@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4598038704487222675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8808e815b3ce9c94e9552cb1dee9e305, type: 3}
+  m_Name: Zip
+  m_EditorClassIdentifier: 
+  Errored: 0
+  ErrorMessage: 
+  ErrorStacktrace: 
+  Active: 1
+  PerManifest: 1
+  ExcludedManifests:
+  - {fileID: 11400000, guid: 0b5c45c77e3192046a1c9acfd4f387e9, type: 2}
+  - {fileID: 11400000, guid: 7fb5b3d290bed6011ed7e8daf230df89, type: 2}
+  - {fileID: 11400000, guid: 2d4d09ec817c24698d35dc9bf0704fdc, type: 2}
+  - {fileID: 11400000, guid: 9bbff6449e1a5460d6b9712c3ecebc9c, type: 2}
+  ArchiveType: 1
+  Source: <BuildPath>
+  Output: <ReleasePath>.zip
+--- !u!114 &-640416070249004058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3570c76eb7a5c3c45942d9295a150917, type: 3}
+  m_Name: StageManifestFiles
+  m_EditorClassIdentifier: 
+  Errored: 0
+  ErrorMessage: 
+  ErrorStacktrace: 
+  Active: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3695521163bdd74fa2845bbd3438240, type: 3}
+  m_Name: BuildLITAndRelease
+  m_EditorClassIdentifier: 
+  Data:
+  - {fileID: 2795398002312913296}
+  - {fileID: 3526975474243183003}
+  - {fileID: -640416070249004058}
+  - {fileID: -4598038704487222675}
+  manifest: {fileID: 11400000, guid: acae7dc04bed84a792d6f9f55f44fd1b, type: 2}
+--- !u!114 &2795398002312913296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50df4f9027e15e04b931a8d460fb22c5, type: 3}
+  m_Name: ExecutePipeline
+  m_EditorClassIdentifier: 
+  Errored: 0
+  ErrorMessage: 
+  ErrorStacktrace: 
+  Active: 1
+  OverrideManifest: 1
+  targetpipeline: {fileID: 11400000, guid: 4e0ada562e823934dad284255704129a, type: 2}
+--- !u!114 &3526975474243183003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc52389347ae9634bbb7e74eba886518, type: 3}
+  m_Name: StageThunderstoreManifest
+  m_EditorClassIdentifier: 
+  Errored: 0
+  ErrorMessage: 
+  ErrorStacktrace: 
+  Active: 1
