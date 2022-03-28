@@ -605,7 +605,20 @@ PlayerSettings:
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
   webGLWasmStreaming: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    1: thunderkit;riskofrain2;nebby-unitymultiplayerhlapi;riskofthunder-ror2editorkit;riskofthunder-hookgenpatcher;riskofthunder-fixplugintypesserialization;teammoonstorm-moonstormsharedutils;bbepis-bepinexpack;tristanmcpherson-r2api
+    7: thunderkit;riskofrain2;nebby-unitymultiplayerhlapi;riskofthunder-ror2editorkit;riskofthunder-hookgenpatcher;riskofthunder-fixplugintypesserialization;teammoonstorm-moonstormsharedutils;bbepis-bepinexpack;tristanmcpherson-r2api
+    13: thunderkit;riskofrain2;nebby-unitymultiplayerhlapi;riskofthunder-ror2editorkit;riskofthunder-hookgenpatcher;riskofthunder-fixplugintypesserialization;teammoonstorm-moonstormsharedutils;bbepis-bepinexpack;tristanmcpherson-r2api
+    14: thunderkit;riskofrain2;nebby-unitymultiplayerhlapi;riskofthunder-ror2editorkit;riskofthunder-hookgenpatcher;riskofthunder-fixplugintypesserialization;teammoonstorm-moonstormsharedutils;bbepis-bepinexpack;tristanmcpherson-r2api
+    19: thunderkit;riskofrain2;nebby-unitymultiplayerhlapi;riskofthunder-ror2editorkit;riskofthunder-hookgenpatcher;riskofthunder-fixplugintypesserialization;teammoonstorm-moonstormsharedutils;bbepis-bepinexpack;tristanmcpherson-r2api
+    21: thunderkit;riskofrain2;nebby-unitymultiplayerhlapi;riskofthunder-ror2editorkit;riskofthunder-hookgenpatcher;riskofthunder-fixplugintypesserialization;teammoonstorm-moonstormsharedutils;bbepis-bepinexpack;tristanmcpherson-r2api
+    25: thunderkit;riskofrain2;nebby-unitymultiplayerhlapi;riskofthunder-ror2editorkit;riskofthunder-hookgenpatcher;riskofthunder-fixplugintypesserialization;teammoonstorm-moonstormsharedutils;bbepis-bepinexpack;tristanmcpherson-r2api
+    27: thunderkit;riskofrain2;nebby-unitymultiplayerhlapi;riskofthunder-ror2editorkit;riskofthunder-hookgenpatcher;riskofthunder-fixplugintypesserialization;teammoonstorm-moonstormsharedutils;bbepis-bepinexpack;tristanmcpherson-r2api
+    28: thunderkit;riskofrain2;nebby-unitymultiplayerhlapi;riskofthunder-ror2editorkit;riskofthunder-hookgenpatcher;riskofthunder-fixplugintypesserialization;teammoonstorm-moonstormsharedutils;bbepis-bepinexpack;tristanmcpherson-r2api
+    29: thunderkit;riskofrain2;nebby-unitymultiplayerhlapi;riskofthunder-ror2editorkit;riskofthunder-hookgenpatcher;riskofthunder-fixplugintypesserialization;teammoonstorm-moonstormsharedutils;bbepis-bepinexpack;tristanmcpherson-r2api
+    30: thunderkit;riskofrain2;nebby-unitymultiplayerhlapi;riskofthunder-ror2editorkit;riskofthunder-hookgenpatcher;riskofthunder-fixplugintypesserialization;teammoonstorm-moonstormsharedutils;bbepis-bepinexpack;tristanmcpherson-r2api
+    32: thunderkit;riskofrain2;nebby-unitymultiplayerhlapi;riskofthunder-ror2editorkit;riskofthunder-hookgenpatcher;riskofthunder-fixplugintypesserialization;teammoonstorm-moonstormsharedutils;bbepis-bepinexpack;tristanmcpherson-r2api
+    33: thunderkit;riskofrain2;nebby-unitymultiplayerhlapi;riskofthunder-ror2editorkit;riskofthunder-hookgenpatcher;riskofthunder-fixplugintypesserialization;teammoonstorm-moonstormsharedutils;bbepis-bepinexpack;tristanmcpherson-r2api
   platformArchitecture: {}
   scriptingBackend: {}
   il2cppCompilerConfiguration: {}
@@ -667,7 +680,31 @@ PlayerSettings:
   XboxOneIsContentPackage: 0
   XboxOneEnhancedXboxCompatibilityMode: 0
   XboxOneEnableGPUVariability: 1
-  XboxOneSockets: {}
+  XboxOneSockets:
+    WwiseCommandSocket:
+      m_Name: WwiseCommandSocket
+      m_Port: 24025
+      m_Protocol: 0
+      m_Usages: 00000000010000000400000007000000
+      m_TemplateName: WwiseCommand
+      m_SessionRequirment: 0
+      m_DeviceUsages: 00000000
+    WwiseDiscoverySocket:
+      m_Name: WwiseDiscoverySocket
+      m_Port: 24024
+      m_Protocol: 1
+      m_Usages: 00000000010000000400000007000000
+      m_TemplateName: WwiseDiscovery
+      m_SessionRequirment: 0
+      m_DeviceUsages: 00000000
+    WwiseNotificationSocket:
+      m_Name: WwiseNotificationSocket
+      m_Port: 24026
+      m_Protocol: 0
+      m_Usages: 00000000010000000400000007000000
+      m_TemplateName: WwiseNotification
+      m_SessionRequirment: 0
+      m_DeviceUsages: 00000000
   XboxOneSplashScreen: {fileID: 0}
   XboxOneAllowedProductIds: []
   XboxOnePersistentLocalStorageSize: 0

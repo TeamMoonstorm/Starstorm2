@@ -58,3 +58,45 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+#RoR2
+SS2-Project/[Pp]ackages/[Rr]isk of Rain 2/*.dll
+SS2-Project/[Pp]ackages/[Rr]isk of Rain 2/[Pp]lugins/*.dll
+
+#Thunderkit Related
+SS2-Project/Assets/ThunderKitSettings/EditorInspectorSettings.asset
+SS2-Project/Assets/ThunderKitSettings/RoR2.asset
+SS2-Project/Assets/ThunderKitSettings/Logs/*
+SS2-Project/Assets/ThunderKitSettings/ThunderKit Extensions.asset
+SS2-Project/ThunderKit/
+
+#Other
+SS2-Project/Assets/Plugins/NGTools/*
+SS2-Project/Assets/Resources/*
+SS2-Project/Packages/*
+!SS2-Project/Packages/packages-lock.json
+!SS2-Project/Packages/manifest.json
+!SS2-Project/Packages/MoonstormSharedUtils
+
+##-------##
+## wwise ##
+##-------##
+
+SS2-Project/WwiseProject/.cache/
+SS2-Project/WwiseProject/*.prof
+SS2-Project/WwiseProject/*_WwiseProject.*.validationcache
+SS2-Project/WwiseProject/*_WwiseProject.*.wsettings
+SS2-Project/WwiseProject/**/*.akd
+
+SS2-Project/Assets/Wwise/Editor/ProjectData/AkWwiseProjectData.asset*
+
+# notes:
+# 1) if any other files go in Assets/Wwise/Editor/ProjectData/ besides AkWwiseProjectData.asset*,
+#    then don't ignore Assets/Wwise/Editor/ProjectData.meta. If AkWwiseProjectData.asset is the only item in there,
+#    then, it's OK to ignore this file.
+# 
+SS2-Project/Assets/Wwise/Editor/ProjectData.meta
+SS2-Project/Assets/Wwise/Deployment/Plugins/Mac/*
+
+#Integration zips
+SS2-Project/WwiseUnityIntegration_Windows_Src.zip
+SS2-Project/WwiseUnityIntegration_Mac_Src.zip
