@@ -12,9 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8808e815b3ce9c94e9552cb1dee9e305, type: 3}
   m_Name: Zip
   m_EditorClassIdentifier: 
-  Errored: 0
-  ErrorMessage: 
-  ErrorStacktrace: 
   Active: 1
   PerManifest: 1
   ExcludedManifests:
@@ -37,9 +34,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3570c76eb7a5c3c45942d9295a150917, type: 3}
   m_Name: StageManifestFiles
   m_EditorClassIdentifier: 
-  Errored: 0
-  ErrorMessage: 
-  ErrorStacktrace: 
   Active: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -58,6 +52,7 @@ MonoBehaviour:
   - {fileID: 3526975474243183003}
   - {fileID: -640416070249004058}
   - {fileID: -4598038704487222675}
+  QuickAccess: 0
   manifest: {fileID: 0}
 --- !u!114 &2795398002312913296
 MonoBehaviour:
@@ -71,9 +66,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50df4f9027e15e04b931a8d460fb22c5, type: 3}
   m_Name: ExecutePipeline
   m_EditorClassIdentifier: 
-  Errored: 0
-  ErrorMessage: 
-  ErrorStacktrace: 
   Active: 1
   OverrideManifest: 1
   targetpipeline: {fileID: 11400000, guid: 4e0ada562e823934dad284255704129a, type: 2}
@@ -89,7 +81,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc52389347ae9634bbb7e74eba886518, type: 3}
   m_Name: StageThunderstoreManifest
   m_EditorClassIdentifier: 
-  Errored: 0
-  ErrorMessage: 
-  ErrorStacktrace: 
   Active: 1
