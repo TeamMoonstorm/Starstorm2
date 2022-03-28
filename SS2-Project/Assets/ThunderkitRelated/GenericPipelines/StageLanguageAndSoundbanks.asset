@@ -12,9 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fc535938fa8dbc45bde03b5ff764cab, type: 3}
   m_Name: StageLanguageFiles
   m_EditorClassIdentifier: 
-  Errored: 0
-  ErrorMessage: 
-  ErrorStacktrace: 
   Active: 1
   LanguageArtifactPath: <LanguageStaging>
 --- !u!114 &-1572175513239099461
@@ -29,9 +26,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3570c76eb7a5c3c45942d9295a150917, type: 3}
   m_Name: StageManifestFiles
   m_EditorClassIdentifier: 
-  Errored: 0
-  ErrorMessage: 
-  ErrorStacktrace: 
   Active: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -48,4 +42,5 @@ MonoBehaviour:
   Data:
   - {fileID: -1572175513239099461}
   - {fileID: -3441690072439955794}
-  manifest: {fileID: 11400000, guid: 6f21799fca639037e1b559d4902eab24, type: 2}
+  QuickAccess: 0
+  manifest: {fileID: 0}
