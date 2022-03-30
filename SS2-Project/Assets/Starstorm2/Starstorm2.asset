@@ -1,5 +1,23 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6425861120697095631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17d1008b78cb6e846889b7778282fbef, type: 3}
+  m_Name: AssetBundleDefinitions
+  m_EditorClassIdentifier: 
+  StagingPaths:
+  - <BuildPathAssets>
+  assetBundles:
+  - assetBundleName: SS2Assets
+    assets:
+    - {fileID: 102900000, guid: bcba50a15972db7448ab948b593d1453, type: 3}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13,31 +31,14 @@ MonoBehaviour:
   m_Name: Starstorm2
   m_EditorClassIdentifier: 
   Data:
-  - {fileID: 114491466299790488}
-  - {fileID: 114200196058502142}
-  - {fileID: 114685984477979976}
-  - {fileID: 114893853169416456}
-  - {fileID: 114685511258912100}
-  - {fileID: 114294944647567532}
-  identity: {fileID: 114491466299790488}
-  QuickAccess: 1
---- !u!114 &114200196058502142
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b7e13dda513544419a89926bd12ad8a, type: 3}
-  m_Name: AssemblyDefinitions
-  m_EditorClassIdentifier: 
-  StagingPaths:
-  - <SS2BuildPathPlugins>
-  definitions:
-  - {fileID: 5897886265953266890, guid: 811accd4506c27046a9eb5c1358c8bcc, type: 3}
---- !u!114 &114294944647567532
+  - {fileID: 8795399528182845369}
+  - {fileID: 2015443043065223482}
+  - {fileID: -6425861120697095631}
+  - {fileID: 522342451077324853}
+  - {fileID: 1297535473851997674}
+  identity: {fileID: 8795399528182845369}
+  QuickAccess: 0
+--- !u!114 &522342451077324853
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -50,11 +51,53 @@ MonoBehaviour:
   m_Name: Files
   m_EditorClassIdentifier: 
   StagingPaths:
-  - <BuildPath>
+  - <BuildPathSoundbanks>
   files:
-  - {fileID: 2800000, guid: 298271dd56116474dbf5fa89f89e5d1a, type: 3}
-  - {fileID: 4900000, guid: 369e8d577844dc6479651e9e75599ae8, type: 3}
---- !u!114 &114491466299790488
+  - {fileID: 102900000, guid: fac793598d1cda244bee02231bc2f101, type: 3}
+--- !u!114 &1297535473851997674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3230df44b431ebc49a958dde5afa4f88, type: 3}
+  m_Name: LanguageFolderTree
+  m_EditorClassIdentifier: 
+  StagingPaths:
+  - <BuildPathPlugins>
+  rootFolderName: SS2Lang
+  languageFolders:
+  - languageName: en
+    languageFiles:
+    - {fileID: 0}
+  - languageName: 
+    languageFiles: []
+  - languageName: 
+    languageFiles: []
+  - languageName: 
+    languageFiles: []
+  - languageName: 
+    languageFiles: []
+--- !u!114 &2015443043065223482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b7e13dda513544419a89926bd12ad8a, type: 3}
+  m_Name: AssemblyDefinitions
+  m_EditorClassIdentifier: 
+  StagingPaths:
+  - <BuildPathPlugins>
+  definitions:
+  - {fileID: 5897886265953266890, guid: f054131d8b8c38f49bfb7567178d0531, type: 3}
+--- !u!114 &8795399528182845369
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -69,61 +112,9 @@ MonoBehaviour:
   StagingPaths:
   - <ManifestPluginStaging>
   Author: TeamMoonstorm
-  Name: Starstorm2 Nightly
+  Name: Starstorm2
   Description: A port of the RoR1 mod Starstorm, featuring new survivors, items,
     gameplay elements, and more.
   Version: 0.4.0
   Dependencies:
   - {fileID: 11400000, guid: a8ac6a3e325999651bd53f63760e6ff0, type: 2}
---- !u!114 &114685511258912100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0a82fec78ebc734d9ad1346cd40b5f9, type: 3}
-  m_Name: ThunderstoreData
-  m_EditorClassIdentifier: 
-  StagingPaths:
-  - <BuildPath>
-  url: https://discord.gg/SgFxwKT7nY
---- !u!114 &114685984477979976
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17d1008b78cb6e846889b7778282fbef, type: 3}
-  m_Name: AssetBundleDefinitions
-  m_EditorClassIdentifier: 
-  StagingPaths:
-  - <SS2BuildPathAssets>
-  assetBundles:
-  - assetBundleName: assetstorm
-    assets:
-    - {fileID: 102900000, guid: a461f23e45c188343a8ad9e102e11b72, type: 3}
-  - assetBundleName: scenestorm
-    assets:
-    - {fileID: 102900000, guid: f0f2ab1fe47e0a24aa1fe2dba5d69df9, type: 3}
---- !u!114 &114893853169416456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b243ff405b33b94dbf5b6775dd9aa33, type: 3}
-  m_Name: Files
-  m_EditorClassIdentifier: 
-  StagingPaths:
-  - <SS2BuildPathSoundBanks>
-  files:
-  - {fileID: 102900000, guid: ef805e20eed460949b53759dd5358089, type: 3}

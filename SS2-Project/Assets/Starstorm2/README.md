@@ -1,0 +1,262 @@
+# Starstorm 2 Nightly
+
+## Overview
+
+Starstorm 2 is a work-in-progress RoR2 port of Starstorm, a diverse gameplay and content mod for Risk of Rain 1. It features two new survivors, over 20 new items and equipment, and a new, dangerous event to shake up your runs.
+
+More information on Starstorm, including features and content to look forward to in SS2, can be found in its info section at https://rainfusion.ml/ or its wiki at https://starstormmod.fandom.com/wiki/Starstorm_Mod_Wiki. For more information on SS2, including development updates and an outlet for feedback and bug reports, visit our Discord server at https://discord.gg/SgFxwKT7nY.
+
+## Nightly?
+
+Nightly builds are unstable versions of Starstorm 2! This release may be buggy, and if you're looking for stable gameplay, we recommend using the stable version of the mod found at https://thunderstore.io/package/TeamMoonstorm/Starstorm2/. If you do find any issues, report them in our Discord, linked above.
+
+Note that updates may not truly be Nightly.
+
+## Features
+
+![](https://i.imgur.com/eLUJ3Z6.png)
+
+* **Executioner** - An aggressive, versatile survivor with an arsenal made for picking off targets and chaining kills. His powerful ion gun gains a shot for every enemy you take down.
+
+* **???** - A survivor of unknown origin, familiar yet unfamiliar. Under the right conditions, you may meet him on the planet, but he certainly won't be on your side.
+
+![](https://i.imgur.com/c0GoQOf.png)
+
+* **New items** - 20 new items and 5 new equipment to support new and existing playstyles. Strengthen your crits with the Erratic Gadget, become a stationary powerhouse with the Hunter's Sigil, or gain some vertical thrust on demand with the Pressurized Canister - and keep an eye out for the elusive Sibylline tier of items!
+
+![](https://i.imgur.com/vGTL8l9.png)
+
+* **Typhoon** - The planet's ultimate challenge awaits those who dare...
+
+* **Storms** - When the skies cloud over, be on your guard. These occasional bouts of bad weather provide enemies with dangerous stat boosts.
+
+## Credits
+
+* Code - Anreol, Flan, Gaforb, KevinFromHPCustomerService, Moffein, Nebby, rob, swuff★, sebacame, Shared, TheTimesweeper, Vale-X, xpcybic, Xubas
+* Art/Modelling/Animation - Anreol, Bolty, bruh, Cexeub, Draymarc, JestAnotherAnimator, Gem, LucidInceptor, KevinFromHPCustomerService, Plexus, PapaZach, QuietAnon, redacted, rob, SOM, Spenny, swuff★, xpcybic, Reithierion, UnknownGlaze
+* Writing - Blimblam, Lyrical Endymion, swuff★, QandQuestion, T_Dimensional
+* Translations - Anreol (Spanish), MysticSword (Russian)
+* Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze
+* Additional support/special thanks - Altzeus, DestroyedClone, don, Draymarc, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Neik, Riskka, Ruxbieno, Shooty, Twiner
+
+## Known Issues
+
+There are no issues. The mod is perfect.
+...In all seriousness, if you find anything, let us know in our Discord (https://discord.gg/fchwaTQcd4)!
+
+## Changelog
+
+**Warning: content spoilers below!**
+
+### 0.3.37β
+* Events
+	* Fixed Nemesis Commando spawning early into runs, for really real. Thank you Sebacame.
+
+### 0.3.36β
+* Events
+	* Fixed Nemesis Commando spawning early into runs, for real. Sorry about that.
+
+### 0.3.35β
+* Events
+	* Fixed Nemesis Commando spawning early into runs (I hope)
+
+### 0.3.34β
+(*Hello again. Sorry for the delay - we are a lot smaller than we once were. There are still plans for this mod. Stay tuned. P.S. Please forgive me for the poor changelog. -★*)
+* General
+	* Updated the mod to work with Moonstorm Shared Utils 0.8.0.
+	* A decent amount of networking fixes - I'm not really sure what specifically. Report any non-networked behaviors in Discord, please.
+* Events
+	* Greatly increased the rarity of storms. Thoughts on this?
+* Items
+	* Added new items: Low Quality Speakers (Uncommon), Swift Skateboard (Rare), Portable Reactor (Rare). Be sure to read the logs for these before giving feedback!
+	* Baby Toys: Fixed incorrect stat calculations)
+
+### 0.3.33β
+* Fixed the mod shipping with debug features enabled.
+
+### 0.3.32β
+(*This will hopefully be the last Nightly release before we push an update to the main mod. There might be some undocumented changes. I'm very tired.*)
+* Executioner
+    * Added new passive: Bloodbath - Killing enemies inflicted with fear reduces all skill cooldowns by 1 second
+    * Slightly reworded some skill descriptions and added keywords to hopefully make things clearer and easier to digest
+    * Fear now provides a 30% movement speed reduction to enemies when applied
+    * Doubled turning radius to be in-line with Vanilla survivors
+    * Half reimplemented ragoll
+    * KNOWN ISSUE: Executioner's ragdoll hangs itself via psychic force
+* Nemesis Commando
+    * Fixed most animations, exception being everything related to Single Tap. I don't want to touch it anymore, so expect a full fix to be alongside the remodel in 0.4.0
+    * Added new Sprint animation
+    * Doubled turning radius to be in-line with Vanilla survivors
+* Items
+    * All: Rewrote many descriptions to match Vanilla wording and phrasing better
+    * A Lot: Modified internally to use RecalculateStatsAPI, which means better stat stacking and less bugs.
+    * Armed Backpack: Added
+    * Back Thruster: Slight rework - now functions like Metroid's Speed Booster when activated, accelerating the user when running in a straight line (*Would this feel better if you could 'run over' enemies for damage? Like a Bighorn Bison?*)
+    * Baby Toys: Added, looking for feedback on current implementation
+    * Broken Blood Tester: Now uses flat values instead of whatever nonsense was going on before
+    * Dormant Fungus: Reduced healing to not heal for 100% of health on proc
+    * Greater Warbanner: Multiple buff wards can now be present at a time
+    * Greater Warbanner: Buff wards now have a lifetime of 90 seconds before disappearing
+    * Hunter's Sigil: Stacks of the item now affect received buffs properly
+    * Malice: Reintroduced. Now uses an orb that you can actually watch bounce between enemies to deal damage. TO-DO: Make it purple
+    * KNOWN ISSUE: Jetboots pickup prefab only applies interactability overlay to a single boot
+    * KNOWN ISSUE: Baby Toys lack model, sprites and formatted tokens
+* Artifacts
+    * Added code for Cognation, alongside a proper trial.
+* Interactables
+    * Added the mod's first Interactable: the Escape Pod. These escape pods can be opened up for free, and will open up to reveal items, monsters, or less fortunate survivors. Heavy feedback on them is much appreciated (Are spawn rates too high? chances for goodies too low?)
+    * KNOWN ISSUE: Drop Pods dont have proper tokens
+* Events
+    * Nemesis Invasion: Nemesis survivors are now given inventories when spawning
+    * KNOWN ISSUE: Event rates might be messed up still|
+* Other
+    * Miscellaneous: We've began to add disabled content to a lot of things that should not be included on the next nightly release. this includes Slate Mines
+    * Miscellaneous: Added a Starstorm2Content Class, functionality is basically the same as RoR2's RoR2Content class.
+    * Unlockables: Rewritten which means all unlocks have been reset, they should work properly now.
+    * Unlockables: Added missing unlocks (EG: Single Tap)
+    * Language Files: Reformatted internally, let us know if issues arise as a result of this
+    * Bugfix: Void cells should now always drop a reward
+    * KNOWN ISSUE: MUL-T's Grand Mastery lacks emissions and tokens.
+
+### 0.3.31β
+(*I don't think this is appropriate for a full on dev log, but right now current focus is on fixing up content to reach version parity with Stable + push ThunderKit build to there. After that, we'll be looking at future content, including Cyborg and Ethereal Teleporters. For now, feedback is CRUCIAL - this is intended as a 'final test' for a lot of features, and specific things still need to be fixed that are skimmed over just to get this out ASAP. Things generally should be working more than before, but some things are still messed up. Be as critical of anything in the mod that seems off as you can.*)
+* General
+    * Title screen is now a bit less purple and a bit more Risk of Rain 2
+    * KNOWN ISSUE: It's a long standing one, but it's on my to-fix list: MUL-T Grandmastery uses incorrect material.
+    * KNOWN ISSUE: Unlocks are broken.
+    * KNOWN ISSUE: Hottest Sauce, Jet Boots, and Stirring Soul have missing or broken visual effects.
+    * KNOWN ISSUE: When Canticum Vitae ends it doesnt resume the original stage's song.
+* Events
+    * Significantly lowered intensity of Storm visuals
+    * Enemies now receive a unique buff icon while storms are active to help signify that storms buff them
+    * Slightly tweaked storm spawn rates, should now be less common. (*How do storm spawn rates feel? Too common? Too rare? Please test on multiple difficulties, and respect that the game is designed to be played on Rainstorm - though feedback for all is crucial.*)
+    * Removed regular storms from Sky Meadow in favor of 100% Purple Rain
+    * Nemesis Invasion: Removed from Commencement spawn pool (*This was a weird fix that may have broken things. Let me know if you see more than one Nemmando during your run. Also, the Void Event is being dropped entirely until we get a better look at the DLC. Until then, I may try to merge the old visuals into this if there's interest.*)
+* Executioner
+    * Fear: Updated buff icon
+    * Crowd Dispersion: Lowered speed multiplier from 3.0 to 2.0, as it was pre-ThunderKit - this should make it more controllable
+    * Supercharged: Updated buff icon
+* Nemesis Commando
+    * Fixed materials of all skins to match pre-ThunderKit
+    * Gouge: Now refreshes duration of existing stacks when applied, again
+    * Distant Gash: Now properly applies gouge
+    * Added IDRS for all the Vanilla Items & Equipments.
+    * (This just leaves his animator as an outlying issue.)*
+* Items
+(Developer Note: *You should probably delete your old config.*)
+    * Detritive Trematode: Changed stacking behavior to directly increase damage rather than increase debuff duration
+    * Detritive Trematode: Buffed movement speed reduction (10% -> 20%)
+    * Dormant Fungus: Fixed scaling being 1/100th as good as it should've been. Oops
+    * Dormant Fungus: Increased duration between procs from 0.5 seconds to 0.75 seconds 
+    * Dormant Fungus: Rebalance healing amounts (2% + 0.5% per stack -> 1% + 1% per stack) (*This was done as per suggestion of Moffein, as most Common items tend to scale linearally like this. This item is currently a candidate for a slight rework with the announcement of Weeping Fungus. Stay tuned.*)
+    * Fork: Changed behavior to Starstorm 1's. The days of overpowered fork are no more! (+7% TOTAL damage -> +25% BASE damage, without levelups *This is probably a sad change but I think it's for the best.*)
+    * Green Chocolate: Updated buff icon
+    * Greater Warbanner: (*Would people prefer this item if you could place more than one at a time, but they disappeared after a duration? Or is it fine it is?*) 
+    * Hunter's Sigil: Updated buff icon
+    * Malice: Temporarily disabled (*Previous version of this item was breaking the game. Will have finished for final release.*)
+    * Needles: Updated long description for clarity on how the item works post-rework
+    * Needles: Changed stacking behaviors to increase duration of the 'pricked' debuff preceeding the 'needles' debuff
+    * Watch Metronome: Updated buff icon
+    * KNOWN ISSUE: I don't think Pressurized Cannister or Back Thruster are networked. 
+* Artifacts
+    * Added Artifact of Cognation.
+
+### 0.3.30β
+* Items
+    * Updated config to make almost every numerical value for Items / Equipment configurable. Let there be config!
+    * Coffee Bag: Additional attack speed is now configurable
+    * Coffee Bag: Additional movement speed is now configurable
+    * Cloaking Headband: Duration of the Invisiblity buff is now configurable
+    * Detritive Trematode: Corrected pickup text / description text to match changes made in last patch
+    * Detritive Trematode: Health theshold is now configurable
+    * Detritive Trematode: Trematode debuff length is now configurable
+    * Dormant Fungus: Corrected pickup text / description text to match changes made in last patch
+    * Dormant Fungus: Base amount of healing is now configurable
+    * Dormant Fungus: Stacking amount of healing can now be configured
+    * Droid Head: No longer adds a movement speed bonus.
+    * Droid Head: Stacking damage is now configurable
+    * Droid Head: Lifetime can now be configured
+    * Erratic Gadget: Flat crit chance can now be configured
+    * Erratic Gadget: Additional crit damage is now configurable
+    * Field Accelerator: Charge per kill is now configurable
+    * Field Accelerator: Maximum stacking charge per kill is now configurable
+    * Field Accelerator: Now uses inverse hyperbolic scaling, opposed to linear with a hardcoded capacity
+    * Greater Warbanner: Extra health regen is now configurable
+    * Greater Warbanner: Extra crit chance is now configurable
+    * Greater Warbanner: Cooldown reduction is now configurable
+    * Hottest Sauce: Radius is now configurable
+    * Fork: Additional damage is now configurable
+    * Hottest Sauce: Duration of the Burn debuff is now configurable
+    * Hunter's Sigil: Added armor is now configurable
+    * Hunter's Sigil: Added armor per stack is now configurable
+    * Hunter's Sigil: Extra crit is now configurable
+    * Hunter's Sigil: Extra crit per stack is now configurable
+    * Hunter's Sigil: The duration of the buff lingering after beginning to move again is now configurable
+    * Hunter's Sigil: The additional duration to the above per stack is now configurable
+    * Molten Coin: Proc chance is now configurable
+    * Needles: Corrected pickup text / description text to match changes made in last patch
+    * Needles: Proc chance is now configurable
+    * Needles: The duration of the buildup debuff is now configurable
+    * Needles: The amount of needed buildup debuffs for the Needles debuff to apply is now configurable
+    * Needles: Duration of the Needles debuff can now be configured
+    * Prototype Jet Boots: Base radius of the explosion can now be configured
+    * Prototype Jet Boots: Stacking radius of the Prototype Jet Boots can now be configured
+    * Prototype Jet Boots: Max radius of the explosion can now be configured
+    * Prototype Jet Boots: Base damage of the explosion can now be configured
+    * Prototype Jet Boots: Stacking damage of the explosion an now be configured
+    * Watch Metronome: Base capacity for buffs is now configurable
+    * Watch Metronone: Additional capacity is now configurable
+    * Watch Metronome: Maximum movespeed bonus is now configurable
+    * Hates will say this is an artifically inflated changelog.
+* Stages:
+    * Stages can now be enabled / disabled via config file
+    * Slate Mines: Added Solus Probes to the enemy pool
+
+### 0.3.29β
+* General
+    * Updated config to allow players to enable / disable specific items
+* Nemesis Commando
+    * Fixed unlock condition
+    * Submission is now fully agile
+    * Distant Gash properly spawns a projectile
+* Maps
+    * Added a beta version of Slate Mines as part of the Stage 2 pool - heavy feedback on this is appreciated, and should be directed towards JestAnotherAnimator (Lui) in feedback threads. This is a VERY EARLY PROTOTYPE, and we are currently looking for feedback on stage layout and playability, rather than texture / model work
+* Items
+    * Fixed a lot of items that were broken due to the deprecation of StaticValues.cs - this includes Detritive Trematode, Molten Coin, Prototype Jet Boots, Droid Head, Relic of Mass, and probably others
+    * Erratic Gadget: Damage is now applied to the crit itself, rather than as a second damage instance
+    * Detritive Trematode: Now applies a 10% slowness debuff alongside the damage over time
+    * Dormant Fungus: Uses old % based behavior rather than the weird level-based scaling
+    * Droid Head: Security Drones are temporarily missing displays for EliteVariety and Aetherium elites. Now supporting Lost in Transit, though.
+    * Needles: Now uses a building debuff rather than immediately applying. Think of it like a chance-based Shattering Justice
+    * Needles: Lowered odds of applying debuff (8% -> 6%)
+
+### 0.3.28β
+* General
+    * Now dependant on MoonstormSharedUtils
+    * General language changes that we didn't keep track of
+    * Added Russian localization
+    * Added Turkish localization
+    * Mod now properly loads on non-English operating systems
+* Executioner
+    * Networked gaining Ion Burst charges
+* Nemesis Commando
+    * Fixed Nemesis Commando transforming into a mess of polygons when having an overlay active.
+    * Drastically improved Nemesis Commando Boss AI 
+    * Nemesis Commando now must manually enter the stage like other survivors, and will only use a void portal to enter the stage on Stage 1
+* Events
+    * Added Canticum Vitae back to the Nemesis encounter event
+    * Added Sandstorm, Blizzard, Ashstorm and Purple Rain events to Abandoned Aqueduct, Rallypoint Delta, Abyssal Depths and Sky Meadow respectively
+* Items
+    * Back Thruster: Added
+    * Nkota's Heritage: No longer drops items on the ground if the item is held by a non-player body (e.g. Mithrix, Engineer Turrets), and puts them straight into their inventory instead
+
+### 0.3.27β
+* General
+	* Fixed frequency of events as to not permanently rain later into runs
+	* Fixed event messages showing something along the lines of "<spritename=MARIOSTARBIT>" instead of sprites 
+* Executioner
+	* Wastelander skin is now armed with a gun, rather than a Petrichorian Apocalypse Series Collectable Action Figure
+* Items
+	* Dormant Fungus: Updated logbook description for accuracy
+* Other
+	* Changed naming scheme for beta versions in the readme to now include the manifest's release version, marked with a "β"
