@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1522826077, guid: d2e201569828c809f3d2502f0471d348, type: 3}
+  m_Name: slatemines
+  m_EditorClassIdentifier: 
+  nameToken: Slate Mines
+  subtitleToken: Abandoned Cavern
+  loreToken: 
+  stageOrder: 2
+  previewTexture: {fileID: 2800000, guid: 6ce762689d9355d4da8f0d0fab4e4f15, type: 3}
+  portalMaterial: {fileID: 2100000, guid: 03e08c0e8bdb8a246a8e26150e46e3e8, type: 2}
+  portalSelectionMessageString: You dream of twisting tunnels...
+  dioramaPrefab: {fileID: 0}
+  sceneType: 1
+  mainTrack: {fileID: 11400000, guid: f86ccc7cc280e1e42834209786713383, type: 2}
+  bossTrack: {fileID: 11400000, guid: 28e992610c3ef0a4980e02a93506a020, type: 2}
+  isOfflineScene: 1
+  suppressPlayerEntry: 0
+  suppressNpcEntry: 0
+  destinations:
+  - {fileID: 11400000, guid: e8cea61f61604f9478902e57efd7e99b, type: 2}
+  - {fileID: 11400000, guid: 0ba07a011e2383c4797fce202c26ab5a, type: 2}
+  preferredPortalPrefab: {fileID: 0}
+  sceneNameOverrides: []
+  reverseSceneNameOverrides: []
+  destinationInjections:
+  - {fileID: 11400000, guid: 428ef6c7b89321e4bb513d1c95f2cfe1, type: 2}
+  - {fileID: 11400000, guid: 98104252e24ef424aab41af74c18c367, type: 2}

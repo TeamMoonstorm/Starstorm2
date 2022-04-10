@@ -1,0 +1,796 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -941717397, guid: f167594c400082e47a0f9ea17327bc80, type: 3}
+  m_Name: MSIDRSidrsNemmando
+  m_EditorClassIdentifier: 
+  MSUKeyAssetRuleGroup:
+  - keyAssetName: BossDamageBonus
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayAPRound
+      IDPHValues: ShoulderL,0.00004,0.00225,0.00098,278.7487,309.8303,23.80888,0.00274,0.00274,0.00274
+      limbMask: 0
+  - keyAssetName: SecondarySkillMagazine
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDoubleMag
+      IDPHValues: Gun,0.00024,-0.00017,-0.00026,348.1462,79.9535,186.6812,-0.0003,-0.00052,-0.00052
+      limbMask: 0
+  - keyAssetName: FlatHealth
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySteakCurved
+      IDPHValues: Head,-0.00127,0.00351,0.00002,299.0993,265.6861,-0.00001,0.00079,0.00079,0.00079
+      limbMask: 0
+  - keyAssetName: Firework
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFirework
+      IDPHValues: Chest,-0.00103,-0.00056,-0.00123,281.098,71.18607,112.7231,0.002,0.002,0.00197
+      limbMask: 0
+  - keyAssetName: Mushroom
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMushroom
+      IDPHValues: FootL,0.00013,0.00146,-0.00026,307.0188,9.00343,350.5404,0.00037,0.00037,0.00037
+      limbMask: 0
+  - keyAssetName: HealWhileSafe
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySnail
+      IDPHValues: Chest,0.00021,0.00599,-0.00054,304.1055,1.29268,2.14032,0.00048,0.00048,0.00048
+      limbMask: 0
+  - keyAssetName: Crowbar
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayCrowbar
+      IDPHValues: Chest,-0.00196,-0.00156,0.00042,9.82541,359.613,2.50492,0.00208,0.00208,0.00208
+      limbMask: 0
+  - keyAssetName: SprintBonus
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySoda
+      IDPHValues: ShoulderR,-0.00085,0.00221,-0.00002,275.4979,10.25677,348.5858,-0.00252,-0.00252,-0.00252
+      limbMask: 0
+  - keyAssetName: NearbyDamageBonus
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDiamond
+      IDPHValues: Sword,0,0,0,0,0,0,-0.00113,-0.00113,-0.00113
+      limbMask: 0
+  - keyAssetName: IgniteOnKill
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGasoline
+      IDPHValues: ThighL,0.00109,0.00252,0.00018,274.5631,245.961,95.29594,-0.00377,-0.00377,-0.00377
+      limbMask: 0
+  - keyAssetName: CritGlasses
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGlasses
+      IDPHValues: Head,-0.00001,0.00213,0.00182,0,0,0,0.00372,0.00339,0.00339
+      limbMask: 0
+  - keyAssetName: Medkit
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMedkit
+      IDPHValues: Chest,-0.00004,-0.00004,0.0016,83.49435,189.5159,189.5357,-0.00439,-0.00439,-0.00439
+      limbMask: 0
+  - keyAssetName: Hoof
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayHoof
+      IDPHValues: CalfL,0.0001,0.00311,-0.00061,63.02884,357.4355,8.76749,0.00079,0.001,0.00071
+      limbMask: 0
+  - keyAssetName: PersonalShield
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayShieldGenerator
+      IDPHValues: Chest,0.00002,-0.00093,0.00122,81.6302,192.3984,193.0263,-0.00158,-0.00158,-0.00158
+      limbMask: 0
+  - keyAssetName: ArmorPlate
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayRepulsionArmorPlate
+      IDPHValues: ArmL,0.00037,0.00176,0.00008,278.6886,222.1258,50.49733,-0.00185,-0.00271,-0.00184
+      limbMask: 0
+  - keyAssetName: TreasureCache
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayKey
+      IDPHValues: Sword,-0.00009,0.00102,-0.00005,0,0,0,0.00688,0.00688,0.00688
+      limbMask: 0
+  - keyAssetName: StickyBomb
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayStickyBomb
+      IDPHValues: ShoulderR,-0.00073,0.0017,0.00044,9.12244,0,5.29106,-0.00181,-0.00181,-0.00181
+      limbMask: 0
+  - keyAssetName: StunChanceOnHit
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayStunGrenade
+      IDPHValues: ShoulderR,-0.00078,0.00236,-0.00055,83.29408,180,180,0.00562,0.00562,0.00562
+      limbMask: 0
+  - keyAssetName: BarrierOnKill
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBrooch
+      IDPHValues: Chest,0.00178,0.0036,0.00167,310.2784,230.3934,166.8923,-0.00349,-0.00349,-0.00349
+      limbMask: 0
+  - keyAssetName: Bear
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBear
+      IDPHValues: Chest,0,0.00248,0.00222,10.81363,0,0,0.00134,0.00134,0.00134
+      limbMask: 0
+  - keyAssetName: BleedOnHit
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTriTip
+      IDPHValues: Gun,-0.00175,0.00197,-0.00084,0,252.4081,0,0.00168,0.00168,0.00168
+      limbMask: 0
+  - keyAssetName: WardOnLevel
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWarbanner
+      IDPHValues: Chest,0.00026,0.00422,-0.00219,67.52062,184.3249,90.54029,-0.00415,-0.00415,-0.00415
+      limbMask: 0
+  - keyAssetName: Tooth
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayToothNecklaceDecal
+      IDPHValues: Chest,0.00018,0.00378,0.00059,0,0,0,0,0,0
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayToothMeshLarge
+      IDPHValues: Chest,0,0.00354,0.00237,320.053,1.10597,1.53428,0.01624,0.01624,0.01624
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayToothMeshSmall1
+      IDPHValues: Chest,0.00027,0.00357,0.0024,0.39687,15.19721,2.43021,0.01271,0.01271,0.01271
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayToothMeshSmall1
+      IDPHValues: Chest,-0.0003,0.0036,0.00233,359.227,347.8072,358.1762,0.01271,0.01271,0.01271
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayToothMeshSmall2
+      IDPHValues: Chest,-0.0006,0.00362,0.00234,0,0,0,0.01211,0.01211,0.01211
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayToothMeshSmall2
+      IDPHValues: Chest,0.00049,0.00359,0.00228,0,0,0,-0.01211,0.01211,0.01211
+      limbMask: 0
+  - keyAssetName: Missile
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMissileLauncher
+      IDPHValues: Gun,0.00023,0.00284,-0.00046,350.5193,255.6219,5.06668,0.00084,0.00084,0.00084
+      limbMask: 0
+  - keyAssetName: WarCryOnMultikill
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayPauldron
+      IDPHValues: ShoulderL,0.00087,0.00017,0.00053,324.6592,321.8653,71.80752,-0.00626,-0.00626,-0.00626
+      limbMask: 0
+  - keyAssetName: SlowOnHit
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBauble
+      IDPHValues: ShoulderR,0.00089,0.00334,-0.00074,343.0117,170.9247,2.67203,-0.00315,-0.00315,-0.00315
+      limbMask: 0
+  - keyAssetName: Deathmark
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDeathmark
+      IDPHValues: Chest,0.00091,-0.00105,0.00074,77.26099,180,145.6681,-0.00035,-0.00035,-0.00035
+      limbMask: 0
+  - keyAssetName: EquipmentMagazine
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBattery
+      IDPHValues: Chest,0.00037,0.00501,-0.00147,0,93.26506,0,-0.00167,-0.00167,-0.00265
+      limbMask: 0
+  - keyAssetName: BonusGoldPackOnKill
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTome
+      IDPHValues: Chest,0.00203,-0.00057,0.00048,10.2573,268.5793,317.6278,-0.00045,-0.00045,-0.00045
+      limbMask: 0
+  - keyAssetName: HealOnCrit
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayScythe
+      IDPHValues: Chest,-0.00247,-0.00188,-0.00009,81.64294,215.8473,20.37621,-0.00202,-0.00202,-0.00202
+      limbMask: 0
+  - keyAssetName: Feather
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFeather
+      IDPHValues: ThighR,-0.00057,0.00241,-0.0007,308.0484,207.9767,243.223,0.00025,0.00025,0.00025
+      limbMask: 0
+  - keyAssetName: Infusion
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayInfusion
+      IDPHValues: ThighL,0.0009,0.00157,-0.0014,358.0964,125.2124,186.5599,0.00417,0.00417,0.00417
+      limbMask: 0
+  - keyAssetName: FireRing
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFireRing
+      IDPHValues: HandL,0.00003,-0.00037,0.0001,63.91947,37.35725,23.20192,-0.00606,-0.00606,-0.00606
+      limbMask: 0
+  - keyAssetName: Seed
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySeed
+      IDPHValues: Chest,-0.00176,0.00404,0.0018,327.7914,274.8672,7.03759,0.00022,0.00022,0.00022
+      limbMask: 0
+  - keyAssetName: TPHealingNova
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGlowFlower
+      IDPHValues: ThighR,-0.00059,0.00239,0.00061,0,299.865,0,0.00397,0.00397,0.00397
+      limbMask: 0
+  - keyAssetName: ExecuteLowHealthElite
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGuillotine
+      IDPHValues: Sword,0.00099,0.01231,-0.0005,0.10516,288.8488,270.0359,0.0027,0.0027,0.0027
+      limbMask: 0
+  - keyAssetName: Phasing
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayStealthKit
+      IDPHValues: CalfR,-0.00007,0.0021,0.00108,71.27696,351.6968,352.1306,-0.00225,-0.00415,-0.00334
+      limbMask: 0
+  - keyAssetName: AttackSpeedOnCrit
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWolfPelt
+      IDPHValues: Head,0,0.00246,0.00119,0,0,0,0.00729,0.00729,0.00729
+      limbMask: 0
+  - keyAssetName: Thorns
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayRazorwireLeft
+      IDPHValues: Sword,0.00013,0.00325,0.00007,86.94386,23.89293,13.69595,-0.00353,-0.00353,-0.00942
+      limbMask: 0
+  - keyAssetName: SprintOutOfCombat
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWhip
+      IDPHValues: Chest,0.00036,-0.00061,-0.00144,342.9917,264.2429,180,-0.00253,-0.00253,-0.00253
+      limbMask: 0
+  - keyAssetName: SprintArmor
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBuckler
+      IDPHValues: ArmL,0,0.00137,-0.00036,16.09725,183.0452,0.86329,0.00179,0.00179,0.00179
+      limbMask: 0
+  - keyAssetName: IceRing
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayIceRing
+      IDPHValues: HandR,0.00034,-0.00009,0.00001,63.58542,25.92959,23.53076,-0.0055,-0.0055,-0.0055
+      limbMask: 0
+  - keyAssetName: Squid
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySquidTurret
+      IDPHValues: CalfL,0,-0.00008,-0.00016,62.60889,0,0,-0.00056,-0.00056,-0.00056
+      limbMask: 0
+  - keyAssetName: ChainLightning
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayUkulele
+      IDPHValues: Chest,0.00071,0.00213,-0.0026,0,172.7611,320.832,0.00623,0.00623,0.00623
+      limbMask: 0
+  - keyAssetName: EnergizedOnEquipmentUse
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWarhorn
+      IDPHValues: Chest,-0.00106,-0.0008,0.00129,12.06961,144.479,234.765,0.00284,-0.00284,-0.00284
+      limbMask: 0
+  - keyAssetName: JumpBoost
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWaxBird
+      IDPHValues: ShoulderL,-0.00307,0.00487,0.00192,48.44913,338.7879,206.5506,0.01051,0.01051,0.01051
+      limbMask: 0
+  - keyAssetName: ExplodeOnDeath
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWillOWisp
+      IDPHValues: Chest,0.00205,0.00083,0.00174,0,0,88.24252,0.00057,0.00057,0.00057
+      limbMask: 0
+  - keyAssetName: Clover
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayClover
+      IDPHValues: ThighL,0.0005,0.00203,0.00065,80.4781,0.00001,333.151,0.00444,0.00444,0.00444
+      limbMask: 0
+  - keyAssetName: BarrierOnOverheal
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayAegis
+      IDPHValues: ArmR,0,0,0,81.33299,0,0,0.00206,0.00206,0.00206
+      limbMask: 0
+  - keyAssetName: AlienHead
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayAlienHead
+      IDPHValues: ShoulderR,-0.00141,0.00011,-0.00014,332.4341,26.70566,81.12897,-0.00653,-0.00653,-0.00653
+      limbMask: 0
+  - keyAssetName: KillEliteFrenzy
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBrainStalk
+      IDPHValues: Head,0,0.00275,0.00001,0,0,0,0.00239,0.00239,0.00239
+      limbMask: 0
+  - keyAssetName: Behemoth
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBehemoth
+      IDPHValues: Gun,-0.00085,0.00162,0.00008,357.8172,347.9224,79.90709,0.00025,0.00025,0.00025
+      limbMask: 0
+  - keyAssetName: Dagger
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDagger
+      IDPHValues: Head,0.00084,0.00106,-0.0014,291.6041,180,180,0.00441,0.00441,0.00441
+      limbMask: 0
+  - keyAssetName: ExtraLife
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayHippo
+      IDPHValues: ShoulderR,-0.00093,-0.00069,-0.00042,52.40368,345.133,144.8698,0.00165,0.00165,0.00165
+      limbMask: 0
+  - keyAssetName: Icicle
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFrostRelic
+      IDPHValues: Base,0.00548,0.00567,-0.00971,0,0,0,1,1,1
+      limbMask: 0
+  - keyAssetName: FallBoots
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGravBoots
+      IDPHValues: CalfL,0.00008,0.00368,-0.00002,18.4162,163.6936,181.7078,0.00268,0.00268,0.00268
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayGravBoots
+      IDPHValues: CalfR,0,0.00368,0,0,0,0,0.00268,-0.00406,0.00268
+      limbMask: 0
+  - keyAssetName: GhostOnKill
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMask
+      IDPHValues: Head,0,0.00233,0.00081,347.2917,0,0,0.00765,0.00765,0.00765
+      limbMask: 0
+  - keyAssetName: UtilitySkillMagazine
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayAfterburnerShoulderRing
+      IDPHValues: Chest,-0.00176,0.00465,-0.00073,296.7793,356.3471,15.07339,-0.00521,-0.00521,-0.00521
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayAfterburnerShoulderRing
+      IDPHValues: Chest,0.00176,0.00465,-0.00073,296.7793,356.3471,344.9266,-0.00521,-0.00521,-0.00521
+      limbMask: 0
+  - keyAssetName: Plant
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayInterstellarDeskPlant
+      IDPHValues: Chest,-0.00135,0.00092,0.00152,0,84.49098,0,-0.00067,-0.00067,-0.00067
+      limbMask: 0
+  - keyAssetName: NovaOnHeal
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDevilHorns
+      IDPHValues: Head,0,0.00223,0,0,0,0,-0.00698,0.00698,0.00698
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayDevilHorns
+      IDPHValues: Head,0,0.00223,0,0,0,0,0.00698,0.00698,0.00698
+      limbMask: 0
+  - keyAssetName: IncreaseHealing
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayAntler
+      IDPHValues: Head,-0.00079,0.00311,0,0,90,0,0.00289,0.00289,-0.00289
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayAntler
+      IDPHValues: Head,0.00079,0.00311,0,0,90,0,0.00289,0.00289,0.00289
+      limbMask: 0
+  - keyAssetName: LaserTurbine
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLaserTurbine
+      IDPHValues: ArmL,0,0.00118,-0.00122,343.7738,0,0,-0.00327,-0.00327,-0.00327
+      limbMask: 0
+  - keyAssetName: BounceNearby
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayHook
+      IDPHValues: Chest,0,0.00571,-0.0007,281.7869,180,180,0.0032,0.0032,0.0032
+      limbMask: 0
+  - keyAssetName: ArmorReductionOnHit
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWarhammer
+      IDPHValues: Chest,0.00106,0.00423,-0.00226,314.6011,76.82185,284.4972,0.00143,0.00143,0.00143
+      limbMask: 0
+  - keyAssetName: Talisman
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTalisman
+      IDPHValues: Base,-0.00853,0.00063,-0.00293,280.5756,180,180,1,1,1
+      limbMask: 0
+  - keyAssetName: ShockNearby
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTeslaCoil
+      IDPHValues: CalfR,0,0,0,82.02888,0,0,-0.0023,-0.0023,-0.0023
+      limbMask: 0
+  - keyAssetName: Headhunter
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySkullcrown
+      IDPHValues: Head,0,0.00376,0,341.8068,0,0,0.00358,0.00108,0.00123
+      limbMask: 0
+  - keyAssetName: LightningStrikeOnHit
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayChargedPerforator
+      IDPHValues: Sword,-0.0002,0.00268,-0.00059,332.2022,265.1257,92.27746,-0.00669,-0.00669,-0.00669
+      limbMask: 0
+  - keyAssetName: NovaOnLowHealth
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayJellyGuts
+      IDPHValues: ThighL,-0.00067,0.0032,-0.00002,0,267.8775,0,-0.00076,-0.00076,-0.00076
+      limbMask: 0
+  - keyAssetName: TitanGoldDuringTP
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGoldHeart
+      IDPHValues: Chest,-0.00098,0.00238,0.00235,0,0,0,0.00107,0.00107,0.00107
+      limbMask: 0
+  - keyAssetName: ShinyPearl
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayShinyPearl
+      IDPHValues: Head,0,0.00468,-0.00033,75.8594,0,0,0.00098,0.00098,0.00098
+      limbMask: 0
+  - keyAssetName: SprintWisp
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBrokenMask
+      IDPHValues: Chest,0.00026,-0.00053,-0.00122,0,0,0,-0.00087,-0.00087,-0.00087
+      limbMask: 0
+  - keyAssetName: SiphonOnLowHealth
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySiphonOnLowHealth
+      IDPHValues: ShoulderL,0.00061,0.0019,-0.00057,0,78.64009,4.56404,-0.0004,-0.0004,-0.0004
+      limbMask: 0
+  - keyAssetName: FireballsOnHit
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFireballsOnHit
+      IDPHValues: Sword,0.00025,0.0027,0.00077,0,196.6571,0,-0.00037,-0.00037,-0.00037
+      limbMask: 0
+  - keyAssetName: Pearl
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayPearl
+      IDPHValues: Head,0,0.00217,-0.00014,81.81031,0,0,0.00098,0.00098,0.00098
+      limbMask: 0
+  - keyAssetName: ParentEgg
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayParentEgg
+      IDPHValues: ShoulderL,0,0.00325,-0.00127,352.1582,180,180,0.00057,0.00057,0.00059
+      limbMask: 0
+  - keyAssetName: BeetleGland
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBeetleGland
+      IDPHValues: Chest,-0.00114,0.00273,-0.00226,0,0,0,0.00065,0.00065,0.00065
+      limbMask: 0
+  - keyAssetName: BleedOnHitAndExplode
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBleedOnHitAndExplode
+      IDPHValues: Chest,0.00158,0.0029,-0.00246,0,0,23.6055,0.00035,0.00035,0.00035
+      limbMask: 0
+  - keyAssetName: Knurl
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayKnurl
+      IDPHValues: ArmR,0,0.00167,0.00034,26.56694,267.4987,149.5042,-0.00054,-0.00054,-0.00054
+      limbMask: 0
+  - keyAssetName: LunarTrinket
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBeads
+      IDPHValues: Sword,-0.00079,0.01374,0.00016,19.49498,180,324.576,-0.01,-0.01,-0.01
+      limbMask: 0
+  - keyAssetName: GoldOnHit
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBoneCrown
+      IDPHValues: Head,0.00003,0.00246,-0.00024,345.3429,0.75214,0.40474,0.01103,0.01103,0.01103
+      limbMask: 0
+  - keyAssetName: RepeatHeal
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayCorpseFlower
+      IDPHValues: ThighL,0.0006,0.00299,-0.00125,274.0406,236.2021,105.3911,0.00206,0.00206,0.00206
+      limbMask: 0
+  - keyAssetName: MonstersOnShrineUse
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMonstersOnShrineUse
+      IDPHValues: Chest,0.00179,-0.00059,-0.00056,49.29925,35.93981,352.6223,0.00038,0.00038,0.00038
+      limbMask: 0
+  - keyAssetName: LunarSpecialReplacement
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBirdHeart
+      IDPHValues: Base,-0.00665,0.00557,-0.01,0,0,0,0.25,0.25,0.25
+      limbMask: 0
+  - keyAssetName: FocusConvergence
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFocusedConvergence
+      IDPHValues: Base,0.00735,0,-0.00284,0,0,0,0.1,0.1,0.1
+      limbMask: 0
+  - keyAssetName: AutoCastEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFossil
+      IDPHValues: ArmR,-0.00003,0,-0.00067,0,277.0074,0,0.00592,0.00592,0.00592
+      limbMask: 0
+  - keyAssetName: LunarSecondaryReplacement
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBirdClaw
+      IDPHValues: HandR,-0.00027,0.00101,-0.00024,353.093,165.7601,14.22053,-0.00256,-0.00256,-0.00256
+      limbMask: 0
+  - keyAssetName: RandomDamageZone
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayRandomDamageZone
+      IDPHValues: Chest,0.00017,-0.00048,-0.0019,40.83539,0,0,0.00055,0.00057,0.00057
+      limbMask: 0
+  - keyAssetName: LunarDagger
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLunarDagger
+      IDPHValues: Chest,-0.00197,-0.00046,-0.00075,12.63575,353.6848,98.38504,-0.00166,-0.00166,-0.00166
+      limbMask: 0
+  - keyAssetName: LunarUtilityReplacement
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBirdFoot
+      IDPHValues: FootR,-0.00038,-0.0003,-0.00052,1.95491,280.3013,251.5622,-0.00302,-0.00302,-0.00302
+      limbMask: 0
+  - keyAssetName: ShieldOnly
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayShieldBug
+      IDPHValues: Head,-0.00065,0.00379,0,357.9433,124.367,329.2971,0.00226,0.00226,-0.00226
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayShieldBug
+      IDPHValues: Head,0.00065,0.00379,-0.00006,8.39747,60.73721,322.6643,0.00226,0.00226,0.00226
+      limbMask: 0
+  - keyAssetName: LunarPrimaryReplacement
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBirdEye
+      IDPHValues: Chest,0.00092,0.00289,0.0021,279.0379,180,180,0.00158,0.00158,0.00158
+      limbMask: 0
+  - keyAssetName: Cleanse
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWaterPack
+      IDPHValues: Chest,-0.00012,0.00224,-0.00213,10.2203,0.45454,183.2354,-0.00113,-0.00113,-0.00113
+      limbMask: 0
+  - keyAssetName: CommandMissile
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMissileRack
+      IDPHValues: Chest,0,0.00294,-0.0022,75.02539,194.2386,15.18204,0.00458,0.00458,0.00458
+      limbMask: 0
+  - keyAssetName: Gateway
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayVase
+      IDPHValues: Chest,0.00202,0.00228,0.00169,0,0,190.5938,-0.0014,-0.0014,-0.0014
+      limbMask: 0
+  - keyAssetName: Fruit
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFruit
+      IDPHValues: Chest,0.00051,0.00181,0.00135,357.0262,180,180,-0.00176,-0.00176,-0.00176
+      limbMask: 0
+  - keyAssetName: DeathProjectile
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDeathProjectile
+      IDPHValues: Sword,-0.00029,0.0075,0,87.36203,0,0,0.00074,0.00074,0.00074
+      limbMask: 0
+  - keyAssetName: QuestVolatileBattery
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBatteryArray
+      IDPHValues: Chest,0,0.00197,0.00231,14.38887,0,0,0.00163,0.00163,0.00163
+      limbMask: 0
+  - keyAssetName: TeamWarCry
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTeamWarCry
+      IDPHValues: Chest,0,0.0039,-0.0026,344.1095,182.6242,359.281,0.00045,0.00045,0.00045
+      limbMask: 0
+  - keyAssetName: GainArmor
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayElephantFigure
+      IDPHValues: ThighR,0.00118,0.00297,0.00021,75.77747,63.61393,344.6869,0.00494,0.00494,0.00494
+      limbMask: 0
+  - keyAssetName: Jetpack
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBugWings
+      IDPHValues: Chest,0,0.00254,-0.00172,0,0,0,0.0013,0.0013,0.0013
+      limbMask: 0
+  - keyAssetName: CritOnUse
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayNeuralImplant
+      IDPHValues: Head,0,0.00285,0.00429,348.1165,0,0,-0.00281,-0.00281,-0.00281
+      limbMask: 0
+  - keyAssetName: BFG
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBFG
+      IDPHValues: ShoulderL,0.00083,0.00016,0.00028,51.46466,5.1794,271.1675,0.00342,0.00342,0.00342
+      limbMask: 0
+  - keyAssetName: BlackHole
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGravCube
+      IDPHValues: Base,0.00869,0.00252,0.00211,0,0,0,0.5,0.5,0.5
+      limbMask: 0
+  - keyAssetName: Scanner
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayScanner
+      IDPHValues: Chest,0.00013,0.0009,0.00208,357.3345,274.2015,2.48175,0.00046,0.00046,0.00046
+      limbMask: 0
+  - keyAssetName: Recycle
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayRecycler
+      IDPHValues: Chest,0.00013,0.00079,0.00215,0.08185,271.0128,353.5576,0.0006,0.0006,0.0006
+      limbMask: 0
+  - keyAssetName: Lightning
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLightningArmRight
+      IDPHValues: ShoulderR,0.00075,0.00358,-0.00089,292.6368,108.969,297.0084,0.00382,0.00382,0.00382
+      limbMask: 0
+  - keyAssetName: Saw
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySawmerangFollower
+      IDPHValues: Base,0.00749,0.0002,0.00092,0,0,0,0.001,0.001,0.001
+      limbMask: 0
+  - keyAssetName: LifeStealOnHit
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLifeStealOnHit
+      IDPHValues: Head,-0.00145,0.00165,-0.00038,349.8672,17.82439,79.26771,0.00137,0.00137,0.00137
+      limbMask: 0
+  - keyAssetName: DroneBackup
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayRadio
+      IDPHValues: Chest,-0.00124,-0.00072,0.00106,354.2077,306.6313,353.9087,0.00309,0.00309,0.00309
+      limbMask: 0
+  - keyAssetName: GoldGat
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGoldGat
+      IDPHValues: ShoulderL,0.00369,0.0029,-0.00015,33.99031,168.8576,235.9107,-0.0016,-0.0016,-0.0016
+      limbMask: 0
+  - keyAssetName: FireballDash
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEgg
+      IDPHValues: Chest,0.00079,0.00155,0.00223,61.09521,261.8885,260.7529,-0.00163,-0.00163,-0.00163
+      limbMask: 0
+  - keyAssetName: CrippleWard
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEffigy
+      IDPHValues: Chest,-0.00001,0.00036,0.00212,349.3293,176.1489,0.71412,0.00259,0.00259,0.00259
+      limbMask: 0
+  - keyAssetName: Meteor
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMeteor
+      IDPHValues: Base,0.00751,0,0.00303,0,0,0,0.75,0.75,0.75
+      limbMask: 0
+  - keyAssetName: BurnNearby
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayPotion
+      IDPHValues: Chest,0.00002,0.00355,-0.00269,346.7816,181.4925,149.2244,-0.00032,-0.00032,-0.00032
+      limbMask: 0
+  - keyAssetName: Tonic
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTonic
+      IDPHValues: Chest,0,0.00254,-0.00234,357.3987,179.6513,178.8232,-0.00373,-0.00373,-0.00373
+      limbMask: 0
+  - keyAssetName: AffixWhite
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteIceCrown
+      IDPHValues: Head,-0.00001,0.00352,-0.00062,65.80632,350.1547,351.0828,-0.00023,-0.00021,-0.00023
+      limbMask: 0
+  - keyAssetName: AffixRed
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteHorn
+      IDPHValues: Head,0.0005,0.0031,0.00052,0,0,0,0.00107,0.00107,0.00107
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayEliteHorn
+      IDPHValues: Head,-0.0005,0.0031,0.00052,0,0,0,-0.00107,0.00107,0.00107
+      limbMask: 0
+  - keyAssetName: AffixBlue
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteRhinoHorn
+      IDPHValues: Head,-0.00013,0.00334,0.00144,311.7019,2.52726,0.61481,0.00215,0.00215,0.00215
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayEliteRhinoHorn
+      IDPHValues: Head,-0.00012,0.00369,0.00092,311.7019,2.52726,0.61481,0.00155,0.00155,0.00155
+      limbMask: 0
+  - keyAssetName: AffixPoison
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteUrchinCrown
+      IDPHValues: Head,0.00015,0.00301,-0.00049,285.1958,177.8746,187.8732,0.00058,0.00058,0.00058
+      limbMask: 0
+  - keyAssetName: AffixLunar
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteLunar,eye
+      IDPHValues: Head,0,0,0,77.3035,338.5667,339.6214,-0.007,-0.007,-0.007
+      limbMask: 0
+  - keyAssetName: AffixHaunted
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteStealthCrown
+      IDPHValues: Head,-0.00018,0.00365,-0.00026,283.5157,177.2808,188.3912,0.00056,0.00056,0.00056
+      limbMask: 0
+  VanillaIDRSKey: idrsNemmando

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1512808244, guid: 951ce57ad9993c1f840a4dceb5f8b763, type: 3}
+  m_Name: GreaterWarbanner
+  m_EditorClassIdentifier: 
+  pickupModelPrefab: {fileID: 6270857343915428241, guid: 4471a4c4e13d61a4ca2b71ebd2c7ddb1,
+    type: 3}
+  cooldown: 55
+  nameToken: SS2_EQUIP_GREATERWARBANNER_NAME
+  pickupToken: SS2_EQUIP_GREATERWARBANNER_PICKUP
+  descriptionToken: SS2_EQUIP_GREATERWARBANNER_DESC
+  loreToken: SS2_EQUIP_GREATERWARBANNER_LORE
+  pickupIconSprite: {fileID: 21300000, guid: 39f860408b2aba24197cd2df9b28d6cb, type: 3}
+  unlockableDef: {fileID: 11400000, guid: fd3de2fd4668dc0438a2ef0671321331, type: 2}
+  colorIndex: 5
+  canDrop: 1
+  enigmaCompatible: 1
+  isLunar: 0
+  isBoss: 0
+  passiveBuffDef: {fileID: 0}
+  appearsInSinglePlayer: 1
+  appearsInMultiPlayer: 1
+  mageElement: 0
