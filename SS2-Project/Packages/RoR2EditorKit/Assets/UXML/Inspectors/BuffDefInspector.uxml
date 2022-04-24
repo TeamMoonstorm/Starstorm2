@@ -1,0 +1,23 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="Header" class="header" style="height: auto; flex-shrink: 0;">
+        <Style src="/Packages/riskofthunder-ror2editorkit/Assets/USS/Inspectors/BuffDefInspector.uss" />
+        <ui:Label text="BuffDef" name="m_Name" binding-path="m_Name" class="headerLabel" />
+    </ui:VisualElement>
+    <ui:VisualElement name="InspectorData">
+        <Style src="/Packages/riskofthunder-ror2editorkit/Assets/USS/Inspectors/BuffDefInspector.uss" />
+        <uie:ObjectField label="Icon Sprite" name="iconSprite" tooltip="The sprite of this buff, Should be a Grayscale sprite" binding-path="iconSprite" />
+        <uie:ColorField label="Buff Color" value="RGBA(0.000, 1.000, 1.000, 1.000)" name="buffColor" tooltip="The color the sprite will have" show-alpha="false" binding-path="buffColor">
+            <ui:Button text="Set to Elite Color" name="colorSetter" tooltip="Sets the color of this buff to the EliteDef&apos;s color" class="colorSetter" />
+        </uie:ColorField>
+        <uie:ObjectField label="Associated EliteDef" name="eliteDef" tooltip="The EliteDef associated with this buff. The EliteDef&apos;s EquipmentDef&apos;s passiveBuffDef must point to this BuffDef" binding-path="eliteDef" />
+        <uie:ObjectField label="Start SFX" name="startSfx" tooltip="A soundEffect that&apos;ll play when this Buff starts" binding-path="startSfx" />
+        <ui:Label text="Toggles" class="separatorLabel" />
+        <ui:Toggle label="Can Stack" name="canStack" tooltip="Whether this buff is Stackable" binding-path="canStack" />
+        <ui:Toggle label="Is Debuff" name="isDebuff" tooltip="Whether this buff applies negative effects" binding-path="isDebuff" />
+        <ui:Toggle label="Is Cooldown" name="isCooldown" tooltip="Whether this buff acts as a Cooldown, IE: Runald&apos;s Band" binding-path="isCooldown" />
+        <ui:Toggle label="Is Hidden" name="isHidden" binding-path="isHidden" />
+    </ui:VisualElement>
+    <ui:VisualElement name="Messages">
+        <Style src="/Packages/riskofthunder-ror2editorkit/Assets/USS/Inspectors/BuffDefInspector.uss" />
+    </ui:VisualElement>
+</ui:UXML>

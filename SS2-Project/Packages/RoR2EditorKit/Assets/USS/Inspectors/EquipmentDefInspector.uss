@@ -1,0 +1,31 @@
+.header {
+    border-left-color: rgb(47, 47, 47);
+    border-right-color: rgb(47, 47, 47);
+    border-top-color: rgb(47, 47, 47);
+    border-bottom-color: rgb(47, 47, 47);
+    border-bottom-width: 5px;
+    background-color: rgb(80, 80, 80);
+}
+
+.headerLabel {
+    -unity-text-align: middle-center;
+    font-size: 16px;
+    flex-grow: 1;
+}
+
+.separatorLabel {
+    border-bottom-color: rgb(41, 41, 41);
+    border-bottom-width: 2px;
+    height: 25px;
+    -unity-text-align: middle-left;
+    border-top-color: rgb(41, 41, 41);
+    border-top-width: 2px;
+}
+
+.chanceSetter {
+    display: none;
+}
+
+.floatField {
+    width: 40px;
+}

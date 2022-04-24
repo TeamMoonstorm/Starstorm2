@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="InspectorData">
+        <uie:PropertyField name="primary" binding-path="primary" />
+        <uie:PropertyField name="secondary" binding-path="secondary" />
+        <uie:PropertyField name="utility" binding-path="utility" />
+        <uie:PropertyField name="special" binding-path="special" />
+        <ui:Foldout text="Passive Skill" name="passiveSkill">
+            <ui:VisualElement name="PassiveSkillHolder" style="background-color: rgb(47, 47, 47);">
+                <uie:PropertyField name="enabled" binding-path="passiveSkill.enabled" tooltip="Wether the passive skill is enabled or not" />
+                <uie:PropertyField name="skillNameToken" binding-path="passiveSkill.skillNameToken" tooltip="The name of the Skill" />
+                <uie:PropertyField name="skillDescriptionToken" binding-path="passiveSkill.skillDescriptionToken" tooltip="The Description of this Skill" />
+                <uie:PropertyField name="icon" binding-path="passiveSkill.icon" tooltip="Icon used to display t he skill" />
+            </ui:VisualElement>
+        </ui:Foldout>
+    </ui:VisualElement>
+</ui:UXML>

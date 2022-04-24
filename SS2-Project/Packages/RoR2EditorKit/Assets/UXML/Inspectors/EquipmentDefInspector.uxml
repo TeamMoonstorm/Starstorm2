@@ -1,0 +1,38 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="Header" class="header" style="height: auto; flex-shrink: 0;">
+        <Style src="/Packages/riskofthunder-ror2editorkit/Assets/USS/Inspectors/EquipmentDefInspector.uss" />
+        <ui:Label text="EquipmentDef" name="m_Name" binding-path="m_Name" class="headerLabel" />
+    </ui:VisualElement>
+    <ui:VisualElement name="InspectorData">
+        <Style src="/Packages/riskofthunder-ror2editorkit/Assets/USS/Inspectors/EquipmentDefInspector.uss" />
+        <uie:PropertyField name="pickupModel" binding-path="pickupModelPrefab" tooltip="The PickupModel for this Equipment" />
+        <uie:PropertyField name="cooldown" binding-path="cooldown" tooltip="How long until this equipment can be activated again" />
+        <uie:PropertyField name="pickupIcon" binding-path="pickupIconSprite" tooltip="The icon used for the Pickup" />
+        <uie:PropertyField label="Required Unlockable" tooltip="The required Unlockable for this Equipment to appear in Runs" name="unlockableDef" binding-path="unlockableDef" />
+        <uie:PropertyField name="canDrop" binding-path="canDrop" />
+        <uie:PropertyField name="canBeRandomlyTriggered" binding-path="canBeRandomlyTriggered" label="Randomly Triggered" />
+        <ui:Slider picking-mode="Ignore" label="Drop on Death Chance" value="0" high-value="1" name="dropOnDeathChance" binding-path="dropOnDeathChance" tooltip="The chance for this EquipmentDef to be dropped on death">
+            <uie:FloatField value="0.00025" readonly="false" name="floatField" class="floatField" style="width: 56px;" />
+            <ui:Button text="Set to Elite Chance" name="chanceSetter" class="chanceSetter" style="display: none;" />
+        </ui:Slider>
+        <uie:PropertyField name="enigmaCompatible" binding-path="enigmaCompatible" tooltip="Whether this EquipmentDef is compatible with Enigma Artifact" />
+        <uie:PropertyField name="isLunar" binding-path="isLunar" tooltip="Whether this EquipmentDef is a Lunar Equipment" />
+        <uie:PropertyField name="isBoss" tooltip="Whether this EquipmentDef is from a Boss" binding-path="isBoss" />
+        <uie:PropertyField name="passiveBuffDef" binding-path="passiveBuffDef" tooltip="The buff to apply when this Equipment is held." />
+        <uie:PropertyField name="appearsInSinglePlayer" tooltip="Whether this EquipmentDef appears in Singleplayer" binding-path="appearsInSinglePlayer" />
+        <uie:PropertyField name="appearsInMultiPlayer" tooltip="Whether this EquipmentDef appears in MultiPlayer" binding-path="appearsInMultiPlayer" />
+        <uie:PropertyField binding-path="requiredExpansion" name="requiredExpansion" tooltip="The expansion that&apos;s required for this EquipmentDef to appear." />
+        <ui:Foldout text="Tokens" name="tokenFoldout" tooltip="Display Tokens">
+            <ui:VisualElement name="tokenHolder" style="background-color: rgb(47, 47, 47);">
+                <ui:Button text="Set Tokens from Object Name" name="tokenSetter" style="width: 178px;" />
+                <uie:PropertyField name="nameToken" tooltip="Token used for the name of this EquipmentDef" binding-path="nameToken" />
+                <uie:PropertyField name="pickupToken" tooltip="Token used when the EquipmentDef is Picked Up" binding-path="pickupToken" />
+                <uie:PropertyField name="descriptionToken" binding-path="descriptionToken" tooltip="Token used for Description of this EquipmentDef on the Logbook" />
+                <uie:PropertyField name="loreToken" tooltip="Token used for the lore of this EquipmentDef on the Logbook" binding-path="loreToken" />
+            </ui:VisualElement>
+        </ui:Foldout>
+    </ui:VisualElement>
+    <ui:VisualElement name="Messages">
+        <Style src="/Packages/riskofthunder-ror2editorkit/Assets/USS/Inspectors/EquipmentDefInspector.uss" />
+    </ui:VisualElement>
+</ui:UXML>

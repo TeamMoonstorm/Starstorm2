@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="InspectorData">
+        <Style src="/Packages/riskofthunder-ror2editorkit/Assets/USS/Inspectors/NetworkStateMachineInspector.uss" />
+        <uie:IntegerField label="Amount of State Machines" value="42" name="arraySize" tooltip="The amount of State Machines to Network" />
+        <ui:VisualElement name="StateMachineHolder" class="stateMachineHolder" />
+    </ui:VisualElement>
+</ui:UXML>
