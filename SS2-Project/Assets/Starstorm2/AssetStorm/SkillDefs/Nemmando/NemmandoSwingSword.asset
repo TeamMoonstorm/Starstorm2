@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1348642413, guid: 06dd3d5416bf43ea368cc39ff96e6d5a, type: 3}
+  m_Name: NemmandoSwingSword
+  m_EditorClassIdentifier: 
+  skillName: NemmandoSwingSword
+  skillNameToken: SS2_NEMMANDO_PRIMARY_BLADE_NAME
+  skillDescriptionToken: SS2_NEMMANDO_PRIMARY_BLADE_DESCRIPTION
+  keywordTokens:
+  - SS2_KEYWORD_GOUGE
+  - KEYWORD_AGILE
+  icon: {fileID: 21300000, guid: 61b32fd54e5897f458d177c829597873, type: 3}
+  activationStateMachineName: Weapon
+  activationState:
+    _typeName: EntityStates.Nemmando.SwingSword, Starstorm2
+  interruptPriority: 0
+  baseRechargeInterval: 1
+  baseMaxStock: 1
+  rechargeStock: 1
+  requiredStock: 0
+  stockToConsume: 0
+  resetCooldownTimerOnUse: 0
+  fullRestockOnAssign: 0
+  dontAllowPastMaxStocks: 0
+  beginSkillCooldownOnSkillEnd: 0
+  cancelSprintingOnActivation: 0
+  forceSprintDuringState: 0
+  canceledFromSprinting: 0
+  isCombatSkill: 1
+  mustKeyPress: 0
+  resetStepsOnIdle: 0
+  stepCount: 2

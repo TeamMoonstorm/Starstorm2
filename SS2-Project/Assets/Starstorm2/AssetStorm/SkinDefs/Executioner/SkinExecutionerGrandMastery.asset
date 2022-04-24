@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1255927399, guid: 06dd3d5416bf43ea368cc39ff96e6d5a, type: 3}
+  m_Name: SkinExecutionerGrandMastery
+  m_EditorClassIdentifier: 
+  baseSkins: []
+  icon: {fileID: 21300000, guid: 73a606211d0b32e45aefae95019b40fa, type: 3}
+  nameToken: SS2_SKIN_EXECUTIONER_KNIGHT
+  unlockableName: 
+  unlockableDef: {fileID: 11400000, guid: 7b73d31dfb008084f948c9ca0a9a0c5a, type: 2}
+  rootObject: {fileID: 3127646991480308002, guid: b5ae8e36d061fae4dae58427a2773bde,
+    type: 3}
+  rendererInfos:
+  - renderer: {fileID: 8480783053020050643, guid: b5ae8e36d061fae4dae58427a2773bde,
+      type: 3}
+    defaultMaterial: {fileID: 2100000, guid: 01b6beb8b06644e409e1d82182a80a70, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+  - renderer: {fileID: 3127646991482511246, guid: b5ae8e36d061fae4dae58427a2773bde,
+      type: 3}
+    defaultMaterial: {fileID: 2100000, guid: 01b6beb8b06644e409e1d82182a80a70, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+  gameObjectActivations: []
+  meshReplacements:
+  - renderer: {fileID: 8480783053020050643, guid: b5ae8e36d061fae4dae58427a2773bde,
+      type: 3}
+    mesh: {fileID: 4300000, guid: 48b1d5071e3af0549993eee0760fa140, type: 2}
+  - renderer: {fileID: 3127646991482511246, guid: b5ae8e36d061fae4dae58427a2773bde,
+      type: 3}
+    mesh: {fileID: 4300000, guid: ccfee477e67a380448ca14bf8b905b11, type: 2}
+  projectileGhostReplacements: []
+  minionSkinReplacements: []

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1881990681, guid: 06dd3d5416bf43ea368cc39ff96e6d5a, type: 3}
+  m_Name: survivorExecutioner
+  m_EditorClassIdentifier: 
+  bodyPrefab: {fileID: 8997949262555194936, guid: b5ae8e36d061fae4dae58427a2773bde,
+    type: 3}
+  displayPrefab: {fileID: 9028416668235531186, guid: dca407037a89a6149bd1086b44a5d668,
+    type: 3}
+  unlockableName: 
+  unlockableDef: {fileID: 11400000, guid: f914c74fc150d004ab7756ebbc9f7742, type: 2}
+  displayNameToken: SS2_EXECUTIONER_NAME
+  descriptionToken: SS2_EXECUTIONER_DESCRIPTION
+  outroFlavorToken: SS2_EXECUTIONER_OUTRO_FLAVOR
+  mainEndingEscapeFailureFlavorToken: SS2_EXECUTIONER_OUTRO_FAILURE
+  primaryColor: {r: 0.6901961, g: 0.43921572, b: 0.4901961, a: 1}
+  desiredSortPosition: 11.011
+  hidden: 0
