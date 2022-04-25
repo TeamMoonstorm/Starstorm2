@@ -6,7 +6,7 @@ namespace Moonstorm.Starstorm2
     {
         public override string AssemblyDir => SS2Assets.Instance.AssemblyDir;
 
-        public override string LanguagesFolderName => "Languages";
+        public override string LanguagesFolderName => "SS2Lang";
 
         ///Due to the nature of the language system in ror, we cannot load our language file using system initializer, as its too late.
         internal void Init()

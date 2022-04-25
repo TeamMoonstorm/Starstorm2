@@ -14,13 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bodyPrefabs:
   - {fileID: 5977874916511045093, guid: bde6261894f2854478563f3fe920f8f5, type: 3}
-  - {fileID: 8997949262555194936, guid: b5ae8e36d061fae4dae58427a2773bde, type: 3}
-  - {fileID: 3542412704943198110, guid: 4e0b3628113da3941803de43c94faba5, type: 3}
   - {fileID: 6516160604520245170, guid: fc4767f47d4d60b44b2ea61c0827b961, type: 3}
   - {fileID: 8105291654350440355, guid: 08a6f560c1f6f32489506483d5fa7a5a, type: 3}
-  - {fileID: 2182981928116722673, guid: 9fe45455533d4cf478e241bcd72cf786, type: 3}
   - {fileID: 1768686348761891691, guid: 05529f503bba9f944bf8a934649a33f7, type: 3}
-  - {fileID: 8997949262555194936, guid: b17b9dc79f1f82f4f8d1062db5544969, type: 3}
   masterPrefabs:
   - {fileID: 1255514408908605, guid: b53f264fa4f379142845b5020686c488, type: 3}
   - {fileID: 1175919788895150, guid: d97f71d977f90044e9c139cb2a51727b, type: 3}
@@ -29,6 +25,7 @@ MonoBehaviour:
   gameModePrefabs:
   - {fileID: 6461730976916899224, guid: ede1a0572d3659542aa89798eb01f30c, type: 3}
   - {fileID: 6461730976916899224, guid: c630f7e73d0716d4f9cc8ea4ccb26836, type: 3}
+  effectPrefabs: []
   networkedObjectPrefabs:
   - {fileID: 1327299180122705, guid: 3d9f7ace24cdd41468507f393ddb0d6f, type: 3}
   - {fileID: 1391198296782427, guid: 8150381cf268f0c46aa947d44f5e3e14, type: 3}
@@ -81,16 +78,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5bcd1e1f2b208744cbb6278ee05c8a4c, type: 2}
   sceneDefs: []
   itemDefs: []
+  itemTierDefs: []
+  itemRelationshipProviders: []
+  itemRelationshipTypes: []
   equipmentDefs: []
   buffDefs: []
   eliteDefs: []
   unlockableDefs: []
-  survivorDefs:
-  - {fileID: 11400000, guid: 110f6c3a01c030c49a3c7350ef8dc400, type: 2}
-  - {fileID: 11400000, guid: 2874d32c713e781499f0ff2bb06600dd, type: 2}
-  - {fileID: 11400000, guid: 0c6bcc8882f8cea48a630ecd8b4e5121, type: 2}
-  - {fileID: 11400000, guid: ee06f1e4e623b7d409cc72f62205b60c, type: 2}
-  - {fileID: 11400000, guid: 7b177c9bd2dc2094da6378cb420c3678, type: 2}
+  survivorDefs: []
   artifactDefs: []
   surfaceDefs:
   - {fileID: 11400000, guid: 9ba93ab1debda6845baf9877b0fbf10d, type: 2}
@@ -111,6 +106,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f239359ddae3a964ab730c831a8347e5, type: 2}
   - {fileID: 11400000, guid: c55ab4c288b6969488356b2cc13da73f, type: 2}
   gameEndingDefs: []
+  miscPickupDefs: []
   entityStateConfigurations:
   - {fileID: 11400000, guid: 03f6a2d330eed3f4699586d2a6e56666, type: 2}
   - {fileID: 11400000, guid: 1f851a191b684e04e815efb5020f00fe, type: 2}
@@ -149,3 +145,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5b3c2017a5a79ac46a61b19da15ed286, type: 2}
   - {fileID: 11400000, guid: 53251fed16bba4d4c89edbabddf3b5af, type: 2}
   entityStateTypes: []
+  expansionDefs: []
+  entitlementDefs: []

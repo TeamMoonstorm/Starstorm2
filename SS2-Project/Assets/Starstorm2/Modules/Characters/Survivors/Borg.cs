@@ -10,14 +10,14 @@ namespace Moonstorm.Starstorm2.Survivors
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("BorgBody");
         public override GameObject MasterPrefab { get; } = null;
 
-        public override void ModifyPrefab()
+        /*public override void ModifyPrefab()
         {
             var charBody = BodyPrefab.GetComponent<CharacterBody>();
             charBody._defaultCrosshairPrefab = Resources.Load<GameObject>("Prefabs/Crosshair/StandardCrosshair");
             charBody.preferredPodPrefab = Resources.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod");
             var footstepHandler = BodyPrefab.GetComponent<ModelLocator>().modelTransform.GetComponent<FootstepHandler>();
             footstepHandler.footstepDustPrefab = Resources.Load<GameObject>("Prefabs/GenericFootstepDust");
-        }
+        }*/
 
         public override void Hook()
         {

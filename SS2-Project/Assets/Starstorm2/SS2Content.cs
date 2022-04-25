@@ -219,10 +219,10 @@ namespace Moonstorm.Starstorm2
                 {
                     new Modules.Projectiles().Initialize();
                 },
-                delegate
+                /*delegate
                 {
                     new Modules.Elites().Initialize();
-                },
+                },*/
                 delegate
                 {
                     Typhoon.Init();
@@ -256,6 +256,7 @@ namespace Moonstorm.Starstorm2
                 },*/
                 delegate
                 {
+                    SS2Log.Info($"Populating entity state array");
                     GetType().Assembly.GetTypes()
                                       .Where(type => typeof(EntityStates.EntityState).IsAssignableFrom(type))
                                       .ToList()
@@ -263,10 +264,12 @@ namespace Moonstorm.Starstorm2
                 },
                 delegate
                 {
+                    SS2Log.Info($"Populating effect prefabs");
                     SerializableContentPack.effectPrefabs = SS2Assets.LoadAllAssetsOfType<GameObject>().Where(go => go.GetComponent<EffectComponent>()).ToArray();
                 },
                 delegate
                 {
+                    SS2Log.Info($"Swapping material shaders");
                     SS2Assets.Instance.SwapMaterialShaders();
                 }
             };
@@ -289,10 +292,10 @@ namespace Moonstorm.Starstorm2
                 {
                     PopulateTypeFields(typeof(Buffs), ContentPack.buffDefs);
                 },
-                delegate
+                /*delegate
                 {
                     PopulateTypeFields(typeof(Elites), ContentPack.eliteDefs);
-                },
+                },*/
                 delegate
                 {
                     PopulateTypeFields(typeof(Survivors), ContentPack.survivorDefs);

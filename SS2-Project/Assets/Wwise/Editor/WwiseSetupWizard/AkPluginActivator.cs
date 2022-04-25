@@ -961,13 +961,7 @@ public class AkPluginActivator
 			else
 				return;
 
-			CppText += @"
-namespace AK { class PluginRegistration; };
-#define AK_STATIC_LINK_PLUGIN(_pluginName_) \
-extern AK::PluginRegistration _pluginName_##Registration; \
-void *_pluginName_##_fp = (void*)&_pluginName_##Registration;
-
-";
+			CppText += "\r\nnamespace AK { class PluginRegistration; };\r\n#define AK_STATIC_LINK_PLUGIN(_pluginName_) \\\r\nextern AK::PluginRegistration _pluginName_##Registration; \\\r\nvoid *_pluginName_##_fp = (void*)&_pluginName_##Registration;\r\n\r\n";
 
 			foreach (var filename in FactoriesHeaderFilenames)
 			{

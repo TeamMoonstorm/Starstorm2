@@ -156,7 +156,7 @@ namespace Moonstorm.Starstorm2.Survivors
             }
         };
 
-        public override void ModifyPrefab()
+        /*public override void ModifyPrefab()
         {
             base.ModifyPrefab();
 
@@ -165,7 +165,7 @@ namespace Moonstorm.Starstorm2.Survivors
             cb._defaultCrosshairPrefab = Resources.Load<GameObject>("Prefabs/Crosshair/StandardCrosshair");
             var footstepHandler = BodyPrefab.GetComponent<ModelLocator>().modelTransform.GetComponent<FootstepHandler>();
             footstepHandler.footstepDustPrefab = Resources.Load<GameObject>("Prefabs/GenericFootstepDust");
-        }
+        }*/
 
         internal static int GetIonCountFromBody(CharacterBody body)
         {

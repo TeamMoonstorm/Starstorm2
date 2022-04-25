@@ -12,54 +12,46 @@ namespace Moonstorm.Starstorm2
 {
     public class SS2Assets : AssetsLoader<SS2Assets>
     {
-        public override AssetBundle MainAssetBundle => assetBundles[0];
+        public override AssetBundle MainAssetBundle => bundle;
 
         public string AssemblyDir => Path.GetDirectoryName(Starstorm.pluginInfo.Location);
 
-        public static ReadOnlyCollection<AssetBundle> assetBundles;
+        private static AssetBundle bundle;
 
         private const string assetBundleFolderName = "assetbundles";
-        private const string mainAssetBundleName = "assetstorm";
+        private const string mainAssetBundleName = "ss2assets";
 
 
         internal void Init()
         {
-            List<AssetBundle> loadedBundles = new List<AssetBundle>();
             var bundlePaths = GetAssetBundlePaths();
-            for (int i = 0; i < bundlePaths.Length; i++)
-            {
-                loadedBundles.Add(AssetBundle.LoadFromFile(bundlePaths[i]));
-            }
-            assetBundles = new ReadOnlyCollection<AssetBundle>(loadedBundles);
-
-            LoadPostProcessing();
+            bundle = AssetBundle.LoadFromFile(bundlePaths);
         }
 
         internal void SwapMaterialShaders()
         {
-            SwapShadersFromMaterialsInBundle(MainAssetBundle);
+            SwapShadersFromMaterialsInBundle(bundle);
         }
 
-        private string[] GetAssetBundlePaths()
+        private string GetAssetBundlePaths()
         {
-            return Directory.GetFiles(Path.Combine(AssemblyDir, assetBundleFolderName))
+            return Path.Combine(AssemblyDir, assetBundleFolderName, mainAssetBundleName);
+            /*return Directory.GetFiles(Path.Combine(AssemblyDir, assetBundleFolderName))
                .Where(filePath => !filePath.EndsWith(".manifest"))
                .OrderByDescending(path => Path.GetFileName(path).Equals(mainAssetBundleName))
-               .ToArray();
+               .ToArray();*/
         }
 
         //Not the most pleasant workaround but that's what we get
         //private static PostProcessProfile[] ppProfiles;
         private void LoadPostProcessing()
         {
-            var ppProfiles = MainAssetBundle.LoadAllAssets<PostProcessProfile>();
+            var ppProfiles = bundle.LoadAllAssets<PostProcessProfile>();
             foreach (var ppProfile in ppProfiles)
             {
-                SS2RampFog tempFog;
-                SS2SobelOutline tempOutline;
-                SS2SobelRain tempRain;
+                SS2Log.Error(ppProfile);
                 bool modified = false;
-                if (ppProfile.TryGetSettings(out tempFog))
+                if (ppProfile.TryGetSettings(out SS2RampFog tempFog))
                 {
                     var fog = ppProfile.AddSettings<RampFog>();
                     fog.enabled = tempFog.enabled;
@@ -78,7 +70,7 @@ namespace Moonstorm.Starstorm2
                     ppProfile.RemoveSettings(typeof(SS2RampFog));
                     modified = true;
                 }
-                if (ppProfile.TryGetSettings(out tempOutline))
+                if (ppProfile.TryGetSettings(out SS2SobelOutline tempOutline))
                 {
                     var outline = ppProfile.AddSettings<SobelOutline>();
                     outline.enabled = tempOutline.enabled;
@@ -88,7 +80,7 @@ namespace Moonstorm.Starstorm2
                     ppProfile.RemoveSettings(typeof(SS2SobelOutline));
                     modified = true;
                 }
-                if (ppProfile.TryGetSettings(out tempRain))
+                if (ppProfile.TryGetSettings(out SS2SobelRain tempRain))
                 {
                     var rain = ppProfile.AddSettings<SobelRain>();
                     rain.enabled = tempRain.enabled;

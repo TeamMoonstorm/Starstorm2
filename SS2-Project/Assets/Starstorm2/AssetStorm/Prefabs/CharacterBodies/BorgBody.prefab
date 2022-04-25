@@ -184,7 +184,6 @@ GameObject:
   - component: {fileID: 5212679950164961357}
   - component: {fileID: 5200315455046285934}
   - component: {fileID: 5198810618381700394}
-  - component: {fileID: 5982044222879776780}
   m_Layer: 0
   m_Name: BorgBody
   m_TagString: Player
@@ -218,7 +217,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5311484837698427353}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Script: {fileID: 11500000, guid: f8258ea15b8f74c4889ce485d21cbbb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_SceneId:
@@ -308,6 +307,7 @@ MonoBehaviour:
   baseAttackSpeed: 0
   baseCrit: 0
   baseArmor: 0
+  baseVisionDistance: Infinity
   baseJumpCount: 1
   sprintingSpeedMultiplier: 1.45
   autoCalculateLevelStats: 0
@@ -328,7 +328,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  crosshairPrefab: {fileID: 0}
+  _defaultCrosshairPrefab: {fileID: 0}
   hideCrosshair: 0
   aimOriginTransform: {fileID: 0}
   hullClassification: 0
@@ -357,9 +357,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraParams: {fileID: 0}
   cameraPivotTransform: {fileID: 0}
-  aimMode: 0
+  fovOverride: 0
   recoil: {x: 0, y: 0}
-  idealLocalCameraPos: {x: 0, y: 0, z: 0}
   dontRaycastToPivot: 0
 --- !u!114 &5199008122590209489
 MonoBehaviour:
@@ -375,12 +374,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _modelTransform: {fileID: 0}
   modelBaseTransform: {fileID: 0}
-  dontReleaseModelOnDeath: 0
   autoUpdateModelTransform: 1
   dontDetatchFromParent: 0
   noCorpse: 0
-  normalizeToFloor: 0
+  dontReleaseModelOnDeath: 0
   preserveModel: 0
+  normalizeToFloor: 0
+  normalSmoothdampTime: 0.1
+  normalMaxAngleDelta: 90
 --- !u!114 &5198614664343890590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -711,19 +712,6 @@ MonoBehaviour:
   canBeHitStunned: 1
   canBeStunned: 1
   canBeFrozen: 1
---- !u!114 &5982044222879776780
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5311484837698427353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee6843963afed4340aa99951f110db95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  heatSinks: []
 --- !u!1 &5311795407171424449
 GameObject:
   m_ObjectHideFlags: 0
@@ -815,6 +803,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 0}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 0}
   indexInGroup: -1
@@ -1134,7 +1123,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8198793095615214638}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1143142494, guid: 06dd3d5416bf43ea368cc39ff96e6d5a, type: 3}
+  m_Script: {fileID: 1143142494, guid: 951ce57ad9993c1f840a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 0}
@@ -1151,7 +1140,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8198793095615214638}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -226763392, guid: 06dd3d5416bf43ea368cc39ff96e6d5a, type: 3}
+  m_Script: {fileID: -226763392, guid: 951ce57ad9993c1f840a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   transformPairs: []
@@ -1164,7 +1153,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8198793095615214638}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1792105662, guid: 06dd3d5416bf43ea368cc39ff96e6d5a, type: 3}
+  m_Script: {fileID: -1792105662, guid: 951ce57ad9993c1f840a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hurtBoxes: []
@@ -1179,13 +1168,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 8198793095615214638}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1480773730, guid: 06dd3d5416bf43ea368cc39ff96e6d5a, type: 3}
+  m_Script: {fileID: 11500000, guid: 7196d6464f5113d409b3ae0adc2a4995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   baseFootstepString: 
   sprintFootstepOverrideString: 
   enableFootstepDust: 0
   footstepDustPrefab: {fileID: 0}
+  footstepEffect: {fileID: 0}
 --- !u!114 &5995153509485936289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1195,7 +1185,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8198793095615214638}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1392865457, guid: 06dd3d5416bf43ea368cc39ff96e6d5a, type: 3}
+  m_Script: {fileID: 1392865457, guid: 951ce57ad9993c1f840a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   inputBank: {fileID: 0}
@@ -1213,6 +1203,7 @@ MonoBehaviour:
   fullYaw: 0
   aimType: 0
   enableAimWeight: 0
+  UseTransformedAimVector: 0
 --- !u!114 &3069990828899800684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1222,7 +1213,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8198793095615214638}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1533710874, guid: 06dd3d5416bf43ea368cc39ff96e6d5a, type: 3}
+  m_Script: {fileID: 1533710874, guid: 951ce57ad9993c1f840a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skins: []
@@ -1333,6 +1324,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1344,6 +1336,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
