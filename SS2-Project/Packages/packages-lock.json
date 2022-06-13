@@ -1,11 +1,5 @@
 {
   "dependencies": {
-    "bbepis-bepinexpack": {
-      "version": "file:BepInExPack",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
     "com.passivepicasso.thunderkit": {
       "version": "https://github.com/PassivePicasso/ThunderKit.git#RC_5_0_0",
       "depth": 0,
@@ -14,6 +8,13 @@
         "com.unity.scriptablebuildpipeline": "1.16.1"
       },
       "hash": "515f013cbde05dd255c0e3aa6cfa72962ff40ad2"
+    },
+    "com.unity.multiplayer-hlapi": {
+      "version": "https://github.com/risk-of-thunder/UnityMultiplayerHLAPI.git#1.0.1",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "39a7bfdc25b53c790f3816b7dcd11e56dd4f865e"
     },
     "com.unity.postprocessing": {
       "version": "2.3.0",
@@ -29,59 +30,26 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
-    "iharbhd-debugtoolkit": {
-      "version": "file:DebugToolkit",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "riskofrain2": {
-      "version": "file:Risk of Rain 2",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "riskofthunder-fixplugintypesserialization": {
-      "version": "file:FixPluginTypesSerialization",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "riskofthunder-hookgenpatcher": {
-      "version": "file:HookGenPatcher",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
     "riskofthunder-ror2editorkit": {
-      "version": "file:RoR2EditorKit",
+      "version": "https://github.com/risk-of-thunder/RoR2EditorKit.git#3.2.1",
       "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
+      "source": "git",
+      "dependencies": {},
+      "hash": "c887f3d93ada626fdb281a04d5e8eef09a6129bd"
     },
-    "riskofthunder-ror2multiplayerhlapi": {
-      "version": "file:RoR2MultiplayerHLAPI",
+    "riskofthunder-ror2importextensions": {
+      "version": "https://github.com/risk-of-thunder/RoR2ImportExtensions.git#1.0.2",
       "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "teammoonstorm-moonstormsharededitorutils": {
-      "version": "file:MoonstormSharedEditorUtils",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
+      "source": "git",
+      "dependencies": {},
+      "hash": "e083a5df4203690adaa09b8a03453a93395924cd"
     },
     "teammoonstorm-moonstormsharedutils": {
-      "version": "file:MoonstormSharedUtils",
+      "version": "https://github.com/TeamMoonstorm/MoonstormSharedUtils.git",
       "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "tristanmcpherson-r2api": {
-      "version": "file:R2API",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
+      "source": "git",
+      "dependencies": {},
+      "hash": "296beae6de0a952e0745a19e6e00dbec47158b8e"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
