@@ -1,5 +1,7 @@
 ﻿using Moonstorm.Loaders;
 using Moonstorm.Starstorm2.PostProcess;
+using RoR2;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -28,9 +30,35 @@ namespace Moonstorm.Starstorm2
             bundle = AssetBundle.LoadFromFile(bundlePaths);
         }
 
-        internal void SwapMaterialShaders()
+        internal IEnumerator SwapMaterialShaders()
         {
-            SwapShadersFromMaterialsInBundle(bundle);
+            var request = bundle.LoadAllAssetsAsync<Material>();
+
+            yield return request;
+
+            while(!request.isDone)
+            {
+                SS2Log.Info($"Swap Material Progress: {request.progress}");
+                yield return null;
+            }
+
+            SwapShadersFromMaterials(request.allAssets.OfType<Material>());
+            yield break;
+        }
+
+        internal IEnumerator LoadEffectsAsync()
+        {
+            var request = bundle.LoadAllAssetsAsync<GameObject>();
+            yield return request;
+
+            while(!request.isDone)
+            {
+                SS2Log.Info(request.progress);
+                yield return null;
+            }
+
+            SS2Content.Instance.SerializableContentPack.effectPrefabs = request.allAssets.OfType<GameObject>().Where(go => go.GetComponent<EffectComponent>()).ToArray();
+            yield break;
         }
 
         private string GetAssetBundlePaths()
