@@ -1,0 +1,184 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4467616490986340797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b243ff405b33b94dbf5b6775dd9aa33, type: 3}
+  m_Name: Files
+  m_EditorClassIdentifier: 
+  StagingPaths:
+  - <BuildPath>
+  files: []
+--- !u!114 &-3892906877110538616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3230df44b431ebc49a958dde5afa4f88, type: 3}
+  m_Name: LanguageFolderTree
+  m_EditorClassIdentifier: 
+  StagingPaths:
+  - <BuildPathPlugins>
+  rootFolderName: SS2Lang
+  languageFolders:
+  - languageName: en
+    languageFiles:
+    - {fileID: 4900000, guid: d314a5da055ee594385d47b2becd9b08, type: 3}
+    - {fileID: 4900000, guid: 52ce4347d2d5ea34a9de30e0ec0b4f62, type: 3}
+    - {fileID: 4900000, guid: 7942f1666d529314c9caff9caa475ff4, type: 3}
+    - {fileID: 4900000, guid: 2e06992ef9ab233468e1d8c4d5d155ae, type: 3}
+    - {fileID: 4900000, guid: d99bc0c76e1450f4695be3ae9287245c, type: 3}
+    - {fileID: 4900000, guid: 61460e0cb44b30347b2227f959936494, type: 3}
+    - {fileID: 4900000, guid: 849c355cc6270b0448bec8a977d756e4, type: 3}
+    - {fileID: 4900000, guid: 464d0f72901dde34981641d0d1109c75, type: 3}
+    - {fileID: 4900000, guid: 8ebc6d6fc1febf84cb526fcce77e6564, type: 3}
+    - {fileID: 4900000, guid: 8659caeae3f8e8b4d888dca580e8c369, type: 3}
+    - {fileID: 4900000, guid: ad5d4a7e31800d845b2be356fa4953dd, type: 3}
+    - {fileID: 4900000, guid: a18f395e47fec9140bd068ac2426f0a9, type: 3}
+    - {fileID: 4900000, guid: 4f485e447382235498ec80cf1736291a, type: 3}
+    - {fileID: 4900000, guid: 58976d127983db0488a8e83e325374d8, type: 3}
+    - {fileID: 4900000, guid: 37d47de16d6232848aac46269f7d8a37, type: 3}
+    - {fileID: 4900000, guid: b1468e0a381e7ed45aec32962e1fd802, type: 3}
+    - {fileID: 4900000, guid: 78443f57f4418b949884c7d997c3398a, type: 3}
+    - {fileID: 4900000, guid: 90591a2841c44214287de2333b90c72b, type: 3}
+    - {fileID: 4900000, guid: 13fe798c37723cc48b289e28a503934a, type: 3}
+    - {fileID: 4900000, guid: fc38ddd51c6e8bc41a54bbfc7ae59046, type: 3}
+    - {fileID: 4900000, guid: bbae9c1147cc4264c92f2f0c357e04f4, type: 3}
+    - {fileID: 4900000, guid: b4b523cf216429d42ba6363ff825c55b, type: 3}
+    - {fileID: 4900000, guid: 2e7ed6e41bae879438722ffc61ef49d1, type: 3}
+    - {fileID: 4900000, guid: 5b3534711f9bfa94485d4f6872f3f057, type: 3}
+    - {fileID: 4900000, guid: 4e60f5bb0ca02994e83e39c070d46eaa, type: 3}
+    - {fileID: 4900000, guid: e31d442070d32714e9333d8ae15667fe, type: 3}
+    - {fileID: 4900000, guid: 4efd28040918b1243aec5730e4a84042, type: 3}
+    - {fileID: 4900000, guid: b0caa26bfe7a6974abbe4f96dda8aa26, type: 3}
+    - {fileID: 4900000, guid: 75fb51340842194409b4ba59e8fe6ab1, type: 3}
+  - languageName: es-419
+    languageFiles:
+    - {fileID: 4900000, guid: 70a613ff95125ec4daccbfd58cacb851, type: 3}
+  - languageName: FR
+    languageFiles:
+    - {fileID: 4900000, guid: a13c3684699ca154497ed49d0d30b428, type: 3}
+  - languageName: RU
+    languageFiles:
+    - {fileID: 4900000, guid: 4172f617beedd904c9f1a30cf21a5a3f, type: 3}
+  - languageName: tr
+    languageFiles:
+    - {fileID: 4900000, guid: efb907279fac2824f883977b6eec632c, type: 3}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e563561e08b6a3642a487177f5cfbb37, type: 3}
+  m_Name: SS2-Manifest
+  m_EditorClassIdentifier: 
+  Data:
+  - {fileID: 114211852988908172}
+  - {fileID: 114107831304456238}
+  - {fileID: 114431642618062350}
+  - {fileID: 114987763159783732}
+  - {fileID: -3892906877110538616}
+  - {fileID: 8324102109481770816}
+  - {fileID: -4467616490986340797}
+  identity: {fileID: 114211852988908172}
+  QuickAccess: 0
+--- !u!114 &114107831304456238
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b7e13dda513544419a89926bd12ad8a, type: 3}
+  m_Name: AssemblyDefinitions
+  m_EditorClassIdentifier: 
+  StagingPaths:
+  - <BuildPathPlugins>
+  definitions:
+  - {fileID: 5897886265953266890, guid: f054131d8b8c38f49bfb7567178d0531, type: 3}
+--- !u!114 &114211852988908172
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f22bb7fd1d3b56a48bc52f8e407901d6, type: 3}
+  m_Name: ManifestIdentity
+  m_EditorClassIdentifier: 
+  StagingPaths:
+  - <ManifestPluginStaging>
+  Author: TeamMoonstorm
+  Name: Starstorm2
+  Description: A sequel of the RoR1 mod Starstorm, featuring new survivors, items,
+    gameplay elements, and more.
+  Version: 0.4.0
+  Dependencies:
+  - {fileID: 11400000, guid: 5ceb1d8ed3af40d4d806e9756b403649, type: 2}
+--- !u!114 &114431642618062350
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17d1008b78cb6e846889b7778282fbef, type: 3}
+  m_Name: AssetBundleDefinitions
+  m_EditorClassIdentifier: 
+  StagingPaths:
+  - <BuildPathAssets>
+  assetBundles:
+  - assetBundleName: SS2Assets
+    assets:
+    - {fileID: 102900000, guid: 0e00ff8588d54f9468878853e86928bb, type: 3}
+--- !u!114 &114987763159783732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b243ff405b33b94dbf5b6775dd9aa33, type: 3}
+  m_Name: Files
+  m_EditorClassIdentifier: 
+  StagingPaths:
+  - <BuildPathSoundbanks>
+  files:
+  - {fileID: 102900000, guid: fac793598d1cda244bee02231bc2f101, type: 3}
+--- !u!114 &8324102109481770816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0a82fec78ebc734d9ad1346cd40b5f9, type: 3}
+  m_Name: ThunderstoreData
+  m_EditorClassIdentifier: 
+  StagingPaths:
+  - <BuildPath>
+  url: https://github.com/TeamMoonstorm/Starstorm2

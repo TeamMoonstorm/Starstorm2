@@ -265,7 +265,15 @@ namespace Moonstorm.Starstorm2
                 delegate
                 {
                     SS2Log.Info($"Populating effect prefabs");
-                    SerializableContentPack.effectPrefabs = SS2Assets.LoadAllAssetsOfType<GameObject>().Where(go => go.GetComponent<EffectComponent>()).ToArray();
+                    SS2Log.Error("Entering foreach");
+                    foreach(GameObject go in SS2Assets.Instance.MainAssetBundle.LoadAllAssets<GameObject>())
+                    {
+                        SS2Log.Error(go.name);
+                        if(go.GetComponent<EffectComponent>())
+                        {
+                            HG.ArrayUtils.ArrayAppend(ref SerializableContentPack.effectPrefabs, go);
+                        }
+                    }
                 },
                 delegate
                 {
