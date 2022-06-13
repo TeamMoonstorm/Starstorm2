@@ -11,7 +11,7 @@ using RoR2EditorKit.Core.PropertyDrawers;
 
 namespace Moonstorm.SS2Editor.PropertyDrawers
 {
-    [CustomPropertyDrawer(typeof(NemesisSpawnCard.StatModifier))]
+    /*[CustomPropertyDrawer(typeof(NemesisSpawnCard.StatModifier))]
     public class StatModifierPropertyDrawer : EditorGUILayoutPropertyDrawer
     {
         private Type CharBodyType
@@ -97,7 +97,7 @@ namespace Moonstorm.SS2Editor.PropertyDrawers
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             return base.GetPropertyHeight(property, label) * 2.5f;
-        }*/
+        }
 
-    }
+    }*/
 }

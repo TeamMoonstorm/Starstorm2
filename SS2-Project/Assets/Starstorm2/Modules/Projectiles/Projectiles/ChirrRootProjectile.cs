@@ -8,8 +8,6 @@ namespace Moonstorm.Starstorm2.Projectiles
     {
         public override GameObject ProjectilePrefab { get; } = SS2Assets.LoadAsset<GameObject>("ChirrRootProjectile");
 
-        public override GameObject ProjectileGhost { get; } = null;
-
         public override void Initialize()
         {
             Debug.LogWarning(ProjectilePrefab);

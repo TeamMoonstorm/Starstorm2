@@ -19,7 +19,7 @@ namespace Moonstorm.Starstorm2.Interactables
 
         public override void Initialize()
         {
-            DirectorAPI.MonsterActions += HandleAvailableMonsters;
+            //DirectorAPI.MonsterActions += HandleAvailableMonsters;
 
             var survivorPod = Resources.Load<GameObject>("prefabs/networkedobjects/SurvivorPod");
             interactable = PrefabAPI.InstantiateClone(survivorPod, "DropPod", false);

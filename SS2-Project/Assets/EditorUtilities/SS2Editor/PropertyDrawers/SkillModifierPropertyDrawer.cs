@@ -4,7 +4,7 @@ using UnityEditor;
 
 namespace Moonstorm.SS2Editor.PropertyDrawers
 {
-    [CustomPropertyDrawer(typeof(NemesisSpawnCard.SkillOverride))]
+    /*[CustomPropertyDrawer(typeof(NemesisSpawnCard.SkillOverride))]
     public class SkillModifierPropertyDrawer : EditorGUILayoutPropertyDrawer
     {
         protected override void DrawPropertyDrawer(SerializedProperty property)
@@ -14,5 +14,5 @@ namespace Moonstorm.SS2Editor.PropertyDrawers
             DrawField("skillDef");
             EditorGUILayout.EndHorizontal();
         }
-    }
+    }*/
 }

@@ -7,8 +7,6 @@ namespace Moonstorm.Starstorm2.Projectiles
     {
         public override GameObject ProjectilePrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemmandoSwordBeamProjectile");
 
-        public override GameObject ProjectileGhost => null;
-
         public override void Initialize()
         {
             var damageAPIComponent = ProjectilePrefab.AddComponent<ModdedDamageTypeHolderComponent>();

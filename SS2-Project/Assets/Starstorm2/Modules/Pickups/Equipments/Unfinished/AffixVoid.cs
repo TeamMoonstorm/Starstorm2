@@ -1,4 +1,5 @@
 ﻿using RoR2;
+using System.Collections.Generic;
 
 namespace Moonstorm.Starstorm2.Equipments
 {
@@ -7,7 +8,10 @@ namespace Moonstorm.Starstorm2.Equipments
     {
         public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("AffixVoid");
 
-        public override MSEliteDef EliteDef { get; } = SS2Assets.LoadAsset<MSEliteDef>("Void");
+        public override List<MSEliteDef> EliteDefs => new List<MSEliteDef>
+        {
+            SS2Assets.LoadAsset<MSEliteDef>("Void")
+        };
 
         public override bool FireAction(EquipmentSlot slot)
         {
