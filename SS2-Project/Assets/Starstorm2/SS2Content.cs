@@ -265,7 +265,9 @@ namespace Moonstorm.Starstorm2
                 delegate
                 {
                     SS2Log.Info($"Populating effect prefabs");
-                    //SS2Assets.Instance.LoadEffectsAsync();
+                    SerializableContentPack.effectPrefabs = SS2Assets.LoadAllAssetsOfType<GameObject>()
+                    .Where(go => go.GetComponent<EffectComponent>())
+                    .ToArray();
                 },
                 delegate
                 {
