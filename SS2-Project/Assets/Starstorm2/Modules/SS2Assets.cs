@@ -28,6 +28,9 @@ namespace Moonstorm.Starstorm2
         {
             var bundlePaths = GetAssetBundlePaths();
             bundle = AssetBundle.LoadFromFile(bundlePaths);
+            SS2Log.Info($"Loading all GO");
+            bundle.LoadAllAssets<GameObject>();
+            SS2Log.Info($":D");
         }
 
         internal IEnumerator SwapMaterialShaders()
