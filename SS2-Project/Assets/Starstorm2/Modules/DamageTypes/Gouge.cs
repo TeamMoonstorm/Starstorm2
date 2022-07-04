@@ -19,7 +19,6 @@ namespace Moonstorm.Starstorm2.DamageTypes
         {
             ModdedDamageType = gougeDamageType;
             DotIndex = Buffs.Gouge.index;
-            Delegates();
         }
 
         public override void Delegates()

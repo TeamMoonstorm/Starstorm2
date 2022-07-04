@@ -28,6 +28,7 @@ GameObject:
   - component: {fileID: 20978386536789293}
   - component: {fileID: 4643035975614718978}
   - component: {fileID: 114913155263267210}
+  - component: {fileID: 4117847295763739593}
   m_Layer: 0
   m_Name: ExecutionerMonsterMaster
   m_TagString: Untagged
@@ -58,7 +59,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1255514408908605}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Script: {fileID: 11500000, guid: f8258ea15b8f74c4889ce485d21cbbb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_SceneId:
@@ -117,6 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 682687671, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemAcquisitionOrder: 
 --- !u!114 &114657824517255066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,6 +187,7 @@ MonoBehaviour:
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 1
+  maxTimesSelected: -1
   moveTargetType: 0
   activationRequiresTargetLoS: 0
   activationRequiresAimTargetLoS: 0
@@ -227,6 +230,7 @@ MonoBehaviour:
   selectionRequiresTargetLoS: 1
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
+  maxTimesSelected: -1
   moveTargetType: 0
   activationRequiresTargetLoS: 1
   activationRequiresAimTargetLoS: 1
@@ -269,6 +273,7 @@ MonoBehaviour:
   selectionRequiresTargetLoS: 1
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
+  maxTimesSelected: -1
   moveTargetType: 0
   activationRequiresTargetLoS: 1
   activationRequiresAimTargetLoS: 1
@@ -311,6 +316,7 @@ MonoBehaviour:
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 1
+  maxTimesSelected: -1
   moveTargetType: 0
   activationRequiresTargetLoS: 0
   activationRequiresAimTargetLoS: 0
@@ -353,6 +359,7 @@ MonoBehaviour:
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 1
+  maxTimesSelected: -1
   moveTargetType: 0
   activationRequiresTargetLoS: 1
   activationRequiresAimTargetLoS: 0
@@ -395,6 +402,7 @@ MonoBehaviour:
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 1
+  maxTimesSelected: -1
   moveTargetType: 0
   activationRequiresTargetLoS: 1
   activationRequiresAimTargetLoS: 0
@@ -437,6 +445,7 @@ MonoBehaviour:
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 1
+  maxTimesSelected: -1
   moveTargetType: 0
   activationRequiresTargetLoS: 1
   activationRequiresAimTargetLoS: 0
@@ -479,6 +488,7 @@ MonoBehaviour:
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 1
+  maxTimesSelected: -1
   moveTargetType: 0
   activationRequiresTargetLoS: 1
   activationRequiresAimTargetLoS: 0
@@ -521,6 +531,7 @@ MonoBehaviour:
   selectionRequiresTargetLoS: 1
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 1
+  maxTimesSelected: -1
   moveTargetType: 0
   activationRequiresTargetLoS: 1
   activationRequiresAimTargetLoS: 1
@@ -563,6 +574,7 @@ MonoBehaviour:
   selectionRequiresTargetLoS: 1
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
+  maxTimesSelected: -1
   moveTargetType: 0
   activationRequiresTargetLoS: 1
   activationRequiresAimTargetLoS: 1
@@ -605,6 +617,7 @@ MonoBehaviour:
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 1
+  maxTimesSelected: -1
   moveTargetType: 0
   activationRequiresTargetLoS: 0
   activationRequiresAimTargetLoS: 0
@@ -647,6 +660,7 @@ MonoBehaviour:
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 1
+  maxTimesSelected: -1
   moveTargetType: 0
   activationRequiresTargetLoS: 0
   activationRequiresAimTargetLoS: 0
@@ -689,6 +703,7 @@ MonoBehaviour:
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 1
+  maxTimesSelected: -1
   moveTargetType: 0
   activationRequiresTargetLoS: 0
   activationRequiresAimTargetLoS: 0
@@ -717,3 +732,17 @@ MonoBehaviour:
   m_Script: {fileID: -1578512655, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4117847295763739593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1255514408908605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -144590133, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+  requireEntitlementIfPlayerControlled: 0

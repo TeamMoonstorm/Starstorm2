@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6141793798355302895}
   - component: {fileID: 504847035894814811}
   - component: {fileID: 7288365632768397799}
+  - component: {fileID: -4358331257143642791}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -64,3 +65,17 @@ MonoBehaviour:
   damageModifier: 0
   hurtBoxGroup: {fileID: 0}
   indexInGroup: -1
+--- !u!114 &-4358331257143642791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254696107526729321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -144590133, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+  requireEntitlementIfPlayerControlled: 0

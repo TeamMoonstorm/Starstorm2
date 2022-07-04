@@ -2238,6 +2238,7 @@ GameObject:
   - component: {fileID: 6718608965470249803}
   - component: {fileID: 8374552064325935088}
   - component: {fileID: 6608221252520632592}
+  - component: {fileID: -6270563822251737510}
   m_Layer: 0
   m_Name: NemmandoBody
   m_TagString: Player
@@ -2271,7 +2272,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3542412704943198110}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Script: {fileID: 11500000, guid: f8258ea15b8f74c4889ce485d21cbbb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_SceneId:
@@ -2323,6 +2324,7 @@ MonoBehaviour:
   baseAttackSpeed: 1
   baseCrit: 1
   baseArmor: 20
+  baseVisionDistance: Infinity
   baseJumpCount: 1
   sprintingSpeedMultiplier: 1.45
   autoCalculateLevelStats: 1
@@ -2361,7 +2363,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  crosshairPrefab: {fileID: 0}
+  _defaultCrosshairPrefab: {fileID: 0}
   hideCrosshair: 0
   aimOriginTransform: {fileID: 6901557293220290833}
   hullClassification: 0
@@ -2423,9 +2425,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraParams: {fileID: 11400000, guid: 0f32a1587e7bad248a563caf83e62fe4, type: 2}
   cameraPivotTransform: {fileID: 0}
-  aimMode: 0
+  fovOverride: 0
   recoil: {x: 0, y: 0}
-  idealLocalCameraPos: {x: 0, y: 0, z: 0}
   dontRaycastToPivot: 0
 --- !u!114 &5235889660041831033
 MonoBehaviour:
@@ -2500,6 +2501,10 @@ MonoBehaviour:
     skillDescriptionToken: 
     keywordToken: 
     icon: {fileID: 0}
+  primaryBonusStockOverrideSkill: {fileID: 0}
+  secondaryBonusStockOverrideSkill: {fileID: 0}
+  utilityBonusStockOverrideSkill: {fileID: 0}
+  specialBonusStockOverrideSkill: {fileID: 0}
 --- !u!114 &5856070180281468391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2826,12 +2831,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _modelTransform: {fileID: 4177302284236717429}
   modelBaseTransform: {fileID: 4946943741982256009}
-  dontReleaseModelOnDeath: 0
   autoUpdateModelTransform: 1
   dontDetatchFromParent: 0
   noCorpse: 0
-  normalizeToFloor: 0
+  dontReleaseModelOnDeath: 0
   preserveModel: 0
+  normalizeToFloor: 0
+  normalSmoothdampTime: 0.1
+  normalMaxAngleDelta: 90
 --- !u!114 &8374552064325935088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2865,6 +2872,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8116c4cf0c0d72d448d34ec52f612b86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-6270563822251737510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3542412704943198110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -144590133, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+  requireEntitlementIfPlayerControlled: 0
 --- !u!1 &3549696034484218463
 GameObject:
   m_ObjectHideFlags: 0
@@ -3461,14 +3482,17 @@ MonoBehaviour:
     defaultMaterial: {fileID: 2100000, guid: 57745dd8404868247b1d5d6eb7945665, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
+    hideOnDeath: 0
   - renderer: {fileID: 3252139871680153552}
     defaultMaterial: {fileID: 2100000, guid: 57745dd8404868247b1d5d6eb7945665, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 1
+    hideOnDeath: 0
   - renderer: {fileID: 5169223389877292900}
     defaultMaterial: {fileID: 2100000, guid: 57745dd8404868247b1d5d6eb7945665, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 1
+    hideOnDeath: 0
   baseLightInfos: []
 --- !u!114 &1396908281064771722
 MonoBehaviour:
@@ -3513,6 +3537,7 @@ MonoBehaviour:
   fullYaw: 0
   aimType: 0
   enableAimWeight: 1
+  UseTransformedAimVector: 0
 --- !u!114 &1036958832538463062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3529,6 +3554,7 @@ MonoBehaviour:
   sprintFootstepOverrideString: 
   enableFootstepDust: 1
   footstepDustPrefab: {fileID: 0}
+  footstepEffect: {fileID: 0}
 --- !u!114 &1123081297722879501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3812,6 +3838,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3823,6 +3850,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -6348,6 +6376,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -6359,6 +6388,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -6586,6 +6616,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 1471515629768193835}
   isBullseye: 1
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 9107403240429298243}
   indexInGroup: 0
@@ -7031,6 +7062,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -7042,6 +7074,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -7705,6 +7738,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -7716,6 +7750,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
