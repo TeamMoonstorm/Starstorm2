@@ -1,4 +1,4 @@
-﻿/*using Moonstorm.Components;
+﻿using Moonstorm.Components;
 using Moonstorm.Starstorm2;
 using Moonstorm.Starstorm2.Buffs;
 using RoR2;
@@ -28,7 +28,7 @@ namespace EntityStates.Events
                 eventStateEffect = effectInstance.GetComponent<EventStateEffect>();
                 if (eventStateEffect)
                 {
-                    eventStateEffect.intensityMultiplier = difficultyScalingValue;
+                    eventStateEffect.intensityMultiplier = DiffScalingValue;
                 }
             }
         }
@@ -58,7 +58,7 @@ namespace EntityStates.Events
             {
                 eventStateEffect.OnEndingStart(fadeDuration);
             }
-            if (hasWarned)
+            if (HasWarned)
             {
                 CharacterBody.onBodyStartGlobal -= BuffEnemy;
                 if(NetworkServer.active)
@@ -66,8 +66,8 @@ namespace EntityStates.Events
                     var bodies = CharacterBody.readOnlyInstancesList;
                     foreach (var body in bodies)
                     {
-                        if(body.HasBuff(stormBuffDef ?? Starstorm2Content.Buffs.BuffStorm))
-                            body.RemoveBuff(stormBuffDef ?? Starstorm2Content.Buffs.BuffStorm);
+                        if(body.HasBuff(stormBuffDef ?? SS2Content.Buffs.BuffStorm))
+                            body.RemoveBuff(stormBuffDef ?? SS2Content.Buffs.BuffStorm);
                     }
                 }
             }
@@ -79,12 +79,11 @@ namespace EntityStates.Events
                 return;
             //If the body isnt on player team, isnt controlled by a player and isnt masterless (no ai). Second part is for potential mod compatibility
             var team = body.teamComponent.teamIndex;
-            if (!(body.isPlayerControlled || body.bodyFlags == CharacterBody.BodyFlags.Masterless) && (team == TeamIndex.Monster || team == TeamIndex.Lunar) && !body.HasBuff(stormBuffDef ?? Starstorm2Content.Buffs.BuffStorm))
+            if (!(body.isPlayerControlled || body.bodyFlags == CharacterBody.BodyFlags.Masterless) && (team == TeamIndex.Monster || team == TeamIndex.Lunar) && !body.HasBuff(stormBuffDef ?? SS2Content.Buffs.BuffStorm))
             {
-                body.AddBuff(stormBuffDef ?? Starstorm2Content.Buffs.BuffStorm);
+                body.AddBuff(stormBuffDef ?? SS2Content.Buffs.BuffStorm);
             }
         }
     }
 
 }
-*/

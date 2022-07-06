@@ -1,8 +1,7 @@
-﻿/*namespace EntityStates.Events
+﻿namespace EntityStates.Events
 {
     public class OverloadingEventState : GenericEliteEvent
     {
         
     }
 }
-*/

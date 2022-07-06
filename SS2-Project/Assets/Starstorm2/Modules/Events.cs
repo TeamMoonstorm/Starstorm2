@@ -1,15 +1,4 @@
-﻿/*using EntityStates;
-using EntityStates.Events;
-using HG;
-using Moonstorm.Starstorm2.ScriptableObjects;
-using R2API;
-using RoR2;
-using RoR2.Navigation;
-using RoR2.Skills;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
@@ -18,6 +7,7 @@ namespace Moonstorm.Starstorm2
 {
     public static class Events
     {
+        /*
         /// <summary>
         /// Class for Nemesis invasion creation from 3rd Parties.
         /// </summary>
@@ -108,10 +98,11 @@ namespace Moonstorm.Starstorm2
                 }
                 return false;
             }
-        }
+        }*/
+
         public static void Init()
         {
-            EventCatalog.AddEventDecks(Assets.Instance.MainAssetBundle.LoadAllAssets<EventSceneDeck>());
+            EventCatalog.AddCards(SS2Assets.LoadAllAssetsOfType<EventCard>());
             SceneManager.sceneLoaded += StormOnMenu;
         }
 
@@ -121,15 +112,14 @@ namespace Moonstorm.Starstorm2
             {
                 if ((DateTime.Today.Month == 12) && ((DateTime.Today.Day == 25) || (DateTime.Today.Day == 24)))
                 {
-                    Object.Instantiate(Assets.Instance.MainAssetBundle.LoadAsset<GameObject>("ChristmasMenuEffect"), Vector3.zero, Quaternion.identity);
-                    Debug.Log("Merry Christmas!! :)");
+                    Object.Instantiate(SS2Assets.LoadAsset<GameObject>("ChristmasMenuEffect"), Vector3.zero, Quaternion.identity);
+                    Debug.Log("Merry Christmas from TeamMoonstorm!! :)");
                 }
                 else
                 {
-                    Object.Instantiate(Assets.Instance.MainAssetBundle.LoadAsset<GameObject>("StormMainMenuEffect"), Vector3.zero, Quaternion.identity);
+                    Object.Instantiate(SS2Assets.LoadAsset<GameObject>("StormMainMenuEffect"), Vector3.zero, Quaternion.identity);
                 }
             }   
         }
     }
 }
-*/
