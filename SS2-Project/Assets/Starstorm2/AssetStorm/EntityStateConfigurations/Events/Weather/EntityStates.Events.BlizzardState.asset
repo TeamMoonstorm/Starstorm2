@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: BlizzardState
+  m_Name: EntityStates.Events.BlizzardState
   m_EditorClassIdentifier: 
   targetType:
     assemblyQualifiedName: EntityStates.Events.BlizzardState, Starstorm2, Version=1.0.0.0,
@@ -20,19 +20,7 @@ MonoBehaviour:
     - fieldName: eventCard
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 11400000, guid: 047f366d50f7c3449bde793387ed49cc, type: 2}
-    - fieldName: drizzleDuration
-      fieldValue:
-        stringValue: 30
-        objectValue: {fileID: 0}
-    - fieldName: typhoonDuration
-      fieldValue:
-        stringValue: 90
-        objectValue: {fileID: 0}
-    - fieldName: warningDuration
-      fieldValue:
-        stringValue: 15
-        objectValue: {fileID: 0}
+        objectValue: {fileID: 11400000, guid: 11cd437c1f98ca7428f4cda9345a7b10, type: 2}
     - fieldName: effectPrefab
       fieldValue:
         stringValue: 
@@ -41,4 +29,16 @@ MonoBehaviour:
     - fieldName: stormBuffDef
       fieldValue:
         stringValue: 
+        objectValue: {fileID: 11400000, guid: 8ab5bb1c91125de45bc6e22406cc89e7, type: 2}
+    - fieldName: minDuration
+      fieldValue:
+        stringValue: 30
+        objectValue: {fileID: 0}
+    - fieldName: maxDuration
+      fieldValue:
+        stringValue: 90
+        objectValue: {fileID: 0}
+    - fieldName: warningDur
+      fieldValue:
+        stringValue: 15
         objectValue: {fileID: 0}

@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 462267d798a056b4ab94d737b7da67f6, type: 3}
-  m_Name: Blizzard
+  m_Name: Ashstorm
   m_EditorClassIdentifier: 
   eventFlags: 1
   eventState:
-    _typeName: EntityStates.Events.BlizzardState, Starstorm2, Version=1.0.0.0, Culture=neutral,
+    _typeName: EntityStates.Events.AshstormState, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  startMessageToken: SS2_EVENT_BLIZZARD_START
-  endMessageToken: SS2_EVENT_BLIZZARD_END
-  messageColor: {r: 0.5372549, g: 0.7176471, b: 0.7725491, a: 1}
+  startMessageToken: SS2_EVENT_ASHSTORM_START
+  endMessageToken: SS2_EVENT_ASHSTORM_END
+  messageColor: {r: 0.37647063, g: 0.37647063, b: 0.37647063, a: 1}
   startSound: {fileID: 0}
-  availableStages: 69206048
+  availableStages: 1048704
   customStageNames: []
-  category: 
+  category: CommonEvents
   selectionWeight: 1
   cost: 210
   minimumStageCompletions: 4
