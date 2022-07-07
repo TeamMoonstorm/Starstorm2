@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: -1255927399, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: SkinChirrNew
   m_EditorClassIdentifier: 
-  baseSkins:
-  - {fileID: 11400000, guid: 86f088e5fda246f4889857e0b72b51cd, type: 2}
+  baseSkins: []
   icon: {fileID: 21300000, guid: e5aec6c495caf7c41a14d51dffbaa180, type: 3}
-  nameToken: SS2_SKIN_CHIRR_MAID
+  nameToken: SS2_SKIN_CHIRR_DEFAULT
   unlockableName: 
   unlockableDef: {fileID: 0}
   rootObject: {fileID: 63143138296311217, guid: 9fe45455533d4cf478e241bcd72cf786,
@@ -26,6 +25,7 @@ MonoBehaviour:
     defaultMaterial: {fileID: 2100000, guid: 073f5026453d09549a7619959af6bf73, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
+    hideOnDeath: 0
   gameObjectActivations: []
   meshReplacements:
   - renderer: {fileID: 63143138309906607, guid: 9fe45455533d4cf478e241bcd72cf786,
