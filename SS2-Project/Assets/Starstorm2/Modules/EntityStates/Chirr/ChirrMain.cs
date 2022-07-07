@@ -60,11 +60,8 @@ namespace EntityStates.Chirr
 
         public void SetupIndicator()
         {
-            enemyIndicator = new Indicator(gameObject, null);
-            if (enemyPrefab) enemyIndicator.visualizerPrefab = enemyPrefab;
-
-            befriendIndicator = new Indicator(gameObject, null);
-            if (befriendPrefab) befriendIndicator.visualizerPrefab = befriendPrefab;
+            enemyIndicator = new Indicator(gameObject, enemyPrefab);
+            befriendIndicator = new Indicator(gameObject, befriendPrefab);
         }
 
         public void Hook()
@@ -161,7 +158,6 @@ namespace EntityStates.Chirr
                 if (chirrInfo.friend)
                 {
                     // This is where we put the second skill for befriend
-                    //skillLocator.special.SetBaseSkill(specialCommand);
                     skillLocator.special.SetSkillOverride(this, specialCommand, GenericSkill.SkillOverridePriority.Contextual);
                     chirrInfo.hasFriend = true;
                 }
@@ -169,7 +165,6 @@ namespace EntityStates.Chirr
             else if (!chirrInfo.friend)
             {
                 // Reset skill back to default
-                //skillLocator.special.SetBaseSkill(specialOriginal);
                 skillLocator.special.UnsetSkillOverride(this, specialCommand, GenericSkill.SkillOverridePriority.Contextual);
                 skillLocator.special.RemoveAllStocks();
                 chirrInfo.hasFriend = false;
@@ -267,8 +262,7 @@ namespace EntityStates.Chirr
         public void UpdateIndicator(Indicator indicator, Transform targetTransform)
         {
             indicator.targetTransform = targetTransform;
-            if (targetTransform == null) indicator.active = false;
-            else indicator.active = true;
+            indicator.active = indicator.targetTransform;
         }
 
         public override void OnExit()

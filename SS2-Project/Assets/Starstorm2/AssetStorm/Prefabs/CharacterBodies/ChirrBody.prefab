@@ -2617,6 +2617,7 @@ MonoBehaviour:
     defaultMaterial: {fileID: 2100000, guid: d215f41c709035b42aa09255a7719001, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
+    hideOnDeath: 0
   baseLightInfos: []
 --- !u!114 &5775926534212280231
 MonoBehaviour:
@@ -2662,8 +2663,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skins:
-  - {fileID: 11400000, guid: 86f088e5fda246f4889857e0b72b51cd, type: 2}
-  - {fileID: 11400000, guid: 6de39de64c4198340ad032c1249111f9, type: 2}
   - {fileID: 11400000, guid: 3ce72a604b9302c4288d45f78f9c38fc, type: 2}
 --- !u!114 &7146184259708495539
 MonoBehaviour:
@@ -2926,6 +2925,7 @@ MonoBehaviour:
   fullYaw: 0
   aimType: 0
   enableAimWeight: 0
+  UseTransformedAimVector: 0
 --- !u!114 &3838507265709813595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2942,6 +2942,7 @@ MonoBehaviour:
   sprintFootstepOverrideString: 
   enableFootstepDust: 0
   footstepDustPrefab: {fileID: 0}
+  footstepEffect: {fileID: 0}
 --- !u!114 &3333918264822009712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3624,6 +3625,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3635,6 +3637,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -4555,7 +4558,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2182981928116722673}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Script: {fileID: 11500000, guid: f8258ea15b8f74c4889ce485d21cbbb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_SceneId:
@@ -4607,6 +4610,7 @@ MonoBehaviour:
   baseAttackSpeed: 1
   baseCrit: 1
   baseArmor: 0
+  baseVisionDistance: Infinity
   baseJumpCount: 1
   sprintingSpeedMultiplier: 1.35
   autoCalculateLevelStats: 1
@@ -4645,7 +4649,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  crosshairPrefab: {fileID: 0}
+  _defaultCrosshairPrefab: {fileID: 0}
   hideCrosshair: 0
   aimOriginTransform: {fileID: 8905741133198499450}
   hullClassification: 0
@@ -4706,9 +4710,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraParams: {fileID: 11400000, guid: 5d11979293fd3cd4bad3ec01775a4613, type: 2}
   cameraPivotTransform: {fileID: 4136680533759720125}
-  aimMode: 0
+  fovOverride: 0
   recoil: {x: 0, y: 0}
-  idealLocalCameraPos: {x: 0, y: 0, z: 0}
   dontRaycastToPivot: 0
 --- !u!114 &7479126645654812182
 MonoBehaviour:
@@ -4783,6 +4786,10 @@ MonoBehaviour:
     skillDescriptionToken: SS2_CHIRR_PASSIVE_DESCRIPTION
     keywordToken: 
     icon: {fileID: 21300000, guid: 65068abab70017e4dac8ae4bc1ad067e, type: 3}
+  primaryBonusStockOverrideSkill: {fileID: 0}
+  secondaryBonusStockOverrideSkill: {fileID: 0}
+  utilityBonusStockOverrideSkill: {fileID: 0}
+  specialBonusStockOverrideSkill: {fileID: 0}
 --- !u!114 &9090057506636009864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5096,12 +5103,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _modelTransform: {fileID: 63143138295820689}
   modelBaseTransform: {fileID: 6133835001028943863}
-  dontReleaseModelOnDeath: 0
   autoUpdateModelTransform: 1
   dontDetatchFromParent: 0
   noCorpse: 0
-  normalizeToFloor: 1
+  dontReleaseModelOnDeath: 0
   preserveModel: 0
+  normalizeToFloor: 1
+  normalSmoothdampTime: 0.1
+  normalMaxAngleDelta: 90
 --- !u!114 &6582799558343887775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5327,6 +5336,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 4254054753883022148}
   isBullseye: 1
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3333918264822009712}
   indexInGroup: 0
