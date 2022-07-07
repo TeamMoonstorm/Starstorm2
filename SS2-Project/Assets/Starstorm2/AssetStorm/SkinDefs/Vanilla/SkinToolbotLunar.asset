@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 055ad47894d63994fa4e32d1cfa2f4d3, type: 3}
+  m_Name: SkinToolbotLunar
+  m_EditorClassIdentifier: 
+  baseSkins: []
+  icon: {fileID: 21300000, guid: 8a6ed8b66865ca041ab0e1126b57ea78, type: 3}
+  nameToken: SS2_SKIN_TOOLBOT_GRANDMASTERY
+  unlockableName: 
+  unlockableDef: {fileID: 11400000, guid: fd398c5b336923445abef6cabe558157, type: 2}
+  rootObject: {fileID: 0}
+  rendererInfos: []
+  gameObjectActivations: []
+  meshReplacements: []
+  projectileGhostReplacements: []
+  minionSkinReplacements: []
+  bodyAddress: RoR2/Base/Toolbot/ToolbotBody.prefab
+  displayAddress: RoR2/Base/Toolbot/ToolbotDisplay.prefab
+  _baseSkins: []
+  _rendererInfos:
+  - defaultMaterial: {fileID: 2100000, guid: eea4f48817b64dda8149dffa6ab4b15a, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+    rendererIndex: 1
+  _gameObjectActivations: []
+  _meshReplacements:
+  - mesh: {fileID: 4300000, guid: 98b177c573aad564094d3ca94afe4aa9, type: 2}
+    rendererIndex: 1
+  _projectileGhostReplacements: []
+  _minionSkinReplacements: []
+  rendererAmounts: 2

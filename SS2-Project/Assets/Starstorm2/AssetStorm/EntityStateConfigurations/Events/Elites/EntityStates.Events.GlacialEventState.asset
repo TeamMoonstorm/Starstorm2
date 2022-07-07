@@ -10,43 +10,35 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: SandstormState
+  m_Name: EntityStates.Events.GlacialEventState
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Events.SandstormState, Starstorm2, Version=1.0.0.0,
+    assemblyQualifiedName: EntityStates.Events.GlacialEventState, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
     - fieldName: eventCard
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 11400000, guid: 64a291f5d75e96842a004d969475a966, type: 2}
-    - fieldName: drizzleDuration
-      fieldValue:
-        stringValue: 30
-        objectValue: {fileID: 0}
-    - fieldName: typhoonDuration
-      fieldValue:
-        stringValue: 90
-        objectValue: {fileID: 0}
-    - fieldName: warningDuration
-      fieldValue:
-        stringValue: 15
-        objectValue: {fileID: 0}
+        objectValue: {fileID: 11400000, guid: b8187e3026bcaa74dbb40db896dddeb6, type: 2}
     - fieldName: effectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 2607978598026306861, guid: 4035075fc8b62db45a40fbdc38a51de4,
+        objectValue: {fileID: 3195754168759004068, guid: 9dc4a143cdbe76c48a0a56f90e7446a3,
           type: 3}
-    - fieldName: fadeDuration
+    - fieldName: equipmentName
       fieldValue:
-        stringValue: 7
+        stringValue: EliteIceEquipment
         objectValue: {fileID: 0}
-    - fieldName: stormItemDef
+    - fieldName: minDuration
       fieldValue:
-        stringValue: 
+        stringValue: 20
         objectValue: {fileID: 0}
-    - fieldName: stormBuffDef
+    - fieldName: maxDuration
       fieldValue:
-        stringValue: 
+        stringValue: 50
+        objectValue: {fileID: 0}
+    - fieldName: warningDur
+      fieldValue:
+        stringValue: 15
         objectValue: {fileID: 0}

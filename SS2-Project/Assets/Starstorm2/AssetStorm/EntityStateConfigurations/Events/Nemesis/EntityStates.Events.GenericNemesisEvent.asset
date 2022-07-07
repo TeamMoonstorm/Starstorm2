@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: GenericNemesisBoss
+  m_Name: EntityStates.Events.GenericNemesisEvent
   m_EditorClassIdentifier: 
   targetType:
     assemblyQualifiedName: EntityStates.Events.GenericNemesisEvent, Starstorm2, Version=1.0.0.0,
@@ -39,11 +39,6 @@ MonoBehaviour:
       fieldValue:
         stringValue: 0
         objectValue: {fileID: 0}
-    - fieldName: effectPrefab
-      fieldValue:
-        stringValue: 
-        objectValue: {fileID: 8824807275847475445, guid: 7e679ccf587050a47a5988b9b36c591f,
-          type: 3}
     - fieldName: spawnCard
       fieldValue:
         stringValue: 
@@ -56,15 +51,15 @@ MonoBehaviour:
       fieldValue:
         stringValue: 
         objectValue: {fileID: 0}
-    - fieldName: drizzleDuration
+    - fieldName: minDuration
       fieldValue:
         stringValue: 0
         objectValue: {fileID: 0}
-    - fieldName: typhoonDuration
+    - fieldName: maxDuration
       fieldValue:
         stringValue: 0
         objectValue: {fileID: 0}
-    - fieldName: warningDuration
+    - fieldName: warningDur
       fieldValue:
         stringValue: 0
         objectValue: {fileID: 0}

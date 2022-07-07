@@ -32,6 +32,7 @@ GameObject:
   - component: {fileID: 3337505611105843367}
   - component: {fileID: 5523237066891539053}
   - component: {fileID: 8195600688277848823}
+  - component: {fileID: 5128405220807551573}
   m_Layer: 0
   m_Name: ExploderBody
   m_TagString: Player
@@ -65,7 +66,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 211202462120017535}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Script: {fileID: 11500000, guid: f8258ea15b8f74c4889ce485d21cbbb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_SceneId:
@@ -117,6 +118,7 @@ MonoBehaviour:
   baseAttackSpeed: 1
   baseCrit: 0
   baseArmor: 10
+  baseVisionDistance: Infinity
   baseJumpCount: 1
   sprintingSpeedMultiplier: 1.45
   autoCalculateLevelStats: 1
@@ -137,7 +139,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  crosshairPrefab: {fileID: 0}
+  _defaultCrosshairPrefab: {fileID: 0}
   hideCrosshair: 0
   aimOriginTransform: {fileID: 565257277260093052}
   hullClassification: 0
@@ -199,9 +201,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraParams: {fileID: 11400000, guid: 0f32a1587e7bad248a563caf83e62fe4, type: 2}
   cameraPivotTransform: {fileID: 4131900798327118362}
-  aimMode: 0
+  fovOverride: 0
   recoil: {x: 0, y: 0}
-  idealLocalCameraPos: {x: 0, y: 0, z: 0}
   dontRaycastToPivot: 0
 --- !u!114 &559958426641568550
 MonoBehaviour:
@@ -276,6 +277,10 @@ MonoBehaviour:
     skillDescriptionToken: 
     keywordToken: 
     icon: {fileID: 0}
+  primaryBonusStockOverrideSkill: {fileID: 0}
+  secondaryBonusStockOverrideSkill: {fileID: 0}
+  utilityBonusStockOverrideSkill: {fileID: 0}
+  specialBonusStockOverrideSkill: {fileID: 0}
 --- !u!114 &4961868275556404263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,12 +521,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _modelTransform: {fileID: 3369083855167953573}
   modelBaseTransform: {fileID: 3369083855167953591}
-  dontReleaseModelOnDeath: 0
   autoUpdateModelTransform: 1
   dontDetatchFromParent: 0
   noCorpse: 0
-  normalizeToFloor: 0
+  dontReleaseModelOnDeath: 0
   preserveModel: 0
+  normalizeToFloor: 0
+  normalSmoothdampTime: 0.1
+  normalMaxAngleDelta: 90
+--- !u!114 &5128405220807551573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211202462120017535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -144590133, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+  requireEntitlementIfPlayerControlled: 0
 --- !u!1 &3369083855168177793
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,6 +679,7 @@ MonoBehaviour:
     defaultMaterial: {fileID: 2100000, guid: daf955d5e5c1e8646845782445b61dfb, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
+    hideOnDeath: 0
   baseLightInfos: []
 --- !u!114 &7226359552893825533
 MonoBehaviour:
@@ -688,6 +710,7 @@ MonoBehaviour:
   sprintFootstepOverrideString: 
   enableFootstepDust: 0
   footstepDustPrefab: {fileID: 0}
+  footstepEffect: {fileID: 0}
 --- !u!114 &2303981457468510591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2410,6 +2433,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 6601923582235527145}
   isBullseye: 1
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 2303981457468510591}
   indexInGroup: 0
@@ -2442,6 +2466,7 @@ MonoBehaviour:
   sprintFootstepOverrideString: 
   enableFootstepDust: 0
   footstepDustPrefab: {fileID: 0}
+  footstepEffect: {fileID: 0}
 --- !u!1 &8066214173822940445
 GameObject:
   m_ObjectHideFlags: 0
@@ -2487,6 +2512,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2498,6 +2524,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0

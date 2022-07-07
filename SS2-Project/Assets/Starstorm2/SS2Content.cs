@@ -227,13 +227,13 @@ namespace Moonstorm.Starstorm2
                 {
                     Typhoon.Init();
                 },
-                /*delegate
+                delegate
                 {
-                    if(Starstorm2.Config.EnableEvents.Value)
+                    if(SS2Config.EnableEvents.Value)
                     {
                         Events.Init();
                     }
-                },*/
+                },
                 delegate
                 {
                     new Modules.Characters().Initialize();
@@ -250,10 +250,6 @@ namespace Moonstorm.Starstorm2
                 {
                     new Modules.Unlockables().Initialize();
                 },
-                /*delegate
-                {
-                    new ItemDisplays().Init();
-                },*/
                 delegate
                 {
                     SS2Log.Info($"Populating entity state array");
@@ -264,9 +260,14 @@ namespace Moonstorm.Starstorm2
                 },
                 delegate
                 {
+                    SS2Log.Info($"Populating EntityStateConfigurations");
+                    SerializableContentPack.entityStateConfigurations = SS2Assets.LoadAllAssetsOfType<EntityStateConfiguration>();
+                },
+                delegate
+                {
                     SS2Log.Info($"Populating effect prefabs");
-                    SerializableContentPack.effectPrefabs = SS2Assets.LoadAllAssetsOfType<GameObject>()
-                    .Where(go => go.GetComponent<EffectComponent>())
+                    SerializableContentPack.effectPrefabs = SerializableContentPack.effectPrefabs.Concat(SS2Assets.LoadAllAssetsOfType<GameObject>()
+                    .Where(go => go.GetComponent<EffectComponent>()))
                     .ToArray();
                 },
                 delegate

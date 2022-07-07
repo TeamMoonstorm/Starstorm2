@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: -1284244208, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: SwiftSkateboard
   m_EditorClassIdentifier: 
-  tier: 2
+  deprecatedTier: 2
+  _itemTierDef: {fileID: 0}
   nameToken: SS2_ITEM_SKATEBOARD_NAME
   pickupToken: SS2_ITEM_SKATEBOARD_PICKUP
   descriptionToken: SS2_ITEM_SKATEBOARD_DESC
@@ -24,3 +25,4 @@ MonoBehaviour:
   hidden: 0
   canRemove: 1
   tags: 0300000008000000
+  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}

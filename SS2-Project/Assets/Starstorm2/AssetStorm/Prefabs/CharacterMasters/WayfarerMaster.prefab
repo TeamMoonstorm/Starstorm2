@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 114034268301629480}
   - component: {fileID: 114913155263267210}
   - component: {fileID: 114633511895228720}
+  - component: {fileID: -2996686873313377993}
   m_Layer: 0
   m_Name: WayfarerMaster
   m_TagString: Untagged
@@ -46,7 +47,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1255514408908605}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Script: {fileID: 11500000, guid: f8258ea15b8f74c4889ce485d21cbbb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_SceneId:
@@ -105,6 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 682687671, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemAcquisitionOrder: 
 --- !u!114 &114657824517255066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,6 +187,7 @@ MonoBehaviour:
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
+  maxTimesSelected: -1
   moveTargetType: 0
   activationRequiresTargetLoS: 0
   activationRequiresAimTargetLoS: 0
@@ -201,3 +204,17 @@ MonoBehaviour:
   resetCurrentEnemyOnNextDriverSelection: 0
   noRepeat: 0
   nextHighPriorityOverride: {fileID: 0}
+--- !u!114 &-2996686873313377993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1255514408908605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -144590133, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+  requireEntitlementIfPlayerControlled: 0

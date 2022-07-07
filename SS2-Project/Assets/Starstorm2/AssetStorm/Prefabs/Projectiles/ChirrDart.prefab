@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 6440665413730906744}
   - component: {fileID: 5579434517552769150}
   - component: {fileID: 2189968000737529236}
+  - component: {fileID: -6936552462368458786}
   m_Layer: 14
   m_Name: ChirrDart
   m_TagString: Untagged
@@ -52,7 +53,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5303318991873935918}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Script: {fileID: 11500000, guid: f8258ea15b8f74c4889ce485d21cbbb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_SceneId:
@@ -122,7 +123,9 @@ MonoBehaviour:
     type: 3}
   ghostTransformAnchor: {fileID: 0}
   startSound: 
+  cannotBeDeleted: 0
   flightSoundLoop: {fileID: 0}
+  canImpactOnTrigger: 0
   allowPrediction: 1
   owner: {fileID: 0}
   procCoefficient: 1
@@ -153,8 +156,9 @@ MonoBehaviour:
   m_Script: {fileID: -1819008361, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  desiredForwardSpeed: 130
   lifetime: 2.5
+  lifetimeExpiredEffect: {fileID: 0}
+  desiredForwardSpeed: 130
   updateAfterFiring: 1
   enableVelocityOverLifetime: 0
   velocityOverLifetime:
@@ -260,6 +264,8 @@ MonoBehaviour:
   force: 0
   damageColorIndex: 0
   damageType: 0
+  useDotMaxStacksFromAttacker: 0
+  dotMaxStacksFromAttacker: 4294967295
 --- !u!114 &2189968000737529236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,3 +279,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultTeam: -1
+--- !u!114 &-6936552462368458786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5303318991873935918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -144590133, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+  requireEntitlementIfPlayerControlled: 0

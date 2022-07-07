@@ -1,5 +1,7 @@
 ﻿using R2API.ScriptableObjects;
 using RoR2;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -14,6 +16,13 @@ namespace Moonstorm.Starstorm2.Artifacts
 
         [ConfigurableField(ConfigDesc = "Wether or not cognation ghosts inherit all items from the original body")]
         public static bool InheritInventory = true;
+
+        public static readonly List<string> blacklistedMasters = new List<string>
+        {
+            "ArtifactShell",
+            "BrotherHurt",
+            "VoidInfestor",
+        };
 
         //Swuff, I Hate You 3000
         public override void Initialize()
@@ -110,12 +119,13 @@ namespace Moonstorm.Starstorm2.Artifacts
 
         private bool CanBecomeGhost(CharacterMaster victimMaster)
         {
-            bool flag1 = victimMaster.teamIndex != TeamIndex.Player;
-            bool flag2 = victimMaster.hasBody;
-            bool flag3 = victimMaster.inventory.GetItemCount(SS2Content.Items.Cognation) == 0;
-            bool flag4 = !(victimMaster.name.Contains("ArtifactShell") || victimMaster.name.Contains("BrotherHurt"));
-
-            return flag1 && flag2 && flag3 && flag4;
+            bool isMonster = victimMaster.teamIndex != TeamIndex.Player;
+            bool hasBody = victimMaster.hasBody;
+            bool notGhost = victimMaster.inventory.GetItemCount(SS2Content.Items.Cognation) == 0;
+            bool notBlacklisted = !(blacklistedMasters.Any(x => victimMaster.name.Contains(x)));
+            bool notVoidTouched = victimMaster.inventory.currentEquipmentIndex != DLC1Content.Equipment.EliteVoidEquipment.equipmentIndex;
+            
+            return isMonster && hasBody && notGhost && notBlacklisted && notVoidTouched;
         }
 
         private MasterSummon PrepareMasterSummon(CharacterMaster master)

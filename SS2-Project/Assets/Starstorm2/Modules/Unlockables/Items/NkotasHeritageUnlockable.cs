@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace Moonstorm.Starstorm2.Unlocks.Pickups
 {
+    [DisabledContent]
     public sealed class NkotasHeritageUnlockable : UnlockableBase
     {
         public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.item.nkotasheritage");

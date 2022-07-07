@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: -1284244208, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: Needles
   m_EditorClassIdentifier: 
-  tier: 0
+  deprecatedTier: 0
+  _itemTierDef: {fileID: 0}
   nameToken: SS2_ITEM_NEEDLES_NAME
   pickupToken: SS2_ITEM_NEEDLES_PICKUP
   descriptionToken: SS2_ITEM_NEEDLES_DESC
@@ -24,3 +25,4 @@ MonoBehaviour:
   hidden: 0
   canRemove: 1
   tags: 01000000
+  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}

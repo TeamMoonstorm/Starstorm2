@@ -1,4 +1,4 @@
-﻿/*using Moonstorm.Starstorm2;
+﻿using Moonstorm.Starstorm2;
 using Moonstorm.Starstorm2.Components;
 using Moonstorm.Starstorm2.ScriptableObjects;
 using RoR2;
@@ -29,7 +29,7 @@ namespace EntityStates.Events
 
         public static float fadeDuration = 7f;
 
-        public override bool overrideTimer => true;
+        public override bool OverrideTimer => true;
 
         /// <summary>This is gotten from the string</summary>
         private MonsterSpawnDistance spawnDistance;
@@ -64,7 +64,7 @@ namespace EntityStates.Events
             {
                 effectInstance = UnityEngine.Object.Instantiate(effectPrefab);
                 eventStateEffect = effectInstance.GetComponent<EventStateEffect>();
-            }
+            }*/
         }
 
         public override void FixedUpdate()
@@ -79,7 +79,7 @@ namespace EntityStates.Events
             if (musicOverridePrefab)
                 musicTrack.track = canticumVitaeB;
             /*if (eventStateEffect)
-                eventStateEffect.OnEffectStart();
+                eventStateEffect.OnEffectStart();*/
             if (NetworkServer.active)
                 SpawnNemesisServer();
         }
@@ -120,7 +120,7 @@ namespace EntityStates.Events
             }
             if (!spawnTarget)
             {
-                LogCore.LogD("Unable to spawn Nemesis Event. Returning.");
+                SS2Log.Error("Unable to spawn Nemesis Event. Returning.");
                 return;
             }
 
@@ -172,7 +172,7 @@ namespace EntityStates.Events
             if (musicTrack)
                 Destroy(musicTrack.gameObject);
             /*if (eventStateEffect)
-                eventStateEffect.OnEndingStart(fadeDuration);
+                eventStateEffect.OnEndingStart(fadeDuration);*/
         }
 
         public override void OnSerialize(NetworkWriter writer)
@@ -189,4 +189,3 @@ namespace EntityStates.Events
     }
 
 }
-*/

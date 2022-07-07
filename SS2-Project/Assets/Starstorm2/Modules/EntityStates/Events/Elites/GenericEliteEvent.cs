@@ -1,4 +1,4 @@
-﻿/*using Moonstorm.Components;
+﻿using Moonstorm.Components;
 using Moonstorm.Starstorm2;
 using Moonstorm.Components;
 using Moonstorm.Starstorm2;
@@ -34,7 +34,7 @@ namespace EntityStates.Events
                 eventStateEffect = effectInstance.GetComponent<EventStateEffect>();
                 if (eventStateEffect)
                 {
-                    eventStateEffect.intensityMultiplier = difficultyScalingValue;
+                    eventStateEffect.intensityMultiplier = DiffScalingValue;
                 }
             }
         }
@@ -56,11 +56,11 @@ namespace EntityStates.Events
             {
                 eventStateEffect.OnEndingStart(fadeDuration);
             }
-            if (hasWarned)
+            if (HasWarned)
             {
                 CharacterBody.onBodyStartGlobal -= MakeElite;
             }
-            }
+        }
 
         private void MakeElite(CharacterBody body)
         {
@@ -80,4 +80,3 @@ namespace EntityStates.Events
     }
 
 }
-*/

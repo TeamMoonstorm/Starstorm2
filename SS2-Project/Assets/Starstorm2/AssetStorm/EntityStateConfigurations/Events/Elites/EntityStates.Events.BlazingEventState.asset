@@ -10,35 +10,35 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: GlacialEliteEvent
+  m_Name: EntityStates.Events.BlazingEventState
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Events.GlacialEventState, Starstorm2, Version=1.0.0.0,
+    assemblyQualifiedName: EntityStates.Events.BlazingEventState, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
     - fieldName: eventCard
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 11400000, guid: efbff249293b22542bffa392b63454a2, type: 2}
-    - fieldName: drizzleDuration
-      fieldValue:
-        stringValue: 20
-        objectValue: {fileID: 0}
-    - fieldName: typhoonDuration
-      fieldValue:
-        stringValue: 50
-        objectValue: {fileID: 0}
-    - fieldName: warningDuration
-      fieldValue:
-        stringValue: 15
-        objectValue: {fileID: 0}
+        objectValue: {fileID: 11400000, guid: 81fee9dc8e36e874396a039305d18643, type: 2}
     - fieldName: effectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 3195754168759004068, guid: 9dc4a143cdbe76c48a0a56f90e7446a3,
+        objectValue: {fileID: 3195754168759004068, guid: 2c404dd765937e34390410028c08243d,
           type: 3}
     - fieldName: equipmentName
       fieldValue:
-        stringValue: AffixWhite
+        stringValue: EliteFireEquipment
+        objectValue: {fileID: 0}
+    - fieldName: minDuration
+      fieldValue:
+        stringValue: 20
+        objectValue: {fileID: 0}
+    - fieldName: maxDuration
+      fieldValue:
+        stringValue: 50
+        objectValue: {fileID: 0}
+    - fieldName: warningDur
+      fieldValue:
+        stringValue: 15
         objectValue: {fileID: 0}

@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 462267d798a056b4ab94d737b7da67f6, type: 3}
+  m_Name: BlazingElite
+  m_EditorClassIdentifier: 
+  eventFlags: 0
+  eventState:
+    _typeName: EntityStates.Events.BlazingEventState, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  startMessageToken: SS2_EVENT_BLAZINGELITE_START
+  endMessageToken: SS2_EVENT_BLAZINGELITE_END
+  messageColor: {r: 0.87843144, g: 0.28235295, b: 0.19607845, a: 1}
+  startSound: {fileID: 0}
+  availableStages: 268321270
+  customStageNames: []
+  category: CommonEvents
+  selectionWeight: 0.8
+  cost: 175
+  minimumStageCompletions: 1
+  requiredUnlockableDef:
+    address: 
+    asset: {fileID: 0}
+  forbiddenUnlockableDef:
+    address: 
+    asset: {fileID: 0}
+  requiredExpansionDef:
+    address: 
+    asset: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}

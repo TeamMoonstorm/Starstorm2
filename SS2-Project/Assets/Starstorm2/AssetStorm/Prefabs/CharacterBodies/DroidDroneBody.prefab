@@ -108,6 +108,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -119,6 +120,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -278,6 +280,7 @@ MonoBehaviour:
   fullYaw: 1
   aimType: 0
   enableAimWeight: 0
+  UseTransformedAimVector: 0
 --- !u!114 &6723751806329359515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,6 +301,7 @@ MonoBehaviour:
     defaultMaterial: {fileID: 2100000, guid: c110b9f3b05ea9845b9f82024ffc9d9b, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
+    hideOnDeath: 0
   baseLightInfos: []
 --- !u!114 &2004212013703121597
 MonoBehaviour:
@@ -469,6 +473,7 @@ GameObject:
   - component: {fileID: 9037261311599559409}
   - component: {fileID: 6053484788037751017}
   - component: {fileID: 2815608122853490930}
+  - component: {fileID: -2026023670776101126}
   m_Layer: 0
   m_Name: DroidDroneBody
   m_TagString: Untagged
@@ -501,7 +506,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5977874916511045093}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Script: {fileID: 11500000, guid: f8258ea15b8f74c4889ce485d21cbbb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_SceneId:
@@ -553,6 +558,7 @@ MonoBehaviour:
   baseAttackSpeed: 0
   baseCrit: 0
   baseArmor: 0
+  baseVisionDistance: Infinity
   baseJumpCount: 1
   sprintingSpeedMultiplier: 1.45
   autoCalculateLevelStats: 1
@@ -573,7 +579,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  crosshairPrefab: {fileID: 0}
+  _defaultCrosshairPrefab: {fileID: 0}
   hideCrosshair: 0
   aimOriginTransform: {fileID: 4819866530768522509}
   hullClassification: 0
@@ -633,9 +639,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraParams: {fileID: 11400000, guid: 0f32a1587e7bad248a563caf83e62fe4, type: 2}
   cameraPivotTransform: {fileID: 0}
-  aimMode: 0
+  fovOverride: 0
   recoil: {x: 0, y: 0}
-  idealLocalCameraPos: {x: 0, y: 0, z: 0}
   dontRaycastToPivot: 0
 --- !u!114 &1776341671264308580
 MonoBehaviour:
@@ -825,6 +830,10 @@ MonoBehaviour:
     skillDescriptionToken: 
     keywordToken: 
     icon: {fileID: 0}
+  primaryBonusStockOverrideSkill: {fileID: 0}
+  secondaryBonusStockOverrideSkill: {fileID: 0}
+  utilityBonusStockOverrideSkill: {fileID: 0}
+  specialBonusStockOverrideSkill: {fileID: 0}
 --- !u!114 &5671343943288532949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -897,12 +906,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _modelTransform: {fileID: 3228796961590415147}
   modelBaseTransform: {fileID: 3781836410550631104}
-  dontReleaseModelOnDeath: 0
   autoUpdateModelTransform: 1
   dontDetatchFromParent: 0
   noCorpse: 1
-  normalizeToFloor: 0
+  dontReleaseModelOnDeath: 0
   preserveModel: 0
+  normalizeToFloor: 0
+  normalSmoothdampTime: 0.1
+  normalMaxAngleDelta: 90
 --- !u!114 &9037261311599559409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -948,6 +959,20 @@ MonoBehaviour:
     _typeName: EntityStates.Drone.DeathState, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   idleStateMachine: []
+--- !u!114 &-2026023670776101126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5977874916511045093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -144590133, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+  requireEntitlementIfPlayerControlled: 0
 --- !u!1 &6282127154329199403
 GameObject:
   m_ObjectHideFlags: 0
@@ -1007,6 +1032,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 987556339088198427}
   isBullseye: 1
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 2004212013703121597}
   indexInGroup: 0

@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 8327880928982751505}
   - component: {fileID: 6150840996721144636}
   - component: {fileID: 2346382503113772966}
+  - component: {fileID: -8792016064944327317}
   m_Layer: 14
   m_Name: MaliceProjectile
   m_TagString: Untagged
@@ -47,7 +48,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3069710925541318143}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Script: {fileID: 11500000, guid: f8258ea15b8f74c4889ce485d21cbbb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_SceneId:
@@ -100,7 +101,9 @@ MonoBehaviour:
   ghostPrefab: {fileID: 0}
   ghostTransformAnchor: {fileID: 0}
   startSound: 
+  cannotBeDeleted: 0
   flightSoundLoop: {fileID: 0}
+  canImpactOnTrigger: 0
   allowPrediction: 1
   owner: {fileID: 0}
   procCoefficient: 1
@@ -121,6 +124,8 @@ MonoBehaviour:
   force: 0
   damageColorIndex: 0
   damageType: 0
+  useDotMaxStacksFromAttacker: 0
+  dotMaxStacksFromAttacker: 4294967295
 --- !u!114 &7600238294184293224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,8 +165,9 @@ MonoBehaviour:
   m_Script: {fileID: -1819008361, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  desiredForwardSpeed: 0
   lifetime: 5
+  lifetimeExpiredEffect: {fileID: 0}
+  desiredForwardSpeed: 0
   updateAfterFiring: 0
   enableVelocityOverLifetime: 0
   velocityOverLifetime:
@@ -187,3 +193,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   yAxisOnly: 0
   rotationSpeed: 720
+--- !u!114 &-8792016064944327317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3069710925541318143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -144590133, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+  requireEntitlementIfPlayerControlled: 0

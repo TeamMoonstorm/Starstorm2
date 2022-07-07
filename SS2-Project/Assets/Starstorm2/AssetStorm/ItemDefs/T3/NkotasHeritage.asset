@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: -1284244208, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: NkotasHeritage
   m_EditorClassIdentifier: 
-  tier: 2
+  deprecatedTier: 2
+  _itemTierDef: {fileID: 0}
   nameToken: SS2_ITEM_NKOTASHERITAGE_NAME
   pickupToken: SS2_ITEM_NKOTASHERITAGE_PICKUP
   descriptionToken: SS2_ITEM_NKOTASHERITAGE_DESC
   loreToken: SS2_ITEM_NKOTASHERITAGE_LORE
-  unlockableDef: {fileID: 11400000, guid: 6958a09de2a45674f8b1ba1adfc69d4c, type: 2}
+  unlockableDef: {fileID: 0}
   pickupModelPrefab: {fileID: 4124491450623053418, guid: ca311e1e8cdc7834ea66234ddaeb8841,
     type: 3}
   pickupIconSprite: {fileID: 21300000, guid: 6283427db6568ea49be75e046d792e4d, type: 3}
   hidden: 0
   canRemove: 1
   tags: 0300000004000000
+  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}

@@ -60,6 +60,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 7
@@ -122,6 +123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 27
@@ -184,6 +186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 25
@@ -246,6 +249,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 38
@@ -308,6 +312,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 9
@@ -370,6 +375,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 41
@@ -409,6 +415,7 @@ GameObject:
   - component: {fileID: 535382068153449435}
   - component: {fileID: 453333854499723557}
   - component: {fileID: 449007038772124597}
+  - component: {fileID: 8554857460552679063}
   m_Layer: 0
   m_Name: WayfarerBody
   m_TagString: Player
@@ -443,7 +450,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 552368109173833114}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Script: {fileID: 11500000, guid: f8258ea15b8f74c4889ce485d21cbbb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_SceneId:
@@ -533,6 +540,7 @@ MonoBehaviour:
   baseAttackSpeed: 1
   baseCrit: 0
   baseArmor: 20
+  baseVisionDistance: Infinity
   baseJumpCount: 0
   sprintingSpeedMultiplier: 1.45
   autoCalculateLevelStats: 1
@@ -571,7 +579,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  crosshairPrefab: {fileID: 0}
+  _defaultCrosshairPrefab: {fileID: 0}
   hideCrosshair: 0
   aimOriginTransform: {fileID: 549688976967165144}
   hullClassification: 2
@@ -599,9 +607,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraParams: {fileID: 11400000, guid: 536c9db961323454ebc0ea457080ad3c, type: 2}
   cameraPivotTransform: {fileID: 549831976130883930}
-  aimMode: 0
+  fovOverride: 0
   recoil: {x: 0, y: 0}
-  idealLocalCameraPos: {x: 0, y: 0, z: -4.71}
   dontRaycastToPivot: 0
 --- !u!114 &448497005463002517
 MonoBehaviour:
@@ -617,12 +624,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _modelTransform: {fileID: 7251327786480375182}
   modelBaseTransform: {fileID: 8478950394381914672}
-  dontReleaseModelOnDeath: 1
   autoUpdateModelTransform: 1
   dontDetatchFromParent: 0
   noCorpse: 0
-  normalizeToFloor: 0
+  dontReleaseModelOnDeath: 1
   preserveModel: 0
+  normalizeToFloor: 0
+  normalSmoothdampTime: 0.1
+  normalMaxAngleDelta: 90
 --- !u!114 &449222239286607946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -699,6 +708,10 @@ MonoBehaviour:
     skillDescriptionToken: 
     keywordToken: 
     icon: {fileID: 0}
+  primaryBonusStockOverrideSkill: {fileID: 0}
+  secondaryBonusStockOverrideSkill: {fileID: 0}
+  utilityBonusStockOverrideSkill: {fileID: 0}
+  specialBonusStockOverrideSkill: {fileID: 0}
 --- !u!114 &448418449030627237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -921,6 +934,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   logUnlockableName: 
   logUnlockableDef: {fileID: 0}
+  bossDropTable: {fileID: 0}
   bossPickup:
     pickupName: ItemIndex.Lamp
 --- !u!54 &535382068153449435
@@ -988,6 +1002,20 @@ MonoBehaviour:
   LedgeHandling: 1
   InteractiveRigidbodyHandling: 1
   SafeMovement: 0
+--- !u!114 &8554857460552679063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552368109173833114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -144590133, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+  requireEntitlementIfPlayerControlled: 0
 --- !u!1 &552688337258673146
 GameObject:
   m_ObjectHideFlags: 0
@@ -1107,6 +1135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 13
@@ -1169,6 +1198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 19
@@ -1232,6 +1262,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 45
@@ -1294,6 +1325,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 10
@@ -1356,6 +1388,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 22
@@ -1418,6 +1451,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 8
@@ -1480,6 +1514,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 11
@@ -1542,6 +1577,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 32
@@ -1604,6 +1640,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 18
@@ -1666,6 +1703,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 17
@@ -1728,6 +1766,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 23
@@ -2426,6 +2465,7 @@ ParticleSystem:
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
   UVModule:
+    serializedVersion: 2
     enabled: 0
     mode: 0
     timeMode: 0
@@ -2489,7 +2529,7 @@ ParticleSystem:
     rowIndex: 0
     cycles: 1
     uvChannelMask: -1
-    randomRow: 1
+    rowMode: 1
     sprites:
     - sprite: {fileID: 0}
     flipU: 0
@@ -3012,8 +3052,61 @@ ParticleSystem:
     inWorldSpace: 0
     randomizePerFrame: 0
   ExternalForcesModule:
+    serializedVersion: 2
     enabled: 0
-    multiplier: 1
+    multiplierCurve:
+      serializedVersion: 2
+      minMaxState: 0
+      scalar: 1
+      minScalar: 1
+      maxCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      minCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
     influenceFilter: 0
     influenceMask:
       serializedVersion: 2
@@ -4187,6 +4280,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4199,6 +4293,7 @@ ParticleSystemRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -4242,12 +4337,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3965318035984932311}
   m_Enabled: 1
-  serializedVersion: 8
+  serializedVersion: 10
   m_Type: 2
+  m_Shape: 0
   m_Color: {r: 0.27803493, g: 0.6495037, b: 0.8301887, a: 1}
   m_Intensity: 1
   m_Range: 2.02
   m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -4257,6 +4354,24 @@ Light:
     m_Bias: 0.05
     m_NormalBias: 0.4
     m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
@@ -4264,12 +4379,15 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!1 &4134717032544817461
@@ -4331,6 +4449,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 40
@@ -4393,6 +4512,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 37
@@ -4455,6 +4575,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 34
@@ -4517,6 +4638,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 21
@@ -4580,6 +4702,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 3
@@ -4642,6 +4765,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 14
@@ -4704,6 +4828,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 24
@@ -4766,6 +4891,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 28
@@ -4828,6 +4954,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 36
@@ -4890,6 +5017,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 31
@@ -4952,6 +5080,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 29
@@ -5015,6 +5144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 44
@@ -5077,6 +5207,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 16
@@ -5139,6 +5270,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 30
@@ -5202,6 +5334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 4
@@ -5265,6 +5398,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 1
@@ -5357,6 +5491,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 20
@@ -5419,6 +5554,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 35
@@ -5481,6 +5617,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 26
@@ -5981,6 +6118,7 @@ MonoBehaviour:
     defaultMaterial: {fileID: 2100000, guid: 44d94f9b936355c4f8fbd680e69c0622, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
+    hideOnDeath: 0
   baseLightInfos:
   - light: {fileID: 960364619985649779}
     defaultColor: {r: 0.27803493, g: 0.6495037, b: 0.8301887, a: 1}
@@ -9194,6 +9332,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -9205,6 +9344,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -11978,6 +12118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 43
@@ -12041,6 +12182,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 0
@@ -12104,6 +12246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 2
@@ -12166,6 +12309,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 15
@@ -12228,6 +12372,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 39
@@ -12290,6 +12435,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 33
@@ -12384,6 +12530,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 42
@@ -12447,6 +12594,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 6
@@ -12510,6 +12658,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 5
@@ -12572,6 +12721,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 449027690755057918}
   isBullseye: 0
+  isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3435066923474861925}
   indexInGroup: 12

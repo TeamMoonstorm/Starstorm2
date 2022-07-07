@@ -10,35 +10,35 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: BlizzardState
+  m_Name: EntityStates.Events.ThunderstormState
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Events.BlizzardState, Starstorm2, Version=1.0.0.0,
+    assemblyQualifiedName: EntityStates.Events.ThunderstormState, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
     - fieldName: eventCard
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 11400000, guid: 047f366d50f7c3449bde793387ed49cc, type: 2}
-    - fieldName: drizzleDuration
-      fieldValue:
-        stringValue: 30
-        objectValue: {fileID: 0}
-    - fieldName: typhoonDuration
-      fieldValue:
-        stringValue: 90
-        objectValue: {fileID: 0}
-    - fieldName: warningDuration
-      fieldValue:
-        stringValue: 15
-        objectValue: {fileID: 0}
+        objectValue: {fileID: 11400000, guid: ba02edd447ad5284fbbf01ad405d1142, type: 2}
     - fieldName: effectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 2822430398392994740, guid: f8e894b4e767a774aae24b92b4a2f52a,
+        objectValue: {fileID: 5557705817396211732, guid: b260621917d16e44fa11ff8421c67e1c,
           type: 3}
     - fieldName: stormBuffDef
       fieldValue:
         stringValue: 
+        objectValue: {fileID: 11400000, guid: 8ab5bb1c91125de45bc6e22406cc89e7, type: 2}
+    - fieldName: minDuration
+      fieldValue:
+        stringValue: 30
+        objectValue: {fileID: 0}
+    - fieldName: maxDuration
+      fieldValue:
+        stringValue: 90
+        objectValue: {fileID: 0}
+    - fieldName: warningDur
+      fieldValue:
+        stringValue: 15
         objectValue: {fileID: 0}
