@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace Moonstorm.Starstorm2.Survivors
 {
-    [DisabledContent]
     public sealed class Borg : SurvivorBase
     {
         public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("SurvivorBorg");

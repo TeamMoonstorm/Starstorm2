@@ -46,7 +46,7 @@ namespace Moonstorm.Starstorm2.Components
 
         private CharacterBody CharBody { get => gameObject.GetComponent<CharacterBody>(); }
 
-        /*private bool HeatSink1 { get => heatSinks[0].available; set => heatSinks[0].available = value; }
+        private bool HeatSink1 { get => heatSinks[0].available; set => heatSinks[0].available = value; }
         private bool HeatSink2 { get => heatSinks[1].available; set => heatSinks[1].available = value; }
         private bool HeatSink3 { get => heatSinks[2].available; set => heatSinks[2].available = value; }
 
