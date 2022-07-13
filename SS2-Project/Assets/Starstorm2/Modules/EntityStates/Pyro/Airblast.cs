@@ -1,5 +1,4 @@
-﻿/*using EntityStates;
-using Moonstorm;
+﻿
 using RoR2.Projectile;
 using RoR2;
 using System;
@@ -9,10 +8,11 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using EntityStates.ArtifactShell;
+using Moonstorm.Starstorm2.Components;
 
 namespace EntityStates.Pyro
 {
-    public class Airblast : BaseSkillState  //based on Enforcer's shield deflect code https://github.com/GnomeModder/EnforcerMod/blob/master/EnforcerMod_VS/Secondary.cs
+    public class HeatWave : BaseState  //based on Enforcer's shield deflect code https://github.com/GnomeModder/EnforcerMod/blob/master/EnforcerMod_VS/Secondary.cs
     {
         public override void OnEnter()
         {
@@ -20,8 +20,8 @@ namespace EntityStates.Pyro
             this.reflectedProjectile = false;
             this.hasHeat = true;
             //this.heatLevel = FireBlast.heatCost;
-            heatController = characterBody.gameObject.GetComponent<HeatComponent>();
-            float cost = Airblast.heatCost * (100f / (100f + Airblast.backupMagFuelReduction * (base.skillLocator.secondary.stock - 1)));
+            heatController = base.GetComponent<PyroHeatComponent>();
+            float cost = HeatWave.heatCost * (100f / (100f + HeatWave.backupMagFuelReduction * (base.skillLocator.secondary.stock - 1)));
             this.heatLevel = Mathf.Min(heatController.GetHeat(), cost);
             if (heatLevel < cost)
             {
@@ -40,13 +40,13 @@ namespace EntityStates.Pyro
                 heatController.ConsumeHeat(cost);
             }
 
-            if (!Airblast.effectPrefab)
+            if (!HeatWave.effectPrefab)
             {
-                //HeatWave.effectPrefab = (Instantiate(typeof(EntityStates.Treebot.Weapon.FireSonicBoom)) as EntityStates.Treebot.Weapon.FireSonicBoom).fireEffectPrefab;
+                HeatWave.effectPrefab = (Instantiate(typeof(EntityStates.Treebot.Weapon.FireSonicBoom)) as EntityStates.Treebot.Weapon.FireSonicBoom).fireEffectPrefab;
             }
-            EffectManager.SimpleMuzzleFlash(Airblast.effectPrefab, base.gameObject, "MuzzleLeft", false);  //TODO: need separate effects for heated/unheated
+            EffectManager.SimpleMuzzleFlash(HeatWave.effectPrefab, base.gameObject, "MuzzleLeft", false);  //TODO: need separate effects for heated/unheated
 
-            Util.PlaySound(Airblast.attackSoundString, base.gameObject);
+            Util.PlaySound(HeatWave.attackSoundString, base.gameObject);
 
             this.aimRay = base.GetAimRay();
             this.childLocator = base.GetModelTransform().GetComponent<ChildLocator>();
@@ -59,7 +59,7 @@ namespace EntityStates.Pyro
                 {
                     base.characterMotor.velocity.y = 0f;
                 }
-                base.characterMotor.ApplyForce(-aimRay.direction * Airblast.selfForce, true, false);
+                base.characterMotor.ApplyForce(-aimRay.direction * HeatWave.selfForce, true, false);
             }
 
             if (NetworkServer.active)
@@ -72,12 +72,12 @@ namespace EntityStates.Pyro
         {
             base.FixedUpdate();
 
-            if (NetworkServer.active && base.fixedAge < Airblast.reflectWindowDuration)
+            if (NetworkServer.active && base.fixedAge < HeatWave.reflectWindowDuration)
             {
                 DeflectServer();
             }
 
-            if (base.fixedAge > Airblast.baseDuration)
+            if (base.fixedAge > HeatWave.baseDuration)
             {
                 this.outer.SetNextStateToMain();
                 return;
@@ -94,7 +94,7 @@ namespace EntityStates.Pyro
 
             bool reflected = false;
 
-            Collider[] array = Physics.OverlapBox(base.transform.position + aimRay.direction * Airblast.hitboxOffset, Airblast.hitboxDimensions, Quaternion.LookRotation(aimRay.direction, Vector3.up), LayerIndex.projectile.mask);
+            Collider[] array = Physics.OverlapBox(base.transform.position + aimRay.direction * HeatWave.hitboxOffset, HeatWave.hitboxDimensions, Quaternion.LookRotation(aimRay.direction, Vector3.up), LayerIndex.projectile.mask);
             for (int i = 0; i < array.Length; i++)
             {
                 ProjectileController pc = array[i].GetComponentInParent<ProjectileController>();
@@ -112,7 +112,7 @@ namespace EntityStates.Pyro
                             position = pc.gameObject.transform.position,
                             rotation = base.characterBody.transform.rotation * Quaternion.FromToRotation(new Vector3(0, 0, 1), aimSpot),
                             owner = base.characterBody.gameObject,
-                            damage = base.characterBody.damage * Airblast.reflectDamageCoefficient,
+                            damage = base.characterBody.damage * HeatWave.reflectDamageCoefficient,
                             force = 3000f,
                             crit = base.RollCrit(),
                             damageColorIndex = DamageColorIndex.Default,
@@ -127,7 +127,7 @@ namespace EntityStates.Pyro
                         if (!reflected)
                         {
                             reflected = true;
-                            Util.PlaySound(Airblast.reflectSoundString, base.gameObject);
+                            Util.PlaySound(HeatWave.reflectSoundString, base.gameObject);
                         }
                     }
                 }
@@ -141,7 +141,7 @@ namespace EntityStates.Pyro
                 return;
             }
             List<HealthComponent> hcList = new List<HealthComponent>();
-            Collider[] array = Physics.OverlapBox(base.transform.position + aimRay.direction * Airblast.hitboxOffset, Airblast.hitboxDimensions, Quaternion.LookRotation(aimRay.direction, Vector3.up), LayerIndex.entityPrecise.mask);
+            Collider[] array = Physics.OverlapBox(base.transform.position + aimRay.direction * HeatWave.hitboxOffset, HeatWave.hitboxDimensions, Quaternion.LookRotation(aimRay.direction, Vector3.up), LayerIndex.entityPrecise.mask);
             for (int i = 0; i < array.Length; i++)
             {
                 HurtBox hurtBox = array[i].GetComponent<HurtBox>();
@@ -158,7 +158,7 @@ namespace EntityStates.Pyro
                             CharacterBody cb = healthComponent.body;
                             if (cb)
                             {
-                                Vector3 forceVector = Airblast.force * aimRay.direction;
+                                Vector3 forceVector = HeatWave.force * aimRay.direction;
                                 Rigidbody rb = cb.rigidbody;
                                 if (rb)
                                 {
@@ -182,12 +182,12 @@ namespace EntityStates.Pyro
 
                                 if (this.hasHeat)   //only deal damage if there is sufficient heat
                                 {
-                                    float heatMult = this.heatLevel / Airblast.heatCost;
+                                    float heatMult = this.heatLevel / HeatWave.heatCost;
                                     healthComponent.TakeDamage(new DamageInfo
                                     {
                                         attacker = base.gameObject,
                                         inflictor = base.gameObject,
-                                        damage = this.damageStat * Airblast.damageCoefficient * heatMult,
+                                        damage = this.damageStat * HeatWave.damageCoefficient * heatMult,
                                         damageColorIndex = DamageColorIndex.Default,
                                         damageType = DamageType.IgniteOnHit,
                                         crit = base.RollCrit(),
@@ -202,7 +202,7 @@ namespace EntityStates.Pyro
                                     {
                                         attacker = base.gameObject,
                                         inflictor = base.gameObject,
-                                        damage = this.damageStat * Airblast.damageCoefficient * heatMult,
+                                        damage = this.damageStat * HeatWave.damageCoefficient * heatMult,
                                         damageColorIndex = DamageColorIndex.Default,
                                         damageType = DamageType.IgniteOnHit,
                                         crit = base.RollCrit(),
@@ -243,13 +243,12 @@ namespace EntityStates.Pyro
 
         private ChildLocator childLocator;
         private Ray aimRay;
-        private HeatComponent heatController;
+        private PyroHeatComponent heatController;
         private bool reflectedProjectile;
         private bool hasHeat;
 
         private float heatLevel;
 
-        private static float hitboxOffset = (Airblast.hitboxDimensions.z / 2f - 0.5f);
+        private static float hitboxOffset = (HeatWave.hitboxDimensions.z / 2f - 0.5f);
     }
 }
-*/

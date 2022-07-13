@@ -1,6 +1,6 @@
-﻿/*using EntityStates;
-using Moonstorm;
+﻿
 using RoR2;
+using Moonstorm.Starstorm2.Components;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -9,18 +9,18 @@ using UnityEngine;
 
 namespace EntityStates.Pyro
 {
-    public class Scorch : BaseSkillState
-	{
-		public override void OnEnter()
-		{
-			base.OnEnter();
+    public class Scorch : BaseState
+    {
+        public override void OnEnter()
+        {
+            base.OnEnter();
 			this.firedShot = false;
-			this.heatController = characterBody.gameObject.GetComponent<HeatComponent>();
+            this.heatController = base.gameObject.GetComponent<PyroHeatComponent>();
 			Util.PlaySound(Scorch.startAttackSoundString, base.gameObject); //TODO: USE LOOPING SOUND
 
 			if (!Scorch.flamethrowerEffectPrefab)
-			{
-				//Scorch.flamethrowerEffectPrefab = (Instantiate(typeof(EntityStates.Mage.Weapon.Flamethrower)) as EntityStates.Mage.Weapon.Flamethrower).flamethrowerEffectPrefab;
+            {
+				Scorch.flamethrowerEffectPrefab = (Instantiate(typeof(EntityStates.Mage.Weapon.Flamethrower)) as EntityStates.Mage.Weapon.Flamethrower).flamethrowerEffectPrefab;
 			}
 
 			Transform modelTransform = base.GetModelTransform();
@@ -60,12 +60,12 @@ namespace EntityStates.Pyro
 			this.tickDuration = Scorch.baseTickDuration / this.attackSpeedStat;
 
 			if (base.characterBody)
-			{
+            {
 				base.characterBody.isSprinting = false;
 			}
 
 			if (base.isAuthority && this.selfForceStopwatch > Scorch.baseTickDuration)
-			{
+            {
 				this.selfForceStopwatch -= Scorch.baseTickDuration;
 				if (base.characterMotor && !base.characterMotor.isGrounded)
 				{
@@ -77,8 +77,8 @@ namespace EntityStates.Pyro
 				}
 			}
 
-			if (this.flamethrowerEffectResetStopwatch > Scorch.flamethrowerEffectResetTimer)    //hacky stuff to get arti's flamethrower effect to loop
-			{
+			if (this.flamethrowerEffectResetStopwatch > Scorch.flamethrowerEffectResetTimer)	//hacky stuff to get arti's flamethrower effect to loop
+            {
 				this.flamethrowerEffectResetStopwatch = 0f;
 				EntityState.Destroy(this.flamethrowerTransform.gameObject);
 				if (this.childLocator)
@@ -98,7 +98,7 @@ namespace EntityStates.Pyro
 			if (this.flamethrowerStopwatch > this.tickDuration)
 			{
 				while (this.flamethrowerStopwatch - this.tickDuration > 0f)
-				{
+                {
 					this.flamethrowerStopwatch -= this.tickDuration;
 				}
 				this.ShootFlame();
@@ -112,7 +112,7 @@ namespace EntityStates.Pyro
 		}
 
 		public override void OnExit()
-		{
+        {
 			Util.PlaySound(Scorch.endAttackSoundString, base.gameObject);
 			if (this.flamethrowerTransform)
 			{
@@ -121,8 +121,8 @@ namespace EntityStates.Pyro
 			base.OnExit();
 		}
 
-		private void ShootFlame()
-		{
+        private void ShootFlame()
+        {
 			this.firedShot = true;
 			if (base.characterBody)
 			{
@@ -165,12 +165,12 @@ namespace EntityStates.Pyro
 			}
 		}
 
-		public override InterruptPriority GetMinimumInterruptPriority()
-		{
+        public override InterruptPriority GetMinimumInterruptPriority()
+        {
 			return InterruptPriority.Skill;
-		}
+        }
 
-		public static string startAttackSoundString = "Play_mage_R_start";
+        public static string startAttackSoundString = "Play_mage_R_start";
 		public static string endAttackSoundString = "Play_mage_R_end";
 		public static GameObject flamethrowerEffectPrefab = null;
 		public static GameObject impactEffectPrefab = Resources.Load<GameObject>("prefabs/effects/impacteffects/missileexplosionvfx");
@@ -182,11 +182,11 @@ namespace EntityStates.Pyro
 		public static float radius = 2.4f;
 		public static float force = 0f;
 		public static float damageCoefficient = 0.6f;
-		public static float baseTickDuration = 0.16f;
-		public static float heatPerTick = 0.025f;
-		public static int burnFrequency = 5;    //When at high heat, apply ignite every X shots. Higher = less frequent, 1 = every shot.
+        public static float baseTickDuration = 0.16f;
+        public static float heatPerTick = 0.025f;
+        public static int burnFrequency = 5;    //When at high heat, apply ignite every X shots. Higher = less frequent, 1 = every shot.
 
-		private HeatComponent heatController;
+        private PyroHeatComponent heatController;
 		private Transform flamethrowerTransform;
 		private Transform muzzleTransform;
 		private ChildLocator childLocator;
@@ -200,4 +200,4 @@ namespace EntityStates.Pyro
 		private static float flamethrowerEffectResetTimer = 1.8f;
 		private float flamethrowerEffectResetStopwatch;
 	}
-}*/
+}
