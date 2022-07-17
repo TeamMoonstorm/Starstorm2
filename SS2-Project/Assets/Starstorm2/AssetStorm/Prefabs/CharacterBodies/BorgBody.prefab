@@ -160,9 +160,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5313463246736428331}
   - component: {fileID: 5198725894830241817}
+  - component: {fileID: 5199087821884108803}
   - component: {fileID: 5198892135970071581}
   - component: {fileID: 5198353458913835271}
-  - component: {fileID: 5199087821884108803}
   - component: {fileID: 5200366843623128486}
   - component: {fileID: 5199008122590209489}
   - component: {fileID: 5199049662970357055}
@@ -243,44 +243,6 @@ MonoBehaviour:
     i15: 0
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
---- !u!114 &5198892135970071581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5311484837698427353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1530905962, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkSpeedPenaltyCoefficient: 1
-  characterDirection: {fileID: 5199049662970357055}
-  muteWalkMotion: 0
-  mass: 100
-  airControl: 0.25
-  disableAirControlUntilCollision: 0
-  generateParametersOnAwake: 1
-  _gravityParameters:
-    environmentalAntiGravityGranterCount: 0
-    antiGravityNeutralizerCount: 0
-    channeledAntiGravityGranterCount: 0
-  _flightParameters:
-    channeledFlightGranterCount: 0
---- !u!114 &5198353458913835271
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5311484837698427353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1549848242, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveVector: {x: 0, y: 0, z: 0}
 --- !u!114 &5199087821884108803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,7 +266,7 @@ MonoBehaviour:
   baseMaxShield: 0
   baseMoveSpeed: 7
   baseAcceleration: 80
-  baseJumpPower: 16.5
+  baseJumpPower: 15.5
   baseDamage: 12
   baseAttackSpeed: 1
   baseCrit: 1
@@ -345,6 +307,44 @@ MonoBehaviour:
   skinIndex: 0
   customKillTotalStatName: 
   overrideCoreTransform: {fileID: 0}
+--- !u!114 &5198892135970071581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5311484837698427353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1530905962, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkSpeedPenaltyCoefficient: 1
+  characterDirection: {fileID: 5199049662970357055}
+  muteWalkMotion: 0
+  mass: 100
+  airControl: 0.25
+  disableAirControlUntilCollision: 0
+  generateParametersOnAwake: 1
+  _gravityParameters:
+    environmentalAntiGravityGranterCount: 0
+    antiGravityNeutralizerCount: 0
+    channeledAntiGravityGranterCount: 0
+  _flightParameters:
+    channeledFlightGranterCount: 0
+--- !u!114 &5198353458913835271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5311484837698427353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1549848242, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveVector: {x: 0, y: 0, z: 0}
 --- !u!114 &5200366843623128486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -748,7 +748,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
-  requireEntitlementIfPlayerControlled: 0
+  requireEntitlementIfPlayerControlled: 1
 --- !u!1 &5311795407171424449
 GameObject:
   m_ObjectHideFlags: 0
