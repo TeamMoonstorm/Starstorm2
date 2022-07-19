@@ -10,31 +10,34 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: Dodge
+  m_Name: EntityStates.Chirr.AreaHeal
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Nemmando.Dodge, Starstorm2, Version=1.0.0.0,
+    assemblyQualifiedName: EntityStates.Chirr.AreaHeal, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
-    - fieldName: duration
+    - fieldName: healFraction
       fieldValue:
-        stringValue: 0.6
+        stringValue: 0.15
         objectValue: {fileID: 0}
-    - fieldName: initialSpeedCoefficient
+    - fieldName: healTimeFraction
       fieldValue:
-        stringValue: 7.5
+        stringValue: 0.2
         objectValue: {fileID: 0}
-    - fieldName: finalSpeedCoefficient
+    - fieldName: baseDuration
       fieldValue:
         stringValue: 1
         objectValue: {fileID: 0}
-    - fieldName: dodgeFOV
+    - fieldName: baseFireDelay
       fieldValue:
-        stringValue: -1
+        stringValue: 0.5
         objectValue: {fileID: 0}
-    - fieldName: JetEffect
+    - fieldName: radius
       fieldValue:
-        stringValue: 
-        objectValue: {fileID: 1130994188944521, guid: 56c9af4e1b3d70f4689434e2a9bc7cb4,
-          type: 3}
+        stringValue: 30
+        objectValue: {fileID: 0}
+    - fieldName: hopVelocity
+      fieldValue:
+        stringValue: 20
+        objectValue: {fileID: 0}

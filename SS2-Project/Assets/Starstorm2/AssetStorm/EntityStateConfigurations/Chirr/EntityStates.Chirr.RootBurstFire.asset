@@ -10,59 +10,59 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: BarrageFire
+  m_Name: EntityStates.Chirr.RootBurstFire
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Nemmando.BarrageFire, Starstorm2, Version=1.0.0.0,
+    assemblyQualifiedName: EntityStates.Chirr.RootBurstFire, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
-    - fieldName: damageCoefficient
+    - fieldName: baseDuration
       fieldValue:
-        stringValue: 0.6
+        stringValue: 0.4
         objectValue: {fileID: 0}
-    - fieldName: procCoefficient
+    - fieldName: minSpread
       fieldValue:
-        stringValue: 0.5
-        objectValue: {fileID: 0}
-    - fieldName: bulletCountPerShot
-      fieldValue:
-        stringValue: 8
-        objectValue: {fileID: 0}
-    - fieldName: range
-      fieldValue:
-        stringValue: 128
+        stringValue: 0
         objectValue: {fileID: 0}
     - fieldName: maxSpread
       fieldValue:
-        stringValue: 30
+        stringValue: 5
         objectValue: {fileID: 0}
-    - fieldName: minBulletCount
+    - fieldName: projSpeed
       fieldValue:
-        stringValue: 2
+        stringValue: 50
         objectValue: {fileID: 0}
-    - fieldName: maxBulletCount
+    - fieldName: minCharge
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: maxCharge
       fieldValue:
         stringValue: 6
         objectValue: {fileID: 0}
-    - fieldName: baseDuration
-      fieldValue:
-        stringValue: 0.8
-        objectValue: {fileID: 0}
-    - fieldName: minTimeBetweenShots
-      fieldValue:
-        stringValue: 0.2
-        objectValue: {fileID: 0}
-    - fieldName: maxTimeBetweenShots
-      fieldValue:
-        stringValue: 0.075
-        objectValue: {fileID: 0}
-    - fieldName: recoil
-      fieldValue:
-        stringValue: 3
-        objectValue: {fileID: 0}
-    - fieldName: tracerPrefab
+    - fieldName: muzzleflastEffectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 1130216254581806, guid: a8b987ae4605db14884dd5fb6ce99301,
+        objectValue: {fileID: 0}
+    - fieldName: projectilePrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 5359033027188040869, guid: af96521acb9975f4b8faf63f9107f76c,
           type: 3}
+    - fieldName: damageCoefficient
+      fieldValue:
+        stringValue: 2
+        objectValue: {fileID: 0}
+    - fieldName: pitchRange
+      fieldValue:
+        stringValue: 2.5
+        objectValue: {fileID: 0}
+    - fieldName: yawSpread
+      fieldValue:
+        stringValue: 7
+        objectValue: {fileID: 0}
+    - fieldName: castRange
+      fieldValue:
+        stringValue: 40
+        objectValue: {fileID: 0}
