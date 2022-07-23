@@ -165,19 +165,18 @@ GameObject:
   - component: {fileID: 5199087821884108803}
   - component: {fileID: 5200366843623128486}
   - component: {fileID: 5199008122590209489}
+  - component: {fileID: 5198614664343890590}
   - component: {fileID: 5199049662970357055}
+  - component: {fileID: 5198807374080690764}
   - component: {fileID: 5198868523282054748}
   - component: {fileID: 5198627847897375243}
-  - component: {fileID: 592356848042733785}
-  - component: {fileID: 5198885553912590727}
-  - component: {fileID: 5198614664343890590}
-  - component: {fileID: 5198807374080690764}
   - component: {fileID: 5200316281388061998}
   - component: {fileID: 5199077103541415719}
   - component: {fileID: 5198657134928875293}
   - component: {fileID: 5198280619272066881}
   - component: {fileID: 5198327608443871973}
   - component: {fileID: 5198769224070552453}
+  - component: {fileID: 5198885553912590727}
   - component: {fileID: 5198634341569236223}
   - component: {fileID: 5199036696950575073}
   - component: {fileID: 5198596167686549839}
@@ -296,29 +295,29 @@ MonoBehaviour:
   bodyIndex: -1
   baseNameToken: SS2_SS2_BORG_NAME
   subtitleNameToken: SS2_SS2_BORG_SUBTITLE
-  bodyFlags: 16
+  bodyFlags: 0
   rootMotionInMainState: 0
   mainRootSpeed: 7
-  baseMaxHealth: 110
-  baseRegen: 1
+  baseMaxHealth: 0
+  baseRegen: 0
   baseMaxShield: 0
-  baseMoveSpeed: 7
-  baseAcceleration: 80
-  baseJumpPower: 16.5
-  baseDamage: 12
-  baseAttackSpeed: 1
-  baseCrit: 1
+  baseMoveSpeed: 0
+  baseAcceleration: 0
+  baseJumpPower: 0
+  baseDamage: 0
+  baseAttackSpeed: 0
+  baseCrit: 0
   baseArmor: 0
   baseVisionDistance: Infinity
   baseJumpCount: 1
   sprintingSpeedMultiplier: 1.45
   autoCalculateLevelStats: 0
-  levelMaxHealth: 33
-  levelRegen: 0.2
+  levelMaxHealth: 0
+  levelRegen: 0
   levelMaxShield: 0
   levelMoveSpeed: 0
   levelJumpPower: 0
-  levelDamage: 2.4
+  levelDamage: 0
   levelAttackSpeed: 0
   levelCrit: 0
   levelArmor: 0
@@ -384,6 +383,24 @@ MonoBehaviour:
   normalizeToFloor: 0
   normalSmoothdampTime: 0.1
   normalMaxAngleDelta: 90
+--- !u!114 &5198614664343890590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5311484837698427353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1297580292, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customName: 
+  initialStateType:
+    _typeName: EntityStates.TestState1, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  mainStateType:
+    _typeName: 
 --- !u!114 &5199049662970357055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -397,13 +414,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveVector: {x: 0, y: 0, z: 0}
-  targetTransform: {fileID: 5313323792665199622}
+  targetTransform: {fileID: 0}
   overrideAnimatorForwardTransform: {fileID: 0}
   rootMotionAccumulator: {fileID: 0}
   modelAnimator: {fileID: 0}
   driveFromRootRotation: 0
   turnSpeed: 720
   turnSoundName: 
+--- !u!114 &5198807374080690764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5311484837698427353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1297580292, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customName: Weapon
+  initialStateType:
+    _typeName: RoR2.RouletteChestController+Idle, RoR2, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  mainStateType:
+    _typeName: RoR2.RouletteChestController+Idle, RoR2, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &5198868523282054748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,7 +452,7 @@ MonoBehaviour:
   m_Script: {fileID: 306635731, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  primary: {fileID: 5198627847897375243}
+  primary: {fileID: 0}
   secondary: {fileID: 0}
   utility: {fileID: 0}
   special: {fileID: 0}
@@ -446,71 +482,6 @@ MonoBehaviour:
   skillName: 
   hideInCharacterSelect: 0
   hasExecutedSuccessfully: 0
---- !u!114 &592356848042733785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5311484837698427353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _skillFamily: {fileID: 11400000, guid: 783c1ce4df7fb34448a8c2601c07a45c, type: 2}
-  skillName: 
-  hideInCharacterSelect: 0
-  hasExecutedSuccessfully: 0
---- !u!114 &5198885553912590727
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5311484837698427353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1918207524, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stateMachines:
-  - {fileID: 5198614664343890590}
-  - {fileID: 5198807374080690764}
---- !u!114 &5198614664343890590
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5311484837698427353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1297580292, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  customName: Body
-  initialStateType:
-    _typeName: EntityStates.SpawnTeleporterState, Assembly-CSharp
-  mainStateType:
-    _typeName: EntityStates.GenericCharacterMain, Assembly-CSharp
---- !u!114 &5198807374080690764
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5311484837698427353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1297580292, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  customName: Weapon
-  initialStateType:
-    _typeName: EntityStates.Idle, Assembly-CSharp
-  mainStateType:
-    _typeName: EntityStates.Idle, Assembly-CSharp
 --- !u!114 &5200316281388061998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -584,7 +555,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathStateMachine: {fileID: 5198614664343890590}
   deathState:
-    _typeName: EntityStates.Commando.DeathState, RoR2, Version=0.0.0.0, Culture=neutral,
+    _typeName: RoR2.DeskPlantController+DeathState, RoR2, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   idleStateMachine: []
 --- !u!114 &5198769224070552453
@@ -604,6 +575,20 @@ MonoBehaviour:
   interpolationFactor: 2
   debugDuplicatePositions: 0
   debugSnapshotReceived: 0
+--- !u!114 &5198885553912590727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5311484837698427353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1918207524, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stateMachines:
+  - {fileID: 5198614664343890590}
 --- !u!114 &5198634341569236223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -731,7 +716,7 @@ MonoBehaviour:
   targetStateMachine: {fileID: 5198614664343890590}
   idleStateMachine: []
   hurtState:
-    _typeName: EntityStates.HurtState, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    _typeName: 
   canBeHitStunned: 1
   canBeStunned: 1
   canBeFrozen: 1
@@ -748,7 +733,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
-  requireEntitlementIfPlayerControlled: 0
+  requireEntitlementIfPlayerControlled: 1
 --- !u!1 &5311795407171424449
 GameObject:
   m_ObjectHideFlags: 0
