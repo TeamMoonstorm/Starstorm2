@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: ChirrMain
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.Chirr.ChirrMain, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: enemyPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 6171661891763488787, guid: eb3eaa6d4189b524dbad4a425e6bd561,
+          type: 3}
+    - fieldName: befriendPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 7176679306960743933, guid: 3ae6902c739467c4097d16782bb1f6b8,
+          type: 3}
+    - fieldName: friendRequiredHealth
+      fieldValue:
+        stringValue: 0.5
+        objectValue: {fileID: 0}
+    - fieldName: enemySearchAngle
+      fieldValue:
+        stringValue: 10
+        objectValue: {fileID: 0}
+    - fieldName: befriendSearchAngle
+      fieldValue:
+        stringValue: 30
+        objectValue: {fileID: 0}
+    - fieldName: hoverVelocity
+      fieldValue:
+        stringValue: -1.1
+        objectValue: {fileID: 0}
+    - fieldName: hoverAcceleration
+      fieldValue:
+        stringValue: 25
+        objectValue: {fileID: 0}
+    - fieldName: chirrFlyBuff
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 11400000, guid: 4ed855adb825aa244900e67713d71a96, type: 2}
+    - fieldName: flyBuffCoefficient
+      fieldValue:
+        stringValue: 0.3
+        objectValue: {fileID: 0}
+    - fieldName: allyBuffCoefficient
+      fieldValue:
+        stringValue: 0.45
+        objectValue: {fileID: 0}
+    - fieldName: enemySlowCoefficient
+      fieldValue:
+        stringValue: 0.45
+        objectValue: {fileID: 0}
+    - fieldName: specialOriginal
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 11400000, guid: d9d78e3245a9ba24a93e77addeb7983b, type: 2}
+    - fieldName: specialCommand
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 11400000, guid: 923d9dfbfb1f66b40ac723aeea5b0592, type: 2}
