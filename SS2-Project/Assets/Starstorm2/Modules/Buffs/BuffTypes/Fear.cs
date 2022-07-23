@@ -17,7 +17,7 @@ namespace Moonstorm.Starstorm2.Buffs
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffFear");
 
-        /*public override void Initialize()
+        public override void Initialize()
         {
             Hook();
         }
@@ -97,6 +97,6 @@ namespace Moonstorm.Starstorm2.Buffs
                         HG.ArrayUtils.ArrayRemoveAtAndResize(ref body.healthComponent.onIncomingDamageReceivers, body.healthComponent.onIncomingDamageReceivers.Length, i);
                 }
             }
-        }*/
+        }
     }
 }

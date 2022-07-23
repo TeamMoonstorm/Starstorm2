@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: EntityStates.Nemmando.ShootGun
+  m_Name: FireIonSummon
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Nemmando.ShootGun, Starstorm2, Version=1.0.0.0,
+    assemblyQualifiedName: EntityStates.Executioner.FireIonSummon, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
     - fieldName: damageCoefficient
       fieldValue:
-        stringValue: 2.1
+        stringValue: 3.8
         objectValue: {fileID: 0}
     - fieldName: procCoefficient
       fieldValue:
@@ -27,25 +27,42 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: baseDuration
       fieldValue:
-        stringValue: 0.3
-        objectValue: {fileID: 0}
-    - fieldName: force
-      fieldValue:
-        stringValue: 400
+        stringValue: 0.075
         objectValue: {fileID: 0}
     - fieldName: recoil
       fieldValue:
-        stringValue: 1.5
+        stringValue: 0.6
+        objectValue: {fileID: 0}
+    - fieldName: aimSnapAngle
+      fieldValue:
+        stringValue: 7.5
         objectValue: {fileID: 0}
     - fieldName: range
       fieldValue:
-        stringValue: 256
+        stringValue: 200
+        objectValue: {fileID: 0}
+    - fieldName: force
+      fieldValue:
+        stringValue: 200
+        objectValue: {fileID: 0}
+    - fieldName: spreadBloomValue
+      fieldValue:
+        stringValue: 0.4
+        objectValue: {fileID: 0}
+    - fieldName: minimumShotBurst
+      fieldValue:
+        stringValue: 5
         objectValue: {fileID: 0}
     - fieldName: muzzleString
       fieldValue:
         stringValue: Muzzle
         objectValue: {fileID: 0}
-    - fieldName: soundString
+    - fieldName: ionEffectPrefab
       fieldValue:
-        stringValue: NemmandoShoot
+        stringValue: 
+        objectValue: {fileID: 5278828488813142746, guid: 9100bf74e3d11dd469b62f2ad760d8bd,
+          type: 3}
+    - fieldName: useAimAssist
+      fieldValue:
+        stringValue: 0
         objectValue: {fileID: 0}

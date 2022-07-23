@@ -10,31 +10,42 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: EntityStates.Executioner.Dash
+  m_Name: ShootGun
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Executioner.Dash, Starstorm2, Version=1.0.0.0,
+    assemblyQualifiedName: EntityStates.Nemmando.ShootGun, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
+    - fieldName: damageCoefficient
+      fieldValue:
+        stringValue: 2.1
+        objectValue: {fileID: 0}
+    - fieldName: procCoefficient
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
     - fieldName: baseDuration
       fieldValue:
-        stringValue: 0.9
+        stringValue: 0.3
         objectValue: {fileID: 0}
-    - fieldName: speedMultiplier
+    - fieldName: force
       fieldValue:
-        stringValue: 3
+        stringValue: 400
         objectValue: {fileID: 0}
-    - fieldName: debuffRadius
+    - fieldName: recoil
       fieldValue:
-        stringValue: 20
+        stringValue: 1.5
         objectValue: {fileID: 0}
-    - fieldName: debuffDuration
+    - fieldName: range
       fieldValue:
-        stringValue: 4
+        stringValue: 256
         objectValue: {fileID: 0}
-    - fieldName: dashEffect
+    - fieldName: muzzleString
       fieldValue:
-        stringValue: 
-        objectValue: {fileID: 6534923719040454523, guid: 88cc4a43e380b2046a3fc4c300898f03,
-          type: 3}
+        stringValue: Muzzle
+        objectValue: {fileID: 0}
+    - fieldName: soundString
+      fieldValue:
+        stringValue: NemmandoShoot
+        objectValue: {fileID: 0}

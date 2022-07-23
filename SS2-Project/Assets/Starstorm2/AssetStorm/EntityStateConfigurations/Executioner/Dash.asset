@@ -10,34 +10,31 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: EntityStates.Executioner.FireTaser
+  m_Name: Dash
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Executioner.FireTaser, Starstorm2, Version=1.0.0.0,
+    assemblyQualifiedName: EntityStates.Executioner.Dash, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
-    - fieldName: damageCoefficient
-      fieldValue:
-        stringValue: 0.8
-        objectValue: {fileID: 0}
-    - fieldName: procCoefficient
-      fieldValue:
-        stringValue: 0.75
-        objectValue: {fileID: 0}
     - fieldName: baseDuration
       fieldValue:
-        stringValue: 0.4
+        stringValue: 0.9
         objectValue: {fileID: 0}
-    - fieldName: recoil
+    - fieldName: speedMultiplier
       fieldValue:
-        stringValue: 0.0
+        stringValue: 3
         objectValue: {fileID: 0}
-    - fieldName: spreadBloom
+    - fieldName: debuffRadius
       fieldValue:
-        stringValue: 0.75
+        stringValue: 20
         objectValue: {fileID: 0}
-    - fieldName: force
+    - fieldName: debuffDuration
       fieldValue:
-        stringValue: 200.0
+        stringValue: 4
         objectValue: {fileID: 0}
+    - fieldName: dashEffect
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 6534923719040454523, guid: 88cc4a43e380b2046a3fc4c300898f03,
+          type: 3}

@@ -10,59 +10,59 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: EntityStates.Nemmando.FireSwordBeam
+  m_Name: FireIonGun
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Nemmando.FireSwordBeam, Starstorm2, Version=1.0.0.0,
+    assemblyQualifiedName: EntityStates.Executioner.FireIonGun, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
-    - fieldName: maxEmission
+    - fieldName: damageCoefficient
       fieldValue:
-        stringValue: 10
-        objectValue: {fileID: 0}
-    - fieldName: minEmission
-      fieldValue:
-        stringValue: 1
-        objectValue: {fileID: 0}
-    - fieldName: maxDamageCoefficient
-      fieldValue:
-        stringValue: 5
-        objectValue: {fileID: 0}
-    - fieldName: minDamageCoefficient
-      fieldValue:
-        stringValue: 1.6
+        stringValue: 3.8
         objectValue: {fileID: 0}
     - fieldName: procCoefficient
       fieldValue:
         stringValue: 1
         objectValue: {fileID: 0}
-    - fieldName: maxRecoil
-      fieldValue:
-        stringValue: 2
-        objectValue: {fileID: 0}
-    - fieldName: minRecoil
-      fieldValue:
-        stringValue: 0.25
-        objectValue: {fileID: 0}
-    - fieldName: maxProjectileSpeed
-      fieldValue:
-        stringValue: 120
-        objectValue: {fileID: 0}
-    - fieldName: minProjectileSpeed
-      fieldValue:
-        stringValue: 50
-        objectValue: {fileID: 0}
     - fieldName: baseDuration
+      fieldValue:
+        stringValue: 0.075
+        objectValue: {fileID: 0}
+    - fieldName: recoil
       fieldValue:
         stringValue: 0.6
         objectValue: {fileID: 0}
-    - fieldName: projectilePrefab
+    - fieldName: aimSnapAngle
+      fieldValue:
+        stringValue: 7.5
+        objectValue: {fileID: 0}
+    - fieldName: range
+      fieldValue:
+        stringValue: 200
+        objectValue: {fileID: 0}
+    - fieldName: force
+      fieldValue:
+        stringValue: 200
+        objectValue: {fileID: 0}
+    - fieldName: spreadBloomValue
+      fieldValue:
+        stringValue: 0.4
+        objectValue: {fileID: 0}
+    - fieldName: minimumShotBurst
+      fieldValue:
+        stringValue: 5
+        objectValue: {fileID: 0}
+    - fieldName: muzzleString
+      fieldValue:
+        stringValue: Muzzle
+        objectValue: {fileID: 0}
+    - fieldName: ionEffectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 1166276589453209, guid: f285ab56eb9a50745b0483ca82c3fbfa,
+        objectValue: {fileID: 5278828488813142746, guid: 9100bf74e3d11dd469b62f2ad760d8bd,
           type: 3}
-    - fieldName: minDamageCoeffficient
+    - fieldName: useAimAssist
       fieldValue:
         stringValue: 0
         objectValue: {fileID: 0}
