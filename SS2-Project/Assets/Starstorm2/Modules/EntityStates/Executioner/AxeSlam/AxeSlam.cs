@@ -38,8 +38,6 @@ namespace EntityStates.Executioner
         private AnimateShaderAlpha[] axeShaderAnimators = Array.Empty<AnimateShaderAlpha>();
 
         private bool hasDoneIntro;
-        private CameraTargetParams.AimRequest aimRequest;
-
         public override void OnEnter()
         {
             base.OnEnter();
@@ -74,9 +72,7 @@ namespace EntityStates.Executioner
             if (isAuthority)
             {
                 characterMotor.Motor.ForceUnground();
-                aimRequest = cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
-
-
+                cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
             }
         }
 
@@ -181,8 +177,7 @@ namespace EntityStates.Executioner
             characterMotor.onHitGroundAuthority -= GroundSlam;
             characterBody.bodyFlags -= CharacterBody.BodyFlags.IgnoreFallDamage;
             if (cameraTargetParams)
-                cameraTargetParams.RemoveRequest(aimRequest);
-                //cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Standard);
+                cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Standard);
             if (NetworkServer.active)
                 characterBody.RemoveBuff(RoR2Content.Buffs.ArmorBoost);
             if (axeShaderAnimators.Length > 0)
