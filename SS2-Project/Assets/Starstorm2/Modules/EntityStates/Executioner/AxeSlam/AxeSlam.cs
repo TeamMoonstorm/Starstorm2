@@ -38,6 +38,18 @@ namespace EntityStates.Executioner
         private AnimateShaderAlpha[] axeShaderAnimators = Array.Empty<AnimateShaderAlpha>();
 
         private bool hasDoneIntro;
+
+        private CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
+        private CharacterCameraParamsData slamCameraParams = new CharacterCameraParamsData
+        {
+            maxPitch = 70f,
+            minPitch = -70f,
+            pivotVerticalOffset = 1f, //how far up should the camera go?
+            idealLocalCameraPos = slamCameraPosition,
+            wallCushion = 0.1f
+        };
+        public static Vector3 slamCameraPosition = new Vector3(0f, 0f, -17.5f); // how far back should the camera go?
+
         public override void OnEnter()
         {
             base.OnEnter();
@@ -72,7 +84,14 @@ namespace EntityStates.Executioner
             if (isAuthority)
             {
                 characterMotor.Motor.ForceUnground();
-                cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
+
+                CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
+                {
+                    cameraParamsData = slamCameraParams,
+                    priority = 0f
+                };
+                camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0.15f);
+                //aimRequest = cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
             }
         }
 
@@ -169,7 +188,6 @@ namespace EntityStates.Executioner
             outer.SetNextStateToMain();
         }
 
-
         public override void OnExit()
         {
             base.OnExit();
@@ -177,7 +195,10 @@ namespace EntityStates.Executioner
             characterMotor.onHitGroundAuthority -= GroundSlam;
             characterBody.bodyFlags -= CharacterBody.BodyFlags.IgnoreFallDamage;
             if (cameraTargetParams)
-                cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Standard);
+            {
+                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, .4f);
+                //cameraTargetParams.RemoveRequest(aimRequest);
+            }
             if (NetworkServer.active)
                 characterBody.RemoveBuff(RoR2Content.Buffs.ArmorBoost);
             if (axeShaderAnimators.Length > 0)
