@@ -155,16 +155,14 @@ namespace Moonstorm.Starstorm2.Survivors
             }
         };
 
-        /*public override void ModifyPrefab()
+        public override void ModifyPrefab()
         {
             base.ModifyPrefab();
 
             var cb = BodyPrefab.GetComponent<CharacterBody>();
             cb.preferredPodPrefab = Resources.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod");
             cb._defaultCrosshairPrefab = Resources.Load<GameObject>("Prefabs/Crosshair/StandardCrosshair");
-            var footstepHandler = BodyPrefab.GetComponent<ModelLocator>().modelTransform.GetComponent<FootstepHandler>();
-            footstepHandler.footstepDustPrefab = Resources.Load<GameObject>("Prefabs/GenericFootstepDust");
-        }*/
+        }
 
         internal static int GetIonCountFromBody(CharacterBody body)
         {

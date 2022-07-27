@@ -168,8 +168,8 @@ GameObject:
   - component: {fileID: 5198614664343890590}
   - component: {fileID: 5199049662970357055}
   - component: {fileID: 5198807374080690764}
-  - component: {fileID: 5198627847897375243}
   - component: {fileID: 5198868523282054748}
+  - component: {fileID: 5198627847897375243}
   - component: {fileID: 5200316281388061998}
   - component: {fileID: 5199077103541415719}
   - component: {fileID: 5198657134928875293}
@@ -255,9 +255,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeedPenaltyCoefficient: 1
-  characterDirection: {fileID: 0}
+  characterDirection: {fileID: 5199049662970357055}
   muteWalkMotion: 0
-  mass: 1
+  mass: 100
   airControl: 0.25
   disableAirControlUntilCollision: 0
   generateParametersOnAwake: 1
@@ -297,7 +297,7 @@ MonoBehaviour:
   subtitleNameToken: SS2_SS2_BORG_SUBTITLE
   bodyFlags: 0
   rootMotionInMainState: 0
-  mainRootSpeed: 0
+  mainRootSpeed: 7
   baseMaxHealth: 0
   baseRegen: 0
   baseMaxShield: 0
@@ -333,8 +333,8 @@ MonoBehaviour:
   hideCrosshair: 0
   aimOriginTransform: {fileID: 0}
   hullClassification: 0
-  portraitIcon: {fileID: 0}
-  bodyColor: {r: 0, g: 0, b: 0, a: 0}
+  portraitIcon: {fileID: 2800000, guid: 569d613e909cca4429fa126c8fc9f44e, type: 3}
+  bodyColor: {r: 0.4, g: 0.6, b: 0.5019608, a: 0}
   isChampion: 0
   currentVehicle: {fileID: 0}
   preferredPodPrefab: {fileID: 0}
@@ -356,7 +356,7 @@ MonoBehaviour:
   m_Script: {fileID: -1067940895, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraParams: {fileID: 0}
+  cameraParams: {fileID: 11400000, guid: 0f32a1587e7bad248a563caf83e62fe4, type: 2}
   cameraPivotTransform: {fileID: 0}
   fovOverride: 0
   recoil: {x: 0, y: 0}
@@ -419,7 +419,7 @@ MonoBehaviour:
   rootMotionAccumulator: {fileID: 0}
   modelAnimator: {fileID: 0}
   driveFromRootRotation: 0
-  turnSpeed: 360
+  turnSpeed: 720
   turnSoundName: 
 --- !u!114 &5198807374080690764
 MonoBehaviour:
@@ -433,28 +433,13 @@ MonoBehaviour:
   m_Script: {fileID: 1297580292, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customName: 
+  customName: Weapon
   initialStateType:
-    _typeName: EntityStates.TestState1, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+    _typeName: RoR2.RouletteChestController+Idle, RoR2, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   mainStateType:
-    _typeName: 
---- !u!114 &5198627847897375243
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5311484837698427353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _skillFamily: {fileID: 0}
-  skillName: 
-  hideInCharacterSelect: 0
-  hasExecutedSuccessfully: 0
+    _typeName: RoR2.RouletteChestController+Idle, RoR2, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &5198868523282054748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,15 +457,31 @@ MonoBehaviour:
   utility: {fileID: 0}
   special: {fileID: 0}
   passiveSkill:
-    enabled: 0
-    skillNameToken: 
-    skillDescriptionToken: 
+    enabled: 1
+    skillNameToken: SS2_BORG_PASSIVE_NAME
+    skillDescriptionToken: SS2_BORG_PASSIVE_DESCRIPTION
     keywordToken: 
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: e9de45abaa572484f8767a80c9991384, type: 3}
   primaryBonusStockOverrideSkill: {fileID: 0}
   secondaryBonusStockOverrideSkill: {fileID: 0}
   utilityBonusStockOverrideSkill: {fileID: 0}
   specialBonusStockOverrideSkill: {fileID: 0}
+--- !u!114 &5198627847897375243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5311484837698427353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillFamily: {fileID: 11400000, guid: 2e01234fb5cd7b24fafff13167dfe35b, type: 2}
+  skillName: 
+  hideInCharacterSelect: 0
+  hasExecutedSuccessfully: 0
 --- !u!114 &5200316281388061998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -513,7 +514,7 @@ MonoBehaviour:
   magnetiCharge: 0
   dontShowHealthbar: 0
   globalDeathEventChanceCoefficient: 1
-  body: {fileID: 0}
+  body: {fileID: 5199087821884108803}
 --- !u!114 &5198657134928875293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -552,9 +553,10 @@ MonoBehaviour:
   m_Script: {fileID: -1277448904, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathStateMachine: {fileID: 0}
+  deathStateMachine: {fileID: 5198614664343890590}
   deathState:
-    _typeName: 
+    _typeName: RoR2.DeskPlantController+DeathState, RoR2, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   idleStateMachine: []
 --- !u!114 &5198769224070552453
 MonoBehaviour:
@@ -585,7 +587,8 @@ MonoBehaviour:
   m_Script: {fileID: 1918207524, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateMachines: []
+  stateMachines:
+  - {fileID: 5198614664343890590}
 --- !u!114 &5198634341569236223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -674,21 +677,21 @@ MonoBehaviour:
   m_Script: {fileID: -1568778350, guid: 050936fea8909af15a3fd3b64da1ff83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharacterController: {fileID: 0}
-  Capsule: {fileID: 0}
-  Rigidbody: {fileID: 0}
+  CharacterController: {fileID: 5198892135970071581}
+  Capsule: {fileID: 5212679950164961357}
+  Rigidbody: {fileID: 5292686311213663035}
   CapsuleRadius: 0.5
   CapsuleHeight: 2
   CapsuleYOffset: 1
   CapsulePhysicsMaterial: {fileID: 0}
   DetectDiscreteCollisions: 0
   GroundDetectionExtraDistance: 0
-  MaxStepHeight: 0.5
+  MaxStepHeight: 0.2
   MinRequiredStepDepth: 0.1
-  MaxStableSlopeAngle: 60
+  MaxStableSlopeAngle: 55
   MaxStableDistanceFromLedge: 0.5
   PreventSnappingOnLedges: 0
-  MaxStableDenivelationAngle: 180
+  MaxStableDenivelationAngle: 55
   RigidbodyInteractionType: 0
   PreserveAttachedRigidbodyMomentum: 1
   HasPlanarConstraint: 0
@@ -710,7 +713,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitThreshold: 0.1
-  targetStateMachine: {fileID: 0}
+  targetStateMachine: {fileID: 5198614664343890590}
   idleStateMachine: []
   hurtState:
     _typeName: 
@@ -730,7 +733,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
-  requireEntitlementIfPlayerControlled: 0
+  requireEntitlementIfPlayerControlled: 1
 --- !u!1 &5311795407171424449
 GameObject:
   m_ObjectHideFlags: 0

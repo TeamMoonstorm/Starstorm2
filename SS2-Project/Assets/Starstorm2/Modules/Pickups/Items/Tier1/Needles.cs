@@ -22,7 +22,7 @@ namespace Moonstorm.Starstorm2.Items
 
         [ConfigurableField(ConfigDesc = "Amount of buildup debuffs needed before the actual needles debuff gets applied")]
         [TokenModifier(token, StatTypes.Default, 3)]
-        public static float neededBuildupAmount = 5f;
+        public static float neededBuildupAmount = 2f;
 
         [ConfigurableField(ConfigDesc = "Duration of the actual needles debuff, in seconds.")]
         [TokenModifier(token, StatTypes.Default, 4)]
