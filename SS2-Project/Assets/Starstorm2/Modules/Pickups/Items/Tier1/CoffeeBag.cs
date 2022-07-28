@@ -4,9 +4,9 @@ using RoR2.Items;
 
 namespace Moonstorm.Starstorm2.Items
 {
+    [DisabledContent]
     public sealed class CoffeeBag : ItemBase
     {
-        [DisabledContent]
         public const string token = "SS2_ITEM_COFFEEBAG_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("CoffeeBag");
 
