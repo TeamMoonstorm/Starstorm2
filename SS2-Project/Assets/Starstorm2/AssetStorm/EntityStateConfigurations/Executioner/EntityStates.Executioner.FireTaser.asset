@@ -10,28 +10,28 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: FirePistol
+  m_Name: EntityStates.Executioner.FireTaser
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Executioner.FirePistol, Starstorm2, Version=1.0.0.0,
+    assemblyQualifiedName: EntityStates.Executioner.FireTaser, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
     - fieldName: damageCoefficient
       fieldValue:
-        stringValue: 3
+        stringValue: 0.8
         objectValue: {fileID: 0}
     - fieldName: procCoefficient
       fieldValue:
-        stringValue: 1
+        stringValue: 0.75
         objectValue: {fileID: 0}
     - fieldName: baseDuration
       fieldValue:
-        stringValue: 0.65
+        stringValue: 0.4
         objectValue: {fileID: 0}
     - fieldName: recoil
       fieldValue:
-        stringValue: 2
+        stringValue: 0.0
         objectValue: {fileID: 0}
     - fieldName: spreadBloom
       fieldValue:
@@ -39,5 +39,5 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: force
       fieldValue:
-        stringValue: 200
+        stringValue: 200.0
         objectValue: {fileID: 0}

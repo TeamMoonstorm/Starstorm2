@@ -38,7 +38,7 @@ namespace Moonstorm.Starstorm2.Items
                 if (dotController)
                     hasDot = dotController.HasDotActive(Trematodes.index);
 
-                if (victim.combinedHealthFraction < missingHealthPercentage && !hasDot)
+                if (victim.combinedHealthFraction < missingHealthPercentage && !hasDot && (victim.gameObject != attacker))
                 {
                     var dotInfo = new InflictDotInfo()
                     {

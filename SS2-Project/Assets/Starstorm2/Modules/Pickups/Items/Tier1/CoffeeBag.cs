@@ -6,6 +6,7 @@ namespace Moonstorm.Starstorm2.Items
 {
     public sealed class CoffeeBag : ItemBase
     {
+        [DisabledContent]
         public const string token = "SS2_ITEM_COFFEEBAG_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("CoffeeBag");
 

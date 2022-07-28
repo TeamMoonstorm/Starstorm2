@@ -7,6 +7,7 @@ namespace Moonstorm.Starstorm2.Items
 {
     public sealed class ErraticGadget : ItemBase
     {
+        [DisabledContent]
         private const string token = "SS2_ITEM_ERRATICGADGET_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ErraticGadget");
 

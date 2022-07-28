@@ -26,7 +26,7 @@ namespace Moonstorm.Starstorm2.Items
 
         [ConfigurableField(ConfigDesc = "Duration of the actual needles debuff, in seconds.")]
         [TokenModifier(token, StatTypes.Default, 4)]
-        public static float needleBuffDuration = 4f;
+        public static float needleBuffDuration = 8f;
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
         {
