@@ -43,7 +43,7 @@ namespace EntityStates.Nemmando
             hitCount = Mathf.RoundToInt(Util.Remap(charge, 0f, 1f, minHits, maxHits));
             damageCoefficient = Util.Remap(charge, 0f, 1f, minDamageCoefficient, maxDamageCoefficient);
             radius = Util.Remap(charge, 0f, 1f, minRadius, maxRadius);
-            emission = Util.Remap(charge, 0f, 1f, minEmission, maxEmission);
+            emission = Util.Remap(charge, 1f, 2f, minEmission, maxEmission);
             //nemmandoController = GetComponent<NemmandoController>();
             characterBody.hideCrosshair = false;
 
@@ -148,7 +148,7 @@ namespace EntityStates.Nemmando
             base.OnExit();
             if (cameraTargetParams)
                 cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Standard);
-            //swordMat.SetFloat("_EmPower", minimumEmission);
+            swordMat.SetFloat("_EmPower", minimumEmission);
             //if (nemmandoController)
             //  nemmandoController.UncoverScreen();
         }

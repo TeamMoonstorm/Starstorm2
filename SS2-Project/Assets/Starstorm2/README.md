@@ -10,7 +10,7 @@ More information on Starstorm, including features and content to look forward to
 
 Nightly builds are unstable versions of Starstorm 2! This release may be buggy, and if you're looking for stable gameplay, we recommend using the stable version of the mod found at https://thunderstore.io/package/TeamMoonstorm/Starstorm2/. If you do find any issues, report them in our Discord, linked above.
 
-Note that updates may not truly be Nightly.
+Note that updates are not literally Nightly.
 
 ## Features
 
@@ -32,8 +32,8 @@ Note that updates may not truly be Nightly.
 
 ## Credits
 
-* Code - Anreol, Flan, Gaforb, KevinFromHPCustomerService, Moffein, Nebby, rob, swuff★, sebacame, Shared, TheTimesweeper, Vale-X, xpcybic, Xubas
-* Art/Modelling/Animation - Anreol, Bolty, bruh, Cexeub, Draymarc, JestAnotherAnimator, Gem, LucidInceptor, KevinFromHPCustomerService, Plexus, PapaZach, QuietAnon, redacted, rob, SOM, Spenny, swuff★, xpcybic, Reithierion, UnknownGlaze
+* Code - Anreol, Flan, Gaforb, KevinFromHPCustomerService, malfaisant, Moffein, Nebby, rob, swuff★, sebacame, Shared, TheTimesweeper, Vale-X, xpcybic, Xubas, Zenithrium
+* Art/Modelling/Animation - Anreol, Bolty, bruh, Cexeub, Draymarc, JestAnotherAnimator, Gem, LucidInceptor, KevinFromHPCustomerService, Plexus, PapaZach, QuietAnon, redacted, rob, SOM, Spenny, swuff★, xpcybic, Reithierion, UnknownGlaze, Zenithrium
 * Writing - Blimblam, Lyrical Endymion, swuff★, QandQuestion, T_Dimensional
 * Translations - Anreol (Spanish), MysticSword (Russian)
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze
