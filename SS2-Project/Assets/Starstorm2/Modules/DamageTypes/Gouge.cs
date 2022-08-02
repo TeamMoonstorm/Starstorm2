@@ -27,6 +27,7 @@ namespace Moonstorm.Starstorm2.DamageTypes
             DotController.onDotInflictedServerGlobal += RefreshGouge;
         }
 
+        //What the hell does this do? I tried commenting this out, but it still refreshes Gouge. - mal
         private void RefreshGouge(DotController dotController, ref InflictDotInfo inflictDotInfo)
         {
             if (inflictDotInfo.dotIndex == DotIndex)

@@ -14,7 +14,7 @@ namespace Moonstorm.Starstorm2.Survivors
         public override void ModifyPrefab()
         {
             var cb = BodyPrefab.GetComponent<CharacterBody>();
-            cb._defaultCrosshairPrefab = Resources.Load<GameObject>("Prefabs/Crosshair/StandardCrosshair");
+            cb._defaultCrosshairPrefab = Resources.Load<GameObject>("Prefabs/Crosshair/MageCrosshair");
         }
     }
 }
