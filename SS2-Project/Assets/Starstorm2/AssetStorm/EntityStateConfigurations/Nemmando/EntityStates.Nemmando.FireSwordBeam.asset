@@ -10,55 +10,59 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: NemmandoBossState
+  m_Name: EntityStates.Nemmando.FireSwordBeam
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Events.NemmandoBossState, Starstorm2, Version=1.0.0.0,
+    assemblyQualifiedName: EntityStates.Nemmando.FireSwordBeam, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
-    - fieldName: eventCard
+    - fieldName: maxEmission
+      fieldValue:
+        stringValue: 10
+        objectValue: {fileID: 0}
+    - fieldName: minEmission
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: maxDamageCoefficient
+      fieldValue:
+        stringValue: 5
+        objectValue: {fileID: 0}
+    - fieldName: minDamageCoefficient
+      fieldValue:
+        stringValue: 1.6
+        objectValue: {fileID: 0}
+    - fieldName: procCoefficient
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: maxRecoil
+      fieldValue:
+        stringValue: 2
+        objectValue: {fileID: 0}
+    - fieldName: minRecoil
+      fieldValue:
+        stringValue: 0.25
+        objectValue: {fileID: 0}
+    - fieldName: maxProjectileSpeed
+      fieldValue:
+        stringValue: 120
+        objectValue: {fileID: 0}
+    - fieldName: minProjectileSpeed
+      fieldValue:
+        stringValue: 50
+        objectValue: {fileID: 0}
+    - fieldName: baseDuration
+      fieldValue:
+        stringValue: 0.6
+        objectValue: {fileID: 0}
+    - fieldName: projectilePrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 0}
-    - fieldName: warningDuration
-      fieldValue:
-        stringValue: 15
-        objectValue: {fileID: 0}
-    - fieldName: fadeDuration
-      fieldValue:
-        stringValue: 7
-        objectValue: {fileID: 0}
-    - fieldName: spawnCard
-      fieldValue:
-        stringValue: 
-        objectValue: {fileID: 11400000, guid: 1e9bba60b294faf479f0719f3e4ca839, type: 2}
-    - fieldName: spawnDistanceString
-      fieldValue:
-        stringValue: Close
-        objectValue: {fileID: 0}
-    - fieldName: effectPrefab
-      fieldValue:
-        stringValue: 
-        objectValue: {fileID: 8824807275847475445, guid: 7e679ccf587050a47a5988b9b36c591f,
+        objectValue: {fileID: 1166276589453209, guid: f285ab56eb9a50745b0483ca82c3fbfa,
           type: 3}
-    - fieldName: drizzleDuration
-      fieldValue:
-        stringValue: 0
-        objectValue: {fileID: 0}
-    - fieldName: typhoonDuration
-      fieldValue:
-        stringValue: 0
-        objectValue: {fileID: 0}
-    - fieldName: minDuration
-      fieldValue:
-        stringValue: 0
-        objectValue: {fileID: 0}
-    - fieldName: maxDuration
-      fieldValue:
-        stringValue: 0
-        objectValue: {fileID: 0}
-    - fieldName: warningDur
+    - fieldName: minDamageCoeffficient
       fieldValue:
         stringValue: 0
         objectValue: {fileID: 0}
