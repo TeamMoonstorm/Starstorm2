@@ -1,6 +1,7 @@
 ﻿using HG;
 using RoR2;
 using RoR2.Orbs;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -22,6 +23,7 @@ namespace Moonstorm.Starstorm2.Items
             GlobalEventManager.onCharacterLevelUp += GlobalEventManager_onCharacterLevelUp;
             SceneExitController.onBeginExit += SceneExitController_onBeginExit;
             Stage.onStageStartGlobal += Stage_onServerStageBegin; //Cannot be onServerStageBegin because the players havent spawned by then!
+            //PickupDropletController.onDropletHitGroundServer += NkotaApplyParticleEffect;
         }
 
         private void Stage_onServerStageBegin(Stage obj)
@@ -56,13 +58,29 @@ namespace Moonstorm.Starstorm2.Items
             NkotasManager.ActivateSingle(obj);
         }
 
+        //private void NkotaApplyParticleEffect(ref GenericPickupController.CreatePickupInfo createPickupInfo, ref bool shouldSpawn)
+        //{
+        //    var token = createPickupInfo.prefabOverride.GetComponent<SS2Util.NkotaToken>();
+        //    if (token)
+        //    {
+        //        EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("NkotasIdleEffect"), new EffectData
+        //        {
+        //            origin = createPickupInfo.position,
+        //            scale = 1f,
+        //        }, true);
+        //    }
+        //   
+        //}
+
         public static class NkotasManager
         {
             public static void ActivateSingle(CharacterBody body)
             {
                 if (body.isPlayerControlled)
                 {
-                    SS2Util.DropShipCall(body.transform, 1, TeamManager.instance.GetTeamLevel(body.teamComponent.teamIndex), 1, ItemTier.Tier1, "NkotasIdleEffect");
+                    int count = body.inventory.GetItemCount(SS2Assets.LoadAsset<ItemDef>("NkotasHeritage"));
+                    Debug.Log("it's happening!");
+                    SS2Util.DropShipCall(body.transform, 1, TeamManager.instance.GetTeamLevel(body.teamComponent.teamIndex), count, ItemTier.Tier1, "NkotasIdleEffect");
 
                     Transform effectSpawnLocation = body.transform; //Will only get overwritten if it succesfully find the child
                     ModelLocator modelLocator = body.modelLocator;
