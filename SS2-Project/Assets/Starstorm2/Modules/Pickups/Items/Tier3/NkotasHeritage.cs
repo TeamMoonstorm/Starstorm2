@@ -79,7 +79,6 @@ namespace Moonstorm.Starstorm2.Items
                 if (body.isPlayerControlled)
                 {
                     int count = body.inventory.GetItemCount(SS2Assets.LoadAsset<ItemDef>("NkotasHeritage"));
-                    Debug.Log("it's happening!");
                     SS2Util.DropShipCall(body.transform, 1, TeamManager.instance.GetTeamLevel(body.teamComponent.teamIndex), count, ItemTier.Tier1, "NkotasIdleEffect");
 
                     Transform effectSpawnLocation = body.transform; //Will only get overwritten if it succesfully find the child
