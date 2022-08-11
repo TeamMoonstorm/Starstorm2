@@ -4,7 +4,6 @@ using System.Linq;
 
 namespace Moonstorm.Starstorm2.Unlocks.Pickups
 {
-    [DisabledContent]
     public sealed class NkotasHeritageUnlockable : UnlockableBase
     {
         public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.item.nkotasheritage");
@@ -51,12 +50,17 @@ namespace Moonstorm.Starstorm2.Unlocks.Pickups
             {
                 if ((bool)currentInventory)
                 {
-                    int num = 25;
-                    int uniqueItems = currentInventory.itemAcquisitionOrder.Count(x => currentInventory.GetItemCount(x) > 0 && ItemTierCatalog.GetItemTierDef(ItemCatalog.GetItemDef(x).tier).isDroppable);
-                    if (uniqueItems >= num)
-                    {
+                    int num = 25; //required unique items for unlock
+
+                    if(currentInventory.itemAcquisitionOrder.Count >= num) {
                         Grant();
                     }
+
+                    //int uniqueItems = currentInventory.itemAcquisitionOrder.Count(x => currentInventory.GetItemCount(x) > 0 && ItemTierCatalog.GetItemTierDef(ItemCatalog.GetItemDef(x).tier).isDroppable);
+                    //if (uniqueItems >= num)
+                    //{
+                    //    Grant();
+                    //}
                 }
             }
             private void OnMasterChanged()
