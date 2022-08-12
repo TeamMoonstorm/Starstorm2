@@ -2,109 +2,72 @@
 {
     /*public class BaseEmote : BaseState
     {
-           public class BaseEmote : BaseState
-    {
         public string soundString;
         public string animString;
         public float duration;
         public float animDuration;
-        public bool explosive;
+        public bool normalizeModel;
 
-        private bool hasExploded;
         private uint activePlayID;
         private Animator animator;
         private ChildLocator childLocator;
-
-        public LocalUser localUser;
-
-        private CharacterCameraParamsData emoteCameraParams = new CharacterCameraParamsData() {
-            maxPitch = 70,
-            minPitch = -70,
-            pivotVerticalOffset = 1f,
-            idealLocalCameraPos = emoteCameraPosition,
-            wallCushion = 0.1f,
-        };
-
-        public static Vector3 emoteCameraPosition = new Vector3(0, 0.0f, -7.9f);
-
-        private CameraParamsOverrideHandle camOverrideHandle;
+        private CharacterCameraParams defaultParams;
 
         public override void OnEnter()
         {
             base.OnEnter();
-            this.animator = base.GetModelAnimator();
-            this.childLocator = base.GetModelChildLocator();
-            this.localUser = LocalUserManager.readOnlyLocalUsersList[0];
+            animator = GetModelAnimator();
+            childLocator = GetModelChildLocator();
 
-            base.characterBody.hideCrosshair = true;
+            characterBody.hideCrosshair = true;
 
-            if (base.GetAimAnimator()) base.GetAimAnimator().enabled = false;
-            this.animator.SetLayerWeight(animator.GetLayerIndex("AimPitch"), 0);
-            this.animator.SetLayerWeight(animator.GetLayerIndex("AimYaw"), 0);
+            if (GetAimAnimator()) GetAimAnimator().enabled = false;
+            animator.SetLayerWeight(animator.GetLayerIndex("AimPitch"), 0);
+            animator.SetLayerWeight(animator.GetLayerIndex("AimYaw"), 0);
 
-            if (this.animDuration == 0 && this.duration != 0) this.animDuration = this.duration;
+            if (animDuration == 0 && duration != 0) animDuration = duration;
 
-            if (this.duration > 0) base.PlayAnimation("FullBody, Override", this.animString, "Emote.playbackRate", this.duration);
-            else base.PlayAnimation("FullBody, Override", this.animString, "Emote.playbackRate", this.animDuration);
+            PlayAnimation("FullBody, Override", animString, "Emote.playbackRate", animDuration);
 
-            this.activePlayID = Util.PlaySound(soundString, base.gameObject);
+            activePlayID = Util.PlaySound(soundString, gameObject);
 
-            CameraParamsOverrideRequest request = new CameraParamsOverrideRequest {
-                cameraParamsData = emoteCameraParams,
-                priority = 0,
-            };
+            if (normalizeModel)
+            {
+                if (modelLocator)
+                {
+                    modelLocator.normalizeToFloor = true;
+                }
+            }
 
-            camOverrideHandle = base.cameraTargetParams.AddParamsOverride(request, 0.5f);
-
+            defaultParams = cameraTargetParams.cameraParams;
+            cameraTargetParams.cameraParams = CameraParams.emoteCameraParams;
         }
 
         public override void OnExit()
         {
             base.OnExit();
 
-            base.characterBody.hideCrosshair = false;
+            characterBody.hideCrosshair = false;
 
-            if (base.GetAimAnimator()) base.GetAimAnimator().enabled = true;
-            this.animator.SetLayerWeight(animator.GetLayerIndex("AimPitch"), 1);
-            this.animator.SetLayerWeight(animator.GetLayerIndex("AimYaw"), 1);
-
-            base.PlayAnimation("FullBody, Override", "BufferEmpty");
-            if (this.activePlayID != 0) AkSoundEngine.StopPlayingID(this.activePlayID);
-
-            this.childLocator.FindChild("PickL").localScale = Vector3.one;
-            this.childLocator.FindChild("PickR").localScale = Vector3.one;
-
-            base.cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 0.5f);
-        }
-
-        private void Explode()
-        {
-            if (!this.hasExploded)
+            if (GetAimAnimator()) GetAimAnimator().enabled = true;
+            if (animator)
             {
-                this.hasExploded = true;
-
-                BlastAttack blastAttack = new BlastAttack();
-                blastAttack.radius = 8f;
-                blastAttack.procCoefficient = 1f;
-                blastAttack.position = base.characterBody.corePosition + (0.5f * base.characterDirection.forward) + (Vector3.up * - 0.25f);
-                blastAttack.attacker = null;
-                blastAttack.crit = base.RollCrit();
-                blastAttack.baseDamage = base.characterBody.damage * 100f;
-                blastAttack.falloffModel = BlastAttack.FalloffModel.SweetSpot;
-                blastAttack.baseForce = 8000f;
-                blastAttack.teamIndex = TeamComponent.GetObjectTeam(blastAttack.attacker);
-                blastAttack.damageType = DamageType.BypassOneShotProtection;
-                blastAttack.attackerFiltering = AttackerFiltering.AlwaysHit;
-                blastAttack.Fire();
-
-                EffectData effectData = new EffectData();
-                effectData.origin = base.characterBody.footPosition;
-                effectData.scale = 32;
-
-                EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/OmniEffect/OmniExplosionVFX"), effectData, false);
-                Util.PlaySound(DiggerPlugin.Sounds.ToTheStarsExplosion, base.gameObject);
-                Util.PlaySound(DiggerPlugin.Sounds.Beep, base.gameObject);
+                animator.SetLayerWeight(animator.GetLayerIndex("AimPitch"), 1);
+                animator.SetLayerWeight(animator.GetLayerIndex("AimYaw"), 1);
             }
+
+            if (normalizeModel)
+            {
+                if (modelLocator)
+                {
+                    modelLocator.normalizeToFloor = false;
+                }
+            }
+
+            PlayAnimation("FullBody, Override", "BufferEmpty");
+            if (activePlayID != 0) AkSoundEngine.StopPlayingID(activePlayID);
+
+            cameraTargetParams.cameraParams = defaultParams;
         }
 
         public override void FixedUpdate()
@@ -113,21 +76,21 @@
 
             bool flag = false;
 
-            if (base.characterMotor)
+            if (characterMotor)
             {
-                if (!base.characterMotor.isGrounded) flag = true;
-                if (base.characterMotor.velocity != Vector3.zero) flag = true;
+                if (!characterMotor.isGrounded) flag = true;
+                if (characterMotor.velocity != Vector3.zero) flag = true;
             }
-             
-            if (base.inputBank)
-            {
-                if (base.inputBank.skill1.down) flag = true;
-                if (base.inputBank.skill2.down) flag = true;
-                if (base.inputBank.skill3.down) flag = true;
-                if (base.inputBank.skill4.down) flag = true;
-                if (base.inputBank.jump.down) flag = true;
 
-                if (base.inputBank.moveVector != Vector3.zero) flag = true;
+            if (inputBank)
+            {
+                if (inputBank.skill1.down) flag = true;
+                if (inputBank.skill2.down) flag = true;
+                if (inputBank.skill3.down) flag = true;
+                if (inputBank.skill4.down) flag = true;
+                if (inputBank.jump.down) flag = true;
+
+                if (inputBank.moveVector != Vector3.zero) flag = true;
             }
 
             //emote cancels
