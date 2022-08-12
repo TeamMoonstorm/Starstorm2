@@ -8,7 +8,9 @@
         public string animString;
         public float duration;
         public float animDuration;
+        public bool explosive;
 
+        private bool hasExploded;
         private uint activePlayID;
         private Animator animator;
         private ChildLocator childLocator;
@@ -75,6 +77,36 @@
             base.cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 0.5f);
         }
 
+        private void Explode()
+        {
+            if (!this.hasExploded)
+            {
+                this.hasExploded = true;
+
+                BlastAttack blastAttack = new BlastAttack();
+                blastAttack.radius = 8f;
+                blastAttack.procCoefficient = 1f;
+                blastAttack.position = base.characterBody.corePosition + (0.5f * base.characterDirection.forward) + (Vector3.up * - 0.25f);
+                blastAttack.attacker = null;
+                blastAttack.crit = base.RollCrit();
+                blastAttack.baseDamage = base.characterBody.damage * 100f;
+                blastAttack.falloffModel = BlastAttack.FalloffModel.SweetSpot;
+                blastAttack.baseForce = 8000f;
+                blastAttack.teamIndex = TeamComponent.GetObjectTeam(blastAttack.attacker);
+                blastAttack.damageType = DamageType.BypassOneShotProtection;
+                blastAttack.attackerFiltering = AttackerFiltering.AlwaysHit;
+                blastAttack.Fire();
+
+                EffectData effectData = new EffectData();
+                effectData.origin = base.characterBody.footPosition;
+                effectData.scale = 32;
+
+                EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/OmniEffect/OmniExplosionVFX"), effectData, false);
+                Util.PlaySound(DiggerPlugin.Sounds.ToTheStarsExplosion, base.gameObject);
+                Util.PlaySound(DiggerPlugin.Sounds.Beep, base.gameObject);
+            }
+        }
+
         public override void FixedUpdate()
         {
             base.FixedUpdate();
@@ -125,5 +157,5 @@
         {
             return InterruptPriority.Any;
         }
-    }
-}/*
+    }*/
+}
