@@ -30,6 +30,7 @@ namespace Moonstorm.Starstorm2.Items
                             damageMultiplier = 1f + (stack * 1f)
                             //If you're trying to configure this and are so desperate you've come here, I don't have a damn clue.
                         };
+                        StrengthenBurnUtils.CheckDotForUpgrade(report.attackerBody.inventory, ref dotInfo);
                         DotController.InflictDot(ref dotInfo);
                         body.master.GiveMoney((uint)(stack * (Run.instance.stageClearCount + (1 * 1f))));
                         //MSUtil.PlayNetworkedSFX("MoltenCoin", report.victim.gameObject.transform.position);
