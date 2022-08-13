@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b2a16891c8108e48883bce0009b7835, type: 3}
+  m_Name: ExecutionerBody
+  m_EditorClassIdentifier: 
+  idrs: {fileID: 11400000, guid: 0355e491a7de95543816fdcb0a744199, type: 2}
+  namedRuleGroups:
+  - keyAsset:
+      address: 
+      asset: {fileID: 11400000, guid: 70eccf52134613f4f9009e58c263fec9, type: 2}
+      loadAssetFrom: 1
+    rules:
+    - ruleType: 0
+      displayPrefab:
+        address: 
+        asset: {fileID: 186780590763755894, guid: a3b323810fe1ea74c9f1583bbe5a5911,
+          type: 3}
+      childName: DisplayLQSpeaker
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+      finishedRule:
+        ruleType: 0
+        followerPrefab: {fileID: 0}
+        childName: 
+        localPos: {x: 0, y: 0, z: 0}
+        localAngles: {x: 0, y: 0, z: 0}
+        localScale: {x: 0, y: 0, z: 0}
+        limbMask: 0
+  - keyAsset:
+      address: 
+      asset: {fileID: 11400000, guid: d87d819d2877c81468e49fce697781cd, type: 2}
+      loadAssetFrom: 1
+    rules:
+    - ruleType: 0
+      displayPrefab:
+        address: 
+        asset: {fileID: 7407229907847124157, guid: 41c106f9c3197e44fa700a701c0904f0,
+          type: 3}
+      childName: DisplayRelicOfForce
+      localPos: {x: 1, y: 1, z: 1}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+      finishedRule:
+        ruleType: 0
+        followerPrefab: {fileID: 0}
+        childName: 
+        localPos: {x: 0, y: 0, z: 0}
+        localAngles: {x: 0, y: 0, z: 0}
+        localScale: {x: 0, y: 0, z: 0}
+        limbMask: 0

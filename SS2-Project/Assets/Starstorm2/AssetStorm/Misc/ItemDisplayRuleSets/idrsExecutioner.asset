@@ -12,7 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: -1888550019, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: idrsExecutioner
   m_EditorClassIdentifier: 
-  namedItemRuleGroups: []
+  namedItemRuleGroups:
+  - name: LQSpeakers
+    displayRuleGroup:
+      rules:
+      - ruleType: 0
+        followerPrefab: {fileID: 186780590763755894, guid: a3b323810fe1ea74c9f1583bbe5a5911,
+          type: 3}
+        childName: DisplayLQSpeakers
+        localPos: {x: 0, y: 0, z: 0}
+        localAngles: {x: 0, y: 0, z: 0}
+        localScale: {x: 1, y: 1, z: 1}
+        limbMask: 0
   namedEquipmentRuleGroups:
   - name: AffixVoid
     displayRuleGroup:
