@@ -15,7 +15,7 @@ namespace Moonstorm.Starstorm2
             List<PickupIndex> dropList;
             float rarityscale = tierWeight * (float)(Math.Sqrt(teamLevel * 13) - 4); //I have absolutely no fucking idea what this is
             if (forcetier == ItemTier.Boss)
-                dropList = Run.instance.availableLunarCombinedDropList;
+                dropList = Run.instance.availableBossDropList;
             else if (forcetier == ItemTier.Lunar)
                 dropList = Run.instance.availableLunarCombinedDropList;
             else if (Util.CheckRoll(0.5f * rarityscale - 1) || teamLevel >= 26 || forcetier == ItemTier.Tier3)
@@ -29,14 +29,16 @@ namespace Moonstorm.Starstorm2
             if (amount > 1)
             {
                 float angle = 360f / (float)amount;
-                Vector3 vector = Quaternion.AngleAxis((float)UnityEngine.Random.Range(0, 360), Vector3.up) * (Vector3.up * 40f + Vector3.forward * 5f);
+                Vector3 vector = Quaternion.AngleAxis((float)UnityEngine.Random.Range(0, 360), Vector3.up) * (Vector3.up * 15f + Vector3.forward * 5f);
                 Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
                 for (int i = 0; i < amount; i++)
                 {
-                    if (theWorstCodeOfTheYear != null)
-                        CreateVFXDroplet(dropList[item], origin.position, new Vector3(0, 0, 0), theWorstCodeOfTheYear);
-                    else
-                        PickupDropletController.CreatePickupDroplet(dropList[item], origin.position, vector);
+                    //if (theWorstCodeOfTheYear != null)
+                    //    CreateVFXDroplet(dropList[item], origin.position, vector, theWorstCodeOfTheYear);
+                    //    
+                    //else
+                    //    PickupDropletController.CreatePickupDroplet(dropList[item], origin.position, vector);
+                    PickupDropletController.CreatePickupDroplet(dropList[item], origin.position, vector);
                     vector = rotation * vector;
                 }
                 return;
@@ -44,19 +46,20 @@ namespace Moonstorm.Starstorm2
 
             if (theWorstCodeOfTheYear != null)
             {
-                CreateVFXDroplet(dropList[item], origin.position, new Vector3(0, 0, 0), theWorstCodeOfTheYear);
+                PickupDropletController.CreatePickupDroplet(dropList[item], origin.position, new Vector3(0, 15, 0));
+                //CreateVFXDroplet(dropList[item], origin.position, new Vector3(0, 15, 0), theWorstCodeOfTheYear);
                 return;
             }
-            PickupDropletController.CreatePickupDroplet(dropList[item], origin.position, new Vector3(0, 0, 0));
+            PickupDropletController.CreatePickupDroplet(dropList[item], origin.position, new Vector3(0, 15, 0));
         }
 
         public static ItemDef NkotasRiggedItemDrop(int tierWeight, uint teamLevel = 1, int forcetier = 0)
         {
             List<PickupIndex> dropList;
-            float rarityscale = tierWeight * (float)(Math.Sqrt(teamLevel * 13) - 4); //I have absolutely no fucking idea what this is
-            if (Util.CheckRoll(0.5f * rarityscale - 1) || teamLevel >= 26 || (forcetier == 3 && forcetier != 0))
+            float rarityscale = tierWeight * (float)(Math.Sqrt(teamLevel * 13) - 4); //I have absolutely no fucking idea what this is // me neither
+            if (Util.CheckRoll(0.5f * rarityscale - 1) || teamLevel >= 22 || (forcetier == 3 && forcetier != 0))
                 dropList = Run.instance.availableTier3DropList;
-            else if (Util.CheckRoll(4 * rarityscale) || teamLevel >= 13 || (forcetier == 2 && forcetier != 0))
+            else if (Util.CheckRoll(4 * rarityscale) || teamLevel >= 11 || (forcetier == 2 && forcetier != 0))
                 dropList = Run.instance.availableTier2DropList;
             else
                 dropList = Run.instance.availableTier1DropList;
@@ -66,18 +69,35 @@ namespace Moonstorm.Starstorm2
 
         public static void CreateVFXDroplet(PickupIndex pickupIndex, Vector3 position, Vector3 velocity, string vfxPrefab)
         {
-            GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(PickupDropletController.pickupDropletPrefab, position, Quaternion.identity);
-            gameObject.GetComponent<PickupDropletController>().NetworkpickupIndex = pickupIndex;
-            Rigidbody component = gameObject.GetComponent<Rigidbody>();
-            component.velocity = velocity;
-            component.AddTorque(UnityEngine.Random.Range(150f, 120f) * UnityEngine.Random.onUnitSphere);
-            NetworkServer.Spawn(gameObject);
+            //GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(PickupDropletController.pickupDropletPrefab, position, Quaternion.identity);
+            //gameObject.GetComponent<PickupDropletController>().NetworkpickupIndex = pickupIndex;
+            //Rigidbody component = gameObject.GetComponent<Rigidbody>();
+            //component.velocity = velocity;
+            //component.AddTorque(UnityEngine.Random.Range(150f, 120f) * UnityEngine.Random.onUnitSphere);
+            //NetworkServer.Spawn(gameObject);
+
+            var pickup = new GenericPickupController.CreatePickupInfo();
+            
+            pickup.prefabOverride = PickupCatalog.GetPickupDef(pickupIndex).dropletDisplayPrefab;
+            //pickup.prefabOverride.AddComponent<NetworkIdentity>();
+            
+            //pickup.prefabOverride.AddComponent<ParticleSystem>();
+            //var particleSys = pickup.prefabOverride.GetComponent<ParticleSystem>();
+            //particleSys.
+
+            pickup.pickupIndex = pickupIndex;
+            PickupDropletController.CreatePickupDroplet(pickup, position, velocity);
+            
+            //PickupDropletController.CreatePickupDroplet(pickupIndex, position, velocity);
             EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>(vfxPrefab), new EffectData
             {
-                origin = gameObject.transform.position,
+                rootObject = pickup.prefabOverride,
+                origin = position,
                 scale = 1f,
             }, true);
         }
+
+
 
         public static IEnumerator BroadcastChat(string token)
         {
