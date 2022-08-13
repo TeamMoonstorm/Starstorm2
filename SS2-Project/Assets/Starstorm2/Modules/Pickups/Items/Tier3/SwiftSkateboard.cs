@@ -49,8 +49,11 @@ namespace Moonstorm.Starstorm2.Items
 
             private void Kickflip(GenericSkill skill)
             {
-                Util.PlaySound("SwiftSkateboard", body.gameObject);
-                if (stack > 0 && cooldownTimer == 0f)
+                if (body.HasBuff(SS2Content.Buffs.BuffKickflip))
+                {
+                    Util.PlaySound("SwiftSkateboard", body.gameObject);
+                }
+                if (cooldownTimer == 0f)
                 {
                     body.AddTimedBuff(SS2Content.Buffs.BuffKickflip, buffDuration, maxStacks + ((stack - 1) * maxStacksPerStack));
                     cooldownTimer += buffCooldown;

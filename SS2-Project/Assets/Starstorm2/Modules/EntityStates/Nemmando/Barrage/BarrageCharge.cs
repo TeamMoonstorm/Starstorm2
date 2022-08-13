@@ -16,6 +16,7 @@ namespace EntityStates.Nemmando
         private bool hasFinishedCharging;
         private GameObject chargeEffectInstance;
 
+        
         public override void OnEnter()
         {
             base.OnEnter();
@@ -25,7 +26,7 @@ namespace EntityStates.Nemmando
             modelBaseTransform = GetModelBaseTransform();
             animator = GetModelAnimator();
             hasFinishedCharging = false;
-
+            
             chargePlayID = Util.PlaySound("NemmandoSubmissionCharge", gameObject);
 
             if ((bool)chargeEffect)
@@ -77,7 +78,7 @@ namespace EntityStates.Nemmando
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.PrioritySkill;
+            return InterruptPriority.Frozen;
         }
     }
 }

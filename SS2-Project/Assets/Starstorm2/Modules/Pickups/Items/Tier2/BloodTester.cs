@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 
 namespace Moonstorm.Starstorm2.Items
 {
+    [DisabledContent]
     public sealed class BloodTester : ItemBase
     {
         private const string token = "SS2_ITEM_BLOODTESTER_DESC";

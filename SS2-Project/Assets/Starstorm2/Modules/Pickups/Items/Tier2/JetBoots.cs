@@ -106,7 +106,8 @@ namespace Moonstorm.Starstorm2.Items
                     falloffModel = BlastAttack.FalloffModel.None,
                     procCoefficient = 0,
                     teamIndex = body.teamComponent.teamIndex,
-                    position = attacker.transform.position
+                    position = attacker.transform.position,
+                    damageType = DamageType.SlowOnHit
                 }.Fire();
             }
             private void OnDestroy()

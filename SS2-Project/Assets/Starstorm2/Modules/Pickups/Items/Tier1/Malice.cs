@@ -23,7 +23,7 @@ namespace Moonstorm.Starstorm2.Items
 
         [ConfigurableField(ConfigDesc = "Total damage each malice bounce carries over. (1 = 100%)")]
         [TokenModifier(token, StatTypes.Percentage, 2)]
-        public static float damageCoeff = 0.55f;
+        public static float damageCoeff = 0.30f;
 
         /*[ConfigurableField(ConfigDesc = "Total damage each malice bounce after the first carries over (1 = 100%)")]
          * [TokenModifier(token, StatTypes.Percentage, 4)]

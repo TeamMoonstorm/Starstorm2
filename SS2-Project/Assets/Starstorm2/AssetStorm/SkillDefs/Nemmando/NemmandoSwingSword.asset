@@ -21,7 +21,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 61b32fd54e5897f458d177c829597873, type: 3}
   activationStateMachineName: Weapon
   activationState:
-    _typeName: EntityStates.Nemmando.SwingSword, Starstorm2
+    _typeName: 
   interruptPriority: 0
   baseRechargeInterval: 1
   baseMaxStock: 1
@@ -37,5 +37,5 @@ MonoBehaviour:
   canceledFromSprinting: 0
   isCombatSkill: 1
   mustKeyPress: 0
-  resetStepsOnIdle: 0
   stepCount: 2
+  stepGraceDuration: 0.1

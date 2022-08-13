@@ -4,6 +4,7 @@ using RoR2.Items;
 
 namespace Moonstorm.Starstorm2.Items
 {
+    [DisabledContent]
     public sealed class BabyToys : ItemBase
     {
         private const string token = "SS2_ITEM_BABYTOYS_DESC";

@@ -39,8 +39,7 @@ namespace Moonstorm.Starstorm2.Items
                 if (!body.isSprinting)
                 {
                     metronomeCharge *= buildCoefficient;
-                    if (body.notMovingStopwatch < notMoveBuffer)
-                        metronomeCharge /= 2f;
+                   
                 }
                 else
                 {

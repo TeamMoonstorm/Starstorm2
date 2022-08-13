@@ -32,7 +32,7 @@ namespace Moonstorm.Starstorm2.Items
                         };
                         DotController.InflictDot(ref dotInfo);
                         body.master.GiveMoney((uint)(stack * (Run.instance.stageClearCount + (1 * 1f))));
-                        MSUtil.PlayNetworkedSFX("MoltenCoin", report.victim.gameObject.transform.position);
+                        //MSUtil.PlayNetworkedSFX("MoltenCoin", report.victim.gameObject.transform.position);
                     }
                 }
             }
