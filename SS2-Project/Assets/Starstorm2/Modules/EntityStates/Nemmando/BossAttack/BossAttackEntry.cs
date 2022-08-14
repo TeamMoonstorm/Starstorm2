@@ -28,12 +28,31 @@ namespace EntityStates.Nemmando
         //private ParticleSystem dashEffect;
         private GameObject dashEffectInstance;
 
+        public CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
+        private CharacterCameraParamsData decisiveCameraParams = new CharacterCameraParamsData
+        {
+            maxPitch = 70f,
+            minPitch = -70f,
+            pivotVerticalOffset = 2f, //how far up should the camera go?
+            idealLocalCameraPos = zoomCameraPosition,
+            wallCushion = 0.1f
+        };
+        public static Vector3 zoomCameraPosition = new Vector3(0f, 0f, -12.5f); // how far back should the camera go?
+
         public override void OnEnter()
         {
             base.OnEnter();
             characterBody.isSprinting = true;
-            if (cameraTargetParams)
-                cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
+            //if (cameraTargetParams)
+            //    cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
+
+            cameraTargetParams.RemoveParamsOverride(camOverrideHandle, .25f);
+            CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
+            {
+                cameraParamsData = decisiveCameraParams,
+                priority = 0f
+            };
+            camOverrideHandle = cameraTargetParams.AddParamsOverride(request, duration);
 
             duration = Util.Remap(charge, 0f, 1f, minDuration, maxDuration);
             speedCoefficient = Util.Remap(charge, 0f, 1f, initialMinSpeedCoefficient, initialMaxSpeedCoefficient);
@@ -115,6 +134,7 @@ namespace EntityStates.Nemmando
             {
                 BossAttack nextState = new BossAttack();
                 nextState.charge = charge;
+                nextState.camOverrideHandle = camOverrideHandle;
                 outer.SetNextState(nextState);
                 return;
             }

@@ -35,6 +35,8 @@ namespace EntityStates.Nemmando
         //private NemmandoController nemmandoController;
         private float minimumEmission;
 
+        public CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
+
         public override void OnEnter()
         {
             base.OnEnter();
@@ -146,8 +148,12 @@ namespace EntityStates.Nemmando
         public override void OnExit()
         {
             base.OnExit();
+
             if (cameraTargetParams)
-                cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Standard);
+            {
+                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, duration/1.5f);
+                //cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Standard);
+            }
             //swordMat.SetFloat("_EmPower", minimumEmission);
             //if (nemmandoController)
             //  nemmandoController.UncoverScreen();

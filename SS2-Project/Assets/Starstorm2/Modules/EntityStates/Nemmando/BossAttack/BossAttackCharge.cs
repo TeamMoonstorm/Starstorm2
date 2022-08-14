@@ -22,6 +22,17 @@ namespace EntityStates.Nemmando
         private GameObject chargeEffectInstance;
         private Transform areaIndicator;
 
+        public CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
+        private CharacterCameraParamsData decisiveCameraParams = new CharacterCameraParamsData
+        {
+            maxPitch = 70f,
+            minPitch = -70f,
+            pivotVerticalOffset = 1f, //how far up should the camera go?
+            idealLocalCameraPos = zoomCameraPosition,
+            wallCushion = 0.1f
+        };
+        public static Vector3 zoomCameraPosition = new Vector3(0f, 0f, -5.3f); // how far back should the camera go?
+
         public override void OnEnter()
         {
             base.OnEnter();
@@ -55,8 +66,16 @@ namespace EntityStates.Nemmando
             chargePlayID = Util.PlayAttackSpeedSound("NemmandoDecisiveStrikeCharge", gameObject, attackSpeedStat);
             PlayAnimation("FullBody, Override", "DecisiveStrikeCharge", "DecisiveStrike.playbackRate", chargeDuration);
 
-            if (cameraTargetParams)
-                cameraTargetParams.RequestAimType(CameraTargetParams.AimType.OverTheShoulder);
+            //
+            CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
+            {
+                cameraParamsData = decisiveCameraParams,
+                priority = 0f
+            };
+            camOverrideHandle = cameraTargetParams.AddParamsOverride(request, chargeDuration);
+            
+            //if (cameraTargetParams)
+            //    cameraTargetParams.RequestAimType(CameraTargetParams.AimType.OverTheShoulder);
 
             swordMat = GetModelTransform().GetComponent<CharacterModel>().baseRendererInfos[1].defaultMaterial;
 
@@ -84,7 +103,13 @@ namespace EntityStates.Nemmando
             if (charge >= 0.6f && !zoomin)
             {
                 zoomin = true;
-                if (cameraTargetParams) cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
+                //if (cameraTargetParams) cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
+                //CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
+                //{
+                //    cameraParamsData = decisiveCameraParams,
+                //    priority = 0f
+                //};
+                //camOverrideHandle = cameraTargetParams.AddParamsOverride(request, chargeDuration);
             }
 
             if (charge >= 1f && !finishedCharge)
@@ -94,8 +119,15 @@ namespace EntityStates.Nemmando
                 AkSoundEngine.StopPlayingID(chargePlayID);
                 Util.PlaySound("NemmandoDecisiveStrikeReady", gameObject);
 
-                if (cameraTargetParams)
-                    cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
+                //if (cameraTargetParams)
+                //    cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
+
+                //CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
+                //{
+                //    cameraParamsData = decisiveCameraParams,
+                //    priority = 0f
+                //};
+                //camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0.15f);
             }
 
             bool keyDown = IsKeyDownAuthority();
@@ -105,6 +137,7 @@ namespace EntityStates.Nemmando
             {
                 BossAttackEntry nextState = new BossAttackEntry();
                 nextState.charge = charge;
+                nextState.camOverrideHandle = camOverrideHandle;
                 outer.SetNextState(nextState);
             }
         }
@@ -126,7 +159,7 @@ namespace EntityStates.Nemmando
 
             AkSoundEngine.StopPlayingID(chargePlayID);
 
-            if (cameraTargetParams) cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
+            //if (cameraTargetParams) cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()
