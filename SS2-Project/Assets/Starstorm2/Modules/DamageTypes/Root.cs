@@ -18,7 +18,7 @@ namespace Moonstorm.Starstorm2.DamageTypes
 
         public override void Initialize()
         {
-            ModdedDamageType = rootDamageType;
+            rootDamageType = ModdedDamageType;
             Delegates();
         }
 
