@@ -12,6 +12,20 @@ namespace Moonstorm.Starstorm2.Items
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("NkotasHeritage");
 
+        public const string token = "SS2_ITEM_NKOTASHERITAGE_DESC";
+
+        [ConfigurableField(ConfigDesc = "Number of items given upon level up per stack.")]
+        [TokenModifier(token, StatTypes.Default, 0)]
+        public static int itemsPerStack = 1;
+
+        [ConfigurableField(ConfigDesc = "Level where white items are removed from the reward pool.")]
+        [TokenModifier(token, StatTypes.Default, 1)]
+        public static int whiteRemovalLevel = 11;
+
+        [ConfigurableField(ConfigDesc = "Level where green items are removed from the reward pool.")]
+        [TokenModifier(token, StatTypes.Default, 2)]
+        public static int greenRemovalLevel = 22;
+
         //Either store this in a static var or do a dictionary checkup if you want to save all the assetbundle lookups in this code
         //Im lazy and this works so.......................
         private static bool holdit = false; //get some funny uhhhh ace attorney youtube link here :)
@@ -58,28 +72,15 @@ namespace Moonstorm.Starstorm2.Items
             NkotasManager.ActivateSingle(obj);
         }
 
-        //private void NkotaApplyParticleEffect(ref GenericPickupController.CreatePickupInfo createPickupInfo, ref bool shouldSpawn)
-        //{
-        //    var token = createPickupInfo.prefabOverride.GetComponent<SS2Util.NkotaToken>();
-        //    if (token)
-        //    {
-        //        EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("NkotasIdleEffect"), new EffectData
-        //        {
-        //            origin = createPickupInfo.position,
-        //            scale = 1f,
-        //        }, true);
-        //    }
-        //   
-        //}
-
         public static class NkotasManager
         {
             public static void ActivateSingle(CharacterBody body)
             {
                 if (body.isPlayerControlled)
                 {
-                    int count = body.inventory.GetItemCount(SS2Assets.LoadAsset<ItemDef>("NkotasHeritage"));
-                    SS2Util.DropShipCall(body.transform, 1, TeamManager.instance.GetTeamLevel(body.teamComponent.teamIndex), count, ItemTier.Tier1, "NkotasIdleEffect");
+                    int itemCount = itemsPerStack * body.inventory.GetItemCount(SS2Assets.LoadAsset<ItemDef>("NkotasHeritage"));
+
+                    SS2Util.DropShipCall(body.transform, 1, TeamManager.instance.GetTeamLevel(body.teamComponent.teamIndex), itemCount, ItemTier.Tier1, "NkotasIdleEffect");
 
                     Transform effectSpawnLocation = body.transform; //Will only get overwritten if it succesfully find the child
                     ModelLocator modelLocator = body.modelLocator;
