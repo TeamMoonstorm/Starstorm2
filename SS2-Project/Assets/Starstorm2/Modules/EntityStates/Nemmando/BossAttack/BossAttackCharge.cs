@@ -32,6 +32,7 @@ namespace EntityStates.Nemmando
             wallCushion = 0.1f
         };
         public static Vector3 zoomCameraPosition = new Vector3(0f, 0f, -5.3f); // how far back should the camera go?
+        Material matInstance;
 
         public override void OnEnter()
         {
@@ -73,11 +74,16 @@ namespace EntityStates.Nemmando
                 priority = 0f
             };
             camOverrideHandle = cameraTargetParams.AddParamsOverride(request, chargeDuration);
-            
+
             //if (cameraTargetParams)
             //    cameraTargetParams.RequestAimType(CameraTargetParams.AimType.OverTheShoulder);
+            ref CharacterModel.RendererInfo renderInfo = ref GetModelTransform().GetComponent<CharacterModel>().baseRendererInfos[1];
 
-            swordMat = GetModelTransform().GetComponent<CharacterModel>().baseRendererInfos[1].defaultMaterial;
+            swordMat = renderInfo.defaultMaterial;
+            matInstance = Object.Instantiate(swordMat);
+            renderInfo.defaultMaterial = matInstance;
+
+
 
             if (GetTeam() == TeamIndex.Monster)
             {
@@ -96,7 +102,8 @@ namespace EntityStates.Nemmando
             characterMotor.velocity = Vector3.zero;
             float charge = CalcCharge();
 
-            swordMat.SetFloat("_EmPower", Util.Remap(charge, 0, 1, minEmission, BossAttack.maxEmission));
+            matInstance.SetFloat("_EmPower", Util.Remap(charge, 0, 1, minEmission, BossAttack.maxEmission));
+            //swordMat.SetFloat("_EmPower", Util.Remap(charge, 0, 1, minEmission, BossAttack.maxEmission));
 
             if (areaIndicator) areaIndicator.localScale = Vector3.one * Util.Remap(charge, 0f, 1f, BossAttack.minRadius, BossAttack.maxRadius);
 
@@ -138,6 +145,8 @@ namespace EntityStates.Nemmando
                 BossAttackEntry nextState = new BossAttackEntry();
                 nextState.charge = charge;
                 nextState.camOverrideHandle = camOverrideHandle;
+                nextState.matInstance = matInstance;
+                nextState.swordMat = swordMat;
                 outer.SetNextState(nextState);
             }
         }

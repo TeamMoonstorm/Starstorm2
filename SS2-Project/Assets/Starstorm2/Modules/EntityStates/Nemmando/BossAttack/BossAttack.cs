@@ -31,11 +31,13 @@ namespace EntityStates.Nemmando
         private float emission;
         private BlastAttack blastAttack;
         private EffectData attackEffect;
-        private Material swordMat;
+        public Material swordMat;
+        public Material matInstance;
         //private NemmandoController nemmandoController;
         private float minimumEmission;
 
         public CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
+        
 
         public override void OnEnter()
         {
@@ -127,8 +129,8 @@ namespace EntityStates.Nemmando
             emission -= 2f * Time.fixedDeltaTime;
             if (emission < 0f) emission = 0f;
 
-            if (swordMat)
-                swordMat.SetFloat("_EmPower", Util.Remap(fixedAge, 0, duration, emission, minimumEmission));
+            //if (swordMat)
+            //    swordMat.SetFloat("_EmPower", Util.Remap(fixedAge, 0, duration, emission, minimumEmission));
 
             characterMotor.rootMotion = Vector3.zero;
             characterMotor.velocity = Vector3.zero;
@@ -153,6 +155,13 @@ namespace EntityStates.Nemmando
             {
                 cameraTargetParams.RemoveParamsOverride(camOverrideHandle, duration/1.5f);
                 //cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Standard);
+            }
+            if (matInstance)
+            {
+                //Object.Destroy(matInstance);
+                ref CharacterModel.RendererInfo renderInfo = ref GetModelTransform().GetComponent<CharacterModel>().baseRendererInfos[1];
+                renderInfo.defaultMaterial = swordMat;
+                Object.Destroy(matInstance);
             }
             //swordMat.SetFloat("_EmPower", minimumEmission);
             //if (nemmandoController)

@@ -38,6 +38,8 @@ namespace EntityStates.Nemmando
             wallCushion = 0.1f
         };
         public static Vector3 zoomCameraPosition = new Vector3(0f, 0f, -12.5f); // how far back should the camera go?
+        public Material matInstance;
+        public Material swordMat;
 
         public override void OnEnter()
         {
@@ -135,6 +137,8 @@ namespace EntityStates.Nemmando
                 BossAttack nextState = new BossAttack();
                 nextState.charge = charge;
                 nextState.camOverrideHandle = camOverrideHandle;
+                nextState.matInstance = matInstance;
+                nextState.swordMat = swordMat;
                 outer.SetNextState(nextState);
                 return;
             }
