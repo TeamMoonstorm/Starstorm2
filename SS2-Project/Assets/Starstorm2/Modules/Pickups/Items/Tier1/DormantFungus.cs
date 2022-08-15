@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 
 namespace Moonstorm.Starstorm2.Items
 {
+    [DisabledContent]
     public sealed class DormantFungus : ItemBase
     {
         private const string token = "SS2_ITEM_DORMANTFUNGUS_DESC";

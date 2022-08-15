@@ -3,6 +3,7 @@ using RoR2.Items;
 
 namespace Moonstorm.Starstorm2.Items
 {
+    
     public sealed class MoltenCoin : ItemBase
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("MoltenCoin");

@@ -11,7 +11,7 @@ namespace Moonstorm.Starstorm2.Items
 
         [ConfigurableField(ConfigName = "Trematode Threshold", ConfigDesc = "Amount of missing health needed for Trematode to proc. (1 = 100%)")]
         [TokenModifier(token, StatTypes.Percentage, 0)]
-        public static float missingHealthPercentage = 0.4f;
+        public static float missingHealthPercentage = 0.25f;
 
         [ConfigurableField(ConfigDesc = "Movement speed reduction received from the Trematode debuff. (1 = 100%)")]
         [TokenModifier(token, StatTypes.Percentage, 2)]
@@ -22,7 +22,7 @@ namespace Moonstorm.Starstorm2.Items
         public static float dotDuration = 4;
 
         [ConfigurableField(ConfigDesc = "Damage dealt by the Trematode debuff, per second. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.Percentage, 1)]
+        [TokenModifier(token, StatTypes.Percentage, 150)]
         public static float trematodeDamage = 1f;
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver

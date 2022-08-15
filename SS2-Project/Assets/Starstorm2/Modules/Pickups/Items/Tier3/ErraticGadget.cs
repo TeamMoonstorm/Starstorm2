@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Moonstorm.Starstorm2.Items
 {
+    [DisabledContent]
     public sealed class ErraticGadget : ItemBase
     {
         private const string token = "SS2_ITEM_ERRATICGADGET_DESC";

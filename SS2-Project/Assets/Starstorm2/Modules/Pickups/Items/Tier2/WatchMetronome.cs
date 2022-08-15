@@ -23,7 +23,7 @@ namespace Moonstorm.Starstorm2.Items
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.WatchMetronome;
             //this gets halved if they are walking
-            private const float buildCoefficient = 1f;
+            private const float buildCoefficient = 0.75f;
             private const float drainCoefficient = -1f;
             private const float notMoveBuffer = 0.6f;
 
@@ -39,8 +39,7 @@ namespace Moonstorm.Starstorm2.Items
                 if (!body.isSprinting)
                 {
                     metronomeCharge *= buildCoefficient;
-                    if (body.notMovingStopwatch < notMoveBuffer)
-                        metronomeCharge /= 2f;
+                    
                 }
                 else
                 {
