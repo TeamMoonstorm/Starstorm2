@@ -98,8 +98,8 @@ namespace EntityStates.Nemmando
                 PlayAnimation("FullBody, Override", "DecisiveStrike", "DecisiveStrike.playbackRate", duration);
                 //Util.PlaySound(effectComponent.swingSound, gameObject);
             }
-
-            swordMat = GetModelTransform().GetComponent<CharacterModel>().baseRendererInfos[1].defaultMaterial;
+            
+            //swordMat = GetModelTransform().GetComponent<CharacterModel>().baseRendererInfos[1].defaultMaterial;
         }
 
         private void FireAttack()
