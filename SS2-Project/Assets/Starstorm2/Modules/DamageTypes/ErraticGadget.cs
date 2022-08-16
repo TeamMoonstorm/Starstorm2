@@ -11,7 +11,7 @@ namespace Moonstorm.Starstorm2.DamageTypes
 
         public override void Initialize()
         {
-            ModdedDamageType = erraticDamageType;
+            erraticDamageType = ModdedDamageType;
         }
 
         public override void Delegates()
