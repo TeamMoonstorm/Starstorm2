@@ -31,8 +31,7 @@ namespace Moonstorm.Starstorm2.Equipments
 
         public override bool FireAction(EquipmentSlot slot)
         {
-            if (!slot.characterBody.characterMotor.isGrounded)
-                return false;
+            
             //To do: make better placement system
             Vector3 position = slot.inputBank.aimOrigin + slot.inputBank.aimDirection;
             GameObject gameObject = Object.Instantiate(WarbannerObject, position, Quaternion.identity);

@@ -9,7 +9,7 @@ namespace Moonstorm.Starstorm2.Buffs
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffGreaterBanner");
 
-        public sealed class Behavior : BaseBuffBodyBehavior, IStatItemBehavior //IBodyStatArgModifier 
+        public sealed class Behavior : BaseBuffBodyBehavior, IBodyStatArgModifier, IStatItemBehavior 
         {
             [BuffDefAssociation]
             private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffGreaterWarbanner;
@@ -17,7 +17,7 @@ namespace Moonstorm.Starstorm2.Buffs
             {
                 args.critAdd += GreaterWarbanner.extraCrit;
                 args.regenMultAdd += GreaterWarbanner.extraRegeneration;
-                args.cooldownMultAdd *= GreaterWarbanner.cooldownReduction;
+               
             }
 
             public void RecalculateStatsEnd()
@@ -26,12 +26,12 @@ namespace Moonstorm.Starstorm2.Buffs
                 {
                     if (body.skillLocator.primary)
                         body.skillLocator.primary.cooldownScale *= GreaterWarbanner.cooldownReduction;
-                    if (body.skillLocator.secondary)
-                        body.skillLocator.secondary.cooldownScale *= GreaterWarbanner.cooldownReduction;
-                    if (body.skillLocator.utility)
-                        body.skillLocator.utility.cooldownScale *= GreaterWarbanner.cooldownReduction;
-                    if (body.skillLocator.special)
-                        body.skillLocator.special.cooldownScale *= GreaterWarbanner.cooldownReduction;
+                    if (body.skillLocator.secondaryBonusStockSkill)
+                        body.skillLocator.secondaryBonusStockSkill.cooldownScale *= GreaterWarbanner.cooldownReduction;
+                    if (body.skillLocator.utilityBonusStockSkill)
+                        body.skillLocator.utilityBonusStockSkill.cooldownScale *= GreaterWarbanner.cooldownReduction;
+                    if (body.skillLocator.specialBonusStockSkill)
+                        body.skillLocator.specialBonusStockSkill.cooldownScale *= GreaterWarbanner.cooldownReduction;
 
                 }
             }

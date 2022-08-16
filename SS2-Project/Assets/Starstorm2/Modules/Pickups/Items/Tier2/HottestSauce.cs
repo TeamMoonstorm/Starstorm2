@@ -5,6 +5,8 @@ using UnityEngine;
 
 namespace Moonstorm.Starstorm2.Items
 {
+    [DisabledContent]
+
     public sealed class HottestSauce : ItemBase
     {
         private const string token = "SS2_ITEM_HOTTESTSAUCE_DESC";
