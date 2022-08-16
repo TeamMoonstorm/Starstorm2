@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 
 namespace Moonstorm.Starstorm2.Items
 {
-    
+    [DisabledContent]
     public sealed class RelicOfExtinction : ItemBase
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfExtinction");

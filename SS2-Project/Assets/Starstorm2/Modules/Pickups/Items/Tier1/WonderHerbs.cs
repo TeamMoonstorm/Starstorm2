@@ -2,7 +2,7 @@
 
 namespace Moonstorm.Starstorm2.Items
 {
-   
+   [DisabledContent]
     public sealed class WonderHerbs : ItemBase
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("WonderHerbs");
