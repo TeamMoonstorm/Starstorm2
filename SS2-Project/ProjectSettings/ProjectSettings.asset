@@ -270,7 +270,10 @@ PlayerSettings:
   m_BuildTargetBatching: []
   m_BuildTargetGraphicsJobs: []
   m_BuildTargetGraphicsJobMode: []
-  m_BuildTargetGraphicsAPIs: []
+  m_BuildTargetGraphicsAPIs:
+  - m_BuildTarget: WindowsStandaloneSupport
+    m_APIs: 1200000002000000
+    m_Automatic: 0
   m_BuildTargetVRSettings: []
   openGLRequireES31: 0
   openGLRequireES31AEP: 0
@@ -546,21 +549,6 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLWasmStreaming: 0
   scriptingDefineSymbols:
-<<<<<<< HEAD
-    1: UNITY_POST_PROCESSING_STACK_V2;riskofrain2;TK_ADDRESSABLE
-    7: UNITY_POST_PROCESSING_STACK_V2;riskofrain2;TK_ADDRESSABLE
-    13: UNITY_POST_PROCESSING_STACK_V2;riskofrain2;TK_ADDRESSABLE
-    14: UNITY_POST_PROCESSING_STACK_V2;riskofrain2;TK_ADDRESSABLE
-    19: UNITY_POST_PROCESSING_STACK_V2;riskofrain2;TK_ADDRESSABLE
-    21: UNITY_POST_PROCESSING_STACK_V2;riskofrain2;TK_ADDRESSABLE
-    25: UNITY_POST_PROCESSING_STACK_V2;riskofrain2;TK_ADDRESSABLE
-    27: UNITY_POST_PROCESSING_STACK_V2;riskofrain2;TK_ADDRESSABLE
-    28: UNITY_POST_PROCESSING_STACK_V2;riskofrain2;TK_ADDRESSABLE
-    29: UNITY_POST_PROCESSING_STACK_V2;riskofrain2;TK_ADDRESSABLE
-    30: UNITY_POST_PROCESSING_STACK_V2;riskofrain2;TK_ADDRESSABLE
-    32: UNITY_POST_PROCESSING_STACK_V2;riskofrain2;TK_ADDRESSABLE
-    33: UNITY_POST_PROCESSING_STACK_V2;riskofrain2;TK_ADDRESSABLE
-=======
     1: riskofrain2;TK_ADDRESSABLE;bbepis-bepinexpack;riskofthunder-hookgenpatcher;tristanmcpherson-r2api;iharbhd-debugtoolkit;UNITY_POST_PROCESSING_STACK_V2;riskofthunder-ror2multiplayerhlapi;riskofthunder-ror2editorkit;riskofthunder-fixplugintypesserialization
     7: riskofrain2;TK_ADDRESSABLE;bbepis-bepinexpack;riskofthunder-hookgenpatcher;tristanmcpherson-r2api;iharbhd-debugtoolkit;UNITY_POST_PROCESSING_STACK_V2;riskofthunder-ror2multiplayerhlapi;riskofthunder-ror2editorkit;riskofthunder-fixplugintypesserialization
     13: riskofrain2;TK_ADDRESSABLE;bbepis-bepinexpack;riskofthunder-hookgenpatcher;tristanmcpherson-r2api;iharbhd-debugtoolkit;UNITY_POST_PROCESSING_STACK_V2;riskofthunder-ror2multiplayerhlapi;riskofthunder-ror2editorkit;riskofthunder-fixplugintypesserialization
@@ -574,7 +562,6 @@ PlayerSettings:
     30: riskofrain2;TK_ADDRESSABLE;bbepis-bepinexpack;riskofthunder-hookgenpatcher;tristanmcpherson-r2api;iharbhd-debugtoolkit;UNITY_POST_PROCESSING_STACK_V2;riskofthunder-ror2multiplayerhlapi;riskofthunder-ror2editorkit;riskofthunder-fixplugintypesserialization
     32: riskofrain2;TK_ADDRESSABLE;bbepis-bepinexpack;riskofthunder-hookgenpatcher;tristanmcpherson-r2api;iharbhd-debugtoolkit;UNITY_POST_PROCESSING_STACK_V2;riskofthunder-ror2multiplayerhlapi;riskofthunder-ror2editorkit;riskofthunder-fixplugintypesserialization
     33: riskofrain2;TK_ADDRESSABLE;bbepis-bepinexpack;riskofthunder-hookgenpatcher;tristanmcpherson-r2api;iharbhd-debugtoolkit;UNITY_POST_PROCESSING_STACK_V2;riskofthunder-ror2multiplayerhlapi;riskofthunder-ror2editorkit;riskofthunder-fixplugintypesserialization
->>>>>>> 1c95d48541e66c7c1c9d59f121728a7929c1f393
   platformArchitecture: {}
   scriptingBackend: {}
   il2cppCompilerConfiguration: {}
