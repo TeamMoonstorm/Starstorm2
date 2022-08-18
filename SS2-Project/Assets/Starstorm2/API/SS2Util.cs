@@ -10,6 +10,7 @@ namespace Moonstorm.Starstorm2
     public static class SS2Util
     {
         #region Misc
+        
         public static void DropShipCall(Transform origin, int tierWeight, uint teamLevel = 1, int amount = 1, ItemTier forcetier = 0, string theWorstCodeOfTheYear = null)
         {
             List<PickupIndex> dropList;
@@ -18,9 +19,9 @@ namespace Moonstorm.Starstorm2
                 dropList = Run.instance.availableBossDropList;
             else if (forcetier == ItemTier.Lunar)
                 dropList = Run.instance.availableLunarCombinedDropList;
-            else if (Util.CheckRoll(0.5f * rarityscale - 1) || teamLevel >= 26 || forcetier == ItemTier.Tier3)
+            else if (Util.CheckRoll(0.5f * rarityscale - 1) || teamLevel >= Items.NkotasHeritage.greenRemovalLevel || forcetier == ItemTier.Tier3)
                 dropList = Run.instance.availableTier3DropList;
-            else if (Util.CheckRoll(4 * rarityscale) || teamLevel >= 13 || forcetier == ItemTier.Tier2)
+            else if (Util.CheckRoll(4 * rarityscale) || teamLevel >= Items.NkotasHeritage.whiteRemovalLevel || forcetier == ItemTier.Tier2)
                 dropList = Run.instance.availableTier2DropList;
             else
                 dropList = Run.instance.availableTier1DropList;
@@ -29,7 +30,8 @@ namespace Moonstorm.Starstorm2
             if (amount > 1)
             {
                 float angle = 360f / (float)amount;
-                Vector3 vector = Quaternion.AngleAxis((float)UnityEngine.Random.Range(0, 360), Vector3.up) * (Vector3.up * 15f + Vector3.forward * 5f);
+                Vector3 vector = Quaternion.AngleAxis((float)UnityEngine.Random.Range(0, 360), Vector3.up) * (Vector3.up * 15f + Vector3.forward * (4.75f + (.25f * amount)));
+
                 Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
                 for (int i = 0; i < amount; i++)
                 {
@@ -57,14 +59,14 @@ namespace Moonstorm.Starstorm2
         {
             List<PickupIndex> dropList;
             float rarityscale = tierWeight * (float)(Math.Sqrt(teamLevel * 13) - 4); //I have absolutely no fucking idea what this is // me neither
-            if (Util.CheckRoll(0.5f * rarityscale - 1) || teamLevel >= 22 || (forcetier == 3 && forcetier != 0))
+            if (Util.CheckRoll(0.5f * rarityscale - 1) || teamLevel >= Items.NkotasHeritage.greenRemovalLevel || (forcetier == 3 && forcetier != 0))
                 dropList = Run.instance.availableTier3DropList;
-            else if (Util.CheckRoll(4 * rarityscale) || teamLevel >= 11 || (forcetier == 2 && forcetier != 0))
+            else if (Util.CheckRoll(4 * rarityscale) || teamLevel >= Items.NkotasHeritage.whiteRemovalLevel || (forcetier == 2 && forcetier != 0))
                 dropList = Run.instance.availableTier2DropList;
             else
                 dropList = Run.instance.availableTier1DropList;
             int item = Run.instance.treasureRng.RangeInt(0, dropList.Count);
-            return ItemCatalog.GetItemDef(PickupCatalog.GetPickupDef(dropList[item]).itemIndex); //This is retarded but so be it?
+            return ItemCatalog.GetItemDef(PickupCatalog.GetPickupDef(dropList[item]).itemIndex); 
         }
 
         public static void CreateVFXDroplet(PickupIndex pickupIndex, Vector3 position, Vector3 velocity, string vfxPrefab)

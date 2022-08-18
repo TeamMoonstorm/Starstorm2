@@ -5,10 +5,16 @@ namespace Moonstorm.Starstorm2.Items
     //[DisabledContent]
     public sealed class PortableReactor : ItemBase
     {
+
+        private const string token = "SS2_ITEM_PORTABLEREACTOR_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("PortableReactor");
 
-        [ConfigurableField(ConfigDesc = "Duration of invulnerability from Portable Reactor.")]
+        [ConfigurableField(ConfigDesc = "Duration of invulnerability from Portable Reactor. (1 = 1 second)")]
+        [TokenModifier(token, StatTypes.Default, 0)]
         public static float invulnTime = 80f;
+        [ConfigurableField(ConfigDesc = "Stacking duration of invulnerability. (1 = 1 second)")]
+        [TokenModifier(token, StatTypes.Default, 1)]
+        public static float stackingInvuln = 40f;
 
         //★ ty nebby
         //To-Do: This thing spits out a few errors every time a stage is started. Doesn't really NEED fixed, but probably should be.
@@ -26,8 +32,8 @@ namespace Moonstorm.Starstorm2.Items
             int count = inv.GetItemCount(ItemDef);
             if (count > 0)
             {
-                if (obj.teamComponent.teamIndex != TeamIndex.Monster) obj.AddTimedBuff(SS2Content.Buffs.BuffReactor, invulnTime + ((count - 1) * invulnTime / 2));
-                else obj.AddTimedBuff(SS2Content.Buffs.BuffReactor, invulnTime / 4 + ((count - 1) * invulnTime / 2));
+                if (obj.teamComponent.teamIndex != TeamIndex.Monster) obj.AddTimedBuff(SS2Content.Buffs.BuffReactor, invulnTime + ((count - 1) * stackingInvuln));
+                else obj.AddTimedBuff(SS2Content.Buffs.BuffReactor, invulnTime / 4 + ((count - 1) * stackingInvuln));
             }
         }
     }

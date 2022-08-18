@@ -7,20 +7,19 @@
       "dependencies": {}
     },
     "com.passivepicasso.thunderkit": {
-      "version": "https://github.com/PassivePicasso/ThunderKit.git#5.2.3",
+      "version": "https://github.com/PassivePicasso/ThunderKit.git#5.3.1",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.unity.scriptablebuildpipeline": "1.16.1"
       },
-      "hash": "15524b17aa67bbc869a0def0e915544134e1eca4"
+      "hash": "9eba82b6376c9bdbe01e8edc698726b2b2f6a436"
     },
     "com.unity.multiplayer-hlapi": {
-      "version": "https://github.com/risk-of-thunder/UnityMultiplayerHLAPI.git#1.0.1",
+      "version": "file:RoR2MultiplayerHLAPI",
       "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "39a7bfdc25b53c790f3816b7dcd11e56dd4f865e"
+      "source": "embedded",
+      "dependencies": {}
     },
     "com.unity.postprocessing": {
       "version": "2.3.0",
@@ -48,12 +47,6 @@
       "source": "embedded",
       "dependencies": {}
     },
-    "riskofthunder-fixplugintypesserialization": {
-      "version": "file:FixPluginTypesSerialization",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
     "riskofthunder-hookgenpatcher": {
       "version": "file:HookGenPatcher",
       "depth": 0,
@@ -61,11 +54,10 @@
       "dependencies": {}
     },
     "riskofthunder-ror2editorkit": {
-      "version": "https://github.com/risk-of-thunder/RoR2EditorKit.git#3.2.2",
+      "version": "file:RoR2EditorKit",
       "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "7fd8f6ebac29608837caeaed90545c3ad4157592"
+      "source": "embedded",
+      "dependencies": {}
     },
     "riskofthunder-ror2importextensions": {
       "version": "https://github.com/risk-of-thunder/RoR2ImportExtensions.git#1.0.2",
@@ -75,11 +67,11 @@
       "hash": "e083a5df4203690adaa09b8a03453a93395924cd"
     },
     "teammoonstorm-moonstormsharedutils": {
-      "version": "https://github.com/TeamMoonstorm/MoonstormSharedUtils.git",
+      "version": "https://github.com/TeamMoonstorm/MoonstormSharedUtils.git#1.0.0",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "a8a8b2ae60a41c1ebaa758a6ab85773db56b8a87"
+      "hash": "fcfcb12e21c86ec75560b7a5137d87f3dc12e5b0"
     },
     "tristanmcpherson-r2api": {
       "version": "file:R2API",

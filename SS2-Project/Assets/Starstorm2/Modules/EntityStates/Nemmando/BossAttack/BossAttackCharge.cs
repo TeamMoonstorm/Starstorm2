@@ -22,6 +22,18 @@ namespace EntityStates.Nemmando
         private GameObject chargeEffectInstance;
         private Transform areaIndicator;
 
+        public CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
+        private CharacterCameraParamsData decisiveCameraParams = new CharacterCameraParamsData
+        {
+            maxPitch = 70f,
+            minPitch = -70f,
+            pivotVerticalOffset = 1f, //how far up should the camera go?
+            idealLocalCameraPos = zoomCameraPosition,
+            wallCushion = 0.1f
+        };
+        public static Vector3 zoomCameraPosition = new Vector3(0f, 0f, -5.3f); // how far back should the camera go?
+        Material matInstance;
+
         public override void OnEnter()
         {
             base.OnEnter();
@@ -55,10 +67,23 @@ namespace EntityStates.Nemmando
             chargePlayID = Util.PlayAttackSpeedSound("NemmandoDecisiveStrikeCharge", gameObject, attackSpeedStat);
             PlayAnimation("FullBody, Override", "DecisiveStrikeCharge", "DecisiveStrike.playbackRate", chargeDuration);
 
-            if (cameraTargetParams)
-                cameraTargetParams.RequestAimType(CameraTargetParams.AimType.OverTheShoulder);
+            //
+            CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
+            {
+                cameraParamsData = decisiveCameraParams,
+                priority = 0f
+            };
+            camOverrideHandle = cameraTargetParams.AddParamsOverride(request, chargeDuration);
 
-            swordMat = GetModelTransform().GetComponent<CharacterModel>().baseRendererInfos[1].defaultMaterial;
+            //if (cameraTargetParams)
+            //    cameraTargetParams.RequestAimType(CameraTargetParams.AimType.OverTheShoulder);
+            ref CharacterModel.RendererInfo renderInfo = ref GetModelTransform().GetComponent<CharacterModel>().baseRendererInfos[1];
+
+            swordMat = renderInfo.defaultMaterial;
+            matInstance = Object.Instantiate(swordMat);
+            renderInfo.defaultMaterial = matInstance;
+
+
 
             if (GetTeam() == TeamIndex.Monster)
             {
@@ -77,14 +102,21 @@ namespace EntityStates.Nemmando
             characterMotor.velocity = Vector3.zero;
             float charge = CalcCharge();
 
-            swordMat.SetFloat("_EmPower", Util.Remap(charge, 0, 1, minEmission, BossAttack.maxEmission));
+            matInstance.SetFloat("_EmPower", Util.Remap(charge, 0, 1, minEmission, BossAttack.maxEmission));
+            //swordMat.SetFloat("_EmPower", Util.Remap(charge, 0, 1, minEmission, BossAttack.maxEmission));
 
             if (areaIndicator) areaIndicator.localScale = Vector3.one * Util.Remap(charge, 0f, 1f, BossAttack.minRadius, BossAttack.maxRadius);
 
             if (charge >= 0.6f && !zoomin)
             {
                 zoomin = true;
-                if (cameraTargetParams) cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
+                //if (cameraTargetParams) cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
+                //CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
+                //{
+                //    cameraParamsData = decisiveCameraParams,
+                //    priority = 0f
+                //};
+                //camOverrideHandle = cameraTargetParams.AddParamsOverride(request, chargeDuration);
             }
 
             if (charge >= 1f && !finishedCharge)
@@ -94,8 +126,15 @@ namespace EntityStates.Nemmando
                 AkSoundEngine.StopPlayingID(chargePlayID);
                 Util.PlaySound("NemmandoDecisiveStrikeReady", gameObject);
 
-                if (cameraTargetParams)
-                    cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
+                //if (cameraTargetParams)
+                //    cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
+
+                //CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
+                //{
+                //    cameraParamsData = decisiveCameraParams,
+                //    priority = 0f
+                //};
+                //camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0.15f);
             }
 
             bool keyDown = IsKeyDownAuthority();
@@ -105,6 +144,9 @@ namespace EntityStates.Nemmando
             {
                 BossAttackEntry nextState = new BossAttackEntry();
                 nextState.charge = charge;
+                nextState.camOverrideHandle = camOverrideHandle;
+                nextState.matInstance = matInstance;
+                nextState.swordMat = swordMat;
                 outer.SetNextState(nextState);
             }
         }
@@ -126,7 +168,7 @@ namespace EntityStates.Nemmando
 
             AkSoundEngine.StopPlayingID(chargePlayID);
 
-            if (cameraTargetParams) cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
+            //if (cameraTargetParams) cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

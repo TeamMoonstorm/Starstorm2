@@ -51,16 +51,22 @@ namespace Moonstorm.Starstorm2.Unlocks.Pickups
                 if ((bool)currentInventory)
                 {
                     int num = 25; //required unique items for unlock
-
+                    SS2Log.Debug("aghhhhhh: " + currentInventory.itemAcquisitionOrder.Count);
                     if(currentInventory.itemAcquisitionOrder.Count >= num) {
-                        Grant();
+                        int temp = 0;
+                        for(int i = 0; i < currentInventory.itemAcquisitionOrder.Count; i++)
+                        {
+                            var currentItemDef = ItemCatalog.GetItemDef(currentInventory.itemAcquisitionOrder[i]);
+                            if(currentItemDef.tier != ItemTier.NoTier && !currentItemDef.hidden)
+                            {
+                                temp++;
+                            }
+                        }
+                        if(temp >= num)
+                        {
+                            Grant();
+                        }
                     }
-
-                    //int uniqueItems = currentInventory.itemAcquisitionOrder.Count(x => currentInventory.GetItemCount(x) > 0 && ItemTierCatalog.GetItemTierDef(ItemCatalog.GetItemDef(x).tier).isDroppable);
-                    //if (uniqueItems >= num)
-                    //{
-                    //    Grant();
-                    //}
                 }
             }
             private void OnMasterChanged()

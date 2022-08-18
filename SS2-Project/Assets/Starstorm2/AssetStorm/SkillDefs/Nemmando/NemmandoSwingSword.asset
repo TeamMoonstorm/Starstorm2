@@ -23,7 +23,7 @@ MonoBehaviour:
   activationState:
     _typeName: EntityStates.Nemmando.SwingSword, Starstorm2
   interruptPriority: 0
-  baseRechargeInterval: 1
+  baseRechargeInterval: 0
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 0
@@ -37,5 +37,5 @@ MonoBehaviour:
   canceledFromSprinting: 0
   isCombatSkill: 1
   mustKeyPress: 0
-  resetStepsOnIdle: 0
   stepCount: 2
+  stepGraceDuration: 0.1
