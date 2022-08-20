@@ -1,14 +1,17 @@
 ﻿using BepInEx;
 using Moonstorm.Starstorm2.API;
 using R2API.Utils;
+using R2API;
+using R2API.Networking;
 
 namespace Moonstorm.Starstorm2
 {
     [BepInDependency("com.TeamMoonstorm.MoonstormSharedUtils", BepInDependency.DependencyFlags.HardDependency)]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
     [R2APISubmoduleDependency(
-        nameof(R2API.DotAPI),
-        nameof(R2API.PrefabAPI))]
+        nameof(DotAPI),
+        nameof(PrefabAPI),
+        nameof(NetworkingAPI))]
     [BepInPlugin(guid, modName, version)]
     public class Starstorm : BaseUnityPlugin
     {
