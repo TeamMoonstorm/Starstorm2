@@ -5,7 +5,7 @@ using UnityEngine;
 //Dont fix what isnt broken or something
 namespace EntityStates.Nemmando
 {
-    public class ShootGun : BaseSkillState
+    public class ShootGun : RendHandler
     {
         [TokenModifier("SS2_NEMMANDO_SECONDARY_SHOOT_DESCRIPTION", StatTypes.Percentage, 0)]
         public static float damageCoefficient;
@@ -16,13 +16,16 @@ namespace EntityStates.Nemmando
         public static float range;
         public static string muzzleString;
         public static string soundString;
-
+        
+        
         [HideInInspector]
         public static GameObject tracerEffectPrefab = Resources.Load<GameObject>("Prefabs/Effects/Tracers/TracerGoldGat");
+        
 
         private float fireTime;
         private bool hasFired;
         private Animator animator;
+        
         private float duration
         {
             get
@@ -31,6 +34,7 @@ namespace EntityStates.Nemmando
             }
         }
 
+        
         public override void OnEnter()
         {
             base.OnEnter();
@@ -52,6 +56,8 @@ namespace EntityStates.Nemmando
             PlayAnimation("Gesture, Override", "ReloadGun", "Reload.playbackRate", 0.5f * (rechargeTime - this.duration - 0.3f));
         }
 
+        
+
         private void Fire()
         {
             if (hasFired)
@@ -66,13 +72,13 @@ namespace EntityStates.Nemmando
             //if (isCrit) soundString += "Crit";
             if (soundString != string.Empty)
                 Util.PlaySound(soundString, gameObject);
-
+            
             if (isAuthority)
             {
                 Ray aimRay = GetAimRay();
                 AddRecoil(-1f * recoil, -2f * recoil, -0.5f * recoil, 0.5f * recoil);
 
-                new BulletAttack
+                BulletAttack bulletAttack = new BulletAttack
                 {
                     bulletCount = 1,
                     aimVector = aimRay.direction,
@@ -101,14 +107,20 @@ namespace EntityStates.Nemmando
                     spreadYawScale = 0f,
                     queryTriggerInteraction = QueryTriggerInteraction.UseGlobal,
                     hitEffectPrefab = EntityStates.Commando.CommandoWeapon.FirePistol2.hitEffectPrefab
-                }.Fire();
+                };
+
+                RendMultiplier(bulletAttack);
+
+                bulletAttack.Fire();
 
                 characterBody.AddSpreadBloom(1.5f);
             }
         }
 
+       
         public override void FixedUpdate()
         {
+            
             base.FixedUpdate();
 
             if (fixedAge >= this.fireTime)

@@ -54,7 +54,37 @@ namespace Moonstorm.Starstorm2
             }
             PickupDropletController.CreatePickupDroplet(dropList[item], origin.position, new Vector3(0, 15, 0));
         }
+        public static void RemoveDotStacks(CharacterBody victim, DotController.DotIndex TargetedIndex, int NumberOfStacksToRemove)
+        {
+            DotController VictimController = DotController.FindDotController(victim.gameObject);
+            if (!VictimController)
+            {
+                return;
+            }
 
+            
+
+            for (int i = VictimController.dotStackList.Count - 1; i >= 0; i--)
+            {
+                DotController.DotStack dotStack = VictimController.dotStackList[i];
+                
+
+                if (dotStack.dotIndex == TargetedIndex)
+                {
+                   
+
+                    VictimController.RemoveDotStackAtServer(i);
+                    NumberOfStacksToRemove--;
+
+                    if (NumberOfStacksToRemove <= 0)
+                    {
+                        return;
+                    }
+                }
+            }
+
+
+        }
         public static ItemDef NkotasRiggedItemDrop(int tierWeight, uint teamLevel = 1, int forcetier = 0)
         {
             List<PickupIndex> dropList;
