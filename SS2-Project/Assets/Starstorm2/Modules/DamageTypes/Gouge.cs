@@ -17,7 +17,7 @@ namespace Moonstorm.Starstorm2.DamageTypes
 
         public override void Initialize()
         {
-            ModdedDamageType = gougeDamageType;
+            gougeDamageType = ModdedDamageType;
             DotIndex = Buffs.Gouge.index;
         }
 
