@@ -5,6 +5,7 @@ using R2API.Utils;
 namespace Moonstorm.Starstorm2
 {
     [BepInDependency("com.TeamMoonstorm.MoonstormSharedUtils", BepInDependency.DependencyFlags.HardDependency)]
+    [BepInDependency("com.DestroyedClone.AncientScepter", BepInDependency.DependencyFlags.SoftDependency)]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
     [R2APISubmoduleDependency(
         nameof(R2API.DotAPI),
@@ -19,6 +20,8 @@ namespace Moonstorm.Starstorm2
         public static Starstorm instance;
         public static PluginInfo pluginInfo;
         public static bool DEBUG = true;
+
+        public static bool ScepterInstalled = false;
 
         public void Awake()
         {
@@ -41,6 +44,12 @@ namespace Moonstorm.Starstorm2
         private void Start()
         {
             SoundBankManager.Init();
+            SetupModCompat();
+        }
+
+        private void SetupModCompat()
+        {
+            ScepterInstalled = BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.DestroyedClone.AncientScepter");
         }
     }
 }

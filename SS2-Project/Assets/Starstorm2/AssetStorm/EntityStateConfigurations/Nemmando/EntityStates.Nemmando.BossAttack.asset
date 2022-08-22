@@ -10,59 +10,51 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: FireSwordBeam
+  m_Name: EntityStates.Nemmando.BossAttack
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Nemmando.FireSwordBeam, Starstorm2, Version=1.0.0.0,
+    assemblyQualifiedName: EntityStates.Nemmando.BossAttack, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
-    - fieldName: maxEmission
+    - fieldName: baseDuration
       fieldValue:
-        stringValue: 10
+        stringValue: 0.6
         objectValue: {fileID: 0}
-    - fieldName: minEmission
+    - fieldName: maxHits
+      fieldValue:
+        stringValue: 6
+        objectValue: {fileID: 0}
+    - fieldName: minHits
       fieldValue:
         stringValue: 1
         objectValue: {fileID: 0}
     - fieldName: maxDamageCoefficient
       fieldValue:
-        stringValue: 5
+        stringValue: 3.8
         objectValue: {fileID: 0}
     - fieldName: minDamageCoefficient
       fieldValue:
-        stringValue: 1.6
+        stringValue: 2.5
         objectValue: {fileID: 0}
-    - fieldName: procCoefficient
+    - fieldName: maxRadius
       fieldValue:
-        stringValue: 1
+        stringValue: 20
         objectValue: {fileID: 0}
-    - fieldName: maxRecoil
+    - fieldName: minRadius
       fieldValue:
-        stringValue: 2
+        stringValue: 8
         objectValue: {fileID: 0}
-    - fieldName: minRecoil
+    - fieldName: maxEmission
       fieldValue:
-        stringValue: 0.25
+        stringValue: 150
         objectValue: {fileID: 0}
-    - fieldName: maxProjectileSpeed
+    - fieldName: minEmission
       fieldValue:
-        stringValue: 120
+        stringValue: 25
         objectValue: {fileID: 0}
-    - fieldName: minProjectileSpeed
-      fieldValue:
-        stringValue: 50
-        objectValue: {fileID: 0}
-    - fieldName: baseDuration
-      fieldValue:
-        stringValue: 0.6
-        objectValue: {fileID: 0}
-    - fieldName: projectilePrefab
+    - fieldName: effectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 1166276589453209, guid: f285ab56eb9a50745b0483ca82c3fbfa,
+        objectValue: {fileID: 2858659625491875739, guid: f2799d53b6c924e4794050f3fc69fbd1,
           type: 3}
-    - fieldName: minDamageCoeffficient
-      fieldValue:
-        stringValue: 0
-        objectValue: {fileID: 0}

@@ -1,6 +1,10 @@
-﻿namespace EntityStates.Nemmando
+﻿using Moonstorm;
+using RoR2;
+using UnityEngine;
+
+namespace EntityStates.Nemmando
 {
-    /*public class ScepterBarrageFire : BaseState
+    public class ScepterBarrageFire : BaseState
     {
         public float charge;
 
@@ -20,6 +24,7 @@
         public static float minTimeBetweenShots = 0.2f;
         public static float maxTimeBetweenShots = 0.075f;
         public static float recoil = 5f;
+        public static GameObject tracerPrefab;
 
         private int totalBulletsFired;
         private int bulletCount;
@@ -74,7 +79,7 @@
                     bulletCount = bulletCountPerShot,
                     damage = damageCoefficient * damageStat,
                     force = 0.5f * EntityStates.Commando.CommandoWeapon.FireBarrage.force,
-                    tracerEffectPrefab = Projectiles.laserTracer,
+                    tracerEffectPrefab = tracerPrefab, //tracerEffectPrefab = Projectiles.laserTracer,
                     muzzleName = muzzleName,
                     hitEffectPrefab = EntityStates.Commando.CommandoWeapon.FireBarrage.hitEffectPrefab,
                     isCrit = RollCrit(),
@@ -149,7 +154,7 @@
         {
             base.OnExit();
 
-            if (cameraTargetParams) cameraTargetParams.aimMode = CameraTargetParams.AimType.Standard;
+            //if (cameraTargetParams) cameraTargetParams.aimMode = CameraTargetParams.AimType.Standard;
         }
 
         public override void FixedUpdate()
@@ -174,5 +179,5 @@
         {
             return InterruptPriority.Skill;
         }
-    }*/
+    }
 }

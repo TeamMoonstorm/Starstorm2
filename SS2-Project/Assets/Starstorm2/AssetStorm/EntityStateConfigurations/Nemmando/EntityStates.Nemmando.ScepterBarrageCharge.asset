@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: BarrageCharge
+  m_Name: EntityStates.Nemmando.ScepterBarrageCharge
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Nemmando.BarrageCharge, Starstorm2, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    assemblyQualifiedName: EntityStates.Nemmando.ScepterBarrageCharge, Starstorm2,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
     - fieldName: baseChargeDuration
@@ -25,4 +25,9 @@ MonoBehaviour:
       fieldValue:
         stringValue: 
         objectValue: {fileID: 9061040036260016931, guid: 556b9eb9d6411844381d1441e08c8d96,
+          type: 3}
+    - fieldName: scepterChargeEffect
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 775252983414055533, guid: 8d4b6ad295e8f604285a222065f706f9,
           type: 3}
