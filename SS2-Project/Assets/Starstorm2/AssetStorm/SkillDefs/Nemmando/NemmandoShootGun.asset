@@ -15,15 +15,17 @@ MonoBehaviour:
   skillName: NemmandoShootGun
   skillNameToken: SS2_NEMMANDO_SECONDARY_SHOOT_NAME
   skillDescriptionToken: SS2_NEMMANDO_SECONDARY_SHOOT_DESCRIPTION
-  keywordTokens: []
+  keywordTokens:
+  - KEYWORD_AGILE
+  - SS2_KEYWORD_REND
   icon: {fileID: 21300000, guid: df08d89f6923bc749bdfd90a6eece5f4, type: 3}
   activationStateMachineName: Gun
   activationState:
     _typeName: EntityStates.Nemmando.ShootGun, Starstorm2
   interruptPriority: 1
   baseRechargeInterval: 2
-  baseMaxStock: 6
-  rechargeStock: 6
+  baseMaxStock: 8
+  rechargeStock: 8
   requiredStock: 1
   stockToConsume: 1
   resetCooldownTimerOnUse: 1

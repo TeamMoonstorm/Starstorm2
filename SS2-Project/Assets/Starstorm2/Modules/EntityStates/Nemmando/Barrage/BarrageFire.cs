@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace EntityStates.Nemmando
 {
-    public class BarrageFire : BaseState
+    public class BarrageFire : RendHandler
     {
         [TokenModifier("SS2_NEMMANDO_SPECIAL_SUBMISSION_DESCRIPTION", StatTypes.Percentage, 1)]
         public static float damageCoefficient;
@@ -65,7 +65,7 @@ namespace EntityStates.Nemmando
                     scale = 1f
                 }, true);*/
 
-                new BulletAttack
+                BulletAttack bulletAttack = new BulletAttack
                 {
                     owner = gameObject,
                     weapon = gameObject,
@@ -89,7 +89,11 @@ namespace EntityStates.Nemmando
                     procCoefficient = procCoefficient,
                     falloffModel = BulletAttack.FalloffModel.DefaultBullet,
                     maxDistance = range
-                }.Fire();
+                };
+
+                RendMultiplier(bulletAttack);
+
+                bulletAttack.Fire();
             }
 
             characterBody.AddSpreadBloom(2f * EntityStates.Commando.CommandoWeapon.FireBarrage.spreadBloomValue);

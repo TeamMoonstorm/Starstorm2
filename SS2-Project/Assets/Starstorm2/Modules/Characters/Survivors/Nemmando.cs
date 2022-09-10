@@ -28,12 +28,11 @@ namespace Moonstorm.Starstorm2.Survivors
             AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(SS2Assets.LoadAsset<SkillDef>("NemmandoScepterBossAttack"), "NemmandoBody", SkillSlot.Special, 1);
         }
 
-        /*public override void ModifyPrefab()
+        public override void ModifyPrefab()
         {
             var cb = BodyPrefab.GetComponent<CharacterBody>();
-            cb._defaultCrosshairPrefab = Resources.Load<GameObject>("Prefabs/Crosshair/StandardCrosshair");
-            cb.GetComponent<ModelLocator>().modelTransform.GetComponent<FootstepHandler>().footstepDustPrefab = footstepDust;
-        }*/
-
+            cb._defaultCrosshairPrefab = Resources.Load<GameObject>("Prefabs/Crosshair/MageCrosshair");
+            //cb.GetComponent<ModelLocator>().modelTransform.GetComponent<FootstepHandler>().footstepDustPrefab = footstepDust;
+        }
     }
 }

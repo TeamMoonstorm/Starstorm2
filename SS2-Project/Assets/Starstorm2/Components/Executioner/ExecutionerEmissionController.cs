@@ -8,8 +8,8 @@ namespace Moonstorm.Starstorm2.Components
     public class ExecutionerEmissionController : MonoBehaviour
     {
         private const float MaxStocksForEmission = 10;
-        private const float MaxEmission = 13f;
-        private const float MinEmission = 5f;
+        private const float MaxEmission = 8f;
+        private const float MinEmission = 2f;
 
         private CharacterModel characterModel;
         private SkillLocator skillLocator;
