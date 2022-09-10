@@ -1,4 +1,7 @@
 ﻿using Moonstorm;
+using Moonstorm.Starstorm2;
+using Moonstorm.Starstorm2.DamageTypes;
+using R2API;
 using RoR2;
 using UnityEngine;
 
@@ -8,16 +11,19 @@ namespace EntityStates.Nemmando
     {
         public float charge;
 
-        public static float laserDamageCoefficient = 8.2f;
-        public static float laserBlastRadius = 8f;
-        public static float laserBlastForce = 2000f;
+        [TokenModifier("SS2_NEMMANDO_SPECIAL_SCEPSUBMISSION_DESCRIPTION", StatTypes.Percentage, 2)]
+        public static float laserDamageCoefficient;
+        public static float laserBlastRadius;// = 8f;
+        public static float laserBlastForce;// = 2000f;
 
+        [TokenModifier("SS2_NEMMANDO_SPECIAL_SCEPSUBMISSION_DESCRIPTION", StatTypes.Percentage, 1)]
         public static float damageCoefficient = 0.6f;
         public static float procCoefficient = 0.5f;
-        public static uint bulletCountPerShot = 8;
+        public static uint bulletCountPerShot = 4;
         public static float range = 128f;
         public static float maxSpread = 40f;
         public static int minBulletCount = 2;
+        [TokenModifier("SS2_NEMMANDO_SPECIAL_SCEPSUBMISSION_DESCRIPTION", StatTypes.Default, 0)]
         public static int maxBulletCount = 6;
 
         public static float baseDuration = 0.8f;
@@ -111,6 +117,8 @@ namespace EntityStates.Nemmando
             {
                 blastPosition = raycastHit.point;
             }
+            //SS2Log.Debug(gameObject + " | " + TeamComponent.GetObjectTeam(gameObject) + " | " + teamComponent);
+            //SS2Log.Debug(laserDamageCoefficient);
 
             BlastAttack blast = new BlastAttack
             {
@@ -122,8 +130,10 @@ namespace EntityStates.Nemmando
                 position = blastPosition,
                 radius = laserBlastRadius,
                 falloffModel = BlastAttack.FalloffModel.SweetSpot,
-                bonusForce = laserBlastForce * aimRay.direction
+                bonusForce = laserBlastForce * aimRay.direction,
+                crit = RollCrit()
             };
+            //DamageAPI.AddModdedDamageType(blast, Gouge.gougeDamageType);
 
             blast.Fire();
 

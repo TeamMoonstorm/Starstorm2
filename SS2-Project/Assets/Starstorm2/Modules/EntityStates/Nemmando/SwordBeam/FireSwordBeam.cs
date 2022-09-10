@@ -83,7 +83,7 @@ namespace EntityStates.Nemmando
             {
                 hasFired = true;
 
-                bool isCrit = RollCrit();
+                //bool isCrit = RollCrit();
 
                 //Util.PlayAttackSpeedSound("NemmandoSwing1", base.gameObject, attackSpeedStat);
 

@@ -1,4 +1,7 @@
-﻿using Moonstorm.Starstorm2.Components;
+﻿using Moonstorm;
+using Moonstorm.Starstorm2.Components;
+using Moonstorm.Starstorm2.DamageTypes;
+using R2API;
 using RoR2;
 using RoR2.Orbs;
 using System.Collections.Generic;
@@ -10,9 +13,10 @@ namespace EntityStates.Nemmando
     {
         public static float baseDuration;
         //[TokenModifier("SS2_NEMMANDO_SPECIAL_BOSS_DESCRIPTION", StatTypes.Default, 0)]
+        [TokenModifier("SS2_NEMMANDO_SPECIAL_SCEPBOSS_DESCRIPTION", StatTypes.Default, 0)]
         public static int maxHits;
         public static int minHits;
-        //[TokenModifier("SS2_NEMMANDO_SPECIAL_BOSS_DESCRIPTION", StatTypes.Percentage, 1)]
+        [TokenModifier("SS2_NEMMANDO_SPECIAL_SCEPBOSS_DESCRIPTION", StatTypes.Percentage, 1)]
         public static float maxDamageCoefficient;
         public static float minDamageCoefficient;
         public static float maxRadius;
@@ -22,7 +26,7 @@ namespace EntityStates.Nemmando
         public static GameObject preSlashEffectPrefab; //NemmandoPreImpactScepterStrikeEffect
         public static GameObject slashEffectPrefab; //NemmandoImpactScepterStrikeEffect
         public static GameObject sheatheEffectPrefab; //NemmandoSheatheEffect
-        public static GameObject appearEffectPrefab; //NemmandoSheatheEffect
+        public static GameObject stunEffectPrefab; //NemmandoImpactSlashEffect
 
         public float charge;
         //public static float baseDuration = 2.5f;
@@ -69,12 +73,13 @@ namespace EntityStates.Nemmando
             if (characterBody.skinIndex == 2) minimumEmission = 70f;
             else minimumEmission = 0f;
 
-            //attackEffect = new EffectData()
-            //{
-            //    scale = 0.5f * radius,
-            //    origin = characterBody.corePosition
-            //};
-            //EffectManager.SpawnEffect(Assets.nemChargedSlashStartFX, attackEffect, true);
+            attackEffect = new EffectData()
+            {
+                scale = 0.5f * radius,
+                origin = characterBody.corePosition
+            };
+            EffectManager.SpawnEffect(preSlashEffectPrefab, attackEffect, true);
+
             characterMotor.rootMotion = Vector3.zero;
             characterMotor.velocity = Vector3.zero;
 
@@ -118,21 +123,15 @@ namespace EntityStates.Nemmando
                         damageInfo.damage = damageCoefficient * damageStat;
                         damageInfo.attacker = gameObject;
                         damageInfo.procCoefficient = 1f;
-                        damageInfo.position = hurtbox.transform.position;
+                        damageInfo.position = hurtbox.transform.position; 
                         damageInfo.crit = isCrit;
-                        damageInfo.damageType = DamageType.BlightOnHit;
+                        //damageInfo.damageType = (DamageType)Gouge.gougeDamageType;
+                        DamageAPI.AddModdedDamageType(damageInfo, Gouge.gougeDamageType);
 
                         hurtbox.healthComponent.TakeDamage(damageInfo);
                         GlobalEventManager.instance.OnHitEnemy(damageInfo, hurtbox.healthComponent.gameObject);
                         GlobalEventManager.instance.OnHitAll(damageInfo, hurtbox.healthComponent.gameObject);
                         
-                        //EffectData effect = new EffectData
-                        //{
-                        //    scale = 4f,
-                        //    origin = hurtbox.transform.position,
-                        //    rotation = hurtbox.transform.rotation
-                        //};
-                        //EffectManager.SpawnEffect(slashEffectPrefab, effect, true);
                     }
                 }
             }
@@ -163,7 +162,8 @@ namespace EntityStates.Nemmando
                                 scale = 0.5f * radius,
                                 origin = i.healthComponent.body.corePosition
                             };
-                            EffectManager.SpawnEffect(preSlashEffectPrefab, attackEffect, true);
+                            EffectManager.SpawnEffect(stunEffectPrefab, attackEffect, true);
+
                             Moonstorm.Starstorm2.Orbs.NemmandoDashOrb dashOrb = new Moonstorm.Starstorm2.Orbs.NemmandoDashOrb();
                             dashOrb.origin = transform.position;
                             dashOrb.target = i;
@@ -188,13 +188,13 @@ namespace EntityStates.Nemmando
                 if (characterModel) characterModel.invisibilityCount--;
                 PlayAnimation("FullBody, Override", "ScepterSpecial", "DecisiveStrike.playbackRate", 1f);
 
-                //EffectData effect = new EffectData
-                //{
-                //    scale = 4f,
-                //    origin = characterModel.transform.position,
-                //    rotation = characterModel.transform.rotation
-                //};
-                //EffectManager.SpawnEffect(appearEffectPrefab, effect, true);
+                EffectData effect = new EffectData
+                {
+                    scale = 4f,
+                    origin = characterModel.transform.position,
+                    rotation = characterModel.transform.rotation
+                };
+                EffectManager.SpawnEffect(preSlashEffectPrefab, effect, true);
             }
             if (fixedAge >= duration && hitsFired < hitCount && hitStopwatch <= 0f)
             {
