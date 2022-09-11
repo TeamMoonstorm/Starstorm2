@@ -97,7 +97,7 @@ namespace Moonstorm.Starstorm2.Buffs
                             hc.body.AddTimedBuff(BuffCatalog.GetBuffDef(BuffCatalog.FindBuffIndex("BuffFear")), (4 + buffStacks) * hitInfo.hitSeverity);
                             return;
                         }*/
-                        hc.body.AddTimedBuff(RoR2Content.Buffs.Cripple, (4 + buffStacks) * hitInfo.hitSeverity);
+                        hc.body.AddTimedBuff(SS2Content.Buffs.BuffVoidLeech, (4 + buffStacks) * hitInfo.hitSeverity);
                         return;
                     }
                 }

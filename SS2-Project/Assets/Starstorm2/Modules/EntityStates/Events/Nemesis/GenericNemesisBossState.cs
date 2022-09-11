@@ -149,7 +149,7 @@ namespace EntityStates.Events
                 combatSquad.AddMember(master);
                 master.onBodyDeath.AddListener(OnBodyDeath);
             }));
-            DirectorCore.instance.TrySpawnObject(directorSpawnRequest);
+            //DirectorCore.instance.TrySpawnObject(directorSpawnRequest);
             if (combatSquad)
             {
                 combatSquad.GetComponent<TeamFilter>().defaultTeam = TeamIndex.Monster;

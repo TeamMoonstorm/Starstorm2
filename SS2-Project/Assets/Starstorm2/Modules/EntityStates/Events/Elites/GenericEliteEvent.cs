@@ -1,7 +1,5 @@
 ﻿using Moonstorm.Components;
 using Moonstorm.Starstorm2;
-using Moonstorm.Components;
-using Moonstorm.Starstorm2;
 using Moonstorm.Starstorm2.Buffs;
 using RoR2;
 using System.Linq;
