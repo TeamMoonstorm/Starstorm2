@@ -1,4 +1,4 @@
-﻿/*using RoR2;
+﻿using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -7,12 +7,20 @@ namespace EntityStates.Nemmando
     public class ScepterSlashEntry : BaseSkillState
     {
         public float charge;
-        public static float maxRecoil = 5f;
-        public static float minRecoil = 0.4f;
-        public static float initialMaxSpeedCoefficient = 35f;
-        public static float initialMinSpeedCoefficient = 2f;
-        public static float minDuration = 0.2f;
-        public static float maxDuration = 0.1f;
+        public static float maxRecoil;
+        public static float minRecoil;
+        public static float initialMaxSpeedCoefficient;
+        public static float initialMinSpeedCoefficient;
+        public static float minDuration;
+        public static float maxDuration;
+        public static GameObject dashEffect;
+
+        //public static float maxRecoil = 5f;
+        //public static float minRecoil = 0.4f;
+        //public static float initialMaxSpeedCoefficient = 35f;
+        //public static float initialMinSpeedCoefficient = 2f;
+        //public static float minDuration = 0.2f;
+        //public static float maxDuration = 0.1f;
 
         private float speedCoefficient;
         private float recoil;
@@ -22,13 +30,34 @@ namespace EntityStates.Nemmando
         private Vector3 forwardDirection;
         private Vector3 previousPosition;
         private ChildLocator childLocator;
-        private ParticleSystem dashEffect;
+        //private ParticleSystem dashEffect;
+        private GameObject dashEffectInstance;
 
+        public CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
+        private CharacterCameraParamsData decisiveCameraParams = new CharacterCameraParamsData
+        {
+            maxPitch = 70f,
+            minPitch = -70f,
+            pivotVerticalOffset = 2f, //how far up should the camera go?
+            idealLocalCameraPos = zoomCameraPosition,
+            wallCushion = 0.1f
+        };
+        public static Vector3 zoomCameraPosition = new Vector3(0f, 0f, -14f); // how far back should the camera go?
+        public Material matInstance;
+        public Material swordMat;
         public override void OnEnter()
         {
             base.OnEnter();
             characterBody.isSprinting = true;
-            if (cameraTargetParams) cameraTargetParams.aimMode = CameraTargetParams.AimType.Aura;
+            //if (cameraTargetParams) cameraTargetParams.aimMode = CameraTargetParams.AimType.Aura; //
+
+            cameraTargetParams.RemoveParamsOverride(camOverrideHandle, .25f);
+            CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
+            {
+                cameraParamsData = decisiveCameraParams,
+                priority = 0f
+            };
+            camOverrideHandle = cameraTargetParams.AddParamsOverride(request, duration);
 
             duration = Util.Remap(charge, 0f, 1f, minDuration, maxDuration);
             speedCoefficient = Util.Remap(charge, 0f, 1f, initialMinSpeedCoefficient, initialMaxSpeedCoefficient);
@@ -53,8 +82,21 @@ namespace EntityStates.Nemmando
             Vector3 b = characterMotor ? characterMotor.velocity : Vector3.zero;
             previousPosition = transform.position - b;
 
-            dashEffect = childLocator.FindChild("DashEffect").GetComponent<ParticleSystem>();
-            if (dashEffect) dashEffect.Play();
+            //dashEffect = childLocator.FindChild("DashEffect").GetComponent<ParticleSystem>();
+            //if (dashEffect) dashEffect.Play();
+
+            if ((bool)dashEffect)
+            {
+                Transform dashTransform = childLocator.FindChild("DashEffect");
+                dashEffectInstance = Object.Instantiate(dashEffect, dashTransform);
+                if ((bool)dashEffectInstance)
+                {
+                    foreach (var particle in dashEffectInstance.GetComponentsInChildren<ParticleSystem>())
+                    {
+                        particle.Play();
+                    }
+                }
+            }
 
             Transform modelTransform = GetModelTransform();
             if (modelTransform)
@@ -81,6 +123,11 @@ namespace EntityStates.Nemmando
             characterMotor.velocity = Vector3.zero;
 
             characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage;
+            
+            if (dashEffectInstance)
+            {
+                Destroy(dashEffectInstance);
+            }
 
             base.OnExit();
         }
@@ -96,6 +143,9 @@ namespace EntityStates.Nemmando
                 {
                     ScepterSlashAttack nextState = new ScepterSlashAttack();
                     nextState.charge = charge;
+                    nextState.camOverrideHandle = camOverrideHandle;
+                    nextState.matInstance = matInstance;
+                    nextState.swordMat = swordMat;
                     outer.SetNextState(nextState);
                     return;
                 }
@@ -103,6 +153,9 @@ namespace EntityStates.Nemmando
                 {
                     BossAttack nextState = new BossAttack();
                     nextState.charge = charge;
+                    nextState.camOverrideHandle = camOverrideHandle;
+                    nextState.matInstance = matInstance;
+                    nextState.swordMat = swordMat;
                     outer.SetNextState(nextState);
                     return;
                 }
@@ -149,4 +202,4 @@ namespace EntityStates.Nemmando
             return InterruptPriority.Frozen;
         }
     }
-}*/
+}

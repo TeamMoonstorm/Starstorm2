@@ -83,7 +83,7 @@ namespace EntityStates.Nemmando
             {
                 hasFired = true;
 
-                bool isCrit = RollCrit();
+                //bool isCrit = RollCrit();
 
                 //Util.PlayAttackSpeedSound("NemmandoSwing1", base.gameObject, attackSpeedStat);
 
@@ -118,7 +118,7 @@ namespace EntityStates.Nemmando
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.Skill;
+            return InterruptPriority.Frozen;
         }
     }
 }

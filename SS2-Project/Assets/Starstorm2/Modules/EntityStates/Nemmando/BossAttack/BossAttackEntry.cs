@@ -81,7 +81,7 @@ namespace EntityStates.Nemmando
             Vector3 b = characterMotor ? characterMotor.velocity : Vector3.zero;
             previousPosition = transform.position - b;
 
-            /*if ((bool)dashEffect)
+            if ((bool)dashEffect)
             {
                 Transform dashTransform = childLocator.FindChild("DashEffect");
                 dashEffectInstance = Object.Instantiate(dashEffect, dashTransform);
@@ -92,7 +92,7 @@ namespace EntityStates.Nemmando
                         particle.Play();
                     }
                 }
-            }*/
+            }
 
             Transform modelTransform = GetModelTransform();
             if (modelTransform)
