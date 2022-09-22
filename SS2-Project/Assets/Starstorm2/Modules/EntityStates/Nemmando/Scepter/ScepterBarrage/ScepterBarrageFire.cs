@@ -1,25 +1,36 @@
-﻿namespace EntityStates.Nemmando
+﻿using Moonstorm;
+using Moonstorm.Starstorm2;
+using Moonstorm.Starstorm2.DamageTypes;
+using R2API;
+using RoR2;
+using UnityEngine;
+
+namespace EntityStates.Nemmando
 {
-    /*public class ScepterBarrageFire : BaseState
+    public class ScepterBarrageFire : BaseState
     {
         public float charge;
 
-        public static float laserDamageCoefficient = 8.2f;
-        public static float laserBlastRadius = 8f;
-        public static float laserBlastForce = 2000f;
+        [TokenModifier("SS2_NEMMANDO_SPECIAL_SCEPSUBMISSION_DESCRIPTION", StatTypes.Percentage, 2)]
+        public static float laserDamageCoefficient;
+        public static float laserBlastRadius;// = 8f;
+        public static float laserBlastForce;// = 2000f;
 
+        [TokenModifier("SS2_NEMMANDO_SPECIAL_SCEPSUBMISSION_DESCRIPTION", StatTypes.Percentage, 1)]
         public static float damageCoefficient = 0.6f;
         public static float procCoefficient = 0.5f;
-        public static uint bulletCountPerShot = 8;
+        public static uint bulletCountPerShot = 4;
         public static float range = 128f;
         public static float maxSpread = 40f;
         public static int minBulletCount = 2;
+        [TokenModifier("SS2_NEMMANDO_SPECIAL_SCEPSUBMISSION_DESCRIPTION", StatTypes.Default, 0)]
         public static int maxBulletCount = 6;
 
         public static float baseDuration = 0.8f;
         public static float minTimeBetweenShots = 0.2f;
         public static float maxTimeBetweenShots = 0.075f;
         public static float recoil = 5f;
+        public static GameObject tracerPrefab;
 
         private int totalBulletsFired;
         private int bulletCount;
@@ -74,7 +85,7 @@
                     bulletCount = bulletCountPerShot,
                     damage = damageCoefficient * damageStat,
                     force = 0.5f * EntityStates.Commando.CommandoWeapon.FireBarrage.force,
-                    tracerEffectPrefab = Projectiles.laserTracer,
+                    tracerEffectPrefab = tracerPrefab, //tracerEffectPrefab = Projectiles.laserTracer,
                     muzzleName = muzzleName,
                     hitEffectPrefab = EntityStates.Commando.CommandoWeapon.FireBarrage.hitEffectPrefab,
                     isCrit = RollCrit(),
@@ -106,6 +117,8 @@
             {
                 blastPosition = raycastHit.point;
             }
+            //SS2Log.Debug(gameObject + " | " + TeamComponent.GetObjectTeam(gameObject) + " | " + teamComponent);
+            //SS2Log.Debug(laserDamageCoefficient);
 
             BlastAttack blast = new BlastAttack
             {
@@ -117,8 +130,10 @@
                 position = blastPosition,
                 radius = laserBlastRadius,
                 falloffModel = BlastAttack.FalloffModel.SweetSpot,
-                bonusForce = laserBlastForce * aimRay.direction
+                bonusForce = laserBlastForce * aimRay.direction,
+                crit = RollCrit()
             };
+            //DamageAPI.AddModdedDamageType(blast, Gouge.gougeDamageType);
 
             blast.Fire();
 
@@ -149,7 +164,7 @@
         {
             base.OnExit();
 
-            if (cameraTargetParams) cameraTargetParams.aimMode = CameraTargetParams.AimType.Standard;
+            //if (cameraTargetParams) cameraTargetParams.aimMode = CameraTargetParams.AimType.Standard;
         }
 
         public override void FixedUpdate()
@@ -174,5 +189,5 @@
         {
             return InterruptPriority.Skill;
         }
-    }*/
+    }
 }
