@@ -14,7 +14,7 @@ namespace EntityStates.Executioner
         [TokenModifier("SS2_EXECUTIONER_DASH_DESCRIPTION", StatTypes.Default, 0)]
         public static float debuffDuration = 4.0f;
         public static GameObject dashEffect;
-        public static float hopVelocity = 17f;
+        public static float hopVelocity; // = 17f;
 
         private float duration;
         private SphereSearch fearSearch;
