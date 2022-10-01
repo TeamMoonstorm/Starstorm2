@@ -32,8 +32,8 @@ Note that updates may not truly be Nightly.
 
 ## Credits
 
-* Code - Anreol, Flan, Gaforb, GrooveSalad, KevinFromHPCustomerService, Moffein, Nebby, rob, swuff★, sebacame, Shared, TheTimesweeper, Vale-X, xpcybic, Xubas
-* Art/Modelling/Animation - Anreol, Bolty, bruh, Cexeub, Draymarc, JestAnotherAnimator, Gem, GrooveSalad, LucidInceptor, KevinFromHPCustomerService, Plexus, PapaZach, QuietAnon, redacted, rob, SOM, Spenny, swuff★, xpcybic, Reithierion, UnknownGlaze
+* Code - Anreol, Flan, Gaforb, GrooveSalad, KevinFromHPCustomerService, malfaisant, Moffein, Nebby, rob, swuff★, sebacame, Shared, TheTimesweeper, Vale-X, xpcybic, Xubas, Zenithrium
+* Art/Modelling/Animation - Anreol, Bolty, bruh, Cexeub, Draymarc, JestAnotherAnimator, Gem, GrooveSalad, LucidInceptor, KevinFromHPCustomerService, Plexus, PapaZach, QuietAnon, redacted, rob, SOM, Spenny, swuff★, xpcybic, Reithierion, UnknownGlaze, Zenithrium
 * Writing - Blimblam, Lyrical Endymion, swuff★, QandQuestion, T_Dimensional
 * Translations - Anreol (Spanish), MysticSword (Russian)
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze
@@ -47,6 +47,8 @@ There are no issues. The mod is perfect.
 ## Changelog
 
 **Warning: content spoilers below!**
+
+### 0.3.38β
 
 ### 0.3.37β
 * Events

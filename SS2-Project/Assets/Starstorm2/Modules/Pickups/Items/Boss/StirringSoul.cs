@@ -34,11 +34,11 @@ namespace Moonstorm.Starstorm2.Items
             {
                 if (reset)
                 {
-                    currentChance = 0;
+                    currentChance = 1;
                 }
                 else if (currentChance < 20)
                 {
-                    currentChance += 0.5f;
+                    currentChance += 1f;
                 }
             }
         }

@@ -1,10 +1,4 @@
-﻿/*using EntityStates;
-using Moonstorm;
-using RoR2;
-using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
+﻿using RoR2;
 using UnityEngine;
 
 namespace EntityStates.Pyro
@@ -200,4 +194,4 @@ namespace EntityStates.Pyro
 		private static float flamethrowerEffectResetTimer = 1.8f;
 		private float flamethrowerEffectResetStopwatch;
 	}
-}*/
+}

@@ -1,8 +1,6 @@
-﻿/*using RoR2;
-using BepInEx;
+﻿using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
-using Moonstorm.Starstorm2.Buffs;
 
 namespace Moonstorm.Starstorm2.Components
 {
@@ -11,11 +9,11 @@ namespace Moonstorm.Starstorm2.Components
     {
         private void Awake()
         {
-            HeatComponent.heatGauge = Resources.Load<Texture2D>("texHeatgauge.png");
-            HeatComponent.heatGauge_Heated = Resources.Load<Texture2D>("texHeatgauge_heated.png");
-            HeatComponent.heatBar = Resources.Load<Texture2D>("texHeatbar.png");
-            HeatComponent.heatBar_Heated = Resources.Load<Texture2D>("texHeatbar_heated.png");
+            HeatComponent.heatGauge = LegacyResourcesAPI.Load<Texture2D>("texHeatgauge.png");
+            HeatComponent.heatGauge_Heated = LegacyResourcesAPI.Load<Texture2D>("texHeatgauge_heated.png");
+            HeatComponent.heatBar = LegacyResourcesAPI.Load<Texture2D>("texHeatbar.png");
+            HeatComponent.heatBar_Heated = LegacyResourcesAPI.Load<Texture2D>("texHeatbar_heated.png");
         }
 
     }
-}*/
+}
