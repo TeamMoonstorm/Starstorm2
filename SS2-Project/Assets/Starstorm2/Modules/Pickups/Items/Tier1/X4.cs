@@ -25,7 +25,7 @@ namespace Moonstorm.Starstorm2.Items
 
         [ConfigurableField(ConfigDesc = "Flat healing upon activating a secondary skill. (1 = 1 health point)")]
         [TokenModifier("SS2_ITEM_X4_DESC", StatTypes.Default, 3)]
-        public static float flatHealth = 20;
+        public static float flatHealth = 10;
 
         public static ProcChainMask ignoredProcs;
 
@@ -83,7 +83,9 @@ namespace Moonstorm.Starstorm2.Items
             private void X4HealOnSkillActivation(On.RoR2.CharacterBody.orig_OnSkillActivated orig, CharacterBody self, GenericSkill skill)
             {
                 orig(self, skill);
-                if (skill.skillFamily.ToString().Contains("Secondary"))
+                //skill == skill.characterBody.skillLocator.secondaryBonusStockSkill
+                //skill.skillFamily.ToString().Contains("Secondary")
+                if (skill == skill.characterBody.skillLocator.secondaryBonusStockSkill)
                 {
                     float amntToHeal = flatHealth + self.healthComponent.health * (percentHealth + (percentHealthStacking * (stack - 1)));
                     self.healthComponent.Heal(amntToHeal, ignoredProcs, true);
