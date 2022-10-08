@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: sstimCenter
+  m_Name: sstimMain
   m_Shader: {fileID: 4800000, guid: 5dfa0015d7b305d4e94f6b67a2105c13, type: 2}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -80,23 +80,19 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: f16790f234ffcc34282db6d09a77fc54, type: 3}
+        m_Texture: {fileID: 2800000, guid: cfe62c9bfca8fb541aa5c3a49c565da9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskTex:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _Normal1Tex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Normal2Tex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _NormalTex:
-        m_Texture: {fileID: 2800000, guid: 8403858fc15e5c746948c7ee27996772, type: 3}
+        m_Texture: {fileID: 2800000, guid: ff0ff559c4163a94688d4201c1700b18, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -129,6 +125,8 @@ Material:
     - _DecalLayer: 0
     - _Depth: 0.2
     - _DetailNormalMapScale: 1
+    - _DistanceModulationMagnitude: 0.5
+    - _DistanceModulationOn: 0
     - _DitherOn: 0
     - _DstBlend: 0
     - _EliteBrightnessMax: 1
@@ -139,6 +137,8 @@ Material:
     - _FEON: 0
     - _Fade: 1
     - _FadeBias: 0
+    - _FarFadeOneDistance: 200000
+    - _FarFadeZeroDistance: 250000
     - _FlowEmissionStrength: 1
     - _FlowHeightBias: 0
     - _FlowHeightPower: 1
@@ -155,12 +155,17 @@ Material:
     - _GlossyReflections: 1
     - _GreenChannelBias: 0
     - _GreenChannelSmoothness: 0
+    - _InvFade: 0.1
     - _LimbPrimeMask: 1
     - _LimbRemovalOn: 0
+    - _Magnitude: 0.05
     - _Metallic: 0
     - _Mode: 0
+    - _NearFadeOneDistance: 5
+    - _NearFadeZeroDistance: 0
     - _NormalStrength: 1
     - _OcclusionStrength: 1
+    - _Opacity: 0
     - _Parallax: 0.02
     - _PrintBias: 0
     - _PrintBoost: 1
@@ -180,11 +185,11 @@ Material:
     - _SplatmapTileScale: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _VertexOffsetStrength: 0
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _DistortionColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FlashColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Scroll: {r: 0, g: 0, b: 0, a: 0}
+    - _OpacityColor: {r: 1, g: 1, b: 1, a: 1}
