@@ -11,20 +11,20 @@ namespace Moonstorm.Starstorm2.Items
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("X4");
 
-        [ConfigurableField(ConfigDesc = "Cooldown reduction per X-4 Stimulant. (1 = 1 second)")]
-        [TokenModifier("SS2_ITEM_X4_DESC", StatTypes.Default, 0)]
+        //[ConfigurableField(ConfigDesc = "Cooldown reduction per X-4 Stimulant. (1 = 1 second)")]
+        //[TokenModifier("SS2_ITEM_X4_DESC", StatTypes.Default, 0)]
         public static float secCooldown = 0.25f;
-
-        [ConfigurableField(ConfigDesc = "Percent healing upon activating a secondary skill. (1 = 1% of max health)")]
-        [TokenModifier("SS2_ITEM_X4_DESC", StatTypes.Percentage, 1)]
+        //
+        //[ConfigurableField(ConfigDesc = "Percent healing upon activating a secondary skill. (1 = 1% of max health)")]
+        //[TokenModifier("SS2_ITEM_X4_DESC", StatTypes.Percentage, 1)]
         public static float percentHealth = .01f;
-
-        [ConfigurableField(ConfigDesc = "Percent healing per stack upon activating a secondary skill. (1 = 1% of max health)")]
-        [TokenModifier("SS2_ITEM_X4_DESC", StatTypes.Percentage, 2)]
+        //
+        //[ConfigurableField(ConfigDesc = "Percent healing per stack upon activating a secondary skill. (1 = 1% of max health)")]
+        //[TokenModifier("SS2_ITEM_X4_DESC", StatTypes.Percentage, 2)]
         public static float percentHealthStacking = .005f;
-
-        [ConfigurableField(ConfigDesc = "Flat healing upon activating a secondary skill. (1 = 1 health point)")]
-        [TokenModifier("SS2_ITEM_X4_DESC", StatTypes.Default, 3)]
+        //
+        //[ConfigurableField(ConfigDesc = "Flat healing upon activating a secondary skill. (1 = 1 health point)")]
+        //[TokenModifier("SS2_ITEM_X4_DESC", StatTypes.Default, 3)]
         public static float flatHealth = 10;
 
         public static ProcChainMask ignoredProcs;
