@@ -35,6 +35,7 @@ namespace EntityStates.Events
 
         public override void StartEvent()
         {
+            SS2Log.Debug("Beginning Storm");
             base.StartEvent();
             if (eventStateEffect)
             {
@@ -49,6 +50,24 @@ namespace EntityStates.Events
                 }
             }
             CharacterBody.onBodyStartGlobal += BuffEnemy;
+            RoR2.Run.onRunDestroyGlobal += RunEndRemoveStorms;
+            RoR2.Stage.onServerStageComplete += StageEndRemoveStorms;
+        }
+
+        private void StageEndRemoveStorms(Stage obj)
+        {
+            SS2Log.Debug("Removing active storm because the stage ended.");
+            CharacterBody.onBodyStartGlobal -= BuffEnemy;
+            RoR2.Run.onRunDestroyGlobal -= RunEndRemoveStorms;
+            RoR2.Stage.onServerStageComplete -= StageEndRemoveStorms;
+        }
+
+        private void RunEndRemoveStorms(Run obj)
+        {
+            SS2Log.Debug("Removing active storm because the run ended.");
+            CharacterBody.onBodyStartGlobal -= BuffEnemy;
+            RoR2.Run.onRunDestroyGlobal -= RunEndRemoveStorms;
+            RoR2.Stage.onServerStageComplete -= StageEndRemoveStorms;
         }
 
         public override void OnExit()
@@ -60,8 +79,11 @@ namespace EntityStates.Events
             }
             if (HasWarned)
             {
+                SS2Log.Debug("Storm ended - removed hook normally.");
                 CharacterBody.onBodyStartGlobal -= BuffEnemy;
-                if(NetworkServer.active)
+                RoR2.Run.onRunDestroyGlobal -= RunEndRemoveStorms;
+                RoR2.Stage.onServerStageComplete -= StageEndRemoveStorms;
+                if (NetworkServer.active)
                 {
                     var bodies = CharacterBody.readOnlyInstancesList;
                     foreach (var body in bodies)

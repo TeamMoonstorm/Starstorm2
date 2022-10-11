@@ -41,12 +41,31 @@ namespace EntityStates.Events
 
         public override void StartEvent()
         {
+            SS2Log.Debug("Beginning Elite Event");
             base.StartEvent();
             if (eventStateEffect)
             {
                 eventStateEffect.OnEffectStart();
             }
             CharacterBody.onBodyStartGlobal += MakeElite;
+            RoR2.Run.onRunDestroyGlobal += RunEndRemoveEliteEvent;
+            RoR2.Stage.onServerStageComplete += StageEndRemoveEliteEvent;
+        }
+
+        private void StageEndRemoveEliteEvent(Stage obj)
+        {
+            SS2Log.Debug("Removing active elite event because the stage ended.");
+            CharacterBody.onBodyStartGlobal -= MakeElite;
+            RoR2.Run.onRunDestroyGlobal -= RunEndRemoveEliteEvent;
+            RoR2.Stage.onServerStageComplete -= StageEndRemoveEliteEvent;
+        }
+
+        private void RunEndRemoveEliteEvent(Run obj)
+        {
+            SS2Log.Debug("Removing active elite event because the run ended.");
+            CharacterBody.onBodyStartGlobal -= MakeElite;
+            RoR2.Run.onRunDestroyGlobal -= RunEndRemoveEliteEvent;
+            RoR2.Stage.onServerStageComplete -= StageEndRemoveEliteEvent;
         }
 
         public override void OnExit()
@@ -58,7 +77,10 @@ namespace EntityStates.Events
             }
             if (HasWarned)
             {
+                SS2Log.Debug("Elite event ended - removed hook normally.");
                 CharacterBody.onBodyStartGlobal -= MakeElite;
+                RoR2.Run.onRunDestroyGlobal -= RunEndRemoveEliteEvent;
+                RoR2.Stage.onServerStageComplete -= StageEndRemoveEliteEvent;
             }
         }
 
