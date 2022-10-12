@@ -359,7 +359,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraParams: {fileID: 11400000, guid: 0f32a1587e7bad248a563caf83e62fe4, type: 2}
-  cameraPivotTransform: {fileID: 5282431506775738655}
+  cameraPivotTransform: {fileID: 0}
   fovOverride: 0
   recoil: {x: 0, y: 0}
   dontRaycastToPivot: 0
@@ -400,7 +400,7 @@ MonoBehaviour:
   m_Script: {fileID: 1512185436, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxInteractionDistance: 1
+  maxInteractionDistance: 3
 --- !u!114 &3427005964494379903
 MonoBehaviour:
   m_ObjectHideFlags: 0

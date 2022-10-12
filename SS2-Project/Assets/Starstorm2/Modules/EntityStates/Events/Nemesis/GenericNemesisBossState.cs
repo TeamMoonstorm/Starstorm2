@@ -130,15 +130,14 @@ namespace EntityStates.Events
                 placementMode = DirectorPlacementRule.PlacementMode.NearestNode
             };
             DirectorCore.GetMonsterSpawnDistance(spawnDistance, out directorPlacementRule.minDistance, out directorPlacementRule.maxDistance);
-
+            
 
             DirectorSpawnRequest directorSpawnRequest = new DirectorSpawnRequest(spawnCard, directorPlacementRule, rng);
             directorSpawnRequest.teamIndexOverride = new TeamIndex?(TeamIndex.Monster);
             directorSpawnRequest.ignoreTeamMemberLimit = true;
 
             CombatSquad combatSquad = null;
-            DirectorSpawnRequest directorSpawnRequest2 = directorSpawnRequest;
-            directorSpawnRequest2.onSpawnedServer = (Action<SpawnCard.SpawnResult>)Delegate.Combine(directorSpawnRequest2.onSpawnedServer, new Action<SpawnCard.SpawnResult>(delegate (SpawnCard.SpawnResult result)
+            directorSpawnRequest.onSpawnedServer = (Action<SpawnCard.SpawnResult>)Delegate.Combine(directorSpawnRequest.onSpawnedServer, new Action<SpawnCard.SpawnResult>(delegate (SpawnCard.SpawnResult result)
 
             {
                 if (!combatSquad)
@@ -149,7 +148,7 @@ namespace EntityStates.Events
                 combatSquad.AddMember(master);
                 master.onBodyDeath.AddListener(OnBodyDeath);
             }));
-            //DirectorCore.instance.TrySpawnObject(directorSpawnRequest);
+            DirectorCore.instance.TrySpawnObject(directorSpawnRequest);
             if (combatSquad)
             {
                 combatSquad.GetComponent<TeamFilter>().defaultTeam = TeamIndex.Monster;
