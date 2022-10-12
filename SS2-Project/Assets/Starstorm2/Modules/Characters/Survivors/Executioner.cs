@@ -8,7 +8,7 @@ namespace Moonstorm.Starstorm2.Survivors
     public sealed class Executioner : SurvivorBase
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("ExecutionerBody");
-        public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("ExecutionerMonsterMaster");
+        public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("ExecutionerMonsterMasterNew");
         public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("SurvivorExecutioner");
 
         internal static Dictionary<string, int> ionChargeValues = new Dictionary<string, int>
