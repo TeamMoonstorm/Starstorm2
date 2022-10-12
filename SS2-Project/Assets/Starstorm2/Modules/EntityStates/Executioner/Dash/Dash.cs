@@ -14,11 +14,13 @@ namespace EntityStates.Executioner
         [TokenModifier("SS2_EXECUTIONER_DASH_DESCRIPTION", StatTypes.Default, 0)]
         public static float debuffDuration = 4.0f;
         public static GameObject dashEffect;
+        public static float hopVelocity; // = 17f;
 
         private float duration;
         private SphereSearch fearSearch;
         private List<HurtBox> hits;
         private Animator animator;
+
 
         public override void OnEnter()
         {
@@ -28,6 +30,8 @@ namespace EntityStates.Executioner
             duration = baseDuration;
             Util.PlayAttackSpeedSound("ExecutionerUtility", gameObject, 1.0f);
             PlayAnimation("FullBody, Override", "Utility", "Utility.playbackRate", duration);
+
+            HopIfAirborne();
 
             //create dash aoe
             if (isAuthority)
@@ -112,6 +116,13 @@ namespace EntityStates.Executioner
 
             if (fixedAge >= duration)
                 outer.SetNextStateToMain();
+        }
+        private void HopIfAirborne()
+        {
+            if (!characterMotor.isGrounded)
+            {
+                SmallHop(characterMotor, hopVelocity);
+            }
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

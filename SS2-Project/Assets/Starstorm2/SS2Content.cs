@@ -132,7 +132,7 @@ namespace Moonstorm.Starstorm2
 
             public static BuffDef BuffGouge;
 
-            public static BuffDef BuffGreaterWarbanner;
+            public static BuffDef BuffGreaterBanner;
 
             public static BuffDef BuffIntoxicated;
 
