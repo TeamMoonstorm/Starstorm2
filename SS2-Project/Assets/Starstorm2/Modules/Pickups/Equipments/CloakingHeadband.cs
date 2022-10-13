@@ -12,6 +12,7 @@ namespace Moonstorm.Starstorm2.Equipments
         public override bool FireAction(EquipmentSlot slot)
         {
             slot.characterBody.AddTimedBuff(RoR2Content.Buffs.Cloak.buffIndex, cloakDuration);
+            slot.characterBody.AddTimedBuff(RoR2Content.Buffs.CloakSpeed.buffIndex, cloakDuration);
             return true;
         }
     }
