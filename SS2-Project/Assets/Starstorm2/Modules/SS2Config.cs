@@ -42,7 +42,7 @@ namespace Moonstorm.Starstorm2
                 Starstorm.instance.Config.Bind("Starstorm 2 :: Unlock All",
                             "false",
                             false,
-                            "Setting this to true unlocks all the content in Starstorm2, excluding skin unlocks.");
+                            "Setting this to true unlocks all the content in Starstorm 2, excluding skin unlocks.");
             EnableFunnyCanister =
                            Starstorm.instance.Config.Bind("Starstorm 2 :: Equipment",
                                        "Pressurized Canister No Jump Control",
@@ -53,7 +53,7 @@ namespace Moonstorm.Starstorm2
                 Starstorm.instance.Config.Bind("Starstorm 2 :: Typhoon",
                             "Increase Team Limit",
                             true,
-                            "Multiplies the Monster Team maximum size by 2 when enabled. Lunar is left unchanged. May affect performance.");
+                            "Multiplies the Monster Team maximum size by 2 when enabled. Lunar and Void are left unchanged. May affect performance.");
             EnableEvents =
                 Starstorm.instance.Config.Bind("Starstorm 2 :: Events",
                             "Enabled",
