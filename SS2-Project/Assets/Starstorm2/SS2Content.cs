@@ -193,6 +193,7 @@ namespace Moonstorm.Starstorm2
         public override void Init()
         {
             base.Init();
+
             LoadDispatchers = new Action[]
             {
                 delegate
@@ -304,6 +305,8 @@ namespace Moonstorm.Starstorm2
                     PopulateTypeFields(typeof(Survivors), ContentPack.survivorDefs);
                 }
             };
+
+            Modules.UglyMULT.Initialize();
         }
     }
 }
