@@ -9,13 +9,17 @@ namespace Moonstorm.Starstorm2.Items
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ArmedBackpack");
 
-        [ConfigurableField(ConfigDesc = "Damage dealt by the backpack. (1 = 100%)")]
+        [ConfigurableField(ConfigDesc = "Damage dealt by the backpack's missle per stack. (1 = 100%)")]
         [TokenModifier("SS2_ITEM_ARMEDBACKPACK_DESC", StatTypes.Percentage, 0)]
         public static float backpackDamage = 1f;
 
         [ConfigurableField(ConfigDesc = "Proc multiplier per percentage of health lost. (1 = 100% of health fraction lost)")]
-        [TokenModifier("SS2_ITEM_ARMEDBACKPACK_DESC", StatTypes.Percentage, 0)]
-        public static float procMult = 2f;
+        [TokenModifier("SS2_ITEM_ARMEDBACKPACK_DESC", StatTypes.Default,1)]
+        public static float procMult = 2.5f;
+
+        [ConfigurableField(ConfigDesc = "Base chance for fired missile. (1 = 1% chance)")]
+        [TokenModifier("SS2_ITEM_ARMEDBACKPACK_DESC", StatTypes.Percentage, 2)]
+        public static float procMin = 15;
 
         public static ProcChainMask ignoredProcs;
 
@@ -30,8 +34,10 @@ namespace Moonstorm.Starstorm2.Items
                 {
                     float percentHPLoss = (damageReport.damageDealt / damageReport.victim.fullCombinedHealth) * 100f * procMult;
                     var playerBody = damageReport.victimBody;
+                    var rollChance = percentHPLoss > procMin ? percentHPLoss : procMin;
 
-                    if (Util.CheckRoll(percentHPLoss, playerBody.master))
+                    SS2Log.Debug("chance was: " + rollChance);
+                    if (Util.CheckRoll(rollChance, playerBody.master))
                     {
                         float damageCoefficient = backpackDamage * stack;
                         float missileDamage = playerBody.damage * damageCoefficient;

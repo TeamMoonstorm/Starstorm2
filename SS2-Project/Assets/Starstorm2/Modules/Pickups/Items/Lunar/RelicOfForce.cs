@@ -21,6 +21,7 @@ namespace Moonstorm.Starstorm2.Items
         [TokenModifier("SS2_ITEM_RELICOFFORCE_DESC", StatTypes.Percentage, 1)]
         public static float forcePenalty = .4f;
 
+        //public static DamageAPI.ModdedDamageType relicForceDamageType;
 
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier
         {
@@ -45,14 +46,22 @@ namespace Moonstorm.Starstorm2.Items
                 //On.RoR2.CharacterBody.OnSkillActivated += RelicOfForceIncreaseCooldown;
                 //On.RoR2.CharacterBody.OnInventoryChanged += AddRelicCompontent;
                 IL.RoR2.GenericSkill.CalculateFinalRechargeInterval += ForceSkillFinalRecharge;
+                //On.RoR2.HealthComponent.TakeDamage += ForceBonusHits;
             }
-
             private void OnDisable()
             {
                 //On.RoR2.CharacterBody.OnSkillActivated -= RelicOfForceIncreaseCooldown;
                 //On.RoR2.CharacterBody.OnInventoryChanged -= AddRelicCompontent;
                 IL.RoR2.GenericSkill.CalculateFinalRechargeInterval -= ForceSkillFinalRecharge;
+                //On.RoR2.HealthComponent.TakeDamage -= ForceBonusHits;
             }
+
+            //private void ForceBonusHits(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
+            //{
+            //    damageInfo.AddModdedDamageType(maliceDamageType);
+            //
+            //}
+            //
 
             private void ForceSkillFinalRecharge(ILContext il)
             {
@@ -273,20 +282,20 @@ namespace Moonstorm.Starstorm2.Items
             //{
             //}
         }
-        public class ForceToken : MonoBehaviour
-        {
-            //public float basePrimaryCD = 0;
-            //public float baseSecondaryCD = 0;
-            //public float baseUtilityCD = 0;
-            //public float baseSpecialCD = 0;
-
-            public float primaryInc = 0;
-            public float secondaryInc = 0;
-            public float utilityInc = 0;
-            public float specialInc = 0;
-
-            public float hilariousValue = 3691;
-        }
+        //public class ForceToken : MonoBehaviour
+        //{
+        //    //public float basePrimaryCD = 0;
+        //    //public float baseSecondaryCD = 0;
+        //    //public float baseUtilityCD = 0;
+        //    //public float baseSpecialCD = 0;
+        //
+        //    public float primaryInc = 0;
+        //    public float secondaryInc = 0;
+        //    public float utilityInc = 0;
+        //    public float specialInc = 0;
+        //
+        //    public float hilariousValue = 3691;
+        //}
 
     }
 
