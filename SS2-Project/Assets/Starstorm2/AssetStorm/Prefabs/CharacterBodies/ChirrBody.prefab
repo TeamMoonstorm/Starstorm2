@@ -2551,7 +2551,6 @@ GameObject:
   - component: {fileID: 7146184259708495539}
   - component: {fileID: 7083039639784167757}
   - component: {fileID: 5455305571027414215}
-  - component: {fileID: 3838507265709813595}
   - component: {fileID: 3333918264822009712}
   - component: {fileID: 745613541888491930}
   m_Layer: 0
@@ -2926,23 +2925,6 @@ MonoBehaviour:
   aimType: 0
   enableAimWeight: 0
   UseTransformedAimVector: 0
---- !u!114 &3838507265709813595
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 63143138296311217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7196d6464f5113d409b3ae0adc2a4995, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseFootstepString: ChirrStep
-  sprintFootstepOverrideString: 
-  enableFootstepDust: 0
-  footstepDustPrefab: {fileID: 0}
-  footstepEffect: {fileID: 0}
 --- !u!114 &3333918264822009712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4523,8 +4505,6 @@ GameObject:
   - component: {fileID: 8241557256103868196}
   - component: {fileID: 6582799558343887775}
   - component: {fileID: 796982413861596990}
-  - component: {fileID: 114454682592723452}
-  - component: {fileID: 114811007085682946}
   - component: {fileID: -812628197186213347}
   m_Layer: 0
   m_Name: ChirrBody
@@ -4605,8 +4585,8 @@ MonoBehaviour:
   baseRegen: 1
   baseMaxShield: 0
   baseMoveSpeed: 7
-  baseAcceleration: 80
-  baseJumpPower: 22.5
+  baseAcceleration: 50
+  baseJumpPower: 15
   baseDamage: 12
   baseAttackSpeed: 1
   baseCrit: 1
@@ -4625,7 +4605,7 @@ MonoBehaviour:
   levelCrit: 0
   levelArmor: 0
   wasLucky: 0
-  spreadBloomDecayTime: 0.45
+  spreadBloomDecayTime: 0.7
   spreadBloomCurve:
     serializedVersion: 2
     m_Curve:
@@ -4886,7 +4866,7 @@ MonoBehaviour:
   initialStateType:
     _typeName: EntityStates.SpawnTeleporterState, Assembly-CSharp
   mainStateType:
-    _typeName: EntityStates.Chirr.ChirrMain, Starstorm2, Version=1.0.0.0, Culture=neutral,
+    _typeName: EntityStates.GenericCharacterMain, RoR2, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
 --- !u!114 &1534564856840442282
 MonoBehaviour:
@@ -4938,7 +4918,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitThreshold: 0.1
   targetStateMachine: {fileID: 6705767678261104068}
-  idleStateMachine: []
+  idleStateMachine:
+  - {fileID: 1534564856840442282}
   hurtState:
     _typeName: EntityStates.HurtState, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
@@ -5152,37 +5133,6 @@ MonoBehaviour:
     rightSpeedSmoothDamp: 0.01
     intoJumpTransitionTime: 0.05
     turnAngleSmoothDamp: 1
---- !u!114 &114454682592723452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2182981928116722673}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd4e203f5d1200647912a7bcd7002115, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114811007085682946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2182981928116722673}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7ce4ac6e30ba9541acfacb3f94f391a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  futureFriend: {fileID: 0}
-  friend: {fileID: 0}
-  friendOrigIndex: 0
-  hasFriend: 0
-  baseInventory: {fileID: 0}
-  pingTarget: {fileID: 0}
-  enemyTarget: {fileID: 0}
 --- !u!114 &-812628197186213347
 MonoBehaviour:
   m_ObjectHideFlags: 0
