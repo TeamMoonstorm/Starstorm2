@@ -1,4 +1,5 @@
 ﻿using RoR2;
+using RoR2.Projectile;
 using UnityEngine;
 
 namespace EntityStates.Beastmaster.Weapon
@@ -21,6 +22,10 @@ namespace EntityStates.Beastmaster.Weapon
             }
         }
 
+        [Tooltip("Minimum duration before it can get interrupted.")]
+        [SerializeField]
+        public float minimumDuration;
+
         [Tooltip("How much the duration should last.")]
         [SerializeField]
         public float baseTargetDuration;
@@ -38,6 +43,9 @@ namespace EntityStates.Beastmaster.Weapon
 
         [SerializeField]
         public float baseProjectileDesiredSpeed;
+
+        [SerializeField]
+        public float baseProjectileForce;
 
         [SerializeField]
         public float raycastMaxLength;
@@ -73,11 +81,12 @@ namespace EntityStates.Beastmaster.Weapon
         public string muzzleThirdVolleyRight;
 
         [SerializeField]
-        public SerializableEntityStateType comboFinalizerState;
+        public bool useComboFinalizerState;
 
         private ChildLocator childLocator;
         private float countdownSinceLastVolley;
         private int volleyCount;
+        private bool buttonReleased;
 
         public override void OnEnter()
         {
@@ -98,6 +107,7 @@ namespace EntityStates.Beastmaster.Weapon
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+
             countdownSinceLastVolley -= Time.fixedDeltaTime;
             if (volleyCount < baseTargetAmountOfVolleys && this.countdownSinceLastVolley <= 0f)
             {
@@ -108,18 +118,37 @@ namespace EntityStates.Beastmaster.Weapon
                     this.FireScatterShot(volleyCount, i);
                 }
             }
+
+            if (!buttonReleased && !(base.inputBank && base.inputBank.skill1.down))
+            {
+                buttonReleased = true;
+            }
+
             if (base.fixedAge >= this.duration && base.isAuthority)
             {
+                if (!buttonReleased && useComboFinalizerState)
+                {
+                    this.outer.SetNextState(new FireHealDart());
+                }
                 this.outer.SetNextStateToMain();
                 return;
             }
+        }
+
+        public override InterruptPriority GetMinimumInterruptPriority()
+        {
+            if (base.fixedAge <= minimumDuration || !buttonReleased)
+            {
+                return InterruptPriority.PrioritySkill;
+            }
+            return InterruptPriority.Any;
         }
 
         private void FireScatterShot(int currentVolley, int currentShotInVolley)
         {
             //Was previously a transform...but SimpleMuzzleFlash only accepts strings and not transforms
             string muzzle = "";
-            Ray aimRay = base.GetAimRay();
+            Ray projectileAimRay = base.GetAimRay();
             if (childLocator)
             {
                 switch (currentVolley % 3)
@@ -179,23 +208,42 @@ namespace EntityStates.Beastmaster.Weapon
             }
             if (muzzle.Length > 0)
             {
-                Transform transform = childLocator.FindChild(muzzle);
-                if (transform)
+                Transform muzzleTransform = childLocator.FindChild(muzzle);
+                if (muzzleTransform)
                 {
-                    aimRay.origin = transform.position;
+                    projectileAimRay.origin = muzzleTransform.position;
                     if (muzzleEffectPrefab)
                     {
                         EffectManager.SimpleMuzzleFlash(muzzleEffectPrefab, base.gameObject, muzzle, false);
                     }
-                    Ray defaultAimray = GetAimRay();
-                    //Apparently this avoids hitting with yourself and... thats about it...?
-                    if (Util.CharacterRaycast(base.gameObject, defaultAimray, out RaycastHit raycastHit, raycastMaxLength, LayerIndex.world.mask | LayerIndex.entityPrecise.mask, QueryTriggerInteraction.Ignore))
+                    if (isAuthority)
                     {
-                        aimRay.direction = raycastHit.point - aimRay.origin;
-                    }
-                    else
-                    {
-                        aimRay.direction = (defaultAimray.direction * raycastMaxLength) - aimRay.origin;
+                        Ray defaultAimray = GetAimRay();
+                        //Apparently this avoids hitting with yourself and... thats about it...?
+                        if (Util.CharacterRaycast(base.gameObject, defaultAimray, out RaycastHit raycastHit, raycastMaxLength, LayerIndex.world.mask | LayerIndex.entityPrecise.mask, QueryTriggerInteraction.Ignore))
+                        {
+                            projectileAimRay.direction = raycastHit.point - projectileAimRay.origin;
+                        }
+                        else
+                        {
+                            projectileAimRay.direction = (defaultAimray.direction * raycastMaxLength) - projectileAimRay.origin;
+                        }
+                        if (this.projectilePrefab != null)
+                        {
+                            FireProjectileInfo fireProjectileInfo = new FireProjectileInfo
+                            {
+                                projectilePrefab = this.projectilePrefab,
+                                position = projectileAimRay.origin,
+                                rotation = Util.QuaternionSafeLookRotation(projectileAimRay.direction),
+                                owner = base.gameObject,
+                                damage = this.damageStat * this.baseProjectileDamageCoefficient,
+                                force = this.baseProjectileForce,
+                                crit = base.RollCrit(),
+                                speedOverride = baseProjectileDesiredSpeed,
+                                //damageTypeOverride = new DamageType?(DamageType.SuperBleedOnCrit)
+                            };
+                            ProjectileManager.instance.FireProjectile(fireProjectileInfo);
+                        }
                     }
                 }
             }
