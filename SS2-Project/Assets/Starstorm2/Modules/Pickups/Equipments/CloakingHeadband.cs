@@ -12,6 +12,13 @@ namespace Moonstorm.Starstorm2.Equipments
         public override bool FireAction(EquipmentSlot slot)
         {
             slot.characterBody.AddTimedBuff(RoR2Content.Buffs.Cloak.buffIndex, cloakDuration);
+            slot.characterBody.AddTimedBuff(RoR2Content.Buffs.CloakSpeed.buffIndex, cloakDuration);
+            EffectData effectData = new EffectData
+            {
+                origin = slot.characterBody.transform.position
+            };
+            effectData.SetNetworkedObjectReference(slot.characterBody.gameObject);
+            EffectManager.SpawnEffect(EntityStates.Bandit2.StealthMode.smokeBombEffectPrefab, effectData, transmit: true);
             return true;
         }
     }
