@@ -1,4 +1,5 @@
-﻿using EntityStates;
+﻿using Assets.Starstorm2.ScriptableObjects;
+using EntityStates;
 using Moonstorm.Starstorm2.Components;
 using RoR2;
 using RoR2.Skills;

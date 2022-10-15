@@ -8,9 +8,9 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace EntityStates.Chirr
+namespace EntityStates.Beastmaster
 {
-    public class ChirrMain : GenericCharacterMain
+    public class BeastmasterMain : GenericCharacterMain
     {
 
         public static AnimationCurve flutterVelocityCurve;

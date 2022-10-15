@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace EntityStates.Chirr.Weapon
+namespace EntityStates.Beastmaster.Weapon
 {
     class WindReflectionPush : GenericProjectileBaseState
 	{

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EntityStates.Chirr.SideWeapon
+namespace EntityStates.Beastmaster.SideWeapon
 {
     class HealSphere
     {
