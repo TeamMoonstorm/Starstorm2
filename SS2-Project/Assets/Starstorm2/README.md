@@ -32,8 +32,8 @@ Note that updates may not truly be Nightly.
 
 ## Credits
 Starstorm 2 is currently being maintained by...
-Code - malfaisant, swuff★, Zenithrium
-Art/Modelling/Animation - dotflare, SkeletorChampion, Zenithrium
+* Code - malfaisant, swuff★, Zenithrium
+* Art/Modelling/Animation - dotflare, SkeletorChampion, Zenithrium
 
 With previous contributions by...
 * Code - Anreol, Flan, Gaforb, GrooveSalad, KevinFromHPCustomerService, Moffein, Nebby, Noop, Phreel, rob, swuff★, sebacame, Shared, TheTimesweeper, Vale-X, xpcybic, Xubas
