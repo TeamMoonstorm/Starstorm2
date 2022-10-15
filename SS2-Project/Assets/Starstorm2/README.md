@@ -4,7 +4,7 @@
 
 Starstorm 2 is a work-in-progress RoR2 port of Starstorm, a diverse gameplay and content mod for Risk of Rain 1. It features two new survivors, over 20 new items and equipment, and a new, dangerous event to shake up your runs.
 
-More information on Starstorm, including features and content to look forward to in SS2, can be found in its info section at https://rainfusion.ml/ or its wiki at https://starstormmod.fandom.com/wiki/Starstorm_Mod_Wiki. For more information on SS2, including development updates and an outlet for feedback and bug reports, visit our Discord server at https://discord.gg/SgFxwKT7nY.
+More information on Starstorm, including features and content to look forward to in SS2, can be found in its info section at https://rainfusion.ml/ or its wiki at https://starstormmod.fandom.com/wiki/Starstorm_Mod_Wiki. For more information on SS2, including development updates and an outlet for feedback and bug reports, visit our Discord server at https://discord.gg/4p6NdERUcZ.
 
 ## Nightly?
 
@@ -48,7 +48,7 @@ Additional thanks to...
 ## Known Issues
 
 There are no issues. The mod is perfect.
-...In all seriousness, if you find anything, let us know in our Discord (https://discord.gg/fchwaTQcd4)!
+...In all seriousness, if you find anything, let us know in our Discord (https://discord.gg/4p6NdERUcZ)!
 
 ## Changelog
 
