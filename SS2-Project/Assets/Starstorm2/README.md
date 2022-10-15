@@ -55,6 +55,7 @@ There are no issues. The mod is perfect.
 **Warning: content spoilers below!**
 ### 0.3.38β
 * Updated to Survivors of the Void & MSU 1.0.1. 
+    * This update has notable balance changes! Please delete your configs. 
 	* Was a long time coming, with of course more to come.
 * General:
 	* Fixed bugs caused by various interactions between new items / survivors. (ex. Molten coin works with ignition tank.)
