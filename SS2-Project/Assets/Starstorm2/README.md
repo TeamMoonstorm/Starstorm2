@@ -58,16 +58,23 @@ There are no issues. The mod is perfect.
     * This update has notable balance changes! Please delete your configs. 
 	* Was a long time coming, with of course more to come.
     * The dev team has nearly entirely changed hands. Yay!
+
 * General:
 	* Fixed bugs caused by various interactions between new items / survivors. (ex. Molten coin works with ignition tank.)
 	* Disabled items that were replaced by SOTV items, those being Coffee Bag, Dormant Fungus, and Erratic Gadget. These items may get reworks some time down the line. 
 	* Adjusted some descriptions for items and abilities to be more clear / accurate. 
     * Added configs for more items that previously lacked them.
+
 * Survivors:
+    * <b>Executioner: </b>
+    * Adjusted base stats to be more in line with normal survivors. 
+
 	* <b>Nemesis Commando: </b>
+    * Adjusted base stats to be more in line with a melee survivors.
 	* Reduced damage for Submission, his default special, from 48x60% to 24x70%.
 	* Added a new keyword - Rend. Pistol skills have this keyword, which makes them deal more damage to enemies with gouge applied.
 	* Readded Ancient Scepter skills.
+
 * Items 
 	* <b>Tier 1: </b>
 	* Armed Backpack - reworked. Chance to fire a missile on taking damage. 
@@ -93,6 +100,7 @@ There are no issues. The mod is perfect.
 * Known Issues
 	* Nemmando's boss fight doesn't fully work. 
 	* Some item displays are missing.
+    * Artifact of Metamorphosis doesn't work.
 	
 ### 0.3.37β
 * Events
