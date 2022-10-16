@@ -4,17 +4,17 @@
 
 Starstorm 2 is a work-in-progress RoR2 port of Starstorm, a diverse gameplay and content mod for Risk of Rain 1. It features two new survivors, over 20 new items and equipment, and a new, dangerous event to shake up your runs.
 
-More information on Starstorm, including features and content to look forward to in SS2, can be found in its info section at https://rainfusion.ml/ or its wiki at https://starstormmod.fandom.com/wiki/Starstorm_Mod_Wiki. For more information on SS2, including development updates and an outlet for feedback and bug reports, visit our Discord server at https://discord.gg/SgFxwKT7nY.
+More information on Starstorm, including features and content to look forward to in SS2, can be found in its info section at https://rainfusion.ml/ or its wiki at https://starstormmod.fandom.com/wiki/Starstorm_Mod_Wiki. For more information on SS2, including development updates and an outlet for feedback and bug reports, visit our Discord server at https://discord.gg/4p6NdERUcZ.
 
 ## Nightly?
 
-Nightly builds are unstable versions of Starstorm 2! This release may be buggy, and if you're looking for stable gameplay, we recommend using the stable version of the mod found at https://thunderstore.io/package/TeamMoonstorm/Starstorm2/. If you do find any issues, report them in our Discord, linked above.
+Nightly builds are unstable versions of Starstorm 2! This release may be buggy, but we're working on fixing those bugs for a stable SOTV release over at https://thunderstore.io/package/TeamMoonstorm/Starstorm2/.
 
 Note that updates may not truly be Nightly.
 
 ## Features
 
-![](https://i.imgur.com/eLUJ3Z6.png)
+![](https://i.imgur.com/YFiPuTM.png)
 
 * **Executioner** - An aggressive, versatile survivor with an arsenal made for picking off targets and chaining kills. His powerful ion gun gains a shot for every enemy you take down.
 
@@ -22,7 +22,7 @@ Note that updates may not truly be Nightly.
 
 ![](https://i.imgur.com/c0GoQOf.png)
 
-* **New items** - 20 new items and 5 new equipment to support new and existing playstyles. Strengthen your crits with the Erratic Gadget, become a stationary powerhouse with the Hunter's Sigil, or gain some vertical thrust on demand with the Pressurized Canister - and keep an eye out for the elusive Sibylline tier of items!
+* **New items** - 20 new items and 5 new equipment to support new and existing playstyles. Speed through teleporter events with the Field Accelerator, become a stationary powerhouse with the Hunter's Sigil, or gain some vertical thrust on demand with the Pressurized Canister!
 
 ![](https://i.imgur.com/vGTL8l9.png)
 
@@ -31,23 +31,85 @@ Note that updates may not truly be Nightly.
 * **Storms** - When the skies cloud over, be on your guard. These occasional bouts of bad weather provide enemies with dangerous stat boosts.
 
 ## Credits
+Starstorm 2 is currently being maintained by...
+* Code - malfaisant, swuff★, Zenithrium
+* Art/Modelling/Animation - dotflare, SkeletorChampion, Zenithrium
 
-* Code - Anreol, Flan, Gaforb, KevinFromHPCustomerService, Moffein, Nebby, rob, swuff★, sebacame, Shared, TheTimesweeper, Vale-X, xpcybic, Xubas
-* Art/Modelling/Animation - Anreol, Bolty, bruh, Cexeub, Draymarc, JestAnotherAnimator, Gem, LucidInceptor, KevinFromHPCustomerService, Plexus, PapaZach, QuietAnon, redacted, rob, SOM, Spenny, swuff★, xpcybic, Reithierion, UnknownGlaze
+With previous contributions by...
+* Code - Anreol, Flan, Gaforb, GrooveSalad, KevinFromHPCustomerService, Moffein, Nebby, Noop, Phreel, rob, swuff★, sebacame, Shared, TheTimesweeper, Vale-X, xpcybic, Xubas
+* Art/Modelling/Animation - Anreol, Bolty, bruh, Cexeub, Draymarc, JestAnotherAnimator, Gem, GrooveSalad, LucidInceptor, KevinFromHPCustomerService, Plexus, PapaZach, QuietAnon, redacted, rob, SOM, Spenny, swuff★, xpcybic, Reithierion, UnknownGlaze, Zenithrium
+
+Additional thanks to... 
 * Writing - Blimblam, Lyrical Endymion, swuff★, QandQuestion, T_Dimensional
 * Translations - Anreol (Spanish), MysticSword (Russian)
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze
-* Additional support/special thanks - Altzeus, DestroyedClone, don, Draymarc, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Neik, Riskka, Ruxbieno, Shooty, Twiner
+* Special thanks - Altzeus, DestroyedClone, don, Draymarc, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Neik, Riskka, Ruxbieno, Shooty, Twiner
 
 ## Known Issues
 
 There are no issues. The mod is perfect.
-...In all seriousness, if you find anything, let us know in our Discord (https://discord.gg/fchwaTQcd4)!
+...In all seriousness, if you find anything, let us know in our Discord (https://discord.gg/4p6NdERUcZ)!
 
 ## Changelog
 
 **Warning: content spoilers below!**
+### 0.3.39β
+* Minor Fixes/Adjustments.
+    * X4 no longer allows enemies to heal on using their secondary skills when they don't have it.
+    * Slightly reduced the height of Executioner's special. It's a bit more reasonable now.
+    * Buffed Armed Backpack's damage from 100% to 400%. It's an on damage proccing item that only hits one enemy, so it having a large payoff is justified.
+    * Actually properly adds Nemmando's Scepter skills. Executioner will come later!
+    * Prevents Blizzards from completely blinding you. The snow is lighter now.
 
+### 0.3.38β
+* Updated to Survivors of the Void & MSU 1.0.1. 
+    * This update has notable balance changes! Please delete your configs. 
+	* Was a long time coming, with of course more to come.
+    * The dev team has nearly entirely changed hands. Yay!
+
+* General:
+	* Fixed bugs caused by various interactions between new items / survivors. (ex. Molten coin works with ignition tank.)
+	* Disabled items that were replaced by SOTV items, those being Coffee Bag, Dormant Fungus, and Erratic Gadget. These items may get reworks some time down the line. 
+	* Adjusted some descriptions for items and abilities to be more clear / accurate. 
+    * Added configs for more items that previously lacked them.
+
+* Survivors:
+    * <b>Executioner: </b>
+    * Adjusted base stats to be more in line with normal survivors. 
+
+	* <b>Nemesis Commando: </b>
+    * Adjusted base stats to be more in line with a melee survivors.
+	* Reduced damage for Submission, his default special, from 48x60% to 24x70%.
+	* Added a new keyword - Rend. Pistol skills have this keyword, which makes them deal more damage to enemies with gouge applied.
+	* Readded Ancient Scepter skills.
+
+* Items 
+	* <b>Tier 1: </b>
+	* Armed Backpack - reworked. Chance to fire a missile on taking damage. 
+	* Detritive Trematode - Low health threshold normalized from 40% -> 25%, and increased DoT damage to compensate 
+	* Diary - reworked. Gain bonus EXP upon killing a boss enemy. 
+	* Fork - Adjusted to be +2 base damage. Ends up being largely the same for most survivors, with only Mul-T getting a slight buff and Acrid getting a slight nerf. Additionally makes the item way less scary when enemies get it.
+	* Malice - Only procs from survivor attacks. Damage reduced from 55% -> 35% total damage. Maintains damage through the chain, rather than decaying per jump.
+	* Needles - Required procs for full crits reduced from 5 -> 2. 
+	* Added X4 Stimulant. (Does this item feel meaningful? Too strong? Feedback is especially welcome)
+	* <b>Tier 2: </b>
+	* Blood Tester and Hottest Sauce removed. Will likely get reworks.
+	* Jet Boots - Replaced stunning in the description with description. It never stunned. 
+	* Low Quality Speaker - has a model and new icon.
+	* Watch Metronome - Now builds stacks while not moving and not sprinting at the same rate. Slightly reduced maximum build rate to compensate.
+	* <b>Tier 3: </b>
+	* Baby's Toys - Now actually reduces level by 3, keeping the stats.
+	* Nkota's Heritage - Stacking now gives multiple items per level up rather than increasing drooped item rarity. 
+	* Portable Reactor - has a model and icon. 
+	* Swift Skateboard - Now only plays a sound effect if you don't already have the buff, to prevent sound effect spamming.
+	* <b>Lunar: </b>
+	* Added Relic of Force. 
+
+* Known Issues
+	* Nemmando's boss fight doesn't fully work. 
+	* Some item displays are missing.
+    * Artifact of Metamorphosis doesn't work.
+	
 ### 0.3.37β
 * Events
 	* Fixed Nemesis Commando spawning early into runs, for really real. Thank you Sebacame.

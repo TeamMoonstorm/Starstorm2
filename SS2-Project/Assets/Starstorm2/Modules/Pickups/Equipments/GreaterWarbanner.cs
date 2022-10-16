@@ -1,5 +1,6 @@
 ﻿using RoR2;
 using RoR2.Audio;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -24,6 +25,10 @@ namespace Moonstorm.Starstorm2.Equipments
         [TokenModifier(token, StatTypes.Percentage, 2)]
         public static float cooldownReduction = 0.5f;
 
+        [ConfigurableField(ConfigDesc = "Max active warbanners for each character.")]
+        [TokenModifier(token, StatTypes.Default, 3)]
+        public static int maxGreaterBanners = 5;
+
         public override void AddBehavior(ref CharacterBody body, int stack)
         {
             body.AddItemBehavior<GreaterWarbannerBehavior>(stack);
@@ -31,10 +36,14 @@ namespace Moonstorm.Starstorm2.Equipments
 
         public override bool FireAction(EquipmentSlot slot)
         {
-            
+            var GBToken = slot.characterBody.gameObject.GetComponent<GreaterBannerToken>();
+            if (!GBToken) {
+                slot.characterBody.gameObject.AddComponent<GreaterBannerToken>();
+                GBToken = slot.characterBody.gameObject.GetComponent<GreaterBannerToken>();
+            }
             //To do: make better placement system
             Vector3 position = slot.inputBank.aimOrigin + slot.inputBank.aimDirection;
-            GameObject gameObject = Object.Instantiate(WarbannerObject, position, Quaternion.identity);
+            GameObject gameObject = UnityEngine.Object.Instantiate(WarbannerObject, position, Quaternion.identity);
 
             gameObject.GetComponent<TeamFilter>().teamIndex = slot.teamComponent.teamIndex;
             var behavior = slot.gameObject.GetComponent<GreaterWarbannerBehavior>();
@@ -42,6 +51,22 @@ namespace Moonstorm.Starstorm2.Equipments
             //NetworkServer.Destroy(behavior.warBannerInstance);
             behavior.warBannerInstance = gameObject;
             NetworkServer.Spawn(behavior.warBannerInstance);
+
+            GBToken.ownedBanners.Add(behavior.warBannerInstance);
+            if(GBToken.ownedBanners.Count > maxGreaterBanners)
+            {
+                SS2Log.Debug("Removing oldest Warbanner");
+                var oldBanner = GBToken.ownedBanners[0];
+                GBToken.ownedBanners.RemoveAt(0);
+                EffectData effectData = new EffectData
+                {
+                    origin = oldBanner.transform.position
+                };
+                effectData.SetNetworkedObjectReference(oldBanner);
+                EffectManager.SpawnEffect(HealthComponent.AssetReferences.executeEffectPrefab, effectData, transmit: true);
+
+                UnityEngine.Object.Destroy(oldBanner);
+            }
 
             if (behavior.soundCooldown >= 5f)
             {
@@ -67,6 +92,13 @@ namespace Moonstorm.Starstorm2.Equipments
                 //if (warBannerInstance)
                 //Destroy(warBannerInstance);
             }
+        }
+
+        public class GreaterBannerToken : MonoBehaviour
+        {
+            //public GameObject[] ownedBanners = new GameObject[0];
+            public List<GameObject> ownedBanners = new List<GameObject>(0);
+            //prevents hilarity from happening
         }
     }
 

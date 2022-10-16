@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settings:
   - {fileID: 114966556546720046}
+  - {fileID: 7910587079758359952}
 --- !u!114 &114966556546720046
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -32,10 +33,10 @@ MonoBehaviour:
     value: 1
   rainIntensity:
     overrideState: 1
-    value: 0
+    value: 1.5
   outlineScale:
     overrideState: 1
-    value: 0.18
+    value: 0.3
   rainDensity:
     overrideState: 1
     value: 1
@@ -46,3 +47,52 @@ MonoBehaviour:
   rainColor:
     overrideState: 1
     value: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}
+--- !u!114 &7910587079758359952
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 534b4b24f223e6d4580fafd6881209c4, type: 3}
+  m_Name: SS2RampFog
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  fogIntensity:
+    overrideState: 1
+    value: 0.45
+  fogPower:
+    overrideState: 1
+    value: 0.27
+  fogZero:
+    overrideState: 0
+    value: 0
+  fogOne:
+    overrideState: 1
+    value: 1
+  fogHeightStart:
+    overrideState: 1
+    value: 35
+  fogHeightEnd:
+    overrideState: 1
+    value: 210
+  fogHeightIntensity:
+    overrideState: 1
+    value: 3.2
+  fogColorStart:
+    overrideState: 1
+    value: {r: 0.1254902, g: 0.18431373, b: 0.12941177, a: 0.078431375}
+  fogColorMid:
+    overrideState: 1
+    value: {r: 0.35686275, g: 0.38431373, b: 0.4117647, a: 0.18039216}
+  fogColorEnd:
+    overrideState: 1
+    value: {r: 0.4862745, g: 0.5019608, b: 0.6156863, a: 0.46666667}
+  skyboxStrength:
+    overrideState: 1
+    value: 1

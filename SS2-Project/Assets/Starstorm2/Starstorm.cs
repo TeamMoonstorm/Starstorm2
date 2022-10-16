@@ -18,7 +18,7 @@ namespace Moonstorm.Starstorm2
     {
         internal const string guid = "com.TeamMoonstorm.Starstorm2-Nightly";
         internal const string modName = "Starstorm 2 Nightly";
-        internal const string version = "0.4.0";
+        internal const string version = "0.3.39";
 
         public static Starstorm instance;
         public static PluginInfo pluginInfo;

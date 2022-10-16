@@ -21,28 +21,10 @@ namespace Moonstorm.Starstorm2.DamageTypes
             DotIndex = Buffs.Gouge.index;
         }
 
+        
         public override void Delegates()
         {
             GlobalEventManager.onServerDamageDealt += ApplyGouge;
-            DotController.onDotInflictedServerGlobal += RefreshGouge;
-        }
-
-        private void RefreshGouge(DotController dotController, ref InflictDotInfo inflictDotInfo)
-        {
-            if (inflictDotInfo.dotIndex == DotIndex)
-            {
-                int i = 0;
-                int count = dotController.dotStackList.Count;
-
-                while (i < count)
-                {
-                    if (dotController.dotStackList[i].dotIndex == DotIndex)
-                    {
-                        dotController.dotStackList[i].timer = Mathf.Max(dotController.dotStackList[i].timer, Duration);
-                    }
-                    i++;
-                }
-            }
         }
 
         private void ApplyGouge(DamageReport report)
@@ -52,7 +34,7 @@ namespace Moonstorm.Starstorm2.DamageTypes
             var damageInfo = report.damageInfo;
             if (DamageAPI.HasModdedDamageType(damageInfo, ModdedDamageType))
             {
-                var gougeDamage = (damageInfo.crit ? 2f : 1f) * 1.2f;
+                var gougeDamage = (damageInfo.crit ? 2f : 1f) * 2.1f;
                 var dotInfo = new InflictDotInfo()
                 {
                     attackerObject = attackerBody.gameObject,

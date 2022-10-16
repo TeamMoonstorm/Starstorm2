@@ -1,7 +1,8 @@
-﻿using RoR2;
+﻿using EntityStates;
+using RoR2;
 using UnityEngine;
 
-namespace EntityStates.Wayfarer
+namespace Starstorm2.Cores.States.Wayfarer
 {
     class CloakState : BaseSkillState
     {
@@ -14,9 +15,9 @@ namespace EntityStates.Wayfarer
         public override void OnEnter()
         {
             base.OnEnter();
-            animator = GetModelAnimator();
-            duration = baseDuration / attackSpeedStat;
-            PlayCrossfade("FullBody, Override", "Cloak", "Cloak.playbackRate", duration, 0.2f);
+            animator = base.GetModelAnimator();
+            this.duration = baseDuration / attackSpeedStat;
+            base.PlayCrossfade("FullBody, Override", "Cloak", "Cloak.playbackRate", duration, 0.2f);
         }
 
         public override void FixedUpdate()
@@ -29,7 +30,7 @@ namespace EntityStates.Wayfarer
                 hasCloaked = true;
             }
 
-            if (fixedAge >= duration)
+            if (base.fixedAge >= duration)
             {
                 outer.SetNextStateToMain();
             }

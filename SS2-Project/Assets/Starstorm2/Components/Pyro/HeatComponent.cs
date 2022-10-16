@@ -1,7 +1,4 @@
-﻿/*using RoR2;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -156,4 +153,3 @@ public class HeatComponent : NetworkBehaviour
     private float barWidth;
 }
 
-*/

@@ -27,7 +27,7 @@ namespace EntityStates.Nemmando
                                 damageInfo.damage *= RendBaseDamageMultiplier;
                                 damageInfo.damageColorIndex = DamageColorIndex.Bleed;
 
-                                Moonstorm.Starstorm2.SS2Util.RemoveDotStacks(momgarfielissmokingthatza, Moonstorm.Starstorm2.Buffs.Gouge.index, 1);
+                                //Moonstorm.Starstorm2.SS2Util.RemoveDotStacks(momgarfielissmokingthatza, Moonstorm.Starstorm2.Buffs.Gouge.index, 1);
 
 
                                 /*EffectManager.SpawnEffect(EpicGougeMultiEffect, new EffectData

@@ -15,9 +15,7 @@ MonoBehaviour:
   skillName: MULEPunch
   skillNameToken: SS2_MULE_PRIMARY_PUNCH_NAME
   skillDescriptionToken: SS2_MULE_PRIMARY_PUNCH_DESC
-  keywordTokens:
-  - SS2_KEYWORD_GOUGE
-  - KEYWORD_AGILE
+  keywordTokens: []
   icon: {fileID: 21300000, guid: 5cd90e9d6b8b3e14fa091abee481621c, type: 3}
   activationStateMachineName: Weapon
   activationState:
@@ -38,5 +36,5 @@ MonoBehaviour:
   canceledFromSprinting: 0
   isCombatSkill: 1
   mustKeyPress: 0
-  resetStepsOnIdle: 0
   stepCount: 2
+  stepGraceDuration: 0.1

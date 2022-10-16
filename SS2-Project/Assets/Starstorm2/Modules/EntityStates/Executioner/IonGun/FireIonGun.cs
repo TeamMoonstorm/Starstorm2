@@ -26,11 +26,11 @@ namespace EntityStates.Executioner
         public static GameObject ionEffectPrefab;
 
         [HideInInspector]
-        public static GameObject muzzlePrefab = Resources.Load<GameObject>("Prefabs/Effects/Muzzleflashes/MuzzleflashHuntressFlurry");
+        public static GameObject muzzlePrefab = LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/Muzzleflashes/MuzzleflashHuntressFlurry");
         [HideInInspector]
-        public static GameObject tracerPrefab = Resources.Load<GameObject>("Prefabs/Effects/Tracers/TracerCommandoDefault");
+        public static GameObject tracerPrefab = LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/Tracers/TracerCommandoDefault");
         [HideInInspector]
-        public static GameObject hitPrefab = Resources.Load<GameObject>("Prefabs/Effects/HitsparkCommando");
+        public static GameObject hitPrefab = LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/HitsparkCommando");
 
         public int shotsFired = 0;
 
