@@ -89,7 +89,6 @@ namespace EntityStates.Beastmaster.Weapon
 						};
 						EffectManager.SpawnEffect(this.reflectTracerEffectPrefab, effectData, true);
 					}
-					GameObject owner = projectileController2.owner;
 					CharacterBody component = projectileController2.owner.GetComponent<CharacterBody>();
 					projectileController2.IgnoreCollisionsWithOwner(false);
 					projectileController2.Networkowner = base.gameObject;

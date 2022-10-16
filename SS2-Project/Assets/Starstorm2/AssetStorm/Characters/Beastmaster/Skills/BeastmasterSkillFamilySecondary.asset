@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23c3a884997f30143ab7a1ec0a39ba90, type: 3}
-  m_Name: RoR2EditorKitSettings
+  m_Script: {fileID: -1627637702, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: BeastmasterSkillFamilySecondary
   m_EditorClassIdentifier: 
-  TokenPrefix: 
-  MainManifest: {fileID: 0}
-  madeRoR2EKAssetsNonEditable: 1
+  variants:
+  - skillDef: {fileID: 11400000, guid: dab61220097d83e4f9ee1be268096db6, type: 2}
+    unlockableName: 
+    unlockableDef: {fileID: 0}
+  defaultVariantIndex: 0
