@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Moonstorm.Starstorm2.Survivors
 {
+    [DisabledContent]
     public sealed class Chirr : SurvivorBase
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("ChirrBody");
