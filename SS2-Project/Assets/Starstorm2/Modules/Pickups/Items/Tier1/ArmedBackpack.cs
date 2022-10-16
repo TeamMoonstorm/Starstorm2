@@ -1,6 +1,9 @@
-﻿using RoR2;
+﻿using R2API;
+using RoR2;
 using RoR2.Items;
+using RoR2.Projectile;
 using System.Linq;
+using UnityEngine;
 
 namespace Moonstorm.Starstorm2.Items
 {
@@ -9,9 +12,9 @@ namespace Moonstorm.Starstorm2.Items
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ArmedBackpack");
 
-        [ConfigurableField(ConfigDesc = "Damage dealt by the backpack's missle per stack. (1 = 100%)")]
+        [ConfigurableField(ConfigDesc = "Damage dealt by the missle per stack. (1 = 100%)")]
         [TokenModifier("SS2_ITEM_ARMEDBACKPACK_DESC", StatTypes.Percentage, 0)]
-        public static float backpackDamage = 1f;
+        public static float backpackDamageCoeff = 4f;
 
         [ConfigurableField(ConfigDesc = "Proc multiplier per percentage of health lost. (1 = 100% of health fraction lost)")]
         [TokenModifier("SS2_ITEM_ARMEDBACKPACK_DESC", StatTypes.Default,1)]
@@ -22,6 +25,7 @@ namespace Moonstorm.Starstorm2.Items
         public static float procMin = 15;
 
         public static ProcChainMask ignoredProcs;
+        public GameObject missilePrefab;
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnTakeDamageServerReceiver
         {
@@ -36,10 +40,10 @@ namespace Moonstorm.Starstorm2.Items
                     var playerBody = damageReport.victimBody;
                     var rollChance = percentHPLoss > procMin ? percentHPLoss : procMin;
 
-                    SS2Log.Debug("chance was: " + rollChance);
+                    //SS2Log.Debug("chance was: " + rollChance);
                     if (Util.CheckRoll(rollChance, playerBody.master))
                     {
-                        float damageCoefficient = backpackDamage * stack;
+                        float damageCoefficient = backpackDamageCoeff * stack;
                         float missileDamage = playerBody.damage * damageCoefficient;
 
                         var teamIndex = damageReport.attackerTeamIndex;
@@ -49,6 +53,7 @@ namespace Moonstorm.Starstorm2.Items
                         {
                             attacker = null; //this prevents it from firing into blood shrines and i guess yourself/teammates if that lunar active is involved
                         }
+                        //var missleObject = GlobalEventManager.CommonAssets.missilePrefab;
                         MissileUtils.FireMissile(
                             playerBody.corePosition,
                             playerBody,
@@ -58,7 +63,7 @@ namespace Moonstorm.Starstorm2.Items
                             Util.CheckRoll(playerBody.crit, playerBody.master),
                             GlobalEventManager.CommonAssets.missilePrefab,
                             DamageColorIndex.Item,
-                            true);
+                            false);
                     }
                 }
             }

@@ -53,6 +53,14 @@ There are no issues. The mod is perfect.
 ## Changelog
 
 **Warning: content spoilers below!**
+### 0.3.39β
+* Minor Fixes/Adjustments.
+    * X4 no longer allows enemies to heal on using their secondary skills when they don't have it.
+    * Slightly reduced the height of Executioner's special. It's a bit more reasonable now.
+    * Buffed Armed Backpack's damage from 100% to 400%. It's an on damage proccing item that only hits one enemy, so it having a large payoff is justified.
+    * Actually properly adds Nemmando's Scepter skills. Executioner will come later!
+    * Prevents Blizzards from completely blinding you. The snow is lighter now.
+
 ### 0.3.38β
 * Updated to Survivors of the Void & MSU 1.0.1. 
     * This update has notable balance changes! Please delete your configs. 

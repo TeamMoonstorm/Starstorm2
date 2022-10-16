@@ -85,10 +85,14 @@ namespace Moonstorm.Starstorm2.Items
                 orig(self, skill);
                 //skill == skill.characterBody.skillLocator.secondaryBonusStockSkill
                 //skill.skillFamily.ToString().Contains("Secondary")
-                if (skill == skill.characterBody.skillLocator.secondaryBonusStockSkill)
+                if (self.inventory)
                 {
-                    float amntToHeal = flatHealth + self.healthComponent.health * (percentHealth + (percentHealthStacking * (stack - 1)));
-                    self.healthComponent.Heal(amntToHeal, ignoredProcs, true);
+                    int count = self.inventory.GetItemCount(SS2Content.Items.X4); //again i could use stack here probably but i just wanna make sure this works we can fix it later
+                    if (skill == skill.characterBody.skillLocator.secondaryBonusStockSkill && count > 0)
+                    {
+                        float amntToHeal = flatHealth + self.healthComponent.health * (percentHealth + (percentHealthStacking * (count - 1)));
+                        self.healthComponent.Heal(amntToHeal, ignoredProcs, true);
+                    }
                 }
                 //SS2Log.Debug("print list!: family: " + skill.skillFamily + " |  _family: " + skill._skillFamily + " |  " + skill.skillOverrides);
                 //if(skill.skill
