@@ -17,6 +17,7 @@ MonoBehaviour:
   - {fileID: 6516160604520245170, guid: fc4767f47d4d60b44b2ea61c0827b961, type: 3}
   - {fileID: 8105291654350440355, guid: 08a6f560c1f6f32489506483d5fa7a5a, type: 3}
   - {fileID: 1768686348761891691, guid: 05529f503bba9f944bf8a934649a33f7, type: 3}
+  - {fileID: 2182981928116722673, guid: 9fe45455533d4cf478e241bcd72cf786, type: 3}
   masterPrefabs:
   - {fileID: 1175919788895150, guid: d97f71d977f90044e9c139cb2a51727b, type: 3}
   projectilePrefabs: []
@@ -30,7 +31,7 @@ MonoBehaviour:
   - {fileID: 6507078371924852745, guid: 52be140b1fd459d4f99aab7b8cee4f55, type: 3}
   skillDefs:
   - {fileID: 11400000, guid: 196f75a687d0e064e8e18ca24d36d090, type: 2}
-  - {fileID: 11400000, guid: d9d78e3245a9ba24a93e77addeb7983b, type: 2}
+  - {fileID: 11400000, guid: 73b2d5402818fa34ab67897302526be1, type: 2}
   - {fileID: 11400000, guid: 85220408d2a0e7244a25332d4776c253, type: 2}
   - {fileID: 11400000, guid: 5758b1152de8c2542a8778dadb057730, type: 2}
   - {fileID: 11400000, guid: 44cb50925a7e9b94e85f8d0220206d8f, type: 2}
@@ -48,8 +49,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8b58e4d7f75de6c42987cca129973255, type: 2}
   - {fileID: 11400000, guid: afa4b69e7eecb7b44a72117cfdb378c5, type: 2}
   - {fileID: 11400000, guid: 3255a99b373451a418cfcd6a3eed4d0c, type: 2}
-  - {fileID: 11400000, guid: 370fe094b2530274b971edafd83d93e5, type: 2}
-  - {fileID: 11400000, guid: 923d9dfbfb1f66b40ac723aeea5b0592, type: 2}
+  - {fileID: 11400000, guid: 8d368cba8dee8b042909836f1bda9dd7, type: 2}
+  - {fileID: 11400000, guid: dab61220097d83e4f9ee1be268096db6, type: 2}
   - {fileID: 11400000, guid: b79875fab0b0c9d46905b20212355105, type: 2}
   skillFamilies:
   - {fileID: 11400000, guid: 94208843d06f6b745859f8b01314eaac, type: 2}
@@ -81,7 +82,8 @@ MonoBehaviour:
   buffDefs: []
   eliteDefs: []
   unlockableDefs: []
-  survivorDefs: []
+  survivorDefs:
+  - {fileID: 11400000, guid: 0c6bcc8882f8cea48a630ecd8b4e5121, type: 2}
   artifactDefs: []
   surfaceDefs:
   - {fileID: 11400000, guid: 9ba93ab1debda6845baf9877b0fbf10d, type: 2}

@@ -13,6 +13,7 @@ namespace Assets.Starstorm2.ScriptableObjects
     {
         [Header("Beastmaster Parameters")]
         [Header("Beastmaster To-Tame Parameters")]
+        [Tooltip("Entity state to use whenever the target is NOT a friend.")]
         public SerializableEntityStateType tameStateType;
 
         [Tooltip("This is the indicator prefab that the skill defaults to.")]
@@ -26,6 +27,7 @@ namespace Assets.Starstorm2.ScriptableObjects
         public float tameMaxTrackingAngle;
 
         [Header("Beastmaster Friend Parameters")]
+        [Tooltip("Entity state to use whenever the target is a friend.")]
         public SerializableEntityStateType friendStateType;
 
         public GameObject friendIndicatorPrefab;
@@ -33,6 +35,7 @@ namespace Assets.Starstorm2.ScriptableObjects
         public string friendSkillNameToken;
         public string friendSkillDescToken;
 
+        [Tooltip("Max distance for a friend to be considered available for friendStateType, set zero or less to disable.")]
         /// <summary>
         /// Max distance for a friend to be considered available for friendStateType, set zero or less to disable.
         /// </summary>
@@ -101,7 +104,7 @@ namespace Assets.Starstorm2.ScriptableObjects
         {
             if (((BeastmasterSkillDef.InstanceData)skillSlot.skillInstanceData).currentlyTrackingOrTamedTarget != null)
             {
-                return !IsTargetFriend(skillSlot) || IsTargetFriend(skillSlot) && friendMaxAvailableDistance <= 0 || Vector3.Distance(skillSlot.characterBody.corePosition, ((BeastmasterSkillDef.InstanceData)skillSlot.skillInstanceData).currentlyTrackingOrTamedTarget.corePosition) <= friendMaxAvailableDistance;
+                return !IsTargetFriend(skillSlot) || (IsTargetFriend(skillSlot) && (friendMaxAvailableDistance <= 0 || Vector3.Distance(skillSlot.characterBody.corePosition, ((BeastmasterSkillDef.InstanceData)skillSlot.skillInstanceData).currentlyTrackingOrTamedTarget.corePosition) <= friendMaxAvailableDistance));
             }
             return false;
         }
@@ -183,6 +186,10 @@ namespace Assets.Starstorm2.ScriptableObjects
                 }
             }
 
+            /// <summary>
+            /// Only searches for a target whenever theres no target or the currently tracking or tamed target is enemy.
+            /// </summary>
+            /// <param name="skillSlot"></param>
             public virtual void SearchForTarget(GenericSkill skillSlot)
             {
                 if (!currentlyTrackingOrTamedTarget || TeamManager.IsTeamEnemy(skillSlot.characterBody.teamComponent.teamIndex, currentlyTrackingOrTamedTarget.teamComponent.teamIndex))
