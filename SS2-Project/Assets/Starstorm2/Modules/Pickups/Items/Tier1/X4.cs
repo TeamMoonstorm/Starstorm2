@@ -87,7 +87,7 @@ namespace Moonstorm.Starstorm2.Items
                 //skill.skillFamily.ToString().Contains("Secondary")
                 if (self.inventory)
                 {
-                    int count = self.inventory.GetItemCount(SS2Content.Items.X4); //again i could use stack here probably but i just wanna make sure this works we can fix it later
+                    int count = self.inventory.GetItemCount(SS2Content.Items.X4.itemIndex); //again i could use stack here probably but i just wanna make sure this works we can fix it later
                     if (skill == skill.characterBody.skillLocator.secondaryBonusStockSkill && count > 0)
                     {
                         float amntToHeal = flatHealth + self.healthComponent.health * (percentHealth + (percentHealthStacking * (count - 1)));
