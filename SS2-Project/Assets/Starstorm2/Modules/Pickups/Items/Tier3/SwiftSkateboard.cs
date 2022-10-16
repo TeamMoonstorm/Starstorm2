@@ -36,7 +36,7 @@ namespace Moonstorm.Starstorm2.Items
         [TokenModifier(token, StatTypes.Default, 5)]
         public static float buffCooldown = 0.75f;
 
-        [ConfigurableField(ConfigDesc = "Whether skateboard should allow all-directoinal sprinting.")]
+        [ConfigurableField(ConfigDesc = "Whether Swift Skateboard should allow all-directional sprinting.")]
         public static bool omniSprint = true;
 
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier

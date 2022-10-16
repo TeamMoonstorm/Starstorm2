@@ -1,4 +1,4 @@
-﻿/*using EntityStates;
+﻿using EntityStates;
 using Moonstorm;
 using RoR2.Projectile;
 using RoR2;
@@ -252,4 +252,3 @@ namespace EntityStates.Pyro
         private static float hitboxOffset = (Airblast.hitboxDimensions.z / 2f - 0.5f);
     }
 }
-*/

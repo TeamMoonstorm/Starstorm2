@@ -15,11 +15,11 @@ namespace EntityStates.Executioner
         public static float force;
 
         [HideInInspector]
-        public static GameObject muzzleEffectPrefab = Resources.Load<GameObject>("prefabs/effects/muzzleflashes/Muzzleflash1");
+        public static GameObject muzzleEffectPrefab = LegacyResourcesAPI.Load<GameObject>("prefabs/effects/muzzleflashes/Muzzleflash1");
         [HideInInspector]
-        public static GameObject tracerPrefab = Resources.Load<GameObject>("prefabs/effects/tracers/tracercommandodefault");
+        public static GameObject tracerPrefab = LegacyResourcesAPI.Load<GameObject>("prefabs/effects/tracers/tracercommandodefault");
         [HideInInspector]
-        public static GameObject hitPrefab = Resources.Load<GameObject>("prefabs/effects/HitsparkCommando");
+        public static GameObject hitPrefab = LegacyResourcesAPI.Load<GameObject>("prefabs/effects/HitsparkCommando");
 
         private float duration;
         private float fireDuration;

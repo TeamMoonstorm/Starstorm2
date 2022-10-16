@@ -14,4 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   namedItemRuleGroups: []
   namedEquipmentRuleGroups: []
-  keyAssetRuleGroups: []
+  keyAssetRuleGroups:
+  - keyAsset: {fileID: 0}
+    displayRuleGroup:
+      rules: []
+  - keyAsset: {fileID: 0}
+    displayRuleGroup:
+      rules:
+      - ruleType: 0
+        followerPrefab: {fileID: 0}
+        childName: 
+        localPos: {x: 0, y: 0, z: 0}
+        localAngles: {x: 0, y: 0, z: 0}
+        localScale: {x: 0, y: 0, z: 0}
+        limbMask: 0
