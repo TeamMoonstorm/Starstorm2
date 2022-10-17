@@ -7,6 +7,7 @@ namespace Moonstorm.Starstorm2.Modules
     public sealed class Equipments : EquipmentModuleBase
     {
         public static Equipments Instance { get; private set; }
+        public static EquipmentDef[] LoadedSS2Equipments { get => SS2Content.Instance.SerializableContentPack.equipmentDefs; }
         public override R2APISerializableContentPack SerializableContentPack => SS2Content.Instance.SerializableContentPack;
 
         public override void Initialize()
@@ -21,6 +22,7 @@ namespace Moonstorm.Starstorm2.Modules
         protected override IEnumerable<EquipmentBase> GetEquipmentBases()
         {
             base.GetEquipmentBases()
+                .Where(eqp => SS2Main.config.Bind<bool>(eqp.EquipmentDef.name, "Enable Equipment", true, "Wether or not to enable this equipment").Value)
                 .ToList()
                 .ForEach(eqp => AddEquipment(eqp));
             return null;
