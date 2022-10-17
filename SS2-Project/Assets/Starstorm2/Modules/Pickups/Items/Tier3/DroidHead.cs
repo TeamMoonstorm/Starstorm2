@@ -36,6 +36,7 @@ namespace Moonstorm.Starstorm2.Items
                 {
                     if (victim.isElite)
                     {
+                        var itemName = victim.equipmentSlot.name;
                         var droneSummon = new MasterSummon();
                         droneSummon.position = victim.corePosition;
                         droneSummon.masterPrefab = masterPrefab;
@@ -49,10 +50,14 @@ namespace Moonstorm.Starstorm2.Items
                             droidBody.baseDamage *= (baseDamage * stack);
 
                             Inventory droidInventory = droneMaster.inventory;
-                            droidInventory.SetEquipmentIndex(victimEquipment);
-
-                            
-
+                            if (!itemName.Contains("Void"))
+                            {
+                                droidInventory.SetEquipmentIndex(victimEquipment);
+                            }
+                            else
+                            {
+                                SS2Log.Debug("void elite");
+                            }
                             Util.PlaySound("DroidHead", body.gameObject);
                         }
                     }
