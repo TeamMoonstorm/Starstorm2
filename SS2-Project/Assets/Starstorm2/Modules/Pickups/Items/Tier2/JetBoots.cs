@@ -95,8 +95,6 @@ namespace Moonstorm.Starstorm2.Items
                 var attacker = body.gameObject;
                 var damage = body.damage * (baseDamage + (stackDamage * stack));
 
-
-
                 new BlastAttack
                 {
                     attacker = attacker,
@@ -107,7 +105,8 @@ namespace Moonstorm.Starstorm2.Items
                     procCoefficient = 0,
                     teamIndex = body.teamComponent.teamIndex,
                     position = attacker.transform.position,
-                    damageType = DamageType.SlowOnHit
+                    damageType = DamageType.SlowOnHit,
+                    attackerFiltering = AttackerFiltering.NeverHitSelf
                 }.Fire();
             }
             private void OnDestroy()
@@ -121,6 +120,7 @@ namespace Moonstorm.Starstorm2.Items
                     body.characterMotor.onHitGroundAuthority -= Restock;
                 }
             }
+
         }
     }
 }

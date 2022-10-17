@@ -8,8 +8,8 @@ namespace Moonstorm.Starstorm2.Items
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Fork");
 
-        [ConfigurableField(ConfigDesc = "Bonus damage per fork. (1 = 100%)")]
-        [TokenModifier("SS2_ITEM_FORK_DESC", StatTypes.Percentage, 0)]
+        [ConfigurableField(ConfigDesc = "Bonus base damage per fork. (1 = 1 base damage. Base damage for most characters is 12.)")]
+        [TokenModifier("SS2_ITEM_FORK_DESC", StatTypes.Default, 0)]
         public static float damageBonus = 2f;
 
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier

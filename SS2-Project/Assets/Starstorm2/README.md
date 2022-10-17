@@ -1,4 +1,4 @@
-# Starstorm 2 Nightly
+# Starstorm 2
 
 ## Overview
 
@@ -6,11 +6,7 @@ Starstorm 2 is a work-in-progress RoR2 port of Starstorm, a diverse gameplay and
 
 More information on Starstorm, including features and content to look forward to in SS2, can be found in its info section at https://rainfusion.ml/ or its wiki at https://starstormmod.fandom.com/wiki/Starstorm_Mod_Wiki. For more information on SS2, including development updates and an outlet for feedback and bug reports, visit our Discord server at https://discord.gg/4p6NdERUcZ.
 
-## Nightly?
-
-Nightly builds are unstable versions of Starstorm 2! This release may be buggy, but we're working on fixing those bugs for a stable SOTV release over at https://thunderstore.io/package/TeamMoonstorm/Starstorm2/.
-
-Note that updates may not truly be Nightly.
+This release may be a bit buggy, but we're working on fixing those bugs for a properly stable SOTV release soon.
 
 ## Features
 
@@ -50,9 +46,31 @@ Additional thanks to...
 There are no issues. The mod is perfect.
 ...In all seriousness, if you find anything, let us know in our Discord (https://discord.gg/4p6NdERUcZ)!
 
+* Known Issues
+	* Nemmando's boss fight doesn't fully work. 
+	* Some item displays are missing.
+    * Artifact of Metamorphosis doesn't work.
+    * Nemmando sometimes forgets which skin he's supposed to be using.
+    * Bottled Chaos can activate some equipments it shouldn't be able to (Canister, Thruster, and MIDAS) - should be fixed in the next patch.
+    * Storms don't fully appear for clients in multiplayer. They still happen, just without the warning and the fancy visuals.
+
 ## Changelog
 
 **Warning: content spoilers below!**
+### 0.3.40β
+* Continued fixes and adjustments.
+    * M.I.D.A.S gold gain is now scaled based on difficulty (and thus, player count). This largely essentially only comes in to play fairly late into runs.
+    * Nkota's Heritage shouldn't cause NREs as much. 
+    * Cleaned up some X4 and Nkotas debug statements. 
+    * Nemmando's animations no longer break after getting frozen while charging his alternate special.
+    * Nemmando's alt special no longer lies about scaling the number of hits with attack speed. It and the scepter variant actually scale now. 
+    * Nemmando no longer gains additional stacks of certain items. Additionally, more of his item displays are functional.
+    * Relic of Force now only procs on hits with a proc coefficent and the additional hits have half the proc coefficient of the hit that caused them. Still might be a bit strong. 
+    * Droid Head base duration increased from 15s -> 20s, and gains an additional 5s lifetime per stack. Additionally, they should hopefully fire at enemies a bit more consistently. 
+    * Updated logbook descriptions for Armed Backpack, Fork, and Jet Boots to be more clear and accurate. Made X4's logbook entry actually readable, and cleaned up text coloring for Diary.
+    * AIs can no longer receive Portable Reactor, as it was hilariously unfair.
+    * Jet Boots no longer deal self damage with Artifact of Chaos enabled. 
+
 ### 0.3.39β
 * Minor Fixes/Adjustments.
     * X4 no longer allows enemies to heal on using their secondary skills when they don't have it.
@@ -104,11 +122,6 @@ There are no issues. The mod is perfect.
 	* Swift Skateboard - Now only plays a sound effect if you don't already have the buff, to prevent sound effect spamming.
 	* <b>Lunar: </b>
 	* Added Relic of Force. 
-
-* Known Issues
-	* Nemmando's boss fight doesn't fully work. 
-	* Some item displays are missing.
-    * Artifact of Metamorphosis doesn't work.
 	
 ### 0.3.37β
 * Events

@@ -56,7 +56,7 @@ namespace Moonstorm.Starstorm2.Items
 
             public void OnDamageDealtServer(DamageReport damageReport)
             {
-                if (!damageReport.damageInfo.HasModdedDamageType(relicForceDamageType) && damageReport.attacker && damageReport.victimBody)
+                if (!damageReport.damageInfo.HasModdedDamageType(relicForceDamageType) && damageReport.damageInfo.procCoefficient > 0 && damageReport.attacker && damageReport.victimBody)
                 {
                     int count = damageReport.attackerBody.inventory.GetItemCount(SS2Content.Items.RelicOfForce); //im pretty sure using stack here made the mod break and im just not having it rn, this works
                     if (count > 0)
@@ -141,7 +141,7 @@ namespace Moonstorm.Starstorm2.Items
                     damageInfo.force = Vector3.zero;
                     damageInfo.crit = initalHit.crit;
                     damageInfo.procChainMask = initalHit.procChainMask;
-                    damageInfo.procCoefficient = initalHit.procCoefficient;
+                    damageInfo.procCoefficient = initalHit.procCoefficient / 2f;
                     damageInfo.position = victim.transform.position;
                     damageInfo.damageColorIndex = DamageColorIndex.Item;
                     damageInfo.damageType = initalHit.damageType;
