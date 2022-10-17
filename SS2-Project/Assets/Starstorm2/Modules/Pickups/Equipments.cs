@@ -24,7 +24,7 @@ namespace Moonstorm.Starstorm2.Modules
             base.GetEquipmentBases()
                 .Where(eqp => SS2Main.config.Bind<bool>(eqp.EquipmentDef.name, "Enable Equipment", true, "Wether or not to enable this equipment").Value)
                 .ToList()
-                .ForEach(eqp => AddEquipment(eqp));
+                .ForEach(eqp => AddEquipment(eqp, null));
             return null;
         }
 
