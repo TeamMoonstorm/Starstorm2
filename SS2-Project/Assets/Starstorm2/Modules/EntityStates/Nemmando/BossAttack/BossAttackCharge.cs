@@ -164,8 +164,8 @@ namespace EntityStates.Nemmando
                 Destroy(chargeEffectInstance);
             }
 
-            PlayAnimation("Gesture, Override", "BufferEmpty");
-
+            PlayAnimation("FullBody, Override", "BufferEmpty");
+            
             AkSoundEngine.StopPlayingID(chargePlayID);
 
             //if (cameraTargetParams) cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);

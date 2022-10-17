@@ -48,7 +48,7 @@ namespace Moonstorm.Starstorm2.Items
                     {
                         cdr = hyperbolicCDR;
                     }
-                    SS2Log.Debug("X4 RecalcStats end - " + hyperbolicCDR + " vs " + stack * secCooldown);
+                    //SS2Log.Debug("X4 RecalcStats end - " + hyperbolicCDR + " vs " + stack * secCooldown);
                     body.skillLocator.secondaryBonusStockSkill.flatCooldownReduction += cdr;
                 }
                 //args.cooldownMultAdd += (float)itemCount * Synergies.pearlCD.Value;
