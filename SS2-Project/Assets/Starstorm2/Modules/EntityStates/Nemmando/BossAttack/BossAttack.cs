@@ -1,4 +1,5 @@
 ﻿using Moonstorm;
+using Moonstorm.Starstorm2;
 using Moonstorm.Starstorm2.DamageTypes;
 using R2API;
 using RoR2;
@@ -45,6 +46,12 @@ namespace EntityStates.Nemmando
             characterBody.isSprinting = false;
             duration = baseDuration / attackSpeedStat;
             hitCount = Mathf.RoundToInt(Util.Remap(charge, 0f, 1f, minHits, maxHits));
+
+            SS2Log.Debug("hit count inital: " + hitCount + "| " + characterBody.attackSpeed);
+            int hitCountModified = (int)(hitCount * ((.5f * characterBody.attackSpeed) + .5f));
+            hitCount = Mathf.Max(hitCount, hitCountModified);
+            SS2Log.Debug("hit count after: " + hitCount);
+
             damageCoefficient = Util.Remap(charge, 0f, 1f, minDamageCoefficient, maxDamageCoefficient);
             radius = Util.Remap(charge, 0f, 1f, minRadius, maxRadius);
             emission = Util.Remap(charge, 0f, 1f, minEmission, maxEmission);

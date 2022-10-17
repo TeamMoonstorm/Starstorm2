@@ -63,7 +63,8 @@ namespace Moonstorm.Starstorm2.Items
 
         private void GlobalEventManager_onCharacterLevelUp(CharacterBody obj)
         {
-            if (!NetworkServer.active || obj.inventory.GetItemCount(SS2Assets.LoadAsset<ItemDef>("NkotasHeritage")) < 1) return;
+            if (!NetworkServer.active || !obj.inventory) return;
+            if (obj.inventory.GetItemCount(SS2Content.Items.NkotasHeritage.itemIndex) < 1) return;
             if (holdit && obj.isPlayerControlled)
             {
                 HG.ArrayUtils.ArrayAppend(ref characterMasters, obj.master); //Should add the same master in case they level up multiple times... not sure if its ok?

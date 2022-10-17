@@ -1,5 +1,6 @@
 ﻿using RoR2;
 using RoR2.Items;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace Moonstorm.Starstorm2.Items
@@ -13,9 +14,13 @@ namespace Moonstorm.Starstorm2.Items
         [TokenModifier(token, StatTypes.Percentage, 0)]
         public static float baseDamage = 1f;
 
-        [ConfigurableField(ConfigDesc = "Lifetime of the security drone, in seconds.")]
+        [ConfigurableField(ConfigDesc = "Base lifetime of the security drone, in seconds.")]
         [TokenModifier(token, StatTypes.Default, 1)]
-        public static float lifeTime = 15f;
+        public static float baseLifeTime = 20f;
+
+        [ConfigurableField(ConfigDesc = "Lifetime of the security drone per stack, in seconds.")]
+        [TokenModifier(token, StatTypes.Default, 2)]
+        public static float stackLifeTime = 5f;
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver
         {
@@ -38,7 +43,7 @@ namespace Moonstorm.Starstorm2.Items
                         var droneMaster = droneSummon.Perform();
                         if (droneMaster)
                         {
-                            droneMaster.gameObject.AddComponent<MasterSuicideOnTimer>().lifeTimer = lifeTime;
+                            droneMaster.gameObject.AddComponent<MasterSuicideOnTimer>().lifeTimer = baseLifeTime + (stackLifeTime * (stack - 1));
 
                             CharacterBody droidBody = droneMaster.GetBody();
                             droidBody.baseDamage *= (baseDamage * stack);
@@ -46,11 +51,28 @@ namespace Moonstorm.Starstorm2.Items
                             Inventory droidInventory = droneMaster.inventory;
                             droidInventory.SetEquipmentIndex(victimEquipment);
 
+                            
+
                             Util.PlaySound("DroidHead", body.gameObject);
                         }
                     }
                 }
             }
         }
+
+        //[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
+        //public void RiskyModCompat(Inventory droidInventory)
+        //{
+        //    //droidInventory.GiveItem(RiskyMod.Allies.AlliesCore.AllyAllowVoidDeathItem);
+        //
+        //    //- RiskyMod.Allies.AlliesCore.AllyMarkerItem
+        //    //- RiskyMod.Allies.AlliesCore.AllyScalingItem
+        //    //- RiskyMod.Allies.AlliesCore.AllyAllowVoidDeathItem(easily - replaced ally, so they get to die to void reaver explosions)
+        //    //- RiskyMod.Allies.AlliesCore.AllyRegenItem, 40 stack
+        //
+        //    //AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(SS2Assets.LoadAsset<SkillDef>("NemmandoScepterSubmission"), "NemmandoBody", SkillSlot.Special, 0);
+        //    //AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(SS2Assets.LoadAsset<SkillDef>("NemmandoScepterBossAttack"), "NemmandoBody", SkillSlot.Special, 1);
+        //}
+
     }
 }

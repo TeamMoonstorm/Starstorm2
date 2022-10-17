@@ -51,7 +51,7 @@ namespace Moonstorm.Starstorm2.Unlocks.Pickups
                 if ((bool)currentInventory)
                 {
                     int num = 25; //required unique items for unlock
-                    SS2Log.Debug("aghhhhhh: " + currentInventory.itemAcquisitionOrder.Count);
+                    //SS2Log.Debug("aghhhhhh: " + currentInventory.itemAcquisitionOrder.Count);
                     if(currentInventory.itemAcquisitionOrder.Count >= num) {
                         int temp = 0;
                         for(int i = 0; i < currentInventory.itemAcquisitionOrder.Count; i++)

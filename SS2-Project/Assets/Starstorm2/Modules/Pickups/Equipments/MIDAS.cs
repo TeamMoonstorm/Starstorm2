@@ -1,4 +1,5 @@
 ﻿using RoR2;
+using UnityEngine;
 
 namespace Moonstorm.Starstorm2.Equipments
 {
@@ -12,7 +13,24 @@ namespace Moonstorm.Starstorm2.Equipments
         //N Nah, this looks good.
         public override bool FireAction(EquipmentSlot slot)
         {
-            goldEarned = slot.characterBody.healthComponent.health * 0.5f;
+            int playerCount = 0;
+            foreach (var player in PlayerCharacterMasterController.instances)
+            {
+                playerCount++;
+            }
+
+            var level = slot.characterBody.level;
+
+            float commandoHealth = .5f * (110 + (33 * (level - 1)));
+            float healthLost = slot.characterBody.healthComponent.health * 0.5f;
+            float chestFraction = healthLost / commandoHealth;
+            //SS2Log.Debug("chest fraction: " + chestFraction);
+
+            goldEarned = Run.instance.GetDifficultyScaledCost((int)(25 * chestFraction));
+
+            goldEarned = Mathf.Max(goldEarned, healthLost);
+            //SS2Log.Debug("gold : " + goldEarned);
+            //goldEarned = slot.characterBody.healthComponent.health * 0.5f * (1.3f * (playerCount - 1));
             DamageInfo damageInfo = new DamageInfo()
             {
                 damage = slot.characterBody.healthComponent.health * 0.5f,
