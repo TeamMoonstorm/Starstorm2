@@ -30,8 +30,8 @@ namespace Moonstorm.Starstorm2
 
         public void Init()
         {
-            itemConfig = CreateConfigFile(items);
-            equipsConfig = CreateConfigFile(equips);
+            itemConfig = CreateConfigFile(items, true);
+            equipsConfig = CreateConfigFile(equips, true);
 
             SetConfigs();
         }
