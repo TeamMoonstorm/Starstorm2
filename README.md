@@ -1,2 +1,2 @@
-# Starstorm2
-This git contains the wiki for Starstorm 2. Note that specific assets not developed in house are missing from this git.
+# The sign is a subtle joke
+The joke is that the place is called “Sneed’s Feed & Seed” which is clever in itself and quite funny to those with a mature sense of humour but what’s really just hilarious about it is that if you look closely at the front of this store, Sneed’s Feed & Seed, you can see a line that reads “Formerly Chuck’s”. Now, this might go over the average viewer’s head as this, THIS, is peak comedy. I doubt anything will ever be as funny as the joke about Sneed’s Feed & Seed. Are you ready for this one? So, like I said, the place is called “Sneed’s Feed & Seed” and this sign says “Formerly Chuck’s”, which means that when Chuck owned the place, well, I don’t have to tell you…
