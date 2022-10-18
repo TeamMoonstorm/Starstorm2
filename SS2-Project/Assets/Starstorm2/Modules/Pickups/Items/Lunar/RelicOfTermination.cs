@@ -42,6 +42,7 @@ namespace Moonstorm.Starstorm2.Items
             public Xoroshiro128Plus terminationRNG;
 
             public GameObject markEffect;
+            //public GameObject globalMarkEffect;
             public GameObject failEffect;
             public GameObject buffEffect;
 
@@ -57,6 +58,9 @@ namespace Moonstorm.Starstorm2.Items
                 markEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationTargetMark");
                 failEffect = SS2Assets.LoadAsset<GameObject>("NemmandoScepterSlashAppear");
                 buffEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationBuffEffect");
+
+                globalMarkEffect = LegacyResourcesAPI.Load<GameObject>("RoR2/Base/Common/BossPositionIndicator.prefab");
+
                 terminationRNG = new Xoroshiro128Plus(Run.instance.seed);
             }
 
@@ -76,7 +80,7 @@ namespace Moonstorm.Starstorm2.Items
                     {
                         targetBody.inventory.GiveItem(SS2Content.Items.TerminationHelper);
                         var token = targetBody.gameObject.GetComponent<TerminationToken>();
-
+                        //failEffect = failEffect.transform.localScale * targetBody.transform.localScale;
                         //markEffect = SS2Assets.LoadAsset<GameObject>("NemmandoScepterSlashAppear");
                         markEffectInstance = Object.Instantiate(failEffect, targetBody.transform);
 
@@ -167,10 +171,11 @@ namespace Moonstorm.Starstorm2.Items
 
                 var targetBody = target.GetBody();
                 markEffectInstance = Object.Instantiate(markEffect, targetBody.transform);
+                // RoR2 / Base / Common / BossPositionIndicator.prefab
 
                 var token = targetBody.gameObject.AddComponent<TerminationToken>();
                 token.PlayerOwner = body;
-                targetBody.isChampion = true;
+                targetBody.teamComponent.RequestDefaultIndicator(markEffectInstance);
 
                 time = maxTime;
             }

@@ -57,6 +57,13 @@ There are no issues. The mod is perfect.
 ## Changelog
 
 **Warning: content spoilers below!**
+### 0.3.41β
+* More fixes.
+    * Adds Relic of Termination, with temp VFX
+    * RiskyMod compatability for Droid Head.
+    * Droid Head drones work way better now. Thank you Moffein! //this doesn't work yet - don't push with this text
+    * Fixed VFX for Relic of Force
+
 ### 0.3.40β
 * Continued fixes and adjustments.
     * M.I.D.A.S gold gain is now scaled based on difficulty (and thus, player count). This largely essentially only comes in to play fairly late into runs.

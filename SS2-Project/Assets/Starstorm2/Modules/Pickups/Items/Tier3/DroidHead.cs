@@ -36,12 +36,12 @@ namespace Moonstorm.Starstorm2.Items
                 {
                     if (victim.isElite)
                     {
-                        var itemName = victim.equipmentSlot.name;
+                        //var itemName = victim.equipmentSlot.name;
                         var droneSummon = new MasterSummon();
                         droneSummon.position = victim.corePosition;
                         droneSummon.masterPrefab = masterPrefab;
                         droneSummon.summonerBodyObject = body.gameObject;
-                        var droneMaster = droneSummon.Perform();
+                        var droneMaster = droneSummon.Perform(); 
                         if (droneMaster)
                         {
                             droneMaster.gameObject.AddComponent<MasterSuicideOnTimer>().lifeTimer = baseLifeTime + (stackLifeTime * (stack - 1));
@@ -50,35 +50,50 @@ namespace Moonstorm.Starstorm2.Items
                             droidBody.baseDamage *= (baseDamage * stack);
 
                             Inventory droidInventory = droneMaster.inventory;
-                            
-                            if (!itemName.Contains("Void"))
+                            //droidInventory.SetEquipmentIndex(victimEquipment);
+
+                            if (!victim.HasBuff(DLC1Content.Buffs.EliteVoid))
                             {
                                 droidInventory.SetEquipmentIndex(victimEquipment);
                             }
-                            else
+
+
+                            if (Starstorm.RiskyModInstalled)
                             {
-                                SS2Log.Debug("void elite");
+                                RiskyModCompat(droidInventory);
                             }
+
                             Util.PlaySound("DroidHead", body.gameObject);
                         }
                     }
                 }
             }
+
+            [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
+            public void RiskyModCompat(Inventory droidInventory) //done this way because i forget how to mod every day
+            {
+                var markerItem = ItemCatalog.FindItemIndex("RiskyModAllyMarkerItem");
+                var scalingItem = ItemCatalog.FindItemIndex("RiskyModAllyScalingItem");
+                var regenItem = ItemCatalog.FindItemIndex("RiskyModAllyRegenItem");
+                var voidDeathItem = ItemCatalog.FindItemIndex("RiskyModAllyAllowVoidDeathItem");
+                if (markerItem != ItemIndex.None)
+                {
+                    droidInventory.GiveItem(markerItem);
+                }
+                if (scalingItem != ItemIndex.None)
+                {
+                    droidInventory.GiveItem(scalingItem);
+                }
+                if (regenItem != ItemIndex.None)
+                {
+                    droidInventory.GiveItem(regenItem, 40);
+                }
+                if (voidDeathItem != ItemIndex.None)
+                {
+                    droidInventory.GiveItem(voidDeathItem);
+                }
+            }
         }
-      
-        //[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-        //public void RiskyModCompat(Inventory droidInventory)
-        //{
-        //    //droidInventory.GiveItem(RiskyMod.Allies.AlliesCore.AllyAllowVoidDeathItem);
-        //
-        //    //- RiskyMod.Allies.AlliesCore.AllyMarkerItem
-        //    //- RiskyMod.Allies.AlliesCore.AllyScalingItem
-        //    //- RiskyMod.Allies.AlliesCore.AllyAllowVoidDeathItem(easily - replaced ally, so they get to die to void reaver explosions)
-        //    //- RiskyMod.Allies.AlliesCore.AllyRegenItem, 40 stack
-        //
-        //    //AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(SS2Assets.LoadAsset<SkillDef>("NemmandoScepterSubmission"), "NemmandoBody", SkillSlot.Special, 0);
-        //    //AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(SS2Assets.LoadAsset<SkillDef>("NemmandoScepterBossAttack"), "NemmandoBody", SkillSlot.Special, 1);
-        //}
 
     }
 }
