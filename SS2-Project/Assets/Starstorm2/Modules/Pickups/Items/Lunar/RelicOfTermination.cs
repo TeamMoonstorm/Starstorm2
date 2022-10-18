@@ -14,8 +14,6 @@ namespace Moonstorm.Starstorm2.Items
         private const string token = "SS2_ITEM_RELICOFTERMINATION_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfTermination");
 
-        private static readonly SphereSearch terminationSearch = new SphereSearch();
-
         public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver
         {
             [ItemDefAssociation]
@@ -61,51 +59,6 @@ namespace Moonstorm.Starstorm2.Items
                     MarkNewEnemy();
                     time = maxTime;
 
-                    //List<CharacterMaster> CharMasters(bool playersOnly = false)
-                    //{
-                    //    return CharacterMaster.readOnlyInstancesList.Where(x => x.hasBody && x.GetBody().healthComponent.alive && (x.GetBody().teamComponent.teamIndex != body.teamComponent.teamIndex)).ToList();
-                    //}
-                    //
-                    //if (terminationRNG == null)
-                    //{
-                    //    terminationRNG = new Xoroshiro128Plus(Run.instance.seed);
-                    //}
-                    ////terminationRNG.RangeInt(0, CharMasters().Count);
-                    //int index = terminationRNG.RangeInt(0, CharMasters().Count);
-                    //target = CharMasters().ElementAt(index);
-                    //
-                    //if (target.name.Contains("Mithrix"))
-                    //{
-                    //    if (CharMasters().Count != index + 1)
-                    //    {
-                    //        target = CharMasters().ElementAt(index + 1);
-                    //    }
-                    //    else if(CharMasters().Count == index + 1)
-                    //    {
-                    //        if(index == 0)
-                    //        {
-                    //            target = null;
-                    //            time = 15;
-                    //            return;
-                    //        }
-                    //        target = CharMasters().ElementAt(index - 1);
-                    //    }
-                    //    else
-                    //    {
-                    //        target = null;
-                    //        time = 15;
-                    //        return;
-                    //    }
-                    //}
-                    //
-                    //var targetBody = target.GetBody();
-                    //markEffectInstance = Object.Instantiate(markEffect, targetBody.transform);
-                    //var token = targetBody.gameObject.AddComponent<TerminationToken>();
-                    //
-                    //token.PlayerOwner = body;
-                    ////target.gameObject.AddComponent<>
-                    //time = 60;
-
                 }
                 else if (time < 0 && target)
                 {
@@ -115,7 +68,13 @@ namespace Moonstorm.Starstorm2.Items
                     {
                         targetBody.inventory.GiveItem(SS2Content.Items.TerminationHelper);
                         var token = targetBody.gameObject.GetComponent<TerminationToken>();
-                        SS2Log.Debug("destroying component");
+
+                        markEffect = SS2Assets.LoadAsset<GameObject>("NemmandoScepterSlashAppear");
+                        markEffectInstance = Object.Instantiate(markEffect, targetBody.transform);
+
+                        markEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationBuffEffect");
+                        markEffectInstance = Object.Instantiate(markEffect, targetBody.transform);
+
                         Destroy(token); 
                     }
 
@@ -207,7 +166,7 @@ namespace Moonstorm.Starstorm2.Items
                         return;
                     }
                 }
-                markEffect = SS2Assets.LoadAsset<GameObject>("TerminationRelicTemp");
+                markEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationTargetMark");
 
                 var targetBody = target.GetBody();
                 markEffectInstance = Object.Instantiate(markEffect, targetBody.transform);
@@ -221,7 +180,7 @@ namespace Moonstorm.Starstorm2.Items
 
         public class TerminationToken : MonoBehaviour
         {
-            //keep track of the target and player responsible
+            //helps keep track of the target and player responsible
             public CharacterBody PlayerOwner;
         }
     }

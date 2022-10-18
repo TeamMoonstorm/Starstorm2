@@ -15,6 +15,7 @@ namespace Moonstorm.Starstorm2.Items
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
             {
                 args.healthMultAdd += RelicOfTermination.Behavior.damageMult;
+                //i assume max hp should be edited too, no? hopefully it comes filled //z
                 args.damageMultAdd += RelicOfTermination.Behavior.healthMult;
                 args.moveSpeedMultAdd += RelicOfTermination.Behavior.speedMult;
             }
