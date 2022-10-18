@@ -14,9 +14,9 @@ namespace Moonstorm.Starstorm2.Items
             private static ItemDef GetItemDef() => SS2Content.Items.NemBossHelper;
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
             {
-                args.healthMultAdd += RelicOfTermination.Behavior.damageMult;
+                args.healthMultAdd += RelicOfTermination.Behavior.healthMult;
                 //i assume max hp should be edited too, no? hopefully it comes filled //z
-                args.damageMultAdd += RelicOfTermination.Behavior.healthMult;
+                args.damageMultAdd += RelicOfTermination.Behavior.damageMult;
                 args.moveSpeedMultAdd += RelicOfTermination.Behavior.speedMult;
             }
         }

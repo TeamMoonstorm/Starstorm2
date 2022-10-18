@@ -50,6 +50,7 @@ namespace Moonstorm.Starstorm2.Items
                             droidBody.baseDamage *= (baseDamage * stack);
 
                             Inventory droidInventory = droneMaster.inventory;
+                            
                             if (!itemName.Contains("Void"))
                             {
                                 droidInventory.SetEquipmentIndex(victimEquipment);
@@ -64,7 +65,7 @@ namespace Moonstorm.Starstorm2.Items
                 }
             }
         }
-
+      
         //[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         //public void RiskyModCompat(Inventory droidInventory)
         //{
