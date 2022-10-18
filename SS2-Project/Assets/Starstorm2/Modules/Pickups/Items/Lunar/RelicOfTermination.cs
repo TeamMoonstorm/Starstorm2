@@ -42,6 +42,8 @@ namespace Moonstorm.Starstorm2.Items
             public Xoroshiro128Plus terminationRNG;
 
             public GameObject markEffect;
+            public GameObject failEffect;
+            public GameObject buffEffect;
 
             private GameObject markEffectInstance;
 
@@ -49,31 +51,37 @@ namespace Moonstorm.Starstorm2.Items
             //public bool shouldFollow = true;
             float time = maxTime/6f;
             CharacterMaster target = null;
+            public new void Awake()
+            {
+                base.Awake();
+                markEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationTargetMark");
+                failEffect = SS2Assets.LoadAsset<GameObject>("NemmandoScepterSlashAppear");
+                buffEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationBuffEffect");
+                terminationRNG = new Xoroshiro128Plus(Run.instance.seed);
+            }
+
             public void FixedUpdate()
             {
-                //SS2Log.Debug("time: " + time);
                 time -= Time.deltaTime;
                 if (time < 0 && !target)
                 {
-                    SS2Log.Debug("time hit 0, enemy is dead, marking new");
                     MarkNewEnemy();
                     time = maxTime;
 
                 }
                 else if (time < 0 && target)
                 {
-                    SS2Log.Debug("time hit zero, enemy is alive, buffing");
                     var targetBody = target.GetBody();
                     if (targetBody.inventory)
                     {
                         targetBody.inventory.GiveItem(SS2Content.Items.TerminationHelper);
                         var token = targetBody.gameObject.GetComponent<TerminationToken>();
 
-                        markEffect = SS2Assets.LoadAsset<GameObject>("NemmandoScepterSlashAppear");
-                        markEffectInstance = Object.Instantiate(markEffect, targetBody.transform);
+                        //markEffect = SS2Assets.LoadAsset<GameObject>("NemmandoScepterSlashAppear");
+                        markEffectInstance = Object.Instantiate(failEffect, targetBody.transform);
 
-                        markEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationBuffEffect");
-                        markEffectInstance = Object.Instantiate(markEffect, targetBody.transform);
+                        //markEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationBuffEffect");
+                        markEffectInstance = Object.Instantiate(buffEffect, targetBody.transform);
 
                         Destroy(token); 
                     }
@@ -88,16 +96,11 @@ namespace Moonstorm.Starstorm2.Items
                 var token = damageReport.victimBody.gameObject.GetComponent<TerminationToken>();
                 if (token)
                 {
-                    SS2Log.Debug("killed enemy with token, rolling reward");
                     int count = token.PlayerOwner.inventory.GetItemCount(SS2Content.Items.RelicOfTermination.itemIndex);
-                    Vector3 vector = Quaternion.AngleAxis(0, Vector3.up) * (Vector3.up * 15f);
+                    Vector3 vector = Quaternion.AngleAxis(0, Vector3.up) * (Vector3.up * 20f);
                     List<PickupIndex> dropList;
 
                     float tierMult = MSUtil.InverseHyperbolicScaling(1, .25f, 5, count);
-                    if (terminationRNG == null)
-                    {
-                        terminationRNG = new Xoroshiro128Plus(Run.instance.seed);
-                    }
                     float tier = tierMult * terminationRNG.RangeInt(0, 100);
                     if(tier < 60f)
                     {
@@ -116,24 +119,19 @@ namespace Moonstorm.Starstorm2.Items
                     }
 
                     int item = Run.instance.treasureRng.RangeInt(0, dropList.Count);
-                    SS2Log.Debug("dropping reward");
+                    //SS2Log.Debug("dropping reward");
                     PickupDropletController.CreatePickupDroplet(dropList[item], damageReport.victim.transform.position, vector);
                 }
             }
 
             private void MarkNewEnemy()
             {
-                SS2Log.Debug("function called");
+                //SS2Log.Debug("function called");
                 List<CharacterMaster> CharMasters(bool playersOnly = false)
                 {
                     return CharacterMaster.readOnlyInstancesList.Where(x => x.hasBody && x.GetBody().healthComponent.alive && (x.GetBody().teamComponent.teamIndex != body.teamComponent.teamIndex)).ToList();
                 }
 
-                if (terminationRNG == null)
-                {
-                    terminationRNG = new Xoroshiro128Plus(Run.instance.seed);
-                }
-                //terminationRNG.RangeInt(0, CharMasters().Count);
                 if(CharMasters().Count == 0)
                 {
                     target = null;
@@ -142,7 +140,7 @@ namespace Moonstorm.Starstorm2.Items
                 }
                 int index = terminationRNG.RangeInt(0, CharMasters().Count);
                 target = CharMasters().ElementAt(index);
-                SS2Log.Debug("found target " + target.name);
+                //SS2Log.Debug("found target " + target.name);
                 if (target.name.Contains("Mithrix"))
                 {
                     if (CharMasters().Count != index + 1)
@@ -166,14 +164,14 @@ namespace Moonstorm.Starstorm2.Items
                         return;
                     }
                 }
-                markEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationTargetMark");
 
                 var targetBody = target.GetBody();
                 markEffectInstance = Object.Instantiate(markEffect, targetBody.transform);
+
                 var token = targetBody.gameObject.AddComponent<TerminationToken>();
-                SS2Log.Debug("applyied token");
                 token.PlayerOwner = body;
-                //target.gameObject.AddComponent<>
+                targetBody.isChampion = true;
+
                 time = maxTime;
             }
         }
