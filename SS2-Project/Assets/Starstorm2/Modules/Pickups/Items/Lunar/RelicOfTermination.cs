@@ -3,6 +3,7 @@ using RoR2.Items;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 
 namespace Moonstorm.Starstorm2.Items
@@ -42,7 +43,7 @@ namespace Moonstorm.Starstorm2.Items
             public Xoroshiro128Plus terminationRNG;
 
             public GameObject markEffect;
-            //public GameObject globalMarkEffect;
+            public GameObject globalMarkEffect;
             public GameObject failEffect;
             public GameObject buffEffect;
 
@@ -59,9 +60,11 @@ namespace Moonstorm.Starstorm2.Items
                 failEffect = SS2Assets.LoadAsset<GameObject>("NemmandoScepterSlashAppear");
                 buffEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationBuffEffect");
 
-                globalMarkEffect = LegacyResourcesAPI.Load<GameObject>("RoR2/Base/Common/BossPositionIndicator.prefab");
-
+                globalMarkEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/NPCPositionIndicator.prefab").WaitForCompletion();
+ 
                 terminationRNG = new Xoroshiro128Plus(Run.instance.seed);
+
+                // use body.radius / bestfitradius to scale effects
             }
 
             public void FixedUpdate()
@@ -175,6 +178,8 @@ namespace Moonstorm.Starstorm2.Items
 
                 var token = targetBody.gameObject.AddComponent<TerminationToken>();
                 token.PlayerOwner = body;
+
+                markEffectInstance = Object.Instantiate(globalMarkEffect, targetBody.transform);
                 targetBody.teamComponent.RequestDefaultIndicator(markEffectInstance);
 
                 time = maxTime;
