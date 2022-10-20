@@ -19,79 +19,75 @@ MonoBehaviour:
     serializedFields:
     - fieldName: minimumDuration
       fieldValue:
-        stringValue: 0
+        stringValue: 1
         objectValue: {fileID: 0}
     - fieldName: baseTargetDuration
       fieldValue:
-        stringValue: 0
+        stringValue: 3
         objectValue: {fileID: 0}
     - fieldName: baseTargetAmountOfVolleys
       fieldValue:
-        stringValue: 0
+        stringValue: 3
         objectValue: {fileID: 0}
     - fieldName: baseAmountOfScatterPerVolley
       fieldValue:
-        stringValue: 0
+        stringValue: 2
         objectValue: {fileID: 0}
     - fieldName: baseAmountOfBulletsPerScatter
       fieldValue:
-        stringValue: 0
+        stringValue: 1
         objectValue: {fileID: 0}
     - fieldName: baseBulletDamageCoefficient
       fieldValue:
-        stringValue: 0
+        stringValue: 1
         objectValue: {fileID: 0}
     - fieldName: baseBulletProcCoefficient
       fieldValue:
-        stringValue: 0
+        stringValue: 0.5
         objectValue: {fileID: 0}
     - fieldName: baseBulletRadius
       fieldValue:
-        stringValue: 0
-        objectValue: {fileID: 0}
-    - fieldName: baseProjectileDesiredSpeed
-      fieldValue:
-        stringValue: 0
+        stringValue: 1
         objectValue: {fileID: 0}
     - fieldName: baseBulletForce
       fieldValue:
-        stringValue: 0
+        stringValue: 30
         objectValue: {fileID: 0}
     - fieldName: minSpread
       fieldValue:
-        stringValue: 0
+        stringValue: 5
         objectValue: {fileID: 0}
     - fieldName: maxSpread
       fieldValue:
-        stringValue: 0
+        stringValue: 20
         objectValue: {fileID: 0}
     - fieldName: spreadPitchScale
       fieldValue:
-        stringValue: 0
+        stringValue: 1
         objectValue: {fileID: 0}
     - fieldName: spreadYawScale
       fieldValue:
-        stringValue: 0
+        stringValue: 5
         objectValue: {fileID: 0}
     - fieldName: spreadBloomValue
       fieldValue:
-        stringValue: 0
+        stringValue: 10
         objectValue: {fileID: 0}
     - fieldName: recoilAmplitudeY
       fieldValue:
-        stringValue: 0
+        stringValue: 2
         objectValue: {fileID: 0}
     - fieldName: recoilAmplitudeX
       fieldValue:
-        stringValue: 0
+        stringValue: 5
         objectValue: {fileID: 0}
     - fieldName: raycastMaxLength
       fieldValue:
-        stringValue: 0
+        stringValue: 25
         objectValue: {fileID: 0}
     - fieldName: bulletMaxLength
       fieldValue:
-        stringValue: 0
+        stringValue: 50
         objectValue: {fileID: 0}
     - fieldName: useSmartCollision
       fieldValue:
@@ -112,7 +108,8 @@ MonoBehaviour:
     - fieldName: hitEffectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 0}
+        objectValue: {fileID: 2828564131440228581, guid: 4b7f27f7b3a18244f9657fb1b3f5633f,
+          type: 3}
     - fieldName: muzzleEffectPrefab
       fieldValue:
         stringValue: 

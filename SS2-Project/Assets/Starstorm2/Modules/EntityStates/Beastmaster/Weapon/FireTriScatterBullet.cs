@@ -51,9 +51,6 @@ namespace EntityStates.Beastmaster.Weapon
         public float baseBulletRadius;
 
         [SerializeField]
-        public float baseProjectileDesiredSpeed;
-
-        [SerializeField]
         public float baseBulletForce;
 
         [SerializeField]
