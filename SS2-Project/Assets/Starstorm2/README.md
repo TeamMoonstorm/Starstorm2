@@ -70,6 +70,7 @@ There are no issues. The mod is perfect.
     * Bottled Chaos can no longer activate Back Thruster, MIDAS, and Pressurized Canister.
     * Executioner should no longer rarely become a lantern.
     * Portable Reactor can appear on enemies again (with fourthed duration) because it's hilarious. Also reduces turret / ally invulnerability duration to one fourth.
+    * Fixed config name for Low Quality Speakers.
     * Fixed up the logbook. Items are now positioned better and have cleaner descriptions.
 
 ### 0.3.40β
