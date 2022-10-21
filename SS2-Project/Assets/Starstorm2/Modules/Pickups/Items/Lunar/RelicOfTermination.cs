@@ -8,10 +8,8 @@ using UnityEngine.Networking;
 
 namespace Moonstorm.Starstorm2.Items
 {
-    //[DisabledContent]
-    public sealed class RelicOfTermination: ItemBase
+    public sealed class RelicOfTermination : ItemBase
     {
-
         private const string token = "SS2_ITEM_RELICOFTERMINATION_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfTermination");
 
@@ -22,7 +20,8 @@ namespace Moonstorm.Starstorm2.Items
 
             [ConfigurableField(ConfigDesc = "Time, in seconds, to kill the marked enemy.")]
             [TokenModifier(token, StatTypes.Default, 0)]
-            public static float maxTime = 35f;
+            [TokenModifier("SS2_ITEM_RELICOFTERMINATION_PICKUP", StatTypes.Default, 0)]
+            public static float maxTime = 30f;
 
             [ConfigurableField(ConfigDesc = "Percent reduction in time to kill per stack.")]
             [TokenModifier(token, StatTypes.Percentage, 1)]

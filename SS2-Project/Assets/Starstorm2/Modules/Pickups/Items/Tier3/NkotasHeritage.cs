@@ -70,7 +70,15 @@ namespace Moonstorm.Starstorm2.Items
                 HG.ArrayUtils.ArrayAppend(ref characterMasters, obj.master); //Should add the same master in case they level up multiple times... not sure if its ok?
                 return;
             }
-            NkotasManager.ActivateSingle(obj);
+            if (!obj.gameObject.GetComponent<BabyToys.BabyToyToken>())
+            {
+                NkotasManager.ActivateSingle(obj);
+            }
+            else
+            {
+                //SS2Log.Debug("babys removal - ignoring level adjustment");
+            }
+            
         }
 
         public static class NkotasManager
