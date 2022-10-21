@@ -28,7 +28,7 @@ This release may be a bit buggy, but we're working on fixing those bugs for a pr
 
 ## Credits
 Starstorm 2 is currently being maintained by...
-* Code - malfaisant, swuff★, Zenithrium
+* Code - malfaisant, Nebby, swuff★, Zenithrium
 * Art/Modelling/Animation - dotflare, SkeletorChampion, Zenithrium
 
 With previous contributions by...
@@ -36,7 +36,7 @@ With previous contributions by...
 * Art/Modelling/Animation - Anreol, Bolty, bruh, Cexeub, Draymarc, JestAnotherAnimator, Gem, GrooveSalad, LucidInceptor, KevinFromHPCustomerService, Plexus, PapaZach, QuietAnon, redacted, rob, SOM, Spenny, swuff★, xpcybic, Reithierion, UnknownGlaze, Zenithrium
 
 Additional thanks to... 
-* Writing - Blimblam, Lyrical Endymion, swuff★, QandQuestion, T_Dimensional
+* Writing - Blimblam, Lyrical Endymion, swuff★, T_Dimensional
 * Translations - Anreol (Spanish), MysticSword (Russian)
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze
 * Special thanks - Altzeus, DestroyedClone, don, Draymarc, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Neik, Riskka, Ruxbieno, Shooty, Twiner
@@ -51,7 +51,6 @@ There are no issues. The mod is perfect.
 	* Some item displays are missing.
     * Artifact of Metamorphosis doesn't work.
     * Nemmando sometimes forgets which skin he's supposed to be using.
-    * Bottled Chaos can activate some equipments it shouldn't be able to (Canister, Thruster, and MIDAS) - should be fixed in the next patch.
     * Storms don't fully appear for clients in multiplayer. They still happen, just without the warning and the fancy visuals.
 
 ## Changelog
@@ -59,10 +58,18 @@ There are no issues. The mod is perfect.
 **Warning: content spoilers below!**
 ### 0.3.41β
 * More fixes.
-    * Adds Relic of Termination, with temp VFX
+    * Adds Relic of Termination, with temp VFX.
     * RiskyMod compatability for Droid Head.
-    * Droid Head drones work way better now. Thank you Moffein! //this doesn't work yet - don't push with this text
-    * Fixed VFX for Relic of Force
+    * Droid Head will no longer spawn void infestors.
+    * Fixed VFX for Relic of Force.
+    * Nkota's Heritage can no longer drop itself.
+    * On skills with multiple base stocks, X4 will only proc once (+1 per additional stock (ex backup mag)) per recharge interval. This primarily normalizes the healing gained form skills like Nemmando's Single Tap and Mul-T's Power Mode.
+    * X4 heals on firing a sniper shot on Railgunner, like backup mag, rather than healing you on scoping in for their default secondary. No change to the alt secondary.
+    * Added all DLC0 item displays for Executioner.
+    * Bottled Chaos can no longer activate Back Thruster, MIDAS, and Pressurized Canister.
+    * Executioner should no longer rarely become a lantern.
+    * Portable Reactor can appear on enemies again (with fourthed duration) because it's hilarious. Also nerfs turret / ally invulnerability to one fourth.
+    * Fixed up the logbook. Items are now positioned better and have cleaner descriptions.
 
 ### 0.3.40β
 * Continued fixes and adjustments.

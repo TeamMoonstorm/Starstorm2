@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b2a16891c8108e48883bce0009b7835, type: 3}
-  m_Name: namedidrsNemmando
+  m_Name: namedidrsExecutioner
   m_EditorClassIdentifier: 
-  idrs: {fileID: 11400000, guid: 32db6b7afda2c524fbcfd5d6259c7246, type: 2}
+  idrs: {fileID: 11400000, guid: 0355e491a7de95543816fdcb0a744199, type: 2}
   namedRuleGroups:
   - keyAsset:
       address: RoR2/Base/BossDamageBonus/BossDamageBonus.asset
@@ -68,9 +68,9 @@ MonoBehaviour:
         address: RoR2/Base/FlatHealth/DisplaySteakCurved.prefab
         asset: {fileID: 0}
       childName: Head
-      localPos: {x: -0.001138702, y: 0.00396279, z: -0.0001841304}
-      localAngles: {x: 301.9583, y: 267.5504, z: 355.3541}
-      localScales: {x: 0.00145, y: 0.00145, z: 0.00145}
+      localPos: {x: -0.00127, y: 0.00351, z: 0.00002}
+      localAngles: {x: 299.0993, y: 265.6861, z: -0.00001}
+      localScales: {x: 0.00079, y: 0.00079, z: 0.00079}
       limbMask: 0
       finishedRule:
         ruleType: 0
@@ -103,7 +103,7 @@ MonoBehaviour:
         localScale: {x: 0, y: 0, z: 0}
         limbMask: 0
   - keyAsset:
-      address: RoR2/Base/Mushroom/Mushroom.asset
+      address: 'RoR2/Base/Mushroom/Mushroom.asset '
       asset: {fileID: 0}
       loadAssetFrom: 2
     rules:
@@ -213,7 +213,7 @@ MonoBehaviour:
         localScale: {x: 0, y: 0, z: 0}
         limbMask: 0
   - keyAsset:
-      address: RoR2/Base/IgniteOnKill/IgniteOnKill.asset
+      address: 'RoR2/Base/IgniteOnKill/IgniteOnKill.asset '
       asset: {fileID: 0}
       loadAssetFrom: 2
     rules:
@@ -244,9 +244,9 @@ MonoBehaviour:
         address: RoR2/Base/CritGlasses/DisplayGlasses.prefab
         asset: {fileID: 0}
       childName: Head
-      localPos: {x: 0.00002817865, y: 0.002601417, z: 0.001519402}
-      localAngles: {x: 355.4256, y: 1.080717, z: 0.1317751}
-      localScales: {x: 0.0033, y: 0.00339, z: 0.00339}
+      localPos: {x: -0.00001, y: 0.00213, z: 0.00182}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.00372, y: 0.00339, z: 0.00339}
       limbMask: 0
       finishedRule:
         ruleType: 0
@@ -505,7 +505,7 @@ MonoBehaviour:
     rules:
     - ruleType: 0
       displayPrefab:
-        address: RoR2/Base/Tooth/DisplayToothNecklaceDecal.prefab
+        address: ' RoR2/Base/Tooth/DisplayToothNecklaceDecal.prefab '
         asset: {fileID: 0}
       childName: Chest
       localPos: {x: 0.00018, y: 0.00378, z: 0.00059}
@@ -1397,8 +1397,8 @@ MonoBehaviour:
         address: RoR2/Base/UtilitySkillMagazine/DisplayAfterburnerShoulderRing.prefab
         asset: {fileID: 0}
       childName: Chest
-      localPos: {x: -0.00176, y: 0.00465, z: -0.00073}
-      localAngles: {x: 296.7793, y: 356.3471, z: 15.07339}
+      localPos: {x: 0.00176, y: 0.00465, z: -0.00073}
+      localAngles: {x: 296.7793, y: 356.3471, z: 344.9266}
       localScales: {x: -0.00521, y: -0.00521, z: -0.00521}
       limbMask: 0
       finishedRule:
@@ -1664,6 +1664,28 @@ MonoBehaviour:
         localScale: {x: 0, y: 0, z: 0}
         limbMask: 0
   - keyAsset:
+      address: RoR2/Base/NovaOnLowHealth/NovaOnLowHealth.asset
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefab:
+        address: RoR2/Base/NovaOnLowHealth/DisplayJellyGuts.prefab
+        asset: {fileID: 0}
+      childName: ThighL
+      localPos: {x: -0.00067, y: 0.0032, z: -0.00002}
+      localAngles: {x: 0, y: 267.8775, z: 0}
+      localScales: {x: -0.00076, y: -0.00076, z: -0.00076}
+      limbMask: 0
+      finishedRule:
+        ruleType: 0
+        followerPrefab: {fileID: 0}
+        childName: 
+        localPos: {x: 0, y: 0, z: 0}
+        localAngles: {x: 0, y: 0, z: 0}
+        localScale: {x: 0, y: 0, z: 0}
+        limbMask: 0
+  - keyAsset:
       address: RoR2/Base/TitanGoldDuringTP/TitanGoldDuringTP.asset
       asset: {fileID: 0}
       loadAssetFrom: 2
@@ -1692,7 +1714,7 @@ MonoBehaviour:
     rules:
     - ruleType: 0
       displayPrefab:
-        address: RoR2/Base/ShinyPearl/DisplayShinyPearl.prefab
+        address: ' RoR2/Base/ShinyPearl/DisplayShinyPearl.prefab '
         asset: {fileID: 0}
       childName: Head
       localPos: {x: 0, y: 0.00468, z: -0.00033}
@@ -2038,7 +2060,7 @@ MonoBehaviour:
         localScale: {x: 0, y: 0, z: 0}
         limbMask: 0
   - keyAsset:
-      address: RoR2/Base/LunarSkillReplacements/LunarSecondaryReplacement.asset
+      address: 'RoR2/Base/LunarSkillReplacements/LunarSecondaryReplacement.asset '
       asset: {fileID: 0}
       loadAssetFrom: 2
     rules:
@@ -2281,7 +2303,7 @@ MonoBehaviour:
     rules:
     - ruleType: 0
       displayPrefab:
-        address: RoR2/Base/DeathProjectile/DeathProjectile.prefab
+        address: RoR2/Base/DeathProjectile/DisplayDeathProjectile.prefab
         asset: {fileID: 0}
       childName: Sword
       localPos: {x: -0.00029, y: 0.0075, z: 0}
@@ -2363,7 +2385,7 @@ MonoBehaviour:
         localScale: {x: 0, y: 0, z: 0}
         limbMask: 0
   - keyAsset:
-      address: 'RoR2/Base/Jetpack/Jetpack.asset '
+      address: RoR2/Base/Jetpack/Jetpack.asset
       asset: {fileID: 0}
       loadAssetFrom: 2
     rules:
@@ -2605,7 +2627,7 @@ MonoBehaviour:
         localScale: {x: 0, y: 0, z: 0}
         limbMask: 0
   - keyAsset:
-      address: ' RoR2/Base/FireBallDash/FireBallDash.asset '
+      address: RoR2/Base/FireBallDash/FireBallDash.asset
       asset: {fileID: 0}
       loadAssetFrom: 2
     rules:
@@ -2649,7 +2671,7 @@ MonoBehaviour:
         localScale: {x: 0, y: 0, z: 0}
         limbMask: 0
   - keyAsset:
-      address: 'RoR2/Base/Meteor/Meteor.asset '
+      address: RoR2/Base/Meteor/Meteor.asset
       asset: {fileID: 0}
       loadAssetFrom: 2
     rules:
@@ -2715,13 +2737,13 @@ MonoBehaviour:
         localScale: {x: 0, y: 0, z: 0}
         limbMask: 0
   - keyAsset:
-      address: RoR2/Base/EliteIce/EliteIceEquipment.asset
+      address: AffixWhite
       asset: {fileID: 0}
-      loadAssetFrom: 2
+      loadAssetFrom: 1
     rules:
     - ruleType: 0
       displayPrefab:
-        address: RoR2/Base/EliteIce/DisplayEliteIceCrown.prefab
+        address: DisplayEliteIceCrown
         asset: {fileID: 0}
       childName: Head
       localPos: {x: -0.00001, y: 0.00352, z: -0.00062}
@@ -2737,13 +2759,13 @@ MonoBehaviour:
         localScale: {x: 0, y: 0, z: 0}
         limbMask: 0
   - keyAsset:
-      address: RoR2/Base/EliteFire/EliteFireEquipment.asset
+      address: AffixRed
       asset: {fileID: 0}
-      loadAssetFrom: 2
+      loadAssetFrom: 1
     rules:
     - ruleType: 0
       displayPrefab:
-        address: RoR2/Base/EliteFire/DisplayEliteHorn.prefab
+        address: DisplayEliteHorn
         asset: {fileID: 0}
       childName: Head
       localPos: {x: 0.0005, y: 0.0031, z: 0.00052}
@@ -2760,7 +2782,7 @@ MonoBehaviour:
         limbMask: 0
     - ruleType: 0
       displayPrefab:
-        address: RoR2/Base/EliteFire/DisplayEliteHorn.prefab
+        address: DisplayEliteHorn
         asset: {fileID: 0}
       childName: Head
       localPos: {x: -0.0005, y: 0.0031, z: 0.00052}
@@ -2776,13 +2798,13 @@ MonoBehaviour:
         localScale: {x: 0, y: 0, z: 0}
         limbMask: 0
   - keyAsset:
-      address: RoR2/Base/EliteLightning/EliteLightningEquipment.asset
+      address: AffixBlue
       asset: {fileID: 0}
-      loadAssetFrom: 2
+      loadAssetFrom: 1
     rules:
     - ruleType: 0
       displayPrefab:
-        address: RoR2/Base/EliteLightning/DisplayEliteRhinoHorn.prefab
+        address: DisplayEliteRhinoHorn
         asset: {fileID: 0}
       childName: Head
       localPos: {x: -0.00013, y: 0.00334, z: 0.00144}
@@ -2799,7 +2821,7 @@ MonoBehaviour:
         limbMask: 0
     - ruleType: 0
       displayPrefab:
-        address: RoR2/Base/EliteLightning/DisplayEliteRhinoHorn.prefab
+        address: DisplayEliteRhinoHorn
         asset: {fileID: 0}
       childName: Head
       localPos: {x: -0.00012, y: 0.00369, z: 0.00092}
@@ -2815,13 +2837,13 @@ MonoBehaviour:
         localScale: {x: 0, y: 0, z: 0}
         limbMask: 0
   - keyAsset:
-      address: RoR2/Base/ElitePoison/ElitePoisonEquipment.asset
+      address: AffixPoison
       asset: {fileID: 0}
-      loadAssetFrom: 2
+      loadAssetFrom: 1
     rules:
     - ruleType: 0
       displayPrefab:
-        address: RoR2/Base/ElitePoison/DisplayEliteUrchinCrown.prefab
+        address: DisplayEliteUrchinCrown
         asset: {fileID: 0}
       childName: Head
       localPos: {x: 0.00015, y: 0.00301, z: -0.00049}
@@ -2837,13 +2859,13 @@ MonoBehaviour:
         localScale: {x: 0, y: 0, z: 0}
         limbMask: 0
   - keyAsset:
-      address: RoR2/Base/EliteLunar/EliteLunarEquipment.asset
+      address: AffixLunar
       asset: {fileID: 0}
-      loadAssetFrom: 2
+      loadAssetFrom: 1
     rules:
     - ruleType: 0
       displayPrefab:
-        address: RoR2/Base/EliteLunar/DisplayEliteLunar,Eye.prefab
+        address: DisplayEliteLunar,eye
         asset: {fileID: 0}
       childName: Head
       localPos: {x: 0, y: 0, z: 0}
@@ -2859,13 +2881,13 @@ MonoBehaviour:
         localScale: {x: 0, y: 0, z: 0}
         limbMask: 0
   - keyAsset:
-      address: RoR2/Base/EliteHaunted/EliteHauntedEquipment.asset
+      address: AffixHaunted
       asset: {fileID: 0}
-      loadAssetFrom: 2
+      loadAssetFrom: 1
     rules:
     - ruleType: 0
       displayPrefab:
-        address: RoR2/Base/EliteHaunted/DisplayEliteStealthCrown.prefab
+        address: DisplayEliteStealthCrown
         asset: {fileID: 0}
       childName: Head
       localPos: {x: -0.00018, y: 0.00365, z: -0.00026}

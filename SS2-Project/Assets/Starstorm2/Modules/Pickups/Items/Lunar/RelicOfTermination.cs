@@ -22,19 +22,27 @@ namespace Moonstorm.Starstorm2.Items
 
             [ConfigurableField(ConfigDesc = "Time, in seconds, to kill the marked enemy.")]
             [TokenModifier(token, StatTypes.Default, 0)]
-            public static float maxTime = 60f;
+            public static float maxTime = 35f;
+
+            [ConfigurableField(ConfigDesc = "Percent reduction in time to kill per stack.")]
+            [TokenModifier(token, StatTypes.Percentage, 1)]
+            public static float timeReduction = .1f;
 
             [ConfigurableField(ConfigDesc = "Damage multiplier added to marked enemy if not killed in time (1 = 100% more damage).")]
-            [TokenModifier(token, StatTypes.Percentage, 1)]
-            public static float damageMult = 2f;
+            [TokenModifier(token, StatTypes.Percentage, 2)]
+            public static float damageMult = 1f;
 
             [ConfigurableField(ConfigDesc = "Health multiplier added to marked enemy if not killed in time (1 = 100% more health).")]
-            [TokenModifier(token, StatTypes.Percentage, 2)]
+            [TokenModifier(token, StatTypes.Percentage, 3)]
             public static float healthMult = 2f;
 
             [ConfigurableField(ConfigDesc = "Speed multiplier added to marked enemy if not killed in time (1 = 100% more speed).")]
-            [TokenModifier(token, StatTypes.Percentage, 3)]
-            public static float speedMult = 2f;
+            [TokenModifier(token, StatTypes.Percentage, 4)]
+            public static float speedMult = 1f;
+
+            [ConfigurableField(ConfigDesc = "Attack speed multiplier added to marked enemy if not killed in time (1 = 100% more attack speed).")]
+            [TokenModifier(token, StatTypes.Percentage, 5)]
+            public static float atkSpeedMult = 1f;
 
             //[ConfigurableField(ConfigDesc = "Health multiplier grantd to marked enemy if not killed in time (1 = 100% health).")]
             //[TokenModifier(token, StatTypes.Percentage, 3)]
@@ -60,8 +68,8 @@ namespace Moonstorm.Starstorm2.Items
                 failEffect = SS2Assets.LoadAsset<GameObject>("NemmandoScepterSlashAppear");
                 buffEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationBuffEffect");
 
-                globalMarkEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/NPCPositionIndicator.prefab").WaitForCompletion();
- 
+                globalMarkEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/BossPositionIndicator.prefab").WaitForCompletion();
+
                 terminationRNG = new Xoroshiro128Plus(Run.instance.seed);
 
                 // use body.radius / bestfitradius to scale effects
@@ -73,7 +81,8 @@ namespace Moonstorm.Starstorm2.Items
                 if (time < 0 && !target)
                 {
                     MarkNewEnemy();
-                    time = maxTime;
+                    float timeMult = Mathf.Pow(1 - timeReduction, stack - 1);
+                    time = maxTime * timeMult;
 
                 }
                 else if (time < 0 && target)
@@ -81,20 +90,33 @@ namespace Moonstorm.Starstorm2.Items
                     var targetBody = target.GetBody();
                     if (targetBody.inventory)
                     {
+                        var healthFrac = targetBody.healthComponent.combinedHealthFraction;
+                        SS2Log.Debug(healthFrac);
                         targetBody.inventory.GiveItem(SS2Content.Items.TerminationHelper);
                         var token = targetBody.gameObject.GetComponent<TerminationToken>();
                         //failEffect = failEffect.transform.localScale * targetBody.transform.localScale;
                         //markEffect = SS2Assets.LoadAsset<GameObject>("NemmandoScepterSlashAppear");
                         markEffectInstance = Object.Instantiate(failEffect, targetBody.transform);
+                        if (markEffectInstance)
+                        {
+                            markEffectInstance.transform.localScale *= targetBody.radius;
+                        }
 
                         //markEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationBuffEffect");
                         markEffectInstance = Object.Instantiate(buffEffect, targetBody.transform);
+                        if (markEffectInstance)
+                        {
+                            markEffectInstance.transform.localScale *= targetBody.radius;
+                        }
 
-                        Destroy(token); 
+                        targetBody.healthComponent.health = targetBody.healthComponent.health * healthFrac;
+
+                        token.hasFailed = true;
                     }
 
                     MarkNewEnemy();
-                    time = maxTime;
+                    float timeMult = Mathf.Pow(1 - timeReduction, stack - 1);
+                    time = maxTime * timeMult;
                 }
             }
 
@@ -103,31 +125,35 @@ namespace Moonstorm.Starstorm2.Items
                 var token = damageReport.victimBody.gameObject.GetComponent<TerminationToken>();
                 if (token)
                 {
-                    int count = token.PlayerOwner.inventory.GetItemCount(SS2Content.Items.RelicOfTermination.itemIndex);
-                    Vector3 vector = Quaternion.AngleAxis(0, Vector3.up) * (Vector3.up * 20f);
-                    List<PickupIndex> dropList;
+                    if (!token.hasFailed)
+                    {
+                        int count = token.PlayerOwner.inventory.GetItemCount(SS2Content.Items.RelicOfTermination.itemIndex);
+                        Vector3 vector = Quaternion.AngleAxis(0, Vector3.up) * (Vector3.up * 20f);
+                        List<PickupIndex> dropList;
 
-                    float tierMult = MSUtil.InverseHyperbolicScaling(1, .25f, 5, count);
-                    float tier = tierMult * terminationRNG.RangeInt(0, 100);
-                    if(tier < 60f)
-                    {
-                        dropList = Run.instance.availableTier1DropList;
-                    }
-                    else if (tier < 90)
-                    {
-                        dropList = Run.instance.availableTier2DropList;
-                    }else if(tier < 97)
-                    {
-                        dropList = Run.instance.availableTier3DropList;
-                    }
-                    else
-                    {
-                        dropList = Run.instance.availableBossDropList;
-                    }
+                        float tierMult = MSUtil.InverseHyperbolicScaling(1, .25f, 5, count);
+                        float tier = tierMult * terminationRNG.RangeInt(0, 100);
+                        if (tier < 60f)
+                        {
+                            dropList = Run.instance.availableTier1DropList;
+                        }
+                        else if (tier < 90)
+                        {
+                            dropList = Run.instance.availableTier2DropList;
+                        }
+                        else if (tier < 97)
+                        {
+                            dropList = Run.instance.availableTier3DropList;
+                        }
+                        else
+                        {
+                            dropList = Run.instance.availableBossDropList;
+                        }
 
-                    int item = Run.instance.treasureRng.RangeInt(0, dropList.Count);
-                    //SS2Log.Debug("dropping reward");
-                    PickupDropletController.CreatePickupDroplet(dropList[item], damageReport.victim.transform.position, vector);
+                        int item = Run.instance.treasureRng.RangeInt(0, dropList.Count);
+                        //SS2Log.Debug("dropping reward");
+                        PickupDropletController.CreatePickupDroplet(dropList[item], damageReport.victim.transform.position, vector);
+                    }
                 }
             }
 
@@ -174,15 +200,20 @@ namespace Moonstorm.Starstorm2.Items
 
                 var targetBody = target.GetBody();
                 markEffectInstance = Object.Instantiate(markEffect, targetBody.transform);
+                if (markEffectInstance)
+                {
+                    markEffectInstance.transform.localScale *= targetBody.radius;
+                }
+
                 // RoR2 / Base / Common / BossPositionIndicator.prefab
 
                 var token = targetBody.gameObject.AddComponent<TerminationToken>();
                 token.PlayerOwner = body;
 
-                markEffectInstance = Object.Instantiate(globalMarkEffect, targetBody.transform);
-                targetBody.teamComponent.RequestDefaultIndicator(markEffectInstance);
+                //markEffectInstance = Object.Instantiate(globalMarkEffect, targetBody.transform);
+                targetBody.teamComponent.RequestDefaultIndicator(globalMarkEffect);
 
-                time = maxTime;
+                //time = maxTime;
             }
         }
 
@@ -190,6 +221,7 @@ namespace Moonstorm.Starstorm2.Items
         {
             //helps keep track of the target and player responsible
             public CharacterBody PlayerOwner;
+            public bool hasFailed = false;
         }
     }
 }
