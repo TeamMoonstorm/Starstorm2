@@ -52,6 +52,7 @@ There are no issues. The mod is perfect.
     * Artifact of Metamorphosis doesn't work.
     * Nemmando sometimes forgets which skin he's supposed to be using.
     * Storms don't fully appear for clients in multiplayer. They still happen, just without the warning and the fancy visuals.
+    * Genesis Loop's particle effect is far too large on Nemmando.
 
 ## Changelog
 
