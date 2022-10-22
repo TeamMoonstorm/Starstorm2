@@ -66,7 +66,7 @@ There are no issues. The mod is perfect.
     * Droid Head will no longer spawn void infestors.
     * Fixed VFX for Relic of Force.
     * Nkota's Heritage can no longer drop itself.
-    * Losing Baby's Toys no longer reduces your level - it now adds the levels gained from it back to your current level. This-readding does not proc Nkota's Heritage.
+    * Losing Baby's Toys no longer reduces your level - it now adds the levels gained from it back to your current level. This readding does not proc Nkota's Heritage.
     * On skills with multiple base stocks, X4 will only proc once (+1 per additional stock (ex backup mag)) per recharge interval. This primarily normalizes the healing gained form skills like Nemmando's Single Tap and Mul-T's Power Mode.
     * X4 heals on firing a sniper shot on Railgunner, like backup mag, rather than healing you on scoping in for their default secondary. No change to the alt secondary.
     * Added all DLC0 item displays for Executioner.
