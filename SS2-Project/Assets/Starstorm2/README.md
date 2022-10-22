@@ -28,18 +28,18 @@ This release may be a bit buggy, but we're working on fixing those bugs for a pr
 
 ## Credits
 Starstorm 2 is currently being maintained by...
-* Code - malfaisant, Nebby, swuff★, Zenithrium
-* Art/Modelling/Animation - dotflare, SkeletorChampion, Zenithrium
+* malfaisant, Nebby, swuff★, Zenithrium
+With previous code contributions by...
+* Anreol, Flan, Gaforb, GrooveSalad, KevinFromHPCustomerService, Moffein, Nebby, Noop, Phreel, rob, swuff★, sebacame, Shared, TheTimesweeper, Vale-X, xpcybic, Xubas
 
-With previous contributions by...
-* Code - Anreol, Flan, Gaforb, GrooveSalad, KevinFromHPCustomerService, Moffein, Nebby, Noop, Phreel, rob, swuff★, sebacame, Shared, TheTimesweeper, Vale-X, xpcybic, Xubas
-* Art/Modelling/Animation - Anreol, Bolty, bruh, Cexeub, Draymarc, JestAnotherAnimator, Gem, GrooveSalad, LucidInceptor, KevinFromHPCustomerService, Plexus, PapaZach, QuietAnon, redacted, rob, SOM, Spenny, swuff★, xpcybic, Reithierion, UnknownGlaze, Zenithrium
+With Art/Modelling/Animation contributions by...
+* Anreol, Bolty, bruh, Cexeub, dotflare, Draymarc, JestAnotherAnimator, Gem, goodguy, GrooveSalad, LucidInceptor, KevinFromHPCustomerService, Plexus, PapaZach, QuietAnon, redacted, rob, SkeletorChampion, SOM, Spenny, swuff★, xpcybic, Reithierion, UnknownGlaze, Zenithrium
 
 Additional thanks to... 
-* Writing - Blimblam, Lyrical Endymion, swuff★, T_Dimensional
+* Writing - Blimblam, Lyrical Endymion, swuff★, T_Dimensional, Zenithrium
 * Translations - Anreol (Spanish), MysticSword (Russian)
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze
-* Special thanks - Altzeus, DestroyedClone, don, Draymarc, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Neik, Riskka, Ruxbieno, Shooty, Twiner
+* Special thanks - Altzeus, DestroyedClone, don, Draymarc, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moffein, Moshinate, MysticSword, Neik, Riskka, Ruxbieno, Twiner
 
 ## Known Issues
 
@@ -53,6 +53,7 @@ There are no issues. The mod is perfect.
     * Nemmando sometimes forgets which skin he's supposed to be using.
     * Storms don't fully appear for clients in multiplayer. They still happen, just without the warning and the fancy visuals.
     * Genesis Loop's particle effect is far too large on Nemmando.
+    * Swift Skateboard might not properly work for clients in multiplayer (investigating)
 
 ## Changelog
 
@@ -60,6 +61,7 @@ There are no issues. The mod is perfect.
 ### 0.3.41β
 * More fixes.
     * Adds Relic of Termination, with temp VFX.
+    * Added a new icon for Executioner's alt primary by goodguy#3899. Thank you! 
     * RiskyMod compatability for Droid Head.
     * Droid Head will no longer spawn void infestors.
     * Fixed VFX for Relic of Force.
@@ -74,6 +76,7 @@ There are no issues. The mod is perfect.
     * Enemies can no longer recieve Armed Backpack. Additionally, lowered the minimum chance for the item to activate as it was overpreforming. 
     * Slightly increased the speed at which Watch Metronome gains charges. 
     * Increased the cooldown of MIDAS from 30s to 75s. 
+    * Swift Skateboard no longer breaks Bandit's backstabs.
     * Fixed config name for Low Quality Speakers.
     * Fixed up the logbook. Items are now positioned better and have cleaner descriptions.
 
