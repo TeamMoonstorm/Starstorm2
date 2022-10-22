@@ -73,6 +73,7 @@ There are no issues. The mod is perfect.
     * Portable Reactor can appear on enemies again (with fourthed duration) because it's hilarious. Also reduces turret / ally invulnerability duration to one fourth.
     * Enemies can no longer recieve Armed Backpack. Additionally, lowered the minimum chance for the item to activate as it was overpreforming. 
     * Slightly increased the speed at which Watch Metronome gains charges. 
+    * Increased the cooldown of MIDAS from 30s to 75s. 
     * Fixed config name for Low Quality Speakers.
     * Fixed up the logbook. Items are now positioned better and have cleaner descriptions.
 
