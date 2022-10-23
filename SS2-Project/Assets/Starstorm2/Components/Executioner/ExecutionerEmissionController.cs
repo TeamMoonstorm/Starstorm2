@@ -62,10 +62,7 @@ namespace Moonstorm.Starstorm2.Components
             }
             var desiredEmission = Util.Remap(secondary.stock + currentStocks, 0, MaxStocksForEmission, MinEmission, MaxEmission);
             currentEmission = Mathf.Lerp(currentEmission, desiredEmission, emissionChangeSpeed * Time.deltaTime);
-            if(currentEmission > MaxEmission)
-            {
-                currentEmission = MaxEmission;
-            }
+
             characterModel.baseRendererInfos.Select(rendererInfo => rendererInfo.renderer)
                 .ToList()
                 .ForEach(renderer =>

@@ -32,14 +32,8 @@ namespace Moonstorm.Starstorm2.Items
             int count = inv.GetItemCount(ItemDef);
             if (count > 0)
             {
-                if (obj.isPlayerControlled)
-                {
-                    obj.AddTimedBuff(SS2Content.Buffs.BuffReactor, invulnTime + ((count - 1) * stackingInvuln));
-                }
-                else 
-                { 
-                    obj.AddTimedBuff(SS2Content.Buffs.BuffReactor, invulnTime / 4 + ((count - 1) * stackingInvuln)); 
-                }
+                if (obj.teamComponent.teamIndex != TeamIndex.Monster) obj.AddTimedBuff(SS2Content.Buffs.BuffReactor, invulnTime + ((count - 1) * stackingInvuln));
+                else obj.AddTimedBuff(SS2Content.Buffs.BuffReactor, invulnTime / 4 + ((count - 1) * stackingInvuln));
             }
         }
     }

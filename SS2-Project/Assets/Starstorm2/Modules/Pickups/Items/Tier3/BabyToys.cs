@@ -76,61 +76,8 @@ namespace Moonstorm.Starstorm2.Items
                 {
                     remainingLevelReduction += (uint)levelChange;
                     TryReduceLevel();
-                }else if(levelChange < 0)
-                {
-                    remainingLevelReduction -= (uint)levelChange;
-                    TryIncreaseLevel();
                 }
             }
-
-            private void TryIncreaseLevel()
-            {
-                ulong currentExperience = master.SS2GetAdjustedExperience();
-                uint currentLevel = TeamManager.FindLevelForExperience(currentExperience);
-                uint newLevel = currentLevel + remainingLevelReduction;
-
-                //if (newLevel > currentLevel || newLevel < 1U)
-                //{
-                //    newLevel = 1U;
-                //}
-                //uint levelsReduced = currentLevel - newLevel;
-                //if (levelsReduced <= 0U)
-                //{
-                //    return;
-                //}
-                //remainingLevelReduction -= levelsReduced;
-
-                ulong currentLevelExperience = TeamManager.GetExperienceForLevel(currentLevel);
-                ulong nextLevelExperience = TeamManager.GetExperienceForLevel(currentLevel + 1U);
-
-                ulong newCurrentLevelExperience = TeamManager.GetExperienceForLevel(newLevel);
-                ulong newNextLevelExperience = TeamManager.GetExperienceForLevel(newLevel + 1U);
-
-                //inverse lerp
-                double currentLevelProgress = (double)(currentExperience - currentLevelExperience) / (double)(nextLevelExperience - currentLevelExperience);
-
-                //lerp
-                long newExperience = (long)Math.Ceiling(newCurrentLevelExperience + (double)(newNextLevelExperience - newCurrentLevelExperience) * currentLevelProgress);
-                long experienceChange = newExperience - (long)currentExperience;
-
-                bool hasBody = master.hasBody;
-                //SS2Log.Debug("about to adjust exp");
-                
-                if (hasBody)
-                {
-                    var token = master.bodyInstanceObject.AddComponent<BabyToyToken>();
-                }
-                master.SS2OffsetExperience(experienceChange);
-
-                if (hasBody)
-                {
-                    master.GetBody().RecalculateStats();
-                    var token = master.bodyInstanceObject.GetComponent<BabyToyToken>();
-                    Destroy(token);
-                }
-                RefreshLevelText();
-            }
-
             public void TryReduceLevel()
             {
                 ulong currentExperience = master.SS2GetAdjustedExperience();
@@ -286,14 +233,8 @@ namespace Moonstorm.Starstorm2.Items
                 GlobalEventManager.onCharacterLevelUp -= GlobalEventManager_onCharacterLevelUp;
             }
 
-        }
-        public class BabyToyToken : MonoBehaviour
-        {
-            public int pastStock;
-            public int usesLeft;
-            //helps keep track of the target and player responsible
-            public CharacterBody PlayerOwner;
-        }
+
+        }        
     }
 }
 /*[ConfigurableField(ConfigName = "Stat Multiplier", ConfigDesc = "Multiplier applied to the stats per stack.")]

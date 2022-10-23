@@ -46,18 +46,6 @@ namespace Moonstorm.Starstorm2
                 return;
             }
 
-            if (dropList[item].itemIndex == SS2Content.Items.NkotasHeritage.itemIndex)
-            {
-                if (item != 0)
-                {
-                    item--;
-                }
-                else if (item != dropList.Count)
-                {
-                    item++;
-                }
-            }
-
             if (theWorstCodeOfTheYear != null)
             {
                 PickupDropletController.CreatePickupDroplet(dropList[item], origin.position, new Vector3(0, 15, 0));

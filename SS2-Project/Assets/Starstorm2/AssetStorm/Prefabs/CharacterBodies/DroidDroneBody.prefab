@@ -474,7 +474,6 @@ GameObject:
   - component: {fileID: 6053484788037751017}
   - component: {fileID: 2815608122853490930}
   - component: {fileID: -2026023670776101126}
-  - component: {fileID: 1759560085381333322}
   m_Layer: 0
   m_Name: DroidDroneBody
   m_TagString: Untagged
@@ -974,27 +973,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
   requireEntitlementIfPlayerControlled: 1
---- !u!114 &1759560085381333322
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5977874916511045093}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 851c3b197304ce14b890588db95ab03e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillLocator: {fileID: 0}
-  characterBody: {fileID: 0}
-  searchStopwatch: 0
-  cooldownStopwatch: 0
-  fireStopwatch: 0
-  shotsLoaded: 0
-  firingBarrage: 0
-  fireInterval: 0
-  targetHurtBox: {fileID: 0}
 --- !u!1 &6282127154329199403
 GameObject:
   m_ObjectHideFlags: 0
