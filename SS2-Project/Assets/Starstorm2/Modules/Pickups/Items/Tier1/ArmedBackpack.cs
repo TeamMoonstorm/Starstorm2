@@ -20,9 +20,9 @@ namespace Moonstorm.Starstorm2.Items
         [TokenModifier("SS2_ITEM_ARMEDBACKPACK_DESC", StatTypes.Default,1)]
         public static float procMult = 2.5f;
 
-        [ConfigurableField(ConfigDesc = "Minimum chance for fired missile. (1 = 1% chance)")]
+        [ConfigurableField(ConfigDesc = "Base chance for fired missile. (1 = 1% chance)")]
         [TokenModifier("SS2_ITEM_ARMEDBACKPACK_DESC", StatTypes.Percentage, 2)]
-        public static float procMinimum = 0;
+        public static float procMin = 15;
 
         public static ProcChainMask ignoredProcs;
         public GameObject missilePrefab;
@@ -38,7 +38,7 @@ namespace Moonstorm.Starstorm2.Items
                 {
                     float percentHPLoss = (damageReport.damageDealt / damageReport.victim.fullCombinedHealth) * 100f * procMult;
                     var playerBody = damageReport.victimBody;
-                    var rollChance = percentHPLoss > procMinimum ? percentHPLoss : procMinimum;
+                    var rollChance = percentHPLoss > procMin ? percentHPLoss : procMin;
 
                     //SS2Log.Debug("chance was: " + rollChance);
                     if (Util.CheckRoll(rollChance, playerBody.master))
