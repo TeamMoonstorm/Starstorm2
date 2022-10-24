@@ -28,18 +28,18 @@ This release may be a bit buggy, but we're working on fixing those bugs for a pr
 
 ## Credits
 Starstorm 2 is currently being maintained by...
-* Code - malfaisant, swuff★, Zenithrium
-* Art/Modelling/Animation - dotflare, SkeletorChampion, Zenithrium
+* malfaisant, Nebby, swuff★, Zenithrium
+With previous code contributions by...
+* Anreol, Flan, Gaforb, GrooveSalad, KevinFromHPCustomerService, Moffein, Nebby, Noop, Phreel, rob, swuff★, sebacame, Shared, TheTimesweeper, Vale-X, xpcybic, Xubas
 
-With previous contributions by...
-* Code - Anreol, Flan, Gaforb, GrooveSalad, KevinFromHPCustomerService, Moffein, Nebby, Noop, Phreel, rob, swuff★, sebacame, Shared, TheTimesweeper, Vale-X, xpcybic, Xubas
-* Art/Modelling/Animation - Anreol, Bolty, bruh, Cexeub, Draymarc, JestAnotherAnimator, Gem, GrooveSalad, LucidInceptor, KevinFromHPCustomerService, Plexus, PapaZach, QuietAnon, redacted, rob, SOM, Spenny, swuff★, xpcybic, Reithierion, UnknownGlaze, Zenithrium
+With Art/Modelling/Animation contributions by...
+* Anreol, Bolty, bruh, Cexeub, dotflare, Draymarc, JestAnotherAnimator, Gem, goodguy, GrooveSalad, LucidInceptor, KevinFromHPCustomerService, Plexus, PapaZach, QuietAnon, redacted, rob, SkeletorChampion, SOM, Spenny, swuff★, xpcybic, Reithierion, UnknownGlaze, Zenithrium
 
 Additional thanks to... 
-* Writing - Blimblam, Lyrical Endymion, swuff★, QandQuestion, T_Dimensional
+* Writing - Blimblam, Lyrical Endymion, swuff★, T_Dimensional, Zenithrium
 * Translations - Anreol (Spanish), MysticSword (Russian)
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze
-* Special thanks - Altzeus, DestroyedClone, don, Draymarc, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Neik, Riskka, Ruxbieno, Shooty, Twiner
+* Special thanks - Altzeus, DestroyedClone, don, Draymarc, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moffein, Moshinate, MysticSword, Neik, Riskka, Ruxbieno, Twiner
 
 ## Known Issues
 
@@ -51,12 +51,37 @@ There are no issues. The mod is perfect.
 	* Some item displays are missing.
     * Artifact of Metamorphosis doesn't work.
     * Nemmando sometimes forgets which skin he's supposed to be using.
-    * Bottled Chaos can activate some equipments it shouldn't be able to (Canister, Thruster, and MIDAS) - should be fixed in the next patch.
     * Storms don't fully appear for clients in multiplayer. They still happen, just without the warning and the fancy visuals.
+    * Genesis Loop's particle effect is far too large on Nemmando.
 
 ## Changelog
 
 **Warning: content spoilers below!**
+### 0.3.44β
+* More fixes.
+    * Adds Relic of Termination, with temp VFX.
+    * Added a new icon for Executioner's alt primary by goodguy#3899. Thank you! 
+    * Droid Head will no longer spawn void infestors.
+    * Fixed VFX for Relic of Force.
+    * Nkota's Heritage can no longer drop itself.
+    * Losing Baby's Toys no longer reduces your level - it now adds the levels gained from it back to your current level. This readding does not proc Nkota's Heritage.
+    * On skills with multiple base stocks, X4 will only proc once (+1 per additional stock (ex backup mag)) per recharge interval. This primarily normalizes the healing gained form skills like Nemmando's Single Tap and Mul-T's Power Mode.
+    * X4 heals on firing a sniper shot on Railgunner, like backup mag, rather than healing you on scoping in for their default secondary. No change to the alt secondary.
+    * Added all DLC0 item displays for Executioner.
+    * Bottled Chaos can no longer activate Back Thruster, MIDAS, and Pressurized Canister.
+    * Executioner should no longer rarely become a lantern.
+    * Portable Reactor can appear on enemies again (with fourthed duration) because it's hilarious. Also reduces turret / ally invulnerability duration to one fourth.
+    * Enemies can no longer recieve Armed Backpack. Additionally, lowered the minimum chance for the item to activate as it was overpreforming. 
+    * Slightly increased the speed at which Watch Metronome gains charges. 
+    * Increased the cooldown of MIDAS from 30s to 75s. 
+    * Swift Skateboard no longer breaks Bandit's backstabs.
+    * Swift Skateboard should no longer only buff the host whilst destroying the ears of the clients.
+    * Fixed config name for Low Quality Speakers.
+    * Fixed up the logbook. Items are now positioned better and have cleaner descriptions.
+
+### 0.3.41-43β
+* We do not speak about these updates.
+
 ### 0.3.40β
 * Continued fixes and adjustments.
     * M.I.D.A.S gold gain is now scaled based on difficulty (and thus, player count). This largely essentially only comes in to play fairly late into runs.

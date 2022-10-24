@@ -2,11 +2,12 @@
 using RoR2;
 using RoR2.Items;
 using System;
+using UnityEngine;
 
 namespace Moonstorm.Starstorm2.Items
 {
     //[DisabledContent]
-    
+
     public sealed class X4 : ItemBase
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("X4");
@@ -40,7 +41,7 @@ namespace Moonstorm.Starstorm2.Items
                     float skillCD = body.skillLocator.secondaryBonusStockSkill.baseRechargeInterval; //base cooldown of relevant skill
                     float hyperbolicCDR = MSUtil.InverseHyperbolicScaling(secCooldown, secCooldown, skillCD - 1f, stack);
                     float cdr;
-                    if(hyperbolicCDR > stack * secCooldown) //so hyperbolic is what i think we'd want here, but it vastly overpreforms with low stacks & and long cooldown. so i just take the lower value
+                    if (hyperbolicCDR > stack * secCooldown) //so hyperbolic is what i think we'd want here, but it vastly overpreforms with low stacks & and long cooldown. so i just take the lower value
                     {
                         cdr = stack * secCooldown;
                     }
@@ -85,19 +86,75 @@ namespace Moonstorm.Starstorm2.Items
                 orig(self, skill);
                 //skill == skill.characterBody.skillLocator.secondaryBonusStockSkill
                 //skill.skillFamily.ToString().Contains("Secondary")
-                if (self.inventory)
+                var token = body.gameObject.GetComponent<X4Token>();
+                if (self.inventory && token)
                 {
+                    SS2Log.Debug("skill" + skill.skillDef.skillNameToken);
                     int count = self.inventory.GetItemCount(SS2Content.Items.X4.itemIndex); //again i could use stack here probably but i just wanna make sure this works we can fix it later
-                    if (skill == skill.characterBody.skillLocator.secondaryBonusStockSkill && count > 0)
+                    if (self.inventory.GetItemCount(DLC1Content.Items.ConvertCritChanceToCritDamage) > 0 && skill.skillDef.skillNameToken == "RAILGUNNER_SNIPE_HEAVY_NAME")
                     {
                         float amntToHeal = flatHealth + self.healthComponent.health * (percentHealth + (percentHealthStacking * (count - 1)));
                         self.healthComponent.Heal(amntToHeal, ignoredProcs, true);
                     }
+                    else if (skill.skillDef.skillNameToken != "SNIPERCLASSIC_SECONDARY_NAME" && (skill.skillDef.skillNameToken == "SNIPERCLASSIC_PRIMARY_NAME" || skill.skillDef.skillNameToken == "SNIPERCLASSIC_PRIMARY_ALT_NAME" || skill.skillDef.skillNameToken == "SNIPERCLASSIC_PRIMARY_ALT2_NAME")) //sniper classic exceptions
+                    {
+                        float amntToHeal = flatHealth + self.healthComponent.health * (percentHealth + (percentHealthStacking * (count - 1)));
+                        self.healthComponent.Heal(amntToHeal, ignoredProcs, true);
+                    }
+                    else if (skill == skill.characterBody.skillLocator.secondaryBonusStockSkill && skill.skillDef.skillNameToken != "RAILGUNNER_SECONDARY_NAME" && count > 0)
+                    {
+                        if (skill.skillDef.skillNameToken == "SS2_EXECUTIONER_IONGUN_NAME" || skill.skillDef.skillNameToken == "RAILGUNNER_SECONDARY_ALT_NAME") //this is jank but it works :)
+                        {
+                            float amntToHeal = flatHealth + self.healthComponent.health * (percentHealth + (percentHealthStacking * (count - 1)));
+                            self.healthComponent.Heal(amntToHeal, ignoredProcs, true);
+                        }
+                        else if (token.usesLeft > 0)
+                        {
+                            float amntToHeal = flatHealth + self.healthComponent.health * (percentHealth + (percentHealthStacking * (count - 1)));
+                            self.healthComponent.Heal(amntToHeal, ignoredProcs, true);
+                            token.usesLeft--;
+                            SS2Log.Debug("skill cooldown:" + skill.CalculateFinalRechargeInterval());
+                        }
+                    }
+
                 }
-                //SS2Log.Debug("print list!: family: " + skill.skillFamily + " |  _family: " + skill._skillFamily + " |  " + skill.skillOverrides);
-                //if(skill.skill
-                //throw new NotImplementedException();
             }
+
+            private void FixedUpdate()
+            {
+                var skill = body.skillLocator.secondaryBonusStockSkill;
+                var token = body.gameObject.GetComponent<X4Token>();
+                if (!token)
+                {
+                    token = body.gameObject.AddComponent<X4Token>();
+                    token.pastStock = skill.stock;
+                    token.usesLeft = 1 + skill.bonusStockFromBody;
+                }
+                else
+                {
+                    int currentStock = skill.stock;
+                    if (currentStock > token.pastStock)
+                    {
+                        token.usesLeft++;
+                        if (token.usesLeft > 1 + skill.bonusStockFromBody)
+                        {
+                            token.usesLeft = 1 + skill.bonusStockFromBody;
+                        }
+                        //token.pastStock++;
+                    }
+
+
+                    token.pastStock = skill.stock;
+                }
+            }
+
+        }
+        public class X4Token : MonoBehaviour
+        {
+            public int pastStock;
+            public int usesLeft;
+            //helps keep track of the target and player responsible
+            public CharacterBody PlayerOwner;
         }
     }
 }
