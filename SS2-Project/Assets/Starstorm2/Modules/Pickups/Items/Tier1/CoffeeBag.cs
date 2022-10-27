@@ -26,63 +26,63 @@ namespace Moonstorm.Starstorm2.Items
 
         int count = 0;
 
-        public override void Initialize()
-        {
-            RoR2.SceneDirector.onPrePopulateSceneServer += ResetCoffeeBag;
-            On.RoR2.CharacterBody.OnInventoryChanged += CoffeeBagInvChanged;
-        }
+        //public override void Initialize()
+        //{
+        //    RoR2.SceneDirector.onPrePopulateSceneServer += ResetCoffeeBag;
+        //    On.RoR2.CharacterBody.OnInventoryChanged += CoffeeBagInvChanged;
+        //}
+        //
+        //private void CoffeeBagInvChanged(On.RoR2.CharacterBody.orig_OnInventoryChanged orig, CharacterBody self)
+        //{
+        //    orig(self);
+        //    //SS2Log.Debug("item collected");
+        //    //int amnt = self.inventory.GetItemCount();
+        //    if (self.hasAuthority && self.inventory)
+        //    {
+        //        int amount = self.inventory.GetItemCount(SS2Content.Items.CoffeeBag.itemIndex);
+        //        SS2Log.Debug("amount:" + amount + " | " + count);
+        //        if (amount > 0)
+        //        {
+        //            if(amount > count)
+        //            {
+        //                int buffCount = self.GetBuffCount(SS2Content.Buffs.BuffCoffeeBag.buffIndex);
+        //                int cycles = (int)stageTimer / 2;
+        //                if (buffCount > 0)
+        //                {
+        //                    cycles += buffCount;
+        //                    for (int i = 0; i < buffCount; i++)
+        //                    {
+        //                        self.RemoveOldestTimedBuff(SS2Content.Buffs.BuffCoffeeBag.buffIndex);
+        //                    }
+        //                }
+        //                for (float i = 1; i <= cycles; i++)
+        //                {
+        //                    self.AddTimedBuffAuthority(SS2Content.Buffs.BuffCoffeeBag.buffIndex, i);
+        //                }
+        //                count = amount;
+        //            }
+        //
+        //        }
+        //        //count = amount;
+        //    }
+        //}
 
-        private void CoffeeBagInvChanged(On.RoR2.CharacterBody.orig_OnInventoryChanged orig, CharacterBody self)
-        {
-            orig(self);
-            //SS2Log.Debug("item collected");
-            //int amnt = self.inventory.GetItemCount();
-            if (self.hasAuthority && self.inventory)
-            {
-                int amount = self.inventory.GetItemCount(SS2Content.Items.CoffeeBag.itemIndex);
-                SS2Log.Debug("amount:" + amount + " | " + count);
-                if (amount > 0)
-                {
-                    if(amount > count)
-                    {
-                        int buffCount = self.GetBuffCount(SS2Content.Buffs.BuffCoffeeBag.buffIndex);
-                        int cycles = (int)stageTimer / 2;
-                        if (buffCount > 0)
-                        {
-                            cycles += buffCount;
-                            for (int i = 0; i < buffCount; i++)
-                            {
-                                self.RemoveOldestTimedBuff(SS2Content.Buffs.BuffCoffeeBag.buffIndex);
-                            }
-                        }
-                        for (float i = 1; i <= cycles; i++)
-                        {
-                            self.AddTimedBuffAuthority(SS2Content.Buffs.BuffCoffeeBag.buffIndex, i);
-                        }
-                        count = amount;
-                    }
-
-                }
-                //count = amount;
-            }
-        }
-
-        private void ResetCoffeeBag(SceneDirector obj)
-        {
-            //SS2Log.Debug("director moment");
-            foreach (var player in PlayerCharacterMasterController.instances)
-            {
-                if (player.body.inventory.GetItemCount(SS2Content.Items.CoffeeBag.itemIndex) > 0)
-                {
-                    for (float i = 1; i <= stageTimer; i++)
-                    {
-                        player.body.AddTimedBuffAuthority(SS2Content.Buffs.BuffCoffeeBag.buffIndex, i);
-                    }
-                }
-            }
-
-        }
-
+        //private void ResetCoffeeBag(SceneDirector obj)
+        //{
+        //    //SS2Log.Debug("director moment");
+        //    foreach (var player in PlayerCharacterMasterController.instances)
+        //    {
+        //        if (player.body.inventory.GetItemCount(SS2Content.Items.CoffeeBag.itemIndex) > 0)
+        //        {
+        //            for (float i = 1; i <= stageTimer; i++)
+        //            {
+        //                player.body.AddTimedBuffAuthority(SS2Content.Buffs.BuffCoffeeBag.buffIndex, i);
+        //            }
+        //        }
+        //    }
+        //
+        //}
+        // the bits above are the problem - basically i want the item to grant half the bonus when you pick it up for the first time, but that first time calls OnEnable(), actually adding the hooks, which means they don't get called on first pickup. 
 
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier //IStatItemBehavior
         {
