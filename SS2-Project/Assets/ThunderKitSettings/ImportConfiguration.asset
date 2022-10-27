@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f4761da1836bc043a94000ffe25bf40, type: 3}
   m_Name: Install RoR2 Editor Kit
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &-4754298712818765026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   m_Name: Import Project Settings
   m_EditorClassIdentifier: 
   enabled: 1
-  IncludedSettings: 0
+  IncludedSettings: -1
 --- !u!114 &-4533257922781505972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,7 +82,7 @@ MonoBehaviour:
   assemblyNames:
   - RoR2.dll
   - KinematicCharacterController.dll
-  hookGenExecutable: {fileID: 0}
+  hookGenExecutable: {fileID: 102900000, guid: e441941fc2ce18f4cb8ae6dc66c65a21, type: 3}
 --- !u!114 &-1287480810468632639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,8 +121,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc02a62d93c1105498092e320b2f0f46, type: 3}
   m_Name: ImportConfiguration
   m_EditorClassIdentifier: 
-  ConfigurationExecutors: []
-  ConfigurationIndex: -1
+  ConfigurationExecutors:
+  - {fileID: 6230867115745810153}
+  - {fileID: 1269532078165000759}
+  - {fileID: -2517701868521210071}
+  - {fileID: 9110527643699403308}
+  - {fileID: 606039999792083891}
+  - {fileID: -1711939428914696159}
+  - {fileID: 8800260941010570447}
+  - {fileID: 1442112436150878350}
+  - {fileID: -4754298712818765026}
+  - {fileID: -64116951240812251}
+  - {fileID: -3458251961346081683}
+  - {fileID: 7870833913960150860}
+  - {fileID: 985849349507311440}
+  - {fileID: -1287480810468632639}
+  - {fileID: -4533257922781505972}
+  - {fileID: 9008778394975098465}
+  - {fileID: 5944488108574732056}
+  - {fileID: -5116632448455389391}
+  - {fileID: 2223253583816545127}
+  - {fileID: 4899363286107652864}
+  ConfigurationIndex: 20
 --- !u!114 &606039999792083891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,7 +159,7 @@ MonoBehaviour:
   assemblyNames:
   - RoR2.dll
   - KinematicCharacterController.dll
-  NStripExecutable: {fileID: 0}
+  NStripExecutable: {fileID: 102900000, guid: 39e2644fdd2b31844bb745cba95889bb, type: 3}
 --- !u!114 &985849349507311440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,7 +237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6a6266570ba40d41bad5cf59676ab77, type: 3}
   m_Name: Install RoR2MultiplayerHLAPI
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &6230867115745810153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,7 +278,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enabled: 1
   OldGuidGenerationMode: 0
-  GuidGenerationMode: 0
+  GuidGenerationMode: 1
 --- !u!114 &9008778394975098465
 MonoBehaviour:
   m_ObjectHideFlags: 0
