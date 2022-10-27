@@ -60,6 +60,7 @@ There are no issues. The mod is perfect.
 ### 0.3.44β
 * More fixes.
     * Adds Relic of Termination, with temp VFX.
+    * Reworked Coffee Bag.
     * Added a new icon for Executioner's alt primary by goodguy#3899. Thank you! 
     * Droid Head will no longer spawn void infestors.
     * Fixed VFX for Relic of Force.
@@ -77,6 +78,7 @@ There are no issues. The mod is perfect.
     * Swift Skateboard no longer breaks Bandit's backstabs.
     * Swift Skateboard should no longer only buff the host whilst destroying the ears of the clients.
     * Fixed config name for Low Quality Speakers.
+    * Fixed the icon for Back Thruster's buff.
     * Fixed up the logbook. Items are now positioned better and have cleaner descriptions.
 
 ### 0.3.41-43β

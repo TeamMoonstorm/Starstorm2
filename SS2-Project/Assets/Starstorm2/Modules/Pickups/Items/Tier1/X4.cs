@@ -15,6 +15,7 @@ namespace Moonstorm.Starstorm2.Items
         //[ConfigurableField(ConfigDesc = "Cooldown reduction per X-4 Stimulant. (1 = 1 second)")]
         //[TokenModifier("SS2_ITEM_X4_DESC", StatTypes.Default, 0)]
         public static float secCooldown = 0.25f;
+        public static float cdReduction = .1f;
         //
         //[ConfigurableField(ConfigDesc = "Percent healing upon activating a secondary skill. (1 = 1% of max health)")]
         //[TokenModifier("SS2_ITEM_X4_DESC", StatTypes.Percentage, 1)]
@@ -49,7 +50,9 @@ namespace Moonstorm.Starstorm2.Items
                     {
                         cdr = hyperbolicCDR;
                     }
-                    //SS2Log.Debug("X4 RecalcStats end - " + hyperbolicCDR + " vs " + stack * secCooldown);
+                    float timeMult = Mathf.Pow(1 - cdReduction, stack - 1);
+                    cdr = skillCD * timeMult;
+                    SS2Log.Debug("X4 RecalcStats end - " + hyperbolicCDR + " vs " + stack * secCooldown + " vs " + cdr);
                     body.skillLocator.secondaryBonusStockSkill.flatCooldownReduction += cdr;
                 }
                 //args.cooldownMultAdd += (float)itemCount * Synergies.pearlCD.Value;
