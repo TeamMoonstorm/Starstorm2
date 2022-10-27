@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace Moonstorm.Starstorm2.Items
 {
+    [DisabledContent]
     public sealed class Augury : ItemBase
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Augury");
