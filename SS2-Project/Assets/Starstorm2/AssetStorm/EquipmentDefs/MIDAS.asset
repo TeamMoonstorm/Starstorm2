@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupModelPrefab: {fileID: 1933585625037829081, guid: 68de2f37f145d7c47b68aeef6bbc7b6d,
     type: 3}
-  cooldown: 30
+  cooldown: 75
   nameToken: SS2_EQUIP_MIDAS_NAME
   pickupToken: SS2_EQUIP_MIDAS_PICKUP
   descriptionToken: SS2_EQUIP_MIDAS_DESC
@@ -24,7 +24,7 @@ MonoBehaviour:
   colorIndex: 5
   canDrop: 1
   dropOnDeathChance: 0
-  canBeRandomlyTriggered: 1
+  canBeRandomlyTriggered: 0
   enigmaCompatible: 1
   isLunar: 0
   isBoss: 0

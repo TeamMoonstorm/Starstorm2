@@ -73,6 +73,13 @@ namespace Moonstorm.Starstorm2.Items
                         DotController.InflictDot(ref dotInfo);
                     }
                 }
+                //EffectData effectData = new EffectData
+                //{
+                //    origin = slot.characterBody.transform.position
+                //};
+                //effectData.SetNetworkedObjectReference(slot.characterBody.gameObject);
+                //EffectManager.SpawnEffect(CharacterBody.AssetReferences., effectData, transmit: true);
+                
             }
             public void OnDestroy()
             {

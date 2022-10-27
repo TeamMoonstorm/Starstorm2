@@ -29,9 +29,9 @@ namespace Moonstorm.Starstorm2.Items
             base.Initialize();
         }
 
-        
-        
-        
+
+
+
         public sealed class MasterBehavior : BaseItemMasterBehavior
         {
             [ItemDefAssociation(useOnClient = true, useOnServer = true)]
@@ -77,13 +77,67 @@ namespace Moonstorm.Starstorm2.Items
                     remainingLevelReduction += (uint)levelChange;
                     TryReduceLevel();
                 }
+                else if (levelChange < 0)
+                {
+                    remainingLevelReduction -= (uint)levelChange;
+                    TryIncreaseLevel();
+                }
             }
+
+            private void TryIncreaseLevel()
+            {
+                ulong currentExperience = master.SS2GetAdjustedExperience();
+                uint currentLevel = TeamManager.FindLevelForExperience(currentExperience);
+                uint newLevel = currentLevel + remainingLevelReduction;
+
+                //if (newLevel > currentLevel || newLevel < 1U)
+                //{
+                //    newLevel = 1U;
+                //}
+                //uint levelsReduced = currentLevel - newLevel;
+                //if (levelsReduced <= 0U)
+                //{
+                //    return;
+                //}
+                //remainingLevelReduction -= levelsReduced;
+
+                ulong currentLevelExperience = TeamManager.GetExperienceForLevel(currentLevel);
+                ulong nextLevelExperience = TeamManager.GetExperienceForLevel(currentLevel + 1U);
+
+                ulong newCurrentLevelExperience = TeamManager.GetExperienceForLevel(newLevel);
+                ulong newNextLevelExperience = TeamManager.GetExperienceForLevel(newLevel + 1U);
+
+                //inverse lerp
+                double currentLevelProgress = (double)(currentExperience - currentLevelExperience) / (double)(nextLevelExperience - currentLevelExperience);
+
+                //lerp
+                long newExperience = (long)Math.Ceiling(newCurrentLevelExperience + (double)(newNextLevelExperience - newCurrentLevelExperience) * currentLevelProgress);
+                long experienceChange = newExperience - (long)currentExperience;
+
+                bool hasBody = master.hasBody;
+                //SS2Log.Debug("about to adjust exp");
+
+                if (hasBody)
+                {
+                    var token = master.bodyInstanceObject.AddComponent<BabyToyToken>();
+                }
+                master.SS2OffsetExperience(experienceChange);
+
+                if (hasBody)
+                {
+                    master.GetBody().RecalculateStats();
+                    var token = master.bodyInstanceObject.GetComponent<BabyToyToken>();
+                    Destroy(token);
+                }
+                RefreshLevelText();
+            }
+
             public void TryReduceLevel()
             {
                 ulong currentExperience = master.SS2GetAdjustedExperience();
                 uint currentLevel = TeamManager.FindLevelForExperience(currentExperience);
                 uint newLevel = currentLevel - remainingLevelReduction;
-                if(newLevel > currentLevel || newLevel < 1U)
+                if (newLevel > currentLevel || newLevel < 1U)
                 {
                     newLevel = 1U;
                 }
@@ -136,7 +190,7 @@ namespace Moonstorm.Starstorm2.Items
 
             private void GlobalEventManager_onCharacterLevelUp(CharacterBody body)
             {
-                if(remainingLevelReduction > 0U && body.master == master)
+                if (remainingLevelReduction > 0U && body.master == master)
                 {
                     TryReduceLevel();
                 }
@@ -145,7 +199,7 @@ namespace Moonstorm.Starstorm2.Items
             private void Inventory_onInventoryChanged()
             {
                 CheckStackChange();
-                
+
             }
 
             private void LevelText_SetDisplayData(ILContext il)
@@ -233,20 +287,24 @@ namespace Moonstorm.Starstorm2.Items
                 GlobalEventManager.onCharacterLevelUp -= GlobalEventManager_onCharacterLevelUp;
             }
 
-
-        }        
+        }
+        public class BabyToyToken : MonoBehaviour
+        {
+            public int pastStock;
+            public int usesLeft;
+            //helps keep track of the target and player responsible
+            public CharacterBody PlayerOwner;
+        }
     }
 }
 /*[ConfigurableField(ConfigName = "Stat Multiplier", ConfigDesc = "Multiplier applied to the stats per stack.")]
 [TokenModifier(token, StatTypes.Default, 0)]
 [TokenModifier(token, StatTypes.DivideBy2, 1)]
 public static float StatMultiplier = 3;
-
 [ConfigurableField(ConfigName = "XP Multiplier", ConfigDesc = "Multiplier applied to XP Gain per stack.")]
 [TokenModifier(token, StatTypes.Default, 2)]
 [TokenModifier(token, StatTypes.DivideBy2, 3)]
 public static float XPMultiplier = 2;
-
 public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier, IOnKilledOtherServerReceiver
 {
     [ItemDefAssociation]
@@ -262,7 +320,6 @@ public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier, IOnKi
         args.baseShieldAdd += GetStatAugmentation(body.levelMaxShield);
         args.critAdd += GetStatAugmentation(body.levelCrit);
     }
-
     private float GetStatAugmentation(float stat)
     {
         return stat * (StatMultiplier + ((StatMultiplier / 2) * (stack - 1)));
