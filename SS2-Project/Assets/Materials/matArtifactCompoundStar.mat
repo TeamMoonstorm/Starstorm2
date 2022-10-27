@@ -8,8 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: matArtifactCompoundStar
-  m_Shader: {fileID: 4800000, guid: 56407be09fc8291429c4bc96120e5fa6, type: 3}
-  m_ShaderKeywords: CLOUD
+  m_Shader: {fileID: 0}
+  m_ShaderKeywords: BINARYBLEND CLOUD USE_CLOUDS
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -19,6 +19,22 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _AtmosphereRamp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BlueChannelNormalTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BlueChannelTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Cloud1Tex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -31,6 +47,74 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DiffuseDetailTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DiffuseTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DirtNormalTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DirtTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionRamp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FlowHeightRamp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FlowHeightmap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FlowTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FresnelMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FresnelRamp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _GreenChannelNormalTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _GreenChannelTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Height1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Height2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LightWarpRamp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -39,48 +123,220 @@ Material:
         m_Texture: {fileID: 2800000, guid: ce27da7e0b0e2064a8e9d0c5d9f38f8d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Normal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normal1Tex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normal2Tex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalDetailTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _NormalTex:
         m_Texture: {fileID: 2800000, guid: 9d4a631d4fa84964ca1cfa6122b29b26, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OutlineMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PrintRamp:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RemapTex:
         m_Texture: {fileID: 2800000, guid: 249a4580b7ca8af4a8c5ebee81dd3aae, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _ScopeMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ScrollingNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SliceAlphaTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SnowNormalTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SnowTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SplatmapTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _AlphaBias: 0
     - _AlphaBoost: 1.54
     - _AngleLimit: 0
+    - _AtmosphereStrength: 1
+    - _BinaryBlendOn: 1
+    - _BlueChannelBias: 0
+    - _BlueChannelSmoothness: 0
+    - _Boost: 1
     - _BumpScale: 1
+    - _CalcTextureAlphaOn: 0
+    - _CharacterLimit: 3
+    - _ClipOn: 0
+    - _CloudNormalMap: 0
+    - _CloudOffsetOn: 0
     - _CloudOn: 1
+    - _CloudsOn: 1
+    - _ColorMask: 15
+    - _ColorsOn: 0
+    - _Cull: 2
     - _Cutoff: 0.5
     - _DecalBlendMode: 0
     - _DecalDstBlend: 10
     - _DecalLayer: 1
     - _DecalSrcBlend: 1
+    - _Depth: 0.2
+    - _DepthOffset: 0
     - _DetailNormalMapScale: 1
+    - _DetailStrength: 0.5
+    - _DirtBias: 0
+    - _DirtOn: 0
+    - _DirtSmoothness: 0
+    - _DirtSpecularExponent: 1
+    - _DirtSpecularStrength: 0
+    - _DisableRemapOn: 0
+    - _DistanceModulationMagnitude: 0.5
+    - _DistanceModulationOn: 0
+    - _DistortionStrength: 0.1
+    - _DitherOn: 0
+    - _DoubleSampleFactor: 1
     - _DstBlend: 0
+    - _DstBlendFloat: 1
+    - _EliteBrightnessMax: 1
+    - _EliteBrightnessMin: 0
+    - _EliteIndex: 0
+    - _EmPower: 1
+    - _EmissionFromAlbedo: 0
+    - _EmissionPower: 1
+    - _EmissionStrength: 1
+    - _EnableCutout: 0
+    - _EnableVertexColorDistortion: 0
+    - _ExternalAlpha: 1
+    - _ExtrusionStrength: 1
+    - _FEON: 0
+    - _Fade: 1
+    - _FadeBias: 0
+    - _FadeCloseDistance: 0.5
+    - _FadeCloseOn: 0
+    - _FadeFromVertexColorsOn: 0
+    - _FarFadeOneDistance: 200000
+    - _FarFadeZeroDistance: 250000
+    - _FlowEmissionStrength: 1
+    - _FlowHeightBias: 0
+    - _FlowHeightPower: 1
+    - _FlowMaskStrength: 0
+    - _FlowNormalStrength: 1
+    - _FlowSpeed: 1
+    - _FlowTextureScaleFactor: 1
+    - _FlowmapOn: 0
+    - _ForceSpecOn: 0
+    - _FresnelBoost: 1
+    - _FresnelOn: 0
+    - _FresnelPower: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _GradientBiasOn: 0
+    - _GreenChannelBias: 0
+    - _GreenChannelSmoothness: 0
+    - _HeightBias: 0
+    - _HeightStrength: 1
+    - _IgnoreBiasOn: 0
+    - _InternalSimpleBlendMode: 0
+    - _IntersectionStrength: 0
+    - _InvFade: 0.1
+    - _LimbPrimeMask: 1
+    - _LimbRemovalOn: 0
     - _LimitTo: 0
+    - _Magnitude: 0.05
     - _MaskMultiplier: 1
     - _MaskNormals: 0
     - _Metallic: 0
     - _Mode: 0
+    - _NearFadeOneDistance: 5
+    - _NearFadeZeroDistance: 0
     - _NormalBlendMode: 1
     - _NormalMultiplier: 1
+    - _NormalStrength: 1
     - _OcclusionStrength: 1
+    - _OffsetAmount: 0
     - _Parallax: 0.02
+    - _PrintBias: 0
+    - _PrintBoost: 1
+    - _PrintDirection: 0
+    - _PrintEmissionToAlbedoLerp: 0
+    - _PrintOn: 0
     - _RampInfo: 0.39
+    - _RimPower: 1
+    - _RimStrength: 1
+    - _RotationSpeed: 0
+    - _Scale: 1
+    - _SkyboxOnly: 0
+    - _SliceAlphaDepth: 0.1
+    - _SliceBandHeight: 1
+    - _SliceHeight: 5
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
+    - _SnowBias: 0
+    - _SnowOn: 0
+    - _SnowSmoothness: 0
+    - _SnowSpecularExponent: 1
+    - _SnowSpecularStrength: 0
+    - _SoftPower: 1
     - _SpecularExponent: 1
     - _SpecularHighlights: 1
+    - _SpecularPower: 1
     - _SpecularStrength: 0
+    - _SplatmapOn: 0
+    - _SplatmapTileScale: 1
     - _SrcBlend: 1
+    - _SrcBlendFloat: 1
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _TintStrength: 0.5
+    - _TriplanarOn: 0
+    - _TriplanarTextureFactor: 1
     - _UVSec: 0
+    - _UseUIAlphaClip: 0
+    - _UseUV1On: 0
+    - _VertexAlphaOn: 0
+    - _VertexColorOn: 0
+    - _VertexOffsetOn: 0
+    - _VertexOffsetStrength: 0
+    - _ZTest: 4
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 0, g: 0, b: 0, a: 0.8666667}
+    - _CritColor: {r: 1, g: 1, b: 1, a: 1}
     - _CutoffScroll: {r: 0, g: 0, b: 0, a: 0}
+    - _EmColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FlashColor: {r: 0, g: 0, b: 0, a: 1}
+    - _GradientBiasVector: {r: 0, g: 0, b: 0, a: 0}
+    - _Scroll: {r: 0, g: 0, b: 0, a: 0}
+    - _ScrollSpeed: {r: 0, g: 0, b: 0, a: 0}
+    - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
+    - _TintColor: {r: 1, g: 1, b: 1, a: 1}
+    - _WindVector: {r: 0, g: 0, b: 0, a: 0}

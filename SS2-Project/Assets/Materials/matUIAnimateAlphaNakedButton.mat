@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: matUIAnimateAlphaNakedButton
-  m_Shader: {fileID: 4800000, guid: 1658ef2d857540f585ba87af69e681b9, type: 2}
+  m_Shader: {fileID: 4800000, guid: 57b2d94e994b5e642b7c514b94a5630f, type: 2}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -31,6 +31,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: c7c1bdf960abe3d4eb90454678f7e135, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _RemapTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - _AlphaBoost: 7.27
     - _BumpScale: 1
@@ -43,6 +47,8 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _GradientScale: 1
+    - _InternalSimpleBlendMode: 0
     - _LightenFactor: 0
     - _Metallic: 0
     - _Mode: 0
@@ -52,6 +58,8 @@ Material:
     - _PatternPanningSpeed: 0
     - _PatternPixelSize: 32
     - _PatternStrength: 1
+    - _PingPong: 0
+    - _Radius: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
