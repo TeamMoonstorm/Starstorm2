@@ -1,2 +1,57 @@
-# The sign is a subtle joke
-The joke is that the place is called “Sneed’s Feed & Seed” which is clever in itself and quite funny to those with a mature sense of humour but what’s really just hilarious about it is that if you look closely at the front of this store, Sneed’s Feed & Seed, you can see a line that reads “Formerly Chuck’s”. Now, this might go over the average viewer’s head as this, THIS, is peak comedy. I doubt anything will ever be as funny as the joke about Sneed’s Feed & Seed. Are you ready for this one? So, like I said, the place is called “Sneed’s Feed & Seed” and this sign says “Formerly Chuck’s”, which means that when Chuck owned the place, well, I don’t have to tell you…
+# Starstorm 2
+
+## About
+
+Starstorm 2 is a work-in-progress RoR2 port/sequel of Starstorm, a diverse gameplay and content mod for Risk of Rain 1. It features two new survivors, over 20 new items and equipment, and a new, dangerous event to shake up your runs.
+
+Starstorm 2 is currently in a bleeding edge state as it's being updated to Survivors of the void, we look for any kind of contribution from outsiders.
+
+## Developing/Contributions
+
+Contributions to the mod via Models and Programming is heavily appreciated, as such, below is a guide on how to clone and properly set up your Starstorm 2 project.
+
+Before we start, here are some guidelines that need to be followed for developing and contributing to Starstorm2:
+
+* (Add something here i cant come up with something atm lol)
+
+## How to clone and develop
+
+* You'll need:
+    * Unity Hub
+    * Unity version 2019.4.26f1
+    * A GIT client (IE: GithubDesktop, Gitkraken, etc)
+
+* Begin by cloning the repository to your hard drive
+
+![](https://cdn.discordapp.com/attachments/1035279289668616202/1035279344601399397/unknown.png)
+
+* Once the project downloads, open the `SS2-Project` folder with Unity 2019.4.26f1, keep in mind that opening the project for the first time will take time, so patience is key
+
+![](https://media.discordapp.net/attachments/1035279289668616202/1035282400088952832/unknown.png)
+
+* During your importing or opening the project, or any other scenario, there is a chance you'll see this box pop up, Always hit "No Thanks", as hitting the other option WILL cause issues with specific assemblies.
+
+![](https://cdn.discordapp.com/attachments/1035279289668616202/1035282616154337411/unknown.png)
+
+* Once the project opens, you'll have a bunch of errors, these errors **are normal**, and are caused by missing ror2 assemblies, to fix this, Go to ``Assets/ThunderKitSettings`` folder, and look for the "ImportConfiguration" file
+    * If there are no Configuration Executors, delete the ImportConfiguration so thunderkit can regenerate it.
+    * If no configurations exist after this, please contact Nebby and ask for help
+
+![](https://cdn.discordapp.com/attachments/1035279289668616202/1035284101839720520/unknown.png)
+
+* Once the import configurations are created, go to Tools/Thunderkit/Settings
+
+![](https://cdn.discordapp.com/attachments/1035279289668616202/1035292228303736853/unknown.png)
+
+* Select the Import Configurations, ensure that your configurations match the one from the image.
+    * If you cant find one of the configurations, delete teh import configuration.
+
+![](https://cdn.discordapp.com/attachments/1035279289668616202/1035292441441476698/unknown.png)
+
+* Select `ThunderKit Settings` and click Browse.
+    * Find your RoR2 Executable, select it
+    * Hit Import
+
+![](https://cdn.discordapp.com/attachments/1035279289668616202/1035292666038071296/unknown.png)
+
+* You're now ready to start development.
