@@ -5,6 +5,7 @@ using R2API;
 using R2API.Networking;
 using On.RoR2;
 using System;
+using UnityEngine;
 
 namespace Moonstorm.Starstorm2
 {
@@ -39,8 +40,14 @@ namespace Moonstorm.Starstorm2
             {
                 base.gameObject.AddComponent<SS2DebugUtil>();
             }
-            new SS2Config().Init();
             new SS2Assets().Init();
+            if(!SS2Assets.LoadAsset<Texture2D>("spike"))
+            {
+                SS2Log.Fatal("Spike not found :c");
+                Destroy(this);
+                return;
+            }
+            new SS2Config().Init();
             new SS2Content().Init();
             new SS2Language().Init();
             ConfigurableFieldManager.AddMod(this);
