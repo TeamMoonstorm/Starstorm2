@@ -1,4 +1,4 @@
-﻿using EntityStates.Chirr;
+﻿using EntityStates.Beastmaster;
 using Moonstorm.Components;
 using R2API;
 using RoR2;
@@ -16,8 +16,9 @@ namespace Moonstorm.Starstorm2.Buffs
             private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffChirrAlly;
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
             {
-                args.attackSpeedMultAdd += (ChirrMain.allyBuffCoefficient * buffStacks);
-                args.moveSpeedMultAdd += (ChirrMain.allyBuffCoefficient * buffStacks);
+                //fixxxxxxxxx laterrrr
+                //args.attackSpeedMultAdd += (BeastmasterMain.allyBuffCoefficient * buffStacks);
+                //args.moveSpeedMultAdd += (BeastmasterMain.allyBuffCoefficient * buffStacks);
             }
         }
     }

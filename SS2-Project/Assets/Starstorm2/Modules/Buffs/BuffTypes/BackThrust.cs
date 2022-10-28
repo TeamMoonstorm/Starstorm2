@@ -12,7 +12,7 @@ namespace Moonstorm.Starstorm2.Buffs
         public override void Initialize()
         {
             //TODO - replace with custom icon?
-            BuffDef.iconSprite = Resources.Load<Sprite>("Textures/BuffIcons/texMovespeedBuffIcon");
+            //BuffDef.iconSprite = Resources.Load<Sprite>("Textures/BuffIcons/texMovespeedBuffIcon");
             BuffDef.buffColor = Color.yellow;
         }
 

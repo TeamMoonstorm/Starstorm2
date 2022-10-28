@@ -17,12 +17,12 @@ namespace Moonstorm.Starstorm2.Items
         public static float backpackDamageCoeff = 4f;
 
         [ConfigurableField(ConfigDesc = "Proc multiplier per percentage of health lost. (1 = 100% of health fraction lost)")]
-        [TokenModifier("SS2_ITEM_ARMEDBACKPACK_DESC", StatTypes.Default,1)]
+        [TokenModifier("SS2_ITEM_ARMEDBACKPACK_DESC", StatTypes.Default, 1)]
         public static float procMult = 2.5f;
 
-        [ConfigurableField(ConfigDesc = "Base chance for fired missile. (1 = 1% chance)")]
+        [ConfigurableField(ConfigDesc = "Minimum chance for fired missile. (1 = 1% chance)")]
         [TokenModifier("SS2_ITEM_ARMEDBACKPACK_DESC", StatTypes.Percentage, 2)]
-        public static float procMin = 15;
+        public static float procMinimum = 0;
 
         public static ProcChainMask ignoredProcs;
         public GameObject missilePrefab;
@@ -34,11 +34,11 @@ namespace Moonstorm.Starstorm2.Items
 
             public void OnTakeDamageServer(DamageReport damageReport)
             {
-                if(stack > 0 && damageReport.damageDealt > 0)
+                if (stack > 0 && damageReport.damageDealt > 0)
                 {
                     float percentHPLoss = (damageReport.damageDealt / damageReport.victim.fullCombinedHealth) * 100f * procMult;
                     var playerBody = damageReport.victimBody;
-                    var rollChance = percentHPLoss > procMin ? percentHPLoss : procMin;
+                    var rollChance = percentHPLoss > procMinimum ? percentHPLoss : procMinimum;
 
                     //SS2Log.Debug("chance was: " + rollChance);
                     if (Util.CheckRoll(rollChance, playerBody.master))
@@ -48,8 +48,8 @@ namespace Moonstorm.Starstorm2.Items
 
                         var teamIndex = damageReport.attackerTeamIndex;
                         var attacker = damageReport.attacker;
-                        
-                        if (teamIndex == TeamIndex.None || teamIndex == TeamIndex.Player )
+
+                        if (teamIndex == TeamIndex.None || teamIndex == TeamIndex.Player)
                         {
                             attacker = null; //this prevents it from firing into blood shrines and i guess yourself/teammates if that lunar active is involved
                         }
@@ -58,7 +58,7 @@ namespace Moonstorm.Starstorm2.Items
                             playerBody.corePosition,
                             playerBody,
                             ignoredProcs,
-                            attacker, 
+                            attacker,
                             missileDamage,
                             Util.CheckRoll(playerBody.crit, playerBody.master),
                             GlobalEventManager.CommonAssets.missilePrefab,

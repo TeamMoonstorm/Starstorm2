@@ -68,11 +68,12 @@ namespace Moonstorm.Starstorm2.Items
                         }
                         else
                         {
-                            damageReport.victim.body.gameObject.AddComponent<ForceHitToken>().enabled = false;
-                            token = damageReport.victim.body.gameObject.GetComponent<ForceHitToken>();
-                            token.count = count;
-                            token.damageReport = damageReport;
-                            token.enabled = true;
+                            token = damageReport.victim.body.gameObject.AddComponent<ForceHitToken>();
+                            token.CallMoreHits(damageReport, count);
+                            //token = damageReport.victim.body.gameObject.GetComponent<ForceHitToken>();
+                            //token.count = count;
+                            //token.damageReport = damageReport;
+                            //token.enabled = true;
                         }
 
                     }
@@ -112,12 +113,12 @@ namespace Moonstorm.Starstorm2.Items
 
         public class ForceHitToken : MonoBehaviour
         {
-            public int count = 0;
-            public DamageReport damageReport;
+            //public int count = 0;
+            //public DamageReport damageReport;
             
             private void Start()
             {
-                StartCoroutine(RelicForceDelayedHits(damageReport, count));
+                //StartCoroutine(RelicForceDelayedHits(damageReport, count));
             }
 
             public void CallMoreHits(DamageReport damageReport, int count)

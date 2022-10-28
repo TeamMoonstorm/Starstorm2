@@ -84,6 +84,8 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef RelicOfMass;
 
+            public static ItemDef RelicOfTermination;
+
             public static ItemDef Insecticide;
 
             public static ItemDef BabyToys;
@@ -91,6 +93,8 @@ namespace Moonstorm.Starstorm2
             public static ItemDef X4;
 
             public static ItemDef NemesisBossHelper;
+
+            public static ItemDef TerminationHelper;
         }
 
         public static class Equipments
@@ -135,6 +139,8 @@ namespace Moonstorm.Starstorm2
             public static BuffDef BuffGreaterBanner;
 
             public static BuffDef BuffIntoxicated;
+
+            public static BuffDef BuffCoffeeBag;
 
             public static BuffDef BuffNeedle;
 

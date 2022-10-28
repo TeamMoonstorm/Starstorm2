@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bcc8a73fa1e29a479614a4350408c0f, type: 3}
+  m_Name: MSIDRSidrsDroidHead
+  m_EditorClassIdentifier: 
+  MSUKeyAssetRuleGroup:
+  - keyAssetName: AffixWhite
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteIceCrown
+      IDPHValues: EliteDisplay,0.5284,0.86596,0,270,270,0,0.13398,0.2034,0.08259
+      limbMask: 0
+  - keyAssetName: AffixRed
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteHorn
+      IDPHValues: EliteDisplay,-0.71288,0.0786,0.25286,31.73542,263.322,332.7186,0.4,0.4,0.4
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayEliteHorn
+      IDPHValues: EliteDisplay,-0.71288,0.0786,-0.25286,31.73541,276.5763,27.28137,-0.4,0.4,0.4
+      limbMask: 0
+  - keyAssetName: AffixBlue
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteRhinoHorn
+      IDPHValues: EliteDisplay,-1.05883,0.14451,0,0,270,0,0.75,0.75,0.75
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayEliteRhinoHorn
+      IDPHValues: EliteDisplay,-1.0568,0.30907,0,316.6909,270,0,0.5,0.5,0.5
+      limbMask: 0
+  - keyAssetName: AffixPoison
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteUrchinCrown
+      IDPHValues: EliteDisplay,0,0.42375,0,270,0,0,0.38608,0.20502,0.20502
+      limbMask: 0
+  - keyAssetName: AffixLunar
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteLunar,eye
+      IDPHValues: EliteDisplay,0.15445,0.23029,1.19665,281.6259,270,90,1.16199,1.16199,1.16199
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayEliteLunar,eye
+      IDPHValues: EliteDisplay,0.15445,0.23029,-1.19665,281.6259,270,90,1,1,1
+      limbMask: 0
+  - keyAssetName: AffixHaunted
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteStealthCrown
+      IDPHValues: EliteDisplay,0,0.742,0,270.3991,90,180,0.4111,0.4111,0.4111
+      limbMask: 0
+  VanillaIDRSKey: idrsSecurityDrone
