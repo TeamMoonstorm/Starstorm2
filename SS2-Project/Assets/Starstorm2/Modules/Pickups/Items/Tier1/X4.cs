@@ -37,23 +37,27 @@ namespace Moonstorm.Starstorm2.Items
             private static ItemDef GetItemDef() => SS2Content.Items.X4;
             public void RecalculateStatsEnd()
             {
-                if (body.skillLocator.secondaryBonusStockSkill)
+                if (body.skillLocator)
                 {
-                    float skillCD = body.skillLocator.secondaryBonusStockSkill.baseRechargeInterval; //base cooldown of relevant skill
-                    float hyperbolicCDR = MSUtil.InverseHyperbolicScaling(secCooldown, secCooldown, skillCD - 1f, stack);
-                    float cdr;
-                    if (hyperbolicCDR > stack * secCooldown) //so hyperbolic is what i think we'd want here, but it vastly overpreforms with low stacks & and long cooldown. so i just take the lower value
+                    if (body.skillLocator.secondaryBonusStockSkill)
                     {
-                        cdr = stack * secCooldown;
+                        float skillCD = body.skillLocator.secondaryBonusStockSkill.baseRechargeInterval; //base cooldown of relevant skill
+                        //float hyperbolicCDR = MSUtil.InverseHyperbolicScaling(secCooldown, secCooldown, skillCD - 1f, stack);
+                        //float cdr;
+                        //if (hyperbolicCDR > stack * secCooldown) //so hyperbolic is what i think we'd want here, but it vastly overpreforms with low stacks & and long cooldown. so i just take the lower value
+                        //{
+                        //    cdr = stack * secCooldown;
+                        //}
+                        //else
+                        //{
+                        //    cdr = hyperbolicCDR;
+                        //}
+                        float timeMult = Mathf.Pow(1 - cdReduction, stack - 1);
+                        //cdr = skillCD * timeMult;
+                        //SS2Log.Debug("X4 RecalcStats - " + hyperbolicCDR + " vs " + stack * secCooldown + " vs " + cdr + "coldown scale: " + body.skillLocator.secondaryBonusStockSkill.cooldownScale);
+                        body.skillLocator.secondaryBonusStockSkill.cooldownScale *= timeMult;
+                        //SS2Log.Debug("X4 RecalcStats end " + body.skillLocator.secondaryBonusStockSkill.cooldownScale);
                     }
-                    else
-                    {
-                        cdr = hyperbolicCDR;
-                    }
-                    float timeMult = Mathf.Pow(1 - cdReduction, stack - 1);
-                    cdr = skillCD * timeMult;
-                    SS2Log.Debug("X4 RecalcStats end - " + hyperbolicCDR + " vs " + stack * secCooldown + " vs " + cdr);
-                    body.skillLocator.secondaryBonusStockSkill.flatCooldownReduction += cdr;
                 }
                 //args.cooldownMultAdd += (float)itemCount * Synergies.pearlCD.Value;
                 //args.secondaryCooldownMultAdd *= MSUtil.InverseHyperbolicScaling(secCooldown, secCooldown, 0.7f, stack);

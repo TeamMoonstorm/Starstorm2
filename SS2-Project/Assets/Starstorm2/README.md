@@ -57,6 +57,19 @@ There are no issues. The mod is perfect.
 ## Changelog
 
 **Warning: content spoilers below!**
+### 0.3.45β
+* Even more fixes.
+    * Fixed Relic of Termination's material.
+    * Adjusted Relic of Termination's VFX.
+    * Reduced the cooldown on Termination attempting to find a new enemy if it couldn't find one (15s -> 5s).
+    * Termination should no longer mark the same enemy twice.
+    * Fixed Termination's logbook lying about what stats the enemies get, and also adjusted the text coloration to be like that of Shipping Request Form.
+    * Fixed Coffee Bag's mid-stage pickup effect.
+    * Capped Swift Skateboard's buff stacks again.
+    * Fixed X4's cooldown reduction. This also might've fixed Executioner's brightness issue? Can't replicate it.
+    * Fixed Reactor's buff icon being the one for Needles. 
+    * Chirr has been disabled again. They'll be ready soon, hopefully
+
 ### 0.3.44β
 * More fixes.
     * Adds Relic of Termination, with temp VFX.

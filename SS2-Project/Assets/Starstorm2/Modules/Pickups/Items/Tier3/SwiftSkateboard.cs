@@ -72,8 +72,19 @@ namespace Moonstorm.Starstorm2.Items
                 }
                 if (stack > 0 && cooldownTimer == 0f)
                 {
+                    int buffCount = body.GetBuffCount(SS2Content.Buffs.BuffKickflip);
+                    int maxBuffStack = maxStacks + (maxStacksPerStack * (stack - 1));
                     //body.AddTimedBuff(SS2Content.Buffs.BuffKickflip, buffDuration, maxStacks + ((stack - 1) * maxStacksPerStack));
-                    body.AddTimedBuffAuthority(SS2Content.Buffs.BuffKickflip.buffIndex, buffDuration); //i swear if this works im killing hopoo
+                    if (buffCount < maxBuffStack)
+                    {
+                        body.AddTimedBuffAuthority(SS2Content.Buffs.BuffKickflip.buffIndex, buffDuration); //i swear if this works im killing hopoo
+                    }
+                    else if (buffCount == maxBuffStack)
+                    {
+                        body.RemoveOldestTimedBuff(SS2Content.Buffs.BuffKickflip.buffIndex);
+                        body.AddTimedBuffAuthority(SS2Content.Buffs.BuffKickflip.buffIndex, buffDuration);
+                    }
+
 
                     cooldownTimer += buffCooldown;
                     RefreshBuff();

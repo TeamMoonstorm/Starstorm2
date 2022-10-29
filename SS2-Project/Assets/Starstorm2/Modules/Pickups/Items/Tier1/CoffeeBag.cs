@@ -30,20 +30,69 @@ namespace Moonstorm.Starstorm2.Items
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.CoffeeBag;
 
-                        
+            int count = 0;
+
             private void Awake()
             {
                 base.Awake();
-                for(int i = 0; i < stageTimer; i++)
+                int buffCount = body.GetBuffCount(SS2Content.Buffs.BuffCoffeeBag);
+                if (buffCount > 0)
+                {
+                    for (int i = 0; i < buffCount; i++)
+                    {
+                        body.RemoveOldestTimedBuff(SS2Content.Buffs.BuffCoffeeBag.buffIndex);
+                    }
+                }
+                for (int i = 0; i < stageTimer / 2f; i++)
                 {
                     body.AddTimedBuff(SS2Content.Buffs.BuffCoffeeBag, i);
                 }
+                count = 1;
             }
 
-            
+            public void OnEnable()
+            {
+                On.RoR2.CharacterBody.OnInventoryChanged += CoffeeBagInvChanged;
+            }
+
+            private void CoffeeBagInvChanged(On.RoR2.CharacterBody.orig_OnInventoryChanged orig, CharacterBody self)
+            {
+                orig(self);
+                //SS2Log.Debug("item collected");
+                //int amnt = self.inventory.GetItemCount();
+                if (self.hasAuthority && self.inventory)
+                {
+                    int amount = self.inventory.GetItemCount(SS2Content.Items.CoffeeBag.itemIndex);
+                    SS2Log.Debug("amount:" + amount + " | " + count);
+                    if (amount > 0)
+                    {
+                        if (amount > count)
+                        {
+                            int buffCount = self.GetBuffCount(SS2Content.Buffs.BuffCoffeeBag.buffIndex);
+                            int cycles = (int)stageTimer / 2;
+                            if (buffCount > 0)
+                            {
+                                cycles += buffCount;
+                                for (int i = 0; i < buffCount; i++)
+                                {
+                                    self.RemoveOldestTimedBuff(SS2Content.Buffs.BuffCoffeeBag.buffIndex);
+                                }
+                            }
+                            for (float i = 1; i <= cycles; i++)
+                            {
+                                self.AddTimedBuffAuthority(SS2Content.Buffs.BuffCoffeeBag.buffIndex, i);
+                            }
+                            //count = amount;
+                        }
+                        count = amount;
+                    }
+                    //count = amount;
+                }
+            }
+
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
             {
-                if(body.GetBuffCount(SS2Content.Buffs.BuffCoffeeBag) > 0)
+                if (body.GetBuffCount(SS2Content.Buffs.BuffCoffeeBag) > 0)
                 {
                     args.attackSpeedMultAdd += atkSpeedBonus * stack;
                     args.moveSpeedMultAdd += moveSpeedBonus * stack;
@@ -53,7 +102,7 @@ namespace Moonstorm.Starstorm2.Items
 
             private void OnDestroy()
             {
-                if(body.HasBuff(SS2Content.Buffs.BuffCoffeeBag))
+                if (body.HasBuff(SS2Content.Buffs.BuffCoffeeBag))
                 {
                     body.RemoveBuff(SS2Content.Buffs.BuffCoffeeBag);
                 }

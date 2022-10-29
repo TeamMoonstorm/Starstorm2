@@ -109,7 +109,7 @@ namespace Moonstorm.Starstorm2.Items
                         }
 
                         targetBody.healthComponent.health = targetBody.healthComponent.health * healthFrac;
-
+                        targetBody.AddBuff(SS2Content.Buffs.BuffTerminationVFX);
                         token.hasFailed = true;
                     }
 
@@ -173,7 +173,7 @@ namespace Moonstorm.Starstorm2.Items
                 int index = terminationRNG.RangeInt(0, CharMasters().Count);
                 target = CharMasters().ElementAt(index);
                 //SS2Log.Debug("found target " + target.name);
-                if (target.name.Contains("Mithrix"))
+                if (target.GetComponent<TerminationToken>())
                 {
                     if (CharMasters().Count != index + 1)
                     {
@@ -184,7 +184,7 @@ namespace Moonstorm.Starstorm2.Items
                         if (index == 0)
                         {
                             target = null;
-                            time = maxTime / 4f;
+                            time = 5f; //maxTime / 6f;
                             return;
                         }
                         target = CharMasters().ElementAt(index - 1);
@@ -192,7 +192,7 @@ namespace Moonstorm.Starstorm2.Items
                     else
                     {
                         target = null;
-                        time = maxTime / 4f;
+                        time = 5f; //maxTime / 6f;
                         return;
                     }
                 }
