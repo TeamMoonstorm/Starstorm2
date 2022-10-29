@@ -1,5 +1,4 @@
-﻿using Moonstorm.Components;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Moonstorm.Starstorm2.Components
 {
