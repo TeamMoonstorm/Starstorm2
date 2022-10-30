@@ -31,11 +31,16 @@ namespace Moonstorm.Starstorm2.Items
             private static ItemDef GetItemDef() => SS2Content.Items.CoffeeBag;
 
             int count = 0;
+            bool first = true;
 
             private void Awake()
             {
                 base.Awake();
+
+                float stacks; // = stageTimer / 2f;
+                stacks = stageTimer;
                 int buffCount = body.GetBuffCount(SS2Content.Buffs.BuffCoffeeBag);
+                stacks += buffCount;
                 if (buffCount > 0)
                 {
                     for (int i = 0; i < buffCount; i++)
@@ -43,7 +48,7 @@ namespace Moonstorm.Starstorm2.Items
                         body.RemoveOldestTimedBuff(SS2Content.Buffs.BuffCoffeeBag.buffIndex);
                     }
                 }
-                for (int i = 0; i < stageTimer / 2f; i++)
+                for (int i = 0; i < stacks; i++)
                 {
                     body.AddTimedBuff(SS2Content.Buffs.BuffCoffeeBag, i);
                 }
@@ -63,7 +68,7 @@ namespace Moonstorm.Starstorm2.Items
                 if (self.hasAuthority && self.inventory)
                 {
                     int amount = self.inventory.GetItemCount(SS2Content.Items.CoffeeBag.itemIndex);
-                    SS2Log.Debug("amount:" + amount + " | " + count);
+                    //SS2Log.Debug("amount:" + amount + " | " + count);
                     if (amount > 0)
                     {
                         if (amount > count + 1)
@@ -108,6 +113,5 @@ namespace Moonstorm.Starstorm2.Items
                 }
             }
         }
-
     }
 }

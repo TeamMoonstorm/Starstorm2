@@ -3,7 +3,7 @@ using UnityEngine;
 using RoR2.Skills;
 using System.Runtime.CompilerServices;
 using UnityEngine.AddressableAssets;
-
+using System.Collections;
 
 namespace Moonstorm.Starstorm2.Survivors
 {
@@ -29,7 +29,7 @@ namespace Moonstorm.Starstorm2.Survivors
         {
             orig(self);
 
-            SS2Log.Debug("self: " + self + " | token:" + self.baseNameToken + " | name:" + self.name);
+            //SS2Log.Debug("self: " + self + " | token:" + self.baseNameToken + " | name:" + self.name);
             if (self.inventory)
             {
                 if(self.inventory.GetItemCount(RoR2Content.Items.NovaOnLowHealth) > 0)
