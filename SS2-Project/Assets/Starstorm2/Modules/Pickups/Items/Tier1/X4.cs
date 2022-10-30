@@ -31,6 +31,8 @@ namespace Moonstorm.Starstorm2.Items
 
         public static ProcChainMask ignoredProcs;
 
+        public static ItemDisplay itemDisplay;
+
         public sealed class Behavior : BaseItemBodyBehavior, IStatItemBehavior
         {
             [ItemDefAssociation]
@@ -96,6 +98,9 @@ namespace Moonstorm.Starstorm2.Items
                 var token = body.gameObject.GetComponent<X4Token>();
                 if (self.inventory && token)
                 {
+                    
+
+
                     SS2Log.Debug("skill" + skill.skillDef.skillNameToken);
                     int count = self.inventory.GetItemCount(SS2Content.Items.X4.itemIndex); //again i could use stack here probably but i just wanna make sure this works we can fix it later
                     if (self.inventory.GetItemCount(DLC1Content.Items.ConvertCritChanceToCritDamage) > 0 && skill.skillDef.skillNameToken == "RAILGUNNER_SNIPE_HEAVY_NAME")
@@ -123,9 +128,8 @@ namespace Moonstorm.Starstorm2.Items
                             SS2Log.Debug("skill cooldown:" + skill.CalculateFinalRechargeInterval());
                         }
                     }
-
                 }
-            }
+        }
 
             private void FixedUpdate()
             {

@@ -7,10 +7,10 @@ namespace Moonstorm.Starstorm2.Unlocks.Nemmando
     {
         public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skin.nemmando.mastery");
 
-        public override void Initialize()
+        /*public override void Initialize()
         {
             AddRequiredType<Survivors.Nemmando>();
-        }
+        }*/
 
         public sealed class NemmandoMasteryAchievement : GenericMasteryAchievement
         {

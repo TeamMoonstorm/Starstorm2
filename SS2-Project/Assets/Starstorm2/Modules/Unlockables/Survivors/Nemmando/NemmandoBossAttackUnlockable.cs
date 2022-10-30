@@ -10,29 +10,27 @@ namespace Moonstorm.Starstorm2.Unlocks.Nemmando
         public override void Initialize()
         {
             AddRequiredType<Survivors.Nemmando>();
+            
         }
         public sealed class NemmandoBossAttackAchievement : BaseAchievement
         {
-            public override BodyIndex LookUpRequiredBodyIndex()
+            public BodyIndex LookUpRequiredBodyIndex()
             {
                 return BodyCatalog.FindBodyIndex("NemmandoBody");
             }
 
             public override void OnInstall()
             {
-                On.RoR2.CharacterBody.AddBuff_BuffIndex += Check;
+                //On.RoR2.CharacterBody.AddBuff_BuffIndex += Check;
             }
 
             private void Check(On.RoR2.CharacterBody.orig_AddBuff_BuffIndex orig, CharacterBody self, BuffIndex buffType)
             {
                 if (self)
                 {
-                    if (self.GetBuffCount(SS2Content.Buffs.BuffGouge) >= 50)
+                    if (self.GetBuffCount(SS2Content.Buffs.BuffGouge) >= 10)
                     {
-                        if (meetsBodyRequirement)
-                        {
-                            Grant();
-                        }
+                        //Grant();
                     }
                 }
                 orig(self, buffType);
@@ -40,7 +38,7 @@ namespace Moonstorm.Starstorm2.Unlocks.Nemmando
 
             public override void OnUninstall()
             {
-                On.RoR2.CharacterBody.AddBuff_BuffIndex -= Check;
+                //On.RoR2.CharacterBody.AddBuff_BuffIndex -= Check;
             }
         }
     }

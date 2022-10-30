@@ -1904,7 +1904,6 @@ GameObject:
   - component: {fileID: 3239170544064599915}
   - component: {fileID: 6129297351772759474}
   - component: {fileID: 6877164564724534258}
-  - component: {fileID: 3866610388234781683}
   m_Layer: 0
   m_Name: mdlExecutioner
   m_TagString: Untagged
@@ -2179,9 +2178,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skins:
   - {fileID: 11400000, guid: fab1a6295d8f8ff43b976b4d46f5d5f4, type: 2}
-  - {fileID: 11400000, guid: 669f491cd7bb33b40a0d96cddbe26739, type: 2}
   - {fileID: 11400000, guid: d29d768f55322e740861f5e1e07e35d5, type: 2}
   - {fileID: 11400000, guid: a6185c1dfde0cce4a97b2c1b45bd7571, type: 2}
+  - {fileID: 11400000, guid: 669f491cd7bb33b40a0d96cddbe26739, type: 2}
 --- !u!114 &8850927188966823203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2256,18 +2255,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundCenter: {fileID: 3127646991480308002}
---- !u!114 &3866610388234781683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3127646991480308002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d47abb01213c3e40bab2ca51db4c33d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3127646991480308004
 GameObject:
   m_ObjectHideFlags: 0

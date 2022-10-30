@@ -7,10 +7,10 @@ namespace Moonstorm.Starstorm2.Unlocks.Executioner
     {
         public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skin.executioner.mastery");
 
-        public override void Initialize()
+        /*public override void Initialize()
         {
             AddRequiredType<Survivors.Executioner>();
-        }
+        }*/
 
         public sealed class ExecutionerMasteryAchievement : GenericMasteryAchievement
         {
