@@ -47,7 +47,7 @@ namespace Moonstorm.Starstorm2.Items
                 {
                     body.AddTimedBuff(SS2Content.Buffs.BuffCoffeeBag, i);
                 }
-                count = 1;
+                //count = 1;
             }
 
             public void OnEnable()
@@ -66,7 +66,7 @@ namespace Moonstorm.Starstorm2.Items
                     SS2Log.Debug("amount:" + amount + " | " + count);
                     if (amount > 0)
                     {
-                        if (amount > count)
+                        if (amount > count + 1)
                         {
                             int buffCount = self.GetBuffCount(SS2Content.Buffs.BuffCoffeeBag.buffIndex);
                             int cycles = (int)stageTimer / 2;
