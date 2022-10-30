@@ -39,7 +39,7 @@ Additional thanks to...
 * Writing - Blimblam, Lyrical Endymion, swuff★, T_Dimensional, Zenithrium
 * Translations - Anreol (Spanish), MysticSword (Russian)
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze
-* Special thanks - Altzeus, DestroyedClone, don, Draymarc, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moffein, Moshinate, MysticSword, Neik, Riskka, Ruxbieno, Twiner
+* Special thanks - Altzeus, DestroyedClone, don, Draymarc, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moffein, Moshinate, MysticSword, Neik, Riskka, Ruxbieno, Twiner, valerie ♥ 
 
 ## Known Issues
 
@@ -52,7 +52,6 @@ There are no issues. The mod is perfect.
     * Artifact of Metamorphosis doesn't work.
     * Nemmando sometimes forgets which skin he's supposed to be using.
     * Storms don't fully appear for clients in multiplayer. They still happen, just without the warning and the fancy visuals.
-    * Genesis Loop's particle effect is far too large on Nemmando.
 
 ## Changelog
 
@@ -66,8 +65,14 @@ There are no issues. The mod is perfect.
     * Fixed Termination's logbook lying about what stats the enemies get, and also adjusted the text coloration to be like that of Shipping Request Form.
     * Fixed Coffee Bag's mid-stage pickup effect.
     * Capped Swift Skateboard's buff stacks again.
-    * Fixed X4's cooldown reduction. This also might've fixed Executioner's brightness issue? Can't replicate it.
+    * Fixed X4's cooldown reduction.
+    * Fixed X4 causing NREs with EliteReworks active.
     * Fixed Reactor's buff icon being the one for Needles. 
+    * Hopefully fixed an NRE caused by Nkota's Heritage
+    * Disabled Genesis Loop's particle effect for Nemmando. No more going blind!
+    * Nemmando now has the dot crosshair.
+    * Fixed Mastery and Grandmastery unlocks.
+    * Added displays for X4.
     * Chirr has been disabled again. They'll be ready soon, hopefully
 
 ### 0.3.44β
