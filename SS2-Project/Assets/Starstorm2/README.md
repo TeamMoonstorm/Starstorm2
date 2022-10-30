@@ -39,7 +39,7 @@ Additional thanks to...
 * Writing - Blimblam, Lyrical Endymion, swuff★, T_Dimensional, Zenithrium
 * Translations - Anreol (Spanish), MysticSword (Russian)
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze
-* Special thanks - Altzeus, DestroyedClone, don, Draymarc, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moffein, Moshinate, MysticSword, Neik, Riskka, Ruxbieno, Twiner
+* Special thanks - Altzeus, DestroyedClone, don, Draymarc, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moffein, Moshinate, MysticSword, Neik, Riskka, Ruxbieno, Twiner, valerie ♥ 
 
 ## Known Issues
 
@@ -70,6 +70,9 @@ There are no issues. The mod is perfect.
     * Fixed Reactor's buff icon being the one for Needles. 
     * Hopefully fixed an NRE caused by Nkota's Heritage
     * Disabled Genesis Loop's particle effect for Nemmando. No more going blind!
+    * Nemmando now has the dot crosshair.
+    * Fixed Mastery and Grandmastery unlocks.
+    * Added displays for X4.
     * Chirr has been disabled again. They'll be ready soon, hopefully
 
 ### 0.3.44β
