@@ -28,7 +28,7 @@ namespace EntityStates.Nemmando
             animator = GetModelAnimator();
             defaultCrosshair = characterBody.defaultCrosshairPrefab;
 
-            RoR2.UI.CrosshairUtils.RequestOverrideForBody(characterBody, Resources.Load<GameObject>("Prefabs/Crosshair/MageCrosshair"), RoR2.UI.CrosshairUtils.OverridePriority.Skill);
+            //RoR2.UI.CrosshairUtils.RequestOverrideForBody(characterBody, Resources.Load<GameObject>("Prefabs/Crosshair/MageCrosshair"), RoR2.UI.CrosshairUtils.OverridePriority.Skill);
 
             if (lightningEffect)
             {
