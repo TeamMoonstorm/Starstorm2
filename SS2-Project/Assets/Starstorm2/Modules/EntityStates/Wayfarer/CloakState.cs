@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace Starstorm2.Cores.States.Wayfarer
 {
-    class CloakState : BaseSkillState
+    public class CloakState : BaseSkillState
     {
         public static float baseDuration = 3.0f;
 
         private Animator animator;
         private float duration;
-        private bool hasCloaked;
+        private bool hasCloaked = false;
 
         public override void OnEnter()
         {
@@ -24,9 +24,10 @@ namespace Starstorm2.Cores.States.Wayfarer
         {
             base.FixedUpdate();
 
-            if (!hasCloaked && animator.GetFloat("Cloak.active") > 0.5)
+            if (!hasCloaked && fixedAge >= duration * 0.9f)
             {
-                characterBody.AddTimedBuff(RoR2Content.Buffs.Cloak, 10f);
+                //Debug.Log("CLOAKING..");
+                characterBody.AddTimedBuffAuthority(RoR2Content.Buffs.Cloak.buffIndex, 10f);
                 hasCloaked = true;
             }
 

@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace Moonstorm.Starstorm2.Components
 {
-    [RequireComponent(typeof(CharacterModel))]
+    [RequireComponent(typeof(CharacterModel))]  //just fucking kill this thing.
     public class ExecutionerEmissionController : MonoBehaviour
     {
-        private const float MaxStocksForEmission = 10;
+        /*private const float MaxStocksForEmission = 10;
         private const float MaxEmission = 8f;
         private const float MinEmission = 2f;
 
@@ -76,6 +76,6 @@ namespace Moonstorm.Starstorm2.Components
                     characterModel.propertyStorage.SetFloat("_EmPower", currentEmission);
                     renderer.SetPropertyBlock(characterModel.propertyStorage);
                 });
-        }
+        }*/
     }
 }

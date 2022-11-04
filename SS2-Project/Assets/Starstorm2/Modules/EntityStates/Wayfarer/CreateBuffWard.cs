@@ -1,31 +1,45 @@
 ﻿using UnityEngine;
+using R2API;
+using RoR2;
+using UnityEngine.AddressableAssets;
+using Moonstorm.Starstorm2;
 
 namespace EntityStates.Wayfarer
 {
-    class CreateBuffWard : BaseSkillState
+    public class CreateBuffWard : BaseSkillState
     {
-        public static float baseDuration = 3.5f;
-        public static float radius = 30f;
+        private static float baseDuration = 1.5f;
 
         private Animator animator;
-        private GameObject buffPrefab;
+        private static GameObject buffPrefab;
+
+        private static GameObject attachment;
+        //private static NetworkedBodyAttachment attachment;
+        private static bool hasPlacedWard = false;
+
+        private GameObject attachmentGameObject;
+
+        private float duration;
 
         public override void OnEnter()
         {
             base.OnEnter();
             animator = GetModelAnimator();
-            PlayCrossfade("FullBody, Override", "Ward", "Ward.playbackRate", baseDuration / attackSpeedStat, 0.2f);
+            duration = baseDuration / attackSpeedStat;
+            PlayCrossfade("FullBody, Override", "Ward", "Ward.playbackRate", baseDuration, 0.2f);
 
         }
-
+         
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (!buffPrefab && animator.GetFloat("Ward.active") > 0.5)
+            if (!buffPrefab && fixedAge >= baseDuration * 0.2f)
             {
-                /*buffPrefab = UnityEngine.Object.Instantiate(Monsters.WayfarerOld.wayfarerBuffWardPrefab);
+                buffPrefab = Object.Instantiate(SS2Assets.LoadAsset<GameObject>("WayfarerWard"), characterBody.transform);
                 buffPrefab.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
-                buffPrefab.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(gameObject);*/
+                buffPrefab.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(characterBody.gameObject);
+                //hasPlacedWard = true;
+                Debug.Log("placing attachment!"); // THIS IS WHERE YOU LEFT OFF!!!
             }
 
             if (fixedAge >= baseDuration)
@@ -38,7 +52,10 @@ namespace EntityStates.Wayfarer
         {
             if (buffPrefab)
             {
-                Object.Destroy(buffPrefab);
+                //Object.Destroy(buffPrefab);
+                //Object.Destroy(attachmentGameObject);
+                //attachmentGameObject = null;
+                //attachment = null;
             }
             base.OnExit();
         }

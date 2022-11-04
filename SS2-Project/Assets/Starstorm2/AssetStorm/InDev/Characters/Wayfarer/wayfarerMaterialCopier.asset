@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dafaec0a88352a4cb9d98947cc15dbd, type: 3}
+  m_Name: wayfarerMaterialCopier
+  m_EditorClassIdentifier: 
+  materialPairs:
+  - materialAddress: RoR2/Base/EliteHaunted/matEliteHauntedParticleReplacement.mat
+    material: {fileID: 2100000, guid: edd3733e7682c8d43a410e39e96a5f4a, type: 2}
+  - materialAddress: RoR2/Base/EliteHaunted/matHauntedEliteAreaIndicator.mat
+    material: {fileID: 2100000, guid: 8b06b27bdec31bd4ab6fe671a285d33a, type: 2}
+  - materialAddress: RoR2/DLC1/Common/Void/matOmniHitsparkVoid.mat
+    material: {fileID: 2100000, guid: 8ffd9424679574a44a0de8c00e5ec926, type: 2}
+  - materialAddress: RoR2/Base/Nullifier/matNullifierGemPortal.mat
+    material: {fileID: 2100000, guid: 46594b7f894243044b1cab81083c2449, type: 2}
+  - materialAddress: RoR2/DLC1/VoidBarnacle/matVoidBarnacleBullet.mat
+    material: {fileID: 2100000, guid: 5b30d694d109a0e4cb1e73af0ba3deee, type: 2}
+  - materialAddress: RoR2/Base/Nullifier/matNullifierStarParticleOffset.mat
+    material: {fileID: 2100000, guid: 464a7ada54293a24fbfefb7b1a456637, type: 2}
+  - materialAddress: RoR2/DLC1/VoidBarnacle/matVoidBarnacleGoo.mat
+    material: {fileID: 2100000, guid: daa2cbc7cebd1034098e9a5f5bdd056d, type: 2}
