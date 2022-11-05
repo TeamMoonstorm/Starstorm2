@@ -62,11 +62,12 @@ namespace Moonstorm.Starstorm2.ScriptableObjects
                     }
                 }
 
-                SS2Log.Info($"Given the following items to {inv.gameObject}:");
+                List<string> log = new List<string>();
                 foreach (ItemIndex i in inv.itemAcquisitionOrder)
                 {
-                    SS2Log.Info($"{inv.GetItemCount(i)}x {ItemCatalog.GetItemDef(i).name}");
+                    log.Add($"{inv.GetItemCount(i)}x {ItemCatalog.GetItemDef(i).name}");
                 }
+                SS2Log.Debug($"Given the following items to {inv.gameObject}:\n{string.Join("\n", log)}");
             }
         }
 
