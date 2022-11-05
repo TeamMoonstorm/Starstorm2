@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace Moonstorm.EditorUtils
+namespace Moonstorm.Starstorm2.Editor
 {
     public class EditorRecordAndSetTransforms
     {

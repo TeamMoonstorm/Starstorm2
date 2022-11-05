@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Assets.Starstorm2.ScriptableObjects
+namespace Moonstorm.Starstorm2.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "NemesisInventory", menuName = "Starstorm2/NemesisInventory")]
     public class NemesisInventory : ScriptableObject
