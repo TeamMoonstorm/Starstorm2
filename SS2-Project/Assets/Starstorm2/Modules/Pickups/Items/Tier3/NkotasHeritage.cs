@@ -85,53 +85,56 @@ namespace Moonstorm.Starstorm2.Items
         {
             public static void ActivateSingle(CharacterBody body)
             {
-                if (body.isPlayerControlled)
+                if (body)
                 {
-                    int itemCount = itemsPerStack * body.inventory.GetItemCount(SS2Assets.LoadAsset<ItemDef>("NkotasHeritage"));
+                    if (body.isPlayerControlled)
+                    {
+                        int itemCount = itemsPerStack * body.inventory.GetItemCount(SS2Assets.LoadAsset<ItemDef>("NkotasHeritage"));
 
-                    SS2Util.DropShipCall(body.transform, 1, TeamManager.instance.GetTeamLevel(body.teamComponent.teamIndex), itemCount, ItemTier.Tier1, "NkotasIdleEffect");
+                        SS2Util.DropShipCall(body.transform, 1, TeamManager.instance.GetTeamLevel(body.teamComponent.teamIndex), itemCount, ItemTier.Tier1, "NkotasIdleEffect");
 
-                    Transform effectSpawnLocation = body.transform; //Will only get overwritten if it succesfully find the child
-                    ModelLocator modelLocator = body.modelLocator;
-                    ChildLocator childLocator;
-                    int childLocatorIndex = -1;
-                    if (modelLocator == null) childLocator = null;
+                        Transform effectSpawnLocation = body.transform; //Will only get overwritten if it succesfully find the child
+                        ModelLocator modelLocator = body.modelLocator;
+                        ChildLocator childLocator;
+                        int childLocatorIndex = -1;
+                        if (modelLocator == null) childLocator = null;
+                        else
+                        {
+                            Transform transform = modelLocator.modelTransform;
+                            childLocator = ((transform != null) ? transform.GetComponent<ChildLocator>() : null);
+                        }
+                        if (childLocator)
+                        {
+                            Transform transform = childLocator.FindChild("Head");
+                            childLocatorIndex = childLocator.FindChildIndex("Head");
+                            if (transform) effectSpawnLocation = transform;
+                        }
+                        EffectData sexBomb = new EffectData
+                        {
+                            origin = effectSpawnLocation.position,
+                            scale = body.radius
+                        };
+                        if (childLocatorIndex != -1)
+                            sexBomb.SetChildLocatorTransformReference(body.gameObject, childLocatorIndex);
+
+                        EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("NkotasSpawnEffect"), sexBomb, true);
+                    }
                     else
                     {
-                        Transform transform = modelLocator.modelTransform;
-                        childLocator = ((transform != null) ? transform.GetComponent<ChildLocator>() : null);
-                    }
-                    if (childLocator)
-                    {
-                        Transform transform = childLocator.FindChild("Head");
-                        childLocatorIndex = childLocator.FindChildIndex("Head");
-                        if (transform) effectSpawnLocation = transform;
-                    }
-                    EffectData sexBomb = new EffectData
-                    {
-                        origin = effectSpawnLocation.position,
-                        scale = body.radius
-                    };
-                    if (childLocatorIndex != -1)
-                        sexBomb.SetChildLocatorTransformReference(body.gameObject, childLocatorIndex);
+                        List<RoR2.Orbs.ItemTransferOrb> inFlightOrbs = new List<RoR2.Orbs.ItemTransferOrb>();
+                        ItemDef itemToGrant;
+                        do
+                        {
+                            itemToGrant = SS2Util.NkotasRiggedItemDrop(1, TeamManager.instance.GetTeamLevel(body.teamComponent.teamIndex));
+                        } while (itemToGrant.ContainsTag(ItemTag.AIBlacklist) || itemToGrant.ContainsTag(ItemTag.CannotCopy) || itemToGrant == SS2Assets.LoadAsset<ItemDef>("NkotasHeritage") || (BodyCatalog.FindBodyIndex("BrotherBody") == body.bodyIndex && itemToGrant.ContainsTag(ItemTag.BrotherBlacklist)));
 
-                    EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("NkotasSpawnEffect"), sexBomb, true);
-                }
-                else
-                {
-                    List<RoR2.Orbs.ItemTransferOrb> inFlightOrbs = new List<RoR2.Orbs.ItemTransferOrb>();
-                    ItemDef itemToGrant;
-                    do
-                    {
-                        itemToGrant = SS2Util.NkotasRiggedItemDrop(1, TeamManager.instance.GetTeamLevel(body.teamComponent.teamIndex));
-                    } while (itemToGrant.ContainsTag(ItemTag.AIBlacklist) || itemToGrant.ContainsTag(ItemTag.CannotCopy) || itemToGrant == SS2Assets.LoadAsset<ItemDef>("NkotasHeritage") || (BodyCatalog.FindBodyIndex("BrotherBody") == body.bodyIndex && itemToGrant.ContainsTag(ItemTag.BrotherBlacklist)));
-
-                    ItemTransferOrb item = ItemTransferOrb.DispatchItemTransferOrb(body.transform.position, body.inventory, itemToGrant.itemIndex, 1, delegate (ItemTransferOrb orb)
-                    {
-                        body.inventory.GiveItem(orb.itemIndex, orb.stack);
-                        inFlightOrbs.Remove(orb);
-                    }, default(Either<NetworkIdentity, HurtBox>));
-                    inFlightOrbs.Add(item);
+                        ItemTransferOrb item = ItemTransferOrb.DispatchItemTransferOrb(body.transform.position, body.inventory, itemToGrant.itemIndex, 1, delegate (ItemTransferOrb orb)
+                        {
+                            body.inventory.GiveItem(orb.itemIndex, orb.stack);
+                            inFlightOrbs.Remove(orb);
+                        }, default(Either<NetworkIdentity, HurtBox>));
+                        inFlightOrbs.Add(item);
+                    }
                 }
             }
         }

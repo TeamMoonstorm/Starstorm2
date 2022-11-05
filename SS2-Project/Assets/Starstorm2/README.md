@@ -39,7 +39,7 @@ Additional thanks to...
 * Writing - Blimblam, Lyrical Endymion, swuff★, T_Dimensional, Zenithrium
 * Translations - Anreol (Spanish), MysticSword (Russian)
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze
-* Special thanks - Altzeus, DestroyedClone, don, Draymarc, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moffein, Moshinate, MysticSword, Neik, Riskka, Ruxbieno, Twiner
+* Special thanks - Altzeus, DestroyedClone, don, Draymarc, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moffein, Moshinate, MysticSword, Neik, Riskka, Ruxbieno, Twiner, valerie ♥ 
 
 ## Known Issues
 
@@ -49,10 +49,10 @@ There are no issues. The mod is perfect.
 * Known Issues
 	* Nemmando's boss fight doesn't fully work. 
 	* Some item displays are missing.
-    * Artifact of Metamorphosis doesn't work.
+    * Artifact of Metamorphosis doesn't work, and Cognation's unlock is currently broken (so it is unlocked by default). 
     * Nemmando sometimes forgets which skin he's supposed to be using.
     * Storms don't fully appear for clients in multiplayer. They still happen, just without the warning and the fancy visuals.
-    * Genesis Loop's particle effect is far too large on Nemmando.
+    * Coffee Bag's first stack grants a 60s buff rather than 30s on pickup.
 
 ## Changelog
 
@@ -64,10 +64,17 @@ There are no issues. The mod is perfect.
     * Reduced the cooldown on Termination attempting to find a new enemy if it couldn't find one (15s -> 5s).
     * Termination should no longer mark the same enemy twice.
     * Fixed Termination's logbook lying about what stats the enemies get, and also adjusted the text coloration to be like that of Shipping Request Form.
-    * Fixed Coffee Bag's mid-stage pickup effect.
+    * Fixed Coffee Bag's mid-stage pickup effect, mostly.
     * Capped Swift Skateboard's buff stacks again.
-    * Fixed X4's cooldown reduction. This also might've fixed Executioner's brightness issue? Can't replicate it.
+    * Fixed X4's cooldown reduction.
+    * Fixed X4 causing NREs with EliteReworks active.
+    * Added displays for X4.
     * Fixed Reactor's buff icon being the one for Needles. 
+    * Hopefully fixed an NRE caused by Nkota's Heritage
+    * Disabled Genesis Loop's particle effect for Nemmando. No more going blind!
+    * Nemmando now has the dot crosshair - he'll be given a custom crosshair eventually.
+    * Fixed Mastery and Grandmastery unlocks.
+    * Relic of Force can no longer be activated by Malice.
     * Chirr has been disabled again. They'll be ready soon, hopefully
 
 ### 0.3.44β
