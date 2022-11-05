@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: matVoidBarnacleBullet
-  m_Shader: {fileID: 4800000, guid: 6ac383fd0c8e3ce43be45643565c23d9, type: 3}
+  m_Shader: {fileID: 4800000, guid: a37cfc6085e6fab4f9481e8001ce1dd7, type: 2}
   m_ShaderKeywords: ALPHACLIP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -20,15 +20,15 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _EmissionTex:
-        m_Texture: {fileID: 2800000, guid: 326243c4ce2ff7f41b154f4b26f128d5, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Height1:
-        m_Texture: {fileID: 2800000, guid: 511b6d3cd8d4f6f4d9d5b6221ba8c0ad, type: 3}
+        m_Texture: {fileID: 2800000, guid: ca68cafbb68f49f408f4c275f1196743, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Height2:
-        m_Texture: {fileID: 2800000, guid: 5a27721ec04735941a5534489c782834, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7d141824ada450747b17a50e01bef09a, type: 3}
         m_Scale: {x: 5, y: 5}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -36,7 +36,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal:
-        m_Texture: {fileID: 2800000, guid: 580d4d1042bb0174aa316ca1ddbc1eea, type: 3}
+        m_Texture: {fileID: 2800000, guid: 8132b2fdee32300458a3f5bb7656213c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -106,7 +106,7 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 9.380282, g: 1.5486313, b: 1.5486313, a: 1}
+    - _Color: {r: 4.690142, g: 3.4378004, b: 0.785783, a: 1}
     - _EmColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FlashColor: {r: 0, g: 0, b: 0, a: 1}
