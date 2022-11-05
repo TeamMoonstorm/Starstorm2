@@ -11,12 +11,12 @@ namespace EntityStates.Nemmando
     {
         public float charge;
 
-        [TokenModifier("SS2_NEMMANDO_SPECIAL_SCEPSUBMISSION_DESCRIPTION", StatTypes.Percentage, 2)]
+        [TokenModifier("SS2_NEMMANDO_SPECIAL_SCEPSUBMISSION_DESCRIPTION", StatTypes.MultiplyByN, 2, "100")]
         public static float laserDamageCoefficient;
         public static float laserBlastRadius;// = 8f;
         public static float laserBlastForce;// = 2000f;
 
-        [TokenModifier("SS2_NEMMANDO_SPECIAL_SCEPSUBMISSION_DESCRIPTION", StatTypes.Percentage, 1)]
+        [TokenModifier("SS2_NEMMANDO_SPECIAL_SCEPSUBMISSION_DESCRIPTION", StatTypes.MultiplyByN, 1, "100")]
         public static float damageCoefficient = 0.6f;
         public static float procCoefficient = 0.5f;
         public static uint bulletCountPerShot = 4;

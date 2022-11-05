@@ -12,7 +12,7 @@ namespace Moonstorm.Starstorm2.Equipments
         public static float thrustDuration = 8f;
 
         [ConfigurableField(ConfigDesc = "Maximum speed bonus from Thruster (1 = 100%)")]
-        [TokenModifier(token, StatTypes.Percentage, 1)]
+        [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
         public static float speedCap = 2f;
 
         [ConfigurableField(ConfigDesc = "How long it takes to reach maximum speed, in seconds")]

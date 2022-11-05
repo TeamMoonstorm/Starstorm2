@@ -23,11 +23,11 @@ namespace Moonstorm.Starstorm2.Items
         public static float maxRadius = 15f;
 
         [ConfigurableField(ConfigDesc = "Base damage of Prototype Jet Boots' explosion. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.Percentage, 2)]
+        [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
         public static float baseDamage = 1.5f;
 
         [ConfigurableField(ConfigDesc = "Stacking damage of Prototype Jet Boots' explosion. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.Percentage, 3)]
+        [TokenModifier(token, StatTypes.MultiplyByN, 3, "100")]
         public static float stackDamage = 1.0f;
 
         public static GameObject JetBootsBlast;

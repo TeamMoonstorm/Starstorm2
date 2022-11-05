@@ -20,7 +20,7 @@ namespace Moonstorm.Starstorm2.Items
         public static float radiusBase = 13f;
 
         [ConfigurableField(ConfigDesc = "Total damage each malice bounce deals. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.Percentage, 2)]
+        [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
         public static float damageCoeff = 0.35f;
 
         [ConfigurableField(ConfigDesc = "Number of bounces per stack")]

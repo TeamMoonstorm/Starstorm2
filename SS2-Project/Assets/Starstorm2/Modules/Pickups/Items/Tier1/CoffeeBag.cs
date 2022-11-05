@@ -17,11 +17,11 @@ namespace Moonstorm.Starstorm2.Items
         public static float stageTimer = 60f;
 
         [ConfigurableField(ConfigDesc = "Attack speed bonus granted per stack at the start of the stage. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.Percentage, 1)]
+        [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
         public static float atkSpeedBonus = .225f;
 
         [ConfigurableField(ConfigDesc = "Movement speed bonus granted per stack at the start of the stage. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.Percentage, 2)]
+        [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
         public static float moveSpeedBonus = .21f;
 
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier //IStatItemBehavior

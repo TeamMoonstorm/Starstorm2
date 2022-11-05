@@ -11,7 +11,7 @@ namespace Moonstorm.Starstorm2.Items
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("DroidHead");
 
         [ConfigurableField(ConfigDesc = "Amount of extra damage for base and per stack, Percentage (1 = 100%)")]
-        [TokenModifier(token, StatTypes.Percentage, 0)]
+        [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float baseDamage = 1f;
 
         [ConfigurableField(ConfigDesc = "Base lifetime of the security drone, in seconds.")]

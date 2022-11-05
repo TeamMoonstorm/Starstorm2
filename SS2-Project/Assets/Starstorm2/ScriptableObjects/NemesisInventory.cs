@@ -1,4 +1,5 @@
-﻿using Moonstorm.Starstorm2;
+﻿using Moonstorm.AddressableAssets;
+using Moonstorm.Starstorm2;
 using RoR2;
 using System;
 using System.Collections.Generic;
@@ -10,84 +11,33 @@ namespace Assets.Starstorm2.ScriptableObjects
     [CreateAssetMenu(fileName = "NemesisInventory", menuName = "Starstorm2/NemesisInventory")]
     public class NemesisInventory : ScriptableObject
     {
-        [Serializable]
-        public struct NemesisItemStringReference
+        public List<NemesisAddressableItemReference> nemesisInventory = new List<NemesisAddressableItemReference>();
+        internal WeightedSelection<NemesisAddressableItemReference> nemesisInventorySelection = new WeightedSelection<NemesisAddressableItemReference>();
+
+        private static List<NemesisInventory> instances = new List<NemesisInventory>();
+
+        private void Awake()
         {
-            public string itemDefName;
-            public float chanceForApplying;
-            public int maxStacks;
-            public int minStacks;
-            public ItemDef ItemDef
-            {
-                get
-                {
-                    if (_itemDef)
-                    {
-                        return _itemDef;
-                    }
-                    else
-                    {
-                        if (!ItemCatalog.availability.available)
-                        {
-                            SS2Log.Error($"Tried to get the ItemDef of name {itemDefName} when the ItemCatalog has not initialized!");
-                            return null;
-                        }
-                        ItemIndex index = ItemCatalog.FindItemIndex(itemDefName);
-                        if (index == ItemIndex.None)
-                        {
-                            SS2Log.Error($"Could not find ItemDef of name {itemDefName}, FindItemIndex returned ItemIndex.None!");
-                            return null;
-                        }
-                        _itemDef = ItemCatalog.GetItemDef(index);
-                        return _itemDef;
-                    }
-                }
-                private set
-                {
-                    _itemDef = value;
-                }
-            }
-
-            private ItemDef _itemDef;
-
-
-            public NemesisItemStringReference(string itemDefName, int maxStacks, int minStacks, float chanceForApplying)
-            {
-                this.itemDefName = itemDefName;
-                this.maxStacks = maxStacks;
-                this.minStacks = minStacks;
-                this.chanceForApplying = chanceForApplying;
-                this._itemDef = null;
-            }
-            internal void GetItemDef()
-            {
-                var foo = ItemDef;
-            }
+            if(!instances.Contains(this))
+                instances.Add(this);
         }
 
-        public List<NemesisItemStringReference> nemesisItems;
-
-        internal WeightedSelection<NemesisItemStringReference> nemesisItemSelections = new WeightedSelection<NemesisItemStringReference>();
-
-        public void Initialize()
+        private void OnDestroy()
         {
-            for (int i = 0; i < nemesisItems.Count; i++)
-            {
-                var current = nemesisItems[i];
-                current.GetItemDef();
-                nemesisItems[i] = current;
-            }
+            if(instances.Contains(this))
+                instances.Remove(this);
+        }
 
-            foreach (NemesisItemStringReference itemStringRef in nemesisItems)
+        [SystemInitializer]
+        private static void Initialize()
+        {
+            AddressableAsset.OnAddressableAssetsLoaded += InitializeNemesisInventories;
+
+            void InitializeNemesisInventories()
             {
-                if (itemStringRef.ItemDef)
+                foreach(NemesisInventory nemesisInventory in instances)
                 {
-                    WeightedSelection<NemesisItemStringReference>.ChoiceInfo choiceInfo = new WeightedSelection<NemesisItemStringReference>.ChoiceInfo
-                    {
-                        weight = itemStringRef.chanceForApplying,
-                        value = itemStringRef
-                    };
-                    nemesisItemSelections.AddChoice(choiceInfo);
+                    nemesisInventory.CreateWeightedSelection();
                 }
             }
         }
@@ -105,10 +55,10 @@ namespace Assets.Starstorm2.ScriptableObjects
 
                 for (int i = 0; i < numItems; i++)
                 {
-                    var selected = nemesisItemSelections.Evaluate(Run.instance.runRNG.nextNormalizedFloat);
-                    if (inv.GetItemCount(selected.ItemDef) == 0)
+                    var selected = nemesisInventorySelection.Evaluate(Run.instance.runRNG.nextNormalizedFloat);
+                    if (inv.GetItemCount(selected.itemDef.Asset) == 0)
                     {
-                        inv.GiveItem(selected.ItemDef, UnityEngine.Random.Range(selected.minStacks, selected.maxStacks));
+                        inv.GiveItem(selected.itemDef.Asset, UnityEngine.Random.Range(selected.minStacks, selected.maxStacks));
                     }
                 }
 
@@ -117,6 +67,47 @@ namespace Assets.Starstorm2.ScriptableObjects
                 {
                     SS2Log.Info($"{inv.GetItemCount(i)}x {ItemCatalog.GetItemDef(i).name}");
                 }
+            }
+        }
+
+        private void CreateWeightedSelection()
+        {
+            foreach (NemesisAddressableItemReference itemRef in nemesisInventory)
+            {
+                if (itemRef.itemDef.Asset)
+                {
+                    WeightedSelection<NemesisAddressableItemReference>.ChoiceInfo choiceInfo = new WeightedSelection<NemesisAddressableItemReference>.ChoiceInfo
+                    {
+                        weight = itemRef.weight,
+                        value = itemRef
+                    };
+                    nemesisInventorySelection.AddChoice(choiceInfo);
+                }
+            }
+        }
+
+        [Serializable]
+        public struct NemesisAddressableItemReference
+        {
+            public AddressableItemDef itemDef;
+            public float weight;
+            public int maxStacks;
+            public int minStacks;
+
+            public NemesisAddressableItemReference(ItemDef itemDef, int maxStacks, int minStacks, float weight)
+            {
+                this.itemDef = new AddressableItemDef(itemDef);
+                this.maxStacks = maxStacks;
+                this.minStacks = minStacks;
+                this.weight = weight;
+            }
+
+            public NemesisAddressableItemReference(string itemDefName, int maxStacks, int minStacks, float weight)
+            {
+                this.itemDef = new AddressableItemDef(itemDefName);
+                this.maxStacks = maxStacks;
+                this.minStacks = minStacks;
+                this.weight = weight;
             }
         }
     }

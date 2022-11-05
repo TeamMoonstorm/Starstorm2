@@ -15,7 +15,7 @@ namespace Moonstorm.Starstorm2.Items
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Diary");
 
         [ConfigurableField(ConfigDesc = "Experience bonus from each diary. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.Percentage, 0)]
+        [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float experienceBonus = 1;
         public override void Initialize()
         {
