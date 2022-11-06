@@ -22,12 +22,6 @@ namespace Moonstorm.Starstorm2.ScriptableObjects
         public ItemDef itemDef;
 
 
-        public enum StatModifierType
-        {
-            Multiplicative = 0,
-            Additive,
-            Override,
-        }
 
         public override void Spawn(Vector3 position, Quaternion rotation, DirectorSpawnRequest directorSpawnRequest, ref SpawnResult result)
         {
@@ -52,7 +46,7 @@ namespace Moonstorm.Starstorm2.ScriptableObjects
                 var body = master.GetBody();
 
                 nemesisInventory.GiveItems(master.inventory);
-                master.inventory.GiveItem(SS2Content.Items.NemBossHelper);
+                //master.inventory.GiveItem(SS2Content.Items.NemBossHelper);
 
                 var component = body.gameObject.AddComponent<NemesisItemDrop>();
                 component.itemDef = itemDef;
@@ -86,14 +80,13 @@ namespace Moonstorm.Starstorm2.ScriptableObjects
         }
         private void ModifyCharacterBody(CharacterBody characterBody)
         {
-            characterBody.isChampion = true;
-            //★ This is objectively worse and disrespectful to whoever wrote the original code below.          
-            foreach (var statModifier in statModifiers)                                                         //TO-DO: Network the below. Proper.
-            {                                                                                                   //...This is in reference to the Nemesis Helper Item, by the way. Not the code directly below. This code below is fine.
+            characterBody.isChampion = true;       
+            foreach (var statModifier in statModifiers)
+            {
                 if (GetField(statModifier.fieldName, out var field))
                 {
                     float value = (float)field.GetValue(characterBody);
-                    /*switch (statModifier.statModifierType)
+                    switch (statModifier.statModifierType)
                     {
                         case StatModifierType.Additive:
                             value += statModifier.modifier;
@@ -104,7 +97,7 @@ namespace Moonstorm.Starstorm2.ScriptableObjects
                         case StatModifierType.Override:
                             value = statModifier.modifier;
                             break;
-                    }*/
+                    }
                     field.SetValue(characterBody, value);
                 }
                 characterBody.PerformAutoCalculateLevelStats();
@@ -122,6 +115,14 @@ namespace Moonstorm.Starstorm2.ScriptableObjects
             return true;
         }
 
+        private void OnValidate()
+        {
+            foreach (var statModifier in statModifiers)
+            {
+                GetField(statModifier.fieldName, out _);
+            }
+        }
+
         [Serializable]
         public struct SkillOverride
         {
@@ -134,7 +135,6 @@ namespace Moonstorm.Starstorm2.ScriptableObjects
                 this.skillDef = skillDef;
             }
         }
-
         [Serializable]
         public struct StatModifier
         {
@@ -148,6 +148,12 @@ namespace Moonstorm.Starstorm2.ScriptableObjects
                 this.modifier = modifier;
                 this.fieldName = fieldName;
             }
+        }
+        public enum StatModifierType
+        {
+            Multiplicative = 0,
+            Additive = 1,
+            Override = 2,
         }
     }
 }

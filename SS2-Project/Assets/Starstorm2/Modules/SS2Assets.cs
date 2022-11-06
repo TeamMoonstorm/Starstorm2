@@ -1,12 +1,9 @@
 ﻿using Moonstorm.Loaders;
 using Moonstorm.Starstorm2.PostProcess;
 using RoR2;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Rendering.PostProcessing;
 using Path = System.IO.Path;
 
@@ -30,9 +27,15 @@ namespace Moonstorm.Starstorm2
             bundle = AssetBundle.LoadFromFile(bundlePaths);
         }
 
+
         internal void SwapMaterialShaders()
         {
             SwapShadersFromMaterials(MainAssetBundle.LoadAllAssets<Material>().Where(mat => mat.shader.name.StartsWith("Stubbed")));
+        }
+
+        internal void FinalizeCopiedMaterials()
+        {
+            FinalizeMaterialsWithAddressableMaterialShader(MainAssetBundle);
         }
 
         private string GetAssetBundlePaths()

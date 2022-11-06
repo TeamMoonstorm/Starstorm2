@@ -1,18 +1,28 @@
 ﻿using RoR2EditorKit.Core.PropertyDrawers;
 using Moonstorm.Starstorm2.ScriptableObjects;
 using UnityEditor;
+using UnityEngine;
 
-namespace Moonstorm.SS2Editor.PropertyDrawers
+namespace Moonstorm.Starstorm2.Editor
 {
-    /*[CustomPropertyDrawer(typeof(NemesisSpawnCard.SkillOverride))]
-    public class SkillModifierPropertyDrawer : EditorGUILayoutPropertyDrawer
+    [CustomPropertyDrawer(typeof(NemesisSpawnCard.SkillOverride))]
+    public class SkillModifierPropertyDrawer : PropertyDrawer
     {
-        protected override void DrawPropertyDrawer(SerializedProperty property)
+
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            EditorGUILayout.BeginHorizontal();
-            DrawField("skillSlot");
-            DrawField("skillDef");
-            EditorGUILayout.EndHorizontal();
+            var skillSlot = property.FindPropertyRelative("skillSlot");
+            var skillDef = property.FindPropertyRelative("skillDef");
+
+            EditorGUI.BeginProperty(position, label, property);
+
+            var skillDefRect = new Rect(position.x, position.y, position.width / 1.5f, position.height);
+            EditorGUI.PropertyField(skillDefRect, skillDef);
+
+            var skillSlotRect = new Rect(skillDefRect.xMax, skillDefRect.position.y, position.width - skillDefRect.width, skillDefRect.height);
+            EditorGUI.PropertyField(skillSlotRect, skillSlot, new GUIContent(), true);
+
+            EditorGUI.EndProperty();
         }
-    }*/
+    }
 }

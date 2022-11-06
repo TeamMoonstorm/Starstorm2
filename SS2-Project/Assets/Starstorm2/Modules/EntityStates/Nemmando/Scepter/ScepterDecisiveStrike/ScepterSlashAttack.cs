@@ -17,7 +17,7 @@ namespace EntityStates.Nemmando
         [TokenModifier("SS2_NEMMANDO_SPECIAL_SCEPBOSS_DESCRIPTION", StatTypes.Default, 0)]
         public static int maxHits;
         public static int minHits;
-        [TokenModifier("SS2_NEMMANDO_SPECIAL_SCEPBOSS_DESCRIPTION", StatTypes.Percentage, 1)]
+        [TokenModifier("SS2_NEMMANDO_SPECIAL_SCEPBOSS_DESCRIPTION", StatTypes.MultiplyByN, 1, "100")]
         public static float maxDamageCoefficient;
         public static float minDamageCoefficient;
         public static float maxRadius;

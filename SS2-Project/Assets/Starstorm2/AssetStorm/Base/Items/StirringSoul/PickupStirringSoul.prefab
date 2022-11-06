@@ -29,8 +29,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
-  m_Father: {fileID: 6865317805171692735}
-  m_RootOrder: 1
+  m_Father: {fileID: 1605146259213188554}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -146.581, y: -22.052002, z: -21.860992}
 --- !u!33 &2661009880324560487
 MeshFilter:
@@ -108,7 +108,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 6865317805171692735}
+  - {fileID: 6456506597407480670}
+  - {fileID: 6060511898159407606}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -139,10 +140,10 @@ Transform:
   m_GameObject: {fileID: 3178522088724548574}
   m_LocalRotation: {x: -0.3344488, y: 0.307775, z: 0.6809798, w: 0.5741821}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.05222, y: 1.02921, z: 0.94319993}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 6865317805171692735}
-  m_RootOrder: 0
+  m_Father: {fileID: 1605146259213188554}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -53.441, y: -9.867001, z: 104.703}
 --- !u!198 &5838179468299744910
 ParticleSystem:
@@ -280,7 +281,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.001
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -396,8 +397,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 2.5
-      minScalar: 1
+      scalar: 0.5
+      minScalar: 0.25
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -858,7 +859,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.436336
+      value: 0.4
       mode: 0
       spread: 0
       speed:
@@ -977,7 +978,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 1
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -4860,7 +4861,7 @@ ParticleSystemRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_RenderMode: 5
+  m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
@@ -4873,7 +4874,7 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
-  m_UseCustomVertexStreams: 1
+  m_UseCustomVertexStreams: 0
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1
@@ -4883,35 +4884,3 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!1 &8951792713665642382
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6865317805171692735}
-  m_Layer: 0
-  m_Name: Intermediate
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6865317805171692735
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8951792713665642382}
-  m_LocalRotation: {x: -0, y: 0.7277642, z: -0, w: 0.68582743}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 6060511898159407606}
-  - {fileID: 6456506597407480670}
-  m_Father: {fileID: 1605146259213188554}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 93.399, z: 0}

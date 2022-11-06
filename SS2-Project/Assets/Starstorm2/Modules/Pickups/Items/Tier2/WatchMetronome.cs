@@ -15,7 +15,7 @@ namespace Moonstorm.Starstorm2.Items
         public static int chargeAmount = 5;
 
         [ConfigurableField(ConfigDesc = "Maximum movement speed bonus that can be achieved via metronome. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.Percentage, 1)]
+        [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
         public static float maxMovementSpeed = 2;
 
         public sealed class Behavior : BaseItemBodyBehavior

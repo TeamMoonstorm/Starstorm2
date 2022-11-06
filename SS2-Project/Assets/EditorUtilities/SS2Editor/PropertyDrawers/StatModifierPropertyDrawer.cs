@@ -9,8 +9,63 @@ using RoR2;
 using Moonstorm.Starstorm2.ScriptableObjects;
 using RoR2EditorKit.Core.PropertyDrawers;
 
-namespace Moonstorm.SS2Editor.PropertyDrawers
+namespace Moonstorm.Starstorm2.Editor
 {
+    [CustomPropertyDrawer(typeof(NemesisSpawnCard.StatModifier))]
+    public class StatModifierPropertyDrawer : PropertyDrawer
+    {
+        public static float StandardPropertyHeight => EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+        private static Type CharacterBodyType => typeof(CharacterBody);
+        private List<string> validFields;
+        private string[] validFieldsArray;
+        public StatModifierPropertyDrawer()
+        {
+            validFields = CharacterBodyType.GetFields()
+                .Where(fi => fi.IsPublic && !fi.IsStatic && fi.Name.Contains("base") && fi.FieldType != typeof(string))
+                .Select(fi => fi.Name)
+                .ToList();
+            validFieldsArray = validFields.ToArray();
+        }
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            var fieldName = property.FindPropertyRelative("fieldName");
+            var modifier = property.FindPropertyRelative("modifier");
+            var modifierType = property.FindPropertyRelative("statModifierType");
+
+            EditorGUI.BeginProperty(position, label, property);
+
+            var foldoutRect = new Rect(position.x, position.y, position.width, 18);
+            property.isExpanded = EditorGUI.Foldout(foldoutRect, property.isExpanded, label);
+            if(property.isExpanded)
+            {
+                EditorGUI.indentLevel++;
+                var num = validFields.IndexOf(fieldName.stringValue);
+                var chosenIndex = num == -1 ? 0 : num;
+                var fieldRect = new Rect(foldoutRect.x, foldoutRect.yMax, foldoutRect.width, foldoutRect.height);
+                var newIndex = EditorGUI.Popup(fieldRect, "Target Base Stat", chosenIndex, validFieldsArray);
+                fieldName.stringValue = validFields[newIndex];
+
+                var modifierRect = new Rect(fieldRect.x, fieldRect.yMax, fieldRect.width / 1.5f, fieldRect.height);
+                EditorGUI.PropertyField(modifierRect, modifier);
+
+                var modifierTypeRect = new Rect(modifierRect.xMax, modifierRect.y, fieldRect.width - modifierRect.width, modifierRect.height);
+                EditorGUI.PropertyField(modifierTypeRect, modifierType, new GUIContent());
+                EditorGUI.indentLevel--;
+            }
+
+            EditorGUI.EndProperty();
+        }
+
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            var basePropertyHeight = base.GetPropertyHeight(property, label);
+            if(property.isExpanded)
+            {
+                basePropertyHeight *= 3;
+            }
+            return basePropertyHeight; 
+        }
+    }
     /*[CustomPropertyDrawer(typeof(NemesisSpawnCard.StatModifier))]
     public class StatModifierPropertyDrawer : EditorGUILayoutPropertyDrawer
     {

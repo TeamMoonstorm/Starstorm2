@@ -13,11 +13,11 @@ namespace Moonstorm.Starstorm2.Items
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("SwiftSkateboard");
 
         [ConfigurableField(ConfigDesc = "Movement speed bonus for each skateboard push. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.Percentage, 0)]
+        [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float moveSpeedBonus = 0.2f;
 
         [ConfigurableField(ConfigDesc = "Movement speed bonus for each skateboard push for each item stack past the first. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.Percentage, 1)]
+        [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
         public static float moveSpeedBonusPerStack = 0.15f;
 
         [ConfigurableField(ConfigDesc = "Initial maximum stacks for the Swift Skateboard's movement speed buff.")]

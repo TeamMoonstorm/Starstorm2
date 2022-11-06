@@ -14,7 +14,7 @@ namespace EntityStates.Executioner
 {
     public class AxeSlam : BaseSkillState
     {
-        [TokenModifier("SS2_EXECUTIONER_AXE_DESCRIPTION", StatTypes.Percentage, 0)]
+        [TokenModifier("SS2_EXECUTIONER_AXE_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
         public static float baseDamageCoefficient = 12f;
         ///<summary>What percentage of baseDamageCoefficient should be made up of force damage. Put a value between 0 and 1 you ape.</summary>
         public static float forceDamageCoefficient = 0.5f;

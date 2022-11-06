@@ -3,7 +3,6 @@ using Moonstorm.Starstorm2.API;
 using R2API.Utils;
 using R2API;
 using R2API.Networking;
-using On.RoR2;
 using System;
 using UnityEngine;
 
@@ -51,9 +50,7 @@ namespace Moonstorm.Starstorm2
             new SS2Content().Init();
             new SS2Language().Init();
             ConfigurableFieldManager.AddMod(this);
-            TokenModifierManager.AddToManager();
         }
-
 
         private void Start()
         {

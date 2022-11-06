@@ -12,6 +12,7 @@ namespace Moonstorm.Starstorm2.Modules
     public static class UglyMULT
     {
         internal static Material matLunarGolem;
+        [SystemInitializer]
         public static void Initialize()
         {
             matLunarGolem = Object.Instantiate(Resources.Load<GameObject>("Prefabs/CharacterBodies/LunarGolemBody").GetComponentInChildren<CharacterModel>().baseRendererInfos[0].defaultMaterial); // to-do: update this into an addressable

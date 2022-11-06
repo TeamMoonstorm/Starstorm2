@@ -6,7 +6,7 @@ namespace EntityStates.Executioner
 {
     public class FirePistol : BaseSkillState
     {
-        [TokenModifier("SS2_EXECUTIONER_PISTOL_DESCRIPTION", StatTypes.Percentage, 0)]
+        [TokenModifier("SS2_EXECUTIONER_PISTOL_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
         public static float damageCoefficient;
         public static float procCoefficient;
         public static float baseDuration;

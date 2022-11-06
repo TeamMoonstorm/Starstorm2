@@ -10,11 +10,11 @@ namespace Moonstorm.Starstorm2.Items
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("GreenChocolate");
 
         [ConfigurableField(ConfigDesc = "Percentage of max hp that must be lost for Green Chocolate's effect to proc. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.Percentage, 0)]
+        [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float damageThreshold = 0.2f;
 
         [ConfigurableField(ConfigDesc = "Percent damage reduction that the damage in excess of the above threshold (base value 20%) is reduced by. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.Percentage, 1)]
+        [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
         public static float damageReduction = 0.5f;
 
         [ConfigurableField(ConfigDesc = "Base duration of the buff provided by Green Chocolate. (1 = 1 second)")]
@@ -26,7 +26,7 @@ namespace Moonstorm.Starstorm2.Items
         public static float stackDuration = 10f;
 
         [ConfigurableField(ConfigDesc = "Percent damage increase from the buff. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.Percentage, 4)]
+        [TokenModifier(token, StatTypes.MultiplyByN, 4, "100")]
         public static float buffDamage = 0.5f;
 
         [ConfigurableField(ConfigDesc = "Crit chance increase from the buff. (1 = 1% crit chance)")]
