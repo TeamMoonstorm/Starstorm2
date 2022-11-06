@@ -2364,6 +2364,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2170043277137016145}
   - component: {fileID: 4042601613002007697}
+  - component: {fileID: 4248541151138022686}
+  - component: {fileID: 2689066612639972194}
   m_Layer: 0
   m_Name: mdlExecutioner2
   m_TagString: Untagged
@@ -2409,6 +2411,57 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4248541151138022686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537515761525436395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1143142494, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: 0}
+  itemDisplayRuleSet: {fileID: 0}
+  autoPopulateLightInfos: 0
+  baseRendererInfos:
+  - renderer: {fileID: 294012133574288574}
+    defaultMaterial: {fileID: 2100000, guid: f471d14a3bb09d34ea01cc2351c11c1c, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+  - renderer: {fileID: 1578221483948415042}
+    defaultMaterial: {fileID: 2100000, guid: dc10a708d723edd4faed42253b4e1410, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 1
+    hideOnDeath: 0
+  - renderer: {fileID: 48079214076043276}
+    defaultMaterial: {fileID: 2100000, guid: 37f6d0c705665b944b9c753fdf6f09d4, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 1
+    hideOnDeath: 0
+  - renderer: {fileID: 240269928518232751}
+    defaultMaterial: {fileID: 2100000, guid: b4d5cbe288b3359459477f91de2b46ea, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+  baseLightInfos: []
+--- !u!114 &2689066612639972194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537515761525436395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1533710874, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skins:
+  - {fileID: 11400000, guid: 2e0cdc049a458534d8e81936d85c25d2, type: 2}
 --- !u!1 &1699291232591387865
 GameObject:
   m_ObjectHideFlags: 0

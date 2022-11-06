@@ -1,5 +1,68 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &121501290596561754
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3303390127915514731}
+  - component: {fileID: 3353577869384659568}
+  - component: {fileID: 4271200378455263199}
+  m_Layer: 12
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3303390127915514731
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 121501290596561754}
+  m_LocalRotation: {x: -0.0012827885, y: 0.00068652513, z: 0.0034646979, w: 0.9999929}
+  m_LocalPosition: {x: -0.007019808, y: 0.00010450874, z: -0.0037373167}
+  m_LocalScale: {x: 1.6666682, y: 1.6666677, z: 1.6666687}
+  m_Children: []
+  m_Father: {fileID: 7251327786480374544}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &3353577869384659568
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 121501290596561754}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4271200378455263199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 121501290596561754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 449027690755057918}
+  isBullseye: 0
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 3342942999571457185}
+  indexInGroup: 38
 --- !u!1 &128247474296620655
 GameObject:
   m_ObjectHideFlags: 0
@@ -31,7 +94,7 @@ Transform:
   m_Father: {fileID: 7251327786480375172}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &167336683985208792
+--- !u!1 &173449294193563693
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -39,9 +102,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6983972388014934512}
-  - component: {fileID: 4820735014529613655}
-  - component: {fileID: 1838483311412947532}
+  - component: {fileID: 3728264341467437038}
+  - component: {fileID: 6820620883366072859}
+  - component: {fileID: 4086338422402575961}
   m_Layer: 12
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -49,40 +112,40 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6983972388014934512
+--- !u!4 &3728264341467437038
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 167336683985208792}
-  m_LocalRotation: {x: 0.00006666408, y: -0.0002632416, z: 0.0004566461, w: 0.9999999}
-  m_LocalPosition: {x: -0.0015918859, y: -0.00037230414, z: 0.0010999904}
-  m_LocalScale: {x: 1.6666667, y: 1.6666682, z: 1.6666659}
+  m_GameObject: {fileID: 173449294193563693}
+  m_LocalRotation: {x: -0.0022879676, y: 0.0009305383, z: 0.0034357912, w: 0.9999911}
+  m_LocalPosition: {x: -0.027810058, y: -0.007256335, z: -0.011279657}
+  m_LocalScale: {x: 1.6666726, y: 1.6666684, z: 1.6666706}
   m_Children: []
-  m_Father: {fileID: 7251327786480374554}
+  m_Father: {fileID: 7251327786480374608}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &4820735014529613655
+--- !u!135 &6820620883366072859
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 167336683985208792}
+  m_GameObject: {fileID: 173449294193563693}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1838483311412947532
+--- !u!114 &4086338422402575961
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 167336683985208792}
+  m_GameObject: {fileID: 173449294193563693}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
@@ -93,7 +156,7 @@ MonoBehaviour:
   isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 19
+  indexInGroup: 32
 --- !u!1 &314249493779280805
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,7 +173,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &563641814383848983
 Transform:
   m_ObjectHideFlags: 0
@@ -405,7 +468,7 @@ Transform:
   m_Father: {fileID: 1047028374884018458}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &405565870477752368
+--- !u!1 &399768714619128616
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -413,9 +476,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1419368031190353093}
-  - component: {fileID: 2635968414398041997}
-  - component: {fileID: 8260055168392162972}
+  - component: {fileID: 7804091011093058871}
+  - component: {fileID: 18863841227371311}
+  - component: {fileID: 2986872844602016219}
   m_Layer: 12
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -423,42 +486,40 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1419368031190353093
+--- !u!4 &7804091011093058871
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 405565870477752368}
-  m_LocalRotation: {x: 0.000060914845, y: -0.000000008026368, z: -0.000000028079736,
-    w: 1}
-  m_LocalPosition: {x: 0, y: 0.0009117126, z: 0}
-  m_LocalScale: {x: 1.6666666, y: 1.666667, z: 1.666667}
+  m_GameObject: {fileID: 399768714619128616}
+  m_LocalRotation: {x: 0.00006666408, y: -0.0002632416, z: 0.0004566461, w: 0.9999999}
+  m_LocalPosition: {x: -0.0015918859, y: -0.00037230414, z: 0.0010999904}
+  m_LocalScale: {x: 1.6666667, y: 1.6666682, z: 1.6666659}
   m_Children: []
-  m_Father: {fileID: 7251327786480374280}
-  m_RootOrder: 5
+  m_Father: {fileID: 7251327786480374554}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &2635968414398041997
-CapsuleCollider:
+--- !u!135 &18863841227371311
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 405565870477752368}
+  m_GameObject: {fileID: 399768714619128616}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1.6
-  m_Direction: 0
-  m_Center: {x: 0, y: 0.2, z: 0}
---- !u!114 &8260055168392162972
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2986872844602016219
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 405565870477752368}
+  m_GameObject: {fileID: 399768714619128616}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
@@ -469,7 +530,70 @@ MonoBehaviour:
   isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 45
+  indexInGroup: 19
+--- !u!1 &444985986222074729
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1944749822988943677}
+  - component: {fileID: 7491475829848947157}
+  - component: {fileID: 3334827861418100557}
+  m_Layer: 12
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1944749822988943677
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 444985986222074729}
+  m_LocalRotation: {x: -0.005150555, y: 0.0042175427, z: -0.00022737267, w: 0.9999779}
+  m_LocalPosition: {x: -0.046803895, y: -0.018800544, z: -0.029548489}
+  m_LocalScale: {x: 1.6666735, y: 1.6666712, z: 1.6666696}
+  m_Children: []
+  m_Father: {fileID: 7251327786480374644}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &7491475829848947157
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 444985986222074729}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3334827861418100557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 444985986222074729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 449027690755057918}
+  isBullseye: 0
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 3342942999571457185}
+  indexInGroup: 25
 --- !u!1 &552368109173833114
 GameObject:
   m_ObjectHideFlags: 0
@@ -507,6 +631,12 @@ GameObject:
   - component: {fileID: 453333854499723557}
   - component: {fileID: 449007038772124597}
   - component: {fileID: 8554857460552679063}
+  - component: {fileID: 5631468988767328057}
+  - component: {fileID: 4998691119878265079}
+  - component: {fileID: 2817225122890544023}
+  - component: {fileID: 2019366477334000011}
+  - component: {fileID: 5868259138846544362}
+  - component: {fileID: 7855648737336116278}
   m_Layer: 0
   m_Name: WayfarerBody
   m_TagString: Player
@@ -572,7 +702,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 552368109173833114}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 1530905962, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
@@ -580,7 +710,7 @@ MonoBehaviour:
   walkSpeedPenaltyCoefficient: 1
   characterDirection: {fileID: 449222239286607946}
   muteWalkMotion: 0
-  mass: 2000
+  mass: 1500
   airControl: 0.25
   disableAirControlUntilCollision: 0
   generateParametersOnAwake: 1
@@ -674,7 +804,7 @@ MonoBehaviour:
   hideCrosshair: 0
   aimOriginTransform: {fileID: 549688976967165144}
   hullClassification: 2
-  portraitIcon: {fileID: 2800000, guid: 576a493f12e548149b711e8a24c69ef5, type: 3}
+  portraitIcon: {fileID: 2800000, guid: cfda9ca012f8d2a47bebec7e6439394a, type: 3}
   bodyColor: {r: 0.196536, g: 0.18422925, b: 0.33962262, a: 1}
   isChampion: 1
   currentVehicle: {fileID: 0}
@@ -757,9 +887,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customName: Body
   initialStateType:
-    _typeName: EntityStates.SpawnTeleporterState, Assembly-CSharp
+    _typeName: EntityStates.FlyState, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   mainStateType:
-    _typeName: EntityStates.GenericCharacterMain, Assembly-CSharp
+    _typeName: EntityStates.FlyState, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &449042048684616238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -924,7 +1054,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathStateMachine: {fileID: 448360102341244513}
   deathState:
-    _typeName: 
+    _typeName: EntityStates.GenericCharacterDeath, RoR2, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   idleStateMachine:
   - {fileID: 449042048684616238}
 --- !u!114 &448571789810767588
@@ -1024,8 +1155,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   logUnlockableName: 
-  logUnlockableDef: {fileID: 0}
-  bossDropTable: {fileID: 0}
+  logUnlockableDef: {fileID: 11400000, guid: 64c7d615e722b1443a1459e5411b64b0, type: 2}
+  bossDropTable: {fileID: 11400000, guid: 80b18a22d1314c84e844b9d3d553a2aa, type: 2}
   bossPickup:
     pickupName: ItemIndex.Lamp
 --- !u!54 &535382068153449435
@@ -1036,13 +1167,13 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 552368109173833114}
   serializedVersion: 2
-  m_Mass: 2000
+  m_Mass: 1500
   m_Drag: 0
-  m_AngularDrag: 0
+  m_AngularDrag: 0.05
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
+  m_Interpolate: 1
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &453333854499723557
 CapsuleCollider:
@@ -1065,7 +1196,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 552368109173833114}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -1568778350, guid: 050936fea8909af15a3fd3b64da1ff83, type: 3}
   m_Name: 
@@ -1107,6 +1238,129 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
   requireEntitlementIfPlayerControlled: 1
+--- !u!114 &5631468988767328057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552368109173833114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1954827382, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aimDirection: {x: 1, y: 1, z: 1}
+  rigid: {fileID: 535382068153449435}
+  angularVelocityPID: {fileID: 2817225122890544023}
+  torquePID: {fileID: 2019366477334000011}
+  freezeXRotation: 1
+  freezeYRotation: 0
+  freezeZRotation: 1
+  animatorXCycle: 
+  animatorYCycle: 
+  animatorZCycle: 
+  animatorTorqueScale: 0
+--- !u!114 &4998691119878265079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552368109173833114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -600610627, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveVector: {x: 0, y: 0, z: 0}
+  rigid: {fileID: 535382068153449435}
+  forcePID: {fileID: 5868259138846544362}
+  centerOfMassOffset: {x: 0, y: 0, z: 0}
+  animatorForward: 
+  animatorRight: 
+  animatorUp: 
+  enableOverrideMoveVectorInLocalSpace: 0
+  canTakeImpactDamage: 1
+  overrideMoveVectorInLocalSpace: {x: 0, y: 0, z: 0}
+--- !u!114 &2817225122890544023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552368109173833114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -2053006600, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customName: Angular Velocity PID
+  PID: {x: 2, y: 1, z: 0}
+  inputQuat: {x: 0, y: 0, z: 0, w: 1}
+  targetQuat: {x: 0, y: 0, z: 0, w: 1}
+  outputVector: {x: 0, y: 0, z: 0}
+  gain: 1
+--- !u!114 &2019366477334000011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552368109173833114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 52559370, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customName: torquePID
+  PID: {x: 2, y: 1, z: 0}
+  inputVector: {x: 0, y: 0, z: 0}
+  targetVector: {x: 0, y: 0, z: 0}
+  outputVector: {x: 0, y: 0, z: 0}
+  isAngle: 1
+  gain: 3
+--- !u!114 &5868259138846544362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552368109173833114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 52559370, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customName: Force PID
+  PID: {x: 3, y: 0, z: 0}
+  inputVector: {x: 0, y: 0, z: 0}
+  targetVector: {x: 0, y: 0, z: 0}
+  outputVector: {x: 0, y: 0, z: 0}
+  isAngle: 0
+  gain: 1
+--- !u!114 &7855648737336116278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552368109173833114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -789927658, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitThreshold: 0.1
+  targetStateMachine: {fileID: 448360102341244513}
+  idleStateMachine:
+  - {fileID: 449042048684616238}
+  hurtState:
+    _typeName: EntityStates.HurtStateFlyer, RoR2, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  canBeHitStunned: 1
+  canBeStunned: 1
+  canBeFrozen: 1
 --- !u!1 &552688337258673146
 GameObject:
   m_ObjectHideFlags: 0
@@ -1198,7 +1452,7 @@ Transform:
   m_Father: {fileID: 7251327786480375172}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &923480670513908319
+--- !u!1 &1004835880097127543
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1206,9 +1460,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3096941449835686643}
-  - component: {fileID: 7822056518006662477}
-  - component: {fileID: 329917797395762978}
+  - component: {fileID: 9083857320460275216}
+  - component: {fileID: 8442002791495960969}
+  - component: {fileID: 6209101069150949767}
   m_Layer: 12
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -1216,41 +1470,40 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3096941449835686643
+--- !u!4 &9083857320460275216
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 923480670513908319}
-  m_LocalRotation: {x: 0.00031187155, y: -0.000019503292, z: -0.00057315506, w: 0.9999998}
-  m_LocalPosition: {x: 0.0022115703, y: -0.00076908554, z: 0.00035635204}
-  m_LocalScale: {x: 1.666666, y: 1.6666662, z: 1.6666669}
+  m_GameObject: {fileID: 1004835880097127543}
+  m_LocalRotation: {x: 0.000034675, y: 0.000008597969, z: 0.000010948627, w: 1}
+  m_LocalPosition: {x: -0.00021146727, y: 0.000982069, z: 0.00018589429}
+  m_LocalScale: {x: 1.6666666, y: 1.6666669, z: 1.6666673}
   m_Children: []
-  m_Father: {fileID: 7251327786480374406}
-  m_RootOrder: 0
+  m_Father: {fileID: 7251327786480375168}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &7822056518006662477
-CapsuleCollider:
+--- !u!135 &8442002791495960969
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 923480670513908319}
+  m_GameObject: {fileID: 1004835880097127543}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.55
-  m_Height: 1.8
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.9, z: 0}
---- !u!114 &329917797395762978
+  serializedVersion: 2
+  m_Radius: 0.9
+  m_Center: {x: 0, y: 0.33, z: 0}
+--- !u!114 &6209101069150949767
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 923480670513908319}
+  m_GameObject: {fileID: 1004835880097127543}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
@@ -1261,7 +1514,7 @@ MonoBehaviour:
   isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 0
+  indexInGroup: 43
 --- !u!1 &1036504204184784425
 GameObject:
   m_ObjectHideFlags: 0
@@ -1292,7 +1545,7 @@ Transform:
   m_Father: {fileID: 5700526578715482104}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1170330515896599252
+--- !u!1 &1400137827882147854
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1300,9 +1553,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8083933582604215593}
-  - component: {fileID: 4318391672356558897}
-  - component: {fileID: 747176997927912878}
+  - component: {fileID: 463085380403557254}
+  - component: {fileID: 8552973186671398207}
+  - component: {fileID: 4782404310352635564}
   m_Layer: 12
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -1310,40 +1563,40 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8083933582604215593
+--- !u!4 &463085380403557254
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1170330515896599252}
-  m_LocalRotation: {x: -0.00004114954, y: 0.0005244366, z: -0.000015567995, w: 0.9999999}
-  m_LocalPosition: {x: -0.0061975596, y: 0.0008139797, z: 0.000051751864}
-  m_LocalScale: {x: 1.6666658, y: 1.6666644, z: 1.6666665}
+  m_GameObject: {fileID: 1400137827882147854}
+  m_LocalRotation: {x: 0.000060491264, y: -0.00018112827, z: 0.00049538014, w: 0.99999994}
+  m_LocalPosition: {x: -0.00065318303, y: -0.0002355944, z: 0.0009999851}
+  m_LocalScale: {x: 1.6666667, y: 1.6666675, z: 1.666667}
   m_Children: []
-  m_Father: {fileID: 7251327786480374602}
+  m_Father: {fileID: 7251327786480374546}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &4318391672356558897
+--- !u!135 &8552973186671398207
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1170330515896599252}
+  m_GameObject: {fileID: 1400137827882147854}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &747176997927912878
+--- !u!114 &4782404310352635564
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1170330515896599252}
+  m_GameObject: {fileID: 1400137827882147854}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
@@ -1354,323 +1607,7 @@ MonoBehaviour:
   isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 9
---- !u!1 &1191202137585160264
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7400220110162037008}
-  - component: {fileID: 3651985324127611490}
-  - component: {fileID: 5401519915609038610}
-  m_Layer: 12
-  m_Name: Hurtbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7400220110162037008
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1191202137585160264}
-  m_LocalRotation: {x: -0.0000042766324, y: 0.000035725527, z: 0.000009986569, w: 1}
-  m_LocalPosition: {x: -0.0008820036, y: -0.00017788628, z: 0.00057864236}
-  m_LocalScale: {x: 1.666667, y: 1.6666667, z: 1.666667}
-  m_Children: []
-  m_Father: {fileID: 7251327786480374612}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &3651985324127611490
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1191202137585160264}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5401519915609038610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1191202137585160264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 449027690755057918}
-  isBullseye: 0
-  isSniperTarget: 0
-  damageModifier: 0
-  hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 41
---- !u!1 &1306229708452974670
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5792876322253440019}
-  - component: {fileID: 3449648337286325653}
-  - component: {fileID: 1807534740382976297}
-  m_Layer: 12
-  m_Name: Hurtbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5792876322253440019
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1306229708452974670}
-  m_LocalRotation: {x: -0.0050044316, y: 0.0036878346, z: 0.0005110765, w: 0.99998057}
-  m_LocalPosition: {x: -0.044318903, y: -0.019128596, z: -0.020374795}
-  m_LocalScale: {x: 1.6666721, y: 1.6666704, z: 1.6666702}
-  m_Children: []
-  m_Father: {fileID: 7251327786480374604}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &3449648337286325653
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1306229708452974670}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1807534740382976297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1306229708452974670}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 449027690755057918}
-  isBullseye: 0
-  isSniperTarget: 0
-  damageModifier: 0
-  hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 27
---- !u!1 &1308880568847696446
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4800784461115918445}
-  - component: {fileID: 7885551914794375596}
-  - component: {fileID: 8867207005334484554}
-  m_Layer: 12
-  m_Name: Hurtbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4800784461115918445
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1308880568847696446}
-  m_LocalRotation: {x: -0.005150555, y: 0.0042175427, z: -0.00022737267, w: 0.9999779}
-  m_LocalPosition: {x: -0.046803895, y: -0.018800544, z: -0.029548489}
-  m_LocalScale: {x: 1.6666735, y: 1.6666712, z: 1.6666696}
-  m_Children: []
-  m_Father: {fileID: 7251327786480374644}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &7885551914794375596
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1308880568847696446}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8867207005334484554
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1308880568847696446}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 449027690755057918}
-  isBullseye: 0
-  isSniperTarget: 0
-  damageModifier: 0
-  hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 25
---- !u!1 &1358195627219171728
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8160562347241772449}
-  - component: {fileID: 3847696395519224731}
-  - component: {fileID: 7275337586201636481}
-  m_Layer: 12
-  m_Name: Hurtbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8160562347241772449
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1358195627219171728}
-  m_LocalRotation: {x: -0.0012827885, y: 0.00068652513, z: 0.0034646979, w: 0.9999929}
-  m_LocalPosition: {x: -0.007019808, y: 0.00010450874, z: -0.0037373167}
-  m_LocalScale: {x: 1.6666682, y: 1.6666677, z: 1.6666687}
-  m_Children: []
-  m_Father: {fileID: 7251327786480374544}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &3847696395519224731
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1358195627219171728}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7275337586201636481
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1358195627219171728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 449027690755057918}
-  isBullseye: 0
-  isSniperTarget: 0
-  damageModifier: 0
-  hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 38
---- !u!1 &1389443770574533156
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2769811239189060733}
-  - component: {fileID: 4676020705179343366}
-  - component: {fileID: 2536085749943958072}
-  m_Layer: 12
-  m_Name: Hurtbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2769811239189060733
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1389443770574533156}
-  m_LocalRotation: {x: -0.00042523444, y: 0.00020742312, z: -0.0005129138, w: 0.9999998}
-  m_LocalPosition: {x: -0.00017008884, y: -0.00076585694, z: 0.00013096066}
-  m_LocalScale: {x: 1.6663208, y: 1.6666657, z: 1.6663786}
-  m_Children: []
-  m_Father: {fileID: 7251327786480374434}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &4676020705179343366
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1389443770574533156}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.275
-  m_Height: 2.35
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.175, z: 0}
---- !u!114 &2536085749943958072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1389443770574533156}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 449027690755057918}
-  isBullseye: 0
-  isSniperTarget: 0
-  damageModifier: 0
-  hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 7
+  indexInGroup: 21
 --- !u!1 &1417329603279667507
 GameObject:
   m_ObjectHideFlags: 0
@@ -1762,6 +1699,69 @@ Transform:
   m_Father: {fileID: 2332914170327827493}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1881554634801312584
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3749135303552503368}
+  - component: {fileID: 3275432065027693393}
+  - component: {fileID: 1426834682743540644}
+  m_Layer: 12
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3749135303552503368
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881554634801312584}
+  m_LocalRotation: {x: -0.0016396636, y: 0.00114533, z: 0.0033669947, w: 0.9999924}
+  m_LocalPosition: {x: -0.0037249762, y: -0.0004583424, z: -0.0020517833}
+  m_LocalScale: {x: 1.6666678, y: 1.6666673, z: 1.6666682}
+  m_Children: []
+  m_Father: {fileID: 7251327786480374548}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &3275432065027693393
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881554634801312584}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1426834682743540644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881554634801312584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 449027690755057918}
+  isBullseye: 0
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 3342942999571457185}
+  indexInGroup: 39
 --- !u!1 &1928321042758533085
 GameObject:
   m_ObjectHideFlags: 0
@@ -1854,7 +1854,7 @@ Transform:
   m_Father: {fileID: 7251327786480375168}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2063372850013069583
+--- !u!1 &2042115751406432655
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1862,9 +1862,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4122487109114323665}
-  - component: {fileID: 1604016057145753895}
-  - component: {fileID: 256533980102372405}
+  - component: {fileID: 9038964225155740285}
+  - component: {fileID: 3069976923251743441}
+  - component: {fileID: 2956052513957627902}
   m_Layer: 12
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -1872,13 +1872,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4122487109114323665
+--- !u!4 &9038964225155740285
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2063372850013069583}
+  m_GameObject: {fileID: 2042115751406432655}
   m_LocalRotation: {x: 0.0000630915, y: 0.0002769194, z: 0.0004442049, w: 0.9999999}
   m_LocalPosition: {x: -0.0046993913, y: 0.0015335841, z: 0.0010057077}
   m_LocalScale: {x: 1.6666664, y: 1.6666659, z: 1.666667}
@@ -1886,26 +1886,26 @@ Transform:
   m_Father: {fileID: 7251327786480374618}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &1604016057145753895
+--- !u!135 &3069976923251743441
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2063372850013069583}
+  m_GameObject: {fileID: 2042115751406432655}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &256533980102372405
+--- !u!114 &2956052513957627902
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2063372850013069583}
+  m_GameObject: {fileID: 2042115751406432655}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
@@ -1917,6 +1917,260 @@ MonoBehaviour:
   damageModifier: 0
   hurtBoxGroup: {fileID: 3342942999571457185}
   indexInGroup: 13
+--- !u!1 &2158958094174337706
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3213818235971316028}
+  - component: {fileID: 6829950446610616977}
+  - component: {fileID: 4523282301555439210}
+  m_Layer: 12
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3213818235971316028
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2158958094174337706}
+  m_LocalRotation: {x: -0.017839912, y: 0.00008232144, z: -0.00041254042, w: 0.99984086}
+  m_LocalPosition: {x: 0.0027302376, y: -0.00048391125, z: -0.001992993}
+  m_LocalScale: {x: 1.6663572, y: 1.6666337, z: 1.6665713}
+  m_Children: []
+  m_Father: {fileID: 7251327786480374438}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: -2, y: 0, z: 0}
+--- !u!136 &6829950446610616977
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2158958094174337706}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.2
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.5, z: 0}
+--- !u!114 &4523282301555439210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2158958094174337706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 449027690755057918}
+  isBullseye: 0
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 3342942999571457185}
+  indexInGroup: 2
+--- !u!1 &2362003707413573397
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 685309616098297037}
+  - component: {fileID: 3907634966034892290}
+  - component: {fileID: 8777042145154563459}
+  m_Layer: 12
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &685309616098297037
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2362003707413573397}
+  m_LocalRotation: {x: 0.0003297776, y: 0.00024178621, z: -0.00017672591, w: 0.9999999}
+  m_LocalPosition: {x: -0.00071895466, y: -0.0023023041, z: -0.0034775955}
+  m_LocalScale: {x: 1.6665688, y: 1.6664271, z: 1.666566}
+  m_Children: []
+  m_Father: {fileID: 7251327786480374456}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &3907634966034892290
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2362003707413573397}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.15
+  m_Height: 0.75
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.35, z: 0}
+--- !u!114 &8777042145154563459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2362003707413573397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 449027690755057918}
+  isBullseye: 0
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 3342942999571457185}
+  indexInGroup: 3
+--- !u!1 &2402384934896329519
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8112156140590160529}
+  - component: {fileID: 779882450760445767}
+  - component: {fileID: 5561026056582377164}
+  m_Layer: 12
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8112156140590160529
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2402384934896329519}
+  m_LocalRotation: {x: -0.0021366472, y: 0.0016591545, z: 0.0031725906, w: 0.9999913}
+  m_LocalPosition: {x: -0.00058903516, y: -0.00088041095, z: 0.00018071524}
+  m_LocalScale: {x: 1.6666677, y: 1.6666677, z: 1.666668}
+  m_Children: []
+  m_Father: {fileID: 7251327786480374648}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &779882450760445767
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2402384934896329519}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5561026056582377164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2402384934896329519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 449027690755057918}
+  isBullseye: 0
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 3342942999571457185}
+  indexInGroup: 40
+--- !u!1 &2642983805924588625
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 867758274599420362}
+  - component: {fileID: 3841758845863998363}
+  - component: {fileID: 4891487245777860449}
+  m_Layer: 12
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &867758274599420362
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2642983805924588625}
+  m_LocalRotation: {x: -0.000011414281, y: 0.00052105973, z: 0.00007212931, w: 0.9999999}
+  m_LocalPosition: {x: -0.0060593756, y: 0.0011134691, z: 0.0001906768}
+  m_LocalScale: {x: 1.6666662, y: 1.6666639, z: 1.6666672}
+  m_Children: []
+  m_Father: {fileID: 7251327786480374606}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &3841758845863998363
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2642983805924588625}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4891487245777860449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2642983805924588625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 449027690755057918}
+  isBullseye: 0
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 3342942999571457185}
+  indexInGroup: 10
 --- !u!1 &2734765557493636709
 GameObject:
   m_ObjectHideFlags: 0
@@ -1947,7 +2201,7 @@ Transform:
   m_Father: {fileID: 3041423426747436434}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2856226570833188610
+--- !u!1 &2880579356147274342
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1955,9 +2209,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8727142282935757884}
-  - component: {fileID: 5547190667660742973}
-  - component: {fileID: 868679048935469625}
+  - component: {fileID: 2319240742320857601}
+  - component: {fileID: 3578642314310960608}
+  - component: {fileID: 2430427001112025846}
   m_Layer: 12
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -1965,40 +2219,40 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8727142282935757884
+--- !u!4 &2319240742320857601
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2856226570833188610}
-  m_LocalRotation: {x: 0.000040139992, y: 0.000027872615, z: 0.00052731123, w: 0.9999999}
-  m_LocalPosition: {x: 0.00035883766, y: 0.00018300276, z: 0.00091179955}
-  m_LocalScale: {x: 1.6666671, y: 1.666667, z: 1.6666669}
+  m_GameObject: {fileID: 2880579356147274342}
+  m_LocalRotation: {x: -0.004672583, y: 0.0033272863, z: 0.0011992363, w: 0.99998283}
+  m_LocalPosition: {x: -0.042102516, y: -0.017585697, z: -0.017682528}
+  m_LocalScale: {x: 1.6666718, y: 1.6666709, z: 1.6666708}
   m_Children: []
-  m_Father: {fileID: 7251327786480374650}
+  m_Father: {fileID: 7251327786480374592}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &5547190667660742973
+--- !u!135 &3578642314310960608
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2856226570833188610}
+  m_GameObject: {fileID: 2880579356147274342}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &868679048935469625
+--- !u!114 &2430427001112025846
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2856226570833188610}
+  m_GameObject: {fileID: 2880579356147274342}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
@@ -2009,8 +2263,8 @@ MonoBehaviour:
   isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 23
---- !u!1 &2900006873571376583
+  indexInGroup: 28
+--- !u!1 &2915331922287127121
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2018,9 +2272,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3097981586915276360}
-  - component: {fileID: 4075898331230782173}
-  - component: {fileID: 6517116852962558045}
+  - component: {fileID: 3844967751806125764}
+  - component: {fileID: 7173348905534093518}
+  - component: {fileID: 6620819704750658798}
   m_Layer: 12
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -2028,40 +2282,40 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3097981586915276360
+--- !u!4 &3844967751806125764
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2900006873571376583}
-  m_LocalRotation: {x: -0.0013270746, y: 0.00026321542, z: 0.0035752107, w: 0.9999927}
-  m_LocalPosition: {x: -0.020635035, y: -0.0017433437, z: -0.008475521}
-  m_LocalScale: {x: 1.6666715, y: 1.6666687, z: 1.6666703}
+  m_GameObject: {fileID: 2915331922287127121}
+  m_LocalRotation: {x: -0.004195882, y: 0.00283007, z: 0.0019451178, w: 0.9999854}
+  m_LocalPosition: {x: -0.039179254, y: -0.015524561, z: -0.015777018}
+  m_LocalScale: {x: 1.6666718, y: 1.6666703, z: 1.6666706}
   m_Children: []
-  m_Father: {fileID: 7251327786480374528}
+  m_Father: {fileID: 7251327786480374596}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &4075898331230782173
+--- !u!135 &7173348905534093518
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2900006873571376583}
+  m_GameObject: {fileID: 2915331922287127121}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6517116852962558045
+--- !u!114 &6620819704750658798
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2900006873571376583}
+  m_GameObject: {fileID: 2915331922287127121}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
@@ -2072,70 +2326,7 @@ MonoBehaviour:
   isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 34
---- !u!1 &2959721858911240113
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5794173546007319369}
-  - component: {fileID: 1647303079899797779}
-  - component: {fileID: 7097398684310689324}
-  m_Layer: 12
-  m_Name: Hurtbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5794173546007319369
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2959721858911240113}
-  m_LocalRotation: {x: -0.0010711957, y: 0.00034372613, z: 0.0035067683, w: 0.9999932}
-  m_LocalPosition: {x: -0.010397735, y: 0.00048858346, z: -0.0050492613}
-  m_LocalScale: {x: 1.6666697, y: 1.6666679, z: 1.6666694}
-  m_Children: []
-  m_Father: {fileID: 7251327786480374556}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &1647303079899797779
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2959721858911240113}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7097398684310689324
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2959721858911240113}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 449027690755057918}
-  isBullseye: 0
-  isSniperTarget: 0
-  damageModifier: 0
-  hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 37
+  indexInGroup: 29
 --- !u!1 &3014708215123536452
 GameObject:
   m_ObjectHideFlags: 0
@@ -2166,69 +2357,6 @@ Transform:
   m_Father: {fileID: 3981294108574868649}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &3053767370996259196
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6791649734286094993}
-  - component: {fileID: 3921502235446615211}
-  - component: {fileID: 8784039177752494190}
-  m_Layer: 12
-  m_Name: Hurtbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6791649734286094993
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3053767370996259196}
-  m_LocalRotation: {x: -0.0021366472, y: 0.0016591545, z: 0.0031725906, w: 0.9999913}
-  m_LocalPosition: {x: -0.00058903516, y: -0.00088041095, z: 0.00018071524}
-  m_LocalScale: {x: 1.6666677, y: 1.6666677, z: 1.666668}
-  m_Children: []
-  m_Father: {fileID: 7251327786480374648}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &3921502235446615211
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3053767370996259196}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8784039177752494190
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3053767370996259196}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 449027690755057918}
-  isBullseye: 0
-  isSniperTarget: 0
-  damageModifier: 0
-  hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 40
 --- !u!1 &3176714517705730522
 GameObject:
   m_ObjectHideFlags: 0
@@ -2260,69 +2388,6 @@ Transform:
   m_Father: {fileID: 7251327786480375172}
   m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &3237471917398603444
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 913473333842899261}
-  - component: {fileID: 735193174258003149}
-  - component: {fileID: 8160189717102079891}
-  m_Layer: 12
-  m_Name: Hurtbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &913473333842899261
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3237471917398603444}
-  m_LocalRotation: {x: 0.000060491264, y: -0.00018112827, z: 0.00049538014, w: 0.99999994}
-  m_LocalPosition: {x: -0.00065318303, y: -0.0002355944, z: 0.0009999851}
-  m_LocalScale: {x: 1.6666667, y: 1.6666675, z: 1.666667}
-  m_Children: []
-  m_Father: {fileID: 7251327786480374546}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &735193174258003149
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3237471917398603444}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8160189717102079891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3237471917398603444}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 449027690755057918}
-  isBullseye: 0
-  isSniperTarget: 0
-  damageModifier: 0
-  hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 21
 --- !u!1 &3273904018414283142
 GameObject:
   m_ObjectHideFlags: 0
@@ -2916,7 +2981,7 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.09794116, y: 14.529173, z: 0.5874983}
     m_Extent: {x: 2.2129147, y: 4.1339793, z: 2.0255375}
   m_DirtyAABB: 0
---- !u!1 &3574064894763119287
+--- !u!1 &3423323108079449406
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2924,9 +2989,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7105218535242469130}
-  - component: {fileID: 3446438070482438927}
-  - component: {fileID: 3752844341924097027}
+  - component: {fileID: 2148312595539690933}
+  - component: {fileID: 3269544869921130110}
+  - component: {fileID: 5659340152555875201}
   m_Layer: 12
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -2934,103 +2999,40 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7105218535242469130
+--- !u!4 &2148312595539690933
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3574064894763119287}
-  m_LocalRotation: {x: -0.000074852214, y: 0.0005187531, z: -0.000051640593, w: 0.9999999}
-  m_LocalPosition: {x: -0.0062161987, y: 0.00043408814, z: -0.000023690014}
-  m_LocalScale: {x: 1.666666, y: 1.6666636, z: 1.6666676}
+  m_GameObject: {fileID: 3423323108079449406}
+  m_LocalRotation: {x: 0.000020682804, y: 0.0004887728, z: 0.00019348545, w: 0.9999999}
+  m_LocalPosition: {x: -0.0057650944, y: 0.0013873207, z: 0.00039941436}
+  m_LocalScale: {x: 1.6666663, y: 1.666664, z: 1.666667}
   m_Children: []
-  m_Father: {fileID: 7251327786480374646}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &3446438070482438927
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3574064894763119287}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3752844341924097027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3574064894763119287}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 449027690755057918}
-  isBullseye: 0
-  isSniperTarget: 0
-  damageModifier: 0
-  hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 8
---- !u!1 &3610051088811595106
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6613371314836729049}
-  - component: {fileID: 194862590087130285}
-  - component: {fileID: 4940294480818405155}
-  m_Layer: 12
-  m_Name: Hurtbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6613371314836729049
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3610051088811595106}
-  m_LocalRotation: {x: -0.000011414281, y: 0.00052105973, z: 0.00007212931, w: 0.9999999}
-  m_LocalPosition: {x: -0.0060593756, y: 0.0011134691, z: 0.0001906768}
-  m_LocalScale: {x: 1.6666662, y: 1.6666639, z: 1.6666672}
-  m_Children: []
-  m_Father: {fileID: 7251327786480374606}
+  m_Father: {fileID: 7251327786480374594}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &194862590087130285
+--- !u!135 &3269544869921130110
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3610051088811595106}
+  m_GameObject: {fileID: 3423323108079449406}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4940294480818405155
+--- !u!114 &5659340152555875201
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3610051088811595106}
+  m_GameObject: {fileID: 3423323108079449406}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
@@ -3041,8 +3043,8 @@ MonoBehaviour:
   isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 10
---- !u!1 &3632774164666095727
+  indexInGroup: 11
+--- !u!1 &3475943749169388663
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3050,9 +3052,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5260153640973142695}
-  - component: {fileID: 2170186904750597715}
-  - component: {fileID: 1647796615158851267}
+  - component: {fileID: 5548362211642276153}
+  - component: {fileID: 3418783081700481560}
+  - component: {fileID: 4049851256207494657}
   m_Layer: 12
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -3060,40 +3062,40 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5260153640973142695
+--- !u!4 &5548362211642276153
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3632774164666095727}
-  m_LocalRotation: {x: 0.000049844373, y: -0.00009090451, z: 0.0005200096, w: 0.9999999}
-  m_LocalPosition: {x: -0.00015487248, y: -0.000042489177, z: 0.0009669972}
-  m_LocalScale: {x: 1.6666671, y: 1.6666673, z: 1.666667}
+  m_GameObject: {fileID: 3475943749169388663}
+  m_LocalRotation: {x: -0.0010895325, y: 0.00012825309, z: 0.003556098, w: 0.99999315}
+  m_LocalPosition: {x: -0.017245209, y: -0.00028016444, z: -0.0073007764}
+  m_LocalScale: {x: 1.6666714, y: 1.6666685, z: 1.66667}
   m_Children: []
-  m_Father: {fileID: 7251327786480374550}
+  m_Father: {fileID: 7251327786480374532}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &2170186904750597715
+--- !u!135 &3418783081700481560
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3632774164666095727}
+  m_GameObject: {fileID: 3475943749169388663}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1647796615158851267
+--- !u!114 &4049851256207494657
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3632774164666095727}
+  m_GameObject: {fileID: 3475943749169388663}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
@@ -3104,7 +3106,70 @@ MonoBehaviour:
   isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 22
+  indexInGroup: 35
+--- !u!1 &3610329179373969802
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8721907268600915345}
+  - component: {fileID: 3363015789056825286}
+  - component: {fileID: 2920699168746949186}
+  m_Layer: 12
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8721907268600915345
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3610329179373969802}
+  m_LocalRotation: {x: -0.0051925443, y: 0.003932579, z: -0.000010557378, w: 0.99997884}
+  m_LocalPosition: {x: -0.04573194, y: -0.020106483, z: -0.02416053}
+  m_LocalScale: {x: 1.666673, y: 1.6666712, z: 1.6666692}
+  m_Children: []
+  m_Father: {fileID: 7251327786480374600}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &3363015789056825286
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3610329179373969802}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2920699168746949186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3610329179373969802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 449027690755057918}
+  isBullseye: 0
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 3342942999571457185}
+  indexInGroup: 26
 --- !u!1 &3661063291740225089
 GameObject:
   m_ObjectHideFlags: 0
@@ -3165,7 +3230,7 @@ Transform:
   m_Father: {fileID: 6231950670126768890}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &3773376016554759913
+--- !u!1 &3889007939118555417
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3173,9 +3238,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7752527033155760939}
-  - component: {fileID: 4939560314021426987}
-  - component: {fileID: 4518135476948567336}
+  - component: {fileID: 7679072180711701976}
+  - component: {fileID: 2458691620414480980}
+  - component: {fileID: 3596950861945780678}
   m_Layer: 12
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -3183,40 +3248,41 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7752527033155760939
+--- !u!4 &7679072180711701976
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3773376016554759913}
-  m_LocalRotation: {x: 0.000020682804, y: 0.0004887728, z: 0.00019348545, w: 0.9999999}
-  m_LocalPosition: {x: -0.0057650944, y: 0.0013873207, z: 0.00039941436}
-  m_LocalScale: {x: 1.6666663, y: 1.666664, z: 1.666667}
+  m_GameObject: {fileID: 3889007939118555417}
+  m_LocalRotation: {x: 0.00031760707, y: 0.00032860786, z: -0.0004722688, w: 0.99999976}
+  m_LocalPosition: {x: -0.0017426976, y: -0.0038061095, z: -0.0028689092}
+  m_LocalScale: {x: 1.6666447, y: 1.6663411, z: 1.6663779}
   m_Children: []
-  m_Father: {fileID: 7251327786480374594}
+  m_Father: {fileID: 7251327786480374432}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &4939560314021426987
-SphereCollider:
+--- !u!136 &2458691620414480980
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3773376016554759913}
+  m_GameObject: {fileID: 3889007939118555417}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4518135476948567336
+  m_Radius: 0.15
+  m_Height: 0.75
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.35, z: 0}
+--- !u!114 &3596950861945780678
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3773376016554759913}
+  m_GameObject: {fileID: 3889007939118555417}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
@@ -3227,7 +3293,70 @@ MonoBehaviour:
   isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 11
+  indexInGroup: 6
+--- !u!1 &3965240421206197527
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7916810838243382348}
+  - component: {fileID: 6362738022003821080}
+  - component: {fileID: 3105209842511827240}
+  m_Layer: 12
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7916810838243382348
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3965240421206197527}
+  m_LocalRotation: {x: -0.0017305306, y: 0.0004890377, z: 0.0035576348, w: 0.99999213}
+  m_LocalPosition: {x: -0.023827981, y: -0.004487177, z: -0.009714144}
+  m_LocalScale: {x: 1.6666725, y: 1.666669, z: 1.6666706}
+  m_Children: []
+  m_Father: {fileID: 7251327786480374540}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &6362738022003821080
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3965240421206197527}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3105209842511827240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3965240421206197527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 449027690755057918}
+  isBullseye: 0
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 3342942999571457185}
+  indexInGroup: 33
 --- !u!1 &4035891060231250039
 GameObject:
   m_ObjectHideFlags: 0
@@ -3509,6 +3638,69 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.21129501, y: 5.6008577, z: 3.5896945}
     m_Extent: {x: 4.0438023, y: 5.356241, z: 4.593332}
   m_DirtyAABB: 0
+--- !u!1 &4101129909450230365
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6702911614230560610}
+  - component: {fileID: 4323270318472693785}
+  - component: {fileID: 3278461583443198824}
+  m_Layer: 12
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6702911614230560610
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4101129909450230365}
+  m_LocalRotation: {x: 0.000040139992, y: 0.000027872615, z: 0.00052731123, w: 0.9999999}
+  m_LocalPosition: {x: 0.00035883766, y: 0.00018300276, z: 0.00091179955}
+  m_LocalScale: {x: 1.6666671, y: 1.666667, z: 1.6666669}
+  m_Children: []
+  m_Father: {fileID: 7251327786480374650}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &4323270318472693785
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4101129909450230365}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3278461583443198824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4101129909450230365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 449027690755057918}
+  isBullseye: 0
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 3342942999571457185}
+  indexInGroup: 23
 --- !u!1 &4136083247911207126
 GameObject:
   m_ObjectHideFlags: 0
@@ -3540,69 +3732,6 @@ Transform:
   m_Father: {fileID: 7251327786480375172}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4140651267603370581
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4980901715472489762}
-  - component: {fileID: 7050430324019454128}
-  - component: {fileID: 3578364973127486270}
-  m_Layer: 12
-  m_Name: Hurtbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4980901715472489762
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4140651267603370581}
-  m_LocalRotation: {x: 0.000061028615, y: -0.00025602887, z: 0.0004612822, w: 0.9999999}
-  m_LocalPosition: {x: -0.0020423983, y: -0.0002690821, z: 0.0011963024}
-  m_LocalScale: {x: 1.6666664, y: 1.6666682, z: 1.6666664}
-  m_Children: []
-  m_Father: {fileID: 7251327786480374534}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &7050430324019454128
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4140651267603370581}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3578364973127486270
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4140651267603370581}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 449027690755057918}
-  isBullseye: 0
-  isSniperTarget: 0
-  damageModifier: 0
-  hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 18
 --- !u!1 &4150733061735332811
 GameObject:
   m_ObjectHideFlags: 0
@@ -3633,7 +3762,7 @@ Transform:
   m_Father: {fileID: 8449842901304488437}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4233943415577595535
+--- !u!1 &4338664833589078568
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3641,9 +3770,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8348143151171416877}
-  - component: {fileID: 661194371462457401}
-  - component: {fileID: 352850918336506070}
+  - component: {fileID: 7300784556846280730}
+  - component: {fileID: 1557017203589058649}
+  - component: {fileID: 2491187854876729773}
   m_Layer: 12
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -3651,40 +3780,40 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8348143151171416877
+--- !u!4 &7300784556846280730
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4233943415577595535}
-  m_LocalRotation: {x: -0.0022879676, y: 0.0009305383, z: 0.0034357912, w: 0.9999911}
-  m_LocalPosition: {x: -0.027810058, y: -0.007256335, z: -0.011279657}
-  m_LocalScale: {x: 1.6666726, y: 1.6666684, z: 1.6666706}
+  m_GameObject: {fileID: 4338664833589078568}
+  m_LocalRotation: {x: 0.000045664587, y: -0.00014268786, z: 0.0005083755, w: 0.9999999}
+  m_LocalPosition: {x: -0.0029214735, y: 0.00040078463, z: 0.0013772068}
+  m_LocalScale: {x: 1.6666664, y: 1.6666684, z: 1.6666659}
   m_Children: []
-  m_Father: {fileID: 7251327786480374608}
+  m_Father: {fileID: 7251327786480374542}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &661194371462457401
+--- !u!135 &1557017203589058649
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4233943415577595535}
+  m_GameObject: {fileID: 4338664833589078568}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &352850918336506070
+--- !u!114 &2491187854876729773
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4233943415577595535}
+  m_GameObject: {fileID: 4338664833589078568}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
@@ -3695,70 +3824,7 @@ MonoBehaviour:
   isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 32
---- !u!1 &4335952078451349123
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5859640179824563979}
-  - component: {fileID: 8524136513298819416}
-  - component: {fileID: 5838233425888406377}
-  m_Layer: 12
-  m_Name: Hurtbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5859640179824563979
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4335952078451349123}
-  m_LocalRotation: {x: 0.000053446707, y: -0.00021552747, z: 0.00048180422, w: 0.9999999}
-  m_LocalPosition: {x: -0.0024866192, y: -0.00002936177, z: 0.0013011657}
-  m_LocalScale: {x: 1.6666664, y: 1.6666678, z: 1.6666657}
-  m_Children: []
-  m_Father: {fileID: 7251327786480374530}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &8524136513298819416
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4335952078451349123}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5838233425888406377
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4335952078451349123}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 449027690755057918}
-  isBullseye: 0
-  isSniperTarget: 0
-  damageModifier: 0
-  hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 17
+  indexInGroup: 16
 --- !u!1 &4491355527245324406
 GameObject:
   m_ObjectHideFlags: 0
@@ -4070,6 +4136,258 @@ Transform:
   m_Father: {fileID: 4897904895790362507}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4521286347898372755
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 308541970654534354}
+  - component: {fileID: 1327283857991442726}
+  - component: {fileID: 8763584832360953390}
+  m_Layer: 12
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &308541970654534354
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4521286347898372755}
+  m_LocalRotation: {x: -0.0029473442, y: 0.0015022293, z: 0.0031454156, w: 0.9999896}
+  m_LocalPosition: {x: -0.031697836, y: -0.010276412, z: -0.012815776}
+  m_LocalScale: {x: 1.6666715, y: 1.6666692, z: 1.6666708}
+  m_Children: []
+  m_Father: {fileID: 7251327786480374620}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1327283857991442726
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4521286347898372755}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8763584832360953390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4521286347898372755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 449027690755057918}
+  isBullseye: 0
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 3342942999571457185}
+  indexInGroup: 31
+--- !u!1 &4565472867624979990
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8138512512111643592}
+  - component: {fileID: 5620399191662830175}
+  - component: {fileID: 2370186888554902832}
+  m_Layer: 12
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8138512512111643592
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4565472867624979990}
+  m_LocalRotation: {x: -0.0050044316, y: 0.0036878346, z: 0.0005110765, w: 0.99998057}
+  m_LocalPosition: {x: -0.044318903, y: -0.019128596, z: -0.020374795}
+  m_LocalScale: {x: 1.6666721, y: 1.6666704, z: 1.6666702}
+  m_Children: []
+  m_Father: {fileID: 7251327786480374604}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &5620399191662830175
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4565472867624979990}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2370186888554902832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4565472867624979990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 449027690755057918}
+  isBullseye: 0
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 3342942999571457185}
+  indexInGroup: 27
+--- !u!1 &4714687954555320480
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8072522673415475489}
+  - component: {fileID: 2129719082179882163}
+  - component: {fileID: 8602494258601452937}
+  m_Layer: 12
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8072522673415475489
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4714687954555320480}
+  m_LocalRotation: {x: 0.000053446707, y: -0.00021552747, z: 0.00048180422, w: 0.9999999}
+  m_LocalPosition: {x: -0.0024866192, y: -0.00002936177, z: 0.0013011657}
+  m_LocalScale: {x: 1.6666664, y: 1.6666678, z: 1.6666657}
+  m_Children: []
+  m_Father: {fileID: 7251327786480374530}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &2129719082179882163
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4714687954555320480}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8602494258601452937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4714687954555320480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 449027690755057918}
+  isBullseye: 0
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 3342942999571457185}
+  indexInGroup: 17
+--- !u!1 &4740233451633744300
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8065890620420608711}
+  - component: {fileID: 4288600261247103004}
+  - component: {fileID: 7894520189936288903}
+  m_Layer: 12
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8065890620420608711
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4740233451633744300}
+  m_LocalRotation: {x: 0.000046968442, y: 0.00041018505, z: 0.00032675115, w: 0.9999999}
+  m_LocalPosition: {x: -0.0053055147, y: 0.0015373154, z: 0.0006839727}
+  m_LocalScale: {x: 1.6666664, y: 1.6666651, z: 1.6666665}
+  m_Children: []
+  m_Father: {fileID: 7251327786480374598}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &4288600261247103004
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4740233451633744300}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7894520189936288903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4740233451633744300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 449027690755057918}
+  isBullseye: 0
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 3342942999571457185}
+  indexInGroup: 12
 --- !u!1 &4753992481338940364
 GameObject:
   m_ObjectHideFlags: 0
@@ -4100,7 +4418,7 @@ Transform:
   m_Father: {fileID: 7636761716438373698}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4975835174610022251
+--- !u!1 &4890131668053103235
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4108,9 +4426,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2740965211702763688}
-  - component: {fileID: 6825277781121886291}
-  - component: {fileID: 1846429166489967304}
+  - component: {fileID: 5125106264664156125}
+  - component: {fileID: 303193325748555257}
+  - component: {fileID: 2350742984675439291}
   m_Layer: 12
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -4118,40 +4436,41 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2740965211702763688
+--- !u!4 &5125106264664156125
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4975835174610022251}
-  m_LocalRotation: {x: 0.000045664587, y: -0.00014268786, z: 0.0005083755, w: 0.9999999}
-  m_LocalPosition: {x: -0.0029214735, y: 0.00040078463, z: 0.0013772068}
-  m_LocalScale: {x: 1.6666664, y: 1.6666684, z: 1.6666659}
+  m_GameObject: {fileID: 4890131668053103235}
+  m_LocalRotation: {x: 0.00029443204, y: 0.00025242943, z: 0.00052794814, w: 0.9999998}
+  m_LocalPosition: {x: -0.0041316687, y: -0.000029647856, z: 0.0013849799}
+  m_LocalScale: {x: 1.6663246, y: 1.6666645, z: 1.6663747}
   m_Children: []
-  m_Father: {fileID: 7251327786480374542}
-  m_RootOrder: 0
+  m_Father: {fileID: 7251327786480374446}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &6825277781121886291
-SphereCollider:
+--- !u!136 &303193325748555257
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4975835174610022251}
+  m_GameObject: {fileID: 4890131668053103235}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
   m_Radius: 0.2
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1846429166489967304
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.5, z: 0}
+--- !u!114 &2350742984675439291
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4975835174610022251}
+  m_GameObject: {fileID: 4890131668053103235}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
@@ -4162,7 +4481,7 @@ MonoBehaviour:
   isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 16
+  indexInGroup: 5
 --- !u!1 &4983248719992777723
 GameObject:
   m_ObjectHideFlags: 0
@@ -4193,7 +4512,7 @@ Transform:
   m_Father: {fileID: 7815157580620558896}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &5090911121595072334
+--- !u!1 &5210627189446121342
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4201,9 +4520,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2574468695843531108}
-  - component: {fileID: 3905454986661024713}
-  - component: {fileID: 2292324492230731340}
+  - component: {fileID: 5174953158130796842}
+  - component: {fileID: 7012582163292886491}
+  - component: {fileID: 8736803453384435920}
   m_Layer: 12
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -4211,41 +4530,40 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2574468695843531108
+--- !u!4 &5174953158130796842
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5090911121595072334}
-  m_LocalRotation: {x: 0.00014780089, y: 0.0000053322874, z: -0.000005642505, w: 1}
-  m_LocalPosition: {x: -0.000042219104, y: 0.0009173114, z: 0.00003383861}
-  m_LocalScale: {x: 1.6666664, y: 1.666667, z: 1.6666672}
+  m_GameObject: {fileID: 5210627189446121342}
+  m_LocalRotation: {x: -0.0010711957, y: 0.00034372613, z: 0.0035067683, w: 0.9999932}
+  m_LocalPosition: {x: -0.010397735, y: 0.00048858346, z: -0.0050492613}
+  m_LocalScale: {x: 1.6666697, y: 1.6666679, z: 1.6666694}
   m_Children: []
-  m_Father: {fileID: 7251327786480375170}
-  m_RootOrder: 1
+  m_Father: {fileID: 7251327786480374556}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &3905454986661024713
-CapsuleCollider:
+--- !u!135 &7012582163292886491
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5090911121595072334}
+  m_GameObject: {fileID: 5210627189446121342}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.35
-  m_Height: 1.63
-  m_Direction: 0
-  m_Center: {x: 0, y: 0.25, z: 0}
---- !u!114 &2292324492230731340
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8736803453384435920
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5090911121595072334}
+  m_GameObject: {fileID: 5210627189446121342}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
@@ -4256,71 +4574,7 @@ MonoBehaviour:
   isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 44
---- !u!1 &5291056724511583882
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2600840385766493092}
-  - component: {fileID: 2679028307201446014}
-  - component: {fileID: 3699854060228393307}
-  m_Layer: 12
-  m_Name: Hurtbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2600840385766493092
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5291056724511583882}
-  m_LocalRotation: {x: -0.0025714259, y: -0.00000017881395, z: 0.00000009452925, w: 0.9999967}
-  m_LocalPosition: {x: 0, y: 0.001539801, z: 0.10440534}
-  m_LocalScale: {x: 1.666667, y: 1.666667, z: 1.666666}
-  m_Children: []
-  m_Father: {fileID: 7251327786480374400}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &2679028307201446014
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5291056724511583882}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.55
-  m_Height: 1.8
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.9, z: 0}
---- !u!114 &3699854060228393307
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5291056724511583882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 449027690755057918}
-  isBullseye: 0
-  isSniperTarget: 0
-  damageModifier: 0
-  hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 1
+  indexInGroup: 37
 --- !u!1 &5360286652804512711
 GameObject:
   m_ObjectHideFlags: 0
@@ -4352,133 +4606,6 @@ Transform:
   m_Father: {fileID: 7251327786480375172}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &5378350287939980105
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 980193661294531873}
-  - component: {fileID: 5228433472660705459}
-  - component: {fileID: 2294410543315943931}
-  m_Layer: 12
-  m_Name: Hurtbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &980193661294531873
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5378350287939980105}
-  m_LocalRotation: {x: -0.0036239906, y: 0.002137513, z: 0.0026522954, w: 0.99998766}
-  m_LocalPosition: {x: -0.03546657, y: -0.013217999, z: -0.014333312}
-  m_LocalScale: {x: 1.6666712, y: 1.6666696, z: 1.666671}
-  m_Children: []
-  m_Father: {fileID: 7251327786480374616}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &5228433472660705459
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5378350287939980105}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2294410543315943931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5378350287939980105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 449027690755057918}
-  isBullseye: 0
-  isSniperTarget: 0
-  damageModifier: 0
-  hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 30
---- !u!1 &5394087147861426864
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3395124884991374522}
-  - component: {fileID: 6449548663237625334}
-  - component: {fileID: 8741996143088393766}
-  m_Layer: 12
-  m_Name: Hurtbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3395124884991374522
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5394087147861426864}
-  m_LocalRotation: {x: -0.00032137337, y: 0.00004149182, z: -0.0004046895, w: 0.9999999}
-  m_LocalPosition: {x: 0.00013259657, y: -0.00077686715, z: -0.00008207186}
-  m_LocalScale: {x: 1.6663524, y: 1.6666393, z: 1.6665711}
-  m_Children: []
-  m_Father: {fileID: 7251327786480374458}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &6449548663237625334
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5394087147861426864}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.275
-  m_Height: 2.35
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.175, z: 0}
---- !u!114 &8741996143088393766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5394087147861426864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 449027690755057918}
-  isBullseye: 0
-  isSniperTarget: 0
-  damageModifier: 0
-  hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 4
 --- !u!1 &5439468419162520602
 GameObject:
   m_ObjectHideFlags: 0
@@ -4509,6 +4636,69 @@ Transform:
   m_Father: {fileID: 7528535144447774289}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5455785824449191526
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1660056748446754135}
+  - component: {fileID: 1853833209735876995}
+  - component: {fileID: 9027687486194176775}
+  m_Layer: 12
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1660056748446754135
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5455785824449191526}
+  m_LocalRotation: {x: 0.000049844373, y: -0.00009090451, z: 0.0005200096, w: 0.9999999}
+  m_LocalPosition: {x: -0.00015487248, y: -0.000042489177, z: 0.0009669972}
+  m_LocalScale: {x: 1.6666671, y: 1.6666673, z: 1.666667}
+  m_Children: []
+  m_Father: {fileID: 7251327786480374550}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1853833209735876995
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5455785824449191526}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &9027687486194176775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5455785824449191526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 449027690755057918}
+  isBullseye: 0
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 3342942999571457185}
+  indexInGroup: 22
 --- !u!1 &5674873371449454896
 GameObject:
   m_ObjectHideFlags: 0
@@ -4651,117 +4841,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hurtBoxes:
-  - {fileID: 329917797395762978}
-  - {fileID: 3699854060228393307}
-  - {fileID: 5557027027197393998}
-  - {fileID: 8306173673973013058}
-  - {fileID: 8741996143088393766}
-  - {fileID: 521286757638014854}
-  - {fileID: 3990523839012478863}
-  - {fileID: 2536085749943958072}
-  - {fileID: 3752844341924097027}
-  - {fileID: 747176997927912878}
-  - {fileID: 4940294480818405155}
-  - {fileID: 4518135476948567336}
-  - {fileID: 445543825572808156}
-  - {fileID: 256533980102372405}
-  - {fileID: 5371716437075571561}
-  - {fileID: 7335811796231162140}
-  - {fileID: 1846429166489967304}
-  - {fileID: 5838233425888406377}
-  - {fileID: 3578364973127486270}
-  - {fileID: 1838483311412947532}
-  - {fileID: 5133730741908215912}
-  - {fileID: 8160189717102079891}
-  - {fileID: 1647796615158851267}
-  - {fileID: 868679048935469625}
-  - {fileID: 9154502330907205216}
-  - {fileID: 8867207005334484554}
-  - {fileID: 6699865056917903558}
-  - {fileID: 1807534740382976297}
   - {fileID: 91988621143801165}
-  - {fileID: 7323838137862485957}
-  - {fileID: 2294410543315943931}
-  - {fileID: 7673940696320459984}
-  - {fileID: 352850918336506070}
-  - {fileID: 8173198461450274025}
-  - {fileID: 6517116852962558045}
-  - {fileID: 3649496032265046941}
-  - {fileID: 7673525782138913554}
-  - {fileID: 7097398684310689324}
-  - {fileID: 7275337586201636481}
-  - {fileID: 7733167073350988265}
-  - {fileID: 8784039177752494190}
-  - {fileID: 5401519915609038610}
-  - {fileID: 7368919345763300334}
-  - {fileID: 4307523523017981525}
-  - {fileID: 2292324492230731340}
-  - {fileID: 8260055168392162972}
-  mainHurtBox: {fileID: 2292324492230731340}
+  - {fileID: 771171101963292343}
+  - {fileID: 4523282301555439210}
+  - {fileID: 8777042145154563459}
+  - {fileID: 3036390382626361819}
+  - {fileID: 2350742984675439291}
+  - {fileID: 3596950861945780678}
+  - {fileID: 35656367316435145}
+  - {fileID: 2776186029082595444}
+  - {fileID: 4472412589481344241}
+  - {fileID: 4891487245777860449}
+  - {fileID: 5659340152555875201}
+  - {fileID: 7894520189936288903}
+  - {fileID: 2956052513957627902}
+  - {fileID: 220512610267040695}
+  - {fileID: 1028385091336742801}
+  - {fileID: 2491187854876729773}
+  - {fileID: 8602494258601452937}
+  - {fileID: 437145431313733942}
+  - {fileID: 2986872844602016219}
+  - {fileID: 388937315690030331}
+  - {fileID: 4782404310352635564}
+  - {fileID: 9027687486194176775}
+  - {fileID: 3278461583443198824}
+  - {fileID: 1152922443471158019}
+  - {fileID: 3334827861418100557}
+  - {fileID: 2920699168746949186}
+  - {fileID: 2370186888554902832}
+  - {fileID: 2430427001112025846}
+  - {fileID: 6620819704750658798}
+  - {fileID: 4557493833017823468}
+  - {fileID: 8763584832360953390}
+  - {fileID: 4086338422402575961}
+  - {fileID: 3105209842511827240}
+  - {fileID: 4682568259432846306}
+  - {fileID: 4049851256207494657}
+  - {fileID: 8517224599841742151}
+  - {fileID: 8736803453384435920}
+  - {fileID: 4271200378455263199}
+  - {fileID: 1426834682743540644}
+  - {fileID: 5561026056582377164}
+  - {fileID: 308049636673174649}
+  - {fileID: 652221045864068085}
+  - {fileID: 6209101069150949767}
+  - {fileID: 2897474532955515351}
+  - {fileID: 6692186375192702212}
+  mainHurtBox: {fileID: 2897474532955515351}
   bullseyeCount: 0
---- !u!1 &5727006781134101781
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7588632729999654329}
-  - component: {fileID: 7612000229905901911}
-  - component: {fileID: 5133730741908215912}
-  m_Layer: 12
-  m_Name: Hurtbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7588632729999654329
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5727006781134101781}
-  m_LocalRotation: {x: 0.000066824236, y: -0.00023846645, z: 0.0004699858, w: 0.9999999}
-  m_LocalPosition: {x: -0.0011316042, y: -0.0003549474, z: 0.0010347652}
-  m_LocalScale: {x: 1.666667, y: 1.6666677, z: 1.6666666}
-  m_Children: []
-  m_Father: {fileID: 7251327786480374558}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &7612000229905901911
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5727006781134101781}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5133730741908215912
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5727006781134101781}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 449027690755057918}
-  isBullseye: 0
-  isSniperTarget: 0
-  damageModifier: 0
-  hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 20
 --- !u!1 &5734979126194865011
 GameObject:
   m_ObjectHideFlags: 0
@@ -4792,7 +4919,7 @@ Transform:
   m_Father: {fileID: 6925512085384640130}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &5774448359426599074
+--- !u!1 &6028717184777902129
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4800,9 +4927,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1712628217485888542}
-  - component: {fileID: 9207000317141477761}
-  - component: {fileID: 5371716437075571561}
+  - component: {fileID: 6641865493135553281}
+  - component: {fileID: 3452471822512300595}
+  - component: {fileID: 1152922443471158019}
   m_Layer: 12
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -4810,140 +4937,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1712628217485888542
+--- !u!4 &6641865493135553281
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5774448359426599074}
-  m_LocalRotation: {x: 0.000059872844, y: 0.0001232009, z: 0.000510115, w: 0.9999999}
-  m_LocalPosition: {x: -0.0040831696, y: 0.0012581401, z: 0.0012482541}
-  m_LocalScale: {x: 1.6666669, y: 1.6666672, z: 1.6666657}
-  m_Children: []
-  m_Father: {fileID: 7251327786480374622}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &9207000317141477761
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5774448359426599074}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5371716437075571561
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5774448359426599074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 449027690755057918}
-  isBullseye: 0
-  isSniperTarget: 0
-  damageModifier: 0
-  hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 14
---- !u!1 &6034412922011169036
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7763864331201184961}
-  - component: {fileID: 5890975380130765154}
-  - component: {fileID: 8306173673973013058}
-  m_Layer: 12
-  m_Name: Hurtbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7763864331201184961
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6034412922011169036}
-  m_LocalRotation: {x: 0.0003297776, y: 0.00024178621, z: -0.00017672591, w: 0.9999999}
-  m_LocalPosition: {x: -0.00071895466, y: -0.0023023041, z: -0.0034775955}
-  m_LocalScale: {x: 1.6665688, y: 1.6664271, z: 1.666566}
-  m_Children: []
-  m_Father: {fileID: 7251327786480374456}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &5890975380130765154
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6034412922011169036}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.15
-  m_Height: 0.75
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.35, z: 0}
---- !u!114 &8306173673973013058
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6034412922011169036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 449027690755057918}
-  isBullseye: 0
-  isSniperTarget: 0
-  damageModifier: 0
-  hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 3
---- !u!1 &6279057569255643161
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5391796116660838752}
-  - component: {fileID: 3895908411533244524}
-  - component: {fileID: 9154502330907205216}
-  m_Layer: 12
-  m_Name: Hurtbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5391796116660838752
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6279057569255643161}
+  m_GameObject: {fileID: 6028717184777902129}
   m_LocalRotation: {x: -0.000021398066, y: -0.000028073784, z: 0.00001208484, w: 1}
   m_LocalPosition: {x: 0.00009123291, y: 0.00024352872, z: 0.000984955}
   m_LocalScale: {x: 1.6666667, y: 1.6666667, z: 1.666667}
@@ -4951,26 +4951,26 @@ Transform:
   m_Father: {fileID: 7251327786480374614}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &3895908411533244524
+--- !u!135 &3452471822512300595
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6279057569255643161}
+  m_GameObject: {fileID: 6028717184777902129}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &9154502330907205216
+--- !u!114 &1152922443471158019
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6279057569255643161}
+  m_GameObject: {fileID: 6028717184777902129}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
@@ -4982,6 +4982,70 @@ MonoBehaviour:
   damageModifier: 0
   hurtBoxGroup: {fileID: 3342942999571457185}
   indexInGroup: 24
+--- !u!1 &6134497701619346451
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9155614972425997683}
+  - component: {fileID: 233074134876651058}
+  - component: {fileID: 2897474532955515351}
+  m_Layer: 12
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9155614972425997683
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6134497701619346451}
+  m_LocalRotation: {x: 0.00014780089, y: 0.0000053322874, z: -0.000005642505, w: 1}
+  m_LocalPosition: {x: -0.000042219104, y: 0.0009173114, z: 0.00003383861}
+  m_LocalScale: {x: 1.6666664, y: 1.666667, z: 1.6666672}
+  m_Children: []
+  m_Father: {fileID: 7251327786480375170}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &233074134876651058
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6134497701619346451}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.35
+  m_Height: 1.63
+  m_Direction: 0
+  m_Center: {x: 0, y: 0.25, z: 0}
+--- !u!114 &2897474532955515351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6134497701619346451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 449027690755057918}
+  isBullseye: 0
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 3342942999571457185}
+  indexInGroup: 44
 --- !u!1 &6282853135129495340
 GameObject:
   m_ObjectHideFlags: 0
@@ -5022,7 +5086,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2995504763101735620}
-  - component: {fileID: 4178664433917329898}
+  - component: {fileID: 1463116357016751509}
   - component: {fileID: 91988621143801165}
   m_Layer: 12
   m_Name: Hurtbox
@@ -5038,15 +5102,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6515692211920885569}
-  m_LocalRotation: {x: -0.004672583, y: 0.0033272863, z: 0.0011992363, w: 0.99998283}
-  m_LocalPosition: {x: -0.042102516, y: -0.017585697, z: -0.017682528}
-  m_LocalScale: {x: 1.6666718, y: 1.6666709, z: 1.6666708}
+  m_LocalRotation: {x: 0.00031187155, y: -0.000019503292, z: -0.00057315506, w: 0.9999998}
+  m_LocalPosition: {x: 0.0022115703, y: -0.00076908554, z: 0.00035635204}
+  m_LocalScale: {x: 1.666666, y: 1.6666662, z: 1.6666669}
   m_Children: []
-  m_Father: {fileID: 7251327786480374592}
+  m_Father: {fileID: 7251327786480374406}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &4178664433917329898
-SphereCollider:
+--- !u!136 &1463116357016751509
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5055,9 +5119,10 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.55
+  m_Height: 1.8
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!114 &91988621143801165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5075,8 +5140,8 @@ MonoBehaviour:
   isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 28
---- !u!1 &6527757135370237498
+  indexInGroup: 0
+--- !u!1 &6585283949411642037
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5084,9 +5149,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2596272698640929960}
-  - component: {fileID: 7594711841369421628}
-  - component: {fileID: 7673525782138913554}
+  - component: {fileID: 3642865422120104930}
+  - component: {fileID: 1737027862000158217}
+  - component: {fileID: 35656367316435145}
   m_Layer: 12
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -5094,40 +5159,41 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2596272698640929960
+--- !u!4 &3642865422120104930
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6527757135370237498}
-  m_LocalRotation: {x: -0.0010057405, y: 0.0001533904, z: 0.0035309615, w: 0.99999326}
-  m_LocalPosition: {x: -0.01381429, y: 0.00042819197, z: -0.0061853146}
-  m_LocalScale: {x: 1.6666708, y: 1.6666679, z: 1.6666697}
+  m_GameObject: {fileID: 6585283949411642037}
+  m_LocalRotation: {x: -0.00042523444, y: 0.00020742312, z: -0.0005129138, w: 0.9999998}
+  m_LocalPosition: {x: -0.00017008884, y: -0.00076585694, z: 0.00013096066}
+  m_LocalScale: {x: 1.6663208, y: 1.6666657, z: 1.6663786}
   m_Children: []
-  m_Father: {fileID: 7251327786480374552}
-  m_RootOrder: 0
+  m_Father: {fileID: 7251327786480374434}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &7594711841369421628
-SphereCollider:
+--- !u!136 &1737027862000158217
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6527757135370237498}
+  m_GameObject: {fileID: 6585283949411642037}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7673525782138913554
+  m_Radius: 0.275
+  m_Height: 2.35
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.175, z: 0}
+--- !u!114 &35656367316435145
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6527757135370237498}
+  m_GameObject: {fileID: 6585283949411642037}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
@@ -5138,7 +5204,72 @@ MonoBehaviour:
   isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 36
+  indexInGroup: 7
+--- !u!1 &6611708236740088621
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8908660948474423950}
+  - component: {fileID: 203451497069350488}
+  - component: {fileID: 6692186375192702212}
+  m_Layer: 12
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8908660948474423950
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6611708236740088621}
+  m_LocalRotation: {x: 0.000060914845, y: -0.000000008026368, z: -0.000000028079736,
+    w: 1}
+  m_LocalPosition: {x: 0, y: 0.0009117126, z: 0}
+  m_LocalScale: {x: 1.6666666, y: 1.666667, z: 1.666667}
+  m_Children: []
+  m_Father: {fileID: 7251327786480374280}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &203451497069350488
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6611708236740088621}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1.6
+  m_Direction: 0
+  m_Center: {x: 0, y: 0.2, z: 0}
+--- !u!114 &6692186375192702212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6611708236740088621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 449027690755057918}
+  isBullseye: 0
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 3342942999571457185}
+  indexInGroup: 45
 --- !u!1 &6619861582437068525
 GameObject:
   m_ObjectHideFlags: 0
@@ -5200,69 +5331,6 @@ Transform:
   m_Father: {fileID: 7251327786480375172}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6766769963717815763
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6133737432850053952}
-  - component: {fileID: 8019040954384075631}
-  - component: {fileID: 7323838137862485957}
-  m_Layer: 12
-  m_Name: Hurtbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6133737432850053952
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6766769963717815763}
-  m_LocalRotation: {x: -0.004195882, y: 0.00283007, z: 0.0019451178, w: 0.9999854}
-  m_LocalPosition: {x: -0.039179254, y: -0.015524561, z: -0.015777018}
-  m_LocalScale: {x: 1.6666718, y: 1.6666703, z: 1.6666706}
-  m_Children: []
-  m_Father: {fileID: 7251327786480374596}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &8019040954384075631
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6766769963717815763}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7323838137862485957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6766769963717815763}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 449027690755057918}
-  isBullseye: 0
-  isSniperTarget: 0
-  damageModifier: 0
-  hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 29
 --- !u!1 &6783484115152797120
 GameObject:
   m_ObjectHideFlags: 0
@@ -5294,7 +5362,7 @@ Transform:
   m_Father: {fileID: 7251327786480375172}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6832367131870541766
+--- !u!1 &6872024644764460186
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5302,9 +5370,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3981535832297551359}
-  - component: {fileID: 5333268152620529987}
-  - component: {fileID: 7673940696320459984}
+  - component: {fileID: 1798914847538310173}
+  - component: {fileID: 342261091386543738}
+  - component: {fileID: 1028385091336742801}
   m_Layer: 12
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -5312,40 +5380,40 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3981535832297551359
+--- !u!4 &1798914847538310173
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6832367131870541766}
-  m_LocalRotation: {x: -0.0029473442, y: 0.0015022293, z: 0.0031454156, w: 0.9999896}
-  m_LocalPosition: {x: -0.031697836, y: -0.010276412, z: -0.012815776}
-  m_LocalScale: {x: 1.6666715, y: 1.6666692, z: 1.6666708}
+  m_GameObject: {fileID: 6872024644764460186}
+  m_LocalRotation: {x: 0.000050976854, y: -0.000025010659, z: 0.000526005, w: 0.9999999}
+  m_LocalPosition: {x: -0.0034845008, y: 0.0008413687, z: 0.0013778001}
+  m_LocalScale: {x: 1.6666666, y: 1.6666679, z: 1.6666652}
   m_Children: []
-  m_Father: {fileID: 7251327786480374620}
+  m_Father: {fileID: 7251327786480374610}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &5333268152620529987
+--- !u!135 &342261091386543738
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6832367131870541766}
+  m_GameObject: {fileID: 6872024644764460186}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7673940696320459984
+--- !u!114 &1028385091336742801
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6832367131870541766}
+  m_GameObject: {fileID: 6872024644764460186}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
@@ -5356,7 +5424,70 @@ MonoBehaviour:
   isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 31
+  indexInGroup: 15
+--- !u!1 &7037945492227832037
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2010288238479838885}
+  - component: {fileID: 8788698031907743942}
+  - component: {fileID: 220512610267040695}
+  m_Layer: 12
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2010288238479838885
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7037945492227832037}
+  m_LocalRotation: {x: 0.000059872844, y: 0.0001232009, z: 0.000510115, w: 0.9999999}
+  m_LocalPosition: {x: -0.0040831696, y: 0.0012581401, z: 0.0012482541}
+  m_LocalScale: {x: 1.6666669, y: 1.6666672, z: 1.6666657}
+  m_Children: []
+  m_Father: {fileID: 7251327786480374622}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &8788698031907743942
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7037945492227832037}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &220512610267040695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7037945492227832037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 449027690755057918}
+  isBullseye: 0
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 3342942999571457185}
+  indexInGroup: 14
 --- !u!1 &7089920497822047086
 GameObject:
   m_ObjectHideFlags: 0
@@ -5417,6 +5548,70 @@ Transform:
   m_Father: {fileID: 8687309880572786366}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7154807272851017301
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5939730381140234167}
+  - component: {fileID: 6035419869436454651}
+  - component: {fileID: 771171101963292343}
+  m_Layer: 12
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5939730381140234167
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7154807272851017301}
+  m_LocalRotation: {x: -0.0025714259, y: -0.00000017881395, z: 0.00000009452925, w: 0.9999967}
+  m_LocalPosition: {x: 0, y: 0.001539801, z: 0.10440534}
+  m_LocalScale: {x: 1.666667, y: 1.666667, z: 1.666666}
+  m_Children: []
+  m_Father: {fileID: 7251327786480374400}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &6035419869436454651
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7154807272851017301}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.55
+  m_Height: 1.8
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!114 &771171101963292343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7154807272851017301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 449027690755057918}
+  isBullseye: 0
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 3342942999571457185}
+  indexInGroup: 1
 --- !u!1 &7204364975567032743
 GameObject:
   m_ObjectHideFlags: 0
@@ -5447,70 +5642,6 @@ Transform:
   m_Father: {fileID: 1644377874069823885}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &7241715273136379695
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1316833981440159748}
-  - component: {fileID: 7886798698037914285}
-  - component: {fileID: 3990523839012478863}
-  m_Layer: 12
-  m_Name: Hurtbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1316833981440159748
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7241715273136379695}
-  m_LocalRotation: {x: 0.00031760707, y: 0.00032860786, z: -0.0004722688, w: 0.99999976}
-  m_LocalPosition: {x: -0.0017426976, y: -0.0038061095, z: -0.0028689092}
-  m_LocalScale: {x: 1.6666447, y: 1.6663411, z: 1.6663779}
-  m_Children: []
-  m_Father: {fileID: 7251327786480374432}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &7886798698037914285
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7241715273136379695}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.15
-  m_Height: 0.75
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.35, z: 0}
---- !u!114 &3990523839012478863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7241715273136379695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 449027690755057918}
-  isBullseye: 0
-  isSniperTarget: 0
-  damageModifier: 0
-  hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 6
 --- !u!1 &7251327786480206214
 GameObject:
   m_ObjectHideFlags: 0
@@ -5823,7 +5954,7 @@ Transform:
   - {fileID: 7251327786480374428}
   - {fileID: 4897904895790362507}
   - {fileID: 6315549241859761042}
-  - {fileID: 3176447502680281597}
+  - {fileID: 9083857320460275216}
   m_Father: {fileID: 7251327786480375170}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5855,7 +5986,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7251327786480375168}
-  - {fileID: 2574468695843531108}
+  - {fileID: 9155614972425997683}
   m_Father: {fileID: 7251327786480374280}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7429,7 +7560,7 @@ Transform:
   - {fileID: 7528535144447774289}
   - {fileID: 1047028374884018458}
   - {fileID: 7251327786480375170}
-  - {fileID: 1419368031190353093}
+  - {fileID: 8908660948474423950}
   m_Father: {fileID: 7251327786480375172}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7552,7 +7683,7 @@ Transform:
   m_LocalPosition: {x: -0.00000016391277, y: 3.9244783, z: -0.00000013411045}
   m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 0.9999999}
   m_Children:
-  - {fileID: 1316833981440159748}
+  - {fileID: 7679072180711701976}
   - {fileID: 7251327786480374446}
   m_Father: {fileID: 7251327786480374434}
   m_RootOrder: 0
@@ -7585,7 +7716,7 @@ Transform:
   m_LocalScale: {x: 1.1457709, y: 1.1457708, z: 1.145771}
   m_Children:
   - {fileID: 7251327786480374432}
-  - {fileID: 2769811239189060733}
+  - {fileID: 3642865422120104930}
   m_Father: {fileID: 7251327786480374280}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7647,7 +7778,7 @@ Transform:
   m_LocalScale: {x: 1.0979319, y: 1.0979319, z: 1.0979321}
   m_Children:
   - {fileID: 7251327786480374436}
-  - {fileID: 3633235337895926675}
+  - {fileID: 3213818235971316028}
   m_Father: {fileID: 7251327786480374456}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7771,7 +7902,7 @@ Transform:
   m_LocalScale: {x: 1.067533, y: 1.067533, z: 1.0675331}
   m_Children:
   - {fileID: 7251327786480374444}
-  - {fileID: 5554846819819989018}
+  - {fileID: 5125106264664156125}
   m_Father: {fileID: 7251327786480374432}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7803,7 +7934,7 @@ Transform:
   m_LocalScale: {x: 0.99999994, y: 1, z: 1}
   m_Children:
   - {fileID: 7251327786480374438}
-  - {fileID: 7763864331201184961}
+  - {fileID: 685309616098297037}
   m_Father: {fileID: 7251327786480374458}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7835,7 +7966,7 @@ Transform:
   m_LocalScale: {x: 1.145771, y: 1.1457707, z: 1.1457709}
   m_Children:
   - {fileID: 7251327786480374456}
-  - {fileID: 3395124884991374522}
+  - {fileID: 1238199566600873484}
   m_Father: {fileID: 7251327786480374280}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8859,7 +8990,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1.0000001, z: 1.0000001}
   m_Children:
   - {fileID: 7251327786480374414}
-  - {fileID: 2600840385766493092}
+  - {fileID: 5939730381140234167}
   m_Father: {fileID: 7251327786480375172}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8951,7 +9082,7 @@ Transform:
   m_LocalPosition: {x: -2.5505564, y: 7.3743896, z: 7.584808}
   m_LocalScale: {x: 1.0000002, y: 1.0000002, z: 1}
   m_Children:
-  - {fileID: 3096941449835686643}
+  - {fileID: 2995504763101735620}
   - {fileID: 7251327786480374404}
   m_Father: {fileID: 7251327786480375172}
   m_RootOrder: 4
@@ -9104,7 +9235,7 @@ Transform:
   m_LocalPosition: {x: -0.0065395236, y: 2.7513669, z: -0.019626535}
   m_LocalScale: {x: 1, y: 0.9999999, z: 0.99999994}
   m_Children:
-  - {fileID: 9115145118413335608}
+  - {fileID: 2329872527777724138}
   - {fileID: 7251327786480374426}
   m_Father: {fileID: 7251327786480375168}
   m_RootOrder: 4
@@ -10343,7 +10474,7 @@ Transform:
   m_LocalScale: {x: 0.99999994, y: 1.0000001, z: 0.99999994}
   m_Children:
   - {fileID: 7251327786480374640}
-  - {fileID: 4800784461115918445}
+  - {fileID: 1944749822988943677}
   m_Father: {fileID: 7251327786480374600}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10375,7 +10506,7 @@ Transform:
   m_LocalScale: {x: 0.99999976, y: 1, z: 0.99999964}
   m_Children:
   - {fileID: 7251327786480374642}
-  - {fileID: 7105218535242469130}
+  - {fileID: 8298844598078958464}
   m_Father: {fileID: 7251327786480374602}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10406,7 +10537,7 @@ Transform:
   m_LocalPosition: {x: 0.0000008982606, y: 0.49243993, z: 0.0000000037252903}
   m_LocalScale: {x: 0.99999976, y: 0.9999994, z: 0.99999964}
   m_Children:
-  - {fileID: 6791649734286094993}
+  - {fileID: 8112156140590160529}
   - {fileID: 7251327786480374548}
   m_Father: {fileID: 7251327786480374612}
   m_RootOrder: 1
@@ -10438,7 +10569,7 @@ Transform:
   m_LocalPosition: {x: 0.0000009536743, y: 0.49243927, z: 0.0000008046627}
   m_LocalScale: {x: 1.0000001, y: 1, z: 1.0000002}
   m_Children:
-  - {fileID: 8727142282935757884}
+  - {fileID: 6702911614230560610}
   - {fileID: 7251327786480374550}
   m_Father: {fileID: 7251327786480374614}
   m_RootOrder: 1
@@ -10532,7 +10663,7 @@ Transform:
   m_LocalPosition: {x: 0.00000017881393, y: 0.49244055, z: 0.000000059604645}
   m_LocalScale: {x: 0.9999998, y: 0.9999999, z: 0.9999999}
   m_Children:
-  - {fileID: 3097981586915276360}
+  - {fileID: 1851537421205586907}
   - {fileID: 7251327786480374540}
   m_Father: {fileID: 7251327786480374532}
   m_RootOrder: 1
@@ -10564,7 +10695,7 @@ Transform:
   m_LocalPosition: {x: -0.00000039488077, y: 0.49244106, z: 0.0000005364418}
   m_LocalScale: {x: 1, y: 1, z: 1.0000001}
   m_Children:
-  - {fileID: 5859640179824563979}
+  - {fileID: 8072522673415475489}
   - {fileID: 7251327786480374542}
   m_Father: {fileID: 7251327786480374534}
   m_RootOrder: 1
@@ -10596,7 +10727,7 @@ Transform:
   m_LocalPosition: {x: 0.00000032782555, y: 0.4924396, z: -0.0000010728836}
   m_LocalScale: {x: 0.9999997, y: 0.99999976, z: 0.9999998}
   m_Children:
-  - {fileID: 8780423165782987102}
+  - {fileID: 5548362211642276153}
   - {fileID: 7251327786480374528}
   m_Father: {fileID: 7251327786480374552}
   m_RootOrder: 1
@@ -10628,7 +10759,7 @@ Transform:
   m_LocalPosition: {x: 0.0000005951151, y: 0.49244142, z: -0.00000017881393}
   m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1.0000004}
   m_Children:
-  - {fileID: 4980901715472489762}
+  - {fileID: 2038091332295692809}
   - {fileID: 7251327786480374530}
   m_Father: {fileID: 7251327786480374554}
   m_RootOrder: 1
@@ -10695,7 +10826,7 @@ Transform:
   m_LocalPosition: {x: -0.00000059604645, y: 0.492439, z: -0.00000035762787}
   m_LocalScale: {x: 0.9999997, y: 1.0000002, z: 0.9999999}
   m_Children:
-  - {fileID: 2126242931220077598}
+  - {fileID: 7916810838243382348}
   - {fileID: 7251327786480374608}
   m_Father: {fileID: 7251327786480374528}
   m_RootOrder: 1
@@ -10727,7 +10858,7 @@ Transform:
   m_LocalPosition: {x: -0.00000014901161, y: 0.49243975, z: 0.0000005364418}
   m_LocalScale: {x: 0.9999994, y: 0.9999997, z: 0.99999994}
   m_Children:
-  - {fileID: 2740965211702763688}
+  - {fileID: 7300784556846280730}
   - {fileID: 7251327786480374610}
   m_Father: {fileID: 7251327786480374530}
   m_RootOrder: 1
@@ -10759,7 +10890,7 @@ Transform:
   m_LocalPosition: {x: 0.00000032782555, y: 0.4924389, z: 0.00000017881393}
   m_LocalScale: {x: 0.99999976, y: 1, z: 0.9999999}
   m_Children:
-  - {fileID: 8160562347241772449}
+  - {fileID: 3303390127915514731}
   - {fileID: 7251327786480374556}
   m_Father: {fileID: 7251327786480374548}
   m_RootOrder: 1
@@ -10791,7 +10922,7 @@ Transform:
   m_LocalPosition: {x: 0.0000009909272, y: 0.49244094, z: -0.00000047683716}
   m_LocalScale: {x: 1, y: 0.9999998, z: 0.9999999}
   m_Children:
-  - {fileID: 913473333842899261}
+  - {fileID: 463085380403557254}
   - {fileID: 7251327786480374558}
   m_Father: {fileID: 7251327786480374550}
   m_RootOrder: 1
@@ -10823,7 +10954,7 @@ Transform:
   m_LocalPosition: {x: -0.000000230968, y: 0.49243945, z: -0.00000008940697}
   m_LocalScale: {x: 0.9999999, y: 1.0000001, z: 0.9999998}
   m_Children:
-  - {fileID: 5342100736240708387}
+  - {fileID: 3749135303552503368}
   - {fileID: 7251327786480374544}
   m_Father: {fileID: 7251327786480374648}
   m_RootOrder: 1
@@ -10855,7 +10986,7 @@ Transform:
   m_LocalPosition: {x: 0.00000093877316, y: 0.49244004, z: 0.0000019073486}
   m_LocalScale: {x: 0.99999994, y: 1, z: 0.9999999}
   m_Children:
-  - {fileID: 5260153640973142695}
+  - {fileID: 1660056748446754135}
   - {fileID: 7251327786480374546}
   m_Father: {fileID: 7251327786480374650}
   m_RootOrder: 1
@@ -10887,7 +11018,7 @@ Transform:
   m_LocalPosition: {x: -0.0000022053719, y: 0.49244037, z: 0}
   m_LocalScale: {x: 0.9999996, y: 1, z: 0.9999998}
   m_Children:
-  - {fileID: 2596272698640929960}
+  - {fileID: 1280978107090953043}
   - {fileID: 7251327786480374532}
   m_Father: {fileID: 7251327786480374556}
   m_RootOrder: 1
@@ -10919,7 +11050,7 @@ Transform:
   m_LocalPosition: {x: -0.0000006109476, y: 0.49243975, z: 0.0000006556511}
   m_LocalScale: {x: 1.0000001, y: 0.9999999, z: 1}
   m_Children:
-  - {fileID: 6983972388014934512}
+  - {fileID: 7804091011093058871}
   - {fileID: 7251327786480374534}
   m_Father: {fileID: 7251327786480374558}
   m_RootOrder: 1
@@ -10951,7 +11082,7 @@ Transform:
   m_LocalPosition: {x: 0.0000003874302, y: 0.49243936, z: -0.0000012218952}
   m_LocalScale: {x: 0.9999996, y: 1, z: 0.9999998}
   m_Children:
-  - {fileID: 5794173546007319369}
+  - {fileID: 5174953158130796842}
   - {fileID: 7251327786480374552}
   m_Father: {fileID: 7251327786480374544}
   m_RootOrder: 1
@@ -10983,7 +11114,7 @@ Transform:
   m_LocalPosition: {x: 0.000000014901161, y: 0.49244195, z: 0.0000007748604}
   m_LocalScale: {x: 0.9999999, y: 0.9999997, z: 0.99999994}
   m_Children:
-  - {fileID: 7588632729999654329}
+  - {fileID: 4342546720508266989}
   - {fileID: 7251327786480374554}
   m_Father: {fileID: 7251327786480374546}
   m_RootOrder: 1
@@ -11015,7 +11146,7 @@ Transform:
   m_LocalPosition: {x: 0.0000013709068, y: 0.59285045, z: 0.00000035762787}
   m_LocalScale: {x: 1, y: 1.0000001, z: 1}
   m_Children:
-  - {fileID: 2995504763101735620}
+  - {fileID: 2319240742320857601}
   - {fileID: 7251327786480374604}
   m_Father: {fileID: 7251327786480374596}
   m_RootOrder: 1
@@ -11047,7 +11178,7 @@ Transform:
   m_LocalPosition: {x: 0.00000047683716, y: 0.59285253, z: 0.000000834465}
   m_LocalScale: {x: 0.9999998, y: 1, z: 0.99999994}
   m_Children:
-  - {fileID: 7752527033155760939}
+  - {fileID: 2148312595539690933}
   - {fileID: 7251327786480374606}
   m_Father: {fileID: 7251327786480374598}
   m_RootOrder: 1
@@ -11079,7 +11210,7 @@ Transform:
   m_LocalPosition: {x: 0.000000059604645, y: 0.60955733, z: 0}
   m_LocalScale: {x: 1, y: 1.0000001, z: 1.0000001}
   m_Children:
-  - {fileID: 6133737432850053952}
+  - {fileID: 3844967751806125764}
   - {fileID: 7251327786480374592}
   m_Father: {fileID: 7251327786480374616}
   m_RootOrder: 1
@@ -11111,7 +11242,7 @@ Transform:
   m_LocalPosition: {x: -0.00000047683716, y: 0.60955596, z: -0.00000037858263}
   m_LocalScale: {x: 1.0000001, y: 1.0000002, z: 1.0000001}
   m_Children:
-  - {fileID: 4580349698643650826}
+  - {fileID: 8065890620420608711}
   - {fileID: 7251327786480374594}
   m_Father: {fileID: 7251327786480374618}
   m_RootOrder: 1
@@ -11143,7 +11274,7 @@ Transform:
   m_LocalPosition: {x: 0.000001013279, y: 0.5928519, z: 0.0000004172325}
   m_LocalScale: {x: 0.9999999, y: 1, z: 1}
   m_Children:
-  - {fileID: 1627307224125522744}
+  - {fileID: 8721907268600915345}
   - {fileID: 7251327786480374644}
   m_Father: {fileID: 7251327786480374604}
   m_RootOrder: 1
@@ -11175,7 +11306,7 @@ Transform:
   m_LocalPosition: {x: 0.0000010384247, y: 0.5928523, z: -0.000001013279}
   m_LocalScale: {x: 0.99999994, y: 0.99999994, z: 1}
   m_Children:
-  - {fileID: 8083933582604215593}
+  - {fileID: 5730498306100521265}
   - {fileID: 7251327786480374646}
   m_Father: {fileID: 7251327786480374606}
   m_RootOrder: 1
@@ -11207,7 +11338,7 @@ Transform:
   m_LocalPosition: {x: -0.00000023841858, y: 0.5928524, z: -0.000000059604645}
   m_LocalScale: {x: 1, y: 1.0000001, z: 0.99999994}
   m_Children:
-  - {fileID: 5792876322253440019}
+  - {fileID: 8138512512111643592}
   - {fileID: 7251327786480374600}
   m_Father: {fileID: 7251327786480374592}
   m_RootOrder: 1
@@ -11239,7 +11370,7 @@ Transform:
   m_LocalPosition: {x: -0.0000009536743, y: 0.59285355, z: 0.00000059604645}
   m_LocalScale: {x: 1, y: 1.0000002, z: 1.0000001}
   m_Children:
-  - {fileID: 6613371314836729049}
+  - {fileID: 867758274599420362}
   - {fileID: 7251327786480374602}
   m_Father: {fileID: 7251327786480374594}
   m_RootOrder: 1
@@ -11271,7 +11402,7 @@ Transform:
   m_LocalPosition: {x: -0.00000011920929, y: 0.60955584, z: -0.000001013279}
   m_LocalScale: {x: 1, y: 0.9999997, z: 1}
   m_Children:
-  - {fileID: 8348143151171416877}
+  - {fileID: 3728264341467437038}
   - {fileID: 7251327786480374620}
   m_Father: {fileID: 7251327786480374540}
   m_RootOrder: 1
@@ -11303,7 +11434,7 @@ Transform:
   m_LocalPosition: {x: -0.0000010728836, y: 0.60955614, z: 0.00000011920929}
   m_LocalScale: {x: 0.9999999, y: 0.9999998, z: 1.0000001}
   m_Children:
-  - {fileID: 246723141173616456}
+  - {fileID: 1798914847538310173}
   - {fileID: 7251327786480374622}
   m_Father: {fileID: 7251327786480374542}
   m_RootOrder: 1
@@ -11335,7 +11466,7 @@ Transform:
   m_LocalPosition: {x: 1.4196498, y: 0.80146307, z: -0.08310969}
   m_LocalScale: {x: 0.99999994, y: 1, z: 0.9999999}
   m_Children:
-  - {fileID: 7400220110162037008}
+  - {fileID: 1461876203319518006}
   - {fileID: 7251327786480374648}
   m_Father: {fileID: 7251327786480375168}
   m_RootOrder: 1
@@ -11367,7 +11498,7 @@ Transform:
   m_LocalPosition: {x: -1.4320408, y: 0.779104, z: -0.08315241}
   m_LocalScale: {x: 1, y: 0.99999994, z: 0.99999994}
   m_Children:
-  - {fileID: 5391796116660838752}
+  - {fileID: 6641865493135553281}
   - {fileID: 7251327786480374650}
   m_Father: {fileID: 7251327786480375168}
   m_RootOrder: 0
@@ -11399,7 +11530,7 @@ Transform:
   m_LocalPosition: {x: -0.0000007748604, y: 0.6095569, z: -0.00000035762787}
   m_LocalScale: {x: 1.0000001, y: 0.9999999, z: 0.9999997}
   m_Children:
-  - {fileID: 980193661294531873}
+  - {fileID: 5569485045721270674}
   - {fileID: 7251327786480374596}
   m_Father: {fileID: 7251327786480374620}
   m_RootOrder: 1
@@ -11431,7 +11562,7 @@ Transform:
   m_LocalPosition: {x: -0.00000071525574, y: 0.609558, z: 0.0000010728836}
   m_LocalScale: {x: 1.0000001, y: 0.9999999, z: 1}
   m_Children:
-  - {fileID: 4122487109114323665}
+  - {fileID: 9038964225155740285}
   - {fileID: 7251327786480374598}
   m_Father: {fileID: 7251327786480374622}
   m_RootOrder: 1
@@ -11463,7 +11594,7 @@ Transform:
   m_LocalPosition: {x: -0.0000011920929, y: 0.6095548, z: 0.000000834465}
   m_LocalScale: {x: 1, y: 1, z: 0.9999999}
   m_Children:
-  - {fileID: 3981535832297551359}
+  - {fileID: 308541970654534354}
   - {fileID: 7251327786480374616}
   m_Father: {fileID: 7251327786480374608}
   m_RootOrder: 1
@@ -11495,12 +11626,12 @@ Transform:
   m_LocalPosition: {x: 0.0000005364418, y: 0.6095563, z: 0.00000071525574}
   m_LocalScale: {x: 0.9999999, y: 1.0000001, z: 1.0000001}
   m_Children:
-  - {fileID: 1712628217485888542}
+  - {fileID: 2010288238479838885}
   - {fileID: 7251327786480374618}
   m_Father: {fileID: 7251327786480374610}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &7298896278257632308
+--- !u!1 &7362695043284171015
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11508,9 +11639,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 9115145118413335608}
-  - component: {fileID: 4809489646874115232}
-  - component: {fileID: 7368919345763300334}
+  - component: {fileID: 5569485045721270674}
+  - component: {fileID: 8998570068949532299}
+  - component: {fileID: 4557493833017823468}
   m_Layer: 12
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -11518,13 +11649,202 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &9115145118413335608
+--- !u!4 &5569485045721270674
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7298896278257632308}
+  m_GameObject: {fileID: 7362695043284171015}
+  m_LocalRotation: {x: -0.0036239906, y: 0.002137513, z: 0.0026522954, w: 0.99998766}
+  m_LocalPosition: {x: -0.03546657, y: -0.013217999, z: -0.014333312}
+  m_LocalScale: {x: 1.6666712, y: 1.6666696, z: 1.666671}
+  m_Children: []
+  m_Father: {fileID: 7251327786480374616}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &8998570068949532299
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7362695043284171015}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4557493833017823468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7362695043284171015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 449027690755057918}
+  isBullseye: 0
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 3342942999571457185}
+  indexInGroup: 30
+--- !u!1 &7462507106647803982
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8298844598078958464}
+  - component: {fileID: 832434462263013920}
+  - component: {fileID: 2776186029082595444}
+  m_Layer: 12
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8298844598078958464
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7462507106647803982}
+  m_LocalRotation: {x: -0.000074852214, y: 0.0005187531, z: -0.000051640593, w: 0.9999999}
+  m_LocalPosition: {x: -0.0062161987, y: 0.00043408814, z: -0.000023690014}
+  m_LocalScale: {x: 1.666666, y: 1.6666636, z: 1.6666676}
+  m_Children: []
+  m_Father: {fileID: 7251327786480374646}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &832434462263013920
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7462507106647803982}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2776186029082595444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7462507106647803982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 449027690755057918}
+  isBullseye: 0
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 3342942999571457185}
+  indexInGroup: 8
+--- !u!1 &7561635137687840520
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1461876203319518006}
+  - component: {fileID: 7911084271374721100}
+  - component: {fileID: 308049636673174649}
+  m_Layer: 12
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1461876203319518006
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7561635137687840520}
+  m_LocalRotation: {x: -0.0000042766324, y: 0.000035725527, z: 0.000009986569, w: 1}
+  m_LocalPosition: {x: -0.0008820036, y: -0.00017788628, z: 0.00057864236}
+  m_LocalScale: {x: 1.666667, y: 1.6666667, z: 1.666667}
+  m_Children: []
+  m_Father: {fileID: 7251327786480374612}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &7911084271374721100
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7561635137687840520}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &308049636673174649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7561635137687840520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 449027690755057918}
+  isBullseye: 0
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 3342942999571457185}
+  indexInGroup: 41
+--- !u!1 &7642999615856141722
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2329872527777724138}
+  - component: {fileID: 3573304379295892249}
+  - component: {fileID: 652221045864068085}
+  m_Layer: 12
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2329872527777724138
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7642999615856141722}
   m_LocalRotation: {x: -0.0001453906, y: -0.00005056708, z: -0.000091548056, w: 1}
   m_LocalPosition: {x: -0.00010044259, y: 0.00085810164, z: 0.0006651255}
   m_LocalScale: {x: 1.6666666, y: 1.666667, z: 1.6666671}
@@ -11532,13 +11852,13 @@ Transform:
   m_Father: {fileID: 7251327786480374428}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &4809489646874115232
+--- !u!136 &3573304379295892249
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7298896278257632308}
+  m_GameObject: {fileID: 7642999615856141722}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
@@ -11546,13 +11866,13 @@ CapsuleCollider:
   m_Height: 2.15
   m_Direction: 1
   m_Center: {x: 0, y: 0.7, z: 0}
---- !u!114 &7368919345763300334
+--- !u!114 &652221045864068085
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7298896278257632308}
+  m_GameObject: {fileID: 7642999615856141722}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
@@ -11564,7 +11884,7 @@ MonoBehaviour:
   damageModifier: 0
   hurtBoxGroup: {fileID: 3342942999571457185}
   indexInGroup: 42
---- !u!1 &7360916300659235908
+--- !u!1 &7723413529709289613
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11572,9 +11892,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2126242931220077598}
-  - component: {fileID: 7906821612543568624}
-  - component: {fileID: 8173198461450274025}
+  - component: {fileID: 1280978107090953043}
+  - component: {fileID: 6727802911169485740}
+  - component: {fileID: 8517224599841742151}
   m_Layer: 12
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -11582,40 +11902,40 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2126242931220077598
+--- !u!4 &1280978107090953043
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7360916300659235908}
-  m_LocalRotation: {x: -0.0017305306, y: 0.0004890377, z: 0.0035576348, w: 0.99999213}
-  m_LocalPosition: {x: -0.023827981, y: -0.004487177, z: -0.009714144}
-  m_LocalScale: {x: 1.6666725, y: 1.666669, z: 1.6666706}
+  m_GameObject: {fileID: 7723413529709289613}
+  m_LocalRotation: {x: -0.0010057405, y: 0.0001533904, z: 0.0035309615, w: 0.99999326}
+  m_LocalPosition: {x: -0.01381429, y: 0.00042819197, z: -0.0061853146}
+  m_LocalScale: {x: 1.6666708, y: 1.6666679, z: 1.6666697}
   m_Children: []
-  m_Father: {fileID: 7251327786480374540}
+  m_Father: {fileID: 7251327786480374552}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &7906821612543568624
+--- !u!135 &6727802911169485740
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7360916300659235908}
+  m_GameObject: {fileID: 7723413529709289613}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8173198461450274025
+--- !u!114 &8517224599841742151
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7360916300659235908}
+  m_GameObject: {fileID: 7723413529709289613}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
@@ -11626,8 +11946,8 @@ MonoBehaviour:
   isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 33
---- !u!1 &7481093655666217670
+  indexInGroup: 36
+--- !u!1 &8050192888016536999
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11635,9 +11955,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 246723141173616456}
-  - component: {fileID: 4235323104494080498}
-  - component: {fileID: 7335811796231162140}
+  - component: {fileID: 4342546720508266989}
+  - component: {fileID: 2473492319486714383}
+  - component: {fileID: 388937315690030331}
   m_Layer: 12
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -11645,40 +11965,40 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &246723141173616456
+--- !u!4 &4342546720508266989
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7481093655666217670}
-  m_LocalRotation: {x: 0.000050976854, y: -0.000025010659, z: 0.000526005, w: 0.9999999}
-  m_LocalPosition: {x: -0.0034845008, y: 0.0008413687, z: 0.0013778001}
-  m_LocalScale: {x: 1.6666666, y: 1.6666679, z: 1.6666652}
+  m_GameObject: {fileID: 8050192888016536999}
+  m_LocalRotation: {x: 0.000066824236, y: -0.00023846645, z: 0.0004699858, w: 0.9999999}
+  m_LocalPosition: {x: -0.0011316042, y: -0.0003549474, z: 0.0010347652}
+  m_LocalScale: {x: 1.666667, y: 1.6666677, z: 1.6666666}
   m_Children: []
-  m_Father: {fileID: 7251327786480374610}
+  m_Father: {fileID: 7251327786480374558}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &4235323104494080498
+--- !u!135 &2473492319486714383
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7481093655666217670}
+  m_GameObject: {fileID: 8050192888016536999}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7335811796231162140
+--- !u!114 &388937315690030331
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7481093655666217670}
+  m_GameObject: {fileID: 8050192888016536999}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
@@ -11689,260 +12009,7 @@ MonoBehaviour:
   isSniperTarget: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 15
---- !u!1 &7490021966576487117
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5342100736240708387}
-  - component: {fileID: 452112860267584581}
-  - component: {fileID: 7733167073350988265}
-  m_Layer: 12
-  m_Name: Hurtbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5342100736240708387
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7490021966576487117}
-  m_LocalRotation: {x: -0.0016396636, y: 0.00114533, z: 0.0033669947, w: 0.9999924}
-  m_LocalPosition: {x: -0.0037249762, y: -0.0004583424, z: -0.0020517833}
-  m_LocalScale: {x: 1.6666678, y: 1.6666673, z: 1.6666682}
-  m_Children: []
-  m_Father: {fileID: 7251327786480374548}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &452112860267584581
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7490021966576487117}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7733167073350988265
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7490021966576487117}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 449027690755057918}
-  isBullseye: 0
-  isSniperTarget: 0
-  damageModifier: 0
-  hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 39
---- !u!1 &7771059100568951658
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5554846819819989018}
-  - component: {fileID: 6031013682807025224}
-  - component: {fileID: 521286757638014854}
-  m_Layer: 12
-  m_Name: Hurtbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5554846819819989018
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7771059100568951658}
-  m_LocalRotation: {x: 0.00029443204, y: 0.00025242943, z: 0.00052794814, w: 0.9999998}
-  m_LocalPosition: {x: -0.0041316687, y: -0.000029647856, z: 0.0013849799}
-  m_LocalScale: {x: 1.6663246, y: 1.6666645, z: 1.6663747}
-  m_Children: []
-  m_Father: {fileID: 7251327786480374446}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &6031013682807025224
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7771059100568951658}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.2
-  m_Height: 3
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.5, z: 0}
---- !u!114 &521286757638014854
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7771059100568951658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 449027690755057918}
-  isBullseye: 0
-  isSniperTarget: 0
-  damageModifier: 0
-  hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 5
---- !u!1 &7913870842554875501
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4580349698643650826}
-  - component: {fileID: 87916434885494582}
-  - component: {fileID: 445543825572808156}
-  m_Layer: 12
-  m_Name: Hurtbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4580349698643650826
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7913870842554875501}
-  m_LocalRotation: {x: 0.000046968442, y: 0.00041018505, z: 0.00032675115, w: 0.9999999}
-  m_LocalPosition: {x: -0.0053055147, y: 0.0015373154, z: 0.0006839727}
-  m_LocalScale: {x: 1.6666664, y: 1.6666651, z: 1.6666665}
-  m_Children: []
-  m_Father: {fileID: 7251327786480374598}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &87916434885494582
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7913870842554875501}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &445543825572808156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7913870842554875501}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 449027690755057918}
-  isBullseye: 0
-  isSniperTarget: 0
-  damageModifier: 0
-  hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 12
---- !u!1 &8108786272150794503
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1627307224125522744}
-  - component: {fileID: 6114319261606953870}
-  - component: {fileID: 6699865056917903558}
-  m_Layer: 12
-  m_Name: Hurtbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1627307224125522744
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8108786272150794503}
-  m_LocalRotation: {x: -0.0051925443, y: 0.003932579, z: -0.000010557378, w: 0.99997884}
-  m_LocalPosition: {x: -0.04573194, y: -0.020106483, z: -0.02416053}
-  m_LocalScale: {x: 1.666673, y: 1.6666712, z: 1.6666692}
-  m_Children: []
-  m_Father: {fileID: 7251327786480374600}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &6114319261606953870
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8108786272150794503}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6699865056917903558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8108786272150794503}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 449027690755057918}
-  isBullseye: 0
-  isSniperTarget: 0
-  damageModifier: 0
-  hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 26
+  indexInGroup: 20
 --- !u!1 &8248828013098336362
 GameObject:
   m_ObjectHideFlags: 0
@@ -11974,6 +12041,69 @@ Transform:
   m_Father: {fileID: 7251327786480375172}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8251801932144442073
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5730498306100521265}
+  - component: {fileID: 3556398162514577972}
+  - component: {fileID: 4472412589481344241}
+  m_Layer: 12
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5730498306100521265
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8251801932144442073}
+  m_LocalRotation: {x: -0.00004114954, y: 0.0005244366, z: -0.000015567995, w: 0.9999999}
+  m_LocalPosition: {x: -0.0061975596, y: 0.0008139797, z: 0.000051751864}
+  m_LocalScale: {x: 1.6666658, y: 1.6666644, z: 1.6666665}
+  m_Children: []
+  m_Father: {fileID: 7251327786480374602}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &3556398162514577972
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8251801932144442073}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4472412589481344241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8251801932144442073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 449027690755057918}
+  isBullseye: 0
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 3342942999571457185}
+  indexInGroup: 9
 --- !u!1 &8260247303093177780
 GameObject:
   m_ObjectHideFlags: 0
@@ -12005,69 +12135,6 @@ Transform:
   m_Father: {fileID: 7251327786480375172}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &8304029667854007903
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8780423165782987102}
-  - component: {fileID: 3211932946263946390}
-  - component: {fileID: 3649496032265046941}
-  m_Layer: 12
-  m_Name: Hurtbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8780423165782987102
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8304029667854007903}
-  m_LocalRotation: {x: -0.0010895325, y: 0.00012825309, z: 0.003556098, w: 0.99999315}
-  m_LocalPosition: {x: -0.017245209, y: -0.00028016444, z: -0.0073007764}
-  m_LocalScale: {x: 1.6666714, y: 1.6666685, z: 1.66667}
-  m_Children: []
-  m_Father: {fileID: 7251327786480374532}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &3211932946263946390
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8304029667854007903}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3649496032265046941
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8304029667854007903}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 449027690755057918}
-  isBullseye: 0
-  isSniperTarget: 0
-  damageModifier: 0
-  hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 35
 --- !u!1 &8376516712728675886
 GameObject:
   m_ObjectHideFlags: 0
@@ -12099,6 +12166,70 @@ Transform:
   m_Father: {fileID: 7251327786480375172}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8395285347350609783
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1238199566600873484}
+  - component: {fileID: 25742110827501595}
+  - component: {fileID: 3036390382626361819}
+  m_Layer: 12
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1238199566600873484
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8395285347350609783}
+  m_LocalRotation: {x: -0.00032137337, y: 0.00004149182, z: -0.0004046895, w: 0.9999999}
+  m_LocalPosition: {x: 0.00013259657, y: -0.00077686715, z: -0.00008207186}
+  m_LocalScale: {x: 1.6663524, y: 1.6666393, z: 1.6665711}
+  m_Children: []
+  m_Father: {fileID: 7251327786480374458}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &25742110827501595
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8395285347350609783}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.275
+  m_Height: 2.35
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.175, z: 0}
+--- !u!114 &3036390382626361819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8395285347350609783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 449027690755057918}
+  isBullseye: 0
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 3342942999571457185}
+  indexInGroup: 4
 --- !u!1 &8435427875646272690
 GameObject:
   m_ObjectHideFlags: 0
@@ -12221,69 +12352,6 @@ Transform:
   m_Father: {fileID: 5058570684948517683}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &8529491837027630639
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3176447502680281597}
-  - component: {fileID: 8577501203150894871}
-  - component: {fileID: 4307523523017981525}
-  m_Layer: 12
-  m_Name: Hurtbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3176447502680281597
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8529491837027630639}
-  m_LocalRotation: {x: 0.000034675, y: 0.000008597969, z: 0.000010948627, w: 1}
-  m_LocalPosition: {x: -0.00021146727, y: 0.000982069, z: 0.00018589429}
-  m_LocalScale: {x: 1.6666666, y: 1.6666669, z: 1.6666673}
-  m_Children: []
-  m_Father: {fileID: 7251327786480375168}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &8577501203150894871
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8529491837027630639}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.9
-  m_Center: {x: 0, y: 0.33, z: 0}
---- !u!114 &4307523523017981525
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8529491837027630639}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 449027690755057918}
-  isBullseye: 0
-  isSniperTarget: 0
-  damageModifier: 0
-  hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 43
 --- !u!1 &8716384250249468412
 GameObject:
   m_ObjectHideFlags: 0
@@ -12314,70 +12382,6 @@ Transform:
   m_Father: {fileID: 6315549241859761042}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &8782497100657891580
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3633235337895926675}
-  - component: {fileID: 1412138179279365853}
-  - component: {fileID: 5557027027197393998}
-  m_Layer: 12
-  m_Name: Hurtbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3633235337895926675
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8782497100657891580}
-  m_LocalRotation: {x: -0.017839912, y: 0.00008232144, z: -0.00041254042, w: 0.99984086}
-  m_LocalPosition: {x: 0.0027302376, y: -0.00048391125, z: -0.001992993}
-  m_LocalScale: {x: 1.6663572, y: 1.6666337, z: 1.6665713}
-  m_Children: []
-  m_Father: {fileID: 7251327786480374438}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -2, y: 0, z: 0}
---- !u!136 &1412138179279365853
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8782497100657891580}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.2
-  m_Height: 3
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.5, z: 0}
---- !u!114 &5557027027197393998
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8782497100657891580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 449027690755057918}
-  isBullseye: 0
-  isSniperTarget: 0
-  damageModifier: 0
-  hurtBoxGroup: {fileID: 3342942999571457185}
-  indexInGroup: 2
 --- !u!1 &8834924592563104075
 GameObject:
   m_ObjectHideFlags: 0
@@ -12409,6 +12413,69 @@ Transform:
   m_Father: {fileID: 7251327786480375172}
   m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8895944709156395929
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2038091332295692809}
+  - component: {fileID: 3158174868228351712}
+  - component: {fileID: 437145431313733942}
+  m_Layer: 12
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2038091332295692809
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8895944709156395929}
+  m_LocalRotation: {x: 0.000061028615, y: -0.00025602887, z: 0.0004612822, w: 0.9999999}
+  m_LocalPosition: {x: -0.0020423983, y: -0.0002690821, z: 0.0011963024}
+  m_LocalScale: {x: 1.6666664, y: 1.6666682, z: 1.6666664}
+  m_Children: []
+  m_Father: {fileID: 7251327786480374534}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &3158174868228351712
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8895944709156395929}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &437145431313733942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8895944709156395929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 449027690755057918}
+  isBullseye: 0
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 3342942999571457185}
+  indexInGroup: 18
 --- !u!1 &9007219212474126938
 GameObject:
   m_ObjectHideFlags: 0
@@ -12440,6 +12507,69 @@ Transform:
   m_Father: {fileID: 7251327786480375172}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &9091388808194012399
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1851537421205586907}
+  - component: {fileID: 5009010093049167510}
+  - component: {fileID: 4682568259432846306}
+  m_Layer: 12
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1851537421205586907
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9091388808194012399}
+  m_LocalRotation: {x: -0.0013270746, y: 0.00026321542, z: 0.0035752107, w: 0.9999927}
+  m_LocalPosition: {x: -0.020635035, y: -0.0017433437, z: -0.008475521}
+  m_LocalScale: {x: 1.6666715, y: 1.6666687, z: 1.6666703}
+  m_Children: []
+  m_Father: {fileID: 7251327786480374528}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &5009010093049167510
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9091388808194012399}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4682568259432846306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9091388808194012399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 449027690755057918}
+  isBullseye: 0
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 3342942999571457185}
+  indexInGroup: 34
 --- !u!1 &9158803951819716610
 GameObject:
   m_ObjectHideFlags: 0

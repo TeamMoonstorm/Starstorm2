@@ -6,11 +6,11 @@ using UnityEngine.AddressableAssets;
 
 namespace Moonstorm.Starstorm2.Survivors
 {
-    //[DisabledContent]
+    [DisabledContent]
     public sealed class NemCommando : SurvivorBase
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemCommandoBody");
-        public bool cool;
+        //public bool cool;
         public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemmandoMonsterMaster");
         public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("survivorNemCommando");
         GameObject footstepDust { get; set; } = Resources.Load<GameObject>("Prefabs/GenericFootstepDust");
