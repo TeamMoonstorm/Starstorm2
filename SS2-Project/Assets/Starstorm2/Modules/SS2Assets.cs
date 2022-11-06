@@ -42,6 +42,11 @@ namespace Moonstorm.Starstorm2
             SwapShadersFromMaterials(MainAssetBundle.LoadAllAssets<Material>().Where(mat => mat.shader.name.StartsWith("Stubbed")));
         }
 
+        internal void FinalizeCopiedMaterials()
+        {
+            FinalizeMaterialsWithAddressableMaterialShader(MainAssetBundle);
+        }
+
         private string GetAssetBundlePaths()
         {
             return Path.Combine(AssemblyDir, assetBundleFolderName, mainAssetBundleName);

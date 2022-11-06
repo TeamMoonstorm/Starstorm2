@@ -283,6 +283,7 @@ namespace Moonstorm.Starstorm2
                 {
                     SS2Log.Info($"Swapping material shaders");
                     SS2Assets.Instance.SwapMaterialShaders();
+                    SS2Assets.Instance.FinalizeCopiedMaterials();
                 }
             };
 
