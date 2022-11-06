@@ -110,6 +110,9 @@ namespace Moonstorm.Starstorm2.Items
 
                         targetBody.healthComponent.health = targetBody.healthComponent.health * healthFrac;
                         targetBody.AddBuff(SS2Content.Buffs.BuffTerminationVFX);
+                        //Vector3 scaleIncrease = new Vector3(1.25f, 1.25f, 1.25f);
+                        //targetBody.transform.localScale *= 1.5f;
+                        targetBody.modelLocator.modelTransform.localScale *= 1.5f;
                         token.hasFailed = true;
                     }
 
