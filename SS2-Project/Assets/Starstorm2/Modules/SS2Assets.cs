@@ -1,12 +1,9 @@
 ﻿using Moonstorm.Loaders;
 using Moonstorm.Starstorm2.PostProcess;
 using RoR2;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Rendering.PostProcessing;
 using Path = System.IO.Path;
 
@@ -28,6 +25,16 @@ namespace Moonstorm.Starstorm2
         {
             var bundlePaths = GetAssetBundlePaths();
             bundle = AssetBundle.LoadFromFile(bundlePaths);
+
+            FinishSibylline();
+        }
+
+        //Neb: This will probably be removed if i decide to make an ItemTier module for MSU, unsure yet, time will tell ig
+        private void FinishSibylline()
+        {
+            ItemTierDef sibylline = bundle.LoadAsset<ItemTierDef>("Sibylline");
+            sibylline.highlightPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/HighlightTier1Item.prefab").WaitForCompletion();
+            sibylline.dropletDisplayPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/Common/VoidOrb.prefab").WaitForCompletion();
         }
 
         internal void SwapMaterialShaders()

@@ -56,6 +56,11 @@ namespace Moonstorm.Starstorm2.ScriptableObjects
                 for (int i = 0; i < numItems; i++)
                 {
                     var selected = nemesisInventorySelection.Evaluate(Run.instance.runRNG.nextNormalizedFloat);
+                    if(selected.itemDef.Asset.requiredExpansion && !Run.instance.IsExpansionEnabled(selected.itemDef.Asset.requiredExpansion))
+                    {
+                        i--;
+                        continue;
+                    }
                     if (inv.GetItemCount(selected.itemDef.Asset) == 0)
                     {
                         inv.GiveItem(selected.itemDef.Asset, UnityEngine.Random.Range(selected.minStacks, selected.maxStacks));
