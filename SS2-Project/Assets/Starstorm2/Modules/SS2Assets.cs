@@ -25,17 +25,8 @@ namespace Moonstorm.Starstorm2
         {
             var bundlePaths = GetAssetBundlePaths();
             bundle = AssetBundle.LoadFromFile(bundlePaths);
-
-            FinishSibylline();
         }
 
-        //Neb: This will probably be removed if i decide to make an ItemTier module for MSU, unsure yet, time will tell ig
-        private void FinishSibylline()
-        {
-            ItemTierDef sibylline = bundle.LoadAsset<ItemTierDef>("Sibylline");
-            sibylline.highlightPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/HighlightTier1Item.prefab").WaitForCompletion();
-            sibylline.dropletDisplayPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/Common/VoidOrb.prefab").WaitForCompletion();
-        }
 
         internal void SwapMaterialShaders()
         {
