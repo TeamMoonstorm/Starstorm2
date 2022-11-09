@@ -195,6 +195,10 @@ namespace Moonstorm.Starstorm2
             //public static SurvivorDef SurvivorPyro;
         }
 
+        public static class ItemTierDefs
+        {
+            public static ItemTierDef Sibylline;
+        }
         public override string identifier => Starstorm.guid;
 
         public override R2APISerializableContentPack SerializableContentPack { get; protected set; } = SS2Assets.LoadAsset<R2APISerializableContentPack>("ContentPack");
@@ -211,6 +215,10 @@ namespace Moonstorm.Starstorm2
                 delegate
                 {
                     new Modules.Scenes().Initialize();
+                },
+                delegate
+                {
+                    new Modules.ItemTiers().Initialize();
                 },
                 delegate
                 {
@@ -287,6 +295,7 @@ namespace Moonstorm.Starstorm2
                 {
                     SS2Log.Info($"Swapping material shaders");
                     SS2Assets.Instance.SwapMaterialShaders();
+                    SS2Assets.Instance.FinalizeCopiedMaterials();
                 }
             };
 
@@ -315,10 +324,12 @@ namespace Moonstorm.Starstorm2
                 delegate
                 {
                     PopulateTypeFields(typeof(Survivors), ContentPack.survivorDefs);
+                },
+                delegate
+                {
+                    PopulateTypeFields(typeof(ItemTierDefs), ContentPack.itemTierDefs);
                 }
             };
-
-            Modules.UglyMULT.Initialize();
         }
     }
 }

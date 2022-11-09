@@ -12,7 +12,7 @@ namespace Moonstorm.Starstorm2.Items
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("LowQualitySpeakers");
 
         [ConfigurableField(ConfigName = "Maximum Move Speed per Speaker", ConfigDesc = "Maximum amount of move speed per item held.")]
-        [TokenModifier(token, StatTypes.Percentage)]
+        [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float bonusMoveSpeed = 0.4f;
 
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier, IOnIncomingDamageServerReceiver

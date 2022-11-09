@@ -10,11 +10,11 @@ namespace Moonstorm.Starstorm2.Items
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("DetritiveTrematode");
 
         [ConfigurableField(ConfigName = "Trematode Threshold", ConfigDesc = "Amount of missing health needed for Trematode to proc. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.Percentage, 0)]
+        [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float missingHealthPercentage = 0.40f;
 
         [ConfigurableField(ConfigDesc = "Movement speed reduction received from the Trematode debuff. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.Percentage, 2)]
+        [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
         public static float trematodeSlow = 0.2f;
 
         [ConfigurableField(ConfigDesc = "Duration of Trematode debuff, in seconds.")]
@@ -22,7 +22,7 @@ namespace Moonstorm.Starstorm2.Items
         public static float dotDuration = 4;
 
         [ConfigurableField(ConfigDesc = "Damage dealt by the Trematode debuff, per second. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.Percentage, 1)]
+        [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
         public static float trematodeDamage = 1f;
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver

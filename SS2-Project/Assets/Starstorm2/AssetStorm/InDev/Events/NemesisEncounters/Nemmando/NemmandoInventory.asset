@@ -12,204 +12,340 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e1c7de9e8007a141b1b98230e9ab050, type: 3}
   m_Name: NemmandoInventory
   m_EditorClassIdentifier: 
-  nemesisItems:
-  - itemDefName: ArmorPlate
-    chanceForApplying: 30
+  nemesisInventory:
+  - itemDef:
+      address: ArmorPlate
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 30
     maxStacks: 4
     minStacks: 1
-  - itemDefName: BarrierOnKill
-    chanceForApplying: 77
+  - itemDef:
+      address: BarrierOnKill
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 77
     maxStacks: 2
     minStacks: 1
-  - itemDefName: BleedOnHit
-    chanceForApplying: 25
+  - itemDef:
+      address: BleedOnHit
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 25
     maxStacks: 4
     minStacks: 1
-  - itemDefName: CoffeeBag
-    chanceForApplying: 70
+  - itemDef:
+      address: CoffeeBag
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 70
     maxStacks: 5
     minStacks: 3
-  - itemDefName: CritGlasses
-    chanceForApplying: 25
+  - itemDef:
+      address: CritGlasses
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 25
     maxStacks: 4
     minStacks: 1
-  - itemDefName: Crowbar
-    chanceForApplying: 30
+  - itemDef:
+      address: Crowbar
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 30
     maxStacks: 3
     minStacks: 1
-  - itemDefName: DormantFungus
-    chanceForApplying: 20
+  - itemDef:
+      address: Fork
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 20
+    maxStacks: 5
+    minStacks: 1
+  - itemDef:
+      address: HealWhileSafe
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 50
+    maxStacks: 3
+    minStacks: 1
+  - itemDef:
+      address: Hoof
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 45
+    maxStacks: 3
+    minStacks: 1
+  - itemDef:
+      address: IgniteOnKill
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 20
+    maxStacks: 3
+    minStacks: 1
+  - itemDef:
+      address: MoltenCoin
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 30
+    maxStacks: 2
+    minStacks: 1
+  - itemDef:
+      address: Mushroom
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 60
+    maxStacks: 3
+    minStacks: 1
+  - itemDef:
+      address: NearbyDamageBonus
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 10
+    maxStacks: 5
+    minStacks: 1
+  - itemDef:
+      address: PersonalShield
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 25
     maxStacks: 4
     minStacks: 1
-  - itemDefName: FlatHealth
-    chanceForApplying: 10
-    maxStacks: 20
-    minStacks: 10
-  - itemDefName: Fork
-    chanceForApplying: 20
+  - itemDef:
+      address: SprintBonus
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 25
+    maxStacks: 2
+    minStacks: 1
+  - itemDef:
+      address: StickyBomb
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 50
     maxStacks: 5
     minStacks: 1
-  - itemDefName: HealWhileSafe
-    chanceForApplying: 50
-    maxStacks: 3
-    minStacks: 1
-  - itemDefName: Hoof
-    chanceForApplying: 45
-    maxStacks: 3
-    minStacks: 1
-  - itemDefName: IgniteOnKill
-    chanceForApplying: 20
-    maxStacks: 3
-    minStacks: 1
-  - itemDefName: MoltenCoin
-    chanceForApplying: 30
-    maxStacks: 2
-    minStacks: 1
-  - itemDefName: Mushroom
-    chanceForApplying: 60
-    maxStacks: 3
-    minStacks: 1
-  - itemDefName: NearbyDamageBonus
-    chanceForApplying: 10
-    maxStacks: 5
-    minStacks: 1
-  - itemDefName: PersonalShield
-    chanceForApplying: 25
-    maxStacks: 4
-    minStacks: 1
-  - itemDefName: SprintBonus
-    chanceForApplying: 25
-    maxStacks: 2
-    minStacks: 1
-  - itemDefName: StickyBomb
-    chanceForApplying: 50
-    maxStacks: 5
-    minStacks: 1
-  - itemDefName: StunChanceOnHit
-    chanceForApplying: 20
+  - itemDef:
+      address: StunChanceOnHit
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 20
     maxStacks: 1
     minStacks: 1
-  - itemDefName: Syringe
-    chanceForApplying: 45
+  - itemDef:
+      address: Syringe
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 45
     maxStacks: 3
     minStacks: 1
-  - itemDefName: Tooth
-    chanceForApplying: 10
+  - itemDef:
+      address: Tooth
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 10
     maxStacks: 1
     minStacks: 1
-  - itemDefName: AttackSpeedOnCrit
-    chanceForApplying: 10
+  - itemDef:
+      address: AttackSpeedOnCrit
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 10
     maxStacks: 3
     minStacks: 1
-  - itemDefName: ChainLightning
-    chanceForApplying: 5
+  - itemDef:
+      address: ChainLightning
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 5
     maxStacks: 3
     minStacks: 1
-  - itemDefName: DeathMark
-    chanceForApplying: 2
+  - itemDef:
+      address: DeathMark
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 2
     maxStacks: 2
     minStacks: 1
-  - itemDefName: ExplodeOnDeath
-    chanceForApplying: 2
+  - itemDef:
+      address: ExplodeOnDeath
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 2
     maxStacks: 3
     minStacks: 1
-  - itemDefName: Feather
-    chanceForApplying: 5
+  - itemDef:
+      address: Feather
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 5
     maxStacks: 2
     minStacks: 1
-  - itemDefName: FireRing
-    chanceForApplying: 2
+  - itemDef:
+      address: FireRing
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 2
     maxStacks: 2
     minStacks: 1
-  - itemDefName: HealOnCrit
-    chanceForApplying: 10
+  - itemDef:
+      address: HealOnCrit
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 10
     maxStacks: 3
     minStacks: 1
-  - itemDefName: HuntersSigil
-    chanceForApplying: 5
+  - itemDef:
+      address: HuntersSigil
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 5
     maxStacks: 2
     minStacks: 1
-  - itemDefName: IceRing
-    chanceForApplying: 2
+  - itemDef:
+      address: IceRing
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 2
     maxStacks: 2
     minStacks: 1
-  - itemDefName: Infusion
-    chanceForApplying: 1
+  - itemDef:
+      address: Infusion
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 1
     maxStacks: 1
     minStacks: 1
-  - itemDefName: JetBoots
-    chanceForApplying: 5
+  - itemDef:
+      address: JetBoots
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 5
     maxStacks: 2
     minStacks: 1
-  - itemDefName: JumpBoost
-    chanceForApplying: 5
+  - itemDef:
+      address: JumpBoost
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 5
     maxStacks: 2
     minStacks: 1
-  - itemDefName: Phasing
-    chanceForApplying: 3
+  - itemDef:
+      address: Phasing
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 3
     maxStacks: 2
     minStacks: 1
-  - itemDefName: Seed
-    chanceForApplying: 6
+  - itemDef:
+      address: Seed
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 6
     maxStacks: 2
     minStacks: 1
-  - itemDefName: SlowOnHit
-    chanceForApplying: 2
+  - itemDef:
+      address: SlowOnHit
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 2
     maxStacks: 2
     minStacks: 1
-  - itemDefName: SprintArmor
-    chanceForApplying: 10
+  - itemDef:
+      address: SprintArmor
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 10
     maxStacks: 2
     minStacks: 1
-  - itemDefName: SprintOutOfCombat
-    chanceForApplying: 10
+  - itemDef:
+      address: SprintOutOfCombat
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 10
     maxStacks: 3
     minStacks: 1
-  - itemDefName: WarCryOnMultiKill
-    chanceForApplying: 1
+  - itemDef:
+      address: WarCryOnMultiKill
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 1
     maxStacks: 1
     minStacks: 1
-  - itemDefName: WatchMetronome
-    chanceForApplying: 16
+  - itemDef:
+      address: WatchMetronome
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 16
     maxStacks: 2
     minStacks: 1
-  - itemDefName: AlienHead
-    chanceForApplying: 1
+  - itemDef:
+      address: AlienHead
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 1
     maxStacks: 3
     minStacks: 1
-  - itemDefName: HealWhileSafe
-    chanceForApplying: 0
+  - itemDef:
+      address: HealWhileSafe
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 0
     maxStacks: 0
     minStacks: 0
-  - itemDefName: ArmorReductionOnHit
-    chanceForApplying: 1
+  - itemDef:
+      address: ArmorReductionOnHit
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 1
     maxStacks: 2
     minStacks: 1
-  - itemDefName: BarrierOnOverHeal
-    chanceForApplying: 1
+  - itemDef:
+      address: BarrierOnOverHeal
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 1
     maxStacks: 3
     minStacks: 1
-  - itemDefName: Behemoth
-    chanceForApplying: 1
+  - itemDef:
+      address: Behemoth
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 1
     maxStacks: 1
     minStacks: 1
-  - itemDefName: Clover
-    chanceForApplying: 1
+  - itemDef:
+      address: Clover
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 1
     maxStacks: 2
     minStacks: 1
-  - itemDefName: ErraticGadget
-    chanceForApplying: 1
+  - itemDef:
+      address: ErraticGadget
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 1
     maxStacks: 2
     minStacks: 1
-  - itemDefName: ExtraLife
-    chanceForApplying: 0.1
+  - itemDef:
+      address: ExtraLife
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 0.1
     maxStacks: 1
     minStacks: 1
-  - itemDefName: IncreaseHealing
-    chanceForApplying: 1
+  - itemDef:
+      address: IncreaseHealing
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 1
     maxStacks: 3
     minStacks: 1
-  - itemDefName: UtilitySkillMagazine
-    chanceForApplying: 1
+  - itemDef:
+      address: UtilitySkillMagazine
+      useDirectReference: 0
+      asset: {fileID: 0}
+    weight: 1
     maxStacks: 2
     minStacks: 1

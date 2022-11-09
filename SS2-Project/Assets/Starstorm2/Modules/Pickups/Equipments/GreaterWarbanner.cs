@@ -14,7 +14,7 @@ namespace Moonstorm.Starstorm2.Equipments
         public GameObject WarbannerObject { get; set; } = SS2Assets.LoadAsset<GameObject>("GreaterWarbannerWard");
 
         [ConfigurableField(ConfigDesc = "Amount of Extra Regeneration. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.Percentage, 0)]
+        [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float extraRegeneration = 0.5f;
 
         [ConfigurableField(ConfigDesc = "Amount of Extra Crit Chance. (100 = 100%)")]
@@ -22,7 +22,7 @@ namespace Moonstorm.Starstorm2.Equipments
         public static float extraCrit = 20f;
 
         [ConfigurableField(ConfigDesc = "Amount of Cooldown Reduction. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.Percentage, 2)]
+        [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
         public static float cooldownReduction = 0.5f;
 
         [ConfigurableField(ConfigDesc = "Max active warbanners for each character.")]

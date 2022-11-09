@@ -6,7 +6,7 @@ namespace EntityStates.Nemmando
 {
     public class BarrageFire : RendHandler
     {
-        [TokenModifier("SS2_NEMMANDO_SPECIAL_SUBMISSION_DESCRIPTION", StatTypes.Percentage, 1)]
+        [TokenModifier("SS2_NEMMANDO_SPECIAL_SUBMISSION_DESCRIPTION", StatTypes.MultiplyByN, 1, "100")]
         public static float damageCoefficient;
         public static float procCoefficient;
         public static uint bulletCountPerShot;

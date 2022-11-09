@@ -14,15 +14,15 @@ namespace Moonstorm.Starstorm2.Items
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfForce");
 
         [ConfigurableField(ConfigDesc = "Damage coefficient for subsequent hits. (1 = 100% of total damage)")]
-        [TokenModifier("SS2_ITEM_RELICOFFORCE_DESC", StatTypes.Percentage, 0)]
+        [TokenModifier("SS2_ITEM_RELICOFFORCE_DESC", StatTypes.MultiplyByN, 0, "100")]
         public static float damageMultiplier = 1;
 
         [ConfigurableField(ConfigDesc = "Attack speed reduction and cooldown increase per stack. (1 = 100% slower attack speed and longer cooldowns)")]
-        [TokenModifier("SS2_ITEM_RELICOFFORCE_DESC", StatTypes.Percentage, 1)]
+        [TokenModifier("SS2_ITEM_RELICOFFORCE_DESC", StatTypes.MultiplyByN, 1, "100")]
         public static float forcePenalty = .4f;
 
         [ConfigurableField(ConfigDesc = "Delay between additional hits. (1 = 1 second)")]
-        [TokenModifier("SS2_ITEM_RELICOFFORCE_DESC", StatTypes.Percentage, 2)]
+        [TokenModifier("SS2_ITEM_RELICOFFORCE_DESC", StatTypes.MultiplyByN, 2, "100")]
         public static float hitDelay = .2f;
 
         public static DamageAPI.ModdedDamageType relicForceDamageType;

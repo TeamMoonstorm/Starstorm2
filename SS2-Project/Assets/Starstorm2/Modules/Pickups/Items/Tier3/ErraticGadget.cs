@@ -16,7 +16,7 @@ namespace Moonstorm.Starstorm2.Items
         public static float extraCrit = 10f;
 
         [ConfigurableField(ConfigDesc = "Extra damage that crits deal per stack of Erratic Gadget. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.Percentage, 1)]
+        [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
         public static float extraDamage = 0.5f;
 
         /*

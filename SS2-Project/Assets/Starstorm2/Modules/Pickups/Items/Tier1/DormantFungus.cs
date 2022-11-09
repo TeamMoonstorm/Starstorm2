@@ -13,11 +13,11 @@ namespace Moonstorm.Starstorm2.Items
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("DormantFungus");
 
         [ConfigurableField(ConfigDesc = "Base amount of healing. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.Percentage, 0)]
+        [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float baseHealPercentage = 0.01f;
 
         [ConfigurableField(ConfigDesc = "Amount of healing per stack. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.Percentage, 1)]
+        [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
         public static float stackHealPercentage = 0.01f;
         public override void Initialize()
         {

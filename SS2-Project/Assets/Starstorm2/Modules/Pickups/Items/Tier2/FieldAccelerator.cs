@@ -8,7 +8,7 @@ namespace Moonstorm.Starstorm2.Items
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("FieldAccelerator");
 
         [ConfigurableField(ConfigDesc = "Amount of charge to add to the teleporter on kill. (1 = 100%)")]
-        [TokenModifier("SS2_ITEM_FIELDACCELERATOR_DESC", StatTypes.Percentage, 0)]
+        [TokenModifier("SS2_ITEM_FIELDACCELERATOR_DESC", StatTypes.MultiplyByN, 0, "100")]
         public static float chargePerKill = 0.01f;
 
         [ConfigurableField(ConfigDesc = "Maximum Amount of Charge per kill. (1 = 100%)")]

@@ -80,29 +80,25 @@ namespace EntityStates.Events
                 musicTrack.track = canticumVitaeB;
             /*if (eventStateEffect)
                 eventStateEffect.OnEffectStart();*/
-            if (NetworkServer.active)
-                SpawnNemesisServer();
+            SpawnNemesisBoss();
         }
 
 
         private void FindSpawnTarget()
         {
-            if (NetworkServer.active)
+            ReadOnlyCollection<PlayerCharacterMasterController> instances = PlayerCharacterMasterController.instances;
+            List<PlayerCharacterMasterController> list = new List<PlayerCharacterMasterController>();
+            foreach (PlayerCharacterMasterController playerCharacterMasterController in instances)
             {
-                ReadOnlyCollection<PlayerCharacterMasterController> instances = PlayerCharacterMasterController.instances;
-                List<PlayerCharacterMasterController> list = new List<PlayerCharacterMasterController>();
-                foreach (PlayerCharacterMasterController playerCharacterMasterController in instances)
-                {
-                    if (playerCharacterMasterController.master.hasBody)
-                        list.Add(playerCharacterMasterController);
-                }
-                if (list.Count > 0)
-                    chosenPlayer = rng.NextElementUniform(list).body.gameObject;
+                if (playerCharacterMasterController.master.hasBody)
+                    list.Add(playerCharacterMasterController);
             }
+            if (list.Count > 0)
+                chosenPlayer = rng.NextElementUniform(list).body.gameObject;
         }
 
 
-        public virtual void SpawnNemesisServer()
+        public virtual void SpawnNemesisBoss()
         {
             if (!this.spawnCard)
                 return;
@@ -137,17 +133,16 @@ namespace EntityStates.Events
             directorSpawnRequest.ignoreTeamMemberLimit = true;
 
             CombatSquad combatSquad = null;
-            directorSpawnRequest.onSpawnedServer = (Action<SpawnCard.SpawnResult>)Delegate.Combine(directorSpawnRequest.onSpawnedServer, new Action<SpawnCard.SpawnResult>(delegate (SpawnCard.SpawnResult result)
-
+            directorSpawnRequest.onSpawnedServer = (spawnResult) =>
             {
                 if (!combatSquad)
                     combatSquad = UnityEngine.Object.Instantiate(encounterPrefab).GetComponent<CombatSquad>();
-                CharacterMaster master = result.spawnedInstance.GetComponent<CharacterMaster>();
+                CharacterMaster master = spawnResult.spawnedInstance.GetComponent<CharacterMaster>();
                 master.gameObject.AddComponent<NemesisResistances>();
                 nemesisBossBody = master.GetBody();
                 combatSquad.AddMember(master);
                 master.onBodyDeath.AddListener(OnBodyDeath);
-            }));
+            };
             DirectorCore.instance.TrySpawnObject(directorSpawnRequest);
             if (combatSquad)
             {

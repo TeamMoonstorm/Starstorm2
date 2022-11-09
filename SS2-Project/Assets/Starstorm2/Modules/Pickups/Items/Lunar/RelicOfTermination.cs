@@ -24,23 +24,23 @@ namespace Moonstorm.Starstorm2.Items
             public static float maxTime = 30f;
 
             [ConfigurableField(ConfigDesc = "Percent reduction in time to kill per stack.")]
-            [TokenModifier(token, StatTypes.Percentage, 1)]
+            [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
             public static float timeReduction = .1f;
 
             [ConfigurableField(ConfigDesc = "Damage multiplier added to marked enemy if not killed in time (1 = 100% more damage).")]
-            [TokenModifier(token, StatTypes.Percentage, 2)]
+            [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
             public static float damageMult = 1f;
 
             [ConfigurableField(ConfigDesc = "Health multiplier added to marked enemy if not killed in time (1 = 100% more health).")]
-            [TokenModifier(token, StatTypes.Percentage, 3)]
+            [TokenModifier(token, StatTypes.MultiplyByN, 3, "100")]
             public static float healthMult = 2f;
 
             [ConfigurableField(ConfigDesc = "Speed multiplier added to marked enemy if not killed in time (1 = 100% more speed).")]
-            [TokenModifier(token, StatTypes.Percentage, 4)]
+            [TokenModifier(token, StatTypes.MultiplyByN, 4, "100")]
             public static float speedMult = 1f;
 
             [ConfigurableField(ConfigDesc = "Attack speed multiplier added to marked enemy if not killed in time (1 = 100% more attack speed).")]
-            [TokenModifier(token, StatTypes.Percentage, 5)]
+            [TokenModifier(token, StatTypes.MultiplyByN, 5, "100")]
             public static float atkSpeedMult = 1f;
 
             //[ConfigurableField(ConfigDesc = "Health multiplier grantd to marked enemy if not killed in time (1 = 100% health).")]
