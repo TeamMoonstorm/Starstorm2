@@ -38,6 +38,8 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef NemBossHelper;
 
+            public static ItemDef NemCommandoLol;
+
             public static ItemDef BloodTester;
 
             public static ItemDef FieldAccelerator;
