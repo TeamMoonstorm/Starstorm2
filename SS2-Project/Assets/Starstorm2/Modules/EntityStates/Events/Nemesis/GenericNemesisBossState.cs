@@ -1,6 +1,7 @@
 ﻿using Moonstorm.Starstorm2;
 using Moonstorm.Starstorm2.Components;
 using Moonstorm.Starstorm2.ScriptableObjects;
+using R2API.Networking.Interfaces;
 using RoR2;
 using System;
 using System.Collections.Generic;
@@ -80,7 +81,8 @@ namespace EntityStates.Events
                 musicTrack.track = canticumVitaeB;
             /*if (eventStateEffect)
                 eventStateEffect.OnEffectStart();*/
-            SpawnNemesisBoss();
+            if(NetworkServer.active)
+                SpawnNemesisBoss();
         }
 
 
@@ -94,7 +96,13 @@ namespace EntityStates.Events
                     list.Add(playerCharacterMasterController);
             }
             if (list.Count > 0)
-                chosenPlayer = rng.NextElementUniform(list).body.gameObject;
+            {
+                var charMaster = rng.NextElementUniform(list);
+                if(charMaster && charMaster.body)
+                {
+                    chosenPlayer = charMaster.body.gameObject;
+                }
+            }
         }
 
 
@@ -140,6 +148,7 @@ namespace EntityStates.Events
                 CharacterMaster master = spawnResult.spawnedInstance.GetComponent<CharacterMaster>();
                 master.gameObject.AddComponent<NemesisResistances>();
                 nemesisBossBody = master.GetBody();
+                new NemesisSpawnCard.SyncBaseStats(nemesisBossBody).Send(R2API.Networking.NetworkDestination.Clients);
                 combatSquad.AddMember(master);
                 master.onBodyDeath.AddListener(OnBodyDeath);
             };
@@ -151,8 +160,6 @@ namespace EntityStates.Events
             }
             UnityEngine.Object.Destroy(spawnCard);
         }
-
-
 
         public virtual void OnBodyDeath()
         {
