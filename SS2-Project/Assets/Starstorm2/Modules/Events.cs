@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Moonstorm.Starstorm2.ScriptableObjects;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
@@ -7,13 +8,42 @@ namespace Moonstorm.Starstorm2
 {
     public static class Events
     {
-        /*
+        
         /// <summary>
-        /// Class for Nemesis invasion creation from 3rd Parties.
+        /// Class for aiding Nemesis invasion creation for 3rd Parties.
         /// </summary>
         public static class NemesisHelpers
         {
-            public class MinimumNemesisData
+            public static NemesisInventory NemmandoInventory { get => SS2Assets.LoadAsset<NemesisInventory>("NemmandoInventory"); }
+            public static EventCard NemmandoEventCard { get => SS2Assets.LoadAsset<EventCard>("NemmandoBoss"); }
+            public static NemesisSpawnCard NemmandoSpawnCard { get => SS2Assets.LoadAsset<NemesisSpawnCard>("nscNemmandoBoss"); }
+
+            public static EventCard CreateEventCardFromTemplate(string assetName)
+            {
+                var copy = Object.Instantiate(NemmandoEventCard);
+                copy.name = assetName;
+                copy.eventState = default;
+                copy.messageColor = Color.white;
+                copy.requiredExpansions.Clear();
+                return copy;
+            }
+
+            public static NemesisSpawnCard CreateNemesisSpawnCardFromTemplate(string assetName)
+            {
+                var copy = Object.Instantiate(NemmandoSpawnCard);
+                copy.name = assetName;
+                copy.prefab = null;
+                copy.nemesisInventory = null;
+                copy.useOverrideState = false;
+                copy.overrideSpawnState = default;
+                copy.skillOverrides = Array.Empty<NemesisSpawnCard.SkillOverride>();
+                copy.visualEffect = null;
+                copy.childName = String.Empty;
+                copy.itemDef = null;
+
+                return copy;
+            }
+            /*public class MinimumNemesisData
             {
                 public string identifier;
                 public GameObject masterPrefab;
@@ -97,8 +127,8 @@ namespace Moonstorm.Starstorm2
                     return true;
                 }
                 return false;
-            }
-        }*/
+            }*/
+        }
 
         public static void Init()
         {
@@ -110,7 +140,8 @@ namespace Moonstorm.Starstorm2
         {
             if (scene.name.Equals("title"))
             {
-                if ((DateTime.Today.Month == 12) && ((DateTime.Today.Day == 25) || (DateTime.Today.Day == 24)))
+                System.DateTime today = System.DateTime.Today;
+                if ((today.Month == 12) && ((today.Day == 25) || (today.Day == 24)))
                 {
                     Object.Instantiate(SS2Assets.LoadAsset<GameObject>("ChristmasMenuEffect"), Vector3.zero, Quaternion.identity);
                     Debug.Log("Merry Christmas from TeamMoonstorm!! :)");
