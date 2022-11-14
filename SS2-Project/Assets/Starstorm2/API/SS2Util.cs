@@ -10,18 +10,19 @@ namespace Moonstorm.Starstorm2
     public static class SS2Util
     {
         #region Misc
-        
+
         public static void DropShipCall(Transform origin, int tierWeight, uint teamLevel = 1, int amount = 1, ItemTier forcetier = 0, string theWorstCodeOfTheYear = null)
         {
             List<PickupIndex> dropList;
-            float rarityscale = tierWeight * (float)(Math.Sqrt(teamLevel * 13) - 4); //I have absolutely no fucking idea what this is
+            //float rarityscale = tierWeight * (float)(Math.Sqrt(teamLevel * 12) - 4); //I have absolutely no fucking idea what this is
+            float rarityscale = tierWeight * ((float)MSUtil.InverseHyperbolicScaling(5, .25f, 10, (int)teamLevel) - 5); // this is still gross but i think will be fine
             if (forcetier == ItemTier.Boss)
                 dropList = Run.instance.availableBossDropList;
             else if (forcetier == ItemTier.Lunar)
                 dropList = Run.instance.availableLunarCombinedDropList;
-            else if (Util.CheckRoll(0.5f * rarityscale - 1) || teamLevel >= Items.NkotasHeritage.greenRemovalLevel || forcetier == ItemTier.Tier3)
+            else if (Util.CheckRoll(0.5f * rarityscale - 1))
                 dropList = Run.instance.availableTier3DropList;
-            else if (Util.CheckRoll(4 * rarityscale) || teamLevel >= Items.NkotasHeritage.whiteRemovalLevel || forcetier == ItemTier.Tier2)
+            else if (Util.CheckRoll(4 * rarityscale))
                 dropList = Run.instance.availableTier2DropList;
             else
                 dropList = Run.instance.availableTier1DropList;
@@ -66,6 +67,7 @@ namespace Moonstorm.Starstorm2
             }
             PickupDropletController.CreatePickupDroplet(dropList[item], origin.position, new Vector3(0, 15, 0));
         }
+
         public static void RemoveDotStacks(CharacterBody victim, DotController.DotIndex TargetedIndex, int NumberOfStacksToRemove)
         {
             DotController VictimController = DotController.FindDotController(victim.gameObject);
@@ -74,17 +76,11 @@ namespace Moonstorm.Starstorm2
                 return;
             }
 
-            
-
             for (int i = VictimController.dotStackList.Count - 1; i >= 0; i--)
             {
                 DotController.DotStack dotStack = VictimController.dotStackList[i];
-                
-
                 if (dotStack.dotIndex == TargetedIndex)
                 {
-                   
-
                     VictimController.RemoveDotStackAtServer(i);
                     NumberOfStacksToRemove--;
 
@@ -94,9 +90,32 @@ namespace Moonstorm.Starstorm2
                     }
                 }
             }
-
-
         }
+
+        public static bool CheckIsValidInteractable(IInteractable interactable, GameObject interactableObject)
+        {
+            var procFilter = interactableObject.GetComponent<InteractionProcFilter>();
+            MonoBehaviour interactableAsMonobehavior = (MonoBehaviour)interactable;
+
+            if ((bool)procFilter)
+            {
+                return procFilter.shouldAllowOnInteractionBeginProc;
+            }
+            if ((bool)interactableAsMonobehavior.GetComponent<GenericPickupController>())
+            {
+                return false;
+            }
+            if ((bool)interactableAsMonobehavior.GetComponent<VehicleSeat>())
+            {
+                return false;
+            }
+            if ((bool)interactableAsMonobehavior.GetComponent<NetworkUIPromptController>())
+            {
+                return false;
+            }
+            return true;
+        }
+
         public static ItemDef NkotasRiggedItemDrop(int tierWeight, uint teamLevel = 1, int forcetier = 0)
         {
             List<PickupIndex> dropList;
@@ -108,7 +127,7 @@ namespace Moonstorm.Starstorm2
             else
                 dropList = Run.instance.availableTier1DropList;
             int item = Run.instance.treasureRng.RangeInt(0, dropList.Count);
-            return ItemCatalog.GetItemDef(PickupCatalog.GetPickupDef(dropList[item]).itemIndex); 
+            return ItemCatalog.GetItemDef(PickupCatalog.GetPickupDef(dropList[item]).itemIndex);
         }
 
         public static void CreateVFXDroplet(PickupIndex pickupIndex, Vector3 position, Vector3 velocity, string vfxPrefab)
@@ -121,17 +140,17 @@ namespace Moonstorm.Starstorm2
             //NetworkServer.Spawn(gameObject);
 
             var pickup = new GenericPickupController.CreatePickupInfo();
-            
+
             pickup.prefabOverride = PickupCatalog.GetPickupDef(pickupIndex).dropletDisplayPrefab;
             //pickup.prefabOverride.AddComponent<NetworkIdentity>();
-            
+
             //pickup.prefabOverride.AddComponent<ParticleSystem>();
             //var particleSys = pickup.prefabOverride.GetComponent<ParticleSystem>();
             //particleSys.
 
             pickup.pickupIndex = pickupIndex;
             PickupDropletController.CreatePickupDroplet(pickup, position, velocity);
-            
+
             //PickupDropletController.CreatePickupDroplet(pickupIndex, position, velocity);
             EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>(vfxPrefab), new EffectData
             {
