@@ -13,39 +13,40 @@ namespace Moonstorm.Starstorm2.Items
         private const string token = "SS2_ITEM_RELICOFTERMINATION_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfTermination");
 
+        [ConfigurableField(ConfigDesc = "Time, in seconds, to kill the marked enemy before going on cooldown.")]
+        [TokenModifier(token, StatTypes.Default, 0)]
+        [TokenModifier("SS2_ITEM_RELICOFTERMINATION_PICKUP", StatTypes.Default, 0)]
+        public static float maxTime = 25f;
+
+        [ConfigurableField(ConfigDesc = "Time between marks in seconds.")]
+        [TokenModifier(token, StatTypes.Default, 0)]
+        public static float downTime = 30f;
+
+        [ConfigurableField(ConfigDesc = "Percent reduction in time to kill per stack.")]
+        [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
+        public static float timeReduction = .1f;
+
+        [ConfigurableField(ConfigDesc = "Damage multiplier which is added to the marked enemy if not killed in time (1 = 100% more damage).")]
+        [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
+        public static float damageMult = 2f;
+
+        [ConfigurableField(ConfigDesc = "Health multiplier which is added to the marked enemy if not killed in time (1 = 100% more health).")]
+        [TokenModifier(token, StatTypes.MultiplyByN, 3, "100")]
+        public static float healthMult = 4f;
+
+        [ConfigurableField(ConfigDesc = "Speed multiplier which is added to the marked enemy if not killed in time (1 = 100% more speed).")]
+        [TokenModifier(token, StatTypes.MultiplyByN, 4, "100")]
+        public static float speedMult = 1.5f;
+
+        [ConfigurableField(ConfigDesc = "Attack speed multiplier which is added to the marked enemy if not killed in time (1 = 100% more attack speed).")]
+        [TokenModifier(token, StatTypes.MultiplyByN, 5, "100")]
+        public static float atkSpeedMult = 1.75f;
+
         public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver
         {
+
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.RelicOfTermination;
-
-            [ConfigurableField(ConfigDesc = "Time, in seconds, to kill the marked enemy before going on cooldown.")]
-            [TokenModifier(token, StatTypes.Default, 0)]
-            [TokenModifier("SS2_ITEM_RELICOFTERMINATION_PICKUP", StatTypes.Default, 0)]
-            public static float maxTime = 25f;
-
-            [ConfigurableField(ConfigDesc = "Time between marks in seconds.")]
-            [TokenModifier(token, StatTypes.Default, 0)]
-            public static float downTime = 30f;
-
-            [ConfigurableField(ConfigDesc = "Percent reduction in time to kill per stack.")]
-            [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
-            public static float timeReduction = .1f;
-
-            [ConfigurableField(ConfigDesc = "Damage multiplier which is added to the marked enemy if not killed in time (1 = 100% more damage).")]
-            [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
-            public static float damageMult = 2f;
-
-            [ConfigurableField(ConfigDesc = "Health multiplier which is added to the marked enemy if not killed in time (1 = 100% more health).")]
-            [TokenModifier(token, StatTypes.MultiplyByN, 3, "100")]
-            public static float healthMult = 4f;
-
-            [ConfigurableField(ConfigDesc = "Speed multiplier which is added to the marked enemy if not killed in time (1 = 100% more speed).")]
-            [TokenModifier(token, StatTypes.MultiplyByN, 4, "100")]
-            public static float speedMult = 1.5f;
-
-            [ConfigurableField(ConfigDesc = "Attack speed multiplier which is added to the marked enemy if not killed in time (1 = 100% more attack speed).")]
-            [TokenModifier(token, StatTypes.MultiplyByN, 5, "100")]
-            public static float atkSpeedMult = 1.75f;
 
             //[ConfigurableField(ConfigDesc = "Health multiplier grantd to marked enemy if not killed in time (1 = 100% health).")]
             //[TokenModifier(token, StatTypes.Percentage, 3)]

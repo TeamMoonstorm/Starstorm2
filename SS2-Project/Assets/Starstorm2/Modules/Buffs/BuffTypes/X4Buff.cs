@@ -23,13 +23,7 @@ namespace Moonstorm.Starstorm2.Buffs
                 if (body.HasBuff(SS2Content.Buffs.BuffX4))
                 {
                     args.baseRegenAdd += (Items.X4.baseRegenBoost + ((Items.X4.baseRegenBoost / 5) * body.level)) * buffStacks; //original code not taken from bitter root becasue i was lazy
-                    
-                    //args.regenMultAdd += Items.X4.extraRegeneration;
-
-
-                    //args.baseAttackSpeedAdd += Items.X4.baseRegenBoost * buffStacks;
                 }
-                //throw new NotImplementedException();
             }
         }
     }
