@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 
 namespace Moonstorm.Starstorm2.Items
 {
-    //[DisabledContent]
+    [DisabledContent]
     public sealed class NemCommandoLol : ItemBase
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("NemCommandoLol");

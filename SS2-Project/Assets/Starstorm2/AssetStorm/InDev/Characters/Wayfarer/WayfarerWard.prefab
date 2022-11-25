@@ -285,7 +285,7 @@ MonoBehaviour:
   radius: 30
   interval: 0.2
   rangeIndicator: {fileID: 4361315721131037}
-  buffDef: {fileID: 0}
+  buffDef: {fileID: 11400000, guid: 29b70353f2e7aa043b352151adf1b67f, type: 2}
   buffDuration: 1
   floorWard: 0
   expires: 1
@@ -298,6 +298,15 @@ MonoBehaviour:
     - serializedVersion: 3
       time: -0.007968128
       value: -0.0034129692
+      inSlope: 11.271252
+      outSlope: 11.271252
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.056097075
+    - serializedVersion: 3
+      time: 0.099623725
+      value: 0.9999757
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -305,19 +314,10 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.097609565
-      value: 0.9931741
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.8984064
-      value: 0.9897611
-      inSlope: -0.015095215
-      outSlope: -0.015095215
+      time: 0.7998346
+      value: 0.9999667
+      inSlope: -0.000039896353
+      outSlope: -0.000039896353
       tangentMode: 136
       weightedMode: 0
       inWeight: 0.33333334
@@ -325,11 +325,11 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1.001992
       value: -0.0034129692
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
+      inSlope: -14.455337
+      outSlope: -14.455337
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.19904011
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2

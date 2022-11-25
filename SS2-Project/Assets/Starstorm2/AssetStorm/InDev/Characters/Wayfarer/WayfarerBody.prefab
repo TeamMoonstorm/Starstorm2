@@ -574,6 +574,7 @@ GameObject:
   - component: {fileID: 449007038772124597}
   - component: {fileID: 8554857460552679063}
   - component: {fileID: 7855648737336116278}
+  - component: {fileID: 443025299912740477}
   m_Layer: 0
   m_Name: WayfarerBody
   m_TagString: Player
@@ -903,7 +904,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 552368109173833114}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -1077198318, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
@@ -930,9 +931,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customName: Body
   initialStateType:
-    _typeName: EntityStates.FlyState, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    _typeName: EntityStates.SpawnTeleporterState, RoR2, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   mainStateType:
-    _typeName: EntityStates.FlyState, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    _typeName: EntityStates.GenericCharacterMain, RoR2, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &449042048684616238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1209,12 +1212,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 552368109173833114}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -1568778350, guid: 050936fea8909af15a3fd3b64da1ff83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharacterController: {fileID: 0}
+  CharacterController: {fileID: 443025299912740477}
   Capsule: {fileID: 453333854499723557}
   Rigidbody: {fileID: 535382068153449435}
   CapsuleRadius: 2
@@ -1273,6 +1276,31 @@ MonoBehaviour:
   canBeHitStunned: 1
   canBeStunned: 1
   canBeFrozen: 1
+--- !u!114 &443025299912740477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552368109173833114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1530905962, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkSpeedPenaltyCoefficient: 1
+  characterDirection: {fileID: 449222239286607946}
+  muteWalkMotion: 0
+  mass: 1500
+  airControl: 0.25
+  disableAirControlUntilCollision: 1
+  generateParametersOnAwake: 1
+  _gravityParameters:
+    environmentalAntiGravityGranterCount: 0
+    antiGravityNeutralizerCount: 0
+    channeledAntiGravityGranterCount: 0
+  _flightParameters:
+    channeledFlightGranterCount: 0
 --- !u!1 &552688337258673146
 GameObject:
   m_ObjectHideFlags: 0

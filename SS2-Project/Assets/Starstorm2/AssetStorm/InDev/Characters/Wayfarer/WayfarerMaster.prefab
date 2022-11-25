@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 1894178138794204384}
   - component: {fileID: 1892710261748002546}
   - component: {fileID: 7465191992455211653}
+  - component: {fileID: -3061022674750461066}
   m_Layer: 0
   m_Name: WayfarerMaster
   m_TagString: Untagged
@@ -121,17 +122,17 @@ MonoBehaviour:
   m_Script: {fileID: 1357070253, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fullVision: 0
+  fullVision: 1
   neverRetaliateFriendlies: 0
-  enemyAttentionDuration: 5
-  desiredSpawnNodeGraphType: 1
-  stateMachine: {fileID: 0}
+  enemyAttentionDuration: 6000
+  desiredSpawnNodeGraphType: 0
+  stateMachine: {fileID: 114034268301629480}
   scanState:
     _typeName: EntityStates.AI.Walker.Wander, RoR2, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   isHealer: 0
   enemyAttention: 0
-  aimVectorDampTime: 0.1
+  aimVectorDampTime: 0.2
   aimVectorMaxSpeed: 180
   selectedSkilldriverName: 
   debugEnemyHurtBox: {fileID: 0}
@@ -175,8 +176,8 @@ MonoBehaviour:
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 14
-  maxDistance: Infinity
+  minDistance: 0
+  maxDistance: 50
   selectionRequiresTargetLoS: 1
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
@@ -185,7 +186,7 @@ MonoBehaviour:
   activationRequiresTargetLoS: 0
   activationRequiresAimTargetLoS: 0
   activationRequiresAimConfirmation: 1
-  movementType: 2
+  movementType: 1
   moveInputScale: 1
   aimType: 1
   ignoreNodeGraph: 0
@@ -209,16 +210,16 @@ MonoBehaviour:
   m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customName: CastWard
-  skillSlot: 1
+  customName: 
+  skillSlot: 2
   requiredSkill: {fileID: 0}
   requireSkillReady: 1
   requireEquipmentReady: 0
   minUserHealthFraction: -Infinity
-  maxUserHealthFraction: Infinity
-  minTargetHealthFraction: 65
+  maxUserHealthFraction: 0.5
+  minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 14
+  minDistance: -Infinity
   maxDistance: Infinity
   selectionRequiresTargetLoS: 1
   selectionRequiresOnGround: 0
@@ -247,12 +248,98 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1255514408908605}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   customName: 
+  skillSlot: 1
+  requiredSkill: {fileID: 0}
+  requireSkillReady: 1
+  requireEquipmentReady: 0
+  minUserHealthFraction: -Infinity
+  maxUserHealthFraction: Infinity
+  minTargetHealthFraction: -Infinity
+  maxTargetHealthFraction: Infinity
+  minDistance: 0
+  maxDistance: 35
+  selectionRequiresTargetLoS: 0
+  selectionRequiresOnGround: 0
+  selectionRequiresAimTarget: 0
+  maxTimesSelected: -1
+  moveTargetType: 1
+  activationRequiresTargetLoS: 1
+  activationRequiresAimTargetLoS: 0
+  activationRequiresAimConfirmation: 0
+  movementType: 0
+  moveInputScale: 1
+  aimType: 1
+  ignoreNodeGraph: 0
+  shouldSprint: 0
+  shouldFireEquipment: 0
+  shouldTapButton: 0
+  buttonPressType: 0
+  driverUpdateTimerOverride: 2
+  resetCurrentEnemyOnNextDriverSelection: 0
+  noRepeat: 0
+  nextHighPriorityOverride: {fileID: 0}
+--- !u!114 &1892710261748002546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1255514408908605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customName: StrafeIdly
+  skillSlot: -1
+  requiredSkill: {fileID: 0}
+  requireSkillReady: 1
+  requireEquipmentReady: 0
+  minUserHealthFraction: -Infinity
+  maxUserHealthFraction: Infinity
+  minTargetHealthFraction: -Infinity
+  maxTargetHealthFraction: Infinity
+  minDistance: 15
+  maxDistance: 35
+  selectionRequiresTargetLoS: 0
+  selectionRequiresOnGround: 0
+  selectionRequiresAimTarget: 0
+  maxTimesSelected: -1
+  moveTargetType: 0
+  activationRequiresTargetLoS: 0
+  activationRequiresAimTargetLoS: 0
+  activationRequiresAimConfirmation: 0
+  movementType: 2
+  moveInputScale: 1
+  aimType: 4
+  ignoreNodeGraph: 0
+  shouldSprint: 0
+  shouldFireEquipment: 0
+  shouldTapButton: 0
+  buttonPressType: 0
+  driverUpdateTimerOverride: -1
+  resetCurrentEnemyOnNextDriverSelection: 0
+  noRepeat: 0
+  nextHighPriorityOverride: {fileID: 0}
+--- !u!114 &7465191992455211653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1255514408908605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customName: PathFromAafar
   skillSlot: -1
   requiredSkill: {fileID: 0}
   requireSkillReady: 0
@@ -283,7 +370,7 @@ MonoBehaviour:
   resetCurrentEnemyOnNextDriverSelection: 0
   noRepeat: 0
   nextHighPriorityOverride: {fileID: 0}
---- !u!114 &1892710261748002546
+--- !u!114 &-3061022674750461066
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -292,80 +379,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1255514408908605}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Script: {fileID: -1578512655, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customName: InvisAtHalfHealth
-  skillSlot: 2
-  requiredSkill: {fileID: 0}
-  requireSkillReady: 1
-  requireEquipmentReady: 0
-  minUserHealthFraction: -Infinity
-  maxUserHealthFraction: 50
-  minTargetHealthFraction: -Infinity
-  maxTargetHealthFraction: Infinity
-  minDistance: 0
-  maxDistance: 76
-  selectionRequiresTargetLoS: 0
-  selectionRequiresOnGround: 0
-  selectionRequiresAimTarget: 0
-  maxTimesSelected: -1
-  moveTargetType: 0
-  activationRequiresTargetLoS: 1
-  activationRequiresAimTargetLoS: 0
-  activationRequiresAimConfirmation: 0
-  movementType: 2
-  moveInputScale: 1
-  aimType: 1
-  ignoreNodeGraph: 0
-  shouldSprint: 0
-  shouldFireEquipment: 0
-  shouldTapButton: 0
-  buttonPressType: 0
-  driverUpdateTimerOverride: 2
-  resetCurrentEnemyOnNextDriverSelection: 0
-  noRepeat: 0
-  nextHighPriorityOverride: {fileID: 0}
---- !u!114 &7465191992455211653
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1255514408908605}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  customName: Backpedal
-  skillSlot: -1
-  requiredSkill: {fileID: 0}
-  requireSkillReady: 0
-  requireEquipmentReady: 0
-  minUserHealthFraction: -Infinity
-  maxUserHealthFraction: Infinity
-  minTargetHealthFraction: -Infinity
-  maxTargetHealthFraction: Infinity
-  minDistance: 0
-  maxDistance: 14
-  selectionRequiresTargetLoS: 0
-  selectionRequiresOnGround: 0
-  selectionRequiresAimTarget: 0
-  maxTimesSelected: -1
-  moveTargetType: 0
-  activationRequiresTargetLoS: 0
-  activationRequiresAimTargetLoS: 0
-  activationRequiresAimConfirmation: 0
-  movementType: 3
-  moveInputScale: 1
-  aimType: 2
-  ignoreNodeGraph: 0
-  shouldSprint: 0
-  shouldFireEquipment: 0
-  shouldTapButton: 0
-  buttonPressType: 0
-  driverUpdateTimerOverride: -1
-  resetCurrentEnemyOnNextDriverSelection: 0
-  noRepeat: 0
-  nextHighPriorityOverride: {fileID: 0}

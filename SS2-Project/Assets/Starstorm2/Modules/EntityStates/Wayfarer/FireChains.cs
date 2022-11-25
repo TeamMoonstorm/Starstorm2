@@ -51,7 +51,7 @@ namespace EntityStates.Wayfarer
                 DoAttack("LanternL");
             }
 
-            if (!hasAttackedR && fixedAge >= duration * 0.7f)
+            if (!hasAttackedR && fixedAge >= duration * 0.66f)
             {
                 hasAttackedR = true;
                 DoAttack("LanternR");
