@@ -22,10 +22,17 @@ namespace EntityStates.Nemmando
             animator = GetModelAnimator();
         }
 
+        public override void OnExit()
+        {
+            base.OnExit();
+            string animationStateNameEnd = (swingSide == 0) ? "endPrimary1" : "endPrimary2";
+            PlayCrossfade("Gesture, Override", animationStateNameEnd, "Primary.playbackRate", duration * swingTimeCoefficient, 0.3f); //0.3f
+        }
+
         public override void PlayAnimation()
         {
             string animationStateName = (swingSide == 0) ? "Primary1" : "Primary2";
-            PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.1f);
+            PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.3f); 
         }
 
         void SteppedSkillDef.IStepSetter.SetStep(int i)

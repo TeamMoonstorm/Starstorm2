@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1255927399, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: SkinNemCommandoWeathered
+  m_EditorClassIdentifier: 
+  baseSkins:
+  - {fileID: 11400000, guid: 0bfd5961f7790c648abfc5d416993ba0, type: 2}
+  icon: {fileID: 21300000, guid: d04f43c9f2cd7294987fdda065020ffd, type: 3}
+  nameToken: SS2_SKIN_NEMCOMMANDO_WEATHERED
+  unlockableName: 
+  unlockableDef: {fileID: 0}
+  rootObject: {fileID: 2559057926401340394, guid: bb7d8bd63210a3f46a889b8e057546ee,
+    type: 3}
+  rendererInfos:
+  - renderer: {fileID: 2541244660559103912, guid: bb7d8bd63210a3f46a889b8e057546ee,
+      type: 3}
+    defaultMaterial: {fileID: 2100000, guid: 3280661c76de8f6439d2ed52ed682c1b, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+  - renderer: {fileID: 879116891908914768, guid: bb7d8bd63210a3f46a889b8e057546ee,
+      type: 3}
+    defaultMaterial: {fileID: 2100000, guid: f693beff1bd43e14f928b87cc35be517, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 1
+    hideOnDeath: 0
+  - renderer: {fileID: 8183190501006871182, guid: bb7d8bd63210a3f46a889b8e057546ee,
+      type: 3}
+    defaultMaterial: {fileID: 2100000, guid: 2302bb9b2a401f447bd2920b076003b1, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 1
+    hideOnDeath: 0
+  gameObjectActivations: []
+  meshReplacements: []
+  projectileGhostReplacements: []
+  minionSkinReplacements: []

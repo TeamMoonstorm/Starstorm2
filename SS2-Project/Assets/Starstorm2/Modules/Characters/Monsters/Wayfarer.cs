@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Moonstorm.Starstorm2.Monsters
 {
-    //[DisabledContent]
+    [DisabledContent]
     public sealed class Wayfarer : MonsterBase
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("WayfarerBody");

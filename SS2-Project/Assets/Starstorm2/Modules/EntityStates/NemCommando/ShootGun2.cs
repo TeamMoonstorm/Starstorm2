@@ -44,7 +44,7 @@ namespace EntityStates.Nemmando
             animator = GetModelAnimator();
             muzzleString = "Muzzle";
 
-            FindModelChildGameObject("GunSpinEffect").SetActive(false);
+            //FindModelChildGameObject("GunSpinEffect").SetActive(false);
             //PlayCrossfade("RightArm, Override", "ShootGunShort", "ShootGun.playbackRate", this.duration, 0.05f);
         }
 
@@ -52,8 +52,8 @@ namespace EntityStates.Nemmando
         {
             base.OnExit();
 
-            float rechargeTime = Mathf.Clamp(this.skillLocator.secondary.finalRechargeInterval, 0.25f, Mathf.Infinity);
-            //PlayAnimation("Gesture, Override, LeftArm", "ReloadGun", "Reload.playbackRate", 0.5f * (rechargeTime - this.duration - 0.3f));
+            float rechargeTime = Mathf.Clamp(skillLocator.secondary.finalRechargeInterval, 0.25f, Mathf.Infinity);
+            PlayAnimation("Gesture, Override, LeftArm", "LowerGun", "Reload.playbackRate", rechargeTime);
         }
 
         
@@ -65,8 +65,8 @@ namespace EntityStates.Nemmando
             hasFired = true;
             bool isCrit = RollCrit();
             EffectManager.SimpleMuzzleFlash(Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab, gameObject, muzzleString, false);
-
             PlayCrossfade("Gesture, Override, LeftArm", "FireGun", "FireGun.playbackRate", duration, 0.075f);
+            //PlayAnimation("Gesture, Override, LeftArm", "FireGun", "FireGun.playbackRate", duration);
 
             //TODO: Add other sounds per skin
             //if (isCrit) soundString += "Crit";
