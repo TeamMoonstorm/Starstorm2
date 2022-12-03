@@ -865,6 +865,40 @@ MonoBehaviour:
     transform: {fileID: 619770013711618520}
   - name: SwingRight
     transform: {fileID: 765478832361854040}
+  - name: Pelvis
+    transform: {fileID: 4359443948644143237}
+  - name: Stomach
+    transform: {fileID: 8602354288146233651}
+  - name: Chest
+    transform: {fileID: 294447071293261103}
+  - name: Neck
+    transform: {fileID: 7402877388186537944}
+  - name: Head
+    transform: {fileID: 2091149466147878291}
+  - name: ShoulderL
+    transform: {fileID: 2758348005298427683}
+  - name: ArmL
+    transform: {fileID: 4982777751721446115}
+  - name: HandL
+    transform: {fileID: 4146709932594916901}
+  - name: ShoulderR
+    transform: {fileID: 2711678214726191489}
+  - name: ArmR
+    transform: {fileID: 6190658742543297971}
+  - name: HandR
+    transform: {fileID: 4563193509591027714}
+  - name: ThighL
+    transform: {fileID: 1561800688530916965}
+  - name: CalfL
+    transform: {fileID: 2615066362065754998}
+  - name: FootL
+    transform: {fileID: 8568641366018835124}
+  - name: ThighR
+    transform: {fileID: 1353494641397619036}
+  - name: CalfR
+    transform: {fileID: 6512414760821082308}
+  - name: FootR
+    transform: {fileID: 4290241673176517995}
 --- !u!114 &6942145962903068767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -907,7 +941,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 838433546084477814}
-  itemDisplayRuleSet: {fileID: 0}
+  itemDisplayRuleSet: {fileID: 11400000, guid: a0f32be97140cff49b516a8195c67c19, type: 2}
   autoPopulateLightInfos: 1
   baseRendererInfos:
   - renderer: {fileID: 2541244660559103912}
@@ -955,19 +989,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputBank: {fileID: 1906349655466180332}
   directionComponent: {fileID: 1315486503484886784}
-  pitchRangeMin: -60
-  pitchRangeMax: 60
-  yawRangeMin: -80
-  yawRangeMax: 80
-  pitchGiveupRange: 30
-  yawGiveupRange: 10
+  pitchRangeMin: -50
+  pitchRangeMax: 50
+  yawRangeMin: -75
+  yawRangeMax: 75
+  pitchGiveupRange: 60
+  yawGiveupRange: 60
   giveupDuration: 3
   raisedApproachSpeed: 720
   loweredApproachSpeed: 360
   smoothTime: 0.1
   fullYaw: 0
   aimType: 0
-  enableAimWeight: 0
+  enableAimWeight: 1
   UseTransformedAimVector: 0
 --- !u!114 &194280533626241157
 MonoBehaviour:
@@ -1657,7 +1691,7 @@ MonoBehaviour:
   m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillFamily: {fileID: 11400000, guid: b7b1f4f7c86f87844b9a2e57c760717d, type: 2}
+  _skillFamily: {fileID: 11400000, guid: b90628b6d3e03e64ca53b8f6d01ae1d6, type: 2}
   skillName: 
   hideInCharacterSelect: 0
   hasExecutedSuccessfully: 0
@@ -1673,7 +1707,7 @@ MonoBehaviour:
   m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillFamily: {fileID: 11400000, guid: 3811f7e64fc86e9479814022a0448778, type: 2}
+  _skillFamily: {fileID: 11400000, guid: 3e9c6c6feaeb9de4b97076edcc6f48ff, type: 2}
   skillName: 
   hideInCharacterSelect: 0
   hasExecutedSuccessfully: 0
@@ -1845,7 +1879,7 @@ MonoBehaviour:
   Rigidbody: {fileID: 1926901548466651161}
   CapsuleRadius: 0.45
   CapsuleHeight: 2.25
-  CapsuleYOffset: -0.25
+  CapsuleYOffset: -0.2
   CapsulePhysicsMaterial: {fileID: 0}
   DetectDiscreteCollisions: 0
   GroundDetectionExtraDistance: 0
@@ -2434,7 +2468,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: -6540107341107321680, guid: 79654839f4e947048ba1a7af28a031b5, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 50707825a1693fe4795377748b324740, type: 2}
   m_Bones:
   - {fileID: 694070117383743111}
   - {fileID: 8602354288146233651}
@@ -2736,7 +2770,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: -5693815908101236700, guid: 79654839f4e947048ba1a7af28a031b5, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 76018bd5b962ced44947044c05ded4d3, type: 2}
   m_Bones:
   - {fileID: 694070117383743111}
   - {fileID: 8602354288146233651}
@@ -3737,7 +3771,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 8989324824668654689, guid: 79654839f4e947048ba1a7af28a031b5, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 9d23b42a4cf76964cac86f0188aced6b, type: 2}
   m_Bones:
   - {fileID: 694070117383743111}
   - {fileID: 8602354288146233651}

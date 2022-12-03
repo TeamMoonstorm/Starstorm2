@@ -25,6 +25,7 @@ namespace EntityStates.Nemmando
         private float fireTime;
         private bool hasFired;
         private Animator animator;
+        private EntityStateMachine swordSM;
         
         private float duration
         {
@@ -43,9 +44,10 @@ namespace EntityStates.Nemmando
             characterBody.SetAimTimer(2f);
             animator = GetModelAnimator();
             muzzleString = "Muzzle";
+            swordSM = EntityStateMachine.FindByCustomName(gameObject, "Weapon");
 
-            //FindModelChildGameObject("GunSpinEffect").SetActive(false);
-            //PlayCrossfade("RightArm, Override", "ShootGunShort", "ShootGun.playbackRate", this.duration, 0.05f);
+            if (animator.GetFloat("primaryPlaying") > 0.05) PlayCrossfade("Gesture, Additive, LeftArm", "FireGun", "FireGun.playbackRate", duration, 0.075f);
+            else PlayCrossfade("Gesture, Override, LeftArm", "FireGun", "FireGun.playbackRate", duration, 0.075f);
         }
 
         public override void OnExit()
@@ -53,7 +55,6 @@ namespace EntityStates.Nemmando
             base.OnExit();
 
             float rechargeTime = Mathf.Clamp(skillLocator.secondary.finalRechargeInterval, 0.25f, Mathf.Infinity);
-            PlayAnimation("Gesture, Override, LeftArm", "LowerGun", "Reload.playbackRate", rechargeTime);
         }
 
         
@@ -65,11 +66,8 @@ namespace EntityStates.Nemmando
             hasFired = true;
             bool isCrit = RollCrit();
             EffectManager.SimpleMuzzleFlash(Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab, gameObject, muzzleString, false);
-            PlayCrossfade("Gesture, Override, LeftArm", "FireGun", "FireGun.playbackRate", duration, 0.075f);
-            //PlayAnimation("Gesture, Override, LeftArm", "FireGun", "FireGun.playbackRate", duration);
+            
 
-            //TODO: Add other sounds per skin
-            //if (isCrit) soundString += "Crit";
             if (soundString != string.Empty)
                 Util.PlaySound(soundString, gameObject);
             
