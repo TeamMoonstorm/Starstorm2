@@ -33,8 +33,12 @@ namespace Moonstorm.Starstorm2.Unlocks
         {
             if ((bool)runReport.gameEnding && runReport.gameEnding.isWin)
             {
-                var runDifficulty = DifficultyCatalog.GetDifficultyDef(runReport.ruleBook.FindDifficulty());
-                if (runDifficulty.countsAsHardMode && runDifficulty.scalingValue >= RequiredDifficultyCoefficient)
+                DifficultyIndex difficultyIndex = runReport.ruleBook.FindDifficulty();
+                DifficultyDef runDifficulty = DifficultyCatalog.GetDifficultyDef(difficultyIndex);
+                
+                if ((runDifficulty.countsAsHardMode && runDifficulty.scalingValue >= RequiredDifficultyCoefficient) || //check our required difficulty coefficient
+                    (difficultyIndex >= DifficultyIndex.Eclipse1 && difficultyIndex <= DifficultyIndex.Eclipse8) || //check for eclipse (to be consistent with other grand masteries)
+                    (runDifficulty.nameToken == "INFERNO_NAME")) //check for inferno mod, as it starts at monsoon coeff but scales higher
                 {
                     Grant();
                 }
