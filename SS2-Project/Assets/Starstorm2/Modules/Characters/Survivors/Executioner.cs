@@ -33,10 +33,10 @@ namespace Moonstorm.Starstorm2.Survivors
 
             foreach(string bodyName in defaultBodyNames)
             {
-                BodyIndex index = BodyCatalog.FindBodyIndex(bodyName);
+                BodyIndex index = BodyCatalog.FindBodyIndexCaseInsensitive(bodyName);
                 if(index != BodyIndex.None)
                 {
-                    AddBodyToSuperchargeList(BodyCatalog.FindBodyIndexCaseInsensitive(bodyName));
+                    AddBodyToSuperchargeList(index);
                 }
             }
         }
@@ -78,14 +78,17 @@ namespace Moonstorm.Starstorm2.Survivors
             if (BodiesThatGiveSuperCharge.Contains(body.bodyIndex))
                 return 100;
 
+            if (body.isChampion)
+                return 10;
+
             switch(body.hullClassification)
             {
                 case HullClassification.Human:
                     return 1;
                 case HullClassification.Golem:
-                    return 5;
+                    return 3;
                 case HullClassification.BeetleQueen:
-                    return 10;
+                    return 5;
                 default:
                     return 1;
             }
