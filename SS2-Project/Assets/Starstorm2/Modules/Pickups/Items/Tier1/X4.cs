@@ -29,6 +29,16 @@ namespace Moonstorm.Starstorm2.Items
         //[TokenModifier("SS2_ITEM_X4_DESC", StatTypes.Default, 3)]
         public static float flatHealth = 10;
 
+        //public static float atkSpeedBonus = .2f;
+
+        public static float baseRegenBoost = 2f;
+
+        public static float regenDuration = 3f;
+        public static float extraRegeneration = 0.2f;
+
+        public static int buffCap = 5;
+
+
         public static ProcChainMask ignoredProcs;
 
         public static ItemDisplay itemDisplay;
@@ -64,105 +74,145 @@ namespace Moonstorm.Starstorm2.Items
                 //args.cooldownMultAdd += (float)itemCount * Synergies.pearlCD.Value;
                 //args.secondaryCooldownMultAdd *= MSUtil.InverseHyperbolicScaling(secCooldown, secCooldown, 0.7f, stack);
             }
-            public void RecalculateStatsStart()
-            {
-            }
 
-            //RecalculateStatsAPI.GetStatCoefficients += new RecalculateStatsAPI.StatHookEventHandler(Hook.RecalculateStatsAPI_GetStatCoefficients);
-            //public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
-            //{
-            //    //float cdr = MSUtil.InverseHyperbolicScaling(secCooldown, secCooldown, 0.7f, stack);
-            //    //SS2Log.Debug("RecalcStats middle? - " + cdr);
-            //    //args.cooldownReductionAdd += stack * secCooldown;
-            //    
-            //}
+            public void RecalculateStatsStart() { }
 
-            private static void RecalculateStatsAPI_GetStatCoefficients(CharacterBody self, RecalculateStatsAPI.StatHookEventArgs args)
-            {
-            }
+            private static void RecalculateStatsAPI_GetStatCoefficients(CharacterBody self, RecalculateStatsAPI.StatHookEventArgs args) { }
+
             private void OnEnable()
             {
                 On.RoR2.CharacterBody.OnSkillActivated += X4HealOnSkillActivation;
+                //On.RoR2.CharacterBody.OnSkillActivated += X4AtkSpeedOnSkill;
             }
 
             private void OnDisable()
             {
                 On.RoR2.CharacterBody.OnSkillActivated -= X4HealOnSkillActivation;
+                //On.RoR2.CharacterBody.OnSkillActivated -= X4AtkSpeedOnSkill;
             }
+
+            //private void X4AtkSpeedOnSkill(On.RoR2.CharacterBody.orig_OnSkillActivated orig, CharacterBody self, GenericSkill skill)
+            //{
+            //    SS2Log.Debug("pissing");
+            //    orig(self, skill);
+            //    if (self.inventory)
+            //    {
+            //        SS2Log.Debug("hell yea");
+            //        int count = self.inventory.GetItemCount(SS2Content.Items.X4.itemIndex);
+            //        if(count > 0 && skill == skill.characterBody.skillLocator.secondaryBonusStockSkill)
+            //        {
+            //            self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, atkSpeedDuration);
+            //            SS2Log.Debug("explosin: " + skill.rechargeStopwatch + " | base: " + skill.baseRechargeInterval + " | base + base: " + skill.baseSkill.baseRechargeInterval);
+            //            
+            //            
+            //            //if (self.GetBuffCount(SS2Content.Buffs.BuffX4) < buffCap)
+            //            //{
+            //            //    self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, atkSpeedDuration);
+            //            //}
+            //            //else if(self.GetBuffCount(SS2Content.Buffs.BuffX4) == buffCap)
+            //            //{
+            //            //    self.RemoveOldestTimedBuff(SS2Content.Buffs.BuffX4.buffIndex);
+            //            //    self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, atkSpeedDuration);
+            //            //}
+            //        }
+            //    }
+            //}
 
             private void X4HealOnSkillActivation(On.RoR2.CharacterBody.orig_OnSkillActivated orig, CharacterBody self, GenericSkill skill)
             {
                 orig(self, skill);
                 //skill == skill.characterBody.skillLocator.secondaryBonusStockSkill
                 //skill.skillFamily.ToString().Contains("Secondary")
-                var token = body.gameObject.GetComponent<X4Token>();
-                if (self.inventory && token)
+                //var token = body.gameObject.GetComponent<X4Token>();
+                if (self.inventory) 
                 {
                     //SS2Log.Debug("skill" + skill.skillDef.skillNameToken);
                     int count = self.inventory.GetItemCount(SS2Content.Items.X4.itemIndex); //again i could use stack here probably but i just wanna make sure this works we can fix it later
-                    if (self.inventory.GetItemCount(DLC1Content.Items.ConvertCritChanceToCritDamage) > 0 && skill.skillDef.skillNameToken == "RAILGUNNER_SNIPE_HEAVY_NAME")
+                    if(count > 0)
                     {
-                        float amntToHeal = flatHealth + self.healthComponent.health * (percentHealth + (percentHealthStacking * (count - 1)));
-                        self.healthComponent.Heal(amntToHeal, ignoredProcs, true);
-                    }
-                    else if (skill.skillDef.skillNameToken != "SNIPERCLASSIC_SECONDARY_NAME" && (skill.skillDef.skillNameToken == "SNIPERCLASSIC_PRIMARY_NAME" || skill.skillDef.skillNameToken == "SNIPERCLASSIC_PRIMARY_ALT_NAME" || skill.skillDef.skillNameToken == "SNIPERCLASSIC_PRIMARY_ALT2_NAME")) //sniper classic exceptions
-                    {
-                        float amntToHeal = flatHealth + self.healthComponent.health * (percentHealth + (percentHealthStacking * (count - 1)));
-                        self.healthComponent.Heal(amntToHeal, ignoredProcs, true);
-                    }
-                    else if (skill == skill.characterBody.skillLocator.secondaryBonusStockSkill && skill.skillDef.skillNameToken != "RAILGUNNER_SECONDARY_NAME" && count > 0)
-                    {
-                        if (skill.skillDef.skillNameToken == "SS2_EXECUTIONER_IONGUN_NAME" || skill.skillDef.skillNameToken == "RAILGUNNER_SECONDARY_ALT_NAME") //this is jank but it works :)
+                        if(skill == skill.characterBody.skillLocator.secondaryBonusStockSkill && skill.baseRechargeInterval != 0)
                         {
-                            float amntToHeal = flatHealth + self.healthComponent.health * (percentHealth + (percentHealthStacking * (count - 1)));
-                            self.healthComponent.Heal(amntToHeal, ignoredProcs, true);
+                            self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
                         }
-                        else if (token.usesLeft > 0)
+                        else if(skill == skill.characterBody.skillLocator.secondaryBonusStockSkill) // if the skill is spammable, cap the buff count
                         {
-                            float amntToHeal = flatHealth + self.healthComponent.health * (percentHealth + (percentHealthStacking * (count - 1)));
-                            self.healthComponent.Heal(amntToHeal, ignoredProcs, true);
-                            token.usesLeft--;
-                            //SS2Log.Debug("skill cooldown:" + skill.CalculateFinalRechargeInterval());
+                            int buffCount = self.GetBuffCount(SS2Content.Buffs.BuffX4);
+                            if(buffCount != 0)
+                            {
+                                self.RemoveOldestTimedBuff(SS2Content.Buffs.BuffX4.buffIndex);
+                                self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
+                            }
                         }
                     }
-                }
-        }
 
-            private void FixedUpdate()
-            {
-                var skill = body.skillLocator.secondaryBonusStockSkill;
-                var token = body.gameObject.GetComponent<X4Token>();
-                if (!token)
-                {
-                    token = body.gameObject.AddComponent<X4Token>();
-                    token.pastStock = skill.stock;
-                    token.usesLeft = 1 + skill.bonusStockFromBody;
-                }
-                else
-                {
-                    int currentStock = skill.stock;
-                    if (currentStock > token.pastStock)
-                    {
-                        token.usesLeft++;
-                        if (token.usesLeft > 1 + skill.bonusStockFromBody)
-                        {
-                            token.usesLeft = 1 + skill.bonusStockFromBody;
-                        }
-                        //token.pastStock++;
-                    }
+                    //if (self.inventory.GetItemCount(DLC1Content.Items.ConvertCritChanceToCritDamage) > 0 && skill.skillDef.skillNameToken == "RAILGUNNER_SNIPE_HEAVY_NAME")
+                    //{
+                    //    //float amntToHeal = flatHealth + self.healthComponent.health * (percentHealth + (percentHealthStacking * (count - 1)));
+                    //    //self.healthComponent.Heal(amntToHeal, ignoredProcs, true);
+                    //    self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
+                    //}
+                    //else if (skill.skillDef.skillNameToken != "SNIPERCLASSIC_SECONDARY_NAME" && (skill.skillDef.skillNameToken == "SNIPERCLASSIC_PRIMARY_NAME" || skill.skillDef.skillNameToken == "SNIPERCLASSIC_PRIMARY_ALT_NAME" || skill.skillDef.skillNameToken == "SNIPERCLASSIC_PRIMARY_ALT2_NAME")) //sniper classic exceptions
+                    //{
+                    //    //float amntToHeal = flatHealth + self.healthComponent.health * (percentHealth + (percentHealthStacking * (count - 1)));
+                    //    //self.healthComponent.Heal(amntToHeal, ignoredProcs, true);
+                    //    self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
+                    //}
+                    //else if (skill == skill.characterBody.skillLocator.secondaryBonusStockSkill && skill.skillDef.skillNameToken != "RAILGUNNER_SECONDARY_NAME" && count > 0)
+                    //{
+                    //    if (skill.skillDef.skillNameToken == "SS2_EXECUTIONER_IONGUN_NAME" || skill.skillDef.skillNameToken == "RAILGUNNER_SECONDARY_ALT_NAME") //this is jank but it works :)
+                    //    {
+                    //        //float amntToHeal = flatHealth + self.healthComponent.health * (percentHealth + (percentHealthStacking * (count - 1)));
+                    //        //self.healthComponent.Heal(amntToHeal, ignoredProcs, true);
+                    //        self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
+                    //    }
+                    //    else if (token.usesLeft > 0)
+                    //    {
+                    //        //float amntToHeal = flatHealth + self.healthComponent.health * (percentHealth + (percentHealthStacking * (count - 1)));
+                    //        //self.healthComponent.Heal(amntToHeal, ignoredProcs, true);
+                    //        self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
+                    //        token.usesLeft--;
+                    //        //SS2Log.Debug("skill cooldown:" + skill.CalculateFinalRechargeInterval());
+                    //    }
+                    //}
 
-
-                    token.pastStock = skill.stock;
                 }
             }
 
+            //private void FixedUpdate()
+            //{
+            //    var skill = body.skillLocator.secondaryBonusStockSkill;
+            //    var token = body.gameObject.GetComponent<X4Token>();
+            //    if (!token)
+            //    {
+            //        token = body.gameObject.AddComponent<X4Token>();
+            //        token.pastStock = skill.stock;
+            //        token.usesLeft = 1 + skill.bonusStockFromBody;
+            //    }
+            //    else
+            //    {
+            //        int currentStock = skill.stock;
+            //        if (currentStock > token.pastStock)
+            //        {
+            //            token.usesLeft++;
+            //            if (token.usesLeft > 1 + skill.bonusStockFromBody)
+            //            {
+            //                token.usesLeft = 1 + skill.bonusStockFromBody;
+            //            }
+            //            //token.pastStock++;
+            //        }
+            //
+            //
+            //        token.pastStock = skill.stock;
+            //    }
+            //}
+
         }
-        public class X4Token : MonoBehaviour
-        {
-            public int pastStock;
-            public int usesLeft;
-            //helps keep track of the target and player responsible
-            public CharacterBody PlayerOwner;
-        }
+        //public class X4Token : MonoBehaviour
+        //{
+        //    public int pastStock;
+        //    public int usesLeft;
+        //    //helps keep track of the target and player responsible
+        //    public CharacterBody PlayerOwner;
+        //}
     }
 }

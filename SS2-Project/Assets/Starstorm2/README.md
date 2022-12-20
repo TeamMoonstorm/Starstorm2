@@ -57,6 +57,17 @@ There are no issues. The mod is perfect.
 ## Changelog
 
 **Warning: content spoilers below!**
+### 0.3.46β
+* Placeholder!
+    * Nerfed Relic of Force - Damage of additional hits now scales with number of hits on a given enemy, resetting on hitting a new enemy. 
+    * Nerfed Relic of Termination - Reduced duration to kill an enemy 30 -> 20 seconds, and added a 30 second cooldown between marks. Enemies not killed in time get even stronger buffs. Lastly, the tier ratio has been adjusted from 60/30/9/1 to 70/25/4.9/.1 and reduced the per stack rarity scaling. 
+        * These nerfs aim to try to bring these relics at least closer in line with Relic of Mass, and generally reduce their power considering you can get them stage one in their current tier.
+    * Nerfed Nkota's Heritage - no longer guarantees reds past a certain level, but rather scales the rarity with your current level. This prevents late runs from getting a crazy amount of reds.
+    * Reworked Coffee Bag - now grants an attack and move speed boost after using an interactable. 
+    * Relic of Termination can no longer be given to enemies.
+
+    * note - i didnt change the lang files for relics yet :pleading_face:
+
 ### 0.3.45β
 * Even more fixes.
     * Fixed Relic of Termination's material.

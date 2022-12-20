@@ -169,6 +169,8 @@ namespace Moonstorm.Starstorm2
             public static BuffDef BuffSurrender;
 
             public static BuffDef BuffTerminationVFX;
+
+            public static BuffDef BuffX4;
         }
 
         public static class Elites
