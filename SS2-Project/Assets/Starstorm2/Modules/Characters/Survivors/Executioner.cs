@@ -1,5 +1,6 @@
 ﻿using RoR2;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 
 
@@ -11,149 +12,52 @@ namespace Moonstorm.Starstorm2.Survivors
         public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("ExecutionerMonsterMasterNew");
         public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("SurvivorExecutioner");
 
-        internal static Dictionary<string, int> ionChargeValues = new Dictionary<string, int>
+        public static ReadOnlyCollection<BodyIndex> BodiesThatGiveSuperCharge { get; private set; }
+        private static List<BodyIndex> bodiesThatGiveSuperCharge = new List<BodyIndex>();
+
+        [SystemInitializer(typeof(BodyCatalog))]
+        private static void InitializeSuperchargeList()
         {
-            {
-                "MoffeinAncientWispBody",
-                10
-            },
-            {
-                "BeetleGuardBody",
-                2
-            },
-            {
-                "BeetleQueen2Body",
-                10
-            },
-            {
-                "BellBody",
-                2
-            },
-            {
-                "BisonBody",
-                2
-            },
-            {
-                "BrotherBody",
-                10
-            },
+            List<string> defaultBodyNames = new List<string>
             {
                 "BrotherGlassBody",
-                50
-            },
-            {
                 "BrotherHurtBody",
-                100
-            },
-            {
-                "ClayBossBody",
-                10
-            },
-            {
-                "ClayBruiserBody",
-                2
-            },
-            {
-                "ElectricWormBody",
-                20
-            },
-            {
-                "GrandParentBody",
-                15
-            },
-            {
-                "GravekeeperBody",
-                10
-            },
-            {
-                "GreaterWispBody",
-                2
-            },
-            {
-                "ImpBossBody",
-                10
-            },
-            {
-                "LemurianBruiserBody",
-                3
-            },
-            {
-                "LunarGolemBody",
-                3
-            },
-            {
-                "LunarWispBody",
-                3
-            },
-            {
-                "MagmaWormBody",
-                10
-            },
-            {
-                "MiniMushroomBody",
-                2
-            },
-            {
-                "NullifierBody",
-                2
-            },
-            {
-                "ParentBody",
-                3
-            },
-            {
-                "RoboBallBossBody",
-                10
-            },
-            {
-                "ScavBody",
-                15
-            },
-            {
                 "ScavLunar1Body",
-                100
-            },
-            {
                 "ScavLunar2Body",
-                100
-            },
-            {
                 "ScavLunar3Body",
-                100
-            },
-            {
                 "ScavLunar4Body",
-                100
-            },
-            {
                 "ShopkeeperBody",
-                300
-            },
-            {
                 "SuperRoboBallBossBody",
-                50
-            },
+                "DireseekerBossBody"
+            };
+
+            foreach(string bodyName in defaultBodyNames)
             {
-                "TitanBody",
-                10
-            },
-            {
-                "TitanGoldBody",
-                30
-            },
-            {
-                "VagrantBody",
-                10
-            },
-            {
-                "DireseekerBody",
-                10
-            },
-            {
-                "DireseekerBossBody",
-                50
+                BodyIndex index = BodyCatalog.FindBodyIndex(bodyName);
+                if(index != BodyIndex.None)
+                {
+                    AddBodyToSuperchargeList(BodyCatalog.FindBodyIndexCaseInsensitive(bodyName));
+                }
             }
-        };
+        }
+
+        public static void AddBodyToSuperchargeList(BodyIndex bodyIndex)
+        {
+            if (bodyIndex == BodyIndex.None)
+            {
+                SS2Log.Debug($"Tried to add a body to the supercharge list, but it's index is none");
+                return;
+            }
+
+            if (bodiesThatGiveSuperCharge.Contains(bodyIndex))
+            {
+                GameObject prefab = BodyCatalog.GetBodyPrefab(bodyIndex);
+                SS2Log.Debug($"Body prefab {prefab} is already in the list of bodies that give supercharge.");
+                return;
+            }
+            bodiesThatGiveSuperCharge.Add(bodyIndex);
+            BodiesThatGiveSuperCharge = new ReadOnlyCollection<BodyIndex>(bodiesThatGiveSuperCharge);
+        }
 
         public override void ModifyPrefab()
         {
@@ -170,13 +74,21 @@ namespace Moonstorm.Starstorm2.Survivors
         {
             if (body == null) return 1;
             if (body.bodyIndex == BodyIndex.None) return 1;
-            string name = BodyCatalog.GetBodyName(body.bodyIndex);
-            if (name == "" || name == null) return 1;
-            if (ionChargeValues.ContainsKey(name))
+
+            if (BodiesThatGiveSuperCharge.Contains(body.bodyIndex))
+                return 100;
+
+            switch(body.hullClassification)
             {
-                return ionChargeValues[name];
+                case HullClassification.Human:
+                    return 1;
+                case HullClassification.Golem:
+                    return 5;
+                case HullClassification.BeetleQueen:
+                    return 10;
+                default:
+                    return 1;
             }
-            return 1;
         }
 
     }
