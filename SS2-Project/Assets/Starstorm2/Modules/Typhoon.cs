@@ -5,7 +5,6 @@ using RoR2;
 namespace Moonstorm.Starstorm2
 {
     //I may make this into an abstract class but christ I don't want to. On the next update we should have difficulty defs so a lot of this will need scrapping, mainly the r2api stuff
-    [R2APISubmoduleDependency((nameof(DifficultyAPI)))]
     public static class Typhoon
     {
         public static R2API.ScriptableObjects.SerializableDifficultyDef TyphoonDef { get; private set; }

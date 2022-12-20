@@ -1,6 +1,7 @@
 ﻿using Moonstorm.Starstorm2;
 using Moonstorm.Starstorm2.Components;
 using Moonstorm.Starstorm2.ScriptableObjects;
+using R2API.Networking.Interfaces;
 using RoR2;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,15 @@ namespace EntityStates.Events
     public class GenericNemesisEvent : EventState
     {
         public static GameObject musicOverridePrefab;
-        public static MusicTrackDef canticumVitaeA;
-        public static MusicTrackDef canticumVitaeB;
 
         [SerializeField]
+        public MusicTrackDef introTrack;
+        [SerializeField]
+        public MusicTrackDef mainTrack;
+        [SerializeField]
+        public MusicTrackDef outroTrack;
+
+        //[SerializeField]
         //public GameObject effectPrefab;
 
         public static GameObject encounterPrefab;
@@ -52,12 +58,14 @@ namespace EntityStates.Events
             rng = Run.instance.spawnRng;
             if (!Enum.TryParse(spawnDistanceString, out spawnDistance))
                 spawnDistance = MonsterSpawnDistance.Standard;
-            FindSpawnTarget();
 
-            if (musicOverridePrefab && canticumVitaeA && canticumVitaeB)
+            if(NetworkServer.active) //Spawn target gets serialized and deserialized later by the network state machine
+                FindSpawnTarget();
+
+            if (musicOverridePrefab && introTrack && mainTrack)
             {
                 musicTrack = GameObject.Instantiate(musicOverridePrefab).GetComponent<MusicTrackOverride>();
-                musicTrack.track = canticumVitaeA;
+                musicTrack.track = introTrack;
             }
 
             /*if (effectPrefab)
@@ -77,10 +85,11 @@ namespace EntityStates.Events
         {
             base.StartEvent();
             if (musicOverridePrefab)
-                musicTrack.track = canticumVitaeB;
+                musicTrack.track = mainTrack;
             /*if (eventStateEffect)
                 eventStateEffect.OnEffectStart();*/
-            SpawnNemesisBoss();
+            if(NetworkServer.active)
+                SpawnNemesisBoss();
         }
 
 
@@ -94,7 +103,13 @@ namespace EntityStates.Events
                     list.Add(playerCharacterMasterController);
             }
             if (list.Count > 0)
-                chosenPlayer = rng.NextElementUniform(list).body.gameObject;
+            {
+                var charMaster = rng.NextElementUniform(list);
+                if(charMaster && charMaster.body)
+                {
+                    chosenPlayer = charMaster.body.gameObject;
+                }
+            }
         }
 
 
@@ -140,6 +155,7 @@ namespace EntityStates.Events
                 CharacterMaster master = spawnResult.spawnedInstance.GetComponent<CharacterMaster>();
                 master.gameObject.AddComponent<NemesisResistances>();
                 nemesisBossBody = master.GetBody();
+                new NemesisSpawnCard.SyncBaseStats(nemesisBossBody).Send(R2API.Networking.NetworkDestination.Clients);
                 combatSquad.AddMember(master);
                 master.onBodyDeath.AddListener(OnBodyDeath);
             };
@@ -151,8 +167,6 @@ namespace EntityStates.Events
             }
             UnityEngine.Object.Destroy(spawnCard);
         }
-
-
 
         public virtual void OnBodyDeath()
         {

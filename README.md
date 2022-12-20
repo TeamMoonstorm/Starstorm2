@@ -46,7 +46,31 @@ Before we start, here are some guidelines that need to be followed for developin
 * Select the Import Configurations, ensure that your configurations match the one from the image.
     * If you cant find one of the configurations, delete teh import configuration.
 
-![](https://cdn.discordapp.com/attachments/1035279289668616202/1035292441441476698/unknown.png)
+* Make sure your import config matches the following:
+
+| Importer Name | Enabled or Disabled | Extra Config |
+|--|--|--|
+| PostProcessing Unity Package Installer | Enabled |  |
+| TextMeshPro Uninstaller | Enabled |  |
+| Unity GUI Uninstaller | Enabled |  |
+| Wwise Blacklister | Enabled |  |
+| Assembly Publicizer | Enabled | Publicize at least RoR2.dll and KinematicCharacterController.dll |
+| MMHook Generator | Enabled | Generate MMHook assemblies for at least RoR2.dll and KinematicCharacterController.dll |
+| Import Assemblies | Enabled |  |
+| RoR2 LegacyResourceAPI Patcher | Enabled |  |
+| Import Project Settings | Enabled | Set the enum to Everything |
+| Set Deferred Shading | Enabled |  |
+| Create Game Package | Enabled |  |
+| Import Addressable Catalog | Enabled |  |
+| Configure Addressable Graphics Settings | Enabled |  |
+| Ensure RoR2 Thunderstore Source | Enabled |  |
+| Install BepInEx | Enabled |  |
+| R2API Submodule Installer | Enabled | Make sure the following are enabled: ArtifactCode; Colors; ContentManagement; Core; DamageType; Difficulty; Director; Dot; Elites; Networking; Prefab; RecalculateStats |
+| Install Ancient Scepter | Enabled |  |
+| Install RoR2MultiplayerHLAPI | Disabled |  |
+| Install RoR2EditorKit | Disabled |  |
+| Install DebugToolkit | Enabled |  |
+| Get Bitness | Enabled |  |
 
 * Select `ThunderKit Settings` and click Browse.
     * Find your RoR2 Executable, select it
