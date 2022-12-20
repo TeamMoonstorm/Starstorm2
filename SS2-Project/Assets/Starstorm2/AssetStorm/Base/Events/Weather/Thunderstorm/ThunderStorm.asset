@@ -23,15 +23,18 @@ MonoBehaviour:
   availableStages: 155648782
   customStageNames: []
   category: CommonEvents
-  selectionWeight: 1
+  selectionWeight: 50
   cost: 375
   minimumStageCompletions: 2
   requiredUnlockableDef:
     address: 
+    useDirectReference: 1
     asset: {fileID: 0}
   forbiddenUnlockableDef:
     address: 
+    useDirectReference: 1
     asset: {fileID: 0}
-  requiredExpansionDef:
-    address: 
+  requiredExpansions:
+  - address: 
+    useDirectReference: 1
     asset: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}

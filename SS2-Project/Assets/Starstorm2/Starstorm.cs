@@ -8,6 +8,12 @@ using UnityEngine;
 
 namespace Moonstorm.Starstorm2
 {
+    #region R2API
+    [BepInDependency("com.bepis.r2api.dot")]
+    [BepInDependency("com.bepis.r2api.networking")]
+    [BepInDependency("com.bepis.r2api.prefab")]
+    [BepInDependency("com.bepis.r2api.difficulty")]
+    #endregion
     [BepInDependency("com.TeamMoonstorm.MoonstormSharedUtils", BepInDependency.DependencyFlags.HardDependency)]
     [BepInDependency("com.DestroyedClone.AncientScepter", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.RiskyLives.RiskyMod", BepInDependency.DependencyFlags.SoftDependency)]
@@ -50,6 +56,9 @@ namespace Moonstorm.Starstorm2
             new SS2Content().Init();
             new SS2Language().Init();
             ConfigurableFieldManager.AddMod(this);
+
+            //N: i have no idea if SystemInitializer would be too late for this, so it stays here for now.
+            R2API.Networking.NetworkingAPI.RegisterMessageType<ScriptableObjects.NemesisSpawnCard.SyncBaseStats>();
         }
 
         private void Start()
