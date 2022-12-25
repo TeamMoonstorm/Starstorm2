@@ -2327,6 +2327,8 @@ GameObject:
   - component: {fileID: 3169909423081768823}
   - component: {fileID: 5713649052791932337}
   - component: {fileID: 6398401010324138139}
+  - component: {fileID: 4379257932353688361}
+  - component: {fileID: 7399443901587763245}
   m_Layer: 0
   m_Name: mdlNemCommando
   m_TagString: Untagged
@@ -2387,18 +2389,18 @@ MonoBehaviour:
   itemDisplayRuleSet: {fileID: 11400000, guid: a0f32be97140cff49b516a8195c67c19, type: 2}
   autoPopulateLightInfos: 1
   baseRendererInfos:
-  - renderer: {fileID: 8791716323650712407}
-    defaultMaterial: {fileID: 2100000, guid: 3280661c76de8f6439d2ed52ed682c1b, type: 2}
+  - renderer: {fileID: 0}
+    defaultMaterial: {fileID: 2100000, guid: da43e1666cddbc644917d4d3d45fb466, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
-  - renderer: {fileID: 7856522920361387477}
-    defaultMaterial: {fileID: 2100000, guid: f693beff1bd43e14f928b87cc35be517, type: 2}
+  - renderer: {fileID: 0}
+    defaultMaterial: {fileID: 2100000, guid: 59ab702a061be6149a09bb1613a94826, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 1
     hideOnDeath: 0
-  - renderer: {fileID: 5002982126243400555}
-    defaultMaterial: {fileID: 2100000, guid: 2302bb9b2a401f447bd2920b076003b1, type: 2}
+  - renderer: {fileID: 0}
+    defaultMaterial: {fileID: 2100000, guid: 0a1a0072bcfa25346b749f11af5c82ad, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 1
     hideOnDeath: 0
@@ -2416,6 +2418,85 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundCenter: {fileID: 7481583511926260775}
+--- !u!54 &4379257932353688361
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7481583511926260775}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &7399443901587763245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7481583511926260775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -226763392, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transformPairs:
+  - name: Base
+    transform: {fileID: 0}
+  - name: Model
+    transform: {fileID: 0}
+  - name: SwordModel
+    transform: {fileID: 0}
+  - name: GunModel
+    transform: {fileID: 0}
+  - name: Muzzle
+    transform: {fileID: 0}
+  - name: PortalSpawn
+    transform: {fileID: 0}
+  - name: SwingLeft
+    transform: {fileID: 0}
+  - name: SwingRight
+    transform: {fileID: 0}
+  - name: Pelvis
+    transform: {fileID: 0}
+  - name: Stomach
+    transform: {fileID: 0}
+  - name: Chest
+    transform: {fileID: 0}
+  - name: Neck
+    transform: {fileID: 0}
+  - name: Head
+    transform: {fileID: 0}
+  - name: ShoulderL
+    transform: {fileID: 0}
+  - name: ArmL
+    transform: {fileID: 0}
+  - name: HandL
+    transform: {fileID: 0}
+  - name: ShoulderR
+    transform: {fileID: 0}
+  - name: ArmR
+    transform: {fileID: 0}
+  - name: HandR
+    transform: {fileID: 0}
+  - name: ThighL
+    transform: {fileID: 0}
+  - name: CalfL
+    transform: {fileID: 0}
+  - name: FootL
+    transform: {fileID: 0}
+  - name: ThighR
+    transform: {fileID: 0}
+  - name: CalfR
+    transform: {fileID: 0}
+  - name: FootR
+    transform: {fileID: 0}
 --- !u!1 &7835200780071306941
 GameObject:
   m_ObjectHideFlags: 0
