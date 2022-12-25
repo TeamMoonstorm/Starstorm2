@@ -20,18 +20,21 @@ MonoBehaviour:
   endMessageToken: SS2_EVENT_GLACIALELITE_END
   messageColor: {r: 0.5882353, g: 0.8117648, b: 0.85098046, a: 1}
   startSound: {fileID: 0}
-  availableStages: 67239968
+  availableStages: 67108896
   customStageNames: []
   category: CommonEvents
-  selectionWeight: 0.6
+  selectionWeight: 33
   cost: 262
   minimumStageCompletions: 1
   requiredUnlockableDef:
     address: 
+    useDirectReference: 1
     asset: {fileID: 0}
   forbiddenUnlockableDef:
     address: 
+    useDirectReference: 1
     asset: {fileID: 0}
-  requiredExpansionDef:
-    address: 
+  requiredExpansions:
+  - address: 
+    useDirectReference: 1
     asset: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}

@@ -1,6 +1,7 @@
 ﻿using R2API.ScriptableObjects;
 using RoR2;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -16,13 +17,53 @@ namespace Moonstorm.Starstorm2.Artifacts
 
         [ConfigurableField(ConfigDesc = "Wether or not cognation ghosts inherit all items from the original body")]
         public static bool InheritInventory = true;
-
+        public static ReadOnlyCollection<MasterCatalog.MasterIndex> BlacklistedMasterIndices { get; private set; }
+        private static readonly List<MasterCatalog.MasterIndex> blacklistedMasterIndices = new List<MasterCatalog.MasterIndex>();
         public static readonly List<string> blacklistedMasters = new List<string>
         {
             "ArtifactShell",
             "BrotherHurt",
             "VoidInfestor",
         };
+
+        [SystemInitializer(typeof(MasterCatalog))]
+        private static void SystemInit()
+        {
+            List<string> defaultBlacklistedMasters = new List<string>
+            {
+                "ArtifactShell",
+                "BrotherHurt",
+                "VoidInfestor"
+            };
+
+            foreach(string masterName in defaultBlacklistedMasters)
+            {
+                MasterCatalog.MasterIndex masterIndex = MasterCatalog.FindMasterIndex(masterName);
+                if(masterIndex != MasterCatalog.MasterIndex.none)
+                {
+                    AddMasterToBlacklist(masterIndex);
+                }
+            }
+        }
+
+        public static void AddMasterToBlacklist(MasterCatalog.MasterIndex masterIndex)
+        {
+            if(masterIndex == MasterCatalog.MasterIndex.none)
+            {
+                SS2Log.Debug($"Tried to add a master to the blacklist, but it's index is none.");
+                return;
+            }
+
+            if(blacklistedMasterIndices.Contains(masterIndex))
+            {
+                GameObject prefab = MasterCatalog.GetMasterPrefab(masterIndex);
+                SS2Log.Debug($"Master PRefab {prefab} is already blacklisted.");
+                return;
+            }
+
+            blacklistedMasterIndices.Add(masterIndex);
+            BlacklistedMasterIndices = new ReadOnlyCollection<MasterCatalog.MasterIndex>(blacklistedMasterIndices);
+        }
 
         //Swuff, I Hate You 3000
         public override void Initialize()
@@ -53,52 +94,6 @@ namespace Moonstorm.Starstorm2.Artifacts
             //IL.RoR2.CharacterMaster.OnBodyDeath += PreventDeath;
             GlobalEventManager.onCharacterDeathGlobal += SpawnCognationGhost;
         }
-        /*private void PreventDeath(MonoMod.Cil.ILContext il)
-        {
-            ILLabel illabel = null;
-            ILCursor c = new ILCursor(il);
-                c.GotoNext(MoveType.After,
-                    x => x.MatchLdarg(0),
-                    x => x.MatchLdstr("PlayExtraLifeSFX"),
-                    x => x.MatchLdcR4(1f),
-                    x => x.MatchCall<MonoBehaviour>("Invoke"),
-                    x => x.MatchBr(out illabel));
-
-            if(illabel != null)
-            {
-                c.Emit(OpCodes.Ldarg_0);
-                c.EmitDelegate<Func<CharacterMaster, bool>>(RespawnAsGhost);
-                c.Emit(OpCodes.Brtrue, illabel);
-            }    
-        }
-
-        private bool RespawnAsGhost(CharacterMaster master)
-        {
-            if(!master.GetComponent<CognationController>() && CanBecomeGhost(master))
-            {
-                master.gameObject.AddComponent<CognationController>();
-
-                Vector3 deathPos = master.deathFootPosition;
-                if(master.killedByUnsafeArea)
-                {
-                    deathPos = (TeleportHelper.FindSafeTeleportDestination(deathPos, master.bodyPrefab.GetComponent<CharacterBody>(), RoR2Application.rng)) ?? master.deathFootPosition;
-                }
-                var charBody = master.Respawn(deathPos, Quaternion.Euler(0f, UnityEngine.Random.Range(0, 360), 0));
-                if (charBody)
-                {
-                    charBody.AddTimedBuff(RoR2Content.Buffs.ArmorBoost, 1f);
-                    if(master.bodyInstanceObject)
-                    {
-                        foreach(EntityStateMachine esm in master.bodyInstanceObject.GetComponents<EntityStateMachine>())
-                        {
-                            esm.initialStateType = esm.mainStateType;
-                        }
-                    }
-                }
-                return true;
-            }
-            return false;
-        }*/
 
         private void SpawnCognationGhost(DamageReport report)
         {
@@ -122,7 +117,7 @@ namespace Moonstorm.Starstorm2.Artifacts
             bool isMonster = victimMaster.teamIndex != TeamIndex.Player;
             bool hasBody = victimMaster.hasBody;
             bool notGhost = victimMaster.inventory.GetItemCount(SS2Content.Items.Cognation) == 0;
-            bool notBlacklisted = !(blacklistedMasters.Any(x => victimMaster.name.Contains(x)));
+            bool notBlacklisted = !BlacklistedMasterIndices.Contains(victimMaster.masterIndex);
             bool notVoidTouched = victimMaster.inventory.currentEquipmentIndex != DLC1Content.Equipment.EliteVoidEquipment.equipmentIndex;
             
             return isMonster && hasBody && notGhost && notBlacklisted && notVoidTouched;
