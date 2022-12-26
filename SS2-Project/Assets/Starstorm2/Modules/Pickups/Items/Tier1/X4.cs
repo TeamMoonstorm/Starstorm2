@@ -32,6 +32,7 @@ namespace Moonstorm.Starstorm2.Items
         //public static float atkSpeedBonus = .2f;
 
         public static float baseRegenBoost = 2f;
+        public static float stackRegenBoost = 1f;
 
         public static float regenDuration = 3f;
         public static float extraRegeneration = 0.2f;
@@ -130,18 +131,34 @@ namespace Moonstorm.Starstorm2.Items
                     int count = self.inventory.GetItemCount(SS2Content.Items.X4.itemIndex); //again i could use stack here probably but i just wanna make sure this works we can fix it later
                     if(count > 0)
                     {
-                        if(skill == skill.characterBody.skillLocator.secondaryBonusStockSkill && skill.baseRechargeInterval != 0)
+                        if(skill == skill.characterBody.skillLocator.secondaryBonusStockSkill && skill.baseRechargeInterval != 0) // if it doesnt have a zero sec cooldown, max buffs at the number of bonus stocks
+                        {
+                            int buffcap = skill.bonusStockFromBody + 1;
+                            SS2Log.Debug(buffcap + " " + skill.maxStock + " " + skill.baseStock + " "+ skill.stock);
+                            self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
+                            int buffCount = self.GetBuffCount(SS2Content.Buffs.BuffX4);
+                            //self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
+                            if (buffCount > buffcap)
+                            {
+                                self.RemoveOldestTimedBuff(SS2Content.Buffs.BuffX4.buffIndex);
+                            }
+                            //self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
+                            
+                        }
+                        else if(skill == skill.characterBody.skillLocator.secondaryBonusStockSkill) // if the skill is spammable, cap the buff count at 1
                         {
                             self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
-                        }
-                        else if(skill == skill.characterBody.skillLocator.secondaryBonusStockSkill) // if the skill is spammable, cap the buff count
-                        {
                             int buffCount = self.GetBuffCount(SS2Content.Buffs.BuffX4);
                             if(buffCount != 0)
                             {
                                 self.RemoveOldestTimedBuff(SS2Content.Buffs.BuffX4.buffIndex);
-                                self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
+                                //self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
                             }
+                            //else
+                            //{
+                            //self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
+                            //}
+
                         }
                     }
 

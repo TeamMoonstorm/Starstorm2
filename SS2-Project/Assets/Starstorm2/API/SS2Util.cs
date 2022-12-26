@@ -15,17 +15,41 @@ namespace Moonstorm.Starstorm2
         {
             List<PickupIndex> dropList;
             //float rarityscale = tierWeight * (float)(Math.Sqrt(teamLevel * 12) - 4); //I have absolutely no fucking idea what this is
-            float rarityscale = tierWeight * ((float)MSUtil.InverseHyperbolicScaling(5, .25f, 10, (int)teamLevel) - 5); // this is still gross but i think will be fine
+            //float rarityscale = tierWeight * ((float)MSUtil.InverseHyperbolicScaling(5, .25f, 10, (int)teamLevel) - 5); // this is still gross but i think will be fine
+            int templevel = (int)teamLevel;
+            float rarityMult = tierWeight * (MSUtil.InverseHyperbolicScaling(1, .1f, 6, templevel) / ((templevel + 14f)/ templevel)); //trust me this almost makes sense - at level 10, non white items are 1.3x more likely, and at 20, they're 2.5x more likely. additionally, reds are impossible at low enough levels
+            SS2Log.Debug(rarityMult);
+
             if (forcetier == ItemTier.Boss)
+            {
                 dropList = Run.instance.availableBossDropList;
+            }
             else if (forcetier == ItemTier.Lunar)
+            {
                 dropList = Run.instance.availableLunarCombinedDropList;
-            else if (Util.CheckRoll(0.5f * rarityscale - 1))
+            }
+            else if (Util.CheckRoll(1 * rarityMult))
+            {
                 dropList = Run.instance.availableTier3DropList;
-            else if (Util.CheckRoll(4 * rarityscale))
+
+                //Util.CheckRoll(.01f * raritymult)
+            }
+            else if (Util.CheckRoll(20 * rarityMult))
+            {
                 dropList = Run.instance.availableTier2DropList;
+            }
             else
+            {
                 dropList = Run.instance.availableTier1DropList;
+            }
+            //else if (Util.CheckRoll(0.5f * rarityscale - 1))
+            //    dropList = Run.instance.availableTier3DropList;
+            //else if (Util.CheckRoll(4 * rarityscale))
+            //    dropList = Run.instance.availableTier2DropList;
+            //else
+            //    dropList = Run.instance.availableTier1DropList;
+
+
             int item = Run.instance.treasureRng.RangeInt(0, dropList.Count);
 
             if (amount > 1)
@@ -120,9 +144,9 @@ namespace Moonstorm.Starstorm2
         {
             List<PickupIndex> dropList;
             float rarityscale = tierWeight * (float)(Math.Sqrt(teamLevel * 13) - 4); //I have absolutely no fucking idea what this is // me neither
-            if (Util.CheckRoll(0.5f * rarityscale - 1) || teamLevel >= Items.NkotasHeritage.greenRemovalLevel || (forcetier == 3 && forcetier != 0))
+            if (Util.CheckRoll(0.5f * rarityscale - 1)  || (forcetier == 3 && forcetier != 0))
                 dropList = Run.instance.availableTier3DropList;
-            else if (Util.CheckRoll(4 * rarityscale) || teamLevel >= Items.NkotasHeritage.whiteRemovalLevel || (forcetier == 2 && forcetier != 0))
+            else if (Util.CheckRoll(4 * rarityscale) || (forcetier == 2 && forcetier != 0))
                 dropList = Run.instance.availableTier2DropList;
             else
                 dropList = Run.instance.availableTier1DropList;

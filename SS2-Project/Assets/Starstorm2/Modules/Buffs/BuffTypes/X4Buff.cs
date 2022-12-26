@@ -22,7 +22,10 @@ namespace Moonstorm.Starstorm2.Buffs
                 //args.attackSpeedMultAdd += atkMult;
                 if (body.HasBuff(SS2Content.Buffs.BuffX4))
                 {
-                    args.baseRegenAdd += (Items.X4.baseRegenBoost + ((Items.X4.baseRegenBoost / 5) * body.level)) * buffStacks; //original code not taken from bitter root becasue i was lazy
+                    int count = body.GetItemCount(SS2Content.Items.X4);
+                    float regenAmnt = Items.X4.baseRegenBoost + (Items.X4.stackRegenBoost * (count - 1));
+                    args.baseRegenAdd += (regenAmnt + ((regenAmnt / 5) * body.level)) * buffStacks; //original code not taken from bitter root becasue i was lazy
+                    SS2Log.Debug(regenAmnt + " per buff stack");
                 }
             }
         }

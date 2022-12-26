@@ -36,7 +36,8 @@ namespace Moonstorm.Starstorm2.Modules
         {
             if(item.ItemDef.deprecatedTier != RoR2.ItemTier.NoTier)
             {
-                ConfigEntry<bool> enabled = Starstorm.instance.Config.Bind<bool>(item.GetType().Name, "Enabled", true, "Should this item be enabled?");
+                string niceName = MSUtil.NicifyString(item.GetType().Name);
+                ConfigEntry<bool> enabled = Starstorm.instance.Config.Bind<bool>(niceName, "Enabled", true, "Should this item be enabled?");
 
                 if (!enabled.Value)
                 {
