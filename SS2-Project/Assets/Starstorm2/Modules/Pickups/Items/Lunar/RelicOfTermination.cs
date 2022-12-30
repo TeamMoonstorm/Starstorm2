@@ -95,7 +95,7 @@ namespace Moonstorm.Starstorm2.Items
                     if (targetBody.inventory)
                     {
                         var healthFrac = targetBody.healthComponent.combinedHealthFraction;
-                        SS2Log.Debug(healthFrac);
+                        //SS2Log.Debug(healthFrac);
                         targetBody.inventory.GiveItem(SS2Content.Items.TerminationHelper);
                         var token = targetBody.gameObject.GetComponent<TerminationToken>();
                         //failEffect = failEffect.transform.localScale * targetBody.transform.localScale;
@@ -134,7 +134,8 @@ namespace Moonstorm.Starstorm2.Items
                 {
                     if (!token.hasFailed)
                     {
-                        int count = token.PlayerOwner.inventory.GetItemCount(SS2Content.Items.RelicOfTermination.itemIndex);
+                        //int count = token.PlayerOwner.inventory.GetItemCount(SS2Content.Items.RelicOfTermination.itemIndex);
+                        int count = token.itemCount;
                         Vector3 vector = Quaternion.AngleAxis(0, Vector3.up) * (Vector3.up * 20f);
                         List<PickupIndex> dropList;
 
@@ -215,8 +216,8 @@ namespace Moonstorm.Starstorm2.Items
                 // RoR2 / Base / Common / BossPositionIndicator.prefab
 
                 var token = targetBody.gameObject.AddComponent<TerminationToken>();
-                token.PlayerOwner = body;
-
+                //token.PlayerOwner = body;
+                token.itemCount = body.inventory.GetItemCount(SS2Content.Items.RelicOfTermination.itemIndex);
                 //markEffectInstance = Object.Instantiate(globalMarkEffect, targetBody.transform);
                 targetBody.teamComponent.RequestDefaultIndicator(globalMarkEffect);
 
@@ -227,7 +228,8 @@ namespace Moonstorm.Starstorm2.Items
         public class TerminationToken : MonoBehaviour
         {
             //helps keep track of the target and player responsible
-            public CharacterBody PlayerOwner;
+            //public CharacterBody PlayerOwner;
+            public int itemCount;
             public bool hasFailed = false;
         }
     }
