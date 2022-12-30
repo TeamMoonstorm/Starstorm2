@@ -29,6 +29,7 @@ This release may be a bit buggy, but we're working on fixing those bugs for a pr
 ## Credits
 Starstorm 2 is currently being maintained by...
 * malfaisant, Nebby, swuff★, Zenithrium
+
 With previous code contributions by...
 * Anreol, Flan, Gaforb, GrooveSalad, KevinFromHPCustomerService, Moffein, Nebby, Noop, Phreel, rob, swuff★, sebacame, Shared, TheTimesweeper, Vale-X, xpcybic, Xubas
 
@@ -37,7 +38,7 @@ With Art/Modelling/Animation contributions by...
 
 Additional thanks to... 
 * Writing - Blimblam, Lyrical Endymion, swuff★, T_Dimensional, Zenithrium
-* Translations - Anreol (Spanish), MysticSword (Russian)
+* Translations - Anreol (Spanish), MysticSword (Russian), Damglador (Ukrainian)
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze
 * Special thanks - Altzeus, DestroyedClone, don, Draymarc, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moffein, Moshinate, MysticSword, Neik, Riskka, Ruxbieno, Twiner, valerie ♥ 
 
@@ -47,26 +48,37 @@ There are no issues. The mod is perfect.
 ...In all seriousness, if you find anything, let us know in our Discord (https://discord.gg/4p6NdERUcZ)!
 
 * Known Issues
-	* Nemmando's boss fight doesn't fully work. 
 	* Some item displays are missing.
     * Artifact of Metamorphosis doesn't work, and Cognation's unlock is currently broken (so it is unlocked by default). 
     * Nemmando sometimes forgets which skin he's supposed to be using.
-    * Storms don't fully appear for clients in multiplayer. They still happen, just without the warning and the fancy visuals.
-    * Coffee Bag's first stack grants a 60s buff rather than 30s on pickup.
 
 ## Changelog
 
 **Warning: content spoilers below!**
-### 0.3.46β
-* Placeholder!
+### 0.3.47β
+* General:
+    * The Nemmando boss fight works again!
+    * Items can finally be disabled without an additional mod. 
+    * Storms now show for other players in multiplayer. 
+    * Added new Grandmastery skin "Weapon" for Acrid.
+    * Added Ukrainian translation.
+    * Updated Russian translation.
+    * Updated to R2API modules.
+
+* Items:
     * Nerfed Relic of Force - Damage of additional hits now scales with number of hits on a given enemy, resetting on hitting a new enemy. 
     * Nerfed Relic of Termination - Reduced duration to kill an enemy 30 -> 20 seconds, and added a 30 second cooldown between marks. Enemies not killed in time get even stronger buffs. Lastly, the tier ratio has been adjusted from 60/30/9/1 to 70/25/4.9/.1 and reduced the per stack rarity scaling. 
         * These nerfs aim to try to bring these relics at least closer in line with Relic of Mass, and generally reduce their power considering you can get them stage one in their current tier.
-    * Nerfed Nkota's Heritage - no longer guarantees reds past a certain level, but rather scales the rarity with your current level. This prevents late runs from getting a crazy amount of reds.
-    * Reworked Coffee Bag - now grants an attack and move speed boost after using an interactable. 
+    * Nerfed Nkota's Heritage - No longer guarantees reds past a certain level, but rather just scales the rarity with your current level. This prevents late runs from getting a crazy amount of reds.
+    * Reworked Coffee Bag - Now grants an attack and move speed boost after using an interactable. This item is likely going to be dropped, but it already got reworked so it gets one more update to shine. 
+    * Reworked X4 Stimulant - Instead of being an instant heal, applies a regeneration buff for a few seconds.
     * Relic of Termination can no longer be given to enemies.
+    * Greater Warbanner's placed banners no longer despawn after 90s. Additionally, it should no longer "go nuclear" and have no cooldown.
+    * Actually fixed Portable Reactor's buff icon being Needles'.
+    * Adjusted some item descriptions to be a bit more accurate. 
 
-    * note - i didnt change the lang files for relics yet :pleading_face:
+### 0.3.46β
+* Emergency update to account for MSU updating to split assemblies before SS2.
 
 ### 0.3.45β
 * Even more fixes.
@@ -159,7 +171,7 @@ There are no issues. The mod is perfect.
 	* Added a new keyword - Rend. Pistol skills have this keyword, which makes them deal more damage to enemies with gouge applied.
 	* Readded Ancient Scepter skills.
 
-* Items 
+* Items:
 	* <b>Tier 1: </b>
 	* Armed Backpack - reworked. Chance to fire a missile on taking damage. 
 	* Detritive Trematode - Low health threshold normalized from 40% -> 25%, and increased DoT damage to compensate 

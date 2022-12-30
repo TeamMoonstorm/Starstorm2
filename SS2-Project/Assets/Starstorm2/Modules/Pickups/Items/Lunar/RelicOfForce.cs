@@ -131,7 +131,11 @@ namespace Moonstorm.Starstorm2.Items
 
             public void CallMoreHits(DamageReport damageReport, int count)
             {
-                hitCount++;
+                if(hitCount * .05f < 1)
+                {
+                    hitCount++;
+                }
+                //hitCount++;
                 StartCoroutine(RelicForceDelayedHits(damageReport, count));
             }
 
@@ -143,7 +147,7 @@ namespace Moonstorm.Starstorm2.Items
                 var initalHit = damageReport.damageInfo;
 
                 float hitMult = hitCount * .05f;
-
+                
                 for (int i = 0; i < count; i++)
                 {
                     DamageInfo damageInfo = new DamageInfo();
