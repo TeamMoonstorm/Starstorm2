@@ -61,6 +61,8 @@ namespace Moonstorm.Starstorm2.Items
 
             private GameObject markEffectInstance;
 
+            private static List<BodyIndex> illegalMarks = new List<BodyIndex>();
+
             //private GameObject prolapsedInstance;
             //public bool shouldFollow = true;
             float time = maxTime / 6f;
@@ -75,6 +77,8 @@ namespace Moonstorm.Starstorm2.Items
                 globalMarkEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/BossPositionIndicator.prefab").WaitForCompletion();
 
                 terminationRNG = new Xoroshiro128Plus(Run.instance.seed);
+
+                InitializeIllegalMarkList();
 
                 // use body.radius / bestfitradius to scale effects
             }
@@ -181,6 +185,12 @@ namespace Moonstorm.Starstorm2.Items
                 }
                 int index = terminationRNG.RangeInt(0, CharMasters().Count);
                 target = CharMasters().ElementAt(index);
+                if (illegalMarks.Contains(target.GetBody().bodyIndex))
+                {
+                    target = null;
+                    time = 30f; //i'm being lazy here
+                    return;
+                }
                 //SS2Log.Debug("found target " + target.name);
                 if (target.GetComponent<TerminationToken>())
                 {
@@ -223,6 +233,52 @@ namespace Moonstorm.Starstorm2.Items
 
                 //time = maxTime;
             }
+
+
+            private static void InitializeIllegalMarkList()
+            {
+                List<string> defaultBodyNames = new List<string>
+            {
+                "BrotherGlassBody",
+                "BrotherHurtBody",
+                "ShopkeeperBody",
+                "MiniVoidRaidCrabPhase1",
+                "MiniVoidRaidCrabPhase2",
+                "MiniVoidRaidCrabPhase3",
+                "VoidRaidCrabJoint",
+                "VoidRaidCrab",
+                "ArtifactShell",
+            };
+
+                foreach (string bodyName in defaultBodyNames)
+                {
+                    BodyIndex index = BodyCatalog.FindBodyIndexCaseInsensitive(bodyName);
+                    if (index != BodyIndex.None)
+                    {
+                        AddBodyToIllegalTerminationList(index);
+                    }
+                }
+            }
+
+            public static void AddBodyToIllegalTerminationList(BodyIndex bodyIndex)
+            {
+                if (bodyIndex == BodyIndex.None)
+                {
+                    //SS2Log.Debug($"Tried to add a body to the illegal termination list, but it's index is none");
+                    return;
+                }
+
+                if (illegalMarks.Contains(bodyIndex))
+                {
+                    GameObject prefab = BodyCatalog.GetBodyPrefab(bodyIndex);
+                    //SS2Log.Debug($"Body prefab {prefab} is already in the illegal termination list.");
+                    return;
+                }
+                illegalMarks.Add(bodyIndex);
+                //BodiesThatGiveSuperCharge = new ReadOnlyCollection<BodyIndex>(bodiesThatGiveSuperCharge);
+            }
+
+
         }
 
         public class TerminationToken : MonoBehaviour

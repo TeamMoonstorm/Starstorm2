@@ -73,6 +73,7 @@ There are no issues. The mod is perfect.
     * Reworked Coffee Bag - Now grants an attack and move speed boost after using an interactable. This item is likely going to be dropped, but it already got reworked so it gets one more update to shine. 
     * Reworked X4 Stimulant - Instead of being an instant heal, applies a regeneration buff for a few seconds.
     * Relic of Termination can no longer be given to enemies.
+    * Relic of Termination should no longer apply to specific, important enemies.
     * Greater Warbanner's placed banners no longer despawn after 90s. Additionally, it should no longer "go nuclear" and have no cooldown.
     * Actually fixed Portable Reactor's buff icon being Needles'.
     * Adjusted some item descriptions to be a bit more accurate. 
