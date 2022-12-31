@@ -20,13 +20,13 @@ namespace Moonstorm.Starstorm2.Items
         [TokenModifier(token, StatTypes.Default, 1)]
         public static float stackArmor = 10;
 
-        [ConfigurableField(ConfigDesc = "Base amount of extra crit added. (100 = 100%)")]
+        [ConfigurableField(ConfigDesc = "Base amount of extra damage added. (100 = 100%)")]
         [TokenModifier(token, StatTypes.Default, 2)]
-        public static float baseCrit = 25;
+        public static float baseDamage = 20;
 
-        [ConfigurableField(ConfigDesc = "Amount of extra crit added per stack. (100 = 100%)")]
+        [ConfigurableField(ConfigDesc = "Amount of extra damage added per stack. (100 = 100%)")]
         [TokenModifier(token, StatTypes.Default, 3)]
-        public static float stackCrit = 20;
+        public static float stackDamage = 15;
 
         [ConfigurableField(ConfigDesc = "Base time the buff lingers for after moving, in seconds.")]
         [TokenModifier(token, StatTypes.Default, 4)]
@@ -69,7 +69,7 @@ namespace Moonstorm.Starstorm2.Items
                 {
                     //the base amounts are added by the buff itself in case the buff is gained from another source such as Aetherium's Accursed Potion
                     args.armorAdd += stackArmor * (stack - 1);
-                    args.critAdd += stackCrit * (stack - 1);
+                    args.damageMultAdd += stackDamage * (stack - 1);
                 }
             }
             public void OnDestroy()

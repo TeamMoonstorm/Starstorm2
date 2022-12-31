@@ -7,6 +7,7 @@ using UnityEngine;
 namespace Moonstorm.Starstorm2.Items
 {
     //[DisabledContent]
+    //this is a fuckin warzone wtf
 
     public sealed class X4 : ItemBase
     {

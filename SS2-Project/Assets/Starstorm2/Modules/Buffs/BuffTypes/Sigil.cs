@@ -19,7 +19,7 @@ namespace Moonstorm.Starstorm2.Buffs
             {
                 //the stacking amounts are added by the item - these base values are here in case the buff is granted by something other than sigil
                 args.armorAdd += HuntersSigil.baseArmor;
-                args.critAdd += HuntersSigil.baseCrit;
+                args.damageMultAdd += HuntersSigil.baseDamage;
             }
         }
     }
