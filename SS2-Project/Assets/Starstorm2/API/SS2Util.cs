@@ -18,7 +18,7 @@ namespace Moonstorm.Starstorm2
             //float rarityscale = tierWeight * ((float)MSUtil.InverseHyperbolicScaling(5, .25f, 10, (int)teamLevel) - 5); // this is still gross but i think will be fine
             int templevel = (int)teamLevel;
             float rarityMult = tierWeight * (MSUtil.InverseHyperbolicScaling(1, .1f, 6, templevel) / ((templevel + 14f)/ templevel)); //trust me this almost makes sense - at level 10, non white items are 1.3x more likely, and at 20, they're 2.5x more likely. additionally, reds are impossible at low enough levels
-            SS2Log.Debug(rarityMult);
+            //SS2Log.Debug(rarityMult);
 
             if (forcetier == ItemTier.Boss)
             {

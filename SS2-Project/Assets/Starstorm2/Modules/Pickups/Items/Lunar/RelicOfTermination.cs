@@ -247,6 +247,10 @@ namespace Moonstorm.Starstorm2.Items
                 "MiniVoidRaidCrabPhase3",
                 "VoidRaidCrabJoint",
                 "VoidRaidCrab",
+                "ScavLunar1Body",
+                "ScavLunar2Body",
+                "ScavLunar3Body",
+                "ScavLunar4Body",
                 "ArtifactShell",
             };
 
