@@ -135,7 +135,7 @@ namespace Moonstorm.Starstorm2.Items
                         if(skill == skill.characterBody.skillLocator.secondaryBonusStockSkill && skill.baseRechargeInterval != 0) // if it doesnt have a zero sec cooldown, max buffs at the number of bonus stocks
                         {
                             int buffcap = skill.bonusStockFromBody + 1;
-                            SS2Log.Debug(buffcap + " " + skill.maxStock + " " + skill.baseStock + " "+ skill.stock);
+                            //SS2Log.Debug(buffcap + " " + skill.maxStock + " " + skill.baseStock + " "+ skill.stock);
                             self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
                             int buffCount = self.GetBuffCount(SS2Content.Buffs.BuffX4);
                             //self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
