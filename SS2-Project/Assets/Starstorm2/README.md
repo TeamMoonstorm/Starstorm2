@@ -2,11 +2,7 @@
 
 ## Overview
 
-Starstorm 2 is a work-in-progress RoR2 port of Starstorm, a diverse gameplay and content mod for Risk of Rain 1. It features two new survivors, over 20 new items and equipment, and a new, dangerous event to shake up your runs.
-
-More information on Starstorm, including features and content to look forward to in SS2, can be found in its info section at https://rainfusion.ml/ or its wiki at https://starstormmod.fandom.com/wiki/Starstorm_Mod_Wiki. For more information on SS2, including development updates and an outlet for feedback and bug reports, visit our Discord server at https://discord.gg/4p6NdERUcZ.
-
-This release may be a bit buggy, but we're working on fixing those bugs for a properly stable SOTV release soon.
+Starstorm 2 is a work-in-progress sequel / adaptation of the legendary Risk of Rain 1 mod "Starstorm". It features two new survivors, over 20 new items and equipment, and new, dangerous events to shake up your runs.
 
 ## Features
 
@@ -14,49 +10,79 @@ This release may be a bit buggy, but we're working on fixing those bugs for a pr
 
 * **Executioner** - An aggressive, versatile survivor with an arsenal made for picking off targets and chaining kills. His powerful ion gun gains a shot for every enemy you take down.
 
-* **???** - A survivor of unknown origin, familiar yet unfamiliar. Under the right conditions, you may meet him on the planet, but he certainly won't be on your side.
+* **???** - A survivor of unknown origin, familiar yet unfamiliar. Under the right conditions, you may meet him on the Planet, but he certainly won't be on your side.
 
 ![](https://i.imgur.com/c0GoQOf.png)
 
-* **New items** - 20 new items and 5 new equipment to support new and existing playstyles. Speed through teleporter events with the Field Accelerator, become a stationary powerhouse with the Hunter's Sigil, or gain some vertical thrust on demand with the Pressurized Canister!
+* **New items** - 20 new items and 5 new equipment to support new and existing playstyles. Watch your six with an Armed Backpack, rush through teleporter events with a Field Accelerator, all while keeping on the move with a Swift Skateboard - and more! 
 
 ![](https://i.imgur.com/vGTL8l9.png)
 
-* **Typhoon** - The planet's ultimate challenge awaits those who dare...
+* **Typhoon** - The Planet grows restless, and hordes grow more quickly on this new difficulty surpassing Monsoon. Unlock new skins for survivors* by proving yourself.
+    *currently includes Commando, MUL-T, Acrid, Captain, and survivors added by the mod.
 
-* **Storms** - When the skies cloud over, be on your guard. These occasional bouts of bad weather provide enemies with dangerous stat boosts.
+* **Events** - Expect the unexpected as forces both natural and supernatural interfere with your runs.
 
 ## Credits
-Starstorm 2 is currently being maintained by...
-* malfaisant, Nebby, swuff★, Zenithrium
+Starstorm 2 is currently being developed and maintained by...
+* Nebby, swuff★, Zenithrium
+
 With previous code contributions by...
-* Anreol, Flan, Gaforb, GrooveSalad, KevinFromHPCustomerService, Moffein, Nebby, Noop, Phreel, rob, swuff★, sebacame, Shared, TheTimesweeper, Vale-X, xpcybic, Xubas
+* Anreol, Flan, Gaforb, GrooveSalad, KevinFromHPCustomerService, malfaisant, Moffein, Nebby, Noop, Phreel, rob, swuff★, sebacame, Shared, TheTimesweeper, Vale-X, xpcybic, Xubas
 
 With Art/Modelling/Animation contributions by...
-* Anreol, Bolty, bruh, Cexeub, dotflare, Draymarc, JestAnotherAnimator, Gem, goodguy, GrooveSalad, LucidInceptor, KevinFromHPCustomerService, Plexus, PapaZach, QuietAnon, redacted, rob, SkeletorChampion, SOM, Spenny, swuff★, xpcybic, Reithierion, UnknownGlaze, Zenithrium
+* Anreol, Bolty, bruh, Cexeub, dotflare, Draymarc, Domi, JestAnotherAnimator, Gem, goodguy, GrooveSalad, LucidInceptor, Neik, KevinFromHPCustomerService, Plexus, PapaZach, QuietAnon, redacted, rob, SkeletorChampion, SOM, Spenny, swuff★, xpcybic, Reithierion, UnknownGlaze, Zenithrium
 
 Additional thanks to... 
 * Writing - Blimblam, Lyrical Endymion, swuff★, T_Dimensional, Zenithrium
 * Translations - Anreol (Spanish), MysticSword (Russian)
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze
-* Special thanks - Altzeus, DestroyedClone, don, Draymarc, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moffein, Moshinate, MysticSword, Neik, Riskka, Ruxbieno, Twiner, valerie ♥ 
+* Special thanks - Altzeus, DestroyedClone, don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, valerie ♥ 
 
-## Known Issues
+## Feedback, Bug Reporting & Known Issues
 
-There are no issues. The mod is perfect.
-...In all seriousness, if you find anything, let us know in our Discord (https://discord.gg/4p6NdERUcZ)!
+Feedback can be best made via our Discord server, found at https://discord.com/invite/SgFxwKT7nY.  
+
+Bugs can be reported at our GitHub page: https://github.com/TeamMoonstorm/Starstorm2/issues. A list of known issues can also be found here. Please include an Output Log and detailed steps to help recreate your error!
+
+The most important issues you may encounter are listed below, to help expect things that may seem off:
 
 * Known Issues
-	* Nemmando's boss fight doesn't fully work. 
-	* Some item displays are missing.
-    * Artifact of Metamorphosis doesn't work, and Cognation's unlock is currently broken (so it is unlocked by default). 
-    * Nemmando sometimes forgets which skin he's supposed to be using.
-    * Storms don't fully appear for clients in multiplayer. They still happen, just without the warning and the fancy visuals.
-    * Coffee Bag's first stack grants a 60s buff rather than 30s on pickup.
+	* Item Displays for the mod's items on survivors are absent. Starstorm 2 survivors may lack item displays.
+    * Artifact of Metamorphosis is broken by the mod.
+    * Artifact of Cognation's unlock is broken. The artifact is unlocked by default.
+    * Event effects may not be networked.
 
 ## Changelog
 
 **Warning: content spoilers below!**
+
+### 0.3.47
+* General
+    * Updated R2API dependencies to proper modules.
+    * Added new Grand Mastery skins "Weapon" and "Prestige" for Acrid and Captain respectively. Happy Holidays.
+    * Added new "Stealth" skin for Commando. Currently unlocked by default, but planned to be locked by default at a later date.
+    * Lowered event frequency significantly and readjusted event weights.
+    * Updated Russian translation.
+    * Added Ukranian translation.
+* Items
+    * Items can now individually be enabled and disabled via config file. Note that equipment remain unaffected by this change for the moment.
+    * Reworked Needles: "Hitting enemies has a 6% chance to prick them, converting all incoming damage to critical hits for 2 seconds (+2s per stack)." Does this feel more balanced? Should the pricked debuff still allow debuffs to critically hit?
+    * Reworked Coffee Bag:
+    * Reworked X-4 Stimulant: "Reduces secondary skill cooldown by 10% (+10% per stack) and increases base health regen by +2 hp/s (+1 hp/s per stack) on secondary use." Should probably one have one stacking condition - which?
+    * Disabled Diary. Item suffers a constant identity crisis without ever feeling impactful. Have been talks of reworks internally, but nothing finalized yet.
+    * Hunter's Sigil now adds +20% damage (+10% per stack) rather than +25% crit chance (+20% per stack) while criteria are met.
+    * Nkota's Heritage no longer guarantees items of a specific tier after level thresholds. Stacking now increases odds of finding better items.
+    * Fixed Portable Reactor's buff icon.
+    * Blacklisted Relic of termination from enemies. (?)
+* Executioner
+    * Gained Ion Burst charges are now based on the hull size of a slain enemy, rather than a hard-coded index.
+* Nemesis Commando
+    * Slightly tweaked Gouge values.
+* Events
+    * Drastically lowered event frequency.
+    * Restored Nemesis Commando invasion event.
+
 ### 0.3.45β
 * Even more fixes.
     * Fixed Relic of Termination's material.
