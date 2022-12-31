@@ -35,7 +35,7 @@ With Art/Modelling/Animation contributions by...
 
 Additional thanks to... 
 * Writing - Blimblam, Lyrical Endymion, swuff★, T_Dimensional, Zenithrium
-* Translations - Anreol (Spanish), MysticSword (Russian)
+* Translations - Anreol (Spanish), MysticSword (Russian), Damglador (Ukrainian)
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze
 * Special thanks - Altzeus, DestroyedClone, don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, valerie ♥ 
 
@@ -52,6 +52,7 @@ The most important issues you may encounter are listed below, to help expect thi
     * Artifact of Metamorphosis is broken by the mod.
     * Artifact of Cognation's unlock is broken. The artifact is unlocked by default.
     * Event effects may not be networked.
+	* Relic of Force may cause skills with 0 cooldown to break.
 
 ## Changelog
 
@@ -65,7 +66,7 @@ The most important issues you may encounter are listed below, to help expect thi
     * Lowered event frequency significantly and readjusted event weights.
     * Updated Russian translation.
     * Added Ukranian translation.
-* Items
+* Items & Equipment
     * Items can now individually be enabled and disabled via config file. Note that equipment remain unaffected by this change for the moment.
     * Reworked Needles: "Hitting enemies has a 6% chance to prick them, converting all incoming damage to critical hits for 2 seconds (+2s per stack)." Does this feel more balanced? Should the pricked debuff still allow debuffs to critically hit?
     * Reworked Coffee Bag:
@@ -74,14 +75,21 @@ The most important issues you may encounter are listed below, to help expect thi
     * Hunter's Sigil now adds +20% damage (+10% per stack) rather than +25% crit chance (+20% per stack) while criteria are met.
     * Nkota's Heritage no longer guarantees items of a specific tier after level thresholds. Stacking now increases odds of finding better items.
     * Fixed Portable Reactor's buff icon.
-    * Blacklisted Relic of termination from enemies. (?)
+    * Blacklisted Relic of Termination from enemies. (?)
+	* Nerfed Relic of Force: The damage dealt by additional hits now starts off at 5% TOTAL damage, and becomes 5% more powerful with consecutive hits on a single enemy. Breaking the chain resets damage.
+	* Nerfed Relic of Termination: Reduced duration to kill an enemy from 30 to 20 seconds. Added a 30 second cooldown between enemy marks. Buffs given to unkilled marks are even more powerful. Finally, adjusted drop rates from 60/30/9/1 to 70/25/4.9/0.1.
+	* Greater Warbanner no longer automatically despawns after 90 seconds. Fixed a major bug causing massive lag when switching stages related to the equipment.
 * Executioner
     * Gained Ion Burst charges are now based on the hull size of a slain enemy, rather than a hard-coded index.
 * Nemesis Commando
     * Slightly tweaked Gouge values.
 * Events
     * Drastically lowered event frequency.
+	* Event VFX should be networked.
     * Restored Nemesis Commando invasion event.
+
+### 0.3.46
+* Emergency update for R2API 5.0.
 
 ### 0.3.45β
 * Even more fixes.
@@ -174,7 +182,7 @@ The most important issues you may encounter are listed below, to help expect thi
 	* Added a new keyword - Rend. Pistol skills have this keyword, which makes them deal more damage to enemies with gouge applied.
 	* Readded Ancient Scepter skills.
 
-* Items 
+* Items:
 	* <b>Tier 1: </b>
 	* Armed Backpack - reworked. Chance to fire a missile on taking damage. 
 	* Detritive Trematode - Low health threshold normalized from 40% -> 25%, and increased DoT damage to compensate 
