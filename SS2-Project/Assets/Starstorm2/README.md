@@ -73,9 +73,9 @@ The most important issues you may encounter are listed below, to help expect thi
     * Reworked X-4 Stimulant: "Reduces secondary skill cooldown by 10% (+10% per stack) and increases base health regen by +2 hp/s (+1 hp/s per stack) for 3 seconds on secondary use." Should probably one have one stacking condition - which?
     * Disabled Diary. Item suffers a constant identity crisis without ever feeling impactful. Have been talks of reworks internally, but nothing finalized yet.
     * Hunter's Sigil now adds +20% damage (+15% per stack) rather than +25% crit chance (+20% per stack) while criteria are met.
-    * Nkota's Heritage no longer guarantees items of a specific tier after level thresholds. Stacking now increases odds of finding better items.
+    * Nkota's Heritage no longer guarantees items of a specific tier after level thresholds.
     * Fixed Portable Reactor's buff icon.
-    * Blacklisted Relic of Termination from enemies. (?)
+    * Blacklisted Relic of Termination from enemies.
 	* Nerfed Relic of Force: The damage dealt by additional hits now starts off at 5% TOTAL damage, and becomes 5% more powerful with consecutive hits on a single enemy. Breaking the chain resets damage.
 	* Nerfed Relic of Termination: Reduced duration to kill an enemy from 30 to 20 seconds. Added a 30 second cooldown between enemy marks. Buffs given to unkilled marks are even more powerful. Finally, adjusted drop rates from 60/30/9/1 to 70/25/4.9/0.1.
 	* Greater Warbanner no longer automatically despawns after 90 seconds. Fixed a major bug causing massive lag when switching stages related to the equipment.
