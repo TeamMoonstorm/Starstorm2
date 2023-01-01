@@ -13,21 +13,17 @@ MonoBehaviour:
   m_Name: EntityStates.Nemmando.SwingSword2
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Nemmando.SwingSword2, Starstorm2, Version=1.0.0.0,
+    assemblyQualifiedName: EntityStates.NemCommando.SwingSword2, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
-    - fieldName: dmgCoefficient
-      fieldValue:
-        stringValue: 1.6
-        objectValue: {fileID: 0}
     - fieldName: procCoefficient
       fieldValue:
         stringValue: 1
         objectValue: {fileID: 0}
     - fieldName: baseDuration
       fieldValue:
-        stringValue: .6
+        stringValue: 0.6
         objectValue: {fileID: 0}
     - fieldName: impactSound
       fieldValue:
@@ -35,7 +31,7 @@ MonoBehaviour:
         objectValue: {fileID: 11400000, guid: 4e4e52591b134ba45baef137b7b1f487, type: 2}
     - fieldName: beginSwingSoundString
       fieldValue:
-        stringValue: NemmandoSwingSaber
+        stringValue: NemmandoSwing
         objectValue: {fileID: 0}
     - fieldName: shorthopVelocityFromHit
       fieldValue:
@@ -73,7 +69,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: swingTimeCoefficient
       fieldValue:
-        stringValue: 1.33
+        stringValue: 1
         objectValue: {fileID: 0}
     - fieldName: damageCoefficient
       fieldValue:

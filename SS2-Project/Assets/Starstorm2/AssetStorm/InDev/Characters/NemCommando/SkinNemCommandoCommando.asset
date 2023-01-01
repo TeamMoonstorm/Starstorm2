@@ -13,42 +13,37 @@ MonoBehaviour:
   m_Name: SkinNemCommandoCommando
   m_EditorClassIdentifier: 
   baseSkins:
-  - {fileID: 11400000, guid: 0bfd5961f7790c648abfc5d416993ba0, type: 2}
+  - {fileID: 11400000, guid: 873341ba07cc6b340854cc0f9a104b4a, type: 2}
   icon: {fileID: 21300000, guid: a759ada008d11cd4e8ccb0f57bae78b4, type: 3}
   nameToken: SS2_SKIN_NEMCOMMANDO_COMMANDO
   unlockableName: 
   unlockableDef: {fileID: 0}
-  rootObject: {fileID: 2559057926401340394, guid: bb7d8bd63210a3f46a889b8e057546ee,
+  rootObject: {fileID: 7426401133873199425, guid: 4737ce5d2dc287e47b4abd095f55246c,
     type: 3}
   rendererInfos:
-  - renderer: {fileID: 2541244660559103912, guid: bb7d8bd63210a3f46a889b8e057546ee,
+  - renderer: {fileID: 1483444258714694913, guid: 4737ce5d2dc287e47b4abd095f55246c,
       type: 3}
     defaultMaterial: {fileID: 2100000, guid: 8d5eb6e383696894c89c93fc36235479, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
-  - renderer: {fileID: 879116891908914768, guid: bb7d8bd63210a3f46a889b8e057546ee,
+  - renderer: {fileID: 4314817997600804089, guid: 4737ce5d2dc287e47b4abd095f55246c,
       type: 3}
     defaultMaterial: {fileID: 2100000, guid: 43ac5cb011184d642a623db125e1b86e, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 1
     hideOnDeath: 0
-  - renderer: {fileID: 8183190501006871182, guid: bb7d8bd63210a3f46a889b8e057546ee,
+  - renderer: {fileID: 5062776448112031783, guid: 4737ce5d2dc287e47b4abd095f55246c,
       type: 3}
     defaultMaterial: {fileID: 2100000, guid: 34f9e90bf6a07f24fb5d372d33772e24, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 1
     hideOnDeath: 0
   gameObjectActivations: []
-  meshReplacements:
-  - renderer: {fileID: 2541244660559103912, guid: bb7d8bd63210a3f46a889b8e057546ee,
+  meshReplacements: []
+  projectileGhostReplacements:
+  - projectilePrefab: {fileID: 1166276589453209, guid: ce43905498ee3ec4ca2f6069b7dc4d20,
       type: 3}
-    mesh: {fileID: 4300000, guid: 76018bd5b962ced44947044c05ded4d3, type: 2}
-  - renderer: {fileID: 879116891908914768, guid: bb7d8bd63210a3f46a889b8e057546ee,
+    projectileGhostReplacementPrefab: {fileID: 3428315936417622212, guid: 0cc8433b12ca39248acb5d3a07e8158e,
       type: 3}
-    mesh: {fileID: 4300000, guid: 50707825a1693fe4795377748b324740, type: 2}
-  - renderer: {fileID: 8183190501006871182, guid: bb7d8bd63210a3f46a889b8e057546ee,
-      type: 3}
-    mesh: {fileID: 4300000, guid: 9d23b42a4cf76964cac86f0188aced6b, type: 2}
-  projectileGhostReplacements: []
   minionSkinReplacements: []

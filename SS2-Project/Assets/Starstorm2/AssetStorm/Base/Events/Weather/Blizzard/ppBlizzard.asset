@@ -13,57 +13,8 @@ MonoBehaviour:
   m_Name: ppBlizzard
   m_EditorClassIdentifier: 
   settings:
-  - {fileID: 114190124253555692}
   - {fileID: 114586209154365970}
---- !u!114 &114190124253555692
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 534b4b24f223e6d4580fafd6881209c4, type: 3}
-  m_Name: SS2RampFog
-  m_EditorClassIdentifier: 
-  active: 1
-  enabled:
-    overrideState: 1
-    value: 1
-  fogIntensity:
-    overrideState: 1
-    value: 0.5
-  fogPower:
-    overrideState: 1
-    value: 0.5
-  fogZero:
-    overrideState: 1
-    value: -0.01
-  fogOne:
-    overrideState: 1
-    value: 0.16
-  fogHeightStart:
-    overrideState: 0
-    value: 0
-  fogHeightEnd:
-    overrideState: 0
-    value: 100
-  fogHeightIntensity:
-    overrideState: 0
-    value: 5
-  fogColorStart:
-    overrideState: 1
-    value: {r: 0.44208413, g: 0.35590956, b: 0.5849056, a: 0.28235295}
-  fogColorMid:
-    overrideState: 1
-    value: {r: 0.2, g: 0.2, b: 0.33333334, a: 0.47058824}
-  fogColorEnd:
-    overrideState: 1
-    value: {r: 0.32941177, g: 0.33333334, b: 0.36078432, a: 1}
-  skyboxStrength:
-    overrideState: 1
-    value: 0.35
+  - {fileID: 5043784496726121190}
 --- !u!114 &114586209154365970
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -111,3 +62,52 @@ MonoBehaviour:
   dirtIntensity:
     overrideState: 0
     value: 0
+--- !u!114 &5043784496726121190
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 2011136271, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: RampFog
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  fogIntensity:
+    overrideState: 1
+    value: 0.5
+  fogPower:
+    overrideState: 1
+    value: 0.5
+  fogZero:
+    overrideState: 1
+    value: -0.01
+  fogOne:
+    overrideState: 1
+    value: 0.16
+  fogHeightStart:
+    overrideState: 0
+    value: 0
+  fogHeightEnd:
+    overrideState: 0
+    value: 100
+  fogHeightIntensity:
+    overrideState: 0
+    value: 0
+  fogColorStart:
+    overrideState: 1
+    value: {r: 0.4431373, g: 0.35686275, b: 0.58431375, a: 0.28235295}
+  fogColorMid:
+    overrideState: 1
+    value: {r: 1, g: 1, b: 1, a: 0.36078432}
+  fogColorEnd:
+    overrideState: 1
+    value: {r: 0.90588236, g: 0.96862745, b: 1, a: 1}
+  skyboxStrength:
+    overrideState: 1
+    value: 0.35

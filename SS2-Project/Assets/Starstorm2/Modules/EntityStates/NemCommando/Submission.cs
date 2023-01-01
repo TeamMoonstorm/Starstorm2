@@ -1,8 +1,9 @@
 ﻿using Moonstorm;
+using Moonstorm.Starstorm2;
 using RoR2;
 using UnityEngine;
 
-namespace EntityStates.Nemmando
+namespace EntityStates.NemCommando
 {
     public class Submission : BaseSkillState
     {
@@ -18,6 +19,8 @@ namespace EntityStates.Nemmando
         //public static float timeBetweenShots;
         public static float recoil;
         public static GameObject tracerPrefab;
+        public static GameObject muzzleFlashPrefab;
+        public static GameObject hitSparkPrefab;
         public static float baseDurationBetweenShots;
 
         private int totalBulletsFired;
@@ -28,12 +31,13 @@ namespace EntityStates.Nemmando
         private Animator modelAnimator;
         private Transform modelTransform;
         private float duration;
+        private string skinNameToken;
         
         private GameObject muzzleFlashEffect = Resources.Load<GameObject>("Prefabs/Effects/ImpactEffects/FusionCellExplosion");
         // ^ jesus wtf?
 
         [HideInInspector]
-        public static GameObject tracerEffectPrefab = Resources.Load<GameObject>("Prefabs/Effects/Tracers/TracerGoldGat");
+        //public static GameObject tracerEffectPrefab = Resources.Load<GameObject>("Prefabs/Effects/Tracers/TracerGoldGat");
 
         public override void OnEnter()
         {
@@ -46,6 +50,24 @@ namespace EntityStates.Nemmando
             modelTransform = GetModelTransform();
             characterBody.SetAimTimer(2f);
             characterBody.outOfCombatStopwatch = 0f;
+
+            skinNameToken = modelTransform.GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
+
+
+
+            if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO" || skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
+            {
+                tracerPrefab = SS2Assets.LoadAsset<GameObject>("TracerNemCommandoShotgunYellow");
+                muzzleFlashPrefab = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoYellow");
+                hitSparkPrefab = SS2Assets.LoadAsset<GameObject>("HitsparkNemCommandoYellow");
+            }
+            else
+            {
+                tracerPrefab = SS2Assets.LoadAsset<GameObject>("TracerNemCommandoShotgunRed");
+                muzzleFlashPrefab = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoRed");
+                hitSparkPrefab = SS2Assets.LoadAsset<GameObject>("HitsparkNemCommandoRed");
+            }
+
             FireBullet();
         }
 
@@ -54,10 +76,10 @@ namespace EntityStates.Nemmando
             Ray aimRay = GetAimRay();
             string muzzleName = "Muzzle";
 
-            EffectManager.SimpleMuzzleFlash(Commando.CommandoWeapon.FireBarrage.effectPrefab, gameObject, muzzleName, false);
+            EffectManager.SimpleMuzzleFlash(muzzleFlashPrefab, gameObject, muzzleName, false);
             Util.PlaySound("NemmandoSubmissionFire", gameObject);
-            if (modelAnimator.GetFloat("primaryPlaying") > 0.05) PlayCrossfade("Gesture, Additive, LeftArm", "FireGun", "FireGun.playbackRate", durationBetweenShots, durationBetweenShots / 2f);
-            else PlayCrossfade("Gesture, Override, LeftArm", "FireGun", "FireGun.playbackRate", durationBetweenShots, durationBetweenShots / 2f);
+            if (modelAnimator.GetFloat("primaryPlaying") > 0.05) PlayCrossfade("Gesture, Additive, LeftArm", "FireGunSpecial", "Special.playbackRate", durationBetweenShots, durationBetweenShots / 2f);
+            else PlayCrossfade("Gesture, Override, LeftArm", "FireGunSpecial", "Special.playbackRate", durationBetweenShots, durationBetweenShots / 2f);
             AddRecoil(-0.8f * recoil, -1f * recoil, -0.1f * recoil, 0.15f * recoil);
 
             if (isAuthority)
@@ -74,9 +96,9 @@ namespace EntityStates.Nemmando
                     bulletCount = bulletCountPerShot,
                     damage = damageCoefficient * damageStat,
                     force = 0.5f * Commando.CommandoWeapon.FireBarrage.force,
-                    tracerEffectPrefab = tracerEffectPrefab,
+                    tracerEffectPrefab = tracerPrefab,
                     muzzleName = muzzleName,
-                    hitEffectPrefab = Commando.CommandoWeapon.FireBarrage.hitEffectPrefab,
+                    hitEffectPrefab = hitSparkPrefab,
                     isCrit = RollCrit(),
                     radius = Commando.CommandoWeapon.FireBarrage.bulletRadius,
                     smartCollision = true,
@@ -92,7 +114,7 @@ namespace EntityStates.Nemmando
                 bulletAttack.Fire();
             }
 
-            characterBody.AddSpreadBloom(2f * EntityStates.Commando.CommandoWeapon.FireBarrage.spreadBloomValue);
+            characterBody.AddSpreadBloom(2f * Commando.CommandoWeapon.FireBarrage.spreadBloomValue);
             totalBulletsFired++;
         }
 
@@ -121,7 +143,7 @@ namespace EntityStates.Nemmando
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.Skill;
+            return InterruptPriority.PrioritySkill;
         }
     }
 }

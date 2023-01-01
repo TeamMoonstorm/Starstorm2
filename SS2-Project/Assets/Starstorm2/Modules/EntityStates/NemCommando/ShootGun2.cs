@@ -1,31 +1,34 @@
 ﻿using Moonstorm;
 using RoR2;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 //Dont fix what isnt broken or something
-namespace EntityStates.Nemmando
+//^ guy who broke it entirely
+namespace EntityStates.NemCommando
 {
-    public class ShootGun2 : RendHandler
+    public class ShootGun2 : BaseSkillState
     {
         [TokenModifier("SS2_NEMMANDO_SECONDARY_SHOOT_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
         public static float damageCoefficient;
         public static float procCoefficient;
         public static float baseDuration;
+        public static float minimumDuration;
         public static float force;
         public static float recoil;
         public static float range;
         public static string muzzleString;
         public static string soundString;
-        
-        
+        private string skinNameToken;
+
+
         [HideInInspector]
-        public static GameObject tracerEffectPrefab = Resources.Load<GameObject>("Prefabs/Effects/Tracers/TracerGoldGat");
+        public static GameObject tracerEffectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/GoldGat/TracerGoldGat.prefab").WaitForCompletion();
         
 
         private float fireTime;
         private bool hasFired;
         private Animator animator;
-        private EntityStateMachine swordSM;
         
         private float duration
         {
@@ -40,14 +43,27 @@ namespace EntityStates.Nemmando
         {
             base.OnEnter();
             characterBody.outOfCombatStopwatch = 0f;
-            fireTime = 0.1f * this.duration;
+            fireTime = 0.1f * duration;
             characterBody.SetAimTimer(2f);
             animator = GetModelAnimator();
-            muzzleString = "Muzzle";
-            swordSM = EntityStateMachine.FindByCustomName(gameObject, "Weapon");
 
-            if (animator.GetFloat("primaryPlaying") > 0.05) PlayCrossfade("Gesture, Additive, LeftArm", "FireGun", "FireGun.playbackRate", duration, 0.075f);
-            else PlayCrossfade("Gesture, Override, LeftArm", "FireGun", "FireGun.playbackRate", duration, 0.075f);
+            if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_GM")
+            {
+                muzzleString = "Suppressor";
+            }
+            else
+            {
+                muzzleString = "Muzzle";
+            }
+
+            animator.SetBool("isDoingBabyReload", false);
+
+            if (animator.GetFloat("primaryPlaying") > 0.05)
+            {
+                PlayCrossfade("Gesture, Additive, LeftArm", "FireGun", "FireGun.playbackRate", baseDuration, 0.075f);
+                animator.SetBool("isDoingBabyReload", true);
+            }
+            else PlayCrossfade("Gesture, Override, LeftArm", "FireGun", "FireGun.playbackRate", baseDuration, 0.075f);
         }
 
         public override void OnExit()
@@ -89,11 +105,11 @@ namespace EntityStates.Nemmando
                     force = force,
                     hitMask = LayerIndex.CommonMasks.bullet,
                     minSpread = 0f,
-                    maxSpread = 0f,
+                    maxSpread = characterBody.spreadBloomAngle,
                     isCrit = isCrit,
                     owner = gameObject,
                     muzzleName = muzzleString,
-                    smartCollision = false,
+                    smartCollision = true,
                     procChainMask = default(ProcChainMask),
                     procCoefficient = procCoefficient,
                     radius = 0.75f,
@@ -107,8 +123,6 @@ namespace EntityStates.Nemmando
                     hitEffectPrefab = Commando.CommandoWeapon.FirePistol2.hitEffectPrefab
                 };
 
-                RendMultiplier(bulletAttack);
-
                 bulletAttack.Fire();
 
                 characterBody.AddSpreadBloom(1.5f);
@@ -121,21 +135,32 @@ namespace EntityStates.Nemmando
             
             base.FixedUpdate();
 
-            if (fixedAge >= this.fireTime)
+            if (fixedAge >= fireTime)
             {
-                this.Fire();
+                Fire();
             }
 
-            if (fixedAge >= this.duration && isAuthority)
+            if (fixedAge >= duration && isAuthority)
             {
-                this.outer.SetNextStateToMain();
+                if (inputBank.skill2.down & skillLocator.secondary.stock >= 1)
+                {
+                    outer.SetNextState(new ShootGun2());
+                    skillLocator.secondary.stock -= 1;
+                    return;
+                }
+                outer.SetNextStateToMain();
                 return;
             }
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.PrioritySkill;
+            if (fixedAge <= minimumDuration)
+            {
+                return InterruptPriority.PrioritySkill;
+            }
+
+            return InterruptPriority.Any;
         }
     }
 }

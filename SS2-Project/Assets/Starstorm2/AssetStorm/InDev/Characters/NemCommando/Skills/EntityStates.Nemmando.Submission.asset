@@ -13,29 +13,29 @@ MonoBehaviour:
   m_Name: EntityStates.Nemmando.Submission
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Nemmando.Submission, Starstorm2, Version=1.0.0.0,
+    assemblyQualifiedName: EntityStates.NemCommando.Submission, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
     - fieldName: damageCoefficient
       fieldValue:
-        stringValue: 0.2
+        stringValue: 0.8
         objectValue: {fileID: 0}
     - fieldName: procCoefficient
       fieldValue:
-        stringValue: 0.15
+        stringValue: 0.2
         objectValue: {fileID: 0}
     - fieldName: bulletCountPerShot
       fieldValue:
-        stringValue: 5
+        stringValue: 6
         objectValue: {fileID: 0}
     - fieldName: range
       fieldValue:
-        stringValue: 128
+        stringValue: 1000
         objectValue: {fileID: 0}
     - fieldName: maxSpread
       fieldValue:
-        stringValue: 30
+        stringValue: 15
         objectValue: {fileID: 0}
     - fieldName: BulletCount
       fieldValue:
@@ -56,4 +56,12 @@ MonoBehaviour:
     - fieldName: baseDurationBetweenShots
       fieldValue:
         stringValue: 0.12
+        objectValue: {fileID: 0}
+    - fieldName: muzzleFlashPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: hitSparkPrefab
+      fieldValue:
+        stringValue: 
         objectValue: {fileID: 0}

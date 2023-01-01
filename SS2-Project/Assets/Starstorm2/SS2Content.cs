@@ -38,8 +38,6 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef NemBossHelper;
 
-            public static ItemDef NemCommandoLol;
-
             public static ItemDef BloodTester;
 
             public static ItemDef FieldAccelerator;
@@ -171,6 +169,8 @@ namespace Moonstorm.Starstorm2
             public static BuffDef BuffSurrender;
 
             public static BuffDef BuffTerminationVFX;
+
+            public static BuffDef BuffX4;
         }
 
         public static class Elites

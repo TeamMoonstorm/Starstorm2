@@ -17,16 +17,15 @@ MonoBehaviour:
   skillDescriptionToken: SS2_NEMMANDO_SECONDARY_SHOOT_DESCRIPTION
   keywordTokens:
   - KEYWORD_AGILE
-  - SS2_KEYWORD_REND
   icon: {fileID: 21300000, guid: df08d89f6923bc749bdfd90a6eece5f4, type: 3}
   activationStateMachineName: Gun
   activationState:
-    _typeName: EntityStates.Nemmando.ShootGun2, Starstorm2, Version=1.0.0.0, Culture=neutral,
+    _typeName: EntityStates.NemCommando.ShootGun2, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
   interruptPriority: 1
   baseRechargeInterval: 2
-  baseMaxStock: 6
-  rechargeStock: 6
+  baseMaxStock: 15
+  rechargeStock: 15
   requiredStock: 1
   stockToConsume: 1
   resetCooldownTimerOnUse: 1
@@ -37,4 +36,4 @@ MonoBehaviour:
   forceSprintDuringState: 0
   canceledFromSprinting: 0
   isCombatSkill: 1
-  mustKeyPress: 0
+  mustKeyPress: 1

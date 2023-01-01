@@ -6,7 +6,6 @@ using UnityEngine.Networking;
 
 namespace Moonstorm.Starstorm2.Items
 {
-    [DisabledContent]
     public sealed class StirringSoul : ItemBase
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("StirringSoul");

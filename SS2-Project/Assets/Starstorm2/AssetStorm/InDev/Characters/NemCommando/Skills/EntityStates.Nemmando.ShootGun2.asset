@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: EntityStates.Nemmando.ShootGun2
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Nemmando.ShootGun2, Starstorm2, Version=1.0.0.0,
+    assemblyQualifiedName: EntityStates.NemCommando.ShootGun2, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
     - fieldName: damageCoefficient
       fieldValue:
-        stringValue: 2.1
+        stringValue: 1.5
         objectValue: {fileID: 0}
     - fieldName: procCoefficient
       fieldValue:
@@ -27,7 +27,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: baseDuration
       fieldValue:
-        stringValue: 0.3
+        stringValue: 0.35
         objectValue: {fileID: 0}
     - fieldName: force
       fieldValue:
@@ -39,7 +39,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: range
       fieldValue:
-        stringValue: 256
+        stringValue: 1000
         objectValue: {fileID: 0}
     - fieldName: muzzleString
       fieldValue:
@@ -49,7 +49,7 @@ MonoBehaviour:
       fieldValue:
         stringValue: NemmandoShoot
         objectValue: {fileID: 0}
-    - fieldName: RendBaseDamageMultiplier
+    - fieldName: minimumDuration
       fieldValue:
-        stringValue: 1.095238
+        stringValue: 0.15
         objectValue: {fileID: 0}

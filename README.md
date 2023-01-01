@@ -4,15 +4,13 @@
 
 Starstorm 2 is a work-in-progress RoR2 port/sequel of Starstorm, a diverse gameplay and content mod for Risk of Rain 1. It features two new survivors, over 20 new items and equipment, and a new, dangerous event to shake up your runs.
 
-Starstorm 2 is currently in a bleeding edge state as it's being updated to Survivors of the void, we look for any kind of contribution from outsiders.
-
 ## Developing/Contributions
 
-Contributions to the mod via Models and Programming is heavily appreciated, as such, below is a guide on how to clone and properly set up your Starstorm 2 project.
+Currently Starstorm 2 is a team-driven effort, and many ideas are heavily baked in-house before making it to the mod. As a result of this, it is heavily recommended to discuss any planned large-scale contributions (content such as new survivors, items, etc.) before developing them to ensure everything is good to go. Contact of this type can be made in our Discord server, or you can directly message swuff★#2224.
 
-Before we start, here are some guidelines that need to be followed for developing and contributing to Starstorm2:
+Understand that large-scale pull requests may be turned down if not discussed beforehand!!! Please come to us before implementing.
 
-* (Add something here i cant come up with something atm lol)
+That said, if you are looking to contribute to the project, set-up instructions can be found below:
 
 ## How to clone and develop
 

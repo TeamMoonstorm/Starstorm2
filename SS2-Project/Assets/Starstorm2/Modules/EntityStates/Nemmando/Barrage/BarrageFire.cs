@@ -30,9 +30,6 @@ namespace EntityStates.Nemmando
         private float duration;
         private float durationBetweenShots;
         private GameObject muzzleFlashEffect = Resources.Load<GameObject>("Prefabs/Effects/ImpactEffects/FusionCellExplosion");
-        // ^ jesus what the fuck? who wanted to do this?
-
-        
 
         public override void OnEnter()
         {
@@ -78,8 +75,8 @@ namespace EntityStates.Nemmando
                     maxSpread = maxSpread,
                     bulletCount = bulletCountPerShot,
                     damage = damageCoefficient * damageStat,
-                    force = 0.4f * Commando.CommandoWeapon.FireBarrage.force,
-                    //tracerEffectPrefab = tracerEffect,
+                    force = 0.5f * EntityStates.Commando.CommandoWeapon.FireBarrage.force,
+                    tracerEffectPrefab = tracerPrefab,
                     muzzleName = muzzleName,
                     hitEffectPrefab = EntityStates.Commando.CommandoWeapon.FireBarrage.hitEffectPrefab,
                     isCrit = RollCrit(),

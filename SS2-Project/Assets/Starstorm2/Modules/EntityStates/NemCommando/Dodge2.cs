@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace EntityStates.Nemmando
+namespace EntityStates.NemCommmando
 {
     public class Dodge2 : BaseSkillState
     {

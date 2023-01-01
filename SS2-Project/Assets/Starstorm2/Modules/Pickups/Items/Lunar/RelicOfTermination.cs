@@ -13,35 +13,40 @@ namespace Moonstorm.Starstorm2.Items
         private const string token = "SS2_ITEM_RELICOFTERMINATION_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfTermination");
 
+        [ConfigurableField(ConfigDesc = "Time, in seconds, to kill the marked enemy before going on cooldown.")]
+        [TokenModifier(token, StatTypes.Default, 0)]
+        [TokenModifier("SS2_ITEM_RELICOFTERMINATION_PICKUP", StatTypes.Default, 0)]
+        public static float maxTime = 25f;
+
+        [ConfigurableField(ConfigDesc = "Time between marks in seconds.")]
+        [TokenModifier(token, StatTypes.Default, 0)]
+        public static float downTime = 30f;
+
+        [ConfigurableField(ConfigDesc = "Percent reduction in time to kill per stack.")]
+        [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
+        public static float timeReduction = .1f;
+
+        [ConfigurableField(ConfigDesc = "Damage multiplier which is added to the marked enemy if not killed in time (1 = 100% more damage).")]
+        [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
+        public static float damageMult = 2f;
+
+        [ConfigurableField(ConfigDesc = "Health multiplier which is added to the marked enemy if not killed in time (1 = 100% more health).")]
+        [TokenModifier(token, StatTypes.MultiplyByN, 3, "100")]
+        public static float healthMult = 4f;
+
+        [ConfigurableField(ConfigDesc = "Speed multiplier which is added to the marked enemy if not killed in time (1 = 100% more speed).")]
+        [TokenModifier(token, StatTypes.MultiplyByN, 4, "100")]
+        public static float speedMult = 1.5f;
+
+        [ConfigurableField(ConfigDesc = "Attack speed multiplier which is added to the marked enemy if not killed in time (1 = 100% more attack speed).")]
+        [TokenModifier(token, StatTypes.MultiplyByN, 5, "100")]
+        public static float atkSpeedMult = 1.75f;
+
         public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver
         {
+
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.RelicOfTermination;
-
-            [ConfigurableField(ConfigDesc = "Time, in seconds, to kill the marked enemy.")]
-            [TokenModifier(token, StatTypes.Default, 0)]
-            [TokenModifier("SS2_ITEM_RELICOFTERMINATION_PICKUP", StatTypes.Default, 0)]
-            public static float maxTime = 30f;
-
-            [ConfigurableField(ConfigDesc = "Percent reduction in time to kill per stack.")]
-            [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
-            public static float timeReduction = .1f;
-
-            [ConfigurableField(ConfigDesc = "Damage multiplier added to marked enemy if not killed in time (1 = 100% more damage).")]
-            [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
-            public static float damageMult = 1f;
-
-            [ConfigurableField(ConfigDesc = "Health multiplier added to marked enemy if not killed in time (1 = 100% more health).")]
-            [TokenModifier(token, StatTypes.MultiplyByN, 3, "100")]
-            public static float healthMult = 2f;
-
-            [ConfigurableField(ConfigDesc = "Speed multiplier added to marked enemy if not killed in time (1 = 100% more speed).")]
-            [TokenModifier(token, StatTypes.MultiplyByN, 4, "100")]
-            public static float speedMult = 1f;
-
-            [ConfigurableField(ConfigDesc = "Attack speed multiplier added to marked enemy if not killed in time (1 = 100% more attack speed).")]
-            [TokenModifier(token, StatTypes.MultiplyByN, 5, "100")]
-            public static float atkSpeedMult = 1f;
 
             //[ConfigurableField(ConfigDesc = "Health multiplier grantd to marked enemy if not killed in time (1 = 100% health).")]
             //[TokenModifier(token, StatTypes.Percentage, 3)]
@@ -55,6 +60,8 @@ namespace Moonstorm.Starstorm2.Items
             public GameObject buffEffect;
 
             private GameObject markEffectInstance;
+
+            private static List<BodyIndex> illegalMarks = new List<BodyIndex>();
 
             //private GameObject prolapsedInstance;
             //public bool shouldFollow = true;
@@ -70,6 +77,8 @@ namespace Moonstorm.Starstorm2.Items
                 globalMarkEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/BossPositionIndicator.prefab").WaitForCompletion();
 
                 terminationRNG = new Xoroshiro128Plus(Run.instance.seed);
+
+                InitializeIllegalMarkList();
 
                 // use body.radius / bestfitradius to scale effects
             }
@@ -90,7 +99,7 @@ namespace Moonstorm.Starstorm2.Items
                     if (targetBody.inventory)
                     {
                         var healthFrac = targetBody.healthComponent.combinedHealthFraction;
-                        SS2Log.Debug(healthFrac);
+                        //SS2Log.Debug(healthFrac);
                         targetBody.inventory.GiveItem(SS2Content.Items.TerminationHelper);
                         var token = targetBody.gameObject.GetComponent<TerminationToken>();
                         //failEffect = failEffect.transform.localScale * targetBody.transform.localScale;
@@ -129,21 +138,22 @@ namespace Moonstorm.Starstorm2.Items
                 {
                     if (!token.hasFailed)
                     {
-                        int count = token.PlayerOwner.inventory.GetItemCount(SS2Content.Items.RelicOfTermination.itemIndex);
+                        //int count = token.PlayerOwner.inventory.GetItemCount(SS2Content.Items.RelicOfTermination.itemIndex);
+                        int count = token.itemCount;
                         Vector3 vector = Quaternion.AngleAxis(0, Vector3.up) * (Vector3.up * 20f);
                         List<PickupIndex> dropList;
 
-                        float tierMult = MSUtil.InverseHyperbolicScaling(1, .25f, 5, count);
-                        float tier = tierMult * terminationRNG.RangeInt(0, 100);
-                        if (tier < 60f)
+                        float tierMult = MSUtil.InverseHyperbolicScaling(1, .1f, 2.5f, count);
+                        float tier = tierMult * terminationRNG.RangeFloat(0, 100);
+                        if (tier < 70f)
                         {
                             dropList = Run.instance.availableTier1DropList;
                         }
-                        else if (tier < 90)
+                        else if (tier < 95)
                         {
                             dropList = Run.instance.availableTier2DropList;
                         }
-                        else if (tier < 97)
+                        else if (tier < 99.9)
                         {
                             dropList = Run.instance.availableTier3DropList;
                         }
@@ -175,6 +185,12 @@ namespace Moonstorm.Starstorm2.Items
                 }
                 int index = terminationRNG.RangeInt(0, CharMasters().Count);
                 target = CharMasters().ElementAt(index);
+                if (illegalMarks.Contains(target.GetBody().bodyIndex))
+                {
+                    target = null;
+                    time = 30f; //i'm being lazy here
+                    return;
+                }
                 //SS2Log.Debug("found target " + target.name);
                 if (target.GetComponent<TerminationToken>())
                 {
@@ -210,19 +226,70 @@ namespace Moonstorm.Starstorm2.Items
                 // RoR2 / Base / Common / BossPositionIndicator.prefab
 
                 var token = targetBody.gameObject.AddComponent<TerminationToken>();
-                token.PlayerOwner = body;
-
+                //token.PlayerOwner = body;
+                token.itemCount = body.inventory.GetItemCount(SS2Content.Items.RelicOfTermination.itemIndex);
                 //markEffectInstance = Object.Instantiate(globalMarkEffect, targetBody.transform);
                 targetBody.teamComponent.RequestDefaultIndicator(globalMarkEffect);
 
                 //time = maxTime;
             }
+
+
+            private static void InitializeIllegalMarkList()
+            {
+                List<string> defaultBodyNames = new List<string>
+            {
+                "BrotherGlassBody",
+                "BrotherHurtBody",
+                "ShopkeeperBody",
+                "MiniVoidRaidCrabPhase1",
+                "MiniVoidRaidCrabPhase2",
+                "MiniVoidRaidCrabPhase3",
+                "VoidRaidCrabJoint",
+                "VoidRaidCrab",
+                "ScavLunar1Body",
+                "ScavLunar2Body",
+                "ScavLunar3Body",
+                "ScavLunar4Body",
+                "ArtifactShell",
+            };
+
+                foreach (string bodyName in defaultBodyNames)
+                {
+                    BodyIndex index = BodyCatalog.FindBodyIndexCaseInsensitive(bodyName);
+                    if (index != BodyIndex.None)
+                    {
+                        AddBodyToIllegalTerminationList(index);
+                    }
+                }
+            }
+
+            public static void AddBodyToIllegalTerminationList(BodyIndex bodyIndex)
+            {
+                if (bodyIndex == BodyIndex.None)
+                {
+                    //SS2Log.Debug($"Tried to add a body to the illegal termination list, but it's index is none");
+                    return;
+                }
+
+                if (illegalMarks.Contains(bodyIndex))
+                {
+                    GameObject prefab = BodyCatalog.GetBodyPrefab(bodyIndex);
+                    //SS2Log.Debug($"Body prefab {prefab} is already in the illegal termination list.");
+                    return;
+                }
+                illegalMarks.Add(bodyIndex);
+                //BodiesThatGiveSuperCharge = new ReadOnlyCollection<BodyIndex>(bodiesThatGiveSuperCharge);
+            }
+
+
         }
 
         public class TerminationToken : MonoBehaviour
         {
             //helps keep track of the target and player responsible
-            public CharacterBody PlayerOwner;
+            //public CharacterBody PlayerOwner;
+            public int itemCount;
             public bool hasFailed = false;
         }
     }

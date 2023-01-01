@@ -18,13 +18,13 @@ namespace Moonstorm.Starstorm2.Items
         [TokenModifier(token, StatTypes.Default, 0)]
         public static int itemsPerStack = 1;
 
-        [ConfigurableField(ConfigDesc = "Level where white items are removed from the reward pool.")]
-        [TokenModifier(token, StatTypes.Default, 1)]
-        public static int whiteRemovalLevel = 11;
+        //[ConfigurableField(ConfigDesc = "Level where white items are removed from the reward pool.")]
+        //[TokenModifier(token, StatTypes.Default, 1)]
+        //public static int whiteRemovalLevel = 11;
 
-        [ConfigurableField(ConfigDesc = "Level where green items are removed from the reward pool.")]
-        [TokenModifier(token, StatTypes.Default, 2)]
-        public static int greenRemovalLevel = 22;
+        //[ConfigurableField(ConfigDesc = "Level where green items are removed from the reward pool.")]
+        //[TokenModifier(token, StatTypes.Default, 2)]
+        //public static int greenRemovalLevel = 22;
 
         //Either store this in a static var or do a dictionary checkup if you want to save all the assetbundle lookups in this code
         //Im lazy and this works so.......................

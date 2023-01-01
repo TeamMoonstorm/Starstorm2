@@ -34,14 +34,15 @@ namespace Moonstorm.Starstorm2.DamageTypes
             var damageInfo = report.damageInfo;
             if (DamageAPI.HasModdedDamageType(damageInfo, ModdedDamageType))
             {
-                var gougeDamage = (damageInfo.crit ? 2f : 1f) * 2.1f;
+                //deprecated by reimplementation in buff
+                //var gougeDamage = (damageInfo.crit ? 2f : 1f) * 2.1f;
                 var dotInfo = new InflictDotInfo()
                 {
                     attackerObject = attackerBody.gameObject,
                     victimObject = victimBody.gameObject,
                     dotIndex = Buffs.Gouge.index,
-                    duration = 3,
-                    damageMultiplier = gougeDamage,
+                    duration = 2,
+                    //damageMultiplier = gougeDamage,
                 };
                 DotController.InflictDot(ref dotInfo);
             }

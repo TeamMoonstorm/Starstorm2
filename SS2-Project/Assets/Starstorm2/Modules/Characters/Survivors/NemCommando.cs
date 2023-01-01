@@ -6,15 +6,12 @@ using UnityEngine.AddressableAssets;
 
 namespace Moonstorm.Starstorm2.Survivors
 {
-    //[DisabledContent]
+    [DisabledContent]
     public sealed class NemCommando : SurvivorBase
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemCommandoBody");
-        //public bool cool;
         public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemmandoMonsterMaster");
         public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("survivorNemCommando");
-        GameObject footstepDust { get; set; } = Resources.Load<GameObject>("Prefabs/GenericFootstepDust");
-
 
         public override void Initialize()
         {
@@ -36,7 +33,7 @@ namespace Moonstorm.Starstorm2.Survivors
         {
             var cb = BodyPrefab.GetComponent<CharacterBody>();
             cb._defaultCrosshairPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/SimpleDotCrosshair.prefab").WaitForCompletion();
-            //cb.GetComponent<ModelLocator>().modelTransform.GetComponent<FootstepHandler>().footstepDustPrefab = footstepDust;
+            //cb.GetComponent<ModelLocator>().modelTransform.GetComponent<FootstepHandler>().footstepDustPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/GenericFootstepDust.prefab").WaitForCompletion();
         }
     }
 }

@@ -14,6 +14,11 @@ namespace EntityStates.Events
         public GameObject effectPrefab;
         [SerializeField]
         public BuffDef stormBuffDef;
+        [SerializeField]
+        public GameObject encounterPrefab;
+        [SerializeField]
+        public float monsterCreditMultiplier = 20f;
+        [SerializeField]
         public static float fadeDuration = 7f;
 
 
@@ -35,7 +40,7 @@ namespace EntityStates.Events
 
         public override void StartEvent()
         {
-            SS2Log.Debug("Beginning Storm");
+            //SS2Log.Debug("Beginning Storm");
             base.StartEvent();
             if (eventStateEffect)
             {
@@ -43,12 +48,48 @@ namespace EntityStates.Events
             }
             if (NetworkServer.active)
             {
-                var enemies = TeamComponent.GetTeamMembers(TeamIndex.Monster).Concat(TeamComponent.GetTeamMembers(TeamIndex.Lunar));
+                //TO-DO: team specific events
+                var enemies = TeamComponent.GetTeamMembers(TeamIndex.Monster).Concat(TeamComponent.GetTeamMembers(TeamIndex.Lunar)).Concat(TeamComponent.GetTeamMembers(TeamIndex.Void));
                 foreach (var teamMember in enemies)
                 {
                     BuffEnemy(teamMember.body);
                 }
             }
+
+            if (encounterPrefab)
+            {
+                NetworkServer.Spawn(encounterPrefab);
+                CombatDirector combatDirector = encounterPrefab.GetComponent<CombatDirector>();
+                if (combatDirector && Stage.instance)
+                {
+                    DifficultyIndex difficultyIndex = Run.instance.ruleBook.FindDifficulty();
+                    DifficultyDef difficultyDef = DifficultyCatalog.GetDifficultyDef(difficultyIndex);
+                    float scalingValue = difficultyDef.scalingValue;
+                    if (difficultyDef.nameToken == "SS2_DIFFICULTY_TYPHOON_NAME")
+                        scalingValue++; //lol
+
+                    float monsterCredit = monsterCreditMultiplier * Run.instance.difficultyCoefficient * scalingValue;
+                    //Debug.Log("monstercredit: " + monsterCredit);
+                    if (monsterCredit != null)
+                        monsterCredit = 40f;
+
+                    WeightedSelection<DirectorCard> weightedSelection = Util.CreateReasonableDirectorCardSpawnList(monsterCredit, combatDirector.maximumNumberToSpawnBeforeSkipping, 6);
+                    DirectorCard directorCard = weightedSelection.Evaluate(combatDirector.rng.nextNormalizedFloat);
+
+                    if (weightedSelection == null)
+                        Debug.Log("weightedselection null");
+
+                    if (directorCard != null)
+                    {
+                        combatDirector.monsterCredit += monsterCredit;
+                        combatDirector.OverrideCurrentMonsterCard(directorCard);
+                        combatDirector.monsterSpawnTimer = 0f;
+                    }
+                    else
+                        Debug.Log("missing director card");
+                }
+            }
+
             CharacterBody.onBodyStartGlobal += BuffEnemy;
             RoR2.Run.onRunDestroyGlobal += RunEndRemoveStorms;
             RoR2.Stage.onServerStageComplete += StageEndRemoveStorms;
@@ -56,7 +97,7 @@ namespace EntityStates.Events
 
         private void StageEndRemoveStorms(Stage obj)
         {
-            SS2Log.Debug("Removing active storm because the stage ended.");
+            //SS2Log.Debug("Removing active storm because the stage ended.");
             CharacterBody.onBodyStartGlobal -= BuffEnemy;
             RoR2.Run.onRunDestroyGlobal -= RunEndRemoveStorms;
             RoR2.Stage.onServerStageComplete -= StageEndRemoveStorms;
@@ -64,7 +105,7 @@ namespace EntityStates.Events
 
         private void RunEndRemoveStorms(Run obj)
         {
-            SS2Log.Debug("Removing active storm because the run ended.");
+            //SS2Log.Debug("Removing active storm because the run ended.");
             CharacterBody.onBodyStartGlobal -= BuffEnemy;
             RoR2.Run.onRunDestroyGlobal -= RunEndRemoveStorms;
             RoR2.Stage.onServerStageComplete -= StageEndRemoveStorms;
@@ -79,7 +120,7 @@ namespace EntityStates.Events
             }
             if (HasWarned)
             {
-                SS2Log.Debug("Storm ended - removed hook normally.");
+                //SS2Log.Debug("Storm ended - removed hook normally.");
                 CharacterBody.onBodyStartGlobal -= BuffEnemy;
                 RoR2.Run.onRunDestroyGlobal -= RunEndRemoveStorms;
                 RoR2.Stage.onServerStageComplete -= StageEndRemoveStorms;
@@ -101,7 +142,7 @@ namespace EntityStates.Events
                 return;
             //If the body isnt on player team, isnt controlled by a player and isnt masterless (no ai). Second part is for potential mod compatibility
             var team = body.teamComponent.teamIndex;
-            if (!(body.isPlayerControlled || body.bodyFlags == CharacterBody.BodyFlags.Masterless) && (team == TeamIndex.Monster || team == TeamIndex.Lunar) && !body.HasBuff(stormBuffDef ?? SS2Content.Buffs.BuffStorm))
+            if (!(body.isPlayerControlled || body.bodyFlags == CharacterBody.BodyFlags.Masterless) && (team == TeamIndex.Monster || team == TeamIndex.Lunar || team == TeamIndex.Void) && !body.HasBuff(stormBuffDef ?? SS2Content.Buffs.BuffStorm))
             {
                 body.AddBuff(stormBuffDef ?? SS2Content.Buffs.BuffStorm);
             }

@@ -78,6 +78,12 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "riskofthunder-r2api_commandhelper": {
+      "version": "file:R2API_CommandHelper",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "riskofthunder-r2api_contentmanagement": {
       "version": "file:R2API_ContentManagement",
       "depth": 0,
@@ -92,6 +98,12 @@
     },
     "riskofthunder-r2api_damagetype": {
       "version": "file:R2API_DamageType",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "riskofthunder-r2api_deployable": {
+      "version": "file:R2API_Deployable",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
@@ -120,8 +132,38 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "riskofthunder-r2api_items": {
+      "version": "file:R2API_Items",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "riskofthunder-r2api_language": {
+      "version": "file:R2API_Language",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "riskofthunder-r2api_loadout": {
+      "version": "file:R2API_Loadout",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "riskofthunder-r2api_lobbyconfig": {
+      "version": "file:R2API_LobbyConfig",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "riskofthunder-r2api_networking": {
       "version": "file:R2API_Networking",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "riskofthunder-r2api_orb": {
+      "version": "file:R2API_Orb",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
@@ -134,6 +176,30 @@
     },
     "riskofthunder-r2api_recalculatestats": {
       "version": "file:R2API_RecalculateStats",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "riskofthunder-r2api_sceneasset": {
+      "version": "file:R2API_SceneAsset",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "riskofthunder-r2api_sound": {
+      "version": "file:R2API_Sound",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "riskofthunder-r2api_tempvisualeffect": {
+      "version": "file:R2API_TempVisualEffect",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "riskofthunder-r2api_unlockable": {
+      "version": "file:R2API_Unlockable",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
@@ -151,12 +217,6 @@
       "source": "git",
       "dependencies": {},
       "hash": "2a7f164889f48f65b8bfb7686d88826cde20a42d"
-    },
-    "rune580-risk_of_options": {
-      "version": "file:Risk_Of_Options",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
     },
     "teammoonstorm-moonstormsharedutils": {
       "version": "https://github.com/TeamMoonstorm/MoonstormSharedUtils.git#1.2.0",
