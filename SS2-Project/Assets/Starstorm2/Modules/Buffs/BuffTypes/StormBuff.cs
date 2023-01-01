@@ -23,8 +23,8 @@ namespace Moonstorm.Starstorm2.Buffs
                     ogGoldReward = deathRewards.goldReward;
                     ogExpReward = deathRewards.expReward;
 
-                    deathRewards.goldReward = (uint)(ogGoldReward * 1.5f);
-                    deathRewards.expReward = (uint)(ogExpReward * 2f);
+                    deathRewards.goldReward = (uint)(ogGoldReward * 2f);
+                    deathRewards.expReward = (uint)(ogExpReward * 2.5f);
                 }
             }
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
@@ -34,6 +34,7 @@ namespace Moonstorm.Starstorm2.Buffs
                 args.damageMultAdd += 0.2f;
                 args.attackSpeedMultAdd += 0.5f;
                 args.moveSpeedMultAdd += 0.5f;
+                args.cooldownMultAdd += 0.2f;
             }
             public void OnDestroy()
             {

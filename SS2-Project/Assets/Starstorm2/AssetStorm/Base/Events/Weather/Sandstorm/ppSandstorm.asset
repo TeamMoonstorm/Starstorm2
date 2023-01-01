@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ppSandstorm
   m_EditorClassIdentifier: 
   settings:
-  - {fileID: 114589153457090896}
   - {fileID: 114150402838529980}
+  - {fileID: 8223756754810789727}
 --- !u!114 &114150402838529980
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -62,7 +62,7 @@ MonoBehaviour:
   dirtIntensity:
     overrideState: 0
     value: 0
---- !u!114 &114589153457090896
+--- !u!114 &8223756754810789727
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,8 +71,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 534b4b24f223e6d4580fafd6881209c4, type: 3}
-  m_Name: SS2RampFog
+  m_Script: {fileID: 2011136271, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: RampFog
   m_EditorClassIdentifier: 
   active: 1
   enabled:
@@ -98,16 +98,16 @@ MonoBehaviour:
     value: 100
   fogHeightIntensity:
     overrideState: 0
-    value: 5
+    value: 0
   fogColorStart:
     overrideState: 1
     value: {r: 0.36862746, g: 0.27058825, b: 0.14117648, a: 0.15294118}
   fogColorMid:
     overrideState: 1
-    value: {r: 0.44313726, g: 0.4117647, b: 0.34901962, a: 0.27058825}
+    value: {r: 0.4431373, g: 0.41176474, b: 0.34901962, a: 0.27058825}
   fogColorEnd:
     overrideState: 1
-    value: {r: 0.43529412, g: 0.38431373, b: 0.28235295, a: 1}
+    value: {r: 0.43529415, g: 0.38431376, b: 0.28235295, a: 1}
   skyboxStrength:
     overrideState: 1
     value: 0.005

@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 462267d798a056b4ab94d737b7da67f6, type: 3}
+  m_Name: MendingElite
+  m_EditorClassIdentifier: 
+  eventFlags: 0
+  eventState:
+    _typeName: EntityStates.Events.MendingEventState, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  startMessageToken: SS2_EVENT_MENDINGELITE_START
+  endMessageToken: SS2_EVENT_MENDINGELITE_END
+  messageColor: {r: 0.50163424, g: 0.8490566, b: 0.2683339, a: 1}
+  startSound: {fileID: 0}
+  availableStages: 738509310
+  customStageNames: []
+  category: CommonEvents
+  selectionWeight: 33
+  cost: 1550
+  minimumStageCompletions: 5
+  requiredUnlockableDef:
+    address: 
+    useDirectReference: 1
+    asset: {fileID: 0}
+  forbiddenUnlockableDef:
+    address: 
+    useDirectReference: 1
+    asset: {fileID: 0}
+  requiredExpansions:
+  - address: 
+    useDirectReference: 1
+    asset: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+  - address: RoR2/DLC1/Common/DLC1.asset
+    useDirectReference: 0
+    asset: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}

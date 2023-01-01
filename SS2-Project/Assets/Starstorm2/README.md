@@ -84,7 +84,11 @@ The most important issues you may encounter are listed below, to help expect thi
 * Nemesis Commando
     * Slightly tweaked Gouge values.
 * Events
-    * Drastically lowered event frequency.
+    * Drastically lowered event frequency, and readjusted event costs and weights.
+	* Enemies now recieve 20% CDR during storms.
+	* Storms now should force an initial wave of enemies upon starting.
+	* Redid event VFX for all weather and elite events.
+	* Added Mending Elite event. Requires Survivors of the Void expansion.
 	* Event VFX should be networked.
     * Restored Nemesis Commando invasion event.
 
