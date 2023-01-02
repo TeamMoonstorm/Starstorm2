@@ -38,7 +38,7 @@ namespace Moonstorm.Starstorm2.Items
                 {
                     if (!report.victimBody.HasBuff(SS2Content.Buffs.BuffNeedle))
                     {
-                        report.victimBody.AddTimedBuff(SS2Content.Buffs.BuffNeedle, needleBuffDuration);
+                        report.victimBody.AddTimedBuff(SS2Content.Buffs.BuffNeedle, needleBuffDuration * stack);
                         //report.victimBody.AddTimedBuff(SS2Content.Buffs.BuffNeedleBuildup, ((buildupDuration + (stack - 1) * buildupStack)) * report.damageInfo.procCoefficient);
                         //if (report.victimBody.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) >= neededBuildupAmount)
                         //{
