@@ -10,7 +10,7 @@ namespace Moonstorm.Starstorm2.Items
 
         [ConfigurableField(ConfigDesc = "Chance for Needles to Proc. (100 = 100%)")]
         [TokenModifier(token, StatTypes.Default, 0)]
-        public static float procChance = 6f;
+        public static float procChance = 4f;
 
         [ConfigurableField(ConfigDesc = "Duration of the pricked debuff, in seconds.")]
         [TokenModifier(token, StatTypes.Default, 1)]
