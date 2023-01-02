@@ -68,7 +68,7 @@ The most important issues you may encounter are listed below, to help expect thi
     * Added Ukranian translation.
 * Items & Equipment
     * Items can now individually be enabled and disabled via config file. Note that equipment remain unaffected by this change for the moment.
-    * Reworked Needles: "Hitting enemies has a 6% chance to prick them, converting all incoming damage to critical hits for 2 seconds (+2s per stack)." Does this feel more balanced? Should the pricked debuff still allow debuffs to critically hit?
+    * Reworked Needles: "Hitting enemies has a 4% chance to prick them, converting all incoming damage to critical hits for 2 seconds (+2s per stack)." Does this feel more balanced? Should the pricked debuff still allow debuffs to critically hit?
     * Reworked Coffee Bag: "Using interactables increases movement speed by 21% (+21% per stack) and attack speed by 22.5% (+22.5% per stack) for 15 seconds."
     * Reworked X-4 Stimulant: "Reduces secondary skill cooldown by 10% (+10% per stack) and increases base health regen by +2 hp/s (+1 hp/s per stack) for 3 seconds on secondary use." Should probably one have one stacking condition - which?
     * Disabled Diary. Item suffers a constant identity crisis without ever feeling impactful. Have been talks of reworks internally, but nothing finalized yet.
