@@ -4,6 +4,9 @@ using UnityEngine.SceneManagement;
 
 namespace Moonstorm.Starstorm2.Unlocks.Chirr
 {
+
+    [DisabledContent]
+
     public sealed class ChirrUnlockable : UnlockableBase
     {
         public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.survivor.beastmaster");

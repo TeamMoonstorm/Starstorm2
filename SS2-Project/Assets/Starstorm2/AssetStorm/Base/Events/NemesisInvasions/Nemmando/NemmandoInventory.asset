@@ -35,13 +35,6 @@ MonoBehaviour:
     maxStacks: 4
     minStacks: 1
   - itemDef:
-      address: NearbyDamageBonus
-      useDirectReference: 0
-      asset: {fileID: 0}
-    weight: 70
-    maxStacks: 1
-    minStacks: 1
-  - itemDef:
       address: CritGlasses
       useDirectReference: 0
       asset: {fileID: 0}
@@ -74,7 +67,7 @@ MonoBehaviour:
       useDirectReference: 0
       asset: {fileID: 0}
     weight: 45
-    maxStacks: 2
+    maxStacks: 3
     minStacks: 1
   - itemDef:
       address: IgniteOnKill
@@ -116,7 +109,7 @@ MonoBehaviour:
       useDirectReference: 0
       asset: {fileID: 0}
     weight: 25
-    maxStacks: 1
+    maxStacks: 2
     minStacks: 1
   - itemDef:
       address: StickyBomb
@@ -277,7 +270,7 @@ MonoBehaviour:
       useDirectReference: 0
       asset: {fileID: 0}
     weight: 16
-    maxStacks: 1
+    maxStacks: 2
     minStacks: 1
   - itemDef:
       address: AlienHead
@@ -287,12 +280,12 @@ MonoBehaviour:
     maxStacks: 3
     minStacks: 1
   - itemDef:
-      address: ExecuteLowHealthElite
+      address: HealWhileSafe
       useDirectReference: 0
       asset: {fileID: 0}
-    weight: 1
-    maxStacks: 1
-    minStacks: 3
+    weight: 0
+    maxStacks: 0
+    minStacks: 0
   - itemDef:
       address: ArmorReductionOnHit
       useDirectReference: 0
@@ -305,7 +298,7 @@ MonoBehaviour:
       useDirectReference: 0
       asset: {fileID: 0}
     weight: 1
-    maxStacks: 2
+    maxStacks: 3
     minStacks: 1
   - itemDef:
       address: Behemoth
@@ -322,13 +315,6 @@ MonoBehaviour:
     maxStacks: 2
     minStacks: 1
   - itemDef:
-      address: Pearl
-      useDirectReference: 0
-      asset: {fileID: 0}
-    weight: 1
-    maxStacks: 3
-    minStacks: 1
-  - itemDef:
       address: ExtraLife
       useDirectReference: 0
       asset: {fileID: 0}
@@ -340,12 +326,12 @@ MonoBehaviour:
       useDirectReference: 0
       asset: {fileID: 0}
     weight: 1
-    maxStacks: 1
+    maxStacks: 3
     minStacks: 1
   - itemDef:
       address: UtilitySkillMagazine
       useDirectReference: 0
       asset: {fileID: 0}
     weight: 1
-    maxStacks: 1
+    maxStacks: 2
     minStacks: 1
