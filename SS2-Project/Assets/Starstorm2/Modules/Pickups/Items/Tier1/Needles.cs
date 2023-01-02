@@ -22,11 +22,11 @@ namespace Moonstorm.Starstorm2.Items
 
         [ConfigurableField(ConfigDesc = "Amount of buildup debuffs needed before the actual needles debuff gets applied")]
         [TokenModifier(token, StatTypes.Default, 3)]
-        public static float neededBuildupAmount = 2f;
+        public static float neededBuildupAmount = 1f;
 
         [ConfigurableField(ConfigDesc = "Duration of the actual needles debuff, in seconds.")]
         [TokenModifier(token, StatTypes.Default, 4)]
-        public static float needleBuffDuration = 4f;
+        public static float needleBuffDuration = 2f;
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
         {
@@ -38,12 +38,13 @@ namespace Moonstorm.Starstorm2.Items
                 {
                     if (!report.victimBody.HasBuff(SS2Content.Buffs.BuffNeedle))
                     {
-                        report.victimBody.AddTimedBuff(SS2Content.Buffs.BuffNeedleBuildup, ((buildupDuration + (stack - 1) * buildupStack)) * report.damageInfo.procCoefficient);
-                        if (report.victimBody.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) >= neededBuildupAmount)
-                        {
-                            report.victimBody.ClearTimedBuffs(SS2Content.Buffs.BuffNeedleBuildup);
-                            report.victimBody.AddTimedBuff(SS2Content.Buffs.BuffNeedle, needleBuffDuration);
-                        }
+                        report.victimBody.AddTimedBuff(SS2Content.Buffs.BuffNeedle, needleBuffDuration);
+                        //report.victimBody.AddTimedBuff(SS2Content.Buffs.BuffNeedleBuildup, ((buildupDuration + (stack - 1) * buildupStack)) * report.damageInfo.procCoefficient);
+                        //if (report.victimBody.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) >= neededBuildupAmount)
+                        //{
+                        //    report.victimBody.ClearTimedBuffs(SS2Content.Buffs.BuffNeedleBuildup);
+                        //    report.victimBody.AddTimedBuff(SS2Content.Buffs.BuffNeedle, needleBuffDuration);
+                        //}
                     }
                 }
             }
