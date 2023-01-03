@@ -86,6 +86,8 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef RelicOfTermination;
 
+            public static ItemDef RelicOfTermination2;
+
             public static ItemDef Insecticide;
 
             public static ItemDef BabyToys;
@@ -171,6 +173,10 @@ namespace Moonstorm.Starstorm2
             public static BuffDef BuffTerminationVFX;
 
             public static BuffDef BuffX4;
+
+            public static BuffDef BuffTerminationCooldown;
+
+            public static BuffDef BuffTerminationReady;
         }
 
         public static class Elites

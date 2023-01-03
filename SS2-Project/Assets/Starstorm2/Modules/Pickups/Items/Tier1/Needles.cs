@@ -32,22 +32,28 @@ namespace Moonstorm.Starstorm2.Items
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.Needles;
+
             public void OnDamageDealtServer(DamageReport report)
             {
-                if (Util.CheckRoll((procChance * stack) * report.damageInfo.procCoefficient, body.master))
-                {
-                    if (!report.victimBody.HasBuff(SS2Content.Buffs.BuffNeedle))
-                    {
-                        report.victimBody.AddTimedBuff(SS2Content.Buffs.BuffNeedle, needleBuffDuration * stack);
-                        //report.victimBody.AddTimedBuff(SS2Content.Buffs.BuffNeedleBuildup, ((buildupDuration + (stack - 1) * buildupStack)) * report.damageInfo.procCoefficient);
-                        //if (report.victimBody.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) >= neededBuildupAmount)
-                        //{
-                        //    report.victimBody.ClearTimedBuffs(SS2Content.Buffs.BuffNeedleBuildup);
-                        //    report.victimBody.AddTimedBuff(SS2Content.Buffs.BuffNeedle, needleBuffDuration);
-                        //}
-                    }
-                }
+                SS2Log.Debug(report.damageInfo.crit);
             }
+
+            //public void OnDamageDealtServer(DamageReport report)
+            //{
+            //    if (Util.CheckRoll((procChance * stack) * report.damageInfo.procCoefficient, body.master))
+            //    {
+            //        if (!report.victimBody.HasBuff(SS2Content.Buffs.BuffNeedle))
+            //        {
+            //            report.victimBody.AddTimedBuff(SS2Content.Buffs.BuffNeedle, needleBuffDuration * stack);
+            //            //report.victimBody.AddTimedBuff(SS2Content.Buffs.BuffNeedleBuildup, ((buildupDuration + (stack - 1) * buildupStack)) * report.damageInfo.procCoefficient);
+            //            //if (report.victimBody.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) >= neededBuildupAmount)
+            //            //{
+            //            //    report.victimBody.ClearTimedBuffs(SS2Content.Buffs.BuffNeedleBuildup);
+            //            //    report.victimBody.AddTimedBuff(SS2Content.Buffs.BuffNeedle, needleBuffDuration);
+            //            //}
+            //        }
+            //    }
+            //}
         }
     }
 }
