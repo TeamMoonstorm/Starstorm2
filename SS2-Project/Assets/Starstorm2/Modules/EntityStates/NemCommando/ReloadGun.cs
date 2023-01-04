@@ -26,7 +26,7 @@ namespace EntityStates.NemCommando
         {
             get
             {
-                return baseDuration * skillLocator.secondary.cooldownScale;
+                return baseDuration / skillLocator.secondary.cooldownScale;
             }
         }
 
@@ -35,12 +35,8 @@ namespace EntityStates.NemCommando
             base.OnEnter();
 
             animator = GetModelAnimator();
-            if (animator.GetFloat("primaryPlaying") > 0.05 || animator.GetBool("isDoingBabyReload"))
-            {
-                PlayCrossfade("Gesture, Additive, LeftArm", "LowerGun", "FireGun.playbackRate", duration, 0.075f);
-                animator.SetBool("isDoingBabyReload", false);
-            }
-            else PlayCrossfade("Gesture, Override, LeftArm", "LowerGun", "FireGun.playbackRate", duration, 0.075f);
+
+            PlayCrossfade("Gesture, Override, LeftArm", "LowerGun", "FireGun.playbackRate", duration, 0.075f);
         }
 
         public override void FixedUpdate()

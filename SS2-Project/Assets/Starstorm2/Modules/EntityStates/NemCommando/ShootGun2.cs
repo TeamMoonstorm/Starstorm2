@@ -3,8 +3,6 @@ using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-//Dont fix what isnt broken or something
-//^ guy who broke it entirely
 namespace EntityStates.NemCommando
 {
     public class ShootGun2 : BaseSkillState
@@ -56,14 +54,14 @@ namespace EntityStates.NemCommando
                 muzzleString = "Muzzle";
             }
 
-            animator.SetBool("isDoingBabyReload", false);
+            animator.SetBool("shouldAdditiveReload", false);
 
-            if (animator.GetFloat("primaryPlaying") > 0.05)
+            /*if (animator.GetFloat("primaryPlaying") > 0.05)
             {
                 PlayCrossfade("Gesture, Additive, LeftArm", "FireGun", "FireGun.playbackRate", baseDuration, 0.075f);
-                animator.SetBool("isDoingBabyReload", true);
+                animator.SetBool("shouldAdditiveReload", true);
             }
-            else PlayCrossfade("Gesture, Override, LeftArm", "FireGun", "FireGun.playbackRate", baseDuration, 0.075f);
+            else*/ PlayCrossfade("Gesture, Override, LeftArm", "FireGun", "FireGun.playbackRate", baseDuration, 0.075f);
         }
 
         public override void OnExit()
