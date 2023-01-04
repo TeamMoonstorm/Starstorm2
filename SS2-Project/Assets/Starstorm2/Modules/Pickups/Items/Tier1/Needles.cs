@@ -57,69 +57,20 @@ namespace Moonstorm.Starstorm2.Items
 
                 if(attackerBody && !damageInfo.rejected && NetworkServer.active)
                 {
-                    if (damageInfo.crit)
+                    if (damageInfo.crit) //this means needles didn't help allow the crit - it would've happened anyway
                     {
-                        var tracker = self.body.gameObject.GetComponent<NeedleTracker>();
-                        if (tracker)
-                        {
-                            tracker.procs--;
-                        }
-                        if (!tracker || tracker.procs == 0)
-                        {
-                            if (tracker)
-                            {
-                                Destroy(tracker);
-                            }
-                            int buffCount = self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup);
-                            for (int i = 0; i < buffCount; i++)
-                            {
-                                self.body.RemoveBuff(SS2Content.Buffs.BuffNeedleBuildup);
-                            }
-                        }
-
-                        EffectData effectData = new EffectData
-                        {
-                            origin = self.body.corePosition
-                        };
-                        EffectManager.SpawnEffect(HealthComponent.AssetReferences.executeEffectPrefab, effectData, transmit: true);
-                        //SS2Log.Debug("normal remove: ");
+                        //doNeedleProc(self); 
                     }
                     else
                     {
-                        //SS2Log.Debug("crit: " + attackerBody.crit);
+                        //P(A+B) = P(A) + P(B) - P(AB)
                         float intendedChance = attackerBody.crit + (self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) * attackerBody.inventory.GetItemCount(SS2Content.Items.Needles)); //assuming each buff is 1% per items
-                        //SS2Log.Debug("intended: " + intendedChance);
                         float secondChance = (attackerBody.crit - intendedChance) / (attackerBody.crit - 100) * 100;
-                        //SS2Log.Debug("second: " + secondChance);
                         bool secondCrit = Util.CheckRoll(secondChance);
-                        //SS2Log.Debug("critted: " + secondCrit);
                         damageInfo.crit = secondCrit;
                         if (damageInfo.crit)
                         {
-                            //SS2Log.Debug("backup remove: ");
-                            var tracker = self.body.gameObject.GetComponent<NeedleTracker>();
-                            if (tracker)
-                            {
-                                tracker.procs--;
-                            }
-                            if(!tracker || tracker.procs == 0)
-                            {
-                                if (tracker)
-                                {
-                                    Destroy(tracker);
-                                }
-                                int buffCount = self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup);
-                                for(int i = 0; i < buffCount; i++)
-                                {
-                                    self.body.RemoveBuff(SS2Content.Buffs.BuffNeedleBuildup);
-                                }
-                            }
-
-                            EffectData effectData = new EffectData
-                            {
-                                origin = self.body.corePosition
-                            };
-                            EffectManager.SpawnEffect(HealthComponent.AssetReferences.executeEffectPrefab, effectData, transmit: true);
+                            doNeedleProc(self);
                         }
                         else
                         {
@@ -137,23 +88,36 @@ namespace Moonstorm.Starstorm2.Items
                 
                 orig(self, damageInfo);
             }
-            //public void OnDamageDealtServer(DamageReport report)
-            //{
-            //    if (Util.CheckRoll((procChance * stack) * report.damageInfo.procCoefficient, body.master))
-            //    {
-            //        if (!report.victimBody.HasBuff(SS2Content.Buffs.BuffNeedle))
-            //        {
-            //            report.victimBody.AddTimedBuff(SS2Content.Buffs.BuffNeedle, needleBuffDuration * stack);
-            //            //report.victimBody.AddTimedBuff(SS2Content.Buffs.BuffNeedleBuildup, ((buildupDuration + (stack - 1) * buildupStack)) * report.damageInfo.procCoefficient);
-            //            //if (report.victimBody.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) >= neededBuildupAmount)
-            //            //{
-            //            //    report.victimBody.ClearTimedBuffs(SS2Content.Buffs.BuffNeedleBuildup);
-            //            //    report.victimBody.AddTimedBuff(SS2Content.Buffs.BuffNeedle, needleBuffDuration);
-            //            //}
-            //        }
-            //    }
-            //}
+
+            public void doNeedleProc(HealthComponent self)
+            {
+                var tracker = self.body.gameObject.GetComponent<NeedleTracker>();
+                if (tracker)
+                {
+                    tracker.procs--;
+                }
+                if (!tracker || tracker.procs == 0)
+                {
+                    if (tracker)
+                    {
+                        Destroy(tracker);
+                    }
+                    int buffCount = self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup);
+                    for (int i = 0; i < buffCount; i++)
+                    {
+                        self.body.RemoveBuff(SS2Content.Buffs.BuffNeedleBuildup);
+                    }
+                }
+
+                EffectData effectData = new EffectData
+                {
+                    origin = self.body.corePosition
+                };
+                EffectManager.SpawnEffect(HealthComponent.AssetReferences.executeEffectPrefab, effectData, transmit: true);
+            }
+
         }
+
         public class NeedleTracker : MonoBehaviour
         {
             //helps keep track of the target and player responsible

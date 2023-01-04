@@ -88,6 +88,8 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef RelicOfTermination2;
 
+            public static ItemDef RelicOfEchelon;
+
             public static ItemDef Insecticide;
 
             public static ItemDef BabyToys;
