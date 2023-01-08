@@ -42,7 +42,7 @@ namespace Moonstorm.Starstorm2.DamageTypes
                     victimObject = victimBody.gameObject,
                     dotIndex = Buffs.Gouge.index,
                     duration = 2,
-                    //damageMultiplier = gougeDamage,
+                    damageMultiplier = 1,
                 };
                 DotController.InflictDot(ref dotInfo);
             }

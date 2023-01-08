@@ -21,6 +21,7 @@ namespace EntityStates.NemCommando
         public static float enterSoundPitch;
 
         private Animator animator;
+        private bool hasEjectedMag = false;
 
         private float duration
         {
@@ -36,12 +37,19 @@ namespace EntityStates.NemCommando
 
             animator = GetModelAnimator();
 
-            PlayCrossfade("Gesture, Override, LeftArm", "LowerGun", "FireGun.playbackRate", duration, 0.075f);
+            PlayCrossfade("Gesture, Override, LeftArm", "LowerGun", "FireGun.playbackRate", duration, 0.03f);
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+            if (animator.GetFloat("ejectMag") >= 0.1 && !hasEjectedMag)
+            {
+                hasEjectedMag = true;
+
+                FindModelChild("magParticle").GetComponent<ParticleSystem>().Emit(1);
+            }
+
             if (fixedAge >= duration / 1.6 && !hasReloaded)
             {
                 Util.PlayAttackSpeedSound(enterSoundString, gameObject, enterSoundPitch);
