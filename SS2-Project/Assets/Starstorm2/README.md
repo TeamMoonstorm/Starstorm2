@@ -58,6 +58,15 @@ The most important issues you may encounter are listed below, to help expect thi
 
 **Warning: content spoilers below!**
 
+### 0.3.49
+* General
+    * Fixed Spanish translation not appearing.
+* Survivors
+    * Nemesis Commando's sword now actually does damage again.
+
+### 0.3.48
+* Emergency update due to improper file structure.
+
 ### 0.3.47
 * General
     * Updated R2API dependencies to proper modules.
