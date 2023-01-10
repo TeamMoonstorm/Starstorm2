@@ -86,6 +86,10 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef RelicOfTermination;
 
+            public static ItemDef RelicOfTermination2;
+
+            public static ItemDef RelicOfEchelon;
+
             public static ItemDef Insecticide;
 
             public static ItemDef BabyToys;
@@ -99,7 +103,7 @@ namespace Moonstorm.Starstorm2
 
         public static class Equipments
         {
-            public static EquipmentDef ElitePurpleEquipment;
+            //public static EquipmentDef ElitePurpleEquipment;
 
             public static EquipmentDef BackThruster;
 
@@ -175,6 +179,12 @@ namespace Moonstorm.Starstorm2
             public static BuffDef bdElitePurple;
 
             public static BuffDef bdPurplePoison;
+			
+            public static BuffDef BuffTerminationCooldown;
+
+            public static BuffDef BuffTerminationReady;
+
+            public static BuffDef BuffEchelon;
         }
 
         public static class Elites

@@ -1,5 +1,8 @@
 ﻿using RoR2;
 using RoR2.Items;
+using System;
+using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Moonstorm.Starstorm2.Items
 {
@@ -32,22 +35,96 @@ namespace Moonstorm.Starstorm2.Items
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.Needles;
+
             public void OnDamageDealtServer(DamageReport report)
             {
-                if (Util.CheckRoll((procChance * stack) * report.damageInfo.procCoefficient, body.master))
+                SS2Log.Debug(report.damageInfo.crit);
+            }
+
+            private void OnEnable()
+            {
+                On.RoR2.HealthComponent.TakeDamage += NeedlesCritMod;
+                
+            }
+            private void OnDisable()
+            {
+                On.RoR2.HealthComponent.TakeDamage -= NeedlesCritMod;
+            }
+
+            private void NeedlesCritMod(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
+            {
+                CharacterBody attackerBody = damageInfo.attacker.GetComponent<CharacterBody>();
+
+                if(attackerBody && !damageInfo.rejected && NetworkServer.active)
                 {
-                    if (!report.victimBody.HasBuff(SS2Content.Buffs.BuffNeedle))
+                    if (damageInfo.crit) //this means needles didn't help allow the crit - it would've happened anyway
                     {
-                        report.victimBody.AddTimedBuff(SS2Content.Buffs.BuffNeedle, needleBuffDuration * stack);
-                        //report.victimBody.AddTimedBuff(SS2Content.Buffs.BuffNeedleBuildup, ((buildupDuration + (stack - 1) * buildupStack)) * report.damageInfo.procCoefficient);
-                        //if (report.victimBody.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) >= neededBuildupAmount)
-                        //{
-                        //    report.victimBody.ClearTimedBuffs(SS2Content.Buffs.BuffNeedleBuildup);
-                        //    report.victimBody.AddTimedBuff(SS2Content.Buffs.BuffNeedle, needleBuffDuration);
-                        //}
+                        //doNeedleProc(self); 
+                    }
+                    else
+                    {
+                        //P(A+B) = P(A) + P(B) - P(AB)
+                        float intendedChance = attackerBody.crit + (self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) * attackerBody.inventory.GetItemCount(SS2Content.Items.Needles)); //assuming each buff is 1% per items
+                        float secondChance = (attackerBody.crit - intendedChance) / (attackerBody.crit - 100) * 100;
+                        bool secondCrit = Util.CheckRoll(secondChance);
+                        damageInfo.crit = secondCrit;
+                        if (damageInfo.crit)
+                        {
+                            doNeedleProc(self);
+                        }
+                        else
+                        {
+                            var tracker = self.body.gameObject.GetComponent<NeedleTracker>();
+                            if (!tracker)
+                            {
+                                tracker = self.body.gameObject.AddComponent<NeedleTracker>();
+                                tracker.procs = attackerBody.GetItemCount(SS2Content.Items.Needles);
+                                tracker.max = tracker.procs;
+                            }
+                            self.body.AddBuff(SS2Content.Buffs.BuffNeedleBuildup);
+                        }
                     }
                 }
+                
+                orig(self, damageInfo);
             }
+
+            public void doNeedleProc(HealthComponent self)
+            {
+                var tracker = self.body.gameObject.GetComponent<NeedleTracker>();
+                if (tracker)
+                {
+                    tracker.procs--;
+                }
+                if (!tracker || tracker.procs == 0)
+                {
+                    if (tracker)
+                    {
+                        Destroy(tracker);
+                    }
+                    int buffCount = self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup);
+                    for (int i = 0; i < buffCount; i++)
+                    {
+                        self.body.RemoveBuff(SS2Content.Buffs.BuffNeedleBuildup);
+                    }
+                }
+
+                EffectData effectData = new EffectData
+                {
+                    origin = self.body.corePosition
+                };
+                EffectManager.SpawnEffect(HealthComponent.AssetReferences.executeEffectPrefab, effectData, transmit: true);
+            }
+
+        }
+
+        public class NeedleTracker : MonoBehaviour
+        {
+            //helps keep track of the target and player responsible
+            //public CharacterBody PlayerOwner;
+            public int procs;
+            public int max;
+
         }
     }
 }
