@@ -63,7 +63,7 @@ That said, if you are looking to contribute to the project, set-up instructions 
 | Configure Addressable Graphics Settings | Enabled |  |
 | Ensure RoR2 Thunderstore Source | Enabled |  |
 | Install BepInEx | Enabled |  |
-| R2API Submodule Installer | Enabled | Make sure the following are enabled: ArtifactCode; Colors; ContentManagement; Core; DamageType; Difficulty; Director; Dot; Elites; Networking; Prefab; RecalculateStats |
+| R2API Submodule Installer | Enabled | Hit disable all button, the Serialized Hard Dependencies will stay enabledd |
 | Install Ancient Scepter | Enabled |  |
 | Install RoR2MultiplayerHLAPI | Disabled |  |
 | Install RoR2EditorKit | Disabled |  |
@@ -77,3 +77,10 @@ That said, if you are looking to contribute to the project, set-up instructions 
 ![](https://cdn.discordapp.com/attachments/1035279289668616202/1035292666038071296/unknown.png)
 
 * You're now ready to start development.
+
+* Issues Q&A
+Q: I'm havintg an issue where certain components cannot be added or general instability
+A: Make sure you didn't left InstallRoR2MultiplayerHLAPI and Install RoR2EditorKit enabled, having these enabled will cause issues due to duplicate assemblies
+
+Q: I'm having an issue where there are compiler errors due to DamageAPI/RecalcStatsAPI/OtherR2APISubmodule is missing
+A: Some of the project's soft dependencies, such as AncientScepter still rely on the old R2API, and as such, when they're installed, it installs R2API version 4.x.x, this causes duplicate types in the project, to fix this, just delete the R2API folder in the packages folder.
