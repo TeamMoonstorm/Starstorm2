@@ -29,9 +29,13 @@ namespace EntityStates.NemCommando
 
             skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
 
-            if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO" || skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
+            if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
             {
                 swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffectYellow");
+            }
+            if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO")
+            {
+                swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffectBlue");
             }
             else
             {

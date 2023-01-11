@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: EntityStates.Nemmando.BossAttackCharge
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.Nemmando.BossAttackCharge, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: baseChargeDuration
+      fieldValue:
+        stringValue: 1.75
+        objectValue: {fileID: 0}
+    - fieldName: chargeEffect
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 4556278966520942157, guid: 330f7f69723dbcd40ae6d5651cb9837e,
+          type: 3}
+    - fieldName: childName
+      fieldValue:
+        stringValue: SwordChargeEffect
+        objectValue: {fileID: 0}
+    - fieldName: zoomCameraPosition
+      fieldValue:
+        stringValue: 0 0 -5.3
+        objectValue: {fileID: 0}
