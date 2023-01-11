@@ -2,6 +2,7 @@
 using Moonstorm.Starstorm2;
 using RoR2;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace EntityStates.NemCommando
 {
@@ -55,11 +56,17 @@ namespace EntityStates.NemCommando
 
 
 
-            if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO" || skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
+            if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
             {
                 tracerPrefab = SS2Assets.LoadAsset<GameObject>("TracerNemCommandoShotgunYellow");
                 muzzleFlashPrefab = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoYellow");
                 hitSparkPrefab = SS2Assets.LoadAsset<GameObject>("HitsparkNemCommandoYellow");
+            }
+            if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO")
+            {
+                tracerPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/TracerCommandoShotgun.prefab").WaitForCompletion();
+                muzzleFlashPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/MuzzleflashFMJ.prefab").WaitForCompletion();
+                hitSparkPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/HitsparkCommandoShotgun.prefab").WaitForCompletion();
             }
             else
             {
@@ -78,8 +85,9 @@ namespace EntityStates.NemCommando
 
             EffectManager.SimpleMuzzleFlash(muzzleFlashPrefab, gameObject, muzzleName, false);
             Util.PlaySound("NemmandoSubmissionFire", gameObject);
-            if (modelAnimator.GetFloat("primaryPlaying") > 0.05) PlayCrossfade("Gesture, Additive, LeftArm", "FireGunSpecial", "Special.playbackRate", durationBetweenShots, durationBetweenShots / 2f);
-            else PlayCrossfade("Gesture, Override, LeftArm", "FireGunSpecial", "Special.playbackRate", durationBetweenShots, durationBetweenShots / 2f);
+
+            if (modelAnimator.GetFloat("primaryPlaying") > 0.05) PlayCrossfade("Gesture, Override, LowerLeftArm", "FireGunSpecial", "Special.playbackRate", durationBetweenShots, durationBetweenShots / 2f);
+            PlayCrossfade("Gesture, Override, LeftArm", "FireGunSpecial", "Special.playbackRate", durationBetweenShots, durationBetweenShots / 2f);
             AddRecoil(-0.8f * recoil, -1f * recoil, -0.1f * recoil, 0.15f * recoil);
 
             if (isAuthority)
@@ -113,6 +121,9 @@ namespace EntityStates.NemCommando
 
                 bulletAttack.Fire();
             }
+
+            //FindModelChild("casingParticle").GetComponent<ParticleSystem>().Emit((int)bulletCountPerShot);
+            //lol
 
             characterBody.AddSpreadBloom(2f * Commando.CommandoWeapon.FireBarrage.spreadBloomValue);
             totalBulletsFired++;
