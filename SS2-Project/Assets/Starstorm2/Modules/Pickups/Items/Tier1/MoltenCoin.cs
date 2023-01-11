@@ -35,7 +35,7 @@ namespace Moonstorm.Starstorm2.Items
 
                         body.master.GiveMoney((uint)(stack * (Run.instance.stageClearCount + (1 * 1f))));
                         MSUtil.PlayNetworkedSFX("MoltenCoin", report.victim.gameObject.transform.position);
-                        EffectManager.SimpleImpactEffect(HealthComponent.AssetReferences.gainCoinsImpactEffectPrefab, body.transform.position, UnityEngine.Vector3.up, true);
+                        EffectManager.SimpleImpactEffect(HealthComponent.AssetReferences.gainCoinsImpactEffectPrefab, report.victimBody.transform.position, UnityEngine.Vector3.up, true);
                     }
                 }
             }

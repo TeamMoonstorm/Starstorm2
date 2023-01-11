@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Moonstorm.Starstorm2.Equipments
 {
-    //[DisabledContent]
+    [DisabledContent]
     public class AffixPurple : EliteEquipmentBase
     {
         public override List<MSEliteDef> EliteDefs { get; } = new List<MSEliteDef>

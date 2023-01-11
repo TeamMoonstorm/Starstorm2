@@ -103,7 +103,7 @@ namespace Moonstorm.Starstorm2
 
         public static class Equipments
         {
-            //public static EquipmentDef ElitePurpleEquipment;
+            public static EquipmentDef ElitePurpleEquipment;
 
             public static EquipmentDef BackThruster;
 
