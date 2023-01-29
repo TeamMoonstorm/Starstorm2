@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08f74610dc9ac9d4dac443c315f5685d, type: 3}
   m_Name: Ensure RoR2 Thunderstore Source
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &-6261592550463955380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25,7 +25,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 235bc6f08aa9bcc46b2cc6ee311b44dc, type: 3}
   m_Name: Install DebugToolkit
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &-3236744828323427037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38,7 +38,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4e66fd1b2f0a6b4e951af502eba5a2b, type: 3}
   m_Name: Create Game Package
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &-2794804963982713906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 892ee265a9c0b884c8c9c36e42a802c6, type: 3}
   m_Name: Install BepInEx
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &-2789259938649931520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,7 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d0e45bf5627b554081a563dac04ff6a, type: 3}
   m_Name: Set Deferred Shading
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &-213018783543491819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e81dec9331ebba548b09674254134864, type: 3}
   m_Name: Wwise Blacklister
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &1314036043919218303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73dfaad4b0991214da3e623825c8357c, type: 3}
   m_Name: MMHook Generator
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
   assemblyNames:
   - RoR2.dll
   - KinematicCharacterController.dll
@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2636f9900aca35942b349a07d34faaf4, type: 3}
   m_Name: Assembly Publicizer
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
   assemblyNames:
   - RoR2.dll
   - KinematicCharacterController.dll
@@ -200,7 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a87a9f1780c348d4080afaf9971d3a7e, type: 3}
   m_Name: Import Assemblies
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &4128643384913986654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,7 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eecc301ed1414ee4ca063a9eeee2a159, type: 3}
   m_Name: TextMeshPro Uninstaller
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &5088177807840033198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,7 +226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8840720793112784295b7c9b06af7493, type: 3}
   m_Name: Get Bitness
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &5246268512910566304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,8 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1b0facc354ed134db02010df191c2d0, type: 3}
   m_Name: R2API Submodule Installer
   m_EditorClassIdentifier: 
-  enabled: 1
-  submoduleIndex: -1
+  enabled: 0
   serializeSelectionIntoJson: 1
   r2apiSubmodules:
   - submoduleName: R2API_ArtifactCode
@@ -265,7 +264,7 @@ MonoBehaviour:
     description: API for registering console commands
     dependedncyID: RiskofThunder-R2API_CommandHelper
     shouldInstall: 0
-    isHardDependency: 0
+    isHardDependency: 1
     dependencies:
     - BepInExPack
     - HookGenPatcher
@@ -491,7 +490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a17181e89416446b9fb82f03553599, type: 3}
   m_Name: RoR2 LegacyResourceAPI Patcher
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &7796958206258684881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,7 +503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b40885578be10f4785f1fa347e9fefa, type: 3}
   m_Name: Import Project Settings
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
   IncludedSettings: 0
 --- !u!114 &7862876282333460180
 MonoBehaviour:
@@ -518,7 +517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4090d1da9d2c4d64393fc97cd46e8414, type: 3}
   m_Name: Unity GUI Uninstaller
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &8085915275810920436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -531,7 +530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 512775de21a2e0e41ba77b90aced0c69, type: 3}
   m_Name: PostProcessing Unity Package Installer
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &8496320829191640364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -544,4 +543,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 211736d3c64c3e041a3ebe0fed60c843, type: 3}
   m_Name: Install Ancient Scepter
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
