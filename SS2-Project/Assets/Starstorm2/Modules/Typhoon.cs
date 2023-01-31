@@ -4,7 +4,6 @@ using RoR2;
 
 namespace Moonstorm.Starstorm2
 {
-    //I may make this into an abstract class but christ I don't want to. On the next update we should have difficulty defs so a lot of this will need scrapping, mainly the r2api stuff
     public static class Typhoon
     {
         public static R2API.ScriptableObjects.SerializableDifficultyDef TyphoonDef { get; private set; }
@@ -14,7 +13,7 @@ namespace Moonstorm.Starstorm2
 
         internal static void Init()
         {
-            TyphoonDef = SS2Assets.LoadAsset<R2API.ScriptableObjects.SerializableDifficultyDef>("Typhoon");
+            TyphoonDef = SS2Assets.LoadAsset<R2API.ScriptableObjects.SerializableDifficultyDef>("Typhoon", SS2Bundle.Base);
             DifficultyAPI.AddDifficulty(TyphoonDef);
             Run.onRunStartGlobal += Run_onRunStartGlobal;
             Run.onRunDestroyGlobal += Run_onRunDestroyGlobal;

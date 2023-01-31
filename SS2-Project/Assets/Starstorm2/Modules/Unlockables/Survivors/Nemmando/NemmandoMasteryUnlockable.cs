@@ -5,7 +5,7 @@ namespace Moonstorm.Starstorm2.Unlocks.Nemmando
 {
     public sealed class NemmandoMasteryUnlockable : UnlockableBase
     {
-        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skin.nemmando.mastery");
+        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skin.nemmando.mastery", SS2Bundle.Nemmando);
 
         /*public override void Initialize()
         {
@@ -16,7 +16,7 @@ namespace Moonstorm.Starstorm2.Unlocks.Nemmando
         {
             public override float RequiredDifficultyCoefficient { get; set; } = 3.0f;
 
-            public override CharacterBody RequiredCharacterBody { get; set; } = SS2Assets.LoadAsset<GameObject>("NemmandoBody").GetComponent<CharacterBody>();
+            public override CharacterBody RequiredCharacterBody { get; set; } = SS2Assets.LoadAsset<GameObject>("NemmandoBody", SS2Bundle.Nemmando).GetComponent<CharacterBody>();
         }
     }
 }

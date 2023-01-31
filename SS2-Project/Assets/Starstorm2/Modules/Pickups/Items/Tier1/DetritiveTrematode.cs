@@ -7,7 +7,7 @@ namespace Moonstorm.Starstorm2.Items
     public sealed class DetritiveTrematode : ItemBase
     {
         private const string token = "SS2_ITEM_DETRITIVETREMATODE_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("DetritiveTrematode");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("DetritiveTrematode", SS2Bundle.Items);
 
         [ConfigurableField(ConfigName = "Trematode Threshold", ConfigDesc = "Amount of missing health needed for Trematode to proc. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]

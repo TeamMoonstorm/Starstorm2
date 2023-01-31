@@ -13,7 +13,7 @@ namespace Moonstorm.Starstorm2.Items
     public sealed class RelicOfTermination : ItemBase
     {
         private const string token = "SS2_ITEM_RELICOFTERMINATION_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfTermination");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfTermination", SS2Bundle.Items);
 
         [ConfigurableField(ConfigDesc = "Time, in seconds, to kill the marked enemy before going on cooldown.")]
         [TokenModifier(token, StatTypes.Default, 0)]

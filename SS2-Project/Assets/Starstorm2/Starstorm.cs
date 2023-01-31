@@ -41,12 +41,11 @@ namespace Moonstorm.Starstorm2
             instance = this;
             pluginInfo = Info;
             SS2Log.logger = Logger;
-            if (DEBUG)
-            {
-                base.gameObject.AddComponent<SS2DebugUtil>();
-            }
+#if DEBUG
+            base.gameObject.AddComponent<SS2DebugUtil>();
+#endif
             new SS2Assets().Init();
-            if(!SS2Assets.LoadAsset<Texture2D>("spike"))
+            if(!SS2Assets.LoadAsset<Texture2D>("spike", SS2Bundle.Main))
             {
                 SS2Log.Fatal("Spike not found :c");
                 Destroy(this);

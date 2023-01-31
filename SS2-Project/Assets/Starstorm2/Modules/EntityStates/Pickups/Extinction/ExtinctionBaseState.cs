@@ -52,7 +52,7 @@ namespace EntityStates.Pickups.Extinction
             {
                 if (this.ownerBody.inventory)
                 {
-                    scale *= (float)this.ownerBody.inventory.GetItemCount(SS2Assets.LoadAsset<ItemDef>("RelicOfExtinction"));
+                    scale *= (float)this.ownerBody.inventory.GetItemCount(SS2Content.Items.RelicOfExtinction);
                 }
             }
             return scale;

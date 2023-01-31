@@ -9,7 +9,7 @@ namespace Moonstorm.Starstorm2.Items
     public sealed class Needles : ItemBase
     {
         private const string token = "SS2_ITEM_NEEDLES_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Needles");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Needles", SS2Bundle.Items);
 
         [ConfigurableField(ConfigDesc = "Chance for Needles to Proc. (100 = 100%)")]
         [TokenModifier(token, StatTypes.Default, 0)]

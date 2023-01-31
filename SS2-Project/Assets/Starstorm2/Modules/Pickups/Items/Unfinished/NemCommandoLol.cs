@@ -8,7 +8,7 @@ namespace Moonstorm.Starstorm2.Items
     [DisabledContent]
     public sealed class NemCommandoLol : ItemBase
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("NemCommandoLol");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("NemCommandoLol", SS2Bundle.Nemmando);
 
     }
 }

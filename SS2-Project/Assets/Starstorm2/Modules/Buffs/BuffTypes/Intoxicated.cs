@@ -6,7 +6,7 @@ namespace Moonstorm.Starstorm2.Buffs
     [DisabledContent]
     public sealed class Intoxicated : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffIntoxicated");
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffIntoxicated", SS2Bundle.Indev);
         public static BuffDef buff;
         public static DotController.DotIndex index;
 

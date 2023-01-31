@@ -10,7 +10,7 @@ namespace Moonstorm.Starstorm2.Unlocks.VanillaSurvivors
 {
     public class CrocoGrandMasteryUnlockable : UnlockableBase
     {
-        public override MSUnlockableDef UnlockableDef => SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skin.croco.grandmastery");
+        public override MSUnlockableDef UnlockableDef => SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skin.croco.grandmastery", SS2Bundle.Vanilla);
 
         public sealed class CrocoGrandMasteryAchievement : GenericMasteryAchievement
         {

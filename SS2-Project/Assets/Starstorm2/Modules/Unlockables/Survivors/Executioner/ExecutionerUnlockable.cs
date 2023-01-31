@@ -5,7 +5,7 @@ namespace Moonstorm.Starstorm2.Unlocks.Executioner
 {
     public sealed class ExecutionerUnlockable : UnlockableBase
     {
-        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.survivor.executioner");
+        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.survivor.executioner", SS2Bundle.Executioner);
 
         public override void Initialize()
         {

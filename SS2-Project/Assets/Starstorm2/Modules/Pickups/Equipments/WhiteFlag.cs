@@ -9,8 +9,8 @@ namespace Moonstorm.Starstorm2.Equipments
     public sealed class WhiteFlag : EquipmentBase
     {
         private const string token = "SS2_EQUIP_GREATERWARBANNER_DESC";
-        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("WhiteFlag");
-        public GameObject WarbannerObject { get; } = SS2Assets.LoadAsset<GameObject>("WhiteFlagWard");
+        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("WhiteFlag", SS2Bundle.Indev);
+        public GameObject WarbannerObject { get; } = SS2Assets.LoadAsset<GameObject>("WhiteFlagWard", SS2Bundle.Indev);
 
         /*[ConfigurableField(ConfigDesc = "Amount of Extra Regeneration. (1 = 100%)")]
         [TokenModifier(token, StatTypes.Percentage, 0)]

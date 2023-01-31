@@ -8,7 +8,7 @@ namespace Moonstorm.Starstorm2.Buffs
 {
     public sealed class BuffTerminationReady : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffTerminationReady");
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffTerminationReady", SS2Bundle.Items);
 
         //public override Material OverlayMaterial => SS2Assets.LoadAsset<Material>("matTerminationOverlay");
     }

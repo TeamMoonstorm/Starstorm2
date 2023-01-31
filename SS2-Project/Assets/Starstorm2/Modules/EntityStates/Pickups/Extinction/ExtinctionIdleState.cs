@@ -42,7 +42,8 @@ namespace EntityStates.Pickups.Extinction
                     this.fireStopwatch -= 1f / this.fireFrequency;
                 }
             }
-            if (base.isAuthority && (!base.ownerBody || base.ownerBody.inventory.GetItemCount(SS2Assets.LoadAsset<ItemDef>("RelicOfExtinction")) < 1))
+            if (base.isAuthority && (!base.ownerBody || base.ownerBody.inventory.GetItemCount(SS2Content
+                .Items.RelicOfExtinction) < 1))
             {
                 this.outer.SetNextState(new ExtinctionDieStage());
             }

@@ -39,8 +39,8 @@ namespace Moonstorm.Starstorm2.Modules
             {
                 if (self.projectilePrefab == ProjectileCatalog.GetProjectilePrefab(ProjectileCatalog.FindProjectileIndex("FMJRamping")) && self.GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[self.characterBody.skinIndex].nameToken == "SS2_SKIN_COMMANDO_VESTIGE")
                 {
-                    self.projectilePrefab = SS2Assets.LoadAsset<GameObject>("FMJRampingRed");
-                    self.effectPrefab = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoRed");
+                    self.projectilePrefab = SS2Assets.LoadAsset<GameObject>("FMJRampingRed", SS2Bundle.Vanilla);
+                    self.effectPrefab = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoRed", SS2Bundle.Vanilla);
                 }
             }
 
@@ -56,15 +56,15 @@ namespace Moonstorm.Starstorm2.Modules
                 {
                     if (self.tracerEffectPrefab == Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/TracerCommandoShotgun.prefab").WaitForCompletion())
                     {
-                        self.tracerEffectPrefab = SS2Assets.LoadAsset<GameObject>("TracerNemCommandoShotgunRed");
+                        self.tracerEffectPrefab = SS2Assets.LoadAsset<GameObject>("TracerNemCommandoShotgunRed", SS2Bundle.Vanilla);
                     }
                     if (self.muzzleFlashPrefab == Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/MuzzleflashFMJ.prefab").WaitForCompletion())
                     {
-                        self.muzzleFlashPrefab = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoRed");
+                        self.muzzleFlashPrefab = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoRed", SS2Bundle.Vanilla);
                     }
                     if (self.hitEffectPrefab == Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/HitsparkCommandoShotgun.prefab").WaitForCompletion())
                     {
-                        self.hitEffectPrefab = SS2Assets.LoadAsset<GameObject>("HitsparkNemCommandoRed");
+                        self.hitEffectPrefab = SS2Assets.LoadAsset<GameObject>("HitsparkNemCommandoRed", SS2Bundle.Vanilla);
                     }
                 }
             }

@@ -8,8 +8,8 @@ namespace Moonstorm.Starstorm2.Orbs
     public class ExecutionerIonSuperOrb : Orb
     {
         public float buffDuration = -1f;
-        private NetworkSoundEventDef sound = SS2Assets.LoadAsset<NetworkSoundEventDef>("SoundEventExecutionerGainCharge");
-        private GameObject orbEffect = SS2Assets.LoadAsset<GameObject>("ExecutionerIonSuperOrbEffect");
+        private NetworkSoundEventDef sound = SS2Assets.LoadAsset<NetworkSoundEventDef>("SoundEventExecutionerGainCharge", SS2Bundle.Executioner);
+        private GameObject orbEffect = SS2Assets.LoadAsset<GameObject>("ExecutionerIonSuperOrbEffect", SS2Bundle.Executioner);
         private HurtBox hurtBox;
         private const float speed = 50f;
 

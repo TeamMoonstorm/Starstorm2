@@ -7,7 +7,7 @@ namespace Moonstorm.Starstorm2.Buffs
 {
     public sealed class Insecticide : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffInsecticide");
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffInsecticide", SS2Bundle.Items);
         public static DotController.DotIndex index;
 
         public override void Initialize()

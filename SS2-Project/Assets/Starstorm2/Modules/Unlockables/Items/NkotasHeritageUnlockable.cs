@@ -6,7 +6,7 @@ namespace Moonstorm.Starstorm2.Unlocks.Pickups
 {
     public sealed class NkotasHeritageUnlockable : UnlockableBase
     {
-        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.item.nkotasheritage");
+        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.item.nkotasheritage", SS2Bundle.Items);
 
         public override void Initialize()
         {

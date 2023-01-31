@@ -5,7 +5,7 @@ namespace Moonstorm.Starstorm2.Unlocks.Nemmando
 {
     public sealed class NemmandoBossAttackUnlockable : UnlockableBase
     {
-        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skill.nemmando.bossattack");
+        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skill.nemmando.bossattack", SS2Bundle.Nemmando);
 
         public override void Initialize()
         {

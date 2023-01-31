@@ -15,7 +15,7 @@ namespace Moonstorm.Starstorm2.Interactables
 
         private static GameObject interactable;
 
-        public override MSInteractableDirectorCard InteractableDirectorCard { get; } = SS2Assets.LoadAsset<MSInteractableDirectorCard>("midcDropPod");
+        public override MSInteractableDirectorCard InteractableDirectorCard { get; } = SS2Assets.LoadAsset<MSInteractableDirectorCard>("midcDropPod", SS2Bundle.Indev);
 
         public override void Initialize()
         {

@@ -6,7 +6,7 @@ namespace Moonstorm.Starstorm2.Buffs
 {
     public sealed class Chocolate : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffChocolate");
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffChocolate", SS2Bundle.Items);
 
         //TODO: Add choccy effect
         public sealed class Behavior : BaseBuffBodyBehavior, IBodyStatArgModifier

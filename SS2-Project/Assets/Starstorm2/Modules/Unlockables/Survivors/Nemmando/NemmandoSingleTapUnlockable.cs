@@ -7,7 +7,7 @@ namespace Moonstorm.Starstorm2.Unlocks.Nemmando
 {
     public sealed class NemmandoSingleTapUnlockable : UnlockableBase
     {
-        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skill.nemmando.singletap");
+        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skill.nemmando.singletap", SS2Bundle.Nemmando);
 
         public override void Initialize()
         {
@@ -19,7 +19,7 @@ namespace Moonstorm.Starstorm2.Unlocks.Nemmando
             {
                 get
                 {
-                    var nemmandoBodyPrefab = SS2Assets.LoadAsset<GameObject>("NemmandoBody");
+                    var nemmandoBodyPrefab = SS2Assets.LoadAsset<GameObject>("NemmandoBody", SS2Bundle.Nemmando);
                     if (nemmandoBodyPrefab)
                     {
                         return nemmandoBodyPrefab.GetComponent<CharacterBody>().bodyIndex;

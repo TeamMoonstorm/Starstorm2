@@ -7,7 +7,7 @@ namespace Moonstorm.Starstorm2.Buffs
     [DisabledContent]
     public sealed class Wealth : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffScavenger");
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffScavenger", SS2Bundle.Indev);
 
         public sealed class Behavior : BaseBuffBodyBehavior, IBodyStatArgModifier
         {
