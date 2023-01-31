@@ -29,7 +29,7 @@ namespace EntityStates.Executioner
 
             duration = baseDuration;
             Util.PlayAttackSpeedSound("ExecutionerUtility", gameObject, 1.0f);
-            PlayAnimation("FullBody, Override", "Utility", "Utility.playbackRate", duration);
+            PlayAnimation("FullBody, Override", "Utility", "Utility.playbackRate", duration * 1.75f);
 
             HopIfAirborne();
 
