@@ -22,7 +22,22 @@ namespace Moonstorm.Starstorm2.Components
                 {
                     if (damageType == DamageType.VoidDeath && master.GetComponent<NemesisResistances>())
                     {
-                        ChatMessage.SendColored("He laughs in the face of the void.", ColorCatalog.ColorIndex.VoidItem);
+                        //ChatMessage.SendColored("He laughs in the face of the void.", ColorCatalog.ColorIndex.VoidItem);
+
+                        int rng = Run.instance.runRNG.RangeInt(1, 4);
+                        switch (rng)
+                        {
+                            case 1:
+                                ChatMessage.Send(body.GetDisplayName() + ": <link=\"textShaky\">Not like that</link>.");
+                                break;
+                            case 2:
+                                ChatMessage.Send(body.GetDisplayName() + ": <link=\"textShaky\">It's not over yet</link>.");
+                                break;
+                            case 3:
+                                ChatMessage.Send(body.GetDisplayName() + ": <link=\"textShaky\">Old trick</link>.");
+                                break;
+                        }
+
                         return;
                     }
                 }

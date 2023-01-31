@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace Moonstorm.Starstorm2.Survivors
 {
+    [DisabledContent]
     public sealed class Executioner : SurvivorBase
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("ExecutionerBody");

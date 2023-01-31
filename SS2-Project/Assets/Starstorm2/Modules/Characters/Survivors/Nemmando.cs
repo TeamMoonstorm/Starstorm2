@@ -7,6 +7,7 @@ using System.Collections;
 
 namespace Moonstorm.Starstorm2.Survivors
 {
+    [DisabledContent]
     public sealed class Nemmando : SurvivorBase
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemmandoBody");

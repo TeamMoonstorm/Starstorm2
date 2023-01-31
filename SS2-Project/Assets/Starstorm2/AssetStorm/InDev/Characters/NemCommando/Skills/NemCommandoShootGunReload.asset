@@ -17,7 +17,7 @@ MonoBehaviour:
   skillDescriptionToken: SS2_NEMCOMMANDO_SECONDARY_SHOOT_DESCRIPTION
   keywordTokens:
   - KEYWORD_AGILE
-  icon: {fileID: 21300000, guid: f854d0a8d71b92045a966773cc397aa6, type: 3}
+  icon: {fileID: 21300000, guid: df08d89f6923bc749bdfd90a6eece5f4, type: 3}
   activationStateMachineName: Gun
   activationState:
     _typeName: EntityStates.NemCommando.ShootGun2, Starstorm2, Version=1.0.0.0, Culture=neutral,
@@ -41,4 +41,4 @@ MonoBehaviour:
     _typeName: EntityStates.NemCommando.ReloadGun, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
   reloadInterruptPriority: 0
-  graceDuration: 1
+  graceDuration: 0.5
