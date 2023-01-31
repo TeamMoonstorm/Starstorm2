@@ -31,7 +31,7 @@ namespace Moonstorm.Starstorm2.Items
         [TokenModifier(token, StatTypes.Default, 4)]
         public static float needleBuffDuration = 2f;
 
-        public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
+        public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver, IOnIncomingDamageOtherServerReciever
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.Needles;
@@ -41,53 +41,94 @@ namespace Moonstorm.Starstorm2.Items
                 SS2Log.Debug(report.damageInfo.crit);
             }
 
-            private void OnEnable()
+            public void OnIncomingDamageOther(HealthComponent self, DamageInfo damageInfo)
             {
-                On.RoR2.HealthComponent.TakeDamage += NeedlesCritMod;
-                
-            }
-            private void OnDisable()
-            {
-                On.RoR2.HealthComponent.TakeDamage -= NeedlesCritMod;
-            }
-
-            private void NeedlesCritMod(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
-            {
-                CharacterBody attackerBody = damageInfo.attacker.GetComponent<CharacterBody>();
-
-                if(attackerBody && !damageInfo.rejected && NetworkServer.active)
+                //CharacterBody attackerBody = damageInfo.attacker.GetComponent<CharacterBody>();
+                if (damageInfo.attacker)
                 {
-                    if (damageInfo.crit) //this means needles didn't help allow the crit - it would've happened anyway
+                    CharacterBody attackerBody = damageInfo.attacker.GetComponent<CharacterBody>();
+                    if (attackerBody && !damageInfo.rejected && NetworkServer.active)
                     {
-                        //doNeedleProc(self); 
-                    }
-                    else
-                    {
-                        //P(A+B) = P(A) + P(B) - P(AB)
-                        float intendedChance = attackerBody.crit + (self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) * attackerBody.inventory.GetItemCount(SS2Content.Items.Needles)); //assuming each buff is 1% per items
-                        float secondChance = (attackerBody.crit - intendedChance) / (attackerBody.crit - 100) * 100;
-                        bool secondCrit = Util.CheckRoll(secondChance);
-                        damageInfo.crit = secondCrit;
-                        if (damageInfo.crit)
+                        if (damageInfo.crit && damageInfo.procCoefficient > 0f) //this means needles didn't help allow the crit - it would've happened anyway
                         {
-                            doNeedleProc(self);
+                            //doNeedleProc(self); 
                         }
                         else
                         {
-                            var tracker = self.body.gameObject.GetComponent<NeedleTracker>();
-                            if (!tracker)
+                            //P(A+B) = P(A) + P(B) - P(AB)
+                            float intendedChance = attackerBody.crit + (self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) * attackerBody.inventory.GetItemCount(SS2Content.Items.Needles)); //assuming each buff is 1% per items
+                            float secondChance = (attackerBody.crit - intendedChance) / (attackerBody.crit - 100) * 100;
+                            bool secondCrit = Util.CheckRoll(secondChance);
+                            damageInfo.crit = secondCrit;
+                            if (damageInfo.crit && damageInfo.procCoefficient > 0f)
                             {
-                                tracker = self.body.gameObject.AddComponent<NeedleTracker>();
-                                tracker.procs = attackerBody.GetItemCount(SS2Content.Items.Needles);
-                                tracker.max = tracker.procs;
+                                doNeedleProc(self);
                             }
-                            self.body.AddBuff(SS2Content.Buffs.BuffNeedleBuildup);
+                            else
+                            {
+                                var tracker = self.body.gameObject.GetComponent<NeedleTracker>();
+                                if (!tracker)
+                                {
+                                    tracker = self.body.gameObject.AddComponent<NeedleTracker>();
+                                    tracker.procs = attackerBody.GetItemCount(SS2Content.Items.Needles);
+                                    tracker.max = tracker.procs;
+                                }
+                                self.body.AddBuff(SS2Content.Buffs.BuffNeedleBuildup);
+                            }
                         }
                     }
                 }
                 
-                orig(self, damageInfo);
+
             }
+
+            //private void OnEnable()
+            //{
+            //    On.RoR2.HealthComponent.TakeDamage += NeedlesCritMod;
+            //    
+            //}
+            //private void OnDisable()
+            //{
+            //    On.RoR2.HealthComponent.TakeDamage -= NeedlesCritMod;
+            //}
+            //
+            //private void NeedlesCritMod(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
+            //{
+            //    CharacterBody attackerBody = damageInfo.attacker.GetComponent<CharacterBody>();
+            //
+            //    if(attackerBody && !damageInfo.rejected && NetworkServer.active)
+            //    {
+            //        if (damageInfo.crit) //this means needles didn't help allow the crit - it would've happened anyway
+            //        {
+            //            //doNeedleProc(self); 
+            //        }
+            //        else
+            //        {
+            //            //P(A+B) = P(A) + P(B) - P(AB)
+            //            float intendedChance = attackerBody.crit + (self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) * attackerBody.inventory.GetItemCount(SS2Content.Items.Needles)); //assuming each buff is 1% per items
+            //            float secondChance = (attackerBody.crit - intendedChance) / (attackerBody.crit - 100) * 100;
+            //            bool secondCrit = Util.CheckRoll(secondChance);
+            //            damageInfo.crit = secondCrit;
+            //            if (damageInfo.crit)
+            //            {
+            //                doNeedleProc(self);
+            //            }
+            //            else
+            //            {
+            //                var tracker = self.body.gameObject.GetComponent<NeedleTracker>();
+            //                if (!tracker)
+            //                {
+            //                    tracker = self.body.gameObject.AddComponent<NeedleTracker>();
+            //                    tracker.procs = attackerBody.GetItemCount(SS2Content.Items.Needles);
+            //                    tracker.max = tracker.procs;
+            //                }
+            //                self.body.AddBuff(SS2Content.Buffs.BuffNeedleBuildup);
+            //            }
+            //        }
+            //    }
+            //    
+            //    orig(self, damageInfo);
+            //}
 
             public void doNeedleProc(HealthComponent self)
             {
@@ -115,7 +156,6 @@ namespace Moonstorm.Starstorm2.Items
                 };
                 EffectManager.SpawnEffect(HealthComponent.AssetReferences.executeEffectPrefab, effectData, transmit: true);
             }
-
         }
 
         public class NeedleTracker : MonoBehaviour
