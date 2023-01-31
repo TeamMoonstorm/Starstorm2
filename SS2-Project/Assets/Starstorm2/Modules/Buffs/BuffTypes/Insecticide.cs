@@ -1,4 +1,6 @@
-﻿using R2API;
+﻿using Moonstorm.Components;
+using Moonstorm.Starstorm2.Items;
+using R2API;
 using RoR2;
 
 namespace Moonstorm.Starstorm2.Buffs
@@ -10,7 +12,7 @@ namespace Moonstorm.Starstorm2.Buffs
 
         public override void Initialize()
         {
-            index = DotAPI.RegisterDotDef(8, 0.125f, DamageColorIndex.Poison, BuffDef);
+            index = DotAPI.RegisterDotDef(0.25f, 0.15f, DamageColorIndex.DeathMark, BuffDef);
         }
     }
 }

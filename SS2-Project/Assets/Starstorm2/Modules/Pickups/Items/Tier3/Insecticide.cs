@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Moonstorm.Starstorm2.Items
 {
-    [DisabledContent]
+    //[DisabledContent]
     public sealed class Insecticide : ItemBase
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Insecticide");
@@ -40,7 +40,7 @@ namespace Moonstorm.Starstorm2.Items
             private static ItemDef GetItemDef() => SS2Content.Items.Insecticide;
             public void OnDamageDealtServer(DamageReport report)
             {
-                if (report.damageInfo.procCoefficient > 0)
+                if (report.victimBody.teamComponent.teamIndex != report.attackerBody.teamComponent.teamIndex && report.damageInfo.procCoefficient > 0)
                 {
                     var dotInfo = new InflictDotInfo()
                     {
@@ -48,7 +48,7 @@ namespace Moonstorm.Starstorm2.Items
                         victimObject = report.victim.gameObject,
                         dotIndex = Buffs.Insecticide.index,
                         duration = report.damageInfo.procCoefficient * duration,
-                        damageMultiplier = 0.45f
+                        damageMultiplier = stack
                     };
                     DotController.InflictDot(ref dotInfo);
                 }

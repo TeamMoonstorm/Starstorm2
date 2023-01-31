@@ -49,7 +49,16 @@ namespace Moonstorm.Starstorm2.Items
                     CharacterBody attackerBody = damageInfo.attacker.GetComponent<CharacterBody>();
                     if (attackerBody && !damageInfo.rejected && NetworkServer.active)
                     {
-                        if (damageInfo.crit && damageInfo.procCoefficient > 0f) //this means needles didn't help allow the crit - it would've happened anyway
+                        //doNeedleProc(self); 
+                    }
+                    else
+                    {
+                        //P(A+B) = P(A) + P(B) - P(AB)
+                        float intendedChance = attackerBody.crit + (self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) * attackerBody.inventory.GetItemCount(SS2Content.Items.Needles)); //assuming each buff is 1% per items
+                        float secondChance = (attackerBody.crit - intendedChance) / (attackerBody.crit - 100) * 100;
+                        bool secondCrit = Util.CheckRoll(secondChance);
+                        damageInfo.crit = secondCrit;
+                        if (damageInfo.crit && damageInfo.procCoefficient > 0f)
                         {
                             //doNeedleProc(self); 
                         }

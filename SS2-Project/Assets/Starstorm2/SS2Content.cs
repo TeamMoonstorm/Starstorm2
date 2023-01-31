@@ -103,7 +103,7 @@ namespace Moonstorm.Starstorm2
 
         public static class Equipments
         {
-            //public static EquipmentDef AffixVoid;
+            public static EquipmentDef ElitePurpleEquipment;
 
             public static EquipmentDef BackThruster;
 
@@ -176,6 +176,10 @@ namespace Moonstorm.Starstorm2
 
             public static BuffDef BuffX4;
 
+            public static BuffDef bdElitePurple;
+
+            public static BuffDef bdPurplePoison;
+			
             public static BuffDef BuffTerminationCooldown;
 
             public static BuffDef BuffTerminationReady;
@@ -185,7 +189,7 @@ namespace Moonstorm.Starstorm2
 
         public static class Elites
         {
-            //public static EliteDef Void;
+            //public static EliteDef edPurple;
         }
 
         public static class Survivors
@@ -250,10 +254,10 @@ namespace Moonstorm.Starstorm2
                 {
                     new Modules.Projectiles().Initialize();
                 },
-                /*delegate
+                delegate
                 {
                     new Modules.Elites().Initialize();
-                },*/
+                },
                 delegate
                 {
                     Typhoon.Init();
@@ -327,10 +331,10 @@ namespace Moonstorm.Starstorm2
                 {
                     PopulateTypeFields(typeof(Buffs), ContentPack.buffDefs);
                 },
-                /*delegate
+                delegate
                 {
                     PopulateTypeFields(typeof(Elites), ContentPack.eliteDefs);
-                },*/
+                },
                 delegate
                 {
                     PopulateTypeFields(typeof(Survivors), ContentPack.survivorDefs);

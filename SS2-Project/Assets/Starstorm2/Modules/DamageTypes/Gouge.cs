@@ -11,7 +11,7 @@ namespace Moonstorm.Starstorm2.DamageTypes
 
         public static DotController.DotIndex DotIndex;
 
-        public static float Duration = 3;
+        public static float Duration = 2;
 
         public static ModdedDamageType gougeDamageType;
 
@@ -42,7 +42,7 @@ namespace Moonstorm.Starstorm2.DamageTypes
                     victimObject = victimBody.gameObject,
                     dotIndex = Buffs.Gouge.index,
                     duration = 2,
-                    //damageMultiplier = gougeDamage,
+                    damageMultiplier = 1,
                 };
                 DotController.InflictDot(ref dotInfo);
             }

@@ -12,6 +12,7 @@ namespace Moonstorm.Starstorm2
         internal void Init()
         {
             LoadLanguages();
+            TMProEffects.Init();
         }
     }
 }

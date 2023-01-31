@@ -54,8 +54,8 @@ namespace EntityStates.Nemmando
                     ChildLocator effectChildLocator = chargeEffectInstance.GetComponent<ChildLocator>();
                     var main = effectChildLocator.FindChild("Charge").GetComponent<ParticleSystem>().main;
                     main.startLifetime = chargeDuration;
-                    main = effectChildLocator.FindChild("Shadow").GetComponent<ParticleSystem>().main;
-                    main.startLifetime = chargeDuration;
+                    //main = effectChildLocator.FindChild("Shadow").GetComponent<ParticleSystem>().main;
+                    //main.startLifetime = chargeDuration;
                     main = effectChildLocator.FindChild("FullCharge").GetComponent<ParticleSystem>().main;
                     main.startDelay = chargeDuration;
                     foreach (ParticleSystem particleSystem in chargeEffectInstance.GetComponentsInChildren<ParticleSystem>())

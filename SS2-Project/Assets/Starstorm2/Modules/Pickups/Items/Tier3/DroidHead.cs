@@ -10,15 +10,15 @@ namespace Moonstorm.Starstorm2.Items
         private const string token = "SS2_ITEM_DROIDHEAD_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("DroidHead");
 
-        [ConfigurableField(ConfigDesc = "Amount of extra damage for base and per stack, Percentage (1 = 100%)")]
+        [ConfigurableField(ConfigDesc = "Damage dealt by Security Drones, at base and per stack. Percentage (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float baseDamage = 1f;
 
-        [ConfigurableField(ConfigDesc = "Base lifetime of the security drone, in seconds.")]
+        [ConfigurableField(ConfigDesc = "Base life time of the Security Drone, in seconds.")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static float baseLifeTime = 20f;
 
-        [ConfigurableField(ConfigDesc = "Lifetime of the security drone per stack, in seconds.")]
+        [ConfigurableField(ConfigDesc = "Life time of the Security Drone per stack, in seconds.")]
         [TokenModifier(token, StatTypes.Default, 2)]
         public static float stackLifeTime = 5f;
 
@@ -32,11 +32,10 @@ namespace Moonstorm.Starstorm2.Items
             {
                 var victim = damageReport.victimBody;
                 var victimEquipment = victim.inventory.GetEquipmentIndex();
-                if (victim.teamComponent.teamIndex != body.teamComponent.teamIndex) //This wasnt necesary before. but now drones from droidhead spawns another drone when they die. just gotta make sure later to do an if(victimbody.gameObject != DroidHeadDroneObject)
+                if (victim.teamComponent.teamIndex != body.teamComponent.teamIndex)
                 {
-                    if (victim.isElite)
-                    {
-                        var itemName = victim.equipmentSlot.name;
+                    if (victim.isElite && victimEquipment != DLC1Content.Equipment.EliteVoidEquipment.equipmentIndex)
+                    {              
                         var droneSummon = new MasterSummon();
                         droneSummon.position = victim.corePosition;
                         droneSummon.masterPrefab = masterPrefab;
@@ -50,15 +49,9 @@ namespace Moonstorm.Starstorm2.Items
                             droidBody.baseDamage *= (baseDamage * stack);
 
                             Inventory droidInventory = droneMaster.inventory;
-                            
-                            if (!itemName.Contains("Void"))
-                            {
-                                droidInventory.SetEquipmentIndex(victimEquipment);
-                            }
-                            else
-                            {
-                                SS2Log.Debug("void elite");
-                            }
+
+                            droidInventory.SetEquipmentIndex(victimEquipment);
+
                             Util.PlaySound("DroidHead", body.gameObject);
                         }
                     }
