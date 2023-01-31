@@ -13,6 +13,7 @@ using MonsterSpawnDistance = RoR2.DirectorCore.MonsterSpawnDistance;
 namespace EntityStates.Events
 {
     //TODO: Post processing
+    //Does it need it? 
     public class GenericNemesisEvent : EventState
     {
         public static GameObject musicOverridePrefab;
@@ -124,7 +125,7 @@ namespace EntityStates.Events
 
             if (chosenPlayer)
                 spawnTarget = chosenPlayer.GetComponent<CharacterBody>().coreTransform;
-            if (TeleporterInteraction.instance && TeleporterInteraction.instance.currentState.GetType() != typeof(TeleporterInteraction.ChargingState) || !chosenPlayer)
+            if (TeleporterInteraction.instance && /*TeleporterInteraction.instance.currentState.GetType() != typeof(TeleporterInteraction.ChargingState) ||*/ !chosenPlayer)
             {
                 spawnTarget = TeleporterInteraction.instance.transform;
                 distance = MonsterSpawnDistance.Close;
