@@ -5,7 +5,7 @@ namespace Moonstorm.Starstorm2.Items
    [DisabledContent]
     public sealed class WonderHerbs : ItemBase
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("WonderHerbs");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("WonderHerbs", SS2Bundle.Items);
 
         [ConfigurableField(ConfigDesc = "Bonus healing per herbs. (1 = 100%)")]
         [TokenModifier("SS2_ITEM_FORK_DESC", StatTypes.MultiplyByN, 0, "100")]

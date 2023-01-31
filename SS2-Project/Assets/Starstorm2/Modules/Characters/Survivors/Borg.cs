@@ -6,8 +6,8 @@ namespace Moonstorm.Starstorm2.Survivors
     [DisabledContent]
     public sealed class Borg : SurvivorBase
     {
-        public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("SurvivorBorg");
-        public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("BorgBody");
+        public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("SurvivorBorg", SS2Bundle.Indev);
+        public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("BorgBody", SS2Bundle.Indev);
         public override GameObject MasterPrefab { get; } = null;
 
         /*public override void ModifyPrefab()

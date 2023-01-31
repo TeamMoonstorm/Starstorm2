@@ -6,14 +6,14 @@ namespace Moonstorm.Starstorm2.Items
 {
     public sealed class Cognation : ItemBase
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Cognation");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Cognation", SS2Bundle.Items);
 
         public sealed class Behavior : BaseItemBodyBehavior
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.Cognation;
 
-            private Material ghostMaterial = SS2Assets.LoadAsset<Material>("matCognation");
+            private Material ghostMaterial = SS2Assets.LoadAsset<Material>("matCognation", SS2Bundle.Items);
 
             private CharacterModel model;
 

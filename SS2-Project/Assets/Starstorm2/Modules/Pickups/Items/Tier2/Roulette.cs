@@ -9,7 +9,7 @@ namespace Moonstorm.Starstorm2.Items
     public sealed class Roulette : ItemBase
     {
         private const string token = "SS2_ITEM_JETBOOTS_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Roulette");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Roulette", SS2Bundle.Items);
 
         public sealed class Behavior : BaseItemBodyBehavior
         {

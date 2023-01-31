@@ -9,9 +9,9 @@ namespace Moonstorm.Starstorm2.Survivors
     [DisabledContent]
     public sealed class NemBandit : SurvivorBase
     {
-        public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemBanditBody");
-        public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemmandoMonsterMaster");
-        public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("survivorNemBandit");
+        public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemBanditBody", SS2Bundle.Indev);
+        public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemmandoMonsterMaster", SS2Bundle.Indev);
+        public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("survivorNemBandit", SS2Bundle.Indev);
 
         public override void Initialize()
         {

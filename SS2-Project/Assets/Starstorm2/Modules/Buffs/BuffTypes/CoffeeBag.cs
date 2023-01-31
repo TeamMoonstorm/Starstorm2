@@ -7,6 +7,6 @@ namespace Moonstorm.Starstorm2.Buffs
 {
     public sealed class CoffeeBag : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffCoffeeBag");
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffCoffeeBag", SS2Bundle.Items);
     }
 }

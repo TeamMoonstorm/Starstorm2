@@ -10,13 +10,13 @@ namespace Moonstorm.Starstorm2.Buffs
     [DisabledContent]
     public sealed class AffixVoid : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffAffixVoid");
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffAffixVoid", SS2Bundle.Indev);
 
         public sealed class Behavior : BaseBuffBodyBehavior
         {
             [BuffDefAssociation]
             public static BuffDef GetBuffDef() => SS2Content.Buffs.BuffAffixVoid;
-            public static GameObject pulsePrefab = SS2Assets.LoadAsset<GameObject>("VoidElitePulse");
+            public static GameObject pulsePrefab = SS2Assets.LoadAsset<GameObject>("VoidElitePulse", SS2Bundle.Indev);
 
             //Prefab info:
             //Final radius: 10, Duration 1.0

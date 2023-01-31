@@ -9,7 +9,7 @@ namespace Moonstorm.Starstorm2.Items
     public sealed class ErraticGadget : ItemBase
     {
         private const string token = "SS2_ITEM_ERRATICGADGET_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ErraticGadget");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ErraticGadget", SS2Bundle.Items);
 
         [ConfigurableField(ConfigDesc = "Base crit chance granted by the first stack of Erratic Gadget.")]
         [TokenModifier(token, StatTypes.Default, 0)]

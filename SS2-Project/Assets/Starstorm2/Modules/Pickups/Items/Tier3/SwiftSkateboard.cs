@@ -10,7 +10,7 @@ namespace Moonstorm.Starstorm2.Items
     {
         public const string token = "SS2_ITEM_SKATEBOARD_DESC";
 
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("SwiftSkateboard");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("SwiftSkateboard", SS2Bundle.Items);
 
         [ConfigurableField(ConfigDesc = "Movement speed bonus for each skateboard push. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]

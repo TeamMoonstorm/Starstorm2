@@ -8,8 +8,8 @@ namespace Moonstorm.Starstorm2.Buffs
 {
     public sealed class Sigil : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffSigil");
-        public override Material OverlayMaterial { get; } = SS2Assets.LoadAsset<Material>("matSigilBuffOverlay");
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffSigil", SS2Bundle.Items);
+        public override Material OverlayMaterial { get; } = SS2Assets.LoadAsset<Material>("matSigilBuffOverlay", SS2Bundle.Items);
 
         public sealed class Behavior : BaseBuffBodyBehavior, IBodyStatArgModifier
         {

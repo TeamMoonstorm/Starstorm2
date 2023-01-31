@@ -9,9 +9,9 @@ namespace Moonstorm.Starstorm2.Survivors
     [DisabledContent]
     public sealed class Executioner : SurvivorBase
     {
-        public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("ExecutionerBody");
-        public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("ExecutionerMonsterMasterNew");
-        public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("SurvivorExecutioner");
+        public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("ExecutionerBody", SS2Bundle.Executioner);
+        public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("ExecutionerMonsterMasterNew", SS2Bundle.Executioner);
+        public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("SurvivorExecutioner", SS2Bundle.Executioner);
 
         public static ReadOnlyCollection<BodyIndex> BodiesThatGiveSuperCharge { get; private set; }
         private static List<BodyIndex> bodiesThatGiveSuperCharge = new List<BodyIndex>();

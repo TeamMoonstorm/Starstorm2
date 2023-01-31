@@ -5,7 +5,7 @@ namespace Moonstorm.Starstorm2.Unlocks.Pickups
 {
     public sealed class DiaryUnlockable : UnlockableBase
     {
-        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.item.diary");
+        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.item.diary", SS2Bundle.Items);
 
         public override void Initialize()
         {

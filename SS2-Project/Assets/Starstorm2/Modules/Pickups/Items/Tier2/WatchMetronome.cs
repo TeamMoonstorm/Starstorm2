@@ -8,7 +8,7 @@ namespace Moonstorm.Starstorm2.Items
     public sealed class WatchMetronome : ItemBase
     {
         private const string token = "SS2_ITEM_WATCHMETRONOME_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("WatchMetronome");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("WatchMetronome", SS2Bundle.Items);
 
         [ConfigurableField(ConfigDesc = "Amount of charges per stack.")]
         [TokenModifier(token, StatTypes.Default, 0)]

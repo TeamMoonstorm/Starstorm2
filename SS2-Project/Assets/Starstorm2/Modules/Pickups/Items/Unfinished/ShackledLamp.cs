@@ -8,7 +8,7 @@ namespace Moonstorm.Starstorm2.Items
     [DisabledContent]
     public sealed class ShackledLamp : ItemBase
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ShackledLamp");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ShackledLamp", SS2Bundle.Indev);
 
         public sealed class Behavior : BaseItemBodyBehavior
         {

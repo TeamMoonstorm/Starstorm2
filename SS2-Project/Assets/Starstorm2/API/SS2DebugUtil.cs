@@ -16,7 +16,7 @@ namespace Moonstorm.Starstorm2.API
             {
                 var inputBank = PlayerCharacterMasterController.instances[0].master.GetBodyObject().GetComponent<InputBankTest>();
                 var position = inputBank.aimOrigin + inputBank.aimDirection * 5;
-                var effect = SS2Assets.LoadAsset<GameObject>("Center");
+                var effect = SS2Assets.LoadAsset<GameObject>("Center", SS2Bundle.All);
                 Instantiate(effect, position, Quaternion.identity);
             }
             if (input1)

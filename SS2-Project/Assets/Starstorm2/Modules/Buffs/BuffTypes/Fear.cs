@@ -15,7 +15,7 @@ namespace Moonstorm.Starstorm2.Buffs
 {
     public sealed class Fear : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffFear");
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffFear", SS2Bundle.Executioner);
 
         public override void Initialize()
         {

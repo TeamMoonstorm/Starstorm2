@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: swuffBuild
   m_EditorClassIdentifier: 
   Data:
+  - {fileID: 7532684020014524547}
   - {fileID: 1865877500085563225}
   - {fileID: 317633807484698766}
   QuickAccess: 1
@@ -55,3 +56,17 @@ MonoBehaviour:
   Active: 1
   OverrideManifest: 1
   targetpipeline: {fileID: 11400000, guid: 4e0ada562e823934dad284255704129a, type: 2}
+--- !u!114 &7532684020014524547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dba11a23eb01c7a4aa61a8ab800c27dd, type: 3}
+  m_Name: ChangeAssemblyBuildMode
+  m_EditorClassIdentifier: 
+  Active: 1
+  buildMode: 0
