@@ -132,7 +132,7 @@ namespace Moonstorm.Starstorm2.Items
 
             private void OnDisable()
             {
-                EquipmentSlot.onServerEquipmentActivated += GrantEchelonBuff;
+                EquipmentSlot.onServerEquipmentActivated -= GrantEchelonBuff;
             }
 
             private void GrantEchelonBuff(EquipmentSlot arg1, EquipmentIndex arg2)
