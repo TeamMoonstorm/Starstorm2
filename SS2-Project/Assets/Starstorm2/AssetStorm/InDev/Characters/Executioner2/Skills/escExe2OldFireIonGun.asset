@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: EntityStates.Executioner.FireIonSummon
+  m_Name: escExe2OldFireIonGun
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: 
+    assemblyQualifiedName: EntityStates.Executioner2.FireIonGunOld, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
     - fieldName: damageCoefficient
@@ -26,7 +27,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: baseDuration
       fieldValue:
-        stringValue: 0.075
+        stringValue: 0.115
         objectValue: {fileID: 0}
     - fieldName: recoil
       fieldValue:
@@ -63,5 +64,5 @@ MonoBehaviour:
           type: 3}
     - fieldName: useAimAssist
       fieldValue:
-        stringValue: 0
+        stringValue: 1
         objectValue: {fileID: 0}

@@ -7,9 +7,9 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace EntityStates.Executioner
+namespace EntityStates.Executioner2
 {
-    public class FireIonGun : BaseSkillState
+    public class FireIonGunOld : BaseSkillState
     {
         [TokenModifier("SS2_EXECUTIONER_IONGUN_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
         public static float damageCoefficient = 3.8f;
@@ -60,16 +60,11 @@ namespace EntityStates.Executioner
             {
                 if (activatorSkillSlot.stock > 0)
                 {
-                    bool keyDown = IsKeyDownAuthority();
-                    bool shotMinimum = shotsFired >= minimumShotBurst || characterBody.HasBuff(SS2Content.Buffs.BuffExecutionerSuperCharged) | characterBody.HasBuff(SS2Content.Buffs.BuffExecutionerArmor);
-                    if (!shotMinimum || keyDown)
-                    {
-                        FireIonGun nextState = new FireIonGun();
-                        nextState.shotsFired = shotsFired;
-                        nextState.activatorSkillSlot = activatorSkillSlot;
-                        outer.SetNextState(nextState);
-                        return;
-                    }
+                    FireIonGunOld nextState = new FireIonGunOld();
+                    nextState.shotsFired = shotsFired;
+                    nextState.activatorSkillSlot = activatorSkillSlot;
+                    outer.SetNextState(nextState);
+                    return;
                 }
                 outer.SetNextStateToMain();
             }
@@ -84,7 +79,7 @@ namespace EntityStates.Executioner
             if (isAuthority)
             {
                 characterBody.SetAimTimer(2f);
-                AddRecoil(-2f * recoil, 3f * recoil, -1f * recoil, 1f * recoil);
+                AddRecoil(-2f * recoil, -3f * recoil, -1f * recoil, 1f * recoil);
                 characterBody.AddSpreadBloom(spreadBloomValue * 1.0f);
                 Ray ray = GetAimRay();
 
@@ -116,7 +111,7 @@ namespace EntityStates.Executioner
                     aimVector = vec,
                     origin = ray.origin,
                     damage = damageCoefficient * damageStat,
-                    damageType = DamageType.Generic,
+                    damageType = DamageType.Shock5s,
                     damageColorIndex = DamageColorIndex.Default,
                     minSpread = 0f,
                     maxSpread = 0.2f,
@@ -128,10 +123,13 @@ namespace EntityStates.Executioner
                     muzzleName = muzzleString,
                     smartCollision = true,
                     procCoefficient = procCoefficient,
-                    radius = 0.5f,
+                    radius = 1f,
                     weapon = gameObject,
                     tracerEffectPrefab = tracerPrefab,
-                    hitEffectPrefab = hitPrefab
+                    hitEffectPrefab = hitPrefab,
+                    stopperMask = LayerIndex.world.mask,
+                    spreadPitchScale = 0.2f,
+                    spreadYawScale = 0.2f
                     //HitEffectNormal = ClayBruiser.Weapon.MinigunFire.bulletHitEffectNormal
                 };
                 bulletAttack.Fire();

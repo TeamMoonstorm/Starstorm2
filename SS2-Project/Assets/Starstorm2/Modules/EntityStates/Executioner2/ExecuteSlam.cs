@@ -31,7 +31,7 @@ namespace EntityStates.Executioner2
             idealLocalCameraPos = slamCameraPosition,
             wallCushion = 0.1f,
         };
-        public static Vector3 slamCameraPosition = new Vector3(0f, 0.0f, -32.5f);
+        public static Vector3 slamCameraPosition = new Vector3(0f, 0.0f, -42.5f);
 
         public override void OnEnter()
         {
