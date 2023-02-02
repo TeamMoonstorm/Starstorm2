@@ -161,7 +161,10 @@ namespace Moonstorm.Starstorm2
 #if DEBUG
             if(!asset)
             {
-                SS2Log.Warning($"Could not find asset of type {typeof(TAsset).Name} with name {name} in bundle {bundle}\n" +
+                var stackTrace = new StackTrace();
+                var method = stackTrace.GetFrame(1).GetMethod();
+
+                SS2Log.Warning($"The  method \"{method.DeclaringType.FullName}.{method.Name}()\" is calling \"LoadAsset<TAsset>(string, SS2Bundle)\" with the arguments \"{typeof(TAsset).Name}\", \"{name}\" and \"{bundle}\", however, the asset could not be found.\n" +
                     $"A complete search of all the bundles will be done and the correct bundle enum will be logged.");
                 return LoadAssetInternal<TAsset>(name, SS2Bundle.All);
             }
@@ -225,7 +228,10 @@ namespace Moonstorm.Starstorm2
 
         internal void FinalizeCopiedMaterials()
         {
-            FinalizeMaterialsWithAddressableMaterialShader(MainAssetBundle);
+            foreach(var (_, bundle) in assetBundles)
+            {
+                FinalizeMaterialsWithAddressableMaterialShader(bundle);
+            }
         }
 
         private string[] GetAssetBundlePaths()
