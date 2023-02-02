@@ -228,7 +228,10 @@ namespace Moonstorm.Starstorm2
 
         internal void FinalizeCopiedMaterials()
         {
-            FinalizeMaterialsWithAddressableMaterialShader(MainAssetBundle);
+            foreach(var (_, bundle) in assetBundles)
+            {
+                FinalizeMaterialsWithAddressableMaterialShader(bundle);
+            }
         }
 
         private string[] GetAssetBundlePaths()
