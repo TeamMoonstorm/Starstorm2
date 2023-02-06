@@ -9,7 +9,7 @@ namespace Moonstorm.Starstorm2.Items
     public sealed class Needles : ItemBase
     {
         private const string token = "SS2_ITEM_NEEDLES_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Needles");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Needles", SS2Bundle.Items);
 
         [ConfigurableField(ConfigDesc = "Chance for Needles to Proc. (100 = 100%)")]
         [TokenModifier(token, StatTypes.Default, 0)]
@@ -65,9 +65,9 @@ namespace Moonstorm.Starstorm2.Items
                         else
                         {
                             //P(A+B) = P(A) + P(B) - P(AB)
-                            float intendedChance = attackerBody.crit + (self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) * attackerBody.inventory.GetItemCount(SS2Content.Items.Needles)); //assuming each buff is 1% per items
-                            float secondChance = (attackerBody.crit - intendedChance) / (attackerBody.crit - 100) * 100;
-                            bool secondCrit = Util.CheckRoll(secondChance);
+                            intendedChance = attackerBody.crit + (self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) * attackerBody.inventory.GetItemCount(SS2Content.Items.Needles)); //assuming each buff is 1% per items
+                            secondChance = (attackerBody.crit - intendedChance) / (attackerBody.crit - 100) * 100;
+                            secondCrit = Util.CheckRoll(secondChance);
                             damageInfo.crit = secondCrit;
                             if (damageInfo.crit && damageInfo.procCoefficient > 0f)
                             {

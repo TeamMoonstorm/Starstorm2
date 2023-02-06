@@ -6,7 +6,7 @@ namespace Moonstorm.Starstorm2.Equipments
     //[DisabledContent]
     public sealed class MIDAS : EquipmentBase
     {
-        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("MIDAS");
+        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("MIDAS", SS2Bundle.Equipments);
         public float goldEarned;
 
         //★ There's probably a way to do this involving an item behavior. Let me know about it.

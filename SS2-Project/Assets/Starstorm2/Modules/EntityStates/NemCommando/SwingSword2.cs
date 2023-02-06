@@ -31,15 +31,15 @@ namespace EntityStates.NemCommando
 
             if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
             {
-                swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffectYellow");
+                swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffectYellow", SS2Bundle.Nemmando);
             }
             if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO")
             {
-                swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffectBlue");
+                swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffectBlue", SS2Bundle.Nemmando);
             }
             else
             {
-                swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffect");
+                swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffect", SS2Bundle.Nemmando);
             }
         }
 

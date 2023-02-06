@@ -23,7 +23,7 @@ namespace EntityStates.Pickups.Extinction
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (base.isAuthority && (base.ownerBody || base.ownerBody.inventory.GetItemCount(SS2Assets.LoadAsset<ItemDef>("RelicOfExtinction")) < 1) && Run.FixedTimeStamp.now >= readyTime)
+            if (base.isAuthority && (base.ownerBody || base.ownerBody.inventory.GetItemCount(SS2Content.Items.RelicOfExtinction) < 1) && Run.FixedTimeStamp.now >= readyTime)
             {
                 this.outer.SetNextState(new ExtinctionIdleState());
             }

@@ -10,8 +10,8 @@ namespace Moonstorm.Starstorm2.Equipments
     public sealed class GreaterWarbanner : EquipmentBase
     {
         private const string token = "SS2_EQUIP_GREATERWARBANNER_DESC";
-        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("GreaterWarbanner");
-        public GameObject WarbannerObject { get; set; } = SS2Assets.LoadAsset<GameObject>("GreaterWarbannerWard");
+        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("GreaterWarbanner", SS2Bundle.Equipments);
+        public GameObject WarbannerObject { get; set; } = SS2Assets.LoadAsset<GameObject>("GreaterWarbannerWard", SS2Bundle.Equipments);
 
         [ConfigurableField(ConfigDesc = "Amount of Extra Regeneration. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]

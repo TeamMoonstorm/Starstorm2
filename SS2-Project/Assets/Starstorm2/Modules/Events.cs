@@ -14,9 +14,9 @@ namespace Moonstorm.Starstorm2
         /// </summary>
         public static class NemesisHelpers
         {
-            public static NemesisInventory NemmandoInventory { get => SS2Assets.LoadAsset<NemesisInventory>("NemmandoInventory"); }
-            public static EventCard NemmandoEventCard { get => SS2Assets.LoadAsset<EventCard>("NemmandoBoss"); }
-            public static NemesisSpawnCard NemmandoSpawnCard { get => SS2Assets.LoadAsset<NemesisSpawnCard>("nscNemmandoBoss"); }
+            public static NemesisInventory NemmandoInventory { get => SS2Assets.LoadAsset<NemesisInventory>("NemmandoInventory", SS2Bundle.Events); }
+            public static EventCard NemmandoEventCard { get => SS2Assets.LoadAsset<EventCard>("NemmandoBoss", SS2Bundle.Events); }
+            public static NemesisSpawnCard NemmandoSpawnCard { get => SS2Assets.LoadAsset<NemesisSpawnCard>("nscNemmandoBoss", SS2Bundle.Events); }
 
             public static EventCard CreateEventCardFromTemplate(string assetName)
             {
@@ -132,7 +132,7 @@ namespace Moonstorm.Starstorm2
 
         public static void Init()
         {
-            EventCatalog.AddCards(SS2Assets.LoadAllAssetsOfType<EventCard>());
+            EventCatalog.AddCards(SS2Assets.LoadAllAssetsOfType<EventCard>(SS2Bundle.Events));
             SceneManager.sceneLoaded += StormOnMenu;
         }
 
@@ -143,12 +143,12 @@ namespace Moonstorm.Starstorm2
                 System.DateTime today = System.DateTime.Today;
                 if ((today.Month == 12) && ((today.Day == 25) || (today.Day == 24)))
                 {
-                    Object.Instantiate(SS2Assets.LoadAsset<GameObject>("ChristmasMenuEffect"), Vector3.zero, Quaternion.identity);
+                    Object.Instantiate(SS2Assets.LoadAsset<GameObject>("ChristmasMenuEffect", SS2Bundle.Events), Vector3.zero, Quaternion.identity);
                     Debug.Log("Merry Christmas from TeamMoonstorm!! :)");
                 }
                 else
                 {
-                    Object.Instantiate(SS2Assets.LoadAsset<GameObject>("StormMainMenuEffect"), Vector3.zero, Quaternion.identity);
+                    Object.Instantiate(SS2Assets.LoadAsset<GameObject>("StormMainMenuEffect", SS2Bundle.Events), Vector3.zero, Quaternion.identity);
                 }
             }   
         }

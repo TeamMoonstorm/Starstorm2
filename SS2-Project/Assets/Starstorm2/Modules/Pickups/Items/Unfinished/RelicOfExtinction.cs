@@ -8,7 +8,7 @@ namespace Moonstorm.Starstorm2.Items
     [DisabledContent]
     public sealed class RelicOfExtinction : ItemBase
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfExtinction");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfExtinction", SS2Bundle.Indev);
 
         public sealed class Behavior : BaseItemBodyBehavior
         {
@@ -25,7 +25,7 @@ namespace Moonstorm.Starstorm2.Items
                 }
                 if (!prolapsedInstance)
                 {
-                    prolapsedInstance = UnityEngine.Object.Instantiate(SS2Assets.LoadAsset<GameObject>("ExtinctionHole"), body.corePosition, Quaternion.identity);
+                    prolapsedInstance = UnityEngine.Object.Instantiate(SS2Assets.LoadAsset<GameObject>("ExtinctionHole", SS2Bundle.Indev), body.corePosition, Quaternion.identity);
                     prolapsedInstance.GetComponent<GenericOwnership>().ownerObject = body.gameObject;
                     prolapsedInstance.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(body.gameObject);
                 }

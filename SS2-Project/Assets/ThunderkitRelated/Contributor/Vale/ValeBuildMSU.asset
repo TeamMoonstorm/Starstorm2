@@ -32,6 +32,7 @@ MonoBehaviour:
   ListType: 1
   Manifests:
   - {fileID: 11400000, guid: 5ceb1d8ed3af40d4d806e9756b403649, type: 2}
+  StrictDictionaryReplace: 1
   Recursive: 1
   SourceRequired: 0
   EstablishDestination: 1
@@ -50,7 +51,22 @@ MonoBehaviour:
   m_Name: ValeBuildMSU
   m_EditorClassIdentifier: 
   Data:
+  - {fileID: 7601315499450710737}
   - {fileID: -3576180096776599551}
   - {fileID: -216652644370084839}
   QuickAccess: 1
   manifest: {fileID: 11400000, guid: 5ceb1d8ed3af40d4d806e9756b403649, type: 2}
+--- !u!114 &7601315499450710737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dba11a23eb01c7a4aa61a8ab800c27dd, type: 3}
+  m_Name: ChangeAssemblyBuildMode
+  m_EditorClassIdentifier: 
+  Active: 1
+  buildMode: 0

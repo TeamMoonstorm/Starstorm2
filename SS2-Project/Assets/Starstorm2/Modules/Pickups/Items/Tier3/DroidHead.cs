@@ -8,7 +8,7 @@ namespace Moonstorm.Starstorm2.Items
     public sealed class DroidHead : ItemBase
     {
         private const string token = "SS2_ITEM_DROIDHEAD_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("DroidHead");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("DroidHead", SS2Bundle.Items);
 
         [ConfigurableField(ConfigDesc = "Damage dealt by Security Drones, at base and per stack. Percentage (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
@@ -27,7 +27,7 @@ namespace Moonstorm.Starstorm2.Items
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.DroidHead;
 
-            GameObject masterPrefab = SS2Assets.LoadAsset<GameObject>("DroidDroneMaster");
+            GameObject masterPrefab = SS2Assets.LoadAsset<GameObject>("DroidDroneMaster", SS2Bundle.Items);
             public void OnKilledOtherServer(DamageReport damageReport)
             {
                 var victim = damageReport.victimBody;

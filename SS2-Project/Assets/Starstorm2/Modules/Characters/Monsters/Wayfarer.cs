@@ -6,8 +6,9 @@ namespace Moonstorm.Starstorm2.Monsters
     [DisabledContent]
     public sealed class Wayfarer : MonsterBase
     {
-        public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("WayfarerBody");
-        public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("WayfarerMaster");
+        public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("WayfarerBody", SS2Bundle.Indev
+            );
+        public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("WayfarerMaster", SS2Bundle.Indev);
         //public override MSMonsterDirectorCardHolder directorCards { get; set; } = Assets.Instance.MainAssetBundle.LoadAsset<MSMonsterDirectorCardHolder>("WayfarerCardHolder");
 
         public override MSMonsterDirectorCard MonsterDirectorCard { get => throw new System.NotImplementedException(); }

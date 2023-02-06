@@ -5,7 +5,7 @@ namespace Moonstorm.Starstorm2.Unlocks.VanillaSurvivors
 {
     public sealed class ToolbotGrandMasteryUnlockable : UnlockableBase
     {
-        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skin.toolbot.grandmastery");
+        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skin.toolbot.grandmastery", SS2Bundle.Vanilla);
 
         public sealed class ToolbotGrandMasteryAchievement : GenericMasteryAchievement
         {

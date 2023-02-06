@@ -215,7 +215,7 @@ namespace Moonstorm.Starstorm2
         }
         public override string identifier => Starstorm.guid;
 
-        public override R2APISerializableContentPack SerializableContentPack { get; protected set; } = SS2Assets.LoadAsset<R2APISerializableContentPack>("ContentPack");
+        public override R2APISerializableContentPack SerializableContentPack { get; protected set; } = SS2Assets.LoadAsset<R2APISerializableContentPack>("ContentPack", SS2Bundle.Main);
         public override Action[] LoadDispatchers { get; protected set; }
 
         public override Action[] PopulateFieldsDispatchers { get; protected set; }
@@ -296,12 +296,12 @@ namespace Moonstorm.Starstorm2
                 delegate
                 {
                     SS2Log.Info($"Populating EntityStateConfigurations");
-                    SerializableContentPack.entityStateConfigurations = SS2Assets.LoadAllAssetsOfType<EntityStateConfiguration>();
+                    SerializableContentPack.entityStateConfigurations = SS2Assets.LoadAllAssetsOfType<EntityStateConfiguration>(SS2Bundle.All);
                 },
                 delegate
                 {
                     SS2Log.Info($"Populating effect prefabs");
-                    SerializableContentPack.effectPrefabs = SerializableContentPack.effectPrefabs.Concat(SS2Assets.LoadAllAssetsOfType<GameObject>()
+                    SerializableContentPack.effectPrefabs = SerializableContentPack.effectPrefabs.Concat(SS2Assets.LoadAllAssetsOfType<GameObject>(SS2Bundle.All)
                     .Where(go => go.GetComponent<EffectComponent>()))
                     .ToArray();
                 },

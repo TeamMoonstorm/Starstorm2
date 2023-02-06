@@ -9,7 +9,7 @@ namespace Moonstorm.Starstorm2.Unlocks.Chirr
 
     public sealed class ChirrUnlockable : UnlockableBase
     {
-        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.survivor.beastmaster");
+        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.survivor.beastmaster", SS2Bundle.Indev);
 
         public sealed class ChirrAchievement : BaseAchievement
         {

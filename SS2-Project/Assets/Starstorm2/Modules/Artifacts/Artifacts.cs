@@ -19,7 +19,7 @@ namespace Moonstorm.Starstorm2.Modules
             SS2Log.Info($"Initializing Artifacts");
             GetArtifactBases();
 
-            var compound = SS2Assets.LoadAsset<ArtifactCompoundDef>("acdStar");
+            var compound = SS2Assets.LoadAsset<ArtifactCompoundDef>("acdStar", SS2Bundle.Artifacts);
             compound.decalMaterial.shader = Resources.Load<ArtifactCompoundDef>("artifactcompound/acdCircle").decalMaterial.shader;
             ArtifactCodeAPI.AddCompound(compound);
         }

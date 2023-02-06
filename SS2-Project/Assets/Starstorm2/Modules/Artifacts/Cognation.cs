@@ -12,8 +12,8 @@ namespace Moonstorm.Starstorm2.Artifacts
 {
     public sealed class Cognation : ArtifactBase
     {
-        public override ArtifactDef ArtifactDef { get; } = SS2Assets.LoadAsset<ArtifactDef>("Cognation");
-        public override ArtifactCode ArtifactCode { get; } = SS2Assets.LoadAsset<ArtifactCode>("Cognation");
+        public override ArtifactDef ArtifactDef { get; } = SS2Assets.LoadAsset<ArtifactDef>("Cognation", SS2Bundle.Artifacts);
+        public override ArtifactCode ArtifactCode { get; } = SS2Assets.LoadAsset<ArtifactCode>("Cognation", SS2Bundle.Artifacts);
 
         [ConfigurableField(ConfigDesc = "Wether or not cognation ghosts inherit all items from the original body")]
         public static bool InheritInventory = true;
@@ -75,7 +75,7 @@ namespace Moonstorm.Starstorm2.Artifacts
         {
             if (arg0.name == "lobby")
             {
-                var code = UObject.Instantiate(SS2Assets.LoadAsset<GameObject>("CognationCode"), Vector3.zero, Quaternion.identity);
+                var code = UObject.Instantiate(SS2Assets.LoadAsset<GameObject>("CognationCode", SS2Bundle.Artifacts), Vector3.zero, Quaternion.identity);
                 code.transform.position = new Vector3(4, 0, 8);
                 code.transform.rotation = Quaternion.Euler(10, 90, 0);
                 code.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);

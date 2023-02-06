@@ -176,7 +176,7 @@ namespace Moonstorm.Starstorm2
             PickupDropletController.CreatePickupDroplet(pickup, position, velocity);
 
             //PickupDropletController.CreatePickupDroplet(pickupIndex, position, velocity);
-            EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>(vfxPrefab), new EffectData
+            EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>(vfxPrefab, SS2Bundle.All), new EffectData
             {
                 rootObject = pickup.prefabOverride,
                 origin = position,

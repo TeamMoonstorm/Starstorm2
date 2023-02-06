@@ -5,7 +5,7 @@ namespace Moonstorm.Starstorm2.Unlocks.Artifacts
 {
     public sealed class CognationUnlockable : UnlockableBase
     {
-        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.artifact.cognation");
+        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.artifact.cognation", SS2Bundle.Artifacts);
 
         public override void Initialize()
         {

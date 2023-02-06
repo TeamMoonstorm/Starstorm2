@@ -6,7 +6,7 @@ namespace Moonstorm.Starstorm2.Buffs
 {
     public sealed class ExecutionerArmor : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffExecutionerArmor");
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffExecutionerArmor", SS2Bundle.Executioner);
 
         public sealed class Behavior : BaseBuffBodyBehavior, IBodyStatArgModifier
         {

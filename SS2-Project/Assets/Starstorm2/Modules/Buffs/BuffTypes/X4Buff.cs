@@ -7,7 +7,7 @@ namespace Moonstorm.Starstorm2.Buffs
 {
     public sealed class X4Buff : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffX4");
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffX4", SS2Bundle.Items);
 
         public sealed class X4BuffBehavior : BaseBuffBodyBehavior, IBodyStatArgModifier
         {

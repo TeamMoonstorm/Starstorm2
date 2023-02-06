@@ -6,7 +6,7 @@ namespace Moonstorm.Starstorm2.Items
 {
     public sealed class NemesisBossHelper : ItemBase
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("NemBossHelper");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("NemBossHelper", SS2Bundle.Items);
 
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier
         {

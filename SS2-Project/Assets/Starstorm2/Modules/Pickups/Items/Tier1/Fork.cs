@@ -6,7 +6,7 @@ namespace Moonstorm.Starstorm2.Items
 {
     public sealed class Fork : ItemBase
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Fork");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Fork", SS2Bundle.Items);
 
         [ConfigurableField(ConfigDesc = "Bonus base damage per fork. (1 = 1 base damage. Base damage for most characters is 12.)")]
         [TokenModifier("SS2_ITEM_FORK_DESC", StatTypes.Default, 0)]

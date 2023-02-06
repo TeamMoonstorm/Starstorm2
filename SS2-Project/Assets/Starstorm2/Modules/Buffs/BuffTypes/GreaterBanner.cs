@@ -7,7 +7,7 @@ namespace Moonstorm.Starstorm2.Buffs
 {
     public sealed class GreaterBanner : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffGreaterBanner");
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffGreaterBanner", SS2Bundle.Equipments);
 
         public sealed class Behavior : BaseBuffBodyBehavior, IBodyStatArgModifier, IStatItemBehavior
         {

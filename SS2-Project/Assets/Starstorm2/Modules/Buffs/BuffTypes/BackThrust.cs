@@ -7,7 +7,7 @@ namespace Moonstorm.Starstorm2.Buffs
 {
     public sealed class BackThrust : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffBackThruster");
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffBackThruster", SS2Bundle.Equipments);
 
         public override void Initialize()
         {

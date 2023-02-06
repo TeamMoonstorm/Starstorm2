@@ -5,7 +5,7 @@ namespace Moonstorm.Starstorm2.Components
 {
     public class CognationController : MonoBehaviour
     {
-        private Material ghostMaterial = SS2Assets.LoadAsset<Material>("matCognation");
+        private Material ghostMaterial = SS2Assets.LoadAsset<Material>("matCognation", SS2Bundle.Artifacts);
 
         private CharacterBody originalBody;
         private CharacterMaster originalMaster;

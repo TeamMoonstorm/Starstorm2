@@ -9,7 +9,7 @@ namespace Moonstorm.Starstorm2.Items
     public sealed class JetBoots : ItemBase
     {
         private const string token = "SS2_ITEM_JETBOOTS_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("JetBoots");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("JetBoots", SS2Bundle.Items);
 
         [ConfigurableField(ConfigDesc = "Base radius of Prototype Jet Boot's explosion, in meters.")]
         [TokenModifier(token, StatTypes.Default, 0)]

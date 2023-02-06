@@ -7,7 +7,7 @@ namespace Moonstorm.Starstorm2.Items
     //[DisabledContent]
     public sealed class Insecticide : ItemBase
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Insecticide");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Insecticide", SS2Bundle.Items);
         public static DotController.DotIndex DotIndex;
         public static float duration = 3;
 

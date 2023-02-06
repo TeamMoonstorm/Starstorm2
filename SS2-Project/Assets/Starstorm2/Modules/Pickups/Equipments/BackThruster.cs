@@ -5,7 +5,7 @@ namespace Moonstorm.Starstorm2.Equipments
     public sealed class BackThruster : EquipmentBase
     {
         private const string token = "SS2_EQUIP_BACKTHRUSTER_DESC";
-        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("BackThruster");
+        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("BackThruster", SS2Bundle.Equipments);
 
         [ConfigurableField(ConfigDesc = "How long the Thruster buff lasts, in seconds.")]
         [TokenModifier(token, StatTypes.Default, 0)]

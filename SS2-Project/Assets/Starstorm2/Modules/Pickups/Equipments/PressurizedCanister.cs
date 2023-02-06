@@ -5,7 +5,7 @@ namespace Moonstorm.Starstorm2.Equipments
 {
     public sealed class PressurizedCanister : EquipmentBase
     {
-        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("PressurizedCanister");
+        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("PressurizedCanister", SS2Bundle.Equipments);
 
         public override bool FireAction(EquipmentSlot slot)
         {

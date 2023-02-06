@@ -10,7 +10,7 @@ namespace Moonstorm.Starstorm2.Items
     public sealed class CoffeeBag : ItemBase
     {
         public const string token = "SS2_ITEM_COFFEEBAG_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("CoffeeBag");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("CoffeeBag", SS2Bundle.Items);
 
         [ConfigurableField(ConfigDesc = "Duration of the buff gained upon using an interactable.")]
         [TokenModifier(token, StatTypes.Default, 0)]
