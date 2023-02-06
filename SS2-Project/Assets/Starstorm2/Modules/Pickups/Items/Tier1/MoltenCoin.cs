@@ -6,7 +6,7 @@ namespace Moonstorm.Starstorm2.Items
     
     public sealed class MoltenCoin : ItemBase
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("MoltenCoin");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("MoltenCoin", SS2Bundle.Items);
 
         [ConfigurableField(ConfigDesc = "Chance for Molten Coin to Proc. (100 = 100%)")]
         [TokenModifier("SS2_ITEM_MOLTENCOIN_DESC", StatTypes.Default, 0)]

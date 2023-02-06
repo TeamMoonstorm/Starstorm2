@@ -63,6 +63,7 @@ MonoBehaviour:
     - {fileID: 4900000, guid: b0caa26bfe7a6974abbe4f96dda8aa26, type: 3}
     - {fileID: 4900000, guid: 75fb51340842194409b4ba59e8fe6ab1, type: 3}
     - {fileID: 4900000, guid: 82945b7e051c44c408e3a0d1735db1e2, type: 3}
+    - {fileID: 4900000, guid: 2fe345c697827eb4d9e2d5c1c86b0f46, type: 3}
   - languageName: es-ES
     languageFiles:
     - {fileID: 4900000, guid: 70a613ff95125ec4daccbfd58cacb851, type: 3}
@@ -214,9 +215,52 @@ MonoBehaviour:
   StagingPaths:
   - <BuildPathAssets>
   assetBundles:
-  - assetBundleName: SS2Assets
+  - assetBundleName: SS2Main
     assets:
-    - {fileID: 102900000, guid: 0e00ff8588d54f9468878853e86928bb, type: 3}
+    - {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+    - {fileID: 2800000, guid: eb3a70227647f7045b1310400a551084, type: 3}
+    - {fileID: 11400000, guid: bfb165b57e40f194e8fc69d48fd3a187, type: 2}
+    - {fileID: 2800000, guid: ab18fbb30379631499164b1b499a3b9a, type: 3}
+    - {fileID: 2800000, guid: 1973417585079444ea976f56d0d6ddd5, type: 3}
+  - assetBundleName: SS2Base
+    assets:
+    - {fileID: 102900000, guid: 90b5ce85b0fd1454a8828bd58f78fadc, type: 3}
+    - {fileID: 102900000, guid: bf6e7a26ee4dd474d8a1e82dcde8bd24, type: 3}
+    - {fileID: 102900000, guid: 501542b4bcf431240b0346bdaa9917d9, type: 3}
+    - {fileID: 102900000, guid: 3aa584817df1c0b4ab71cb90742e4cbd, type: 3}
+  - assetBundleName: SS2Artifacts
+    assets:
+    - {fileID: 102900000, guid: 3a0ad87d866aef74dba7a41400574ae2, type: 3}
+  - assetBundleName: SS2Executioner
+    assets:
+    - {fileID: 102900000, guid: 1ef117185f394334089203703b6e4d13, type: 3}
+  - assetBundleName: SS2Nemmando
+    assets:
+    - {fileID: 102900000, guid: 418666e089c2c7949b9b779e9d8238ef, type: 3}
+  - assetBundleName: SS2Equipments
+    assets:
+    - {fileID: 102900000, guid: 54c50cc18d9504f47b057c63be6e441e, type: 3}
+  - assetBundleName: SS2Items
+    assets:
+    - {fileID: 102900000, guid: 11b0ea49617bade468afe6088793a9cc, type: 3}
+  - assetBundleName: SS2Events
+    assets:
+    - {fileID: 102900000, guid: 1b7496dcbe7d1ad45a0938f99547c81a, type: 3}
+  - assetBundleName: SS2Vanilla
+    assets:
+    - {fileID: 102900000, guid: 55f7dd6be561cc14cafa245d9a2085fb, type: 3}
+  - assetBundleName: SS2Dev
+    assets:
+    - {fileID: 102900000, guid: 117bdc60d32a3cc4d847c477c2b26d45, type: 3}
+  - assetBundleName: SS2Shared
+    assets:
+    - {fileID: 102900000, guid: 6aaeac829803fd14f9ee898e61c14d8b, type: 3}
+    - {fileID: 102900000, guid: b1284d83472bd1749aeb60d1a09724ef, type: 3}
+    - {fileID: 102900000, guid: 7962a48d8620f5e4dbaf9557535616bc, type: 3}
+    - {fileID: 102900000, guid: 8b2682aa478687745a6b70fa716f563e, type: 3}
+    - {fileID: 102900000, guid: 071e77fdeac30b44e8eed0fd1cd25e4f, type: 3}
+    - {fileID: 2800000, guid: 5f51e0b22aa8cb84b9f422576ce87ff9, type: 3}
+    - {fileID: 102900000, guid: 868db15ebaf1e4f4ea9a3a0769ad8d3a, type: 3}
 --- !u!114 &114987763159783732
 MonoBehaviour:
   m_ObjectHideFlags: 0

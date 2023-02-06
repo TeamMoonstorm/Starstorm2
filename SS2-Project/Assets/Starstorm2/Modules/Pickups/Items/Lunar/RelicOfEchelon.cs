@@ -11,7 +11,7 @@ namespace Moonstorm.Starstorm2.Items
     {
         private const string token = "SS2_ITEM_RELICOFECHELON_DESC";
 
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfEchelon");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfEchelon", SS2Bundle.Items);
 
         [ConfigurableField(ConfigDesc = "Equipment cooldown increase per use, per stack.")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]

@@ -12,9 +12,9 @@ namespace Moonstorm.Starstorm2.ItemTiers
 {
     public class Sibylline : ItemTierBase
     {
-        public override ItemTierDef ItemTierDef => SS2Assets.LoadAsset<ItemTierDef>("Sibylline");
+        public override ItemTierDef ItemTierDef => SS2Assets.LoadAsset<ItemTierDef>("Sibylline", SS2Bundle.Indev);
 
-        public override GameObject PickupDisplayVFX => SS2Assets.LoadAsset<GameObject>("SibyllinePickupDisplayVFX");
+        public override GameObject PickupDisplayVFX => SS2Assets.LoadAsset<GameObject>("SibyllinePickupDisplayVFX", SS2Bundle.Indev);
 
         public override void Initialize()
         {

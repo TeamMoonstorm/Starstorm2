@@ -14,7 +14,7 @@ namespace Moonstorm.Starstorm2.Items
     public sealed class Diary : ItemBase
     {
         private const string token = "SS2_ITEM_DIARY_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Diary");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Diary", SS2Bundle.Items);
 
         [ConfigurableField(ConfigDesc = "Experience bonus from each diary. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]

@@ -11,7 +11,7 @@ namespace Moonstorm.Starstorm2.Items
     public sealed class RelicOfTermination2 : ItemBase
     {
         private const string token = "SS2_ITEM_RELICOFTERMINATION_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfTermination2");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfTermination2", SS2Bundle.Items);
 
         [ConfigurableField(ConfigDesc = "Time, in seconds, to kill the marked enemy before going on cooldown.")]
         [TokenModifier(token, StatTypes.Default, 0)]
@@ -70,9 +70,9 @@ namespace Moonstorm.Starstorm2.Items
             public new void Awake()
             {
                 base.Awake();
-                markEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationTargetMark");
-                failEffect = SS2Assets.LoadAsset<GameObject>("NemmandoScepterSlashAppear");
-                buffEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationBuffEffect");
+                markEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationTargetMark", SS2Bundle.Items);
+                failEffect = SS2Assets.LoadAsset<GameObject>("NemmandoScepterSlashAppear", SS2Bundle.Items);
+                buffEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationBuffEffect", SS2Bundle.Items);
 
                 globalMarkEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/BossPositionIndicator.prefab").WaitForCompletion();
 

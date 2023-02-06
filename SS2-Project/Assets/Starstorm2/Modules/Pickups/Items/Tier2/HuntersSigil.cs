@@ -9,7 +9,7 @@ namespace Moonstorm.Starstorm2.Items
     public sealed class HuntersSigil : ItemBase
     {
         private const string token = "SS2_ITEM_HUNTERSSIGIL_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("HuntersSigil");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("HuntersSigil", SS2Bundle.Items);
         public static GameObject effect;
 
         [ConfigurableField(ConfigDesc = "Base amount of extra armor added.")]
@@ -39,7 +39,7 @@ namespace Moonstorm.Starstorm2.Items
         public override void Initialize()
         {
             base.Initialize();
-            effect = SS2Assets.LoadAsset<GameObject>("SigilEffect");
+            effect = SS2Assets.LoadAsset<GameObject>("SigilEffect", SS2Bundle.Items);
         }
 
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier

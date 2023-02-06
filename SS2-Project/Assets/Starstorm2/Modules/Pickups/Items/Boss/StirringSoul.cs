@@ -8,14 +8,14 @@ namespace Moonstorm.Starstorm2.Items
 {
     public sealed class StirringSoul : ItemBase
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("StirringSoul");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("StirringSoul", SS2Bundle.Items);
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.StirringSoul;
             public float currentChance;
-            private static GameObject MonsterSoulPickup = SS2Assets.LoadAsset<GameObject>("MonsterSoul");
+            private static GameObject MonsterSoulPickup = SS2Assets.LoadAsset<GameObject>("MonsterSoul", SS2Bundle.Items);
             public void OnKilledOtherServer(DamageReport report)
             {
                 if (NetworkServer.active && !Run.instance.isRunStopwatchPaused && report.victimMaster)

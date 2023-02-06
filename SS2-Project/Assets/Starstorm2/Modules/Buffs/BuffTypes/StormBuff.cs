@@ -6,7 +6,7 @@ namespace Moonstorm.Starstorm2.Buffs
 {
     public sealed class StormBuff : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffStorm");
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffStorm", SS2Bundle.Events);
 
         public sealed class Behavior : BaseBuffBodyBehavior, IBodyStatArgModifier
         {

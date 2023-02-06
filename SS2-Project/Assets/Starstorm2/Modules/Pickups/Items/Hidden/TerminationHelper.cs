@@ -7,7 +7,7 @@ namespace Moonstorm.Starstorm2.Items
 {
     public sealed class TerminationHelper : ItemBase
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("TerminationHelper");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("TerminationHelper", SS2Bundle.Items);
 
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier
         {

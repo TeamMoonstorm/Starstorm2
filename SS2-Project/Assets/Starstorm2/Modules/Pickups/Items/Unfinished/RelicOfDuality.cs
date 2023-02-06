@@ -7,7 +7,7 @@ namespace Moonstorm.Starstorm2.Items
     [DisabledContent]
     public sealed class RelicOfDuality : ItemBase
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfDuality");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfDuality", SS2Bundle.Indev);
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnIncomingDamageServerReceiver, IOnDamageDealtServerReceiver
         {

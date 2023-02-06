@@ -10,7 +10,7 @@ namespace Moonstorm.Starstorm2.Items
     public sealed class HottestSauce : ItemBase
     {
         private const string token = "SS2_ITEM_HOTTESTSAUCE_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("HottestSauce");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("HottestSauce", SS2Bundle.Items);
 
         [ConfigurableField(ConfigDesc = "Radius in which the hottest sauce deals damage, in meters.")]
         [TokenModifier(token, StatTypes.Default, 0)]

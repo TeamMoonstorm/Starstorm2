@@ -5,7 +5,7 @@ namespace Moonstorm.Starstorm2.Unlocks.Pickups
 {
     public sealed class StrangeCanUnlockable : UnlockableBase
     {
-        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.item.strangecan");
+        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.item.strangecan", SS2Bundle.Indev);
 
         public override void Initialize()
         {

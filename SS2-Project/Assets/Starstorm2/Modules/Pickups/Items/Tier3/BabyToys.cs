@@ -17,7 +17,7 @@ namespace Moonstorm.Starstorm2.Items
         private const string pickupToken = "SS2_ITEM_BABYTOYS_PICKUP";
 
         private const string descToken = "SS2_ITEM_BABYTOYS_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("BabyToys");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("BabyToys", SS2Bundle.Items);
 
         [ConfigurableField(ConfigDesc = "Levels removed per stack")]
         [TokenModifier(pickupToken, StatTypes.Default, 0)]

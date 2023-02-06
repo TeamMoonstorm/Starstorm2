@@ -9,7 +9,7 @@ namespace Moonstorm.Starstorm2.Items
     [DisabledContent]
     public sealed class Augury : ItemBase
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Augury");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Augury", SS2Bundle.Indev);
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnTakeDamageServerReceiver
         {
@@ -19,7 +19,7 @@ namespace Moonstorm.Starstorm2.Items
             private EntityStateMachine esm;
             private void Start()
             {
-                attachment = Instantiate(SS2Assets.LoadAsset<GameObject>($"{nameof(Augury)}BodyAttachment")).GetComponent<NetworkedBodyAttachment>();
+                attachment = Instantiate(SS2Assets.LoadAsset<GameObject>($"{nameof(Augury)}BodyAttachment", SS2Bundle.Indev)).GetComponent<NetworkedBodyAttachment>();
                 attachment.AttachToGameObjectAndSpawn(body.gameObject);
                 esm = attachment.gameObject.GetComponent<EntityStateMachine>();
 

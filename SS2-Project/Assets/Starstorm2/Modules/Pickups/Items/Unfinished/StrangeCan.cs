@@ -6,7 +6,7 @@ namespace Moonstorm.Starstorm2.Items
     [DisabledContent]
     public sealed class StrangeCan : ItemBase
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("StrangeCan");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("StrangeCan", SS2Bundle.Items);
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
         {

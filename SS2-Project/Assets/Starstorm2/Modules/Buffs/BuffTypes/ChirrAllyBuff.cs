@@ -8,7 +8,7 @@ namespace Moonstorm.Starstorm2.Buffs
     //[DisabledContent]
     public sealed class ChirrAllyBuff : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffChirrAlly");
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffChirrAlly", SS2Bundle.Indev);
 
         public sealed class Behaviour : BaseBuffBodyBehavior, IBodyStatArgModifier
         {

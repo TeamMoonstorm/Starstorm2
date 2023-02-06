@@ -6,7 +6,7 @@ namespace Moonstorm.Starstorm2.Equipments
     //[DisabledContent]
     public sealed class AffixEmpyrean : EquipmentBase
     {
-        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("AffixEmpyrean");
+        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("AffixEmpyrean", SS2Bundle.Indev);
 
 
         // override MSEliteDef EliteDef { get; set; } = Assets.Instance.MainAssetBundle.LoadAsset<MSEliteDef>("Void");

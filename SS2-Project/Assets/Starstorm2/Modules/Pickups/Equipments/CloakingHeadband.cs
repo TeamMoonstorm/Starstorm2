@@ -4,7 +4,7 @@ namespace Moonstorm.Starstorm2.Equipments
 {
     public sealed class CloakingHeadband : EquipmentBase
     {
-        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("CloakingHeadband");
+        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("CloakingHeadband", SS2Bundle.Equipments);
 
         [ConfigurableField(ConfigDesc = "How long the Cloak buff lasts, in seconds.")]
         [TokenModifier("SS2_EQUIP_CLOAKINGHEADBAND_DESC", StatTypes.Default, 0)]

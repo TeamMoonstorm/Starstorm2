@@ -10,7 +10,7 @@ namespace Moonstorm.Starstorm2.Items
     //[DisabledContent]
     public sealed class ArmedBackpack : ItemBase
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ArmedBackpack");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ArmedBackpack", SS2Bundle.Items);
 
         [ConfigurableField(ConfigDesc = "Damage dealt by the missle per stack. (1 = 100%)")]
         [TokenModifier("SS2_ITEM_ARMEDBACKPACK_DESC", StatTypes.MultiplyByN, 0, "100")]

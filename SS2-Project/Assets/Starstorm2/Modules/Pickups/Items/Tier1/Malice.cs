@@ -13,7 +13,7 @@ namespace Moonstorm.Starstorm2.Items
     public sealed class Malice : ItemBase
     {
         private const string token = "SS2_ITEM_MALICE_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Malice");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Malice", SS2Bundle.Items);
 
         [ConfigurableField(ConfigDesc = "Radius of malice, in meters")]
         [TokenModifier(token, StatTypes.Default, 0)]
@@ -44,7 +44,7 @@ namespace Moonstorm.Starstorm2.Items
             maliceDamageType = DamageAPI.ReserveDamageType();
             ignoredProcs.AddProc(ProcType.Backstab);
 
-            maliceOrbEffectPrefab = SS2Assets.LoadAsset<GameObject>("MaliceOrbEffect");
+            maliceOrbEffectPrefab = SS2Assets.LoadAsset<GameObject>("MaliceOrbEffect", SS2Bundle.Items);
             /*MaterialControllerComponents.HGCloudRemapController hGCloudRemapController = maliceOrbEffectPrefab.AddComponent<MaterialControllerComponents.HGCloudRemapController>();
             LineRenderer lineRenderer = maliceOrbEffectPrefab.GetComponentInChildren<LineRenderer>();
             hGCloudRemapController.renderer = lineRenderer;

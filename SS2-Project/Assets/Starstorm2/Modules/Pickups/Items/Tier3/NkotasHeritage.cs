@@ -10,7 +10,7 @@ namespace Moonstorm.Starstorm2.Items
 {
     public sealed class NkotasHeritage : ItemBase
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("NkotasHeritage");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("NkotasHeritage", SS2Bundle.Items);
 
         public const string token = "SS2_ITEM_NKOTASHERITAGE_DESC";
 
@@ -89,7 +89,7 @@ namespace Moonstorm.Starstorm2.Items
                 {
                     if (body.isPlayerControlled)
                     {
-                        int itemCount = itemsPerStack * body.inventory.GetItemCount(SS2Assets.LoadAsset<ItemDef>("NkotasHeritage"));
+                        int itemCount = itemsPerStack * body.inventory.GetItemCount(SS2Content.Items.NkotasHeritage);
 
                         SS2Util.DropShipCall(body.transform, 1, TeamManager.instance.GetTeamLevel(body.teamComponent.teamIndex), itemCount, ItemTier.Tier1, "NkotasIdleEffect");
 
@@ -117,7 +117,7 @@ namespace Moonstorm.Starstorm2.Items
                         if (childLocatorIndex != -1)
                             sexBomb.SetChildLocatorTransformReference(body.gameObject, childLocatorIndex);
 
-                        EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("NkotasSpawnEffect"), sexBomb, true);
+                        EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("NkotasSpawnEffect", SS2Bundle.Items), sexBomb, true);
                     }
                     else
                     {
@@ -126,7 +126,7 @@ namespace Moonstorm.Starstorm2.Items
                         do
                         {
                             itemToGrant = SS2Util.NkotasRiggedItemDrop(1, TeamManager.instance.GetTeamLevel(body.teamComponent.teamIndex));
-                        } while (itemToGrant.ContainsTag(ItemTag.AIBlacklist) || itemToGrant.ContainsTag(ItemTag.CannotCopy) || itemToGrant == SS2Assets.LoadAsset<ItemDef>("NkotasHeritage") || (BodyCatalog.FindBodyIndex("BrotherBody") == body.bodyIndex && itemToGrant.ContainsTag(ItemTag.BrotherBlacklist)));
+                        } while (itemToGrant.ContainsTag(ItemTag.AIBlacklist) || itemToGrant.ContainsTag(ItemTag.CannotCopy) || itemToGrant == SS2Content.Items.NkotasHeritage || (BodyCatalog.FindBodyIndex("BrotherBody") == body.bodyIndex && itemToGrant.ContainsTag(ItemTag.BrotherBlacklist)));
 
                         ItemTransferOrb item = ItemTransferOrb.DispatchItemTransferOrb(body.transform.position, body.inventory, itemToGrant.itemIndex, 1, delegate (ItemTransferOrb orb)
                         {

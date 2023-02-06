@@ -8,9 +8,9 @@ namespace Moonstorm.Starstorm2.Survivors
     [DisabledContent]
     public sealed class NemExe : SurvivorBase
     {
-        public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemExeBody");
-        public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("ExecutionerMonsterMaster");
-        public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("survivorNemExe");
+        public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemExeBody", SS2Bundle.Nemmando);
+        public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("ExecutionerMonsterMaster", SS2Bundle.Nemmando);
+        public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("survivorNemExe", SS2Bundle.Nemmando);
 
         internal static Dictionary<string, int> ionChargeValues = new Dictionary<string, int>
         {

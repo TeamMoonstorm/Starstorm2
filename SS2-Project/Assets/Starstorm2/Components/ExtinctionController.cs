@@ -102,7 +102,7 @@ namespace Moonstorm.Starstorm2.Components
 
         public float GetControllerCharge()
         {
-            return Mathf.Max(cachedOwnerBody.inventory.GetItemCount(SS2Assets.LoadAsset<ItemDef>("RelicOfExtinction")) + extraCharge, 0);
+            return Mathf.Max(cachedOwnerBody.inventory.GetItemCount(SS2Content.Items.RelicOfExtinction) + extraCharge, 0);
         }
 
         [Client]

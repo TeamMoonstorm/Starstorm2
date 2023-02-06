@@ -6,7 +6,7 @@ namespace Moonstorm.Starstorm2.Unlocks.Pickups
 {
     public sealed class ErraticGadgetUnlockable : UnlockableBase
     {
-        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.item.erraticgadget");
+        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.item.erraticgadget", SS2Bundle.Items);
 
         public override void Initialize()
         {

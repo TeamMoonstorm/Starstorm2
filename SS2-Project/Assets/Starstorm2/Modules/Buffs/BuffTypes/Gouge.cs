@@ -6,7 +6,7 @@ namespace Moonstorm.Starstorm2.Buffs
 {
     public sealed class Gouge : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffGouge");
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffGouge", SS2Bundle.Nemmando);
         public static DotController.DotIndex index;
 
         public override void Initialize()

@@ -9,8 +9,8 @@ namespace Moonstorm.Starstorm2.Orbs
     {
         public ExecutionerController execController;
 
-        private NetworkSoundEventDef sound = SS2Assets.LoadAsset<NetworkSoundEventDef>("SoundEventExecutionerGainCharge");
-        private GameObject orbEffect = SS2Assets.LoadAsset<GameObject>("ExecutionerIonOrbEffect");
+        private NetworkSoundEventDef sound = SS2Assets.LoadAsset<NetworkSoundEventDef>("SoundEventExecutionerGainCharge", SS2Bundle.Executioner);
+        private GameObject orbEffect = SS2Assets.LoadAsset<GameObject>("ExecutionerIonOrbEffect", SS2Bundle.Executioner);
         private const float speed = 50f;
 
         public override void Begin()

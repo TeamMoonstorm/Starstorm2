@@ -10,7 +10,7 @@ namespace Moonstorm.Starstorm2.Items
     public sealed class BloodTester : ItemBase
     {
         private const string token = "SS2_ITEM_BLOODTESTER_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("BloodTester");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("BloodTester", SS2Bundle.Items);
 
         [ConfigurableField(ConfigDesc = "Amount of healing required per Blood Tester proc.")]
         [TokenModifier(token, StatTypes.Default, 0)]

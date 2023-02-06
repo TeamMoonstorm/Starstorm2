@@ -11,7 +11,7 @@ namespace Moonstorm.Starstorm2.Items
 
     public sealed class X4 : ItemBase
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("X4");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("X4", SS2Bundle.Items);
 
         //[ConfigurableField(ConfigDesc = "Cooldown reduction per X-4 Stimulant. (1 = 1 second)")]
         //[TokenModifier("SS2_ITEM_X4_DESC", StatTypes.Default, 0)]

@@ -8,7 +8,7 @@ namespace Moonstorm.Starstorm2.Buffs
     [DisabledContent]
     public sealed class VoidLeech : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffVoidLeech");
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffVoidLeech", SS2Bundle.Items);
 
         public sealed class Behavior : BaseBuffBodyBehavior, IBodyStatArgModifier//, IStatItemBehavior
         {

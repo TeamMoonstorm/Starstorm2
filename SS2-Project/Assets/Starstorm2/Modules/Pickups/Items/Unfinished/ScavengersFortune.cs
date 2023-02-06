@@ -6,7 +6,7 @@ namespace Moonstorm.Starstorm2.Items
     [DisabledContent]
     public sealed class ScavengersFortune : ItemBase
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ScavengersFortune");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ScavengersFortune", SS2Bundle.Indev);
 
         public sealed class Behavior : BaseItemBodyBehavior
         {

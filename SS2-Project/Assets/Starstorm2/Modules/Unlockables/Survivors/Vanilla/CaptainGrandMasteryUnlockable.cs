@@ -5,7 +5,7 @@ namespace Moonstorm.Starstorm2.Unlocks.VanillaSurvivors
 {
     public sealed class CaptainGrandMasteryUnlockable : UnlockableBase
     {
-        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skin.captain.grandmastery");
+        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skin.captain.grandmastery", SS2Bundle.Vanilla);
 
         public sealed class CaptainGrandMasteryAchievement : GenericMasteryAchievement
         {

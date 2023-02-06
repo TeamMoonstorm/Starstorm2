@@ -1,7 +1,12 @@
 ﻿using Moonstorm.Loaders;
 using Moonstorm.Starstorm2.PostProcess;
 using RoR2;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Rendering.PostProcessing;
@@ -9,49 +14,238 @@ using Path = System.IO.Path;
 
 namespace Moonstorm.Starstorm2
 {
+    public enum SS2Bundle
+    {
+        Invalid,
+        All,
+        Main,
+        Base,
+        Artifacts,
+        Executioner,
+        Nemmando,
+        Equipments,
+        Items,
+        Events,
+        Vanilla,
+        Indev,
+        Shared
+    }
     public class SS2Assets : AssetsLoader<SS2Assets>
     {
-        public override AssetBundle MainAssetBundle => bundle;
+        private const string ASSET_BUNDLE_FOLDER_NAME = "assetbundles";
+        private const string MAIN = "ss2main";
+        private const string BASE = "ss2base";
+        private const string ARTIFACTS = "ss2artifacts";
+        private const string EXECUTIONER = "ss2executioner";
+        private const string NEMMANDO = "ss2nemmando";
+        private const string EQUIPS = "ss2equipments";
+        private const string ITEMS = "ss2items";
+        private const string EVENTS = "ss2events";
+        private const string VANILLA = "ss2vanilla";
+        private const string DEV = "ss2dev";
+        private const string SHARED = "ss2shared";
 
+        private static Dictionary<SS2Bundle, AssetBundle> assetBundles = new Dictionary<SS2Bundle, AssetBundle>();
+        [Obsolete("LoadAsset should not be used without specifying the SS2Bundle")]
+        public new static TAsset LoadAsset<TAsset>(string name) where TAsset : UnityEngine.Object
+        {
+#if DEBUG
+            var stackTrace = new StackTrace();
+            var method = stackTrace.GetFrame(1).GetMethod();
+            SS2Log.Warning($"Assembly {Assembly.GetCallingAssembly()} is trying to load an asset of name {name} and type {typeof(TAsset).Name} without specifying what bundle to use for loading. This causes large performance loss as SS2Assets has to search thru the entire bundle collection. Avoid calling LoadAsset without specifying the AssetBundle. (Method: {method.DeclaringType.FullName}.{method.Name}()");
+#endif
+            return LoadAsset<TAsset>(name, SS2Bundle.All);
+        }
+        [Obsolete("LoadAllAssetsOfType should not be used without specifying the SS2Bundle")]
+        public new static TAsset[] LoadAllAssetsOfType<TAsset>() where TAsset : UnityEngine.Object
+        {
+#if DEBUG
+            var stackTrace = new StackTrace();
+            var method = stackTrace.GetFrame(1).GetMethod();
+            SS2Log.Warning($"Assembly {Assembly.GetCallingAssembly()} is trying to load all assets of type {typeof(TAsset).Name} without specifying what bundle to use for loading. This causes large performance loss as SS2Assets has to search thru the entire bundle collection. Avoid calling LoadAsset without specifying the AssetBundle. (Method: {method.DeclaringType.FullName}.{method.Name}()");
+#endif
+            return LoadAllAssetsOfType<TAsset>(SS2Bundle.All);
+        } 
+        public static TAsset LoadAsset<TAsset>(string name, SS2Bundle bundle) where TAsset : UnityEngine.Object
+        {
+            if(Instance == null)
+            {
+                SS2Log.Error("Cannot load asset when there's no isntance of SS2Assets!");
+                return null;
+            }
+            return Instance.LoadAssetInternal<TAsset>(name, bundle);
+        }
+        public static TAsset[] LoadAllAssetsOfType<TAsset>(SS2Bundle bundle) where TAsset : UnityEngine.Object
+        {
+            if(Instance == null)
+            {
+                SS2Log.Error("Cannot load asset when there's no instance of SS2Assets!");
+                return null;
+            }
+            return Instance.LoadAllAssetsOfTypeInternal<TAsset>(bundle);
+        }
+
+        public override AssetBundle MainAssetBundle => GetAssetBundle(SS2Bundle.Main);
         public string AssemblyDir => Path.GetDirectoryName(Starstorm.pluginInfo.Location);
-
-        private static AssetBundle bundle;
-
-        private const string assetBundleFolderName = "assetbundles";
-        private const string mainAssetBundleName = "ss2assets";
-
-
+        public AssetBundle GetAssetBundle(SS2Bundle bundle)
+        {
+            return assetBundles[bundle];
+        }
         internal void Init()
         {
             var bundlePaths = GetAssetBundlePaths();
-            bundle = AssetBundle.LoadFromFile(bundlePaths);
+            foreach(string path in bundlePaths)
+            {
+                var fileName = Path.GetFileName(path);
+                switch(fileName)
+                {
+                    case MAIN: LoadBundle(path, SS2Bundle.Main); break;
+                    case BASE: LoadBundle(path, SS2Bundle.Base); break;
+                    case ARTIFACTS: LoadBundle(path, SS2Bundle.Artifacts); break;
+                    case EXECUTIONER: LoadBundle(path, SS2Bundle.Executioner); break;
+                    case NEMMANDO: LoadBundle(path, SS2Bundle.Nemmando); break;
+                    case EQUIPS: LoadBundle(path, SS2Bundle.Equipments); break;
+                    case ITEMS: LoadBundle(path, SS2Bundle.Items); break;
+                    case EVENTS: LoadBundle(path, SS2Bundle.Events); break;
+                    case VANILLA: LoadBundle(path, SS2Bundle.Vanilla); break;
+                    case DEV: LoadBundle(path, SS2Bundle.Indev); break;
+                    case SHARED: LoadBundle(path, SS2Bundle.Shared); break;
+                    default: SS2Log.Warning($"Invalid or Unexpected file in the AssetBundles folder (File name: {fileName}, Path: {path})"); break;
+                }
+            }
+
+            void LoadBundle(string path, SS2Bundle bundleEnum)
+            {
+                try
+                {
+                    AssetBundle bundle = AssetBundle.LoadFromFile(path);
+                    if(!bundle)
+                    {
+                        throw new FileLoadException("AssetBundle.LoadFromFile did not return an asset bundle");
+                    }
+
+                    if(assetBundles.ContainsKey(bundleEnum))
+                    {
+                        throw new InvalidOperationException($"AssetBundle in path loaded succesfully, but the assetBundles dictionary already contains an entry for {bundleEnum}.");
+                    }
+
+                    assetBundles[bundleEnum] = bundle;
+                }
+                catch(Exception e)
+                {
+                    SS2Log.Error($"Could not load assetbundle at path {path} and assign to enum {bundleEnum}. {e}");
+                }
+            }
         }
 
+        private TAsset LoadAssetInternal<TAsset>(string name, SS2Bundle bundle) where TAsset : UnityEngine.Object
+        {
+            TAsset asset = null;
+            if(bundle == SS2Bundle.All)
+            {
+                asset = FindAsset<TAsset>(name, out SS2Bundle foundInBundle);
+#if DEBUG
+                if(!asset)
+                {
+                    SS2Log.Warning($"Could not find asset of type {typeof(TAsset).Name} with name {name} in any of the bundles.");
+                }
+                else
+                {
+                    SS2Log.Info($"Asset of type {typeof(TAsset).Name} was found inside bundle {foundInBundle}, it is recommended that you load the asset directly");
+                }
+#endif
+                return asset;
+            }
+
+            asset = assetBundles[bundle].LoadAsset<TAsset>(name);
+#if DEBUG
+            if(!asset)
+            {
+                var stackTrace = new StackTrace();
+                var method = stackTrace.GetFrame(1).GetMethod();
+
+                SS2Log.Warning($"The  method \"{method.DeclaringType.FullName}.{method.Name}()\" is calling \"LoadAsset<TAsset>(string, SS2Bundle)\" with the arguments \"{typeof(TAsset).Name}\", \"{name}\" and \"{bundle}\", however, the asset could not be found.\n" +
+                    $"A complete search of all the bundles will be done and the correct bundle enum will be logged.");
+                return LoadAssetInternal<TAsset>(name, SS2Bundle.All);
+            }
+#endif
+            return asset;
+
+            TAsset FindAsset<TAsset>(string assetName, out SS2Bundle foundInBundle) where TAsset : UnityEngine.Object
+            {
+                foreach((var enumVal, var assetBundle) in assetBundles)
+                {
+                    var loadedAsset = assetBundle.LoadAsset<TAsset>(assetName);
+                    if (loadedAsset)
+                    {
+                        foundInBundle = enumVal;
+                        return loadedAsset;
+                    }
+                }
+                foundInBundle = SS2Bundle.Invalid;
+                return null;
+            }
+        }
+
+        private TAsset[] LoadAllAssetsOfTypeInternal<TAsset>(SS2Bundle bundle) where TAsset : UnityEngine.Object
+        {
+            List<TAsset> loadedAssets = new List<TAsset>();
+            if(bundle == SS2Bundle.All)
+            {
+                FindAssets<TAsset>(loadedAssets);
+#if DEBUG
+                if(loadedAssets.Count == 0)
+                {
+                    SS2Log.Warning($"Could not find any asset of type {typeof(TAsset)} inside any of the bundles");
+                }
+#endif
+                return loadedAssets.ToArray();
+            }
+
+            loadedAssets = assetBundles[bundle].LoadAllAssets<TAsset>().ToList();
+#if DEBUG
+            if (loadedAssets.Count == 0)
+            {
+                SS2Log.Warning($"Could not find any asset of type {typeof(TAsset)} inside the bundle {bundle}");
+            }
+#endif
+            return loadedAssets.ToArray();
+
+            void FindAssets<TAsset>(List<TAsset> output) where TAsset: UnityEngine.Object
+            {
+                foreach((var _, var bndl) in assetBundles)
+                {
+                    output.AddRange(bndl.LoadAllAssets<TAsset>());
+                }
+                return;
+            }
+        }
 
         internal void SwapMaterialShaders()
         {
-            SwapShadersFromMaterials(MainAssetBundle.LoadAllAssets<Material>().Where(mat => mat.shader.name.StartsWith("Stubbed")));
+            SwapShadersFromMaterials(LoadAllAssetsOfType<Material>(SS2Bundle.All).Where(mat => mat.shader.name.StartsWith("Stubbed")));
         }
 
         internal void FinalizeCopiedMaterials()
         {
-            FinalizeMaterialsWithAddressableMaterialShader(MainAssetBundle);
+            foreach(var (_, bundle) in assetBundles)
+            {
+                FinalizeMaterialsWithAddressableMaterialShader(bundle);
+            }
         }
 
-        private string GetAssetBundlePaths()
+        private string[] GetAssetBundlePaths()
         {
-            return Path.Combine(AssemblyDir, assetBundleFolderName, mainAssetBundleName);
-            /*return Directory.GetFiles(Path.Combine(AssemblyDir, assetBundleFolderName))
+            return Directory.GetFiles(Path.Combine(AssemblyDir, ASSET_BUNDLE_FOLDER_NAME))
                .Where(filePath => !filePath.EndsWith(".manifest"))
-               .OrderByDescending(path => Path.GetFileName(path).Equals(mainAssetBundleName))
-               .ToArray();*/
+               .ToArray();
         }
 
         //Not the most pleasant workaround but that's what we get
         //private static PostProcessProfile[] ppProfiles;
         private void LoadPostProcessing()
         {
-            var ppProfiles = bundle.LoadAllAssets<PostProcessProfile>();
+            var ppProfiles = LoadAllAssetsOfType<PostProcessProfile>(SS2Bundle.All);
             foreach (var ppProfile in ppProfiles)
             {
                 SS2Log.Error(ppProfile);

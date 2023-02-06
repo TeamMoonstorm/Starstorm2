@@ -11,7 +11,7 @@ namespace Moonstorm.Starstorm2.Items
 {
     public sealed class RelicOfForce : ItemBase
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfForce");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfForce", SS2Bundle.Items);
 
         [ConfigurableField(ConfigDesc = "Damage coefficient for subsequent hits. (1 = 100% of total damage)")]
         [TokenModifier("SS2_ITEM_RELICOFFORCE_DESC", StatTypes.MultiplyByN, 0, "100")]
@@ -176,7 +176,8 @@ namespace Moonstorm.Starstorm2.Items
                             origin = victim.transform.position
                         };
                         effectData.SetNetworkedObjectReference(victim.gameObject);
-                        EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("RelicOfForceHitEffect"), effectData, transmit: true);
+                        EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("RelicOfForceHitEffect", SS2Bundle
+                            .Items), effectData, transmit: true);
                     }
                     
                 }
