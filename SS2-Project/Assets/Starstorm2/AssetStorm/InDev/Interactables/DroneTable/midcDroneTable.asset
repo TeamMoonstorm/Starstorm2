@@ -10,31 +10,37 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8577aced8c5464a488c5ef8182ea0b80, type: 3}
-  m_Name: midcDropPod
+  m_Name: midcDroneTable
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
+  prefab: {fileID: 8519376120205637586, guid: 1d562be046731e04eaf72e45baafd092, type: 3}
   sendOverNetwork: 1
   hullSize: 0
   nodeGraphType: 0
-  requiredFlags: 1
-  forbiddenFlags: 8
+  requiredFlags: 0
+  forbiddenFlags: 16
   directorCreditCost: 1
   occupyPosition: 1
   eliteRules: 0
   orientToFloor: 1
   slightlyRandomizeOrientation: 0
   skipSpawnWhenSacrificeArtifactEnabled: 0
+  weightScalarWhenSacrificeArtifactEnabled: 1
+  maxSpawnsPerStage: -1
   directorCard:
     spawnCard: {fileID: 11400000}
     selectionWeight: 5
     spawnDistance: 0
-    allowAmbushSpawn: 1
     preventOverhead: 0
     minimumStageCompletions: 0
     requiredUnlockable: 
     forbiddenUnlockable: 
     requiredUnlockableDef: {fileID: 0}
     forbiddenUnlockableDef: {fileID: 0}
-  interactableCategory: 2
-  stages: 147966
+  interactableCategory: 4
+  customCategory: 
+  stages: -1
   customStages: []
+  requiredExpansions:
+  - address: 
+    useDirectReference: 1
+    asset: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
