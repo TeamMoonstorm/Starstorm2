@@ -60,13 +60,13 @@ namespace EntityStates.NemCommando
 
                 if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO" || skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
                 {
-                    muzzleFlash = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoYellow", SS2Bundle.Nemmando);
-                    projectilePrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwordBeamProjectileYellow", SS2Bundle.Nemmando);
+                    muzzleFlash = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoYellow", SS2Bundle.Indev);
+                    projectilePrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwordBeamProjectileYellow", SS2Bundle.Indev);
                 }
                 else
                 {
-                    muzzleFlash = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoRed", SS2Bundle.Nemmando);
-                    projectilePrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwordBeamProjectile", SS2Bundle.Nemmando);
+                    muzzleFlash = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoRed", SS2Bundle.Indev);
+                    projectilePrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwordBeamProjectile", SS2Bundle.Indev);
                 }
 
                 EffectManager.SimpleMuzzleFlash(muzzleFlash, gameObject, muzzleString, false);

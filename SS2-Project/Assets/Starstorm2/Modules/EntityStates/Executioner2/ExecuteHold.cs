@@ -19,15 +19,19 @@ namespace EntityStates.Executioner2
         public static string ExhaustR;
 
         public static GameObject areaIndicator;
+        public static GameObject areaIndicatorOOB;
 
         [HideInInspector]
         public static GameObject areaIndicatorInstance;
+
+        [HideInInspector]
+        public static GameObject areaIndicatorInstanceOOB;
 
         private CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
         private CharacterCameraParamsData slamCameraParams = new CharacterCameraParamsData
         {
             maxPitch = 88f,
-            minPitch = 45f,
+            minPitch = 25f,
             pivotVerticalOffset = 1f,
             idealLocalCameraPos = slamCameraPosition,
             wallCushion = 0.1f,
@@ -56,6 +60,7 @@ namespace EntityStates.Executioner2
                 camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0f);
 
                 areaIndicatorInstance = UnityEngine.Object.Instantiate(areaIndicator);
+                areaIndicatorInstanceOOB = UnityEngine.Object.Instantiate(areaIndicatorOOB);
             }
         }
 
@@ -76,19 +81,23 @@ namespace EntityStates.Executioner2
         {
             if (areaIndicatorInstance)
             {
-                float maxDistance = 256f;
+                float maxDistance = 49f;
 
                 Ray aimRay = GetAimRay();
                 RaycastHit raycastHit;
                 if (Physics.Raycast(aimRay, out raycastHit, maxDistance, LayerIndex.CommonMasks.bullet))
                 {
+                    areaIndicatorInstance.SetActive(true);
+                    areaIndicatorInstanceOOB.SetActive(false);
                     areaIndicatorInstance.transform.position = raycastHit.point;
                     areaIndicatorInstance.transform.up = raycastHit.normal;
                 }
                 else
                 {
-                    areaIndicatorInstance.transform.position = aimRay.GetPoint(maxDistance);
-                    areaIndicatorInstance.transform.up = -aimRay.direction;
+                    areaIndicatorInstance.SetActive(false);
+                    areaIndicatorInstanceOOB.SetActive(true);
+                    areaIndicatorInstanceOOB.transform.position = aimRay.GetPoint(maxDistance);
+                    areaIndicatorInstanceOOB.transform.up = -aimRay.direction;
                 }
             }
         }
@@ -121,6 +130,11 @@ namespace EntityStates.Executioner2
             if (areaIndicatorInstance)
             {
                 Destroy(areaIndicatorInstance.gameObject);
+            }
+
+            if (areaIndicatorInstanceOOB)
+            {
+                Destroy(areaIndicatorInstanceOOB.gameObject);
             }
         }
     }

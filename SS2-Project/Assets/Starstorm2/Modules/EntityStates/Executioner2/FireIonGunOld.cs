@@ -46,6 +46,8 @@ namespace EntityStates.Executioner2
             PlayAnimation("Gesture, Override", "FireIonGun", "Secondary.playbackRate", duration);
             EffectManager.SimpleMuzzleFlash(muzzlePrefab, gameObject, muzzleString, false);
 
+            characterBody.SetBuffCount(SS2Content.Buffs.bdExeCharge.buffIndex, 0);
+
             Shoot();
             if (!characterBody.HasBuff(SS2Content.Buffs.BuffExecutionerSuperCharged) && !characterBody.HasBuff(SS2Content.Buffs.BuffExecutionerArmor))
                 activatorSkillSlot.DeductStock(1);
@@ -68,6 +70,13 @@ namespace EntityStates.Executioner2
                 }
                 outer.SetNextStateToMain();
             }
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+            if (inputBank.skill2.down)
+                characterBody.SetBuffCount(SS2Content.Buffs.bdExeCharge.buffIndex, 1);
         }
 
         private void Shoot()

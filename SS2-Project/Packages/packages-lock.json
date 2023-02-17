@@ -22,11 +22,10 @@
       "hash": "7c486009280b6d905a66df075341941f8f8e60ca"
     },
     "com.unity.multiplayer-hlapi": {
-      "version": "https://github.com/risk-of-thunder/UnityMultiplayerHLAPI.git",
+      "version": "file:RoR2MultiplayerHLAPI",
       "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "ab4c0e7aca99354e4b5b211906e4acd83264ed12"
+      "source": "embedded",
+      "dependencies": {}
     },
     "com.unity.postprocessing": {
       "version": "2.3.0",
@@ -176,6 +175,12 @@
     },
     "riskofthunder-r2api_recalculatestats": {
       "version": "file:R2API_RecalculateStats",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "riskofthunder-r2api_rulebook": {
+      "version": "file:R2API_Rulebook",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}

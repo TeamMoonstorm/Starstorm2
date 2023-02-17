@@ -12,10 +12,10 @@ namespace EntityStates.Executioner2
 {
     public class ExecuteSlam : BaseSkillState
     {
-        public static float baseDamageCoefficient = 12f;
-        public static float slamRadius = 14f;
-        public static float procCoefficient = 1.0f;
-        public static float recoil = 8f;
+        public static float baseDamageCoefficient;
+        public static float slamRadius;
+        public static float procCoefficient;
+        public static float recoil;
         public static GameObject slamEffect;
 
         public static float duration = 1f;
@@ -31,7 +31,7 @@ namespace EntityStates.Executioner2
             idealLocalCameraPos = slamCameraPosition,
             wallCushion = 0.1f,
         };
-        public static Vector3 slamCameraPosition = new Vector3(0f, 0.0f, -42.5f);
+        public static Vector3 slamCameraPosition = new Vector3(0f, 0.0f, -32.5f);
 
         public override void OnEnter()
         {
@@ -49,7 +49,7 @@ namespace EntityStates.Executioner2
                     cameraParamsData = slamCameraParams,
                     priority = 1f
                 };
-                camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0.5f);
+                camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0.1f);
             }
         }
 
@@ -128,7 +128,7 @@ namespace EntityStates.Executioner2
             if (slamEffect)
                 EffectManager.SimpleEffect(slamEffect, hitGroundInfo.position, Quaternion.identity, true);
 
-            PlayAnimation("FullBody, Override", "SpecialImpact", "Special.playbackRate", duration);
+            
 
             outer.SetNextStateToMain();
         }
@@ -136,11 +136,12 @@ namespace EntityStates.Executioner2
         public override void OnExit()
         {
             base.OnExit();
+            PlayAnimation("FullBody, Override", "SpecialImpact", "Special.playbackRate", duration);
             characterMotor.onHitGroundAuthority -= GroundSlam;
             characterBody.bodyFlags -= CharacterBody.BodyFlags.IgnoreFallDamage;
             if (cameraTargetParams)
             {
-                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 1f);
+                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 1.2f);
             }
         }
     }

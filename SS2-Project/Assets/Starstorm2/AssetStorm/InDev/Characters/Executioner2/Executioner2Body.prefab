@@ -247,11 +247,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 430723268366279277}
-  m_LocalRotation: {x: -0.25, y: 0.75, z: -0.4330127, w: -0.4330127}
-  m_LocalPosition: {x: -0.189, y: 1.125, z: -0.19}
+  m_LocalRotation: {x: 0.43210962, y: -0.43031016, z: -0.7515542, w: -0.25155693}
+  m_LocalPosition: {x: -0.18544342, y: 0.031583976, z: 0.22783262}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 607405382189400129}
+  m_Father: {fileID: 7573341162725836530}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 60, y: 240, z: 0}
 --- !u!1 &442127833701192548
@@ -832,7 +832,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 9121819297087567692}
+  - {fileID: 6740491542069365490}
   m_Father: {fileID: 1480604342764416274}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1692,6 +1694,36 @@ Transform:
   m_Father: {fileID: 3273816697816812125}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2473500530164254876
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6690262323131547440}
+  m_Layer: 0
+  m_Name: ExhaustGun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6690262323131547440
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2473500530164254876}
+  m_LocalRotation: {x: 0.31883064, y: -0.61118186, z: -0.28483883, w: -0.6660861}
+  m_LocalPosition: {x: 0.0072484612, y: 0.2155025, z: -0.0066893985}
+  m_LocalScale: {x: 0.04257198, y: 0.042572007, z: 0.042572025}
+  m_Children: []
+  m_Father: {fileID: 1813424013012859770}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2559167381449630112
 GameObject:
   m_ObjectHideFlags: 0
@@ -2133,6 +2165,8 @@ MonoBehaviour:
     transform: {fileID: 9121819297087567692}
   - name: ExhaustR
     transform: {fileID: 6740491542069365490}
+  - name: ExhaustGun
+    transform: {fileID: 6690262323131547440}
 --- !u!114 &3645459943297996498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2190,13 +2224,13 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_Stiffness: 0.7
+  m_Stiffness: 0.372
   m_StiffnessDistrib:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: -0.09141159
-      value: 0.5497818
+      value: 0.24608612
       inSlope: -0.03587862
       outSlope: -0.03587862
       tangentMode: 0
@@ -2205,7 +2239,7 @@ MonoBehaviour:
       outWeight: 0.06573541
     - serializedVersion: 3
       time: 0.37606895
-      value: 0.6847012
+      value: 0.41242337
       inSlope: 0.034182172
       outSlope: 0.034182172
       tangentMode: 0
@@ -2213,8 +2247,8 @@ MonoBehaviour:
       inWeight: 0.3333333
       outWeight: 0.20837937
     - serializedVersion: 3
-      time: 0.9975586
-      value: 0.5703125
+      time: 1.0467279
+      value: 0.29803112
       inSlope: -0
       outSlope: -0
       tangentMode: 0
@@ -4466,11 +4500,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7529783595450862049}
-  m_LocalRotation: {x: -0.25000003, y: -0.75, z: 0.4330127, w: -0.43301272}
-  m_LocalPosition: {x: 0.134, y: 1.134, z: -0.233}
+  m_LocalRotation: {x: 0.43211037, y: 0.43030992, z: 0.7515537, w: -0.25155744}
+  m_LocalPosition: {x: 0.13755661, y: 0.022274671, z: 0.27076638}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 607405382189400129}
+  m_Father: {fileID: 7573341162725836530}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 60, y: -240, z: 0}
 --- !u!1 &7586786748131003371
@@ -5005,9 +5039,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 9121819297087567692}
-  - {fileID: 6740491542069365490}
+  m_Children: []
   m_Father: {fileID: 3077815623334918784}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5433,6 +5465,7 @@ Transform:
   m_Children:
   - {fileID: 4411968231867487660}
   - {fileID: 8915456048174881873}
+  - {fileID: 6690262323131547440}
   m_Father: {fileID: 436080160467669668}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5584,6 +5617,7 @@ GameObject:
   - component: {fileID: 9011166777397608896}
   - component: {fileID: 9011166777397608899}
   - component: {fileID: 9011166777397608898}
+  - component: {fileID: 8029635195395309803}
   - component: {fileID: 8651399261720920612}
   - component: {fileID: 9011166777397608900}
   - component: {fileID: 9011166777397608955}
@@ -5905,7 +5939,7 @@ MonoBehaviour:
   m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillFamily: {fileID: 11400000, guid: 961c31fd0b0d1f04b99ccd50ce725cdc, type: 2}
+  _skillFamily: {fileID: 11400000, guid: f1080292953fc194590706619d4d608c, type: 2}
   skillName: 
   hideInCharacterSelect: 0
   hasExecutedSuccessfully: 0
@@ -5953,6 +5987,7 @@ MonoBehaviour:
   stateMachines:
   - {fileID: 9011166777397608899}
   - {fileID: 9011166777397608898}
+  - {fileID: 8029635195395309803}
 --- !u!114 &9011166777397608899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5987,6 +6022,24 @@ MonoBehaviour:
     _typeName: EntityStates.Idle, Assembly-CSharp
   mainStateType:
     _typeName: EntityStates.Idle, Assembly-CSharp
+--- !u!114 &8029635195395309803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9011166777397608954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1297580292, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customName: JumpPack
+  initialStateType:
+    _typeName: RoR2.RouletteChestController+Idle, RoR2, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  mainStateType:
+    _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &8651399261720920612
 MonoBehaviour:
   m_ObjectHideFlags: 0

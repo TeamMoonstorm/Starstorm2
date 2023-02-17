@@ -24,7 +24,7 @@ namespace EntityStates.Executioner2
         private CharacterCameraParamsData slamCameraParams = new CharacterCameraParamsData
         {
             maxPitch = 88f,
-            minPitch = 45f,
+            minPitch = 25f,
             pivotVerticalOffset = 1f,
             idealLocalCameraPos = slamCameraPosition,
             wallCushion = 0.1f,
@@ -36,6 +36,19 @@ namespace EntityStates.Executioner2
 
             flyVector = Vector3.up;
 
+            Transform modelTransform = GetModelTransform();
+            if (modelTransform)
+            {
+                TemporaryOverlay temporaryOverlay = modelTransform.gameObject.AddComponent<TemporaryOverlay>();
+                temporaryOverlay.duration = 1.5f * duration;
+                temporaryOverlay.animateShaderAlpha = true;
+                temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 0.5f, 0.5f, 0f);
+                temporaryOverlay.destroyComponentOnEnd = true;
+                temporaryOverlay.originalMaterial = Resources.Load<Material>("Materials/matHuntressFlashBright");
+                temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
+            }
+
+            Util.PlaySound("ExecutionerSpecialCast", gameObject);
             PlayAnimation("FullBody, Override", "SpecialJump", "Special.playbackRate", duration);
 
             if (isAuthority)
@@ -65,8 +78,16 @@ namespace EntityStates.Executioner2
         {
             if (fixedAge >= duration)
             {
-                ExecuteHold nextState = new ExecuteHold();
-                outer.SetNextState(nextState);
+                if (inputBank.skill4.down)
+                {
+                    ExecuteHold nextState = new ExecuteHold();
+                    outer.SetNextState(nextState);
+                }
+                else
+                {
+                    ExecuteSlam nextState = new ExecuteSlam();
+                    outer.SetNextState(nextState);
+                }
             }
             else
                 HandleMovement();

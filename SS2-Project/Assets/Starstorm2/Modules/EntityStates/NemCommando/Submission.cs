@@ -58,9 +58,9 @@ namespace EntityStates.NemCommando
 
             if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
             {
-                tracerPrefab = SS2Assets.LoadAsset<GameObject>("TracerNemCommandoShotgunYellow", SS2Bundle.Nemmando);
-                muzzleFlashPrefab = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoYellow", SS2Bundle.Nemmando);
-                hitSparkPrefab = SS2Assets.LoadAsset<GameObject>("HitsparkNemCommandoYellow", SS2Bundle.Nemmando);
+                tracerPrefab = SS2Assets.LoadAsset<GameObject>("TracerNemCommandoShotgunYellow", SS2Bundle.Indev);
+                muzzleFlashPrefab = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoYellow", SS2Bundle.Indev);
+                hitSparkPrefab = SS2Assets.LoadAsset<GameObject>("HitsparkNemCommandoYellow", SS2Bundle.Indev);
             }
             if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO")
             {
@@ -70,9 +70,9 @@ namespace EntityStates.NemCommando
             }
             else
             {
-                tracerPrefab = SS2Assets.LoadAsset<GameObject>("TracerNemCommandoShotgunRed", SS2Bundle.Nemmando);
-                muzzleFlashPrefab = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoRed", SS2Bundle.Nemmando);
-                hitSparkPrefab = SS2Assets.LoadAsset<GameObject>("HitsparkNemCommandoRed", SS2Bundle.Nemmando);
+                tracerPrefab = SS2Assets.LoadAsset<GameObject>("TracerNemCommandoShotgunRed", SS2Bundle.Indev);
+                muzzleFlashPrefab = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoRed", SS2Bundle.Indev);
+                hitSparkPrefab = SS2Assets.LoadAsset<GameObject>("HitsparkNemCommandoRed", SS2Bundle.Indev);
             }
 
             FireBullet();
