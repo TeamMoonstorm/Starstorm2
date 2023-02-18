@@ -5613,6 +5613,7 @@ GameObject:
   - component: {fileID: 2514430406451502841}
   - component: {fileID: 934401702331999292}
   - component: {fileID: 6549691725392835590}
+  - component: {fileID: 3466142491736520836}
   - component: {fileID: 9011166777397608902}
   - component: {fileID: 9011166777397608896}
   - component: {fileID: 9011166777397608899}
@@ -5883,8 +5884,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   primary: {fileID: 6157381984090699662}
   secondary: {fileID: 2514430406451502841}
-  utility: {fileID: 934401702331999292}
-  special: {fileID: 6549691725392835590}
+  utility: {fileID: 6549691725392835590}
+  special: {fileID: 3466142491736520836}
   passiveSkill:
     enabled: 0
     skillNameToken: SS2_EXECUTIONER_PASSIVE_NAME
@@ -5924,10 +5925,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: fbd6b23edf9e43d47bbf0b0e88a9bce4, type: 2}
-  skillName: 
+  skillName: exeSecondary
   hideInCharacterSelect: 0
   hasExecutedSuccessfully: 0
 --- !u!114 &934401702331999292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9011166777397608954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillFamily: {fileID: 11400000, guid: bfd01efb131fc86478652f9798b96f5a, type: 2}
+  skillName: exeManipulators
+  hideInCharacterSelect: 0
+  hasExecutedSuccessfully: 0
+--- !u!114 &6549691725392835590
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5943,7 +5960,7 @@ MonoBehaviour:
   skillName: 
   hideInCharacterSelect: 0
   hasExecutedSuccessfully: 0
---- !u!114 &6549691725392835590
+--- !u!114 &3466142491736520836
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -31,9 +31,13 @@ namespace Moonstorm.Starstorm2.Components
 
         private void FixedUpdate()
         {
-            targetChargeLevel = (secondary.stock * 10f / secondary.maxStock * 10f) * 0.01f;
+            if (!secondary)
+                return;
+
+            targetChargeLevel = (secondary.stock * 10f / secondary.maxStock * 10f) * 0.01f; //this is stupid but it wouldn't work normally for some reason.
+
             if (chargeLevel != targetChargeLevel)
-            {       //this looks stupid
+            {       //this is also stupid
                 if (targetChargeLevel > chargeLevel)
                     chargeLevel += 0.01f;
                 if (targetChargeLevel < chargeLevel)
@@ -54,7 +58,7 @@ namespace Moonstorm.Starstorm2.Components
         public void OnDamageDealtServer(DamageReport report)
         {
             //This will break is anyone renames that skilldef's identifier
-            if (report.victim.gameObject != report.attacker && !report.victimBody.bodyFlags.HasFlag(CharacterBody.BodyFlags.Masterless) && (secondary.skillDef.skillName == "ExecutionerFireIonGun" || secondary.skillDef.skillName == "ExecutionerFireIonSummon"))
+            if (report.victim.gameObject != report.attacker && !report.victimBody.bodyFlags.HasFlag(CharacterBody.BodyFlags.Masterless) && secondary.skillDef.skillName == "ExecutionerChargeIons")
             {
                 var killComponents = report.victimBody.GetComponents<ExecutionerKillComponent>();
                 foreach (var killCpt in killComponents)

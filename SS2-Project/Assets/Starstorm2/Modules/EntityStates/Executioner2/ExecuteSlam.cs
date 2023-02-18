@@ -89,6 +89,7 @@ namespace EntityStates.Executioner2
             List<HealthComponent> hitTargets = new List<HealthComponent>();
 
             float damage = baseDamageCoefficient;
+            float procMultiplier = 1;
 
             search.ClearCandidates();
             search.origin = hitGroundInfo.position;
@@ -105,13 +106,16 @@ namespace EntityStates.Executioner2
                     hitTargets.Add(hp);
             }
             if (hitTargets.Count <= 1)
+            {
                 damage *= 2f;
+                procMultiplier++;
+            }
 
             bool crit = RollCrit();
             BlastAttack blast = new BlastAttack()
             {
                 radius = slamRadius,
-                procCoefficient = procCoefficient,
+                procCoefficient = procCoefficient * procMultiplier,
                 position = hitGroundInfo.position,
                 attacker = gameObject,
                 teamIndex = teamComponent.teamIndex,

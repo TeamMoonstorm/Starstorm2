@@ -31,8 +31,9 @@ namespace EntityStates.Executioner2
 
         [HideInInspector]
         public static GameObject muzzlePrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/MuzzleflashFMJ.prefab").WaitForCompletion();
+        public static GameObject tracerPrefab;
         [HideInInspector]
-        public static GameObject tracerPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/TracerCommandoShotgun.prefab").WaitForCompletion();
+        public static GameObject tracerExtraPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/TracerCommandoShotgun.prefab").WaitForCompletion();
         [HideInInspector]
         public static GameObject hitPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/HitsparkCommandoShotgun.prefab").WaitForCompletion();
 
@@ -179,7 +180,7 @@ namespace EntityStates.Executioner2
                             procCoefficient = procCoefficient * 0.5f,
                             radius = 0.5f,
                             weapon = gameObject,
-                            tracerEffectPrefab = tracerPrefab,
+                            tracerEffectPrefab = tracerExtraPrefab,
                             hitEffectPrefab = hitPrefab,
                             stopperMask = LayerIndex.world.mask,
                             spreadPitchScale = 1f,

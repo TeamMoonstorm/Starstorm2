@@ -12,6 +12,7 @@ namespace EntityStates.Executioner2
 
         [SerializeField]
         public SkillDef primaryOverride;
+        private SkillDef overrideDef;
 
         private GenericSkill overriddenSkill;
 
@@ -60,7 +61,19 @@ namespace EntityStates.Executioner2
 
             CameraSwap();
 
+            //GenericSkill manipulatorSkill = skillLocator.FindSkillByFamilyName("sfExe2Manipulators");
+
+            Debug.Log(skillLocator.FindSkill("exeManipulators").skillDef.skillName);
+
+            //overrideDef = manipulatorSkill.skillDef;
+
+            //Debug.Log(overrideDef);
+
             GenericSkill primarySkill = skillLocator.primary;
+
+            Debug.Log(primarySkill);
+            Debug.Log(primaryOverride);
+
             if (primarySkill)
             {
                 if (!overriddenSkill)
@@ -114,18 +127,10 @@ namespace EntityStates.Executioner2
                 thisFuckingSucks = false;
             }
 
-            if (Input.GetKeyDown(KeyCode.V) && !isPressingCameraSwap)
+            if (Input.GetKeyDown(KeyCode.V))
             {
-                Debug.Log("pressing v");
-                isPressingCameraSwap = true;
                 useAltCamera = !useAltCamera;
                 CameraSwap();
-            }
-
-            if (!Input.GetKeyDown(KeyCode.V) && isPressingCameraSwap)
-            {
-                Debug.Log("let go of v");
-                isPressingCameraSwap = false;
             }
 
             /*if (fixedAge >= duration && inputBank.skill2.down)

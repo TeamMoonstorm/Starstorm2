@@ -10,21 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1391837873, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: sdExe2FireChargeBurst
+  m_Name: sdExe2ChargeIons
   m_EditorClassIdentifier: 
-  skillName: ExecutionerFireIonGun
-  skillNameToken: SS2_EXECUTIONER2_IONBURST_NAME
-  skillDescriptionToken: SS2_EXECUTIONER2_IONBURST_DESC
-  keywordTokens:
-  - KEYWORD_SHOCKING
-  icon: {fileID: 21300000, guid: bc3ed12a95933dc409bce08ccf2ac297, type: 3}
-  activationStateMachineName: Weapon
+  skillName: ExecutionerChargeIons
+  skillNameToken: SS2_EXECUTIONER2_IONCHARGE_NAME
+  skillDescriptionToken: SS2_EXECUTIONER2_IONCHARGE_DESC
+  keywordTokens: []
+  icon: {fileID: 21300000, guid: b387f3692bf0a0148829fabfa06690d9, type: 3}
+  activationStateMachineName: JumpPack
   activationState:
-    _typeName: EntityStates.Executioner2.FireChargeGun, Starstorm2, Version=1.0.0.0,
+    _typeName: EntityStates.Executioner2.ChargeGun, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   interruptPriority: 1
   baseRechargeInterval: 0
-  baseMaxStock: 1
+  baseMaxStock: 10
   rechargeStock: 0
   requiredStock: 0
   stockToConsume: 0
@@ -34,6 +33,6 @@ MonoBehaviour:
   beginSkillCooldownOnSkillEnd: 1
   cancelSprintingOnActivation: 1
   forceSprintDuringState: 0
-  canceledFromSprinting: 0
-  isCombatSkill: 1
+  canceledFromSprinting: 1
+  isCombatSkill: 0
   mustKeyPress: 0

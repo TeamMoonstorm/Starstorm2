@@ -23,15 +23,12 @@ namespace Moonstorm.Starstorm2.Survivors
         {
             List<string> defaultBodyNames = new List<string>
             {
-                "BrotherGlassBody",
                 "BrotherHurtBody",
                 "ScavLunar1Body",
                 "ScavLunar2Body",
                 "ScavLunar3Body",
                 "ScavLunar4Body",
-                "ShopkeeperBody",
-                "SuperRoboBallBossBody",
-                "DireseekerBossBody"
+                "ShopkeeperBody"
             };
 
             foreach(string bodyName in defaultBodyNames)
@@ -48,14 +45,14 @@ namespace Moonstorm.Starstorm2.Survivors
         {
             if (bodyIndex == BodyIndex.None)
             {
-                SS2Log.Debug($"Tried to add a body to the supercharge list, but it's index is none");
+                //SS2Log.Debug($"Tried to add a body to the supercharge list, but it's index is none");
                 return;
             }
 
             if (bodiesThatGiveSuperCharge.Contains(bodyIndex))
             {
                 GameObject prefab = BodyCatalog.GetBodyPrefab(bodyIndex);
-                SS2Log.Debug($"Body prefab {prefab} is already in the list of bodies that give supercharge.");
+                //SS2Log.Debug($"Body prefab {prefab} is already in the list of bodies that give supercharge.");
                 return;
             }
             bodiesThatGiveSuperCharge.Add(bodyIndex);

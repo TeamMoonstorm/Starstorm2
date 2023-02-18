@@ -36,7 +36,7 @@ namespace EntityStates.Executioner
             characterBody.SetAimTimer(2f);
             muzzleString = "Muzzle";
             hasFired = false;
-            PlayAnimation("Gesture, Override", "Primary", "Primary.playbackRate", duration * 2f);
+            PlayCrossfade("Gesture, Override", "Primary", "Primary.playbackRate", duration * 2.5f, 0.05f);
             Shoot();
         }
 
