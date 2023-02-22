@@ -12,6 +12,15 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "com.passivepicasso.thunderkit": {
+      "version": "https://github.com/PassivePicasso/ThunderKit.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.scriptablebuildpipeline": "1.16.1"
+      },
+      "hash": "7ea752a2390306be73860a590d7639b995d9ca28"
+    },
     "com.unity.multiplayer-hlapi": {
       "version": "https://github.com/risk-of-thunder/UnityMultiplayerHLAPI.git",
       "depth": 0,
@@ -148,6 +157,13 @@
       "source": "git",
       "dependencies": {},
       "hash": "9acf13ca9731e1fea43d89b88c6bc054eb6cf32c"
+    },
+    "teammoonstorm-moonstormsharedutils": {
+      "version": "https://github.com/TeamMoonstorm/MoonstormSharedUtils.git#1.3.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "cb012483b6d04f83dfe352b1db4da73d2a3e2c43"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
