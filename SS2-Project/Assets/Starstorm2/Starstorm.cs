@@ -13,6 +13,7 @@ namespace Moonstorm.Starstorm2
     [BepInDependency("com.bepis.r2api.networking")]
     [BepInDependency("com.bepis.r2api.prefab")]
     [BepInDependency("com.bepis.r2api.difficulty")]
+    [BepInDependency("com.bepis.r2api.tempvisualeffect")]
     #endregion
     [BepInDependency("com.TeamMoonstorm.MoonstormSharedUtils", BepInDependency.DependencyFlags.HardDependency)]
     [BepInDependency("com.DestroyedClone.AncientScepter", BepInDependency.DependencyFlags.SoftDependency)]

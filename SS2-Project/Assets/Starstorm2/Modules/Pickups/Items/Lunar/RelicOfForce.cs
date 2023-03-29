@@ -27,6 +27,41 @@ namespace Moonstorm.Starstorm2.Items
 
         public static DamageAPI.ModdedDamageType relicForceDamageType;
 
+        override public void Initialize()
+        {
+            IL.RoR2.GenericSkill.CalculateFinalRechargeInterval += ForceSkillFinalRecharge;
+        }
+
+        private void ForceSkillFinalRecharge(ILContext il)
+        {
+            ILCursor c = new ILCursor(il);
+            if (c.TryGotoNext(
+                x => x.MatchLdarg(0),
+                x => x.MatchCallOrCallvirt<RoR2.GenericSkill>("get_baseRechargeInterval")
+                ))
+            {
+                c.Remove();
+                c.Remove();
+            }
+            else
+            {
+                SS2Log.Error("Failed to apply Relic of Force First IL Hook");
+            }
+
+            if (c.TryGotoNext(
+                x => x.MatchCallOrCallvirt<UnityEngine.Mathf>("Min")
+                ))
+            {
+                c.Remove();
+                //c.EmitDelegate<Func<float, float, float>>((v1, v2) => v2);
+                //c.Emit(OpCodes.Ret);
+            }
+            else
+            {
+                SS2Log.Error("Failed to apply Relic of Force IL Second Hook");
+            }
+        }
+
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier, IOnDamageDealtServerReceiver
         {
             [ItemDefAssociation]
@@ -46,15 +81,16 @@ namespace Moonstorm.Starstorm2.Items
                 args.specialCooldownMultAdd += penalty;
             }
 
-            private void OnEnable()
-            {
-                IL.RoR2.GenericSkill.CalculateFinalRechargeInterval += ForceSkillFinalRecharge;
-            }
-
-            private void OnDisable()
-            {
-                IL.RoR2.GenericSkill.CalculateFinalRechargeInterval -= ForceSkillFinalRecharge;
-            }
+            //private void OnEnable()
+            //{
+            //    IL.RoR2.GenericSkill.CalculateFinalRechargeInterval += ForceSkillFinalRecharge;
+            //}
+            //
+            //private void OnDisable()
+            //{
+            //    IL.RoR2.GenericSkill.CalculateFinalRechargeInterval -= ForceSkillFinalRecharge;
+            //}
+            //
 
             public void OnDamageDealtServer(DamageReport damageReport)
             {
@@ -84,36 +120,6 @@ namespace Moonstorm.Starstorm2.Items
                         }
 
                     }
-                }
-            }
-
-            private void ForceSkillFinalRecharge(ILContext il)
-            {
-                ILCursor c = new ILCursor(il);
-                if (c.TryGotoNext(
-                    x => x.MatchLdarg(0),
-                    x => x.MatchCallOrCallvirt<RoR2.GenericSkill>("get_baseRechargeInterval")
-                    ))
-                {
-                    c.Remove();
-                    c.Remove();
-                }
-                else
-                {
-                    SS2Log.Error("Failed to apply Relic of Force First IL Hook");
-                }
-
-                if (c.TryGotoNext(
-                    x => x.MatchCallOrCallvirt<UnityEngine.Mathf>("Min")
-                    ))
-                {
-                    c.Remove();
-                    //c.EmitDelegate<Func<float, float, float>>((v1, v2) => v2);
-                    //c.Emit(OpCodes.Ret);
-                }
-                else
-                {
-                    SS2Log.Error("Failed to apply Relic of Force IL Second Hook");
                 }
             }
         }
