@@ -44,7 +44,7 @@ namespace Moonstorm.Starstorm2.Equipments
             {
                 //SS2Log.Debug("is not player controled");
                 uint splitAmount = (uint)(goldEarned / playerCount);
-                SS2Log.Debug("is not player controlled, giving " + splitAmount + " to all players");
+                //SS2Log.Debug("is not player controlled, giving " + splitAmount + " to all players");
                 foreach (var player in PlayerCharacterMasterController.instances)
                 {
                     player.master.GiveMoney(splitAmount);
@@ -52,7 +52,7 @@ namespace Moonstorm.Starstorm2.Equipments
             }
             else
             {
-                SS2Log.Debug("is player controled@!!!!!");
+                //SS2Log.Debug("is player controled@!!!!!");
                 slot.characterBody.master.GiveMoney((uint)goldEarned);
             }
             
