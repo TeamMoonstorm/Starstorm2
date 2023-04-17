@@ -52,11 +52,30 @@ The most important issues you may encounter are listed below, to help expect thi
     * Artifact of Metamorphosis is broken by the mod.
     * Artifact of Cognation's unlock is broken. The artifact is unlocked by default.
     * Event effects may not be networked.
-	* Relic of Force may cause skills with 0 cooldown to break.
 
 ## Changelog
 
 **Warning: content spoilers below!**
+
+### 0.3.51
+* General
+    * Adjusted Clocking Headband's Russian translation.
+* Items & Equipment
+    * Added Equipment disabling.
+    * Reworked Relic of Termination - now grants a buff that is consumed upon an enemy spawning, and then goes on a 30 second cooldown displayed via a buff stack.
+    * Reworked Needles - Now grants a +1% stacking debuff which increases crit chance against that enemy until 1 (+1 per stack) crits happen on that enemy.
+    * Adjusted MIDAS - When given to an equipment drone, the drone now splits the gold it would recieve amongst all players.
+    * Fixed Coffee Bag behaving strangely in multiplayer.
+    * Blacklisted Coffee Bag from enemies.
+    * Should have fixed Relic of Force rarely giving primary skills cooldowns.
+    * Should have fixed Greater Warbanner's cooldown breaking.
+    * Added R2API TempVFX dependency.
+* Events
+    * Invading Nemesis Commando now does less damage. (10x -> 7x)
+
+### 0.3.50
+* Items
+    * Fixed Hunter's Sigil adding 20000% damage and not 20%. Additionally fixed its description still mentioning crit chance and not damage.
 
 ### 0.3.49
 * General
