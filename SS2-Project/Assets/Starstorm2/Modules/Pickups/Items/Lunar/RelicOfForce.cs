@@ -34,6 +34,7 @@ namespace Moonstorm.Starstorm2.Items
 
         private void ForceSkillFinalRecharge(ILContext il)
         {
+            bool successful = true;
             ILCursor c = new ILCursor(il);
             if (c.TryGotoNext(
                 x => x.MatchLdarg(0),
@@ -45,20 +46,24 @@ namespace Moonstorm.Starstorm2.Items
             }
             else
             {
-                SS2Log.Error("Failed to apply Relic of Force First IL Hook");
+                SS2Log.Error("Failed to apply Relic of Force First IL Hook - not attempting second hook");
+                successful = false;
             }
 
-            if (c.TryGotoNext(
-                x => x.MatchCallOrCallvirt<UnityEngine.Mathf>("Min")
-                ))
+            if (successful)
             {
-                c.Remove();
-                //c.EmitDelegate<Func<float, float, float>>((v1, v2) => v2);
-                //c.Emit(OpCodes.Ret);
-            }
-            else
-            {
-                SS2Log.Error("Failed to apply Relic of Force IL Second Hook");
+                if (c.TryGotoNext(
+                                x => x.MatchCallOrCallvirt<UnityEngine.Mathf>("Min")
+                                ))
+                {
+                    c.Remove();
+                    //c.EmitDelegate<Func<float, float, float>>((v1, v2) => v2);
+                    //c.Emit(OpCodes.Ret);
+                }
+                else
+                {
+                    SS2Log.Error("Failed to apply Relic of Force IL Second Hook");
+                }
             }
         }
 
