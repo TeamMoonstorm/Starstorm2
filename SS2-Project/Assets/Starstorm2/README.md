@@ -72,6 +72,8 @@ The most important issues you may encounter are listed below, to help expect thi
     * Added R2API TempVFX dependency.
 * Events
     * Invading Nemesis Commando now does less damage. (10x -> 7x)
+    * Mending Orbs no longer gain elite effects during elite events.
+    * Married Lemurians no longer have their elite type overriden during elite events.
 
 ### 0.3.50
 * Items
