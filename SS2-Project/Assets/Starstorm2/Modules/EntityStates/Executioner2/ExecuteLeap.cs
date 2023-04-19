@@ -55,8 +55,8 @@ namespace EntityStates.Executioner2
             {
                 characterMotor.Motor.ForceUnground();
 
-                EffectManager.SimpleMuzzleFlash(jumpEffect, gameObject, ExhaustL, false);
-                EffectManager.SimpleMuzzleFlash(jumpEffect, gameObject, ExhaustR, false);
+                EffectManager.SimpleMuzzleFlash(jumpEffect, gameObject, ExhaustL, true);
+                EffectManager.SimpleMuzzleFlash(jumpEffect, gameObject, ExhaustR, true);
 
                 CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
                 {
@@ -106,6 +106,11 @@ namespace EntityStates.Executioner2
             {
                 cameraTargetParams.RemoveParamsOverride(camOverrideHandle, .1f);
             }
+        }
+
+        public override InterruptPriority GetMinimumInterruptPriority()
+        {
+            return InterruptPriority.PrioritySkill;
         }
     }
 }

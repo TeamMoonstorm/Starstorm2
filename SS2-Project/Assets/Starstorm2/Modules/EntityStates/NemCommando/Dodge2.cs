@@ -16,6 +16,8 @@ namespace EntityStates.NemCommmando
         private Vector3 forwardDirection;
         private Vector3 previousPosition;
         private Animator animator;
+        private EntityStateMachine swordSM;
+        private NetworkStateMachine nsm;
 
         public override void OnEnter()
         {
@@ -23,6 +25,11 @@ namespace EntityStates.NemCommmando
             animator = GetModelAnimator();
             ChildLocator childLocator = animator.GetComponent<ChildLocator>();
             Util.PlaySound(Commando.DodgeState.dodgeSoundString, gameObject);
+
+            //nsm = GetComponent<NetworkStateMachine>();
+            //swordSM = nsm.stateMachines[1];
+
+            //Debug.Log("swordSM: " + swordSM.customName);
 
             animator.SetBool("isRolling", true);
 
@@ -109,6 +116,14 @@ namespace EntityStates.NemCommmando
         {
             animator.SetBool("isRolling", false);
 
+            if (swordSM)
+            {
+                //swordSM.SetNextStateToMain();
+                //Debug.Log("set sword to idle");
+            }
+
+            animator.SetBool("shouldExit", true);
+
             if (cameraTargetParams)
                 cameraTargetParams.fovOverride = -1f;
             base.OnExit();
@@ -124,6 +139,11 @@ namespace EntityStates.NemCommmando
         {
             base.OnDeserialize(reader);
             forwardDirection = reader.ReadVector3();
+        }
+
+        public override InterruptPriority GetMinimumInterruptPriority()
+        {
+            return InterruptPriority.PrioritySkill;
         }
     }
 }

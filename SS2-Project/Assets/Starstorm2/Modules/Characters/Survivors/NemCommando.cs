@@ -13,12 +13,15 @@ namespace Moonstorm.Starstorm2.Survivors
         public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemmandoMonsterMaster", SS2Bundle.Nemmando);
         public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("survivorNemCommando", SS2Bundle.Nemmando);
 
+        private GameObject nemesisPod;
+
         public override void Initialize()
         {
             base.Initialize();
             if (Starstorm.ScepterInstalled)
             {
                 ScepterCompat();
+                CreateNemesisPod();
             }
         }
 
@@ -29,9 +32,15 @@ namespace Moonstorm.Starstorm2.Survivors
             AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(SS2Assets.LoadAsset<SkillDef>("NemmandoScepterBossAttack", SS2Bundle.Nemmando), "NemmandoBody", SkillSlot.Special, 1);
         }
 
+        public void CreateNemesisPod()
+        {
+            //later
+        }
+
         public override void ModifyPrefab()
         {
             var cb = BodyPrefab.GetComponent<CharacterBody>();
+            //cb.preferredPodPrefab = Resources.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod");
             cb._defaultCrosshairPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/SimpleDotCrosshair.prefab").WaitForCompletion();
             //cb.GetComponent<ModelLocator>().modelTransform.GetComponent<FootstepHandler>().footstepDustPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/GenericFootstepDust.prefab").WaitForCompletion();
         }

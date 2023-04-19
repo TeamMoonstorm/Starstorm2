@@ -7,6 +7,7 @@ using R2API;
 using R2API.Utils;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement;
+using RoR2.Projectile;
 
 namespace Moonstorm.Starstorm2.Modules
 {
@@ -39,7 +40,14 @@ namespace Moonstorm.Starstorm2.Modules
             {
                 if (self.projectilePrefab == ProjectileCatalog.GetProjectilePrefab(ProjectileCatalog.FindProjectileIndex("FMJRamping")) && self.GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[self.characterBody.skinIndex].nameToken == "SS2_SKIN_COMMANDO_VESTIGE")
                 {
-                    self.projectilePrefab = SS2Assets.LoadAsset<GameObject>("FMJRampingRed", SS2Bundle.Vanilla);
+                    GameObject projectileInstance;
+                    projectileInstance = self.projectilePrefab;
+                    ProjectileController pc = projectileInstance.GetComponent<ProjectileController>();
+                    ProjectileOverlapAttack poa = projectileInstance.GetComponent<ProjectileOverlapAttack>();
+
+                    pc.ghostPrefab = SS2Assets.LoadAsset<GameObject>("FMJRampingGhostRed", SS2Bundle.Vanilla);
+                    poa.impactEffect = SS2Assets.LoadAsset<GameObject>("OmniExplosionVFXFMJRed", SS2Bundle.Vanilla);
+                    //self.projectilePrefab = SS2Assets.LoadAsset<GameObject>("FMJRampingRed", SS2Bundle.Vanilla);
                     self.effectPrefab = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoRed", SS2Bundle.Vanilla);
                 }
             }

@@ -182,6 +182,8 @@ namespace Moonstorm.Starstorm2
 
             public static BuffDef bdExeCharge;
 
+            public static BuffDef bdCanJump;
+
             public static BuffDef bdExeMuteCharge;
 			
             public static BuffDef BuffTerminationCooldown;

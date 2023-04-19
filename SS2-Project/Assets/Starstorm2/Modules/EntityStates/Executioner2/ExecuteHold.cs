@@ -48,8 +48,8 @@ namespace EntityStates.Executioner2
 
             if (isAuthority)
             {
-                EffectManager.SimpleMuzzleFlash(jumpEffect, gameObject, ExhaustL, false);
-                EffectManager.SimpleMuzzleFlash(jumpEffect, gameObject, ExhaustR, false);
+                EffectManager.SimpleMuzzleFlash(jumpEffect, gameObject, ExhaustL, true);
+                EffectManager.SimpleMuzzleFlash(jumpEffect, gameObject, ExhaustR, true);
 
                 CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
                 {
@@ -81,7 +81,7 @@ namespace EntityStates.Executioner2
         {
             if (areaIndicatorInstance)
             {
-                float maxDistance = 49f;
+                float maxDistance = 48.4f * moveSpeedStat; //i think that's accurate..
 
                 Ray aimRay = GetAimRay();
                 RaycastHit raycastHit;
@@ -136,6 +136,11 @@ namespace EntityStates.Executioner2
             {
                 Destroy(areaIndicatorInstanceOOB.gameObject);
             }
+        }
+
+        public override InterruptPriority GetMinimumInterruptPriority()
+        {
+            return InterruptPriority.PrioritySkill;
         }
     }
 }

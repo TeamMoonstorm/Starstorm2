@@ -47,8 +47,7 @@ namespace EntityStates.Executioner
             EffectManager.SimpleMuzzleFlash(muzzlePrefab, gameObject, muzzleString, false);
 
             Shoot();
-            if (!characterBody.HasBuff(SS2Content.Buffs.BuffExecutionerSuperCharged) && !characterBody.HasBuff(SS2Content.Buffs.BuffExecutionerArmor))
-                activatorSkillSlot.DeductStock(1);
+            activatorSkillSlot.DeductStock(1);
             shotsFired++;
         }
 

@@ -58,6 +58,23 @@ The most important issues you may encounter are listed below, to help expect thi
 
 **Warning: content spoilers below!**
 
+### 0.3.50 - swuff pending changes
+* Executioner
+    * Rebuilt from the ground up, featuring a new model, animations, skill reworks, etc.
+    * New secondary skill, Ion Manipulators, temporarily replaces your Primary and builds M2 stocks while held
+    * Fear has been reworked to give an execution threshold and prevent enemies from attacking, but lost many other bonuses
+    * Execution has been remastered for feel
+* Nemesis Commando
+    * Rebuilt from the ground up, featuring a new model, animations, skill reworks, etc.
+    * Single Tap is now the default secondary, given it better compliments the dichotomy of ranged / melee the character has.
+    * Rewrote Submission to no longer require a charge-up period
+* Items & Equipment
+    * Did IDRS for some items. Can't recall which. Sorry.
+    * Added Insecticide: 100% chance to poison enemies on hit with a debuff slightly worse than bleed. Is like finding a stack of tri-tips out of a chest :)
+    * Reworked Pressurized Cannister: Now makes the player take a forwards, upwards leap, and grants an extra double jump.
+* Events
+    * Added new "Fog" event exclusive to Distant Roost and Wetland Aspect.
+
 ### 0.3.49
 * General
     * Fixed Spanish translation not appearing.

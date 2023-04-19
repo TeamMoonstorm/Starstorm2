@@ -36,6 +36,7 @@ namespace EntityStates.Nemmando
         public Material matInstance;
         //private NemmandoController nemmandoController;
         private float minimumEmission;
+        private string skinNameToken;
 
         public CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
         
@@ -52,11 +53,32 @@ namespace EntityStates.Nemmando
             hitCount = Mathf.Max(hitCount, hitCountModified);
             SS2Log.Debug("hit count after: " + hitCount);
 
-            damageCoefficient = Util.Remap(charge, 0f, 1f, minDamageCoefficient, maxDamageCoefficient);
-            radius = Util.Remap(charge, 0f, 1f, minRadius, maxRadius);
+            damageCoefficient = maxDamageCoefficient;
+            radius = maxRadius;
             emission = Util.Remap(charge, 0f, 1f, minEmission, maxEmission);
             //nemmandoController = GetComponent<NemmandoController>();
             characterBody.hideCrosshair = false;
+
+            skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
+
+            if (skinNameToken != "SS2_SKIN_NEMCOMMANDO_DEFAULT")
+            {
+                //Yellow
+                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
+                {
+                    effectPrefab = SS2Assets.LoadAsset<GameObject>("DecisiveStrikeSlashYellow", SS2Bundle.NemCommando);
+                }
+                //Blue
+                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO")
+                {
+                    effectPrefab = SS2Assets.LoadAsset<GameObject>("DecisiveStrikeSlashBlue", SS2Bundle.NemCommando);
+                }
+            }
+            //Red
+            else
+            {
+                effectPrefab = SS2Assets.LoadAsset<GameObject>("DecisiveStrikeSlash", SS2Bundle.NemCommando);
+            }
 
             //minimumEmission = effectComponent.defaultSwordEmission;
 

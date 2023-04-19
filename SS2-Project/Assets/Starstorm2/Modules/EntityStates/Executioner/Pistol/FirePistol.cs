@@ -102,7 +102,7 @@ namespace EntityStates.Executioner
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.Skill;
+            return InterruptPriority.PrioritySkill;
         }
     }
 }

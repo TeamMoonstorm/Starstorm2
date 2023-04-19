@@ -14,7 +14,7 @@ namespace Moonstorm.Starstorm2.Equipments
             {
                 slot.characterBody.AddItemBehavior<Behavior>(1);
                 Debug.Log($"Adding behavior");
-                if (slot.hasAuthority)
+                //if (slot.hasAuthority)
                 {
                 }
                 return true;
@@ -25,10 +25,11 @@ namespace Moonstorm.Starstorm2.Equipments
         //notice how this is not added by this.AddItemBehavior() but the Fire Action
         public sealed class Behavior : CharacterBody.ItemBehavior
         {
-            private static float duration = 3f;
+            private static float duration = 0.8f;
             private static float thrustForce = 90f;
             private static int effectSpawnTotal = 10;
 
+            //private AnimationCurve curve = new AnimationCurve(new Keyframe(0, 1), new Keyframe(0.7f * duration, 1), new Keyframe(duration, 0));
 
             private float stopwatch;
             private int effectInterval;
@@ -38,12 +39,16 @@ namespace Moonstorm.Starstorm2.Equipments
             {
                 characterMotor = body.characterMotor;
                 if (characterMotor.isGrounded)
-                    EffectManager.SimpleEffect(Resources.Load<GameObject>("prefabs/effects/SmokescreenEffect"), body.footPosition, Quaternion.identity, false);
+                    EffectManager.SimpleEffect(Resources.Load<GameObject>("prefabs/effects/SmokescreenEffect"), body.footPosition, Quaternion.identity, true);
                 if (body.hasAuthority)
                 {
                     characterMotor.Motor.ForceUnground();
-                    characterMotor.velocity = new Vector3(characterMotor.velocity.x, Mathf.Max(characterMotor.velocity.y, 15f), characterMotor.velocity.z);
-                }
+                    EffectManager.SimpleEffect(SS2Assets.LoadAsset<GameObject>("canExhaust", SS2Bundle.Equipments), body.transform.position, body.transform.rotation, true);
+                    body.AddBuff(SS2Content.Buffs.bdCanJump.buffIndex);
+                    body.characterMotor.Jump(1.2f, 2.2f, false); //it would be so awesome 
+                    //body.baseJumpCount++; done through invisible buff so it clears after landing //it would be so cool
+                    // characterMotor.velocity = new Vector3(characterMotor.velocity.x, Mathf.Max(characterMotor.velocity.y, 15f), characterMotor.velocity.z); //it would be the most incredible superher
+                } //why was there all of this complicated stuff instead of just a jump..?
             }
 
             private void FixedUpdate()
@@ -59,23 +64,27 @@ namespace Moonstorm.Starstorm2.Equipments
 
             public void AuthorityUpdate()
             {
-                bool funnyCanister = SS2Config.EnableFunnyCanister.Value;
-                if (characterMotor.enabled)
-                {
-                    if (funnyCanister || body.inputBank.jump.down)
-                    {
-                        characterMotor.ApplyForce(Vector3.up * thrustForce * (body.rigidbody.mass / 100f));
-                        if (stopwatch >= (duration / effectSpawnTotal * effectInterval))
-                        {
-                            EffectData effectData = new EffectData();
-                            effectData.origin = body.footPosition;
-                            effectData.scale = 0.5f;
-                            EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/impacteffects/CharacterLandImpact"), effectData, true);
-                        }
-                    }
-                    if (stopwatch >= (duration / effectSpawnTotal * effectInterval))
-                        effectInterval++;
-                }
+                /* bool funnyCanister = SS2Config.EnableFunnyCanister.Value;
+                 if (characterMotor.enabled)
+                 {
+                     if (funnyCanister || body.inputBank.jump.down)
+                     {
+                         characterMotor.ApplyForce(Vector3.up * thrustForce * (body.rigidbody.mass / 100f));
+                         if (stopwatch >= (duration / effectSpawnTotal * effectInterval))
+                         {
+                             EffectData effectData = new EffectData();
+                             effectData.origin = body.footPosition;
+                             effectData.scale = 0.5f;
+                             EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/impacteffects/CharacterLandImpact"), effectData, true);
+                         }
+                     }
+                     if (stopwatch >= (duration / effectSpawnTotal * effectInterval))
+                         effectInterval++;
+                 }*/
+
+                //characterMotor.rootMotion += Vector3.up * (body.moveSpeed * EntityStates.Executioner2.ExecuteLeap.speedCoefficientCurve.Evaluate(stopwatch / (duration * 0.6f)) * Time.fixedDeltaTime * 10f);
+                
+                //characterMotor.velocity.y = 0f;
             }
         }
     }

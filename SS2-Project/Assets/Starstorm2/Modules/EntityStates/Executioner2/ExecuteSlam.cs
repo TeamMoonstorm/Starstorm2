@@ -148,6 +148,11 @@ namespace EntityStates.Executioner2
                 cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 1.2f);
             }
         }
+
+        public override InterruptPriority GetMinimumInterruptPriority()
+        {
+            return InterruptPriority.PrioritySkill;
+        }
     }
 }
 

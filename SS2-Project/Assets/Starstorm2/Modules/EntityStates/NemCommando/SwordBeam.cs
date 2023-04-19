@@ -58,15 +58,26 @@ namespace EntityStates.NemCommando
 
                 skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
 
-                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO" || skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
+                if (skinNameToken != "SS2_SKIN_NEMCOMMANDO_DEFAULT")
                 {
-                    muzzleFlash = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoYellow", SS2Bundle.Indev);
-                    projectilePrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwordBeamProjectileYellow", SS2Bundle.Indev);
+                    //Blue
+                    if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO")
+                    {
+                        muzzleFlash = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoYellow", SS2Bundle.NemCommando);
+                        projectilePrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwordBeamProjectileYellow", SS2Bundle.NemCommando);
+                    }
+                    //Yellow
+                    if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
+                    {
+                        muzzleFlash = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoYellow", SS2Bundle.NemCommando);
+                        projectilePrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwordBeamProjectileYellow", SS2Bundle.NemCommando);
+                    }
                 }
+                //Red
                 else
                 {
-                    muzzleFlash = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoRed", SS2Bundle.Indev);
-                    projectilePrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwordBeamProjectile", SS2Bundle.Indev);
+                    muzzleFlash = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoRed", SS2Bundle.NemCommando);
+                    projectilePrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwordBeamProjectile", SS2Bundle.NemCommando);
                 }
 
                 EffectManager.SimpleMuzzleFlash(muzzleFlash, gameObject, muzzleString, false);
