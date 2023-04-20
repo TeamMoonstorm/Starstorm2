@@ -30,7 +30,14 @@ namespace Moonstorm.Starstorm2.Items
         override public void Initialize()
         {
             //IL.RoR2.GenericSkill.CalculateFinalRechargeInterval += ForceSkillFinalRecharge;
-            On.RoR2.GenericSkill.CalculateFinalRechargeInterval += ForceSkillFinalRecharge2;
+            if (!Starstorm.GOTCEInstalled)
+            {
+                On.RoR2.GenericSkill.CalculateFinalRechargeInterval += ForceSkillFinalRecharge2; //since this hook is exactly one from gotce, let's not run it twice
+            }
+            else
+            {
+                SS2Log.Info("GOTCE Compat - Not adding Force hook");
+            }
         }
 
         private float ForceSkillFinalRecharge2(On.RoR2.GenericSkill.orig_CalculateFinalRechargeInterval orig, GenericSkill self)
