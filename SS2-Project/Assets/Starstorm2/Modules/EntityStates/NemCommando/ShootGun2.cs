@@ -91,6 +91,14 @@ namespace EntityStates.NemCommando
                 Ray aimRay = GetAimRay();
                 AddRecoil(-1f * recoil, -2f * recoil, -0.5f * recoil, 0.5f * recoil);
 
+                float minSpread = 0f;
+                float maxSpread = characterBody.spreadBloomAngle;
+                if (teamComponent.teamIndex != TeamIndex.Player)
+                {
+                    minSpread += 2f;
+                    maxSpread += 4f;
+                }
+
                 BulletAttack bulletAttack = new BulletAttack
                 {
                     bulletCount = 1,
@@ -103,8 +111,8 @@ namespace EntityStates.NemCommando
                     maxDistance = range,
                     force = force,
                     hitMask = LayerIndex.CommonMasks.bullet,
-                    minSpread = 0f,
-                    maxSpread = characterBody.spreadBloomAngle,
+                    minSpread = minSpread,
+                    maxSpread = maxSpread,
                     isCrit = isCrit,
                     owner = gameObject,
                     muzzleName = muzzleString,
@@ -116,8 +124,8 @@ namespace EntityStates.NemCommando
                     stopperMask = LayerIndex.CommonMasks.bullet,
                     weapon = null,
                     tracerEffectPrefab = tracerEffectPrefab,
-                    spreadPitchScale = 0f,
-                    spreadYawScale = 0f,
+                    spreadPitchScale = 1f,
+                    spreadYawScale = 1f,
                     queryTriggerInteraction = QueryTriggerInteraction.UseGlobal,
                     hitEffectPrefab = Commando.CommandoWeapon.FirePistol2.hitEffectPrefab
                 };
@@ -126,7 +134,7 @@ namespace EntityStates.NemCommando
 
                 FindModelChild("casingParticle").GetComponent<ParticleSystem>().Emit(1);
 
-                characterBody.AddSpreadBloom(1.5f);
+                characterBody.AddSpreadBloom(3f);
             }
         }
 

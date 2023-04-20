@@ -3,6 +3,7 @@ using UnityEngine;
 using RoR2.Skills;
 using System.Runtime.CompilerServices;
 using UnityEngine.AddressableAssets;
+using RoR2.UI;
 
 namespace Moonstorm.Starstorm2.Survivors
 {
@@ -14,6 +15,7 @@ namespace Moonstorm.Starstorm2.Survivors
         public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("survivorNemCommando", SS2Bundle.Nemmando);
 
         private GameObject nemesisPod;
+        private CharacterSelectController csc;
 
         public override void Initialize()
         {
@@ -23,6 +25,29 @@ namespace Moonstorm.Starstorm2.Survivors
                 ScepterCompat();
                 CreateNemesisPod();
             }
+
+            On.RoR2.UI.SurvivorIconController.Rebuild += SurvivorIconController_Rebuild;
+        }
+
+        private void SurvivorIconController_Rebuild(On.RoR2.UI.SurvivorIconController.orig_Rebuild orig, SurvivorIconController self)
+        {
+
+            if (SurvivorCatalog.GetSurvivorDef(self.survivorIndex).bodyPrefab == SS2Assets.LoadAsset<GameObject>("NemCommandoBody", SS2Bundle.NemCommando))
+            {
+                //Debug.Log("if you know you know");
+                if (!SurvivorCatalog.SurvivorIsUnlockedOnThisClient(self.survivorIndex))
+                {
+                    //Debug.Log("locked flagged for removal survivor: " + self.survivorIndex);
+                    //Destroy(self.gameObject);
+                    self.gameObject.SetActive(false);
+                }
+            }
+            orig(self);
+        }
+
+        private void Destroy(GameObject gameObject)
+        {
+            Destroy(gameObject);
         }
 
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]

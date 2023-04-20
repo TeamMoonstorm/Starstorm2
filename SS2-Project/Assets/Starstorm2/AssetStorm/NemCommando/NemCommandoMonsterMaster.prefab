@@ -328,7 +328,7 @@ MonoBehaviour:
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
   minDistance: 8
-  maxDistance: 15
+  maxDistance: 16
   selectionRequiresTargetLoS: 1
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
@@ -406,15 +406,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customName: FireGunCloseEntry
   skillSlot: 1
-  requiredSkill: {fileID: 11400000, guid: 2899a73976f62f242a8584804c65a132, type: 2}
+  requiredSkill: {fileID: 11400000, guid: 35a59a4d02f795c4891a21ac70a179c4, type: 2}
   requireSkillReady: 1
   requireEquipmentReady: 0
   minUserHealthFraction: -Infinity
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 6
-  maxDistance: 18
+  minDistance: 36
+  maxDistance: 48
   selectionRequiresTargetLoS: 1
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
@@ -427,14 +427,14 @@ MonoBehaviour:
   moveInputScale: 1
   aimType: 1
   ignoreNodeGraph: 0
-  shouldSprint: 0
+  shouldSprint: 1
   shouldFireEquipment: 0
   shouldTapButton: 0
-  buttonPressType: 1
+  buttonPressType: 0
   driverUpdateTimerOverride: 0.01
   resetCurrentEnemyOnNextDriverSelection: 0
   noRepeat: 1
-  nextHighPriorityOverride: {fileID: 114952999876005401}
+  nextHighPriorityOverride: {fileID: 114031117987699380}
 --- !u!114 &114060791859614262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -642,7 +642,7 @@ MonoBehaviour:
   moveInputScale: 1
   aimType: 1
   ignoreNodeGraph: 0
-  shouldSprint: 0
+  shouldSprint: 1
   shouldFireEquipment: 0
   shouldTapButton: 0
   buttonPressType: 0
@@ -685,7 +685,7 @@ MonoBehaviour:
   moveInputScale: 1
   aimType: 1
   ignoreNodeGraph: 0
-  shouldSprint: 0
+  shouldSprint: 1
   shouldFireEquipment: 0
   shouldTapButton: 0
   buttonPressType: 2

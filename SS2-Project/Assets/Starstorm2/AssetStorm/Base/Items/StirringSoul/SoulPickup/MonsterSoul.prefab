@@ -5265,7 +5265,7 @@ MonoBehaviour:
   m_Script: {fileID: 1788389205, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 20
+  duration: 15
   resetAgeOnDisable: 0
 --- !u!114 &114561058603441302
 MonoBehaviour:
@@ -5280,7 +5280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blinkFrequency: 20
-  delayBeforeBeginningBlinking: 19
+  delayBeforeBeginningBlinking: 13
   blinkingRootObject: {fileID: 1055642186408739}
 --- !u!54 &54581704103237224
 Rigidbody:
@@ -5472,7 +5472,7 @@ TrailRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fac141f12ef27e9419f838e6ca95eaa3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

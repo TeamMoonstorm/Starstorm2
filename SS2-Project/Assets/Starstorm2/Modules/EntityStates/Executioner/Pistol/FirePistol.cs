@@ -72,6 +72,8 @@ namespace EntityStates.Executioner
                 {
                     float dmg = damageCoefficient * damageStat;
                     Ray r = GetAimRay();
+
+
                     BulletAttack bullet = new BulletAttack
                     {
                         aimVector = r.direction,
@@ -80,7 +82,7 @@ namespace EntityStates.Executioner
                         damageType = DamageType.Generic,
                         damageColorIndex = DamageColorIndex.Default,
                         minSpread = 0f,
-                        maxSpread = characterBody.spreadBloomAngle * 0.5f,
+                        maxSpread = characterBody.spreadBloomAngle,
                         falloffModel = BulletAttack.FalloffModel.None,
                         force = force,
                         isCrit = isCrit,

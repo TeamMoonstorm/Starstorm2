@@ -18,14 +18,15 @@ MonoBehaviour:
   hidden: 0
   achievementIcon: {fileID: 21300000, guid: ad77a35609295dc42b2e511c6f62e409, type: 3}
   achievementCondition:
-    assemblyQualifiedName: 
+    assemblyQualifiedName: Moonstorm.Starstorm2.Unlocks.NemCommando.NemCommandoMasteryUnlockable+NemCommandoMasteryAchievement,
+      Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   serverTracked: 0
   baseServerAchievement:
     assemblyQualifiedName: 
-  achievementNameToken: SS2_ACHIEVEMENT_NEMMANDO_MASTERY_NAME
-  achievementDescToken: SS2_ACHIEVEMENT_NEMMANDO_MASTERY_DESC
+  achievementNameToken: SS2_ACHIEVEMENT_NEMCOMMANDO_MASTERY_NAME
+  achievementDescToken: SS2_ACHIEVEMENT_NEMCOMMANDO_MASTERY_DESC
   achievedIcon: {fileID: 21300000, guid: cc1f2d88e24c002468c61929027ca4f7, type: 3}
   unachievedIcon: {fileID: 0}
   prerequisiteAchievement:
     AchievementIdentifier: 
-    UnlockableDef: {fileID: 0}
+    UnlockableDef: {fileID: 11400000, guid: 6ea167caf1b549f4eb5c25875d6a4188, type: 2}

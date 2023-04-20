@@ -962,7 +962,7 @@ GameObject:
   - component: {fileID: 4370789057600581325}
   - component: {fileID: 1269489204924067475}
   - component: {fileID: 3567198640229521453}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: thigh.r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8843,8 +8843,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Root: {fileID: 4607051342996607103}
   m_UpdateRate: 120
-  m_UpdateMode: 1
-  m_Damping: 0.3
+  m_UpdateMode: 0
+  m_Damping: 0.344
   m_DampingDistrib:
     serializedVersion: 2
     m_Curve:
@@ -8869,77 +8869,77 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_Elasticity: 0.5
+  m_Elasticity: 0.1
   m_ElasticityDistrib:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.0059776306
-      value: 0.25
-      inSlope: 0.80223507
-      outSlope: 0.80223507
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
+      outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 1.0474396
-      inSlope: 0.80223507
-      outSlope: 0.80223507
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_Stiffness: 0.25
+  m_Stiffness: 0.1
   m_StiffnessDistrib:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: -0.0038452148
-      value: 0.5
-      inSlope: -0.50718176
-      outSlope: -0.50718176
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
+      outWeight: 0
     - serializedVersion: 3
-      time: 0.9819946
-      value: 0
-      inSlope: -0.50718176
-      outSlope: -0.50718176
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_Inert: 0.5
+  m_Inert: 0
   m_InertDistrib:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.45
-      inSlope: 0.5844696
-      outSlope: 0.5844696
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
+      outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 1.0344696
-      inSlope: 0.5844696
-      outSlope: 0.5844696
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -13887,7 +13887,7 @@ GameObject:
   - component: {fileID: 8033896196742868057}
   - component: {fileID: 5534110593226549010}
   - component: {fileID: 1954828610263793487}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: calf.r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14459,27 +14459,27 @@ MonoBehaviour:
   levelCrit: 0
   levelArmor: 0
   wasLucky: 0
-  spreadBloomDecayTime: 0.45
+  spreadBloomDecayTime: 0.7
   spreadBloomCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: -0
-      outSlope: -0
+      inSlope: 4.613252
+      outSlope: 4.613252
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.1557971
+      outWeight: 0.12221829
     - serializedVersion: 3
       time: 1
-      value: 5
-      inSlope: 0
-      outSlope: 0
+      value: 2
+      inSlope: -0.3375377
+      outSlope: -0.3375377
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.3872022
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
