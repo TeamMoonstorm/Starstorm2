@@ -68,7 +68,7 @@ The most important issues you may encounter are listed below, to help expect thi
     * Adjusted MIDAS - When given to an equipment drone, the drone now splits the gold it would recieve amongst all players.
     * Fixed Coffee Bag behaving strangely in multiplayer.
     * Blacklisted Coffee Bag from enemies.
-    * Did Not fix Relic of Force rarely giving primary skills cooldowns - oops! Fix this
+    * Fixed Relic of Force giving primary skills cooldowns.
     * Should have fixed Greater Warbanner's cooldown breaking.
     * Relic of Termination now has a blacklist for enemies that are not fit for being marked (bosses, destructible props, etc)
     * Added R2API TempVFX dependency.

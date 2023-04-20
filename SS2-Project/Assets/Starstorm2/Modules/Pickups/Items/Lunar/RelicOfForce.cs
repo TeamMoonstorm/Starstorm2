@@ -29,43 +29,49 @@ namespace Moonstorm.Starstorm2.Items
 
         override public void Initialize()
         {
-            IL.RoR2.GenericSkill.CalculateFinalRechargeInterval += ForceSkillFinalRecharge;
+            //IL.RoR2.GenericSkill.CalculateFinalRechargeInterval += ForceSkillFinalRecharge;
+            On.RoR2.GenericSkill.CalculateFinalRechargeInterval += ForceSkillFinalRecharge2;
         }
 
-        private void ForceSkillFinalRecharge(ILContext il)
+        private float ForceSkillFinalRecharge2(On.RoR2.GenericSkill.orig_CalculateFinalRechargeInterval orig, GenericSkill self)
         {
-            bool successful = true;
-            ILCursor c = new ILCursor(il);
-            if (c.TryGotoNext(
-                x => x.MatchLdarg(0),
-                x => x.MatchCallOrCallvirt<RoR2.GenericSkill>("get_baseRechargeInterval")
-                ))
-            {
-                c.Remove();
-                c.Remove();
-            }
-            else
-            {
-                SS2Log.Error("Failed to apply Relic of Force First IL Hook - not attempting second hook");
-                successful = false;
-            }
-
-            if (successful)
-            {
-                if (c.TryGotoNext(
-                                x => x.MatchCallOrCallvirt<UnityEngine.Mathf>("Min")
-                                ))
-                {
-                    c.Remove();
-                    //c.EmitDelegate<Func<float, float, float>>((v1, v2) => v2);
-                    //c.Emit(OpCodes.Ret);
-                }
-                else
-                {
-                    SS2Log.Error("Failed to apply Relic of Force IL Second Hook");
-                }
-            }
+            return self.baseRechargeInterval > 0 ? Mathf.Max(0.5f, self.baseRechargeInterval * self.cooldownScale - self.flatCooldownReduction) : 0; //lovely ternary, thank you HIFU
         }
+
+        //private void ForceSkillFinalRecharge(ILContext il)
+        //{
+        //    bool successful = true;
+        //    ILCursor c = new ILCursor(il);
+        //    if (c.TryGotoNext(
+        //        x => x.MatchLdarg(0),
+        //        x => x.MatchCallOrCallvirt<RoR2.GenericSkill>("get_baseRechargeInterval")
+        //        ))
+        //    {
+        //        c.Remove();
+        //        c.Remove();
+        //    }
+        //    else
+        //    {
+        //        SS2Log.Error("Failed to apply Relic of Force First IL Hook - not attempting second hook");
+        //        successful = false;
+        //    }
+        //
+        //    if (successful)
+        //    {
+        //        if (c.TryGotoNext(
+        //                        x => x.MatchCallOrCallvirt<UnityEngine.Mathf>("Min")
+        //                        ))
+        //        {
+        //            c.Remove();
+        //            //c.EmitDelegate<Func<float, float, float>>((v1, v2) => v2);
+        //            //c.Emit(OpCodes.Ret);
+        //        }
+        //        else
+        //        {
+        //            SS2Log.Error("Failed to apply Relic of Force IL Second Hook");
+        //        }
+        //    }
+        //}
 
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier, IOnDamageDealtServerReceiver
         {
