@@ -64,11 +64,13 @@ The most important issues you may encounter are listed below, to help expect thi
     * Added Equipment disabling.
     * Reworked Relic of Termination - now grants a buff that is consumed upon an enemy spawning, and then goes on a 30 second cooldown displayed via a buff stack.
     * Reworked Needles - Now grants a +1% stacking debuff which increases crit chance against that enemy until 1 (+1 per stack) crits happen on that enemy.
+    * Adjusted Detritive Trematode - The debuff no longer expires, but the items low health threshold was lowered to 25% for consistency with other "low health" items.
     * Adjusted MIDAS - When given to an equipment drone, the drone now splits the gold it would recieve amongst all players.
     * Fixed Coffee Bag behaving strangely in multiplayer.
     * Blacklisted Coffee Bag from enemies.
-    * Should have fixed Relic of Force rarely giving primary skills cooldowns.
+    * Did Not fix Relic of Force rarely giving primary skills cooldowns - oops! Fix this
     * Should have fixed Greater Warbanner's cooldown breaking.
+    * Relic of Termination now has a blacklist for enemies that are not fit for being marked (bosses, destructible props, etc)
     * Added R2API TempVFX dependency.
 * Events
     * Invading Nemesis Commando now does less damage. (10x -> 7x)
