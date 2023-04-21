@@ -31,14 +31,11 @@ namespace Moonstorm.Starstorm2.Survivors
 
         private void SurvivorIconController_Rebuild(On.RoR2.UI.SurvivorIconController.orig_Rebuild orig, SurvivorIconController self)
         {
-
             if (SurvivorCatalog.GetSurvivorDef(self.survivorIndex).bodyPrefab == SS2Assets.LoadAsset<GameObject>("NemCommandoBody", SS2Bundle.NemCommando))
             {
                 //Debug.Log("if you know you know");
                 if (!SurvivorCatalog.SurvivorIsUnlockedOnThisClient(self.survivorIndex))
                 {
-                    //Debug.Log("locked flagged for removal survivor: " + self.survivorIndex);
-                    //Destroy(self.gameObject);
                     self.gameObject.SetActive(false);
                 }
             }

@@ -1,6 +1,7 @@
 ﻿using Moonstorm;
 using RoR2;
 using RoR2.Skills;
+using UnityEngine;
 using UnityEngine.Networking;
 
 namespace EntityStates.MULE
@@ -12,17 +13,20 @@ namespace EntityStates.MULE
         public static float swingTimeCoefficient = 1.33f;
         public int swingSide;
 
+        public float spinCount = 1f;
         public override void OnEnter()
         {
+            Debug.Log("Punching");
             damageCoefficient = dmgCoefficient;
             base.OnEnter();
             animator = GetModelAnimator();
+            hitEffectPrefab = EntityStates.Bison.Headbutt.hitEffectPrefab;
         }
 
         public override void PlayAnimation()
         {
-            string animationStateName = (swingSide == 0) ? "Primary1" : "Primary2";
-            PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.1f);
+            string animationStateName = (swingSide == 0) ? "Punch1" : "Punch2";
+            PlayCrossfade("Gesture, Override", animationStateName, "Secondary.playbackRate", duration, 0.1f);
         }
 
         void SteppedSkillDef.IStepSetter.SetStep(int i)
@@ -43,7 +47,7 @@ namespace EntityStates.MULE
         }
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.Skill;
+            return InterruptPriority.PrioritySkill;
         }
 
         public override void AuthorityModifyOverlapAttack(OverlapAttack overlapAttack)

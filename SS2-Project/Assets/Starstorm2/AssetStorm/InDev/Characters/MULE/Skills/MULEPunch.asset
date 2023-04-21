@@ -13,19 +13,21 @@ MonoBehaviour:
   m_Name: MULEPunch
   m_EditorClassIdentifier: 
   skillName: MULEPunch
-  skillNameToken: SS2_MULE_PRIMARY_PUNCH_NAME
-  skillDescriptionToken: SS2_MULE_PRIMARY_PUNCH_DESC
-  keywordTokens: []
+  skillNameToken: SS2_MULE_PUNCH_NAME
+  skillDescriptionToken: SS2_MULE_PUNCH_DESC
+  keywordTokens:
+  - SS2_MULE_KEYWORD_OVERCLOCKING
+  - KEYWORD_STUNNING
   icon: {fileID: 21300000, guid: 5cd90e9d6b8b3e14fa091abee481621c, type: 3}
   activationStateMachineName: Weapon
   activationState:
-    _typeName: EntityStates.MULE.MULEPunch, Starstorm2, Version=1.0.0.0, Culture=neutral,
+    _typeName: EntityStates.MULE.MULEChargePunch, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  interruptPriority: 0
-  baseRechargeInterval: 1
+  interruptPriority: 1
+  baseRechargeInterval: 4
   baseMaxStock: 1
   rechargeStock: 1
-  requiredStock: 0
+  requiredStock: 1
   stockToConsume: 0
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 0

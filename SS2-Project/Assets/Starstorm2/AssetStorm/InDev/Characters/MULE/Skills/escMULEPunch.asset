@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: EntityStates.MULE.MULEPunch
+  m_Name: escMULEPunch
   m_EditorClassIdentifier: 
   targetType:
     assemblyQualifiedName: EntityStates.MULE.MULEPunch, Starstorm2, Version=1.0.0.0,
@@ -23,7 +23,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: baseDuration
       fieldValue:
-        stringValue: 0.8
+        stringValue: 0.45
         objectValue: {fileID: 0}
     - fieldName: damageCoefficient
       fieldValue:
@@ -36,8 +36,7 @@ MonoBehaviour:
     - fieldName: hitEffectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 6443695628875283645, guid: 764f4adef77324a4bb7f9fb5b822f069,
-          type: 3}
+        objectValue: {fileID: 0}
     - fieldName: procCoefficient
       fieldValue:
         stringValue: 1
@@ -57,8 +56,7 @@ MonoBehaviour:
     - fieldName: swingEffectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 7856802779772733562, guid: 5cf2788ecd4f37940a1dc7e2bdc221dc,
-          type: 3}
+        objectValue: {fileID: 0}
     - fieldName: swingEffectMuzzleString
       fieldValue:
         stringValue: 
@@ -77,7 +75,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: beginSwingSoundString
       fieldValue:
-        stringValue: 
+        stringValue: Play_loader_m1_swing
         objectValue: {fileID: 0}
     - fieldName: impactSound
       fieldValue:

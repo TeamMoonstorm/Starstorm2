@@ -180,6 +180,10 @@ namespace Moonstorm.Starstorm2
 
             public static BuffDef bdPurplePoison;
 
+            public static BuffDef bdHiddenSlow20;
+
+            public static BuffDef bdMULENet;
+
             public static BuffDef bdExeCharge;
 
             public static BuffDef bdCanJump;
