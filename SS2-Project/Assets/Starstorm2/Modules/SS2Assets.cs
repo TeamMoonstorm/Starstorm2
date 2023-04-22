@@ -28,6 +28,7 @@ namespace Moonstorm.Starstorm2
         Events,
         Vanilla,
         Indev,
+        //Interactables,
         Shared
     }
     public class SS2Assets : AssetsLoader<SS2Assets>
@@ -43,6 +44,7 @@ namespace Moonstorm.Starstorm2
         private const string EVENTS = "ss2events";
         private const string VANILLA = "ss2vanilla";
         private const string DEV = "ss2dev";
+       // private const string INTERACTABLES = "ss2interactables";
         private const string SHARED = "ss2shared";
 
         private static Dictionary<SS2Bundle, AssetBundle> assetBundles = new Dictionary<SS2Bundle, AssetBundle>();
@@ -108,6 +110,7 @@ namespace Moonstorm.Starstorm2
                     case ITEMS: LoadBundle(path, SS2Bundle.Items); break;
                     case EVENTS: LoadBundle(path, SS2Bundle.Events); break;
                     case VANILLA: LoadBundle(path, SS2Bundle.Vanilla); break;
+                    //case INTERACTABLES: LoadBundle(path, SS2Bundle.Interactables); break;
                     case DEV: LoadBundle(path, SS2Bundle.Indev); break;
                     case SHARED: LoadBundle(path, SS2Bundle.Shared); break;
                     default: SS2Log.Warning($"Invalid or Unexpected file in the AssetBundles folder (File name: {fileName}, Path: {path})"); break;

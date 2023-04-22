@@ -11,7 +11,7 @@ using UnityEngine.Networking;
 
 namespace Moonstorm.Starstorm2.Interactables
 {
-    [DisabledContent]
+    //[DisabledContent]
     public sealed class DroneTable : InteractableBase
     {
         public override GameObject Interactable { get => interactable; }
