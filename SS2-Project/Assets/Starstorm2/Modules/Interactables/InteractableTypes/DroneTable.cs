@@ -11,7 +11,7 @@ using UnityEngine.Networking;
 
 namespace Moonstorm.Starstorm2.Interactables
 {
-    //[DisabledContent]
+    [DisabledContent]
     public sealed class DroneTable : InteractableBase
     {
         public override GameObject Interactable { get => interactable; }
@@ -78,7 +78,7 @@ namespace Moonstorm.Starstorm2.Interactables
                 int cost = context.cost;
                 //int num = 0;
                 var minions = CharacterMaster.readOnlyInstancesList.Where(el => el.minionOwnership.ownerMaster == component.master);
-                List<CharacterMaster> validMinions = new();
+                List<CharacterMaster> validMinions = new List<CharacterMaster>();
                 foreach(var minion in minions)
                 {
 
