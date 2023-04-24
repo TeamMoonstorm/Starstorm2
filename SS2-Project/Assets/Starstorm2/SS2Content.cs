@@ -86,7 +86,7 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef RelicOfTermination;
 
-            public static ItemDef RelicOfTermination2;
+            public static ItemDef RelicOfTerminationOld;
 
             public static ItemDef RelicOfEchelon;
 
@@ -183,6 +183,8 @@ namespace Moonstorm.Starstorm2
             public static BuffDef BuffTerminationCooldown;
 
             public static BuffDef BuffTerminationReady;
+
+            public static BuffDef BuffTerminationFailed;
 
             public static BuffDef BuffEchelon;
         }

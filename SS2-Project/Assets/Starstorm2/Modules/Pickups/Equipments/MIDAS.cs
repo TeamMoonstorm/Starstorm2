@@ -40,7 +40,22 @@ namespace Moonstorm.Starstorm2.Equipments
                 position = slot.characterBody.healthComponent.gameObject.transform.position,
             };
             slot.characterBody.healthComponent.TakeDamage(damageInfo);
-            slot.characterBody.master.GiveMoney((uint)goldEarned);
+            if (!slot.characterBody.isPlayerControlled && slot.characterBody.teamComponent.teamIndex == TeamIndex.Player)
+            {
+                //SS2Log.Debug("is not player controled");
+                uint splitAmount = (uint)(goldEarned / playerCount);
+                //SS2Log.Debug("is not player controlled, giving " + splitAmount + " to all players");
+                foreach (var player in PlayerCharacterMasterController.instances)
+                {
+                    player.master.GiveMoney(splitAmount);
+                }
+            }
+            else
+            {
+                //SS2Log.Debug("is player controled@!!!!!");
+                slot.characterBody.master.GiveMoney((uint)goldEarned);
+            }
+            
             return true;
         }
     }

@@ -8,8 +8,6 @@ using UnityEngine.Networking;
 
 namespace Moonstorm.Starstorm2.Items
 {
-    [DisabledContent]
-
     public sealed class RelicOfTermination : ItemBase
     {
         private const string token = "SS2_ITEM_RELICOFTERMINATION_DESC";
@@ -34,17 +32,17 @@ namespace Moonstorm.Starstorm2.Items
 
         [ConfigurableField(ConfigDesc = "Health multiplier which is added to the marked enemy if not killed in time (1 = 100% more health).")]
         [TokenModifier(token, StatTypes.MultiplyByN, 3, "100")]
-        public static float healthMult = 4f;
+        public static float healthMult = 5f;
 
         [ConfigurableField(ConfigDesc = "Speed multiplier which is added to the marked enemy if not killed in time (1 = 100% more speed).")]
         [TokenModifier(token, StatTypes.MultiplyByN, 4, "100")]
-        public static float speedMult = 1.5f;
+        public static float speedMult = .5f;
 
         [ConfigurableField(ConfigDesc = "Attack speed multiplier which is added to the marked enemy if not killed in time (1 = 100% more attack speed).")]
         [TokenModifier(token, StatTypes.MultiplyByN, 5, "100")]
-        public static float atkSpeedMult = 1.75f;
+        public static float atkSpeedMult = 1f;
 
-        public sealed class Behavior : BaseItemBodyBehavior
+        public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver
         {
 
             [ItemDefAssociation]
@@ -56,10 +54,11 @@ namespace Moonstorm.Starstorm2.Items
 
             public Xoroshiro128Plus terminationRNG;
 
-            public GameObject markEffect;
-            public GameObject globalMarkEffect;
-            public GameObject failEffect;
-            public GameObject buffEffect;
+            public static GameObject markEffect;
+            public static GameObject failEffect;
+            public static GameObject buffEffect;
+
+            public static GameObject globalMarkEffect;
 
             private GameObject markEffectInstance;
 
@@ -69,28 +68,152 @@ namespace Moonstorm.Starstorm2.Items
             //public bool shouldFollow = true;
             float time = maxTime / 6f;
             CharacterMaster target = null;
-            //public new void Awake()
-            //{
-            //    base.Awake();
-            //    markEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationTargetMark");
-            //    failEffect = SS2Assets.LoadAsset<GameObject>("NemmandoScepterSlashAppear");
-            //    buffEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationBuffEffect");
-            //
-            //    globalMarkEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/BossPositionIndicator.prefab").WaitForCompletion();
-            //
-            //    terminationRNG = new Xoroshiro128Plus(Run.instance.seed);
-            //
-            //    InitializeIllegalMarkList();
-            //
-            //    // use body.radius / bestfitradius to scale effects
-            //}
-            //
+            public new void Awake()
+            {
+                base.Awake();
+                markEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationTargetMark", SS2Bundle.Items);
+                failEffect = SS2Assets.LoadAsset<GameObject>("NemmandoScepterSlashAppear", SS2Bundle.Items);
+                buffEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationBuffEffect", SS2Bundle.Items);
+
+                globalMarkEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/BossPositionIndicator.prefab").WaitForCompletion();
+
+                terminationRNG = new Xoroshiro128Plus(Run.instance.seed);
+
+                //string fuck = "ahhh 2";
+                //SS2Log.Debug(fuck);
+
+                InitializeIllegalMarkList();
+
+                // use body.radius / bestfitradius to scale effects
+            }
+
+            private void OnEnable()
+            {
+                CharacterBody.onBodyStartGlobal += TerminationSpawnHook;
+                On.RoR2.Util.GetBestBodyName += AddTerminalName;
+            }
+            private void OnDisable()
+            {
+                CharacterBody.onBodyStartGlobal -= TerminationSpawnHook;
+                On.RoR2.Util.GetBestBodyName -= AddTerminalName;
+            }
+
+            private void TerminationSpawnHook(CharacterBody obj)
+            {
+                //string test = "obj name: " + obj.name + " | " + obj.bodyIndex + " | " + obj.master.name;
+               
+                //SS2Log.Info(test);
+               
+                
+                if (!NetworkServer.active || illegalMarks.Contains(obj.bodyIndex) || obj.isPlayerControlled || obj.teamComponent.teamIndex == TeamIndex.Player || obj.teamComponent.teamIndex == TeamIndex.Neutral)
+                {
+                    return;
+                }
+                foreach (var player in PlayerCharacterMasterController.instances)
+                {
+                    
+                    if (player.body.HasBuff(SS2Content.Buffs.BuffTerminationReady))
+                    {
+                        var holderToken = player.body.GetComponent<TerminationHolderToken>();
+                        if (!holderToken)
+                        {
+                            holderToken = player.body.gameObject.AddComponent<TerminationHolderToken>();
+                        }
+                        else
+                        {
+                            //SS2Log.Debug("token found in spawn hook");
+                        }
+                        //Debug.Log("spawning - has buff");
+                        if (obj.inventory && !holderToken.target)
+                        {
+                            int count = player.body.GetItemCount(SS2Content.Items.RelicOfTermination);
+                            if(count == 0)
+                            {
+                                count = 1; //doing this so that if for some reason if get this buff (aetherium potion) it still does something
+                            }
+                            
+                            obj.inventory.GiveItem(SS2Content.Items.TerminationHelper);
+                            var token = obj.gameObject.AddComponent<TerminationToken>();
+                            token.itemCount = count;
+                            token.initalTime = Time.time;
+                            token.owner = holderToken;
+                            holderToken.target = token;
+                            holderToken.body = player.body;
+
+                            obj.modelLocator.modelTransform.localScale *= 1.5f;
+                            obj.AddBuff(SS2Content.Buffs.BuffTerminationVFX);
+
+                            obj.teamComponent.RequestDefaultIndicator(globalMarkEffect);
+
+                            for (int i = 0; i < 30; i++)
+                            {
+                                player.body.AddTimedBuff(SS2Content.Buffs.BuffTerminationCooldown.buffIndex, i + 1);
+                            }
+                            //player.body.AddBuff(SS2Content.Buffs.BuffTerminationCooldown);
+                            player.body.RemoveBuff(SS2Content.Buffs.BuffTerminationReady);
+                        }
+                    }
+                }
+            }
+
+            private string AddTerminalName(On.RoR2.Util.orig_GetBestBodyName orig, GameObject bodyObject)
+            {
+                var body = bodyObject.GetComponent<CharacterBody>();
+                //SS2Log.Debug("terminal begin");
+                if (body)
+                {
+                    //SS2Log.Debug("body found");
+                    if (body.inventory)
+                    {
+                        //SS2Log.Debug("inventory");
+                        if (body.inventory.GetItemCount(SS2Content.Items.TerminationHelper) > 0)
+                        {
+                            //SS2Log.Debug("epic");
+                            return "Terminal " + orig(bodyObject);
+                        }
+                    }
+                }
+
+                return orig(bodyObject);
+            }
+
+            public void FixedUpdate()
+            {
+                //moffein approved if statement
+                //body.GetComponent<TerminationHolderToken>();
+
+                if (!body.HasBuff(SS2Content.Buffs.BuffTerminationCooldown) && !body.HasBuff(SS2Content.Buffs.BuffTerminationReady) && NetworkServer.active)
+                {
+                    var holderToken = body.GetComponent<TerminationHolderToken>();
+                    if (holderToken)
+                    {
+                        //SS2Log.Info("found token for buff");
+                        if(holderToken.target != null && !body.HasBuff(SS2Content.Buffs.BuffTerminationFailed))
+                        {
+                            //SS2Log.Info("giving failed buff");
+                            body.AddBuff(SS2Content.Buffs.BuffTerminationFailed);
+                        }
+                        else if(holderToken.target == null)
+                        {
+                            //SS2Log.Info("giving success from failed path");
+                            body.AddBuff(SS2Content.Buffs.BuffTerminationReady);
+                        }
+                    }
+                    else
+                    {
+                        //SS2Log.Info("Gifts Ungiven");
+                        body.AddBuff(SS2Content.Buffs.BuffTerminationReady);
+                    }
+                    //body.AddBuff(SS2Content.Buffs.BuffTerminationReady);
+                }
+            }
+
             //public void FixedUpdate()
             //{
             //    time -= Time.deltaTime;
             //    if (time < 0 && !target)
             //    {
-            //        MarkNewEnemy();
+            //        //MarkNewEnemy();
             //        float timeMult = Mathf.Pow(1 - timeReduction, stack - 1);
             //        time = maxTime * timeMult;
             //
@@ -127,50 +250,59 @@ namespace Moonstorm.Starstorm2.Items
             //            token.hasFailed = true;
             //        }
             //
-            //        MarkNewEnemy();
+            //        //MarkNewEnemy();
             //        float timeMult = Mathf.Pow(1 - timeReduction, stack - 1);
             //        time = maxTime * timeMult;
             //    }
             //}
-            //
-            //public void OnKilledOtherServer(DamageReport damageReport)
-            //{
-            //    var token = damageReport.victimBody.gameObject.GetComponent<TerminationToken>();
-            //    if (token)
-            //    {
-            //        if (!token.hasFailed)
-            //        {
-            //            //int count = token.PlayerOwner.inventory.GetItemCount(SS2Content.Items.RelicOfTermination.itemIndex);
-            //            int count = token.itemCount;
-            //            Vector3 vector = Quaternion.AngleAxis(0, Vector3.up) * (Vector3.up * 20f);
-            //            List<PickupIndex> dropList;
-            //
-            //            float tierMult = MSUtil.InverseHyperbolicScaling(1, .1f, 2.5f, count);
-            //            float tier = tierMult * terminationRNG.RangeFloat(0, 100);
-            //            if (tier < 70f)
-            //            {
-            //                dropList = Run.instance.availableTier1DropList;
-            //            }
-            //            else if (tier < 95)
-            //            {
-            //                dropList = Run.instance.availableTier2DropList;
-            //            }
-            //            else if (tier < 99.9)
-            //            {
-            //                dropList = Run.instance.availableTier3DropList;
-            //            }
-            //            else
-            //            {
-            //                dropList = Run.instance.availableBossDropList;
-            //            }
-            //
-            //            int item = Run.instance.treasureRng.RangeInt(0, dropList.Count);
-            //            //SS2Log.Debug("dropping reward");
-            //            PickupDropletController.CreatePickupDroplet(dropList[item], damageReport.victim.transform.position, vector);
-            //        }
-            //    }
-            //}
-            //
+
+            public void OnKilledOtherServer(DamageReport damageReport)
+            {
+                var token = damageReport.victimBody.gameObject.GetComponent<TerminationToken>();
+                if (token)
+                {
+                    var time = token.initalTime;
+                    var now = Time.time;
+                    if (body.HasBuff(SS2Content.Buffs.BuffTerminationFailed))
+                    {
+                        token.owner.body.RemoveBuff(SS2Content.Buffs.BuffTerminationFailed);
+                    }
+                    token.owner.target = null;  // :)
+
+                    if (!(now - time > 30))
+                    {
+                        //int count = token.PlayerOwner.inventory.GetItemCount(SS2Content.Items.RelicOfTermination.itemIndex);
+                        int count = token.itemCount;
+                        Vector3 vector = Quaternion.AngleAxis(0, Vector3.up) * (Vector3.up * 20f);
+                        List<PickupIndex> dropList;
+
+                        float tierMult = MSUtil.InverseHyperbolicScaling(1, .1f, 2.5f, count);
+                        float tier = tierMult * terminationRNG.RangeFloat(0, 100);
+                        if (tier < 70f)
+                        {
+                            dropList = Run.instance.availableTier1DropList;
+                        }
+                        else if (tier < 95)
+                        {
+                            dropList = Run.instance.availableTier2DropList;
+                        }
+                        else if (tier < 99.9)
+                        {
+                            dropList = Run.instance.availableTier3DropList;
+                        }
+                        else
+                        {
+                            dropList = Run.instance.availableBossDropList;
+                        }
+
+                        int item = Run.instance.treasureRng.RangeInt(0, dropList.Count);
+                        //SS2Log.Debug("dropping reward");
+                        PickupDropletController.CreatePickupDroplet(dropList[item], damageReport.victim.transform.position, vector);
+                    }
+
+                }
+            }
+
             //private void MarkNewEnemy()
             //{
             //    //SS2Log.Debug("function called");
@@ -235,64 +367,107 @@ namespace Moonstorm.Starstorm2.Items
             //
             //    //time = maxTime;
             //}
-            //
-            //
-            //private static void InitializeIllegalMarkList()
-            //{
-            //    List<string> defaultBodyNames = new List<string>
-            //{
-            //    "BrotherGlassBody",
-            //    "BrotherHurtBody",
-            //    "ShopkeeperBody",
-            //    "MiniVoidRaidCrabPhase1",
-            //    "MiniVoidRaidCrabPhase2",
-            //    "MiniVoidRaidCrabPhase3",
-            //    "VoidRaidCrabJoint",
-            //    "VoidRaidCrab",
-            //    "ScavLunar1Body",
-            //    "ScavLunar2Body",
-            //    "ScavLunar3Body",
-            //    "ScavLunar4Body",
-            //    "ArtifactShell",
-            //};
-            //
-            //    foreach (string bodyName in defaultBodyNames)
-            //    {
-            //        BodyIndex index = BodyCatalog.FindBodyIndexCaseInsensitive(bodyName);
-            //        if (index != BodyIndex.None)
-            //        {
-            //            AddBodyToIllegalTerminationList(index);
-            //        }
-            //    }
-            //}
-            //
-            //public static void AddBodyToIllegalTerminationList(BodyIndex bodyIndex)
-            //{
-            //    if (bodyIndex == BodyIndex.None)
-            //    {
-            //        //SS2Log.Debug($"Tried to add a body to the illegal termination list, but it's index is none");
-            //        return;
-            //    }
-            //
-            //    if (illegalMarks.Contains(bodyIndex))
-            //    {
-            //        GameObject prefab = BodyCatalog.GetBodyPrefab(bodyIndex);
-            //        //SS2Log.Debug($"Body prefab {prefab} is already in the illegal termination list.");
-            //        return;
-            //    }
-            //    illegalMarks.Add(bodyIndex);
-            //    //BodiesThatGiveSuperCharge = new ReadOnlyCollection<BodyIndex>(bodiesThatGiveSuperCharge);
-            //}
+
+
+            private static void InitializeIllegalMarkList()
+            {
+                List<string> defaultBodyNames = new List<string>
+            {
+                "BrotherBody",
+                "BrotherGlassBody",
+                "BrotherHurtBody",
+                "BrotherHauntBody",
+                "ShopkeeperBody",
+                "MiniVoidRaidCrabBodyBase",
+                "MiniVoidRaidCrabBodyPhase1",
+                "MiniVoidRaidCrabBodyPhase2",
+                "MiniVoidRaidCrabBodyPhase3",
+                "VoidRaidCrabJointBody",
+                "VoidRaidCrabBody",
+                "ScavLunar1Body",
+                "ScavLunar2Body",
+                "ScavLunar3Body",
+                "ScavLunar4Body",
+                "ScavSackProjectile",
+                "ArtifactShellBody",
+                "VagrantTrackingBomb",
+                "LunarWispTrackingBomb",
+                "GravekeeperTrackingFireball",
+                "BeetleWard",
+                "AffixEarthHealerBody",
+                "AltarSkeletonBody",
+                "DeathProjectile",
+                "TimeCrystalBody",
+                "SulfurPodBody",
+                "FusionCellDestructibleBody",
+                "ExplosivePotDestructibleBody",
+                "SMInfiniteTowerMaulingRockLarge",
+                "SMInfiniteTowerMaulingRockMedium",
+                "SMInfiniteTowerMaulingRockSmall",
+                "SMMaulingRockLarge",
+                "SMMaulingRockMedium",
+                "SMMaulingRockSmall",
+            };
+
+                //SS2Log.Debug("all bodies: " + BodyCatalog.allBodyPrefabs.ToString());
+                //GameObject[] list = BodyCatalog.allBodyPrefabs.ToArray();
+                //int i = 0;
+                //foreach(GameObject obj in list)
+                //{
+                //    SS2Log.Debug(i + " - obj name: " + obj.name);
+                //    ++i;
+                //}
+                foreach (string bodyName in defaultBodyNames)
+                {
+                    BodyIndex index = BodyCatalog.FindBodyIndexCaseInsensitive(bodyName);
+                    if (index != BodyIndex.None)
+                    {
+                        //Debug.Log("found body " + bodyName + " with index " + index + ", adding them");
+                        SS2Log.Info("found body " + bodyName + " with index " + index + ", adding them");
+                        AddBodyToIllegalTerminationList(index);
+                    }
+                }
+            }
+
+            public static void AddBodyToIllegalTerminationList(BodyIndex bodyIndex)
+            {
+                if (bodyIndex == BodyIndex.None)
+                {
+                    SS2Log.Info($"Tried to add a body to the illegal termination list, but it's index is none");
+                    return;
+                }
+
+                if (illegalMarks.Contains(bodyIndex))
+                {
+                    GameObject prefab = BodyCatalog.GetBodyPrefab(bodyIndex);
+                    SS2Log.Info($"Body prefab {prefab} is already in the illegal termination list.");
+                    return;
+                }
+                illegalMarks.Add(bodyIndex);
+                //BodiesThatGiveSuperCharge = new ReadOnlyCollection<BodyIndex>(bodiesThatGiveSuperCharge);
+            }
 
 
         }
 
-        //public class TerminationToken : MonoBehaviour
-        //{
-        //    //helps keep track of the target and player responsible
-        //    //public CharacterBody PlayerOwner;
-        //    public int itemCount;
-        //    public bool hasFailed = false;
-        //}
+        public class TerminationToken : MonoBehaviour
+        {
+            //helps keep track of the target and player responsible
+            //public CharacterBody PlayerOwner;
+            public int itemCount;
+            public bool hasFailed = false;
+            public float initalTime;
+            public TerminationHolderToken owner;
+
+        }
+        public class TerminationHolderToken : MonoBehaviour
+        {
+            //helps keep track of the target and player responsible
+            //public CharacterBody PlayerOwner;
+            public TerminationToken target;
+            public CharacterBody body;
+            public PlayerCharacterMasterController player;
+
+        }
     }
 }

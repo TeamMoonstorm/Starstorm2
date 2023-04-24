@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 namespace Moonstorm.Starstorm2.Items
 {
+    [DisabledContent]
     public sealed class RelicOfEchelon : ItemBase
     {
         private const string token = "SS2_ITEM_RELICOFECHELON_DESC";

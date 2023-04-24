@@ -28,10 +28,10 @@ Starstorm 2 is currently being developed and maintained by...
 * Nebby, swuff★, Zenithrium
 
 With previous code contributions by...
-* Anreol, Flan, Gaforb, GrooveSalad, KevinFromHPCustomerService, malfaisant, Moffein, Nebby, Noop, Phreel, rob, swuff★, sebacame, Shared, TheTimesweeper, Vale-X, xpcybic, Xubas
+* Anreol, Flan, Gaforb, GrooveSalad, HIFU, KevinFromHPCustomerService, malfaisant, Moffein, Nebby, Noop, Phreel, rob, swuff★, sebacame, Shared, TheTimesweeper, Vale-X, xpcybic, Xubas
 
 With Art/Modelling/Animation contributions by...
-* Anreol, Bolty, bruh, Cexeub, dotflare, Draymarc, Domi, JestAnotherAnimator, Gem, goodguy, GrooveSalad, LucidInceptor, Neik, KevinFromHPCustomerService, Plexus, PapaZach, QuietAnon, redacted, rob, SkeletorChampion, SOM, Spenny, swuff★, xpcybic, Reithierion, UnknownGlaze, Zenithrium
+* Anreol, Bolty, bruh, Cexeub, dotflare, Draymarc, Domi, JestAnotherAnimator, Gem, goodguy, GrooveSalad, LucidInceptor, Neik, KevinFromHPCustomerService, PapaZach, Plexus, prodzpod, QuietAnon, redacted, rob, SkeletorChampion, SOM, Spenny, swuff★, xpcybic, Reithierion, UnknownGlaze, Zenithrium
 
 Additional thanks to... 
 * Writing - Blimblam, Lyrical Endymion, swuff★, T_Dimensional, Zenithrium
@@ -52,11 +52,34 @@ The most important issues you may encounter are listed below, to help expect thi
     * Artifact of Metamorphosis is broken by the mod.
     * Artifact of Cognation's unlock is broken. The artifact is unlocked by default.
     * Event effects may not be networked.
-	* Relic of Force may cause skills with 0 cooldown to break.
 
 ## Changelog
 
 **Warning: content spoilers below!**
+
+### 0.3.51
+* General
+    * Adjusted Clocking Headband's Russian translation.
+* Items & Equipment
+    * Added Equipment disabling.
+    * Reworked Relic of Termination - now grants a buff that is consumed upon an enemy spawning, and then goes on a 30 second cooldown displayed via a buff stack.
+    * Reworked Needles - Now grants a +1% stacking debuff which increases crit chance against that enemy until 1 (+1 per stack) crits happen on that enemy.
+    * Adjusted Detritive Trematode - The debuff no longer expires, but the items low health threshold was lowered to 25% for consistency with other "low health" items.
+    * Adjusted MIDAS - When given to an equipment drone, the drone now splits the gold it would recieve amongst all players.
+    * Fixed Coffee Bag behaving strangely in multiplayer.
+    * Blacklisted Coffee Bag from enemies.
+    * Fixed Relic of Force giving primary skills cooldowns.
+    * Should have fixed Greater Warbanner's cooldown breaking.
+    * Relic of Termination now has a blacklist for enemies that are not fit for being marked (bosses, destructible props, etc)
+    * Added R2API TempVFX dependency.
+* Events
+    * Invading Nemesis Commando now does less damage. (10x -> 7x)
+    * Mending Orbs no longer gain elite effects during elite events.
+    * Married Lemurians no longer have their elite type overriden during elite events.
+
+### 0.3.50
+* Items
+    * Fixed Hunter's Sigil adding 20000% damage and not 20%. Additionally fixed its description still mentioning crit chance and not damage.
 
 ### 0.3.49
 * General
