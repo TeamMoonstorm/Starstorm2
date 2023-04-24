@@ -8,7 +8,7 @@ using UnityEngine.Networking;
 
 namespace Moonstorm.Starstorm2.Interactables
 {
-    [DisabledContent]
+    //[DisabledContent]
     public sealed class DropPod : InteractableBase
     {
         public override GameObject Interactable { get => interactable; }
