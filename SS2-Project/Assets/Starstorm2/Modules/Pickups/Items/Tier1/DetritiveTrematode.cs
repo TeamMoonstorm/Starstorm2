@@ -11,15 +11,15 @@ namespace Moonstorm.Starstorm2.Items
 
         [ConfigurableField(ConfigName = "Trematode Threshold", ConfigDesc = "Amount of missing health needed for Trematode to proc. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
-        public static float missingHealthPercentage = 0.40f;
+        public static float missingHealthPercentage = 0.25f;
 
         [ConfigurableField(ConfigDesc = "Movement speed reduction received from the Trematode debuff. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
         public static float trematodeSlow = 0.2f;
 
-        [ConfigurableField(ConfigDesc = "Duration of Trematode debuff, in seconds.")]
-        [TokenModifier(token, StatTypes.Default, 3)]
-        public static float dotDuration = 4;
+        //[ConfigurableField(ConfigDesc = "Duration of Trematode debuff, in seconds.")]
+        //[TokenModifier(token, StatTypes.Default, 3)]
+        //public static float dotDuration = 4;
 
         [ConfigurableField(ConfigDesc = "Damage dealt by the Trematode debuff, per second. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
@@ -45,7 +45,8 @@ namespace Moonstorm.Starstorm2.Items
                         attackerObject = attacker,
                         victimObject = victim.gameObject,
                         dotIndex = Trematodes.index,
-                        duration = report.damageInfo.procCoefficient * dotDuration,
+                        //duration = report.damageInfo.procCoefficient * dotDuration,
+                        duration = -1f,
                         damageMultiplier = trematodeDamage * stack,
                     };
                     DotController.InflictDot(ref dotInfo);

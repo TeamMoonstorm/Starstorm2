@@ -24,11 +24,12 @@ MonoBehaviour:
   orientToFloor: 1
   slightlyRandomizeOrientation: 0
   skipSpawnWhenSacrificeArtifactEnabled: 0
+  weightScalarWhenSacrificeArtifactEnabled: 1
+  maxSpawnsPerStage: -1
   directorCard:
     spawnCard: {fileID: 11400000}
     selectionWeight: 5
     spawnDistance: 0
-    allowAmbushSpawn: 1
     preventOverhead: 0
     minimumStageCompletions: 0
     requiredUnlockable: 
@@ -36,5 +37,7 @@ MonoBehaviour:
     requiredUnlockableDef: {fileID: 0}
     forbiddenUnlockableDef: {fileID: 0}
   interactableCategory: 2
+  customCategory: 
   stages: 147966
   customStages: []
+  requiredExpansions: []
