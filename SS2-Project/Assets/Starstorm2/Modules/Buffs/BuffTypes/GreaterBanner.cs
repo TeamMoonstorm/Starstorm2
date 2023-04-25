@@ -2,6 +2,7 @@
 using Moonstorm.Starstorm2.Equipments;
 using R2API;
 using RoR2;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -86,17 +87,18 @@ namespace Moonstorm.Starstorm2.Buffs
         //public GameObject[] ownedBanners = new GameObject[0];
         //public List<GameObject> ownedBanners = new List<GameObject>(0);
         public CharacterBody body;
-        public float timer = 0;
+        //public float timer = 0;
+        //public List<int> lastUpdate;
         //public float soundCooldown = 5f;
 
         void Awake()
         {
-            timer = 0;
+
         }
 
         private void FixedUpdate()
         {
-            if (body.HasBuff(SS2Content.Buffs.BuffGreaterBanner) && timer > 1f && NetworkServer.active)
+            if (body.HasBuff(SS2Content.Buffs.BuffGreaterBanner) && NetworkServer.active)
             {
 
                 //if (body.skillLocator)
@@ -116,20 +118,31 @@ namespace Moonstorm.Starstorm2.Buffs
                     for(int i = 0; i < body.skillLocator.allSkills.Length; ++i)
                     {
                         GenericSkill genericSkill = body.skillLocator.allSkills[i];
+                        //if (lastUpdate.Count < (i + 1))
+                        //{
+                        //    lastUpdate.Add(0); //gives it same number of skills in same order as allSkills
+                        //}
                         if(genericSkill.stock < genericSkill.maxStock)
                         {
-                            SS2Log.Info("Skill Cooldown: " + genericSkill.rechargeStopwatch);
-                            genericSkill.rechargeStopwatch += 1;
+                            //SS2Log.Info("Skill Cooldown: " + genericSkill.rechargeStopwatch);
+                            //SS2Log.Warning("Skill Cooldown: " + genericSkill.rechargeStopwatch);
+                            // float nextHalf = Mathf.Floor(genericSkill.rechargeStopwatch) + .5f;
+                            if(genericSkill.rechargeStopwatch > Mathf.Floor(genericSkill.rechargeStopwatch) + .5f)
+                            {
+                                genericSkill.rechargeStopwatch += .5f;
+                                //timer = 0f;
+                            }
+                            //genericSkill.rechargeStopwatch += 1;
                         }
                     }
                 }
-                timer = 0f;
+                //timer = 0f;
                     
             }
-            if (body.HasBuff(SS2Content.Buffs.BuffGreaterBanner))
-            {
-                timer += Time.deltaTime;
-            }
+            //if (body.HasBuff(SS2Content.Buffs.BuffGreaterBanner))
+            //{
+            //    timer += Time.deltaTime;
+            //}
 
             //timer += Time.deltaTime;
 
