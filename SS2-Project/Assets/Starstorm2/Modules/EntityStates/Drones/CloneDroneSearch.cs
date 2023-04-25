@@ -5,6 +5,7 @@ using RoR2;
 using Moonstorm.Starstorm2;
 using UnityEngine.Networking;
 using HG;
+using Moonstorm.Starstorm2.Components;
 
 namespace EntityStates.CloneDrone
 {
@@ -18,6 +19,7 @@ namespace EntityStates.CloneDrone
         private ChildLocator childLocator;
         private SphereSearch sphereSearch;
         public GenericPickupController gpc;
+        public ItemTier pickupTier;
 
         public override void OnEnter()
         {
@@ -34,7 +36,10 @@ namespace EntityStates.CloneDrone
                 sphereSearch.radius = radius;
             }
 
-            Search();
+            //Search();
+            //this doesn't work - intent is to prevent player from cloning the new clone.
+            //unsure how to implement.
+            //suffering.
         }
         public void Search()
         {
@@ -62,12 +67,20 @@ namespace EntityStates.CloneDrone
                 //bypass non-items
                 if (obj.GetComponent<GenericPickupController>() != null)
                 {
-                    //to-do: filter out non-items. filter lunars?
-                    float distance = Vector3.Distance(transform.position, obj.transform.position);
-                    //if no closest object or obj is closer than old closest object
-                    if (closestObject == null || distance < Vector3.Distance(transform.position, closestObject.transform.position))
+                    GenericPickupController tempGPC = obj.GetComponent<GenericPickupController>();
+                    //filter items that aren't normal world drops or void variants.
+                    if (IsWhitelistTier(tempGPC.pickupIndex.pickupDef))
                     {
-                        closestObject = obj;
+                        //check that the item hasn't already been cloned before
+                        if (obj.GetComponent<CloneDroneItemMarker>() == null)
+                        {
+                            float distance = Vector3.Distance(transform.position, obj.transform.position);
+                            //if no closest object or obj is closer than old closest object
+                            if (closestObject == null || distance < Vector3.Distance(transform.position, closestObject.transform.position))
+                            {
+                                closestObject = obj;
+                            }
+                        }
                     }
                 }
             }
@@ -76,15 +89,24 @@ namespace EntityStates.CloneDrone
             {
                 gpc = closestObject.GetComponent<GenericPickupController>();
                 //Debug.Log("closest item pickup: " + gpc.GetDisplayName());
-                //Clone();
+                Clone();
             }
         }
+
+        public bool IsWhitelistTier(PickupDef pickupDef)
+        {
+            if (pickupTier == ItemTier.Tier1 || pickupTier == ItemTier.Tier2 || pickupTier == ItemTier.Tier3 || pickupTier == ItemTier.Boss || pickupTier == ItemTier.VoidTier1 || pickupTier == ItemTier.VoidTier2 || pickupTier == ItemTier.VoidTier3 || pickupTier == ItemTier.VoidBoss)
+                return true;
+            else
+                return false;
+        }
+
         public override void OnExit()
         {
             base.OnExit();
             if (gpc != null)
             {
-                Clone();
+                //Clone();
             }
             //Debug.Log("exiting search");
         }
@@ -101,7 +123,7 @@ namespace EntityStates.CloneDrone
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (isAuthority && duration >= fixedAge)
+            if (isAuthority && fixedAge >= duration)
                 outer.SetNextStateToMain();
         }
         public override InterruptPriority GetMinimumInterruptPriority()

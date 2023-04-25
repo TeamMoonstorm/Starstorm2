@@ -14,13 +14,14 @@ namespace Moonstorm.Starstorm2.Unlocks.NemCommando
 
         public sealed class NemCommandoDecisiveAchievement : BaseAchievement
         {
-            public BodyIndex LookUpRequiredBodyIndex()
+            public override BodyIndex LookUpRequiredBodyIndex()
             {
                 return BodyCatalog.FindBodyIndex("NemCommandoBody");
             }
 
             public override void OnInstall()
             {
+                base.OnInstall();
                 On.RoR2.CharacterBody.AddBuff_BuffIndex += Check;
             }
 
@@ -38,6 +39,7 @@ namespace Moonstorm.Starstorm2.Unlocks.NemCommando
 
             public override void OnUninstall()
             {
+                base.OnUninstall();
                 On.RoR2.CharacterBody.AddBuff_BuffIndex -= Check;
             }
         }

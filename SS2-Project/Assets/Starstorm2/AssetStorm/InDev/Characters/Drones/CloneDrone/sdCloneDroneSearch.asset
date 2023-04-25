@@ -17,12 +17,12 @@ MonoBehaviour:
   skillDescriptionToken: SS2_CLONE_DRONE_SEARCH
   keywordTokens: []
   icon: {fileID: 0}
-  activationStateMachineName: Weapon
+  activationStateMachineName: Body
   activationState:
     _typeName: EntityStates.CloneDrone.CloneDroneSearch, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   interruptPriority: 1
-  baseRechargeInterval: 2
+  baseRechargeInterval: 0
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 1
