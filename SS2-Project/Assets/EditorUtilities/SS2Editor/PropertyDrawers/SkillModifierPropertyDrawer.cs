@@ -1,5 +1,4 @@
-﻿using RoR2EditorKit.Core.PropertyDrawers;
-using Moonstorm.Starstorm2.ScriptableObjects;
+﻿using Moonstorm.Starstorm2.ScriptableObjects;
 using UnityEditor;
 using UnityEngine;
 
