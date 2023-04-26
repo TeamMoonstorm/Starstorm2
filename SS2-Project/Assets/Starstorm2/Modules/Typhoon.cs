@@ -27,13 +27,19 @@ namespace Moonstorm.Starstorm2
                 foreach (CharacterMaster cm in run.userMasters.Values)
                     cm.inventory.GiveItem(RoR2Content.Items.MonsoonPlayerHelper.itemIndex);
                 if (SS2Config.TyphoonIncreaseSpawnCap.Value)
+                {
                     TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit *= 2;
+                    TeamCatalog.GetTeamDef(TeamIndex.Void).softCharacterLimit *= 2;
+                    TeamCatalog.GetTeamDef(TeamIndex.Lunar).softCharacterLimit *= 2;
+                }
             }
         }
 
         private static void Run_onRunDestroyGlobal(Run run)
         {
             TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit = defMonsterCap;
+            TeamCatalog.GetTeamDef(TeamIndex.Void).softCharacterLimit = defMonsterCap;
+            TeamCatalog.GetTeamDef(TeamIndex.Lunar).softCharacterLimit = defMonsterCap;
         }
     }
 }

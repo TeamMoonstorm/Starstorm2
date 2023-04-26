@@ -274,6 +274,10 @@ namespace Moonstorm.Starstorm2
                 },
                 delegate
                 {
+                    Ethereal.Init();
+                },
+                delegate
+                {
                     if(SS2Config.EnableEvents.Value)
                     {
                         Events.Init();
