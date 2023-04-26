@@ -473,7 +473,6 @@ GameObject:
   - component: {fileID: 9037261311599559409}
   - component: {fileID: 6053484788037751017}
   - component: {fileID: 2815608122853490930}
-  - component: {fileID: -2026023670776101126}
   m_Layer: 0
   m_Name: DroidDroneBody
   m_TagString: Untagged
@@ -959,20 +958,6 @@ MonoBehaviour:
     _typeName: EntityStates.Drone.DeathState, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   idleStateMachine: []
---- !u!114 &-2026023670776101126
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5977874916511045093}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -144590133, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
-  requireEntitlementIfPlayerControlled: 1
 --- !u!1 &6282127154329199403
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 ﻿using RoR2;
+using RoR2.EntitlementManagement;
 using RoR2.Items;
 using System.Collections.Generic;
 using System.Linq;
@@ -101,10 +102,14 @@ namespace Moonstorm.Starstorm2.Items
             private void TerminationSpawnHook(CharacterBody obj)
             {
                 //string test = "obj name: " + obj.name + " | " + obj.bodyIndex + " | " + obj.master.name;
-               
+
                 //SS2Log.Info(test);
-               
-                
+                //HG.ReadOnlyArray<EntitlementDef> defs = EntitlementCatalog.entitlementDefs;
+                //foreach (EntitlementDef def in defs)
+                //{
+                //    SS2Log.Info("def: " + def.entitlementIndex + " | appid: " + def.steamAppId + " | eosid:" + def.eosItemId);
+                //}
+
                 if (!NetworkServer.active || illegalMarks.Contains(obj.bodyIndex) || obj.isPlayerControlled || obj.teamComponent.teamIndex == TeamIndex.Player || obj.teamComponent.teamIndex == TeamIndex.Neutral)
                 {
                     return;

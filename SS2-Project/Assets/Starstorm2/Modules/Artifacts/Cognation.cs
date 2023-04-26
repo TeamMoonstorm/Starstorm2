@@ -161,17 +161,18 @@ namespace Moonstorm.Starstorm2.Artifacts
             }
         }
 
-        public override void OnArtifactDisabled()
-        {
-            //IL.RoR2.CharacterMaster.OnBodyDeath -= PreventDeath;
-            GlobalEventManager.onCharacterDeathGlobal -= SpawnCognationGhost;
-
-        }
-
         public override void OnArtifactEnabled()
         {
             //IL.RoR2.CharacterMaster.OnBodyDeath += PreventDeath;
             GlobalEventManager.onCharacterDeathGlobal += SpawnCognationGhost;
+            On.RoR2.Util.GetBestBodyName += AddCognateName;
+        }
+
+        public override void OnArtifactDisabled()
+        {
+            //IL.RoR2.CharacterMaster.OnBodyDeath -= PreventDeath;
+            GlobalEventManager.onCharacterDeathGlobal -= SpawnCognationGhost;
+            On.RoR2.Util.GetBestBodyName -= AddCognateName;
         }
 
         private void SpawnCognationGhost(DamageReport report)
@@ -195,7 +196,26 @@ namespace Moonstorm.Starstorm2.Artifacts
                 }
             }
         }
+        private string AddCognateName(On.RoR2.Util.orig_GetBestBodyName orig, GameObject bodyObject)
+        {
+            var body = bodyObject.GetComponent<CharacterBody>();
+            //SS2Log.Debug("terminal begin");
+            if (body)
+            {
+                //SS2Log.Debug("body found");
+                if (body.inventory)
+                {
+                    //SS2Log.Debug("inventory");
+                    if (body.inventory.GetItemCount(SS2Content.Items.Cognation) > 0)
+                    {
+                        //SS2Log.Debug("epic");
+                        return "Cognate " + orig(bodyObject);
+                    }
+                }
+            }
 
+            return orig(bodyObject);
+        }
         private bool CanBecomeGhost(CharacterMaster victimMaster)
         {
             bool isMonster = victimMaster.teamIndex != TeamIndex.Player;
