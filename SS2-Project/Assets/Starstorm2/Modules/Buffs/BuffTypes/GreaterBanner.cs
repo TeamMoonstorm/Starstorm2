@@ -127,9 +127,9 @@ namespace Moonstorm.Starstorm2.Buffs
                             //SS2Log.Info("Skill Cooldown: " + genericSkill.rechargeStopwatch);
                             //SS2Log.Warning("Skill Cooldown: " + genericSkill.rechargeStopwatch);
                             // float nextHalf = Mathf.Floor(genericSkill.rechargeStopwatch) + .5f;
-                            if(genericSkill.rechargeStopwatch > Mathf.Floor(genericSkill.rechargeStopwatch) + .5f)
+                            if(genericSkill.rechargeStopwatch > Mathf.Floor(genericSkill.rechargeStopwatch) + GreaterWarbanner.cooldownReduction)
                             {
-                                genericSkill.rechargeStopwatch += .5f;
+                                genericSkill.rechargeStopwatch += GreaterWarbanner.cooldownReduction;
                                 //timer = 0f;
                             }
                             //genericSkill.rechargeStopwatch += 1;
