@@ -199,16 +199,12 @@ namespace Moonstorm.Starstorm2.Artifacts
         private string AddCognateName(On.RoR2.Util.orig_GetBestBodyName orig, GameObject bodyObject)
         {
             var body = bodyObject.GetComponent<CharacterBody>();
-            //SS2Log.Debug("terminal begin");
             if (body)
-            {
-                //SS2Log.Debug("body found");
+            { 
                 if (body.inventory)
                 {
-                    //SS2Log.Debug("inventory");
                     if (body.inventory.GetItemCount(SS2Content.Items.Cognation) > 0)
                     {
-                        //SS2Log.Debug("epic");
                         return "Cognate " + orig(bodyObject);
                     }
                 }
@@ -221,7 +217,7 @@ namespace Moonstorm.Starstorm2.Artifacts
             bool isMonster = victimMaster.teamIndex != TeamIndex.Player;
             bool hasBody = victimMaster.hasBody;
             bool notGhost = victimMaster.inventory.GetItemCount(SS2Content.Items.Cognation) == 0;
-            SS2Log.Info("victim master: " + victimMaster.masterIndex);
+            //SS2Log.Info("victim master: " + victimMaster.masterIndex);
             //bool notBlacklisted = !BlacklistedMasterIndices.Contains(victimMaster.masterIndex);
             bool notBlacklisted = !illegalGhosts.Contains(victimMaster.backupBodyIndex);
             //if(victimMaster.masterIndex == ) { 
