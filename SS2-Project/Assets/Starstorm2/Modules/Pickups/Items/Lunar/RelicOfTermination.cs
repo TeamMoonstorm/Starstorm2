@@ -436,7 +436,7 @@ namespace Moonstorm.Starstorm2.Items
                     if (index != BodyIndex.None)
                     {
                         //Debug.Log("found body " + bodyName + " with index " + index + ", adding them");
-                        SS2Log.Info("found body " + bodyName + " with index " + index + ", adding them");
+                        //SS2Log.Info("found body " + bodyName + " with index " + index + ", adding them");
                         AddBodyToIllegalTerminationList(index);
                     }
                 }
