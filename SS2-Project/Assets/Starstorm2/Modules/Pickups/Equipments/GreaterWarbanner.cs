@@ -32,7 +32,7 @@ namespace Moonstorm.Starstorm2.Equipments
 
         override public void Initialize()
         {
-            //CreateVisualEffects();
+            CreateVisualEffects();
         }
 
         //public override void AddBehavior(ref CharacterBody body, int stack)
@@ -129,23 +129,23 @@ namespace Moonstorm.Starstorm2.Equipments
             }   
         }
 
-        //private void CreateVisualEffects()
-        //{
-        //    var SheenEffectInstance = SS2Assets.LoadAsset<GameObject>("testMask"); //SS2Assets.LoadAsset<GameObject>("testMask", SS2Bundle.Equipments);  //AssetBundle.LoadAsset<GameObject>("SheenEffect");
-        //    var tempEffectComponent = SheenEffectInstance.AddComponent<TemporaryVisualEffect>();
-        //    tempEffectComponent.visualTransform = SheenEffectInstance.GetComponent<Transform>();
-        //
-        //    var destroyOnTimerComponent = SheenEffectInstance.AddComponent<DestroyOnTimer>();
-        //    destroyOnTimerComponent.duration = 0.1f;
-        //    MonoBehaviour[] exitComponents = new MonoBehaviour[1];
-        //    exitComponents[0] = destroyOnTimerComponent;
-        //
-        //    tempEffectComponent.exitComponents = exitComponents;
-        //
-        //    TempVisualEffectAPI.AddTemporaryVisualEffect(SheenEffectInstance.InstantiateClone("TestEffect", false), (CharacterBody body) => { return body.HasBuff(SS2Content.Buffs.BuffGreaterBanner); }, true, "HandR");
-        //    //TempVisualEffectAPI.AddTemporaryVisualEffect(SheenEffectInstance.InstantiateClone("SheenEffectR", false), (CharacterBody body) => { return body.HasBuff(SS2Content.Buffs.BuffGreaterBanner); }, true, "HandR");
-        //    
-        //}
+        private void CreateVisualEffects()
+        {
+            var effectInstance = SS2Assets.LoadAsset<GameObject>("GreaterBannerBuffEffect"); //SS2Assets.LoadAsset<GameObject>("testMask", SS2Bundle.Equipments);  //AssetBundle.LoadAsset<GameObject>("SheenEffect");
+            //var tempEffectComponent = SheenEffectInstance.AddComponent<TemporaryVisualEffect>();
+            //tempEffectComponent.visualTransform = SheenEffectInstance.GetComponent<Transform>();
+        
+            //var destroyOnTimerComponent = SheenEffectInstance.AddComponent<DestroyOnTimer>();
+            //destroyOnTimerComponent.duration = 0.1f;
+            //MonoBehaviour[] exitComponents = new MonoBehaviour[1];
+            //exitComponents[0] = destroyOnTimerComponent;
+        
+            //tempEffectComponent.exitComponents = exitComponents;
+        
+            TempVisualEffectAPI.AddTemporaryVisualEffect(effectInstance.InstantiateClone("GreaterBannerBuffEffect", false), (CharacterBody body) => { return body.HasBuff(SS2Content.Buffs.BuffGreaterBanner); }, true, "MainHurtbox");
+            //TempVisualEffectAPI.AddTemporaryVisualEffect(SheenEffectInstance.InstantiateClone("SheenEffectR", false), (CharacterBody body) => { return body.HasBuff(SS2Content.Buffs.BuffGreaterBanner); }, true, "HandR");
+            
+        }
     }
     
 
