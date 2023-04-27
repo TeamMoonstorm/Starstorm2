@@ -11,25 +11,33 @@ namespace Moonstorm.Starstorm2.Items
         private const string token = "SS2_ITEM_NEEDLES_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Needles", SS2Bundle.Items);
 
-        [ConfigurableField(ConfigDesc = "Chance for Needles to Proc. (100 = 100%)")]
+        //[ConfigurableField(ConfigDesc = "Chance for Needles to Proc. (100 = 100%)")]
+        //[TokenModifier(token, StatTypes.Default, 0)]
+        //public static float procChance = 4f;
+        //
+        //[ConfigurableField(ConfigDesc = "Duration of the pricked debuff, in seconds.")]
+        //[TokenModifier(token, StatTypes.Default, 1)]
+        //public static float buildupDuration = 5f;
+        //
+        //[ConfigurableField(ConfigDesc = "Additional duration of the pricked debuff per stack, in seconds.")]
+        //[TokenModifier(token, StatTypes.Default, 2)]
+        //public static float buildupStack = 1f;
+        //
+        //[ConfigurableField(ConfigDesc = "Amount of buildup debuffs needed before the actual needles debuff gets applied")]
+        //[TokenModifier(token, StatTypes.Default, 3)]
+        //public static float neededBuildupAmount = 1f;
+        //
+        //[ConfigurableField(ConfigDesc = "Duration of the actual needles debuff, in seconds.")]
+        //[TokenModifier(token, StatTypes.Default, 4)]
+        //public static float needleBuffDuration = 2f;
+
+        [ConfigurableField(ConfigDesc = "Amount of bonus critical chance per applied per stack. (1 = 1%")]
         [TokenModifier(token, StatTypes.Default, 0)]
-        public static float procChance = 4f;
+        public static float bonusCrit = 1;
 
-        [ConfigurableField(ConfigDesc = "Duration of the pricked debuff, in seconds.")]
+        [ConfigurableField(ConfigDesc = "Amount of critical hits allowed per stack. (1 = 1 critical hit per stack before the buff is cleared)")]
         [TokenModifier(token, StatTypes.Default, 1)]
-        public static float buildupDuration = 5f;
-
-        [ConfigurableField(ConfigDesc = "Additional duration of the pricked debuff per stack, in seconds.")]
-        [TokenModifier(token, StatTypes.Default, 2)]
-        public static float buildupStack = 1f;
-
-        [ConfigurableField(ConfigDesc = "Amount of buildup debuffs needed before the actual needles debuff gets applied")]
-        [TokenModifier(token, StatTypes.Default, 3)]
-        public static float neededBuildupAmount = 1f;
-
-        [ConfigurableField(ConfigDesc = "Duration of the actual needles debuff, in seconds.")]
-        [TokenModifier(token, StatTypes.Default, 4)]
-        public static float needleBuffDuration = 2f;
+        public static int critsPerStack = 1;
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver, IOnIncomingDamageOtherServerReciever
         {
@@ -54,7 +62,8 @@ namespace Moonstorm.Starstorm2.Items
                     else
                     {
                         //P(A+B) = P(A) + P(B) - P(AB)
-                        float intendedChance = attackerBody.crit + (self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) * attackerBody.inventory.GetItemCount(SS2Content.Items.Needles)); //assuming each buff is 1% per items
+                        //float intendedChance = attackerBody.crit + (self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) * attackerBody.inventory.GetItemCount(SS2Content.Items.Needles)); //assuming each buff is 1% per items
+                        float intendedChance = attackerBody.crit + (self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) * bonusCrit);
                         float secondChance = (attackerBody.crit - intendedChance) / (attackerBody.crit - 100) * 100;
                         bool secondCrit = Util.CheckRoll(secondChance);
                         damageInfo.crit = secondCrit;
@@ -65,7 +74,9 @@ namespace Moonstorm.Starstorm2.Items
                         else
                         {
                             //P(A+B) = P(A) + P(B) - P(AB)
-                            intendedChance = attackerBody.crit + (self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) * attackerBody.inventory.GetItemCount(SS2Content.Items.Needles)); //assuming each buff is 1% per items
+                            //intendedChance = attackerBody.crit + (self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) * attackerBody.inventory.GetItemCount(SS2Content.Items.Needles)); //assuming each buff is 1% per items
+                            intendedChance = attackerBody.crit + (self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) * bonusCrit);
+
                             secondChance = (attackerBody.crit - intendedChance) / (attackerBody.crit - 100) * 100;
                             secondCrit = Util.CheckRoll(secondChance);
                             damageInfo.crit = secondCrit;
@@ -79,7 +90,7 @@ namespace Moonstorm.Starstorm2.Items
                                 if (!tracker)
                                 {
                                     tracker = self.body.gameObject.AddComponent<NeedleTracker>();
-                                    tracker.procs = attackerBody.GetItemCount(SS2Content.Items.Needles);
+                                    tracker.procs = attackerBody.GetItemCount(SS2Content.Items.Needles) * critsPerStack;
                                     tracker.max = tracker.procs;
                                 }
                                 self.body.AddBuff(SS2Content.Buffs.BuffNeedleBuildup);

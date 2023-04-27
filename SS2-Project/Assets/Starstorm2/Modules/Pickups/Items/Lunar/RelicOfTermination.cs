@@ -17,15 +17,15 @@ namespace Moonstorm.Starstorm2.Items
         [ConfigurableField(ConfigDesc = "Time, in seconds, to kill the marked enemy before going on cooldown.")]
         [TokenModifier(token, StatTypes.Default, 0)]
         [TokenModifier("SS2_ITEM_RELICOFTERMINATION_PICKUP", StatTypes.Default, 0)]
-        public static float maxTime = 25f;
+        public static float maxTime = 30f;
 
-        [ConfigurableField(ConfigDesc = "Time between marks in seconds.")]
-        [TokenModifier(token, StatTypes.Default, 0)]
-        public static float downTime = 30f;
+        //[ConfigurableField(ConfigDesc = "Time between marks in seconds.")]
+        //[TokenModifier(token, StatTypes.Default, 0)]
+        //public static float downTime = 30f;
 
-        [ConfigurableField(ConfigDesc = "Percent reduction in time to kill per stack.")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
-        public static float timeReduction = .1f;
+        //[ConfigurableField(ConfigDesc = "Percent reduction in time to kill per stack.")]
+        //[TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
+        //public static float timeReduction = .1f;
 
         [ConfigurableField(ConfigDesc = "Damage multiplier which is added to the marked enemy if not killed in time (1 = 100% more damage).")]
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
@@ -114,6 +114,14 @@ namespace Moonstorm.Starstorm2.Items
                 {
                     return;
                 }
+                if (obj.inventory)
+                {
+                    if(obj.inventory.GetItemCount(SS2Content.Items.Cognation) > 0)
+                    {
+                        return;
+                    }
+                }
+
                 foreach (var player in PlayerCharacterMasterController.instances)
                 {
                     
