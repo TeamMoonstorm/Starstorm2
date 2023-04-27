@@ -7,6 +7,7 @@ using System.Text;
 using R2API.Utils;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using UnityEngine.AddressableAssets;
 
 namespace Moonstorm.Starstorm2
 {
@@ -18,6 +19,10 @@ namespace Moonstorm.Starstorm2
         public static int etherealsCompleted { get; private set; }
         public static bool teleIsEthereal;
         private static float storedScalingValue;
+
+        public static Material teleporterFresnel;
+
+        public static bool teleUpgraded;
         internal static void Init()
         {
             Run.onRunStartGlobal += Run_onRunStartGlobal;
@@ -25,6 +30,16 @@ namespace Moonstorm.Starstorm2
             On.RoR2.SceneDirector.Start += SceneDirector_Start;
             TeleporterInteraction.onTeleporterBeginChargingGlobal += TeleporterInteraction_onTeleporterBeginChargingGlobal;
             TeleporterInteraction.onTeleporterFinishGlobal += TeleporterInteraction_onTeleporterFinishGlobal;
+            On.RoR2.TeleporterInteraction.FixedUpdate += TeleporterInteraction_FixedUpdate;
+            On.RoR2.TeleporterInteraction.Start += TeleporterInteraction_Start;
+            Run.
+
+            teleporterFresnel = Addressables.LoadAssetAsync<Material>("RoR2/Base/Teleporters/matTeleporterFresnelOverlay.mat").WaitForCompletion();
+        }
+
+        private static void Run_CCRunEnd(Run run)
+        {
+
         }
 
         private static void Run_onRunStartGlobal(Run run)
@@ -61,7 +76,7 @@ namespace Moonstorm.Starstorm2
                 {
                     case "blackbeach":
                         position = new Vector3(-60, -51.2f, -231);
-                        rotation = Quaternion.Euler(0, 0, 90);
+                        rotation = Quaternion.Euler(0, 0, 0);
                         break;
                     case "blackbeach2":
                         position = new Vector3(-101.4f, 1.5f, 20.1f);
@@ -107,11 +122,23 @@ namespace Moonstorm.Starstorm2
                         position = new Vector3(65.9f, 127.4f, -293.9f);
                         rotation = Quaternion.Euler(0, 194.8f, 0);
                         break;
+                    case "snowyforest":
+                        position = new Vector3(-38.7f, 112.7f, 153.1f);
+                        rotation = Quaternion.Euler(0, 54.1f, 0);
+                        break;
+                    case "ancientloft":
+                        position = new Vector3(-133.4f, 33.5f, -280f);
+                        rotation = Quaternion.Euler(0, 354.5f, 0);
+                        break;
+                    case "sulfurpools":
+                        position = new Vector3(-33.6f, 36.8f, 164.1f);
+                        rotation = Quaternion.Euler(0, 187f, 0);
+                        break;
                 }
                 var term = Object.Instantiate(SS2Assets.LoadAsset<GameObject>("ShrineEthereal", SS2Bundle.Indev), position, rotation);
             }
 
-            Debug.Log("completed: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
+            Debug.Log("completed ethereals: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
             if (teleIsEthereal)
             {
                 ChatMessage.Send("SS2_ETHEREAL_DIFFICULTY_WARNING");
@@ -157,11 +184,64 @@ namespace Moonstorm.Starstorm2
                         curDiff.scalingValue += 0.5f;
                     }
 
+                    if (run.selectedDifficulty == Typhoon.TyphoonIndex)
+                        run.selectedDifficulty = SuperTyphoon.SuperTyphoonIndex;
+        
                     string diffToken = curDiff.nameToken;
                     Debug.Log(DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).scalingValue + " - current scaling value");
                     Debug.Log("completed: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
                 }
             }
+        }
+
+        private static void TeleporterInteraction_Start(On.RoR2.TeleporterInteraction.orig_Start orig, TeleporterInteraction self)
+        {
+            orig(self);
+            {
+                var newTeleMat = teleporterFresnel;
+                var teleBase = self.gameObject.transform.Find("TeleporterBaseMesh").gameObject;
+                var teleProngs = teleBase.transform.Find("TeleporterProngMesh").gameObject;
+                var teleBeacon = teleBase.transform.Find("SurfaceHeight").Find("TeleporterBeacon").gameObject;
+                teleBase.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
+                teleProngs.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
+                teleBeacon.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
+            }
+            
+        }
+
+        private static void TeleporterInteraction_FixedUpdate(On.RoR2.TeleporterInteraction.orig_FixedUpdate orig, TeleporterInteraction self)
+        {
+            orig(self);
+
+            if (teleIsEthereal && !teleUpgraded)
+            {
+                Debug.Log("tele change");
+                teleUpgraded = true;
+                var newTeleMat = SS2Assets.LoadAsset<Material>("matEtherealFresnelOverlay", SS2Bundle.Indev);
+                var teleBase = self.gameObject.transform.Find("TeleporterBaseMesh").gameObject;
+                var teleProngs = teleBase.transform.Find("TeleporterProngMesh").gameObject;
+                var teleBeacon = teleBase.transform.Find("SurfaceHeight").Find("TeleporterBeacon").gameObject;
+                var teleParticleSphere = teleBase.transform.Find("BuiltInEffects").Find("PassiveParticle, Sphere").gameObject;
+                var teleParticleCenter = teleBase.transform.Find("BuiltInEffects").Find("PassiveParticle, Center").gameObject;
+                teleBase.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
+                teleProngs.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
+                teleBeacon.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
+                teleBase.transform.localScale *= 1.5f;
+                //teleProngs.transform.localScale *= 2f;
+                teleBeacon.transform.localScale *= 0.5f;
+
+                ParticleSystem telePassiveParticles = teleParticleSphere.GetComponent<ParticleSystem>();
+                teleParticleSphere.transform.localScale *= 2f;
+                telePassiveParticles.startColor = new Color(.8f, .32f, .39f);
+
+                ParticleSystem teleCenterParticles = teleParticleCenter.GetComponent<ParticleSystem>();
+                teleCenterParticles.startColor = new Color(.8f, .32f, .39f);
+
+                //there's so many vfx to replace and recolor.
+                //hell.
+            }
+            if (!teleIsEthereal && teleUpgraded)
+                teleUpgraded = false;
         }
 
         private static void TeleporterInteraction_onTeleporterBeginChargingGlobal(TeleporterInteraction tele)
@@ -193,7 +273,7 @@ namespace Moonstorm.Starstorm2
         {
             if (teleIsEthereal)
             {
-                radius *= 2f;
+                radius *= 1.5f;
             }
         }
 
@@ -201,7 +281,7 @@ namespace Moonstorm.Starstorm2
         {
             if (teleIsEthereal)
             {
-                rate /= 1.25f;
+                rate *= 0.75f;
             }
         }
 

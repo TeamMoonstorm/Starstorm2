@@ -274,6 +274,10 @@ namespace Moonstorm.Starstorm2
                 },
                 delegate
                 {
+                    SuperTyphoon.Init();
+                },
+                delegate
+                {
                     Ethereal.Init();
                 },
                 delegate
