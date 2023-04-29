@@ -131,7 +131,7 @@ namespace Moonstorm.Starstorm2.Equipments
 
         private void CreateVisualEffects()
         {
-            var effectInstance = SS2Assets.LoadAsset<GameObject>("GreaterBannerBuffEffect"); //SS2Assets.LoadAsset<GameObject>("testMask", SS2Bundle.Equipments);  //AssetBundle.LoadAsset<GameObject>("SheenEffect");
+            var effectInstance = SS2Assets.LoadAsset<GameObject>("GreaterBannerBuffEffect", SS2Bundle.Equipments); //SS2Assets.LoadAsset<GameObject>("testMask", SS2Bundle.Equipments);  //AssetBundle.LoadAsset<GameObject>("SheenEffect");
             //var tempEffectComponent = SheenEffectInstance.AddComponent<TemporaryVisualEffect>();
             //tempEffectComponent.visualTransform = SheenEffectInstance.GetComponent<Transform>();
         

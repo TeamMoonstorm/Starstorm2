@@ -7,10 +7,10 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: matDeathProjectileFlare
+  m_Name: matGreaterWarbannerBuffBillboard
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
-  m_ShaderKeywords: DISABLEREMAP VERTEXCOLOR _ALPHATEST_ON _EMISSION
-  m_LightmapFlags: 1
+  m_ShaderKeywords: CLOUDOFFSET USE_CLOUDS
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -20,35 +20,35 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Cloud1Tex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: b72b6d09036cc6f43b27dfaaa37840ed, type: 3}
+        m_Scale: {x: 0.1, y: 0.1}
         m_Offset: {x: 0, y: 0}
     - _Cloud2Tex:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 0, y: 0}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: dd07efd28d61e9b45830cce41b8b1425, type: 3}
+        m_Texture: {fileID: 2800000, guid: d48b96ea8d308654d9ac14ca3fdcb0a0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RemapTex:
-        m_Texture: {fileID: 2800000, guid: d1409c987857d00439ddcaadbf342ff6, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4524e32683d27794cb7096a7ba08c1df, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _AlphaBias: 0
-    - _AlphaBoost: 5.01
-    - _Boost: 4
+    - _AlphaBias: 0.365
+    - _AlphaBoost: 0.98
+    - _Boost: 2
     - _BumpScale: 1
     - _CalcTextureAlphaOn: 0
-    - _CloudOffsetOn: 0
-    - _CloudsOn: 0
-    - _Cull: 0
+    - _CloudOffsetOn: 1
+    - _CloudsOn: 1
+    - _Cull: 2
     - _Cutoff: 0.5
-    - _DepthOffset: 0
+    - _DepthOffset: -3.63
     - _DetailNormalMapScale: 1
-    - _DisableRemapOn: 1
-    - _DistortionStrength: 0.1
+    - _DisableRemapOn: 0
+    - _DistortionStrength: 0.06
     - _DstBlend: 10
     - _ExternalAlpha: 1
     - _Fade: 1
@@ -60,9 +60,9 @@ Material:
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _InternalSimpleBlendMode: 1
-    - _InvFade: 1
+    - _InvFade: 2
     - _Metallic: 0
-    - _Mode: 1
+    - _Mode: 0
     - _OcclusionStrength: 1
     - _OffsetAmount: 0
     - _Parallax: 0.02
@@ -71,15 +71,14 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 5
     - _UVSec: 0
-    - _UVSwapOn: 0
     - _UseUV1On: 0
     - _VertexAlphaOn: 0
-    - _VertexColorOn: 1
+    - _VertexColorOn: 0
     - _VertexOffsetOn: 0
-    - _ZTest: 4
+    - _ZTest: 8
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _CutoffScroll: {r: 0, g: 0, b: 0, a: 0}
+    - _CutoffScroll: {r: -25, g: 0, b: -30, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _TintColor: {r: 1, g: 1, b: 1, a: 1}
+    - _TintColor: {r: 0.9607843, g: 0.6431373, b: 0.36078432, a: 1}

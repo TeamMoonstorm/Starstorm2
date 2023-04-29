@@ -68,6 +68,7 @@ The most important issues you may encounter are listed below, to help expect thi
     * Adjusted Detritive Trematode - The debuff no longer expires, but the low health threshold was lowered to 25% for consistency with other "low health" items.
     * Adjusted MIDAS - When given to an equipment drone, the drone now splits the gold it would recieve amongst all players.
     * Adjusted Greater Warbanner - No longer directly gives CDR, but instead makes cooldowns tick faster.
+    * Greater Warbanner's buff now has a visual on the player, like Warbanner.
     * Fixed Coffee Bag behaving strangely in multiplayer.
     * Blacklisted Coffee Bag from enemies.
     * Fixed Relic of Force giving primary skills cooldowns.
@@ -76,7 +77,7 @@ The most important issues you may encounter are listed below, to help expect thi
     * Added R2API TempVFX dependency.
 * Artifacts
     * Cognation's icon now better matches with vanilla artifact icons.
-    * Cognation's code now works, and the artifact properly spawns ghosts. Cognation ghosts now have the "Cognate" prefix.
+    * Cognation's unlock code now works, and the artifact properly spawns ghosts. Cognation ghosts now have the "Cognate" prefix.
     * Metamorphosis no longer makes the game unplayable. 
 * Events
     * Invading Nemesis Commando now does less damage. (10x -> 7x)
