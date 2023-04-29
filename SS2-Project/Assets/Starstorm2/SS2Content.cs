@@ -182,6 +182,8 @@ namespace Moonstorm.Starstorm2
 
             public static BuffDef bdHiddenSlow20;
 
+            public static BuffDef bdHiddenSpeed5;
+
             public static BuffDef bdMULENet;
 
             public static BuffDef bdExeCharge;
@@ -267,6 +269,18 @@ namespace Moonstorm.Starstorm2
                 delegate
                 {
                     new Modules.Elites().Initialize();
+                },
+                delegate
+                {
+                    Deluge.Init();
+                },
+                delegate
+                {
+                    Tempest.Init();
+                },
+                delegate
+                {
+                    Cyclone.Init();
                 },
                 delegate
                 {

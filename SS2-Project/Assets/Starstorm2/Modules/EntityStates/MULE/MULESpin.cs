@@ -27,21 +27,41 @@ namespace EntityStates.MULE
             //if (ogCDScale == null) - LOUD INCORRECT BUZZER
                 //ogCDScale = skillLocator.utility.cooldownScale;
             //skillLocator.utility.cooldownScale = 0f; 
+
             Debug.Log("spinCount: " + spinCount);
+
+            characterBody.AddTimedBuffAuthority(SS2Content.Buffs.bdHiddenSpeed5.buffIndex, (0.5f + (spinCount / 3))); //>
+            characterBody.RecalculateStats();
+
             damageCoefficient = dmgCoefficient;
             duration /= attackSpeedStat;
-            maxSpinCount *= attackSpeedStat;
+            if (duration <= 0.125f)
+                duration = 0.125f;
+            //maxSpinCount *= (attackSpeedStat / 6) + 1f;
             childLocator = GetModelChildLocator();
+
+            if (!isGrounded)
+            {
+                if (spinCount == 1)
+                    SmallHop(characterMotor, 15f);
+                else
+                    SmallHop(characterMotor, 2.5f);
+            }
+
             spinFX = childLocator.FindChild(spinFXmuzzle).gameObject;
             if (spinFX)
                 spinFX.SetActive(true);
+
             base.OnEnter();
+
             animator = GetModelAnimator();
+
             if (isAuthority)
             {
-                characterBody.SetBuffCount(SS2Content.Buffs.bdHiddenSlow20.buffIndex, 2);
+                //characterBody.SetBuffCount(SS2Content.Buffs.bdHiddenSpeed5.buffIndex, spinCount);
                 characterBody.SetBuffCount(RoR2Content.Buffs.SmallArmorBoost.buffIndex, 1);
             }
+
             hitEffectPrefab = EntityStates.Bison.Headbutt.hitEffectPrefab;
         }
         public override void PlayAnimation()
@@ -59,28 +79,31 @@ namespace EntityStates.MULE
                     MULESpin nextState = new MULESpin();
                     nextState.spinCount = spinCount;
                     nextState.ogCDScale = ogCDScale;
-                    //skillLocator.utility.rechargeStopwatch = 6f;
                     outer.SetNextState(nextState);
+                }
+                else if (isAuthority)
+                {
+
+                    outer.SetNextStateToMain();
+                    skillLocator.utility.DeductStock(1);
+                    PlayCrossfade("Gesture, Override", "CancelSpin", "Utility.playbackRate", duration, 0.1f);
+
+                    if (spinCount > minSpinCount)
+                    {
+                        skillLocator.utility.rechargeStopwatch -= ((spinCount - minSpinCount) / 2f);
+                    }
+
+
                     if (isAuthority)
-                        characterBody.SetBuffCount(SS2Content.Buffs.bdHiddenSlow20.buffIndex, 2);
-                    return;
+                    {
+                        characterBody.SetBuffCount(SS2Content.Buffs.bdHiddenSlow20.buffIndex, 0);
+                        //characterBody.SetBuffCount(SS2Content.Buffs.bdHiddenSpeed5.buffIndex, 0);
+                        characterBody.SetBuffCount(RoR2Content.Buffs.SmallArmorBoost.buffIndex, 0);
+                        //skillLocator.utility.DeductStock(1);
+                    }
+                    if (spinFX)
+                        spinFX.SetActive(false);
                 }
-                outer.SetNextStateToMain();
-                skillLocator.utility.DeductStock(1);
-                if (spinCount > minSpinCount)
-                {
-                    skillLocator.utility.rechargeStopwatch -= ((spinCount - minSpinCount) / 2f);
-                }
-                
-                PlayCrossfade("Gesture, Override", "CancelSpin", "Utility.playbackRate", duration, 0.1f);
-                if (isAuthority)
-                {
-                    characterBody.SetBuffCount(SS2Content.Buffs.bdHiddenSlow20.buffIndex, 0);
-                    characterBody.SetBuffCount(RoR2Content.Buffs.SmallArmorBoost.buffIndex, 0);
-                    //skillLocator.utility.DeductStock(1);
-                }
-                if (spinFX)
-                    spinFX.SetActive(false);
                 
                 //skillLocator.utility.cooldownScale = ogCDScale;
             }
@@ -88,17 +111,6 @@ namespace EntityStates.MULE
 
         public override void OnExit()
         {
-            /*if ((spinCount < 5 && !inputBank.skill3.down) || spinCount < 9)
-            {
-                MULESpin nextState = new MULESpin();
-                nextState.spinCount = spinCount;
-                outer.SetNextState(nextState);
-                return;
-            }
-            outer.SetNextStateToMain();
-            PlayCrossfade("Gesture, Override", "CancelSpin", "Utility.playbackRate", duration, 0.1f);*/
-            
-            //skillLocator.utility.stock -= 1;
             base.OnExit();
         }
 
@@ -115,6 +127,7 @@ namespace EntityStates.MULE
                 overlapAttack.forceVector *= 2f;
                 overlapAttack.pushAwayForce *= 2f;
             }
+            overlapAttack.damageType = DamageType.Stun1s;
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

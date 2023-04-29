@@ -18,6 +18,8 @@ namespace EntityStates.MULE
         public static float baseDuration;
         public static string muzzleString;
 
+        public static GameObject slamEffectVFX;
+
         private Animator animator;
         private float duration;
         private float radius;
@@ -76,8 +78,10 @@ namespace EntityStates.MULE
             };
 
             blast.Fire();
-      
-            
+
+            EffectManager.SimpleMuzzleFlash(slamEffectVFX, gameObject, muzzleString, true);
+
+
 
             //AddRecoil();
         }

@@ -18,6 +18,8 @@ namespace EntityStates.MULE
         public static float baseDuration;
         public static string muzzleString;
 
+        public static GameObject slamEffectVFX;
+
         public static GameObject projectilePrefab;
         public static float waveProjectileArc;
         public static int waveProjectileCount;
@@ -77,7 +79,7 @@ namespace EntityStates.MULE
 
             blast.Fire();
 
-            EffectManager.SimpleMuzzleFlash(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/GenericHugeFootstepDust.prefab").WaitForCompletion(), gameObject, muzzleString, true);
+            EffectManager.SimpleMuzzleFlash(slamEffectVFX, gameObject, muzzleString, true);
 
             FireShockwaves();
             //AddRecoil();

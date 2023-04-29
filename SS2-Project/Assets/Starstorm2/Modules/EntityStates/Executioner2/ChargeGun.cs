@@ -187,6 +187,7 @@ namespace EntityStates.Executioner2
             }
             if (chargeEffectInstance)
                 Destroy(chargeEffectInstance);
+            skillLocator.primary.RemoveAllStocks();
         }
     }
 

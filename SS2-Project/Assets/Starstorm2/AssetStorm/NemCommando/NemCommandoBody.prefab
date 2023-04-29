@@ -314,10 +314,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.54
-  m_Height: 2.09
+  m_Radius: 0.42923093
+  m_Height: 1.9146032
   m_Direction: 1
-  m_Center: {x: 0.021859974, y: -0.27, z: -0.027962774}
+  m_Center: {x: -0.036452293, y: -0.3576984, z: 0.024494058}
 --- !u!114 &5894166662581366059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5934,6 +5934,69 @@ CapsuleCollider:
   m_Height: 1.9
   m_Direction: 0
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &2614213765072311188
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6742695699038805533}
+  - component: {fileID: 716110486663220968}
+  - component: {fileID: 4816594315917473459}
+  m_Layer: 17
+  m_Name: HeadHurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6742695699038805533
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2614213765072311188}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3272458012772026149}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &716110486663220968
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2614213765072311188}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.75194186
+  m_Center: {x: -0.000000011933496, y: 0.56859016, z: 0.00000043537545}
+--- !u!114 &4816594315917473459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2614213765072311188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 1815109087204470018}
+  isBullseye: 0
+  isSniperTarget: 1
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 5563432461909112862}
+  indexInGroup: 1
 --- !u!1 &2620172576964390036
 GameObject:
   m_ObjectHideFlags: 0
@@ -6029,7 +6092,8 @@ Transform:
   m_LocalRotation: {x: -0.103792086, y: -0.12554434, z: 0.03757427, w: 0.985928}
   m_LocalPosition: {x: -0, y: 0.2990463, z: 0.00000008195639}
   m_LocalScale: {x: 1.0000001, y: 1, z: 1.0000002}
-  m_Children: []
+  m_Children:
+  - {fileID: 6742695699038805533}
   m_Father: {fileID: 6049559598644252604}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8814,6 +8878,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hurtBoxes:
   - {fileID: 5894166662581366059}
+  - {fileID: 4816594315917473459}
   mainHurtBox: {fileID: 5894166662581366059}
   bullseyeCount: 1
 --- !u!114 &6094737180007599303

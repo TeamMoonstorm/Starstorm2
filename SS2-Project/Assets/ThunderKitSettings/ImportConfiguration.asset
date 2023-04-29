@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 235bc6f08aa9bcc46b2cc6ee311b44dc, type: 3}
   m_Name: Install DebugToolkit
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &-6172219054358698223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25,7 +25,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d0e45bf5627b554081a563dac04ff6a, type: 3}
   m_Name: Set Deferred Shading
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &-5868095601417264387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38,7 +38,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2636f9900aca35942b349a07d34faaf4, type: 3}
   m_Name: Assembly Publicizer
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
   assemblyNames:
   - RoR2.dll
   - KinematicCharacterController.dll
@@ -55,7 +55,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4e66fd1b2f0a6b4e951af502eba5a2b, type: 3}
   m_Name: Create Game Package
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &-4465778446793977025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eecc301ed1414ee4ca063a9eeee2a159, type: 3}
   m_Name: TextMeshPro Uninstaller
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &-4352919925196166156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,7 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8840720793112784295b7c9b06af7493, type: 3}
   m_Name: Get Bitness
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &-3551278150003409249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a17181e89416446b9fb82f03553599, type: 3}
   m_Name: RoR2 LegacyResourceAPI Patcher
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &-3479261026247651361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,7 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bb24ae4d588a7b4fbc1757e2fb5fd78, type: 3}
   m_Name: Import Addressable Catalog
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &-2263613682057598629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 512775de21a2e0e41ba77b90aced0c69, type: 3}
   m_Name: PostProcessing Unity Package Installer
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &-1333398263386512209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b40885578be10f4785f1fa347e9fefa, type: 3}
   m_Name: Import Project Settings
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
   IncludedSettings: -1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 892ee265a9c0b884c8c9c36e42a802c6, type: 3}
   m_Name: Install BepInEx
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &1864765004298132685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,7 +209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e81dec9331ebba548b09674254134864, type: 3}
   m_Name: Wwise Blacklister
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &3637552491195116879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,7 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4090d1da9d2c4d64393fc97cd46e8414, type: 3}
   m_Name: Unity GUI Uninstaller
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &4562440645222703240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,7 +248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08f74610dc9ac9d4dac443c315f5685d, type: 3}
   m_Name: Ensure RoR2 Thunderstore Source
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &5331793033760261268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,7 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a87a9f1780c348d4080afaf9971d3a7e, type: 3}
   m_Name: Import Assemblies
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &5453469227640338952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,7 +274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 211736d3c64c3e041a3ebe0fed60c843, type: 3}
   m_Name: Install Ancient Scepter
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &6194533408129552167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -469,7 +469,7 @@ MonoBehaviour:
   - submoduleName: R2API_Rulebook
     description: API for registering rules to the Rule Catalog
     dependedncyID: RiskofThunder-R2API_Rulebook
-    shouldInstall: 0
+    shouldInstall: 1
     isHardDependency: 0
     dependencies:
     - BepInExPack
@@ -536,7 +536,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 782d5ab1acc2056478f835108aa9474b, type: 3}
   m_Name: Configure Addressable Graphics Settings
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
 --- !u!114 &7065197439769205176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -549,9 +549,209 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73dfaad4b0991214da3e623825c8357c, type: 3}
   m_Name: MMHook Generator
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
   assemblyNames:
   - RoR2.dll
   - KinematicCharacterController.dll
   hookGenExecutable: {fileID: 102900000, guid: e441941fc2ce18f4cb8ae6dc66c65a21, type: 3}
-  cachedAssembliesInAppDomain: []
+  cachedAssembliesInAppDomain:
+  - mscorlib.dll
+  - UnityEngine.dll
+  - UnityEngine.AIModule.dll
+  - UnityEngine.ARModule.dll
+  - UnityEngine.AccessibilityModule.dll
+  - UnityEngine.AndroidJNIModule.dll
+  - UnityEngine.AnimationModule.dll
+  - UnityEngine.AssetBundleModule.dll
+  - UnityEngine.AudioModule.dll
+  - UnityEngine.ClothModule.dll
+  - UnityEngine.ClusterInputModule.dll
+  - UnityEngine.ClusterRendererModule.dll
+  - UnityEngine.CoreModule.dll
+  - UnityEngine.CrashReportingModule.dll
+  - UnityEngine.DSPGraphModule.dll
+  - UnityEngine.DirectorModule.dll
+  - UnityEngine.GameCenterModule.dll
+  - UnityEngine.GridModule.dll
+  - UnityEngine.HotReloadModule.dll
+  - UnityEngine.IMGUIModule.dll
+  - UnityEngine.ImageConversionModule.dll
+  - UnityEngine.InputModule.dll
+  - UnityEngine.InputLegacyModule.dll
+  - UnityEngine.JSONSerializeModule.dll
+  - UnityEngine.LocalizationModule.dll
+  - UnityEngine.ParticleSystemModule.dll
+  - UnityEngine.PerformanceReportingModule.dll
+  - UnityEngine.PhysicsModule.dll
+  - UnityEngine.Physics2DModule.dll
+  - UnityEngine.ProfilerModule.dll
+  - UnityEngine.ScreenCaptureModule.dll
+  - UnityEngine.SharedInternalsModule.dll
+  - UnityEngine.SpriteMaskModule.dll
+  - UnityEngine.SpriteShapeModule.dll
+  - UnityEngine.StreamingModule.dll
+  - UnityEngine.SubstanceModule.dll
+  - UnityEngine.SubsystemsModule.dll
+  - UnityEngine.TLSModule.dll
+  - UnityEngine.TerrainModule.dll
+  - UnityEngine.TerrainPhysicsModule.dll
+  - UnityEngine.TextCoreModule.dll
+  - UnityEngine.TextRenderingModule.dll
+  - UnityEngine.TilemapModule.dll
+  - UnityEngine.UIModule.dll
+  - UnityEngine.UIElementsModule.dll
+  - UnityEngine.UNETModule.dll
+  - UnityEngine.UmbraModule.dll
+  - UnityEngine.UnityAnalyticsModule.dll
+  - UnityEngine.UnityConnectModule.dll
+  - UnityEngine.UnityTestProtocolModule.dll
+  - UnityEngine.UnityWebRequestModule.dll
+  - UnityEngine.UnityWebRequestAssetBundleModule.dll
+  - UnityEngine.UnityWebRequestAudioModule.dll
+  - UnityEngine.UnityWebRequestTextureModule.dll
+  - UnityEngine.UnityWebRequestWWWModule.dll
+  - UnityEngine.VFXModule.dll
+  - UnityEngine.VRModule.dll
+  - UnityEngine.VehiclesModule.dll
+  - UnityEngine.VideoModule.dll
+  - UnityEngine.WindModule.dll
+  - UnityEngine.XRModule.dll
+  - UnityEditor.dll
+  - System.Core.dll
+  - System.dll
+  - Mono.Security.dll
+  - System.Configuration.dll
+  - System.Xml.dll
+  - Unity.CompilationPipeline.Common.dll
+  - UnityEditor.VR.dll
+  - UnityEditor.Graphs.dll
+  - UnityEditor.WindowsStandalone.Extensions.dll
+  - SyntaxTree.VisualStudio.Unity.Bridge.dll
+  - Assembly-CSharp.dll
+  - Assembly-CSharp-Editor.dll
+  - BsDiff.dll
+  - UnityEditor.CacheServer.dll
+  - RoR2EditorKit.dll
+  - MonoDetector.dll
+  - Unity.ScriptableBuildPipeline.Editor.dll
+  - com.unity.multiplayer-hlapi.Editor.dll
+  - Wwise.dll
+  - RoR2EditorScripts.dll
+  - ThunderKit.Addressable.Config.dll
+  - ThunderKit.Thunderstore.dll
+  - SS2Editor.dll
+  - MoonstormEditorUtils.dll
+  - ProjectSpecificImporters.dll
+  - UnityVersion.dll
+  - ThunderKit.Markdown.dll
+  - ToolbarExtender.Editor.dll
+  - RoR2Importers.dll
+  - Unity.Postprocessing.Editor.dll
+  - com.unity.multiplayer-weaver.Editor.dll
+  - MSUImporters.dll
+  - AssetsExporter.dll
+  - ThunderKit.Addressable.Tools.dll
+  - Unity.2D.Sprite.Editor.dll
+  - Unity.Postprocessing.Runtime.dll
+  - AssetsTools.NET.dll
+  - ThunderKit.Core.dll
+  - Starstorm2.dll
+  - WwiseEditor.dll
+  - Unity.ScriptableBuildPipeline.dll
+  - MoonstormSharedUtils.dll
+  - ThunderKit.Common.dll
+  - com.unity.multiplayer-hlapi.Runtime.dll
+  - AncientScepter.dll
+  - 0Harmony.dll
+  - 0Harmony20.dll
+  - BepInEx.Bootstrap.dll
+  - BepInEx.dll
+  - BepInEx.Harmony.dll
+  - BepInEx.Preloader.dll
+  - HarmonyXInterop.dll
+  - Mono.Cecil.dll
+  - Mono.Cecil.Mdb.dll
+  - Mono.Cecil.Pdb.dll
+  - Mono.Cecil.Rocks.dll
+  - MonoMod.RuntimeDetour.dll
+  - MonoMod.Utils.dll
+  - BepInEx.GUI.Patcher.dll
+  - FixPluginTypesSerialization.dll
+  - RoR2BepInExPack.dll
+  - Markdig.Signed.dll
+  - SharpCompress.dll
+  - ICSharpCode.SharpZipLib.dll
+  - DebugToolkit.dll
+  - MMHOOK_KinematicCharacterController.dll
+  - MMHOOK_RoR2.dll
+  - Decalicious.dll
+  - EOS.dll
+  - Facepunch.Steamworks.dll
+  - GenericIK.dll
+  - HGCSharpUtils.dll
+  - HGSignup.dll
+  - HGUnityUtils.dll
+  - KinematicCharacterController.dll
+  - LegacyResourcesAPI.dll
+  - ModLoader.dll
+  - Newtonsoft.Json.dll
+  - Rewired_Core.dll
+  - Rewired_CSharp.dll
+  - Rewired_Windows.dll
+  - RoR2.dll
+  - SimpleJSON.dll
+  - System.ComponentModel.Composition.dll
+  - System.Data.dll
+  - System.Diagnostics.StackTrace.dll
+  - System.Drawing.dll
+  - System.EnterpriseServices.dll
+  - System.Globalization.Extensions.dll
+  - System.IO.Compression.dll
+  - System.IO.Compression.FileSystem.dll
+  - System.Net.Http.dll
+  - System.Numerics.dll
+  - System.Runtime.Serialization.dll
+  - System.Runtime.Serialization.Xml.dll
+  - System.ServiceModel.Internals.dll
+  - System.Transactions.dll
+  - System.Xml.XPath.XDocument.dll
+  - Unity.Addressables.dll
+  - Unity.ProBuilder.Csg.dll
+  - Unity.ProBuilder.dll
+  - Unity.ProBuilder.KdTree.dll
+  - Unity.ProBuilder.Poly2Tri.dll
+  - Unity.ProBuilder.Stl.dll
+  - Unity.RenderPipelines.Core.Runtime.dll
+  - Unity.RenderPipelines.Core.ShaderLibrary.dll
+  - Unity.ResourceManager.dll
+  - Unity.TextMeshPro.dll
+  - Unity.Timeline.dll
+  - UnityEngine.SpatialTracking.dll
+  - UnityEngine.UI.dll
+  - UnityEngine.XR.LegacyInputHelpers.dll
+  - Zio.dll
+  - BepInEx.MonoMod.HookGenPatcher.dll
+  - R2API.ArtifactCode.dll
+  - R2API.Colors.dll
+  - R2API.CommandHelper.dll
+  - R2API.ContentManagement.dll
+  - R2API.Core.dll
+  - R2API.DamageType.dll
+  - R2API.Difficulty.dll
+  - R2API.Director.dll
+  - R2API.Dot.dll
+  - R2API.Elites.dll
+  - R2API.Items.dll
+  - R2API.Language.dll
+  - R2API.Networking.dll
+  - R2API.Orb.dll
+  - R2API.Prefab.dll
+  - R2API.RecalculateStats.dll
+  - R2API.Rules.dll
+  - netstandard.dll
+  - System.Xml.Linq.dll
+  - SyntaxTree.VisualStudio.Unity.Messaging.dll
+  - Unity.Cecil.dll
+  - Unity.SerializationLogic.dll
+  - ExCSS.Unity.dll
+  - Unity.Legacy.NRefactory.dll

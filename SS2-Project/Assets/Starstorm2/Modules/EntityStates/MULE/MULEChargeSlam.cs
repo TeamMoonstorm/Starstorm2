@@ -70,15 +70,6 @@ namespace EntityStates.MULE
 
             if (isAuthority && (charge >= 1f || (!IsKeyDownAuthority() && fixedAge >= 0.01f)))
             {
-                if (charge < 1f)
-                {
-                    //Normal Slam
-                    Debug.Log("Normal Slam " + charge);
-                    MULESlam nextState = new MULESlam();
-                    nextState.charge = charge;
-                    outer.SetNextState(nextState);
-                }
-
                 if (charge <= 0.125f)
                 {
                     //Punch
@@ -86,15 +77,35 @@ namespace EntityStates.MULE
                     MULEPunch nextState = new MULEPunch();
                     nextState.swingSide = swingSide;
                     outer.SetNextState(nextState);
+                    return;
+                }
+                if (charge < 1f && isGrounded)
+                {
+                    //Normal Slam
+                    Debug.Log("Normal Slam " + charge);
+                    MULESlam nextState = new MULESlam();
+                    nextState.charge = charge;
+                    outer.SetNextState(nextState);
+                    return;
                 }
 
-                if (charge >= 1f)
+                if (charge >= 1f && isGrounded)
                 {
                     //Mega Slam
                     Debug.Log("Max Slam " + charge);
                     MULESuperSlam nextState = new MULESuperSlam();
                     nextState.charge = charge;
                     outer.SetNextState(nextState);
+                    return;
+                }
+                if (!isGrounded && charge >= 0.125f)
+                {
+                    //Air Slam
+                    Debug.Log("Air Slam " + charge);
+                    MULEAirSlam nextState = new MULEAirSlam();
+                    nextState.charge = charge;
+                    outer.SetNextState(nextState);
+                    return;
                 }
                 Debug.Log("Released at: " + charge);
             }
