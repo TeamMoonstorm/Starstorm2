@@ -29,11 +29,11 @@ namespace Moonstorm.Starstorm2.Items
 
         [ConfigurableField(ConfigDesc = "Damage multiplier which is added to the marked enemy if not killed in time (1 = 100% more damage).")]
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
-        public static float damageMult = 2f;
+        public static float damageMult = 1.75f;
 
         [ConfigurableField(ConfigDesc = "Health multiplier which is added to the marked enemy if not killed in time (1 = 100% more health).")]
         [TokenModifier(token, StatTypes.MultiplyByN, 3, "100")]
-        public static float healthMult = 5f;
+        public static float healthMult = 5.5f;
 
         [ConfigurableField(ConfigDesc = "Speed multiplier which is added to the marked enemy if not killed in time (1 = 100% more speed).")]
         [TokenModifier(token, StatTypes.MultiplyByN, 4, "100")]
@@ -43,158 +43,220 @@ namespace Moonstorm.Starstorm2.Items
         [TokenModifier(token, StatTypes.MultiplyByN, 5, "100")]
         public static float atkSpeedMult = 1f;
 
+        private static List<BodyIndex> illegalMarks = new List<BodyIndex>();
+        public static GameObject globalMarkEffect;
+
+        //public static Xoroshiro128Plus terminationRNG;
+
+        public static GameObject markEffect;
+        public static GameObject failEffect;
+        public static GameObject buffEffect;
+
+        //private GameObject markEffectInstance;
+
+        override public void Initialize()
+        {
+            CharacterBody.onBodyStartGlobal += TerminationSpawnHook;
+            On.RoR2.Util.GetBestBodyName += AddTerminalName;
+
+            markEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationTargetMark", SS2Bundle.Items);
+            failEffect = SS2Assets.LoadAsset<GameObject>("NemmandoScepterSlashAppear", SS2Bundle.Items);
+            buffEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationBuffEffect", SS2Bundle.Items);
+
+            globalMarkEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/BossPositionIndicator.prefab").WaitForCompletion();
+
+        }
+
+        //private void OnEnable()
+        //{
+        //    CharacterBody.onBodyStartGlobal += TerminationSpawnHook;
+        //    On.RoR2.Util.GetBestBodyName += AddTerminalName;
+        //    InitItem();
+        //}
+        //private void OnDisable()
+        //{
+        //    CharacterBody.onBodyStartGlobal -= TerminationSpawnHook;
+        //    On.RoR2.Util.GetBestBodyName -= AddTerminalName;
+        //}
+
+        private void TerminationSpawnHook(CharacterBody obj)
+        {
+            //string test = "obj name: " + obj.name + " | " + obj.bodyIndex + " | " + obj.master.name;
+
+            //SS2Log.Info(test);
+            //HG.ReadOnlyArray<EntitlementDef> defs = EntitlementCatalog.entitlementDefs;
+            //foreach (EntitlementDef def in defs)
+            //{
+            //    SS2Log.Info("def: " + def.entitlementIndex + " | appid: " + def.steamAppId + " | eosid:" + def.eosItemId);
+            //}
+
+            if (!NetworkServer.active || illegalMarks.Contains(obj.bodyIndex) || obj.isPlayerControlled || obj.teamComponent.teamIndex == TeamIndex.Player || obj.teamComponent.teamIndex == TeamIndex.Neutral)
+            {
+                return;
+            }
+            if (obj.inventory)
+            {
+                if (obj.inventory.GetItemCount(SS2Content.Items.Cognation) > 0)
+                {
+                    return;
+                }
+            }
+            //if(obj.master.money)
+
+
+            foreach (var player in PlayerCharacterMasterController.instances)
+            {
+
+                if (player.body.HasBuff(SS2Content.Buffs.BuffTerminationReady))
+                {
+                    var holderToken = player.body.GetComponent<TerminationHolderToken>();
+                    if (!holderToken)
+                    {
+                        holderToken = player.body.gameObject.AddComponent<TerminationHolderToken>();
+                    }
+                    else
+                    {
+                        //SS2Log.Debug("token found in spawn hook");
+                    }
+                    //Debug.Log("spawning - has buff");
+                    if (obj.inventory && !holderToken.target)
+                    {
+                        int count = player.body.GetItemCount(SS2Content.Items.RelicOfTermination);
+                        if (count == 0)
+                        {
+                            count = 1; //doing this so that if for some reason if get this buff (aetherium potion) it still does something
+                        }
+
+                        obj.inventory.GiveItem(SS2Content.Items.TerminationHelper);
+                        var token = obj.gameObject.AddComponent<TerminationToken>();
+                        token.itemCount = count;
+                        token.initalTime = Time.time;
+                        token.owner = holderToken;
+                        holderToken.target = token;
+                        holderToken.body = player.body;
+
+                        obj.modelLocator.modelTransform.localScale *= 1.5f;
+                        obj.AddBuff(SS2Content.Buffs.BuffTerminationVFX);
+                        var printController = obj.modelLocator.modelTransform.GetComponent<PrintController>();
+                        //var printController = obj.GetComponent<PrintController>();
+                        //SS2Log.Info("trying to find controller: " + printController);
+                        if (printController)
+                        {
+                            //SS2Log.Info("found controler");
+                            printController.printTime = 25f;
+                            printController.maxPrintHeight = 100;
+                        }
+
+
+                        obj.teamComponent.RequestDefaultIndicator(globalMarkEffect);
+
+                        for (int i = 0; i < maxTime; i++)
+                        {
+                            player.body.AddTimedBuff(SS2Content.Buffs.BuffTerminationCooldown.buffIndex, i + 1);
+                        }
+                        //player.body.AddBuff(SS2Content.Buffs.BuffTerminationCooldown);
+                        player.body.RemoveBuff(SS2Content.Buffs.BuffTerminationReady);
+                    }
+                }
+            }
+        }
+
+        private string AddTerminalName(On.RoR2.Util.orig_GetBestBodyName orig, GameObject bodyObject)
+        {
+            var body = bodyObject.GetComponent<CharacterBody>();
+            //SS2Log.Debug("terminal begin");
+            if (body)
+            {
+                //SS2Log.Debug("body found");
+                if (body.inventory)
+                {
+                    //SS2Log.Debug("inventory");
+                    if (body.inventory.GetItemCount(SS2Content.Items.TerminationHelper) > 0)
+                    {
+                        //SS2Log.Debug("epic");
+                        return "Terminal " + orig(bodyObject);
+                    }
+                }
+            }
+
+            return orig(bodyObject);
+        }
+
+        //private void InitItem()
+        //{
+        //    markEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationTargetMark", SS2Bundle.Items);
+        //    failEffect = SS2Assets.LoadAsset<GameObject>("NemmandoScepterSlashAppear", SS2Bundle.Items);
+        //    buffEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationBuffEffect", SS2Bundle.Items);
+        //
+        //    globalMarkEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/BossPositionIndicator.prefab").WaitForCompletion();
+        //
+        //    terminationRNG = new Xoroshiro128Plus(Run.instance.seed);
+        //    InitializeIllegalMarkList();
+        //}
+
+
         public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver
         {
 
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.RelicOfTermination;
 
+            private float EntranceTimer;
+
+            public static Xoroshiro128Plus terminationRNG;
+
+            public bool hasInitalizedList = false;
+
             //[ConfigurableField(ConfigDesc = "Health multiplier grantd to marked enemy if not killed in time (1 = 100% health).")]
             //[TokenModifier(token, StatTypes.Percentage, 3)]
             //public static float effectiveRadius = 100f;
 
-            public Xoroshiro128Plus terminationRNG;
-
-            public static GameObject markEffect;
-            public static GameObject failEffect;
-            public static GameObject buffEffect;
-
-            public static GameObject globalMarkEffect;
-
-            private GameObject markEffectInstance;
-
-            private static List<BodyIndex> illegalMarks = new List<BodyIndex>();
-
             //private GameObject prolapsedInstance;
             //public bool shouldFollow = true;
-            float time = maxTime / 6f;
-            CharacterMaster target = null;
+            //float time = maxTime / 6f;
+            //CharacterMaster target = null;
+
             public new void Awake()
             {
                 base.Awake();
-                markEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationTargetMark", SS2Bundle.Items);
-                failEffect = SS2Assets.LoadAsset<GameObject>("NemmandoScepterSlashAppear", SS2Bundle.Items);
-                buffEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationBuffEffect", SS2Bundle.Items);
+                //SS2Log.Info("awoken!");
+                EntranceTimer = 2.5f;
 
-                globalMarkEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/BossPositionIndicator.prefab").WaitForCompletion();
-
-                terminationRNG = new Xoroshiro128Plus(Run.instance.seed);
-
-                //string fuck = "ahhh 2";
-                //SS2Log.Debug(fuck);
-
-                InitializeIllegalMarkList();
+                if (terminationRNG == null)
+                {
+                    terminationRNG = new Xoroshiro128Plus(Run.instance.seed);
+                }
+                if (!hasInitalizedList)
+                {
+                    InitializeIllegalMarkList();
+                    hasInitalizedList = true;
+                }
+                //markEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationTargetMark", SS2Bundle.Items);
+                //failEffect = SS2Assets.LoadAsset<GameObject>("NemmandoScepterSlashAppear", SS2Bundle.Items);
+                //buffEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationBuffEffect", SS2Bundle.Items);
+                //
+                //globalMarkEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/BossPositionIndicator.prefab").WaitForCompletion();
+                //
+                //terminationRNG = new Xoroshiro128Plus(Run.instance.seed);
+                //InitializeIllegalMarkList();
+                ////string fuck = "ahhh 2";
+                ////SS2Log.Debug(fuck);
+                //SS2Log.Info("Awakened!");
+                //InitializeIllegalMarkList();
 
                 // use body.radius / bestfitradius to scale effects
             }
 
-            private void OnEnable()
-            {
-                CharacterBody.onBodyStartGlobal += TerminationSpawnHook;
-                On.RoR2.Util.GetBestBodyName += AddTerminalName;
-            }
-            private void OnDisable()
-            {
-                CharacterBody.onBodyStartGlobal -= TerminationSpawnHook;
-                On.RoR2.Util.GetBestBodyName -= AddTerminalName;
-            }
-
-            private void TerminationSpawnHook(CharacterBody obj)
-            {
-                //string test = "obj name: " + obj.name + " | " + obj.bodyIndex + " | " + obj.master.name;
-
-                //SS2Log.Info(test);
-                //HG.ReadOnlyArray<EntitlementDef> defs = EntitlementCatalog.entitlementDefs;
-                //foreach (EntitlementDef def in defs)
-                //{
-                //    SS2Log.Info("def: " + def.entitlementIndex + " | appid: " + def.steamAppId + " | eosid:" + def.eosItemId);
-                //}
-
-                if (!NetworkServer.active || illegalMarks.Contains(obj.bodyIndex) || obj.isPlayerControlled || obj.teamComponent.teamIndex == TeamIndex.Player || obj.teamComponent.teamIndex == TeamIndex.Neutral)
-                {
-                    return;
-                }
-                if (obj.inventory)
-                {
-                    if(obj.inventory.GetItemCount(SS2Content.Items.Cognation) > 0)
-                    {
-                        return;
-                    }
-                }
-
-                foreach (var player in PlayerCharacterMasterController.instances)
-                {
-                    
-                    if (player.body.HasBuff(SS2Content.Buffs.BuffTerminationReady))
-                    {
-                        var holderToken = player.body.GetComponent<TerminationHolderToken>();
-                        if (!holderToken)
-                        {
-                            holderToken = player.body.gameObject.AddComponent<TerminationHolderToken>();
-                        }
-                        else
-                        {
-                            //SS2Log.Debug("token found in spawn hook");
-                        }
-                        //Debug.Log("spawning - has buff");
-                        if (obj.inventory && !holderToken.target)
-                        {
-                            int count = player.body.GetItemCount(SS2Content.Items.RelicOfTermination);
-                            if(count == 0)
-                            {
-                                count = 1; //doing this so that if for some reason if get this buff (aetherium potion) it still does something
-                            }
-                            
-                            obj.inventory.GiveItem(SS2Content.Items.TerminationHelper);
-                            var token = obj.gameObject.AddComponent<TerminationToken>();
-                            token.itemCount = count;
-                            token.initalTime = Time.time;
-                            token.owner = holderToken;
-                            holderToken.target = token;
-                            holderToken.body = player.body;
-
-                            obj.modelLocator.modelTransform.localScale *= 1.5f;
-                            obj.AddBuff(SS2Content.Buffs.BuffTerminationVFX);
-
-                            obj.teamComponent.RequestDefaultIndicator(globalMarkEffect);
-
-                            for (int i = 0; i < 30; i++)
-                            {
-                                player.body.AddTimedBuff(SS2Content.Buffs.BuffTerminationCooldown.buffIndex, i + 1);
-                            }
-                            //player.body.AddBuff(SS2Content.Buffs.BuffTerminationCooldown);
-                            player.body.RemoveBuff(SS2Content.Buffs.BuffTerminationReady);
-                        }
-                    }
-                }
-            }
-
-            private string AddTerminalName(On.RoR2.Util.orig_GetBestBodyName orig, GameObject bodyObject)
-            {
-                var body = bodyObject.GetComponent<CharacterBody>();
-                //SS2Log.Debug("terminal begin");
-                if (body)
-                {
-                    //SS2Log.Debug("body found");
-                    if (body.inventory)
-                    {
-                        //SS2Log.Debug("inventory");
-                        if (body.inventory.GetItemCount(SS2Content.Items.TerminationHelper) > 0)
-                        {
-                            //SS2Log.Debug("epic");
-                            return "Terminal " + orig(bodyObject);
-                        }
-                    }
-                }
-
-                return orig(bodyObject);
-            }
-
             public void FixedUpdate()
             {
+                if(EntranceTimer > 0)
+                {
+                    EntranceTimer -= Time.deltaTime;
+                    return;
+                }
                 //moffein approved if statement
                 //body.GetComponent<TerminationHolderToken>();
-
+                //SS2Log.Info("Attempting giving buff");
                 if (!body.HasBuff(SS2Content.Buffs.BuffTerminationCooldown) && !body.HasBuff(SS2Content.Buffs.BuffTerminationReady) && NetworkServer.active)
                 {
                     var holderToken = body.GetComponent<TerminationHolderToken>();
@@ -205,6 +267,12 @@ namespace Moonstorm.Starstorm2.Items
                         {
                             //SS2Log.Info("giving failed buff");
                             body.AddBuff(SS2Content.Buffs.BuffTerminationFailed);
+                        }else if(holderToken.target == null && body.HasBuff(SS2Content.Buffs.BuffTerminationFailed))
+                        {
+                            for (int i = 0; i < 5; i++)
+                            {
+                                body.AddTimedBuff(SS2Content.Buffs.BuffTerminationCooldown.buffIndex, i + 1);
+                            }
                         }
                         else if(holderToken.target == null)
                         {
@@ -219,6 +287,84 @@ namespace Moonstorm.Starstorm2.Items
                     }
                     //body.AddBuff(SS2Content.Buffs.BuffTerminationReady);
                 }
+            }
+
+            private static void InitializeIllegalMarkList()
+            {
+                List<string> defaultBodyNames = new List<string>
+            {
+                "BrotherBody",
+                "BrotherGlassBody",
+                "BrotherHurtBody",
+                "BrotherHauntBody",
+                "ShopkeeperBody",
+                "MiniVoidRaidCrabBodyBase",
+                "MiniVoidRaidCrabBodyPhase1",
+                "MiniVoidRaidCrabBodyPhase2",
+                "MiniVoidRaidCrabBodyPhase3",
+                "VoidRaidCrabJointBody",
+                "VoidRaidCrabBody",
+                "ScavLunar1Body",
+                "ScavLunar2Body",
+                "ScavLunar3Body",
+                "ScavLunar4Body",
+                "ScavSackProjectile",
+                "ArtifactShellBody",
+                "VagrantTrackingBomb",
+                "LunarWispTrackingBomb",
+                "GravekeeperTrackingFireball",
+                "BeetleWard",
+                "AffixEarthHealerBody",
+                "AltarSkeletonBody",
+                "DeathProjectile",
+                "TimeCrystalBody",
+                "SulfurPodBody",
+                "FusionCellDestructibleBody",
+                "ExplosivePotDestructibleBody",
+                "SMInfiniteTowerMaulingRockLarge",
+                "SMInfiniteTowerMaulingRockMedium",
+                "SMInfiniteTowerMaulingRockSmall",
+                "SMMaulingRockLarge",
+                "SMMaulingRockMedium",
+                "SMMaulingRockSmall",
+            };
+
+                //SS2Log.Debug("all bodies: " + BodyCatalog.allBodyPrefabs.ToString());
+                //GameObject[] list = BodyCatalog.allBodyPrefabs.ToArray();
+                //int i = 0;
+                //foreach(GameObject obj in list)
+                //{
+                //    SS2Log.Debug(i + " - obj name: " + obj.name);
+                //    ++i;
+                //}
+                foreach (string bodyName in defaultBodyNames)
+                {
+                    BodyIndex index = BodyCatalog.FindBodyIndexCaseInsensitive(bodyName);
+                    if (index != BodyIndex.None)
+                    {
+                        //Debug.Log("found body " + bodyName + " with index " + index + ", adding them");
+                        //SS2Log.Info("found body " + bodyName + " with index " + index + ", adding them");
+                        AddBodyToIllegalTerminationList(index);
+                    }
+                }
+            }
+
+            public static void AddBodyToIllegalTerminationList(BodyIndex bodyIndex)
+            {
+                if (bodyIndex == BodyIndex.None)
+                {
+                    SS2Log.Info($"Tried to add a body to the illegal termination list, but it's index is none");
+                    return;
+                }
+
+                if (illegalMarks.Contains(bodyIndex))
+                {
+                    GameObject prefab = BodyCatalog.GetBodyPrefab(bodyIndex);
+                    SS2Log.Info($"Body prefab {prefab} is already in the illegal termination list.");
+                    return;
+                }
+                illegalMarks.Add(bodyIndex);
+                //BodiesThatGiveSuperCharge = new ReadOnlyCollection<BodyIndex>(bodiesThatGiveSuperCharge);
             }
 
             //public void FixedUpdate()
@@ -382,83 +528,7 @@ namespace Moonstorm.Starstorm2.Items
             //}
 
 
-            private static void InitializeIllegalMarkList()
-            {
-                List<string> defaultBodyNames = new List<string>
-            {
-                "BrotherBody",
-                "BrotherGlassBody",
-                "BrotherHurtBody",
-                "BrotherHauntBody",
-                "ShopkeeperBody",
-                "MiniVoidRaidCrabBodyBase",
-                "MiniVoidRaidCrabBodyPhase1",
-                "MiniVoidRaidCrabBodyPhase2",
-                "MiniVoidRaidCrabBodyPhase3",
-                "VoidRaidCrabJointBody",
-                "VoidRaidCrabBody",
-                "ScavLunar1Body",
-                "ScavLunar2Body",
-                "ScavLunar3Body",
-                "ScavLunar4Body",
-                "ScavSackProjectile",
-                "ArtifactShellBody",
-                "VagrantTrackingBomb",
-                "LunarWispTrackingBomb",
-                "GravekeeperTrackingFireball",
-                "BeetleWard",
-                "AffixEarthHealerBody",
-                "AltarSkeletonBody",
-                "DeathProjectile",
-                "TimeCrystalBody",
-                "SulfurPodBody",
-                "FusionCellDestructibleBody",
-                "ExplosivePotDestructibleBody",
-                "SMInfiniteTowerMaulingRockLarge",
-                "SMInfiniteTowerMaulingRockMedium",
-                "SMInfiniteTowerMaulingRockSmall",
-                "SMMaulingRockLarge",
-                "SMMaulingRockMedium",
-                "SMMaulingRockSmall",
-            };
-
-                //SS2Log.Debug("all bodies: " + BodyCatalog.allBodyPrefabs.ToString());
-                //GameObject[] list = BodyCatalog.allBodyPrefabs.ToArray();
-                //int i = 0;
-                //foreach(GameObject obj in list)
-                //{
-                //    SS2Log.Debug(i + " - obj name: " + obj.name);
-                //    ++i;
-                //}
-                foreach (string bodyName in defaultBodyNames)
-                {
-                    BodyIndex index = BodyCatalog.FindBodyIndexCaseInsensitive(bodyName);
-                    if (index != BodyIndex.None)
-                    {
-                        //Debug.Log("found body " + bodyName + " with index " + index + ", adding them");
-                        //SS2Log.Info("found body " + bodyName + " with index " + index + ", adding them");
-                        AddBodyToIllegalTerminationList(index);
-                    }
-                }
-            }
-
-            public static void AddBodyToIllegalTerminationList(BodyIndex bodyIndex)
-            {
-                if (bodyIndex == BodyIndex.None)
-                {
-                    SS2Log.Info($"Tried to add a body to the illegal termination list, but it's index is none");
-                    return;
-                }
-
-                if (illegalMarks.Contains(bodyIndex))
-                {
-                    GameObject prefab = BodyCatalog.GetBodyPrefab(bodyIndex);
-                    SS2Log.Info($"Body prefab {prefab} is already in the illegal termination list.");
-                    return;
-                }
-                illegalMarks.Add(bodyIndex);
-                //BodiesThatGiveSuperCharge = new ReadOnlyCollection<BodyIndex>(bodiesThatGiveSuperCharge);
-            }
+            
 
 
         }
