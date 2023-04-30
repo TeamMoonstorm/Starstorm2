@@ -36,7 +36,7 @@ namespace Moonstorm.Starstorm2.Unlocks.NemCommando
             {
                 if (localUser != null && (bool)localUser.cachedBody)
                 {
-                    if (localUser.cachedBody.bleedChance >= 1f)
+                    if (localUser.cachedBody.bleedChance >= 100f && localUser.cachedBody.bodyIndex == requiredBodyIndex)
                     {
                         Grant();
                     }

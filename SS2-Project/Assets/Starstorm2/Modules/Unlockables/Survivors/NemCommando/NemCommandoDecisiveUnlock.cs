@@ -29,7 +29,7 @@ namespace Moonstorm.Starstorm2.Unlocks.NemCommando
             {
                 if (self)
                 {
-                    if (self.GetBuffCount(SS2Content.Buffs.BuffGouge) >= 8f)
+                    if (self.GetBuffCount(SS2Content.Buffs.BuffGouge) >= 8f && localUser.cachedBody.bodyIndex == requiredBodyIndex)
                     {
                         Grant();
                     }

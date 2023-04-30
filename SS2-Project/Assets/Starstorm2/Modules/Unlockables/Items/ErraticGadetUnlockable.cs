@@ -4,9 +4,10 @@ using System.Collections.Generic;
 
 namespace Moonstorm.Starstorm2.Unlocks.Pickups
 {
+    [DisabledContent]
     public sealed class ErraticGadgetUnlockable : UnlockableBase
     {
-        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.item.erraticgadget", SS2Bundle.Items);
+        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.item.erraticgadget", SS2Bundle.Indev);
 
         public override void Initialize()
         {

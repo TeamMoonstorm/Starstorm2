@@ -10,20 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1391837873, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: NemCommandoSubmission
+  m_Name: NemCommandoBossAttack
   m_EditorClassIdentifier: 
-  skillName: NemCommandoSubmission
-  skillNameToken: SS2_NEMCOMMANDO_SPECIAL_SUBMISSION_NAME
-  skillDescriptionToken: SS2_NEMCOMMANDO_SPECIAL_SUBMISSION_DESCRIPTION
+  skillName: NemmandoBossAttack
+  skillNameToken: SS2_NEMCOMMANDO_SPECIAL_BOSS_NAME
+  skillDescriptionToken: SS2_NEMCOMMANDO_SPECIAL_BOSS_DESCRIPTION
   keywordTokens:
-  - KEYWORD_STUNNING
-  icon: {fileID: 21300000, guid: 39e8f87b9df06514fb17b6fa95fb042b, type: 3}
-  activationStateMachineName: Gun
+  - SS2_KEYWORD_GOUGE
+  icon: {fileID: 21300000, guid: 5ad9bc6831e357c409ccfcdf660364aa, type: 3}
+  activationStateMachineName: Body
   activationState:
-    _typeName: EntityStates.NemCommando.Submission, Starstorm2, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    _typeName: EntityStates.Nemmando.BossAttackCharge, Starstorm2
   interruptPriority: 2
-  baseRechargeInterval: 9
+  baseRechargeInterval: 12
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 1
@@ -31,9 +30,9 @@ MonoBehaviour:
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
-  beginSkillCooldownOnSkillEnd: 0
-  cancelSprintingOnActivation: 0
+  beginSkillCooldownOnSkillEnd: 1
+  cancelSprintingOnActivation: 1
   forceSprintDuringState: 0
   canceledFromSprinting: 0
   isCombatSkill: 1
-  mustKeyPress: 1
+  mustKeyPress: 0

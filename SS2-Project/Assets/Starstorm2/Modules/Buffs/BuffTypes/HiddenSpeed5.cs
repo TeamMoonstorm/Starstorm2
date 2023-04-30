@@ -10,7 +10,7 @@ namespace Moonstorm.Starstorm2.Buffs
     //:troll:
     public sealed class HiddenSpeed5 : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdHiddenSpeed5", SS2Bundle.Items);
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdHiddenSpeed5", SS2Bundle.Indev);
 
         public sealed class Behavior : BaseBuffBodyBehavior, IBodyStatArgModifier
         {

@@ -64,7 +64,7 @@ namespace EntityStates.NemCommando
                     if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO")
                     {
                         muzzleFlash = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoYellow", SS2Bundle.NemCommando);
-                        projectilePrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwordBeamProjectileYellow", SS2Bundle.NemCommando);
+                        projectilePrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwordBeamProjectileBlue", SS2Bundle.NemCommando);
                     }
                     //Yellow
                     if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")

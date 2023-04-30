@@ -21,31 +21,25 @@ namespace Moonstorm.Starstorm2
         public static bool teleIsEthereal;
         private static float storedScalingValue;
 
-        public static Material teleporterFresnel;
-
         public static bool teleUpgraded;
         internal static void Init()
         {
             Run.onRunStartGlobal += Run_onRunStartGlobal;
             Run.onRunDestroyGlobal += Run_onRunDestroyGlobal;
-            On.RoR2.SceneDirector.Start += SceneDirector_Start;
+
+            //DISABLING ALL OF THIS CONTENT IS AS SIMPLE AS JUST COMMENTING OUT THIS
+            //obv won't prevent content loading - that should go without saying, but will make it all inaccessible by player via standard gameplay
+            //On.RoR2.SceneDirector.Start += SceneDirector_Start;
+
             TeleporterInteraction.onTeleporterBeginChargingGlobal += TeleporterInteraction_onTeleporterBeginChargingGlobal;
             TeleporterInteraction.onTeleporterFinishGlobal += TeleporterInteraction_onTeleporterFinishGlobal;
             On.RoR2.TeleporterInteraction.FixedUpdate += TeleporterInteraction_FixedUpdate;
             On.RoR2.TeleporterInteraction.Start += TeleporterInteraction_Start;
-
-            teleporterFresnel = Addressables.LoadAssetAsync<Material>("RoR2/Base/Teleporters/matTeleporterFresnelOverlay.mat").WaitForCompletion();
         }
 
         private static void Run_onRunStartGlobal(Run run)
         {
-            Debug.Log("Setting up Ethereals..");
-            var diffToken = DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).nameToken;
-            var builder = new StringBuilder();
-            builder.Append(Language.GetString(diffToken));
-            builder.Append(" +1");
-            storedScalingValue = DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).scalingValue;
-            Debug.Log(DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).scalingValue + " - scaling value");
+            //Debug.Log("Setting up Ethereals..");
             etherealsCompleted = 0;
             teleIsEthereal = false;
             Debug.Log("completed: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
@@ -55,7 +49,7 @@ namespace Moonstorm.Starstorm2
         {
             DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).scalingValue = storedScalingValue;
             Debug.Log(DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).scalingValue + " - scaling value");
-            Debug.Log("completed: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
+            Debug.Log("completed ethereals: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
         }
 
         private static void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)
@@ -196,7 +190,7 @@ namespace Moonstorm.Starstorm2
                     //drizzle -> rainstorm, rainstorm -> monsoon
                     if (curDiff.scalingValue < 3)
                         curDiff.scalingValue += 1;
-                    //monsoon -> typhoon, typhoon +25%
+                    //monsoon -> typhoon, typhoon+ -> +25%
                     else
                     {
                         curDiff.scalingValue += 0.5f;
@@ -250,6 +244,7 @@ namespace Moonstorm.Starstorm2
                                 Debug.Log("typhoon detected; trying to override");
                                 run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(SuperTyphoon.SuperTyphoonDef.nameToken)));
                                 //for some reason appears as deluge in run history???
+                                //appears correctly mid-run & at run end so will ignore for now...
                             }
                         }
 
@@ -264,7 +259,7 @@ namespace Moonstorm.Starstorm2
         
                     string diffToken = curDiff.nameToken;
                     Debug.Log(DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).scalingValue + " - current scaling value");
-                    Debug.Log("completed: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
+                    Debug.Log("ethereals completed: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
                 }
             }
         }
@@ -290,7 +285,7 @@ namespace Moonstorm.Starstorm2
 
             if (teleIsEthereal && !teleUpgraded)
             {
-                Debug.Log("tele change");
+                Debug.Log("tele changing...");
                 //flag the teleporter as modified
                 teleUpgraded = true;
 
@@ -323,7 +318,9 @@ namespace Moonstorm.Starstorm2
                 teleCenterParticles.startColor = new Color(.8f, .32f, .39f);
 
                 //there's so many vfx to replace and recolor.
-                //hell.
+                //it'd maybe be easier to make a new prefab entirely although i can't help but feel it makes more sense to just edit the existing...
+                //maybe particle system prefabs in unity & code to adjust scale / pos of the objects?
+                //hell either way.
             }
             if (!teleIsEthereal && teleUpgraded)
                 teleUpgraded = false;
@@ -338,9 +335,7 @@ namespace Moonstorm.Starstorm2
                     TeleporterInteraction.instance.holdoutZoneController.calcRadius += HoldoutZoneController_calcRadius;
                     TeleporterInteraction.instance.holdoutZoneController.calcChargeRate += HoldoutZoneController_calcChargeRate;
 
-                    TeleporterInteraction.instance.originalTeleporterColor = new Color(.8f, .32f, .39f);
-
-                    Debug.Log("completed: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
+                    Debug.Log("ethereals completed: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
 
                     if (tele.bossDirector)
                     {
@@ -373,77 +368,10 @@ namespace Moonstorm.Starstorm2
         }
 
         private static void TeleporterInteraction_onTeleporterFinishGlobal(TeleporterInteraction obj)
-        { }
+        {
+            //nothing yet lol
+        }
     }
-    /*public class ShrineEtherealBehavior : NetworkBehaviour
-    {
-        public int maxPurchaseCount = 1;
-        public int purchaseCount;
-        private float refreshTimer;
-        private bool waitingForRefresh;
-
-        [SerializeField]
-        public PurchaseInteraction purchaseInteraction;
-
-        public void Start()
-        {
-            Debug.Log("starting ethereal shrine behavior");
-            /*purchaseInteraction = GetComponent<PurchaseInteraction>();
-            purchaseInteraction.onPurchase.AddListener(ActivateEtherealTerminal);
-            purchaseInteraction = GetComponent<PurchaseInteraction>();
-            purchaseInteraction.onPurchase.AddListener(ActivateEtherealTerminal);
-
-            if (purchaseInteraction == null)
-                Debug.Log("pi null");
-            else
-                Debug.Log("pi set");
-        }
-
-        public void FixedUpdate()
-        {
-            if (waitingForRefresh)
-            {
-                refreshTimer -= Time.fixedDeltaTime;
-                if (refreshTimer <= 0 && purchaseCount < maxPurchaseCount)
-                {
-                    Debug.Log("set to avaliable");
-                    purchaseInteraction.SetAvailable(true);
-                    waitingForRefresh = false;
-                }
-            }
-        }
-
-        [Server]
-        public void ActivateEtherealTerminal(Interactor interactor)
-        {
-            Debug.Log("Beginning to activate ethereal terminal");
-            if (!NetworkServer.active)
-                return;
-
-            purchaseInteraction.SetAvailable(false);
-            waitingForRefresh = true;
-
-            if (TeleporterInteraction.instance != null)
-            {
-                Ethereal.teleIsEthereal = true;
-                Debug.Log("Set ethereal to true");
-            }
-            else
-                Debug.Log("Teleporter null");
-
-            CharacterBody body = interactor.GetComponent<CharacterBody>();
-            Chat.SendBroadcastChat(new Chat.SubjectFormatChatMessage
-            {
-                subjectAsCharacterBody = body,
-                baseToken = "SS2_SHRINE_ETHEREAL_USE_MESSAGE",
-            });
-            //Add shrine use effect EffectManager.SpawnEffect() https://github.com/Flanowski/Moonstorm/blob/0.4/Starstorm%202/Cores/EtherealCore.cs
-
-            purchaseCount++;
-            refreshTimer = 2;
-            Debug.Log("Finished ethereal setup from shrine");
-        }
-    }*/
 }
 
 
