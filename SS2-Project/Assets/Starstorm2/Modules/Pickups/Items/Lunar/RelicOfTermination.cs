@@ -81,15 +81,6 @@ namespace Moonstorm.Starstorm2.Items
 
         private void TerminationSpawnHook(CharacterBody obj)
         {
-            //string test = "obj name: " + obj.name + " | " + obj.bodyIndex + " | " + obj.master.name;
-
-            //SS2Log.Info(test);
-            //HG.ReadOnlyArray<EntitlementDef> defs = EntitlementCatalog.entitlementDefs;
-            //foreach (EntitlementDef def in defs)
-            //{
-            //    SS2Log.Info("def: " + def.entitlementIndex + " | appid: " + def.steamAppId + " | eosid:" + def.eosItemId);
-            //}
-
             if (!NetworkServer.active || illegalMarks.Contains(obj.bodyIndex) || obj.isPlayerControlled || obj.teamComponent.teamIndex == TeamIndex.Player || obj.teamComponent.teamIndex == TeamIndex.Neutral)
             {
                 return;
@@ -101,12 +92,17 @@ namespace Moonstorm.Starstorm2.Items
                     return;
                 }
             }
-            //if(obj.master.money)
-
 
             foreach (var player in PlayerCharacterMasterController.instances)
             {
-
+                if (!player)
+                {
+                    return;
+                }
+                if (!player.body)
+                {
+                    return;
+                }
                 if (player.body.HasBuff(SS2Content.Buffs.BuffTerminationReady))
                 {
                     var holderToken = player.body.GetComponent<TerminationHolderToken>();
