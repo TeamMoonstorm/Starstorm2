@@ -45,7 +45,7 @@ namespace Moonstorm.Starstorm2.Items
                     }
                 }
             }
-            [ItemDefAssociation(useOnClient = false,  useOnServer = true)]
+            [ItemDefAssociation(useOnClient = false, useOnServer = true)]
             private static ItemDef GetItemDef() => SS2Content.Items.Diary;
             private bool expectBossKill = false;
             private float localTime;

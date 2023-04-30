@@ -8,58 +8,45 @@ namespace Moonstorm.Starstorm2
 {
     public class SS2Config : ConfigLoader<SS2Config>
     {
-        public const string items = "SS2.Items";
-        public const string equips = "SS2.Equips";
-
         public override BaseUnityPlugin MainClass => Starstorm.instance;
+
+        public const string PREFIX = "SS2.";
+        internal const string IDMain = PREFIX + "Main";
+        internal const string IDItem = PREFIX + "Items";
+        internal const string IDArtifact = PREFIX + "Survivors";
+        internal const string IDSurvivor = PREFIX + "Artifacts";
+        internal const string IDMisc = PREFIX + "Miscellaneous";
 
         public override bool CreateSubFolder => true;
 
-        public static ConfigFile itemConfig;
-        public static ConfigFile equipsConfig;
+        public static ConfigFile ConfigMain;
+        public static ConfigFile ConfigItem;
+        public static ConfigFile ConfigArtifact;
+        public static ConfigFile ConfigSurvivor;
+        public static ConfigFile ConfigMisc;
 
-        internal static ConfigEntry<bool> UnlockAll;
+        [ConfigurableField(IDMain, ConfigSection = "General", ConfigName = "Unlock All", ConfigDesc = "Setting this to true unlocks all the content in Starstorm 2, excluding skin unlocks.")]
+        internal static bool UnlockAll = false;
+
         internal static ConfigEntry<KeyCode> RestKeybind;
         internal static KeyCode restKeybind;
         internal static ConfigEntry<KeyCode> TauntKeybind;
         internal static KeyCode tauntKeybind;
         internal static List<ConfigEntry<bool>> ItemToggles;
-        internal static ConfigEntry<bool> EnableFunnyCanister; //OK
-        internal static ConfigEntry<bool> TyphoonIncreaseSpawnCap; //OK
-        internal static ConfigEntry<bool> EnableEvents; //OK
 
         public void Init()
         {
-            itemConfig = CreateConfigFile(items);
-            equipsConfig = CreateConfigFile(equips);
+            ConfigMain = CreateConfigFile(IDMain);
+            ConfigItem = CreateConfigFile(IDItem);
+            ConfigSurvivor = CreateConfigFile(IDSurvivor);
+            ConfigArtifact = CreateConfigFile(IDArtifact);
+            ConfigMisc = CreateConfigFile(IDMisc);
 
             SetConfigs();
         }
 
         private static void SetConfigs()
         {
-            UnlockAll =
-                Starstorm.instance.Config.Bind("Starstorm 2 :: Unlock All",
-                            "false",
-                            false,
-                            "Setting this to true unlocks all the content in Starstorm 2, excluding skin unlocks.");
-            EnableFunnyCanister =
-                           Starstorm.instance.Config.Bind("Starstorm 2 :: Equipment",
-                                       "Pressurized Canister No Jump Control",
-                                       false,
-                                       "Set to true to disable jump control on Pressurized Canister - activating the equipment will apply constant upward force regardless of whether you hold the jump button. This may lead to Funny and Memorable (tm) moments, especially if you like picking up Gestures of the Drowned.");
-
-            TyphoonIncreaseSpawnCap =
-                Starstorm.instance.Config.Bind("Starstorm 2 :: Typhoon",
-                            "Increase Team Limit",
-                            true,
-                            "Multiplies the Monster Team maximum size by 2 when enabled. Lunar and Void are left unchanged. May affect performance.");
-            EnableEvents =
-                Starstorm.instance.Config.Bind("Starstorm 2 :: Events",
-                            "Enabled",
-                            true,
-                            "Enables Starstorm 2's random events, including storms. Set to false to disable events.");
-
             //emotes
             /*RestKeybind = Starstorm.instance.Config.Bind("Starstorm 2 :: Keybinds", "Rest Emote", KeyCode.Alpha1, "Keybind used for the Rest emote.");
             restKeybind = RestKeybind.Value;// cache it for performance

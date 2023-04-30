@@ -14,19 +14,19 @@ namespace Moonstorm.Starstorm2.Items
 
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfEchelon", SS2Bundle.Items);
 
-        [ConfigurableField(ConfigDesc = "Equipment cooldown increase per use, per stack.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Equipment cooldown increase per use, per stack.")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float cooldownIncrease = .15f;
 
-        [ConfigurableField(ConfigDesc = "Base amount of additional base damage added.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Base amount of additional base damage added.")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static float damageBonus = 150;
 
-        [ConfigurableField(ConfigDesc = "Base amount of additional base health added.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Base amount of additional base health added.")]
         [TokenModifier(token, StatTypes.Default, 2)]
         public static float healthBonus = 5000;
 
-        [ConfigurableField(ConfigDesc = "Duration of the Echelon buff. Does not scale with stacks. (1 = 1 second)")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of the Echelon buff. Does not scale with stacks. (1 = 1 second)")]
         [TokenModifier(token, StatTypes.Default, 3)]
         public static float buffDuration = 8;
 

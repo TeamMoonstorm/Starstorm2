@@ -1,5 +1,6 @@
 ﻿using RoR2;
 using UnityEngine;
+using static AkMIDIEvent;
 
 namespace Moonstorm.Starstorm2.Equipments
 {
@@ -7,6 +8,8 @@ namespace Moonstorm.Starstorm2.Equipments
     {
         public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("PressurizedCanister", SS2Bundle.Equipments);
 
+        [ConfigurableField(SS2Config.IDItem, ConfigName = "No Jump Control", ConfigDesc = "Set to true to disable jump control on Pressurized Canister - activating the equipment will apply constant upward force regardless of whether you hold the jump button. This may lead to Funny and Memorable (tm) moments, especially if you like picking up Gestures of the Drowned.")]
+        public static bool funnyCanister = false;
         public override bool FireAction(EquipmentSlot slot)
         {
             var characterMotor = slot.characterBody.characterMotor;
@@ -59,7 +62,6 @@ namespace Moonstorm.Starstorm2.Equipments
 
             public void AuthorityUpdate()
             {
-                bool funnyCanister = SS2Config.EnableFunnyCanister.Value;
                 if (characterMotor.enabled)
                 {
                     if (funnyCanister || body.inputBank.jump.down)

@@ -8,7 +8,12 @@ namespace Moonstorm.Starstorm2
 {
     public static class Events
     {
-        
+
+        [ConfigurableField(SS2Config.IDMain, ConfigSection = "Events", ConfigName = ": Enable Events :", ConfigDesc = "Enables Starstorm 2's random events, including storms. Set to false to disable events.")]
+        public static bool EnableEvents = true;
+        [ConfigurableField(SS2Config.IDMisc, ConfigSection = "Visuals", ConfigName = "Custom Main Menu", ConfigDesc = "Setting this to false returns the main menu to the original, bright one.")]
+        internal static bool CustomMainMenu = true;
+
         /// <summary>
         /// Class for aiding Nemesis invasion creation for 3rd Parties.
         /// </summary>
@@ -132,15 +137,20 @@ namespace Moonstorm.Starstorm2
 
         public static void Init()
         {
-            EventCatalog.AddCards(SS2Assets.LoadAllAssetsOfType<EventCard>(SS2Bundle.Events));
+            if (EnableEvents) foreach (var evt in SS2Assets.LoadAllAssetsOfType<EventCard>(SS2Bundle.Events))
+            {
+                string name = evt.name;
+                if (SS2Config.ConfigMain.Bind("Events", "Enable " + MSUtil.NicifyString(name), true, "Set to false to disable this event.").Value) EventCatalog.AddCard(evt);
+            }
             SceneManager.sceneLoaded += StormOnMenu;
         }
 
         private static void StormOnMenu(Scene scene, LoadSceneMode mode)
         {
+            if (!CustomMainMenu) return;
             if (scene.name.Equals("title"))
             {
-                System.DateTime today = System.DateTime.Today;
+                DateTime today = DateTime.Today;
                 if ((today.Month == 12) && ((today.Day == 25) || (today.Day == 24)))
                 {
                     Object.Instantiate(SS2Assets.LoadAsset<GameObject>("ChristmasMenuEffect", SS2Bundle.Events), Vector3.zero, Quaternion.identity);

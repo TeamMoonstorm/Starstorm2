@@ -8,7 +8,7 @@ namespace Moonstorm.Starstorm2.Items
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfMass", SS2Bundle.Items);
 
-        [ConfigurableField(ConfigDesc = "Amount of which acceleration is divided by.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of which acceleration is divided by.")]
         public static float acclMult = 8f;
 
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier, IStatItemBehavior
