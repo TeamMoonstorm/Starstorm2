@@ -15,10 +15,10 @@ namespace Moonstorm.Starstorm2.Items
             private static ItemDef GetItemDef() => SS2Content.Items.TerminationHelper;
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
             {
-                args.healthMultAdd += RelicOfTermination2.healthMult;
-                args.damageMultAdd += RelicOfTermination2.damageMult;
-                args.moveSpeedMultAdd += RelicOfTermination2.speedMult;
-                args.attackSpeedMultAdd += RelicOfTermination2.atkSpeedMult;
+                args.healthMultAdd += RelicOfTermination.healthMult;
+                args.damageMultAdd += RelicOfTermination.damageMult;
+                args.moveSpeedMultAdd += RelicOfTermination.speedMult;
+                args.attackSpeedMultAdd += RelicOfTermination.atkSpeedMult;
             }
 
         }

@@ -32,7 +32,7 @@ That said, if you are looking to contribute to the project, set-up instructions 
 ![](https://cdn.discordapp.com/attachments/1035279289668616202/1035282616154337411/unknown.png)
 
 * Once the project opens, you'll have a bunch of errors, these errors **are normal**, and are caused by missing ror2 assemblies, to fix this, Go to ``Assets/ThunderKitSettings`` folder, and look for the "ImportConfiguration" file
-    * If there are no Configuration Executors, delete the ImportConfiguration so thunderkit can regenerate it.
+    * If there are no Configuration Executors, delete the ImportConfiguration so Thunderkit can regenerate it.
     * If no configurations exist after this, please contact Nebby and ask for help
 
 ![](https://cdn.discordapp.com/attachments/1035279289668616202/1035284101839720520/unknown.png)
@@ -42,7 +42,7 @@ That said, if you are looking to contribute to the project, set-up instructions 
 ![](https://cdn.discordapp.com/attachments/1035279289668616202/1035292228303736853/unknown.png)
 
 * Select the Import Configurations, ensure that your configurations match the one from the image.
-    * If you cant find one of the configurations, delete teh import configuration.
+    * If you can't find one of the configurations, delete the import configuration.
 
 * Make sure your import config matches the following:
 
@@ -63,7 +63,7 @@ That said, if you are looking to contribute to the project, set-up instructions 
 | Configure Addressable Graphics Settings | Enabled |  |
 | Ensure RoR2 Thunderstore Source | Enabled |  |
 | Install BepInEx | Enabled |  |
-| R2API Submodule Installer | Enabled | Hit disable all button, the Serialized Hard Dependencies will stay enabledd |
+| R2API Submodule Installer | Enabled | Hit disable all button, the Serialized Hard Dependencies will stay enabled |
 | Install Ancient Scepter | Enabled |  |
 | Install RoR2MultiplayerHLAPI | Disabled |  |
 | Install RoR2EditorKit | Disabled |  |
@@ -80,13 +80,13 @@ That said, if you are looking to contribute to the project, set-up instructions 
 
 ## Issues Q&A
 
-Q: I'm havintg an issue where certain components cannot be added or general instability
+Q: I'm having an issue where certain components cannot be added or general instability
 * A: Make sure you didn't left InstallRoR2MultiplayerHLAPI and Install RoR2EditorKit enabled, having these enabled will cause issues due to duplicate assemblies
 
 Q: I'm having an issue where there are compiler errors due to DamageAPI/RecalcStatsAPI/OtherR2APISubmodule is missing
 * A: Some of the project's soft dependencies, such as AncientScepter still rely on the old R2API, and as such, when they're installed, it installs R2API version 4.x.x, this causes duplicate types in the project, to fix this, just delete the R2API folder in the packages folder.
 
-Q: How do i build?
+Q: How do I build?
 * A: Do the following:
     * Go into ASsets/ThunderkitRelated/Contributor
     * Click on the Nebby folder
@@ -99,8 +99,8 @@ Q: How do i build?
     * On the Constant path component, set the value to your R2ModMan profile's plugins folder
     * Running the build pipeline should output the built mod into your r2modman profile
 
-Q: Any mods i should have on my r2modman development profile:
+Q: Any mods I should have on my r2modman development profile:
 * A: We recommend using the following profile code, as this profile code contains all the dependencies and configuration: ``https://cdn.discordapp.com/attachments/1060999373846229132/1062874434379202620/SS2Dev_1673479382645.r2z``
 
-Q: When i build my project using the pipelines no DLL is created
+Q: When I build my project using the pipelines no DLL is created
 * A: Check the pipeline log, it usually logs anything and everything regarding issues with the build process, there's also a high chance that a duplicate MMHook assembly (such as AssemblyCSharp mmhook) i9s causing issues, if this is the case, go into HookGenPatcher's plugins folder and delete MMHOOK_AssemblyCSharp.dll

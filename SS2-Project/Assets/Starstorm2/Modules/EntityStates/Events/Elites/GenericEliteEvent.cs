@@ -90,9 +90,22 @@ namespace EntityStates.Events
         {
             if (!NetworkServer.active)
                 return;
-            //Check if body ISN'T player controlled, masterless, marked as a champion, IS on monster team - and a little RNG.
+            //Check if body ISN'T player controlled, masterless, marked as a champion, IS on monster team - and a little RNG. (plus not being married or an earth affix bomb)
             var team = body.teamComponent.teamIndex;
-            if (!(body.isPlayerControlled || body.bodyFlags == CharacterBody.BodyFlags.Masterless) && !(body.isChampion) && (team == TeamIndex.Monster || team == TeamIndex.Void) && (Util.CheckRoll(80)))
+
+            bool specialCondition = true;
+            if (body.master.name.Contains("AffixEarthHealerMaster)") || body.master.name == "AffixEarthHealerMaster(Clone)")
+            {
+                //Debug.Log("special condition met - affix earth");
+                specialCondition = false;
+            }
+            if(body.master.name.Contains("LemurianBruiserFireMaster") || body.master.name.Contains("LemurianBruiserIceMaster"))
+            {
+                //Debug.Log("special condition met - married");
+                specialCondition = false; 
+            }
+
+            if (!(body.isPlayerControlled || body.bodyFlags == CharacterBody.BodyFlags.Masterless) && !(body.isChampion) && (team == TeamIndex.Monster || team == TeamIndex.Void) && (Util.CheckRoll(80)) && specialCondition)
             {
                 body.inventory.SetEquipmentIndex(equipmentDef.equipmentIndex);
                 body.maxHealth *= 4.7f;

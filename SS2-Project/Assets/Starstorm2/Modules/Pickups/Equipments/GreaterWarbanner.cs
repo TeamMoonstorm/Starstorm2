@@ -3,6 +3,7 @@ using RoR2.Audio;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using R2API;
 
 namespace Moonstorm.Starstorm2.Equipments
 {
@@ -29,31 +30,51 @@ namespace Moonstorm.Starstorm2.Equipments
         [TokenModifier(token, StatTypes.Default, 3)]
         public static int maxGreaterBanners = 5;
 
-        public override void AddBehavior(ref CharacterBody body, int stack)
+        override public void Initialize()
         {
-            body.AddItemBehavior<GreaterWarbannerBehavior>(stack);
+            //CreateVisualEffects();
         }
+
+        //public override void AddBehavior(ref CharacterBody body, int stack)
+        //{
+        //    body.AddItemBehavior<GreaterWarbannerBehavior>(stack);
+        //}
 
         public override bool FireAction(EquipmentSlot slot)
         {
             var GBToken = slot.characterBody.gameObject.GetComponent<GreaterBannerToken>();
-            if (!GBToken) {
+            if (!GBToken)
+            {
                 slot.characterBody.gameObject.AddComponent<GreaterBannerToken>();
                 GBToken = slot.characterBody.gameObject.GetComponent<GreaterBannerToken>();
             }
             //To do: make better placement system
-            Vector3 position = slot.inputBank.aimOrigin + slot.inputBank.aimDirection;
-            GameObject gameObject = UnityEngine.Object.Instantiate(WarbannerObject, position, Quaternion.identity);
+            SS2Log.Info("aimorigin: " + slot.inputBank.aimOrigin + " | direction: " + slot.inputBank.aimDirection);
+            SS2Log.Warning("aimorigin: " + slot.inputBank.aimOrigin + " | direction: " + slot.inputBank.aimDirection);
+            SS2Log.Message("aimorigin: " + slot.inputBank.aimOrigin + " | direction: " + slot.inputBank.aimDirection);
 
-            gameObject.GetComponent<TeamFilter>().teamIndex = slot.teamComponent.teamIndex;
-            var behavior = slot.gameObject.GetComponent<GreaterWarbannerBehavior>();
+            Vector3 position = slot.inputBank.aimOrigin - (slot.inputBank.aimDirection);
+            GameObject bannerObject = UnityEngine.Object.Instantiate(WarbannerObject, position, Quaternion.identity);
+
+            bannerObject.GetComponent<TeamFilter>().teamIndex = slot.teamComponent.teamIndex;
+            NetworkServer.Spawn(WarbannerObject);
+            //var behavior = slot.gameObject.GetComponent<GreaterWarbannerBehavior>();
             //if (behavior.warBannerInstance)
             //NetworkServer.Destroy(behavior.warBannerInstance);
-            behavior.warBannerInstance = gameObject;
-            NetworkServer.Spawn(behavior.warBannerInstance);
+            //behavior.warBannerInstance = gameObject;
 
-            GBToken.ownedBanners.Add(behavior.warBannerInstance);
-            if(GBToken.ownedBanners.Count > maxGreaterBanners)
+            //NetworkServer.Spawn(behavior.warBannerInstance); //?
+
+            if (GBToken.soundCooldown >= 5f)
+            {
+                var sound = NetworkSoundEventCatalog.FindNetworkSoundEventIndex("GreaterWarbanner");
+                EffectManager.SimpleSoundEffect(sound, bannerObject.transform.position, true);
+                GBToken.soundCooldown = 0f;
+            }
+
+            GBToken.ownedBanners.Add(bannerObject);
+
+            if (GBToken.ownedBanners.Count > maxGreaterBanners)
             {
                 SS2Log.Debug("Removing oldest Warbanner");
                 var oldBanner = GBToken.ownedBanners[0];
@@ -66,14 +87,15 @@ namespace Moonstorm.Starstorm2.Equipments
                 EffectManager.SpawnEffect(HealthComponent.AssetReferences.executeEffectPrefab, effectData, transmit: true);
 
                 UnityEngine.Object.Destroy(oldBanner);
+                NetworkServer.Destroy(oldBanner);
             }
 
-            if (behavior.soundCooldown >= 5f)
-            {
-                var sound = NetworkSoundEventCatalog.FindNetworkSoundEventIndex("GreaterWarbanner");
-                EffectManager.SimpleSoundEffect(sound, behavior.warBannerInstance.transform.position, true);
-                behavior.soundCooldown = 0f;
-            }
+            //if (GBToken.soundCooldown >= 5f)
+            //{
+            //    var sound = NetworkSoundEventCatalog.FindNetworkSoundEventIndex("GreaterWarbanner");
+            //    EffectManager.SimpleSoundEffect(sound, bannerObject.transform.position, true);
+            //    GBToken.soundCooldown = 0f;
+            //}
             return true;
         }
 
@@ -98,8 +120,32 @@ namespace Moonstorm.Starstorm2.Equipments
         {
             //public GameObject[] ownedBanners = new GameObject[0];
             public List<GameObject> ownedBanners = new List<GameObject>(0);
-            //prevents hilarity from happening
+
+            public float soundCooldown = 5f;
+
+            private void FixedUpdate()
+            {
+                soundCooldown += Time.fixedDeltaTime;
+            }   
         }
+
+        //private void CreateVisualEffects()
+        //{
+        //    var SheenEffectInstance = SS2Assets.LoadAsset<GameObject>("testMask"); //SS2Assets.LoadAsset<GameObject>("testMask", SS2Bundle.Equipments);  //AssetBundle.LoadAsset<GameObject>("SheenEffect");
+        //    var tempEffectComponent = SheenEffectInstance.AddComponent<TemporaryVisualEffect>();
+        //    tempEffectComponent.visualTransform = SheenEffectInstance.GetComponent<Transform>();
+        //
+        //    var destroyOnTimerComponent = SheenEffectInstance.AddComponent<DestroyOnTimer>();
+        //    destroyOnTimerComponent.duration = 0.1f;
+        //    MonoBehaviour[] exitComponents = new MonoBehaviour[1];
+        //    exitComponents[0] = destroyOnTimerComponent;
+        //
+        //    tempEffectComponent.exitComponents = exitComponents;
+        //
+        //    TempVisualEffectAPI.AddTemporaryVisualEffect(SheenEffectInstance.InstantiateClone("TestEffect", false), (CharacterBody body) => { return body.HasBuff(SS2Content.Buffs.BuffGreaterBanner); }, true, "HandR");
+        //    //TempVisualEffectAPI.AddTemporaryVisualEffect(SheenEffectInstance.InstantiateClone("SheenEffectR", false), (CharacterBody body) => { return body.HasBuff(SS2Content.Buffs.BuffGreaterBanner); }, true, "HandR");
+        //    
+        //}
     }
 
 }

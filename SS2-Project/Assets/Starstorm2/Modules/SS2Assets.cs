@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Rendering.PostProcessing;
@@ -23,12 +24,12 @@ namespace Moonstorm.Starstorm2
         Artifacts,
         Executioner,
         Nemmando,
-        NemCommando,
         Equipments,
         Items,
         Events,
         Vanilla,
         Indev,
+        //Interactables,
         Shared
     }
     public class SS2Assets : AssetsLoader<SS2Assets>
@@ -39,22 +40,22 @@ namespace Moonstorm.Starstorm2
         private const string ARTIFACTS = "ss2artifacts";
         private const string EXECUTIONER = "ss2executioner";
         private const string NEMMANDO = "ss2nemmando";
-        private const string NEMCOMMANDO = "ss2nemcommando";
         private const string EQUIPS = "ss2equipments";
         private const string ITEMS = "ss2items";
         private const string EVENTS = "ss2events";
         private const string VANILLA = "ss2vanilla";
         private const string DEV = "ss2dev";
+       // private const string INTERACTABLES = "ss2interactables";
         private const string SHARED = "ss2shared";
 
         private static Dictionary<SS2Bundle, AssetBundle> assetBundles = new Dictionary<SS2Bundle, AssetBundle>();
+        private static AssetBundle[] streamedSceneBundles = Array.Empty<AssetBundle>();
+
         [Obsolete("LoadAsset should not be used without specifying the SS2Bundle")]
         public new static TAsset LoadAsset<TAsset>(string name) where TAsset : UnityEngine.Object
         {
 #if DEBUG
-            var stackTrace = new StackTrace();
-            var method = stackTrace.GetFrame(1).GetMethod();
-            SS2Log.Warning($"Assembly {Assembly.GetCallingAssembly()} is trying to load an asset of name {name} and type {typeof(TAsset).Name} without specifying what bundle to use for loading. This causes large performance loss as SS2Assets has to search thru the entire bundle collection. Avoid calling LoadAsset without specifying the AssetBundle. (Method: {method.DeclaringType.FullName}.{method.Name}()");
+            SS2Log.Warning($"Method {GetCallingMethod()} is trying to load an asset of name {name} and type {typeof(TAsset).Name} without specifying what bundle to use for loading. This causes large performance loss as SS2Assets has to search thru the entire bundle collection. Avoid calling LoadAsset without specifying the AssetBundle.");
 #endif
             return LoadAsset<TAsset>(name, SS2Bundle.All);
         }
@@ -62,9 +63,7 @@ namespace Moonstorm.Starstorm2
         public new static TAsset[] LoadAllAssetsOfType<TAsset>() where TAsset : UnityEngine.Object
         {
 #if DEBUG
-            var stackTrace = new StackTrace();
-            var method = stackTrace.GetFrame(1).GetMethod();
-            SS2Log.Warning($"Assembly {Assembly.GetCallingAssembly()} is trying to load all assets of type {typeof(TAsset).Name} without specifying what bundle to use for loading. This causes large performance loss as SS2Assets has to search thru the entire bundle collection. Avoid calling LoadAsset without specifying the AssetBundle. (Method: {method.DeclaringType.FullName}.{method.Name}()");
+            SS2Log.Warning($"Method {GetCallingMethod()} is trying to load all assets of type {typeof(TAsset).Name} without specifying what bundle to use for loading. This causes large performance loss as SS2Assets has to search thru the entire bundle collection. Avoid calling LoadAsset without specifying the AssetBundle.");
 #endif
             return LoadAllAssetsOfType<TAsset>(SS2Bundle.All);
         } 
@@ -87,6 +86,47 @@ namespace Moonstorm.Starstorm2
             return Instance.LoadAllAssetsOfTypeInternal<TAsset>(bundle);
         }
 
+#if DEBUG
+        private static string GetCallingMethod()
+        {
+            var stackTrace = new StackTrace();
+
+            for(int stackFrameIndex = 0; stackFrameIndex < stackTrace.FrameCount; stackFrameIndex++)
+            {
+                var frame = stackTrace.GetFrame(stackFrameIndex);
+                var method = frame.GetMethod();
+                
+                if (method == null)
+                    continue;
+
+                var declaringType = method.DeclaringType;
+                if (declaringType == typeof(SS2Assets))
+                    continue;
+
+                var fileName = frame.GetFileName();
+                var fileLineNumber = frame.GetFileLineNumber();
+                var fileColumnNumber = frame.GetFileColumnNumber();
+
+                return $"{declaringType.FullName}.{method.Name}({GetMethodParams(method)}) (fileName: {fileName}, Location: L{fileLineNumber} C{fileColumnNumber})";
+            }
+
+            return "[COULD NOT GET CALLING METHOD]";
+        }
+
+        private static string GetMethodParams(MethodBase methodBase)
+        {
+            var parameters = methodBase.GetParameters();
+            if (parameters.Length == 0)
+                return string.Empty;
+
+            StringBuilder stringBuilder = new StringBuilder();
+            foreach(var parameter in parameters)
+            {
+                stringBuilder.Append(parameter.ToString() + ", ");
+            }
+            return stringBuilder.ToString();
+        }
+#endif
         public override AssetBundle MainAssetBundle => GetAssetBundle(SS2Bundle.Main);
         public string AssemblyDir => Path.GetDirectoryName(Starstorm.pluginInfo.Location);
         public AssetBundle GetAssetBundle(SS2Bundle bundle)
@@ -101,23 +141,47 @@ namespace Moonstorm.Starstorm2
                 var fileName = Path.GetFileName(path);
                 switch(fileName)
                 {
-                    case MAIN: LoadBundle(path, SS2Bundle.Main); break;
-                    case BASE: LoadBundle(path, SS2Bundle.Base); break;
-                    case ARTIFACTS: LoadBundle(path, SS2Bundle.Artifacts); break;
-                    case EXECUTIONER: LoadBundle(path, SS2Bundle.Executioner); break;
-                    case NEMMANDO: LoadBundle(path, SS2Bundle.Nemmando); break;
-                    case NEMCOMMANDO: LoadBundle(path, SS2Bundle.NemCommando); break;
-                    case EQUIPS: LoadBundle(path, SS2Bundle.Equipments); break;
-                    case ITEMS: LoadBundle(path, SS2Bundle.Items); break;
-                    case EVENTS: LoadBundle(path, SS2Bundle.Events); break;
-                    case VANILLA: LoadBundle(path, SS2Bundle.Vanilla); break;
-                    case DEV: LoadBundle(path, SS2Bundle.Indev); break;
-                    case SHARED: LoadBundle(path, SS2Bundle.Shared); break;
-                    default: SS2Log.Warning($"Invalid or Unexpected file in the AssetBundles folder (File name: {fileName}, Path: {path})"); break;
+                    case MAIN: LoadAndAssign(path, SS2Bundle.Main); break;
+                    case BASE: LoadAndAssign(path, SS2Bundle.Base); break;
+                    case ARTIFACTS: LoadAndAssign(path, SS2Bundle.Artifacts); break;
+                    case EXECUTIONER: LoadAndAssign(path, SS2Bundle.Executioner); break;
+                    case NEMMANDO: LoadAndAssign(path, SS2Bundle.Nemmando); break;
+                    case EQUIPS: LoadAndAssign(path, SS2Bundle.Equipments); break;
+                    case ITEMS: LoadAndAssign(path, SS2Bundle.Items); break;
+                    case EVENTS: LoadAndAssign(path, SS2Bundle.Events); break;
+                    case VANILLA: LoadAndAssign(path, SS2Bundle.Vanilla); break;
+                    //case INTERACTABLES: LoadBundle(path, SS2Bundle.Interactables); break;
+                    case DEV: LoadAndAssign(path, SS2Bundle.Indev); break;
+                    case SHARED: LoadAndAssign(path, SS2Bundle.Shared); break;
+                    default:
+                        {
+                            try
+                            {
+                                var ab = AssetBundle.LoadFromFile(path);
+                                if (!ab)
+                                {
+                                    throw new FileLoadException($"AssetBundle.LoadFromFile did not return an asset bundle. (Path:{path} FileName:{fileName})");
+                                }
+                                if (!ab.isStreamedSceneAssetBundle)
+                                {
+                                    throw new Exception($"AssetBundle is not a streamed scene bundle, but it's file name was not found on the Switch statement. (Path:{path} FileName:{fileName})");
+                                }
+                                else
+                                {
+                                    HG.ArrayUtils.ArrayAppend(ref streamedSceneBundles, ab);
+                                }
+                                SS2Log.Warning($"Invalid or Unexpected file in the AssetBundles folder (File name: {fileName}, Path: {path})");
+                            }
+                            catch(Exception e)
+                            {
+                                SS2Log.Error($"Default statement on bundle loading method hit, Exception thrown.\n{e}");
+                            }
+                            break;
+                        }
                 }
             }
 
-            void LoadBundle(string path, SS2Bundle bundleEnum)
+            void LoadAndAssign(string path, SS2Bundle bundleEnum)
             {
                 try
                 {
@@ -126,7 +190,6 @@ namespace Moonstorm.Starstorm2
                     {
                         throw new FileLoadException("AssetBundle.LoadFromFile did not return an asset bundle");
                     }
-
                     if(assetBundles.ContainsKey(bundleEnum))
                     {
                         throw new InvalidOperationException($"AssetBundle in path loaded succesfully, but the assetBundles dictionary already contains an entry for {bundleEnum}.");
@@ -164,10 +227,7 @@ namespace Moonstorm.Starstorm2
 #if DEBUG
             if(!asset)
             {
-                var stackTrace = new StackTrace();
-                var method = stackTrace.GetFrame(1).GetMethod();
-
-                SS2Log.Warning($"The  method \"{method.DeclaringType.FullName}.{method.Name}()\" is calling \"LoadAsset<TAsset>(string, SS2Bundle)\" with the arguments \"{typeof(TAsset).Name}\", \"{name}\" and \"{bundle}\", however, the asset could not be found.\n" +
+                SS2Log.Warning($"The  method \"{GetCallingMethod()}\" is calling \"LoadAsset<TAsset>(string, SS2Bundle)\" with the arguments \"{typeof(TAsset).Name}\", \"{name}\" and \"{bundle}\", however, the asset could not be found.\n" +
                     $"A complete search of all the bundles will be done and the correct bundle enum will be logged.");
                 return LoadAssetInternal<TAsset>(name, SS2Bundle.All);
             }
