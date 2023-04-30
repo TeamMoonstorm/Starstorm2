@@ -1,5 +1,6 @@
 ﻿using Moonstorm.Starstorm2.ScriptableObjects;
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
@@ -11,8 +12,6 @@ namespace Moonstorm.Starstorm2
 
         [ConfigurableField(SS2Config.IDMain, ConfigSection = "Events", ConfigName = ": Enable Events :", ConfigDesc = "Enables Starstorm 2's random events, including storms. Set to false to disable events.")]
         public static bool EnableEvents = true;
-        [ConfigurableField(SS2Config.IDMisc, ConfigSection = "Visuals", ConfigName = "Custom Main Menu", ConfigDesc = "Setting this to false returns the main menu to the original, bright one.")]
-        internal static bool CustomMainMenu = true;
 
         /// <summary>
         /// Class for aiding Nemesis invasion creation for 3rd Parties.
@@ -142,12 +141,19 @@ namespace Moonstorm.Starstorm2
                 string name = evt.name;
                 if (SS2Config.ConfigMain.Bind("Events", "Enable " + MSUtil.NicifyString(name), true, "Set to false to disable this event.").Value) EventCatalog.AddCard(evt);
             }
-            SceneManager.sceneLoaded += StormOnMenu;
+            if (SS2Config.ConfigMisc.Bind("Visuals", "Custom Main Menu", true, "Setting this to false returns the main menu to the original, bright one.").Value)
+            {
+                SceneManager.sceneLoaded += StormOnMenu;
+                On.RoR2.UI.SteamBuildIdLabel.Start += (orig, self) =>
+                {
+                    orig(self);
+                    self.GetComponent<TextMeshProUGUI>().text += "<color=#75BAFF> + <link=\"textWavy\">SS2 " + Starstorm.version.ToString() + "</link></color>";
+                }; // copied from wrb which copied from rm so its my code :smirk_cat:
+            }
         }
 
         private static void StormOnMenu(Scene scene, LoadSceneMode mode)
         {
-            if (!CustomMainMenu) return;
             if (scene.name.Equals("title"))
             {
                 DateTime today = DateTime.Today;
