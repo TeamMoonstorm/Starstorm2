@@ -144,6 +144,8 @@ namespace Moonstorm.Starstorm2
 
             public static BuffDef BuffIntoxicated;
 
+            public static BuffDef BuffInsecticide;
+
             public static BuffDef BuffCoffeeBag;
 
             public static BuffDef BuffNeedle;
@@ -172,8 +174,6 @@ namespace Moonstorm.Starstorm2
 
             public static BuffDef BuffSurrender;
 
-            public static BuffDef BuffTerminationVFX;
-
             public static BuffDef BuffX4;
 
             public static BuffDef bdElitePurple;
@@ -197,6 +197,8 @@ namespace Moonstorm.Starstorm2
             public static BuffDef BuffTerminationReady;
 
             public static BuffDef BuffTerminationFailed;
+
+            public static BuffDef BuffTerminationVFX;
 
             public static BuffDef BuffEchelon;
         }
