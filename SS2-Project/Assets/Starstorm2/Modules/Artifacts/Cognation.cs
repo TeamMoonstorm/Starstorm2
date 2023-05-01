@@ -13,7 +13,7 @@ namespace Moonstorm.Starstorm2.Artifacts
     public sealed class Cognation : ArtifactBase
     {
         public override ArtifactDef ArtifactDef { get; } = SS2Assets.LoadAsset<ArtifactDef>("Cognation", SS2Bundle.Artifacts);
-        public override ArtifactCode ArtifactCode { get; } = SS2Assets.LoadAsset<ArtifactCode>("Cognation", SS2Bundle.Artifacts);
+        public override ArtifactCode ArtifactCode { get; } = SS2Assets.LoadAsset<ArtifactCode>("CognationCode", SS2Bundle.Artifacts);
 
         [ConfigurableField(ConfigDesc = "Whether or not cognation ghosts inherit all items from the original body")]
         public static bool InheritInventory = true;

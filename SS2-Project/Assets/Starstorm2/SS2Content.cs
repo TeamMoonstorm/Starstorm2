@@ -193,7 +193,10 @@ namespace Moonstorm.Starstorm2
         {
             //public static EliteDef edPurple;
         }
-
+        public static class Scenes
+        {
+            public static SceneDef VoidShop;
+        }
         public static class Survivors
         {
             //public static SurvivorDef SurvivorBorg;
@@ -336,6 +339,10 @@ namespace Moonstorm.Starstorm2
                 delegate
                 {
                     PopulateTypeFields(typeof(Elites), ContentPack.eliteDefs);
+                },
+                delegate
+                {
+                    PopulateTypeFields(typeof(Scenes), ContentPack.sceneDefs);
                 },
                 delegate
                 {
