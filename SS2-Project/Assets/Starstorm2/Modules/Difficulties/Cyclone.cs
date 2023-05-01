@@ -13,11 +13,14 @@ namespace Moonstorm.Starstorm2
         public static DifficultyIndex CycloneIndex { get => CycloneDef.DifficultyIndex; }
 
         private static int defMonsterCap;
+        private static RuleChoiceDef rcd;
 
         internal static void Init()
         {
             CycloneDef = SS2Assets.LoadAsset<R2API.ScriptableObjects.SerializableDifficultyDef>("Cyclone", SS2Bundle.Base);
             DifficultyAPI.AddDifficulty(CycloneDef);
+            rcd = RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(CycloneDef.nameToken));
+            rcd.excludeByDefault = true;
             Run.onRunDestroyGlobal += Run_onRunDestroyGlobal;
             Run.onRunStartGlobal += Run_onRunStartGlobal;
         }

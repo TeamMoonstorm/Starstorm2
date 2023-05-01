@@ -81,7 +81,7 @@ namespace EntityStates.Executioner2
         {
             if (areaIndicatorInstance)
             {
-                float maxDistance = 48.4f * moveSpeedStat; //i think that's accurate..
+                float maxDistance = 48f * moveSpeedStat; //i think that's accurate..
 
                 Ray aimRay = GetAimRay();
                 RaycastHit raycastHit;
@@ -140,7 +140,7 @@ namespace EntityStates.Executioner2
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.PrioritySkill;
+            return InterruptPriority.Frozen;
         }
     }
 }

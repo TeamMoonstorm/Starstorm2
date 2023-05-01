@@ -276,15 +276,15 @@ namespace Moonstorm.Starstorm2
                 },
                 delegate
                 {
-                    Deluge.Init();
+                    //Deluge.Init();
                 },
                 delegate
                 {
-                    Tempest.Init();
+                    //Tempest.Init();
                 },
                 delegate
                 {
-                    Cyclone.Init();
+                    //Cyclone.Init();
                 },
                 delegate
                 {
@@ -292,7 +292,7 @@ namespace Moonstorm.Starstorm2
                 },
                 delegate
                 {
-                    SuperTyphoon.Init();
+                    //SuperTyphoon.Init();
                 },
                 delegate
                 {

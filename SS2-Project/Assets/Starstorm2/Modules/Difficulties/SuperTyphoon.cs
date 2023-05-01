@@ -14,13 +14,14 @@ namespace Moonstorm.Starstorm2
 
         private static int defMonsterCap;
 
-        private static RuleDef superTyphoonRuleDef;
-        private static RuleChoiceDef superTyphoonRCD;
+        private static RuleChoiceDef rcd;
 
         internal static void Init()
         {
             SuperTyphoonDef = SS2Assets.LoadAsset<R2API.ScriptableObjects.SerializableDifficultyDef>("SuperTyphoon", SS2Bundle.Base);
             //SuperTyphoonDef.hideFromDifficultySelection = true; // THANK YOU NEBBY
+            rcd = RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(SuperTyphoonDef.nameToken));
+            rcd.excludeByDefault = true;
             DifficultyAPI.AddDifficulty(SuperTyphoonDef);
             Run.onRunStartGlobal += Run_onRunStartGlobal;
             Run.onRunDestroyGlobal += Run_onRunDestroyGlobal;
