@@ -7,7 +7,7 @@ namespace Moonstorm.Starstorm2.Items
     [DisabledContent]
     public sealed class BaneFlask : ItemBase
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("BaneFlask");
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("BaneFlask", SS2Bundle.Items);
         public static DotController.DotIndex DotIndex;
         public static float duration = 2;
 
