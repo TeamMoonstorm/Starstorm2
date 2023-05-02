@@ -11,23 +11,23 @@ namespace Moonstorm.Starstorm2.Items
         private const string token = "SS2_ITEM_NEEDLES_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Needles", SS2Bundle.Items);
 
-        [ConfigurableField(ConfigDesc = "Chance for Needles to Proc. (100 = 100%)")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance for Needles to Proc. (100 = 100%)")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float procChance = 4f;
 
-        [ConfigurableField(ConfigDesc = "Duration of the pricked debuff, in seconds.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of the pricked debuff, in seconds.")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static float buildupDuration = 5f;
 
-        [ConfigurableField(ConfigDesc = "Additional duration of the pricked debuff per stack, in seconds.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Additional duration of the pricked debuff per stack, in seconds.")]
         [TokenModifier(token, StatTypes.Default, 2)]
         public static float buildupStack = 1f;
 
-        [ConfigurableField(ConfigDesc = "Amount of buildup debuffs needed before the actual needles debuff gets applied")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of buildup debuffs needed before the actual needles debuff gets applied")]
         [TokenModifier(token, StatTypes.Default, 3)]
         public static float neededBuildupAmount = 1f;
 
-        [ConfigurableField(ConfigDesc = "Duration of the actual needles debuff, in seconds.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of the actual needles debuff, in seconds.")]
         [TokenModifier(token, StatTypes.Default, 4)]
         public static float needleBuffDuration = 2f;
 

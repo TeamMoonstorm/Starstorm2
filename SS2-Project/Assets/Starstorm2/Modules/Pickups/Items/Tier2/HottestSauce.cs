@@ -12,11 +12,11 @@ namespace Moonstorm.Starstorm2.Items
         private const string token = "SS2_ITEM_HOTTESTSAUCE_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("HottestSauce", SS2Bundle.Items);
 
-        [ConfigurableField(ConfigDesc = "Radius in which the hottest sauce deals damage, in meters.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius in which the hottest sauce deals damage, in meters.")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float radius = 30f;
 
-        [ConfigurableField(ConfigDesc = "Duration of the burn effect, in seconds.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of the burn effect, in seconds.")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static float DOTDuration = 6f;
 

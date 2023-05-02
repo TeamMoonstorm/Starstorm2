@@ -10,15 +10,15 @@ namespace Moonstorm.Starstorm2.Items
         private const string token = "SS2_ITEM_DROIDHEAD_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("DroidHead", SS2Bundle.Items);
 
-        [ConfigurableField(ConfigDesc = "Damage dealt by Security Drones, at base and per stack. Percentage (1 = 100%)")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Damage dealt by Security Drones, at base and per stack. Percentage (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float baseDamage = 1f;
 
-        [ConfigurableField(ConfigDesc = "Base life time of the Security Drone, in seconds.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Base life time of the Security Drone, in seconds.")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static float baseLifeTime = 20f;
 
-        [ConfigurableField(ConfigDesc = "Life time of the Security Drone per stack, in seconds.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Life time of the Security Drone per stack, in seconds.")]
         [TokenModifier(token, StatTypes.Default, 2)]
         public static float stackLifeTime = 5f;
 

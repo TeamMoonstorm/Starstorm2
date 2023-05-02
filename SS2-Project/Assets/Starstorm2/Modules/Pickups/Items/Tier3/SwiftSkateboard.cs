@@ -12,31 +12,31 @@ namespace Moonstorm.Starstorm2.Items
 
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("SwiftSkateboard", SS2Bundle.Items);
 
-        [ConfigurableField(ConfigDesc = "Movement speed bonus for each skateboard push. (1 = 100%)")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Movement speed bonus for each skateboard push. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float moveSpeedBonus = 0.2f;
 
-        [ConfigurableField(ConfigDesc = "Movement speed bonus for each skateboard push for each item stack past the first. (1 = 100%)")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Movement speed bonus for each skateboard push for each item stack past the first. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
         public static float moveSpeedBonusPerStack = 0.15f;
 
-        [ConfigurableField(ConfigDesc = "Initial maximum stacks for the Swift Skateboard's movement speed buff.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Initial maximum stacks for the Swift Skateboard's movement speed buff.")]
         [TokenModifier(token, StatTypes.Default, 2)]
         public static int maxStacks = 4;
 
-        [ConfigurableField(ConfigDesc = "Additional maximum stacks for each item stack of Swift Skateboard past the first.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Additional maximum stacks for each item stack of Swift Skateboard past the first.")]
         [TokenModifier(token, StatTypes.Default, 3)]
         public static int maxStacksPerStack = 0;
 
-        [ConfigurableField(ConfigDesc = "Duration of Swift Skateboard's movement speed buff.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of Swift Skateboard's movement speed buff.")]
         [TokenModifier(token, StatTypes.Default, 4)]
         public static float buffDuration = 3f;
 
-        [ConfigurableField(ConfigDesc = "Cooldown between applications of Swift Skateboard's movement speed buff.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Cooldown between applications of Swift Skateboard's movement speed buff.")]
         [TokenModifier(token, StatTypes.Default, 5)]
         public static float buffCooldown = 0.75f;
 
-        [ConfigurableField(ConfigDesc = "Whether Swift Skateboard should allow all-directional sprinting.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Whether Swift Skateboard should allow all-directional sprinting.")]
         public static bool omniSprint = true;
 
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier

@@ -12,11 +12,11 @@ namespace Moonstorm.Starstorm2.Items
         private const string token = "SS2_ITEM_BLOODTESTER_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("BloodTester", SS2Bundle.Items);
 
-        [ConfigurableField(ConfigDesc = "Amount of healing required per Blood Tester proc.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of healing required per Blood Tester proc.")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float healIncrement = 15f;
 
-        [ConfigurableField(ConfigDesc = "Amount of gold given per Blood Tester proc. DOES NOT SCALE WITH LEVEL.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of gold given per Blood Tester proc. DOES NOT SCALE WITH LEVEL.")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static float goldIncrement = 2f;
 
