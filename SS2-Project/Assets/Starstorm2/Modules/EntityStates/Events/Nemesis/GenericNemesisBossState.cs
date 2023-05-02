@@ -142,25 +142,29 @@ namespace EntityStates.Events
                 placementMode = DirectorPlacementRule.PlacementMode.NearestNode
             };
             DirectorCore.GetMonsterSpawnDistance(spawnDistance, out directorPlacementRule.minDistance, out directorPlacementRule.maxDistance);
-            
-
-            DirectorSpawnRequest directorSpawnRequest = new DirectorSpawnRequest(spawnCard, directorPlacementRule, rng);
-            directorSpawnRequest.teamIndexOverride = new TeamIndex?(TeamIndex.Monster);
-            directorSpawnRequest.ignoreTeamMemberLimit = true;
 
             CombatSquad combatSquad = null;
-            directorSpawnRequest.onSpawnedServer = (spawnResult) =>
+            bool swarm = RunArtifactManager.instance.IsArtifactEnabled(RoR2Content.Artifacts.swarmsArtifactDef);
+            for (var i = 0; i < (swarm ? 2 : 1); i++)
             {
-                if (!combatSquad)
-                    combatSquad = UnityEngine.Object.Instantiate(encounterPrefab).GetComponent<CombatSquad>();
-                CharacterMaster master = spawnResult.spawnedInstance.GetComponent<CharacterMaster>();
-                master.gameObject.AddComponent<NemesisResistances>();
-                nemesisBossBody = master.GetBody();
-                new NemesisSpawnCard.SyncBaseStats(nemesisBossBody).Send(R2API.Networking.NetworkDestination.Clients);
-                combatSquad.AddMember(master);
-                master.onBodyDeath.AddListener(OnBodyDeath);
-            };
-            DirectorCore.instance.TrySpawnObject(directorSpawnRequest);
+                DirectorSpawnRequest directorSpawnRequest = new DirectorSpawnRequest(spawnCard, directorPlacementRule, rng);
+                directorSpawnRequest.teamIndexOverride = new TeamIndex?(TeamIndex.Monster);
+                directorSpawnRequest.ignoreTeamMemberLimit = true;
+
+                directorSpawnRequest.onSpawnedServer = (spawnResult) =>
+                {
+                    if (!combatSquad)
+                        combatSquad = UnityEngine.Object.Instantiate(encounterPrefab).GetComponent<CombatSquad>();
+                    CharacterMaster master = spawnResult.spawnedInstance.GetComponent<CharacterMaster>();
+                    master.gameObject.AddComponent<NemesisResistances>();
+                    nemesisBossBody = master.GetBody();
+                    nemesisBossBody.baseMaxHealth /= swarm ? 2 : 1;
+                    new NemesisSpawnCard.SyncBaseStats(nemesisBossBody).Send(R2API.Networking.NetworkDestination.Clients);
+                    combatSquad.AddMember(master);
+                    master.onBodyDeath.AddListener(OnBodyDeath);
+                };
+                DirectorCore.instance.TrySpawnObject(directorSpawnRequest);
+            }
             if (combatSquad)
             {
                 combatSquad.GetComponent<TeamFilter>().defaultTeam = TeamIndex.Monster;
