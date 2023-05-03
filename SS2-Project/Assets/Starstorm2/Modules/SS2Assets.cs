@@ -179,7 +179,7 @@ namespace Moonstorm.Starstorm2
                                 }
                                 SS2Log.Warning($"Invalid or Unexpected file in the AssetBundles folder (File name: {fileName}, Path: {path})");
                             }
-                            catch(Exception e)
+                            catch (Exception e)
                             {
                                 SS2Log.Error($"Default statement on bundle loading method hit, Exception thrown.\n{e}");
                             }
