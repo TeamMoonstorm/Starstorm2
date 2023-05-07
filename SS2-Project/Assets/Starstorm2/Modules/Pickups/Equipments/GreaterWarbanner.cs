@@ -50,14 +50,12 @@ namespace Moonstorm.Starstorm2.Equipments
             }
             //To do: make better placement system
             SS2Log.Info("aimorigin: " + slot.inputBank.aimOrigin + " | direction: " + slot.inputBank.aimDirection);
-            SS2Log.Warning("aimorigin: " + slot.inputBank.aimOrigin + " | direction: " + slot.inputBank.aimDirection);
-            SS2Log.Message("aimorigin: " + slot.inputBank.aimOrigin + " | direction: " + slot.inputBank.aimDirection);
 
             Vector3 position = slot.inputBank.aimOrigin - (slot.inputBank.aimDirection);
             GameObject bannerObject = UnityEngine.Object.Instantiate(WarbannerObject, position, Quaternion.identity);
 
             bannerObject.GetComponent<TeamFilter>().teamIndex = slot.teamComponent.teamIndex;
-            NetworkServer.Spawn(WarbannerObject);
+            NetworkServer.Spawn(bannerObject);
             //var behavior = slot.gameObject.GetComponent<GreaterWarbannerBehavior>();
             //if (behavior.warBannerInstance)
             //NetworkServer.Destroy(behavior.warBannerInstance);
@@ -96,6 +94,7 @@ namespace Moonstorm.Starstorm2.Equipments
             //    EffectManager.SimpleSoundEffect(sound, bannerObject.transform.position, true);
             //    GBToken.soundCooldown = 0f;
             //}
+
             return true;
         }
 
