@@ -401,7 +401,7 @@ MonoBehaviour:
       childName: Base
       localPos: {x: 3.176863, y: -0.4462852, z: -1.486189}
       localAngles: {x: 0, y: 0, z: 0}
-      localScales: {x: 1, y: 1, z: 1}
+      localScales: {x: 0.85, y: 0.85, z: 0.85}
       limbMask: 0
   - keyAssetName: BossHunterConsumed
     keyAsset:
@@ -1639,7 +1639,7 @@ MonoBehaviour:
       asset: {fileID: 0}
       loadAssetFrom: 2
     rules:
-    - ruleType: 1
+    - ruleType: 0
       displayPrefabName: DisplayHoof
       displayPrefab:
         address: RoR2/Base/Hoof/DisplayHoof.prefab

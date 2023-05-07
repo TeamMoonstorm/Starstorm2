@@ -15,7 +15,7 @@ namespace Moonstorm.Starstorm2.Items
         {
             //DotController.onDotInflictedServerGlobal += RefreshInsects;
         }
-
+         
         //private void RefreshInsects(DotController dotController, ref InflictDotInfo inflictDotInfo)
         //{
         //    if (inflictDotInfo.dotIndex == DotIndex)

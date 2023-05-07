@@ -164,6 +164,7 @@ namespace Moonstorm.Starstorm2
 		private static void CharacterMaster_Awake(On.RoR2.CharacterMaster.orig_Awake orig, CharacterMaster self)
 		{
 			BaseItemMasterBehavior[] value = BaseItemMasterBehavior.GetNetworkContext().behaviorArraysPool.Request();
+			//SS2Log.Info("adding " + self + " of value " + value + " in charmast awake");
 			BaseItemMasterBehavior.masterToItemBehaviors.Add(self, value);
 			orig(self);
 		}
@@ -215,7 +216,16 @@ namespace Moonstorm.Starstorm2
 		private static void UpdateMasterItemBehaviorStacks(CharacterMaster master)
 		{
 			ref BaseItemMasterBehavior.NetworkContextSet networkContext = ref BaseItemMasterBehavior.GetNetworkContext();
-			BaseItemMasterBehavior[] array = BaseItemMasterBehavior.masterToItemBehaviors[master];
+			//SS2Log.Info("Calling problem line");
+			BaseItemMasterBehavior[] arr;
+			bool success = BaseItemMasterBehavior.masterToItemBehaviors.TryGetValue(master, out arr);
+            if (!success)
+            {
+				//SS2Log.Info("Failed to Find"); //My understanding is this gets called post-master being destroyed therefore the master it's looking for is null -> original function throws an error?
+				return;							 //since it would just error here in the past and the game still functioned i think i can just return
+            }
+			//BaseItemMasterBehavior[] arr = BaseItemMasterBehavior.masterToItemBehaviors.TryGetValue(master);
+			//BaseItemMasterBehavior[] array = BaseItemMasterBehavior.masterToItemBehaviors[master]; // problem line
 			BaseItemBodyBehavior.ItemTypePair[] itemTypePairs = networkContext.itemTypePairs;
 			Inventory inventory = master.inventory;
 			if (inventory)
@@ -223,14 +233,14 @@ namespace Moonstorm.Starstorm2
 				for (int i = 0; i < itemTypePairs.Length; i++)
 				{
 					BaseItemBodyBehavior.ItemTypePair itemTypePair = itemTypePairs[i];
-					ref BaseItemMasterBehavior behavior = ref array[i];
+					ref BaseItemMasterBehavior behavior = ref arr[i];
 					BaseItemMasterBehavior.SetItemStack(master, ref behavior, itemTypePair.behaviorType, inventory.GetItemCount(itemTypePair.itemIndex));
 				}
 				return;
 			}
 			for (int j = 0; j < itemTypePairs.Length; j++)
 			{
-				ref BaseItemMasterBehavior ptr = ref array[j];
+				ref BaseItemMasterBehavior ptr = ref arr[j];
 				if (ptr != null)
 				{
 					Destroy(ptr);
