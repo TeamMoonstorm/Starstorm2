@@ -60,6 +60,7 @@ The most important issues you may encounter are listed below, to help expect thi
     * Added Chinese translation. 
     * Adjusted Cloaking Headband's Russian translation.
     * Commando now correctly fires phase round projectiles in multiplayer with the Stealth skin equipped.
+    * Fixed "Key Not Found" exception being thrown after ally death.
 * Items & Equipment
     * Added Equipment disabling.
     * Reworked Relic of Termination: "Every 30 seconds, gain a buff which marks the next spawning enemy. If defeated in time, they drop an item; if not, they drop nothing and delay the next mark. Marked enemies have significantly increased stats. (Rarity of the dropped item increases with stacks)."
