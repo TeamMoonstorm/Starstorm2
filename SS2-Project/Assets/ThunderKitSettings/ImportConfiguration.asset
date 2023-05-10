@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-9073086616044070721
+--- !u!114 &-9196934796441220020
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,15 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2636f9900aca35942b349a07d34faaf4, type: 3}
-  m_Name: Assembly Publicizer
+  m_Script: {fileID: 11500000, guid: eecc301ed1414ee4ca063a9eeee2a159, type: 3}
+  m_Name: TextMeshPro Uninstaller
   m_EditorClassIdentifier: 
-  enabled: 0
-  assemblyNames:
-  - RoR2.dll
-  - KinematicCharacterController.dll
-  NStripExecutable: {fileID: 102900000, guid: 39e2644fdd2b31844bb745cba95889bb, type: 3}
---- !u!114 &-8636807764321410969
+  enabled: 1
+--- !u!114 &-8865689468609538805
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -26,11 +22,178 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 512775de21a2e0e41ba77b90aced0c69, type: 3}
-  m_Name: PostProcessing Unity Package Installer
+  m_Script: {fileID: 11500000, guid: 8840720793112784295b7c9b06af7493, type: 3}
+  m_Name: Get Bitness
   m_EditorClassIdentifier: 
-  enabled: 0
---- !u!114 &-8239299593924623557
+  enabled: 1
+--- !u!114 &-7144439083607284740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4090d1da9d2c4d64393fc97cd46e8414, type: 3}
+  m_Name: Unity GUI Uninstaller
+  m_EditorClassIdentifier: 
+  enabled: 1
+--- !u!114 &-5979533712579987158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4e66fd1b2f0a6b4e951af502eba5a2b, type: 3}
+  m_Name: Create Game Package
+  m_EditorClassIdentifier: 
+  enabled: 1
+--- !u!114 &-5108207445146537937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 235bc6f08aa9bcc46b2cc6ee311b44dc, type: 3}
+  m_Name: Install DebugToolkit
+  m_EditorClassIdentifier: 
+  enabled: 1
+--- !u!114 &-4815604945556673188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e81dec9331ebba548b09674254134864, type: 3}
+  m_Name: Wwise Blacklister
+  m_EditorClassIdentifier: 
+  enabled: 1
+--- !u!114 &-3911189334349785095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bb24ae4d588a7b4fbc1757e2fb5fd78, type: 3}
+  m_Name: Import Addressable Catalog
+  m_EditorClassIdentifier: 
+  enabled: 1
+--- !u!114 &-3131033656821160530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08f74610dc9ac9d4dac443c315f5685d, type: 3}
+  m_Name: Ensure RoR2 Thunderstore Source
+  m_EditorClassIdentifier: 
+  enabled: 1
+--- !u!114 &-3077255763709621384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a87a9f1780c348d4080afaf9971d3a7e, type: 3}
+  m_Name: Import Assemblies
+  m_EditorClassIdentifier: 
+  enabled: 1
+--- !u!114 &-2165954033962183478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 211736d3c64c3e041a3ebe0fed60c843, type: 3}
+  m_Name: Install Ancient Scepter
+  m_EditorClassIdentifier: 
+  enabled: 1
+--- !u!114 &-700143343324937404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b40885578be10f4785f1fa347e9fefa, type: 3}
+  m_Name: Import Project Settings
+  m_EditorClassIdentifier: 
+  enabled: 1
+  IncludedSettings: -1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc02a62d93c1105498092e320b2f0f46, type: 3}
+  m_Name: ImportConfiguration
+  m_EditorClassIdentifier: 
+  ConfigurationExecutors:
+  - {fileID: 8167180584939220668}
+  - {fileID: -9196934796441220020}
+  - {fileID: -7144439083607284740}
+  - {fileID: -4815604945556673188}
+  - {fileID: 9109668228207382209}
+  - {fileID: 7791948497166894361}
+  - {fileID: -3077255763709621384}
+  - {fileID: 5953440931092667725}
+  - {fileID: -700143343324937404}
+  - {fileID: 7253479093974224263}
+  - {fileID: -5979533712579987158}
+  - {fileID: -3911189334349785095}
+  - {fileID: 3829427365007165074}
+  - {fileID: -3131033656821160530}
+  - {fileID: 2700162979014353071}
+  - {fileID: 3706831279816515535}
+  - {fileID: 6542931270262992671}
+  - {fileID: -2165954033962183478}
+  - {fileID: 8425352104040890402}
+  - {fileID: -5108207445146537937}
+  - {fileID: -8865689468609538805}
+  ConfigurationIndex: 21
+  totalImportExtensionCount: 21
+--- !u!114 &2700162979014353071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 892ee265a9c0b884c8c9c36e42a802c6, type: 3}
+  m_Name: Install BepInEx
+  m_EditorClassIdentifier: 
+  enabled: 1
+--- !u!114 &3706831279816515535
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,7 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1b0facc354ed134db02010df191c2d0, type: 3}
   m_Name: R2API Submodule Installer
   m_EditorClassIdentifier: 
-  enabled: 0
+  enabled: 1
   serializeSelectionIntoJson: 1
   r2apiSubmodules:
   - submoduleName: R2API_Core
@@ -101,7 +264,7 @@ MonoBehaviour:
   - submoduleName: R2API_Deployable
     description: API for adding custom deployables
     dependedncyID: RiskofThunder-R2API_Deployable
-    shouldInstall: 1
+    shouldInstall: 0
     isHardDependency: 0
     dependencies:
     - BepInExPack
@@ -148,7 +311,7 @@ MonoBehaviour:
   - submoduleName: R2API_Items
     description: API for adding custom items
     dependedncyID: RiskofThunder-R2API_Items
-    shouldInstall: 1
+    shouldInstall: 0
     isHardDependency: 0
     dependencies:
     - BepInExPack
@@ -158,7 +321,7 @@ MonoBehaviour:
   - submoduleName: R2API_Language
     description: API for modifying the language localisation of the game
     dependedncyID: RiskofThunder-R2API_Language
-    shouldInstall: 1
+    shouldInstall: 0
     isHardDependency: 0
     dependencies:
     - BepInExPack
@@ -167,7 +330,7 @@ MonoBehaviour:
   - submoduleName: R2API_Loadout
     description: API for registering skills, skins and entity states
     dependedncyID: RiskofThunder-R2API_Loadout
-    shouldInstall: 1
+    shouldInstall: 0
     isHardDependency: 0
     dependencies:
     - BepInExPack
@@ -178,7 +341,7 @@ MonoBehaviour:
   - submoduleName: R2API_LobbyConfig
     description: API for modifying the in-game lobby rules
     dependedncyID: RiskofThunder-R2API_LobbyConfig
-    shouldInstall: 1
+    shouldInstall: 0
     isHardDependency: 0
     dependencies:
     - BepInExPack
@@ -196,7 +359,7 @@ MonoBehaviour:
   - submoduleName: R2API_Orb
     description: API for creation and management of custom Orb types.
     dependedncyID: RiskofThunder-R2API_Orb
-    shouldInstall: 1
+    shouldInstall: 0
     isHardDependency: 0
     dependencies:
     - BepInExPack
@@ -224,7 +387,7 @@ MonoBehaviour:
   - submoduleName: R2API_Rulebook
     description: API for registering rules to the Rule Catalog
     dependedncyID: RiskofThunder-R2API_Rulebook
-    shouldInstall: 1
+    shouldInstall: 0
     isHardDependency: 0
     dependencies:
     - BepInExPack
@@ -233,7 +396,7 @@ MonoBehaviour:
   - submoduleName: R2API_SceneAsset
     description: API for retrieving assets that live exclusively in game scenes
     dependedncyID: RiskofThunder-R2API_SceneAsset
-    shouldInstall: 1
+    shouldInstall: 0
     isHardDependency: 0
     dependencies:
     - BepInExPack
@@ -243,7 +406,7 @@ MonoBehaviour:
     description: R2API Submodule for adding custom Skins and Skin-related utilities
       to the game
     dependedncyID: RiskofThunder-R2API_Skins
-    shouldInstall: 1
+    shouldInstall: 0
     isHardDependency: 0
     dependencies:
     - BepInExPack
@@ -252,7 +415,7 @@ MonoBehaviour:
   - submoduleName: R2API_Sound
     description: API for adding custom sounds or musics
     dependedncyID: RiskofThunder-R2API_Sound
-    shouldInstall: 1
+    shouldInstall: 0
     isHardDependency: 0
     dependencies:
     - BepInExPack
@@ -272,40 +435,14 @@ MonoBehaviour:
   - submoduleName: R2API_Unlockable
     description: API for adding custom achievements and unlockables
     dependedncyID: RiskofThunder-R2API_Unlockable
-    shouldInstall: 1
+    shouldInstall: 0
     isHardDependency: 0
     dependencies:
     - BepInExPack
     - HookGenPatcher
     - R2API_Core
     - R2API_ContentManagement
---- !u!114 &-7429344242194024111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e81dec9331ebba548b09674254134864, type: 3}
-  m_Name: Wwise Blacklister
-  m_EditorClassIdentifier: 
-  enabled: 1
---- !u!114 &-6912482234045991192
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bb24ae4d588a7b4fbc1757e2fb5fd78, type: 3}
-  m_Name: Import Addressable Catalog
-  m_EditorClassIdentifier: 
-  enabled: 1
---- !u!114 &-6657309378643623550
+--- !u!114 &3829427365007165074
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -317,8 +454,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 782d5ab1acc2056478f835108aa9474b, type: 3}
   m_Name: Configure Addressable Graphics Settings
   m_EditorClassIdentifier: 
-  enabled: 0
---- !u!114 &-4828128988438557049
+  enabled: 1
+--- !u!114 &5953440931092667725
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -327,11 +464,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eecc301ed1414ee4ca063a9eeee2a159, type: 3}
-  m_Name: TextMeshPro Uninstaller
+  m_Script: {fileID: 11500000, guid: e5a17181e89416446b9fb82f03553599, type: 3}
+  m_Name: RoR2 LegacyResourceAPI Patcher
   m_EditorClassIdentifier: 
-  enabled: 0
---- !u!114 &-2182184337667953581
+  enabled: 1
+--- !u!114 &6542931270262992671
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -344,57 +481,7 @@ MonoBehaviour:
   m_Name: Install RoR2MultiplayerHLAPI
   m_EditorClassIdentifier: 
   enabled: 0
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc02a62d93c1105498092e320b2f0f46, type: 3}
-  m_Name: ImportConfiguration
-  m_EditorClassIdentifier: 
-  ConfigurationExecutors:
-  - {fileID: -8636807764321410969}
-  - {fileID: -4828128988438557049}
-  - {fileID: 2070118909054495853}
-  - {fileID: -7429344242194024111}
-  - {fileID: -9073086616044070721}
-  - {fileID: 8643781664290304282}
-  - {fileID: 4330131937424644711}
-  - {fileID: 2172453309486294088}
-  - {fileID: 962599428460842891}
-  - {fileID: 1915433736942242247}
-  - {fileID: 7528906239275846861}
-  - {fileID: -6912482234045991192}
-  - {fileID: -6657309378643623550}
-  - {fileID: 5360498830579694984}
-  - {fileID: 8950554243743209018}
-  - {fileID: -8239299593924623557}
-  - {fileID: -2182184337667953581}
-  - {fileID: 2466078553791182690}
-  - {fileID: 9041352071350450320}
-  - {fileID: 2046163525302950960}
-  - {fileID: 8810940399271450416}
-  ConfigurationIndex: 21
-  totalImportExtensionCount: 21
---- !u!114 &962599428460842891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b40885578be10f4785f1fa347e9fefa, type: 3}
-  m_Name: Import Project Settings
-  m_EditorClassIdentifier: 
-  enabled: 0
-  IncludedSettings: 0
---- !u!114 &1915433736942242247
+--- !u!114 &7253479093974224263
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -406,99 +493,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d0e45bf5627b554081a563dac04ff6a, type: 3}
   m_Name: Set Deferred Shading
   m_EditorClassIdentifier: 
-  enabled: 0
---- !u!114 &2046163525302950960
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 235bc6f08aa9bcc46b2cc6ee311b44dc, type: 3}
-  m_Name: Install DebugToolkit
-  m_EditorClassIdentifier: 
-  enabled: 0
---- !u!114 &2070118909054495853
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4090d1da9d2c4d64393fc97cd46e8414, type: 3}
-  m_Name: Unity GUI Uninstaller
-  m_EditorClassIdentifier: 
-  enabled: 0
---- !u!114 &2172453309486294088
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5a17181e89416446b9fb82f03553599, type: 3}
-  m_Name: RoR2 LegacyResourceAPI Patcher
-  m_EditorClassIdentifier: 
-  enabled: 0
---- !u!114 &2466078553791182690
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 211736d3c64c3e041a3ebe0fed60c843, type: 3}
-  m_Name: Install Ancient Scepter
-  m_EditorClassIdentifier: 
-  enabled: 0
---- !u!114 &4330131937424644711
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a87a9f1780c348d4080afaf9971d3a7e, type: 3}
-  m_Name: Import Assemblies
-  m_EditorClassIdentifier: 
-  enabled: 0
---- !u!114 &5360498830579694984
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08f74610dc9ac9d4dac443c315f5685d, type: 3}
-  m_Name: Ensure RoR2 Thunderstore Source
-  m_EditorClassIdentifier: 
-  enabled: 0
---- !u!114 &7528906239275846861
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4e66fd1b2f0a6b4e951af502eba5a2b, type: 3}
-  m_Name: Create Game Package
-  m_EditorClassIdentifier: 
-  enabled: 0
---- !u!114 &8643781664290304282
+  enabled: 1
+--- !u!114 &7791948497166894361
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -515,214 +511,8 @@ MonoBehaviour:
   - RoR2.dll
   - KinematicCharacterController.dll
   hookGenExecutable: {fileID: 102900000, guid: e441941fc2ce18f4cb8ae6dc66c65a21, type: 3}
-  cachedAssembliesInAppDomain:
-  - mscorlib.dll
-  - UnityEngine.dll
-  - UnityEngine.AIModule.dll
-  - UnityEngine.ARModule.dll
-  - UnityEngine.AccessibilityModule.dll
-  - UnityEngine.AndroidJNIModule.dll
-  - UnityEngine.AnimationModule.dll
-  - UnityEngine.AssetBundleModule.dll
-  - UnityEngine.AudioModule.dll
-  - UnityEngine.ClothModule.dll
-  - UnityEngine.ClusterInputModule.dll
-  - UnityEngine.ClusterRendererModule.dll
-  - UnityEngine.CoreModule.dll
-  - UnityEngine.CrashReportingModule.dll
-  - UnityEngine.DSPGraphModule.dll
-  - UnityEngine.DirectorModule.dll
-  - UnityEngine.GameCenterModule.dll
-  - UnityEngine.GridModule.dll
-  - UnityEngine.HotReloadModule.dll
-  - UnityEngine.IMGUIModule.dll
-  - UnityEngine.ImageConversionModule.dll
-  - UnityEngine.InputModule.dll
-  - UnityEngine.InputLegacyModule.dll
-  - UnityEngine.JSONSerializeModule.dll
-  - UnityEngine.LocalizationModule.dll
-  - UnityEngine.ParticleSystemModule.dll
-  - UnityEngine.PerformanceReportingModule.dll
-  - UnityEngine.PhysicsModule.dll
-  - UnityEngine.Physics2DModule.dll
-  - UnityEngine.ProfilerModule.dll
-  - UnityEngine.ScreenCaptureModule.dll
-  - UnityEngine.SharedInternalsModule.dll
-  - UnityEngine.SpriteMaskModule.dll
-  - UnityEngine.SpriteShapeModule.dll
-  - UnityEngine.StreamingModule.dll
-  - UnityEngine.SubstanceModule.dll
-  - UnityEngine.SubsystemsModule.dll
-  - UnityEngine.TLSModule.dll
-  - UnityEngine.TerrainModule.dll
-  - UnityEngine.TerrainPhysicsModule.dll
-  - UnityEngine.TextCoreModule.dll
-  - UnityEngine.TextRenderingModule.dll
-  - UnityEngine.TilemapModule.dll
-  - UnityEngine.UIModule.dll
-  - UnityEngine.UIElementsModule.dll
-  - UnityEngine.UNETModule.dll
-  - UnityEngine.UmbraModule.dll
-  - UnityEngine.UnityAnalyticsModule.dll
-  - UnityEngine.UnityConnectModule.dll
-  - UnityEngine.UnityTestProtocolModule.dll
-  - UnityEngine.UnityWebRequestModule.dll
-  - UnityEngine.UnityWebRequestAssetBundleModule.dll
-  - UnityEngine.UnityWebRequestAudioModule.dll
-  - UnityEngine.UnityWebRequestTextureModule.dll
-  - UnityEngine.UnityWebRequestWWWModule.dll
-  - UnityEngine.VFXModule.dll
-  - UnityEngine.VRModule.dll
-  - UnityEngine.VehiclesModule.dll
-  - UnityEngine.VideoModule.dll
-  - UnityEngine.WindModule.dll
-  - UnityEngine.XRModule.dll
-  - UnityEditor.dll
-  - System.Core.dll
-  - System.dll
-  - Mono.Security.dll
-  - System.Configuration.dll
-  - System.Xml.dll
-  - Unity.CompilationPipeline.Common.dll
-  - UnityEditor.VR.dll
-  - UnityEditor.Graphs.dll
-  - UnityEditor.WindowsStandalone.Extensions.dll
-  - SyntaxTree.VisualStudio.Unity.Bridge.dll
-  - Unity.Cecil.dll
-  - Assembly-CSharp.dll
-  - Assembly-CSharp-Editor.dll
-  - BsDiff.dll
-  - UnityEditor.CacheServer.dll
-  - RoR2EditorKit.dll
-  - MonoDetector.dll
-  - Unity.ScriptableBuildPipeline.Editor.dll
-  - com.unity.multiplayer-hlapi.Editor.dll
-  - Wwise.dll
-  - RoR2EditorScripts.dll
-  - ThunderKit.Addressable.Config.dll
-  - ThunderKit.Thunderstore.dll
-  - SS2Editor.dll
-  - MoonstormEditorUtils.dll
-  - ProjectSpecificImporters.dll
-  - UnityVersion.dll
-  - ThunderKit.Markdown.dll
-  - ToolbarExtender.Editor.dll
-  - RoR2Importers.dll
-  - Unity.Postprocessing.Editor.dll
-  - com.unity.multiplayer-weaver.Editor.dll
-  - MSUImporters.dll
-  - AssetsExporter.dll
-  - ThunderKit.Addressable.Tools.dll
-  - Unity.Postprocessing.Runtime.dll
-  - AssetsTools.NET.dll
-  - ThunderKit.Core.dll
-  - Starstorm2.dll
-  - WwiseEditor.dll
-  - Unity.ScriptableBuildPipeline.dll
-  - MoonstormSharedUtils.dll
-  - ThunderKit.Common.dll
-  - com.unity.multiplayer-hlapi.Runtime.dll
-  - AncientScepter.dll
-  - 0Harmony.dll
-  - 0Harmony20.dll
-  - BepInEx.Bootstrap.dll
-  - BepInEx.dll
-  - BepInEx.Harmony.dll
-  - BepInEx.Preloader.dll
-  - HarmonyXInterop.dll
-  - Mono.Cecil.dll
-  - Mono.Cecil.Mdb.dll
-  - Mono.Cecil.Pdb.dll
-  - Mono.Cecil.Rocks.dll
-  - MonoMod.RuntimeDetour.dll
-  - MonoMod.Utils.dll
-  - BepInEx.GUI.Patcher.dll
-  - FixPluginTypesSerialization.dll
-  - RoR2BepInExPack.dll
-  - Markdig.Signed.dll
-  - SharpCompress.dll
-  - ICSharpCode.SharpZipLib.dll
-  - DebugToolkit.dll
-  - MMHOOK_KinematicCharacterController.dll
-  - MMHOOK_RoR2.dll
-  - Decalicious.dll
-  - EOS.dll
-  - Facepunch.Steamworks.dll
-  - GenericIK.dll
-  - HGCSharpUtils.dll
-  - HGSignup.dll
-  - HGUnityUtils.dll
-  - KinematicCharacterController.dll
-  - LegacyResourcesAPI.dll
-  - ModLoader.dll
-  - Newtonsoft.Json.dll
-  - Rewired_Core.dll
-  - Rewired_CSharp.dll
-  - Rewired_Windows.dll
-  - RoR2.dll
-  - SimpleJSON.dll
-  - System.ComponentModel.Composition.dll
-  - System.Data.dll
-  - System.Diagnostics.StackTrace.dll
-  - System.Drawing.dll
-  - System.EnterpriseServices.dll
-  - System.Globalization.Extensions.dll
-  - System.IO.Compression.dll
-  - System.IO.Compression.FileSystem.dll
-  - System.Net.Http.dll
-  - System.Numerics.dll
-  - System.Runtime.Serialization.dll
-  - System.Runtime.Serialization.Xml.dll
-  - System.ServiceModel.Internals.dll
-  - System.Transactions.dll
-  - System.Xml.XPath.XDocument.dll
-  - Unity.Addressables.dll
-  - Unity.ProBuilder.Csg.dll
-  - Unity.ProBuilder.dll
-  - Unity.ProBuilder.KdTree.dll
-  - Unity.ProBuilder.Poly2Tri.dll
-  - Unity.ProBuilder.Stl.dll
-  - Unity.RenderPipelines.Core.Runtime.dll
-  - Unity.RenderPipelines.Core.ShaderLibrary.dll
-  - Unity.ResourceManager.dll
-  - Unity.TextMeshPro.dll
-  - Unity.Timeline.dll
-  - UnityEngine.SpatialTracking.dll
-  - UnityEngine.UI.dll
-  - UnityEngine.XR.LegacyInputHelpers.dll
-  - Zio.dll
-  - BepInEx.MonoMod.HookGenPatcher.dll
-  - R2API.ArtifactCode.dll
-  - R2API.Colors.dll
-  - R2API.CommandHelper.dll
-  - R2API.ContentManagement.dll
-  - R2API.Core.dll
-  - R2API.DamageType.dll
-  - R2API.Deployable.dll
-  - R2API.Difficulty.dll
-  - R2API.Director.dll
-  - R2API.Dot.dll
-  - R2API.Elites.dll
-  - R2API.Items.dll
-  - R2API.Language.dll
-  - R2API.Loadout.dll
-  - R2API.LobbyConfig.dll
-  - R2API.Networking.dll
-  - R2API.Orb.dll
-  - R2API.Prefab.dll
-  - R2API.RecalculateStats.dll
-  - R2API.SceneAsset.dll
-  - R2API.Sound.dll
-  - R2API.TempVisualEffect.dll
-  - R2API.Unlockable.dll
-  - R2API.dll
-  - netstandard.dll
-  - System.Xml.Linq.dll
-  - SyntaxTree.VisualStudio.Unity.Messaging.dll
-  - Unity.SerializationLogic.dll
-  - ExCSS.Unity.dll
-  - Unity.Legacy.NRefactory.dll
---- !u!114 &8810940399271450416
+  cachedAssembliesInAppDomain: []
+--- !u!114 &8167180584939220668
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -731,24 +521,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8840720793112784295b7c9b06af7493, type: 3}
-  m_Name: Get Bitness
+  m_Script: {fileID: 11500000, guid: 512775de21a2e0e41ba77b90aced0c69, type: 3}
+  m_Name: PostProcessing Unity Package Installer
   m_EditorClassIdentifier: 
   enabled: 1
---- !u!114 &8950554243743209018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 892ee265a9c0b884c8c9c36e42a802c6, type: 3}
-  m_Name: Install BepInEx
-  m_EditorClassIdentifier: 
-  enabled: 0
---- !u!114 &9041352071350450320
+--- !u!114 &8425352104040890402
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -761,3 +538,20 @@ MonoBehaviour:
   m_Name: Install RoR2 Editor Kit
   m_EditorClassIdentifier: 
   enabled: 0
+--- !u!114 &9109668228207382209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2636f9900aca35942b349a07d34faaf4, type: 3}
+  m_Name: Assembly Publicizer
+  m_EditorClassIdentifier: 
+  enabled: 1
+  assemblyNames:
+  - RoR2.dll
+  - KinematicCharacterController.dll
+  NStripExecutable: {fileID: 102900000, guid: 39e2644fdd2b31844bb745cba95889bb, type: 3}

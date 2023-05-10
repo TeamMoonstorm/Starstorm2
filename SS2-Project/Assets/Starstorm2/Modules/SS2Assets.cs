@@ -155,7 +155,6 @@ namespace Moonstorm.Starstorm2
                     case ITEMS: LoadAndAssign(path, SS2Bundle.Items); break;
                     case EVENTS: LoadAndAssign(path, SS2Bundle.Events); break;
                     case STAGES: LoadAndAssign(path, SS2Bundle.Stages); break;
-                    case VOIDSHOP: LoadAndAssign(path, SS2Bundle.VoidShop); break;
                     case VANILLA: LoadAndAssign(path, SS2Bundle.Vanilla); break;
                     //case INTERACTABLES: LoadBundle(path, SS2Bundle.Interactables); break;
                     case DEV: LoadAndAssign(path, SS2Bundle.Indev); break;

@@ -16,7 +16,7 @@ namespace Moonstorm.Starstorm2.Scenes
 {
     public sealed class VoidShop : SceneBase
     {
-        public override SceneDef SceneDef { get; } = SS2Assets.LoadAsset<SceneDef>("voidshop", SS2Bundle.Stages);
+        public override SceneDef SceneDef { get; } = SS2Assets.LoadAsset<SceneDef>("VoidShop", SS2Bundle.Stages);
         private static MusicTrackDef music = Addressables.LoadAssetAsync<MusicTrackDef>("RoR2/Base/Common/muSong08.asset").WaitForCompletion();
 
         public override void Initialize()
