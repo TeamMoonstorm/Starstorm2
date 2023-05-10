@@ -19,7 +19,7 @@ namespace Moonstorm.Starstorm2.Unlocks.NemCommando
             {
                 get
                 {
-                    var nemCommandoBodyPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoBody");
+                    var nemCommandoBodyPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoBody", SS2Bundle.NemCommando);
                     if (nemCommandoBodyPrefab)
                     {
                         return nemCommandoBodyPrefab.GetComponent<CharacterBody>().bodyIndex;

@@ -55,7 +55,7 @@ namespace EntityStates.Executioner2
             {
                 if (skillLocator.secondary.stock >= 10)
                 {
-                    fullBurst = true;
+                    //fullBurst = true; nvm
                 }
             }
 
