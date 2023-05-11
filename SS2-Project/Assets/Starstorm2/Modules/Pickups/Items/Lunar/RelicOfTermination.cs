@@ -309,7 +309,7 @@ namespace Moonstorm.Starstorm2.Items
                 //moffein approved if statement
                 //body.GetComponent<TerminationHolderToken>();
                 //SS2Log.Info("Attempting giving buff");
-                if (!body.HasBuff(SS2Content.Buffs.BuffTerminationCooldown) && !body.HasBuff(SS2Content.Buffs.BuffTerminationReady) && NetworkServer.active)
+                if (!body.HasBuff(SS2Content.Buffs.BuffTerminationCooldown) && !body.HasBuff(SS2Content.Buffs.BuffTerminationReady) && NetworkServer.active && body.isPlayerControlled)
                 {
                     var holderToken = body.GetComponent<TerminationHolderToken>();
                     if (holderToken)
