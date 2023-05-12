@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Moonstorm.Starstorm2.Items
 {
-    //[DisabledContent]
+    [DisabledContent]
     public sealed class BaneFlask : ItemBase
     {
 
@@ -87,21 +87,24 @@ namespace Moonstorm.Starstorm2.Items
                 
 
                 BuffIndex[] buffList = victimBody.activeBuffsList;
+                int[] buffList2 = victimBody.buffs;
+                //int[] buffList2 = victimBody.buff;
 
                 List<CharacterBody.TimedBuff> a = victimBody.timedBuffs;
 
-                foreach (BuffIndex buffType in BuffCatalog.debuffBuffIndices)
+                foreach (BuffDef def in BuffCatalog.buffDefs)
                 {
-                    if (victimBody.HasBuff(buffType))
+                    SS2Log.Info("Testing " + def.name + " | " + def);
+                    if (victimBody.HasBuff(def))
                     {
-                        SS2Log.Debug("has " + buffType);
+                        SS2Log.Debug("0: has " + def); //seems like on death the enemy no longer "has" these buffs, so this won't work (what deathmark does) 
                         //num14++;
                     }
                 }
 
                 foreach (CharacterBody.TimedBuff buff in a)
                 {
-                    SS2Log.Info("timed buff: " + buff + " | " + buff.buffIndex + " | " + buff.timer);
+                    SS2Log.Info("1: timed buff: " + buff + " | " + buff.buffIndex + " | " + buff.timer); //finds active timed buffs
                 }
 
                 //DotController dotControlle2r = DotController.FindDotController(damageReport.victim.gameObject);
@@ -109,9 +112,10 @@ namespace Moonstorm.Starstorm2.Items
                 {
                     for (DotController.DotIndex dotIndex = DotController.DotIndex.Bleed; dotIndex < DotController.DotIndex.Count; dotIndex++)
                     {
+                        SS2Log.Info("Testing DOT " + dotIndex + " | " + DotController.GetDotDef(dotIndex));
                         if (dotController.HasDotActive(dotIndex))
                         {
-                            SS2Log.Info("dot active index: " + dotIndex);
+                            SS2Log.Info("2: dot active index: " + dotIndex); //finds active dots
                         }
                     }
                 }
@@ -122,16 +126,32 @@ namespace Moonstorm.Starstorm2.Items
                     List<DotController.DotStack> dotList = dotController.dotStackList;
                     foreach (DotController.DotStack dot in dotList)
                     {
-                        SS2Log.Info("dot: " + dot);
+                        SS2Log.Info("3: dot: " + dot + " | def: " + dot.dotDef + " | ind: " + dot.dotIndex); //gets DOT stacks 
                     }
                 }
 
 
                 foreach(BuffIndex ind in buffList)
                 {
-                    SS2Log.Info("buff: " + ind);
+                    SS2Log.Info("4: buff: " + ind + " | def: " + BuffCatalog.GetBuffDef(ind));
+                    if (body.HasBuff(ind))
+                    {
+                        SS2Log.Info("yeah they actually have " + BuffCatalog.GetBuffDef(ind));
+                    }
                 }
 
+                //foreach(int ind in buffList2)
+                //{
+                //    SS2Log.Info("total buffs: " + BuffCatalog.buffCount);
+                //    if(BuffCatalog.buffCount >= ind)
+                //    {
+                //        SS2Log.Info("ind: " + ind + " | " + BuffCatalog.GetBuffDef((BuffIndex)ind));
+                //    }
+                //    else
+                //    {
+                //        SS2Log.Info("ind: " + ind + " | " + "invalid index");
+                //    }
+                //}
 
                 if (attackerBody.inventory)
                 {
