@@ -35,7 +35,7 @@ With Art/Modelling/Animation contributions by...
 
 Additional thanks to... 
 * Writing - Blimblam, Lyrical Endymion, swuff★, T_Dimensional, Zenithrium
-* Translations - Anreol (Spanish), MysticSword (Russian), Damglador (Ukrainian), Dying_Twilight (Chinese)
+* Translations - Anreol (Spanish), MysticSword (Russian), Damglador (Ukrainian), Returndirt & Friends, Dying_Twilight (Chinese)
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze
 * Special thanks - Altzeus, DestroyedClone, don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, valerie ♥ 
 
