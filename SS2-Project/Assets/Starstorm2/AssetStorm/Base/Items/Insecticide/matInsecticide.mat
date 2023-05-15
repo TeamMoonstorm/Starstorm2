@@ -7,7 +7,11 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<<< Updated upstream:SS2-Project/Assets/Starstorm2/AssetStorm/Base/Items/Insecticide/matInsecticide.mat
   m_Name: matInsecticide
+========
+  m_Name: matSeraph
+>>>>>>>> Stashed changes:SS2-Project/Assets/Starstorm2/AssetStorm/InDev/Characters/Seraph/matSeraph.mat
   m_Shader: {fileID: 4800000, guid: 9b2024ee08a5bfc418ff897991e84323, type: 2}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -44,7 +48,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: afb14eaa1cb166f4d9074959736cca13, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -80,7 +84,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
+<<<<<<<< Updated upstream:SS2-Project/Assets/Starstorm2/AssetStorm/Base/Items/Insecticide/matInsecticide.mat
         m_Texture: {fileID: 2800000, guid: af3e1bd3519676a469a76cedc6b7c35e, type: 3}
+========
+        m_Texture: {fileID: 2800000, guid: e42cecb102664f94fbce207afd519ae8, type: 3}
+>>>>>>>> Stashed changes:SS2-Project/Assets/Starstorm2/AssetStorm/InDev/Characters/Seraph/matSeraph.mat
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -175,6 +183,6 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EmColor: {r: 0.8941177, g: 0.7568628, b: 0.882353, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FlashColor: {r: 0, g: 0, b: 0, a: 1}
