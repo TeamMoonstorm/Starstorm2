@@ -1,0 +1,44 @@
+{
+  "strings": {
+    "SS2_EXECUTIONER_NAME": "行刑者",
+    "SS2_EXECUTIONER_SUBTITLE": "骇人断头台",
+    "SS2_EXECUTIONER_DESCRIPTION": "行刑者是一名高风险高收益风格的幸存者，他的所有特质都依赖大量击杀敌人。\n\n<color=#CCD3E0> < ! >使用制式手枪来获得一些击杀数，击杀将使你的离子迸发更强大。\n\n< ! >你可以点按离子迸发以进行一次连射，或者长按将全部子弹发射出去。\n\n< ! >处决对单体敌人和群体敌人都很有效，它的伤害和命中目标数有关。\n\n< ! >如果被包围，可以使用人群驱散迅速脱困。",
+    "SS2_EXECUTIONER_OUTRO_FLAVOR": "……于是他走了，留下一副血迹斑斑的盔甲",
+    "SS2_EXECUTIONER_OUTRO_FAILURE": "……于是他就这样消逝了，尝试逃离那不可避免的事情",
+    "SS2_EXECUTIONER_LORE": "死亡不可避免，死亡不放过任何一个人。有人试图躲避，有人试图逃跑，但是死亡总会到来。在战争中死亡只是一种常见的付出，光荣战死是一个人能追求到的最好的死法之一。\n\n尽管如此还是有一些人试图逃离死亡，我们管他们叫做逃兵、懦夫、叛徒……这些叛徒需要为他们的罪行受到惩罚，他们试图逃脱的死亡正是他们的惩罚。\n\n他们的死亡要来了。他们的死亡不是黑袍镰刀的幽灵，不是风衣和左轮手枪，不是疾病，不是衰老。他们的死亡将穿着闪耀的装甲，持握上好膛的制式手枪，带着充能完毕的离子操纵器而来。",
+
+
+
+    "SS2_KEYWORD_FEAR": "<style=cKeywordName>恐惧</style><style=cSub>使被影响的敌人停止攻击并逃跑，受恐惧影响的敌人受到额外50%的伤害，移动速度减慢30%。</style>",
+    "SS2_KEYWORD_EXECUTING": "<style=cKeywordName>行刑</style><style=cSub>如果只击中了一个敌人则造成的伤害翻倍</style>",
+    "SS2_KEYWORD_RECHARGING": "<style=cKeywordName>充电</style><style=cSub>击杀敌人恢复此技能的充能次数，恢复量取决于所击杀的敌人的强度。处决提供的回复量翻倍</style>",
+
+
+
+    "SS2_EXECUTIONER_PASSIVE_NAME": "浴血",
+    "SS2_EXECUTIONER_PASSIVE_DESC": "击杀<style=cIsUtility>恐惧</style>的敌人将为所有技能缩减<style=cIsUtility>1秒</style>的冷却时间",
+
+
+
+    "SS2_EXECUTIONER_PISTOL_NAME": "制式手枪",
+    "SS2_EXECUTIONER_PISTOL_DESCRIPTION": "使用手枪射击，造成<style=cIsDamage>{0}% 的伤害</style>。",
+    "SS2_EXECUTIONER_TASER_NAME": "致死电压",
+    "SS2_EXECUTIONER_TASER_DESCRIPTION": "向前发射电弧，造成<style=cIsDamage>{0}% 的伤害</style>。",
+    "SS2_EXECUTIONER_SWINGAXE_NAME": "离子斧",
+    "SS2_EXECUTIONER_SWINGAXE_DESCRIPTION": "Swing your axe for <style=cIsDamage>% damage</style>. <style=cIsUtility>Each Secondary charge grants 4% maximum health in shield</style>.",
+    "SS2_EXECUTIONER_IONGUN_NAME": "离子迸发",
+    "SS2_EXECUTIONER_IONGUN_DESCRIPTION": "<style=cIsUtility>充电。</style> 连续射出电离弹，每枚造成 <style=cIsDamage>{0}% 伤害</style>。<style=cIsUtility>一次发射5枚电浆弹</style>。",
+    "SS2_EXECUTIONER_IONBLAST_NAME": "离子爆裂",
+    "SS2_EXECUTIONER_IONBLAST_DESCRIPTION": "发射一股电浆造成<style=cIsDamage>% 伤害</style>。可被<style=cIsUtility>充能</style>，使用时消耗多次充能。 <style=cIsUtility>对每个被击杀的敌人为你恢复充能次数</style>.",
+    "SS2_EXECUTIONER_DASH_NAME": "人群驱散",
+    "SS2_EXECUTIONER_DASH_DESCRIPTION": "向前推进并<style=cIsUtility>恐惧</style>周边所有敌人<style=cIsUtility>{0}秒</style>。",
+    "SS2_EXECUTIONER_AXE_NAME": "处决",
+    "SS2_EXECUTIONER_AXE_DESCRIPTION": "<style=cIsUtility>重型。</style> <style=cIsDamage>行刑。</style>跳到空中，使用巨型离子斧向下猛击，造成<style=cIsDamage>{0}% 伤害</style>。",
+    "SS2_EXECUTIONER_AXESCEPTER_NAME": "集体处决",
+    "SS2_EXECUTIONER_AXESCEPTER_DESCRIPTION": "跳到空中，使用巨型离子斧向下猛击，造成<style=cIsDamage>3000%伤害</style>。",
+    "SS2_EXECUTIONER_ARMOR_NAME": "离子判官",
+    "SS2_EXECUTIONER_ARMOR_DESCRIPTION": "装备电离护甲，获得<style=cIsUtility>60护甲</style>且<style=cIsDamage>过载</style>你的<style=cIsUtility>次要技能</style><style=cIsDamage>4</style>秒。",
+    "SS2_EXECUTIONER_ARMORSCEPTER_NAME": "离子过载",
+    "SS2_EXECUTIONER_ARMORSCEPTER_NAME": "装备电离护甲， 提供<style=cIsUtility>80护甲</style>且<style=cIsDamage>过载</style>你的<style=cIsUtility>次要技能</style><style=cIsDamage>4</style>秒。 击杀<style=cIsUtility>恐惧</style>的敌人额外提供4秒。"
+  }
+}
