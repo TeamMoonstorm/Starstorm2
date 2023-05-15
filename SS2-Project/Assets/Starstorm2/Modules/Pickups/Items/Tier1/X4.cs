@@ -47,8 +47,8 @@ namespace Moonstorm.Starstorm2.Items
         public static float regenDuration = 3f;
         public static float extraRegeneration = 0.2f;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Regen buff cap.")]
-        public static int buffCap = 5;
+        //[ConfigurableField(SS2Config.IDItem, ConfigDesc = "Regen buff cap.")]
+        //public static int buffCap = 5;
 
 
         public static ProcChainMask ignoredProcs;

@@ -57,12 +57,12 @@ The most important issues you may encounter are listed below, to help expect thi
 
 ### 0.3.51
 * General
+    * Added significantly more configs, split into individual files. You can now disable events individually, disable equipments, and items that were lacking in configurable options now have them.
     * Added Chinese translation. 
     * Adjusted Cloaking Headband's Russian translation.
     * Commando now correctly fires phase round projectiles in multiplayer with the Stealth skin equipped.
     * Fixed "Key Not Found" exception being thrown after ally death.
 * Items & Equipment
-    * Added Equipment disabling.
     * Reworked Relic of Termination: "Every 30 seconds, gain a buff which marks the next spawning enemy. If defeated in time, they drop an item; if not, they drop nothing and delay the next mark. Marked enemies have significantly increased stats. (Rarity of the dropped item increases with stacks)."
     * Reworked Needles: "Non-critical strikes add +1% critical chance against the struck enemy. Additional critical chance is cleared after 1 (+1 per stack) critical strikes against them." 
     * Reworked Coffee Bag: "Using interactables increases movement speed by 21% and attack speed by 22.5% for up to 15 (+15 per stack) seconds."
