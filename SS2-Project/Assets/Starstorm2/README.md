@@ -35,7 +35,7 @@ With Art/Modelling/Animation contributions by...
 
 Additional thanks to... 
 * Writing - Blimblam, Lyrical Endymion, swuff★, T_Dimensional, Zenithrium
-* Translations - Anreol (Spanish), MysticSword (Russian), Damglador (Ukrainian)
+* Translations - Anreol (Spanish), MysticSword (Russian), Damglador (Ukrainian), Dying_Twilight (Chinese)
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze
 * Special thanks - Altzeus, DestroyedClone, don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, valerie ♥ 
 
@@ -49,8 +49,6 @@ The most important issues you may encounter are listed below, to help expect thi
 
 * Known Issues
 	* Item Displays for the mod's items on survivors are absent. Starstorm 2 survivors may lack item displays.
-    * Artifact of Metamorphosis is broken by the mod.
-    * Artifact of Cognation's unlock is broken. The artifact is unlocked by default.
     * Event effects may not be networked.
 
 ## Changelog
@@ -59,19 +57,29 @@ The most important issues you may encounter are listed below, to help expect thi
 
 ### 0.3.51
 * General
-    * Adjusted Clocking Headband's Russian translation.
+    * Added Chinese translation. 
+    * Adjusted Cloaking Headband's Russian translation.
+    * Commando now correctly fires phase round projectiles in multiplayer with the Stealth skin equipped.
+    * Fixed "Key Not Found" exception being thrown after ally death.
 * Items & Equipment
     * Added Equipment disabling.
-    * Reworked Relic of Termination - now grants a buff that is consumed upon an enemy spawning, and then goes on a 30 second cooldown displayed via a buff stack.
-    * Reworked Needles - Now grants a +1% stacking debuff which increases crit chance against that enemy until 1 (+1 per stack) crits happen on that enemy.
-    * Adjusted Detritive Trematode - The debuff no longer expires, but the items low health threshold was lowered to 25% for consistency with other "low health" items.
+    * Reworked Relic of Termination: "Every 30 seconds, gain a buff which marks the next spawning enemy. If defeated in time, they drop an item; if not, they drop nothing and delay the next mark. Marked enemies have significantly increased stats. (Rarity of the dropped item increases with stacks)."
+    * Reworked Needles: "Non-critical strikes add +1% critical chance against the struck enemy. Additional critical chance is cleared after 1 (+1 per stack) critical strikes against them." 
+    * Reworked Coffee Bag: "Using interactables increases movement speed by 21% and attack speed by 22.5% for up to 15 (+15 per stack) seconds."
+    * Adjusted Detritive Trematode - The debuff no longer expires, but the low health threshold was lowered to 25% for consistency with other "low health" items.
     * Adjusted MIDAS - When given to an equipment drone, the drone now splits the gold it would recieve amongst all players.
+    * Adjusted Greater Warbanner - No longer directly gives CDR, but instead makes cooldowns tick faster.
+    * Greater Warbanner's buff now has a visual on the player, like Warbanner.
     * Fixed Coffee Bag behaving strangely in multiplayer.
     * Blacklisted Coffee Bag from enemies.
     * Fixed Relic of Force giving primary skills cooldowns.
     * Should have fixed Greater Warbanner's cooldown breaking.
-    * Relic of Termination now has a blacklist for enemies that are not fit for being marked (bosses, destructible props, etc)
+    * Relic of Termination now has a blacklist for enemies that are not fit for being marked (specific bosses, destructible props, etc), and can no longer mark Cognation ghosts.
     * Added R2API TempVFX dependency.
+* Artifacts
+    * Cognation's icon now better matches with vanilla artifact icons.
+    * Cognation's unlock code now works, and the artifact properly spawns ghosts. Cognation ghosts now have the "Cognate" prefix.
+    * Metamorphosis no longer makes the game unplayable. 
 * Events
     * Invading Nemesis Commando now does less damage. (10x -> 7x)
     * Mending Orbs no longer gain elite effects during elite events.

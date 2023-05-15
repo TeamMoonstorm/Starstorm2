@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 using RoR2;
 using Moonstorm.Starstorm2.ScriptableObjects;
-using RoR2EditorKit.Core.PropertyDrawers;
 
 namespace Moonstorm.Starstorm2.Editor
 {

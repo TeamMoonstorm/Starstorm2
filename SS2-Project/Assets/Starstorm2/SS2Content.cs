@@ -96,6 +96,8 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef X4;
 
+            public static ItemDef BaneFlask;
+
             public static ItemDef NemesisBossHelper;
 
             public static ItemDef TerminationHelper;
@@ -187,6 +189,8 @@ namespace Moonstorm.Starstorm2
             public static BuffDef BuffTerminationFailed;
 
             public static BuffDef BuffEchelon;
+
+            public static BuffDef BuffBane;
         }
 
         public static class Elites

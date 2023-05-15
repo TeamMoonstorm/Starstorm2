@@ -24,6 +24,12 @@ namespace Moonstorm.Starstorm2.Items
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
         public static float moveSpeedBonus = .21f;
 
+        [ConfigurableField(ConfigDesc = "Max duration of buff, per stack. (1 = 1 second)")]
+        [TokenModifier(token, StatTypes.Default, 3)]
+        public static float maxDurationStacking = 15;
+
+
+
         override public void Initialize()
         {
             On.RoR2.GlobalEventManager.OnInteractionBegin += CoffeeBagBuff;
@@ -35,8 +41,8 @@ namespace Moonstorm.Starstorm2.Items
             if (sender.GetBuffCount(SS2Content.Buffs.BuffCoffeeBag) > 0)
             {
                 int stack = sender.GetItemCount(SS2Content.Items.CoffeeBag);
-                args.attackSpeedMultAdd += atkSpeedBonus * stack;
-                args.moveSpeedMultAdd += moveSpeedBonus * stack;
+                args.attackSpeedMultAdd += atkSpeedBonus;// * stack;
+                args.moveSpeedMultAdd += moveSpeedBonus;// * stack;
             }
         }
 
@@ -61,17 +67,29 @@ namespace Moonstorm.Starstorm2.Items
         private void ApplyCoffeeBagBuff(CharacterBody cb)
         {
             int buffCount = cb.GetBuffCount(SS2Content.Buffs.BuffCoffeeBag);
-            if (buffCount > 0)
+            //if (buffCount > 0)
+            //{
+            //    for (int i = 0; i < buffCount; i++)
+            //    {
+            //        cb.RemoveOldestTimedBuff(SS2Content.Buffs.BuffCoffeeBag.buffIndex);
+            //    }
+            //}
+            //
+            //for (int i = 1; i <= interactBuff + buffCount; i++)
+            //{
+            //    cb.AddTimedBuffAuthority(SS2Content.Buffs.BuffCoffeeBag.buffIndex, i);
+            //}
+            int j = 0;
+            for(int i = buffCount; i < (maxDurationStacking * cb.GetItemCount(SS2Content.Items.CoffeeBag)); ++i)
             {
-                for (int i = 0; i < buffCount; i++)
+                ++j;
+                cb.AddTimedBuffAuthority(SS2Content.Buffs.BuffCoffeeBag.buffIndex, i + 1);
+                if(j >= 15) 
                 {
-                    cb.RemoveOldestTimedBuff(SS2Content.Buffs.BuffCoffeeBag.buffIndex);
-                }
-            }
+                    //SS2Log.Info("added " + j + " stacks, ending");
+                    break;
 
-            for (int i = 1; i <= interactBuff + buffCount; i++)
-            {
-                cb.AddTimedBuffAuthority(SS2Content.Buffs.BuffCoffeeBag.buffIndex, i);
+                }
             }
         }
 

@@ -2812,7 +2812,6 @@ GameObject:
   - component: {fileID: 5408097213353817437}
   - component: {fileID: 8256448554288801553}
   - component: {fileID: 4565841121605088580}
-  - component: {fileID: 8191208427499231670}
   m_Layer: 0
   m_Name: NemCaptainDisplay
   m_TagString: Player
@@ -3444,20 +3443,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8116c4cf0c0d72d448d34ec52f612b86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8191208427499231670
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5900013110983913384}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -144590133, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
-  requireEntitlementIfPlayerControlled: 1
 --- !u!1 &5993095231905383692
 GameObject:
   m_ObjectHideFlags: 0

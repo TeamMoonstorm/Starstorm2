@@ -35,7 +35,7 @@ namespace Moonstorm.Starstorm2.Items
         //Sometimes, we need these necesary evils, and tbh i'm ok with this one case.
         public override void Initialize()
         {
-            JetBootsBlast = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Effects/OmniEffect/OmniExplosionVFXCommandoGrenade"), "JetBootsBlast");
+            JetBootsBlast = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Effects/OmniEffect/OmniExplosionVFXCommandoGrenade"), "JetBootsBlast", false);
 
             GameObject.DestroyImmediate(JetBootsBlast.transform.Find("ScaledHitsparks 1").gameObject);
             GameObject.DestroyImmediate(JetBootsBlast.transform.Find("UnscaledHitsparks 1").gameObject);
@@ -45,6 +45,9 @@ namespace Moonstorm.Starstorm2.Items
             JetBootsBlast.GetComponent<ShakeEmitter>().radius *= 0.5f;
             JetBootsBlast.GetComponent<EffectComponent>().soundName = "JetBootsExplosion";
             JetBootsBlast.GetComponent<EffectComponent>().applyScale = true;
+
+            ContentAddition.AddEffect(JetBootsBlast);
+
             HG.ArrayUtils.ArrayAppend(ref SS2Content.Instance.SerializableContentPack.effectPrefabs, JetBootsBlast);
         }
 

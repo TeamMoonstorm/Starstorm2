@@ -140,9 +140,10 @@ namespace Moonstorm.Starstorm2.Items
                 {
                     //SS2Log.Debug("skill" + skill.skillDef.skillNameToken);
                     int count = self.inventory.GetItemCount(SS2Content.Items.X4.itemIndex); //again i could use stack here probably but i just wanna make sure this works we can fix it later
+                    //SS2Log.Info("count: " + count + " | base skill name token: " + skill.baseSkill.skillNameToken + " | skill: " + skill.defaultSkillDef + " | skill: " + skill.name + " |||| " + skill.characterBody.skillLocator.secondaryBonusStockSkill + " | " + skill.characterBody.skillLocator.secondary);
                     if(count > 0)
-                    {
-                        if(skill == skill.characterBody.skillLocator.secondaryBonusStockSkill && skill.baseRechargeInterval != 0) // if it doesnt have a zero sec cooldown, max buffs at the number of bonus stocks
+                    {//|| skill.baseSkill.skillNameToken == SS2_NEMCOMMANDO_SECONDARY_SHOOT_NAME
+                        if (skill == skill.characterBody.skillLocator.secondaryBonusStockSkill && skill.baseRechargeInterval != 0 || skill.baseSkill.skillNameToken == "SS2_NEMCOMMANDO_SECONDARY_SHOOT_NAME") // if it doesnt have a zero sec cooldown, max buffs at the number of bonus stocks
                         {
                             int buffcap = skill.bonusStockFromBody + 1;
                             //SS2Log.Debug(buffcap + " " + skill.maxStock + " " + skill.baseStock + " "+ skill.stock);
