@@ -11,11 +11,11 @@ namespace Moonstorm.Starstorm2.Items
         private const string token = "SS2_ITEM_ERRATICGADGET_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ErraticGadget", SS2Bundle.Items);
 
-        [ConfigurableField(ConfigDesc = "Base crit chance granted by the first stack of Erratic Gadget.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Base crit chance granted by the first stack of Erratic Gadget.")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float extraCrit = 10f;
 
-        [ConfigurableField(ConfigDesc = "Extra damage that crits deal per stack of Erratic Gadget. (1 = 100%)")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Extra damage that crits deal per stack of Erratic Gadget. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
         public static float extraDamage = 0.5f;
 

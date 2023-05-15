@@ -10,6 +10,13 @@ namespace Moonstorm.Starstorm2.Items
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("StirringSoul", SS2Bundle.Items);
 
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance to gain soul initially. (1 = 100%)")]
+        [TokenModifier("SS2_ITEM_STIRRINGSOUL_DESC", StatTypes.MultiplyByN, 0, "100")]
+        public static float initChance = 0.005f;
+
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Soul gain chance cap. (1 = 100%)")]
+        public static float maxChance = 0.1f;
+
         public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver
         {
             [ItemDefAssociation]
@@ -34,11 +41,11 @@ namespace Moonstorm.Starstorm2.Items
             {
                 if (reset)
                 {
-                    currentChance = 1;
+                    currentChance = initChance * 200;
                 }
-                else if (currentChance < 20)
+                else if (currentChance < (maxChance * 200))
                 {
-                    currentChance += 1f;
+                    currentChance += initChance * 200;
                 }
             }
         }

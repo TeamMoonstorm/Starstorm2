@@ -7,11 +7,11 @@ namespace Moonstorm.Starstorm2.Items
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("FieldAccelerator", SS2Bundle.Items);
 
-        [ConfigurableField(ConfigDesc = "Amount of charge to add to the teleporter on kill. (1 = 100%)")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of charge to add to the teleporter on kill. (1 = 100%)")]
         [TokenModifier("SS2_ITEM_FIELDACCELERATOR_DESC", StatTypes.MultiplyByN, 0, "100")]
         public static float chargePerKill = 0.01f;
 
-        [ConfigurableField(ConfigDesc = "Maximum Amount of Charge per kill. (1 = 100%)")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Maximum Amount of Charge per kill. (1 = 100%)")]
         public static float maxChargePerKill = 0.05f;
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver

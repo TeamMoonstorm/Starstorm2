@@ -10,6 +10,9 @@ namespace Moonstorm.Starstorm2.Modules
         public static Equipments Instance { get; private set; }
         public override R2APISerializableContentPack SerializableContentPack => SS2Content.Instance.SerializableContentPack;
 
+        [ConfigurableField(SS2Config.IDItem, ConfigSection = ": Enable All Equipments :", ConfigName = ": Enable All Equipments :", ConfigDesc = "Enables Starstorm 2's equipments. Set to false to disable equipments.")]
+        public static bool EnableEquipments = true;
+
         public override void Initialize()
         {
             Instance = this;
@@ -23,9 +26,17 @@ namespace Moonstorm.Starstorm2.Modules
         {
             base.GetEquipmentBases()
                 .ToList()
-                .ForEach(eqp => AddEquipment(eqp));
+                .ForEach(eqp => {
+                    if (eqp.EquipmentDef.cooldown != 0)
+                    {
+                        string niceName = MSUtil.NicifyString(eqp.GetType().Name);
+                        float cooldown = SS2Config.ConfigItem.Bind(niceName, "Cooldown", eqp.EquipmentDef.cooldown, "Cooldown of this equipment in seconds.").Value;
+                        eqp.EquipmentDef.cooldown = cooldown;
+                    }
+                    AddEquipment(eqp);
+                });
 
-            base.GetEquipmentBases().ToList().ForEach(eqp => CheckEnabledStatus(eqp));
+            base.GetEquipmentBases().ToList().ForEach(CheckEnabledStatus);
 
             return null;
         }
@@ -44,12 +55,15 @@ namespace Moonstorm.Starstorm2.Modules
             if (!(eqp.EquipmentDef.dropOnDeathChance > 0 || eqp.EquipmentDef.passiveBuffDef || niceName.ToLower().Contains("affix")))
             {
                 //string niceName = MSUtil.NicifyString(eqp.GetType().Name);
-                ConfigEntry<bool> enabled = Starstorm.instance.Config.Bind<bool>(niceName, "Enabled", true, "Should this item be enabled?");
-                if (!enabled.Value)
+                ConfigEntry<bool> enabled = SS2Config.ConfigItem.Bind(niceName, "Enabled", true, "Should this item be enabled?");
+                if (!EnableEquipments || !enabled.Value)
                 {
-                    eqp.EquipmentDef.appearsInSinglePlayer = false; // :)
-                    eqp.EquipmentDef.appearsInMultiPlayer = false;
                     eqp.EquipmentDef.canDrop = false;
+                    eqp.EquipmentDef.appearsInSinglePlayer = false;
+                    eqp.EquipmentDef.appearsInMultiPlayer = false;
+                    eqp.EquipmentDef.canBeRandomlyTriggered = false;
+                    eqp.EquipmentDef.enigmaCompatible = false;
+                    eqp.EquipmentDef.dropOnDeathChance = 0f;
                 }
             }
 

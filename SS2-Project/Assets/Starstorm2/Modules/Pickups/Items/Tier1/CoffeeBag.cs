@@ -12,15 +12,15 @@ namespace Moonstorm.Starstorm2.Items
         public const string token = "SS2_ITEM_COFFEEBAG_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("CoffeeBag", SS2Bundle.Items);
 
-        [ConfigurableField(ConfigDesc = "Duration of the buff gained upon using an interactable.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of the buff gained upon using an interactable.")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float interactBuff = 15;
 
-        [ConfigurableField(ConfigDesc = "Attack speed bonus granted per stack while the buff is active. (1 = 100%)")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Attack speed bonus granted per stack while the buff is active. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
         public static float atkSpeedBonus = .225f;
 
-        [ConfigurableField(ConfigDesc = "Movement speed bonus granted per stack while the buff is active. (1 = 100%)")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Movement speed bonus granted per stack while the buff is active. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
         public static float moveSpeedBonus = .21f;
 

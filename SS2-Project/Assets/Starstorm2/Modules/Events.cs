@@ -1,5 +1,6 @@
 ﻿using Moonstorm.Starstorm2.ScriptableObjects;
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
@@ -8,7 +9,10 @@ namespace Moonstorm.Starstorm2
 {
     public static class Events
     {
-        
+
+        [ConfigurableField(SS2Config.IDMain, ConfigSection = "Events", ConfigName = ": Enable Events :", ConfigDesc = "Enables Starstorm 2's random events, including storms. Set to false to disable events.")]
+        public static bool EnableEvents = true;
+
         /// <summary>
         /// Class for aiding Nemesis invasion creation for 3rd Parties.
         /// </summary>
@@ -132,15 +136,27 @@ namespace Moonstorm.Starstorm2
 
         public static void Init()
         {
-            EventCatalog.AddCards(SS2Assets.LoadAllAssetsOfType<EventCard>(SS2Bundle.Events));
-            SceneManager.sceneLoaded += StormOnMenu;
+            if (EnableEvents) foreach (var evt in SS2Assets.LoadAllAssetsOfType<EventCard>(SS2Bundle.Events))
+            {
+                string name = evt.name;
+                if (SS2Config.ConfigMain.Bind("Events", "Enable " + MSUtil.NicifyString(name), true, "Set to false to disable this event.").Value) EventCatalog.AddCard(evt);
+            }
+            if (SS2Config.ConfigMisc.Bind("Visuals", "Custom Main Menu", true, "Setting this to false returns the main menu to the original, bright one.").Value)
+            {
+                SceneManager.sceneLoaded += StormOnMenu;
+                On.RoR2.UI.SteamBuildIdLabel.Start += (orig, self) =>
+                {
+                    orig(self);
+                    self.GetComponent<TextMeshProUGUI>().text += "<color=#75BAFF> + <link=\"textWavy\">SS2 " + Starstorm.version.ToString() + "</link></color>";
+                }; // copied from wrb which copied from rm so its my code :smirk_cat:
+            }
         }
 
         private static void StormOnMenu(Scene scene, LoadSceneMode mode)
         {
             if (scene.name.Equals("title"))
             {
-                System.DateTime today = System.DateTime.Today;
+                DateTime today = DateTime.Today;
                 if ((today.Month == 12) && ((today.Day == 25) || (today.Day == 24)))
                 {
                     Object.Instantiate(SS2Assets.LoadAsset<GameObject>("ChristmasMenuEffect", SS2Bundle.Events), Vector3.zero, Quaternion.identity);

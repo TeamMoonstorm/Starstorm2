@@ -260,17 +260,8 @@ namespace Moonstorm.Starstorm2
                 {
                     new Modules.Elites().Initialize();
                 },
-                delegate
-                {
-                    Typhoon.Init();
-                },
-                delegate
-                {
-                    if(SS2Config.EnableEvents.Value)
-                    {
-                        Events.Init();
-                    }
-                },
+                Typhoon.Init,
+                Events.Init,
                 delegate
                 {
                     new Modules.Characters().Initialize();
