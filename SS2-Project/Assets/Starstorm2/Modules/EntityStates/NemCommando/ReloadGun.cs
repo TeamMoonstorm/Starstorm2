@@ -27,7 +27,7 @@ namespace EntityStates.NemCommando
         {
             get
             {
-                return baseDuration / skillLocator.secondary.cooldownScale;
+                return baseDuration * skillLocator.secondary.cooldownScale;
             }
         }
 

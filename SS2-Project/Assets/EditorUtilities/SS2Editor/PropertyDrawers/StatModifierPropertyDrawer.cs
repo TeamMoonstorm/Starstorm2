@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using RoR2;
 using Moonstorm.Starstorm2.ScriptableObjects;
+using RoR2EditorKit.PropertyDrawers;
 
 namespace Moonstorm.Starstorm2.Editor
 {

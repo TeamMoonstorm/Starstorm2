@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: escMULESlam
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.MULE.MULESlam, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: minDamageCoefficient
+      fieldValue:
+        stringValue: 4
+        objectValue: {fileID: 0}
+    - fieldName: maxDamageCoefficient
+      fieldValue:
+        stringValue: 9
+        objectValue: {fileID: 0}
+    - fieldName: minRadius
+      fieldValue:
+        stringValue: 4
+        objectValue: {fileID: 0}
+    - fieldName: maxRadius
+      fieldValue:
+        stringValue: 12
+        objectValue: {fileID: 0}
+    - fieldName: baseDuration
+      fieldValue:
+        stringValue: 0.6
+        objectValue: {fileID: 0}
+    - fieldName: muzzleString
+      fieldValue:
+        stringValue: SlamMuzzle
+        objectValue: {fileID: 0}
+    - fieldName: slamEffectVFX
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 96297726240274829, guid: 45a2e2a874d3e0a499632c0e3ba9a136,
+          type: 3}

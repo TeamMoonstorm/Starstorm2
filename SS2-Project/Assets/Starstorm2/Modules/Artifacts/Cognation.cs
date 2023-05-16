@@ -147,7 +147,7 @@ namespace Moonstorm.Starstorm2.Artifacts
         //Swuff, I Hate You 3000
         public override void Initialize()
         {
-            SceneManager.sceneLoaded += AddCode;
+            //SceneManager.sceneLoaded += AddCode; kill!!!!!!!
         }
 
         private void AddCode(Scene arg0, LoadSceneMode arg1)

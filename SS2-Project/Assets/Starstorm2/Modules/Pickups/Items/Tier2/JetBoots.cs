@@ -83,7 +83,7 @@ namespace Moonstorm.Starstorm2.Items
 
                     EffectData bootsEffectData = new EffectData()
                     {
-                        color = new Color32(0, 255, 0, 255),
+                        color = new Color32(0, 255, 0, 150),
                         scale = radius / 2,
                         origin = body.footPosition
                     };

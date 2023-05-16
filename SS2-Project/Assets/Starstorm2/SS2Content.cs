@@ -146,6 +146,8 @@ namespace Moonstorm.Starstorm2
 
             public static BuffDef BuffIntoxicated;
 
+            public static BuffDef BuffInsecticide;
+
             public static BuffDef BuffCoffeeBag;
 
             public static BuffDef BuffNeedle;
@@ -174,19 +176,31 @@ namespace Moonstorm.Starstorm2
 
             public static BuffDef BuffSurrender;
 
-            public static BuffDef BuffTerminationVFX;
-
             public static BuffDef BuffX4;
 
             public static BuffDef bdElitePurple;
 
             public static BuffDef bdPurplePoison;
+
+            public static BuffDef bdHiddenSlow20;
+
+            public static BuffDef bdHiddenSpeed5;
+
+            public static BuffDef bdMULENet;
+
+            public static BuffDef bdExeCharge;
+
+            public static BuffDef bdCanJump;
+
+            public static BuffDef bdExeMuteCharge;
 			
             public static BuffDef BuffTerminationCooldown;
 
             public static BuffDef BuffTerminationReady;
 
             public static BuffDef BuffTerminationFailed;
+
+            public static BuffDef BuffTerminationVFX;
 
             public static BuffDef BuffEchelon;
 
@@ -264,8 +278,41 @@ namespace Moonstorm.Starstorm2
                 {
                     new Modules.Elites().Initialize();
                 },
+				
                 Typhoon.Init,
                 Events.Init,
+				
+                //delegate
+                //{
+                //    //Deluge.Init();
+                //},
+                //delegate
+                //{
+                //    //Tempest.Init();
+                //},
+                //delegate
+                //{
+                //    //Cyclone.Init();
+                //},
+                //delegate
+                //{
+                //    Typhoon.Init();
+                //},
+                //delegate
+                //{
+                //    //SuperTyphoon.Init();
+                //},
+                //delegate
+                //{
+                //    Ethereal.Init();
+                //},
+                //delegate
+                //{
+                //    if(SS2Config.EnableEvents.Value)
+                //    {
+                //        Events.Init();
+                //    }
+                //},
                 delegate
                 {
                     new Modules.Characters().Initialize();

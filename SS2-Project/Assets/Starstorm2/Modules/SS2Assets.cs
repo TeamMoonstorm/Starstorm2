@@ -24,6 +24,7 @@ namespace Moonstorm.Starstorm2
         Artifacts,
         Executioner,
         Nemmando,
+        NemCommando,
         Equipments,
         Items,
         Events,
@@ -40,6 +41,7 @@ namespace Moonstorm.Starstorm2
         private const string ARTIFACTS = "ss2artifacts";
         private const string EXECUTIONER = "ss2executioner";
         private const string NEMMANDO = "ss2nemmando";
+        private const string NEMCOMMANDO = "ss2nemcommando";
         private const string EQUIPS = "ss2equipments";
         private const string ITEMS = "ss2items";
         private const string EVENTS = "ss2events";
@@ -71,7 +73,7 @@ namespace Moonstorm.Starstorm2
         {
             if(Instance == null)
             {
-                SS2Log.Error("Cannot load asset when there's no isntance of SS2Assets!");
+                SS2Log.Error("Cannot load asset when there's no instance of SS2Assets!");
                 return null;
             }
             return Instance.LoadAssetInternal<TAsset>(name, bundle);
@@ -146,6 +148,7 @@ namespace Moonstorm.Starstorm2
                     case ARTIFACTS: LoadAndAssign(path, SS2Bundle.Artifacts); break;
                     case EXECUTIONER: LoadAndAssign(path, SS2Bundle.Executioner); break;
                     case NEMMANDO: LoadAndAssign(path, SS2Bundle.Nemmando); break;
+                    case NEMCOMMANDO: LoadAndAssign(path, SS2Bundle.NemCommando); break;
                     case EQUIPS: LoadAndAssign(path, SS2Bundle.Equipments); break;
                     case ITEMS: LoadAndAssign(path, SS2Bundle.Items); break;
                     case EVENTS: LoadAndAssign(path, SS2Bundle.Events); break;

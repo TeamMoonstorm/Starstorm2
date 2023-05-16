@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: escMULESpin
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.MULE.MULESpin, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: dmgCoefficient
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: swingTimeCoefficient
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: duration
+      fieldValue:
+        stringValue: 0.35
+        objectValue: {fileID: 0}
+    - fieldName: baseDuration
+      fieldValue:
+        stringValue: 0.35
+        objectValue: {fileID: 0}
+    - fieldName: damageCoefficient
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: hitBoxGroupName
+      fieldValue:
+        stringValue: SpinHitbox
+        objectValue: {fileID: 0}
+    - fieldName: hitEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: procCoefficient
+      fieldValue:
+        stringValue: 0.5
+        objectValue: {fileID: 0}
+    - fieldName: pushAwayForce
+      fieldValue:
+        stringValue: 800
+        objectValue: {fileID: 0}
+    - fieldName: forceVector
+      fieldValue:
+        stringValue: 0 0 0
+        objectValue: {fileID: 0}
+    - fieldName: hitPauseDuration
+      fieldValue:
+        stringValue: 0.05
+        objectValue: {fileID: 0}
+    - fieldName: swingEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: swingEffectMuzzleString
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: mecanimHitboxActiveParameter
+      fieldValue:
+        stringValue: spinHitbox
+        objectValue: {fileID: 0}
+    - fieldName: shorthopVelocityFromHit
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: beginStateSoundString
+      fieldValue:
+        stringValue: Play_moonBrother_swing_horizontal
+        objectValue: {fileID: 0}
+    - fieldName: beginSwingSoundString
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: impactSound
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: forceForwardVelocity
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: forwardVelocityCurve
+      fieldValue:
+        stringValue: '{"preWrapMode":8,"postWrapMode":8,"keys":[]}'
+        objectValue: {fileID: 0}
+    - fieldName: scaleHitPauseDurationAndVelocityWithAttackSpeed
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: ignoreAttackSpeed
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: minSpinCount
+      fieldValue:
+        stringValue: 4
+        objectValue: {fileID: 0}
+    - fieldName: maxSpinCount
+      fieldValue:
+        stringValue: 10
+        objectValue: {fileID: 0}

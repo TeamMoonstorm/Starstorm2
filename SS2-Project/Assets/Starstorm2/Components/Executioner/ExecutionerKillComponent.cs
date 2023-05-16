@@ -25,10 +25,14 @@ namespace Moonstorm.Starstorm2.Components
             CharacterBody body = GetComponent<CharacterBody>();
             if (body)
                 orbCount = Executioner.GetIonCountFromBody(body);
+            /*if (report.attackerBody.skillLocator.secondary.stock == 0 || report.damageInfo.damageType.HasFlag(DamageType.Shock5s))
+                orbCount *= 0;*/
+            if (report.victimBody.teamComponent.teamIndex == TeamIndex.Lunar)
+                orbCount *= 3;
+            if (report.victimBody.isElite)
+                orbCount *= 2;
             if (report.damageInfo.damageType.HasFlag(DamageType.BypassOneShotProtection))
                 orbCount *= 2;
-
-
 
             //Christ we should really just scale the size of the orb or some shit...
             for (int i = 0; i < orbCount; i++)
@@ -38,6 +42,7 @@ namespace Moonstorm.Starstorm2.Components
                 ionOrb.target = Util.FindBodyMainHurtBox(attacker);
                 OrbManager.instance.AddOrb(ionOrb);
             }
+
             if (orbCount >= 50)
             {
                 ExecutionerIonSuperOrb superIonOrb = new ExecutionerIonSuperOrb();

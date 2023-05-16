@@ -9,7 +9,7 @@ namespace Moonstorm.Starstorm2.Buffs
 {
     public sealed class BuffEchelon : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffEchelon", SS2Bundle.Items);
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffEchelon", SS2Bundle.Indev);
 
         //public override Material OverlayMaterial => SS2Assets.LoadAsset<Material>("matTerminationOverlay");
 
