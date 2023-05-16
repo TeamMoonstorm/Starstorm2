@@ -17,6 +17,7 @@ namespace Moonstorm.Starstorm2.Components
         public EntityStateMachine esm;
         public ModelLocator modelLocator;
         public ChildLocator childLocator;
+        public static GameObject menuPrefab;
         public PickupPickerController pickupPickerController;
         private Interactor interactor;
 
@@ -30,6 +31,11 @@ namespace Moonstorm.Starstorm2.Components
 
         public Dictionary<ItemDef, float> itemValues = new Dictionary<ItemDef, float>();
         public Dictionary<Sprite, ItemDef> itemSprites = new Dictionary<Sprite, ItemDef>(); //stupid solution
+
+        internal static void Init()
+        {
+            menuPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Scrapper/ScrapperPickerPanel.prefab").WaitForCompletion(); ;
+        }
 
         // private static GameObject menu = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Scrapper/ScrapperPickerPanel.prefab").WaitForCompletion();
         void Start()
@@ -98,7 +104,7 @@ namespace Moonstorm.Starstorm2.Components
             //Set 'favorite item' label
             if (ltmcPrice != null)
             {
-                string combinedString = string.Format("{0} {1} {2}", "SS2_TRADER_WANT_TEXT", favoriteItem.nameToken, "SS2_TRADER_WANT2_TEXT");
+                string combinedString = string.Format("{0}{1}{2}", Language.GetStringFormatted("SS2_TRADER_WANT_TEXT"), Language.GetStringFormatted(favoriteItem.nameToken), Language.GetStringFormatted("SS2_TRADER_WANT2_TEXT"));
                 ltmcPrice.token = combinedString;
             }
             else
@@ -141,7 +147,7 @@ namespace Moonstorm.Starstorm2.Components
                 case ItemTier.Boss:
                 case ItemTier.VoidTier3:
                 case ItemTier.VoidBoss:
-                    value = UnityEngine.Random.Range(rareValue * 0.7f, rareValue * 1.3f);
+                    value = UnityEngine.Random.Range(rareValue * 0.9f, rareValue * 1.3f);
                     break;
 
                 //lunar:
@@ -152,7 +158,7 @@ namespace Moonstorm.Starstorm2.Components
                 //uncommon and void equivalent:
                 case ItemTier.Tier2:
                 case ItemTier.VoidTier2:
-                    value = UnityEngine.Random.Range(uncommonValue * 0.7f, uncommonValue * 1.3f);
+                    value = UnityEngine.Random.Range(uncommonValue * 0.7f, uncommonValue * 1.5f);
                     break;
 
                 //common and void equivalent:

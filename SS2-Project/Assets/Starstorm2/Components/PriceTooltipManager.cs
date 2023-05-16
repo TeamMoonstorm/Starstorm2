@@ -76,7 +76,7 @@ namespace Moonstorm.Starstorm2.Components
                 tooltip.titleColor = ColorCatalog.GetColor(item.darkColorIndex);
                 tooltip.titleToken = item.nameToken;
                 string value = Mathf.Floor(zanzanController.itemValues[item] * 100).ToString();
-                string combinedString = string.Format("{0} {1} {2}", value, "% - ", quality);
+                string combinedString = string.Format("{0}{1}{2}", value, "% - ", Language.GetStringFormatted(quality));
                 tooltip.bodyToken = combinedString;
             }
         }
