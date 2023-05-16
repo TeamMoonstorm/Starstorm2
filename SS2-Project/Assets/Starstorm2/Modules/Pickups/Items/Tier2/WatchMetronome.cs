@@ -10,11 +10,11 @@ namespace Moonstorm.Starstorm2.Items
         private const string token = "SS2_ITEM_WATCHMETRONOME_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("WatchMetronome", SS2Bundle.Items);
 
-        [ConfigurableField(ConfigDesc = "Amount of charges per stack.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of charges per stack.")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static int chargeAmount = 5;
 
-        [ConfigurableField(ConfigDesc = "Maximum movement speed bonus that can be achieved via metronome. (1 = 100%)")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Maximum movement speed bonus that can be achieved via metronome. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
         public static float maxMovementSpeed = 2;
 

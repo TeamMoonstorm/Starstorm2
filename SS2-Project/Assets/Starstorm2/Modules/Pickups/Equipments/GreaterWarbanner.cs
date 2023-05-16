@@ -14,25 +14,25 @@ namespace Moonstorm.Starstorm2.Equipments
         public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("GreaterWarbanner", SS2Bundle.Equipments);
         public GameObject WarbannerObject { get; set; } = SS2Assets.LoadAsset<GameObject>("GreaterWarbannerWard", SS2Bundle.Equipments);
 
-        [ConfigurableField(ConfigDesc = "Amount of Extra Regeneration. (1 = 100%)")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of Extra Regeneration. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float extraRegeneration = 0.5f;
 
-        [ConfigurableField(ConfigDesc = "Amount of Extra Crit Chance. (100 = 100%)")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of Extra Crit Chance. (100 = 100%)")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static float extraCrit = 20f;
 
-        [ConfigurableField(ConfigDesc = "Amount of Cooldown Reduction. (1 = 100%)")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of Cooldown Reduction. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
         public static float cooldownReduction = 0.5f;
 
-        [ConfigurableField(ConfigDesc = "Max active warbanners for each character.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Max active warbanners for each character.")]
         [TokenModifier(token, StatTypes.Default, 3)]
         public static int maxGreaterBanners = 5;
 
         override public void Initialize()
         {
-            //CreateVisualEffects();
+            CreateVisualEffects();
         }
 
         //public override void AddBehavior(ref CharacterBody body, int stack)
@@ -50,14 +50,12 @@ namespace Moonstorm.Starstorm2.Equipments
             }
             //To do: make better placement system
             SS2Log.Info("aimorigin: " + slot.inputBank.aimOrigin + " | direction: " + slot.inputBank.aimDirection);
-            SS2Log.Warning("aimorigin: " + slot.inputBank.aimOrigin + " | direction: " + slot.inputBank.aimDirection);
-            SS2Log.Message("aimorigin: " + slot.inputBank.aimOrigin + " | direction: " + slot.inputBank.aimDirection);
 
             Vector3 position = slot.inputBank.aimOrigin - (slot.inputBank.aimDirection);
             GameObject bannerObject = UnityEngine.Object.Instantiate(WarbannerObject, position, Quaternion.identity);
 
             bannerObject.GetComponent<TeamFilter>().teamIndex = slot.teamComponent.teamIndex;
-            NetworkServer.Spawn(WarbannerObject);
+            NetworkServer.Spawn(bannerObject);
             //var behavior = slot.gameObject.GetComponent<GreaterWarbannerBehavior>();
             //if (behavior.warBannerInstance)
             //NetworkServer.Destroy(behavior.warBannerInstance);
@@ -96,6 +94,7 @@ namespace Moonstorm.Starstorm2.Equipments
             //    EffectManager.SimpleSoundEffect(sound, bannerObject.transform.position, true);
             //    GBToken.soundCooldown = 0f;
             //}
+
             return true;
         }
 
@@ -129,23 +128,24 @@ namespace Moonstorm.Starstorm2.Equipments
             }   
         }
 
-        //private void CreateVisualEffects()
-        //{
-        //    var SheenEffectInstance = SS2Assets.LoadAsset<GameObject>("testMask"); //SS2Assets.LoadAsset<GameObject>("testMask", SS2Bundle.Equipments);  //AssetBundle.LoadAsset<GameObject>("SheenEffect");
-        //    var tempEffectComponent = SheenEffectInstance.AddComponent<TemporaryVisualEffect>();
-        //    tempEffectComponent.visualTransform = SheenEffectInstance.GetComponent<Transform>();
-        //
-        //    var destroyOnTimerComponent = SheenEffectInstance.AddComponent<DestroyOnTimer>();
-        //    destroyOnTimerComponent.duration = 0.1f;
-        //    MonoBehaviour[] exitComponents = new MonoBehaviour[1];
-        //    exitComponents[0] = destroyOnTimerComponent;
-        //
-        //    tempEffectComponent.exitComponents = exitComponents;
-        //
-        //    TempVisualEffectAPI.AddTemporaryVisualEffect(SheenEffectInstance.InstantiateClone("TestEffect", false), (CharacterBody body) => { return body.HasBuff(SS2Content.Buffs.BuffGreaterBanner); }, true, "HandR");
-        //    //TempVisualEffectAPI.AddTemporaryVisualEffect(SheenEffectInstance.InstantiateClone("SheenEffectR", false), (CharacterBody body) => { return body.HasBuff(SS2Content.Buffs.BuffGreaterBanner); }, true, "HandR");
-        //    
-        //}
+        private void CreateVisualEffects()
+        {
+            var effectInstance = SS2Assets.LoadAsset<GameObject>("GreaterBannerBuffEffect", SS2Bundle.Equipments); //SS2Assets.LoadAsset<GameObject>("testMask", SS2Bundle.Equipments);  //AssetBundle.LoadAsset<GameObject>("SheenEffect");
+            //var tempEffectComponent = SheenEffectInstance.AddComponent<TemporaryVisualEffect>();
+            //tempEffectComponent.visualTransform = SheenEffectInstance.GetComponent<Transform>();
+        
+            //var destroyOnTimerComponent = SheenEffectInstance.AddComponent<DestroyOnTimer>();
+            //destroyOnTimerComponent.duration = 0.1f;
+            //MonoBehaviour[] exitComponents = new MonoBehaviour[1];
+            //exitComponents[0] = destroyOnTimerComponent;
+        
+            //tempEffectComponent.exitComponents = exitComponents;
+        
+            TempVisualEffectAPI.AddTemporaryVisualEffect(effectInstance.InstantiateClone("GreaterBannerBuffEffect", false), (CharacterBody body) => { return body.HasBuff(SS2Content.Buffs.BuffGreaterBanner); }, true, "MainHurtbox");
+            //TempVisualEffectAPI.AddTemporaryVisualEffect(SheenEffectInstance.InstantiateClone("SheenEffectR", false), (CharacterBody body) => { return body.HasBuff(SS2Content.Buffs.BuffGreaterBanner); }, true, "HandR");
+            
+        }
     }
+    
 
 }

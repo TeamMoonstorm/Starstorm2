@@ -9,6 +9,7 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using Moonstorm.Components;
+using static RoR2.Items.BaseItemBodyBehavior;
 
 namespace Moonstorm.Starstorm2.Items
 {
@@ -19,7 +20,7 @@ namespace Moonstorm.Starstorm2.Items
         private const string descToken = "SS2_ITEM_BABYTOYS_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("BabyToys", SS2Bundle.Items);
 
-        [ConfigurableField(ConfigDesc = "Levels removed per stack")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Levels removed per stack")]
         [TokenModifier(pickupToken, StatTypes.Default, 0)]
         [TokenModifier(descToken, StatTypes.Default, 0)]
         public static int levelReductionPerStack = 3;
@@ -31,6 +32,21 @@ namespace Moonstorm.Starstorm2.Items
 
 
 
+        //public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier
+        //{
+        //    [ItemDefAssociation]
+        //    private static ItemDef GetItemDef() => SS2Content.Items.BabyToys;
+        //    public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+        //    {
+        //        BabyToyToken token = body.GetComponent<BabyToyToken>();
+        //        if (token)
+        //        {
+        //
+        //        }
+        //        args.levelFlatAdd += (stack * levelReductionPerStack - (int)token.remainingLevelReduction);
+        //        //throw new NotImplementedException();
+        //    }
+        //}
 
         public sealed class MasterBehavior : BaseItemMasterBehavior
         {
@@ -72,14 +88,21 @@ namespace Moonstorm.Starstorm2.Items
             public void OnStackChanged(int change)
             {
                 int levelChange = change * levelReductionPerStack;
+                BabyToyToken token = master.GetBody().GetComponent<BabyToyToken>();
+                if (!token)
+                {
+                    token = master.GetBody().gameObject.AddComponent<BabyToyToken>();
+                }
                 if (levelChange > 0)
                 {
                     remainingLevelReduction += (uint)levelChange;
+                    token.remainingLevelReduction = remainingLevelReduction;
                     TryReduceLevel();
                 }
                 else if (levelChange < 0)
                 {
                     remainingLevelReduction -= (uint)levelChange;
+                    token.remainingLevelReduction = remainingLevelReduction;
                     TryIncreaseLevel();
                 }
             }
@@ -147,7 +170,11 @@ namespace Moonstorm.Starstorm2.Items
                     return;
                 }
                 remainingLevelReduction -= levelsReduced;
-
+                BabyToyToken token = master.GetBody().GetComponent<BabyToyToken>();
+                if (token)
+                {
+                    token.remainingLevelReduction = remainingLevelReduction;
+                }
                 ulong currentLevelExperience = TeamManager.GetExperienceForLevel(currentLevel);
                 ulong nextLevelExperience = TeamManager.GetExperienceForLevel(currentLevel + 1U);
 
@@ -236,6 +263,8 @@ namespace Moonstorm.Starstorm2.Items
                             if (hasBeenAdjusted && levelText.targetText)
                             {
                                 RectTransform rectTransform = (RectTransform)levelText.targetText.transform;
+                                //Transform transf = new Transform(0)
+                                rectTransform.transform.position += (Vector3.right * 5000); 
                                 rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x - levelTextScaleAdjustment, rectTransform.sizeDelta.y);
                                 adjustedLevelText.Remove(levelText);
                             }
@@ -244,12 +273,13 @@ namespace Moonstorm.Starstorm2.Items
                 }
                 else { SS2Log.Error(this + ": Level Text IL hook failed!"); }
             }
+
             private void CharacterBody_RecalculateStats(ILContext il)
             {
                 ILCursor c = new ILCursor(il);
-
+            
                 int localLevelMultiplierLocIndex = -1;
-
+            
                 bool ILFound = c.TryGotoNext(MoveType.After,
                     x => x.MatchLdarg(0),
                     x => x.MatchCall<CharacterBody>("get_level"),
@@ -259,7 +289,7 @@ namespace Moonstorm.Starstorm2.Items
                     ) && c.TryGotoNext(MoveType.After,
                     x => x.MatchStloc(out localLevelMultiplierLocIndex)
                     );
-
+            
                 if (ILFound)
                 {
                     c.MoveAfterLabels();
@@ -276,7 +306,7 @@ namespace Moonstorm.Starstorm2.Items
                     c.Emit(OpCodes.Stloc, localLevelMultiplierLocIndex);
                 }
                 else { SS2Log.Error(this + ": Bonus Level Stats IL hook failed!"); }
-
+            
             }
 
             private void OnDisable()
@@ -294,6 +324,7 @@ namespace Moonstorm.Starstorm2.Items
             public int usesLeft;
             //helps keep track of the target and player responsible
             public CharacterBody PlayerOwner;
+            public uint remainingLevelReduction;
         }
     }
 }

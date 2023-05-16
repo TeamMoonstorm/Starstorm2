@@ -13,9 +13,9 @@ namespace Moonstorm.Starstorm2.Artifacts
     public sealed class Cognation : ArtifactBase
     {
         public override ArtifactDef ArtifactDef { get; } = SS2Assets.LoadAsset<ArtifactDef>("Cognation", SS2Bundle.Artifacts);
-        public override ArtifactCode ArtifactCode { get; } = SS2Assets.LoadAsset<ArtifactCode>("Cognation", SS2Bundle.Artifacts);
+        public override ArtifactCode ArtifactCode { get; } = SS2Assets.LoadAsset<ArtifactCode>("CognationCode", SS2Bundle.Artifacts);
 
-        [ConfigurableField(ConfigDesc = "Whether or not cognation ghosts inherit all items from the original body")]
+        [ConfigurableField(SS2Config.IDArtifact, ConfigDesc = "Whether or not cognation ghosts inherit all items from the original body")]
         public static bool InheritInventory = true;
         public static ReadOnlyCollection<MasterCatalog.MasterIndex> BlacklistedMasterIndices { get; private set; }
         private static readonly List<MasterCatalog.MasterIndex> blacklistedMasterIndices = new List<MasterCatalog.MasterIndex>();
@@ -26,8 +26,11 @@ namespace Moonstorm.Starstorm2.Artifacts
             "VoidInfestor",
         };
 
+        private static bool hasMadeList;
+        private static List<BodyIndex> illegalGhosts = new List<BodyIndex>();
+
         [SystemInitializer(typeof(MasterCatalog))]
-        private static void SystemInit()
+        private static void SystemInit() //yeah this doesnt fucking run and i'm assuming somethings like actually wrong here so instead of trying to fix it im just gonna make a workaround 
         {
             List<string> defaultBlacklistedMasters = new List<string>
             {
@@ -41,6 +44,7 @@ namespace Moonstorm.Starstorm2.Artifacts
                 MasterCatalog.MasterIndex masterIndex = MasterCatalog.FindMasterIndex(masterName);
                 if(masterIndex != MasterCatalog.MasterIndex.none)
                 {
+                    SS2Log.Info("Adding " + masterName + " with index " + masterIndex + " to cognation banlist");
                     AddMasterToBlacklist(masterIndex);
                 }
             }
@@ -57,12 +61,87 @@ namespace Moonstorm.Starstorm2.Artifacts
             if(blacklistedMasterIndices.Contains(masterIndex))
             {
                 GameObject prefab = MasterCatalog.GetMasterPrefab(masterIndex);
-                SS2Log.Debug($"Master PRefab {prefab} is already blacklisted.");
+                SS2Log.Debug($"Master Prefab {prefab} is already blacklisted.");
                 return;
             }
 
             blacklistedMasterIndices.Add(masterIndex);
-            BlacklistedMasterIndices = new ReadOnlyCollection<MasterCatalog.MasterIndex>(blacklistedMasterIndices);
+            BlacklistedMasterIndices = new ReadOnlyCollection<MasterCatalog.MasterIndex>(blacklistedMasterIndices); //is this needed here? i have no fucking idea what this means tbh
+            foreach(MasterCatalog.MasterIndex index in BlacklistedMasterIndices)
+            {
+                SS2Log.Info("Collected indexes: " + index);
+            }
+        }
+        
+        private static void InitializeIllegalGhostList()
+        {
+            List<string> defaultBodyNames = new List<string>
+            {
+                "BrotherHurtBody",
+                "VoidInfestorBody",
+                "ArtifactShellBody",
+        
+                //"BrotherBody",
+                //"BrotherGlassBody",
+                //"BrotherHauntBody",
+                //"ShopkeeperBody",
+                //"MiniVoidRaidCrabBodyBase",
+                //"MiniVoidRaidCrabBodyPhase1",
+                //"MiniVoidRaidCrabBodyPhase2",
+                //"MiniVoidRaidCrabBodyPhase3",
+                //"VoidRaidCrabJointBody",
+                //"VoidRaidCrabBody",
+                //"ScavLunar1Body",
+                //"ScavLunar2Body",
+                //"ScavLunar3Body",
+                //"ScavLunar4Body",
+                //"ScavSackProjectile",
+                //"VagrantTrackingBomb",
+                //"LunarWispTrackingBomb",
+                //"GravekeeperTrackingFireball",
+                //"BeetleWard",
+                //"AffixEarthHealerBody",
+                //"AltarSkeletonBody",
+                //"DeathProjectile",
+                //"TimeCrystalBody",
+                //"SulfurPodBody",
+                //"FusionCellDestructibleBody",
+                //"ExplosivePotDestructibleBody",
+                //"SMInfiniteTowerMaulingRockLarge",
+                //"SMInfiniteTowerMaulingRockMedium",
+                //"SMInfiniteTowerMaulingRockSmall",
+                //"SMMaulingRockLarge",
+                //"SMMaulingRockMedium",
+                //"SMMaulingRockSmall",
+            };
+        
+            foreach (string bodyName in defaultBodyNames)
+            {
+                BodyIndex index = BodyCatalog.FindBodyIndexCaseInsensitive(bodyName);
+                if (index != BodyIndex.None)
+                {
+                    //SS2Log.Info("found body " + bodyName + " with index " + index + ", adding them");
+                    AddBodyToIllegalTerminationList(index);
+                }
+            }
+        }
+        
+        public static void AddBodyToIllegalTerminationList(BodyIndex bodyIndex)
+        {
+            if (bodyIndex == BodyIndex.None)
+            {
+                SS2Log.Info($"Tried to add a body to the illegal ghost list, but it's index is none");
+                return;
+            }
+        
+            if (illegalGhosts.Contains(bodyIndex))
+            {
+                GameObject prefab = BodyCatalog.GetBodyPrefab(bodyIndex);
+                SS2Log.Info($"Body prefab {prefab} is already in the illegal ghost list.");
+                return;
+            }
+            illegalGhosts.Add(bodyIndex);
+            //BodiesThatGiveSuperCharge = new ReadOnlyCollection<BodyIndex>(bodiesThatGiveSuperCharge);
         }
 
         //Swuff, I Hate You 3000
@@ -82,21 +161,27 @@ namespace Moonstorm.Starstorm2.Artifacts
             }
         }
 
-        public override void OnArtifactDisabled()
-        {
-            //IL.RoR2.CharacterMaster.OnBodyDeath -= PreventDeath;
-            GlobalEventManager.onCharacterDeathGlobal -= SpawnCognationGhost;
-
-        }
-
         public override void OnArtifactEnabled()
         {
             //IL.RoR2.CharacterMaster.OnBodyDeath += PreventDeath;
             GlobalEventManager.onCharacterDeathGlobal += SpawnCognationGhost;
+            On.RoR2.Util.GetBestBodyName += AddCognateName;
+        }
+
+        public override void OnArtifactDisabled()
+        {
+            //IL.RoR2.CharacterMaster.OnBodyDeath -= PreventDeath;
+            GlobalEventManager.onCharacterDeathGlobal -= SpawnCognationGhost;
+            On.RoR2.Util.GetBestBodyName -= AddCognateName;
         }
 
         private void SpawnCognationGhost(DamageReport report)
         {
+            if (!hasMadeList)
+            {
+                InitializeIllegalGhostList(); //this is so fucking jank
+                hasMadeList = true;
+            }
             CharacterMaster victimMaster = report.victimMaster;
 
             if (victimMaster)
@@ -111,13 +196,33 @@ namespace Moonstorm.Starstorm2.Artifacts
                 }
             }
         }
+        private string AddCognateName(On.RoR2.Util.orig_GetBestBodyName orig, GameObject bodyObject)
+        {
+            var body = bodyObject.GetComponent<CharacterBody>();
+            if (body)
+            { 
+                if (body.inventory)
+                {
+                    if (body.inventory.GetItemCount(SS2Content.Items.Cognation) > 0)
+                    {
+                        return "Cognate " + orig(bodyObject);
+                    }
+                }
+            }
 
+            return orig(bodyObject);
+        }
         private bool CanBecomeGhost(CharacterMaster victimMaster)
         {
             bool isMonster = victimMaster.teamIndex != TeamIndex.Player;
             bool hasBody = victimMaster.hasBody;
             bool notGhost = victimMaster.inventory.GetItemCount(SS2Content.Items.Cognation) == 0;
-            bool notBlacklisted = !BlacklistedMasterIndices.Contains(victimMaster.masterIndex);
+            //SS2Log.Info("victim master: " + victimMaster.masterIndex);
+            //bool notBlacklisted = !BlacklistedMasterIndices.Contains(victimMaster.masterIndex);
+            bool notBlacklisted = !illegalGhosts.Contains(victimMaster.backupBodyIndex);
+            //if(victimMaster.masterIndex == ) { 
+            //}
+            //bool notBlacklisted
             bool notVoidTouched = victimMaster.inventory.currentEquipmentIndex != DLC1Content.Equipment.EliteVoidEquipment.equipmentIndex;
             
             return isMonster && hasBody && notGhost && notBlacklisted && notVoidTouched;

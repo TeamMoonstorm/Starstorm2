@@ -4,6 +4,8 @@ using RoR2.Items;
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using RoR2.UI;
+using System.Collections;
 
 namespace Moonstorm.Starstorm2.Items
 {
@@ -14,21 +16,23 @@ namespace Moonstorm.Starstorm2.Items
 
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfEchelon", SS2Bundle.Items);
 
-        [ConfigurableField(ConfigDesc = "Equipment cooldown increase per use, per stack.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Equipment cooldown increase per use, per stack.")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float cooldownIncrease = .15f;
 
-        [ConfigurableField(ConfigDesc = "Base amount of additional base damage added.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Base amount of additional base damage added.")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static float damageBonus = 150;
 
-        [ConfigurableField(ConfigDesc = "Base amount of additional base health added.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Base amount of additional base health added.")]
         [TokenModifier(token, StatTypes.Default, 2)]
         public static float healthBonus = 5000;
 
-        [ConfigurableField(ConfigDesc = "Duration of the Echelon buff. Does not scale with stacks. (1 = 1 second)")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of the Echelon buff. Does not scale with stacks. (1 = 1 second)")]
         [TokenModifier(token, StatTypes.Default, 3)]
         public static float buffDuration = 8;
+
+        public static Color echelonColor;
 
         public override void Initialize()
         {
@@ -94,6 +98,7 @@ namespace Moonstorm.Starstorm2.Items
                         token = self.gameObject.AddComponent<EchelonToken>();
                         token.usedEquipment = new Dictionary<EquipmentIndex, int>();
                         token.usedEquipment.Add(eqp, itemCount);
+                        token.body = null;
 
                     }
 
@@ -119,6 +124,7 @@ namespace Moonstorm.Starstorm2.Items
                 }
                 return num;
             };
+            echelonColor = new Color(0.4235f, 0.6706f, 0.6588f);
         }
 
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier
@@ -129,11 +135,13 @@ namespace Moonstorm.Starstorm2.Items
             private void OnEnable()
             {
                 EquipmentSlot.onServerEquipmentActivated += GrantEchelonBuff;
+                On.RoR2.UI.HealthBar.UpdateBarInfos += Echelon2;
             }
 
             private void OnDisable()
             {
                 EquipmentSlot.onServerEquipmentActivated -= GrantEchelonBuff;
+                On.RoR2.UI.HealthBar.UpdateBarInfos -= Echelon2;
             }
 
             private void GrantEchelonBuff(EquipmentSlot arg1, EquipmentIndex arg2)
@@ -153,6 +161,10 @@ namespace Moonstorm.Starstorm2.Items
                             token = arg1.characterBody.inventory.gameObject.AddComponent<EchelonToken>();
                             token.usedEquipment = new Dictionary<EquipmentIndex, int>();
                         }
+                        if(token.body == null)
+                        {
+                            token.body = arg1.characterBody;
+                        }
                         if (token.usedEquipment.ContainsKey(arg2))
                         {
                             token.usedEquipment[arg2] += count;
@@ -164,9 +176,31 @@ namespace Moonstorm.Starstorm2.Items
 
                         }
                         arg1.characterBody.AddTimedBuffAuthority(SS2Content.Buffs.BuffEchelon.buffIndex, buffDuration);
+                        StartCoroutine(token.callRecalcOnBuffEnd());
+                        //RoR2.UI.HealthBar.UpdateHealthbar(Time.de);
+                        //arg1.characterBody.
+                        //arg1.characterBody.healthComponent.GetHealthBarValues().heal;
                     }
                 }
             }
+
+            private void Echelon2(On.RoR2.UI.HealthBar.orig_UpdateBarInfos orig, HealthBar self)
+            {
+                //SS2Log.Info("calling orig");
+                orig(self);
+                var healthComponent = self._source;
+                if (healthComponent)
+                {
+                    //var iv = healthComponent.body.inventory;
+                    if (healthComponent.body.HasBuff(SS2Content.Buffs.BuffEchelon))
+                    {
+                        //SS2Log.Info("ahh bees bees bees bees 2");
+                        self.barInfoCollection.trailingOverHealthbarInfo.color = echelonColor;
+                    }
+                }
+                //throw new NotImplementedException();
+            }
+
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
             {
                 if (body.HasBuff(SS2Content.Buffs.BuffEchelon))
@@ -183,7 +217,20 @@ namespace Moonstorm.Starstorm2.Items
             //helps keep track of the target and player responsible
             //public CharacterBody PlayerOwner;
             public IDictionary<EquipmentIndex, int> usedEquipment;
+            public CharacterBody body;
+            public bool hadBuff;
 
+            //public void FixedUpdate()
+            //{
+            //    if()
+            //}
+            public IEnumerator callRecalcOnBuffEnd()
+            {
+                //SS2Log.Info("i have been awoken");
+                yield return new WaitForSeconds(buffDuration + .01f);
+                body.RecalculateStats();
+                //SS2Log.Info("zzzzzzzzzzzzzzzzzz....");
+            }
         }
 
     }

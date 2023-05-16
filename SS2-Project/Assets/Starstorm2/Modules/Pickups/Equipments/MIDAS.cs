@@ -1,5 +1,6 @@
 ﻿using RoR2;
 using UnityEngine;
+using static AkMIDIEvent;
 
 namespace Moonstorm.Starstorm2.Equipments
 {
@@ -8,6 +9,13 @@ namespace Moonstorm.Starstorm2.Equipments
     {
         public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("MIDAS", SS2Bundle.Equipments);
         public float goldEarned;
+
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Health percentage sacrificed (1 = 100%)")]
+        [TokenModifier("SS2_EQUIP_MIDAS_DESC", StatTypes.MultiplyByN, 0, "100")]
+        public static float healthPercentage = 0.5f;
+
+        [ConfigurableField(SS2Config.IDItem)]
+        public static float goldMultiplier = 1f;
 
         //★ There's probably a way to do this involving an item behavior. Let me know about it.
         //N Nah, this looks good.
@@ -22,7 +30,7 @@ namespace Moonstorm.Starstorm2.Equipments
             var level = slot.characterBody.level;
 
             float commandoHealth = .5f * (110 + (33 * (level - 1)));
-            float healthLost = slot.characterBody.healthComponent.health * 0.5f;
+            float healthLost = slot.characterBody.healthComponent.health * healthPercentage;
             float chestFraction = healthLost / commandoHealth;
             //SS2Log.Debug("chest fraction: " + chestFraction);
 
@@ -33,7 +41,7 @@ namespace Moonstorm.Starstorm2.Equipments
             //goldEarned = slot.characterBody.healthComponent.health * 0.5f * (1.3f * (playerCount - 1));
             DamageInfo damageInfo = new DamageInfo()
             {
-                damage = slot.characterBody.healthComponent.health * 0.5f,
+                damage = healthLost,
                 damageType = DamageType.BypassArmor,
                 damageColorIndex = DamageColorIndex.Item,
                 inflictor = slot.characterBody.gameObject,
@@ -43,7 +51,7 @@ namespace Moonstorm.Starstorm2.Equipments
             if (!slot.characterBody.isPlayerControlled && slot.characterBody.teamComponent.teamIndex == TeamIndex.Player)
             {
                 //SS2Log.Debug("is not player controled");
-                uint splitAmount = (uint)(goldEarned / playerCount);
+                uint splitAmount = (uint)((goldEarned * goldMultiplier) / playerCount);
                 //SS2Log.Debug("is not player controlled, giving " + splitAmount + " to all players");
                 foreach (var player in PlayerCharacterMasterController.instances)
                 {

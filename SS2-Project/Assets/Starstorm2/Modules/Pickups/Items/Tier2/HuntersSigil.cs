@@ -12,27 +12,27 @@ namespace Moonstorm.Starstorm2.Items
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("HuntersSigil", SS2Bundle.Items);
         public static GameObject effect;
 
-        [ConfigurableField(ConfigDesc = "Base amount of extra armor added.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Base amount of extra armor added.")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float baseArmor = 15;
 
-        [ConfigurableField(ConfigDesc = "Amount of extra armor added per stack.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of extra armor added per stack.")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static float stackArmor = 10;
 
-        [ConfigurableField(ConfigDesc = "Base amount of extra damage added. (1 = 100%)")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Base amount of extra damage added. (1 = 100%)")]
         [TokenModifier(token, StatTypes.Percentage, 2)]
         public static float baseDamage = .2f;
 
-        [ConfigurableField(ConfigDesc = "Amount of extra damage added per stack. (1 = 100%)")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of extra damage added per stack. (1 = 100%)")]
         [TokenModifier(token, StatTypes.Percentage, 3)]
         public static float stackDamage = .15f;
 
-        [ConfigurableField(ConfigDesc = "Base time the buff lingers for after moving, in seconds.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Base time the buff lingers for after moving, in seconds.")]
         [TokenModifier(token, StatTypes.Default, 4)]
         public static float baseLinger = 1.5f;
 
-        [ConfigurableField(ConfigDesc = "Amount of extra lingering time added per stack, in seconds.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of extra lingering time added per stack, in seconds.")]
         [TokenModifier(token, StatTypes.Default, 5)]
         public static float stackLinger = 0.75f;
 

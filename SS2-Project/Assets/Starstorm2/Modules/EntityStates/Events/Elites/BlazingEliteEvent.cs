@@ -1,4 +1,4 @@
-﻿namespace EntityStates.Events
+﻿    namespace EntityStates.Events
 {
     public class BlazingEventState : GenericEliteEvent
     {

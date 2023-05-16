@@ -13,6 +13,9 @@ namespace Moonstorm.Starstorm2.Modules
         public BaseUnityPlugin MainClass => Starstorm.instance;
         public override R2APISerializableContentPack SerializableContentPack => SS2Content.Instance.SerializableContentPack;
 
+        [ConfigurableField(SS2Config.IDItem, ConfigSection = ": Enable All Items :", ConfigName = ": Enable All Items :", ConfigDesc = "Enables Starstorm 2's items. Set to false to disable items.")]
+        public static bool EnableItem = true;
+
         public override void Initialize()
         {
             Instance = this;
@@ -34,12 +37,11 @@ namespace Moonstorm.Starstorm2.Modules
 
         protected void CheckEnabledStatus(ItemBase item)
         {
-            if(item.ItemDef.deprecatedTier != RoR2.ItemTier.NoTier)
+            if (item.ItemDef.deprecatedTier != RoR2.ItemTier.NoTier)
             {
                 string niceName = MSUtil.NicifyString(item.GetType().Name);
-                ConfigEntry<bool> enabled = Starstorm.instance.Config.Bind<bool>(niceName, "Enabled", true, "Should this item be enabled?");
-
-                if (!enabled.Value)
+                ConfigEntry<bool> enabled = SS2Config.ConfigItem.Bind(niceName, "Enabled", true, "Should this item be enabled?");
+                if (!EnableItem || !enabled.Value)
                 {
                     item.ItemDef.deprecatedTier = RoR2.ItemTier.NoTier;
                 }

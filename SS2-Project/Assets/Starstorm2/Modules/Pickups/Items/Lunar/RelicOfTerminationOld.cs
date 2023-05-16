@@ -15,32 +15,32 @@ namespace Moonstorm.Starstorm2.Items
         private const string token = "SS2_ITEM_RELICOFTERMINATION_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfTerminationOld", SS2Bundle.Items);
 
-        [ConfigurableField(ConfigDesc = "Time, in seconds, to kill the marked enemy before going on cooldown.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Time, in seconds, to kill the marked enemy before going on cooldown.")]
         [TokenModifier(token, StatTypes.Default, 0)]
         [TokenModifier("SS2_ITEM_RELICOFTERMINATION_PICKUP", StatTypes.Default, 0)]
         public static float maxTime = 25f;
 
-        [ConfigurableField(ConfigDesc = "Time between marks in seconds.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Time between marks in seconds.")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float downTime = 30f;
 
-        [ConfigurableField(ConfigDesc = "Percent reduction in time to kill per stack.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Percent reduction in time to kill per stack.")]
         [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
         public static float timeReduction = .1f;
 
-        [ConfigurableField(ConfigDesc = "Damage multiplier which is added to the marked enemy if not killed in time (1 = 100% more damage).")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Damage multiplier which is added to the marked enemy if not killed in time (1 = 100% more damage).")]
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
         public static float damageMult = 2f;
 
-        [ConfigurableField(ConfigDesc = "Health multiplier which is added to the marked enemy if not killed in time (1 = 100% more health).")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Health multiplier which is added to the marked enemy if not killed in time (1 = 100% more health).")]
         [TokenModifier(token, StatTypes.MultiplyByN, 3, "100")]
         public static float healthMult = 4f;
 
-        [ConfigurableField(ConfigDesc = "Speed multiplier which is added to the marked enemy if not killed in time (1 = 100% more speed).")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Speed multiplier which is added to the marked enemy if not killed in time (1 = 100% more speed).")]
         [TokenModifier(token, StatTypes.MultiplyByN, 4, "100")]
         public static float speedMult = 1.5f;
 
-        [ConfigurableField(ConfigDesc = "Attack speed multiplier which is added to the marked enemy if not killed in time (1 = 100% more attack speed).")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Attack speed multiplier which is added to the marked enemy if not killed in time (1 = 100% more attack speed).")]
         [TokenModifier(token, StatTypes.MultiplyByN, 5, "100")]
         public static float atkSpeedMult = 1.75f;
 
@@ -50,7 +50,7 @@ namespace Moonstorm.Starstorm2.Items
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.RelicOfTerminationOld;
 
-            //[ConfigurableField(ConfigDesc = "Health multiplier grantd to marked enemy if not killed in time (1 = 100% health).")]
+            //[ConfigurableField(SS2Config.IDItem, ConfigDesc = "Health multiplier grantd to marked enemy if not killed in time (1 = 100% health).")]
             //[TokenModifier(token, StatTypes.Percentage, 3)]
             //public static float effectiveRadius = 100f;
 

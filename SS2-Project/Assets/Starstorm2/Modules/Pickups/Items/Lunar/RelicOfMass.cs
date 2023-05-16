@@ -8,7 +8,12 @@ namespace Moonstorm.Starstorm2.Items
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfMass", SS2Bundle.Items);
 
-        [ConfigurableField(ConfigDesc = "Amount of which acceleration is divided by.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of health increase. (1 = 100%)")]
+        [TokenModifier("SS2_ITEM_RELICOFMASS_DESC", StatTypes.MultiplyByN, 0, "100")]
+        public static float healthIncrease = 1f;
+
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of which acceleration is divided by.")]
+        [TokenModifier("SS2_ITEM_RELICOFMASS_DESC", StatTypes.Default, 1)]
         public static float acclMult = 8f;
 
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier, IStatItemBehavior
@@ -17,7 +22,7 @@ namespace Moonstorm.Starstorm2.Items
             private static ItemDef GetItemDef() => SS2Content.Items.RelicOfMass;
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
             {
-                args.baseHealthAdd += (body.baseMaxHealth + (body.levelMaxHealth * (body.level - 1))) * stack;
+                args.baseHealthAdd += (body.baseMaxHealth + (body.levelMaxHealth * (body.level - 1))) * (stack * healthIncrease);
                 //args.moveSpeedMultAdd += stack / 2;
             }
             public void RecalculateStatsStart()

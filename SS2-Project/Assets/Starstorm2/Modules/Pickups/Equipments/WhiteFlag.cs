@@ -12,15 +12,15 @@ namespace Moonstorm.Starstorm2.Equipments
         public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("WhiteFlag", SS2Bundle.Indev);
         public GameObject WarbannerObject { get; } = SS2Assets.LoadAsset<GameObject>("WhiteFlagWard", SS2Bundle.Indev);
 
-        /*[ConfigurableField(ConfigDesc = "Amount of Extra Regeneration. (1 = 100%)")]
+        /*[ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of Extra Regeneration. (1 = 100%)")]
         [TokenModifier(token, StatTypes.Percentage, 0)]
         public static float extraRegeneration = 0.5f;
 
-        [ConfigurableField(ConfigDesc = "Amount of Extra Crit Chance. (100 = 100%)")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of Extra Crit Chance. (100 = 100%)")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static float extraCrit = 20f;
 
-        [ConfigurableField(ConfigDesc = "Amount of Cooldown Reduction. (1 = 100%)")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of Cooldown Reduction. (1 = 100%)")]
         [TokenModifier(token, StatTypes.Percentage, 2)]
         public static float cooldownReduction = 0.5f;*/
 

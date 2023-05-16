@@ -11,6 +11,12 @@ namespace Moonstorm.Starstorm2
 
         private static int defMonsterCap;
 
+        [ConfigurableField(SS2Config.IDMain, ConfigSection = "Typhoon", ConfigName = "Increase Team Limit", ConfigDesc = "Multiplies the Monster Team maximum size by 2 when enabled. Lunar and Void are left unchanged. May affect performance.")]
+        internal static bool IncreaseSpawnCap = true;
+
+        [ConfigurableField(SS2Config.IDMain, ConfigSection = "Typhoon", ConfigName = "Increase Storm", ConfigDesc = "Multiplies Storm Frequency by like +28% compared to other difficulties.")]
+        internal static bool IncreaseStorm = true;
+
         internal static void Init()
         {
             TyphoonDef = SS2Assets.LoadAsset<R2API.ScriptableObjects.SerializableDifficultyDef>("Typhoon", SS2Bundle.Base);
@@ -26,8 +32,7 @@ namespace Moonstorm.Starstorm2
             {
                 foreach (CharacterMaster cm in run.userMasters.Values)
                     cm.inventory.GiveItem(RoR2Content.Items.MonsoonPlayerHelper.itemIndex);
-                if (SS2Config.TyphoonIncreaseSpawnCap.Value)
-                    TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit *= 2;
+                if (IncreaseSpawnCap) TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit *= 2;
             }
         }
 
