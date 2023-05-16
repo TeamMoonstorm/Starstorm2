@@ -14,9 +14,5 @@ namespace EntityStates.Trader.Bag
                 return true;
             }
         }
-        public override void OnEnter()
-        {
-            Debug.Log("idle bag state");
-        }
     }
 }

@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using RoR2;
 using EntityStates.Trader.Bag;
+using RoR2.UI;
 
 namespace Moonstorm.Starstorm2.Components
 {
@@ -13,6 +15,8 @@ namespace Moonstorm.Starstorm2.Components
     {
         public ItemIndex lastTradedItemIndex { get; private set; }
         public EntityStateMachine esm;
+        public ModelLocator modelLocator;
+        public ChildLocator childLocator;
         public PickupPickerController pickupPickerController;
         private Interactor interactor;
 
@@ -22,19 +26,27 @@ namespace Moonstorm.Starstorm2.Components
         public float lunarValue = 0.45f;
 
         private ItemDef favoriteItem;
+        private LanguageTextMeshController ltmcPrice;
 
-        private Dictionary<ItemDef, float> itemValues = new Dictionary<ItemDef, float>();
+        public Dictionary<ItemDef, float> itemValues = new Dictionary<ItemDef, float>();
+        //private Dictionary<ItemDef, Sprite> itemSprites = new Dictionary<ItemDef, Sprite>(); //this is the stupidest thing ever.
+        private Dictionary<Sprite, ItemDef> reversedItemSprites = new Dictionary<Sprite, ItemDef>();
 
+       // private static GameObject menu = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Scrapper/ScrapperPickerPanel.prefab").WaitForCompletion();
         void Start()
         {
+            modelLocator = GetComponent<ModelLocator>();
+            childLocator = modelLocator.modelTransform.GetComponent<ChildLocator>();
+
             //Modify pickup controller; deprecate once something custom is made in project.
             if (pickupPickerController)
             {
                 pickupPickerController.panelPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Scrapper/ScrapperPickerPanel.prefab").WaitForCompletion();
+                ModifyMenu(pickupPickerController.panelPrefab);
             }
 
             //Assign a favorite item.
-            favoriteItem = GetRandomItem();
+            favoriteItem = FindFavorite();
 
             //Give every item a value.
             if (NetworkServer.active)
@@ -48,12 +60,54 @@ namespace Moonstorm.Starstorm2.Components
                         Debug.Log("Value for " + item.nameToken + " is " + itemValues[item]);
                         if (item == favoriteItem)
                             Debug.Log("I ABSOLUTELY FUCKING LOVE " + item.nameToken + " BTW");
+                        reversedItemSprites[item.pickupIconSprite] = item; //jesus.
+                        //Debug.Log("item: " + reversedItemSprites[item.pickupIconSprite]);
                     }
                 }
             }
         }
 
-        private ItemDef GetRandomItem()
+        public ItemDef GetItemThroughSprite(Sprite sprite)
+        {
+            return reversedItemSprites[sprite];
+        }
+
+        private GameObject ModifyMenu(GameObject menuPrefab)
+        {
+            Transform panel = menuPrefab.transform.Find("MainPanel");
+            Transform juice = panel.Find("Juice");
+            Transform label = juice.Find("Label");
+            LanguageTextMeshController ltmc = label.GetComponent<LanguageTextMeshController>();
+
+            if (ltmc != null)
+                ltmc.token = "SS2_TRADER_POPUP_TEXT";
+            else
+                Debug.Log("ltmc null");
+
+            GameObject priceLabel = Instantiate(label.gameObject);
+            priceLabel.transform.SetParent(label);
+
+            RectTransform priceLabelRect = priceLabel.GetComponent<RectTransform>();
+            priceLabelRect.SetPositionAndRotation(new Vector3(priceLabelRect.localPosition.x, priceLabelRect.localPosition.y - 45, priceLabelRect.localPosition.z), priceLabel.transform.rotation);
+            ltmcPrice = priceLabel.GetComponent<LanguageTextMeshController>();
+
+            if (ltmcPrice != null)
+                ltmcPrice.token = "PRICE:";
+            else
+                Debug.Log("ltmc2 null");
+
+            Transform iconContainer = juice.Find("IconContainer");
+            Transform pickupTemplate = iconContainer.Find("PickupButtonTemplate");
+            TooltipProvider tooltipProvider = pickupTemplate.gameObject.AddComponent<TooltipProvider>();
+            PriceTooltipManager priceTooltipManager = pickupTemplate.gameObject.AddComponent<PriceTooltipManager>();
+
+            //tooltipProvider.titleColor = pickupTemplate.GetComponent<pickup>
+            //tooltipProvider.titleToken = ItemCatalog.get
+
+            return menuPrefab;
+        }
+
+        private ItemDef FindFavorite()
         {
             int itemCount = ItemCatalog.allItemDefs.Length;
             int randomindex = UnityEngine.Random.Range(0, itemCount); //dual wielding randoms
@@ -107,7 +161,7 @@ namespace Moonstorm.Starstorm2.Components
             if (itemDef == favoriteItem)
                 value += 0.3f;
 
-            //zanzan does not collect garbage
+            //zanzan does not care much for garbage
             if (itemDef == RoR2Content.Items.ScrapGreen || itemDef == RoR2Content.Items.ScrapWhite || itemDef == RoR2Content.Items.ScrapYellow || itemDef == RoR2Content.Items.ScrapRed)
                 value *= 0.2f;
 
@@ -121,7 +175,6 @@ namespace Moonstorm.Starstorm2.Components
         void Update()
         { }
 
-        //first of many blocks of code i will shamelessly steal from RoR2.ScrapperController:
         [Server]
         public void AssignPotentialInteractor(Interactor potentialInteractor)
         {
@@ -130,18 +183,18 @@ namespace Moonstorm.Starstorm2.Components
                 Debug.Log("THIS MF IS A CLIENT LOL @ TraderController AssignPotentialInteractor");
                 return;
             }
+            else
+            {
+                Debug.Log("hello!");
+            }
             interactor = potentialInteractor;
         }
 
         [Server]
         public void BeginTrade(int intPickupIndex)
         {
-            //step 1: define the method
-            //step 2: write the rest of the method
-
             if (!NetworkServer.active)
             {
-                Debug.Log("client @ TraderController BeginTrade");
                 return;
             }
             PickupDef pickupDef = PickupCatalog.GetPickupDef(new PickupIndex(intPickupIndex));
@@ -152,12 +205,11 @@ namespace Moonstorm.Starstorm2.Components
                 if (interactorBody && interactorBody.inventory)
                 {
                     interactorBody.inventory.RemoveItem(pickupDef.itemIndex, 1);
-                    Debug.Log("trade succesful!");
+                    CreateItemTakenOrb(interactorBody.corePosition, gameObject, pickupDef.itemIndex);
                 }
             }
             if (esm)
             {
-                Debug.Log("esm found!: " + esm);
                 esm.SetNextState(new WaitToBeginTrade());
             }
         }
@@ -193,12 +245,6 @@ namespace Moonstorm.Starstorm2.Components
 
         private void UNetVersion()
         { }
-
-        /*public override bool OnSerialize(NetworkWriter writer, bool forceAll)
-        {
-            bool result;
-            return result;
-        }*/
 
         public override void OnDeserialize(NetworkReader reader, bool initialState)
         { }

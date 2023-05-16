@@ -22,12 +22,14 @@ namespace EntityStates.Trader.Bag
         public override void OnEnter()
         {
             base.OnEnter();
+            Util.PlaySound(enterSoundString, gameObject);
             //vfx, sfx, etc
         }
 
         public override void OnExit()
         {
             //vfx, sfx, etc
+            Util.PlaySound(exitSoundString, gameObject);
             base.OnExit();
         }
 

@@ -38,6 +38,7 @@ namespace EntityStates.Trader.Bag
         public override void OnEnter()
         {
             base.OnEnter();
+            Util.PlaySound(enterSoundString, gameObject);
             //sfx, vfx, etc.
 
             if (!NetworkServer.active)
@@ -63,6 +64,8 @@ namespace EntityStates.Trader.Bag
                     //spawn red
                     ItemIndex[] tier3Items = ItemCatalog.tier3ItemList.ToArray();
                     ItemIndex randomItem = tier3Items[UnityEngine.Random.Range(0, tier3Items.Length)];
+                    if (randomItem == RoR2Content.Items.ScrapRed.itemIndex)
+                        randomItem += 1;
                     zanPickup = PickupCatalog.FindPickupIndex(randomItem);
                 }
                 else if (playerValue >= uncommonThreshold)
@@ -70,6 +73,8 @@ namespace EntityStates.Trader.Bag
                     //spawn green
                     ItemIndex[] tier2Items = ItemCatalog.tier2ItemList.ToArray();
                     ItemIndex randomItem = tier2Items[UnityEngine.Random.Range(0, tier2Items.Length)];
+                    if (randomItem == RoR2Content.Items.ScrapGreen.itemIndex)
+                        randomItem += 1;
                     zanPickup = PickupCatalog.FindPickupIndex(randomItem);
                 }
                 else if (playerValue >= commonThreshold)
@@ -77,6 +82,8 @@ namespace EntityStates.Trader.Bag
                     //spawn white
                     ItemIndex[] tier1Items = ItemCatalog.tier1ItemList.ToArray();
                     ItemIndex randomItem = tier1Items[UnityEngine.Random.Range(0, tier1Items.Length)];
+                    if (randomItem == RoR2Content.Items.ScrapWhite.itemIndex)
+                        randomItem += 1;
                     zanPickup = PickupCatalog.FindPickupIndex(randomItem);
                 }
                 else
@@ -84,6 +91,12 @@ namespace EntityStates.Trader.Bag
                     //spawn scrap
                     zanPickup = PickupCatalog.FindPickupIndex(RoR2Content.Items.ScrapWhite.itemIndex);
                 }
+
+                //filter out unobtainables
+                if (!Run.instance.IsItemAvailable(zanPickup.itemIndex))
+                    zanPickup = PickupCatalog.FindPickupIndex(zanPickup.itemIndex + 1);
+
+                traderController.ReduceValue();
 
                 Debug.Log("zan giving: " + zanPickup.GetPickupNameToken());
 
@@ -99,6 +112,9 @@ namespace EntityStates.Trader.Bag
         public override void OnExit()
         {
             //sfx, vfx, etc.
+            Util.PlaySound(exitSoundString, gameObject);
+            if (isAuthority)
+                characterBody.SetBuffCount(Moonstorm.Starstorm2.SS2Content.Buffs.bdHiddenSlow20.buffIndex, 0);
             base.OnExit();
         }
 

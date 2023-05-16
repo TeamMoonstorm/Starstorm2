@@ -640,6 +640,7 @@ Transform:
   m_LocalScale: {x: 1, y: 0.9999999, z: 0.99999994}
   m_Children:
   - {fileID: 981733104084773827}
+  - {fileID: 8663108128204527442}
   m_Father: {fileID: 4969612213613206518}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 153.14961, y: 0.000030517578, z: -180}
@@ -1271,7 +1272,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2713121631414283110}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6797850396653719074}
@@ -1668,6 +1669,7 @@ GameObject:
   - component: {fileID: 9108205785334512007}
   - component: {fileID: 6745579080907944367}
   - component: {fileID: 1691801183786372544}
+  - component: {fileID: 5444654141027706527}
   m_Layer: 0
   m_Name: mdlTrader
   m_TagString: Untagged
@@ -1744,6 +1746,8 @@ MonoBehaviour:
   transformPairs:
   - name: Eject
     transform: {fileID: 113761068704403323}
+  - name: BackpackMuzzle
+    transform: {fileID: 8663108128204527442}
 --- !u!114 &7756326644596516181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1772,7 +1776,7 @@ MonoBehaviour:
   m_Script: {fileID: 1480773730, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseFootstepString: Play_player_footstep
+  baseFootstepString: Play_scav_step
   baseFootliftString: 
   sprintFootstepOverrideString: 
   sprintFootliftOverrideString: 
@@ -1863,6 +1867,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundCenter: {fileID: 0}
+--- !u!114 &5444654141027706527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3816345919330352920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1844056223, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 3560210650644898028}
+  blinkTriggers:
+  - BlinkLeft
+  - BlinkRight
+  blinkChancePerUpdate: 3
 --- !u!1 &3840708886709974839
 GameObject:
   m_ObjectHideFlags: 0
@@ -2359,13 +2380,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4449584981525618740}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -10.77, z: 7.49}
+  m_LocalRotation: {x: 0.5, y: -0.5, z: -0.5, w: -0.5}
+  m_LocalPosition: {x: -0.74, y: 3.41, z: -0.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 7743216719487162344}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 8832186307136393926}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 270, y: 90, z: 0}
 --- !u!1 &4490503250244262012
 GameObject:
   m_ObjectHideFlags: 0
@@ -3658,6 +3679,70 @@ Transform:
   m_Father: {fileID: 4671127647947070256}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -74.611206, y: 7.9593306, z: -177.70784}
+--- !u!1 &6241098963443851228
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8663108128204527442}
+  - component: {fileID: 2576774336528117603}
+  m_Layer: 0
+  m_Name: BackpackMuzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8663108128204527442
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6241098963443851228}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 15.73, z: -1.72}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6709827876798977862}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2576774336528117603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6241098963443851228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8258ea15b8f74c4889ce485d21cbbb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!1 &6362348467417074391
 GameObject:
   m_ObjectHideFlags: 0
@@ -4080,11 +4165,11 @@ MonoBehaviour:
   m_Script: {fileID: 952828898, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathSound: 
-  barkSound: 
+  deathSound: Play_scav_death
+  barkSound: Play_scav_idle_VO
   openSound: 
-  landingSound: Play_char_land
-  fallDamageSound: Play_char_land_fall_damage
+  landingSound: 
+  fallDamageSound: 
   aliveLoopStart: 
   aliveLoopStop: 
   sprintLoopStart: 
@@ -4102,7 +4187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hideAllyCardDisplay: 0
-  _teamIndex: -1
+  _teamIndex: 0
 --- !u!114 &5759372773500819636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4118,7 +4203,7 @@ MonoBehaviour:
   walkSpeedPenaltyCoefficient: 1
   characterDirection: {fileID: 6940847801766599780}
   muteWalkMotion: 0
-  mass: 100
+  mass: 600
   airControl: 0.25
   disableAirControlUntilCollision: 0
   generateParametersOnAwake: 1
@@ -4297,7 +4382,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6493827583746707147}
   serializedVersion: 2
-  m_Mass: 100
+  m_Mass: 600
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 0
@@ -4483,6 +4568,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   esm: {fileID: 8305973606314702422}
+  modelLocator: {fileID: 0}
+  childLocator: {fileID: 0}
   pickupPickerController: {fileID: 3411196135211828814}
   commonValue: 0.1
   uncommonValue: 0.3
@@ -4603,7 +4690,6 @@ Transform:
   m_LocalScale: {x: 0.44773757, y: 0.447738, z: 0.44773757}
   m_Children:
   - {fileID: 4078660996563824930}
-  - {fileID: 113761068704403323}
   m_Father: {fileID: 6797850396653719074}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90.00001, y: -0, z: 0}
@@ -5065,6 +5151,7 @@ Transform:
   - {fileID: 1402644789322605284}
   - {fileID: 421502351898865949}
   - {fileID: 3207268974220525194}
+  - {fileID: 113761068704403323}
   m_Father: {fileID: 990359382178697202}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 8.072328, y: -0.8695265, z: 2.5812173}
