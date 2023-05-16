@@ -29,21 +29,13 @@ namespace Moonstorm.Starstorm2.Components
         private LanguageTextMeshController ltmcPrice;
 
         public Dictionary<ItemDef, float> itemValues = new Dictionary<ItemDef, float>();
-        //private Dictionary<ItemDef, Sprite> itemSprites = new Dictionary<ItemDef, Sprite>(); //this is the stupidest thing ever.
-        private Dictionary<Sprite, ItemDef> reversedItemSprites = new Dictionary<Sprite, ItemDef>();
+        public Dictionary<Sprite, ItemDef> itemSprites = new Dictionary<Sprite, ItemDef>(); //stupid solution
 
-       // private static GameObject menu = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Scrapper/ScrapperPickerPanel.prefab").WaitForCompletion();
+        // private static GameObject menu = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Scrapper/ScrapperPickerPanel.prefab").WaitForCompletion();
         void Start()
         {
             modelLocator = GetComponent<ModelLocator>();
             childLocator = modelLocator.modelTransform.GetComponent<ChildLocator>();
-
-            //Modify pickup controller; deprecate once something custom is made in project.
-            if (pickupPickerController)
-            {
-                pickupPickerController.panelPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Scrapper/ScrapperPickerPanel.prefab").WaitForCompletion();
-                ModifyMenu(pickupPickerController.panelPrefab);
-            }
 
             //Assign a favorite item.
             favoriteItem = FindFavorite();
@@ -51,6 +43,7 @@ namespace Moonstorm.Starstorm2.Components
             //Give every item a value.
             if (NetworkServer.active)
             {
+                Debug.Log("yep");
                 foreach (ItemDef item in ItemCatalog.allItemDefs)
                 {
                     if (Run.instance.IsItemAvailable(item.itemIndex))
@@ -60,30 +53,41 @@ namespace Moonstorm.Starstorm2.Components
                         Debug.Log("Value for " + item.nameToken + " is " + itemValues[item]);
                         if (item == favoriteItem)
                             Debug.Log("I ABSOLUTELY FUCKING LOVE " + item.nameToken + " BTW");
-                        reversedItemSprites[item.pickupIconSprite] = item; //jesus.
-                        //Debug.Log("item: " + reversedItemSprites[item.pickupIconSprite]);
+                        itemSprites[item.pickupIconSprite] = item; //fuck it we ball.
                     }
                 }
             }
+
+            //Modify pickup controller; deprecate once something custom is made in project.
+            if (pickupPickerController)
+            {
+                pickupPickerController.panelPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Scrapper/ScrapperPickerPanel.prefab").WaitForCompletion();
+                ModifyMenu(pickupPickerController.panelPrefab);
+            }
+
+            Debug.Log("hi");
         }
 
         public ItemDef GetItemThroughSprite(Sprite sprite)
         {
-            return reversedItemSprites[sprite];
+            return itemSprites[sprite];
         }
 
-        private GameObject ModifyMenu(GameObject menuPrefab)
+        public GameObject ModifyMenu(GameObject menuPrefab)
         {
+            //Pull some elements of the menu for easy reference
             Transform panel = menuPrefab.transform.Find("MainPanel");
             Transform juice = panel.Find("Juice");
             Transform label = juice.Find("Label");
             LanguageTextMeshController ltmc = label.GetComponent<LanguageTextMeshController>();
 
+            //Set trader info label
             if (ltmc != null)
                 ltmc.token = "SS2_TRADER_POPUP_TEXT";
             else
                 Debug.Log("ltmc null");
 
+            //Create the 'favorite item' label
             GameObject priceLabel = Instantiate(label.gameObject);
             priceLabel.transform.SetParent(label);
 
@@ -91,18 +95,20 @@ namespace Moonstorm.Starstorm2.Components
             priceLabelRect.SetPositionAndRotation(new Vector3(priceLabelRect.localPosition.x, priceLabelRect.localPosition.y - 45, priceLabelRect.localPosition.z), priceLabel.transform.rotation);
             ltmcPrice = priceLabel.GetComponent<LanguageTextMeshController>();
 
+            //Set 'favorite item' label
             if (ltmcPrice != null)
-                ltmcPrice.token = "PRICE:";
+            {
+                string combinedString = string.Format("{0} {1} {2}", "SS2_TRADER_WANT_TEXT", favoriteItem.nameToken, "SS2_TRADER_WANT2_TEXT");
+                ltmcPrice.token = combinedString;
+            }
             else
                 Debug.Log("ltmc2 null");
 
+            //Add tooltips to every item
             Transform iconContainer = juice.Find("IconContainer");
             Transform pickupTemplate = iconContainer.Find("PickupButtonTemplate");
             TooltipProvider tooltipProvider = pickupTemplate.gameObject.AddComponent<TooltipProvider>();
             PriceTooltipManager priceTooltipManager = pickupTemplate.gameObject.AddComponent<PriceTooltipManager>();
-
-            //tooltipProvider.titleColor = pickupTemplate.GetComponent<pickup>
-            //tooltipProvider.titleToken = ItemCatalog.get
 
             return menuPrefab;
         }
@@ -151,7 +157,7 @@ namespace Moonstorm.Starstorm2.Components
 
                 //common and void equivalent:
                 default:
-                    value = UnityEngine.Random.Range(commonValue * 0.7f, commonValue * 1.3f);
+                    value = UnityEngine.Random.Range(commonValue * 0.7f, commonValue * 1.45f);
                     if ((itemDef.tier != ItemTier.Tier1) && (itemDef.tier != ItemTier.VoidTier1)) //bonus for mystery items
                         value += 0.65f; //now how'd you manage that...?
                     break;

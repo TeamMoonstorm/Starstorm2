@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 namespace Moonstorm.Starstorm2.Components
 {
+    //Not good. None of it.
     public class PriceTooltipManager : NetworkBehaviour
     {
         private Transform icon;
@@ -23,39 +24,60 @@ namespace Moonstorm.Starstorm2.Components
         void Start()
         {
             icon = transform.Find("Icon");
-            if (icon != null)
-                Debug.Log("found icon");
-            else
+            if (icon == null)
                 return;
 
             image = icon.GetComponent<Image>();
-            if (image != null)
-                Debug.Log("found image");
-            else
+            if (image == null)
                 return;
 
             sprite = image.sprite;
-            if (image != null)
-                Debug.Log("found sprite: " + sprite.name);
-            else
+            if (image == null)
                 return;
 
             zanzan = GameObject.Find("TraderBody(Clone)");
             zanzanController = zanzan.GetComponent<TraderController>();
-            if (zanzanController != null)
-                Debug.Log("found zanzan controller");
+            if (zanzanController == null)
+                return;
 
             tooltip = GetComponent<TooltipProvider>();
-            if (tooltip != null)
-                Debug.Log("found tooltip");
+            if (tooltip == null)
+                return;
 
+            //fuck it we ball
             item = zanzanController.GetItemThroughSprite(sprite);
             if (item != null)
             {
                 Debug.Log("item = " + item);
-                tooltip.titleColor = Color.white;
+                float itemValue = zanzanController.itemValues[item];
+                string quality;
+                //these thresholds should be calculated but they're hard coded for now.
+                if (itemValue >= 0.82f)
+                {
+                    quality = "SS2_TRADER_QUALITY_BEST";
+                }
+                else if (itemValue >= 0.62f)
+                {
+                    quality = "SS2_TRADER_QUALITY_GREAT";
+                }
+                else if (itemValue >= 0.33f)
+                {
+                    quality = "SS2_TRADER_QUALITY_GOOD";
+                }
+                else if (itemValue >= 0.11f)
+                {
+                    quality = "SS2_TRADER_QUALITY_MODERATE";
+                }
+                else
+                {
+                    quality = "SS2_TRADER_QUALITY_POOR";
+                }
+
+                tooltip.titleColor = ColorCatalog.GetColor(item.darkColorIndex);
                 tooltip.titleToken = item.nameToken;
-                tooltip.bodyToken = zanzanController.itemValues[item].ToString();
+                string value = Mathf.Floor(zanzanController.itemValues[item] * 100).ToString();
+                string combinedString = string.Format("{0} {1} {2}", value, "% - ", quality);
+                tooltip.bodyToken = combinedString;
             }
         }
     }
