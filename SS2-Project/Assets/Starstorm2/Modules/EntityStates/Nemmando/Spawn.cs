@@ -5,7 +5,7 @@ namespace EntityStates.Nemmando
 {
     public class Spawn : BaseState
     {
-        public static float minimumIdleDuration = 4f;
+        public static float minimumIdleDuration = 2f;
         public static GameObject spawnEffectPrefab;
         private Animator modelAnimator;
         private CharacterModel characterModel;

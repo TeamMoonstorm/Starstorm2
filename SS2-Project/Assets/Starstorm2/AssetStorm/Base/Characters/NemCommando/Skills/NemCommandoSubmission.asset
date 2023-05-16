@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1391837873, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: NemCommandoSubmission
+  m_EditorClassIdentifier: 
+  skillName: NemCommandoSubmission
+  skillNameToken: SS2_NEMCOMMANDO_SPECIAL_SUBMISSION_NAME
+  skillDescriptionToken: SS2_NEMCOMMANDO_SPECIAL_SUBMISSION_DESCRIPTION
+  keywordTokens:
+  - KEYWORD_STUNNING
+  icon: {fileID: 21300000, guid: 5e0981d74ace665409bb8efdffabefdd, type: 3}
+  activationStateMachineName: Gun
+  activationState:
+    _typeName: EntityStates.NemCommando.Submission, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  interruptPriority: 2
+  baseRechargeInterval: 9
+  baseMaxStock: 1
+  rechargeStock: 1
+  requiredStock: 1
+  stockToConsume: 1
+  resetCooldownTimerOnUse: 0
+  fullRestockOnAssign: 1
+  dontAllowPastMaxStocks: 0
+  beginSkillCooldownOnSkillEnd: 0
+  cancelSprintingOnActivation: 0
+  forceSprintDuringState: 0
+  canceledFromSprinting: 0
+  isCombatSkill: 1
+  mustKeyPress: 1

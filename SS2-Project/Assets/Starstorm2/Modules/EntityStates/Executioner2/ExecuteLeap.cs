@@ -16,27 +16,47 @@ namespace EntityStates.Executioner2
         public static AnimationCurve speedCoefficientCurve;
         public static float duration = 0.8f;
 
+        public static GameObject jumpEffect;
+        public static string ExhaustL;
+        public static string ExhaustR;
+
         private CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
         private CharacterCameraParamsData slamCameraParams = new CharacterCameraParamsData
         {
             maxPitch = 88f,
-            minPitch = 55f,
+            minPitch = 25f,
             pivotVerticalOffset = 1f,
             idealLocalCameraPos = slamCameraPosition,
             wallCushion = 0.1f,
         };
-        public static Vector3 slamCameraPosition = new Vector3(1.6f, 0.0f, -9f);
+        public static Vector3 slamCameraPosition = new Vector3(2.6f, -2.0f, -4f);
         public override void OnEnter()
         {
             base.OnEnter();
 
             flyVector = Vector3.up;
 
+            Transform modelTransform = GetModelTransform();
+            if (modelTransform)
+            {
+                TemporaryOverlay temporaryOverlay = modelTransform.gameObject.AddComponent<TemporaryOverlay>();
+                temporaryOverlay.duration = 1.5f * duration;
+                temporaryOverlay.animateShaderAlpha = true;
+                temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 0.5f, 0.5f, 0f);
+                temporaryOverlay.destroyComponentOnEnd = true;
+                temporaryOverlay.originalMaterial = Resources.Load<Material>("Materials/matHuntressFlashBright");
+                temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
+            }
+
+            Util.PlaySound("ExecutionerSpecialCast", gameObject);
             PlayAnimation("FullBody, Override", "SpecialJump", "Special.playbackRate", duration);
 
             if (isAuthority)
             {
                 characterMotor.Motor.ForceUnground();
+
+                EffectManager.SimpleMuzzleFlash(jumpEffect, gameObject, ExhaustL, true);
+                EffectManager.SimpleMuzzleFlash(jumpEffect, gameObject, ExhaustR, true);
 
                 CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
                 {
@@ -58,8 +78,16 @@ namespace EntityStates.Executioner2
         {
             if (fixedAge >= duration)
             {
-                ExecuteHold nextState = new ExecuteHold();
-                outer.SetNextState(nextState);
+                if (inputBank.skill4.down)
+                {
+                    ExecuteHold nextState = new ExecuteHold();
+                    outer.SetNextState(nextState);
+                }
+                else
+                {
+                    ExecuteSlam nextState = new ExecuteSlam();
+                    outer.SetNextState(nextState);
+                }
             }
             else
                 HandleMovement();
@@ -78,6 +106,11 @@ namespace EntityStates.Executioner2
             {
                 cameraTargetParams.RemoveParamsOverride(camOverrideHandle, .1f);
             }
+        }
+
+        public override InterruptPriority GetMinimumInterruptPriority()
+        {
+            return InterruptPriority.Frozen;
         }
     }
 }
