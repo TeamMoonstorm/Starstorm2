@@ -54,25 +54,29 @@ namespace EntityStates.NemCommando
 
             skinNameToken = modelTransform.GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
 
-
-
-            if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
+            if (skinNameToken != "SS2_SKIN_NEMCOMMANDO_DEFAULT" && skinNameToken != "SS2_SKIN_NEMCOMMANDO_GRANDMASTERY")
             {
-                tracerPrefab = SS2Assets.LoadAsset<GameObject>("TracerNemCommandoShotgunYellow", SS2Bundle.Nemmando);
-                muzzleFlashPrefab = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoYellow", SS2Bundle.Nemmando);
-                hitSparkPrefab = SS2Assets.LoadAsset<GameObject>("HitsparkNemCommandoYellow", SS2Bundle.Nemmando);
+                //Yellow
+                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
+                {
+                    tracerPrefab = SS2Assets.LoadAsset<GameObject>("TracerNemCommandoShotgunYellow", SS2Bundle.NemCommando);
+                    muzzleFlashPrefab = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoYellow", SS2Bundle.NemCommando);
+                    hitSparkPrefab = SS2Assets.LoadAsset<GameObject>("HitsparkNemCommandoYellow", SS2Bundle.NemCommando);
+                }
+                //Blue
+                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO")
+                {
+                    tracerPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/TracerCommandoShotgun.prefab").WaitForCompletion();
+                    muzzleFlashPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/MuzzleflashFMJ.prefab").WaitForCompletion();
+                    hitSparkPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/HitsparkCommandoShotgun.prefab").WaitForCompletion();
+                }
             }
-            if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO")
-            {
-                tracerPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/TracerCommandoShotgun.prefab").WaitForCompletion();
-                muzzleFlashPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/MuzzleflashFMJ.prefab").WaitForCompletion();
-                hitSparkPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/HitsparkCommandoShotgun.prefab").WaitForCompletion();
-            }
+            //Red
             else
             {
-                tracerPrefab = SS2Assets.LoadAsset<GameObject>("TracerNemCommandoShotgunRed", SS2Bundle.Nemmando);
-                muzzleFlashPrefab = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoRed", SS2Bundle.Nemmando);
-                hitSparkPrefab = SS2Assets.LoadAsset<GameObject>("HitsparkNemCommandoRed", SS2Bundle.Nemmando);
+                tracerPrefab = SS2Assets.LoadAsset<GameObject>("TracerNemCommandoShotgunRed", SS2Bundle.NemCommando);
+                muzzleFlashPrefab = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoRed", SS2Bundle.NemCommando);
+                hitSparkPrefab = SS2Assets.LoadAsset<GameObject>("HitsparkNemCommandoRed", SS2Bundle.NemCommando);
             }
 
             FireBullet();

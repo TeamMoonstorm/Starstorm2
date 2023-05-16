@@ -13,13 +13,19 @@
       "dependencies": {}
     },
     "com.passivepicasso.thunderkit": {
-      "version": "https://github.com/PassivePicasso/ThunderKit.git",
+      "version": "https://github.com/PassivePicasso/ThunderKit.git#7.1.2",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.unity.scriptablebuildpipeline": "1.16.1"
       },
-      "hash": "7ea752a2390306be73860a590d7639b995d9ca28"
+      "hash": "2cce48d97a8474e52552c8bd9a362496bcd2766a"
+    },
+    "com.unity.2d.sprite": {
+      "version": "1.0.0",
+      "depth": 0,
+      "source": "builtin",
+      "dependencies": {}
     },
     "com.unity.multiplayer-hlapi": {
       "version": "https://github.com/risk-of-thunder/UnityMultiplayerHLAPI.git",
@@ -102,12 +108,6 @@
       "source": "embedded",
       "dependencies": {}
     },
-    "riskofthunder-r2api_deployable": {
-      "version": "file:R2API_Deployable",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
     "riskofthunder-r2api_difficulty": {
       "version": "file:R2API_Difficulty",
       "depth": 0,
@@ -132,38 +132,8 @@
       "source": "embedded",
       "dependencies": {}
     },
-    "riskofthunder-r2api_items": {
-      "version": "file:R2API_Items",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "riskofthunder-r2api_language": {
-      "version": "file:R2API_Language",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "riskofthunder-r2api_loadout": {
-      "version": "file:R2API_Loadout",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "riskofthunder-r2api_lobbyconfig": {
-      "version": "file:R2API_LobbyConfig",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
     "riskofthunder-r2api_networking": {
       "version": "file:R2API_Networking",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "riskofthunder-r2api_orb": {
-      "version": "file:R2API_Orb",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
@@ -206,12 +176,6 @@
       "source": "git",
       "dependencies": {},
       "hash": "56fa35e24c27264611b42ba775b0ec4101c656ae"
-    },
-    "tristanmcpherson-r2api": {
-      "version": "file:R2API",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",

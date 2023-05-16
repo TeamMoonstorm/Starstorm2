@@ -12,10 +12,10 @@ namespace EntityStates.Executioner2
 {
     public class ExecuteSlam : BaseSkillState
     {
-        public static float baseDamageCoefficient = 12f;
-        public static float slamRadius = 14f;
-        public static float procCoefficient = 1.0f;
-        public static float recoil = 8f;
+        public static float baseDamageCoefficient;
+        public static float slamRadius;
+        public static float procCoefficient;
+        public static float recoil;
         public static GameObject slamEffect;
 
         public static float duration = 1f;
@@ -49,7 +49,7 @@ namespace EntityStates.Executioner2
                     cameraParamsData = slamCameraParams,
                     priority = 1f
                 };
-                camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0.5f);
+                camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0.1f);
             }
         }
 
@@ -89,6 +89,7 @@ namespace EntityStates.Executioner2
             List<HealthComponent> hitTargets = new List<HealthComponent>();
 
             float damage = baseDamageCoefficient;
+            float procMultiplier = 1;
 
             search.ClearCandidates();
             search.origin = hitGroundInfo.position;
@@ -105,13 +106,16 @@ namespace EntityStates.Executioner2
                     hitTargets.Add(hp);
             }
             if (hitTargets.Count <= 1)
+            {
                 damage *= 2f;
+                procMultiplier++;
+            }
 
             bool crit = RollCrit();
             BlastAttack blast = new BlastAttack()
             {
                 radius = slamRadius,
-                procCoefficient = procCoefficient,
+                procCoefficient = procCoefficient * procMultiplier,
                 position = hitGroundInfo.position,
                 attacker = gameObject,
                 teamIndex = teamComponent.teamIndex,
@@ -128,7 +132,7 @@ namespace EntityStates.Executioner2
             if (slamEffect)
                 EffectManager.SimpleEffect(slamEffect, hitGroundInfo.position, Quaternion.identity, true);
 
-            PlayAnimation("FullBody, Override", "SpecialImpact", "Special.playbackRate", duration);
+            
 
             outer.SetNextStateToMain();
         }
@@ -136,12 +140,18 @@ namespace EntityStates.Executioner2
         public override void OnExit()
         {
             base.OnExit();
+            PlayAnimation("FullBody, Override", "SpecialImpact", "Special.playbackRate", duration);
             characterMotor.onHitGroundAuthority -= GroundSlam;
             characterBody.bodyFlags -= CharacterBody.BodyFlags.IgnoreFallDamage;
             if (cameraTargetParams)
             {
-                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 1f);
+                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 1.2f);
             }
+        }
+
+        public override InterruptPriority GetMinimumInterruptPriority()
+        {
+            return InterruptPriority.Frozen;
         }
     }
 }

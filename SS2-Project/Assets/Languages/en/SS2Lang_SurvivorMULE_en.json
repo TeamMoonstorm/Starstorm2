@@ -1,20 +1,32 @@
 {
 	"strings": {
 		"SS2_MULE_NAME": "MULE",
-		"SS2_MULE_SUBTITLE": "DIRECTIVE: SURVIVE",
+		"SS2_MULE_SUBTITLE": "Directive: Survive",
 		"SS2_MULE_DESCRIPTION": "",
-		"SS2_MULE_OUTRO_FLAVOR": "..and so it left, directive fulfilled.",
-		"SS2_MULE_OUTRO_FAILURE": "..and so it died.",
+		"SS2_MULE_OUTRO_FLAVOR": "..and so it left, engine sputtering, directive finally fulfilled.",
+		"SS2_MULE_OUTRO_FAILURE": "..and so it vanished, finally put out of commission.",
 		"SS2_MULE_LORE": "",
 
-		"SS2_MULE_PASSIVE_DRONE_NAME": "FAIL-SAFE ASSISTANCE",
-		"SS2_MULE_PASSIVE_DRONE_DESC": "Taking damage to below <style=cIsHealth>25% health</style> releases a <style=cIsUtility>personal repair drone</style>, <style=cIsHealing>healing</style> you for <style=cIsHealing>35%</style> of <style=cIsHealing>maximum health</style> and temporarily increasing <style=cIsUtility>armor</style>.",
-		"SS2_MULE_PRIMARY_PUNCH_NAME": "INTERFERENCE REMOVAL",
-		"SS2_MULE_PRIMARY_PUNCH_DESC": "PUNCH THE SHIT OUT OF LIZARDS FOR 280% DAMAGE",
-		"SS2_MULE_SECONDARY_SLAM_NAME": "",
-		"SS2_MULE_SECONDARY_SLAM_DESC": "",
-		"SS2_MULE_UTILITY_SPIN_NAME": "TORQUE CALIBRATION",
-		"SS2_MULE_UTILITY_SPIN_DESC": "",
-		"SS2_MULE_SPECIAL_NET_NAME": "IMMOBILIZE",
-		"SS2_MULE_SPECIAL_NET_DESC": "",
+		"SS2_MULE_KEYWORD_OVERCLOCKING": "<style=cKeywordName>Overclocking</style></style=cSub>Hold the button to extend the skill's duration, but also extend the skill's cooldown length.</sub>",
+		"SS2_MULE_KEYWORD_OVERCLOCKING2": "<style=cKeywordName>Overclocking</style></style=cSub>Hold the button to charge the skill further, but also extend the skill's cooldown length.</sub>",
+
+		"SS2_MULE_PASSIVE_DRONE_NAME": "Fail-Safe Assistance",
+		"SS2_MULE_PASSIVE_DRONE_DESC": "Taking damage to below <style=cIsHealth>25% health</style>activates your personal <style=cIsHealing>Repair Drone</style>, healing for <style=cIsHealing>50%</style> of your health. Has a <style=cIsUtility>60</style> second cooldown.",
+
+		"SS2_MULE_SLAM_NAME": "Interference Removal",
+		"SS2_MULE_SLAM_DESC": "<style=cIsDamage>Tap</style> to punch enemies for <style=cIsDamage>280% damage</style>. <style=cIsDamage>Hold</style> to charge up a mighty slam, dealing up to <style=cIsDamage>1200%</style> damage and creating a shockwave for <style=cIsDamage>400%</style>.",
+
+		"SS2_MULE_PUNCH_NAME": "Centrifugal Smash",
+		"SS2_MULE_PUNCH_DESC": "<style=cIsUtility>Overclocking</style>. <style=cIsUtility>Stunning</style>. Wind up, and throw a mighty punch forward for <style=cIsDamage>280% damage</style>. <style=cIsDamage>Damage is multiplied by charge level, up to 4x</style>.",
+
+		"SS2_MULE_JUMP_NAME": "Relocate",
+		"SS2_MULE_JUMP_DESC":  "<style=cIsUtility>Hold to charge</style> a powerful upwards leap.",
+
+		"SS2_MULE_SPIN_NAME": "Torque Calibration",
+		"SS2_MULE_SPIN_DESC": "<style=cIsUtility>Overclocking</style>. Rapidly spin, gradually increasing <style=cIsUtility>movement speed</style> and <style=cIsUtility>increasing armor</style> while dealing <style=cIsDamage>100% damage</style> per rotation.",
+
+		"SS2_MULE_NET_NAME": "Immobilize",
+		"SS2_MULE_NET_DESC": "Launch a <style=cIsUtility>net</style>, holding enemies within <style=cIsUtility>12m</style> of impact in place and preventing them from attacking for <style=cIsUtility>5</style> seconds. <style=cIsUtility>Flying enemies are grounded</style>."
+
+
 	}

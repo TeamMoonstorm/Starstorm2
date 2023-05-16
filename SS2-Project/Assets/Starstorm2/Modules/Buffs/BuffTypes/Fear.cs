@@ -65,37 +65,14 @@ namespace Moonstorm.Starstorm2.Buffs
             };
         }
 
-        public sealed class Behavior : BaseBuffBodyBehavior, IBodyStatArgModifier, IOnIncomingDamageServerReceiver
+        public sealed class Behavior : BaseBuffBodyBehavior, IBodyStatArgModifier
         {
             [BuffDefAssociation]
             private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffFear;
-            private void Start()
-            {
-                if (body.healthComponent)
-                {
-                    HG.ArrayUtils.ArrayAppend(ref body.healthComponent.onIncomingDamageReceivers, this);
-                }
-            }
 
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
             {
-                args.moveSpeedReductionMultAdd += 0.3f;
-            }
-
-            public void OnIncomingDamageServer(DamageInfo damageInfo)
-            {
-                damageInfo.damage *= 1.5f;
-            }
-
-            private void OnDestroy()
-            {
-                //This SHOULDNT cause any errors because nothing should be fucking with the order of things in this list... I hope.
-                if (body.healthComponent)
-                {
-                    int i = Array.IndexOf(body.healthComponent.onIncomingDamageReceivers, this);
-                    if (i > -1)
-                        HG.ArrayUtils.ArrayRemoveAtAndResize(ref body.healthComponent.onIncomingDamageReceivers, body.healthComponent.onIncomingDamageReceivers.Length, i);
-                }
+                args.moveSpeedReductionMultAdd += 0.5f;
             }
         }
     }

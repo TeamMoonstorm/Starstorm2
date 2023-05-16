@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseSkins:
   - {fileID: 11400000, guid: fce2219708ddbb0499ac302a36929286, type: 2}
-  icon: {fileID: 21300000, guid: 9ac39d9705854834d9e52702117950c0, type: 3}
-  nameToken: SS2_SKIN_EXECUTIONER@_DEFAULT
+  icon: {fileID: 21300000, guid: f38cb3110d8f30f4e82a58029f5e4f1b, type: 3}
+  nameToken: SS2_SKIN_EXECUTIONER2_MASTERY
   unlockableName: texExecutionerSkin
   unlockableDef: {fileID: 11400000, guid: b9d1420dc5100a44ba717f1ec8c3e291, type: 2}
   rootObject: {fileID: 3077815623334618848, guid: 18c30c6bbe052f04eb5058bbd75ba580,
@@ -41,14 +41,14 @@ MonoBehaviour:
   - renderer: {fileID: 0}
     defaultMaterial: {fileID: 0}
     defaultShadowCastingMode: 1
-    ignoreOverlays: 0
+    ignoreOverlays: 1
     hideOnDeath: 0
   - renderer: {fileID: 8966749530243362934, guid: 18c30c6bbe052f04eb5058bbd75ba580,
       type: 3}
-    defaultMaterial: {fileID: 2100000, guid: f6cfc036de4e22447b58cede540473b9, type: 2}
+    defaultMaterial: {fileID: 2100000, guid: 69f3d27faba96c7449b76ac296ff38ce, type: 2}
     defaultShadowCastingMode: 1
-    ignoreOverlays: 0
-    hideOnDeath: 0
+    ignoreOverlays: 1
+    hideOnDeath: 1
   gameObjectActivations: []
   meshReplacements:
   - renderer: {fileID: 7890932552577666186, guid: 18c30c6bbe052f04eb5058bbd75ba580,

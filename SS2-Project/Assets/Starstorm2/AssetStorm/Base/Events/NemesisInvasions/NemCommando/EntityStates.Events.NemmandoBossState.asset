@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: EntityStates.Events.NemmandoBossState
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.Events.NemCommandoBossState, Starstorm2,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: eventCard
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 11400000, guid: 1f208a25eabdb4746bd6a04ad628c971, type: 2}
+    - fieldName: spawnCard
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 11400000, guid: 1e9bba60b294faf479f0719f3e4ca839, type: 2}
+    - fieldName: spawnDistanceString
+      fieldValue:
+        stringValue: Close
+        objectValue: {fileID: 0}
+    - fieldName: minDuration
+      fieldValue:
+        stringValue: 15
+        objectValue: {fileID: 0}
+    - fieldName: maxDuration
+      fieldValue:
+        stringValue: 30
+        objectValue: {fileID: 0}
+    - fieldName: warningDur
+      fieldValue:
+        stringValue: 5
+        objectValue: {fileID: 0}
+    - fieldName: introTrack
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 11400000, guid: f239359ddae3a964ab730c831a8347e5, type: 2}
+    - fieldName: mainTrack
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 11400000, guid: c55ab4c288b6969488356b2cc13da73f, type: 2}
+    - fieldName: outroTrack
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
