@@ -9,10 +9,10 @@ namespace Moonstorm.Starstorm2.Items
         private const string token = "SS2_ITEM_PORTABLEREACTOR_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("PortableReactor", SS2Bundle.Items);
 
-        [ConfigurableField(ConfigDesc = "Duration of invulnerability from Portable Reactor. (1 = 1 second)")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of invulnerability from Portable Reactor. (1 = 1 second)")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float invulnTime = 80f;
-        [ConfigurableField(ConfigDesc = "Stacking duration of invulnerability. (1 = 1 second)")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Stacking duration of invulnerability. (1 = 1 second)")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static float stackingInvuln = 40f;
 
