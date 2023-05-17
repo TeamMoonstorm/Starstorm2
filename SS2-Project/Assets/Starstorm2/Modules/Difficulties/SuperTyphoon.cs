@@ -64,7 +64,7 @@ namespace Moonstorm.Starstorm2
             {
                 foreach (CharacterMaster cm in run.userMasters.Values)
                     cm.inventory.GiveItem(RoR2Content.Items.MonsoonPlayerHelper.itemIndex);
-                if (SS2Config.TyphoonIncreaseSpawnCap.Value)
+                if (Typhoon.IncreaseSpawnCap)
                 {
                     TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit *= 3;
                     TeamCatalog.GetTeamDef(TeamIndex.Void).softCharacterLimit *= 3;
