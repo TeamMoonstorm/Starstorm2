@@ -51,8 +51,8 @@ namespace EntityStates.Executioner2
                 CreateFearAoe();
             }
 
-            EffectManager.SimpleMuzzleFlash(dashEffect, gameObject, ExhaustL, false);
-            EffectManager.SimpleMuzzleFlash(dashEffect, gameObject, ExhaustR, false);
+            EffectManager.SimpleMuzzleFlash(dashEffect, gameObject, ExhaustL, true);
+            EffectManager.SimpleMuzzleFlash(dashEffect, gameObject, ExhaustR, true);
 
             Transform modelTransform = GetModelTransform();
             if (modelTransform)

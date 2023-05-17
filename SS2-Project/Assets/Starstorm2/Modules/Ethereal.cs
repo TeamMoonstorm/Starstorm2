@@ -24,17 +24,20 @@ namespace Moonstorm.Starstorm2
         public static bool teleUpgraded;
         internal static void Init()
         {
+            //Initialize Scavenger trading
+            Components.TraderController.Initialize();
+
+            //Hooks
             Run.onRunStartGlobal += Run_onRunStartGlobal;
             Run.onRunDestroyGlobal += Run_onRunDestroyGlobal;
-
-            //DISABLING ALL OF THIS CONTENT IS AS SIMPLE AS JUST COMMENTING OUT THIS
-            //obv won't prevent content loading - that should go without saying, but will make it all inaccessible by player via standard gameplay
-            //On.RoR2.SceneDirector.Start += SceneDirector_Start;
-
             TeleporterInteraction.onTeleporterBeginChargingGlobal += TeleporterInteraction_onTeleporterBeginChargingGlobal;
             TeleporterInteraction.onTeleporterFinishGlobal += TeleporterInteraction_onTeleporterFinishGlobal;
             On.RoR2.TeleporterInteraction.FixedUpdate += TeleporterInteraction_FixedUpdate;
             On.RoR2.TeleporterInteraction.Start += TeleporterInteraction_Start;
+
+            //DISABLING ALL OF THIS CONTENT IS AS SIMPLE AS JUST DISABLING THIS HOOK!!!
+            //obv won't prevent content loading - that should go without saying, but will make it all inaccessible by player via standard gameplay
+            //On.RoR2.SceneDirector.Start += SceneDirector_Start;
         }
 
         private static void Run_onRunStartGlobal(Run run)
