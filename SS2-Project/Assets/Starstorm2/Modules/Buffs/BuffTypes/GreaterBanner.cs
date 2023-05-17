@@ -12,6 +12,7 @@ namespace Moonstorm.Starstorm2.Buffs
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffGreaterBanner", SS2Bundle.Equipments);
 
+
         public sealed class Behavior : BaseBuffBodyBehavior, IBodyStatArgModifier, IStatItemBehavior
         {
             [BuffDefAssociation]
@@ -112,12 +113,13 @@ namespace Moonstorm.Starstorm2.Buffs
                 //    if (body.skillLocator.special)
                 //        body.skillLocator.special.cooldownScale *= GreaterWarbanner.cooldownReduction;
                 //}
-
-                if (body.skillLocator)
+                SkillLocator locator = body.skillLocator;
+                bool hasAuthority = locator.hasEffectiveAuthority;
+                if (locator)
                 {
-                    for(int i = 0; i < body.skillLocator.allSkills.Length; ++i)
+                    for(int i = 0; i < locator.allSkills.Length; ++i)
                     {
-                        GenericSkill genericSkill = body.skillLocator.allSkills[i];
+                        GenericSkill genericSkill = locator.allSkills[i];
                         //if (lastUpdate.Count < (i + 1))
                         //{
                         //    lastUpdate.Add(0); //gives it same number of skills in same order as allSkills
@@ -130,6 +132,7 @@ namespace Moonstorm.Starstorm2.Buffs
                             if(genericSkill.rechargeStopwatch > Mathf.Floor(genericSkill.rechargeStopwatch) + GreaterWarbanner.cooldownReduction)
                             {
                                 genericSkill.rechargeStopwatch += GreaterWarbanner.cooldownReduction;
+                                //locator.DeductCooldownFromAllSkillsServer(genericSkill, hasAuthority);
                                 //timer = 0f;
                             }
                             //genericSkill.rechargeStopwatch += 1;
@@ -160,5 +163,54 @@ namespace Moonstorm.Starstorm2.Buffs
 
 
         }
+
+        //public void DeductCooldownFromAllSkillsServer(GenericSkill skill, bool hasAuthority)
+        //{
+        //    if (hasAuthority)
+        //    {
+        //        DeductCooldownFromAllSkillsAuthority(skill);
+        //        return;
+        //    }
+        //    CallRpcDeductCooldownFromAllSkillsServer(deduction);
+        //}
+
+        //public void CallRpcDeductCooldownFromAllSkillsServer(float deduction)
+        //{
+        //    if (!NetworkServer.active)
+        //    {
+        //        Debug.LogError("RPC Function RpcDeductCooldownFromAllSkillsServer called on client.");
+        //        return;
+        //    }
+        //    NetworkWriter networkWriter = new NetworkWriter();
+        //    networkWriter.Write(0);
+        //    networkWriter.Write((short)((ushort)2));
+        //    networkWriter.WritePackedUInt32((uint)SkillLocator.kRpcRpcDeductCooldownFromAllSkillsServer);
+        //    networkWriter.Write(base.GetComponent<NetworkIdentity>().netId);
+        //    networkWriter.Write(deduction);
+        //    this.SendRPCInternal(networkWriter, 0, "RpcDeductCooldownFromAllSkillsServer");
+        //}
+
+        // Token: 0x060030BD RID: 12477 RVA: 0x000CF25A File Offset: 0x000CD45A
+        //[ClientRpc]
+        //private void RpcDeductCooldownFromAllSkillsServer(float deduction)
+        //{
+        //    if (this.hasEffectiveAuthority)
+        //    {
+        //        this.DeductCooldownFromAllSkillsAuthority(deduction);
+        //    }
+        //}
+        //
+        //private void DeductCooldownFromAllSkillsAuthority(float deduction)
+        //{
+        //    for (int i = 0; i < this.allSkills.Length; i++)
+        //    {
+        //        GenericSkill genericSkill = this.allSkills[i];
+        //        if (genericSkill.stock < genericSkill.maxStock)
+        //        {
+        //            genericSkill.rechargeStopwatch += deduction;
+        //        }
+        //    }
+        //}
+
     }
 }

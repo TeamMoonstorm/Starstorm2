@@ -35,7 +35,7 @@ With Art/Modelling/Animation contributions by...
 
 Additional thanks to... 
 * Writing - Blimblam, Lyrical Endymion, swuff★, T_Dimensional, Zenithrium
-* Translations - Anreol (Spanish), MysticSword (Russian), Damglador (Ukrainian), Returndirt & Friends, Dying_Twilight (Chinese)
+* Translations - Anreol (Spanish), MysticSword (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight (Chinese)
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze
 * Special thanks - Altzeus, DestroyedClone, don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, valerie ♥ 
 
@@ -57,15 +57,18 @@ The most important issues you may encounter are listed below, to help expect thi
 
 ### 0.3.51
 * General
+    * Overhauled Executioner and Nemesis Commando.
     * Added significantly more configs, split into individual files. You can now disable events individually, disable equipments, and items that were lacking in configurable options now have them.
     * Added Chinese translation. 
     * Adjusted Cloaking Headband's Russian translation.
     * Commando now correctly fires phase round projectiles in multiplayer with the Stealth skin equipped.
     * Fixed "Key Not Found" exception being thrown after ally death.
 * Items & Equipment
+    * Added Insecticide.
     * Reworked Relic of Termination: "Every 30 seconds, gain a buff which marks the next spawning enemy. If defeated in time, they drop an item; if not, they drop nothing and delay the next mark. Marked enemies have significantly increased stats. (Rarity of the dropped item increases with stacks)."
     * Reworked Needles: "Non-critical strikes add +1% critical chance against the struck enemy. Additional critical chance is cleared after 1 (+1 per stack) critical strikes against them." 
     * Reworked Coffee Bag: "Using interactables increases movement speed by 21% and attack speed by 22.5% for up to 15 (+15 per stack) seconds."
+    * Reworked Pressurized Cannister: "Grants an upward boost upon activating, and grants a temporary additional jump until landing."
     * Adjusted Detritive Trematode - The debuff no longer expires, but the low health threshold was lowered to 25% for consistency with other "low health" items.
     * Adjusted MIDAS - When given to an equipment drone, the drone now splits the gold it would recieve amongst all players.
     * Adjusted Greater Warbanner - No longer directly gives CDR, but instead makes cooldowns tick faster.
@@ -80,6 +83,7 @@ The most important issues you may encounter are listed below, to help expect thi
     * Cognation's icon now better matches with vanilla artifact icons.
     * Cognation's unlock code now works, and the artifact properly spawns ghosts. Cognation ghosts now have the "Cognate" prefix.
     * Metamorphosis no longer makes the game unplayable. 
+    * Nemesis Commando's fight now works correctly with Swarms.
 * Events
     * Invading Nemesis Commando now does less damage. (10x -> 7x)
     * Mending Orbs no longer gain elite effects during elite events.

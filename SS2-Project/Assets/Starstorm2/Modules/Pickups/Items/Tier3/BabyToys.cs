@@ -264,7 +264,7 @@ namespace Moonstorm.Starstorm2.Items
                             {
                                 RectTransform rectTransform = (RectTransform)levelText.targetText.transform;
                                 //Transform transf = new Transform(0)
-                                rectTransform.transform.position += (Vector3.right * 5000); 
+                                rectTransform.transform.position += (Vector3.right * 1); 
                                 rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x - levelTextScaleAdjustment, rectTransform.sizeDelta.y);
                                 adjustedLevelText.Remove(levelText);
                             }

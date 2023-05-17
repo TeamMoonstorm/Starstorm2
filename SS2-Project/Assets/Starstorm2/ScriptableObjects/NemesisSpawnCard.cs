@@ -12,7 +12,7 @@ using UnityEngine.Networking;
 namespace Moonstorm.Starstorm2.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "NemesisSpawnCard", menuName = "Starstorm2/NemesisSpawnCard")]
-    public class NemesisSpawnCard : SpawnCard
+    public class NemesisSpawnCard : CharacterSpawnCard
     {
         public NemesisInventory nemesisInventory;
         public bool useOverrideState;

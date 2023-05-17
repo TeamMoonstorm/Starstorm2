@@ -11,10 +11,10 @@ namespace Moonstorm.Starstorm2
 
         private static int defMonsterCap;
 
-        [ConfigurableField(SS2Config.IDMain, ConfigSection = "Typhoon", ConfigName = "Increase Team Limit", ConfigDesc = "Multiplies the Monster Team maximum size by 2 when enabled. Lunar and Void are left unchanged. May affect performance.")]
+        [ConfigurableField(SS2Config.IDMain, ConfigSection = "Typhoon", ConfigName = "Increase Team Limit", ConfigDesc = "Multiplies the Monster, Lunar, and Void Team maximum size by 2 when enabled. May affect performance.")]
         internal static bool IncreaseSpawnCap = true;
 
-        [ConfigurableField(SS2Config.IDMain, ConfigSection = "Typhoon", ConfigName = "Increase Storm", ConfigDesc = "Multiplies Storm Frequency by like +28% compared to other difficulties.")]
+        [ConfigurableField(SS2Config.IDMain, ConfigSection = "Typhoon", ConfigName = "Increase Storm", ConfigDesc = "Multiplies Storm Frequency by roughly +28% compared to other difficulties.")]
         internal static bool IncreaseStorm = true;
 
         internal static void Init()
