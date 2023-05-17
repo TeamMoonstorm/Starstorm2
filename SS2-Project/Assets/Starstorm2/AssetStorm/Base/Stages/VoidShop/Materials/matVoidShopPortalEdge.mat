@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: matVoidShopPortalEdge
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
-  m_ShaderKeywords: CLOUDOFFSET USE_CLOUDS VERTEXALPHA
+  m_ShaderKeywords: CLOUDOFFSET USE_CLOUDS VERTEXALPHA VERTEXOFFSET
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -25,7 +25,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _Cloud1Tex:
         m_Texture: {fileID: 2800000, guid: 6f26a1b564e83614ba842884ab6301de, type: 3}
-        m_Scale: {x: 0.1, y: 0.1}
+        m_Scale: {x: 0.1, y: 0.2}
         m_Offset: {x: 0, y: 0}
     - _Cloud2Tex:
         m_Texture: {fileID: 0}
@@ -68,26 +68,26 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _AlphaBias: 0.226
-    - _AlphaBoost: 5.64
+    - _AlphaBias: 0.6707022
+    - _AlphaBoost: 3.486684
     - _Boost: 1
     - _BumpScale: 1
     - _CalcTextureAlphaOn: 0
     - _CloudOffsetOn: 1
     - _CloudsOn: 1
-    - _Cull: 2
+    - _Cull: 0
     - _Cutoff: 0.5
-    - _DepthOffset: 0
+    - _DepthOffset: -0.7263923
     - _DetailNormalMapScale: 1
     - _DisableRemapOn: 0
-    - _DistortionStrength: -0.46
+    - _DistortionStrength: 0.6440678
     - _DstBlend: 0
     - _ExternalAlpha: 1
     - _Fade: 1
-    - _FadeCloseDistance: 0.5
+    - _FadeCloseDistance: 0.4757869
     - _FadeCloseOn: 0
     - _FresnelOn: 0
-    - _FresnelPower: 0.8
+    - _FresnelPower: -14.69637
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -106,11 +106,11 @@ Material:
     - _UseUV1On: 0
     - _VertexAlphaOn: 1
     - _VertexColorOn: 0
-    - _VertexOffsetOn: 0
+    - _VertexOffsetOn: 1
     - _ZTest: 4
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _CutoffScroll: {r: 1, g: 0.3, b: 0, a: 0}
+    - _CutoffScroll: {r: 1, g: 4, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _TintColor: {r: 1, g: 1, b: 1, a: 1}
+    - _TintColor: {r: 1, g: 1, b: 1, a: 0.6039216}
