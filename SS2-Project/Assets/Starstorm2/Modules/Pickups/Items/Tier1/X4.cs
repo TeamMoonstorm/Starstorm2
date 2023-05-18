@@ -150,16 +150,34 @@ namespace Moonstorm.Starstorm2.Items
                             //self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
                             int buffCount = self.GetBuffCount(SS2Content.Buffs.BuffX4);
                             //self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
-                            if (buffCount > buffcap)
+                            if (buffCount < buffcap)
                             {
+                                //SS2Log.Info("aghhhh 1");
+                                self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
                                 //self.RemoveOldestTimedBuff(SS2Content.Buffs.BuffX4.buffIndex);
                             }
-                            else
+                            else if(buffCount == buffcap)
                             {
+                                //SS2Log.Info("aghhhh 2");
+                                self.RemoveOldestTimedBuff(SS2Content.Buffs.BuffX4.buffIndex);
                                 self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
                             }
+
+                            //if (buffCount < maxBuffStack)
+                            //{
+                            //    body.AddTimedBuffAuthority(SS2Content.Buffs.BuffKickflip.buffIndex, buffDuration); //i swear if this works im killing hopoo
+                            //}
+                            //else if (buffCount == maxBuffStack)
+                            //{
+                            //    body.RemoveOldestTimedBuff(SS2Content.Buffs.BuffKickflip.buffIndex);
+                            //    body.AddTimedBuffAuthority(SS2Content.Buffs.BuffKickflip.buffIndex, buffDuration); //this is what skateboard does
+                            //}
+                            //else
+                            //{
+                            //    self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration); //why am i like this
+                            //}
                             //self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
-                            
+
                         }
                         else if(skill == skill.characterBody.skillLocator.secondaryBonusStockSkill) // if the skill is spammable, cap the buff count at 1
                         {
