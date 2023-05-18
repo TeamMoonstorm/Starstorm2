@@ -63,6 +63,7 @@ The most important issues you may encounter are listed below, to help expect thi
     * Adjusted Cloaking Headband's Russian translation.
     * Commando now correctly fires phase round projectiles in multiplayer with the Stealth skin equipped.
     * Fixed "Key Not Found" exception being thrown after ally death.
+    * Added R2API TempVFX dependency.
 * Items & Equipment
     * Added Insecticide.
     * Reworked Relic of Termination: "Every 30 seconds, gain a buff which marks the next spawning enemy. If defeated in time, they drop an item; if not, they drop nothing and delay the next mark. Marked enemies have significantly increased stats. (Rarity of the dropped item increases with stacks)."
@@ -78,7 +79,8 @@ The most important issues you may encounter are listed below, to help expect thi
     * Fixed Relic of Force giving primary skills cooldowns.
     * Should have fixed Greater Warbanner's cooldown breaking.
     * Relic of Termination now has a blacklist for enemies that are not fit for being marked (specific bosses, destructible props, etc), and can no longer mark Cognation ghosts.
-    * Added R2API TempVFX dependency.
+    * Reduced the brightness of Jet Boot's visual effect.
+    * Item displays have proper ditheirng.
 * Artifacts
     * Cognation's icon now better matches with vanilla artifact icons.
     * Cognation's unlock code now works, and the artifact properly spawns ghosts. Cognation ghosts now have the "Cognate" prefix.
