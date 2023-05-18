@@ -71,7 +71,8 @@ namespace Moonstorm.Starstorm2.Items
         {
             CharacterBody.onBodyStartGlobal += TerminationSpawnHook;
             GlobalEventManager.onCharacterDeathGlobal += TerminationDeathHook;
-            On.RoR2.Util.GetBestBodyName += AddTerminalName;
+            //On.RoR2.Util.GetBestBodyName += AddTerminalName;
+            On.RoR2.Util.GetBestBodyName += AddTerminalName2;
 
             markEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationTargetMark", SS2Bundle.Items);
             failEffect = SS2Assets.LoadAsset<GameObject>("NemmandoScepterSlashAppear", SS2Bundle.Items);
@@ -88,7 +89,7 @@ namespace Moonstorm.Starstorm2.Items
             {
                 var body = token.owner.body;
 
-                var time = token.initalTime;
+                var inital = token.initalTime;
                 var now = Time.time;
                 if (body.HasBuff(SS2Content.Buffs.BuffTerminationFailed))
                 {
@@ -98,9 +99,12 @@ namespace Moonstorm.Starstorm2.Items
                                             //SS2Log.Info("time")
 
                 float timeMult = Mathf.Pow(1 - timeReduction, token.itemCount - 1);
-                time = maxTime * timeMult;
+                //inital = maxTime * timeMult;
+                float compmaxTime = maxTime * timeMult;
 
-                if (!(now - time > maxTime))
+
+
+                if (!(now - inital > compmaxTime))
                 {
                     //int count = token.PlayerOwner.inventory.GetItemCount(SS2Content.Items.RelicOfTermination.itemIndex);
                     int count = token.itemCount;
@@ -153,7 +157,12 @@ namespace Moonstorm.Starstorm2.Items
 
         private void TerminationSpawnHook(CharacterBody obj)
         {
-            if (!NetworkServer.active || illegalMarks.Contains(obj.bodyIndex) || obj.isPlayerControlled || obj.teamComponent.teamIndex == TeamIndex.Player || obj.teamComponent.teamIndex == TeamIndex.Neutral)
+            if (!NetworkServer.active)
+            {
+                SS2Log.Info("TerminationSpawnHook called on Client");
+                return;
+            }
+            if (illegalMarks.Contains(obj.bodyIndex) || obj.isPlayerControlled || obj.teamComponent.teamIndex == TeamIndex.Player || obj.teamComponent.teamIndex == TeamIndex.Neutral)
             {
                 return;
             }
@@ -171,10 +180,12 @@ namespace Moonstorm.Starstorm2.Items
                 {
                     return;
                 }
+
                 if (!player.body)
                 {
                     return;
                 }
+
                 if (player.body.HasBuff(SS2Content.Buffs.BuffTerminationReady))
                 {
                     var holderToken = player.body.GetComponent<TerminationHolderToken>();
@@ -215,16 +226,19 @@ namespace Moonstorm.Starstorm2.Items
                             printController.maxPrintHeight = 100;
                         }
 
-
                         obj.teamComponent.RequestDefaultIndicator(globalMarkEffect);
 
-                        for (int i = 0; i < maxTime; i++)
+                        float timeMult = Mathf.Pow(1 - timeReduction, token.itemCount - 1);
+                        float compmaxTime = maxTime * timeMult;
+
+                        for (int i = 0; i < Mathf.Ceil(compmaxTime); i++)
                         {
                             player.body.AddTimedBuff(SS2Content.Buffs.BuffTerminationCooldown.buffIndex, i + 1);
                         }
                         //player.body.AddBuff(SS2Content.Buffs.BuffTerminationCooldown);
                         player.body.RemoveBuff(SS2Content.Buffs.BuffTerminationReady);
                     }
+                    break;
                 }
             }
         }
@@ -248,6 +262,17 @@ namespace Moonstorm.Starstorm2.Items
             }
 
             return orig(bodyObject);
+        }
+
+        private string AddTerminalName2(On.RoR2.Util.orig_GetBestBodyName orig, GameObject bodyObject) //i love stealing
+        {
+            var result = orig(bodyObject);
+            CharacterBody characterBody = bodyObject?.GetComponent<CharacterBody>();
+            if (characterBody && characterBody.inventory && characterBody.inventory.GetItemCount(SS2Content.Items.TerminationHelper) > 0)
+            {
+                result = Language.GetStringFormatted("SS2_ITEM_RELICOFTERMINATION_PREFIX", result);
+            }
+            return result;
         }
 
         //private void InitItem()

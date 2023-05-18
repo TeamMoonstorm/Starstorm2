@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using R2API;
+using System;
 
 namespace Moonstorm.Starstorm2.Equipments
 {
@@ -33,6 +34,22 @@ namespace Moonstorm.Starstorm2.Equipments
         override public void Initialize()
         {
             CreateVisualEffects();
+            On.RoR2.GenericSkill.RunRecharge += FasterTickrateBannerHook;
+        }
+
+        private void FasterTickrateBannerHook(On.RoR2.GenericSkill.orig_RunRecharge orig, GenericSkill self, float dt)
+        {
+            if (self)
+            {
+                if (self.characterBody)
+                {
+                    if (self.characterBody.HasBuff(SS2Content.Buffs.BuffGreaterBanner))
+                    {
+                        dt *= (1f + (2f * cooldownReduction));
+                    }
+                }
+            }
+            orig(self, dt);
         }
 
         //public override void AddBehavior(ref CharacterBody body, int stack)

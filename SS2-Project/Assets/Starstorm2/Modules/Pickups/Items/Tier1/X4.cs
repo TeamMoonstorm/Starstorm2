@@ -147,12 +147,16 @@ namespace Moonstorm.Starstorm2.Items
                         {
                             int buffcap = skill.bonusStockFromBody + 1;
                             //SS2Log.Debug(buffcap + " " + skill.maxStock + " " + skill.baseStock + " "+ skill.stock);
-                            self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
+                            //self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
                             int buffCount = self.GetBuffCount(SS2Content.Buffs.BuffX4);
                             //self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
                             if (buffCount > buffcap)
                             {
-                                self.RemoveOldestTimedBuff(SS2Content.Buffs.BuffX4.buffIndex);
+                                //self.RemoveOldestTimedBuff(SS2Content.Buffs.BuffX4.buffIndex);
+                            }
+                            else
+                            {
+                                self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
                             }
                             //self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
                             
