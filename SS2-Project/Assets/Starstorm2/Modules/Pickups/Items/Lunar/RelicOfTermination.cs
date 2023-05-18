@@ -73,6 +73,7 @@ namespace Moonstorm.Starstorm2.Items
             GlobalEventManager.onCharacterDeathGlobal += TerminationDeathHook;
             //On.RoR2.Util.GetBestBodyName += AddTerminalName;
             On.RoR2.Util.GetBestBodyName += AddTerminalName2;
+            RoR2.Inventory.onInventoryChangedGlobal += CheckTerminationBuff;
 
             markEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationTargetMark", SS2Bundle.Items);
             failEffect = SS2Assets.LoadAsset<GameObject>("NemmandoScepterSlashAppear", SS2Bundle.Items);
@@ -82,13 +83,39 @@ namespace Moonstorm.Starstorm2.Items
 
         }
 
+        private void CheckTerminationBuff(Inventory obj)
+        {
+            var master = obj.GetComponent<CharacterMaster>();
+            if (master)
+            {
+                var body = master.GetBody();
+                if (body)
+                {
+                    if(obj.GetItemCount(SS2Content.Items.RelicOfTermination) == 0)
+                    {
+                        if (body.HasBuff(SS2Content.Buffs.BuffTerminationReady))
+                        {
+                            body.RemoveBuff(SS2Content.Buffs.BuffTerminationReady);
+                            var token = body.GetComponent<TerminationHolderToken>();
+                            if (token)
+                            {
+                                //SS2Log.Info("Destroying token");
+
+                                GameObject.Destroy(token);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         private void TerminationDeathHook(DamageReport obj)
         {
             var token = obj.victimBody.gameObject.GetComponent<TerminationToken>();
             if (token)
             {
                 var body = token.owner.body;
-
+                
                 var inital = token.initalTime;
                 var now = Time.time;
                 if (body.HasBuff(SS2Content.Buffs.BuffTerminationFailed))
@@ -694,6 +721,20 @@ namespace Moonstorm.Starstorm2.Items
             public CharacterBody body;
             public PlayerCharacterMasterController player;
 
+            //private void FixedUpdate()
+            //{
+            //    if(body.GetItemCount(SS2Content.Items.RelicOfTermination) < 1)
+            //    {
+            //        int ready = body.GetBuffCount(SS2Content.Buffs.BuffTerminationReady);
+            //        if(ready > 0)
+            //        {
+            //            body.RemoveBuff(SS2Content.Buffs.BuffTerminationReady);
+            //        } //all other buffs should time out and decay
+            //
+            //        Destroy(this);
+            //
+            //    }
+            //}
         }
     }
 }
