@@ -8,7 +8,9 @@ namespace EntityStates.Executioner2
     {
         public static float baseDuration = 1.2f;
         public static GameObject chargeEffectPrefab;
+        public static GameObject chargeEffectPrefabMastery;
         private GameObject chargeEffectInstance;
+        private string skinNameToken;
 
         [SerializeField]
         public SkillDef primaryOverride;
@@ -139,8 +141,8 @@ namespace EntityStates.Executioner2
                 nextState.useAltCamera = useAltCamera;
                 outer.SetNextState(nextState);
                 return;
-            }*/   
-            
+            }*/
+
             if (!inputBank.skill2.down)
             {
                 outer.SetNextStateToMain();
@@ -158,13 +160,31 @@ namespace EntityStates.Executioner2
                 outer.SetNextState(nextState);
             }*/
 
-            if (chargeEffectPrefab && !chargeEffectInstance && fixedAge >= 0.3f)
+            //shrimply stolen from nemmando's sword swing 
+            skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
+
+            if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
             {
-                ChildLocator cl = modelLocator.modelTransform.GetComponent<ChildLocator>();
-                Transform muzzle = cl.FindChild("ExhaustGun");
-                chargeEffectInstance = Object.Instantiate(chargeEffectPrefab, muzzle.position, muzzle.rotation);
-                chargeEffectInstance.transform.parent = muzzle.transform;
+                if (chargeEffectPrefabMastery && !chargeEffectInstance && fixedAge >= 0.3f)
+                {
+                    ChildLocator cl = modelLocator.modelTransform.GetComponent<ChildLocator>();
+                    Transform muzzle = cl.FindChild("ExhaustGun");
+                    chargeEffectInstance = Object.Instantiate(chargeEffectPrefabMastery, muzzle.position, muzzle.rotation);
+                    chargeEffectInstance.transform.parent = muzzle.transform;
+                }
             }
+            else
+            {
+                if (chargeEffectPrefab && !chargeEffectInstance && fixedAge >= 0.3f)
+                {
+                    ChildLocator cl = modelLocator.modelTransform.GetComponent<ChildLocator>();
+                    Transform muzzle = cl.FindChild("ExhaustGun");
+                    chargeEffectInstance = Object.Instantiate(chargeEffectPrefab, muzzle.position, muzzle.rotation);
+                    chargeEffectInstance.transform.parent = muzzle.transform;
+                }
+            }
+
+
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

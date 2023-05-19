@@ -15,8 +15,10 @@ namespace EntityStates.Executioner2
         public static float duration = 1f;
 
         public static GameObject jumpEffect;
+        public static GameObject jumpEffectMastery;
         public static string ExhaustL;
         public static string ExhaustR;
+        private string skinNameToken;
 
         public static GameObject areaIndicator;
         public static GameObject areaIndicatorOOB;
@@ -48,8 +50,22 @@ namespace EntityStates.Executioner2
 
             if (isAuthority)
             {
-                EffectManager.SimpleMuzzleFlash(jumpEffect, gameObject, ExhaustL, true);
-                EffectManager.SimpleMuzzleFlash(jumpEffect, gameObject, ExhaustR, true);
+
+                //shrimply stolen from nemmando's sword swing 
+                skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
+
+                if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
+                {
+                    EffectManager.SimpleMuzzleFlash(jumpEffectMastery, gameObject, ExhaustL, true);
+                    EffectManager.SimpleMuzzleFlash(jumpEffectMastery, gameObject, ExhaustR, true);
+                }
+                else
+                {
+                    EffectManager.SimpleMuzzleFlash(jumpEffect, gameObject, ExhaustL, true);
+                    EffectManager.SimpleMuzzleFlash(jumpEffect, gameObject, ExhaustR, true);
+                }
+                Debug.Log("skin name token: " + skinNameToken);
+
 
                 CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
                 {
@@ -108,7 +124,7 @@ namespace EntityStates.Executioner2
             {
                 ExecuteSlam nextState = new ExecuteSlam();
                 outer.SetNextState(nextState);
-            }  
+            }
             else
                 HandleMovement();
         }

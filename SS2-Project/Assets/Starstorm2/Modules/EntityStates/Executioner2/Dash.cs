@@ -4,6 +4,7 @@ using RoR2;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.AddressableAssets;
 
 namespace EntityStates.Executioner2
 {
@@ -24,9 +25,11 @@ namespace EntityStates.Executioner2
         private Animator animator;
 
         public static GameObject dashEffect;
+        public static GameObject dashEffectMastery;
+        public static Material dashMasteryMaterial;
         public static string ExhaustL;
         public static string ExhaustR;
-
+        private string skinNameToken;
 
         public override void OnEnter()
         {
@@ -51,18 +54,50 @@ namespace EntityStates.Executioner2
                 CreateFearAoe();
             }
 
-            EffectManager.SimpleMuzzleFlash(dashEffect, gameObject, ExhaustL, false);
-            EffectManager.SimpleMuzzleFlash(dashEffect, gameObject, ExhaustR, false);
+            //shrimply stolen from nemmando's sword swing 
+            skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
+
+            if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
+            {
+                EffectManager.SimpleMuzzleFlash(dashEffectMastery, gameObject, ExhaustL, false);
+                EffectManager.SimpleMuzzleFlash(dashEffectMastery, gameObject, ExhaustR, false);
+            }
+            else
+            {
+                EffectManager.SimpleMuzzleFlash(dashEffect, gameObject, ExhaustL, false);
+                EffectManager.SimpleMuzzleFlash(dashEffect, gameObject, ExhaustR, false);
+            }
+            
+
 
             Transform modelTransform = GetModelTransform();
             if (modelTransform)
             {
                 TemporaryOverlay temporaryOverlay = modelTransform.gameObject.AddComponent<TemporaryOverlay>();
-                temporaryOverlay.duration = 1.5f * baseDuration;
+                // yknow i probably should have done !skinNameToken so its easier to understand but this works and i dont wanna change it so idk - b
+                if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
+                {
+                    temporaryOverlay.duration = 1.3f * baseDuration; // doing this because otherwise it just makes him flash white ??? i still have no idea why this doesnt happen with the huntress one bc the settings are the same :((( -b
+                }
+                else
+                {
+                    temporaryOverlay.duration = 1.5f * baseDuration;
+                }
+                
                 temporaryOverlay.animateShaderAlpha = true;
                 temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 0.5f, 1f, 0f);
                 temporaryOverlay.destroyComponentOnEnd = true;
-                temporaryOverlay.originalMaterial = Resources.Load<Material>("Materials/matHuntressFlashBright");
+           
+
+                if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
+                {
+                    temporaryOverlay.originalMaterial = dashMasteryMaterial;
+                }
+                else
+                {
+                    temporaryOverlay.originalMaterial = Addressables.LoadAssetAsync<Material>("RoR2/Base/Huntress/matHuntressFlashBright.mat").WaitForCompletion();
+                }
+
                 temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
             }
         }

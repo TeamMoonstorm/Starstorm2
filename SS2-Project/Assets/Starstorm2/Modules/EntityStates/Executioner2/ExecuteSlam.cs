@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using BepInEx;
 
 namespace EntityStates.Executioner2
 {
@@ -17,6 +18,8 @@ namespace EntityStates.Executioner2
         public static float procCoefficient;
         public static float recoil;
         public static GameObject slamEffect;
+        public static GameObject slamEffectMastery;
+        private string skinNameToken;
 
         public static float duration = 1f;
         private bool hasSlammed = false;
@@ -129,10 +132,23 @@ namespace EntityStates.Executioner2
             blast.Fire();
 
             AddRecoil(-0.4f * recoil, -0.8f * recoil, -0.3f * recoil, 0.3f * recoil);
-            if (slamEffect)
-                EffectManager.SimpleEffect(slamEffect, hitGroundInfo.position, Quaternion.identity, true);
 
-            
+
+            //shrimply stolen from nemmando's sword swing 
+            skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
+
+            if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
+            {
+                if (slamEffect) // you could save 1 instruction by commenting this out so its 0.000001% less laggy !! -b
+                    EffectManager.SimpleEffect(slamEffectMastery, hitGroundInfo.position, Quaternion.identity, true);
+            }
+            else
+            {
+                if (slamEffect) 
+                    EffectManager.SimpleEffect(slamEffect, hitGroundInfo.position, Quaternion.identity, true);
+            }
+            Debug.Log("skinNameToken: " + skinNameToken);
+            Debug.Log("ModelTransform: " + GetModelTransform());
 
             outer.SetNextStateToMain();
         }

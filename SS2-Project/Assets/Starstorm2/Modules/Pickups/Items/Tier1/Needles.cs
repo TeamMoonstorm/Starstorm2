@@ -11,7 +11,7 @@ namespace Moonstorm.Starstorm2.Items
         private const string token = "SS2_ITEM_NEEDLES_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Needles", SS2Bundle.Items);
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance for Needles to Proc. (100 = 100%)")]
+        //[ConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance for Needles to Proc. (100 = 100%)")]
         //[ConfigurableField(ConfigDesc = "Chance for Needles to Proc. (100 = 100%)")]
         //[TokenModifier(token, StatTypes.Default, 0)]
         //public static float procChance = 4f;
