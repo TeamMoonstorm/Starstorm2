@@ -507,6 +507,7 @@ namespace Moonstorm.Starstorm2.Items
                 "SMMaulingRockLarge",
                 "SMMaulingRockMedium",
                 "SMMaulingRockSmall",
+                "VoidInfestorBody",
             };
 
                 //SS2Log.Debug("all bodies: " + BodyCatalog.allBodyPrefabs.ToString());

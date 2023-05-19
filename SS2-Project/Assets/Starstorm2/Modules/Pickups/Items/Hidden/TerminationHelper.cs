@@ -52,7 +52,7 @@ namespace Moonstorm.Starstorm2.Items
                 }
 
                 body.teamComponent.RequestDefaultIndicator(globalMarkEffectTwo);
-                var ind = globalMarkEffectTwo.GetComponent<PositionIndicator>();
+                //var ind = globalMarkEffectTwo.GetComponent<PositionIndicator>();
 
                 //ind.targetTransform = body.transform;
             }

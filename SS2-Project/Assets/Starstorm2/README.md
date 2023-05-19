@@ -68,7 +68,7 @@ The most important issues you may encounter are listed below, to help expect thi
     * Added R2API TempVFX dependency.
 * Items & Equipment
     * Added Insecticide.
-    * Reworked Relic of Termination: "Every 30 seconds, gain a buff which marks the next spawning enemy. If defeated in time, they drop an item; if not, they drop nothing and delay the next mark. Marked enemies have significantly increased stats. (Rarity of the dropped item increases with stacks)." Additionally, it has new mark VFX.
+    * Reworked Relic of Termination: "Every 30 seconds, gain a buff which marks the next spawning enemy. If defeated in time, they drop an item; if not, they drop nothing and delay the next mark. Marked enemies have significantly increased stats. (Rarity of the dropped item increases with stacks)." Additionally, it has clearer mark VFX.
     * Reworked Needles: "Non-critical strikes add +1% critical chance against the struck enemy. Additional critical chance is cleared after 1 (+1 per stack) critical strikes against them." 
     * Reworked Coffee Bag: "Using interactables increases movement speed by 21% and attack speed by 22.5% for up to 15 (+15 per stack) seconds."
     * Reworked Pressurized Cannister: "Grants an upward boost upon activating, and grants a temporary additional jump until landing."
