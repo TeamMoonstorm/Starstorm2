@@ -12,7 +12,7 @@ namespace EntityStates.Executioner2
         public override void OnEnter()
         {
             base.OnEnter();
-            Debug.Log("entering");
+            //Debug.Log("entering");
             duration = baseDuration / characterBody.attackSpeed;
         }
 
@@ -21,7 +21,7 @@ namespace EntityStates.Executioner2
             base.FixedUpdate();
             if (duration >= fixedAge && isAuthority /*&& !inputBank.skill2.down*/)
             {
-                Debug.Log("over duration");
+                //Debug.Log("over duration");
                 PlayAnimation("Gesture, Override", "FireIonGunStart", "Secondary.playbackRate", duration);
                 FireIonGunOld nextState = new FireIonGunOld();
                 nextState.activatorSkillSlot = activatorSkillSlot;

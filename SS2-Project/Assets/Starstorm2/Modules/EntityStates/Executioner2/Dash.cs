@@ -4,6 +4,7 @@ using RoR2;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Networking;
 
 namespace EntityStates.Executioner2
 {
@@ -46,7 +47,7 @@ namespace EntityStates.Executioner2
             fearSearch.radius = debuffRadius;
 
             //create dash aoe
-            if (isAuthority)
+            if (NetworkServer.active)
             {
                 CreateFearAoe();
             }
@@ -85,7 +86,7 @@ namespace EntityStates.Executioner2
                     if (ssoh)
                     {
                         Type state = ssoh.targetStateMachine.state.GetType();
-                        if (state != typeof(EntityStates.StunState) && state != typeof(EntityStates.ShockState) && state != typeof(EntityStates.FrozenState))
+                        if (state != typeof(StunState) && state != typeof(ShockState) && state != typeof(FrozenState))
                         {
                             ssoh.SetStun(-1f);
                         }
@@ -114,7 +115,7 @@ namespace EntityStates.Executioner2
             if (characterDirection && characterMotor)
                 characterMotor.rootMotion += characterDirection.forward * characterBody.moveSpeed * speedMultiplier * Time.fixedDeltaTime;
 
-            if (isAuthority)
+            if (NetworkServer.active)
             {
                 debuffCheckStopwatch += Time.fixedDeltaTime;
                 if (debuffCheckStopwatch >= debuffCheckInterval)

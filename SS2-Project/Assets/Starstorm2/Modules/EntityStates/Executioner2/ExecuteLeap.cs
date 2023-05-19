@@ -34,6 +34,8 @@ namespace EntityStates.Executioner2
         {
             base.OnEnter();
 
+            characterBody.SetAimTimer(duration);
+
             flyVector = Vector3.up;
 
             Transform modelTransform = GetModelTransform();

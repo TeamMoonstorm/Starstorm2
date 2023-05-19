@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Networking;
 
 namespace EntityStates.Executioner2
 {
@@ -62,12 +63,12 @@ namespace EntityStates.Executioner2
             PlayAnimation("Gesture, Override", "FireIonGun", "Secondary.playbackRate", duration);
             EffectManager.SimpleMuzzleFlash(muzzlePrefab, gameObject, muzzleString, false);
 
-            characterBody.SetBuffCount(SS2Content.Buffs.bdExeMuteCharge.buffIndex, 1);
+            if (NetworkServer.active)
+                characterBody.AddBuff(SS2Content.Buffs.bdExeMuteCharge.buffIndex); Debug.Log("added mute: " + GetBuffCount(SS2Content.Buffs.bdExeMuteCharge.buffIndex));
 
             Shoot();
 
-            if (!characterBody.HasBuff(SS2Content.Buffs.BuffExecutionerSuperCharged) && !characterBody.HasBuff(SS2Content.Buffs.BuffExecutionerArmor))
-                skillLocator.secondary.DeductStock(1);
+            skillLocator.secondary.DeductStock(1);
             shotsFired++;
         }
 
@@ -96,6 +97,11 @@ namespace EntityStates.Executioner2
             //This is desynced, need to network this
             bool isCrit = RollCrit();
             Util.PlayAttackSpeedSound("ExecutionerSecondary", gameObject, attackSpeedStat);
+
+            if (NetworkServer.active && skillLocator.secondary.stock == 1)
+                characterBody.SetBuffCount(SS2Content.Buffs.bdExeMuteCharge.buffIndex, 0);
+            if (NetworkServer.active && skillLocator.secondary.stock == 1)
+                characterBody.RemoveBuff(SS2Content.Buffs.bdExeMuteCharge.buffIndex); Debug.Log("removed mute: " + GetBuffCount(SS2Content.Buffs.bdExeMuteCharge.buffIndex));
 
             if (isAuthority)
             {
@@ -157,7 +163,8 @@ namespace EntityStates.Executioner2
 
                 if (skillLocator.secondary.stock == 1)
                 {
-                    characterBody.SetBuffCount(Moonstorm.Starstorm2.SS2Content.Buffs.bdExeMuteCharge.buffIndex, 0);
+                    //characterBody.SetBuffCount(Moonstorm.Starstorm2.SS2Content.Buffs.bdExeMuteCharge.buffIndex, 0);
+
                     if (fullBurst)
                     {
                         var bulletAttack2 = new BulletAttack

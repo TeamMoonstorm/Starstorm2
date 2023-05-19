@@ -59,6 +59,8 @@ namespace EntityStates.Executioner2
 
                 camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0f);
 
+                characterBody.SetAimTimer(duration);
+
                 areaIndicatorInstance = UnityEngine.Object.Instantiate(areaIndicator);
                 areaIndicatorInstanceOOB = UnityEngine.Object.Instantiate(areaIndicatorOOB);
             }

@@ -55,6 +55,9 @@ namespace Moonstorm.Starstorm2
             new SS2Language().Init();
             ConfigurableFieldManager.AddMod(this);
 
+            //we do a little testing
+            //On.RoR2.Networking.NetworkManagerSystemSteam.OnClientConnect += (s, u, t) => { };
+
             //N: i have no idea if SystemInitializer would be too late for this, so it stays here for now.
             R2API.Networking.NetworkingAPI.RegisterMessageType<ScriptableObjects.NemesisSpawnCard.SyncBaseStats>();
         }

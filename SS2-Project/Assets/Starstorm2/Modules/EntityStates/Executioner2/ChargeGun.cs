@@ -1,6 +1,8 @@
-﻿using RoR2;
+﻿using Moonstorm.Starstorm2;
+using RoR2;
 using RoR2.Skills;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace EntityStates.Executioner2
 {
@@ -53,7 +55,10 @@ namespace EntityStates.Executioner2
             base.OnEnter();
             //Debug.Log("entering");
             duration = baseDuration / skillLocator.secondary.cooldownScale;
-            characterBody.SetBuffCount(Moonstorm.Starstorm2.SS2Content.Buffs.bdExeCharge.buffIndex, 1);
+            if (isAuthority)
+                characterBody.AddTimedBuffAuthority(SS2Content.Buffs.bdExeCharge.buffIndex, float.PositiveInfinity); //Debug.Log("authority add buff");)
+            Debug.Log("buffs: " + GetBuffCount(SS2Content.Buffs.bdExeCharge.buffIndex));
+            //characterBody.SetBuffCount(Moonstorm.Starstorm2.SS2Content.Buffs.bdExeCharge.buffIndex, 1);
 
             PlayCrossfade("Gesture, Override", "FireIonGunStart", "Secondary.playbackRate", duration, 0.3f);
 
@@ -63,7 +68,7 @@ namespace EntityStates.Executioner2
 
             //GenericSkill manipulatorSkill = skillLocator.FindSkillByFamilyName("sfExe2Manipulators");
 
-            Debug.Log(skillLocator.FindSkill("exeManipulators").skillDef.skillName);
+            //Debug.Log(skillLocator.FindSkill("exeManipulators").skillDef.skillName);
 
             //overrideDef = manipulatorSkill.skillDef;
 
@@ -71,8 +76,8 @@ namespace EntityStates.Executioner2
 
             GenericSkill primarySkill = skillLocator.primary;
 
-            Debug.Log(primarySkill);
-            Debug.Log(primaryOverride);
+            //Debug.Log(primarySkill);
+            //Debug.Log(primaryOverride);
 
             if (primarySkill)
             {
@@ -175,7 +180,10 @@ namespace EntityStates.Executioner2
         public override void OnExit()
         {
             base.OnExit();
-            characterBody.SetBuffCount(Moonstorm.Starstorm2.SS2Content.Buffs.bdExeCharge.buffIndex, 0);
+            //characterBody.SetBuffCount(Moonstorm.Starstorm2.SS2Content.Buffs.bdExeCharge.buffIndex, 0);
+            if (isAuthority)
+                characterBody.SetBuffCount(SS2Content.Buffs.bdExeCharge.buffIndex, 0);
+            Debug.Log("buffs exit: " + GetBuffCount(SS2Content.Buffs.bdExeCharge.buffIndex));
             PlayCrossfade("Gesture, Override", "BufferEmpty", "Secondary.playbackRate", duration, 0.3f);
             if (cameraTargetParams)
             {

@@ -1,4 +1,5 @@
-﻿using RoR2;
+﻿using Moonstorm.Starstorm2;
+using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -11,6 +12,8 @@ namespace EntityStates.NemCommmando
         public float finalSpeedCoefficient = 1f;
         public static float dodgeFOV = -1f;
         public static GameObject JetEffect;
+        public static string DashJetL;
+        public static string DashJetR;
 
         private float rollSpeed;
         private Vector3 forwardDirection;
@@ -18,6 +21,7 @@ namespace EntityStates.NemCommmando
         private Animator animator;
         private EntityStateMachine swordSM;
         private NetworkStateMachine nsm;
+        private string skinNameToken;
 
         public override void OnEnter()
         {
@@ -54,10 +58,21 @@ namespace EntityStates.NemCommmando
                 characterMotor.velocity = forwardDirection * rollSpeed;
             }
 
-            if ((bool)JetEffect)
+            skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
+
+            if ((bool)JetEffect && skinNameToken != "SS2_SKIN_NEMCOMMANDO_GRANDMASTERY")
             {
-                Transform transform = childLocator.FindChild("JetMuzzleL");
-                Transform transform2 = childLocator.FindChild("JetMuzzleR");
+                //red
+                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_DEFAULT")
+                    JetEffect = SS2Assets.LoadAsset<GameObject>("NemCommandoDashJets", SS2Bundle.NemCommando);
+                //yellow
+                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
+                    JetEffect = SS2Assets.LoadAsset<GameObject>("NemCommandoDashJetsYellow", SS2Bundle.NemCommando);
+                //blue
+                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO")
+                    JetEffect = SS2Assets.LoadAsset<GameObject>("NemCommandoDashJetsBlue", SS2Bundle.NemCommando);
+                Transform transform = childLocator.FindChild(DashJetL);
+                Transform transform2 = childLocator.FindChild(DashJetR);
                 if ((bool)transform)
                 {
                     Object.Instantiate(JetEffect, transform);
@@ -143,7 +158,7 @@ namespace EntityStates.NemCommmando
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.PrioritySkill;
+            return InterruptPriority.Frozen;
         }
     }
 }

@@ -42,6 +42,8 @@ namespace EntityStates.Executioner2
             characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
             characterMotor.onHitGroundAuthority += GroundSlam;
 
+            characterBody.SetAimTimer(duration);
+
             if (isAuthority)
             {
                 CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest

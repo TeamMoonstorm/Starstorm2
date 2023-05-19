@@ -5648,7 +5648,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 1}
+        key0: {r: 0.15886435, g: 0.7812394, b: 0.9622642, a: 0.5882353}
         key1: {r: 1, g: 1, b: 1, a: 0}
         key2: {r: 0.9764706, g: 0.9764706, b: 0.9764706, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
@@ -7489,7 +7489,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: f7a998985db32f24d885e78dc1275a01, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -12732,7 +12731,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: d1141a026d8f0b54b82494ee40716e60, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -15350,7 +15348,7 @@ MonoBehaviour:
   m_Script: {fileID: 816898038, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vfxPriority: 1
+  vfxPriority: 2
   vfxIntensity: 0
   optionalLights:
   - {fileID: 774491039750544819}
@@ -15370,7 +15368,7 @@ MonoBehaviour:
   shakeOnStart: 1
   shakeOnEnable: 0
   wave:
-    amplitude: 1.3
+    amplitude: 2
     frequency: 1
     cycleOffset: 0
   duration: 1
@@ -16046,8 +16044,8 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 0}
-        key1: {r: 1, g: 1, b: 1, a: 1}
-        key2: {r: 0, g: 0, b: 0, a: 1}
+        key1: {r: 1, g: 1, b: 1, a: 0.5882353}
+        key2: {r: 0, g: 0, b: 0, a: 0.5882353}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0.5019608}
         key5: {r: 0, g: 0, b: 0, a: 0.6117647}
@@ -17922,7 +17920,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: c5c041e0d9ca6cc489f4928675cdc3e6, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

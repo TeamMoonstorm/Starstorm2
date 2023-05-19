@@ -61,7 +61,7 @@ namespace EntityStates.Nemmando
 
             skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
 
-            if (skinNameToken != "SS2_SKIN_NEMCOMMANDO_DEFAULT")
+            if (skinNameToken != "SS2_SKIN_NEMCOMMANDO_DEFAULT" && skinNameToken != "SS2_SKIN_NEMCOMMANDO_GRANDMASTERY")
             {
                 //Yellow
                 if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
@@ -180,18 +180,24 @@ namespace EntityStates.Nemmando
         {
             base.OnExit();
 
+            emission = 0f;
+
             if (cameraTargetParams)
             {
                 cameraTargetParams.RemoveParamsOverride(camOverrideHandle, duration/1.5f);
                 //cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Standard);
             }
+            ref CharacterModel.RendererInfo renderInfo = ref GetModelTransform().GetComponent<CharacterModel>().baseRendererInfos[1];
             if (matInstance)
             {
                 //Object.Destroy(matInstance);
-                ref CharacterModel.RendererInfo renderInfo = ref GetModelTransform().GetComponent<CharacterModel>().baseRendererInfos[1];
                 renderInfo.defaultMaterial = swordMat;
+                swordMat.SetFloat("_EmPower", 1f);
+                renderInfo.defaultMaterial.SetFloat("_EmPower", 1f);
                 Object.Destroy(matInstance);
             }
+            
+            renderInfo.defaultMaterial.SetFloat("_EmPower", 1f);
             //swordMat.SetFloat("_EmPower", minimumEmission);
             //if (nemmandoController)
             //  nemmandoController.UncoverScreen();
