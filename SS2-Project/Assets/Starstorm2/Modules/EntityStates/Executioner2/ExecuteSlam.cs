@@ -147,8 +147,8 @@ namespace EntityStates.Executioner2
                 if (slamEffect) 
                     EffectManager.SimpleEffect(slamEffect, hitGroundInfo.position, Quaternion.identity, true);
             }
-            Debug.Log("skinNameToken: " + skinNameToken);
-            Debug.Log("ModelTransform: " + GetModelTransform());
+            //Debug.Log("skinNameToken: " + skinNameToken);
+            //Debug.Log("ModelTransform: " + GetModelTransform());
 
             outer.SetNextStateToMain();
         }
