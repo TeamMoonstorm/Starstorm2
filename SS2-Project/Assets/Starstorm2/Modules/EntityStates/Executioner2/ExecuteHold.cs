@@ -64,7 +64,7 @@ namespace EntityStates.Executioner2
                     EffectManager.SimpleMuzzleFlash(jumpEffect, gameObject, ExhaustL, true);
                     EffectManager.SimpleMuzzleFlash(jumpEffect, gameObject, ExhaustR, true);
                 }
-                Debug.Log("skin name token: " + skinNameToken);
+                //Debug.Log("skin name token: " + skinNameToken);
 
 
                 CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
