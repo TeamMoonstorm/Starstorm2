@@ -166,7 +166,7 @@ namespace Moonstorm.Starstorm2.Artifacts
             //IL.RoR2.CharacterMaster.OnBodyDeath += PreventDeath;
             GlobalEventManager.onCharacterDeathGlobal += SpawnCognationGhost;
             //On.RoR2.Util.GetBestBodyName += AddCognateName;
-            On.RoR2.Util.GetBestBodyName += AddCognateName2;
+            //On.RoR2.Util.GetBestBodyName += AddCognateName2;
         }
 
         public override void OnArtifactDisabled()
@@ -174,20 +174,20 @@ namespace Moonstorm.Starstorm2.Artifacts
             //IL.RoR2.CharacterMaster.OnBodyDeath -= PreventDeath;
             GlobalEventManager.onCharacterDeathGlobal -= SpawnCognationGhost;
             //On.RoR2.Util.GetBestBodyName -= AddCognateName;
-            On.RoR2.Util.GetBestBodyName -= AddCognateName2;
+            //On.RoR2.Util.GetBestBodyName -= AddCognateName2;
         }
 
-        private string AddCognateName2(On.RoR2.Util.orig_GetBestBodyName orig, GameObject bodyObject)
-        {
-            var result = orig(bodyObject);
-            //SS2Log.Info("ahhhh");
-            CharacterBody characterBody = bodyObject?.GetComponent<CharacterBody>();
-            if (characterBody && characterBody.inventory && characterBody.inventory.GetItemCount(SS2Content.Items.Cognation) > 0)
-            {
-                result = Language.GetStringFormatted("SS2_ARTIFACT_COGNATION_PREFIX", result);
-            }
-            return result;
-        }
+        //private string AddCognateName2(On.RoR2.Util.orig_GetBestBodyName orig, GameObject bodyObject)
+        //{
+        //    var result = orig(bodyObject);
+        //    //SS2Log.Info("ahhhh");
+        //    CharacterBody characterBody = bodyObject?.GetComponent<CharacterBody>();
+        //    if (characterBody && characterBody.inventory && characterBody.inventory.GetItemCount(SS2Content.Items.Cognation) > 0)
+        //    {
+        //        result = Language.GetStringFormatted("SS2_ARTIFACT_COGNATION_PREFIX", result);
+        //    }
+        //    return result;
+        //}
 
         private void SpawnCognationGhost(DamageReport report)
         {

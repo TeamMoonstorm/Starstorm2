@@ -58,6 +58,8 @@ The most important issues you may encounter are listed below, to help expect thi
 ### 0.3.51
 * General
     * Overhauled Executioner and Nemesis Commando.
+    * Reimplemented survivor-related unlocks. Executioner is intentionally unlocked by default now.
+    * SS2 Survivors have item displays for all base and SOTV items. 
     * Added significantly more configs, split into individual files. You can now disable events individually, disable equipments, and items that were lacking in configurable options now have them.
     * Added Chinese translation. 
     * Adjusted Cloaking Headband's Russian translation.
@@ -66,7 +68,7 @@ The most important issues you may encounter are listed below, to help expect thi
     * Added R2API TempVFX dependency.
 * Items & Equipment
     * Added Insecticide.
-    * Reworked Relic of Termination: "Every 30 seconds, gain a buff which marks the next spawning enemy. If defeated in time, they drop an item; if not, they drop nothing and delay the next mark. Marked enemies have significantly increased stats. (Rarity of the dropped item increases with stacks)."
+    * Reworked Relic of Termination: "Every 30 seconds, gain a buff which marks the next spawning enemy. If defeated in time, they drop an item; if not, they drop nothing and delay the next mark. Marked enemies have significantly increased stats. (Rarity of the dropped item increases with stacks)." Additionally, it has new mark VFX.
     * Reworked Needles: "Non-critical strikes add +1% critical chance against the struck enemy. Additional critical chance is cleared after 1 (+1 per stack) critical strikes against them." 
     * Reworked Coffee Bag: "Using interactables increases movement speed by 21% and attack speed by 22.5% for up to 15 (+15 per stack) seconds."
     * Reworked Pressurized Cannister: "Grants an upward boost upon activating, and grants a temporary additional jump until landing."
@@ -78,6 +80,7 @@ The most important issues you may encounter are listed below, to help expect thi
     * Blacklisted Coffee Bag from enemies.
     * Fixed Relic of Force giving primary skills cooldowns.
     * Should have fixed Greater Warbanner's cooldown breaking.
+    * Potentially fixed X4 buff-related networking issues.
     * Relic of Termination now has a blacklist for enemies that are not fit for being marked (specific bosses, destructible props, etc), and can no longer mark Cognation ghosts.
     * Reduced the brightness of Jet Boot's visual effect.
     * Item displays have proper ditheirng.
@@ -87,6 +90,8 @@ The most important issues you may encounter are listed below, to help expect thi
     * Metamorphosis no longer makes the game unplayable. 
     * Nemesis Commando's fight now works correctly with Swarms.
 * Events
+    * Added new Fog event.
+    * Storm VFX has been greatly improved.
     * Invading Nemesis Commando now does less damage. (10x -> 7x)
     * Mending Orbs no longer gain elite effects during elite events.
     * Married Lemurians no longer have their elite type overriden during elite events.
