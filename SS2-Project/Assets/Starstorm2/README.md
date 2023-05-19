@@ -1,27 +1,26 @@
-# Starstorm 2
+![Starstorm 2](https://github.com/swuff-star/Starstorm2/blob/main/SS2-Project/Assets/Starstorm2/ReadmeAssets/ss2logored.gif?raw=true)
 
-## Overview
+Starstorm 2 is a work-in-progress sequel / adaptation of the  Risk of Rain 1 mod "Starstorm". It currently features two new survivors, over 20 new items and equipment, and numerous new challenges to shake up your runs.
 
-Starstorm 2 is a work-in-progress sequel / adaptation of the legendary Risk of Rain 1 mod "Starstorm". It features two new survivors, over 20 new items and equipment, and new, dangerous events to shake up your runs.
+![New Survivors...](https://github.com/swuff-star/Starstorm2/blob/main/SS2-Project/Assets/Starstorm2/ReadmeAssets/ss2survivorpromo.gif?raw=true)
 
-## Features
 
-![](https://i.imgur.com/YFiPuTM.png)
-
-* **Executioner** - An aggressive, versatile survivor with an arsenal made for picking off targets and chaining kills. His powerful ion gun gains a shot for every enemy you take down.
+* **Executioner**  - An aggressive, versatile survivor with an arsenal made for picking off targets and chaining kills. His powerful Ion Manipulators gain charges with every kill.
 
 * **???** - A survivor of unknown origin, familiar yet unfamiliar. Under the right conditions, you may meet him on the Planet, but he certainly won't be on your side.
 
-![](https://i.imgur.com/c0GoQOf.png)
+## ITEMS
 
 * **New items** - 20 new items and 5 new equipment to support new and existing playstyles. Watch your six with an Armed Backpack, rush through teleporter events with a Field Accelerator, all while keeping on the move with a Swift Skateboard - and more! 
 
-![](https://i.imgur.com/vGTL8l9.png)
+![New Challenges...](https://github.com/swuff-star/Starstorm2/blob/main/SS2-Project/Assets/Starstorm2/ReadmeAssets/ss2challengepromo.gif?raw=true)
 
-* **Typhoon** - The Planet grows restless, and hordes grow more quickly on this new difficulty surpassing Monsoon. Unlock new skins for survivors* by proving yourself.
-    *currently includes Commando, MUL-T, Acrid, Captain, and survivors added by the mod.
+* **Events** - Between severe weather, magical buildups, and mysterious invaders, learn to expect the unexpected as forces both natural and supernatural interfere with your runs.
 
-* **Events** - Expect the unexpected as forces both natural and supernatural interfere with your runs.
+* **Typhoon** - The Planet grows restless, with both more fearsome events and monsters coming in greater numbers than ever before. Unlock new skins for survivors* by proving yourself in this new challenge exceeding even Monsoon!
+    *currently includes Commando, MUL-T, Acrid, Captain, and Commando's Vestige.
+
+
 
 ## Credits
 Starstorm 2 is currently being developed and maintained by...
