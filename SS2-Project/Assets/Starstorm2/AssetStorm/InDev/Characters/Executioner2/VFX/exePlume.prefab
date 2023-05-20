@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1460480754173556606}
   - component: {fileID: 1401353196149644754}
   - component: {fileID: 5293666917017556964}
+  - component: {fileID: 2550249683269810178}
   m_Layer: 0
   m_Name: exePlume
   m_TagString: Untagged
@@ -84,6 +85,28 @@ MonoBehaviour:
   vfxIntensity: 1
   optionalLights: []
   secondaryParticleSystem: []
+--- !u!114 &2550249683269810178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3173681102054731733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -565067572, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeOnStart: 1
+  shakeOnEnable: 0
+  wave:
+    amplitude: 0.1
+    frequency: 0.1
+    cycleOffset: 0
+  duration: 0.25
+  radius: 10
+  scaleShakeRadiusWithLocalScale: 0
+  amplitudeTimeDecay: 1
 --- !u!1 &3418801569410514134
 GameObject:
   m_ObjectHideFlags: 0

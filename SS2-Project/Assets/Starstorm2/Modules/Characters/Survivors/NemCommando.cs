@@ -23,22 +23,16 @@ namespace Moonstorm.Starstorm2.Survivors
             if (Starstorm.ScepterInstalled)
             {
                 ScepterCompat();
-                CreateNemesisPod();
+                //CreateNemesisPod();
             }
 
-            On.RoR2.UI.SurvivorIconController.Rebuild += SurvivorIconController_Rebuild;
+            On.RoR2.CharacterSelectBarController.Awake += CharacterSelectBarController_Awake;
         }
 
-        private void SurvivorIconController_Rebuild(On.RoR2.UI.SurvivorIconController.orig_Rebuild orig, SurvivorIconController self)
+        private void CharacterSelectBarController_Awake(On.RoR2.CharacterSelectBarController.orig_Awake orig, CharacterSelectBarController self)
         {
-            if (SurvivorCatalog.GetSurvivorDef(self.survivorIndex).bodyPrefab == SS2Assets.LoadAsset<GameObject>("NemCommandoBody", SS2Bundle.NemCommando))
-            {
-                //Debug.Log("if you know you know");
-                if (!SurvivorCatalog.SurvivorIsUnlockedOnThisClient(self.survivorIndex))
-                {
-                    self.gameObject.SetActive(false);
-                }
-            }
+            //hide nemcommando from css proper
+            SS2Content.Survivors.survivorNemCommando.hidden = !SurvivorCatalog.SurvivorIsUnlockedOnThisClient(SS2Content.Survivors.survivorNemCommando.survivorIndex);
             orig(self);
         }
 

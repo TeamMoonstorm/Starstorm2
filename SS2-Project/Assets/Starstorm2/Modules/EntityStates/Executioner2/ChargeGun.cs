@@ -2,6 +2,7 @@
 using RoR2;
 using RoR2.Skills;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 
 namespace EntityStates.Executioner2
@@ -11,6 +12,11 @@ namespace EntityStates.Executioner2
         public static float baseDuration = 1.2f;
         public static GameObject chargeEffectPrefab;
         private GameObject chargeEffectInstance;
+
+        public static float timeBetweenStocks = 1.2f;
+
+        public static GameObject plumeEffect = SS2Assets.LoadAsset<GameObject>("exePlume", SS2Bundle.Indev);
+        public static GameObject plumeEffectLarge = SS2Assets.LoadAsset<GameObject>("exePlumeBig", SS2Bundle.Indev);
 
         [SerializeField]
         public SkillDef primaryOverride;
@@ -26,7 +32,9 @@ namespace EntityStates.Executioner2
         private bool isPressingCameraSwap;
         private bool useAltCamera = false;
 
-        private CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
+        private float timer;
+
+        public CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
         private CharacterCameraParamsData chargeCameraParams = new CharacterCameraParamsData
         {
             maxPitch = 85f,
@@ -53,12 +61,14 @@ namespace EntityStates.Executioner2
         public override void OnEnter()
         {
             base.OnEnter();
-            //Debug.Log("entering");
+
+            if (inputBank.skill4.down)
+            {
+                outer.SetNextStateToMain();
+                return;
+            }
+
             duration = baseDuration / skillLocator.secondary.cooldownScale;
-            if (isAuthority)
-                characterBody.AddTimedBuffAuthority(SS2Content.Buffs.bdExeCharge.buffIndex, float.PositiveInfinity); //Debug.Log("authority add buff");)
-            Debug.Log("buffs: " + GetBuffCount(SS2Content.Buffs.bdExeCharge.buffIndex));
-            //characterBody.SetBuffCount(Moonstorm.Starstorm2.SS2Content.Buffs.bdExeCharge.buffIndex, 1);
 
             PlayCrossfade("Gesture, Override", "FireIonGunStart", "Secondary.playbackRate", duration, 0.3f);
 
@@ -66,19 +76,7 @@ namespace EntityStates.Executioner2
 
             CameraSwap();
 
-            //GenericSkill manipulatorSkill = skillLocator.FindSkillByFamilyName("sfExe2Manipulators");
-
-            //Debug.Log(skillLocator.FindSkill("exeManipulators").skillDef.skillName);
-
-            //overrideDef = manipulatorSkill.skillDef;
-
-            //Debug.Log(overrideDef);
-
             GenericSkill primarySkill = skillLocator.primary;
-
-            //Debug.Log(primarySkill);
-            //Debug.Log(primaryOverride);
-
             if (primarySkill)
             {
                 if (!overriddenSkill)
@@ -121,6 +119,8 @@ namespace EntityStates.Executioner2
         {
             base.FixedUpdate();
 
+            characterBody.isSprinting = false;
+
             if (!thisFuckingSucks && skillLocator.secondary.stock == 0)
             {
                 thisFuckingSucks = true;
@@ -138,6 +138,35 @@ namespace EntityStates.Executioner2
                 CameraSwap();
             }
 
+            if (!characterBody.HasBuff(SS2Content.Buffs.bdExeMuteCharge))
+                timer += Time.fixedDeltaTime;
+            else
+                timer = 0f;
+
+            if (timer >= timeBetweenStocks && characterBody.skillLocator.secondary.stock < characterBody.skillLocator.secondary.maxStock)
+            {
+                timer = 0f;
+
+                skillLocator.secondary.AddOneStock();
+                Debug.Log("adding stock");
+
+                if (characterBody.skillLocator.secondary.stock < characterBody.skillLocator.secondary.maxStock)
+                {
+                    Util.PlaySound("ExecutionerGainCharge", gameObject);
+                    EffectManager.SimpleMuzzleFlash(plumeEffect, gameObject, "ExhaustL", false);
+                    EffectManager.SimpleMuzzleFlash(plumeEffect, gameObject, "ExhaustR", false);
+                }
+                if (characterBody.skillLocator.secondary.stock >= characterBody.skillLocator.secondary.maxStock)
+                {
+                    Util.PlaySound("ExecutionerMaxCharge", gameObject);
+                    EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustL", false);
+                    EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustR", false);
+                    EffectManager.SimpleEffect(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/LightningFlash.prefab").WaitForCompletion(), characterBody.corePosition, Quaternion.identity, false);
+                }
+
+                characterBody.SetAimTimer(timeBetweenStocks);
+            }
+
             /*if (fixedAge >= duration && inputBank.skill2.down)
             {
                 ChargeGun nextState = new ChargeGun();
@@ -146,7 +175,7 @@ namespace EntityStates.Executioner2
                 return;
             }*/   
             
-            if (!inputBank.skill2.down)
+            if (!inputBank.skill2.down || inputBank.skill3.down || inputBank.skill4.down)
             {
                 outer.SetNextStateToMain();
                 return;
@@ -180,10 +209,6 @@ namespace EntityStates.Executioner2
         public override void OnExit()
         {
             base.OnExit();
-            //characterBody.SetBuffCount(Moonstorm.Starstorm2.SS2Content.Buffs.bdExeCharge.buffIndex, 0);
-            if (isAuthority)
-                characterBody.SetBuffCount(SS2Content.Buffs.bdExeCharge.buffIndex, 0);
-            Debug.Log("buffs exit: " + GetBuffCount(SS2Content.Buffs.bdExeCharge.buffIndex));
             PlayCrossfade("Gesture, Override", "BufferEmpty", "Secondary.playbackRate", duration, 0.3f);
             if (cameraTargetParams)
             {
@@ -198,5 +223,4 @@ namespace EntityStates.Executioner2
             skillLocator.primary.RemoveAllStocks();
         }
     }
-
 }

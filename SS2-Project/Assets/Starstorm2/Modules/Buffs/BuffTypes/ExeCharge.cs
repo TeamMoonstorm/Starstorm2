@@ -37,15 +37,15 @@ namespace Moonstorm.Starstorm2.Buffs
                         if (body.skillLocator.secondary.stock < body.skillLocator.secondary.maxStock)
                         {
                             Util.PlaySound("ExecutionerGainCharge", gameObject);
-                            EffectManager.SimpleMuzzleFlash(plumeEffect, gameObject, "ExhaustL", false);
-                            EffectManager.SimpleMuzzleFlash(plumeEffect, gameObject, "ExhaustR", false);
+                            EffectManager.SimpleMuzzleFlash(plumeEffect, gameObject, "ExhaustL", true);
+                            EffectManager.SimpleMuzzleFlash(plumeEffect, gameObject, "ExhaustR", true);
                         }
                         if (body.skillLocator.secondary.stock >= body.skillLocator.secondary.maxStock)
                         {
                             Util.PlaySound("ExecutionerMaxCharge", gameObject);
-                            EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustL", false);
-                            EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustR", false);
-                            EffectManager.SimpleEffect(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/LightningFlash.prefab").WaitForCompletion(), body.corePosition, Quaternion.identity, false);
+                            EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustL", true);
+                            EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustR", true);
+                            EffectManager.SimpleEffect(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/LightningFlash.prefab").WaitForCompletion(), body.corePosition, Quaternion.identity, true);
                         }
 
                         body.SetAimTimer(timer);

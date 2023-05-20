@@ -2631,7 +2631,7 @@ ParticleSystem:
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
-  useRigidbodyForVelocity: 0
+  useRigidbodyForVelocity: 1
   startDelay:
     serializedVersion: 2
     minMaxState: 0
@@ -5091,7 +5091,7 @@ ParticleSystemRenderer:
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
+  m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
@@ -5132,7 +5132,7 @@ ParticleSystemRenderer:
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
   m_UseCustomVertexStreams: 0
-  m_EnableGPUInstancing: 0
+  m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1
   m_VertexStreams: 000304
@@ -5150,10 +5150,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1391696195087818449}
-  - component: {fileID: 397641511336566222}
   - component: {fileID: 5295665193886386769}
   - component: {fileID: 755973254260992263}
   - component: {fileID: 2937729749535248126}
+  - component: {fileID: 397641511336566222}
   m_Layer: 0
   m_Name: NemCommandoSwingEffect
   m_TagString: Untagged
@@ -5168,7 +5168,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4237556790985801160}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5177,28 +5177,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &397641511336566222
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4237556790985801160}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -565067572, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shakeOnStart: 1
-  shakeOnEnable: 0
-  wave:
-    amplitude: 0.2
-    frequency: 0.1
-    cycleOffset: 0.25
-  duration: 0.1
-  radius: 20
-  scaleShakeRadiusWithLocalScale: 0
-  amplitudeTimeDecay: 1
 --- !u!114 &5295665193886386769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5243,6 +5221,28 @@ MonoBehaviour:
   m_Script: {fileID: -335047464, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &397641511336566222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4237556790985801160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -565067572, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeOnStart: 1
+  shakeOnEnable: 0
+  wave:
+    amplitude: 0.2
+    frequency: 0.1
+    cycleOffset: 0.25
+  duration: 0.1
+  radius: 20
+  scaleShakeRadiusWithLocalScale: 0
+  amplitudeTimeDecay: 1
 --- !u!1 &8013293021937260910
 GameObject:
   m_ObjectHideFlags: 0

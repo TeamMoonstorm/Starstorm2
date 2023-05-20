@@ -27,6 +27,8 @@ namespace EntityStates.Executioner2
         [HideInInspector]
         public static GameObject areaIndicatorInstanceOOB;
 
+        public bool imAFilthyFuckingLiar = false;
+
         private CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
         private CharacterCameraParamsData slamCameraParams = new CharacterCameraParamsData
         {
@@ -83,12 +85,14 @@ namespace EntityStates.Executioner2
         {
             if (areaIndicatorInstance)
             {
-                float maxDistance = 48f * moveSpeedStat; //i think that's accurate..
+                float maxDistance = 48f;
+                Debug.Log("movespeed test calc: " + moveSpeedStat * 4f);
 
                 Ray aimRay = GetAimRay();
                 RaycastHit raycastHit;
                 if (Physics.Raycast(aimRay, out raycastHit, maxDistance, LayerIndex.CommonMasks.bullet))
                 {
+                    imAFilthyFuckingLiar = true;
                     areaIndicatorInstance.SetActive(true);
                     areaIndicatorInstanceOOB.SetActive(false);
                     areaIndicatorInstance.transform.position = raycastHit.point;
@@ -96,6 +100,7 @@ namespace EntityStates.Executioner2
                 }
                 else
                 {
+                    imAFilthyFuckingLiar = false;
                     areaIndicatorInstance.SetActive(false);
                     areaIndicatorInstanceOOB.SetActive(true);
                     areaIndicatorInstanceOOB.transform.position = aimRay.GetPoint(maxDistance);
@@ -109,6 +114,7 @@ namespace EntityStates.Executioner2
             if (fixedAge >= duration || !inputBank.skill4.down || inputBank.skill1.down)
             {
                 ExecuteSlam nextState = new ExecuteSlam();
+                nextState.wasLiedTo = imAFilthyFuckingLiar; //probably every time
                 outer.SetNextState(nextState);
             }  
             else

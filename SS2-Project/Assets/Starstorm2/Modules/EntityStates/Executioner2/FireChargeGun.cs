@@ -72,6 +72,7 @@ namespace EntityStates.Executioner2
             shotsFired++;
         }
 
+
         public override void FixedUpdate()
         {
             base.FixedUpdate();
@@ -203,7 +204,7 @@ namespace EntityStates.Executioner2
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.PrioritySkill;
+            return InterruptPriority.Frozen;
         }
     }
 }
