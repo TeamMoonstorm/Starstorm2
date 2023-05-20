@@ -107,6 +107,8 @@ namespace Moonstorm.Starstorm2
         {
             public static EquipmentDef ElitePurpleEquipment;
 
+            public static EquipmentDef EliteKineticEquipment;
+
             public static EquipmentDef BackThruster;
 
             public static EquipmentDef CloakingHeadband;
@@ -181,6 +183,8 @@ namespace Moonstorm.Starstorm2
             public static BuffDef bdElitePurple;
 
             public static BuffDef bdPurplePoison;
+
+            public static BuffDef bdEliteKinetic;
 
             public static BuffDef bdHiddenSlow20;
 

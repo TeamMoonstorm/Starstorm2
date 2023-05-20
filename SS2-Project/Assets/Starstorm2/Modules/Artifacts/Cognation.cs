@@ -165,16 +165,12 @@ namespace Moonstorm.Starstorm2.Artifacts
         {
             //IL.RoR2.CharacterMaster.OnBodyDeath += PreventDeath;
             GlobalEventManager.onCharacterDeathGlobal += SpawnCognationGhost;
-            //On.RoR2.Util.GetBestBodyName += AddCognateName;
-            //On.RoR2.Util.GetBestBodyName += AddCognateName2;
         }
 
         public override void OnArtifactDisabled()
         {
             //IL.RoR2.CharacterMaster.OnBodyDeath -= PreventDeath;
             GlobalEventManager.onCharacterDeathGlobal -= SpawnCognationGhost;
-            //On.RoR2.Util.GetBestBodyName -= AddCognateName;
-            //On.RoR2.Util.GetBestBodyName -= AddCognateName2;
         }
 
         //private string AddCognateName2(On.RoR2.Util.orig_GetBestBodyName orig, GameObject bodyObject)

@@ -191,22 +191,22 @@ namespace Moonstorm.Starstorm2.Items
 
         private void TerminationSpawnHook(CharacterBody obj)
         {
-            SS2Log.Info("Spawn hook activated");
+            //SS2Log.Info("Spawn hook activated");
             if (!NetworkServer.active)
             {
-                SS2Log.Info("TerminationSpawnHook called on Client");
+                //SS2Log.Info("TerminationSpawnHook called on Client");
                 return;
             }
             if (illegalMarks.Contains(obj.bodyIndex) || obj.isPlayerControlled || obj.teamComponent.teamIndex == TeamIndex.Player || obj.teamComponent.teamIndex == TeamIndex.Neutral)
             {
-                SS2Log.Info("bad mark");
+                //SS2Log.Info("bad mark");
                 return;
             }
             if (obj.inventory)
             {
                 if (obj.inventory.GetItemCount(SS2Content.Items.Cognation) > 0)
                 {
-                    SS2Log.Info("cognation");
+                    //SS2Log.Info("cognation");
                     return;
                 }
             }
@@ -219,7 +219,7 @@ namespace Moonstorm.Starstorm2.Items
             foreach (var player in PlayerCharacterMasterController.instances)
             {
                 ++a;
-                SS2Log.Info(a + ": player: " + player + " | " + player.transform);
+                //SS2Log.Info(a + ": player: " + player + " | " + player.transform);
                 if (player)
                 {
                     //SS2Log.Info("no player");
@@ -231,7 +231,7 @@ namespace Moonstorm.Starstorm2.Items
                         {
                             if (playerbody.HasBuff(SS2Content.Buffs.BuffTerminationReady))
                             {
-                                SS2Log.Info("player " + a + " DID have buff!!!!!!!!!!!");
+                                //SS2Log.Info("player " + a + " DID have buff!!!!!!!!!!!");
                                 var holderToken = playerbody.GetComponent<TerminationHolderToken>();
                                 if (!holderToken)
                                 {
@@ -256,6 +256,7 @@ namespace Moonstorm.Starstorm2.Items
                                     token.itemCount = count;
                                     token.initalTime = Time.time;
                                     token.owner = holderToken;
+                                    
 
                                     holderToken.target = token;
                                     holderToken.body = playerbody;
@@ -293,13 +294,16 @@ namespace Moonstorm.Starstorm2.Items
                                     float timeMult = Mathf.Pow(1 - timeReduction, token.itemCount - 1);
                                     float compmaxTime = maxTime * timeMult;
 
+                                    //SS2Log.Info("max time: " + compmaxTime);
+                                    token.timeLimit = compmaxTime;
+
                                     for (int i = 0; i < Mathf.Ceil(compmaxTime); i++)
                                     {
                                         playerbody.AddTimedBuff(SS2Content.Buffs.BuffTerminationCooldown.buffIndex, i + 1);
                                     }
                                     //player.body.AddBuff(SS2Content.Buffs.BuffTerminationCooldown);
                                     playerbody.RemoveBuff(SS2Content.Buffs.BuffTerminationReady);
-                                    SS2Log.Info("finished for player " + a);
+                                    //SS2Log.Info("finished for player " + a);
                                     break;
                                 }
                                 //SS2Log.Info("finished for player " + a);
@@ -307,23 +311,23 @@ namespace Moonstorm.Starstorm2.Items
                             }
                             else
                             {
-                                SS2Log.Info("player " + a + " did not have buff");
+                                //SS2Log.Info("player " + a + " did not have buff");
                             }
                         }
                         else
                         {
-                            SS2Log.Info("player did not have a body");
+                            //SS2Log.Info("player did not have a body");
                         }
                     }
                     else
                     {
-                        SS2Log.Info("player didn't have a master?? " + player);
+                        //SS2Log.Info("player didn't have a master?? " + player);
                     }
 
                 }
                 else
                 {
-                    SS2Log.Info("player didn't " + player);
+                    //SS2Log.Info("player didn't " + player);
                 }
             }
         }
@@ -770,6 +774,7 @@ namespace Moonstorm.Starstorm2.Items
             public bool hasFailed = false;
             public float initalTime;
             public TerminationHolderToken owner;
+            public float timeLimit = 30;
 
         }
         public class TerminationHolderToken : MonoBehaviour
