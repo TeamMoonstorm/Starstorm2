@@ -59,10 +59,11 @@ namespace Moonstorm.Starstorm2.Items
 
         private static List<BodyIndex> illegalMarks = new List<BodyIndex>();
 
-        public static GameObject globalMarkEffect;
+        //public static GameObject globalMarkEffect;
 
         public static GameObject globalMarkEffectTwo;
-
+        public static GameObject spawnRock1VFX;
+        public static GameObject spawnRock2VFX;
         //[ConfigurableField(SS2Config.IDItem, ConfigDesc = "Health multiplier grantd to marked enemy if not killed in time (1 = 100% health).")]
         //[TokenModifier(token, StatTypes.Percentage, 3)]
         //public static float effectiveRadius = 100f;
@@ -86,8 +87,11 @@ namespace Moonstorm.Starstorm2.Items
             failEffect = SS2Assets.LoadAsset<GameObject>("NemmandoScepterSlashAppear", SS2Bundle.Items);
             buffEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationBuffEffect", SS2Bundle.Items);
 
-            globalMarkEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/BossPositionIndicator.prefab").WaitForCompletion();
-            globalMarkEffectTwo = SS2Assets.LoadAsset<GameObject>("TerminationPositionIndicator", SS2Bundle.Items); 
+            //globalMarkEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/BossPositionIndicator.prefab").WaitForCompletion();
+
+            globalMarkEffectTwo = SS2Assets.LoadAsset<GameObject>("TerminationPositionIndicator", SS2Bundle.Items);
+            spawnRock1VFX = SS2Assets.LoadAsset<GameObject>("TerminationDebris1", SS2Bundle.Items);
+            spawnRock2VFX = SS2Assets.LoadAsset<GameObject>("TerminationDebris2", SS2Bundle.Items);
         }
 
         private void CheckTerminationBuff(Inventory obj)
@@ -172,6 +176,13 @@ namespace Moonstorm.Starstorm2.Items
                     int item = Run.instance.treasureRng.RangeInt(0, dropList.Count);
                     //SS2Log.Debug("dropping reward");
                     PickupDropletController.CreatePickupDroplet(dropList[item], obj.victim.transform.position, vector);
+
+                    EffectData effectData = new EffectData
+                    {
+                        origin = obj.victimBody.transform.position,
+                        scale = .5f// * (float)obj.victimBody.hullClassification
+                    };
+                    EffectManager.SpawnEffect(spawnRock1VFX, effectData, transmit: true);
                 }
 
             }
@@ -279,6 +290,13 @@ namespace Moonstorm.Starstorm2.Items
                                     
                                     obj.AddBuff(SS2Content.Buffs.BuffTerminationVFX);
 
+                                    EffectData effectData = new EffectData
+                                    {
+                                        origin = obj.transform.position,
+                                        scale = .5f
+                                    
+                                    };
+                                    EffectManager.SpawnEffect(spawnRock1VFX, effectData, transmit: true);
                                     //var printController = obj.modelLocator.modelTransform.GetComponent<PrintController>();
                                     ////var printController = obj.GetComponent<PrintController>();
                                     ////SS2Log.Info("trying to find controller: " + printController);
@@ -288,7 +306,7 @@ namespace Moonstorm.Starstorm2.Items
                                     //    printController.printTime = 25f;
                                     //    printController.maxPrintHeight = 100;
                                     //}
-                                    
+
                                     //obj.teamComponent.RequestDefaultIndicator(globalMarkEffectTwo);
 
                                     float timeMult = Mathf.Pow(1 - timeReduction, token.itemCount - 1);
