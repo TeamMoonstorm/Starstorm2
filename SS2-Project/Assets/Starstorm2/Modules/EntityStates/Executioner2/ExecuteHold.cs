@@ -61,8 +61,6 @@ namespace EntityStates.Executioner2
 
             if (isAuthority)
             {
-
-                //shrimply stolen from nemmando's sword swing 
                 skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
 
                 if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
@@ -75,7 +73,6 @@ namespace EntityStates.Executioner2
                     EffectManager.SimpleMuzzleFlash(jumpEffect, gameObject, ExhaustL, true);
                     EffectManager.SimpleMuzzleFlash(jumpEffect, gameObject, ExhaustR, true);
                 }
-                //Debug.Log("skin name token: " + skinNameToken);
 
 
                 CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
@@ -111,7 +108,6 @@ namespace EntityStates.Executioner2
             if (areaIndicatorInstance)
             {
                 float maxDistance = moveSpeedStat * 6.8f;
-                //Debug.Log("movespeed test calc: " + moveSpeedStat * 6.8f);
 
                 Ray aimRay = GetAimRay();
                 RaycastHit raycastHit;

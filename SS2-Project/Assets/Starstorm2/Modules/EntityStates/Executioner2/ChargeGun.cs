@@ -10,13 +10,22 @@ namespace EntityStates.Executioner2
     public class ChargeGun : BaseSkillState
     {
         public static float baseDuration = 1.2f;
-        public static GameObject chargeEffectPrefab;
+        [HideInInspector]
+        public static GameObject chargeEffectPrefab = null;
+        public static GameObject defaultChargeEffectPrefab;
+        public static GameObject masteryChargeEffectPrefab;
         private GameObject chargeEffectInstance;
 
         public static float timeBetweenStocks = 1.2f;
 
+        [HideInInspector]
         public static GameObject plumeEffect = SS2Assets.LoadAsset<GameObject>("exePlume", SS2Bundle.Indev);
+        [HideInInspector]
         public static GameObject plumeEffectLarge = SS2Assets.LoadAsset<GameObject>("exePlumeBig", SS2Bundle.Indev);
+        public static GameObject defaultPlume;
+        public static GameObject defaultPlumeLarge;
+        //public static GameObject masteryPlume;
+        //public static GameObject masteryPlumeLarge;
 
         [SerializeField]
         public SkillDef primaryOverride;
@@ -34,6 +43,8 @@ namespace EntityStates.Executioner2
 
         private NetworkStateMachine nsm;
         private EntityStateMachine weaponEsm;
+
+        private string skinNameToken;
 
         private float timer;
 
@@ -64,6 +75,21 @@ namespace EntityStates.Executioner2
         public override void OnEnter()
         {
             base.OnEnter();
+
+            skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
+
+            if (skinNameToken == "SS2_SKIN_EXECUTIONER_MASTERY")
+            {
+                chargeEffectPrefab = masteryChargeEffectPrefab;
+                //plumeEffect = masteryPlume;
+                //plumeEffectLarge = masteryPlumeLarge;
+            }
+            else
+            {
+                chargeEffectPrefab = defaultChargeEffectPrefab;
+                //plumeEffect = defaultPlume;
+                //plumeEffectLarge = defaultPlumeLarge;
+            }
 
             nsm = GetComponent<NetworkStateMachine>();
             if (nsm != null)
@@ -208,7 +234,10 @@ namespace EntityStates.Executioner2
             {
                 ChildLocator cl = modelLocator.modelTransform.GetComponent<ChildLocator>();
                 Transform muzzle = cl.FindChild("ExhaustGun");
-                chargeEffectInstance = Object.Instantiate(chargeEffectPrefab, muzzle.position, muzzle.rotation);
+                if (skinNameToken == "SS2_SKIN_EXECUTIONER_MASTERY")
+                    chargeEffectInstance = Object.Instantiate(masteryChargeEffectPrefab, muzzle.position, muzzle.rotation);
+                else
+                    chargeEffectInstance = Object.Instantiate(defaultChargeEffectPrefab, muzzle.position, muzzle.rotation);
                 chargeEffectInstance.transform.parent = muzzle.transform;
             }
         }

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using Moonstorm.Starstorm2.Components;
+using UnityEngine.AddressableAssets;
 
 namespace EntityStates.Executioner2
 {
@@ -18,8 +19,12 @@ namespace EntityStates.Executioner2
         public static float duration = 0.8f;
 
         public static GameObject jumpEffect;
+        public static GameObject jumpEffectMastery;
+        public static Material jumpMaterialMastery;
         public static string ExhaustL;
         public static string ExhaustR;
+
+        private string skinNameToken;
 
         private ExecutionerController exeController;
 
@@ -37,9 +42,13 @@ namespace EntityStates.Executioner2
         {
             base.OnEnter();
 
+            skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
+
             exeController = GetComponent<ExecutionerController>();
             if (exeController != null)
                 exeController.meshExeAxe.SetActive(true);
+
+            //skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
 
             characterBody.hideCrosshair = true;
             characterBody.SetAimTimer(duration);
@@ -50,11 +59,25 @@ namespace EntityStates.Executioner2
             if (modelTransform)
             {
                 TemporaryOverlay temporaryOverlay = modelTransform.gameObject.AddComponent<TemporaryOverlay>();
-                temporaryOverlay.duration = 1.5f * duration;
+
+
                 temporaryOverlay.animateShaderAlpha = true;
-                temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 0.5f, 0.5f, 0f);
+
                 temporaryOverlay.destroyComponentOnEnd = true;
-                temporaryOverlay.originalMaterial = Resources.Load<Material>("Materials/matHuntressFlashBright");
+
+                if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
+                {
+                    temporaryOverlay.duration = .3f * duration;
+                    temporaryOverlay.originalMaterial = jumpMaterialMastery;
+                    temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 0.5f, 0.5f, 100f);
+                }
+                else
+                {
+                    temporaryOverlay.duration = 1.5f * duration;
+                    temporaryOverlay.originalMaterial = Addressables.LoadAssetAsync<Material>("RoR2/Base/Huntress/matHuntressFlashBright.mat").WaitForCompletion();
+                    temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 0.5f, 0.5f, 0f);
+                }
+
                 temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
             }
 
@@ -65,8 +88,16 @@ namespace EntityStates.Executioner2
             {
                 characterMotor.Motor.ForceUnground();
 
-                EffectManager.SimpleMuzzleFlash(jumpEffect, gameObject, ExhaustL, true);
-                EffectManager.SimpleMuzzleFlash(jumpEffect, gameObject, ExhaustR, true);
+                if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
+                {
+                    EffectManager.SimpleMuzzleFlash(jumpEffectMastery, gameObject, ExhaustL, true);
+                    EffectManager.SimpleMuzzleFlash(jumpEffectMastery, gameObject, ExhaustR, true);
+                }
+                else
+                {
+                    EffectManager.SimpleMuzzleFlash(jumpEffect, gameObject, ExhaustL, true);
+                    EffectManager.SimpleMuzzleFlash(jumpEffect, gameObject, ExhaustR, true);
+                }
 
                 CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
                 {

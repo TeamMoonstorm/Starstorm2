@@ -18,13 +18,13 @@ namespace EntityStates.Executioner2
         public static float procCoefficient = 1.0f;
         public static float baseDuration = 0.085f;
         public static float recoil = 0.6f;
-        //Idk how to serialize a bool so this isnt in the state config
-        public static bool useAimAssist = true;
+        [SerializeField]
+        public static bool useAimAssist = false;
         public static float aimSnapAngle = 5.5f;
         public static float range = 200f;
         public static float force = 200f;
         public static float spreadBloomValue = 0.8f;
-        public static int minimumShotBurst = 5;
+        //public static int minimumShotBurst = 5;
         public static string muzzleString = "Muzzle";
         public static GameObject ionEffectPrefab;
         public static GameObject muzzlePrefabMastery;
@@ -59,7 +59,7 @@ namespace EntityStates.Executioner2
             {
                 if (skillLocator.secondary.stock >= 10)
                 {
-                    fullBurst = true;
+                    //fullBurst = true;
                 }
             }
 
@@ -78,10 +78,6 @@ namespace EntityStates.Executioner2
                 EffectManager.SimpleMuzzleFlash(muzzlePrefab, gameObject, muzzleString, false);
             }
             
-
-            /*if (NetworkServer.active)
-                characterBody.AddBuff(SS2Content.Buffs.bdExeMuteCharge.buffIndex); Debug.Log("added mute: " + GetBuffCount(SS2Content.Buffs.bdExeMuteCharge.buffIndex));*/
-
             Shoot();
 
             skillLocator.secondary.DeductStock(1);
@@ -114,11 +110,6 @@ namespace EntityStates.Executioner2
             //This is desynced, need to network this
             bool isCrit = RollCrit();
             Util.PlayAttackSpeedSound("ExecutionerSecondary", gameObject, attackSpeedStat);
-
-            /*if (NetworkServer.active && skillLocator.secondary.stock == 1)
-                characterBody.SetBuffCount(SS2Content.Buffs.bdExeMuteCharge.buffIndex, 0);
-            if (NetworkServer.active && skillLocator.secondary.stock == 1)
-                characterBody.RemoveBuff(SS2Content.Buffs.bdExeMuteCharge.buffIndex); Debug.Log("removed mute: " + GetBuffCount(SS2Content.Buffs.bdExeMuteCharge.buffIndex));*/
 
             if (isAuthority)
             {
