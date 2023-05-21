@@ -25,7 +25,8 @@ namespace EntityStates.NemCommmando
 
         public override void OnEnter()
         {
-            
+            base.OnEnter();
+
             animator = GetModelAnimator();
             ChildLocator childLocator = animator.GetComponent<ChildLocator>();
             Util.PlaySound(Commando.DodgeState.dodgeSoundString, gameObject);
@@ -86,7 +87,6 @@ namespace EntityStates.NemCommmando
             Vector3 velocity = characterMotor ? characterMotor.velocity : Vector3.zero;
             previousPosition = transform.position - velocity;
 
-            base.OnEnter();
         }
 
         private void RecalculateRollSpeed()
