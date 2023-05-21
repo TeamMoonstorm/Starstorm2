@@ -79,6 +79,7 @@ The most important issues you may encounter are listed below, to help expect thi
     * Fixed Coffee Bag behaving strangely in multiplayer.
     * Blacklisted Coffee Bag from enemies.
     * Fixed Relic of Force giving primary skills cooldowns.
+    * Relic of Force's pickup animator now works.
     * Should have fixed Greater Warbanner's cooldown breaking.
     * Potentially fixed X4 buff-related networking issues.
     * Relic of Termination now has a blacklist for enemies that are not fit for being marked (specific bosses, destructible props, etc), and can no longer mark Cognation ghosts.
