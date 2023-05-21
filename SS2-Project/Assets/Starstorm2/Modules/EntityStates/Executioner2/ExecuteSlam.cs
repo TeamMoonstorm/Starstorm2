@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using Moonstorm.Starstorm2.Components;
 
 namespace EntityStates.Executioner2
 {
@@ -21,6 +22,8 @@ namespace EntityStates.Executioner2
         public static float duration = 1f;
         private bool hasSlammed = false;
         private Vector3 dashVector = Vector3.zero;
+
+        private ExecutionerController exeController;
 
         public bool wasLiedTo = false;
 
@@ -39,6 +42,11 @@ namespace EntityStates.Executioner2
         {
             base.OnEnter();
 
+            exeController = GetComponent<ExecutionerController>();
+            if (exeController != null)
+                exeController.meshExeAxe.SetActive(true);
+
+            characterBody.hideCrosshair = true;
             PlayAnimation("FullBody, Override", "SpecialSwing", "Special.playbackRate", duration * 0.8f);
 
             characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
@@ -74,7 +82,7 @@ namespace EntityStates.Executioner2
             }
             if (fixedAge >= duration)
             {
-                if (wasLiedTo && !hasSlammed)
+                if (wasLiedTo)
                 {
                     GroundSlamPos(characterBody.footPosition);
                 }
@@ -208,6 +216,9 @@ namespace EntityStates.Executioner2
         public override void OnExit()
         {
             base.OnExit();
+            characterBody.hideCrosshair = false;
+            if (exeController != null)
+                exeController.meshExeAxe.SetActive(false);
             PlayAnimation("FullBody, Override", "SpecialImpact", "Special.playbackRate", duration);
             characterMotor.onHitGroundAuthority -= GroundSlam;
             characterBody.bodyFlags -= CharacterBody.BodyFlags.IgnoreFallDamage;

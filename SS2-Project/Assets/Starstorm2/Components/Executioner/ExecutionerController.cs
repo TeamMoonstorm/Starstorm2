@@ -11,20 +11,33 @@ namespace Moonstorm.Starstorm2.Components
         private GenericSkill secondary;
         private ModelLocator modelLocator;
         private Animator modelAnimator;
+        private ChildLocator childLocator;
         private float clipCycleEnd;
 
         private float chargeLevel = 0;
         private float targetChargeLevel;
+
+        private Transform transformExeAxe;
+        public GameObject meshExeAxe;
+        private bool axeVisible = false;
         private void Awake()
         {
             secondary = GetComponent<SkillLocator>().secondary;
             modelLocator = GetComponent<ModelLocator>();
-            modelAnimator = modelLocator.modelTransform.GetComponent<Animator>();
         }
 
         private void Start()
         {
             secondary.RemoveAllStocks();
+
+            modelAnimator = modelLocator.modelTransform.GetComponent<Animator>();
+            childLocator = modelLocator.modelTransform.GetComponent<ChildLocator>();
+            if (childLocator)
+                transformExeAxe = childLocator.FindChild("AxeSpawn");
+            if (transformExeAxe)
+                meshExeAxe = transformExeAxe.gameObject;
+            meshExeAxe.SetActive(axeVisible);
+
             int layerIndex = modelAnimator.GetLayerIndex("Pack");
             modelAnimator.Play("IonCharge", layerIndex);
             modelAnimator.Update(0f);

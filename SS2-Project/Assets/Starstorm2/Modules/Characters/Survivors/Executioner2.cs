@@ -36,7 +36,7 @@ namespace Moonstorm.Starstorm2.Survivors
                 BodyIndex index = BodyCatalog.FindBodyIndexCaseInsensitive(bodyName);
                 if(index != BodyIndex.None)
                 {
-                    AddBodyToSuperchargeList(index);
+                    //AddBodyToSuperchargeList(index); //this counts as a fix.
                 }
             }
         }

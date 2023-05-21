@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using Moonstorm.Starstorm2.Components;
 
 namespace EntityStates.Executioner2
 {
@@ -27,6 +28,8 @@ namespace EntityStates.Executioner2
         [HideInInspector]
         public static GameObject areaIndicatorInstanceOOB;
 
+        private ExecutionerController exeController;
+
         public bool imAFilthyFuckingLiar = false;
 
         private CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
@@ -45,6 +48,12 @@ namespace EntityStates.Executioner2
         public override void OnEnter()
         {
             base.OnEnter();
+
+            exeController = GetComponent<ExecutionerController>();
+            if (exeController != null)
+                exeController.meshExeAxe.SetActive(true);
+
+            characterBody.hideCrosshair = true;
 
             PlayAnimation("FullBody, Override", "SpecialHang", "Special.playbackRate", duration);
 
@@ -86,7 +95,7 @@ namespace EntityStates.Executioner2
             if (areaIndicatorInstance)
             {
                 float maxDistance = moveSpeedStat * 6.8f;
-                Debug.Log("movespeed test calc: " + moveSpeedStat * 6.8f);
+                //Debug.Log("movespeed test calc: " + moveSpeedStat * 6.8f);
 
                 Ray aimRay = GetAimRay();
                 RaycastHit raycastHit;
@@ -114,7 +123,7 @@ namespace EntityStates.Executioner2
             if (fixedAge >= duration || !inputBank.skill4.down || inputBank.skill1.down)
             {
                 ExecuteSlam nextState = new ExecuteSlam();
-                nextState.wasLiedTo = imAFilthyFuckingLiar; //probably every time
+                nextState.wasLiedTo = imAFilthyFuckingLiar; //probably every time LOL 
                 outer.SetNextState(nextState);
             }  
             else
@@ -129,6 +138,11 @@ namespace EntityStates.Executioner2
         public override void OnExit()
         {
             base.OnExit();
+
+            characterBody.hideCrosshair = false;
+
+            if (exeController != null)
+                exeController.meshExeAxe.SetActive(false);
 
             if (cameraTargetParams)
             {

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using Moonstorm.Starstorm2.Components;
 
 namespace EntityStates.Executioner2
 {
@@ -19,6 +20,8 @@ namespace EntityStates.Executioner2
         public static GameObject jumpEffect;
         public static string ExhaustL;
         public static string ExhaustR;
+
+        private ExecutionerController exeController;
 
         private CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
         private CharacterCameraParamsData slamCameraParams = new CharacterCameraParamsData
@@ -34,6 +37,11 @@ namespace EntityStates.Executioner2
         {
             base.OnEnter();
 
+            exeController = GetComponent<ExecutionerController>();
+            if (exeController != null)
+                exeController.meshExeAxe.SetActive(true);
+
+            characterBody.hideCrosshair = true;
             characterBody.SetAimTimer(duration);
 
             flyVector = Vector3.up;
@@ -104,6 +112,9 @@ namespace EntityStates.Executioner2
         public override void OnExit()
         {
             base.OnExit();
+            characterBody.hideCrosshair = false;
+            if (exeController != null)
+                exeController.meshExeAxe.SetActive(false);
             if (cameraTargetParams)
             {
                 cameraTargetParams.RemoveParamsOverride(camOverrideHandle, .1f);
