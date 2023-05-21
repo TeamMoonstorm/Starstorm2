@@ -11,7 +11,9 @@ namespace Moonstorm.Starstorm2.Orbs
 
         private NetworkSoundEventDef sound = SS2Assets.LoadAsset<NetworkSoundEventDef>("SoundEventExecutionerGainCharge", SS2Bundle.Executioner);
         private GameObject orbEffect = SS2Assets.LoadAsset<GameObject>("ExecutionerIonOrbEffect", SS2Bundle.Executioner);
+        private GameObject orbEffectMastery = SS2Assets.LoadAsset<GameObject>("ExecutionerIonOrbEffectMastery", SS2Bundle.Executioner);// referenced just for u <3 -b
         private const float speed = 50f;
+        private string skinNameToken;
 
         public override void Begin()
         {
@@ -22,7 +24,9 @@ namespace Moonstorm.Starstorm2.Orbs
                 genericFloat = duration
             };
             effectData.SetHurtBoxReference(target);
+
             EffectManager.SpawnEffect(orbEffect, effectData, true);
+
             HurtBox hurtBox = target.GetComponent<HurtBox>();
             if (hurtBox)
                 execController = hurtBox.healthComponent.GetComponent<ExecutionerController>();

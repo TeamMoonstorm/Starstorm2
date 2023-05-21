@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: matExeMasteryArmor
+  m_Name: matExeMasteryJumpkit
   m_Shader: {fileID: 4800000, guid: 9b2024ee08a5bfc418ff897991e84323, type: 2}
-  m_ShaderKeywords: FRESNEL_EMISSION
+  m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -44,7 +44,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmTex:
-        m_Texture: {fileID: 2800000, guid: 1e83d69df8a94ca4d94d65d07b1c0ac4, type: 3}
+        m_Texture: {fileID: 2800000, guid: f8e477bb9a67108428addfe36e6d8543, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -68,7 +68,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FresnelRamp:
-        m_Texture: {fileID: 2800000, guid: 123be54f92a066245bc700145184e007, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GreenChannelNormalTex:
@@ -80,7 +80,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 1e3a0c1752d9937458c144a063b7ddec, type: 3}
+        m_Texture: {fileID: 2800000, guid: f4d37c85071410c4d97e61dfadb982c7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
@@ -92,7 +92,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalTex:
-        m_Texture: {fileID: 2800000, guid: 48a7cb536b7cf3f4fba7a1dcf31f4fb0, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -134,7 +134,7 @@ Material:
     - _EliteIndex: 0
     - _EmPower: 1
     - _EnableCutout: 0
-    - _FEON: 1
+    - _FEON: 0
     - _Fade: 1
     - _FadeBias: 0
     - _FarFadeOneDistance: 200000
@@ -149,7 +149,7 @@ Material:
     - _FlowmapOn: 0
     - _ForceSpecOn: 0
     - _FresnelBoost: 1
-    - _FresnelPower: 2.6
+    - _FresnelPower: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -176,11 +176,11 @@ Material:
     - _SliceAlphaDepth: 0.1
     - _SliceBandHeight: 1
     - _SliceHeight: 5
-    - _Smoothness: 0.2
+    - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
-    - _SpecularExponent: 10
+    - _SpecularExponent: 1
     - _SpecularHighlights: 1
-    - _SpecularStrength: 0.3
+    - _SpecularStrength: 0
     - _SplatmapOn: 0
     - _SplatmapTileScale: 1
     - _SrcBlend: 1

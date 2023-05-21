@@ -16,6 +16,8 @@ namespace Moonstorm.Starstorm2
 
         private static RuleChoiceDef rcd;
 
+        [ConfigurableField(SS2Config.IDMain, ConfigSection = "SuperTyphoon", ConfigName = "Increase Team Limit", ConfigDesc = "Multiplies the Monster Team maximum size by 2 when enabled. Lunar and Void are left unchanged. May affect performance.")]
+        internal static bool IncreaseSpawnCap = true;
         internal static void Init()
         {
             SuperTyphoonDef = SS2Assets.LoadAsset<R2API.ScriptableObjects.SerializableDifficultyDef>("SuperTyphoon", SS2Bundle.Base);
