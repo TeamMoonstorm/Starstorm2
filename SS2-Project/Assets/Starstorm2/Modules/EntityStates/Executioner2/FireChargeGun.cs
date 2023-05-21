@@ -63,8 +63,8 @@ namespace EntityStates.Executioner2
             PlayAnimation("Gesture, Override", "FireIonGun", "Secondary.playbackRate", duration);
             EffectManager.SimpleMuzzleFlash(muzzlePrefab, gameObject, muzzleString, false);
 
-            if (NetworkServer.active)
-                characterBody.AddBuff(SS2Content.Buffs.bdExeMuteCharge.buffIndex); Debug.Log("added mute: " + GetBuffCount(SS2Content.Buffs.bdExeMuteCharge.buffIndex));
+            /*if (NetworkServer.active)
+                characterBody.AddBuff(SS2Content.Buffs.bdExeMuteCharge.buffIndex); Debug.Log("added mute: " + GetBuffCount(SS2Content.Buffs.bdExeMuteCharge.buffIndex));*/
 
             Shoot();
 
@@ -99,10 +99,10 @@ namespace EntityStates.Executioner2
             bool isCrit = RollCrit();
             Util.PlayAttackSpeedSound("ExecutionerSecondary", gameObject, attackSpeedStat);
 
-            if (NetworkServer.active && skillLocator.secondary.stock == 1)
+            /*if (NetworkServer.active && skillLocator.secondary.stock == 1)
                 characterBody.SetBuffCount(SS2Content.Buffs.bdExeMuteCharge.buffIndex, 0);
             if (NetworkServer.active && skillLocator.secondary.stock == 1)
-                characterBody.RemoveBuff(SS2Content.Buffs.bdExeMuteCharge.buffIndex); Debug.Log("removed mute: " + GetBuffCount(SS2Content.Buffs.bdExeMuteCharge.buffIndex));
+                characterBody.RemoveBuff(SS2Content.Buffs.bdExeMuteCharge.buffIndex); Debug.Log("removed mute: " + GetBuffCount(SS2Content.Buffs.bdExeMuteCharge.buffIndex));*/
 
             if (isAuthority)
             {

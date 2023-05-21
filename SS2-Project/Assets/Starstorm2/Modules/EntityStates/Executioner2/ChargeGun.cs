@@ -32,6 +32,9 @@ namespace EntityStates.Executioner2
         private bool isPressingCameraSwap;
         private bool useAltCamera = false;
 
+        private NetworkStateMachine nsm;
+        private EntityStateMachine weaponEsm;
+
         private float timer;
 
         public CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
@@ -61,6 +64,10 @@ namespace EntityStates.Executioner2
         public override void OnEnter()
         {
             base.OnEnter();
+
+            nsm = GetComponent<NetworkStateMachine>();
+            if (nsm != null)
+                weaponEsm = nsm.stateMachines[1];
 
             if (inputBank.skill4.down)
             {
@@ -132,13 +139,32 @@ namespace EntityStates.Executioner2
                 thisFuckingSucks = false;
             }
 
-            if (Input.GetKeyDown(KeyCode.V))
+            if (Input.GetKeyDown(KeyCode.V) && isAuthority)
             {
                 useAltCamera = !useAltCamera;
                 CameraSwap();
             }
 
-            if (!characterBody.HasBuff(SS2Content.Buffs.bdExeMuteCharge))
+            
+
+            /*if (fixedAge >= duration && inputBank.skill2.down)
+            {
+                ChargeGun nextState = new ChargeGun();
+                nextState.useAltCamera = useAltCamera;
+                outer.SetNextState(nextState);
+                return;
+            }*/
+
+            if (isAuthority)
+            {
+                if (!inputBank.skill2.down || inputBank.skill3.down || inputBank.skill4.down)
+                {
+                    outer.SetNextStateToMain();
+                    return;
+                }
+            }
+
+            if (weaponEsm.IsInMainState())
                 timer += Time.fixedDeltaTime;
             else
                 timer = 0f;
@@ -147,8 +173,8 @@ namespace EntityStates.Executioner2
             {
                 timer = 0f;
 
-                skillLocator.secondary.AddOneStock();
-                Debug.Log("adding stock");
+                skillLocator.secondary.stock += 1;
+                //Debug.Log("adding stock");
 
                 if (characterBody.skillLocator.secondary.stock < characterBody.skillLocator.secondary.maxStock)
                 {
@@ -165,20 +191,6 @@ namespace EntityStates.Executioner2
                 }
 
                 characterBody.SetAimTimer(timeBetweenStocks);
-            }
-
-            /*if (fixedAge >= duration && inputBank.skill2.down)
-            {
-                ChargeGun nextState = new ChargeGun();
-                nextState.useAltCamera = useAltCamera;
-                outer.SetNextState(nextState);
-                return;
-            }*/   
-            
-            if (!inputBank.skill2.down || inputBank.skill3.down || inputBank.skill4.down)
-            {
-                outer.SetNextStateToMain();
-                return;
             }
 
             /*if (inputBank.skill1.down && skillLocator.secondary.stock >= 1)

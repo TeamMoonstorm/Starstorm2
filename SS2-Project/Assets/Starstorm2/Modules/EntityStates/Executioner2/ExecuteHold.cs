@@ -85,8 +85,8 @@ namespace EntityStates.Executioner2
         {
             if (areaIndicatorInstance)
             {
-                float maxDistance = 48f;
-                Debug.Log("movespeed test calc: " + moveSpeedStat * 4f);
+                float maxDistance = moveSpeedStat * 6.8f;
+                Debug.Log("movespeed test calc: " + moveSpeedStat * 6.8f);
 
                 Ray aimRay = GetAimRay();
                 RaycastHit raycastHit;

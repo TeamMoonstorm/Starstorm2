@@ -24,6 +24,7 @@ namespace Moonstorm.Starstorm2.Components
 
         private void Start()
         {
+            secondary.RemoveAllStocks();
             int layerIndex = modelAnimator.GetLayerIndex("Pack");
             modelAnimator.Play("IonCharge", layerIndex);
             modelAnimator.Update(0f);

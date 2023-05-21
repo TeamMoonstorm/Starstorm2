@@ -74,6 +74,7 @@ namespace Moonstorm.Starstorm2.Survivors
         {
             SetupFearExecute();
         }
+
         private HealthComponent.HealthBarValues FearExecuteHealthbar(On.RoR2.HealthComponent.orig_GetHealthBarValues orig, HealthComponent self)
         {
             var hbv = orig(self);

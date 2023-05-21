@@ -21,9 +21,6 @@ namespace EntityStates.NemCommando
 
         public override void OnEnter()
         {
-            base.OnEnter();
-            animator = GetModelAnimator();
-
             skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
 
             //red default
@@ -46,6 +43,10 @@ namespace EntityStates.NemCommando
                     hitEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoImpactSlashEffectBlue", SS2Bundle.NemCommando);
                 }
             }
+
+            base.OnEnter();
+
+            animator = GetModelAnimator();
         }
 
         public override void PlayAnimation()
