@@ -45,7 +45,7 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 **Warning: content spoilers below!**
 
 
-### 0.3.51
+### 0.4.0
 * General
     * Overhauled Executioner and Nemesis Commando entirely.
     * Reimplemented survivor-related unlocks. Executioner is intentionally unlocked by default now.
