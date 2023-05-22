@@ -30,7 +30,7 @@ namespace Moonstorm.Starstorm2.Items
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.Cognation;
 
-            private Material ghostMaterial = SS2Assets.LoadAsset<Material>("matCognation", SS2Bundle.Items);
+            private static Material ghostMaterial = SS2Assets.LoadAsset<Material>("matCognation", SS2Bundle.Items);
 
             private CharacterModel model;
 
@@ -67,6 +67,7 @@ namespace Moonstorm.Starstorm2.Items
 
                 if (model)
                 {
+                    //SS2Log.Info("swapping shader");
                     ModifyCharacterModel();
                 }
             }
@@ -78,6 +79,12 @@ namespace Moonstorm.Starstorm2.Items
                     var mat = model.baseRendererInfos[i].defaultMaterial;
                     if (mat.shader.name.StartsWith("Hopoo Games/Deferred"))
                     {
+                        //SS2Log.Info("swapping shader real " +mat.shader.name + " | " + ghostMaterial + " | ");
+                        if (!ghostMaterial)
+                        {
+                            SS2Log.Info("Shader was null?");
+                            ghostMaterial = SS2Assets.LoadAsset<Material>("matCognation", SS2Bundle.Items);
+                        }
                         mat = ghostMaterial;
                         model.baseRendererInfos[i].defaultMaterial = mat;
                     }
