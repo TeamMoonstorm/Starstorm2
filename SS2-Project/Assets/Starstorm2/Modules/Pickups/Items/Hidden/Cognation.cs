@@ -7,6 +7,23 @@ namespace Moonstorm.Starstorm2.Items
     public sealed class Cognation : ItemBase
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Cognation", SS2Bundle.Items);
+        
+        override public void Initialize()
+        {
+            On.RoR2.Util.GetBestBodyName += AddCognateName3;
+            //SceneManager.sceneLoaded += AddCode; kill!!!!!!!
+        }
+
+        private string AddCognateName3(On.RoR2.Util.orig_GetBestBodyName orig, GameObject bodyObject) //i love stealing
+        {
+            var result = orig(bodyObject);
+            CharacterBody characterBody = bodyObject?.GetComponent<CharacterBody>();
+            if (characterBody && characterBody.inventory && characterBody.inventory.GetItemCount(SS2Content.Items.Cognation) > 0)
+            {
+                result = Language.GetStringFormatted("SS2_ARTIFACT_COGNATION_PREFIX", result);
+            }
+            return result;
+        }
 
         public sealed class Behavior : BaseItemBodyBehavior
         {
@@ -23,6 +40,11 @@ namespace Moonstorm.Starstorm2.Items
                 {
                     body.inventory.RemoveItem(SS2Content.Items.Cognation, stack);
                     Destroy(this);
+                }
+
+                if (body.inventory.GetItemCount(SS2Content.Items.TerminationHelper) > 0)
+                {
+                    body.inventory.RemoveItem(SS2Content.Items.TerminationHelper);
                 }
 
                 body.baseMaxHealth *= 3;

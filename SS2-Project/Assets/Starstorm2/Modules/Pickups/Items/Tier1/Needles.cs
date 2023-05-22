@@ -11,6 +11,8 @@ namespace Moonstorm.Starstorm2.Items
         private const string token = "SS2_ITEM_NEEDLES_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Needles", SS2Bundle.Items);
 
+        //the graveyard
+
         //[ConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance for Needles to Proc. (100 = 100%)")]
         //[ConfigurableField(ConfigDesc = "Chance for Needles to Proc. (100 = 100%)")]
         //[TokenModifier(token, StatTypes.Default, 0)]
@@ -31,40 +33,40 @@ namespace Moonstorm.Starstorm2.Items
         //[ConfigurableField(ConfigDesc = "Duration of the actual needles debuff, in seconds.")]
         //[TokenModifier(token, StatTypes.Default, 4)]
         //public static float needleBuffDuration = 2f;
+        //
+        //[ConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of the pricked debuff, in seconds.")]
+        //[TokenModifier(token, StatTypes.Default, 1)]
+        //public static float buildupDuration = 5f;
+        //
+        //[ConfigurableField(SS2Config.IDItem, ConfigDesc = "Additional duration of the pricked debuff per stack, in seconds.")]
+        //[TokenModifier(token, StatTypes.Default, 2)]
+        //public static float buildupStack = 1f;
+        //
+        //[ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of buildup debuffs needed before the actual needles debuff gets applied")]
+        //[TokenModifier(token, StatTypes.Default, 3)]
+        //public static float neededBuildupAmount = 1f;
+        //
+        //[ConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of the actual needles debuff, in seconds.")]
+        //[TokenModifier(token, StatTypes.Default, 4)]
+        //public static float needleBuffDuration = 2f;
 
         [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of bonus critical chance per applied per stack. (1 = 1%")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float bonusCrit = 1;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of the pricked debuff, in seconds.")]
-        [TokenModifier(token, StatTypes.Default, 1)]
-        public static float buildupDuration = 5f;
-
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Additional duration of the pricked debuff per stack, in seconds.")]
-        [TokenModifier(token, StatTypes.Default, 2)]
-        public static float buildupStack = 1f;
-
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of buildup debuffs needed before the actual needles debuff gets applied")]
-        [TokenModifier(token, StatTypes.Default, 3)]
-        public static float neededBuildupAmount = 1f;
-
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of the actual needles debuff, in seconds.")]
-        [TokenModifier(token, StatTypes.Default, 4)]
-        public static float needleBuffDuration = 2f;
-        
         [ConfigurableField(ConfigDesc = "Amount of critical hits allowed per stack. (1 = 1 critical hit per stack before the buff is cleared)")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static int critsPerStack = 1;
 
-        public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver, IOnIncomingDamageOtherServerReciever
+        public sealed class Behavior : BaseItemBodyBehavior, IOnIncomingDamageOtherServerReciever //, IOnDamageDealtServerReceiver
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.Needles;
 
-            public void OnDamageDealtServer(DamageReport report)
-            {
-                SS2Log.Debug(report.damageInfo.crit);
-            }
+            //public void OnDamageDealtServer(DamageReport report)
+            //{
+            //    SS2Log.Debug(report.damageInfo.crit);
+            //}
 
             public void OnIncomingDamageOther(HealthComponent self, DamageInfo damageInfo)
             {

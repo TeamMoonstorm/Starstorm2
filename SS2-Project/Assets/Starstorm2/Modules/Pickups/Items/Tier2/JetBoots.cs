@@ -40,6 +40,18 @@ namespace Moonstorm.Starstorm2.Items
             GameObject.DestroyImmediate(JetBootsBlast.transform.Find("ScaledHitsparks 1").gameObject);
             GameObject.DestroyImmediate(JetBootsBlast.transform.Find("UnscaledHitsparks 1").gameObject);
             GameObject.DestroyImmediate(JetBootsBlast.transform.Find("Nova Sphere (1)").gameObject);
+            GameObject lightobj = JetBootsBlast.transform.Find("Point Light").gameObject;
+            if (lightobj)
+            {
+                Light light = lightobj.GetComponent<Light>();
+                SS2Log.Info("found lightobj");
+                if (light)
+                {
+                    SS2Log.Info("found light compontent");
+                    light.intensity = 3; //original was 100
+                }
+            }
+            
             //RemoveEffect(lightJetBootsFX.transform.Find("Point Light"));
 
             JetBootsBlast.GetComponent<ShakeEmitter>().radius *= 0.5f;

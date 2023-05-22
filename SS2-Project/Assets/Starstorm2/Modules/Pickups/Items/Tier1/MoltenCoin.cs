@@ -16,7 +16,7 @@ namespace Moonstorm.Starstorm2.Items
         [TokenModifier("SS2_ITEM_MOLTENCOIN_DESC", StatTypes.MultiplyByN, 1, "100")]
         public static float damageCoeff = 1f;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Coin Gains. (1 = 1$)")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Coin gain on proc. Scales with time. (1 = 1$)")]
         [TokenModifier("SS2_ITEM_MOLTENCOIN_DESC", StatTypes.Default, 2)]
         public static int coinGain = 1;
 
@@ -42,6 +42,7 @@ namespace Moonstorm.Starstorm2.Items
                         DotController.InflictDot(ref dotInfo);
 
                         body.master.GiveMoney((uint)(stack * (Run.instance.stageClearCount + (coinGain * 1f))));
+                        
                         MSUtil.PlayNetworkedSFX("MoltenCoin", report.victim.gameObject.transform.position);
                         EffectManager.SimpleImpactEffect(HealthComponent.AssetReferences.gainCoinsImpactEffectPrefab, report.victimBody.transform.position, UnityEngine.Vector3.up, true);
                     }

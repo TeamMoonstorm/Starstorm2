@@ -1,4 +1,5 @@
-﻿using RoR2;
+﻿using KinematicCharacterController;
+using RoR2;
 using RoR2.EntitlementManagement;
 using RoR2.Items;
 using System.Collections.Generic;
@@ -19,13 +20,14 @@ namespace Moonstorm.Starstorm2.Items
         [TokenModifier("SS2_ITEM_RELICOFTERMINATION_PICKUP", StatTypes.Default, 0)]
         public static float maxTime = 30f;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Time between marks in seconds.")]
-        [TokenModifier(token, StatTypes.Default, 0)]
-        public static float downTime = 30f;
-
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Percent reduction in time to kill per stack.")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Percent reduction in time to kill per stack. (1 = 100% reduction, .1 = 10% reduction)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
         public static float timeReduction = .1f;
+
+        //[ConfigurableField(SS2Config.IDItem, ConfigDesc = "Time between marks in seconds.")]
+        //[TokenModifier(token, StatTypes.Default, 0)]
+        //public static float downTime = 30f;
+
         
         //[ConfigurableField(ConfigDesc = "Time between marks in seconds.")]
         //[TokenModifier(token, StatTypes.Default, 0)]
@@ -35,29 +37,36 @@ namespace Moonstorm.Starstorm2.Items
         //[TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
         //public static float timeReduction = .1f;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Damage multiplier which is added to the marked enemy if not killed in time (1 = 100% more damage).")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Damage multiplier which is added to the marked enemy. (1 = 100% more damage).")]
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
         public static float damageMult = 1.5f;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Health multiplier which is added to the marked enemy if not killed in time (1 = 100% more health).")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Health multiplier which is added to the marked enemy. (1 = 100% more health).")]
         [TokenModifier(token, StatTypes.MultiplyByN, 3, "100")]
         public static float healthMult = 6f;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Speed multiplier which is added to the marked enemy if not killed in time (1 = 100% more speed).")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Speed multiplier which is added to the marked enemy. (1 = 100% more speed).")]
         [TokenModifier(token, StatTypes.MultiplyByN, 4, "100")]
         public static float speedMult = .5f;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Attack speed multiplier which is added to the marked enemy if not killed in time (1 = 100% more attack speed).")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Attack speed multiplier which is added to the marked enemy. (1 = 100% more attack speed).")]
         [TokenModifier(token, StatTypes.MultiplyByN, 5, "100")]
         public static float atkSpeedMult = 1f;
 
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Scale multiplier applied to marked enemies. (1 = 100% of normal scale (no change)).")]
+        [TokenModifier(token, StatTypes.MultiplyByN, 6, "100")]
+        public static float scaleMod = 1.5f;
+
         private static List<BodyIndex> illegalMarks = new List<BodyIndex>();
 
-        public static GameObject globalMarkEffect;
+        //public static GameObject globalMarkEffect;
 
-            //[ConfigurableField(SS2Config.IDItem, ConfigDesc = "Health multiplier grantd to marked enemy if not killed in time (1 = 100% health).")]
-            //[TokenModifier(token, StatTypes.Percentage, 3)]
-            //public static float effectiveRadius = 100f;
+        public static GameObject globalMarkEffectTwo;
+        public static GameObject spawnRock1VFX;
+        public static GameObject spawnRock2VFX;
+        //[ConfigurableField(SS2Config.IDItem, ConfigDesc = "Health multiplier grantd to marked enemy if not killed in time (1 = 100% health).")]
+        //[TokenModifier(token, StatTypes.Percentage, 3)]
+        //public static float effectiveRadius = 100f;
         public static GameObject markEffect;
         public static GameObject failEffect;
         public static GameObject buffEffect;
@@ -70,14 +79,45 @@ namespace Moonstorm.Starstorm2.Items
         {
             CharacterBody.onBodyStartGlobal += TerminationSpawnHook;
             GlobalEventManager.onCharacterDeathGlobal += TerminationDeathHook;
-            On.RoR2.Util.GetBestBodyName += AddTerminalName;
+            //On.RoR2.Util.GetBestBodyName += AddTerminalName;
+            On.RoR2.Util.GetBestBodyName += AddTerminalName2;
+            RoR2.Inventory.onInventoryChangedGlobal += CheckTerminationBuff;
 
             markEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationTargetMark", SS2Bundle.Items);
             failEffect = SS2Assets.LoadAsset<GameObject>("NemmandoScepterSlashAppear", SS2Bundle.Items);
             buffEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationBuffEffect", SS2Bundle.Items);
 
-            globalMarkEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/BossPositionIndicator.prefab").WaitForCompletion();
+            //globalMarkEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/BossPositionIndicator.prefab").WaitForCompletion();
 
+            globalMarkEffectTwo = SS2Assets.LoadAsset<GameObject>("TerminationPositionIndicator", SS2Bundle.Items);
+            spawnRock1VFX = SS2Assets.LoadAsset<GameObject>("TerminationDebris1", SS2Bundle.Items);
+            spawnRock2VFX = SS2Assets.LoadAsset<GameObject>("TerminationDebris2", SS2Bundle.Items);
+        }
+
+        private void CheckTerminationBuff(Inventory obj)
+        {
+            var master = obj.GetComponent<CharacterMaster>();
+            if (master)
+            {
+                var body = master.GetBody();
+                if (body)
+                {
+                    if(obj.GetItemCount(SS2Content.Items.RelicOfTermination) == 0)
+                    {
+                        if (body.HasBuff(SS2Content.Buffs.BuffTerminationReady))
+                        {
+                            body.RemoveBuff(SS2Content.Buffs.BuffTerminationReady);
+                            var token = body.GetComponent<TerminationHolderToken>();
+                            if (token)
+                            {
+                                //SS2Log.Info("Destroying token");
+
+                                GameObject.Destroy(token);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private void TerminationDeathHook(DamageReport obj)
@@ -86,8 +126,8 @@ namespace Moonstorm.Starstorm2.Items
             if (token)
             {
                 var body = token.owner.body;
-
-                var time = token.initalTime;
+                
+                var inital = token.initalTime;
                 var now = Time.time;
                 if (body.HasBuff(SS2Content.Buffs.BuffTerminationFailed))
                 {
@@ -95,7 +135,14 @@ namespace Moonstorm.Starstorm2.Items
                 }
                 token.owner.target = null;  // :)
                                             //SS2Log.Info("time")
-                if (!(now - time > maxTime))
+
+                float timeMult = Mathf.Pow(1 - timeReduction, token.itemCount - 1);
+                //inital = maxTime * timeMult;
+                float compmaxTime = maxTime * timeMult;
+
+
+
+                if (!(now - inital > compmaxTime))
                 {
                     //int count = token.PlayerOwner.inventory.GetItemCount(SS2Content.Items.RelicOfTermination.itemIndex);
                     int count = token.itemCount;
@@ -129,6 +176,13 @@ namespace Moonstorm.Starstorm2.Items
                     int item = Run.instance.treasureRng.RangeInt(0, dropList.Count);
                     //SS2Log.Debug("dropping reward");
                     PickupDropletController.CreatePickupDroplet(dropList[item], obj.victim.transform.position, vector);
+
+                    EffectData effectData = new EffectData
+                    {
+                        origin = obj.victimBody.transform.position,
+                        scale = .5f// * (float)obj.victimBody.hullClassification
+                    };
+                    EffectManager.SpawnEffect(spawnRock1VFX, effectData, transmit: true);
                 }
 
             }
@@ -148,78 +202,150 @@ namespace Moonstorm.Starstorm2.Items
 
         private void TerminationSpawnHook(CharacterBody obj)
         {
-            if (!NetworkServer.active || illegalMarks.Contains(obj.bodyIndex) || obj.isPlayerControlled || obj.teamComponent.teamIndex == TeamIndex.Player || obj.teamComponent.teamIndex == TeamIndex.Neutral)
+            //SS2Log.Info("Spawn hook activated");
+            if (!NetworkServer.active)
             {
+                //SS2Log.Info("TerminationSpawnHook called on Client");
+                return;
+            }
+            if (illegalMarks.Contains(obj.bodyIndex) || obj.isPlayerControlled || obj.teamComponent.teamIndex == TeamIndex.Player || obj.teamComponent.teamIndex == TeamIndex.Neutral)
+            {
+                //SS2Log.Info("bad mark");
                 return;
             }
             if (obj.inventory)
             {
                 if (obj.inventory.GetItemCount(SS2Content.Items.Cognation) > 0)
                 {
+                    //SS2Log.Info("cognation");
                     return;
                 }
             }
-
+            int a = 0;
+            //foreach(var player in PlayerCharacterMasterController.instances)
+            //{
+            //    SS2Log.Info(++a + ": player" + player + " | " + player.name);
+            //}
+            //a = 0;
             foreach (var player in PlayerCharacterMasterController.instances)
             {
-                if (!player)
+                ++a;
+                //SS2Log.Info(a + ": player: " + player + " | " + player.transform);
+                if (player)
                 {
-                    return;
-                }
-                if (!player.body)
-                {
-                    return;
-                }
-                if (player.body.HasBuff(SS2Content.Buffs.BuffTerminationReady))
-                {
-                    var holderToken = player.body.GetComponent<TerminationHolderToken>();
-                    if (!holderToken)
+                    //SS2Log.Info("no player");
+                    //return;
+                    if (player.master)
                     {
-                        holderToken = player.body.gameObject.AddComponent<TerminationHolderToken>();
+                        var playerbody = player.master.GetBody();
+                        if (playerbody)
+                        {
+                            if (playerbody.HasBuff(SS2Content.Buffs.BuffTerminationReady))
+                            {
+                                //SS2Log.Info("player " + a + " DID have buff!!!!!!!!!!!");
+                                var holderToken = playerbody.GetComponent<TerminationHolderToken>();
+                                if (!holderToken)
+                                {
+                                    holderToken = playerbody.gameObject.AddComponent<TerminationHolderToken>();
+                                }
+                                else
+                                {
+                                    //SS2Log.Debug("token found in spawn hook");
+                                }
+                                //Debug.Log("spawning - has buff");
+                                if (obj.inventory && !holderToken.target)
+                                {
+                                    int count = playerbody.GetItemCount(SS2Content.Items.RelicOfTermination);
+                                    if (count == 0)
+                                    {
+                                        count = 1; //doing this so that if for some reason if get this buff (aetherium potion) it still does something
+                                    }
+
+                                    obj.inventory.GiveItem(SS2Content.Items.TerminationHelper);
+                                    var token = obj.gameObject.AddComponent<TerminationToken>();
+
+                                    token.itemCount = count;
+                                    token.initalTime = Time.time;
+                                    token.owner = holderToken;
+                                    
+
+                                    holderToken.target = token;
+                                    holderToken.body = playerbody;
+
+                                    //obj.modelLocator.modelTransform.localScale *= scaleMod;
+                                    //
+                                    //if (obj.isFlying)
+                                    //{
+                                    //    KinematicCharacterMotor[] list = obj.GetComponentsInChildren<KinematicCharacterMotor>();
+                                    //    foreach(KinematicCharacterMotor motor in list)
+                                    //    {
+                                    //        if (motor)
+                                    //        {
+                                    //            motor.SetCapsuleDimensions(motor.Capsule.radius * scaleMod, motor.CapsuleHeight * scaleMod, scaleMod);
+                                    //        }
+                                    //    }
+                                    //   // obj.characterMotor.
+                                    //}
+                                    //mdlTransform.localScale *= sizeCoefficient;
+                                    
+                                    obj.AddBuff(SS2Content.Buffs.BuffTerminationVFX);
+
+                                    EffectData effectData = new EffectData
+                                    {
+                                        origin = obj.transform.position,
+                                        scale = .5f
+                                    
+                                    };
+                                    EffectManager.SpawnEffect(spawnRock1VFX, effectData, transmit: true);
+                                    //var printController = obj.modelLocator.modelTransform.GetComponent<PrintController>();
+                                    ////var printController = obj.GetComponent<PrintController>();
+                                    ////SS2Log.Info("trying to find controller: " + printController);
+                                    //if (printController)
+                                    //{
+                                    //    //SS2Log.Info("found controler");
+                                    //    printController.printTime = 25f;
+                                    //    printController.maxPrintHeight = 100;
+                                    //}
+
+                                    //obj.teamComponent.RequestDefaultIndicator(globalMarkEffectTwo);
+
+                                    float timeMult = Mathf.Pow(1 - timeReduction, token.itemCount - 1);
+                                    float compmaxTime = maxTime * timeMult;
+
+                                    //SS2Log.Info("max time: " + compmaxTime);
+                                    token.timeLimit = compmaxTime;
+
+                                    for (int i = 0; i < Mathf.Ceil(compmaxTime); i++)
+                                    {
+                                        playerbody.AddTimedBuff(SS2Content.Buffs.BuffTerminationCooldown.buffIndex, i + 1);
+                                    }
+                                    //player.body.AddBuff(SS2Content.Buffs.BuffTerminationCooldown);
+                                    playerbody.RemoveBuff(SS2Content.Buffs.BuffTerminationReady);
+                                    //SS2Log.Info("finished for player " + a);
+                                    break;
+                                }
+                                //SS2Log.Info("finished for player " + a);
+                                //break;
+                            }
+                            else
+                            {
+                                //SS2Log.Info("player " + a + " did not have buff");
+                            }
+                        }
+                        else
+                        {
+                            //SS2Log.Info("player did not have a body");
+                        }
                     }
                     else
                     {
-                        //SS2Log.Debug("token found in spawn hook");
+                        //SS2Log.Info("player didn't have a master?? " + player);
                     }
-                    //Debug.Log("spawning - has buff");
-                    if (obj.inventory && !holderToken.target)
-                    {
-                        int count = player.body.GetItemCount(SS2Content.Items.RelicOfTermination);
-                        if (count == 0)
-                        {
-                            count = 1; //doing this so that if for some reason if get this buff (aetherium potion) it still does something
-                        }
 
-                        obj.inventory.GiveItem(SS2Content.Items.TerminationHelper);
-                        var token = obj.gameObject.AddComponent<TerminationToken>();
-                        token.itemCount = count;
-                        token.initalTime = Time.time;
-                        token.owner = holderToken;
-                        holderToken.target = token;
-                        holderToken.body = player.body;
-
-                        obj.modelLocator.modelTransform.localScale *= 1.5f;
-                        obj.AddBuff(SS2Content.Buffs.BuffTerminationVFX);
-                        var printController = obj.modelLocator.modelTransform.GetComponent<PrintController>();
-                        //var printController = obj.GetComponent<PrintController>();
-                        //SS2Log.Info("trying to find controller: " + printController);
-                        if (printController)
-                        {
-                            //SS2Log.Info("found controler");
-                            printController.printTime = 25f;
-                            printController.maxPrintHeight = 100;
-                        }
-
-
-                        obj.teamComponent.RequestDefaultIndicator(globalMarkEffect);
-
-                        for (int i = 0; i < maxTime; i++)
-                        {
-                            player.body.AddTimedBuff(SS2Content.Buffs.BuffTerminationCooldown.buffIndex, i + 1);
-                        }
-                        //player.body.AddBuff(SS2Content.Buffs.BuffTerminationCooldown);
-                        player.body.RemoveBuff(SS2Content.Buffs.BuffTerminationReady);
-                    }
+                }
+                else
+                {
+                    //SS2Log.Info("player didn't " + player);
                 }
             }
         }
@@ -243,6 +369,17 @@ namespace Moonstorm.Starstorm2.Items
             }
 
             return orig(bodyObject);
+        }
+
+        private string AddTerminalName2(On.RoR2.Util.orig_GetBestBodyName orig, GameObject bodyObject) //i love stealing
+        {
+            var result = orig(bodyObject);
+            CharacterBody characterBody = bodyObject?.GetComponent<CharacterBody>();
+            if (characterBody && characterBody.inventory && characterBody.inventory.GetItemCount(SS2Content.Items.TerminationHelper) > 0)
+            {
+                result = Language.GetStringFormatted("SS2_ITEM_RELICOFTERMINATION_PREFIX", result);
+            }
+            return result;
         }
 
         //private void InitItem()
@@ -392,6 +529,7 @@ namespace Moonstorm.Starstorm2.Items
                 "SMMaulingRockLarge",
                 "SMMaulingRockMedium",
                 "SMMaulingRockSmall",
+                "VoidInfestorBody",
             };
 
                 //SS2Log.Debug("all bodies: " + BodyCatalog.allBodyPrefabs.ToString());
@@ -654,6 +792,7 @@ namespace Moonstorm.Starstorm2.Items
             public bool hasFailed = false;
             public float initalTime;
             public TerminationHolderToken owner;
+            public float timeLimit = 30;
 
         }
         public class TerminationHolderToken : MonoBehaviour
@@ -664,6 +803,20 @@ namespace Moonstorm.Starstorm2.Items
             public CharacterBody body;
             public PlayerCharacterMasterController player;
 
+            //private void FixedUpdate()
+            //{
+            //    if(body.GetItemCount(SS2Content.Items.RelicOfTermination) < 1)
+            //    {
+            //        int ready = body.GetBuffCount(SS2Content.Buffs.BuffTerminationReady);
+            //        if(ready > 0)
+            //        {
+            //            body.RemoveBuff(SS2Content.Buffs.BuffTerminationReady);
+            //        } //all other buffs should time out and decay
+            //
+            //        Destroy(this);
+            //
+            //    }
+            //}
         }
     }
 }
