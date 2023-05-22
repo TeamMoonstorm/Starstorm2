@@ -1,39 +1,44 @@
-﻿using RoR2;
+﻿using Moonstorm.Starstorm2;
+using RoR2;
 using UnityEngine;
 
 namespace EntityStates.Nemmando
 {
     public class Spawn : BaseState
     {
-        public static float minimumIdleDuration = 2f;
+        public static float minimumIdleDuration = 3.5f;
         public static GameObject spawnEffectPrefab;
+        public static GameObject spawnEffectFakePod;
         private Animator modelAnimator;
         private CharacterModel characterModel;
+        private bool hasSpawnedPrefab = false;
         public override void OnEnter()
         {
             base.OnEnter();
             //base.characterBody.enabled = false;
             //We know its nemmando and that he has a model... but lets make it generic
-            this.characterModel = null;
-            if (base.characterBody.modelLocator && base.characterBody.modelLocator.modelTransform)
+            characterBody.AddTimedBuffAuthority(RoR2Content.Buffs.HiddenInvincibility.buffIndex, float.PositiveInfinity);
+            characterModel = null;
+            if (characterBody.modelLocator && characterBody.modelLocator.modelTransform)
             {
-                this.characterModel = base.characterBody.modelLocator.modelTransform.GetComponent<CharacterModel>();
+                characterModel = characterBody.modelLocator.modelTransform.GetComponent<CharacterModel>();
             }
             if (characterModel)
             {
                 characterModel.invisibilityCount++;
             }
             modelAnimator = GetModelAnimator();
-            EffectManager.SpawnEffect(Spawn.spawnEffectPrefab, new EffectData
+            
+            /*EffectManager.SpawnEffect(Spawn.spawnEffectPrefab, new EffectData
             {
                 origin = base.characterBody.footPosition
-            }, false);
+            }, false);*/
         }
         public override void OnExit()
         {
-            if (this.modelAnimator)
+            if (modelAnimator)
             {
-                this.modelAnimator.SetFloat(AnimationParameters.aimWeight, 1f);
+                modelAnimator.SetFloat(AnimationParameters.aimWeight, 1f);
             }
             base.OnExit();
         }
@@ -41,9 +46,15 @@ namespace EntityStates.Nemmando
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (base.isAuthority && base.fixedAge >= Spawn.minimumIdleDuration && (base.inputBank.moveVector.sqrMagnitude >= Mathf.Epsilon || base.inputBank.CheckAnyButtonDown()))
+            if (isAuthority && fixedAge >= minimumIdleDuration)
             {
-                this.outer.SetNextState(new Appear());
+                /*if (!hasSpawnedPrefab)
+                {
+                    Object.Instantiate(SS2Assets.LoadAsset<GameObject>("NemSpawnPrefab", SS2Bundle.NemCommando), characterBody.corePosition, characterBody.transform.rotation);
+                    hasSpawnedPrefab = true;
+                }
+                if (inputBank.interact.down)*/
+                outer.SetNextState(new Appear());
             }
         }
     }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Networking;
 
 namespace EntityStates.Executioner2
 {
@@ -17,16 +18,19 @@ namespace EntityStates.Executioner2
         public static float procCoefficient = 1.0f;
         public static float baseDuration = 0.085f;
         public static float recoil = 0.6f;
-        //Idk how to serialize a bool so this isnt in the state config
-        public static bool useAimAssist = true;
+        [SerializeField]
+        public static bool useAimAssist = false;
         public static float aimSnapAngle = 5.5f;
         public static float range = 200f;
         public static float force = 200f;
         public static float spreadBloomValue = 0.8f;
-        public static int minimumShotBurst = 5;
+        //public static int minimumShotBurst = 5;
         public static string muzzleString = "Muzzle";
         public static GameObject ionEffectPrefab;
-
+        public static GameObject muzzlePrefabMastery;
+        public static GameObject tracerPrefabMastery;
+        public static GameObject hitPrefabMastery;
+        private string skinNameToken;
         public bool fullBurst = false;
 
         [HideInInspector]
@@ -55,21 +59,31 @@ namespace EntityStates.Executioner2
             {
                 if (skillLocator.secondary.stock >= 10)
                 {
-                    //fullBurst = true; nvm
+                    //fullBurst = true;
                 }
             }
 
-            PlayAnimation("Gesture, Override", "FireIonGun", "Secondary.playbackRate", duration);
-            EffectManager.SimpleMuzzleFlash(muzzlePrefab, gameObject, muzzleString, false);
+            skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
 
-            characterBody.SetBuffCount(SS2Content.Buffs.bdExeMuteCharge.buffIndex, 1);
-
+            if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
+            {
+                muzzlePrefab = muzzlePrefabMastery;
+                PlayAnimation("Gesture, Override", "FireIonGun", "Secondary.playbackRate", duration);
+                EffectManager.SimpleMuzzleFlash(muzzlePrefab, gameObject, muzzleString, false);
+            }
+            else
+            {
+                muzzlePrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/MuzzleflashFMJ.prefab").WaitForCompletion();
+                PlayAnimation("Gesture, Override", "FireIonGun", "Secondary.playbackRate", duration);
+                EffectManager.SimpleMuzzleFlash(muzzlePrefab, gameObject, muzzleString, false);
+            }
+            
             Shoot();
 
-            if (!characterBody.HasBuff(SS2Content.Buffs.BuffExecutionerSuperCharged) && !characterBody.HasBuff(SS2Content.Buffs.BuffExecutionerArmor))
-                skillLocator.secondary.DeductStock(1);
+            skillLocator.secondary.DeductStock(1);
             shotsFired++;
         }
+
 
         public override void FixedUpdate()
         {
@@ -153,11 +167,72 @@ namespace EntityStates.Executioner2
                     spreadYawScale = 0.2f
                     //HitEffectNormal = ClayBruiser.Weapon.MinigunFire.bulletHitEffectNormal
                 };
+
+                if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
+                {
+                    bulletAttack = new BulletAttack
+                    {
+                        aimVector = vec,
+                        origin = ray.origin,
+                        damage = damageCoefficient * damageStat,
+                        damageType = DamageType.Shock5s,
+                        damageColorIndex = DamageColorIndex.Default,
+                        minSpread = 0f,
+                        maxSpread = characterBody.spreadBloomAngle,
+                        falloffModel = BulletAttack.FalloffModel.None,
+                        maxDistance = range,
+                        force = force,
+                        isCrit = isCrit,
+                        owner = gameObject,
+                        muzzleName = muzzleString,
+                        smartCollision = true,
+                        procCoefficient = procCoefficient,
+                        radius = 1f,
+                        weapon = gameObject,
+                        tracerEffectPrefab = tracerPrefabMastery,
+                        hitEffectPrefab = hitPrefabMastery,
+                        stopperMask = LayerIndex.world.mask,
+                        spreadPitchScale = 0.2f,
+                        spreadYawScale = 0.2f
+                        //HitEffectNormal = ClayBruiser.Weapon.MinigunFire.bulletHitEffectNormal
+                    };
+                }
+                else
+                {
+                    bulletAttack = new BulletAttack
+                    {
+                        aimVector = vec,
+                        origin = ray.origin,
+                        damage = damageCoefficient * damageStat,
+                        damageType = DamageType.Shock5s,
+                        damageColorIndex = DamageColorIndex.Default,
+                        minSpread = 0f,
+                        maxSpread = characterBody.spreadBloomAngle,
+                        falloffModel = BulletAttack.FalloffModel.None,
+                        maxDistance = range,
+                        force = force,
+                        isCrit = isCrit,
+                        owner = gameObject,
+                        muzzleName = muzzleString,
+                        smartCollision = true,
+                        procCoefficient = procCoefficient,
+                        radius = 1f,
+                        weapon = gameObject,
+                        tracerEffectPrefab = tracerPrefab,
+                        hitEffectPrefab = hitPrefab,
+                        stopperMask = LayerIndex.world.mask,
+                        spreadPitchScale = 0.2f,
+                        spreadYawScale = 0.2f
+                        //HitEffectNormal = ClayBruiser.Weapon.MinigunFire.bulletHitEffectNormal
+                    };
+                }
+
                 bulletAttack.Fire();
 
                 if (skillLocator.secondary.stock == 1)
                 {
-                    characterBody.SetBuffCount(Moonstorm.Starstorm2.SS2Content.Buffs.bdExeMuteCharge.buffIndex, 0);
+                    //characterBody.SetBuffCount(Moonstorm.Starstorm2.SS2Content.Buffs.bdExeMuteCharge.buffIndex, 0);
+
                     if (fullBurst)
                     {
                         var bulletAttack2 = new BulletAttack
@@ -187,6 +262,67 @@ namespace EntityStates.Executioner2
                             spreadYawScale = 1f
                             //HitEffectNormal = ClayBruiser.Weapon.MinigunFire.bulletHitEffectNormal
                         };
+                        if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
+                        {
+                            bulletAttack2 = new BulletAttack
+                            {
+                                aimVector = vec,
+                                origin = ray.origin,
+                                damage = damageBurstCoefficient * damageStat / 2,
+                                damageType = DamageType.Shock5s,
+                                damageColorIndex = DamageColorIndex.Default,
+                                minSpread = 0.5f,
+                                maxSpread = 16f,
+                                falloffModel = BulletAttack.FalloffModel.None,
+                                maxDistance = range,
+                                bulletCount = 8,
+                                force = force,
+                                isCrit = isCrit,
+                                owner = gameObject,
+                                muzzleName = muzzleString,
+                                smartCollision = true,
+                                procCoefficient = procCoefficient * 0.5f,
+                                radius = 0.5f,
+                                weapon = gameObject,
+                                tracerEffectPrefab = tracerPrefabMastery,
+                                hitEffectPrefab = hitPrefabMastery,
+                                stopperMask = LayerIndex.world.mask,
+                                spreadPitchScale = 1f,
+                                spreadYawScale = 1f
+                                //HitEffectNormal = ClayBruiser.Weapon.MinigunFire.bulletHitEffectNormal
+                            };
+                        }
+                        else
+                        {
+                            bulletAttack2 = new BulletAttack
+                            {
+                                aimVector = vec,
+                                origin = ray.origin,
+                                damage = damageBurstCoefficient * damageStat / 2,
+                                damageType = DamageType.Shock5s,
+                                damageColorIndex = DamageColorIndex.Default,
+                                minSpread = 0.5f,
+                                maxSpread = 16f,
+                                falloffModel = BulletAttack.FalloffModel.None,
+                                maxDistance = range,
+                                bulletCount = 8,
+                                force = force,
+                                isCrit = isCrit,
+                                owner = gameObject,
+                                muzzleName = muzzleString,
+                                smartCollision = true,
+                                procCoefficient = procCoefficient * 0.5f,
+                                radius = 0.5f,
+                                weapon = gameObject,
+                                tracerEffectPrefab = tracerPrefabMastery,
+                                hitEffectPrefab = hitPrefabMastery,
+                                stopperMask = LayerIndex.world.mask,
+                                spreadPitchScale = 1f,
+                                spreadYawScale = 1f
+                                //HitEffectNormal = ClayBruiser.Weapon.MinigunFire.bulletHitEffectNormal
+                            };
+                        }
+
                         bulletAttack2.Fire();
                     }
                     //Debug.Log("firing final bullet of full burst");
@@ -196,7 +332,7 @@ namespace EntityStates.Executioner2
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.PrioritySkill;
+            return InterruptPriority.Frozen;
         }
     }
 }

@@ -247,13 +247,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 430723268366279277}
-  m_LocalRotation: {x: 0.43210962, y: -0.43031016, z: -0.7515542, w: -0.25155693}
+  m_LocalRotation: {x: 0.8021067, y: -0.18577369, z: -0.32890087, w: -0.46253335}
   m_LocalPosition: {x: -0.18544342, y: 0.031583976, z: 0.22783262}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7573341162725836530}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 60, y: 240, z: 0}
+  m_LocalEulerAnglesHint: {x: 239.792, y: 45, z: -0.70999146}
 --- !u!1 &442127833701192548
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,10 +299,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.109043114
-  m_Height: 0.5334229
+  m_Radius: 0.085235246
+  m_Height: 0.3932914
   m_Direction: 1
-  m_Center: {x: 0.0000008100667, y: 0.21776903, z: -0.030800365}
+  m_Center: {x: -0.008600436, y: 0.2878303, z: -0.04600557}
 --- !u!54 &811532234566246200
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1288,6 +1288,7 @@ GameObject:
   - component: {fileID: 2925247097089665269}
   - component: {fileID: 4324788771772051300}
   - component: {fileID: 784556980784750019}
+  - component: {fileID: 7800055370436300373}
   m_Layer: 17
   m_Name: thigh.l
   m_TagString: Untagged
@@ -1320,10 +1321,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.109043114
-  m_Height: 0.5334229
+  m_Radius: 0.085235246
+  m_Height: 0.29439682
   m_Direction: 1
-  m_Center: {x: 0.0000008100667, y: 0.21776903, z: -0.030800365}
+  m_Center: {x: -0.008600383, y: 0.3372782, z: -0.04600579}
 --- !u!54 &2925247097089665269
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1402,6 +1403,20 @@ MonoBehaviour:
   m_Height: 0.5334229
   m_Direction: 1
   m_Bound: 0
+--- !u!136 &7800055370436300373
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758624239444607480}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.085235246
+  m_Height: 0.3932914
+  m_Direction: 1
+  m_Center: {x: -0.008600436, y: 0.2878303, z: -0.04600557}
 --- !u!1 &1845761779445300663
 GameObject:
   m_ObjectHideFlags: 0
@@ -4520,13 +4535,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7529783595450862049}
-  m_LocalRotation: {x: 0.43211037, y: 0.43030992, z: 0.7515537, w: -0.25155744}
+  m_LocalRotation: {x: 0.8021067, y: 0.18577369, z: 0.32890087, w: -0.46253335}
   m_LocalPosition: {x: 0.13755661, y: 0.022274671, z: 0.27076638}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7573341162725836530}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 60, y: -240, z: 0}
+  m_LocalEulerAnglesHint: {x: 239.792, y: -45, z: 0.70999146}
 --- !u!1 &7586786748131003371
 GameObject:
   m_ObjectHideFlags: 0
@@ -4873,9 +4888,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.14118838
-  m_Height: 0.3808517
+  m_Height: 0.28237683
   m_Direction: 0
-  m_Center: {x: -6.09851e-13, y: 0.13351445, z: 0.025262684}
+  m_Center: {x: 0.005415559, y: 0.13351445, z: 0.025262684}
 --- !u!1 &7934795669064016212
 GameObject:
   m_ObjectHideFlags: 0
@@ -5953,7 +5968,7 @@ MonoBehaviour:
   hideCrosshair: 0
   aimOriginTransform: {fileID: 6302135568559517438}
   hullClassification: 0
-  portraitIcon: {fileID: 2800000, guid: 8c745c74c1d69ac4c979eb3cf251aa66, type: 3}
+  portraitIcon: {fileID: 2800000, guid: a227cf48f5fc2f240a304138d0cb5ef9, type: 3}
   bodyColor: {r: 0.5803922, g: 0.34901962, b: 0.50980395, a: 1}
   isChampion: 0
   currentVehicle: {fileID: 0}
@@ -6247,8 +6262,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customName: JumpPack
   initialStateType:
-    _typeName: RoR2.RouletteChestController+Idle, RoR2, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   mainStateType:
     _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &8651399261720920612
@@ -6289,6 +6303,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   idleStateMachine:
   - {fileID: 9011166777397608898}
+  - {fileID: 8029635195395309803}
 --- !u!136 &9011166777397608955
 CapsuleCollider:
   m_ObjectHideFlags: 0

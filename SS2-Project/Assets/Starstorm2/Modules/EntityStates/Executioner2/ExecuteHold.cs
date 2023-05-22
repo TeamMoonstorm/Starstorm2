@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using Moonstorm.Starstorm2.Components;
 
 namespace EntityStates.Executioner2
 {
@@ -15,8 +16,10 @@ namespace EntityStates.Executioner2
         public static float duration = 1f;
 
         public static GameObject jumpEffect;
+        public static GameObject jumpEffectMastery;
         public static string ExhaustL;
         public static string ExhaustR;
+        private string skinNameToken;
 
         public static GameObject areaIndicator;
         public static GameObject areaIndicatorOOB;
@@ -26,6 +29,10 @@ namespace EntityStates.Executioner2
 
         [HideInInspector]
         public static GameObject areaIndicatorInstanceOOB;
+
+        private ExecutionerController exeController;
+
+        public bool imAFilthyFuckingLiar = false;
 
         private CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
         private CharacterCameraParamsData slamCameraParams = new CharacterCameraParamsData
@@ -44,12 +51,29 @@ namespace EntityStates.Executioner2
         {
             base.OnEnter();
 
+            exeController = GetComponent<ExecutionerController>();
+            if (exeController != null)
+                exeController.meshExeAxe.SetActive(true);
+
+            characterBody.hideCrosshair = true;
+
             PlayAnimation("FullBody, Override", "SpecialHang", "Special.playbackRate", duration);
 
             if (isAuthority)
             {
-                EffectManager.SimpleMuzzleFlash(jumpEffect, gameObject, ExhaustL, true);
-                EffectManager.SimpleMuzzleFlash(jumpEffect, gameObject, ExhaustR, true);
+                skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
+
+                if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
+                {
+                    EffectManager.SimpleMuzzleFlash(jumpEffectMastery, gameObject, ExhaustL, true);
+                    EffectManager.SimpleMuzzleFlash(jumpEffectMastery, gameObject, ExhaustR, true);
+                }
+                else
+                {
+                    EffectManager.SimpleMuzzleFlash(jumpEffect, gameObject, ExhaustL, true);
+                    EffectManager.SimpleMuzzleFlash(jumpEffect, gameObject, ExhaustR, true);
+                }
+
 
                 CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
                 {
@@ -58,6 +82,8 @@ namespace EntityStates.Executioner2
                 };
 
                 camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0f);
+
+                characterBody.SetAimTimer(duration);
 
                 areaIndicatorInstance = UnityEngine.Object.Instantiate(areaIndicator);
                 areaIndicatorInstanceOOB = UnityEngine.Object.Instantiate(areaIndicatorOOB);
@@ -81,12 +107,13 @@ namespace EntityStates.Executioner2
         {
             if (areaIndicatorInstance)
             {
-                float maxDistance = 48f * moveSpeedStat; //i think that's accurate..
+                float maxDistance = moveSpeedStat * 6.8f;
 
                 Ray aimRay = GetAimRay();
                 RaycastHit raycastHit;
                 if (Physics.Raycast(aimRay, out raycastHit, maxDistance, LayerIndex.CommonMasks.bullet))
                 {
+                    imAFilthyFuckingLiar = true;
                     areaIndicatorInstance.SetActive(true);
                     areaIndicatorInstanceOOB.SetActive(false);
                     areaIndicatorInstance.transform.position = raycastHit.point;
@@ -94,6 +121,7 @@ namespace EntityStates.Executioner2
                 }
                 else
                 {
+                    imAFilthyFuckingLiar = false;
                     areaIndicatorInstance.SetActive(false);
                     areaIndicatorInstanceOOB.SetActive(true);
                     areaIndicatorInstanceOOB.transform.position = aimRay.GetPoint(maxDistance);
@@ -107,8 +135,9 @@ namespace EntityStates.Executioner2
             if (fixedAge >= duration || !inputBank.skill4.down || inputBank.skill1.down)
             {
                 ExecuteSlam nextState = new ExecuteSlam();
+                nextState.wasLiedTo = imAFilthyFuckingLiar; //probably every time LOL 
                 outer.SetNextState(nextState);
-            }  
+            }
             else
                 HandleMovement();
         }
@@ -121,6 +150,11 @@ namespace EntityStates.Executioner2
         public override void OnExit()
         {
             base.OnExit();
+
+            characterBody.hideCrosshair = false;
+
+            if (exeController != null)
+                exeController.meshExeAxe.SetActive(false);
 
             if (cameraTargetParams)
             {

@@ -6,9 +6,9 @@ Starstorm 2 is a work-in-progress RoR2 port/sequel of Starstorm, a diverse gamep
 
 ## Developing/Contributions
 
-Currently Starstorm 2 is a team-driven effort, and many ideas are heavily baked in-house before making it to the mod. As a result of this, it is heavily recommended to discuss any planned large-scale contributions (content such as new survivors, items, etc.) before developing them to ensure everything is good to go. Contact of this type can be made in our Discord server, or you can directly message swuff★#2224.
+Currently Starstorm 2 is a team-driven effort and many ideas are heavily baked in-house before making it to the mod. As a result of this, it is heavily recommended to discuss any planned large-scale contributions (content such as new survivors, items, etc.) before developing them to ensure everything is good to go. Contact of this type can be made in our Discord server, or you can directly message swuff★#2224.
 
-Understand that large-scale pull requests may be turned down if not discussed beforehand!!! Please come to us before implementing.
+Understand that **large-scale pull requests may be turned down if not discussed beforehand!!!** Please come to us before implementing.
 
 That said, if you are looking to contribute to the project, set-up instructions can be found below:
 
@@ -31,7 +31,7 @@ That said, if you are looking to contribute to the project, set-up instructions 
 
 ![](https://cdn.discordapp.com/attachments/1035279289668616202/1035282616154337411/unknown.png)
 
-* Once the project opens, you'll have a bunch of errors, these errors **are normal**, and are caused by missing ror2 assemblies, to fix this, Go to ``Assets/ThunderKitSettings`` folder, and look for the "ImportConfiguration" file
+* Once the project opens, you'll have a bunch of errors, these errors **are normal**, and are caused by missing ror2 assemblies. To fix this, Go to ``Assets/ThunderKitSettings`` folder, and look for the "ImportConfiguration" file.
     * If there are no Configuration Executors, delete the ImportConfiguration so Thunderkit can regenerate it.
     * If no configurations exist after this, please contact Nebby and ask for help
 
@@ -81,14 +81,14 @@ That said, if you are looking to contribute to the project, set-up instructions 
 ## Issues Q&A
 
 Q: I'm having an issue where certain components cannot be added or general instability
-* A: Make sure you didn't left InstallRoR2MultiplayerHLAPI and Install RoR2EditorKit enabled, having these enabled will cause issues due to duplicate assemblies
+* A: Make sure you didn't leave Install RoR2MultiplayerHLAPI and Install RoR2EditorKit enabled, having these enabled will cause issues due to duplicate assemblies
 
 Q: I'm having an issue where there are compiler errors due to DamageAPI/RecalcStatsAPI/OtherR2APISubmodule is missing
-* A: Some of the project's soft dependencies, such as AncientScepter still rely on the old R2API, and as such, when they're installed, it installs R2API version 4.x.x, this causes duplicate types in the project, to fix this, just delete the R2API folder in the packages folder.
+* A: Some of the project's soft dependencies such as AncientScepter still rely on the old R2API and as such, when they're installed, it installs R2API version 4.x.x, causing duplicate types in the project. To fix this, just delete the R2API folder in the packages folder.
 
 Q: How do I build?
 * A: Do the following:
-    * Go into ASsets/ThunderkitRelated/Contributor
+    * Go into Assets/ThunderkitRelated/Contributor
     * Click on the Nebby folder
     * Press ``Ctrl+D`` to duplicate, rename the duplicate to your username
     * Enter the duplicate folder
@@ -99,8 +99,8 @@ Q: How do I build?
     * On the Constant path component, set the value to your R2ModMan profile's plugins folder
     * Running the build pipeline should output the built mod into your r2modman profile
 
-Q: Any mods I should have on my r2modman development profile:
+Q: Any mods I should have on my r2modman development profile?
 * A: We recommend using the following profile code, as this profile code contains all the dependencies and configuration: ``https://cdn.discordapp.com/attachments/1060999373846229132/1062874434379202620/SS2Dev_1673479382645.r2z``
 
 Q: When I build my project using the pipelines no DLL is created
-* A: Check the pipeline log, it usually logs anything and everything regarding issues with the build process, there's also a high chance that a duplicate MMHook assembly (such as AssemblyCSharp mmhook) i9s causing issues, if this is the case, go into HookGenPatcher's plugins folder and delete MMHOOK_AssemblyCSharp.dll
+* A: Check the pipeline log, it usually logs anything and everything regarding issues with the build process, there's also a high chance that a duplicate MMHook assembly (such as AssemblyCSharp mmhook) is causing issues. If this is the case, go into HookGenPatcher's plugins folder and delete MMHOOK_AssemblyCSharp.dll

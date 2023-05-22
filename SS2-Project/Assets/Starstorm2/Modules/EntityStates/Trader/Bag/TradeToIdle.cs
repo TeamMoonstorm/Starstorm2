@@ -64,17 +64,14 @@ namespace EntityStates.Trader.Bag
                     //spawn red
                     ItemIndex[] tier3Items = ItemCatalog.tier3ItemList.ToArray();
                     ItemIndex randomItem = tier3Items[UnityEngine.Random.Range(0, tier3Items.Length)];
-                    if (randomItem == RoR2Content.Items.ScrapRed.itemIndex)
-                        randomItem += 1;
                     zanPickup = PickupCatalog.FindPickupIndex(randomItem);
+
                 }
                 else if (playerValue >= uncommonThreshold)
                 {
                     //spawn green
                     ItemIndex[] tier2Items = ItemCatalog.tier2ItemList.ToArray();
                     ItemIndex randomItem = tier2Items[UnityEngine.Random.Range(0, tier2Items.Length)];
-                    if (randomItem == RoR2Content.Items.ScrapGreen.itemIndex)
-                        randomItem += 1;
                     zanPickup = PickupCatalog.FindPickupIndex(randomItem);
                 }
                 else if (playerValue >= commonThreshold)
@@ -82,15 +79,25 @@ namespace EntityStates.Trader.Bag
                     //spawn white
                     ItemIndex[] tier1Items = ItemCatalog.tier1ItemList.ToArray();
                     ItemIndex randomItem = tier1Items[UnityEngine.Random.Range(0, tier1Items.Length)];
-                    if (randomItem == RoR2Content.Items.ScrapWhite.itemIndex)
-                        randomItem += 1;
                     zanPickup = PickupCatalog.FindPickupIndex(randomItem);
                 }
-                else
+
+                if (playerValue < commonThreshold)
                 {
                     //spawn scrap
                     zanPickup = PickupCatalog.FindPickupIndex(RoR2Content.Items.ScrapWhite.itemIndex);
                 }
+                else
+                {
+                    if (zanPickup == PickupCatalog.FindPickupIndex(RoR2Content.Items.ScrapWhite.itemIndex))
+                        zanPickup = PickupCatalog.FindPickupIndex(RoR2Content.Items.Syringe.itemIndex);
+                    if (zanPickup == PickupCatalog.FindPickupIndex(RoR2Content.Items.ScrapGreen.itemIndex))
+                        zanPickup = PickupCatalog.FindPickupIndex(RoR2Content.Items.Feather.itemIndex);
+                    if (zanPickup == PickupCatalog.FindPickupIndex(RoR2Content.Items.ScrapRed.itemIndex))
+                        zanPickup = PickupCatalog.FindPickupIndex(RoR2Content.Items.ExtraLife.itemIndex);
+                }
+
+                
 
                 //filter out unobtainables
                 if (!Run.instance.IsItemAvailable(zanPickup.itemIndex))

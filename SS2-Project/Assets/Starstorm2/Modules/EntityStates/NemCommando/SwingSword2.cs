@@ -13,27 +13,22 @@ namespace EntityStates.NemCommando
     //★ idk what's going on but i don't think i broke nor fixed whatever you did
     class SwingSword2 : BasicMeleeAttack, SteppedSkillDef.IStepSetter
     {
-        public static float swingTimeCoefficient = 1f;
+        public static float swingTimeCoefficient = 1.71f;
         [TokenModifier("SS2_NEMMANDO_PRIMARY_BLADE_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
         public static float TokenModifier_dmgCoefficient => new SwingSword2().damageCoefficient;
         public int swingSide;
         private string skinNameToken;
-        private bool hasPlayedVFX = false;
-        private bool shouldExit = false;
-
-        //bad. nasty. bad.
 
         public override void OnEnter()
         {
-            base.OnEnter();
-
-            animator = GetModelAnimator();
-
-            shouldExit = false;
-
             skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
 
-            if (skinNameToken != "SS2_SKIN_NEMCOMMANDO_DEFAULT")
+            //red default
+            swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffect", SS2Bundle.NemCommando);
+            hitEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemmandoImpactSlashEffect", SS2Bundle.NemCommando);
+
+            //overrides
+            if (skinNameToken != "SS2_SKIN_NEMCOMMANDO_DEFAULT" && skinNameToken != "SS2_SKIN_NEMCOMMANDO_GRANDMASTERY")
             {
                 //Yellow
                 if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
@@ -48,34 +43,16 @@ namespace EntityStates.NemCommando
                     hitEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoImpactSlashEffectBlue", SS2Bundle.NemCommando);
                 }
             }
-            //Red
-            else
-            {
-                swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffect", SS2Bundle.NemCommando);
-                hitEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemmandoImpactSlashEffect", SS2Bundle.NemCommando);
-            }
-        }
 
-        public override void OnExit()
-        {
-            base.OnExit();
-            //string animationStateNameEnd = (swingSide == 0) ? "endPrimary1Tree" : "endPrimary2Tree";
+            base.OnEnter();
 
-            //if (!animator.GetBool("isRolling") && shouldExit) 
-                //PlayCrossfade("Gesture, Override", animationStateNameEnd, "Primary.playbackRate", duration * swingTimeCoefficient, 0.3f);
-            
+            animator = GetModelAnimator();
         }
 
         public override void PlayAnimation()
         {
-            string animationStateName = (swingSide == 0) ? "Primary1Tree" : "Primary2Tree";
-
-            if (!animator.GetBool("isRolling"))
-            {
-                PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.3f);
-                //shouldExit = true;
-            }
-                
+            string animationStateName = (swingSide == 0) ? "Primary1TreeNew" : "Primary2TreeNew";
+            PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.05f);   
         }
 
         void SteppedSkillDef.IStepSetter.SetStep(int i)
@@ -84,35 +61,20 @@ namespace EntityStates.NemCommando
             swingEffectMuzzleString = (swingSide == 0) ? "SwingLeft" : "SwingRight";
         }
 
-        public override void FixedUpdate()
-        {
-            base.FixedUpdate();
-
-            if (characterBody.attackSpeed >= 1.45f && fixedAge >= 0.1 && !hasPlayedVFX && !animator.GetBool("isRolling")) //bad
-            {
-                hasPlayedVFX = true;
-                BeginMeleeAttackEffect();
-            }
-        }
-
         public override void OnSerialize(NetworkWriter writer)
         {
-            if (animator.GetBool("isRolling"))
-                return;
             base.OnSerialize(writer);
             writer.Write((byte)swingSide);
         }
         public override void OnDeserialize(NetworkReader reader)
         {
-            if (animator.GetBool("isRolling"))
-                return;
             base.OnDeserialize(reader);
             swingSide = (int)reader.ReadByte();
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.PrioritySkill;
+            return InterruptPriority.Skill;
         }
 
         public override void AuthorityModifyOverlapAttack(OverlapAttack overlapAttack)
