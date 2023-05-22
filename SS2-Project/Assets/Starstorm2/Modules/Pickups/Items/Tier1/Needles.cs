@@ -50,7 +50,7 @@ namespace Moonstorm.Starstorm2.Items
         //[TokenModifier(token, StatTypes.Default, 4)]
         //public static float needleBuffDuration = 2f;
 
-        [ConfigurableField(ConfigDesc = "Amount of bonus critical chance per applied per stack. (1 = 1%")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of bonus critical chance per applied per stack. (1 = 1%")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float bonusCrit = 1;
 

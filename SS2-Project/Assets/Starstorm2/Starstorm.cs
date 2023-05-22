@@ -23,9 +23,9 @@ namespace Moonstorm.Starstorm2
     [BepInPlugin(guid, modName, version)]
     public class Starstorm : BaseUnityPlugin
     {
-        internal const string guid = "com.TeamMoonstorm.Starstorm2-Nightly";
-        internal const string modName = "Starstorm 2 Nightly";
-        internal const string version = "0.3.50";
+        internal const string guid = "com.TeamMoonstorm.Starstorm2";
+        internal const string modName = "Starstorm 2";
+        internal const string version = "0.4.0";
 
         public static Starstorm instance;
         public static PluginInfo pluginInfo;
@@ -54,6 +54,9 @@ namespace Moonstorm.Starstorm2
             new SS2Content().Init();
             new SS2Language().Init();
             ConfigurableFieldManager.AddMod(this);
+
+            //we do a little testing
+            //On.RoR2.Networking.NetworkManagerSystemSteam.OnClientConnect += (s, u, t) => { };
 
             //N: i have no idea if SystemInitializer would be too late for this, so it stays here for now.
             R2API.Networking.NetworkingAPI.RegisterMessageType<ScriptableObjects.NemesisSpawnCard.SyncBaseStats>();

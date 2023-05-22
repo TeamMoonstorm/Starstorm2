@@ -51,7 +51,7 @@ namespace EntityStates.Nemmando
 
                 skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
 
-                if (skinNameToken != "SS2_SKIN_NEMCOMMANDO_DEFAULT")
+                if (skinNameToken != "SS2_SKIN_NEMCOMMANDO_DEFAULT" && skinNameToken != "SS2_SKIN_NEMCOMMANDO_GRANDMASTERY")
                 {
                     //Yellow
                     if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")

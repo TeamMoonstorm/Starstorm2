@@ -950,6 +950,36 @@ Transform:
   m_Father: {fileID: 2632678017071204898}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2337722525615073966
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8471533336831465851}
+  m_Layer: 17
+  m_Name: jetL
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8471533336831465851
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2337722525615073966}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
+  m_LocalPosition: {x: -0.695, y: 1.737, z: -1.573}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8779483653839406487}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!1 &2343514438879688882
 GameObject:
   m_ObjectHideFlags: 0
@@ -6062,6 +6092,36 @@ Transform:
   m_Father: {fileID: 1926031661390834617}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2770041351435752916
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4607181606846749189}
+  m_Layer: 17
+  m_Name: jetR
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4607181606846749189
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2770041351435752916}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
+  m_LocalPosition: {x: 0.695, y: 1.737, z: -1.573}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8779483653839406487}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!1 &2994780603649129262
 GameObject:
   m_ObjectHideFlags: 0
@@ -6284,6 +6344,8 @@ Transform:
   - {fileID: 6049559598644252604}
   - {fileID: 3329042129180698608}
   - {fileID: 8710567179660177545}
+  - {fileID: 8471533336831465851}
+  - {fileID: 4607181606846749189}
   m_Father: {fileID: 5648892938309157758}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8695,6 +8757,10 @@ MonoBehaviour:
     transform: {fileID: 272616493475341264}
   - name: SwordChargeEffect
     transform: {fileID: 4826375943860323246}
+  - name: JetL
+    transform: {fileID: 8471533336831465851}
+  - name: JetR
+    transform: {fileID: 4607181606846749189}
 --- !u!114 &2655730857014373108
 MonoBehaviour:
   m_ObjectHideFlags: 0

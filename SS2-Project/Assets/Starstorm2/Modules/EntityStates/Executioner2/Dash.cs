@@ -4,6 +4,8 @@ using RoR2;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Networking;
+using UnityEngine.AddressableAssets;
 
 namespace EntityStates.Executioner2
 {
@@ -24,9 +26,12 @@ namespace EntityStates.Executioner2
         private Animator animator;
 
         public static GameObject dashEffect;
+        public static GameObject dashEffectMastery;
+        public static Material dashMasteryMaterial;
         public static string ExhaustL;
         public static string ExhaustR;
 
+        private string skinNameToken;
 
         public override void OnEnter()
         {
@@ -46,23 +51,52 @@ namespace EntityStates.Executioner2
             fearSearch.radius = debuffRadius;
 
             //create dash aoe
-            if (isAuthority)
+            if (NetworkServer.active)
             {
                 CreateFearAoe();
             }
 
-            EffectManager.SimpleMuzzleFlash(dashEffect, gameObject, ExhaustL, false);
-            EffectManager.SimpleMuzzleFlash(dashEffect, gameObject, ExhaustR, false);
+            skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
+
+            if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
+            {
+                EffectManager.SimpleMuzzleFlash(dashEffectMastery, gameObject, ExhaustL, false);
+                EffectManager.SimpleMuzzleFlash(dashEffectMastery, gameObject, ExhaustR, false);
+            }
+            else
+            {
+                EffectManager.SimpleMuzzleFlash(dashEffect, gameObject, ExhaustL, false);
+                EffectManager.SimpleMuzzleFlash(dashEffect, gameObject, ExhaustR, false);
+            }
 
             Transform modelTransform = GetModelTransform();
             if (modelTransform)
             {
                 TemporaryOverlay temporaryOverlay = modelTransform.gameObject.AddComponent<TemporaryOverlay>();
-                temporaryOverlay.duration = 1.5f * baseDuration;
+                // yknow i probably should have done !skinNameToken so its easier to understand but this works and i dont wanna change it so idk - b
+                if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
+                {
+                    temporaryOverlay.duration = 1.3f * baseDuration; // doing this because otherwise it just makes him flash white ??? i still have no idea why this doesnt happen with the huntress one bc the settings are the same :((( -b
+                }
+                else
+                {
+                    temporaryOverlay.duration = 1.5f * baseDuration;
+                }
+
                 temporaryOverlay.animateShaderAlpha = true;
                 temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 0.5f, 1f, 0f);
                 temporaryOverlay.destroyComponentOnEnd = true;
-                temporaryOverlay.originalMaterial = Resources.Load<Material>("Materials/matHuntressFlashBright");
+
+
+                if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
+                {
+                    temporaryOverlay.originalMaterial = dashMasteryMaterial;
+                }
+                else
+                {
+                    temporaryOverlay.originalMaterial = Addressables.LoadAssetAsync<Material>("RoR2/Base/Huntress/matHuntressFlashBright.mat").WaitForCompletion();
+                }
+
                 temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
             }
         }
@@ -85,7 +119,7 @@ namespace EntityStates.Executioner2
                     if (ssoh)
                     {
                         Type state = ssoh.targetStateMachine.state.GetType();
-                        if (state != typeof(EntityStates.StunState) && state != typeof(EntityStates.ShockState) && state != typeof(EntityStates.FrozenState))
+                        if (state != typeof(StunState) && state != typeof(ShockState) && state != typeof(FrozenState))
                         {
                             ssoh.SetStun(-1f);
                         }
@@ -114,7 +148,7 @@ namespace EntityStates.Executioner2
             if (characterDirection && characterMotor)
                 characterMotor.rootMotion += characterDirection.forward * characterBody.moveSpeed * speedMultiplier * Time.fixedDeltaTime;
 
-            if (isAuthority)
+            if (NetworkServer.active)
             {
                 debuffCheckStopwatch += Time.fixedDeltaTime;
                 if (debuffCheckStopwatch >= debuffCheckInterval)

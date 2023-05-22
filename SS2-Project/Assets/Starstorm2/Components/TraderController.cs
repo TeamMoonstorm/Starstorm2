@@ -17,6 +17,7 @@ namespace Moonstorm.Starstorm2.Components
         public EntityStateMachine esm;
         public ModelLocator modelLocator;
         public ChildLocator childLocator;
+        public static GameObject menuPrefab;
         public PickupPickerController pickupPickerController;
         private Interactor interactor;
 
@@ -25,25 +26,25 @@ namespace Moonstorm.Starstorm2.Components
         public float rareValue = 0.62f;
         public float lunarValue = 0.45f;
 
-        private ItemDef favoriteItem;
+        public ItemDef favoriteItem;
         private LanguageTextMeshController ltmcPrice;
 
-        public Dictionary<ItemDef, float> itemValues = new Dictionary<ItemDef, float>();
-        //private Dictionary<ItemDef, Sprite> itemSprites = new Dictionary<ItemDef, Sprite>(); //this is the stupidest thing ever.
-        private Dictionary<Sprite, ItemDef> reversedItemSprites = new Dictionary<Sprite, ItemDef>();
+        private GameObject priceLabel;
 
-       // private static GameObject menu = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Scrapper/ScrapperPickerPanel.prefab").WaitForCompletion();
+        public Dictionary<ItemDef, float> itemValues = new Dictionary<ItemDef, float>();
+        public Dictionary<Sprite, ItemDef> itemSprites = new Dictionary<Sprite, ItemDef>(); //stupid solution
+
+        internal static void Initialize()
+        {
+            menuPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Scrapper/ScrapperPickerPanel.prefab").WaitForCompletion();
+            ModifyMenu(menuPrefab);
+        }
+
+        // private static GameObject menu = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Scrapper/ScrapperPickerPanel.prefab").WaitForCompletion();
         void Start()
         {
             modelLocator = GetComponent<ModelLocator>();
             childLocator = modelLocator.modelTransform.GetComponent<ChildLocator>();
-
-            //Modify pickup controller; deprecate once something custom is made in project.
-            if (pickupPickerController)
-            {
-                pickupPickerController.panelPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Scrapper/ScrapperPickerPanel.prefab").WaitForCompletion();
-                ModifyMenu(pickupPickerController.panelPrefab);
-            }
 
             //Assign a favorite item.
             favoriteItem = FindFavorite();
@@ -51,6 +52,7 @@ namespace Moonstorm.Starstorm2.Components
             //Give every item a value.
             if (NetworkServer.active)
             {
+                Debug.Log("yep");
                 foreach (ItemDef item in ItemCatalog.allItemDefs)
                 {
                     if (Run.instance.IsItemAvailable(item.itemIndex))
@@ -60,50 +62,82 @@ namespace Moonstorm.Starstorm2.Components
                         Debug.Log("Value for " + item.nameToken + " is " + itemValues[item]);
                         if (item == favoriteItem)
                             Debug.Log("I ABSOLUTELY FUCKING LOVE " + item.nameToken + " BTW");
-                        reversedItemSprites[item.pickupIconSprite] = item; //jesus.
-                        //Debug.Log("item: " + reversedItemSprites[item.pickupIconSprite]);
+                        itemSprites[item.pickupIconSprite] = item; //fuck it we ball.
                     }
                 }
             }
+
+            //Modify pickup controller; deprecate once something custom is made in project.
+            if (pickupPickerController)
+            {
+                pickupPickerController.panelPrefab = menuPrefab;
+
+                Transform panel = pickupPickerController.panelPrefab.transform.Find("MainPanel");
+                Transform juice = panel.Find("Juice");
+                Transform label = juice.Find("Label");
+
+                GameObject priceLabel = Instantiate(label.gameObject);
+                priceLabel.AddComponent<FavoriteTooltipManager>();
+                RectTransform priceLabelRect = priceLabel.GetComponent<RectTransform>();
+                priceLabelRect.SetPositionAndRotation(new Vector3(priceLabelRect.localPosition.x, priceLabelRect.localPosition.y - 45, priceLabelRect.localPosition.z), priceLabelRect.rotation);
+
+                /*if (label.Find("Label(Clone") == null)
+                {
+                    priceLabel = Instantiate(label.gameObject);
+                    priceLabel.transform.SetParent(label);
+                }
+                else
+                    Debug.Log("pricelabel null, returning"); return;
+                
+                //ltmcPrice = priceLabel.GetComponent<LanguageTextMeshController>();
+
+                //Set 'favorite item' label
+                if (ltmcPrice != null)
+                {
+                    string combinedString = string.Format("{0}{1}{2}", Language.GetStringFormatted("SS2_TRADER_WANT_TEXT"), Language.GetStringFormatted(favoriteItem.nameToken), Language.GetStringFormatted("SS2_TRADER_WANT2_TEXT"));
+                    ltmcPrice.token = combinedString;
+                }
+                else
+                    Debug.Log("ltmc2 null");*/
+            }
+
+            Debug.Log("hi");
         }
 
         public ItemDef GetItemThroughSprite(Sprite sprite)
         {
-            return reversedItemSprites[sprite];
+            return itemSprites[sprite];
         }
 
-        private GameObject ModifyMenu(GameObject menuPrefab)
+        public static GameObject ModifyMenu(GameObject menuPrefab)
         {
+            Debug.Log("MAKING MENU");
+            //Pull some elements of the menu for easy reference
             Transform panel = menuPrefab.transform.Find("MainPanel");
             Transform juice = panel.Find("Juice");
             Transform label = juice.Find("Label");
             LanguageTextMeshController ltmc = label.GetComponent<LanguageTextMeshController>();
 
+            //Set trader info label
             if (ltmc != null)
                 ltmc.token = "SS2_TRADER_POPUP_TEXT";
             else
                 Debug.Log("ltmc null");
 
+            //Create the 'favorite item' label
             GameObject priceLabel = Instantiate(label.gameObject);
             priceLabel.transform.SetParent(label);
-
+            priceLabel.AddComponent<FavoriteTooltipManager>();
             RectTransform priceLabelRect = priceLabel.GetComponent<RectTransform>();
-            priceLabelRect.SetPositionAndRotation(new Vector3(priceLabelRect.localPosition.x, priceLabelRect.localPosition.y - 45, priceLabelRect.localPosition.z), priceLabel.transform.rotation);
-            ltmcPrice = priceLabel.GetComponent<LanguageTextMeshController>();
+            priceLabelRect.SetPositionAndRotation(new Vector3(priceLabelRect.localPosition.x, priceLabelRect.localPosition.y - 45, priceLabelRect.localPosition.z), priceLabelRect.rotation);
 
-            if (ltmcPrice != null)
-                ltmcPrice.token = "PRICE:";
-            else
-                Debug.Log("ltmc2 null");
-
+            //Add tooltips to every item
             Transform iconContainer = juice.Find("IconContainer");
             Transform pickupTemplate = iconContainer.Find("PickupButtonTemplate");
             TooltipProvider tooltipProvider = pickupTemplate.gameObject.AddComponent<TooltipProvider>();
             PriceTooltipManager priceTooltipManager = pickupTemplate.gameObject.AddComponent<PriceTooltipManager>();
 
-            //tooltipProvider.titleColor = pickupTemplate.GetComponent<pickup>
-            //tooltipProvider.titleToken = ItemCatalog.get
-
+            Debug.Log("MADE MENU");
             return menuPrefab;
         }
 
@@ -135,7 +169,7 @@ namespace Moonstorm.Starstorm2.Components
                 case ItemTier.Boss:
                 case ItemTier.VoidTier3:
                 case ItemTier.VoidBoss:
-                    value = UnityEngine.Random.Range(rareValue * 0.7f, rareValue * 1.3f);
+                    value = UnityEngine.Random.Range(rareValue * 0.9f, rareValue * 1.3f);
                     break;
 
                 //lunar:
@@ -146,12 +180,12 @@ namespace Moonstorm.Starstorm2.Components
                 //uncommon and void equivalent:
                 case ItemTier.Tier2:
                 case ItemTier.VoidTier2:
-                    value = UnityEngine.Random.Range(uncommonValue * 0.7f, uncommonValue * 1.3f);
+                    value = UnityEngine.Random.Range(uncommonValue * 0.7f, uncommonValue * 1.5f);
                     break;
 
                 //common and void equivalent:
                 default:
-                    value = UnityEngine.Random.Range(commonValue * 0.7f, commonValue * 1.3f);
+                    value = UnityEngine.Random.Range(commonValue * 0.7f, commonValue * 1.45f);
                     if ((itemDef.tier != ItemTier.Tier1) && (itemDef.tier != ItemTier.VoidTier1)) //bonus for mystery items
                         value += 0.65f; //now how'd you manage that...?
                     break;
