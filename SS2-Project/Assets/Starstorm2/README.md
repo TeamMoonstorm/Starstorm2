@@ -75,6 +75,7 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Relic of Termination now has a blacklist for enemies that are not fit for being marked (specific bosses, destructible props, etc), and can no longer mark Cognation ghosts.
     * Reduced the brightness of Jet Boot's visual effect.
     * Item displays have proper ditheirng.
+    * Item icons are properly sized when scrapping.
 * Artifacts
     * Cognation's icon now better matches with vanilla artifact icons.
     * Cognation's unlock code now works, and the artifact properly spawns ghosts. Cognation ghosts now have the "Cognate" prefix.

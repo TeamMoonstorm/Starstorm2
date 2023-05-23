@@ -4,6 +4,7 @@ using UnityEngine;
 using Moonstorm;
 using RoR2;
 using UnityEngine.AddressableAssets;
+using Moonstorm.Starstorm2;
 
 namespace EntityStates.NemCommando
 {
@@ -43,6 +44,9 @@ namespace EntityStates.NemCommando
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+
+            //SS2Log.Info("Oooooooohhhhh");
+
             if (animator.GetFloat("ejectMag") >= 0.1 && !hasEjectedMag)
             {
                 hasEjectedMag = true;

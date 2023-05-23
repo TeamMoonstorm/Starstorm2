@@ -137,7 +137,8 @@ MonoBehaviour:
   desiredSpawnNodeGraphType: 0
   stateMachine: {fileID: 114034268301629480}
   scanState:
-    _typeName: 
+    _typeName: EntityStates.AI.Walker.Wander, RoR2, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   isHealer: 0
   enemyAttention: 0
   aimVectorDampTime: 0.2
@@ -158,9 +159,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customName: AI
   initialStateType:
-    _typeName: 
+    _typeName: EntityStates.AI.Walker.Wander, RoR2, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   mainStateType:
-    _typeName: 
+    _typeName: EntityStates.AI.Walker.Wander, RoR2, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &114269107184689812
 MonoBehaviour:
   m_ObjectHideFlags: 0

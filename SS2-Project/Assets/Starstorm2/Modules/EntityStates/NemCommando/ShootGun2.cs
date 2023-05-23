@@ -1,4 +1,5 @@
 ﻿using Moonstorm;
+using Moonstorm.Starstorm2;
 using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -68,8 +69,15 @@ namespace EntityStates.NemCommando
         public override void OnExit()
         {
             base.OnExit();
-
-            float rechargeTime = Mathf.Clamp(skillLocator.secondary.finalRechargeInterval, 0.25f, Mathf.Infinity);
+            //SS2Log.Info("Ahhhh");
+            //if(skillLocator.secondary.stock != skillLocator.secondary.maxStock)
+            //{
+            //    ReloadGun nextState = new ReloadGun();
+            //    outer.SetNextState(nextState);
+            //}
+            //ReloadGun nextState = new ReloadGun();
+            //outer.SetNextState(nextState);
+            //float rechargeTime = Mathf.Clamp(skillLocator.secondary.finalRechargeInterval, 0.25f, Mathf.Infinity);
         }
 
         
@@ -144,6 +152,8 @@ namespace EntityStates.NemCommando
             
             base.FixedUpdate();
 
+            //SS2Log.Info("Aaahh");
+
             if (fixedAge >= fireTime)
             {
                 Fire();
@@ -157,8 +167,13 @@ namespace EntityStates.NemCommando
                     skillLocator.secondary.stock -= 1;
                     return;
                 }
-                outer.SetNextStateToMain();
-                return;
+                if(fixedAge >= 1.5f * duration)
+                {
+                    outer.SetNextState(new ReloadGun());
+                    //return;
+                }
+                //outer.SetNextStateToMain();
+                //return;
             }
         }
 
