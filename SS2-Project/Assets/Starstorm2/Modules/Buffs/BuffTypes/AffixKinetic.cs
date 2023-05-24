@@ -17,13 +17,13 @@ namespace Moonstorm.Starstorm2.Buffs
             [BuffDefAssociation]
             public static BuffDef GetBuffDef() => SS2Content.Buffs.bdEliteKinetic;
             public static GameObject pulsePrefab = SS2Assets.LoadAsset<GameObject>("VoidElitePulse", SS2Bundle.Indev);
-
+            public static GameObject auraPrefab = SS2Assets.LoadAsset<GameObject>("KineticAOEIndicator", SS2Bundle.Indev);
             //Prefab info:
             //Final radius: 10, Duration 1.0
             //Destroy On Timer: 3 Seconds
             //Has Shaker Emiter
             private bool alreadyIn = false;
-
+            private bool hasMadeAura = false;
             private SphereSearch sphereSearch;
 
             private void FixedUpdate()
@@ -40,6 +40,12 @@ namespace Moonstorm.Starstorm2.Buffs
                 else if (body.outOfCombat && alreadyIn)
                 {
                     alreadyIn = false;
+                }
+                if (!hasMadeAura)
+                {
+                    GameObject tempAuraPrefab = UnityEngine.Object.Instantiate<GameObject>(auraPrefab, body.corePosition, Quaternion.identity);
+                    tempAuraPrefab.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(body.gameObject, null);
+                    hasMadeAura = true;
                 }
             }
 
