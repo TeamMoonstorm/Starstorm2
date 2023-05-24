@@ -63,6 +63,7 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Reworked Coffee Bag: "Using interactables increases movement speed by 21% and attack speed by 22.5% for up to 15 (+15 per stack) seconds."
     * Reworked Pressurized Cannister: "Grants an upward boost upon activating, and grants a temporary additional jump until landing."
     * Adjusted Detritive Trematode - The debuff no longer expires, but the low health threshold was lowered to 25% for consistency with other "low health" items.
+    * Adjusted Droid Head - Spawned drones are now more aggressive and should be less likely to spawn clipping into the ground.
     * Adjusted MIDAS - When given to an equipment drone, the drone now splits the gold it would recieve amongst all players.
     * Adjusted Greater Warbanner - No longer directly gives CDR, but instead makes cooldowns tick faster.
     * Greater Warbanner's buff now has a visual on the player, like Warbanner.
