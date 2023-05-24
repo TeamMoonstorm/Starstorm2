@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: EntityStates.NemHuntress.ChargeBurstArrow
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.NemHuntress.ChargeBurstArrow, Starstorm2,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: baseChargeDuration
+      fieldValue:
+        stringValue: 2.1
+        objectValue: {fileID: 0}
+    - fieldName: maxEmission
+      fieldValue:
+        stringValue: 10
+        objectValue: {fileID: 0}
+    - fieldName: minEmission
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: lightningEffect
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 6244720766972569001, guid: 7168fab5696bbb849a27afee56adc320,
+          type: 3}
