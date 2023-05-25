@@ -6,7 +6,7 @@ namespace Moonstorm.Starstorm2.Buffs
 {
     public sealed class ExeMuteCharge : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdExeMuteCharge", SS2Bundle.Indev);
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdExeMuteCharge", SS2Bundle.Executioner2);
 
     }
 }

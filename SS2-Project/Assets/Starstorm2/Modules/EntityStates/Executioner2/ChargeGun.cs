@@ -19,9 +19,9 @@ namespace EntityStates.Executioner2
         public static float timeBetweenStocks = 1.2f;
 
         [HideInInspector]
-        public static GameObject plumeEffect = SS2Assets.LoadAsset<GameObject>("exePlume", SS2Bundle.Indev);
+        public static GameObject plumeEffect = SS2Assets.LoadAsset<GameObject>("exePlume", SS2Bundle.Executioner2);
         [HideInInspector]
-        public static GameObject plumeEffectLarge = SS2Assets.LoadAsset<GameObject>("exePlumeBig", SS2Bundle.Indev);
+        public static GameObject plumeEffectLarge = SS2Assets.LoadAsset<GameObject>("exePlumeBig", SS2Bundle.Executioner2);
         public static GameObject defaultPlume;
         public static GameObject defaultPlumeLarge;
         //public static GameObject masteryPlume;
@@ -205,14 +205,14 @@ namespace EntityStates.Executioner2
                 if (characterBody.skillLocator.secondary.stock < characterBody.skillLocator.secondary.maxStock)
                 {
                     Util.PlaySound("ExecutionerGainCharge", gameObject);
-                    EffectManager.SimpleMuzzleFlash(plumeEffect, gameObject, "ExhaustL", false);
-                    EffectManager.SimpleMuzzleFlash(plumeEffect, gameObject, "ExhaustR", false);
+                    EffectManager.SimpleMuzzleFlash(plumeEffect, gameObject, "ExhaustL", true);
+                    EffectManager.SimpleMuzzleFlash(plumeEffect, gameObject, "ExhaustR", true);
                 }
                 if (characterBody.skillLocator.secondary.stock >= characterBody.skillLocator.secondary.maxStock)
                 {
                     Util.PlaySound("ExecutionerMaxCharge", gameObject);
-                    EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustL", false);
-                    EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustR", false);
+                    EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustL", true);
+                    EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustR", true);
                     EffectManager.SimpleEffect(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/LightningFlash.prefab").WaitForCompletion(), characterBody.corePosition, Quaternion.identity, false);
                 }
 

@@ -9,8 +9,8 @@ namespace Moonstorm.Starstorm2.Buffs
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffExecutionerSuperCharged", SS2Bundle.Executioner);
 
-        public static GameObject plumeEffect = SS2Assets.LoadAsset<GameObject>("exePlume", SS2Bundle.Indev);
-        public static GameObject plumeEffectLarge = SS2Assets.LoadAsset<GameObject>("exePlumeBig", SS2Bundle.Indev);
+        public static GameObject plumeEffect = SS2Assets.LoadAsset<GameObject>("exePlume", SS2Bundle.Executioner2);
+        public static GameObject plumeEffectLarge = SS2Assets.LoadAsset<GameObject>("exePlumeBig", SS2Bundle.Executioner2);
 
         public sealed class Behavior : BaseBuffBodyBehavior
         {
@@ -34,14 +34,14 @@ namespace Moonstorm.Starstorm2.Buffs
                     if (body.skillLocator.secondary.stock < body.skillLocator.secondary.maxStock)
                     {
                         Util.PlaySound("ExecutionerGainCharge", gameObject);
-                        EffectManager.SimpleMuzzleFlash(plumeEffect, gameObject, "ExhaustL", false);
-                        EffectManager.SimpleMuzzleFlash(plumeEffect, gameObject, "ExhaustR", false);
+                        EffectManager.SimpleMuzzleFlash(plumeEffect, gameObject, "ExhaustL", true);
+                        EffectManager.SimpleMuzzleFlash(plumeEffect, gameObject, "ExhaustR", true);
                     }
                     if (body.skillLocator.secondary.stock >= body.skillLocator.secondary.maxStock)
                     {
                         Util.PlaySound("ExecutionerMaxCharge", gameObject);
-                        EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustL", false);
-                        EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustR", false);
+                        EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustL", true);
+                        EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustR", true);
                         EffectManager.SimpleEffect(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/LightningFlash.prefab").WaitForCompletion(), body.corePosition, Quaternion.identity, false);
                     }
 

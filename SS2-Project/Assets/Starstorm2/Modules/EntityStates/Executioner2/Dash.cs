@@ -60,13 +60,13 @@ namespace EntityStates.Executioner2
 
             if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
             {
-                EffectManager.SimpleMuzzleFlash(dashEffectMastery, gameObject, ExhaustL, false);
-                EffectManager.SimpleMuzzleFlash(dashEffectMastery, gameObject, ExhaustR, false);
+                EffectManager.SimpleMuzzleFlash(dashEffectMastery, gameObject, ExhaustL, true);
+                EffectManager.SimpleMuzzleFlash(dashEffectMastery, gameObject, ExhaustR, true);
             }
             else
             {
-                EffectManager.SimpleMuzzleFlash(dashEffect, gameObject, ExhaustL, false);
-                EffectManager.SimpleMuzzleFlash(dashEffect, gameObject, ExhaustR, false);
+                EffectManager.SimpleMuzzleFlash(dashEffect, gameObject, ExhaustL, true);
+                EffectManager.SimpleMuzzleFlash(dashEffect, gameObject, ExhaustR, true);
             }
 
             Transform modelTransform = GetModelTransform();
@@ -171,7 +171,7 @@ namespace EntityStates.Executioner2
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.PrioritySkill;
+            return InterruptPriority.Frozen;
         }
     }
 }

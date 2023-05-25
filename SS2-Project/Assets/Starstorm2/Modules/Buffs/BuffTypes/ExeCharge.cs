@@ -8,10 +8,10 @@ namespace Moonstorm.Starstorm2.Buffs
 {
     public sealed class ExeCharge : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdExeCharge", SS2Bundle.Indev);
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdExeCharge", SS2Bundle.Executioner2);
 
-        public static GameObject plumeEffect = SS2Assets.LoadAsset<GameObject>("exePlume", SS2Bundle.Indev);
-        public static GameObject plumeEffectLarge = SS2Assets.LoadAsset<GameObject>("exePlumeBig", SS2Bundle.Indev);
+        public static GameObject plumeEffect = SS2Assets.LoadAsset<GameObject>("exePlume", SS2Bundle.Executioner2);
+        public static GameObject plumeEffectLarge = SS2Assets.LoadAsset<GameObject>("exePlumeBig", SS2Bundle.Executioner2);
 
         public sealed class Behavior : BaseBuffBodyBehavior
         {

@@ -38,7 +38,7 @@ namespace Moonstorm.Starstorm2.Buffs
                 curs.Emit(OpCodes.Ldloc_1);
                 curs.EmitDelegate<Func<EntityStateMachine, AISkillDriver.MovementType, AISkillDriver.MovementType>>((ESM, MoveType) =>
                 {
-                    if (ESM.GetComponent<CharacterMaster>().GetBody().HasBuff(SS2Content.Buffs.BuffFear))
+                    if (ESM.GetComponent<CharacterMaster>().GetBody().HasBuff(SS2Content.Buffs.BuffFear) && !ESM.GetComponent<CharacterMaster>().GetBody().isChampion)
                     {
                         return AISkillDriver.MovementType.FleeMoveTarget;
                     }
@@ -58,7 +58,7 @@ namespace Moonstorm.Starstorm2.Buffs
                 curs.EmitDelegate<Func<bool, EntityStateMachine, bool>>((cond, ESM) =>
                 {
                     if (ESM.GetComponent<CharacterMaster>().GetBody())
-                        if (ESM.GetComponent<CharacterMaster>().GetBody().HasBuff(SS2Content.Buffs.BuffFear))
+                        if (ESM.GetComponent<CharacterMaster>().GetBody().HasBuff(SS2Content.Buffs.BuffFear) && !ESM.GetComponent<CharacterMaster>().GetBody().isChampion)
                             return false;
                     return cond;
                 });

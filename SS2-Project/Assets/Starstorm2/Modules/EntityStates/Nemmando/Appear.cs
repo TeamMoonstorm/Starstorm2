@@ -18,8 +18,6 @@ namespace EntityStates.Nemmando
             //base.characterBody.enabled = true;
             //Lets undo what we did over at Spawn state
             this.characterModel = null;
-            if (isAuthority)
-                characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility);
             if (base.characterBody.modelLocator && base.characterBody.modelLocator.modelTransform)
             {
                 this.characterModel = base.characterBody.modelLocator.modelTransform.GetComponent<CharacterModel>();
