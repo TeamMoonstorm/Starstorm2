@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using R2API;
+using System;
 
 namespace Moonstorm.Starstorm2.Equipments
 {
@@ -33,6 +34,22 @@ namespace Moonstorm.Starstorm2.Equipments
         override public void Initialize()
         {
             CreateVisualEffects();
+            On.RoR2.GenericSkill.RunRecharge += FasterTickrateBannerHook;
+        }
+
+        private void FasterTickrateBannerHook(On.RoR2.GenericSkill.orig_RunRecharge orig, GenericSkill self, float dt)
+        {
+            if (self)
+            {
+                if (self.characterBody)
+                {
+                    if (self.characterBody.HasBuff(SS2Content.Buffs.BuffGreaterBanner))
+                    {
+                        dt *= (1f + (2f * cooldownReduction));
+                    }
+                }
+            }
+            orig(self, dt);
         }
 
         //public override void AddBehavior(ref CharacterBody body, int stack)
@@ -49,7 +66,7 @@ namespace Moonstorm.Starstorm2.Equipments
                 GBToken = slot.characterBody.gameObject.GetComponent<GreaterBannerToken>();
             }
             //To do: make better placement system
-            SS2Log.Info("aimorigin: " + slot.inputBank.aimOrigin + " | direction: " + slot.inputBank.aimDirection);
+            //SS2Log.Info("aimorigin: " + slot.inputBank.aimOrigin + " | direction: " + slot.inputBank.aimDirection);
 
             Vector3 position = slot.inputBank.aimOrigin - (slot.inputBank.aimDirection);
             GameObject bannerObject = UnityEngine.Object.Instantiate(WarbannerObject, position, Quaternion.identity);
@@ -74,7 +91,7 @@ namespace Moonstorm.Starstorm2.Equipments
 
             if (GBToken.ownedBanners.Count > maxGreaterBanners)
             {
-                SS2Log.Debug("Removing oldest Warbanner");
+                //SS2Log.Debug("Removing oldest Warbanner");
                 var oldBanner = GBToken.ownedBanners[0];
                 GBToken.ownedBanners.RemoveAt(0);
                 EffectData effectData = new EffectData

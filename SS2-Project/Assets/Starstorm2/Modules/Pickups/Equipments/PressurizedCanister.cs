@@ -8,8 +8,9 @@ namespace Moonstorm.Starstorm2.Equipments
     {
         public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("PressurizedCanister", SS2Bundle.Equipments);
 
-        [ConfigurableField(SS2Config.IDItem, ConfigName = "No Jump Control", ConfigDesc = "Set to true to disable jump control on Pressurized Canister - activating the equipment will apply constant upward force regardless of whether you hold the jump button. This may lead to Funny and Memorable (tm) moments, especially if you like picking up Gestures of the Drowned.")]
-        public static bool funnyCanister = false;
+        //[ConfigurableField(SS2Config.IDItem, ConfigName = "No Jump Control", ConfigDesc = "Set to true to disable jump control on Pressurized Canister - activating the equipment will apply constant upward force regardless of whether you hold the jump button. This may lead to Funny and Memorable (tm) moments, especially if you like picking up Gestures of the Drowned.")]
+        //public static bool funnyCanister = false;
+
         public override bool FireAction(EquipmentSlot slot)
         {
             var characterMotor = slot.characterBody.characterMotor;
@@ -19,7 +20,7 @@ namespace Moonstorm.Starstorm2.Equipments
                 Debug.Log($"Adding behavior");
                 //if (slot.hasAuthority)
                 {
-                }
+                } //this is so fucking true
                 return true;
             }
             return false;

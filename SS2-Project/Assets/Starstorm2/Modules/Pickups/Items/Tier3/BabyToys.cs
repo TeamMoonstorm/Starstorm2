@@ -20,7 +20,7 @@ namespace Moonstorm.Starstorm2.Items
         private const string descToken = "SS2_ITEM_BABYTOYS_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("BabyToys", SS2Bundle.Items);
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Levels removed per stack")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Levels removed per stack.")]
         [TokenModifier(pickupToken, StatTypes.Default, 0)]
         [TokenModifier(descToken, StatTypes.Default, 0)]
         public static int levelReductionPerStack = 3;
@@ -264,7 +264,7 @@ namespace Moonstorm.Starstorm2.Items
                             {
                                 RectTransform rectTransform = (RectTransform)levelText.targetText.transform;
                                 //Transform transf = new Transform(0)
-                                rectTransform.transform.position += (Vector3.right * 5000); 
+                                rectTransform.transform.position += (Vector3.right * 1); 
                                 rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x - levelTextScaleAdjustment, rectTransform.sizeDelta.y);
                                 adjustedLevelText.Remove(levelText);
                             }
