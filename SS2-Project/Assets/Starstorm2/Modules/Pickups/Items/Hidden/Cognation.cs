@@ -30,7 +30,7 @@ namespace Moonstorm.Starstorm2.Items
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.Cognation;
 
-            private static Material ghostMaterial = SS2Assets.LoadAsset<Material>("matCognation", SS2Bundle.Items);
+            private static Material ghostMaterial = SS2Assets.LoadAsset<Material>("matCognation", SS2Bundle.Artifacts);
 
             private CharacterModel model;
 
@@ -83,7 +83,7 @@ namespace Moonstorm.Starstorm2.Items
                         if (!ghostMaterial)
                         {
                             SS2Log.Info("Shader was null?");
-                            ghostMaterial = SS2Assets.LoadAsset<Material>("matCognation", SS2Bundle.Items);
+                            ghostMaterial = SS2Assets.LoadAsset<Material>("matCognation", SS2Bundle.Artifacts);
                         }
                         mat = ghostMaterial;
                         model.baseRendererInfos[i].defaultMaterial = mat;
