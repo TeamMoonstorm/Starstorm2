@@ -7,13 +7,13 @@ using System;
 
 namespace Moonstorm.Starstorm2.Survivors
 {
+    [DisabledContent]
     public sealed class NemesisHuntress : SurvivorBase
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemHuntress2Body", SS2Bundle.Indev);
-        public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemmandoMonsterMaster", SS2Bundle.Indev);
+        public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemmandoMonsterMaster", SS2Bundle.Nemmando);
         public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("survivorNemHuntress2", SS2Bundle.Indev);
 
-        SurvivorDef huntressDef = RoR2Content.Survivors.Huntress;
         GameObject footstepDust { get; set; } = Resources.Load<GameObject>("Prefabs/GenericFootstepDust");
 
         public override void Initialize()
