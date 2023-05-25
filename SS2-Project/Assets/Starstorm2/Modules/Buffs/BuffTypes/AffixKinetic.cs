@@ -9,7 +9,7 @@ using UnityEngine.Networking;
 
 namespace Moonstorm.Starstorm2.Buffs
 {
-    //[DisabledContent]
+    [DisabledContent]
     public sealed class AffixKinetic : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdEliteKinetic", SS2Bundle.Indev);
