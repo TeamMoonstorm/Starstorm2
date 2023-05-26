@@ -1,6 +1,7 @@
 ﻿using R2API;
 using R2API.Utils;
 using RoR2;
+using UnityEngine;
 
 namespace Moonstorm.Starstorm2
 {
@@ -25,6 +26,24 @@ namespace Moonstorm.Starstorm2
             Run.onRunDestroyGlobal += Run_onRunDestroyGlobal;
         }
 
+        /*public static void CombatDirector_Awake_Test(On.RoR2.CombatDirector.orig_Awake orig, CombatDirector self)
+        {
+            Debug.Log("creditMultiplier = " + self.creditMultiplier);
+            orig(self);
+        }*/
+
+        public static void CombatDirector_Awake(On.RoR2.CombatDirector.orig_Awake orig, CombatDirector self)
+        {
+            if (IncreaseSpawnCap)
+            {
+                self.creditMultiplier = 1.25f;
+                self.expRewardCoefficient = 0.8f;
+                self.goldRewardCoefficient = 0.8f;
+                Debug.Log("creditMultiplier = " + self.creditMultiplier);
+            }
+            orig(self);
+        }
+
         private static void Run_onRunStartGlobal(Run run)
         {
             defMonsterCap = TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit;
@@ -37,8 +56,10 @@ namespace Moonstorm.Starstorm2
                     TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit *= 2;
                     TeamCatalog.GetTeamDef(TeamIndex.Void).softCharacterLimit *= 2;
                     TeamCatalog.GetTeamDef(TeamIndex.Lunar).softCharacterLimit *= 2;
+                    On.RoR2.CombatDirector.Awake += CombatDirector_Awake;
                 }
             }
+            //On.RoR2.CombatDirector.Awake += CombatDirector_Awake_Test;
         }
 
         private static void Run_onRunDestroyGlobal(Run run)
@@ -46,6 +67,9 @@ namespace Moonstorm.Starstorm2
             TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit = defMonsterCap;
             TeamCatalog.GetTeamDef(TeamIndex.Void).softCharacterLimit = defMonsterCap;
             TeamCatalog.GetTeamDef(TeamIndex.Lunar).softCharacterLimit = defMonsterCap;
+            //On.RoR2.CombatDirector.Awake -= CombatDirector_Awake_Test;
+            if (IncreaseSpawnCap)
+                On.RoR2.CombatDirector.Awake -= CombatDirector_Awake;
         }
     }
 }
