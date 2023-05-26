@@ -65,7 +65,7 @@ namespace EntityStates.Events
                     DifficultyIndex difficultyIndex = Run.instance.ruleBook.FindDifficulty();
                     DifficultyDef difficultyDef = DifficultyCatalog.GetDifficultyDef(difficultyIndex);
                     float scalingValue = difficultyDef.scalingValue;
-                    if (difficultyDef.nameToken == "SS2_DIFFICULTY_TYPHOON_NAME" && Typhoon.IncreaseStorm)
+                    if (difficultyDef.nameToken == "SS2_DIFFICULTY_TYPHOON_NAME")
                         scalingValue++; //lol
 
                     float monsterCredit = monsterCreditMultiplier * Run.instance.difficultyCoefficient * scalingValue;

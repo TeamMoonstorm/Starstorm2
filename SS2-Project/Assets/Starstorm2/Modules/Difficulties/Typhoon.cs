@@ -15,9 +15,6 @@ namespace Moonstorm.Starstorm2
         [ConfigurableField(SS2Config.IDMain, ConfigSection = "Typhoon", ConfigName = "Increase Team Limit", ConfigDesc = "Multiplies the Monster, Lunar, and Void Team maximum size by 2 when enabled. May affect performance.")]
         internal static bool IncreaseSpawnCap = true;
 
-        [ConfigurableField(SS2Config.IDMain, ConfigSection = "Typhoon", ConfigName = "Increase Storm", ConfigDesc = "Multiplies Storm Frequency by roughly +28% compared to other difficulties.")]
-        internal static bool IncreaseStorm = true;
-
         internal static void Init()
         {
             TyphoonDef = SS2Assets.LoadAsset<R2API.ScriptableObjects.SerializableDifficultyDef>("Typhoon", SS2Bundle.Base);
@@ -26,20 +23,16 @@ namespace Moonstorm.Starstorm2
             Run.onRunDestroyGlobal += Run_onRunDestroyGlobal;
         }
 
-        /*public static void CombatDirector_Awake_Test(On.RoR2.CombatDirector.orig_Awake orig, CombatDirector self)
-        {
-            Debug.Log("creditMultiplier = " + self.creditMultiplier);
-            orig(self);
-        }*/
-
         public static void CombatDirector_Awake(On.RoR2.CombatDirector.orig_Awake orig, CombatDirector self)
         {
             if (IncreaseSpawnCap)
             {
-                self.creditMultiplier = 1.25f;
-                self.expRewardCoefficient = 0.8f;
-                self.goldRewardCoefficient = 0.8f;
-                Debug.Log("creditMultiplier = " + self.creditMultiplier);
+                self.creditMultiplier *= 1.25f;
+                self.expRewardCoefficient *= 0.8f;
+                self.goldRewardCoefficient *= 0.8f;
+                //Debug.Log("creditMultiplier = " + self.creditMultiplier);
+                //Debug.Log("expRewardCoefficient = " + self.expRewardCoefficient);
+                //Debug.Log("goldRewardCoefficient = " + self.goldRewardCoefficient);
             }
             orig(self);
         }
