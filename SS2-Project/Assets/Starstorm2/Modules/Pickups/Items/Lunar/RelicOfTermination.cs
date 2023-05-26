@@ -203,11 +203,11 @@ namespace Moonstorm.Starstorm2.Items
         private void TerminationSpawnHook(CharacterBody obj)
         {
             //SS2Log.Info("Spawn hook activated");
-            if (!NetworkServer.active)
-            {
-                //SS2Log.Info("TerminationSpawnHook called on Client");
-                return;
-            }
+            //if (!NetworkServer.active)
+            //{
+            //    //SS2Log.Info("TerminationSpawnHook called on Client");
+            //    return;
+            //}
             if (illegalMarks.Contains(obj.bodyIndex) || obj.isPlayerControlled || obj.teamComponent.teamIndex == TeamIndex.Player || obj.teamComponent.teamIndex == TeamIndex.Neutral)
             {
                 //SS2Log.Info("bad mark");
@@ -221,7 +221,7 @@ namespace Moonstorm.Starstorm2.Items
                     return;
                 }
             }
-            int a = 0;
+            //int a = 0;
             //foreach(var player in PlayerCharacterMasterController.instances)
             //{
             //    SS2Log.Info(++a + ": player" + player + " | " + player.name);
@@ -229,7 +229,7 @@ namespace Moonstorm.Starstorm2.Items
             //a = 0;
             foreach (var player in PlayerCharacterMasterController.instances)
             {
-                ++a;
+                //++a;
                 //SS2Log.Info(a + ": player: " + player + " | " + player.transform);
                 if (player)
                 {
@@ -272,6 +272,16 @@ namespace Moonstorm.Starstorm2.Items
                                     holderToken.target = token;
                                     holderToken.body = playerbody;
 
+                                    float timeMult = Mathf.Pow(1 - timeReduction, token.itemCount - 1);
+                                    float compmaxTime = maxTime * timeMult;
+
+                                    //SS2Log.Info("max time: " + compmaxTime);
+                                    token.timeLimit = compmaxTime;
+
+                                    if (!NetworkServer.active)
+                                    {
+                                        return;
+                                    }
                                     //obj.modelLocator.modelTransform.localScale *= scaleMod;
                                     //
                                     //if (obj.isFlying)
@@ -287,7 +297,7 @@ namespace Moonstorm.Starstorm2.Items
                                     //   // obj.characterMotor.
                                     //}
                                     //mdlTransform.localScale *= sizeCoefficient;
-                                    
+
                                     obj.AddBuff(SS2Content.Buffs.BuffTerminationVFX);
 
                                     EffectData effectData = new EffectData
@@ -308,12 +318,6 @@ namespace Moonstorm.Starstorm2.Items
                                     //}
 
                                     //obj.teamComponent.RequestDefaultIndicator(globalMarkEffectTwo);
-
-                                    float timeMult = Mathf.Pow(1 - timeReduction, token.itemCount - 1);
-                                    float compmaxTime = maxTime * timeMult;
-
-                                    //SS2Log.Info("max time: " + compmaxTime);
-                                    token.timeLimit = compmaxTime;
 
                                     for (int i = 0; i < Mathf.Ceil(compmaxTime); i++)
                                     {

@@ -36,8 +36,9 @@ namespace Moonstorm.Starstorm2.Items
                 {
                     if (victim.isElite && victimEquipment != DLC1Content.Equipment.EliteVoidEquipment.equipmentIndex)
                     {              
+                        
                         var droneSummon = new MasterSummon();
-                        droneSummon.position = victim.corePosition;
+                        droneSummon.position = victim.corePosition + (Vector3.up * 3);
                         droneSummon.masterPrefab = masterPrefab;
                         droneSummon.summonerBodyObject = body.gameObject;
                         var droneMaster = droneSummon.Perform();

@@ -3,6 +3,7 @@ using RoR2;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using static Moonstorm.Starstorm2.Items.RelicOfTermination;
 
 public class TerminationMarkerToken : MonoBehaviour
@@ -14,7 +15,7 @@ public class TerminationMarkerToken : MonoBehaviour
     AnimationCurve sizeCurve;
     GameObject ring;
     // Start is called before the first frame update
-    void Start()
+    void Start() 
     {
         
         //sizeCurve = new AnimationCurve();
@@ -23,7 +24,7 @@ public class TerminationMarkerToken : MonoBehaviour
         //        new Keyframe(1, .07f, .07f, .07f),
         //};
         sizeCurve = AnimationCurve.Linear(0, .235f, 1, .066f);
-
+    
         token = this.GetComponentInParent<TerminationToken>();
         if (token)
         {
@@ -39,6 +40,15 @@ public class TerminationMarkerToken : MonoBehaviour
                 if (insobj)
                 {
                     ring = insobj.transform.Find("Ring").gameObject;
+                    //SS2Log.Info("Found ring ");
+                    if (NetworkServer.active)
+                    {
+                        SS2Log.Info("Found ring Server");
+                    }
+                    else
+                    {
+                        SS2Log.Info("Found ring Client");
+                    }
                     //var curve = ring.GetComponent<ObjectScaleCurve>();
                     //curve.timeMax = timeLimit;
                     //timeLimit += Time.fixedDeltaTime; //cushion?
@@ -62,9 +72,53 @@ public class TerminationMarkerToken : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        //SS2Log.Info("ss2");
+        if (!ring)
+        {
+            sizeCurve = AnimationCurve.Linear(0, .235f, 1, .066f);
+
+                token = GetComponentInParent<TerminationToken>();
+                if (token)
+                {
+                    maxTime = token.timeLimit;
+                    timer = 0;
+                var posind = GetComponent<PositionIndicator>();
+                if (posind)
+                {
+                    var insobj = posind.insideViewObject;
+                    //insobj.GetComponent
+                    //insobj
+                    //curve = insobj.GetComponent<ObjectScaleCurve>();
+                    if (insobj)
+                    {
+                        ring = insobj.transform.Find("Ring").gameObject;
+                        //SS2Log.Info("Found ring ");
+                        if (NetworkServer.active)
+                        {
+                            SS2Log.Info("Found ring Server");
+                        }
+                        else
+                        {
+                            SS2Log.Info("Found ring Client");
+                        }
+                    }
+                }
+            }
+        }
+
+        //if (NetworkServer.active)
+        //{
+        //    SS2Log.Info("Is Active");
+        //}
+        //else
+        //{
+        //    SS2Log.Info("Isn't Active");
+        //}
+
         float ratio = timer / maxTime;
         if(ratio < 1 && ring)
         {
+            SS2Log.Info("updating ring " + ratio);
             float amount = sizeCurve.Evaluate(ratio);
             Vector3 vec = new Vector3(amount, amount, amount);
             ring.transform.localScale = vec;

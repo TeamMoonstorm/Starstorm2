@@ -63,6 +63,7 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Reworked Coffee Bag: "Using interactables increases movement speed by 21% and attack speed by 22.5% for up to 15 (+15 per stack) seconds."
     * Reworked Pressurized Cannister: "Grants an upward boost upon activating, and grants a temporary additional jump until landing."
     * Adjusted Detritive Trematode - The debuff no longer expires, but the low health threshold was lowered to 25% for consistency with other "low health" items.
+    * Adjusted Droid Head - Spawned drones are now more aggressive and should be less likely to spawn clipping into the ground.
     * Adjusted MIDAS - When given to an equipment drone, the drone now splits the gold it would recieve amongst all players.
     * Adjusted Greater Warbanner - No longer directly gives CDR, but instead makes cooldowns tick faster.
     * Greater Warbanner's buff now has a visual on the player, like Warbanner.
@@ -73,8 +74,10 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Should have fixed Greater Warbanner's cooldown breaking.
     * Potentially fixed X4 buff-related networking issues.
     * Relic of Termination now has a blacklist for enemies that are not fit for being marked (specific bosses, destructible props, etc), and can no longer mark Cognation ghosts.
+    * Relic of Force now properly sets its damage type.
     * Reduced the brightness of Jet Boot's visual effect.
     * Item displays have proper ditheirng.
+    * Item icons are properly sized when scrapping.
 * Artifacts
     * Cognation's icon now better matches with vanilla artifact icons.
     * Cognation's unlock code now works, and the artifact properly spawns ghosts. Cognation ghosts now have the "Cognate" prefix.

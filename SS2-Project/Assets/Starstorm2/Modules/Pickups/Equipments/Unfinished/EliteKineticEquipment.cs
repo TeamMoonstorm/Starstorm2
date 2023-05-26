@@ -9,7 +9,8 @@ namespace Moonstorm.Starstorm2.Equipments
 
         public override List<MSEliteDef> EliteDefs => new List<MSEliteDef>
         {
-            SS2Assets.LoadAsset<MSEliteDef>("edKinetic", SS2Bundle.Indev)
+            SS2Assets.LoadAsset<MSEliteDef>("edKinetic", SS2Bundle.Indev),
+            SS2Assets.LoadAsset<MSEliteDef>("edKineticHonor", SS2Bundle.Indev)
         };
 
         public override bool FireAction(EquipmentSlot slot)
