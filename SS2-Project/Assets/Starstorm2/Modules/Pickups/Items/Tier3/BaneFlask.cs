@@ -155,8 +155,8 @@ namespace Moonstorm.Starstorm2.Items
 
                 if (attackerBody.inventory)
                 {
-                    var cryoCount = attackerBody.inventory.GetItemCount(SS2Content.Items.BaneFlask);
-                    if (cryoCount > 0)
+                    var baneCount = attackerBody.inventory.GetItemCount(SS2Content.Items.BaneFlask);
+                    if (baneCount > 0)
                     {
                         float stackRadius = aoeRange;// + (aoeRangeStacking.Value * (float)(cryoCount - 1));
                         float victimRadius = victimBody.radius;

@@ -9,7 +9,7 @@ namespace Moonstorm.Starstorm2.Orbs
     {
         public ExecutionerController execController;
 
-        private NetworkSoundEventDef sound = SS2Assets.LoadAsset<NetworkSoundEventDef>("SoundEventExecutionerGainCharge", SS2Bundle.Executioner);
+        //private NetworkSoundEventDef sound = SS2Assets.LoadAsset<NetworkSoundEventDef>("SoundEventExecutionerGainCharge", SS2Bundle.Executioner);
         private GameObject orbEffect = SS2Assets.LoadAsset<GameObject>("ExecutionerIonOrbEffect", SS2Bundle.Executioner);
         private GameObject orbEffectMastery = SS2Assets.LoadAsset<GameObject>("ExecutionerIonOrbEffectMastery", SS2Bundle.Executioner);// referenced just for u <3 -b
         private const float speed = 50f;
@@ -37,8 +37,8 @@ namespace Moonstorm.Starstorm2.Orbs
             if (execController)
             {
                 execController.RpcAddIonCharge();
-                if (sound)
-                    EffectManager.SimpleSoundEffect(sound.index, execController.transform.position, true);
+                //if (sound)
+                //    EffectManager.SimpleSoundEffect(sound.index, execController.transform.position, true);
             }
         }
     }
