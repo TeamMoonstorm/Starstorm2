@@ -15344,7 +15344,7 @@ MonoBehaviour:
   m_Script: {fileID: 816898038, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vfxPriority: 1
+  vfxPriority: 2
   vfxIntensity: 0
   optionalLights:
   - {fileID: 774491039750544819}
@@ -15364,7 +15364,7 @@ MonoBehaviour:
   shakeOnStart: 1
   shakeOnEnable: 0
   wave:
-    amplitude: 1.3
+    amplitude: 2
     frequency: 1
     cycleOffset: 0
   duration: 1
@@ -16040,8 +16040,8 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 0}
-        key1: {r: 1, g: 1, b: 1, a: 1}
-        key2: {r: 0, g: 0, b: 0, a: 1}
+        key1: {r: 1, g: 1, b: 1, a: 0.5882353}
+        key2: {r: 0, g: 0, b: 0, a: 0.5882353}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0.5019608}
         key5: {r: 0, g: 0, b: 0, a: 0.6117647}
