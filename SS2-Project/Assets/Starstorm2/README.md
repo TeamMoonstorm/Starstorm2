@@ -74,6 +74,7 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Should have fixed Greater Warbanner's cooldown breaking.
     * Potentially fixed X4 buff-related networking issues.
     * Relic of Termination now has a blacklist for enemies that are not fit for being marked (specific bosses, destructible props, etc), and can no longer mark Cognation ghosts.
+    * Relic of Force now properly sets its damage type.
     * Reduced the brightness of Jet Boot's visual effect.
     * Item displays have proper ditheirng.
     * Item icons are properly sized when scrapping.
