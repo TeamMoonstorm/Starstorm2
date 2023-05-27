@@ -2,6 +2,8 @@
 using RoR2;
 using RoR2.Items;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -56,116 +58,30 @@ namespace Moonstorm.Starstorm2.Items
 
         public static ItemDisplay itemDisplay;
 
+        public static Dictionary<string, bool> specialSkillNames;
+
         override public void Initialize()
         {
-            On.RoR2.CharacterBody.OnSkillActivated += X4HealOnSkillActivation;
+            //On.RoR2.CharacterBody.OnSkillActivated += X4HealOnSkillActivation;
+            InitalizeSpecialSkillsList(); // hi nebby :)
             //SceneManager.sceneLoaded += AddCode; kill!!!!!!!
         }
 
-        private void X4HealOnSkillActivation(On.RoR2.CharacterBody.orig_OnSkillActivated orig, CharacterBody self, GenericSkill skill)
+        public void InitalizeSpecialSkillsList()
         {
-            orig(self, skill);
-            //skill == skill.characterBody.skillLocator.secondaryBonusStockSkill
-            //skill.skillFamily.ToString().Contains("Secondary")
-            //var token = body.gameObject.GetComponent<X4Token>();
-            if (!NetworkServer.active) {
-                return;
-            }
-            if (self.inventory)
+            specialSkillNames = new Dictionary<string, bool> //Name of skill, isIgnored
             {
-                //SS2Log.Debug("skill" + skill.skillDef.skillNameToken);
-                int count = self.inventory.GetItemCount(SS2Content.Items.X4.itemIndex); //again i could use stack here probably but i just wanna make sure this works we can fix it later
-                                                                                        //SS2Log.Info("count: " + count + " | base skill name token: " + skill.baseSkill.skillNameToken + " | skill: " + skill.defaultSkillDef + " | skill: " + skill.name + " |||| " + skill.characterBody.skillLocator.secondaryBonusStockSkill + " | " + skill.characterBody.skillLocator.secondary);
-                if (count > 0)
-                {//|| skill.baseSkill.skillNameToken == SS2_NEMCOMMANDO_SECONDARY_SHOOT_NAME
-                    if (skill == skill.characterBody.skillLocator.secondaryBonusStockSkill && skill.baseRechargeInterval != 0 || skill.baseSkill.skillNameToken == "SS2_NEMCOMMANDO_SECONDARY_SHOOT_NAME") // if it doesnt have a zero sec cooldown, max buffs at the number of bonus stocks
-                    {
-
-                        int buffcap = skill.bonusStockFromBody + 1;
-                        //SS2Log.Debug(buffcap + " " + skill.maxStock + " " + skill.baseStock + " "+ skill.stock);
-                        //self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
-                        int buffCount = self.GetBuffCount(SS2Content.Buffs.BuffX4);
-                        //self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
-                        if (buffCount < buffcap)
-                        {
-                            SS2Log.Info("aghhhh 1 | " + buffCount + " | " + buffcap);
-                            self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
-                            //self.RemoveOldestTimedBuff(SS2Content.Buffs.BuffX4.buffIndex);
-                        }
-                        else if (buffCount == buffcap)
-                        {
-                            SS2Log.Info("aghhhh 2 | " + buffCount + " | " + buffcap);
-                            self.RemoveOldestTimedBuff(SS2Content.Buffs.BuffX4);
-                            self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
-                        }
-
-                        SS2Log.Info("bonus: " + skill.bonusStockFromBody + " | cap: " + buffcap + " | buffcount: " + buffCount + " | final amount: " + self.GetBuffCount(SS2Content.Buffs.BuffX4));
-                        //if (buffCount < maxBuffStack)
-                        //{
-                        //    body.AddTimedBuffAuthority(SS2Content.Buffs.BuffKickflip.buffIndex, buffDuration); //i swear if this works im killing hopoo
-                        //}
-                        //else if (buffCount == maxBuffStack)
-                        //{
-                        //    body.RemoveOldestTimedBuff(SS2Content.Buffs.BuffKickflip.buffIndex);
-                        //    body.AddTimedBuffAuthority(SS2Content.Buffs.BuffKickflip.buffIndex, buffDuration); //this is what skateboard does
-                        //}
-                        //else
-                        //{
-                        //    self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration); //why am i like this
-                        //}
-                        //self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
-
-                    }
-                    else if (skill == skill.characterBody.skillLocator.secondaryBonusStockSkill) // if the skill is spammable, cap the buff count at 1
-                    {
-                        SS2Log.Info("pee shit explosion!!!");
-                        self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
-                        int buffCount = self.GetBuffCount(SS2Content.Buffs.BuffX4);
-                        if (buffCount != 0)
-                        {
-                            self.RemoveOldestTimedBuff(SS2Content.Buffs.BuffX4.buffIndex);
-                            //self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
-                        }
-                        //else
-                        //{
-                        //self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
-                        //}
-
-                    }
-                }
-
-                //if (self.inventory.GetItemCount(DLC1Content.Items.ConvertCritChanceToCritDamage) > 0 && skill.skillDef.skillNameToken == "RAILGUNNER_SNIPE_HEAVY_NAME")
-                //{
-                //    //float amntToHeal = flatHealth + self.healthComponent.health * (percentHealth + (percentHealthStacking * (count - 1)));
-                //    //self.healthComponent.Heal(amntToHeal, ignoredProcs, true);
-                //    self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
-                //}
-                //else if (skill.skillDef.skillNameToken != "SNIPERCLASSIC_SECONDARY_NAME" && (skill.skillDef.skillNameToken == "SNIPERCLASSIC_PRIMARY_NAME" || skill.skillDef.skillNameToken == "SNIPERCLASSIC_PRIMARY_ALT_NAME" || skill.skillDef.skillNameToken == "SNIPERCLASSIC_PRIMARY_ALT2_NAME")) //sniper classic exceptions
-                //{
-                //    //float amntToHeal = flatHealth + self.healthComponent.health * (percentHealth + (percentHealthStacking * (count - 1)));
-                //    //self.healthComponent.Heal(amntToHeal, ignoredProcs, true);
-                //    self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
-                //}
-                //else if (skill == skill.characterBody.skillLocator.secondaryBonusStockSkill && skill.skillDef.skillNameToken != "RAILGUNNER_SECONDARY_NAME" && count > 0)
-                //{
-                //    if (skill.skillDef.skillNameToken == "SS2_EXECUTIONER_IONGUN_NAME" || skill.skillDef.skillNameToken == "RAILGUNNER_SECONDARY_ALT_NAME") //this is jank but it works :)
-                //    {
-                //        //float amntToHeal = flatHealth + self.healthComponent.health * (percentHealth + (percentHealthStacking * (count - 1)));
-                //        //self.healthComponent.Heal(amntToHeal, ignoredProcs, true);
-                //        self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
-                //    }
-                //    else if (token.usesLeft > 0)
-                //    {
-                //        //float amntToHeal = flatHealth + self.healthComponent.health * (percentHealth + (percentHealthStacking * (count - 1)));
-                //        //self.healthComponent.Heal(amntToHeal, ignoredProcs, true);
-                //        self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
-                //        token.usesLeft--;
-                //        //SS2Log.Debug("skill cooldown:" + skill.CalculateFinalRechargeInterval());
-                //    }
-                //}
-
-            }
+                { "SS2_EXECUTIONER2_IONCHARGE_NAME", true },
+                { "SS2_EXECUTIONER2_IONBURST_NAME", false },
+                { "SS2_NEMCOMMANDO_SECONDARY_SHOOT_NAME", false },
+                { "RAILGUNNER_SECONDARY_NAME", true },
+                { "RAILGUNNER_SNIPE_HEAVY_NAME", false },
+                { "RAILGUNNER_SECONDARY_ALT_NAME", true},
+                { "RAILGUNNER_SNIPE_LIGHT_NAME", false }
+            };
+            //SS2Log.Info("Made list");
         }
+        
         public sealed class Behavior : BaseItemBodyBehavior, IStatItemBehavior
         {
             [ItemDefAssociation]    
@@ -179,47 +95,78 @@ namespace Moonstorm.Starstorm2.Items
 
             private void X4HealOnSkillActivation(GenericSkill skill)
             {
-                //if (!body.HasBuff(SS2Content.Buffs.BuffKickflip))
+               
+                //if (!NetworkServer.active)
                 //{
-                //    Util.PlaySound("SwiftSkateboard", body.gameObject);
+                //    //SS2Log.Info("onSkillActivatedAuthority called on client, somehow?");
+                //    return;
                 //}
-                //if (stack > 0 && cooldownTimer == 0f)
-                //{
-                //    int buffCount = body.GetBuffCount(SS2Content.Buffs.BuffKickflip);
-                //    int maxBuffStack = maxStacks + (maxStacksPerStack * (stack - 1));
-                //    //body.AddTimedBuff(SS2Content.Buffs.BuffKickflip, buffDuration, maxStacks + ((stack - 1) * maxStacksPerStack));
-                //    if (buffCount < maxBuffStack)
-                //    {
-                //        body.AddTimedBuffAuthority(SS2Content.Buffs.BuffKickflip.buffIndex, buffDuration); //i swear if this works im killing hopoo
-                //    }
-                //    else if (buffCount == maxBuffStack)
-                //    {
-                //        body.RemoveOldestTimedBuff(SS2Content.Buffs.BuffKickflip.buffIndex);
-                //        body.AddTimedBuffAuthority(SS2Content.Buffs.BuffKickflip.buffIndex, buffDuration);
-                //    }
-                //
-                //
-                //    cooldownTimer += buffCooldown;
-                //    RefreshBuff();
-                //}
-
-                if (!NetworkServer.active)
-                {
-                    //SS2Log.Info("onSkillActivatedAuthority called on client, somehow?");
-                    return;
-                }
                 var charbody = skill.characterBody;
-                if (charbody)
+                if (NetworkServer.active && charbody)
                 {
                     if (charbody.inventory)
                     {
                         int count = charbody.inventory.GetItemCount(SS2Content.Items.X4.itemIndex);
                         if (count > 0)
                         {
-                            if (skill == skill.characterBody.skillLocator.secondaryBonusStockSkill && skill.baseRechargeInterval != 0 || skill.baseSkill.skillNameToken == "SS2_NEMCOMMANDO_SECONDARY_SHOOT_NAME") // if it doesnt have a zero sec cooldown, max buffs at the number of bonus stocks
+                            bool success = specialSkillNames.TryGetValue(skill.skillDef.skillNameToken, out bool isIgnored);
+                            //bool possible = true;
+                            if (success)
                             {
+                                //SS2Log.Info("found " + skill.skillDef.skillNameToken + " | " + isIgnored);
+                                if (isIgnored)
+                                {
+                                    //SS2Log.Info("Function ENDS"); 
+                                    return;
+                                }
 
+                            }
+                            else
+                            {
+                                isIgnored = true;
+                            }
+                            if (!isIgnored || (skill == skill.characterBody.skillLocator.secondaryBonusStockSkill && skill.baseRechargeInterval != 0)) // if it doesnt have a zero sec cooldown, max buffs at the number of bonus stocks
+                            {
                                 int buffcap = skill.bonusStockFromBody + 1;
+
+                                if (!isIgnored)
+                                {
+                                    var secondary = skill.characterBody.skillLocator.secondaryBonusStockSkill;
+                                    //SS2Log.Info("was valid!");
+                                    if (skill.skillDef.skillNameToken == "SS2_EXECUTIONER2_IONBURST_NAME")
+                                    {
+                                        //var secondary = skill.characterBody.skillLocator.secondaryBonusStockSkill;
+                                        if (secondary.skillNameToken == "SS2_EXECUTIONER2_IONCHARGE_NAME")
+                                        {
+                                            if (secondary.stock <= 0)
+                                            {
+                                                //SS2Log.Info("ion gun sucks");
+                                                return;
+                                            }
+
+                                        }
+                                        //else if (skill.baseRechargeInterval == 0)
+                                        //{
+                                        //    //SS2Log.Info("fuck railgunner");
+                                        //    charbody.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
+                                        //    int buffCount1 = charbody.GetBuffCount(SS2Content.Buffs.BuffX4);
+                                        //    if (buffCount1 != 0)
+                                        //    {
+                                        //        charbody.RemoveOldestTimedBuff(SS2Content.Buffs.BuffX4.buffIndex);
+                                        //        //self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
+                                        //    }
+                                        //}
+
+                                    }
+
+                                    if (skill.skillDef.skillNameToken != secondary.skillNameToken) //if skill is technically not secondary slot, 
+                                    {
+                                        buffcap = secondary.bonusStockFromBody + 1; //this assumes that the """SECONDARY""" being used should benefit from backup mags. for at least all base, dlc1, and ss2 characters, this is true
+                                        //SS2Log.Info("Overrode stocks from " + skill.bonusStockFromBody + 1 + " to " + buffcap);
+                                    }
+
+                                }
+                                //int buffcap = skill.bonusStockFromBody + 1;
                                 //SS2Log.Debug(buffcap + " " + skill.maxStock + " " + skill.baseStock + " "+ skill.stock);
                                 //self.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
                                 int buffCount = charbody.GetBuffCount(SS2Content.Buffs.BuffX4);
@@ -230,12 +177,34 @@ namespace Moonstorm.Starstorm2.Items
                                     charbody.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
                                     //self.RemoveOldestTimedBuff(SS2Content.Buffs.BuffX4.buffIndex);
                                 }
-                                else if (buffCount == buffcap)
+                                else if (buffCount == buffcap && buffCount >= 1)
                                 {
-                                   // SS2Log.Info("aghhhh 2 | " + buffCount + " | " + buffcap);
-                                    charbody.RemoveOldestTimedBuff(SS2Content.Buffs.BuffX4);
-                                    charbody.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
+                                    //SS2Log.Info("aghhhh 2 | " + buffCount + " | " + buffcap);
+
+                                    //SS2Log.Info("removing stack " + charbody.GetBuffCount(SS2Content.Buffs.BuffX4.buffIndex));
+                                    //charbody.RemoveOldestTimedBuff(SS2Content.Buffs.BuffX4.buffIndex);
+                                    // SS2Log.Info("has removed STACK " + charbody.GetBuffCount(SS2Content.Buffs.BuffX4.buffIndex));
+
+                                    //charbody.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
+                                    SS2Util.RefreshOldestBuffStack(charbody, SS2Content.Buffs.BuffX4, regenDuration);
+
                                 }
+                                //else if(buffCount == buffcap && buffCount == 1)
+                                //{
+                                //    //SS2Log.Info("aghhhh 3 | " + buffCount + " | " + buffcap);
+                                //    //charbody.RemoveBuff(SS2Content.Buffs.BuffX4.buffIndex);
+                                //    //charbody.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration); if i do this i get -1 stacks sometimes im so pissed
+                                //    for (int i = 0; i < body.timedBuffs.Count; i++)
+                                //    {
+                                //        if (body.timedBuffs[i].buffIndex == SS2Content.Buffs.BuffX4.buffIndex)
+                                //        {
+                                //            body.timedBuffs[i].timer = regenDuration;
+                                //            break; //this is a little shit but it's probably fine right
+                                //        }
+                                //    }
+                                //
+                                //}
+
 
                                 //SS2Log.Info("bonus: " + skill.bonusStockFromBody + " | cap: " + buffcap + " | buffcount: " + buffCount + " | final amount: " + charbody.GetBuffCount(SS2Content.Buffs.BuffX4));
                                 //if (buffCount < maxBuffStack)
