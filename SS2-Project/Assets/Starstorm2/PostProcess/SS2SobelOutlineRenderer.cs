@@ -8,9 +8,16 @@ namespace Moonstorm.Starstorm2.PostProcess
         public override void Render(PostProcessRenderContext context)
         {
             PropertySheet propertySheet = context.propertySheets.Get(Shader.Find("Hidden/PostProcess/SobelOutline"));
-            propertySheet.properties.SetFloat("_OutlineIntensity", settings.outlineIntensity);
-            propertySheet.properties.SetFloat("_OutlineScale", settings.outlineScale);
-            context.command.BlitFullscreenTriangle(context.source, context.destination, propertySheet, 0, false, null);
+            if(propertySheet != null)
+            {
+                propertySheet.properties.SetFloat("_OutlineIntensity", settings.outlineIntensity);
+                propertySheet.properties.SetFloat("_OutlineScale", settings.outlineScale);
+                context.command.BlitFullscreenTriangle(context.source, context.destination, propertySheet, 0, false, null);
+            }
+            else
+            {
+                SS2Log.Info("SS2RampFogRenderer property sheet was null");
+            }
         }
     }
 }
