@@ -76,9 +76,9 @@ namespace EntityStates.Events
                     //Debug.Log("monstercredit: " + monsterCredit);
                     if (monsterCredit != null)
                         monsterCredit = 40f;
-
+                    
                     WeightedSelection<DirectorCard> weightedSelection = Util.CreateReasonableDirectorCardSpawnList(monsterCredit, combatDirector.maximumNumberToSpawnBeforeSkipping, 6);
-                    if(weightedSelection != null)
+                    if(weightedSelection != null && combatDirector.rng != null) //adding a null check for the rng? seems to nullref 
                     {
                         DirectorCard directorCard = weightedSelection.Evaluate(combatDirector.rng.nextNormalizedFloat);
                         if (directorCard != null)

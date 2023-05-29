@@ -20,7 +20,8 @@ namespace Moonstorm.Starstorm2.Components
                 var master = body.master;
                 if (master)
                 {
-                    if (damageType == DamageType.VoidDeath && master.GetComponent<NemesisResistances>())
+                    var nemres = master.GetComponent<NemesisResistances>(); //this bit plus the above check got merged into one line - think that might've caused an error if the master didn't exist?
+                    if (damageType == DamageType.VoidDeath && nemres) 
                     {
                         //ChatMessage.SendColored("He laughs in the face of the void.", ColorCatalog.ColorIndex.VoidItem);
 
