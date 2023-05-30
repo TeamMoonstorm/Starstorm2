@@ -8,6 +8,7 @@ using UnityEngine.Networking;
 
 namespace Moonstorm.Starstorm2.Interactables
 {
+    [DisabledContent]
     public sealed class ShockDroneDamaged : InteractableBase
     {
         public override GameObject Interactable { get; } = SS2Assets.LoadAsset<GameObject>("ShockDroneBroken", SS2Bundle.Indev);

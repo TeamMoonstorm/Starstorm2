@@ -154,7 +154,7 @@ namespace EntityStates.NemCommando
 
             //SS2Log.Info("Aaahh");
 
-            if (fixedAge >= fireTime)
+            if (fixedAge >= fireTime * duration)
             {
                 Fire();
             }
@@ -170,7 +170,7 @@ namespace EntityStates.NemCommando
                 if(fixedAge >= 1.5f * duration)
                 {
                     outer.SetNextState(new ReloadGun());
-                    //return;
+                    return;
                 }
                 //outer.SetNextStateToMain();
                 //return;

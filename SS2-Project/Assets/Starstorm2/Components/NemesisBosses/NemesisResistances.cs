@@ -17,11 +17,14 @@ namespace Moonstorm.Starstorm2.Components
             var body = self.body;
             if (body)
             {
+                Debug.Log("body found");
                 var master = body.master;
                 if (master)
                 {
-                    if (damageType == DamageType.VoidDeath && master.GetComponent<NemesisResistances>())
+                    Debug.Log("master found");
+                    if (damageType == DamageType.VoidDeath && body.GetComponent<NemesisResistances>() != null)
                     {
+                        Debug.Log("void death + nemresistances found");
                         //ChatMessage.SendColored("He laughs in the face of the void.", ColorCatalog.ColorIndex.VoidItem);
 
                         int rng = Run.instance.runRNG.RangeInt(1, 4);
@@ -50,7 +53,7 @@ namespace Moonstorm.Starstorm2.Components
             if (other.gameObject)
             {
                 var body = other.GetComponent<CharacterBody>();
-                if (body.master.GetComponent<NemesisResistances>())
+                if (body.GetComponent<NemesisResistances>() != null)
                 {
                     var teamComponent = body.teamComponent;
                     if (teamComponent)

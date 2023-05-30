@@ -27,7 +27,7 @@ namespace Moonstorm.Starstorm2
         public static void MusicInit()
         {
             AkSoundEngine.LoadBank("SS2Music", /*-1,*/ out var bank);
-            GameObject.Instantiate(SS2Assets.Instance.MainAssetBundle.LoadAsset("SS2MusicInitializer"));
+            GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("SS2MusicInitializer", SS2Bundle.Base));
         }
     }
 }

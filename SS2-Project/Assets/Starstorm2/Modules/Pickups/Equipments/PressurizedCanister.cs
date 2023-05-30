@@ -1,5 +1,6 @@
 ﻿using RoR2;
 using UnityEngine;
+using UnityEngine.Networking;
 using static AkMIDIEvent;
 
 namespace Moonstorm.Starstorm2.Equipments
@@ -44,7 +45,7 @@ namespace Moonstorm.Starstorm2.Equipments
                 characterMotor = body.characterMotor;
                 if (characterMotor.isGrounded)
                     EffectManager.SimpleEffect(Resources.Load<GameObject>("prefabs/effects/SmokescreenEffect"), body.footPosition, Quaternion.identity, true);
-                if (body.hasAuthority)
+                if (NetworkServer.active)
                 {
                     characterMotor.Motor.ForceUnground();
                     EffectManager.SimpleEffect(SS2Assets.LoadAsset<GameObject>("canExhaust", SS2Bundle.Equipments), body.transform.position, body.transform.rotation, true);

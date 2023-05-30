@@ -32,7 +32,6 @@ MonoBehaviour:
   ListType: 1
   Manifests:
   - {fileID: 11400000, guid: bcbdefdb47e2f8f45bdd7a2a4559b405, type: 2}
-  - {fileID: 11400000, guid: 5ceb1d8ed3af40d4d806e9756b403649, type: 2}
   StrictDictionaryReplace: 1
   Recursive: 1
   SourceRequired: 0
@@ -49,7 +48,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a3695521163bdd74fa2845bbd3438240, type: 3}
-  m_Name: ZenithBuild
+  m_Name: ZenithBuildMini
   m_EditorClassIdentifier: 
   Data:
   - {fileID: 3115510770482166597}
@@ -70,4 +69,4 @@ MonoBehaviour:
   m_Name: ChangeAssemblyBuildMode
   m_EditorClassIdentifier: 
   Active: 1
-  buildMode: 0
+  buildMode: 1
