@@ -49,7 +49,7 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 
 ### 0.4.0
 * General
-    * Overhauled Executioner and Nemesis Commando entirely.
+    * Overhauled Executioner and Nemesis Commando entirely. BE SURE TO RESET YOUR CONFIG.
     * Reimplemented survivor-related unlocks. Executioner is intentionally unlocked by default now.
     * SS2 Survivors have item displays for all base and SOTV items. 
     * Added significantly more configs, split into individual files. You can now disable events individually, disable equipments, and items that were lacking in configurable options now have them.
