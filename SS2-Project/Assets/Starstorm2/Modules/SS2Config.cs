@@ -13,8 +13,8 @@ namespace Moonstorm.Starstorm2
         public const string PREFIX = "SS2.";
         internal const string IDMain = PREFIX + "Main";
         internal const string IDItem = PREFIX + "Items";
-        internal const string IDArtifact = PREFIX + "Survivors";
-        internal const string IDSurvivor = PREFIX + "Artifacts";
+        internal const string IDArtifact = PREFIX + "Artifacts"; 
+        internal const string IDSurvivor = PREFIX + "Survivors";
         internal const string IDMisc = PREFIX + "Miscellaneous";
 
         public override bool CreateSubFolder => true;
