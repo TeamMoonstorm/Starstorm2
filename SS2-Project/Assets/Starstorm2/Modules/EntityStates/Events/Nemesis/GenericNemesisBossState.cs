@@ -126,7 +126,7 @@ namespace EntityStates.Events
 
             if (chosenPlayer)
                 spawnTarget = chosenPlayer.GetComponent<CharacterBody>().coreTransform;
-            if (TeleporterInteraction.instance && /*TeleporterInteraction.instance.currentState.GetType() != typeof(TeleporterInteraction.ChargingState) ||*/ !chosenPlayer)
+            if (TeleporterInteraction.instance)
             {
                 spawnTarget = TeleporterInteraction.instance.transform;
                 distance = MonsterSpawnDistance.Close;
@@ -155,8 +155,9 @@ namespace EntityStates.Events
                 if (!combatSquad)
                     combatSquad = UnityEngine.Object.Instantiate(encounterPrefab).GetComponent<CombatSquad>();
                 CharacterMaster master = spawnResult.spawnedInstance.GetComponent<CharacterMaster>();
-                master.gameObject.AddComponent<NemesisResistances>();
+                //master.gameObject.AddComponent<NemesisResistances>();
                 nemesisBossBody = master.GetBody();
+                //nemesisBossBody.gameObject.AddComponent<NemesisResistances>();
                 new NemesisSpawnCard.SyncBaseStats(nemesisBossBody).Send(R2API.Networking.NetworkDestination.Clients);
                 combatSquad.AddMember(master);
                 master.onBodyDeath.AddListener(OnBodyDeath);

@@ -8,6 +8,7 @@ using R2API.Utils;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement;
 using RoR2.Projectile;
+using UnityEngine.Networking;
 
 namespace Moonstorm.Starstorm2.Modules
 {
@@ -20,11 +21,12 @@ namespace Moonstorm.Starstorm2.Modules
         [SystemInitializer]
         public static void Initialize()
         {
-            //Commando
+            //Generic Hooks
             On.EntityStates.GenericProjectileBaseState.FireProjectile += GPBS_FireProjectile;
             On.EntityStates.GenericBulletBaseState.FireBullet += GBBS_FireBullet;
+            CharacterBody.onBodyStartGlobal += BodyStartGlobal;
 
-            //MUL-T
+            //MUL-T specific
             matLunarGolem = Object.Instantiate(Resources.Load<GameObject>("Prefabs/CharacterBodies/LunarGolemBody").GetComponentInChildren<CharacterModel>().baseRendererInfos[0].defaultMaterial); // to-do: update this into an addressable
             On.EntityStates.Toolbot.BaseNailgunState.FireBullet += BaseNailgunState_FireBullet;
             On.EntityStates.Toolbot.FireSpear.FireBullet += FireSpear_FireBullet;
@@ -40,6 +42,7 @@ namespace Moonstorm.Starstorm2.Modules
             {
                 if (self.projectilePrefab == ProjectileCatalog.GetProjectilePrefab(ProjectileCatalog.FindProjectileIndex("FMJRamping")) && self.GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[self.characterBody.skinIndex].nameToken == "SS2_SKIN_COMMANDO_VESTIGE")
                 {
+                    //grab the projectile prefab & modify it to use red vfx
                     GameObject projectileInstance;
                     projectileInstance = self.projectilePrefab;
                     ProjectileController pc = projectileInstance.GetComponent<ProjectileController>();
@@ -47,7 +50,6 @@ namespace Moonstorm.Starstorm2.Modules
 
                     pc.ghostPrefab = SS2Assets.LoadAsset<GameObject>("FMJRampingGhostRed", SS2Bundle.NemCommando);
                     poa.impactEffect = SS2Assets.LoadAsset<GameObject>("OmniExplosionVFXFMJRed", SS2Bundle.NemCommando);
-                    //self.projectilePrefab = SS2Assets.LoadAsset<GameObject>("FMJRampingRed", SS2Bundle.Vanilla);
                     self.effectPrefab = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoRed", SS2Bundle.NemCommando);
                 }
             }
@@ -55,11 +57,35 @@ namespace Moonstorm.Starstorm2.Modules
             orig(self);
         }
 
+        private static void BodyStartGlobal(CharacterBody body)
+        {
+            if (!NetworkServer.active)
+                return;
+            
+            if (body.baseNameToken == "TOOLBOT_BODY_NAME")
+            {
+                //Debug.Log("is toolbot");
+                if (body.modelLocator.modelBaseTransform.GetComponentInChildren<ModelSkinController>().skins[body.skinIndex].nameToken == "SS2_SKIN_TOOLBOT_GRANDMASTERY")
+                {
+                    //Debug.Log("is lunar");
+                    LoopSoundWhileCharacterMoving lswcm = body.GetComponent<LoopSoundWhileCharacterMoving>();
+                    //lswcm.enabled = false;
+                    lswcm.startSoundName = "Play_lunar_golem_idle_loop";
+                    lswcm.stopSoundName = "Stop_lunar_golem_idle_loop";
+                    lswcm.minSpeed = 0;
+                    //it's just like an idle sound except i couldn't get it to actually work as an idle sound for some reason..
+
+                    //Debug.Log("modified lunar idle sounds! :)");
+                }
+            }
+        }
+
         public static void GBBS_FireBullet(On.EntityStates.GenericBulletBaseState.orig_FireBullet orig, EntityStates.GenericBulletBaseState self, Ray aimRay)
         {
             //Commando
             if (self.characterBody.baseNameToken == "COMMANDO_BODY_NAME")
             {
+                //if using the skin, update vfx to use nemcommando variants
                 if (self.GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[self.characterBody.skinIndex].nameToken == "SS2_SKIN_COMMANDO_VESTIGE")
                 {
                     if (self.tracerEffectPrefab == Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/TracerCommandoShotgun.prefab").WaitForCompletion())
@@ -81,12 +107,28 @@ namespace Moonstorm.Starstorm2.Modules
 
         public static void ToolbotDualWield_OnEnter(On.EntityStates.Toolbot.ToolbotDualWield.orig_OnEnter orig, EntityStates.Toolbot.ToolbotDualWield self)
         {
+            bool isLunar = false;
+            string oldSound = EntityStates.Toolbot.ToolbotDualWieldStart.enterSfx;
+            string skinNameToken = self.GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[self.characterBody.skinIndex].nameToken;
+
+            if (skinNameToken == "SS2_SKIN_TOOLBOT_GRANDMASTERY")
+            {
+                //if using the lunar skin, set to lunar & update sound
+                isLunar = true;
+                EntityStates.Toolbot.ToolbotDualWieldStart.enterSfx = "Play_lunar_golem_idle_VO";
+            }
+
+            //call self
             orig(self);
 
-            if (self.GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[self.characterBody.skinIndex].nameToken == "SS2_SKIN_TOOLBOT_GRANDMASTERY")
+            if (isLunar)
             {
+                //change mats of dual wield guns to lunar
                 self.coverLeftInstance.GetComponentInChildren<SkinnedMeshRenderer>().material = matLunarGolem;
                 self.coverRightInstance.GetComponentInChildren<SkinnedMeshRenderer>().material = matLunarGolem;
+
+                //change sound back after skill is played to ensure non-lunar toolbots still function correctly
+                EntityStates.Toolbot.ToolbotDualWieldStart.enterSfx = oldSound;
             }
         }
 
@@ -95,14 +137,17 @@ namespace Moonstorm.Starstorm2.Modules
             bool isLunar = false;
             GameObject oldTracer = self.tracerEffectPrefab;
 
+            //check skin; update tracer if in use
             if (self.GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[self.characterBody.skinIndex].nameToken == "SS2_SKIN_TOOLBOT_GRANDMASTERY")
             {
                 isLunar = true;
                 self.tracerEffectPrefab = Resources.Load<GameObject>("Prefabs/Effects/Tracers/TracerHuntressSnipe"); // this too
             }
 
+            //call self
             orig(self, aimRay);
 
+            //change tracer back
             if (isLunar)
             {
                 self.tracerEffectPrefab = oldTracer;
@@ -120,7 +165,6 @@ namespace Moonstorm.Starstorm2.Modules
                 isLunar = true;
                 EntityStates.Toolbot.BaseNailgunState.tracerEffectPrefab = Resources.Load<GameObject>("Prefabs/Effects/Tracers/TracerLunarWispMinigun"); // and also this
                 EntityStates.Toolbot.BaseNailgunState.fireSoundString = EntityStates.LunarWisp.FireLunarGuns.fireSound;
-
             }
 
             orig(self, aimRay, bulletCount, spreadPitchScale, spreadYawScale);
