@@ -144,11 +144,11 @@ namespace Moonstorm.Starstorm2
             if (SS2Config.ConfigMisc.Bind("Visuals", "Custom Main Menu", true, "Setting this to false returns the main menu to the original, bright one.").Value)
             {
                 SceneManager.sceneLoaded += StormOnMenu;
-                On.RoR2.UI.SteamBuildIdLabel.Start += (orig, self) =>
-                {
-                    orig(self);
-                    self.GetComponent<TextMeshProUGUI>().text += "<color=#75BAFF> + <link=\"textWavy\">SS2 " + Starstorm.version.ToString() + "</link></color>";
-                }; // copied from wrb which copied from rm so its my code :smirk_cat:
+                //On.RoR2.UI.SteamBuildIdLabel.Start += (orig, self) =>
+                //{
+                //    orig(self);
+                //    self.GetComponent<TextMeshProUGUI>().text += "<color=#75BAFF> + <link=\"textWavy\">SS2 " + Starstorm.version.ToString() + "</link></color>";
+                //}; // copied from wrb which copied from rm so its my code :smirk_cat:
             }
         }
 
