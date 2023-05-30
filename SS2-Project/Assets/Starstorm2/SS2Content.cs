@@ -214,6 +214,7 @@ namespace Moonstorm.Starstorm2
         public static class Elites
         {
             //public static EliteDef edPurple;
+            public static EliteDef edKinetic;
         }
 
         public static class Survivors

@@ -205,7 +205,7 @@ namespace Moonstorm.Starstorm2.Items
 
                 if (!NetworkServer.active)
                 {
-                    SS2Log.Info("onSkillActivatedAuthority called on client, somehow?");
+                    //SS2Log.Info("onSkillActivatedAuthority called on client, somehow?");
                     return;
                 }
                 var charbody = skill.characterBody;

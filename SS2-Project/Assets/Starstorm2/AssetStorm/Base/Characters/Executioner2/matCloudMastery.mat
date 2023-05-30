@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: matCloudMastery
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
-  m_ShaderKeywords: USE_CLOUDS
+  m_ShaderKeywords: FADECLOSE USE_CLOUDS
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -85,7 +85,7 @@ Material:
     - _ExternalAlpha: 1
     - _Fade: 1
     - _FadeCloseDistance: 0.5
-    - _FadeCloseOn: 0
+    - _FadeCloseOn: 1
     - _FresnelOn: 0
     - _FresnelPower: 0
     - _GlossMapScale: 1

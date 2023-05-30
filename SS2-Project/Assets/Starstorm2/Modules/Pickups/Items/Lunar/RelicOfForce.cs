@@ -41,6 +41,10 @@ namespace Moonstorm.Starstorm2.Items
             {
                 SS2Log.Info("GOTCE Compat - Not adding Force hook");
             }
+
+            relicForceDamageType = DamageAPI.ReserveDamageType();
+
+
         }
 
         private float ForceSkillFinalRecharge2(On.RoR2.GenericSkill.orig_CalculateFinalRechargeInterval orig, GenericSkill self)
@@ -196,7 +200,7 @@ namespace Moonstorm.Starstorm2.Items
                     {
                         damageInfo.position = victim.transform.position;
                         victimHealthComp.TakeDamage(damageInfo);
-                        GlobalEventManager.instance.OnHitEnemy(damageInfo, victimHealthComp.gameObject);
+                        GlobalEventManager.instance.OnHitEnemy(damageInfo, victimHealthComp.gameObject); //what
                         GlobalEventManager.instance.OnHitAll(damageInfo, victimHealthComp.gameObject);
                         EffectData effectData = new EffectData
                         {
