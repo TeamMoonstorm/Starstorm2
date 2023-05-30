@@ -21,7 +21,7 @@ namespace Moonstorm.Starstorm2.Modules
         [SystemInitializer]
         public static void Initialize()
         {
-            //Generic Hooks
+            //Generic Hooks (Currently all Commando - subject to change)
             On.EntityStates.GenericProjectileBaseState.FireProjectile += GPBS_FireProjectile;
             On.EntityStates.GenericBulletBaseState.FireBullet += GBBS_FireBullet;
             CharacterBody.onBodyStartGlobal += BodyStartGlobal;
@@ -31,6 +31,8 @@ namespace Moonstorm.Starstorm2.Modules
             On.EntityStates.Toolbot.BaseNailgunState.FireBullet += BaseNailgunState_FireBullet;
             On.EntityStates.Toolbot.FireSpear.FireBullet += FireSpear_FireBullet;
             On.EntityStates.Toolbot.ToolbotDualWield.OnEnter += ToolbotDualWield_OnEnter;
+            On.EntityStates.Toolbot.ToolbotDash.OnEnter += ToolbotDash_OnEnter;
+            //On.EntityStates.Toolbot.ToolbotDash.OnExit += ToolbotDash_OnExit;
         }
 
         public static void GPBS_FireProjectile(On.EntityStates.GenericProjectileBaseState.orig_FireProjectile orig, EntityStates.GenericProjectileBaseState self)
@@ -105,6 +107,68 @@ namespace Moonstorm.Starstorm2.Modules
             orig(self, aimRay);  
         }
 
+        /*public static void ToolbotDash_OnExit(On.EntityStates.Toolbot.ToolbotDash.orig_OnExit orig, EntityStates.Toolbot.ToolbotDash self)
+        {
+            string skinNameToken = self.GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[self.characterBody.skinIndex].nameToken;
+
+            if (skinNameToken == "SS2_SKIN_TOOLBOT_GRANDMASTERY")
+            {
+                SkateSparks ss = self.characterBody.modelLocator.modelTransform.GetComponent<SkateSparks>();
+                GameObject toolbot = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Toolbot/ToolbotBody.prefab").WaitForCompletion();
+                Transform toolbotModelTransform = null;
+                if (toolbot != null)
+                    toolbotModelTransform = toolbot.transform.GetComponent<ModelLocator>().modelBaseTransform;
+                SkateSparks defaultSS = null;
+                if (toolbotModelTransform != null)
+                    defaultSS = toolbotModelTransform.GetComponent<SkateSparks>();
+                if (defaultSS != null)
+                {
+                    ss.leftParticleSystem = defaultSS.leftParticleSystem;
+                    ss.rightParticleSystem = defaultSS.rightParticleSystem;
+                }
+            }
+
+            orig(self);
+        }*/
+
+        public static void ToolbotDash_OnEnter(On.EntityStates.Toolbot.ToolbotDash.orig_OnEnter orig, EntityStates.Toolbot.ToolbotDash self)
+        {
+            bool isLunar = false;
+            string oldEnterSound = EntityStates.Toolbot.ToolbotDash.startSoundString;
+            string oldExitSound = EntityStates.Toolbot.ToolbotDash.endSoundString;
+            string skinNameToken = self.GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[self.characterBody.skinIndex].nameToken;
+
+            if (skinNameToken == "SS2_SKIN_TOOLBOT_GRANDMASTERY")
+            {
+                isLunar = true;
+                EntityStates.Toolbot.ToolbotDash.startSoundString = EntityStates.LunarGolem.ChargeTwinShot.chargeSoundString;
+                EntityStates.Toolbot.ToolbotDash.endSoundString = "Play_lunar_golem_death";
+
+                /*SkateSparks ss = self.characterBody.modelLocator.modelTransform.GetComponent<SkateSparks>();
+                GameObject lunarChimaera = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/LunarGolem/LunarGolemBody.prefab").WaitForCompletion();
+                Transform chimaeraModelTransform = null;
+                if (lunarChimaera != null)
+                    chimaeraModelTransform = lunarChimaera.transform.GetComponent<ModelLocator>().modelBaseTransform;
+                SprintEffectController sec = null;
+                if (chimaeraModelTransform != null)
+                    sec = chimaeraModelTransform.GetComponent<SprintEffectController>();
+                ParticleSystem lcDebris = null;
+                if (sec != null)
+                    lcDebris = sec.loopSystems[1];
+
+                ss.leftParticleSystem = lcDebris;
+                ss.rightParticleSystem = lcDebris;*/
+            }
+
+            orig(self);
+
+            if (isLunar)
+            {
+                EntityStates.Toolbot.ToolbotDash.startSoundString = oldEnterSound;
+                EntityStates.Toolbot.ToolbotDash.endSoundString = oldExitSound;
+            }    
+        }
+
         public static void ToolbotDualWield_OnEnter(On.EntityStates.Toolbot.ToolbotDualWield.orig_OnEnter orig, EntityStates.Toolbot.ToolbotDualWield self)
         {
             bool isLunar = false;
@@ -115,7 +179,7 @@ namespace Moonstorm.Starstorm2.Modules
             {
                 //if using the lunar skin, set to lunar & update sound
                 isLunar = true;
-                EntityStates.Toolbot.ToolbotDualWieldStart.enterSfx = "Play_lunar_golem_idle_VO";
+                EntityStates.Toolbot.ToolbotDualWieldStart.enterSfx = EntityStates.LunarGolem.ChargeTwinShot.chargeSoundString;
             }
 
             //call self
