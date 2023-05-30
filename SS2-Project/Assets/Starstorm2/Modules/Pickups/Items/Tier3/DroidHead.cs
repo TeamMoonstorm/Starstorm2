@@ -20,7 +20,7 @@ namespace Moonstorm.Starstorm2.Items
 
         [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Life time of the Security Drone per stack, in seconds.")]
         [TokenModifier(token, StatTypes.Default, 2)]
-        public static float stackLifeTime = 5f;
+        public static float stackLifeTime = 10f;
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver
         {

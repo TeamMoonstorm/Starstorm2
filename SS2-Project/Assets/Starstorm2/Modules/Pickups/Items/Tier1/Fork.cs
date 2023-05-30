@@ -38,6 +38,7 @@ namespace Moonstorm.Starstorm2.Items
                 args.baseDamageAdd += damageBonus * stack;
 
                 //G- sorry for changing it without properly consulting the team
+                //all good g :thumbsup:
             }
         }
     }
