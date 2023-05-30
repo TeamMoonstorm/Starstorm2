@@ -38,7 +38,7 @@ namespace EntityStates.NemCommando
 
             animator = GetModelAnimator();
 
-            PlayCrossfade("Gesture, Override, LeftArm", "LowerGun", "FireGun.playbackRate", duration, 0.03f);
+            PlayCrossfade("Gesture, Override, LeftArm", "LowerGun", "FireGun.playbackRate", duration, 0.3f);
         }
 
         public override void FixedUpdate()

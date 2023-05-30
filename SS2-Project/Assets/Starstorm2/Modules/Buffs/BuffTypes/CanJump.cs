@@ -38,6 +38,7 @@ namespace Moonstorm.Starstorm2.Buffs
             public void OnDestroy()
             {
                 body.characterMotor.onHitGroundAuthority -= RemoveBuff;
+                body.baseJumpCount--;
             }
         }
     }
