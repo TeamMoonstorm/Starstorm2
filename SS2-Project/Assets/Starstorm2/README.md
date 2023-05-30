@@ -19,6 +19,8 @@
 
 * **Typhoon** - The Planet grows restless, with fearsome events and monsters coming in greater numbers than ever before. Unlock new skins for survivors* by proving yourself in this new challenge exceeding even Monsoon!
 	 *currently includes Commando, MUL-T, Acrid, Captain, and Commando's Vestige.
+	 
+* **Artifact of Cognation** - A new, unlockable artifact to shape up your runs.
 
 ![Credits](https://github.com/swuff-star/Starstorm2/blob/main/SS2-Project/Assets/Starstorm2/ReadmeAssets/ss2credits.gif?raw=true)
 
