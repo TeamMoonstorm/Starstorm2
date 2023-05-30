@@ -23,7 +23,7 @@ namespace Moonstorm.Starstorm2.Components
             //SS2Log.Info(itemDef.name + " stuff: " + (int)itemDef.deprecatedTier + " | " + (int)ItemTier.NoTier);
             if (itemDef.deprecatedTier != ItemTier.NoTier) //sorry using itemDef.tier doesnt change when the item gets notiered :(
             {
-            PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(itemDef.itemIndex), body.corePosition, Vector3.up);
+                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(itemDef.itemIndex), body.corePosition, Vector3.up);
             }
             else
             {

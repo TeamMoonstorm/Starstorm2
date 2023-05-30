@@ -90,7 +90,8 @@ namespace Moonstorm.Starstorm2.Items
             public void Start()
             {
                 body.onSkillActivatedAuthority += X4HealOnSkillActivation;
-
+                //SS2Log.Info("hook added on " + body + " |");
+                //SS2Log.Info("hook added on " + body.baseNameToken + " |");
             }
 
             private void X4HealOnSkillActivation(GenericSkill skill)
@@ -98,12 +99,14 @@ namespace Moonstorm.Starstorm2.Items
                
                 //if (!NetworkServer.active)
                 //{
-                //    //SS2Log.Info("onSkillActivatedAuthority called on client, somehow?");
+                //SS2Log.Info("onSkillActivatedAuthority called" + body + " | " + body.baseNameToken);
                 //    return;
                 //}
+                
                 var charbody = skill.characterBody;
-                if (NetworkServer.active && charbody)
+                if (charbody)
                 {
+                    //SS2Log.Info("active called");
                     if (charbody.inventory)
                     {
                         int count = charbody.inventory.GetItemCount(SS2Content.Items.X4.itemIndex);
@@ -111,6 +114,7 @@ namespace Moonstorm.Starstorm2.Items
                         {
                             bool success = specialSkillNames.TryGetValue(skill.skillDef.skillNameToken, out bool isIgnored);
                             //bool possible = true;
+                            //SS2Log.Info("skill bonus: " + skill.bonusStockFromBody + " | skill: " + skill.skillNameToken + " | recharg: " + skill.baseRechargeInterval + " | stok: " + skill.baseStock);
                             if (success)
                             {
                                 //SS2Log.Info("found " + skill.skillDef.skillNameToken + " | " + isIgnored);

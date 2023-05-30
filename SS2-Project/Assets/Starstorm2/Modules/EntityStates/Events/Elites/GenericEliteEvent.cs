@@ -94,15 +94,18 @@ namespace EntityStates.Events
             var team = body.teamComponent.teamIndex;
 
             bool specialCondition = true;
-            if (body.master.name.Contains("AffixEarthHealerMaster)") || body.master.name == "AffixEarthHealerMaster(Clone)")
+            if (body.master)
             {
-                //Debug.Log("special condition met - affix earth");
-                specialCondition = false;
-            }
-            if(body.master.name.Contains("LemurianBruiserFireMaster") || body.master.name.Contains("LemurianBruiserIceMaster"))
-            {
-                //Debug.Log("special condition met - married");
-                specialCondition = false; 
+                if (body.master.name.Contains("AffixEarthHealerMaster)") || body.master.name == "AffixEarthHealerMaster(Clone)")
+                {
+                    //Debug.Log("special condition met - affix earth");
+                    specialCondition = false;
+                }
+                if (body.master.name.Contains("LemurianBruiserFireMaster") || body.master.name.Contains("LemurianBruiserIceMaster"))
+                {
+                    //Debug.Log("special condition met - married");
+                    specialCondition = false;
+                }
             }
 
             if (!(body.isPlayerControlled || body.bodyFlags == CharacterBody.BodyFlags.Masterless) && !(body.isChampion) && (team == TeamIndex.Monster || team == TeamIndex.Void) && (Util.CheckRoll(80)) && specialCondition)
