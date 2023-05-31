@@ -8,42 +8,51 @@ namespace Moonstorm.Starstorm2.Unlocks.NemCommando
     {
         public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.survivor.nemcommando", SS2Bundle.NemCommando);
 
-        /*public override void Initialize()
-        {
-            AddRequiredType<Survivors.NemCommando>();
-        }*/
-
         public sealed class NemCommandoAchievement : BaseAchievement
         {
-            public BodyIndex nemCommandoBodyIndex
-            {
-                get
-                {
-                    var nemCommandoBodyPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoBody", SS2Bundle.NemCommando);
-                    if (nemCommandoBodyPrefab)
-                    {
-                        return nemCommandoBodyPrefab.GetComponent<CharacterBody>().bodyIndex;
-                    }
-                    return BodyIndex.None;
-                }
-            }
             public override void OnInstall()
             {
                 base.OnInstall();
-                EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal += OnNemCommandoDefeated;
+                base.SetServerTracked(true);
             }
 
             public override void OnUninstall()
             {
-                EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal -= OnNemCommandoDefeated;
                 base.OnUninstall();
             }
 
-            private void OnNemCommandoDefeated(CharacterBody obj)
+            private class NemCommandoServerAchievement : BaseServerAchievement
             {
-                if (obj.bodyIndex == nemCommandoBodyIndex)
+                public BodyIndex nemCommandoBodyIndex
                 {
-                    Grant();
+                    get
+                    {
+                        var nemCommandoBodyPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoBody", SS2Bundle.NemCommando);
+                        if (nemCommandoBodyPrefab)
+                        {
+                            return nemCommandoBodyPrefab.GetComponent<CharacterBody>().bodyIndex;
+                        }
+                        return BodyIndex.None;
+                    }
+                }
+                public override void OnInstall()
+                {
+                    base.OnInstall();
+                    EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal += OnNemCommandoDefeated;
+                }
+
+                public override void OnUninstall()
+                {
+                    EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal -= OnNemCommandoDefeated;
+                    base.OnUninstall();
+                }
+
+                private void OnNemCommandoDefeated(CharacterBody obj)
+                {
+                    if (obj.bodyIndex == nemCommandoBodyIndex)
+                    {
+                        Grant();
+                    }
                 }
             }
         }

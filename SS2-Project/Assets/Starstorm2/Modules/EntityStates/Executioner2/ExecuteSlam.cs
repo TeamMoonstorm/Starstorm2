@@ -87,10 +87,9 @@ namespace EntityStates.Executioner2
             }
             if (fixedAge >= duration)
             {
-                if (wasLiedTo)
-                {
-                    GroundSlamPos(characterBody.footPosition);
-                }
+                //if (wasLiedTo)
+                //by request of ts <3
+                GroundSlamPos(characterBody.footPosition);
                 outer.SetNextStateToMain();
             }
             else
