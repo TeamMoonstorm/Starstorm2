@@ -25,7 +25,7 @@ namespace Moonstorm.Starstorm2.Components
         {
             if (instance)
             {
-                DestroyImmediate(instance);
+                Destroy(instance);
             }
         }
 
@@ -39,7 +39,7 @@ namespace Moonstorm.Starstorm2.Components
         {
             if (instance)
             {
-                DestroyImmediate(instance);
+                Destroy(instance);
             }
 
             instance = Instantiate(Addressables.LoadAssetAsync<GameObject>(AssetPath).WaitForCompletion(), gameObject.transform);
