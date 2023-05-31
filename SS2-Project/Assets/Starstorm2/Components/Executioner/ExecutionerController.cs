@@ -6,7 +6,7 @@ namespace Moonstorm.Starstorm2.Components
 {
     [RequireComponent(typeof(SkillLocator))]
     //[RequireComponent(typeof(CharacterModel))]
-    public class ExecutionerController : NetworkBehaviour, IOnDamageDealtServerReceiver, IOnKilledOtherServerReceiver
+    public class ExecutionerController : NetworkBehaviour, IOnDamageDealtServerReceiver
     {
         private GenericSkill secondary;
         private ModelLocator modelLocator;
@@ -99,13 +99,13 @@ namespace Moonstorm.Starstorm2.Components
                 ionGunSkill.AddOneStock();
         }
 
-        public void OnKilledOtherServer(DamageReport damageReport)
+        /*public void OnKilledOtherServer(DamageReport damageReport)
         {
             if (damageReport.victimBody.HasBuff(SS2Content.Buffs.BuffFear))
             {
                 SkillLocator skillLocator = damageReport.attackerBody.skillLocator;
                 skillLocator.DeductCooldownFromAllSkillsServer(1f);
             }
-        }
+        }*/
     }
 }

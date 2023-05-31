@@ -17,6 +17,7 @@ namespace EntityStates.Executioner2
         private Vector3 flyVector = Vector3.zero;
         public static AnimationCurve speedCoefficientCurve;
         public static float duration = 0.8f;
+        public static float crosshairDur = 0.75f;
 
         public static GameObject jumpEffect;
         public static GameObject jumpEffectMastery;
@@ -25,6 +26,16 @@ namespace EntityStates.Executioner2
         public static string ExhaustR;
 
         private string skinNameToken;
+        private bool hasPlacedCrosshair = false;
+
+        public static GameObject areaIndicator;
+        public static GameObject areaIndicatorOOB;
+
+        [HideInInspector]
+        public static GameObject areaIndicatorInstance;
+
+        [HideInInspector]
+        public static GameObject areaIndicatorInstanceOOB;
 
         private ExecutionerController exeController;
 
@@ -37,7 +48,7 @@ namespace EntityStates.Executioner2
             idealLocalCameraPos = slamCameraPosition,
             wallCushion = 0.1f,
         };
-        public static Vector3 slamCameraPosition = new Vector3(2.6f, -2.0f, -4f);
+        public static Vector3 slamCameraPosition = new Vector3(2.6f, -2.0f, -8f);
         public override void OnEnter()
         {
             base.OnEnter();
@@ -105,14 +116,56 @@ namespace EntityStates.Executioner2
                     priority = 1f
                 };
                 camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0.5f);
+
+                
             }    
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+            if (fixedAge >= duration * crosshairDur && !hasPlacedCrosshair)
+            {
+                hasPlacedCrosshair = true;
+                areaIndicatorInstance = UnityEngine.Object.Instantiate(areaIndicator);
+                areaIndicatorInstanceOOB = UnityEngine.Object.Instantiate(areaIndicatorOOB);
+            }
+
             if (isAuthority)
                 FixedUpdateAuthority();
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            UpdateAreaIndicator();
+        }
+
+        private void UpdateAreaIndicator()
+        {
+            if (areaIndicatorInstance)
+            {
+                float maxDistance = moveSpeedStat * 6.8f;
+
+                Ray aimRay = GetAimRay();
+                RaycastHit raycastHit;
+                if (Physics.Raycast(aimRay, out raycastHit, maxDistance, LayerIndex.CommonMasks.bullet))
+                {
+                    //imAFilthyFuckingLiar = true;
+                    areaIndicatorInstance.SetActive(true);
+                    areaIndicatorInstanceOOB.SetActive(false);
+                    areaIndicatorInstance.transform.position = raycastHit.point;
+                    areaIndicatorInstance.transform.up = raycastHit.normal;
+                }
+                else
+                {
+                    //imAFilthyFuckingLiar = false;
+                    areaIndicatorInstance.SetActive(false);
+                    areaIndicatorInstanceOOB.SetActive(true);
+                    areaIndicatorInstanceOOB.transform.position = aimRay.GetPoint(maxDistance);
+                    areaIndicatorInstanceOOB.transform.up = -aimRay.direction;
+                }
+            }
         }
 
         private void FixedUpdateAuthority()
@@ -149,6 +202,16 @@ namespace EntityStates.Executioner2
             if (cameraTargetParams)
             {
                 cameraTargetParams.RemoveParamsOverride(camOverrideHandle, .1f);
+            }
+
+            if (areaIndicatorInstance)
+            {
+                Destroy(areaIndicatorInstance.gameObject);
+            }
+
+            if (areaIndicatorInstanceOOB)
+            {
+                Destroy(areaIndicatorInstanceOOB.gameObject);
             }
         }
 

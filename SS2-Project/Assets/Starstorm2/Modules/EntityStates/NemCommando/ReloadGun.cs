@@ -64,7 +64,13 @@ namespace EntityStates.NemCommando
             {
                 return;
             }
-            outer.SetNextStateToMain();
+            if (inputBank.skill2.down)
+            {
+                outer.SetNextState(new ShootGun2());
+                skillLocator.secondary.stock -= 1;
+            }
+            else
+                outer.SetNextStateToMain();
         }
 
         public override void OnExit()

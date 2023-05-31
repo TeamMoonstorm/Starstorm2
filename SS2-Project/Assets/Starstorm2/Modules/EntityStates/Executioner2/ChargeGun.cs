@@ -195,7 +195,7 @@ namespace EntityStates.Executioner2
             else
                 timer = 0f;
 
-            if (timer >= timeBetweenStocks && characterBody.skillLocator.secondary.stock < characterBody.skillLocator.secondary.maxStock)
+            if (timer >= timeBetweenStocks * skillLocator.secondary.cooldownScale && characterBody.skillLocator.secondary.stock < characterBody.skillLocator.secondary.maxStock)
             {
                 timer = 0f;
 

@@ -45,7 +45,7 @@ namespace EntityStates.Executioner2
         };
 
         [HideInInspector]
-        public static Vector3 slamCameraPosition = new Vector3(2.6f, -2.0f, -4f);
+        public static Vector3 slamCameraPosition = new Vector3(2.6f, -2.0f, -8f);
 
         public override void OnEnter()
         {
