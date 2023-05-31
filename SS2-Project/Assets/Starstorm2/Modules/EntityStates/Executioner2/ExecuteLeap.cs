@@ -26,6 +26,7 @@ namespace EntityStates.Executioner2
         public static string ExhaustR;
 
         private string skinNameToken;
+        private bool hasPlacedCrosshair = false;
 
         public static GameObject areaIndicator;
         public static GameObject areaIndicatorOOB;
@@ -114,7 +115,7 @@ namespace EntityStates.Executioner2
                     cameraParamsData = slamCameraParams,
                     priority = 1f
                 };
-                camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0.1f);
+                camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0.5f);
 
                 
             }    
@@ -123,8 +124,9 @@ namespace EntityStates.Executioner2
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (fixedAge >= duration * crosshairDur)
+            if (fixedAge >= duration * crosshairDur && !hasPlacedCrosshair)
             {
+                hasPlacedCrosshair = true;
                 areaIndicatorInstance = UnityEngine.Object.Instantiate(areaIndicator);
                 areaIndicatorInstanceOOB = UnityEngine.Object.Instantiate(areaIndicatorOOB);
             }
