@@ -37,9 +37,10 @@ namespace Moonstorm.Starstorm2.Items
         {
             JetBootsBlast = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Effects/OmniEffect/OmniExplosionVFXCommandoGrenade"), "JetBootsBlast", false);
 
-            GameObject.DestroyImmediate(JetBootsBlast.transform.Find("ScaledHitsparks 1").gameObject);
-            GameObject.DestroyImmediate(JetBootsBlast.transform.Find("UnscaledHitsparks 1").gameObject);
-            GameObject.DestroyImmediate(JetBootsBlast.transform.Find("Nova Sphere (1)").gameObject);
+            GameObject.Destroy(JetBootsBlast.transform.Find("ScaledHitsparks 1").gameObject);
+            GameObject.Destroy(JetBootsBlast.transform.Find("UnscaledHitsparks 1").gameObject);
+            GameObject.Destroy(JetBootsBlast.transform.Find("Nova Sphere (1)").gameObject);
+
             GameObject lightobj = JetBootsBlast.transform.Find("Point Light").gameObject;
             if (lightobj)
             {

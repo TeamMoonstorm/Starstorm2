@@ -46,8 +46,25 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 
 **Warning: content spoilers below!**
 
+### 0.4.4
+* General
+    * Instances of "DestroyImmediate" in code have been replaced with Destroy. May fix some crashes.
+* Executioner
+    * Kills on feared enemies no longer grants CDR.
+* Items
+    * Items and equipments should now be properly disabled when using the sweeping item/equip disables.
+    * Fixed a bug where Needles messed up how crits should be handled, and could stack to a ridiculous stack amount. 
+    * Termination's cooldown debuff can no longer be cleared by Blast Shower.
 
-### 0.4.0
+### 0.4.3
+* Executioner
+	* Fixed a bug where Execute would spawn extra indicators.
+	* Thanks TimeSweeper
+
+### 0.4.2
+* Oops
+
+### 0.4.1
 * General
     * Overhauled Executioner and Nemesis Commando entirely. BE SURE TO RESET YOUR CONFIG.
     * Reimplemented survivor-related unlocks. Executioner is intentionally unlocked by default now.

@@ -78,34 +78,40 @@ namespace Moonstorm.Starstorm2.Items
                     {
                         //SS2Log.Info("original if");
                         //doNeedleProc(self); 
-                    //}
-                    //else //what the fuck is this else for again?
-                    //{
+                        //}
+                        //else //what the fuck is this else for again?
+                        //{
                         //SS2Log.Info("original else");
                         //P(A+B) = P(A) + P(B) - P(AB)
+                        int buffCount = self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup);
                         //float intendedChance = attackerBody.crit + (self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) * attackerBody.inventory.GetItemCount(SS2Content.Items.Needles)); //assuming each buff is 1% per items
-                        float intendedChance = attackerBody.crit + (self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) * bonusCrit);
+                        float intendedChance = attackerBody.crit + (buffCount * bonusCrit);
                         float secondChance = (attackerBody.crit - intendedChance) / (attackerBody.crit - 100) * 100;
                         bool secondCrit = Util.CheckRoll(secondChance);
-                        damageInfo.crit = secondCrit;
-                        if (damageInfo.crit && damageInfo.procCoefficient > 0f) //&& damageInfo.damageType != DamageType.DoT
+                        //if (secondCrit)
+                        //{
+                        //    damageInfo.crit = secondCrit;
+                        //}
+                        if (secondCrit && damageInfo.procCoefficient > 0f) //&& damageInfo.damageType != DamageType.DoT
                         {
                             //SS2Log.Info("second if");
-                            doNeedleProc(self); 
+                            doNeedleProc(self);
+                            damageInfo.crit = secondCrit;
                         }
                         else
                         {
                             //SS2Log.Info("second else");
                             //P(A+B) = P(A) + P(B) - P(AB)
                             //intendedChance = attackerBody.crit + (self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) * attackerBody.inventory.GetItemCount(SS2Content.Items.Needles)); //assuming each buff is 1% per items
-                            intendedChance = attackerBody.crit + (self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) * bonusCrit);
+                            intendedChance = attackerBody.crit + (buffCount * bonusCrit);
 
                             secondChance = (attackerBody.crit - intendedChance) / (attackerBody.crit - 100) * 100;
                             secondCrit = Util.CheckRoll(secondChance);
-                            damageInfo.crit = secondCrit;
-                            if (damageInfo.crit && damageInfo.procCoefficient > 0f) //&& damageInfo.damageType != DamageType.DoT
+                            //damageInfo.crit = secondCrit;
+                            if (secondCrit && damageInfo.procCoefficient > 0f) //&& damageInfo.damageType != DamageType.DoT
                             {
                                 //SS2Log.Info("third if");
+                                damageInfo.crit = secondCrit;
                                 doNeedleProc(self);
                             }
                             else
@@ -118,6 +124,16 @@ namespace Moonstorm.Starstorm2.Items
                                     tracker.procs = attackerBody.GetItemCount(SS2Content.Items.Needles) * critsPerStack;
                                     tracker.max = tracker.procs;
                                 }
+                                //self.body.AddBuff(SS2Content.Buffs.BuffNeedleBuildup);
+
+                                SS2Log.Info("buffCount | bonusCrit " + buffCount + " | " + bonusCrit + " | " + attackerBody.crit);
+
+                                if((buffCount * bonusCrit) + attackerBody.crit >= 100)
+                                {
+                                    //damageInfo.damage = damageInfo.damage * 1.1f; //eh this is weird
+                                    doNeedleProc(self);
+                                }
+
                                 self.body.AddBuff(SS2Content.Buffs.BuffNeedleBuildup);
                             }
                         }
