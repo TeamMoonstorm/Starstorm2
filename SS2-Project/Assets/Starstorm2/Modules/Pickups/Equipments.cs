@@ -10,13 +10,14 @@ namespace Moonstorm.Starstorm2.Modules
         public static Equipments Instance { get; private set; }
         public override R2APISerializableContentPack SerializableContentPack => SS2Content.Instance.SerializableContentPack;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigSection = ": Enable All Equipments :", ConfigName = ": Enable All Equipments :", ConfigDesc = "Enables Starstorm 2's equipments. Set to false to disable equipments.")]
-        public static bool EnableEquipments = true;
+        //[ConfigurableField(SS2Config.IDItem, ConfigSection = ": Enable All Equipments :", ConfigName = ": Enable All Equipments :", ConfigDesc = "Enables Starstorm 2's equipments. Set to false to disable equipments.")]
+        public static ConfigEntry<bool> EnableEquipments;
 
         public override void Initialize()
         {
             Instance = this;
             base.Initialize();
+            EnableEquipments = SS2Config.ConfigItem.Bind(": Enable All Equipments :", ": Enable All Equipments :", true, "Enables Starstorm 2's equipments. Set to false to disable all equipments.");
             SS2Log.Info($"Initializing Equipments...");
             GetEquipmentBases();
             GetEliteEquipmentBases();
@@ -56,8 +57,10 @@ namespace Moonstorm.Starstorm2.Modules
             {
                 //string niceName = MSUtil.NicifyString(eqp.GetType().Name);
                 ConfigEntry<bool> enabled = SS2Config.ConfigItem.Bind(niceName, "Enabled", true, "Should this item be enabled?");
-                if (!EnableEquipments || !enabled.Value)
+                SS2Log.Info("EnableEquipments " + EnableEquipments + " | enabled? " + enabled.Value);
+                if (!EnableEquipments.Value || !enabled.Value)
                 {
+                    //SS2Log.Info("Disabling " + niceName);
                     eqp.EquipmentDef.canDrop = false;
                     eqp.EquipmentDef.appearsInSinglePlayer = false;
                     eqp.EquipmentDef.appearsInMultiPlayer = false;
