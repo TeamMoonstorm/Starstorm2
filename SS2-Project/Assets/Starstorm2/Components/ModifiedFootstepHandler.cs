@@ -23,7 +23,7 @@ namespace Moonstorm.Starstorm2.Components
             childLocator = GetComponent<ChildLocator>();
             body = GetComponent<CharacterModel>()?.body;
             animator = GetComponent<Animator>();
-            if (enableFootstepDust)
+            if (enableFootstepDust && footstepDustPrefab)
             {
                 footstepDustInstanceTransform = Instantiate(footstepDustPrefab, transform).transform;
                 footstepDustInstanceParticleSystem = footstepDustInstanceTransform.GetComponent<ParticleSystem>();

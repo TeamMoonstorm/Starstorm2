@@ -36,30 +36,37 @@ namespace Moonstorm.Starstorm2.Survivors
         private void CheckNemmandoMag(On.RoR2.GenericSkill.orig_RecalculateMaxStock orig, GenericSkill self)
         {
             orig(self);
-            if(self.skillNameToken == "SS2_NEMCOMMANDO_SECONDARY_SHOOT_NAME")
+            if (self.characterBody) //this makes sure this function doesnt happen on CaptainSupplyDropSkillDef, because it doesn't have a skillNameToken
             {
-                var body = self.characterBody;
-                if (body)
+                //SS2Log.Info("name token: " + self.characterBody.baseNameToken);
+                if (self.characterBody.baseNameToken == "SS2_NEMCOMMANDO_NAME" || self.characterBody.baseNameToken == "SS2_NEMMANDO_NAME") //so i thought the name would be NEMCOMMANDO but it's NEMMANDO? This is fine, but weird and might get fixed, so I'm gonna put both!
                 {
-                    var token = body.gameObject.GetComponent<NemmandoPistolToken>();
-                    if (!token)
+                    if (self.skillNameToken == "SS2_NEMCOMMANDO_SECONDARY_SHOOT_NAME")
                     {
-                        token = body.gameObject.AddComponent<NemmandoPistolToken>();
-                        token.secondaryStocks = self.maxStock;
-
-                    }
-                    else
-                    {
-                        if (token.secondaryStocks != self.maxStock)
+                        var body = self.characterBody;
+                        if (body)
                         {
-                            //SS2Log.Info("attempting to force reload");
-                            token.secondaryStocks = self.maxStock;
-                            var state = self.stateMachine;
-                            EntityStates.NemCommando.ReloadGun nextState = new EntityStates.NemCommando.ReloadGun();
-                            state.SetNextState(nextState);
+                            var token = body.gameObject.GetComponent<NemmandoPistolToken>();
+                            if (!token)
+                            {
+                                token = body.gameObject.AddComponent<NemmandoPistolToken>();
+                                token.secondaryStocks = self.maxStock;
+
+                            }
+                            else
+                            {
+                                if (token.secondaryStocks != self.maxStock)
+                                {
+                                    //SS2Log.Info("attempting to force reload");
+                                    token.secondaryStocks = self.maxStock;
+                                    var state = self.stateMachine;
+                                    EntityStates.NemCommando.ReloadGun nextState = new EntityStates.NemCommando.ReloadGun();
+                                    state.SetNextState(nextState);
+                                }
+                            }
+
                         }
                     }
-
                 }
             }
             

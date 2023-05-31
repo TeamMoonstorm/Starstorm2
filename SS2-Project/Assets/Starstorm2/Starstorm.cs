@@ -34,6 +34,7 @@ namespace Moonstorm.Starstorm2
         public static bool ScepterInstalled = false;
         public static bool RiskyModInstalled = false;
         public static bool GOTCEInstalled = false;
+        public static bool StageAesthInstalled = false;
 
         public void Awake()
         {
@@ -73,6 +74,7 @@ namespace Moonstorm.Starstorm2
             ScepterInstalled = BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.DestroyedClone.AncientScepter");
             RiskyModInstalled = BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.RiskyLives.RiskyMod");
             GOTCEInstalled = BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.TheBestAssociatedLargelyLudicrousSillyheadGroup.GOTCE");
+            StageAesthInstalled = BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.HIFU.StageAesthetic");
             //if (ScepterInstalled)
             //{
             //    SS2Log.Info("SS2 Compat - Scepter Recognized");

@@ -31,29 +31,31 @@ namespace Moonstorm.Starstorm2.Items
             public void OnKilledOtherServer(DamageReport damageReport)
             {
                 var victim = damageReport.victimBody;
-                var victimEquipment = victim.inventory.GetEquipmentIndex();
-                if (victim.teamComponent.teamIndex != body.teamComponent.teamIndex)
+                if (victim.inventory) 
                 {
-                    if (victim.isElite && victimEquipment != DLC1Content.Equipment.EliteVoidEquipment.equipmentIndex)
-                    {              
-                        
-                        var droneSummon = new MasterSummon();
-                        droneSummon.position = victim.corePosition + (Vector3.up * 3);
-                        droneSummon.masterPrefab = masterPrefab;
-                        droneSummon.summonerBodyObject = body.gameObject;
-                        var droneMaster = droneSummon.Perform();
-                        if (droneMaster)
+                    var victimEquipment = victim.inventory.GetEquipmentIndex();
+                    if (victim.teamComponent.teamIndex != body.teamComponent.teamIndex)
+                    {
+                        if (victim.isElite && victimEquipment != DLC1Content.Equipment.EliteVoidEquipment.equipmentIndex)
                         {
-                            droneMaster.gameObject.AddComponent<MasterSuicideOnTimer>().lifeTimer = baseLifeTime + (stackLifeTime * (stack - 1));
+                            var droneSummon = new MasterSummon();
+                            droneSummon.position = victim.corePosition + (Vector3.up * 3);
+                            droneSummon.masterPrefab = masterPrefab;
+                            droneSummon.summonerBodyObject = body.gameObject;
+                            var droneMaster = droneSummon.Perform();
+                            if (droneMaster)
+                            {
+                                droneMaster.gameObject.AddComponent<MasterSuicideOnTimer>().lifeTimer = baseLifeTime + (stackLifeTime * (stack - 1));
 
-                            CharacterBody droidBody = droneMaster.GetBody();
-                            droidBody.baseDamage *= (baseDamage * stack);
+                                CharacterBody droidBody = droneMaster.GetBody();
+                                droidBody.baseDamage *= (baseDamage * stack);
 
-                            Inventory droidInventory = droneMaster.inventory;
+                                Inventory droidInventory = droneMaster.inventory;
 
-                            droidInventory.SetEquipmentIndex(victimEquipment);
+                                droidInventory.SetEquipmentIndex(victimEquipment);
 
-                            Util.PlaySound("DroidHead", body.gameObject);
+                                Util.PlaySound("DroidHead", body.gameObject);
+                            }
                         }
                     }
                 }

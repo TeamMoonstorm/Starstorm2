@@ -53,6 +53,7 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Reimplemented survivor-related unlocks. Executioner is intentionally unlocked by default now.
     * SS2 Survivors have item displays for all base and SOTV items. 
     * Added significantly more configs, split into individual files. You can now disable events individually, disable equipments, and items that were lacking in configurable options now have them.
+    * Adjusted Typhoon - Now additionally has +25% increased spawn rate and -20% enemy rewards.
     * Added Chinese translation. 
     * Adjusted Cloaking Headband's Russian translation.
     * Commando now correctly fires phase round projectiles in multiplayer with the Stealth skin equipped.
