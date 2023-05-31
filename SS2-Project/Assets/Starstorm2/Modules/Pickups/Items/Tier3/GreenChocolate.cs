@@ -19,11 +19,11 @@ namespace Moonstorm.Starstorm2.Items
 
         [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Base duration of the buff provided by Green Chocolate. (1 = 1 second)")]
         [TokenModifier(token, StatTypes.Default, 2)]
-        public static float baseDuration = 15f;
+        public static float baseDuration = 12f;
 
         [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of the buff gained per stack. (1 = 1 second)")]
         [TokenModifier(token, StatTypes.Default, 3)]
-        public static float stackDuration = 10f;
+        public static float stackDuration = 6f;
 
         [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Percent damage increase from the buff. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 4, "100")]

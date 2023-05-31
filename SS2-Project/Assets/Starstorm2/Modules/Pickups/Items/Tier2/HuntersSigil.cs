@@ -14,7 +14,7 @@ namespace Moonstorm.Starstorm2.Items
 
         [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Base amount of extra armor added.")]
         [TokenModifier(token, StatTypes.Default, 0)]
-        public static float baseArmor = 15;
+        public static float baseArmor = 20;
 
         [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of extra armor added per stack.")]
         [TokenModifier(token, StatTypes.Default, 1)]
@@ -26,15 +26,15 @@ namespace Moonstorm.Starstorm2.Items
 
         [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of extra damage added per stack. (1 = 100%)")]
         [TokenModifier(token, StatTypes.Percentage, 3)]
-        public static float stackDamage = .15f;
+        public static float stackDamage = .10f;
 
         [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Base time the buff lingers for after moving, in seconds.")]
         [TokenModifier(token, StatTypes.Default, 4)]
-        public static float baseLinger = 1.5f;
+        public static float baseLinger = 2f;
 
         [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of extra lingering time added per stack, in seconds.")]
         [TokenModifier(token, StatTypes.Default, 5)]
-        public static float stackLinger = 0.75f;
+        public static float stackLinger = 1f;
 
         public override void Initialize()
         {
