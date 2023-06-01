@@ -1,0 +1,230 @@
+[1mdiff --git a/SS2-Project/Assets/Starstorm2/AssetStorm/Base/Characters/Executioner.meta b/SS2-Project/Assets/Starstorm2/AssetStorm/Base/Characters/Executioner.meta[m
+[1mdeleted file mode 100644[m
+[1mindex 9ae0befc..00000000[m
+[1m--- a/SS2-Project/Assets/Starstorm2/AssetStorm/Base/Characters/Executioner.meta[m
+[1m+++ /dev/null[m
+[36m@@ -1,8 +0,0 @@[m
+[31m-fileFormatVersion: 2[m
+[31m-guid: f84810c64e0923e4c95e113a20036ee3[m
+[31m-folderAsset: yes[m
+[31m-DefaultImporter:[m
+[31m-  externalObjects: {}[m
+[31m-  userData: [m
+[31m-  assetBundleName: [m
+[31m-  assetBundleVariant: [m
+[1mdiff --git a/SS2-Project/Assets/Starstorm2/AssetStorm/InDev/Characters/NemCommando.meta b/SS2-Project/Assets/Starstorm2/AssetStorm/InDev/Characters/NemCommando.meta[m
+[1mdeleted file mode 100644[m
+[1mindex 3e83cfa3..00000000[m
+[1m--- a/SS2-Project/Assets/Starstorm2/AssetStorm/InDev/Characters/NemCommando.meta[m
+[1m+++ /dev/null[m
+[36m@@ -1,8 +0,0 @@[m
+[31m-fileFormatVersion: 2[m
+[31m-guid: 616da8566dab28341a84541bbce45675[m
+[31m-folderAsset: yes[m
+[31m-DefaultImporter:[m
+[31m-  externalObjects: {}[m
+[31m-  userData: [m
+[31m-  assetBundleName: [m
+[31m-  assetBundleVariant: [m
+[1mdiff --git a/SS2-Project/Assets/Starstorm2/Modules/Pickups/Items.cs b/SS2-Project/Assets/Starstorm2/Modules/Pickups/Items.cs[m
+[1mindex 0355bb72..857b5f07 100644[m
+[1m--- a/SS2-Project/Assets/Starstorm2/Modules/Pickups/Items.cs[m
+[1m+++ b/SS2-Project/Assets/Starstorm2/Modules/Pickups/Items.cs[m
+[36m@@ -1,8 +1,11 @@[m
+ ﻿using BepInEx;[m
+ using BepInEx.Configuration;[m
+ using R2API.ScriptableObjects;[m
+[32m+[m[32musing RoR2;[m
+[32m+[m[32musing System;[m
+ using System.Collections.Generic;[m
+ using System.Linq;[m
+[32m+[m[32musing UnityEngine;[m
+ [m
+ namespace Moonstorm.Starstorm2.Modules[m
+ {[m
+[36m@@ -16,29 +19,34 @@[m [mnamespace Moonstorm.Starstorm2.Modules[m
+         //[ConfigurableField(SS2Config.IDItem, ConfigSection = ": Enable All Items :", ConfigName = ": Enable All Items :", ConfigDesc = "Enables Starstorm 2's items. Set to false to disable items.")][m
+         public static ConfigEntry<bool> EnableItem;[m
+ [m
+[32m+[m[32m        private static IEnumerable<ItemBase> items;[m
+         public override void Initialize()[m
+         {[m
+             Instance = this;[m
+             base.Initialize();[m
+             EnableItem = SS2Config.ConfigItem.Bind(": Enable All Items :", ": Enable All Items :", true, "Enables Starstorm 2's items. Set to false to disable all items.");[m
+             SS2Log.Info($"Initializing Items...");[m
+[31m-            GetItemBases();[m
+[32m+[m[32m            items = GetItemBases();[m
+         }[m
+ [m
+[31m-        protected override IEnumerable<ItemBase> GetItemBases()[m
+[32m+[m[32m        [SystemInitializer(typeof(ItemTierCatalog))]  // done for custom tiered items that doesn't work with deprecatedtier. -P[m
+[32m+[m[32m        public static void TierInit()[m
+         {[m
+[31m-            base.GetItemBases()[m
+[31m-                .ToList()[m
+[31m-                .ForEach(item => AddItem(item));[m
+[31m-[m
+[31m-            base.GetItemBases().ToList().ForEach(item => CheckEnabledStatus(item));[m
+[32m+[m[32m            SS2Log.Info($"Post-Initializing Items...");[m
+[32m+[m[32m            items.ToList().ForEach(i => { if (i.ItemDef.deprecatedTier == ItemTier.NoTier) i.ItemDef.tier = ItemTier.NoTier; });[m
+[32m+[m[32m        }[m
+ [m
+[31m-            return null;[m
+[32m+[m[32m        protected override IEnumerable<ItemBase> GetItemBases()[m
+[32m+[m[32m        {[m
+[32m+[m[32m            List<ItemBase> list = base.GetItemBases().ToList();[m
+[32m+[m[32m            list.ForEach(item => AddItem(item));[m
+[32m+[m[32m            list.ForEach(CheckEnabledStatus);[m
+[32m+[m[32m            return list;[m
+         }[m
+ [m
+[31m-        protected void CheckEnabledStatus(ItemBase item)[m
+[32m+[m[32m        public void CheckEnabledStatus(ItemBase item)[m
+         {[m
+[31m-            if (item.ItemDef.deprecatedTier != RoR2.ItemTier.NoTier || item.ItemDef.tier == RoR2.ItemTier.AssignedAtRuntime) //fix for sybl[m
+[32m+[m[32m            if (item.ItemDef.deprecatedTier != ItemTier.NoTier || item.ItemDef.tier == ItemTier.AssignedAtRuntime) //fix for sybl[m
+             {[m
+                 string niceName = MSUtil.NicifyString(item.GetType().Name);[m
+                 ConfigEntry<bool> enabled = SS2Config.ConfigItem.Bind(niceName, "Enabled", true, "Should this item be enabled?");[m
+[36m@@ -46,7 +54,7 @@[m [mnamespace Moonstorm.Starstorm2.Modules[m
+                 if (!EnableItem.Value || !enabled.Value)[m
+                 {[m
+                     //SS2Log.Info("Disabling " + niceName);[m
+[31m-                    item.ItemDef.deprecatedTier = RoR2.ItemTier.NoTier;[m
+[32m+[m[32m                    item.ItemDef.deprecatedTier = ItemTier.NoTier;[m
+                 }[m
+             }[m
+         }[m
+[1mdiff --git a/SS2-Project/Assets/StreamingAssets/Audio/GeneratedSoundBanks/Windows/DecodedBanks/English(US).meta b/SS2-Project/Assets/StreamingAssets/Audio/GeneratedSoundBanks/Windows/DecodedBanks/English(US).meta[m
+[1mindex 80089835..f5348fca 100644[m
+[1m--- a/SS2-Project/Assets/StreamingAssets/Audio/GeneratedSoundBanks/Windows/DecodedBanks/English(US).meta[m
+[1m+++ b/SS2-Project/Assets/StreamingAssets/Audio/GeneratedSoundBanks/Windows/DecodedBanks/English(US).meta[m
+[36m@@ -1,5 +1,5 @@[m
+ fileFormatVersion: 2[m
+[31m-guid: ce3c921b49b8e0047b31cde75c79d72c[m
+[32m+[m[32mguid: eb0c0e95713f8c9468086852717af06e[m
+ folderAsset: yes[m
+ DefaultImporter:[m
+   externalObjects: {}[m
+[1mdiff --git a/SS2-Project/Assets/ThunderKitSettings/EditorInspectorSettings.asset.meta b/SS2-Project/Assets/ThunderKitSettings/EditorInspectorSettings.asset.meta[m
+[1mindex de973700..3b0afcc1 100644[m
+[1m--- a/SS2-Project/Assets/ThunderKitSettings/EditorInspectorSettings.asset.meta[m
+[1m+++ b/SS2-Project/Assets/ThunderKitSettings/EditorInspectorSettings.asset.meta[m
+[36m@@ -1,5 +1,5 @@[m
+ fileFormatVersion: 2[m
+[31m-guid: 3e98879f0d3cfd7438c4dd3ef549c3ab[m
+[32m+[m[32mguid: a4905afb90b157245a7bec36f83ce1c2[m
+ NativeFormatImporter:[m
+   externalObjects: {}[m
+   mainObjectFileID: 11400000[m
+[1mdiff --git a/SS2-Project/Assets/ThunderKitSettings/Logs.meta b/SS2-Project/Assets/ThunderKitSettings/Logs.meta[m
+[1mindex 57ec6874..b150c94b 100644[m
+[1m--- a/SS2-Project/Assets/ThunderKitSettings/Logs.meta[m
+[1m+++ b/SS2-Project/Assets/ThunderKitSettings/Logs.meta[m
+[36m@@ -1,5 +1,5 @@[m
+ fileFormatVersion: 2[m
+[31m-guid: 403ad2f2d169baf418dacf8bd0816244[m
+[32m+[m[32mguid: a70569a4c1ca7f34eaa7ee7f51e16c80[m
+ folderAsset: yes[m
+ DefaultImporter:[m
+   externalObjects: {}[m
+[1mdiff --git a/SS2-Project/Assets/ThunderKitSettings/ThunderKit Extensions.asset.meta b/SS2-Project/Assets/ThunderKitSettings/ThunderKit Extensions.asset.meta[m
+[1mindex 85f85fd3..b3121daa 100644[m
+[1m--- a/SS2-Project/Assets/ThunderKitSettings/ThunderKit Extensions.asset.meta[m	
+[1m+++ b/SS2-Project/Assets/ThunderKitSettings/ThunderKit Extensions.asset.meta[m	
+[36m@@ -1,5 +1,5 @@[m
+ fileFormatVersion: 2[m
+[31m-guid: 4380ead87cf0451439cb262f374f81d2[m
+[32m+[m[32mguid: 0e1858ad83f917d428e95e51ed435867[m
+ NativeFormatImporter:[m
+   externalObjects: {}[m
+   mainObjectFileID: 11400000[m
+[1mdiff --git a/SS2-Project/Assets/ThunderKitSettings/ThunderKitSettings.asset b/SS2-Project/Assets/ThunderKitSettings/ThunderKitSettings.asset[m
+[1mindex 8f94b572..f8c07851 100644[m
+[1m--- a/SS2-Project/Assets/ThunderKitSettings/ThunderKitSettings.asset[m
+[1m+++ b/SS2-Project/Assets/ThunderKitSettings/ThunderKitSettings.asset[m
+[36m@@ -15,7 +15,7 @@[m [mMonoBehaviour:[m
+   FirstLoad: 0[m
+   ShowOnStartup: 1[m
+   GameExecutable: Risk of Rain 2.exe[m
+[31m-  GamePath: E:\SteamLibrary\steamapps\common\Risk of Rain 2[m
+[32m+[m[32m  GamePath: C:\Program Files (x86)\Steam\steamapps\common\Risk of Rain 2[m
+   Is64Bit: 1[m
+   DateTimeFormat: HH:mm:ss:fff[m
+   CreatedDateFormat: MMM/dd HH:mm:ss[m
+[36m@@ -24,8 +24,8 @@[m [mMonoBehaviour:[m
+   ImageCachePath: Library/MarkdownImageCache[m
+   CachedImageCount: 0[m
+   CacheSize: 0[m
+[31m-  MarkdownOpenMode: 0[m
+[31m-  SelectedPipeline: {fileID: 0}[m
+[32m+[m[32m  MarkdownOpenMode: 1[m
+[32m+[m[32m  SelectedPipeline: {fileID: 11400000, guid: 33528692ad1d19c4cb72c9f4687597c9, type: 2}[m
+   SelectedManifest: {fileID: 0}[m
+   QuickAccessPipelines:[m
+   - {fileID: 11400000, guid: 33528692ad1d19c4cb72c9f4687597c9, type: 2}[m
+[1mdiff --git a/SS2-Project/Assets/ThunderkitRelated/Contributor/prod/README.md b/SS2-Project/Assets/ThunderkitRelated/Contributor/prod/README.md[m
+[1mindex a2000d24..4f443d9f 100644[m
+[1m--- a/SS2-Project/Assets/ThunderkitRelated/Contributor/prod/README.md[m
+[1m+++ b/SS2-Project/Assets/ThunderkitRelated/Contributor/prod/README.md[m
+[36m@@ -1,2 +1,26 @@[m
+ # S T A Y C U T E . . . . .[m
+[31m-bro im hella late[m
+\ No newline at end of file[m
+[32m+[m
+[32m+[m
+[32m+[m[32m## post-build build fixes[m
+[32m+[m
+[32m+[m[32m- Remove R2API DLL[m
+[32m+[m[32m- Add manifest[m
+[32m+[m[32m    ```powershell[m
+[32m+[m[32m        New-Item -Path 'C:\Users\User\Desktop\e\Starstorm2\SS2-Project\ThunderKit\AssetBundleStaging\AssetBundleStaging.manifest' -ItemType File[m
+[32m+[m[32m    ```[m
+[32m+[m[32m- Generate Solution in `Edit > Preferences > External Tools > Regenerate Project Files`[m
+[32m+[m[32m- Check for `MMHOOK_CSHARP` (delete if true)[m
+[32m+[m[32m- Add in `Starstorm.csproj`[m
+[32m+[m[32m    ```xml[m
+[32m+[m[32m    <Target Name="CopyDLL" AfterTargets="AfterBuild">[m
+[32m+[m[32m        <Copy SourceFiles="C:\Users\User\Desktop\e\Starstorm2\SS2-Project\Temp\bin\Debug\Starstorm2.dll" DestinationFolder="C:\Users\User\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\profiles\ss2dev\BepInEx\plugins\Starstorm2\plugins" />[m
+[32m+[m[32m    </Target>[m
+[32m+[m[32m    ```[m
+[32m+[m[32m- Paste Assetbundles from build to target (if changed)[m
+[32m+[m
+[32m+[m[32m## honestly[m
+[32m+[m[32m- yeah idk guys like im trying my best to stay positive and get this done but[m[41m [m
+[32m+[m[32m- idk if its thunderkit and all the abstraction layers getting to me, how i was treated as a free volunteer or just an unfortunate sequence of misfortunes but working ss2 kinda sucked all passion i had for ror2 modding lmfao[m
+[32m+[m[32m- like school was definitely 1 thing and getting an actual job was also 1 thing but i did definitely took a break from ror2 and more specifically ss2[m
+[32m+[m[32m-  i couldve definitely crammed everything in if i had the kind of love i had for early rm days i am The Releaser like lol[m
+[32m+[m[32m- no hate to yall obviously, especially zenith ur super cool :3[m
+\ No newline at end of file[m
+[1mdiff --git a/SS2-Project/Assets/ThunderkitRelated/Contributor/prod/prodTestingPath.asset b/SS2-Project/Assets/ThunderkitRelated/Contributor/prod/prodTestingPath.asset[m
+[1mindex 2e698c06..300733a1 100644[m
+[1m--- a/SS2-Project/Assets/ThunderkitRelated/Contributor/prod/prodTestingPath.asset[m
+[1m+++ b/SS2-Project/Assets/ThunderkitRelated/Contributor/prod/prodTestingPath.asset[m
+[36m@@ -12,7 +12,7 @@[m [mMonoBehaviour:[m
+   m_Script: {fileID: 11500000, guid: cebc722807299b54bb8733330087d5e3, type: 3}[m
+   m_Name: Constant[m
+   m_EditorClassIdentifier: [m
+[31m-  Value: C:\Users\User\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\profiles\dev\BepInEx\plugins[m
+[32m+[m[32m  Value: C:\Users\User\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\profiles\ss2dev\BepInEx\plugins[m
+ --- !u!114 &11400000[m
+ MonoBehaviour:[m
+   m_ObjectHideFlags: 0[m
+[1mdiff --git a/SS2-Project/Packages/packages-lock.json b/SS2-Project/Packages/packages-lock.json[m
+[1mindex 45f5b42f..471b7603 100644[m
+[1m--- a/SS2-Project/Packages/packages-lock.json[m
+[1m+++ b/SS2-Project/Packages/packages-lock.json[m
+[36m@@ -213,6 +213,12 @@[m
+       "dependencies": {},[m
+       "hash": "a67190ccc2f91023df00882e6142a3ec0fc9d18f"[m
+     },[m
+[32m+[m[32m    "tristanmcpherson-r2api": {[m
+[32m+[m[32m      "version": "file:R2API",[m
+[32m+[m[32m      "depth": 0,[m
+[32m+[m[32m      "source": "embedded",[m
+[32m+[m[32m      "dependencies": {}[m
+[32m+[m[32m    },[m
+     "com.unity.modules.ai": {[m
+       "version": "1.0.0",[m
+       "depth": 0,[m
