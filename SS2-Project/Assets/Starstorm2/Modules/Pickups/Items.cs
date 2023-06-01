@@ -1,5 +1,6 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
+using Moonstorm.Config;
 using R2API.ScriptableObjects;
 using RoR2;
 using System.Collections.Generic;
@@ -14,15 +15,21 @@ namespace Moonstorm.Starstorm2.Modules
         public BaseUnityPlugin MainClass => Starstorm.instance;
         public override R2APISerializableContentPack SerializableContentPack => SS2Content.Instance.SerializableContentPack;
 
+        public static ConfigurableBool EnableItems = new ConfigurableBool(true)
+        {
+            Section = "Enable All Items",
+            Key = "Enable All Items",
+            Description = "Enables Starstorm 2's items. Set to false to disable all items",
+        }
         //[ConfigurableField(SS2Config.IDItem, ConfigSection = ": Enable All Items :", ConfigName = ": Enable All Items :", ConfigDesc = "Enables Starstorm 2's items. Set to false to disable items.")]
-        public static ConfigEntry<bool> EnableItem;
+        public static ConfigEntry<bool> EnableItems;
 
         private static IEnumerable<ItemBase> items;
         public override void Initialize()
         {
             Instance = this;
             base.Initialize();
-            EnableItem = SS2Config.ConfigItem.Bind(": Enable All Items :", ": Enable All Items :", true, "Enables Starstorm 2's items. Set to false to disable all items.");
+            EnableItems = SS2Config.ConfigItem.Bind(": Enable All Items :", ": Enable All Items :", true, "Enables Starstorm 2's items. Set to false to disable all items.");
             SS2Log.Info($"Initializing Items...");
             items = GetItemBases();
         }
@@ -49,7 +56,7 @@ namespace Moonstorm.Starstorm2.Modules
                 string niceName = MSUtil.NicifyString(item.GetType().Name);
                 ConfigEntry<bool> enabled = SS2Config.ConfigItem.Bind(niceName, "Enabled", true, "Should this item be enabled?");
                 //SS2Log.Info("EnabledItems checking " + item.ItemDef.nameToken );
-                if (!EnableItem.Value || !enabled.Value)
+                if (!EnableItems.Value || !enabled.Value)
                 {
                     //SS2Log.Info("Disabling " + niceName);
                     item.ItemDef.deprecatedTier = ItemTier.NoTier;

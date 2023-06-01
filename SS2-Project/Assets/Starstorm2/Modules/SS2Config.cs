@@ -33,7 +33,7 @@ namespace Moonstorm.Starstorm2
         {
             Section = "General",
             Key = "Unlock All",
-            Description = "setting this to true unlocks all the content in Starstorm 2, excluding skin unlocks.",
+            Description = "Setting this to true unlocks all the content in Starstorm 2, excluding skin unlocks.",
             ModGUID = Starstorm.guid,
             ModName = Starstorm.modName,
             CheckBoxConfig = new CheckBoxConfig
@@ -72,6 +72,17 @@ namespace Moonstorm.Starstorm2
 
             TauntKeybind = Starstorm.instance.Config.Bind("Starstorm 2 :: Keybinds", "Taunt Emote", KeyCode.Alpha2, "Keybind used for the Taunt emote.");
             tauntKeybind = TauntKeybind.Value;// cache it for performance*/
+        }
+
+        /// <summary>
+        /// Just 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="instance"></param>
+        /// <returns></returns>
+        internal static T SetupConfigurableVariable<T>(T instance) where T : ConfigurableVariable
+        {
+            return (T)instance.SetModGUID(Starstorm.guid).SetModName(Starstorm.modName);
         }
     }
     /*

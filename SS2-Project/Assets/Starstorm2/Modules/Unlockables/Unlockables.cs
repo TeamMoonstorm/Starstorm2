@@ -25,7 +25,6 @@ namespace Moonstorm.Starstorm2.Modules
         protected override IEnumerable<UnlockableBase> GetUnlockableBases()
         {
             var allUnlocks = base.GetUnlockableBases();
-            SS2Log.Info($"Unlock all config is {SS2Config.UnlockAll}");
             if (SS2Config.UnlockAll)
             {
                 RemoveAllNonSkinUnlocks();
