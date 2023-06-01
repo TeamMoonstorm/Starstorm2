@@ -54,7 +54,7 @@ namespace Moonstorm.Starstorm2.Items
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float bonusCrit = 1;
 
-        [ConfigurableField(ConfigDesc = "Amount of critical hits allowed per stack. (1 = 1 critical hit per stack before the buff is cleared)")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of critical hits allowed per stack. (1 = 1 critical hit per stack before the buff is cleared)")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static int critsPerStack = 1;
 
@@ -114,7 +114,7 @@ namespace Moonstorm.Starstorm2.Items
                                 damageInfo.crit = secondCrit;
                                 doNeedleProc(self);
                             }
-                            else
+                            else if(attackerBody.crit < 100)
                             {
                                 //SS2Log.Info("third else");
                                 var tracker = self.body.gameObject.GetComponent<NeedleTracker>();
@@ -126,7 +126,7 @@ namespace Moonstorm.Starstorm2.Items
                                 }
                                 //self.body.AddBuff(SS2Content.Buffs.BuffNeedleBuildup);
 
-                                SS2Log.Info("buffCount | bonusCrit " + buffCount + " | " + bonusCrit + " | " + attackerBody.crit);
+                                //SS2Log.Info("buffCount | bonusCrit " + buffCount + " | " + bonusCrit + " | " + attackerBody.crit);
 
                                 if((buffCount * bonusCrit) + attackerBody.crit >= 100)
                                 {
