@@ -1,4 +1,4 @@
-﻿using BepInEx;
+using BepInEx;
 using Moonstorm.Starstorm2.API;
 using R2API;
 using R2API.Utils;
