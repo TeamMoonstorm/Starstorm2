@@ -1,4 +1,11 @@
 # Starstorm 2
+Table of Contents
+
+1. [About](#about)
+2. [Developing/Contributions](#developingcontributions)
+3. [How to clone and develop](#how-to-clone-and-develop)
+4. [Branch Structure](#branch-structure)
+5. [Issues Q&A](#issues-qa)
 
 ## About
 
@@ -48,6 +55,8 @@ That said, if you are looking to contribute to the project, set-up instructions 
 
 | Importer Name | Enabled or Disabled | Extra Config |
 |--|--|--|
+| Check Unity Version | Enabled |  |
+| Disable Assembly Updater | Enabled |  |
 | PostProcessing Unity Package Installer | Enabled |  |
 | TextMeshPro Uninstaller | Enabled |  |
 | Unity GUI Uninstaller | Enabled |  |
@@ -64,11 +73,13 @@ That said, if you are looking to contribute to the project, set-up instructions 
 | Ensure RoR2 Thunderstore Source | Enabled |  |
 | Install BepInEx | Enabled |  |
 | R2API Submodule Installer | Enabled | Hit disable all button, the Serialized Hard Dependencies will stay enabled |
-| Install Ancient Scepter | Enabled |  |
 | Install RoR2MultiplayerHLAPI | Disabled |  |
+| Install Ancient Scepter | Enabled |  |
 | Install RoR2EditorKit | Disabled |  |
-| Install DebugToolkit | Enabled |  |
+| Install Risk of Options | Enabled |  |
 | Get Bitness | Enabled |  |
+| Beep | Enabled |  |
+| Prompt Restart | Enabled |  |
 
 * Select `ThunderKit Settings` and click Browse.
     * Find your RoR2 Executable, select it
@@ -77,6 +88,18 @@ That said, if you are looking to contribute to the project, set-up instructions 
 ![](https://cdn.discordapp.com/attachments/1035279289668616202/1035292666038071296/unknown.png)
 
 * You're now ready to start development.
+
+## Branch Structure
+
+Currently, Starstorm2 has two branches.
+
+* Main: This branch contains the current Minor (IE: 0.4) version on ThunderStore, The branch itself is used exclusively for pushing Patches and Bugfixes.
+* Indev: This branch contains all the new and WIP content for the mod. New content that's going to be added to the next Minor version on ThunderStore. Once the team feels like the amount of content is good enough, this branch is merged into Main.
+
+For contributors, what you need to know is the following:
+
+1. Create pull requests to ``main`` if you wish to submit bugfixes/patches of the current thunderstore version
+2. Create pull requests to ``indev`` if you wish to submit new features/content.
 
 ## Issues Q&A
 
@@ -100,7 +123,17 @@ Q: How do I build?
     * Running the build pipeline should output the built mod into your r2modman profile
 
 Q: Any mods I should have on my r2modman development profile?
-* A: We recommend using the following profile code, as this profile code contains all the dependencies and configuration: ``https://cdn.discordapp.com/attachments/1060999373846229132/1062874434379202620/SS2Dev_1673479382645.r2z``
+* A: We recommend using the following profile code, as this profile code contains all the dependencies and configuration: ``https://cdn.discordapp.com/attachments/1060999373846229132/1113650552266575872/SS2Dev_1685585348913.r2z`
 
 Q: When I build my project using the pipelines no DLL is created
 * A: Check the pipeline log, it usually logs anything and everything regarding issues with the build process, there's also a high chance that a duplicate MMHook assembly (such as AssemblyCSharp mmhook) is causing issues. If this is the case, go into HookGenPatcher's plugins folder and delete MMHOOK_AssemblyCSharp.dll
+
+Q: I fetched origin on my fork, and now i have general instability and/or weird error logs on my console.
+* A: This tends to be normal and usually caused when a dependency is updated on the package's manifest file. we recommend doing the following:
+    * Close your unity project
+    * Go to the project root folder
+    * Open the Packages folder
+    * Select everything on the folder EXCECPT ``manifest.json`` and ``packages-lock.json``
+    * Delete the selected contents
+    * Open your unity project
+    * Reimport your game, remember that the correct import configuration can be found [here](#developingcontributions)

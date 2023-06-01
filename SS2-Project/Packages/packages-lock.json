@@ -13,13 +13,13 @@
       "dependencies": {}
     },
     "com.passivepicasso.thunderkit": {
-      "version": "https://github.com/PassivePicasso/ThunderKit.git#7.1.2",
+      "version": "https://github.com/PassivePicasso/ThunderKit.git#8.0.3",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.unity.scriptablebuildpipeline": "1.16.1"
       },
-      "hash": "2cce48d97a8474e52552c8bd9a362496bcd2766a"
+      "hash": "4e3d3c17593fe72bffe9d8c6d32bb53be948c31e"
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
@@ -48,12 +48,6 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
-    "iharbhd-debugtoolkit": {
-      "version": "file:DebugToolkit",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
     "mmhook-assemblies": {
       "version": "file:mmhook-assemblies",
       "depth": 0,
@@ -62,6 +56,18 @@
     },
     "riskofrain2": {
       "version": "file:Risk of Rain 2",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "riskofthunder-bepinex_gui": {
+      "version": "file:BepInEx_GUI",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "riskofthunder-fixplugintypesserialization": {
+      "version": "file:FixPluginTypesSerialization",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
@@ -174,6 +180,12 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "riskofthunder-ror2bepinexpack": {
+      "version": "file:RoR2BepInExPack",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "riskofthunder-ror2editorkit": {
       "version": "https://github.com/risk-of-thunder/RoR2EditorKit.git#4.0.4",
       "depth": 0,
@@ -188,12 +200,18 @@
       "dependencies": {},
       "hash": "ebe4d6e4a27e4b766b33e5bdd3ab6c7d17518dfb"
     },
+    "rune580-risk_of_options": {
+      "version": "file:Risk_Of_Options",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "teammoonstorm-moonstormsharedutils": {
-      "version": "https://github.com/TeamMoonstorm/MoonstormSharedUtils.git#1.4.1",
+      "version": "https://github.com/TeamMoonstorm/MoonstormSharedUtils.git#1.5.1",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "56fa35e24c27264611b42ba775b0ec4101c656ae"
+      "hash": "a67190ccc2f91023df00882e6142a3ec0fc9d18f"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",

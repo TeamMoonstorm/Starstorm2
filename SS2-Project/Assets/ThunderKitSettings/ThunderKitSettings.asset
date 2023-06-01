@@ -14,14 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FirstLoad: 0
   ShowOnStartup: 1
-  notifyWhenImportCompletes: 1
-  GameExecutable: 
-  GamePath: 
-  Is64Bit: 0
+  GameExecutable: Risk of Rain 2.exe
+  GamePath: E:\SteamLibrary\steamapps\common\Risk of Rain 2
+  Is64Bit: 1
   DateTimeFormat: HH:mm:ss:fff
   CreatedDateFormat: MMM/dd HH:mm:ss
   ShowLogWindow: 1
-  MarkdownOpenMode: 1
+  LogPackageSourceTimings: 0
+  ImageCachePath: Library/MarkdownImageCache
+  CachedImageCount: 0
+  CacheSize: 0
+  MarkdownOpenMode: 0
   SelectedPipeline: {fileID: 0}
   SelectedManifest: {fileID: 0}
   QuickAccessPipelines:
@@ -34,4 +37,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 47f6b8c702866f147881605d9aa112f7, type: 2}
   QuickAccessManifests:
   - {fileID: 11400000, guid: 5ceb1d8ed3af40d4d806e9756b403649, type: 2}
-  ImportConfiguration: {fileID: 0}
+  ImportConfiguration: {fileID: 11400000, guid: b6b10ead92e92524ba3a4e6f3441d5f0,
+    type: 2}
