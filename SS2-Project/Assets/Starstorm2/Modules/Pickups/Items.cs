@@ -56,9 +56,20 @@ namespace Moonstorm.Starstorm2.Modules
             if (item.ItemDef.deprecatedTier != ItemTier.NoTier || item.ItemDef.tier == ItemTier.AssignedAtRuntime) //fix for sybl
             {
                 string niceName = MSUtil.NicifyString(item.GetType().Name);
-                ConfigEntry<bool> enabled = SS2Config.ConfigItem.Bind(niceName, "Enabled", true, "Should this item be enabled?");
+                var cfg = new ConfigurableBool(true)
+                {
+                    Section = niceName,
+                    Key = "Enabled",
+                    Description = "Should this item be enabled",
+                    ConfigFile = SS2Config.ConfigItem,
+                    CheckBoxConfig = new CheckBoxConfig
+                    {
+                        restartRequired = true,
+                        checkIfDisabled = () => !EnableItems,
+                    }
+                }.DoConfigure();
                 //SS2Log.Info("EnabledItems checking " + item.ItemDef.nameToken );
-                if (!EnableItems.Value || !enabled.Value)
+                if (!EnableItems || !cfg)
                 {
                     //SS2Log.Info("Disabling " + niceName);
                     item.ItemDef.deprecatedTier = ItemTier.NoTier;
