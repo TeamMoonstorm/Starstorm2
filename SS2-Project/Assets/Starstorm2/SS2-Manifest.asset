@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StagingPaths:
   - <BuildPath>
+  includeMetaFiles: 0
   files: []
 --- !u!114 &-3892906877110538616
 MonoBehaviour:
@@ -294,7 +295,7 @@ MonoBehaviour:
     - {fileID: 2800000, guid: 5f51e0b22aa8cb84b9f422576ce87ff9, type: 3}
   - assetBundleName: SS2NemCommando
     assets:
-    - {fileID: 102900000, guid: 616da8566dab28341a84541bbce45675, type: 3}
+    - {fileID: 102900000, guid: 2da2c3ce805f34048a21940bffd6e167, type: 3}
   - assetBundleName: SS2Executioner2
     assets:
     - {fileID: 102900000, guid: fdeae74d19fd5cc488d40d33ab8e465b, type: 3}
@@ -312,6 +313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StagingPaths:
   - <BuildPathSoundbanks>
+  includeMetaFiles: 0
   files:
   - {fileID: 102900000, guid: fac793598d1cda244bee02231bc2f101, type: 3}
 --- !u!114 &8324102109481770816
