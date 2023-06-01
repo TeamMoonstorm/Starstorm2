@@ -24,7 +24,7 @@ namespace Moonstorm.Starstorm2.Items
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
         public static float moveSpeedBonus = .21f;
 
-        [ConfigurableField(ConfigDesc = "Max duration of buff, per stack. (1 = 1 second)")]
+        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Max duration of buff, per stack. (1 = 1 second)")]
         [TokenModifier(token, StatTypes.Default, 3)]
         public static float maxDurationStacking = 15;
 
