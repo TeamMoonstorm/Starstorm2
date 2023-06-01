@@ -5,6 +5,7 @@ using R2API.ScriptableObjects;
 using RoR2;
 using System.Collections.Generic;
 using System.Linq;
+using RiskOfOptions.OptionConfigs;
 
 namespace Moonstorm.Starstorm2.Modules
 {
@@ -20,16 +21,17 @@ namespace Moonstorm.Starstorm2.Modules
             Section = "Enable All Items",
             Key = "Enable All Items",
             Description = "Enables Starstorm 2's items. Set to false to disable all items",
-        }
-        //[ConfigurableField(SS2Config.IDItem, ConfigSection = ": Enable All Items :", ConfigName = ": Enable All Items :", ConfigDesc = "Enables Starstorm 2's items. Set to false to disable items.")]
-        public static ConfigEntry<bool> EnableItems;
-
+            CheckBoxConfig = new CheckBoxConfig
+            {
+                restartRequired = true,
+            },
+        };
         private static IEnumerable<ItemBase> items;
         public override void Initialize()
         {
             Instance = this;
+            EnableItems.SetConfigFile(SS2Config.ConfigItem).DoConfigure();
             base.Initialize();
-            EnableItems = SS2Config.ConfigItem.Bind(": Enable All Items :", ": Enable All Items :", true, "Enables Starstorm 2's items. Set to false to disable all items.");
             SS2Log.Info($"Initializing Items...");
             items = GetItemBases();
         }

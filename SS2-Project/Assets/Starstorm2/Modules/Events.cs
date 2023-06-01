@@ -62,8 +62,6 @@ namespace Moonstorm.Starstorm2
                     Key = $"Enable {MSUtil.NicifyString(name)}",
                     Description = "Set to false to disable this event",
                     ConfigFile = SS2Config.ConfigMain,
-                    ModGUID = Starstorm.guid,
-                    ModName = Starstorm.modName,
                     CheckBoxConfig = new CheckBoxConfig
                     {
                         checkIfDisabled = () => !EnableEvents,
@@ -81,8 +79,6 @@ namespace Moonstorm.Starstorm2
                 Key = "Custom Main Menu",
                 Description = "Setting this to false returns the main menu to the original, bright one.",
                 ConfigFile = SS2Config.ConfigMisc,
-                ModGUID = Starstorm.guid,
-                ModName = Starstorm.modName,
             }.AddOnConfigChanged((b) =>
             {
                 if(b)

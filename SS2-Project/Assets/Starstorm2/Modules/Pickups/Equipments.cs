@@ -13,7 +13,7 @@ namespace Moonstorm.Starstorm2.Modules
         public override R2APISerializableContentPack SerializableContentPack => SS2Content.Instance.SerializableContentPack;
 
         //[ConfigurableField(SS2Config.IDItem, ConfigSection = ": Enable All Equipments :", ConfigName = ": Enable All Equipments :", ConfigDesc = "Enables Starstorm 2's equipments. Set to false to disable equipments.")]
-        public static ConfigurableBool EnableEquipments = SS2Config.SetupConfigurableVariable(new ConfigurableBool(true)
+        public static ConfigurableBool EnableEquipments = new ConfigurableBool(true)
         {
             Section = "Enable All Equipments",
             Key = "Enable All Equipments",
@@ -22,7 +22,7 @@ namespace Moonstorm.Starstorm2.Modules
             {
                 restartRequired = true,
             }
-        });
+        };
 
         public override void Initialize()
         {
@@ -47,8 +47,6 @@ namespace Moonstorm.Starstorm2.Modules
                             Section = niceName,
                             Key = "Cooldown",
                             Description = "Cooldown of this equipment in seconds",
-                            ModGUID = Starstorm.guid,
-                            ModName = Starstorm.modName,
                             ConfigFile = SS2Config.ConfigItem,
                             UseStepSlider = false,
                             SliderConfig = new SliderConfig
@@ -90,8 +88,6 @@ namespace Moonstorm.Starstorm2.Modules
                     Key = "Enabled",
                     Description = "Should this equipment be enabled?",
                     ConfigFile = SS2Config.ConfigItem,
-                    ModGUID = Starstorm.guid,
-                    ModName = Starstorm.modName,
                     CheckBoxConfig = new CheckBoxConfig
                     {
                         checkIfDisabled = () => !EnableEquipments,

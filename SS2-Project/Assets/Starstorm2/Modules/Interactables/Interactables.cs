@@ -17,8 +17,6 @@ namespace Moonstorm.Starstorm2.Modules
             Section = "Enable All Interactables",
             Key = "Enable All Interactables",
             Description = "Enables Starstorm 2's interactables. Set to false to disable interactables.",
-            ModGUID = Starstorm.guid,
-            ModName = Starstorm.modName,
             CheckBoxConfig = new CheckBoxConfig
             {
                 restartRequired = true,
@@ -45,8 +43,6 @@ namespace Moonstorm.Starstorm2.Modules
                         Section = "Interactables",
                         Key = interactable.Interactable.ToString(),
                         Description = "Enable/Disable this Interactable",
-                        ModGUID = Starstorm.guid,
-                        ModName = Starstorm.modName,
                         ConfigFile = SS2Config.ConfigMain,
                         CheckBoxConfig = new CheckBoxConfig
                         {
