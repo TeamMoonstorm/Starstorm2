@@ -12,7 +12,7 @@ namespace Moonstorm.Starstorm2
 
         private static int defMonsterCap;
 
-        [ConfigurableField(SS2Config.IDMain, ConfigSection = "Typhoon", ConfigName = "Increase Team Limit", ConfigDesc = "Multiplies the Monster, Lunar, and Void Team maximum size by 2 when enabled. May affect performance.")]
+        [RooConfigurableField(SS2Config.IDMain, ConfigSection = "Typhoon", ConfigName = "Increase Team Limit", ConfigDesc = "Multiplies the Monster, Lunar, and Void Team maximum size by 2 when enabled. May affect performance.")]
         internal static bool IncreaseSpawnCap = true;
 
         internal static void Init()

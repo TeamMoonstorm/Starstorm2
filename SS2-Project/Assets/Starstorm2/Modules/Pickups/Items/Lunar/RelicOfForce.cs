@@ -13,18 +13,18 @@ namespace Moonstorm.Starstorm2.Items
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfForce", SS2Bundle.Items);
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Attack speed reduction and cooldown increase per stack. (1 = 100% slower attack speed and longer cooldowns)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Attack speed reduction and cooldown increase per stack. (1 = 100% slower attack speed and longer cooldowns)")]
         [TokenModifier("SS2_ITEM_RELICOFFORCE_DESC", StatTypes.MultiplyByN, 0, "100")]
         public static float forcePenalty = .4f;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Delay between additional hits. (1 = 1 second)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Delay between additional hits. (1 = 1 second)")]
         public static float hitDelay = .2f;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Increased damage per additional hits. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Increased damage per additional hits. (1 = 100%)")]
         [TokenModifier("SS2_ITEM_RELICOFFORCE_DESC", StatTypes.MultiplyByN, 1, "100")]
         public static float hitIncrease = .05f;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Increased damage cap for additional hits. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Increased damage cap for additional hits. (1 = 100%)")]
         [TokenModifier("SS2_ITEM_RELICOFFORCE_DESC", StatTypes.MultiplyByN, 2, "100")]
         public static float hitMax = 1f;
 
