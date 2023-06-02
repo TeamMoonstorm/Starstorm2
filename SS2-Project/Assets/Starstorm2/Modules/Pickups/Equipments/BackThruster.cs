@@ -7,18 +7,18 @@ namespace Moonstorm.Starstorm2.Equipments
         private const string token = "SS2_EQUIP_BACKTHRUSTER_DESC";
         public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("BackThruster", SS2Bundle.Equipments);
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "How long the Thruster buff lasts, in seconds.")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "How long the Thruster buff lasts, in seconds.")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float thrustDuration = 8f;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Maximum speed bonus from Thruster (1 = 100%)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Maximum speed bonus from Thruster (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
         public static float speedCap = 2f;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "How long it takes to reach maximum speed, in seconds")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "How long it takes to reach maximum speed, in seconds")]
         public static float accel = 1.5f;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Maximum turning angle before losing built up speed")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Maximum turning angle before losing built up speed")]
         public static float maxAngle = 15f;
         public override bool FireAction(EquipmentSlot slot)
         {

@@ -20,7 +20,7 @@ namespace Moonstorm.Starstorm2.Items
         private const string descToken = "SS2_ITEM_BABYTOYS_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("BabyToys", SS2Bundle.Items);
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Levels removed per stack.")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Levels removed per stack.")]
         [TokenModifier(pickupToken, StatTypes.Default, 0)]
         [TokenModifier(descToken, StatTypes.Default, 0)]
         public static int levelReductionPerStack = 3;

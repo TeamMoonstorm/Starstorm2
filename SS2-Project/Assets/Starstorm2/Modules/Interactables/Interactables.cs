@@ -1,6 +1,8 @@
-﻿using R2API.ScriptableObjects;
+﻿using Moonstorm.Config;
+using R2API.ScriptableObjects;
 using System.Collections.Generic;
 using System.Linq;
+using RiskOfOptions.OptionConfigs;
 
 namespace Moonstorm.Starstorm2.Modules
 {
@@ -10,8 +12,17 @@ namespace Moonstorm.Starstorm2.Modules
 
         public override R2APISerializableContentPack SerializableContentPack { get; } = SS2Content.Instance.SerializableContentPack;
 
-        [ConfigurableField(SS2Config.IDMain, ConfigSection = ": Enable All Interactables :", ConfigName = ": Enable All Interactables :", ConfigDesc = "Enables Starstorm 2's interactables. Set to false to disable interactables.")]
-        public static bool EnableInteractables = true;
+        public static ConfigurableBool EnableInteractables = SS2Config.MakeConfigurableBool(true, (b) =>
+        {
+            b.Section = "Enable All Interactables";
+            b.Key = "Enable All Interactables";
+            b.Description = "Enables Starstorm 2's interactables. Set to false to disable interactables.";
+            b.ConfigFile = SS2Config.ConfigMain;
+            b.CheckBoxConfig = new CheckBoxConfig
+            {
+                restartRequired = true,
+            };
+        }).DoConfigure();
 
         public override void Initialize()
         {
@@ -25,7 +36,21 @@ namespace Moonstorm.Starstorm2.Modules
         protected override IEnumerable<InteractableBase> GetInteractableBases()
         {
             base.GetInteractableBases()
-                .Where(interactable => SS2Config.ConfigMain.Bind("Interactables", $"{interactable.Interactable}", true, "Enable/Disable this Interactable").Value)
+                .Where(interactable =>
+                {
+                    return SS2Config.MakeConfigurableBool(true, (b) =>
+                    {
+                        b.Section = "Interactables";
+                        b.Key = interactable.Interactable.ToString();
+                        b.Description = "Enable/Disable this Interactable";
+                        b.ConfigFile = SS2Config.ConfigMain;
+                        b.CheckBoxConfig = new CheckBoxConfig
+                        {
+                            checkIfDisabled = () => !EnableInteractables,
+                            restartRequired = true
+                        };
+                    }).DoConfigure();
+                })
                 .ToList()
                 .ForEach(interactable => AddInteractable(interactable));
             return null;

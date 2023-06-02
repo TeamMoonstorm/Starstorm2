@@ -11,7 +11,7 @@ namespace Moonstorm.Starstorm2.Items
         private const string token = "SS2_ITEM_LOWQUALITYSPEAKERS_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("LowQualitySpeakers", SS2Bundle.Items);
 
-        [ConfigurableField(SS2Config.IDItem, ConfigName = "Maximum Move Speed per Speaker", ConfigDesc = "Maximum amount of move speed per item held.")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigName = "Maximum Move Speed per Speaker", ConfigDesc = "Maximum amount of move speed per item held.")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float bonusMoveSpeed = 0.6f;
 

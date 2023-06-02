@@ -13,7 +13,8 @@ namespace Moonstorm.Starstorm2.Items
 
         //the graveyard
 
-        //[ConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance for Needles to Proc. (100 = 100%)")]
+        //
+        //SS2Config.IDItem, ConfigDesc = "Chance for Needles to Proc. (100 = 100%)")]
         //[ConfigurableField(ConfigDesc = "Chance for Needles to Proc. (100 = 100%)")]
         //[TokenModifier(token, StatTypes.Default, 0)]
         //public static float procChance = 4f;
@@ -50,11 +51,11 @@ namespace Moonstorm.Starstorm2.Items
         //[TokenModifier(token, StatTypes.Default, 4)]
         //public static float needleBuffDuration = 2f;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of bonus critical chance per applied per stack. (1 = 1%")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of bonus critical chance per applied per stack. (1 = 1%")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float bonusCrit = 1;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of critical hits allowed per stack. (1 = 1 critical hit per stack before the buff is cleared)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of critical hits allowed per stack. (1 = 1 critical hit per stack before the buff is cleared)")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static int critsPerStack = 1;
 
