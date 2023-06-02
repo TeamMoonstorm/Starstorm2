@@ -14,11 +14,12 @@ namespace Moonstorm.Starstorm2.Items
 
         public const string token = "SS2_ITEM_NKOTASHERITAGE_DESC";
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Number of items given upon level up per stack.")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Number of items given upon level up per stack.")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static int itemsPerStack = 1;
 
-        //[ConfigurableField(SS2Config.IDItem, ConfigDesc = "Level where white items are removed from the reward pool.")]
+        //
+        //SS2Config.IDItem, ConfigDesc = "Level where white items are removed from the reward pool.")]
         //[TokenModifier(token, StatTypes.Default, 1)]
         //public static int whiteRemovalLevel = 11;
 

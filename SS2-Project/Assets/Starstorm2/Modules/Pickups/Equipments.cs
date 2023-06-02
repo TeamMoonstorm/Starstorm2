@@ -4,6 +4,7 @@ using R2API.ScriptableObjects;
 using System.Collections.Generic;
 using System.Linq;
 using RiskOfOptions.OptionConfigs;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Moonstorm.Starstorm2.Modules
 {
@@ -12,23 +13,22 @@ namespace Moonstorm.Starstorm2.Modules
         public static Equipments Instance { get; private set; }
         public override R2APISerializableContentPack SerializableContentPack => SS2Content.Instance.SerializableContentPack;
 
-        //[ConfigurableField(SS2Config.IDItem, ConfigSection = ": Enable All Equipments :", ConfigName = ": Enable All Equipments :", ConfigDesc = "Enables Starstorm 2's equipments. Set to false to disable equipments.")]
-        public static ConfigurableBool EnableEquipments = new ConfigurableBool(true)
+        public static ConfigurableBool EnableEquipments = SS2Config.MakeConfigurableBool(true, (b) =>
         {
-            Section = "Enable All Equipments",
-            Key = "Enable All Equipments",
-            Description = "Enables Starstorm 2's equipments. Set to false to disable all equipments.",
-            CheckBoxConfig = new CheckBoxConfig
+            b.Section = "Enable All Equipments";
+            b.Key = "Enable All Equipments";
+            b.Description = "Enables Starstorm 2's equipments. Set to false to disable all equipments.";
+            b.ConfigFile = SS2Config.ConfigItem;
+            b.CheckBoxConfig = new CheckBoxConfig
             {
                 restartRequired = true,
-            }
-        };
+            };
+        }).DoConfigure();
 
         public override void Initialize()
         {
             Instance = this;
             base.Initialize();
-            EnableEquipments.SetConfigFile(SS2Config.ConfigItem).DoConfigure();
             SS2Log.Info($"Initializing Equipments...");
             GetEquipmentBases();
             GetEliteEquipmentBases();
@@ -42,22 +42,22 @@ namespace Moonstorm.Starstorm2.Modules
                     if (eqp.EquipmentDef.cooldown != 0)
                     {
                         string niceName = MSUtil.NicifyString(eqp.GetType().Name);
-                        var cfg = new ConfigurableFloat(eqp.EquipmentDef.cooldown)
+                        var cfg = SS2Config.MakeConfigurableFloat(eqp.EquipmentDef.cooldown, (f) =>
                         {
-                            Section = niceName,
-                            Key = "Cooldown",
-                            Description = "Cooldown of this equipment in seconds",
-                            ConfigFile = SS2Config.ConfigItem,
-                            UseStepSlider = false,
-                            SliderConfig = new SliderConfig
+                            f.Section = niceName;
+                            f.Key = "Cooldown";
+                            f.Description = "Cooldown of this equipment in seconds";
+                            f.ConfigFile = SS2Config.ConfigItem;
+                            f.UseStepSlider = false;
+                            f.OnConfigChanged += (f1) => eqp.EquipmentDef.cooldown = f1;
+                            f.SliderConfig = new SliderConfig
                             {
                                 checkIfDisabled = () => !EnableEquipments,
                                 min = 0,
                                 max = 600,
                                 formatString = "{0:0.0}",
-                            }
-                        };
-                        cfg.OnConfigChanged += (f) => eqp.EquipmentDef.cooldown = f;
+                            };
+                        });
                         cfg.DoConfigure();
                     }
                     AddEquipment(eqp);
@@ -82,18 +82,18 @@ namespace Moonstorm.Starstorm2.Modules
             if (!(eqp.EquipmentDef.dropOnDeathChance > 0 || eqp.EquipmentDef.passiveBuffDef || niceName.ToLower().Contains("affix")))
             {
                 //string niceName = MSUtil.NicifyString(eqp.GetType().Name);
-                var cfg = new ConfigurableBool(true)
+                var cfg = SS2Config.MakeConfigurableBool(true, b =>
                 {
-                    Section = niceName,
-                    Key = "Enabled",
-                    Description = "Should this equipment be enabled?",
-                    ConfigFile = SS2Config.ConfigItem,
-                    CheckBoxConfig = new CheckBoxConfig
+                    b.Section = niceName;
+                    b.Key = "Enabled";
+                    b.Description = "Should this equipment be enabled?";
+                    b.ConfigFile = SS2Config.ConfigItem;
+                    b.CheckBoxConfig = new CheckBoxConfig
                     {
                         checkIfDisabled = () => !EnableEquipments,
                         restartRequired = true
-                    }
-                }.DoConfigure();
+                    };
+                }).DoConfigure();
 #if DEBUG
                 SS2Log.Info("EnableEquipments " + EnableEquipments + " | enabled? " + cfg);
 #endif

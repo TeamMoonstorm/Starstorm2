@@ -11,22 +11,22 @@ namespace Moonstorm.Starstorm2.Items
         private const string token = "SS2_ITEM_JETBOOTS_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("JetBoots", SS2Bundle.Items);
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Base radius of Prototype Jet Boot's explosion, in meters.")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Base radius of Prototype Jet Boot's explosion, in meters.")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float baseRadius = 7.5f;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Stacking radius of Prototype Jet Boots' explosion, in meters.")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Stacking radius of Prototype Jet Boots' explosion, in meters.")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static float stackRadius = 2.5f;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Maximum radius of Prototype Jet Boots' explosion, in meters.")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Maximum radius of Prototype Jet Boots' explosion, in meters.")]
         public static float maxRadius = 15f;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Base damage of Prototype Jet Boots' explosion. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Base damage of Prototype Jet Boots' explosion. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
         public static float baseDamage = 1.5f;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Stacking damage of Prototype Jet Boots' explosion. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Stacking damage of Prototype Jet Boots' explosion. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 3, "100")]
         public static float stackDamage = 1.0f;
 

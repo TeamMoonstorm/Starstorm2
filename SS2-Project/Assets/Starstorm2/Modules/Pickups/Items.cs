@@ -6,6 +6,7 @@ using RoR2;
 using System.Collections.Generic;
 using System.Linq;
 using RiskOfOptions.OptionConfigs;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Moonstorm.Starstorm2.Modules
 {
@@ -16,21 +17,22 @@ namespace Moonstorm.Starstorm2.Modules
         public BaseUnityPlugin MainClass => Starstorm.instance;
         public override R2APISerializableContentPack SerializableContentPack => SS2Content.Instance.SerializableContentPack;
 
-        public static ConfigurableBool EnableItems = new ConfigurableBool(true)
+        public static ConfigurableBool EnableItems = SS2Config.MakeConfigurableBool(true, b =>
         {
-            Section = "Enable All Items",
-            Key = "Enable All Items",
-            Description = "Enables Starstorm 2's items. Set to false to disable all items",
-            CheckBoxConfig = new CheckBoxConfig
+            b.Section = "Enable All Items";
+            b.Key = "Enable All Items";
+            b.Description = "Enables Starstorm 2's items. Set to false to disable all items";
+            b.ConfigFile = SS2Config.ConfigItem;
+            b.CheckBoxConfig = new CheckBoxConfig
             {
                 restartRequired = true,
-            },
-        };
+            };
+        }).DoConfigure();
+
         private static IEnumerable<ItemBase> items;
         public override void Initialize()
         {
             Instance = this;
-            EnableItems.SetConfigFile(SS2Config.ConfigItem).DoConfigure();
             base.Initialize();
             SS2Log.Info($"Initializing Items...");
             items = GetItemBases();
@@ -56,18 +58,18 @@ namespace Moonstorm.Starstorm2.Modules
             if (item.ItemDef.deprecatedTier != ItemTier.NoTier || item.ItemDef.tier == ItemTier.AssignedAtRuntime) //fix for sybl
             {
                 string niceName = MSUtil.NicifyString(item.GetType().Name);
-                var cfg = new ConfigurableBool(true)
+                var cfg = SS2Config.MakeConfigurableBool(true, b =>
                 {
-                    Section = niceName,
-                    Key = "Enabled",
-                    Description = "Should this item be enabled",
-                    ConfigFile = SS2Config.ConfigItem,
-                    CheckBoxConfig = new CheckBoxConfig
+                    b.Section = niceName;
+                    b.Key = "Enabled";
+                    b.Description = "Should this item be enabled";
+                    b.ConfigFile = SS2Config.ConfigItem;
+                    b.CheckBoxConfig = new CheckBoxConfig
                     {
                         restartRequired = true,
                         checkIfDisabled = () => !EnableItems,
-                    }
-                }.DoConfigure();
+                    };
+                }).DoConfigure();
                 //SS2Log.Info("EnabledItems checking " + item.ItemDef.nameToken );
                 if (!EnableItems || !cfg)
                 {

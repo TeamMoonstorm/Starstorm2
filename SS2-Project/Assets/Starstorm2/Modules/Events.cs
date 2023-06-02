@@ -6,14 +6,24 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using RiskOfOptions.OptionConfigs;
 using Object = UnityEngine.Object;
+using BepInEx.Configuration;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Moonstorm.Starstorm2
 {
     public static class Events
     {
-
-        [ConfigurableField(SS2Config.IDMain, ConfigSection = "Events", ConfigName = ": Enable Events :", ConfigDesc = "Enables Starstorm 2's random events, including storms. Set to false to disable events.")]
-        public static bool EnableEvents = true;
+        public static ConfigurableBool EnableEvents = SS2Config.MakeConfigurableBool(true, b =>
+        {
+            b.Section = "Events";
+            b.Key = "Enable Events";
+            b.Description = "Enables Starstorm 2's random events, including storms. Set to false to disable events.";
+            b.ConfigFile = SS2Config.ConfigMain;
+            b.CheckBoxConfig = new CheckBoxConfig
+            {
+                restartRequired = true
+            };
+        }).DoConfigure();
 
         /// <summary>
         /// Class for aiding Nemesis invasion creation for 3rd Parties.
@@ -56,40 +66,41 @@ namespace Moonstorm.Starstorm2
             if (EnableEvents) foreach (var evt in SS2Assets.LoadAllAssetsOfType<EventCard>(SS2Bundle.Events))
             {
                 string name = evt.name;
-                var cfg = new ConfigurableBool(true)
+                var cfg = SS2Config.MakeConfigurableBool(true, b =>
                 {
-                    Section = "Events",
-                    Key = $"Enable {MSUtil.NicifyString(name)}",
-                    Description = "Set to false to disable this event",
-                    ConfigFile = SS2Config.ConfigMain,
-                    CheckBoxConfig = new CheckBoxConfig
+                    b.Section = "Events";
+                    b.Key = $"Enable {MSUtil.NicifyString(name)}";
+                    b.Description = "Set to false to disable this event";
+                    b.ConfigFile = SS2Config.ConfigMain;
+                    b.CheckBoxConfig = new CheckBoxConfig
                     {
                         checkIfDisabled = () => !EnableEvents,
                         restartRequired = true,
-                    }
-                }.DoConfigure();
+                    };
+                }).DoConfigure();
 
                 if (cfg)
                     EventCatalog.AddCard(evt);
             }
 
-            new ConfigurableBool(true)
+            SS2Config.MakeConfigurableBool(true, b =>
             {
-                Section = "Visuals",
-                Key = "Custom Main Menu",
-                Description = "Setting this to false returns the main menu to the original, bright one.",
-                ConfigFile = SS2Config.ConfigMisc,
-            }.AddOnConfigChanged((b) =>
-            {
-                if(b)
+                b.Section = "Visuals";
+                b.Key = "Custom Main Menu";
+                b.Description = "Setting this to false returns the main menu to the original, bright one.";
+                b.ConfigFile = SS2Config.ConfigMisc;
+                b.OnConfigChanged += b1 =>
                 {
-                    SceneManager.sceneLoaded -= StormOnMenu;
-                    SceneManager.sceneLoaded += StormOnMenu;
-                }
-                else
-                {
-                    SceneManager.sceneLoaded -= StormOnMenu;
-                }
+                    if (b1)
+                    {
+                        SceneManager.sceneLoaded -= StormOnMenu;
+                        SceneManager.sceneLoaded += StormOnMenu;
+                    }
+                    else
+                    {
+                        SceneManager.sceneLoaded -= StormOnMenu;
+                    }
+                };
             }).DoConfigure();
         }
 

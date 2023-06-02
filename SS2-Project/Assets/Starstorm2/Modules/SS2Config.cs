@@ -34,6 +34,8 @@ namespace Moonstorm.Starstorm2
             Section = "General",
             Key = "Unlock All",
             Description = "Setting this to true unlocks all the content in Starstorm 2, excluding skin unlocks.",
+            ModGUID = Starstorm.guid,
+            ModName = Starstorm.modName,
             CheckBoxConfig = new CheckBoxConfig
             {
                 restartRequired = true,
