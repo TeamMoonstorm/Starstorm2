@@ -109,6 +109,8 @@ namespace Moonstorm.Starstorm2
 
             public static EquipmentDef EliteKineticEquipment;
 
+            public static EquipmentDef equipDivineRight;
+
             public static EquipmentDef BackThruster;
 
             public static EquipmentDef CloakingHeadband;
@@ -286,6 +288,8 @@ namespace Moonstorm.Starstorm2
 				
                 Typhoon.Init,
                 Events.Init,
+                Ethereal.Init,
+                Bulwark.Init,
 				
                 //delegate
                 //{

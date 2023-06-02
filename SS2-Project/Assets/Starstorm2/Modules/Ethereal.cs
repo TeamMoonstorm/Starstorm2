@@ -37,7 +37,7 @@ namespace Moonstorm.Starstorm2
 
             //DISABLING ALL OF THIS CONTENT IS AS SIMPLE AS JUST DISABLING THIS HOOK!!!
             //obv won't prevent content loading - that should go without saying, but will make it all inaccessible by player via standard gameplay
-            //On.RoR2.SceneDirector.Start += SceneDirector_Start;
+            On.RoR2.SceneDirector.Start += SceneDirector_Start;
         }
 
         private static void Run_onRunStartGlobal(Run run)
@@ -57,8 +57,6 @@ namespace Moonstorm.Starstorm2
 
         private static void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)
         {
-            orig(self);
-
             if (self.teleporterInstance)
             {
                 var position = Vector3.zero;
@@ -147,6 +145,8 @@ namespace Moonstorm.Starstorm2
                         break;
                 }
                 var term = Object.Instantiate(SS2Assets.LoadAsset<GameObject>("ShrineEthereal", SS2Bundle.Indev), position, rotation);
+                Debug.Log("placed shrine at: " + position + "pos & " + rotation + "rot");
+                orig(self);
             }
 
             Debug.Log("completed ethereals: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
