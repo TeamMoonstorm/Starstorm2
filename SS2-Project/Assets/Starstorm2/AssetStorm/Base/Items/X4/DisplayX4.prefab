@@ -46,14 +46,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rendererInfos:
   - renderer: {fileID: 2193795084610499159}
-    defaultMaterial: {fileID: 2100000, guid: 15d3f8478538942449dd2cb240a271c1, type: 2}
+    defaultMaterial: {fileID: 2100000, guid: d2877ec60a6f4c849824800fde0bbb7c, type: 2}
     defaultShadowCastingMode: 1
-    ignoreOverlays: 1
+    ignoreOverlays: 0
     hideOnDeath: 0
   - renderer: {fileID: 2193795084610499159}
-    defaultMaterial: {fileID: 2100000, guid: 040223aafd62de747bef20ea75e4a694, type: 2}
+    defaultMaterial: {fileID: 2100000, guid: f28df4bc656849c4f94cd38fa7e7a6c9, type: 2}
     defaultShadowCastingMode: 1
-    ignoreOverlays: 1
+    ignoreOverlays: 0
     hideOnDeath: 0
   hideOnDeathObjects: []
 --- !u!1 &6212907227188380861
@@ -114,8 +114,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 15d3f8478538942449dd2cb240a271c1, type: 2}
-  - {fileID: 2100000, guid: 040223aafd62de747bef20ea75e4a694, type: 2}
+  - {fileID: 2100000, guid: f28df4bc656849c4f94cd38fa7e7a6c9, type: 2}
+  - {fileID: 2100000, guid: d2877ec60a6f4c849824800fde0bbb7c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -21,15 +21,15 @@ namespace Moonstorm.Starstorm2.Survivors
         {
             List<string> defaultBodyNames = new List<string>
             {
-                "BrotherGlassBody",
+                //"BrotherGlassBody",
                 "BrotherHurtBody",
                 "ScavLunar1Body",
                 "ScavLunar2Body",
                 "ScavLunar3Body",
                 "ScavLunar4Body",
-                "ShopkeeperBody",
-                "SuperRoboBallBossBody",
-                "DireseekerBossBody"
+                "ShopkeeperBody"
+                //"SuperRoboBallBossBody",
+                //"DireseekerBossBody"
             };
 
             foreach(string bodyName in defaultBodyNames)

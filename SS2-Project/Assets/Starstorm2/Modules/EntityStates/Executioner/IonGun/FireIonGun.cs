@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace EntityStates.Executioner
 {
@@ -26,11 +27,11 @@ namespace EntityStates.Executioner
         public static GameObject ionEffectPrefab;
 
         [HideInInspector]
-        public static GameObject muzzlePrefab = LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/Muzzleflashes/MuzzleflashHuntressFlurry");
+        public static GameObject muzzlePrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/MuzzleflashFMJ.prefab").WaitForCompletion();
         [HideInInspector]
-        public static GameObject tracerPrefab = LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/Tracers/TracerCommandoDefault");
+        public static GameObject tracerPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/TracerCommandoShotgun.prefab").WaitForCompletion();
         [HideInInspector]
-        public static GameObject hitPrefab = LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/HitsparkCommando");
+        public static GameObject hitPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/HitsparkCommandoShotgun.prefab").WaitForCompletion();
 
         public int shotsFired = 0;
 
@@ -46,8 +47,7 @@ namespace EntityStates.Executioner
             EffectManager.SimpleMuzzleFlash(muzzlePrefab, gameObject, muzzleString, false);
 
             Shoot();
-            if (!characterBody.HasBuff(SS2Content.Buffs.BuffExecutionerSuperCharged) && !characterBody.HasBuff(SS2Content.Buffs.BuffExecutionerArmor))
-                activatorSkillSlot.DeductStock(1);
+            activatorSkillSlot.DeductStock(1);
             shotsFired++;
         }
 

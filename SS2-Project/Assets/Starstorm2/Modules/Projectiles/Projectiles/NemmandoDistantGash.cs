@@ -5,7 +5,7 @@ namespace Moonstorm.Starstorm2.Projectiles
 {
     public sealed class NemmandoDistantGash : ProjectileBase
     {
-        public override GameObject ProjectilePrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemCommandoSwordBeamProjectile", SS2Bundle.Nemmando);
+        public override GameObject ProjectilePrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemCommandoSwordBeamProjectile", SS2Bundle.NemCommando);
 
         public override void Initialize()
         {

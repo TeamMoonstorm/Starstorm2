@@ -9,21 +9,25 @@ namespace Moonstorm.Starstorm2.Items
         private const string token = "SS2_ITEM_DETRITIVETREMATODE_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("DetritiveTrematode", SS2Bundle.Items);
 
-        [ConfigurableField(ConfigName = "Trematode Threshold", ConfigDesc = "Amount of missing health needed for Trematode to proc. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigName = "Trematode Threshold", ConfigDesc = "Amount of missing health needed for Trematode to proc. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float missingHealthPercentage = 0.25f;
 
-        [ConfigurableField(ConfigDesc = "Movement speed reduction received from the Trematode debuff. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Damage dealt by the Trematode debuff, per second. (1 = 100%)")]
+        [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
+        public static float trematodeDamage = 1f;
+
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Movement speed reduction received from the Trematode debuff. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
         public static float trematodeSlow = 0.2f;
 
-        //[ConfigurableField(ConfigDesc = "Duration of Trematode debuff, in seconds.")]
+        //[ConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of Trematode debuff, in seconds.")]
         //[TokenModifier(token, StatTypes.Default, 3)]
         //public static float dotDuration = 4;
 
-        [ConfigurableField(ConfigDesc = "Damage dealt by the Trematode debuff, per second. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
-        public static float trematodeDamage = 1f;
+        //[ConfigurableField(SS2Config.IDItem, ConfigDesc = "Damage dealt by the Trematode debuff, per second. (1 = 100%)")]
+        //[TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
+        //public static float trematodeDamage = 1f;
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
         {

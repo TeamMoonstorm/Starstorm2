@@ -13,69 +13,52 @@ namespace EntityStates.NemCommando
     //★ idk what's going on but i don't think i broke nor fixed whatever you did
     class SwingSword2 : BasicMeleeAttack, SteppedSkillDef.IStepSetter
     {
-        public static float swingTimeCoefficient = 1f;
+        public static float swingTimeCoefficient = 1.71f;
         [TokenModifier("SS2_NEMMANDO_PRIMARY_BLADE_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
         public static float TokenModifier_dmgCoefficient => new SwingSword2().damageCoefficient;
         public int swingSide;
         private string skinNameToken;
-        private bool hasPlayedVFX = false;
-
-        //bad. nasty. bad.
 
         public override void OnEnter()
         {
-            base.OnEnter();
-            animator = GetModelAnimator();
-
             skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
 
-            if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
-            {
-                swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffectYellow", SS2Bundle.Nemmando);
-            }
-            if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO")
-            {
-                swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffectBlue", SS2Bundle.Nemmando);
-            }
-            else
-            {
-                swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffect", SS2Bundle.Nemmando);
-            }
-        }
+            //red default
+            swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffect", SS2Bundle.NemCommando);
+            hitEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemmandoImpactSlashEffect", SS2Bundle.NemCommando);
 
-        public override void OnExit()
-        {
-            base.OnExit();
-            string animationStateNameEnd = (swingSide == 0) ? "endPrimary1Tree" : "endPrimary2Tree";
+            //overrides
+            if (skinNameToken != "SS2_SKIN_NEMCOMMANDO_DEFAULT" && skinNameToken != "SS2_SKIN_NEMCOMMANDO_GRANDMASTERY")
+            {
+                //Yellow
+                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
+                {
+                    swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffectYellow", SS2Bundle.NemCommando);
+                    hitEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoImpactSlashEffectYellow", SS2Bundle.NemCommando);
+                }
+                //Blue
+                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO")
+                {
+                    swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffectBlue", SS2Bundle.NemCommando);
+                    hitEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoImpactSlashEffectBlue", SS2Bundle.NemCommando);
+                }
+            }
 
-            if (!animator.GetBool("isRolling")) 
-                PlayCrossfade("Gesture, Override", animationStateNameEnd, "Primary.playbackRate", duration * swingTimeCoefficient, 0.3f);
-            
+            base.OnEnter();
+
+            animator = GetModelAnimator();
         }
 
         public override void PlayAnimation()
         {
-            string animationStateName = (swingSide == 0) ? "Primary1Tree" : "Primary2Tree";
-
-            if (!animator.GetBool("isRolling"))
-                PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.3f);
+            string animationStateName = (swingSide == 0) ? "Primary1TreeNew" : "Primary2TreeNew";
+            PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.01f);   
         }
 
         void SteppedSkillDef.IStepSetter.SetStep(int i)
         {
             swingSide = i;
             swingEffectMuzzleString = (swingSide == 0) ? "SwingLeft" : "SwingRight";
-        }
-
-        public override void FixedUpdate()
-        {
-            base.FixedUpdate();
-
-            if (characterBody.attackSpeed >= 1.45f && fixedAge >= 0.1 && !hasPlayedVFX) //bad
-            {
-                hasPlayedVFX = true;
-                BeginMeleeAttackEffect();
-            }
         }
 
         public override void OnSerialize(NetworkWriter writer)
@@ -91,7 +74,7 @@ namespace EntityStates.NemCommando
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.PrioritySkill;
+            return InterruptPriority.Skill;
         }
 
         public override void AuthorityModifyOverlapAttack(OverlapAttack overlapAttack)

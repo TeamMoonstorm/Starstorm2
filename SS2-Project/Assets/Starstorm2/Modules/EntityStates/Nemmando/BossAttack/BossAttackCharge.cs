@@ -1,4 +1,5 @@
-﻿using RoR2;
+﻿using Moonstorm.Starstorm2;
+using RoR2;
 using UnityEngine;
 
 namespace EntityStates.Nemmando
@@ -21,6 +22,7 @@ namespace EntityStates.Nemmando
         private float minEmission;
         private GameObject chargeEffectInstance;
         private Transform areaIndicator;
+        private string skinNameToken;
 
         public CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
         private CharacterCameraParamsData decisiveCameraParams = new CharacterCameraParamsData
@@ -46,6 +48,28 @@ namespace EntityStates.Nemmando
             if (chargeEffect)
             {
                 Transform chargeTransform = childLocator.FindChild(childName);
+
+                skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
+
+                if (skinNameToken != "SS2_SKIN_NEMCOMMANDO_DEFAULT" && skinNameToken != "SS2_SKIN_NEMCOMMANDO_GRANDMASTERY")
+                {
+                    //Yellow
+                    if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
+                    {
+                        chargeEffect = SS2Assets.LoadAsset<GameObject>("DecisiveStrikeChargeYellow", SS2Bundle.NemCommando);
+                    }
+                    //Blue
+                    if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO")
+                    {
+                        chargeEffect = SS2Assets.LoadAsset<GameObject>("DecisiveStrikeChargeBlue", SS2Bundle.NemCommando);
+                    }
+                }
+                //Red
+                else
+                {
+                    chargeEffect = SS2Assets.LoadAsset<GameObject>("DecisiveStrikeChargeNew", SS2Bundle.NemCommando);
+                }
+
                 chargeEffectInstance = Object.Instantiate(chargeEffect, chargeTransform);
                 //I hate this code but it just works
                 if ((bool)chargeEffectInstance)

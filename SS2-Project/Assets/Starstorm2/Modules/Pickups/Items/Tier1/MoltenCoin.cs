@@ -8,9 +8,17 @@ namespace Moonstorm.Starstorm2.Items
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("MoltenCoin", SS2Bundle.Items);
 
-        [ConfigurableField(ConfigDesc = "Chance for Molten Coin to Proc. (100 = 100%)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance for Molten Coin to Proc. (100 = 100%)")]
         [TokenModifier("SS2_ITEM_MOLTENCOIN_DESC", StatTypes.Default, 0)]
         public static float procChance = 6f;
+
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Base Damage per stack. (1 = 100%)")]
+        [TokenModifier("SS2_ITEM_MOLTENCOIN_DESC", StatTypes.MultiplyByN, 1, "100")]
+        public static float damageCoeff = 1f;
+
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Coin gain on proc. Scales with time. (1 = 1$)")]
+        [TokenModifier("SS2_ITEM_MOLTENCOIN_DESC", StatTypes.Default, 2)]
+        public static int coinGain = 1;
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
         {
@@ -28,12 +36,13 @@ namespace Moonstorm.Starstorm2.Items
                             victimObject = report.victim.gameObject,
                             dotIndex = DotController.DotIndex.Burn,
                             duration = report.damageInfo.procCoefficient * 4f,
-                            damageMultiplier = stack
+                            damageMultiplier = stack * damageCoeff
                         };
                         StrengthenBurnUtils.CheckDotForUpgrade(report.attackerBody.inventory, ref dotInfo);
                         DotController.InflictDot(ref dotInfo);
 
-                        body.master.GiveMoney((uint)(stack * (Run.instance.stageClearCount + (1 * 1f))));
+                        body.master.GiveMoney((uint)(stack * (Run.instance.stageClearCount + (coinGain * 1f))));
+                        
                         MSUtil.PlayNetworkedSFX("MoltenCoin", report.victim.gameObject.transform.position);
                         EffectManager.SimpleImpactEffect(HealthComponent.AssetReferences.gainCoinsImpactEffectPrefab, report.victimBody.transform.position, UnityEngine.Vector3.up, true);
                     }

@@ -1,65 +1,71 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
+using Moonstorm.Config;
 using Moonstorm.Loaders;
 using System.Collections.Generic;
 using UnityEngine;
+using RiskOfOptions.Options;
+using RiskOfOptions.OptionConfigs;
+using RiskOfOptions;
 
 namespace Moonstorm.Starstorm2
 {
     public class SS2Config : ConfigLoader<SS2Config>
     {
-        public const string items = "SS2.Items";
-        public const string equips = "SS2.Equips";
-
         public override BaseUnityPlugin MainClass => Starstorm.instance;
+
+        public const string PREFIX = "SS2.";
+        internal const string IDMain = PREFIX + "Main";
+        internal const string IDItem = PREFIX + "Items";
+        internal const string IDArtifact = PREFIX + "Artifacts"; 
+        internal const string IDSurvivor = PREFIX + "Survivors";
+        internal const string IDMisc = PREFIX + "Miscellaneous";
 
         public override bool CreateSubFolder => true;
 
-        public static ConfigFile itemConfig;
-        public static ConfigFile equipsConfig;
+        public static ConfigFile ConfigMain;
+        public static ConfigFile ConfigItem;
+        public static ConfigFile ConfigArtifact;
+        public static ConfigFile ConfigSurvivor;
+        public static ConfigFile ConfigMisc;
 
-        internal static ConfigEntry<bool> UnlockAll;
+        internal static ConfigurableBool UnlockAll = new ConfigurableBool(false)
+        {
+            Section = "General",
+            Key = "Unlock All",
+            Description = "Setting this to true unlocks all the content in Starstorm 2, excluding skin unlocks.",
+            ModGUID = Starstorm.guid,
+            ModName = Starstorm.modName,
+            CheckBoxConfig = new CheckBoxConfig
+            {
+                restartRequired = true,
+            }
+        };
+
         internal static ConfigEntry<KeyCode> RestKeybind;
         internal static KeyCode restKeybind;
         internal static ConfigEntry<KeyCode> TauntKeybind;
         internal static KeyCode tauntKeybind;
         internal static List<ConfigEntry<bool>> ItemToggles;
-        internal static ConfigEntry<bool> EnableFunnyCanister; //OK
-        internal static ConfigEntry<bool> TyphoonIncreaseSpawnCap; //OK
-        internal static ConfigEntry<bool> EnableEvents; //OK
 
         public void Init()
         {
-            itemConfig = CreateConfigFile(items);
-            equipsConfig = CreateConfigFile(equips);
+            Sprite icon = SS2Assets.LoadAsset<Sprite>("icon", SS2Bundle.Main);
+            ModSettingsManager.SetModIcon(icon, Starstorm.guid, Starstorm.modName);
+            ModSettingsManager.SetModDescription("A general content mod adapting Risk of Rain 1's Starstorm", Starstorm.guid, Starstorm.modName);
+
+            ConfigMain = CreateConfigFile(IDMain);
+            ConfigItem = CreateConfigFile(IDItem);
+            ConfigSurvivor = CreateConfigFile(IDSurvivor);
+            ConfigArtifact = CreateConfigFile(IDArtifact);
+            ConfigMisc = CreateConfigFile(IDMisc);
 
             SetConfigs();
         }
 
         private static void SetConfigs()
         {
-            UnlockAll =
-                Starstorm.instance.Config.Bind("Starstorm 2 :: Unlock All",
-                            "false",
-                            false,
-                            "Setting this to true unlocks all the content in Starstorm 2, excluding skin unlocks.");
-            EnableFunnyCanister =
-                           Starstorm.instance.Config.Bind("Starstorm 2 :: Equipment",
-                                       "Pressurized Canister No Jump Control",
-                                       false,
-                                       "Set to true to disable jump control on Pressurized Canister - activating the equipment will apply constant upward force regardless of whether you hold the jump button. This may lead to Funny and Memorable (tm) moments, especially if you like picking up Gestures of the Drowned.");
-
-            TyphoonIncreaseSpawnCap =
-                Starstorm.instance.Config.Bind("Starstorm 2 :: Typhoon",
-                            "Increase Team Limit",
-                            true,
-                            "Multiplies the Monster Team maximum size by 2 when enabled. Lunar and Void are left unchanged. May affect performance.");
-            EnableEvents =
-                Starstorm.instance.Config.Bind("Starstorm 2 :: Events",
-                            "Enabled",
-                            true,
-                            "Enables Starstorm 2's random events, including storms. Set to false to disable events.");
-
+            UnlockAll.SetConfigFile(ConfigMain).DoConfigure();
             //emotes
             /*RestKeybind = Starstorm.instance.Config.Bind("Starstorm 2 :: Keybinds", "Rest Emote", KeyCode.Alpha1, "Keybind used for the Rest emote.");
             restKeybind = RestKeybind.Value;// cache it for performance

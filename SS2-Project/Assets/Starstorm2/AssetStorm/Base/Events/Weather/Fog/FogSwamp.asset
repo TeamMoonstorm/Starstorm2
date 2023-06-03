@@ -25,7 +25,8 @@ MonoBehaviour:
   category: CommonEvents
   selectionWeight: 50
   cost: 550
-  minimumStageCompletions: 2
+  repeatedSelectionCostCoefficient: 2
+  minimumStageCompletions: 0
   requiredUnlockableDef:
     address: 
     useDirectReference: 1

@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: escMULEStunPunch
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.MULE.MULEStunPunch, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: dmgCoefficient
+      fieldValue:
+        stringValue: 2.8
+        objectValue: {fileID: 0}
+    - fieldName: swingTimeCoefficient
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: baseDuration
+      fieldValue:
+        stringValue: 0.8
+        objectValue: {fileID: 0}
+    - fieldName: damageCoefficient
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: hitBoxGroupName
+      fieldValue:
+        stringValue: FistHitbox
+        objectValue: {fileID: 0}
+    - fieldName: hitEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: procCoefficient
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: pushAwayForce
+      fieldValue:
+        stringValue: 2000
+        objectValue: {fileID: 0}
+    - fieldName: forceVector
+      fieldValue:
+        stringValue: 400 0 400
+        objectValue: {fileID: 0}
+    - fieldName: hitPauseDuration
+      fieldValue:
+        stringValue: 0.3
+        objectValue: {fileID: 0}
+    - fieldName: swingEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: swingEffectMuzzleString
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: mecanimHitboxActiveParameter
+      fieldValue:
+        stringValue: punchHitbox
+        objectValue: {fileID: 0}
+    - fieldName: shorthopVelocityFromHit
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: beginStateSoundString
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: beginSwingSoundString
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: impactSound
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: forceForwardVelocity
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: forwardVelocityCurve
+      fieldValue:
+        stringValue: '{"preWrapMode":8,"postWrapMode":8,"keys":[{"time":0.0039840638637542728,"value":-0.010238908231258393,"inTangent":0.0,"outTangent":0.0,"inWeight":0.3333333432674408,"outWeight":0.3333333432674408,"weightedMode":0,"tangentMode":136},{"time":0.012500000186264515,"value":0.30000001192092898,"inTangent":0.0,"outTangent":0.0,"inWeight":0.3333333432674408,"outWeight":0.3333333432674408,"weightedMode":0,"tangentMode":136},{"time":0.3499999940395355,"value":0.30000001192092898,"inTangent":0.0,"outTangent":0.0,"inWeight":0.3333333432674408,"outWeight":0.3333333432674408,"weightedMode":0,"tangentMode":136},{"time":1.0019919872283936,"value":-0.013651876710355282,"inTangent":-1.495707392692566,"outTangent":-1.495707392692566,"inWeight":0.054885949939489368,"outWeight":0.3333333432674408,"weightedMode":0,"tangentMode":0}]}'
+        objectValue: {fileID: 0}
+    - fieldName: scaleHitPauseDurationAndVelocityWithAttackSpeed
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: ignoreAttackSpeed
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}

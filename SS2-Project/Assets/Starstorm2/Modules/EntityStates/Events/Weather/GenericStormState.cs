@@ -21,6 +21,8 @@ namespace EntityStates.Events
         [SerializeField]
         public static float fadeDuration = 7f;
 
+        public static GameObject SArain;
+
 
         private GameObject effectInstance;
         private EventStateEffect eventStateEffect;
@@ -46,6 +48,8 @@ namespace EntityStates.Events
             {
                 eventStateEffect.OnEffectStart();
             }
+
+
             if (NetworkServer.active)
             {
                 //TO-DO: team specific events
@@ -72,21 +76,25 @@ namespace EntityStates.Events
                     //Debug.Log("monstercredit: " + monsterCredit);
                     if (monsterCredit != null)
                         monsterCredit = 40f;
-
+                    
                     WeightedSelection<DirectorCard> weightedSelection = Util.CreateReasonableDirectorCardSpawnList(monsterCredit, combatDirector.maximumNumberToSpawnBeforeSkipping, 6);
-                    DirectorCard directorCard = weightedSelection.Evaluate(combatDirector.rng.nextNormalizedFloat);
-
-                    if (weightedSelection == null)
-                        Debug.Log("weightedselection null");
-
-                    if (directorCard != null)
+                    if(weightedSelection != null && combatDirector.rng != null) //adding a null check for the rng? seems to nullref 
                     {
-                        combatDirector.monsterCredit += monsterCredit;
-                        combatDirector.OverrideCurrentMonsterCard(directorCard);
-                        combatDirector.monsterSpawnTimer = 0f;
+                        DirectorCard directorCard = weightedSelection.Evaluate(combatDirector.rng.nextNormalizedFloat);
+                        if (directorCard != null)
+                        {
+                            combatDirector.monsterCredit += monsterCredit;
+                            combatDirector.OverrideCurrentMonsterCard(directorCard);
+                            combatDirector.monsterSpawnTimer = 0f;
+                        }
+                        else
+                            Debug.Log("missing director card");
                     }
                     else
-                        Debug.Log("missing director card");
+                    {
+                        Debug.Log("weightedselection null");
+                    }
+
                 }
             }
 

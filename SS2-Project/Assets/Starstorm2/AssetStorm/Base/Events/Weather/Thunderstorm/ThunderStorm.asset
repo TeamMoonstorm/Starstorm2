@@ -23,9 +23,10 @@ MonoBehaviour:
   availableStages: 155583246
   customStageNames: []
   category: CommonEvents
-  selectionWeight: 50
+  selectionWeight: 75
   cost: 1150
-  minimumStageCompletions: 0
+  repeatedSelectionCostCoefficient: 1.5
+  minimumStageCompletions: 3
   requiredUnlockableDef:
     address: 
     useDirectReference: 1

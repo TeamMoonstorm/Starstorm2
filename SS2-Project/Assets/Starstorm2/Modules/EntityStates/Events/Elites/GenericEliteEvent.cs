@@ -46,8 +46,8 @@ namespace EntityStates.Events
                 eventStateEffect.OnEffectStart();
             }
             CharacterBody.onBodyStartGlobal += MakeElite;
-            RoR2.Run.onRunDestroyGlobal += RunEndRemoveEliteEvent;
-            RoR2.Stage.onServerStageComplete += StageEndRemoveEliteEvent;
+            Run.onRunDestroyGlobal += RunEndRemoveEliteEvent;
+            Stage.onServerStageComplete += StageEndRemoveEliteEvent;
             //On.RoR2.DeathRewards.OnKilledServer += DropAspect;
         }
 
@@ -55,8 +55,8 @@ namespace EntityStates.Events
         {
             //SS2Log.Debug("Removing active elite event because the stage ended.");
             CharacterBody.onBodyStartGlobal -= MakeElite;
-            RoR2.Run.onRunDestroyGlobal -= RunEndRemoveEliteEvent;
-            RoR2.Stage.onServerStageComplete -= StageEndRemoveEliteEvent;
+            Run.onRunDestroyGlobal -= RunEndRemoveEliteEvent;
+            Stage.onServerStageComplete -= StageEndRemoveEliteEvent;
             //On.RoR2.DeathRewards.OnKilledServer -= DropAspect;
         }
 
@@ -64,8 +64,8 @@ namespace EntityStates.Events
         {
             //SS2Log.Debug("Removing active elite event because the run ended.");
             CharacterBody.onBodyStartGlobal -= MakeElite;
-            RoR2.Run.onRunDestroyGlobal -= RunEndRemoveEliteEvent;
-            RoR2.Stage.onServerStageComplete -= StageEndRemoveEliteEvent;
+            Run.onRunDestroyGlobal -= RunEndRemoveEliteEvent;
+            Stage.onServerStageComplete -= StageEndRemoveEliteEvent;
             //On.RoR2.DeathRewards.OnKilledServer -= DropAspect;
         }
 
@@ -80,8 +80,8 @@ namespace EntityStates.Events
             {
                 //SS2Log.Debug("Elite event ended - removed hook normally.");
                 CharacterBody.onBodyStartGlobal -= MakeElite;
-                RoR2.Run.onRunDestroyGlobal -= RunEndRemoveEliteEvent;
-                RoR2.Stage.onServerStageComplete -= StageEndRemoveEliteEvent;
+                Run.onRunDestroyGlobal -= RunEndRemoveEliteEvent;
+                Stage.onServerStageComplete -= StageEndRemoveEliteEvent;
                 
             }
         }
@@ -94,15 +94,18 @@ namespace EntityStates.Events
             var team = body.teamComponent.teamIndex;
 
             bool specialCondition = true;
-            if (body.master.name.Contains("AffixEarthHealerMaster)") || body.master.name == "AffixEarthHealerMaster(Clone)")
+            if (body.master)
             {
-                //Debug.Log("special condition met - affix earth");
-                specialCondition = false;
-            }
-            if(body.master.name.Contains("LemurianBruiserFireMaster") || body.master.name.Contains("LemurianBruiserIceMaster"))
-            {
-                //Debug.Log("special condition met - married");
-                specialCondition = false; 
+                if (body.master.name.Contains("AffixEarthHealerMaster)") || body.master.name == "AffixEarthHealerMaster(Clone)")
+                {
+                    //Debug.Log("special condition met - affix earth");
+                    specialCondition = false;
+                }
+                if (body.master.name.Contains("LemurianBruiserFireMaster") || body.master.name.Contains("LemurianBruiserIceMaster"))
+                {
+                    //Debug.Log("special condition met - married");
+                    specialCondition = false;
+                }
             }
 
             if (!(body.isPlayerControlled || body.bodyFlags == CharacterBody.BodyFlags.Masterless) && !(body.isChampion) && (team == TeamIndex.Monster || team == TeamIndex.Void) && (Util.CheckRoll(80)) && specialCondition)

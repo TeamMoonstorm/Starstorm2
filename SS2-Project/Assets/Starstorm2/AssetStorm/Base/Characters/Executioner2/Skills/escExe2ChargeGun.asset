@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: escExe2ChargeGun
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.Executioner2.ChargeGun, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: baseDuration
+      fieldValue:
+        stringValue: 1.2
+        objectValue: {fileID: 0}
+    - fieldName: primaryOverride
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 11400000, guid: 6de78aa138d9a8e42bd5434c894ca4e2, type: 2}
+    - fieldName: timeBetweenStocks
+      fieldValue:
+        stringValue: 1.2
+        objectValue: {fileID: 0}
+    - fieldName: masteryChargeEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 6805773096446986950, guid: d6d774add176ff744aa8df1ba573018a,
+          type: 3}
+    - fieldName: defaultChargeEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 6805773096446986950, guid: cfa7c0f0af22c424d9515c05f5e9ea84,
+          type: 3}
+    - fieldName: defaultPlume
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 3173681102054731733, guid: 5053a920723284642b859bfac0b5b41d,
+          type: 3}
+    - fieldName: defaultPlumeLarge
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 8334885970757087957, guid: 4449d53d94c22d6468649eaa4b1c4dd9,
+          type: 3}

@@ -1,7 +1,7 @@
-﻿using BepInEx;
+using BepInEx;
 using Moonstorm.Starstorm2.API;
-using R2API.Utils;
 using R2API;
+using R2API.Utils;
 using R2API.Networking;
 using System;
 using UnityEngine;
@@ -19,16 +19,13 @@ namespace Moonstorm.Starstorm2
     [BepInDependency("com.DestroyedClone.AncientScepter", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.RiskyLives.RiskyMod", BepInDependency.DependencyFlags.SoftDependency)]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
-    [R2APISubmoduleDependency(
-        nameof(DotAPI),
-        nameof(PrefabAPI),
-        nameof(NetworkingAPI))]
+    [R2APISubmoduleDependency(nameof(DotAPI), nameof(PrefabAPI), nameof(NetworkingAPI))]
     [BepInPlugin(guid, modName, version)]
     public class Starstorm : BaseUnityPlugin
     {
-        internal const string guid = "com.TeamMoonstorm.Starstorm2-Nightly";
-        internal const string modName = "Starstorm 2 Nightly";
-        internal const string version = "0.3.50";
+        internal const string guid = "com.TeamMoonstorm.Starstorm2";
+        internal const string modName = "Starstorm 2";
+        internal const string version = "0.4.0";
 
         public static Starstorm instance;
         public static PluginInfo pluginInfo;
@@ -37,6 +34,7 @@ namespace Moonstorm.Starstorm2
         public static bool ScepterInstalled = false;
         public static bool RiskyModInstalled = false;
         public static bool GOTCEInstalled = false;
+        public static bool StageAesthInstalled = false;
 
         public void Awake()
         {
@@ -58,6 +56,9 @@ namespace Moonstorm.Starstorm2
             new SS2Language().Init();
             ConfigurableFieldManager.AddMod(this);
 
+            //we do a little testing
+            //On.RoR2.Networking.NetworkManagerSystemSteam.OnClientConnect += (s, u, t) => { };
+
             //N: i have no idea if SystemInitializer would be too late for this, so it stays here for now.
             R2API.Networking.NetworkingAPI.RegisterMessageType<ScriptableObjects.NemesisSpawnCard.SyncBaseStats>();
         }
@@ -73,6 +74,7 @@ namespace Moonstorm.Starstorm2
             ScepterInstalled = BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.DestroyedClone.AncientScepter");
             RiskyModInstalled = BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.RiskyLives.RiskyMod");
             GOTCEInstalled = BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.TheBestAssociatedLargelyLudicrousSillyheadGroup.GOTCE");
+            StageAesthInstalled = BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.HIFU.StageAesthetic");
             //if (ScepterInstalled)
             //{
             //    SS2Log.Info("SS2 Compat - Scepter Recognized");

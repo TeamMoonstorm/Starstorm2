@@ -44,7 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: -1479993534, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rendererInfos: []
+  rendererInfos:
+  - renderer: {fileID: 2595335531045574695}
+    defaultMaterial: {fileID: 2100000, guid: 4be4838e1f8f01446ab742a5f955af46, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
   hideOnDeathObjects: []
 --- !u!1001 &2493216622407745358
 PrefabInstance:
@@ -118,6 +123,12 @@ PrefabInstance:
 --- !u!4 &2650773238525293747 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 455109276250082301, guid: ce15e40e0d262c44f8a00a554e114a97,
+    type: 3}
+  m_PrefabInstance: {fileID: 2493216622407745358}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &2595335531045574695 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 476770939738892137, guid: ce15e40e0d262c44f8a00a554e114a97,
     type: 3}
   m_PrefabInstance: {fileID: 2493216622407745358}
   m_PrefabAsset: {fileID: 0}
