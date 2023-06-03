@@ -14,15 +14,15 @@ namespace Moonstorm.Starstorm2.Items
         public static DotController.DotIndex DotIndex;
         //public static float duration = 2;
 
-        [ConfigurableField(ConfigDesc = "Debuff Damage per Second. (1 = 100%)")]
+        [RooConfigurableField(ConfigDesc = "Debuff Damage per Second. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float debuffDamage = .3f;
 
-        [ConfigurableField(ConfigDesc = "Duration of applied Bane debuff. (1 = 1 second)")]
+        [RooConfigurableField(ConfigDesc = "Duration of applied Bane debuff. (1 = 1 second)")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static float debuffDuration = 2;
 
-        [ConfigurableField(ConfigDesc = "Range of on-death AOE. (1 = 1m)")]
+        [RooConfigurableField(ConfigDesc = "Range of on-death AOE. (1 = 1m)")]
         [TokenModifier(token, StatTypes.Default, 2)]
         public static float aoeRange = 12; 
 

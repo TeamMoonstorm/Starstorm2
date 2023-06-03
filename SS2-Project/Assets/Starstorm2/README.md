@@ -46,6 +46,15 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 
 **Warning: content spoilers below!**
 
+### 0.4.5
+* General
+    * Fixed a startup crash relating to an unfinished drone.
+    * Fixed specific configs for Needles and Coffee Bag not appearing in the correct config file.
+* Nemesis Commando
+    * Skill unlocks now use updated skill icons.
+    * Fixed a bug where Nemesis Commando would be invulnerable after exiting the portal for the first stage.
+
+
 ### 0.4.4
 * General
     * Instances of "DestroyImmediate" in code have been replaced with Destroy. May fix some crashes.

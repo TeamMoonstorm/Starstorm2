@@ -19,7 +19,7 @@ namespace Moonstorm.Starstorm2.Items
         //[ConfigurableField(SS2Config.IDItem, ConfigDesc = "Cooldown reduction per X-4 Stimulant. (1 = 1 second)")]
         //[TokenModifier("SS2_ITEM_X4_DESC", StatTypes.Default, 0)]
         public static float secCooldown = 0.25f;
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Cooldown reduction per X-4 Stimulant. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Cooldown reduction per X-4 Stimulant. (1 = 100%)")]
         [TokenModifier("SS2_ITEM_X4_DESC", StatTypes.MultiplyByN, 0, "100")]
         public static float cdReduction = .1f;
         //
@@ -37,15 +37,15 @@ namespace Moonstorm.Starstorm2.Items
 
         //public static float atkSpeedBonus = .2f;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Regen boost when using secondary skill. (1 = 1hp/s)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Regen boost when using secondary skill. (1 = 1hp/s)")]
         [TokenModifier("SS2_ITEM_X4_DESC", StatTypes.Default, 1)]
         public static float baseRegenBoost = 2f;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Regen boost per stack when using secondary skill. (1 = 1hp/s)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Regen boost per stack when using secondary skill. (1 = 1hp/s)")]
         [TokenModifier("SS2_ITEM_X4_DESC", StatTypes.Default, 2)]
         public static float stackRegenBoost = 1f;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Regen duration when using secondary skill. (1 = 1s)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Regen duration when using secondary skill. (1 = 1s)")]
         [TokenModifier("SS2_ITEM_X4_DESC", StatTypes.Default, 3)]
         public static float regenDuration = 3f;
         public static float extraRegeneration = 0.2f;

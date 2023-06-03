@@ -8,15 +8,15 @@ namespace Moonstorm.Starstorm2.Items
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("MoltenCoin", SS2Bundle.Items);
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance for Molten Coin to Proc. (100 = 100%)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance for Molten Coin to Proc. (100 = 100%)")]
         [TokenModifier("SS2_ITEM_MOLTENCOIN_DESC", StatTypes.Default, 0)]
         public static float procChance = 6f;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Base Damage per stack. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Base Damage per stack. (1 = 100%)")]
         [TokenModifier("SS2_ITEM_MOLTENCOIN_DESC", StatTypes.MultiplyByN, 1, "100")]
         public static float damageCoeff = 1f;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Coin gain on proc. Scales with time. (1 = 1$)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Coin gain on proc. Scales with time. (1 = 1$)")]
         [TokenModifier("SS2_ITEM_MOLTENCOIN_DESC", StatTypes.Default, 2)]
         public static int coinGain = 1;
 

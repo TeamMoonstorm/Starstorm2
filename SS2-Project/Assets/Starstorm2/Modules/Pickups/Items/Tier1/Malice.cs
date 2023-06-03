@@ -15,19 +15,19 @@ namespace Moonstorm.Starstorm2.Items
         private const string token = "SS2_ITEM_MALICE_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Malice", SS2Bundle.Items);
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius of Malice, in meters.")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius of Malice, in meters.")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float radiusBase = 13f;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Total damage each Malice bounce deals. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Total damage each Malice bounce deals. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
         public static float damageCoeff = 0.35f;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Number of bounces per stack.")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Number of bounces per stack.")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static int bounceStack = 1;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Proc coefficient of damage dealt by Malice.")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Proc coefficient of damage dealt by Malice.")]
         public static float procCo = 0.2f;
 
         //damage types should not be used as a substitute for proper proc chain masks, but it works here
