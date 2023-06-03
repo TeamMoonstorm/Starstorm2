@@ -15,7 +15,7 @@ namespace Moonstorm.Starstorm2.Artifacts
         public override ArtifactDef ArtifactDef { get; } = SS2Assets.LoadAsset<ArtifactDef>("Cognation", SS2Bundle.Artifacts);
         public override ArtifactCode ArtifactCode { get; } = SS2Assets.LoadAsset<ArtifactCode>("CognationCode", SS2Bundle.Artifacts);
 
-        [ConfigurableField(SS2Config.IDArtifact, ConfigDesc = "Whether or not cognation ghosts inherit all items from the original body")]
+        [RooConfigurableField(SS2Config.IDArtifact, ConfigDesc = "Whether or not cognation ghosts inherit all items from the original body")]
         public static bool InheritInventory = true;
         public static ReadOnlyCollection<MasterCatalog.MasterIndex> BlacklistedMasterIndices { get; private set; }
         private static readonly List<MasterCatalog.MasterIndex> blacklistedMasterIndices = new List<MasterCatalog.MasterIndex>();

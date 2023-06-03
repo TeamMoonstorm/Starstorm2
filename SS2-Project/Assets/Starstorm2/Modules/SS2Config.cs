@@ -1,8 +1,12 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
+using Moonstorm.Config;
 using Moonstorm.Loaders;
 using System.Collections.Generic;
 using UnityEngine;
+using RiskOfOptions.Options;
+using RiskOfOptions.OptionConfigs;
+using RiskOfOptions;
 
 namespace Moonstorm.Starstorm2
 {
@@ -25,8 +29,18 @@ namespace Moonstorm.Starstorm2
         public static ConfigFile ConfigSurvivor;
         public static ConfigFile ConfigMisc;
 
-        [ConfigurableField(IDMain, ConfigSection = "General", ConfigName = "Unlock All", ConfigDesc = "Setting this to true unlocks all the content in Starstorm 2, excluding skin unlocks.")]
-        internal static bool UnlockAll = false;
+        internal static ConfigurableBool UnlockAll = new ConfigurableBool(false)
+        {
+            Section = "General",
+            Key = "Unlock All",
+            Description = "Setting this to true unlocks all the content in Starstorm 2, excluding skin unlocks.",
+            ModGUID = Starstorm.guid,
+            ModName = Starstorm.modName,
+            CheckBoxConfig = new CheckBoxConfig
+            {
+                restartRequired = true,
+            }
+        };
 
         internal static ConfigEntry<KeyCode> RestKeybind;
         internal static KeyCode restKeybind;
@@ -36,6 +50,10 @@ namespace Moonstorm.Starstorm2
 
         public void Init()
         {
+            Sprite icon = SS2Assets.LoadAsset<Sprite>("icon", SS2Bundle.Main);
+            ModSettingsManager.SetModIcon(icon, Starstorm.guid, Starstorm.modName);
+            ModSettingsManager.SetModDescription("A general content mod adapting Risk of Rain 1's Starstorm", Starstorm.guid, Starstorm.modName);
+
             ConfigMain = CreateConfigFile(IDMain);
             ConfigItem = CreateConfigFile(IDItem);
             ConfigSurvivor = CreateConfigFile(IDSurvivor);
@@ -47,6 +65,7 @@ namespace Moonstorm.Starstorm2
 
         private static void SetConfigs()
         {
+            UnlockAll.SetConfigFile(ConfigMain).DoConfigure();
             //emotes
             /*RestKeybind = Starstorm.instance.Config.Bind("Starstorm 2 :: Keybinds", "Rest Emote", KeyCode.Alpha1, "Keybind used for the Rest emote.");
             restKeybind = RestKeybind.Value;// cache it for performance

@@ -11,15 +11,15 @@ namespace Moonstorm.Starstorm2.Items
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Insecticide", SS2Bundle.Items);
         public static DotController.DotIndex DotIndex;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance. (1 = 100%)")]
         [TokenModifier("SS2_ITEM_INSECTICIDE_DESC", StatTypes.MultiplyByN, 0, "100")]
         public static float chance = 1f;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Total damage. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Total damage. (1 = 100%)")]
         [TokenModifier("SS2_ITEM_INSECTICIDE_DESC", StatTypes.MultiplyByN, 1, "100")]
         public static float damageCoeff = 1.8f;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of poison.")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of poison.")]
         public static float duration = 3;
 
         public override void Initialize()

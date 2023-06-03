@@ -24,7 +24,7 @@ namespace Moonstorm.Starstorm2
     public static class SS2ExperienceManager
 	{
         //exp visuals mostly added to make the exp items feel cooler
-        [ConfigurableField(SS2Config.IDMisc, ConfigSection = "Visuals", ConfigName = "Improved Experience Visuals", ConfigDesc = "Enable the new experience visuals?")]
+        [RooConfigurableField(SS2Config.IDMisc, ConfigSection = "Visuals", ConfigName = "Improved Experience Visuals", ConfigDesc = "Enable the new experience visuals?")]
         public static bool enableNewExperienceVisuals = true;
 
         public static Dictionary<CharacterMaster, ulong> masterToFoundExperience = new Dictionary<CharacterMaster, ulong>();
