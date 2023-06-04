@@ -31,7 +31,7 @@ With previous and one-off code contributions by...
 * Anreol, bread, Flan, Gaforb, GrooveSalad, HIFU, KevinFromHPCustomerService, malfaisant, Moffein, Nebby, Noop, Phreel, rob, swuff★, sebacame, Shared, TheTimesweeper, Vale-X, xpcybic, Xubas
 
 With Art/Modelling/Animation contributions by...
-* Alextarwras, Anreol, Bolty, bread, bruh, Cexeub, dotflare, Draymarc, Domi, JestAnotherAnimator, Gem, goodguy, GrooveSalad, LucidInceptor, Neik, KevinFromHPCustomerService, PapaZach, Plexus, prodzpod, QuietAnon, redacted, rob, SkeletorChampion, SOM, Spenny, swuff★, xpcybic, Reithierion, UnknownGlaze, Zenithrium
+* Alexstarwras, Anreol, Bolty, bread, bruh, Cexeub, dotflare, Draymarc, Domi, JestAnotherAnimator, Gem, goodguy, GrooveSalad, LucidInceptor, Neik, KevinFromHPCustomerService, PapaZach, Plexus, prodzpod, QuietAnon, redacted, rob, SkeletorChampion, SOM, Spenny, swuff★, xpcybic, Reithierion, UnknownGlaze, Zenithrium
 
 Additional thanks to... 
 * Writing - Blimblam, Lyrical Endymion, swuff★, T_Dimensional, Zenithrium
@@ -48,11 +48,13 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 
 ### 0.4.5
 * General
-    * Fixed a startup crash relating to an unfinished drone.
+    * Fixed a crash caused by a conflict with other mods.
     * Fixed specific configs for Needles and Coffee Bag not appearing in the correct config file.
 * Nemesis Commando
     * Skill unlocks now use updated skill icons.
     * Fixed a bug where Nemesis Commando would be invulnerable after exiting the portal for the first stage.
+* Executioner
+	* Fixed kill assists not counting towards Ion Manipulator stocks and increased window for which attacks will count as kill assists.
 
 
 ### 0.4.4
