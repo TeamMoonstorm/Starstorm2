@@ -74,6 +74,7 @@ namespace Moonstorm.Starstorm2.Components
             //This will break is anyone renames that skilldef's identifier
             if (report.victim.gameObject != report.attacker && !report.victimBody.bodyFlags.HasFlag(CharacterBody.BodyFlags.Masterless) && secondary.skillDef.skillName == "ExecutionerChargeIons")
             {
+                //Debug.Log("adding killcpt");
                 var killComponents = report.victimBody.GetComponents<ExecutionerKillComponent>();
                 foreach (var killCpt in killComponents)
                 {

@@ -8,7 +8,7 @@ namespace Moonstorm.Starstorm2.Components
 {
     public class ExecutionerKillComponent : MonoBehaviour, IOnKilledServerReceiver
     {
-        public static float lifeTime = 0.5f;
+        public static float lifeTime = 1f;
         public GameObject attacker;
         public float timeAlive;
 
