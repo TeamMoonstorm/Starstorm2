@@ -18,7 +18,7 @@ namespace EntityStates.Nemmando
             base.OnEnter();
             //base.characterBody.enabled = false;
             //We know its nemmando and that he has a model... but lets make it generic
-            if (NetworkServer.active) characterBody.AddTimedBuff(RoR2Content.Buffs.ArmorBoost, minimumIdleDuration);
+            if (NetworkServer.active) characterBody.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, minimumIdleDuration);
             characterModel = null;
             if (characterBody.modelLocator && characterBody.modelLocator.modelTransform)
             {

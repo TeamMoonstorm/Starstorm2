@@ -55,6 +55,8 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Fixed a bug where Nemesis Commando would be invulnerable after exiting the portal for the first stage.
 * Executioner
 	* Fixed kill assists not counting towards Ion Manipulator stocks and increased window for which attacks will count as kill assists.
+* Items
+    * Needles no longer spams debug logs, and also now checks that the target is not on the same team as the attacker when applying the debuff.
 
 
 ### 0.4.4

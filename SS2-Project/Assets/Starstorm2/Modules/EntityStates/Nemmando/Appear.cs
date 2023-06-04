@@ -44,7 +44,7 @@ namespace EntityStates.Nemmando
 				modelTransform.GetComponent<PrintController>().enabled = true;
 			}*/
 
-            if (NetworkServer.active) characterBody.AddTimedBuff(RoR2Content.Buffs.ArmorBoost, duration * 1.2f);
+            if (NetworkServer.active) characterBody.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, duration * 1.2f);
         }
         public override void Update()
         {
