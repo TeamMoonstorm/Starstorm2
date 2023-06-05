@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: swuffBuild
   m_EditorClassIdentifier: 
   Data:
+  - {fileID: 7532684020014524547}
   - {fileID: 1865877500085563225}
   - {fileID: 317633807484698766}
-  - {fileID: 7532684020014524547}
   QuickAccess: 1
   manifest: {fileID: 11400000, guid: bcbdefdb47e2f8f45bdd7a2a4559b405, type: 2}
 --- !u!114 &317633807484698766
@@ -35,6 +35,7 @@ MonoBehaviour:
   ListType: 1
   Manifests:
   - {fileID: 11400000, guid: bcbdefdb47e2f8f45bdd7a2a4559b405, type: 2}
+  - {fileID: 11400000, guid: 5ceb1d8ed3af40d4d806e9756b403649, type: 2}
   ReplaceDirectory: 1
   Recursive: 1
   SourceRequired: 0
@@ -69,4 +70,4 @@ MonoBehaviour:
   m_Name: ChangeAssemblyBuildMode
   m_EditorClassIdentifier: 
   Active: 1
-  buildMode: 1
+  buildMode: 0
