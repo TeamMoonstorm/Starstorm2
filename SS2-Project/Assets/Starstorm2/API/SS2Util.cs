@@ -184,6 +184,36 @@ namespace Moonstorm.Starstorm2
             }, true);
         }
 
+        public static void RefreshOldestBuffStack(CharacterBody charBody, BuffDef buff, float duration)
+        {
+            float timer = 9999;
+            int pos = -1;
+            var buffs = charBody.timedBuffs;
+
+            for (int i = 0; i < buffs.Count; ++i)
+            {
+                if (buffs[i].buffIndex == buff.buffIndex)
+                {
+                    if(buffs[i].timer < timer)
+                    {
+                        timer = buffs[i].timer;
+                        pos = i;
+                    }
+                    //charBody.timedBuffs[i].timer = duration;
+                }
+            }
+
+            if(pos != -1 && pos < buffs.Count)
+            {
+                //if(buffs[pos].buffIndex == buff.buffIndex) //maybe this is important but i diont think so, this shouldn't take too long, so realistically the buff should still exist right? if not just uncomment this
+                //{
+                    buffs[pos].timer = duration;
+                    //SS2Log.Info("refershed buff with def " + buff.buffIndex + ", was in slot " + pos + " out of " + buffs.Count);
+                //}
+            }
+        }
+
+
 
 
         public static IEnumerator BroadcastChat(string token)

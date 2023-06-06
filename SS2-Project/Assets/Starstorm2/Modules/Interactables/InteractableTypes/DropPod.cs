@@ -2,6 +2,7 @@
 using Moonstorm.Starstorm2.Components;
 using R2API;
 using RoR2;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -15,12 +16,12 @@ namespace Moonstorm.Starstorm2.Interactables
 
         private static GameObject interactable;
 
-        public override MSInteractableDirectorCard InteractableDirectorCard { get; } = SS2Assets.LoadAsset<MSInteractableDirectorCard>("midcDropPod", SS2Bundle.Indev);
+        public override MSInteractableDirectorCard InteractableDirectorCard { get; } = SS2Assets.LoadAsset<MSInteractableDirectorCard>("msidcDropPod", SS2Bundle.Indev);
 
         public override void Initialize()
         {
             //DirectorAPI.MonsterActions += HandleAvailableMonsters;
-
+            
             var survivorPod = Resources.Load<GameObject>("prefabs/networkedobjects/SurvivorPod");
             interactable = PrefabAPI.InstantiateClone(survivorPod, "DropPod", false);
 
@@ -33,9 +34,22 @@ namespace Moonstorm.Starstorm2.Interactables
 
             HG.ArrayUtils.ArrayAppend(ref SS2Content.Instance.SerializableContentPack.networkedObjectPrefabs, Interactable);
             InteractableDirectorCard.prefab = Interactable;
+            InteractableDirectorCard.maxSpawnsPerStage = 2;
+
+            DirectorAPI.MonsterActions += HandleAvailableMonsters2;
+
+            SS2Log.Info("Finished setting up Drop Pod.");
         }
 
-        private void HandleAvailableMonsters(System.Collections.Generic.List<DirectorAPI.DirectorCardHolder> arg1, DirectorAPI.StageInfo arg2)
+        private void HandleAvailableMonsters2(DccsPool arg1, List<DirectorAPI.DirectorCardHolder> arg2, DirectorAPI.StageInfo arg3) //i mean maybe this works lol
+        {
+            DropPodController.currentStageMonsters = arg2.Where(cardHolder => cardHolder.MonsterCategory == DirectorAPI.MonsterCategory.BasicMonsters)
+                                                         .Select(cardHolder => cardHolder.Card)
+                                                         .ToArray();
+            //throw new System.NotImplementedException();
+        }
+
+        private void HandleAvailableMonsters(List<DirectorAPI.DirectorCardHolder> arg1, DirectorAPI.StageInfo arg2)
         {
             DropPodController.currentStageMonsters = arg1.Where(cardHolder => cardHolder.MonsterCategory == DirectorAPI.MonsterCategory.BasicMonsters)
                                                          .Select(cardHolder => cardHolder.Card)

@@ -10,17 +10,17 @@ namespace Moonstorm.Starstorm2.Items
         private const string token = "SS2_ITEM_DROIDHEAD_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("DroidHead", SS2Bundle.Items);
 
-        [ConfigurableField(ConfigDesc = "Damage dealt by Security Drones, at base and per stack. Percentage (1 = 100%)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Damage dealt by Security Drones, at base and per stack. Percentage (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float baseDamage = 1f;
 
-        [ConfigurableField(ConfigDesc = "Base life time of the Security Drone, in seconds.")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Base life time of the Security Drone, in seconds.")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static float baseLifeTime = 20f;
 
-        [ConfigurableField(ConfigDesc = "Life time of the Security Drone per stack, in seconds.")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Life time of the Security Drone per stack, in seconds.")]
         [TokenModifier(token, StatTypes.Default, 2)]
-        public static float stackLifeTime = 5f;
+        public static float stackLifeTime = 10f;
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver
         {
@@ -31,28 +31,31 @@ namespace Moonstorm.Starstorm2.Items
             public void OnKilledOtherServer(DamageReport damageReport)
             {
                 var victim = damageReport.victimBody;
-                var victimEquipment = victim.inventory.GetEquipmentIndex();
-                if (victim.teamComponent.teamIndex != body.teamComponent.teamIndex)
+                if (victim.inventory) 
                 {
-                    if (victim.isElite && victimEquipment != DLC1Content.Equipment.EliteVoidEquipment.equipmentIndex)
-                    {              
-                        var droneSummon = new MasterSummon();
-                        droneSummon.position = victim.corePosition;
-                        droneSummon.masterPrefab = masterPrefab;
-                        droneSummon.summonerBodyObject = body.gameObject;
-                        var droneMaster = droneSummon.Perform();
-                        if (droneMaster)
+                    var victimEquipment = victim.inventory.GetEquipmentIndex();
+                    if (victim.teamComponent.teamIndex != body.teamComponent.teamIndex)
+                    {
+                        if (victim.isElite && victimEquipment != DLC1Content.Equipment.EliteVoidEquipment.equipmentIndex)
                         {
-                            droneMaster.gameObject.AddComponent<MasterSuicideOnTimer>().lifeTimer = baseLifeTime + (stackLifeTime * (stack - 1));
+                            var droneSummon = new MasterSummon();
+                            droneSummon.position = victim.corePosition + (Vector3.up * 3);
+                            droneSummon.masterPrefab = masterPrefab;
+                            droneSummon.summonerBodyObject = body.gameObject;
+                            var droneMaster = droneSummon.Perform();
+                            if (droneMaster)
+                            {
+                                droneMaster.gameObject.AddComponent<MasterSuicideOnTimer>().lifeTimer = baseLifeTime + (stackLifeTime * (stack - 1));
 
-                            CharacterBody droidBody = droneMaster.GetBody();
-                            droidBody.baseDamage *= (baseDamage * stack);
+                                CharacterBody droidBody = droneMaster.GetBody();
+                                droidBody.baseDamage *= (baseDamage * stack);
 
-                            Inventory droidInventory = droneMaster.inventory;
+                                Inventory droidInventory = droneMaster.inventory;
 
-                            droidInventory.SetEquipmentIndex(victimEquipment);
+                                droidInventory.SetEquipmentIndex(victimEquipment);
 
-                            Util.PlaySound("DroidHead", body.gameObject);
+                                Util.PlaySound("DroidHead", body.gameObject);
+                            }
                         }
                     }
                 }

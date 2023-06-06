@@ -11,22 +11,22 @@ namespace Moonstorm.Starstorm2.Items
         private const string token = "SS2_ITEM_JETBOOTS_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("JetBoots", SS2Bundle.Items);
 
-        [ConfigurableField(ConfigDesc = "Base radius of Prototype Jet Boot's explosion, in meters.")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Base radius of Prototype Jet Boot's explosion, in meters.")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float baseRadius = 7.5f;
 
-        [ConfigurableField(ConfigDesc = "Stacking radius of Prototype Jet Boots' explosion, in meters.")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Stacking radius of Prototype Jet Boots' explosion, in meters.")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static float stackRadius = 2.5f;
 
-        [ConfigurableField(ConfigDesc = "Maximum radius of Prototype Jet Boots' explosion, in meters.")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Maximum radius of Prototype Jet Boots' explosion, in meters.")]
         public static float maxRadius = 15f;
 
-        [ConfigurableField(ConfigDesc = "Base damage of Prototype Jet Boots' explosion. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Base damage of Prototype Jet Boots' explosion. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
         public static float baseDamage = 1.5f;
 
-        [ConfigurableField(ConfigDesc = "Stacking damage of Prototype Jet Boots' explosion. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Stacking damage of Prototype Jet Boots' explosion. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 3, "100")]
         public static float stackDamage = 1.0f;
 
@@ -35,16 +35,32 @@ namespace Moonstorm.Starstorm2.Items
         //Sometimes, we need these necesary evils, and tbh i'm ok with this one case.
         public override void Initialize()
         {
-            JetBootsBlast = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Effects/OmniEffect/OmniExplosionVFXCommandoGrenade"), "JetBootsBlast");
+            JetBootsBlast = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Effects/OmniEffect/OmniExplosionVFXCommandoGrenade"), "JetBootsBlast", false);
 
-            GameObject.DestroyImmediate(JetBootsBlast.transform.Find("ScaledHitsparks 1").gameObject);
-            GameObject.DestroyImmediate(JetBootsBlast.transform.Find("UnscaledHitsparks 1").gameObject);
-            GameObject.DestroyImmediate(JetBootsBlast.transform.Find("Nova Sphere (1)").gameObject);
+            GameObject.Destroy(JetBootsBlast.transform.Find("ScaledHitsparks 1").gameObject);
+            GameObject.Destroy(JetBootsBlast.transform.Find("UnscaledHitsparks 1").gameObject);
+            GameObject.Destroy(JetBootsBlast.transform.Find("Nova Sphere (1)").gameObject);
+
+            GameObject lightobj = JetBootsBlast.transform.Find("Point Light").gameObject;
+            if (lightobj)
+            {
+                Light light = lightobj.GetComponent<Light>();
+                SS2Log.Info("found lightobj");
+                if (light)
+                {
+                    SS2Log.Info("found light compontent");
+                    light.intensity = 3; //original was 100
+                }
+            }
+            
             //RemoveEffect(lightJetBootsFX.transform.Find("Point Light"));
 
             JetBootsBlast.GetComponent<ShakeEmitter>().radius *= 0.5f;
             JetBootsBlast.GetComponent<EffectComponent>().soundName = "JetBootsExplosion";
             JetBootsBlast.GetComponent<EffectComponent>().applyScale = true;
+
+            ContentAddition.AddEffect(JetBootsBlast);
+
             HG.ArrayUtils.ArrayAppend(ref SS2Content.Instance.SerializableContentPack.effectPrefabs, JetBootsBlast);
         }
 
@@ -80,7 +96,7 @@ namespace Moonstorm.Starstorm2.Items
 
                     EffectData bootsEffectData = new EffectData()
                     {
-                        color = new Color32(0, 255, 0, 255),
+                        color = new Color32(0, 255, 0, 150),
                         scale = radius / 2,
                         origin = body.footPosition
                     };

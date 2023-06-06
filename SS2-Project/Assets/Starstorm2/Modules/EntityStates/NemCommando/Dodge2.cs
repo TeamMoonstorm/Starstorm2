@@ -1,4 +1,5 @@
-﻿using RoR2;
+﻿using Moonstorm.Starstorm2;
+using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -11,18 +12,29 @@ namespace EntityStates.NemCommmando
         public float finalSpeedCoefficient = 1f;
         public static float dodgeFOV = -1f;
         public static GameObject JetEffect;
+        public static string DashJetL;
+        public static string DashJetR;
 
         private float rollSpeed;
         private Vector3 forwardDirection;
         private Vector3 previousPosition;
         private Animator animator;
+        private EntityStateMachine swordSM;
+        private NetworkStateMachine nsm;
+        private string skinNameToken;
 
         public override void OnEnter()
         {
             base.OnEnter();
+
             animator = GetModelAnimator();
             ChildLocator childLocator = animator.GetComponent<ChildLocator>();
             Util.PlaySound(Commando.DodgeState.dodgeSoundString, gameObject);
+
+            //nsm = GetComponent<NetworkStateMachine>();
+            //swordSM = nsm.stateMachines[1];
+
+            //Debug.Log("swordSM: " + swordSM.customName);
 
             animator.SetBool("isRolling", true);
 
@@ -47,10 +59,21 @@ namespace EntityStates.NemCommmando
                 characterMotor.velocity = forwardDirection * rollSpeed;
             }
 
-            if ((bool)JetEffect)
+            skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
+
+            if ((bool)JetEffect && skinNameToken != "SS2_SKIN_NEMCOMMANDO_GRANDMASTERY")
             {
-                Transform transform = childLocator.FindChild("JetMuzzleL");
-                Transform transform2 = childLocator.FindChild("JetMuzzleR");
+                //red
+                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_DEFAULT")
+                    JetEffect = SS2Assets.LoadAsset<GameObject>("NemCommandoDashJets", SS2Bundle.NemCommando);
+                //yellow
+                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
+                    JetEffect = SS2Assets.LoadAsset<GameObject>("NemCommandoDashJetsYellow", SS2Bundle.NemCommando);
+                //blue
+                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO")
+                    JetEffect = SS2Assets.LoadAsset<GameObject>("NemCommandoDashJetsBlue", SS2Bundle.NemCommando);
+                Transform transform = childLocator.FindChild(DashJetL);
+                Transform transform2 = childLocator.FindChild(DashJetR);
                 if ((bool)transform)
                 {
                     Object.Instantiate(JetEffect, transform);
@@ -63,6 +86,7 @@ namespace EntityStates.NemCommmando
 
             Vector3 velocity = characterMotor ? characterMotor.velocity : Vector3.zero;
             previousPosition = transform.position - velocity;
+
         }
 
         private void RecalculateRollSpeed()
@@ -109,6 +133,14 @@ namespace EntityStates.NemCommmando
         {
             animator.SetBool("isRolling", false);
 
+            if (swordSM)
+            {
+                //swordSM.SetNextStateToMain();
+                //Debug.Log("set sword to idle");
+            }
+
+            animator.SetBool("shouldExit", true);
+
             if (cameraTargetParams)
                 cameraTargetParams.fovOverride = -1f;
             base.OnExit();
@@ -124,6 +156,11 @@ namespace EntityStates.NemCommmando
         {
             base.OnDeserialize(reader);
             forwardDirection = reader.ReadVector3();
+        }
+
+        public override InterruptPriority GetMinimumInterruptPriority()
+        {
+            return InterruptPriority.Frozen;
         }
     }
 }

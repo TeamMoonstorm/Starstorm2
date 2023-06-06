@@ -38,7 +38,7 @@ namespace Moonstorm.Starstorm2.Buffs
                 curs.Emit(OpCodes.Ldloc_1);
                 curs.EmitDelegate<Func<EntityStateMachine, AISkillDriver.MovementType, AISkillDriver.MovementType>>((ESM, MoveType) =>
                 {
-                    if (ESM.GetComponent<CharacterMaster>().GetBody().HasBuff(SS2Content.Buffs.BuffFear))
+                    if (ESM.GetComponent<CharacterMaster>().GetBody().HasBuff(SS2Content.Buffs.BuffFear) && !ESM.GetComponent<CharacterMaster>().GetBody().isChampion)
                     {
                         return AISkillDriver.MovementType.FleeMoveTarget;
                     }
@@ -58,44 +58,21 @@ namespace Moonstorm.Starstorm2.Buffs
                 curs.EmitDelegate<Func<bool, EntityStateMachine, bool>>((cond, ESM) =>
                 {
                     if (ESM.GetComponent<CharacterMaster>().GetBody())
-                        if (ESM.GetComponent<CharacterMaster>().GetBody().HasBuff(SS2Content.Buffs.BuffFear))
+                        if (ESM.GetComponent<CharacterMaster>().GetBody().HasBuff(SS2Content.Buffs.BuffFear) && !ESM.GetComponent<CharacterMaster>().GetBody().isChampion)
                             return false;
                     return cond;
                 });
             };
         }
 
-        public sealed class Behavior : BaseBuffBodyBehavior, IBodyStatArgModifier, IOnIncomingDamageServerReceiver
+        public sealed class Behavior : BaseBuffBodyBehavior, IBodyStatArgModifier
         {
             [BuffDefAssociation]
             private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffFear;
-            private void Start()
-            {
-                if (body.healthComponent)
-                {
-                    HG.ArrayUtils.ArrayAppend(ref body.healthComponent.onIncomingDamageReceivers, this);
-                }
-            }
 
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
             {
-                args.moveSpeedReductionMultAdd += 0.3f;
-            }
-
-            public void OnIncomingDamageServer(DamageInfo damageInfo)
-            {
-                damageInfo.damage *= 1.5f;
-            }
-
-            private void OnDestroy()
-            {
-                //This SHOULDNT cause any errors because nothing should be fucking with the order of things in this list... I hope.
-                if (body.healthComponent)
-                {
-                    int i = Array.IndexOf(body.healthComponent.onIncomingDamageReceivers, this);
-                    if (i > -1)
-                        HG.ArrayUtils.ArrayRemoveAtAndResize(ref body.healthComponent.onIncomingDamageReceivers, body.healthComponent.onIncomingDamageReceivers.Length, i);
-                }
+                args.moveSpeedReductionMultAdd += 0.5f;
             }
         }
     }

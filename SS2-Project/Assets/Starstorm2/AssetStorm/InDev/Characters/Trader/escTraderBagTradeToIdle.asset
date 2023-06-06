@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: escTraderBagTradeToIdle
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.Trader.Bag.TradeToIdle, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: duration
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: enterSoundString
+      fieldValue:
+        stringValue: Play_scav_step
+        objectValue: {fileID: 0}
+    - fieldName: exitSoundString
+      fieldValue:
+        stringValue: Play_scav_idle_VO
+        objectValue: {fileID: 0}
+    - fieldName: dropUpVelocityStrength
+      fieldValue:
+        stringValue: 15
+        objectValue: {fileID: 0}
+    - fieldName: dropForwardVelocityStrength
+      fieldValue:
+        stringValue: 4
+        objectValue: {fileID: 0}
+    - fieldName: muzzleFlashEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: muzzleString
+      fieldValue:
+        stringValue: Eject
+        objectValue: {fileID: 0}
+    - fieldName: lowTrade
+      fieldValue:
+        stringValue: -0.1
+        objectValue: {fileID: 0}
+    - fieldName: highTrade
+      fieldValue:
+        stringValue: 0.4
+        objectValue: {fileID: 0}
+    - fieldName: rareThreshold
+      fieldValue:
+        stringValue: 0.72
+        objectValue: {fileID: 0}
+    - fieldName: uncommonThreshold
+      fieldValue:
+        stringValue: 0.32
+        objectValue: {fileID: 0}
+    - fieldName: commonThreshold
+      fieldValue:
+        stringValue: 0.01
+        objectValue: {fileID: 0}

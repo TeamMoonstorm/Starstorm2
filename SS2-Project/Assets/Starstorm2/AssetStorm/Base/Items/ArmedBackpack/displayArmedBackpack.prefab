@@ -44,7 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: -1479993534, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rendererInfos: []
+  rendererInfos:
+  - renderer: {fileID: 214738040599635457}
+    defaultMaterial: {fileID: 2100000, guid: 596870abc1c07c14d95a81647a300ce8, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
   hideOnDeathObjects: []
 --- !u!1 &8385984419196324537
 GameObject:
@@ -104,7 +109,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 65fa0087196c02a4182ce2c7dafdd6f5, type: 2}
+  - {fileID: 2100000, guid: 596870abc1c07c14d95a81647a300ce8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: escExe2ChargeGunFire
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.Executioner2.FireChargeGun, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: damageCoefficient
+      fieldValue:
+        stringValue: 3.5
+        objectValue: {fileID: 0}
+    - fieldName: procCoefficient
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: baseDuration
+      fieldValue:
+        stringValue: 0.115
+        objectValue: {fileID: 0}
+    - fieldName: recoil
+      fieldValue:
+        stringValue: 0.6
+        objectValue: {fileID: 0}
+    - fieldName: aimSnapAngle
+      fieldValue:
+        stringValue: 7.5
+        objectValue: {fileID: 0}
+    - fieldName: range
+      fieldValue:
+        stringValue: 200
+        objectValue: {fileID: 0}
+    - fieldName: force
+      fieldValue:
+        stringValue: 200
+        objectValue: {fileID: 0}
+    - fieldName: spreadBloomValue
+      fieldValue:
+        stringValue: 0.4
+        objectValue: {fileID: 0}
+    - fieldName: minimumShotBurst
+      fieldValue:
+        stringValue: 5
+        objectValue: {fileID: 0}
+    - fieldName: muzzleString
+      fieldValue:
+        stringValue: Muzzle
+        objectValue: {fileID: 0}
+    - fieldName: ionEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 5278828488813142746, guid: 9100bf74e3d11dd469b62f2ad760d8bd,
+          type: 3}
+    - fieldName: useAimAssist
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: damageBurstCoefficient
+      fieldValue:
+        stringValue: 0.5
+        objectValue: {fileID: 0}
+    - fieldName: tracerPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1155134562493520, guid: 0685de3f99e3cff409d068c328d808ac,
+          type: 3}
+    - fieldName: muzzlePrefabMastery
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1235408164177298, guid: 8092e65db39702f4aa683b2201bdd913,
+          type: 3}
+    - fieldName: tracerPrefabMastery
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1155134562493520, guid: 8020a53a4ed79f34eb06c7c3234fd917,
+          type: 3}
+    - fieldName: hitPrefabMastery
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1310465176928669, guid: 604954b87b230114ca5df03ea2c69016,
+          type: 3}

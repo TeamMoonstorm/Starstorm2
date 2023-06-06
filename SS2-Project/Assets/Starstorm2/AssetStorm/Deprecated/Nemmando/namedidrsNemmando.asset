@@ -1,0 +1,2344 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b2a16891c8108e48883bce0009b7835, type: 3}
+  m_Name: namedidrsNemmando
+  m_EditorClassIdentifier: 
+  idrs: {fileID: 11400000, guid: 32db6b7afda2c524fbcfd5d6259c7246, type: 2}
+  namedRuleGroups:
+  - keyAssetName: BossDamageBonus
+    keyAsset:
+      address: RoR2/Base/BossDamageBonus/BossDamageBonus.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayAPRound
+      displayPrefab:
+        address: RoR2/Base/BossDamageBonus/DisplayAPRound.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ShoulderL
+      localPos: {x: 0.00004, y: 0.00225, z: 0.00098}
+      localAngles: {x: 278.7487, y: 309.8303, z: 23.80888}
+      localScales: {x: 0.00274, y: 0.00274, z: 0.00274}
+      limbMask: 0
+  - keyAssetName: SecondarySkillMagazine
+    keyAsset:
+      address: RoR2/Base/SecondarySkillMagazine/SecondarySkillMagazine.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDoubleMag
+      displayPrefab:
+        address: RoR2/Base/SecondarySkillMagazine/DisplayDoubleMag.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Gun
+      localPos: {x: 0.00024, y: -0.00017, z: -0.00026}
+      localAngles: {x: 348.1462, y: 79.9535, z: 186.6812}
+      localScales: {x: -0.0003, y: -0.00052, z: -0.00052}
+      limbMask: 0
+  - keyAssetName: FlatHealth
+    keyAsset:
+      address: RoR2/Base/FlatHealth/FlatHealth.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySteakCurved
+      displayPrefab:
+        address: RoR2/Base/FlatHealth/DisplaySteakCurved.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: -0.001138702, y: 0.00396279, z: -0.0001841304}
+      localAngles: {x: 301.9583, y: 267.5504, z: 355.3541}
+      localScales: {x: 0.00145, y: 0.00145, z: 0.00145}
+      limbMask: 0
+  - keyAssetName: Firework
+    keyAsset:
+      address: RoR2/Base/Firework/Firework.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFirework
+      displayPrefab:
+        address: RoR2/Base/Firework/DisplayFirework.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.00103, y: -0.00056, z: -0.00123}
+      localAngles: {x: 281.098, y: 71.18607, z: 112.7231}
+      localScales: {x: 0.002, y: 0.002, z: 0.00197}
+      limbMask: 0
+  - keyAssetName: Mushroom
+    keyAsset:
+      address: RoR2/Base/Mushroom/Mushroom.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMushroom
+      displayPrefab:
+        address: RoR2/Base/Mushroom/DisplayMushroom.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: FootL
+      localPos: {x: 0.00013, y: 0.00146, z: -0.00026}
+      localAngles: {x: 307.0188, y: 9.00343, z: 350.5404}
+      localScales: {x: 0.00037, y: 0.00037, z: 0.00037}
+      limbMask: 0
+  - keyAssetName: HealWhileSafe
+    keyAsset:
+      address: RoR2/Base/HealWhileSafe/HealWhileSafe.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySnail
+      displayPrefab:
+        address: RoR2/Base/HealWhileSafe/DisplaySnail.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00021, y: 0.00599, z: -0.00054}
+      localAngles: {x: 304.1055, y: 1.29268, z: 2.14032}
+      localScales: {x: 0.00048, y: 0.00048, z: 0.00048}
+      limbMask: 0
+  - keyAssetName: Crowbar
+    keyAsset:
+      address: RoR2/Base/Crowbar/Crowbar.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayCrowbar
+      displayPrefab:
+        address: RoR2/Base/Crowbar/DisplayCrowbar.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.00196, y: -0.00156, z: 0.00042}
+      localAngles: {x: 9.82541, y: 359.613, z: 2.50492}
+      localScales: {x: 0.00208, y: 0.00208, z: 0.00208}
+      limbMask: 0
+  - keyAssetName: SprintBonus
+    keyAsset:
+      address: RoR2/Base/SprintBonus/SprintBonus.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySoda
+      displayPrefab:
+        address: RoR2/Base/SprintBonus/DisplaySoda.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ShoulderR
+      localPos: {x: -0.00085, y: 0.00221, z: -0.00002}
+      localAngles: {x: 275.4979, y: 10.25677, z: 348.5858}
+      localScales: {x: -0.00252, y: -0.00252, z: -0.00252}
+      limbMask: 0
+  - keyAssetName: NearbyDamageBonus
+    keyAsset:
+      address: RoR2/Base/NearbyDamageBonus/NearbyDamageBonus.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDiamond
+      displayPrefab:
+        address: RoR2/Base/NearbyDamageBonus/DisplayDiamond.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Sword
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: -0.00113, y: -0.00113, z: -0.00113}
+      limbMask: 0
+  - keyAssetName: IgniteOnKill
+    keyAsset:
+      address: RoR2/Base/IgniteOnKill/IgniteOnKill.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGasoline
+      displayPrefab:
+        address: RoR2/Base/IgniteOnKill/DisplayGasoline.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ThighL
+      localPos: {x: 0.00109, y: 0.00252, z: 0.00018}
+      localAngles: {x: 274.5631, y: 245.961, z: 95.29594}
+      localScales: {x: -0.00377, y: -0.00377, z: -0.00377}
+      limbMask: 0
+  - keyAssetName: CritGlasses
+    keyAsset:
+      address: RoR2/Base/CritGlasses/CritGlasses.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGlasses
+      displayPrefab:
+        address: RoR2/Base/CritGlasses/DisplayGlasses.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0.00002817865, y: 0.002601417, z: 0.001519402}
+      localAngles: {x: 355.4256, y: 1.080717, z: 0.1317751}
+      localScales: {x: 0.0033, y: 0.00339, z: 0.00339}
+      limbMask: 0
+  - keyAssetName: Medkit
+    keyAsset:
+      address: RoR2/Base/Medkit/Medkit.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMedkit
+      displayPrefab:
+        address: RoR2/Base/Medkit/DisplayMedkit.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.00004, y: -0.00004, z: 0.0016}
+      localAngles: {x: 83.49435, y: 189.5159, z: 189.5357}
+      localScales: {x: -0.00439, y: -0.00439, z: -0.00439}
+      limbMask: 0
+  - keyAssetName: Hoof
+    keyAsset:
+      address: RoR2/Base/Hoof/Hoof.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayHoof
+      displayPrefab:
+        address: RoR2/Base/Hoof/DisplayHoof.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: CalfL
+      localPos: {x: 0.0001, y: 0.00311, z: -0.00061}
+      localAngles: {x: 63.02884, y: 357.4355, z: 8.76749}
+      localScales: {x: 0.00079, y: 0.001, z: 0.00071}
+      limbMask: 0
+  - keyAssetName: PersonalShield
+    keyAsset:
+      address: RoR2/Base/PersonalShield/PersonalShield.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayShieldGenerator
+      displayPrefab:
+        address: RoR2/Base/PersonalShield/DisplayShieldGenerator.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00002, y: -0.00093, z: 0.00122}
+      localAngles: {x: 81.6302, y: 192.3984, z: 193.0263}
+      localScales: {x: -0.00158, y: -0.00158, z: -0.00158}
+      limbMask: 0
+  - keyAssetName: ArmorPlate
+    keyAsset:
+      address: RoR2/Base/ArmorPlate/ArmorPlate.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayRepulsionArmorPlate
+      displayPrefab:
+        address: RoR2/Base/ArmorPlate/DisplayRepulsionArmorPlate.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ArmL
+      localPos: {x: 0.00037, y: 0.00176, z: 0.00008}
+      localAngles: {x: 278.6886, y: 222.1258, z: 50.49733}
+      localScales: {x: -0.00185, y: -0.00271, z: -0.00184}
+      limbMask: 0
+  - keyAssetName: TreasureCache
+    keyAsset:
+      address: RoR2/Base/TreasureCache/TreasureCache.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayKey
+      displayPrefab:
+        address: RoR2/Base/TreasureCache/DisplayKey.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Sword
+      localPos: {x: -0.00009, y: 0.00102, z: -0.00005}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.00688, y: 0.00688, z: 0.00688}
+      limbMask: 0
+  - keyAssetName: StickyBomb
+    keyAsset:
+      address: RoR2/Base/StickyBomb/StickyBomb.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayStickyBomb
+      displayPrefab:
+        address: RoR2/Base/StickyBomb/DisplayStickyBomb.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ShoulderR
+      localPos: {x: -0.00073, y: 0.0017, z: 0.00044}
+      localAngles: {x: 9.12244, y: 0, z: 5.29106}
+      localScales: {x: -0.00181, y: -0.00181, z: -0.00181}
+      limbMask: 0
+  - keyAssetName: StunChanceOnHit
+    keyAsset:
+      address: RoR2/Base/StunChanceOnHit/StunChanceOnHit.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayStunGrenade
+      displayPrefab:
+        address: RoR2/Base/StunChanceOnHit/DisplayStunGrenade.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ShoulderR
+      localPos: {x: -0.00078, y: 0.00236, z: -0.00055}
+      localAngles: {x: 83.29408, y: 180, z: 180}
+      localScales: {x: 0.00562, y: 0.00562, z: 0.00562}
+      limbMask: 0
+  - keyAssetName: BarrierOnKill
+    keyAsset:
+      address: RoR2/Base/BarrierOnKill/BarrierOnKill.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBrooch
+      displayPrefab:
+        address: RoR2/Base/BarrierOnKill/DisplayBrooch.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00178, y: 0.0036, z: 0.00167}
+      localAngles: {x: 310.2784, y: 230.3934, z: 166.8923}
+      localScales: {x: -0.00349, y: -0.00349, z: -0.00349}
+      limbMask: 0
+  - keyAssetName: Bear
+    keyAsset:
+      address: RoR2/Base/Bear/Bear.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBear
+      displayPrefab:
+        address: RoR2/Base/Bear/DisplayBear.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0, y: 0.00248, z: 0.00222}
+      localAngles: {x: 10.81363, y: 0, z: 0}
+      localScales: {x: 0.00134, y: 0.00134, z: 0.00134}
+      limbMask: 0
+  - keyAssetName: BleedOnHit
+    keyAsset:
+      address: RoR2/Base/BleedOnHit/BleedOnHit.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTriTip
+      displayPrefab:
+        address: RoR2/Base/BleedOnHit/DisplayTriTip.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Gun
+      localPos: {x: -0.00175, y: 0.00197, z: -0.00084}
+      localAngles: {x: 0, y: 252.4081, z: 0}
+      localScales: {x: 0.00168, y: 0.00168, z: 0.00168}
+      limbMask: 0
+  - keyAssetName: WardOnLevel
+    keyAsset:
+      address: RoR2/Base/WardOnLevel/WardOnLevel.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWarbanner
+      displayPrefab:
+        address: RoR2/Base/WardOnLevel/DisplayWarbanner.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00026, y: 0.00422, z: -0.00219}
+      localAngles: {x: 67.52062, y: 184.3249, z: 90.54029}
+      localScales: {x: -0.00415, y: -0.00415, z: -0.00415}
+      limbMask: 0
+  - keyAssetName: Tooth
+    keyAsset:
+      address: RoR2/Base/Tooth/Tooth.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayToothNecklaceDecal
+      displayPrefab:
+        address: RoR2/Base/Tooth/DisplayToothNecklaceDecal.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00018, y: 0.00378, z: 0.00059}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayToothMeshLarge
+      displayPrefab:
+        address: RoR2/Base/Tooth/DisplayToothMeshLarge.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0, y: 0.00354, z: 0.00237}
+      localAngles: {x: 320.053, y: 1.10597, z: 1.53428}
+      localScales: {x: 0.01624, y: 0.01624, z: 0.01624}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayToothMeshSmall1
+      displayPrefab:
+        address: RoR2/Base/Tooth/DisplayToothMeshSmall1.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00027, y: 0.00357, z: 0.0024}
+      localAngles: {x: 0.39687, y: 15.19721, z: 2.43021}
+      localScales: {x: 0.01271, y: 0.01271, z: 0.01271}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayToothMeshSmall1
+      displayPrefab:
+        address: RoR2/Base/Tooth/DisplayToothMeshSmall1.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.0003, y: 0.0036, z: 0.00233}
+      localAngles: {x: 359.227, y: 347.8072, z: 358.1762}
+      localScales: {x: 0.01271, y: 0.01271, z: 0.01271}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayToothMeshSmall2
+      displayPrefab:
+        address: RoR2/Base/Tooth/DisplayToothMeshSmall2.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.0006, y: 0.00362, z: 0.00234}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.01211, y: 0.01211, z: 0.01211}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayToothMeshSmall2
+      displayPrefab:
+        address: RoR2/Base/Tooth/DisplayToothMeshSmall2.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00049, y: 0.00359, z: 0.00228}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: -0.01211, y: 0.01211, z: 0.01211}
+      limbMask: 0
+  - keyAssetName: Missile
+    keyAsset:
+      address: RoR2/Base/Missile/Missile.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMissileLauncher
+      displayPrefab:
+        address: RoR2/Base/Missile/DisplayMissileLauncher.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Gun
+      localPos: {x: 0.00023, y: 0.00284, z: -0.00046}
+      localAngles: {x: 350.5193, y: 255.6219, z: 5.06668}
+      localScales: {x: 0.00084, y: 0.00084, z: 0.00084}
+      limbMask: 0
+  - keyAssetName: WarCryOnMultiKill
+    keyAsset:
+      address: RoR2/Base/WarCryOnMultiKill/WarCryOnMultiKill.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayPauldron
+      displayPrefab:
+        address: RoR2/Base/WarCryOnMultiKill/DisplayPauldron.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ShoulderL
+      localPos: {x: 0.00087, y: 0.00017, z: 0.00053}
+      localAngles: {x: 324.6592, y: 321.8653, z: 71.80752}
+      localScales: {x: -0.00626, y: -0.00626, z: -0.00626}
+      limbMask: 0
+  - keyAssetName: SlowOnHit
+    keyAsset:
+      address: RoR2/Base/SlowOnHit/SlowOnHit.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBauble
+      displayPrefab:
+        address: RoR2/Base/SlowOnHit/DisplayBauble.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ShoulderR
+      localPos: {x: 0.00089, y: 0.00334, z: -0.00074}
+      localAngles: {x: 343.0117, y: 170.9247, z: 2.67203}
+      localScales: {x: -0.00315, y: -0.00315, z: -0.00315}
+      limbMask: 0
+  - keyAssetName: DeathMark
+    keyAsset:
+      address: RoR2/Base/DeathMark/DeathMark.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDeathMark
+      displayPrefab:
+        address: RoR2/Base/DeathMark/DisplayDeathMark.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00091, y: -0.00105, z: 0.00074}
+      localAngles: {x: 77.26099, y: 180, z: 145.6681}
+      localScales: {x: -0.00035, y: -0.00035, z: -0.00035}
+      limbMask: 0
+  - keyAssetName: EquipmentMagazine
+    keyAsset:
+      address: RoR2/Base/EquipmentMagazine/EquipmentMagazine.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBattery
+      displayPrefab:
+        address: RoR2/Base/EquipmentMagazine/DisplayBattery.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00037, y: 0.00501, z: -0.00147}
+      localAngles: {x: 0, y: 93.26506, z: 0}
+      localScales: {x: -0.00167, y: -0.00167, z: -0.00265}
+      limbMask: 0
+  - keyAssetName: BonusGoldPackOnKill
+    keyAsset:
+      address: RoR2/Base/BonusGoldPackOnKill/BonusGoldPackOnKill.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTome
+      displayPrefab:
+        address: RoR2/Base/BonusGoldPackOnKill/DisplayTome.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00203, y: -0.00057, z: 0.00048}
+      localAngles: {x: 10.2573, y: 268.5793, z: 317.6278}
+      localScales: {x: -0.00045, y: -0.00045, z: -0.00045}
+      limbMask: 0
+  - keyAssetName: HealOnCrit
+    keyAsset:
+      address: RoR2/Base/HealOnCrit/HealOnCrit.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayScythe
+      displayPrefab:
+        address: RoR2/Base/HealOnCrit/DisplayScythe.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.00247, y: -0.00188, z: -0.00009}
+      localAngles: {x: 81.64294, y: 215.8473, z: 20.37621}
+      localScales: {x: -0.00202, y: -0.00202, z: -0.00202}
+      limbMask: 0
+  - keyAssetName: Feather
+    keyAsset:
+      address: RoR2/Base/Feather/Feather.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFeather
+      displayPrefab:
+        address: RoR2/Base/Feather/DisplayFeather.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ThighR
+      localPos: {x: -0.00057, y: 0.00241, z: -0.0007}
+      localAngles: {x: 308.0484, y: 207.9767, z: 243.223}
+      localScales: {x: 0.00025, y: 0.00025, z: 0.00025}
+      limbMask: 0
+  - keyAssetName: Infusion
+    keyAsset:
+      address: RoR2/Base/Infusion/Infusion.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayInfusion
+      displayPrefab:
+        address: RoR2/Base/Infusion/DisplayInfusion.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ThighL
+      localPos: {x: 0.0009, y: 0.00157, z: -0.0014}
+      localAngles: {x: 358.0964, y: 125.2124, z: 186.5599}
+      localScales: {x: 0.00417, y: 0.00417, z: 0.00417}
+      limbMask: 0
+  - keyAssetName: FireRing
+    keyAsset:
+      address: RoR2/Base/ElementalRings/FireRing.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFireRing
+      displayPrefab:
+        address: RoR2/Base/ElementalRings/DisplayFireRing.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: HandL
+      localPos: {x: 0.00003, y: -0.00037, z: 0.0001}
+      localAngles: {x: 63.91947, y: 37.35725, z: 23.20192}
+      localScales: {x: -0.00606, y: -0.00606, z: -0.00606}
+      limbMask: 0
+  - keyAssetName: Seed
+    keyAsset:
+      address: RoR2/Base/Seed/Seed.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySeed
+      displayPrefab:
+        address: RoR2/Base/Seed/DisplaySeed.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.00176, y: 0.00404, z: 0.0018}
+      localAngles: {x: 327.7914, y: 274.8672, z: 7.03759}
+      localScales: {x: 0.00022, y: 0.00022, z: 0.00022}
+      limbMask: 0
+  - keyAssetName: TPHealingNova
+    keyAsset:
+      address: RoR2/Base/TPHealingNova/TPHealingNova.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGlowFlower
+      displayPrefab:
+        address: RoR2/Base/TPHealingNova/DisplayGlowFlower.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ThighR
+      localPos: {x: -0.00059, y: 0.00239, z: 0.00061}
+      localAngles: {x: 0, y: 299.865, z: 0}
+      localScales: {x: 0.00397, y: 0.00397, z: 0.00397}
+      limbMask: 0
+  - keyAssetName: ExecuteLowHealthElite
+    keyAsset:
+      address: RoR2/Base/ExecuteLowHealthElite/ExecuteLowHealthElite.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGuillotine
+      displayPrefab:
+        address: RoR2/Base/ExecuteLowHealthElite/DisplayGuillotine.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Sword
+      localPos: {x: 0.00099, y: 0.01231, z: -0.0005}
+      localAngles: {x: 0.10516, y: 288.8488, z: 270.0359}
+      localScales: {x: 0.0027, y: 0.0027, z: 0.0027}
+      limbMask: 0
+  - keyAssetName: Phasing
+    keyAsset:
+      address: RoR2/Base/Phasing/Phasing.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayStealthkit
+      displayPrefab:
+        address: RoR2/Base/Phasing/DisplayStealthkit.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: CalfR
+      localPos: {x: -0.00007, y: 0.0021, z: 0.00108}
+      localAngles: {x: 71.27696, y: 351.6968, z: 352.1306}
+      localScales: {x: -0.00225, y: -0.00415, z: -0.00334}
+      limbMask: 0
+  - keyAssetName: AttackSpeedOnCrit
+    keyAsset:
+      address: RoR2/Base/AttackSpeedOnCrit/AttackSpeedOnCrit.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWolfPelt
+      displayPrefab:
+        address: RoR2/Base/AttackSpeedOnCrit/DisplayWolfPelt.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0, y: 0.00246, z: 0.00119}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.00729, y: 0.00729, z: 0.00729}
+      limbMask: 0
+  - keyAssetName: Thorns
+    keyAsset:
+      address: RoR2/Base/Thorns/Thorns.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayRazorwireLeft
+      displayPrefab:
+        address: RoR2/Base/Thorns/DisplayRazorwireLeft.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Sword
+      localPos: {x: 0.00013, y: 0.00325, z: 0.00007}
+      localAngles: {x: 86.94386, y: 23.89293, z: 13.69595}
+      localScales: {x: -0.00353, y: -0.00353, z: -0.00942}
+      limbMask: 0
+  - keyAssetName: SprintOutOfCombat
+    keyAsset:
+      address: RoR2/Base/SprintOutOfCombat/SprintOutOfCombat.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWhip
+      displayPrefab:
+        address: RoR2/Base/SprintOutOfCombat/DisplayWhip.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00036, y: -0.00061, z: -0.00144}
+      localAngles: {x: 342.9917, y: 264.2429, z: 180}
+      localScales: {x: -0.00253, y: -0.00253, z: -0.00253}
+      limbMask: 0
+  - keyAssetName: SprintArmor
+    keyAsset:
+      address: RoR2/Base/SprintArmor/SprintArmor.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBuckler
+      displayPrefab:
+        address: RoR2/Base/SprintArmor/DisplayBuckler.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ArmL
+      localPos: {x: 0, y: 0.00137, z: -0.00036}
+      localAngles: {x: 16.09725, y: 183.0452, z: 0.86329}
+      localScales: {x: 0.00179, y: 0.00179, z: 0.00179}
+      limbMask: 0
+  - keyAssetName: IceRing
+    keyAsset:
+      address: RoR2/Base/ElementalRings/IceRing.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayIceRing
+      displayPrefab:
+        address: RoR2/Base/ElementalRings/DisplayIceRing.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: HandR
+      localPos: {x: 0.00034, y: -0.00009, z: 0.00001}
+      localAngles: {x: 63.58542, y: 25.92959, z: 23.53076}
+      localScales: {x: -0.0055, y: -0.0055, z: -0.0055}
+      limbMask: 0
+  - keyAssetName: Squid
+    keyAsset:
+      address: RoR2/Base/Squid/Squid.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySquidTurret
+      displayPrefab:
+        address: RoR2/Base/Squid/DisplaySquidTurret.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: CalfL
+      localPos: {x: 0, y: -0.00008, z: -0.00016}
+      localAngles: {x: 62.60889, y: 0, z: 0}
+      localScales: {x: -0.00056, y: -0.00056, z: -0.00056}
+      limbMask: 0
+  - keyAssetName: ChainLightning
+    keyAsset:
+      address: RoR2/Base/ChainLightning/ChainLightning.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayUkulele
+      displayPrefab:
+        address: RoR2/Base/ChainLightning/DisplayUkulele.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00071, y: 0.00213, z: -0.0026}
+      localAngles: {x: 0, y: 172.7611, z: 320.832}
+      localScales: {x: 0.00623, y: 0.00623, z: 0.00623}
+      limbMask: 0
+  - keyAssetName: EnergizedOnEquipmentUse
+    keyAsset:
+      address: RoR2/Base/EnergizedOnEquipmentUse/EnergizedOnEquipmentUse.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWarHorn
+      displayPrefab:
+        address: RoR2/Base/EnergizedOnEquipmentUse/DisplayWarHorn.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.00106, y: -0.0008, z: 0.00129}
+      localAngles: {x: 12.06961, y: 144.479, z: 234.765}
+      localScales: {x: 0.00284, y: -0.00284, z: -0.00284}
+      limbMask: 0
+  - keyAssetName: JumpBoost
+    keyAsset:
+      address: RoR2/Base/JumpBoost/JumpBoost.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWaxBird
+      displayPrefab:
+        address: RoR2/Base/JumpBoost/DisplayWaxBird.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ShoulderL
+      localPos: {x: -0.00307, y: 0.00487, z: 0.00192}
+      localAngles: {x: 48.44913, y: 338.7879, z: 206.5506}
+      localScales: {x: 0.01051, y: 0.01051, z: 0.01051}
+      limbMask: 0
+  - keyAssetName: ExplodeOnDeath
+    keyAsset:
+      address: RoR2/Base/ExplodeOnDeath/ExplodeOnDeath.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWilloWisp
+      displayPrefab:
+        address: RoR2/Base/ExplodeOnDeath/DisplayWilloWisp.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00205, y: 0.00083, z: 0.00174}
+      localAngles: {x: 0, y: 0, z: 88.24252}
+      localScales: {x: 0.00057, y: 0.00057, z: 0.00057}
+      limbMask: 0
+  - keyAssetName: Clover
+    keyAsset:
+      address: RoR2/Base/Clover/Clover.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayClover
+      displayPrefab:
+        address: RoR2/Base/Clover/DisplayClover.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ThighL
+      localPos: {x: 0.0005, y: 0.00203, z: 0.00065}
+      localAngles: {x: 80.4781, y: 0.00001, z: 333.151}
+      localScales: {x: 0.00444, y: 0.00444, z: 0.00444}
+      limbMask: 0
+  - keyAssetName: BarrierOnOverHeal
+    keyAsset:
+      address: RoR2/Base/BarrierOnOverHeal/BarrierOnOverHeal.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayAegis
+      displayPrefab:
+        address: RoR2/Base/BarrierOnOverHeal/DisplayAegis.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ArmR
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 81.33299, y: 0, z: 0}
+      localScales: {x: 0.00206, y: 0.00206, z: 0.00206}
+      limbMask: 0
+  - keyAssetName: AlienHead
+    keyAsset:
+      address: RoR2/Base/AlienHead/AlienHead.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayAlienHead
+      displayPrefab:
+        address: RoR2/Base/AlienHead/DisplayAlienHead.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ShoulderR
+      localPos: {x: -0.00141, y: 0.00011, z: -0.00014}
+      localAngles: {x: 332.4341, y: 26.70566, z: 81.12897}
+      localScales: {x: -0.00653, y: -0.00653, z: -0.00653}
+      limbMask: 0
+  - keyAssetName: KillEliteFrenzy
+    keyAsset:
+      address: RoR2/Base/KillEliteFrenzy/KillEliteFrenzy.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBrainstalk
+      displayPrefab:
+        address: RoR2/Base/KillEliteFrenzy/DisplayBrainstalk.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0, y: 0.00275, z: 0.00001}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.00239, y: 0.00239, z: 0.00239}
+      limbMask: 0
+  - keyAssetName: Behemoth
+    keyAsset:
+      address: RoR2/Base/Behemoth/Behemoth.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBehemoth
+      displayPrefab:
+        address: RoR2/Base/Behemoth/DisplayBehemoth.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Gun
+      localPos: {x: -0.00085, y: 0.00162, z: 0.00008}
+      localAngles: {x: 357.8172, y: 347.9224, z: 79.90709}
+      localScales: {x: 0.00025, y: 0.00025, z: 0.00025}
+      limbMask: 0
+  - keyAssetName: Dagger
+    keyAsset:
+      address: RoR2/Base/Dagger/Dagger.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDagger
+      displayPrefab:
+        address: RoR2/Base/Dagger/DisplayDagger.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0.00084, y: 0.00106, z: -0.0014}
+      localAngles: {x: 291.6041, y: 180, z: 180}
+      localScales: {x: 0.00441, y: 0.00441, z: 0.00441}
+      limbMask: 0
+  - keyAssetName: ExtraLife
+    keyAsset:
+      address: RoR2/Base/ExtraLife/ExtraLife.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayHippo
+      displayPrefab:
+        address: RoR2/Base/ExtraLife/DisplayHippo.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ShoulderR
+      localPos: {x: -0.00093, y: -0.00069, z: -0.00042}
+      localAngles: {x: 52.40368, y: 345.133, z: 144.8698}
+      localScales: {x: 0.00165, y: 0.00165, z: 0.00165}
+      limbMask: 0
+  - keyAssetName: Icicle
+    keyAsset:
+      address: RoR2/Base/Icicle/Icicle.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFrostRelic
+      displayPrefab:
+        address: RoR2/Base/Icicle/DisplayFrostRelic.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Base
+      localPos: {x: 0.00548, y: 0.00567, z: -0.00971}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: FallBoots
+    keyAsset:
+      address: RoR2/Base/FallBoots/FallBoots.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGravBoots
+      displayPrefab:
+        address: RoR2/Base/FallBoots/DisplayGravBoots.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: CalfL
+      localPos: {x: 0.00008, y: 0.00368, z: -0.00002}
+      localAngles: {x: 18.4162, y: 163.6936, z: 181.7078}
+      localScales: {x: 0.00268, y: 0.00268, z: 0.00268}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayGravBoots
+      displayPrefab:
+        address: RoR2/Base/FallBoots/DisplayGravBoots.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: CalfR
+      localPos: {x: 0, y: 0.00368, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.00268, y: -0.00406, z: 0.00268}
+      limbMask: 0
+  - keyAssetName: GhostOnKill
+    keyAsset:
+      address: RoR2/Base/GhostOnKill/GhostOnKill.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMask
+      displayPrefab:
+        address: RoR2/Base/GhostOnKill/DisplayMask.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0, y: 0.00233, z: 0.00081}
+      localAngles: {x: 347.2917, y: 0, z: 0}
+      localScales: {x: 0.00765, y: 0.00765, z: 0.00765}
+      limbMask: 0
+  - keyAssetName: UtilitySkillMagazine
+    keyAsset:
+      address: RoR2/Base/UtilitySkillMagazine/UtilitySkillMagazine.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayAfterburnerShoulderRing
+      displayPrefab:
+        address: RoR2/Base/UtilitySkillMagazine/DisplayAfterburnerShoulderRing.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.00176, y: 0.00465, z: -0.00073}
+      localAngles: {x: 296.7793, y: 356.3471, z: 15.07339}
+      localScales: {x: -0.00521, y: -0.00521, z: -0.00521}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayAfterburnerShoulderRing
+      displayPrefab:
+        address: RoR2/Base/UtilitySkillMagazine/DisplayAfterburnerShoulderRing.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.00176, y: 0.00465, z: -0.00073}
+      localAngles: {x: 296.7793, y: 356.3471, z: 15.07339}
+      localScales: {x: -0.00521, y: -0.00521, z: -0.00521}
+      limbMask: 0
+  - keyAssetName: Plant
+    keyAsset:
+      address: RoR2/Base/Plant/Plant.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayInterstellarDeskPlant
+      displayPrefab:
+        address: RoR2/Base/Plant/DisplayInterstellarDeskPlant.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.00135, y: 0.00092, z: 0.00152}
+      localAngles: {x: 0, y: 84.49098, z: 0}
+      localScales: {x: -0.00067, y: -0.00067, z: -0.00067}
+      limbMask: 0
+  - keyAssetName: NovaOnHeal
+    keyAsset:
+      address: RoR2/Base/NovaOnHeal/NovaOnHeal.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDevilHorns
+      displayPrefab:
+        address: RoR2/Base/NovaOnHeal/DisplayDevilHorns.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0, y: 0.00223, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: -0.00698, y: 0.00698, z: 0.00698}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayDevilHorns
+      displayPrefab:
+        address: RoR2/Base/NovaOnHeal/DisplayDevilHorns.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0, y: 0.00223, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.00698, y: 0.00698, z: 0.00698}
+      limbMask: 0
+  - keyAssetName: IncreaseHealing
+    keyAsset:
+      address: RoR2/Base/IncreaseHealing/IncreaseHealing.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayAntler
+      displayPrefab:
+        address: RoR2/Base/IncreaseHealing/DisplayAntler.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: -0.00079, y: 0.00311, z: 0}
+      localAngles: {x: 0, y: 90, z: 0}
+      localScales: {x: 0.00289, y: 0.00289, z: -0.00289}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayAntler
+      displayPrefab:
+        address: RoR2/Base/IncreaseHealing/DisplayAntler.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0.00079, y: 0.00311, z: 0}
+      localAngles: {x: 0, y: 90, z: 0}
+      localScales: {x: 0.00289, y: 0.00289, z: 0.00289}
+      limbMask: 0
+  - keyAssetName: LaserTurbine
+    keyAsset:
+      address: RoR2/Base/LaserTurbine/LaserTurbine.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLaserTurbine
+      displayPrefab:
+        address: RoR2/Base/LaserTurbine/DisplayLaserTurbine.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ArmL
+      localPos: {x: 0, y: 0.00118, z: -0.00122}
+      localAngles: {x: 343.7738, y: 0, z: 0}
+      localScales: {x: -0.00327, y: -0.00327, z: -0.00327}
+      limbMask: 0
+  - keyAssetName: BounceNearby
+    keyAsset:
+      address: RoR2/Base/BounceNearby/BounceNearby.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayHook
+      displayPrefab:
+        address: RoR2/Base/BounceNearby/DisplayHook.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0, y: 0.00571, z: -0.0007}
+      localAngles: {x: 281.7869, y: 180, z: 180}
+      localScales: {x: 0.0032, y: 0.0032, z: 0.0032}
+      limbMask: 0
+  - keyAssetName: ArmorReductionOnHit
+    keyAsset:
+      address: RoR2/Base/ArmorReductionOnHit/ArmorReductionOnHit.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWarhammer
+      displayPrefab:
+        address: RoR2/Base/ArmorReductionOnHit/DisplayWarhammer.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00106, y: 0.00423, z: -0.00226}
+      localAngles: {x: 314.6011, y: 76.82185, z: 284.4972}
+      localScales: {x: 0.00143, y: 0.00143, z: 0.00143}
+      limbMask: 0
+  - keyAssetName: Talisman
+    keyAsset:
+      address: RoR2/Base/Talisman/Talisman.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTalisman
+      displayPrefab:
+        address: RoR2/Base/Talisman/DisplayTalisman.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Base
+      localPos: {x: -0.00853, y: 0.00063, z: -0.00293}
+      localAngles: {x: 280.5756, y: 180, z: 180}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: ShockNearby
+    keyAsset:
+      address: RoR2/Base/ShockNearby/ShockNearby.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTeslaCoil
+      displayPrefab:
+        address: RoR2/Base/ShockNearby/DisplayTeslaCoil.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: CalfR
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 82.02888, y: 0, z: 0}
+      localScales: {x: -0.0023, y: -0.0023, z: -0.0023}
+      limbMask: 0
+  - keyAssetName: HeadHunter
+    keyAsset:
+      address: RoR2/Base/HeadHunter/HeadHunter.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySkullcrown
+      displayPrefab:
+        address: RoR2/Base/HeadHunter/DisplaySkullcrown.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0, y: 0.00376, z: 0}
+      localAngles: {x: 341.8068, y: 0, z: 0}
+      localScales: {x: 0.00358, y: 0.00108, z: 0.00123}
+      limbMask: 0
+  - keyAssetName: LightningStrikeOnHit
+    keyAsset:
+      address: RoR2/Base/LightningStrikeOnHit/LightningStrikeOnHit.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayChargedPerforator
+      displayPrefab:
+        address: RoR2/Base/LightningStrikeOnHit/DisplayChargedPerforator.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Sword
+      localPos: {x: -0.0002, y: 0.00268, z: -0.00059}
+      localAngles: {x: 332.2022, y: 265.1257, z: 92.27746}
+      localScales: {x: -0.00669, y: -0.00669, z: -0.00669}
+      limbMask: 0
+  - keyAssetName: NovaOnLowHealth
+    keyAsset:
+      address: RoR2/Base/NovaOnLowHealth/NovaOnLowHealth.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayJellyGuts
+      displayPrefab:
+        address: RoR2/Base/NovaOnLowHealth/DisplayJellyGuts.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ThighL
+      localPos: {x: -0.00067, y: 0.0032, z: -0.00002}
+      localAngles: {x: 0, y: 267.8775, z: 0}
+      localScales: {x: -0.00076, y: -0.00076, z: -0.00076}
+      limbMask: 0
+  - keyAssetName: TitanGoldDuringTP
+    keyAsset:
+      address: RoR2/Base/TitanGoldDuringTP/TitanGoldDuringTP.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGoldHeart
+      displayPrefab:
+        address: RoR2/Base/TitanGoldDuringTP/DisplayGoldHeart.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.00098, y: 0.00238, z: 0.00235}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.00107, y: 0.00107, z: 0.00107}
+      limbMask: 0
+  - keyAssetName: ShinyPearl
+    keyAsset:
+      address: RoR2/Base/ShinyPearl/ShinyPearl.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayShinyPearl
+      displayPrefab:
+        address: RoR2/Base/ShinyPearl/DisplayShinyPearl.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0, y: 0.00468, z: -0.00033}
+      localAngles: {x: 75.8594, y: 0, z: 0}
+      localScales: {x: 0.00098, y: 0.00098, z: 0.00098}
+      limbMask: 0
+  - keyAssetName: SprintWisp
+    keyAsset:
+      address: RoR2/Base/SprintWisp/SprintWisp.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBrokenMask
+      displayPrefab:
+        address: RoR2/Base/SprintWisp/DisplayBrokenMask.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00026, y: -0.00053, z: -0.00122}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: -0.00087, y: -0.00087, z: -0.00087}
+      limbMask: 0
+  - keyAssetName: SiphonOnLowHealth
+    keyAsset:
+      address: RoR2/Base/SiphonOnLowHealth/SiphonOnLowHealth.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySiphonOnLowHealth
+      displayPrefab:
+        address: RoR2/Base/SiphonOnLowHealth/DisplaySiphonOnLowHealth.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ShoulderL
+      localPos: {x: 0.00061, y: 0.0019, z: -0.00057}
+      localAngles: {x: 0, y: 78.64009, z: 4.56404}
+      localScales: {x: -0.0004, y: -0.0004, z: -0.0004}
+      limbMask: 0
+  - keyAssetName: FireballsOnHit
+    keyAsset:
+      address: RoR2/Base/FireballsOnHit/FireballsOnHit.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFireballsOnHit
+      displayPrefab:
+        address: RoR2/Base/FireballsOnHit/DisplayFireballsOnHit.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Sword
+      localPos: {x: 0.00025, y: 0.0027, z: 0.00077}
+      localAngles: {x: 0, y: 196.6571, z: 0}
+      localScales: {x: -0.00037, y: -0.00037, z: -0.00037}
+      limbMask: 0
+  - keyAssetName: Pearl
+    keyAsset:
+      address: RoR2/Base/Pearl/Pearl.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayPearl
+      displayPrefab:
+        address: RoR2/Base/Pearl/DisplayPearl.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0, y: 0.00217, z: -0.00014}
+      localAngles: {x: 81.81031, y: 0, z: 0}
+      localScales: {x: 0.00098, y: 0.00098, z: 0.00098}
+      limbMask: 0
+  - keyAssetName: ParentEgg
+    keyAsset:
+      address: RoR2/Base/ParentEgg/ParentEgg.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayParentEgg
+      displayPrefab:
+        address: RoR2/Base/ParentEgg/DisplayParentEgg.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ShoulderL
+      localPos: {x: 0, y: 0.00325, z: -0.00127}
+      localAngles: {x: 352.1582, y: 180, z: 180}
+      localScales: {x: 0.00057, y: 0.00057, z: 0.00059}
+      limbMask: 0
+  - keyAssetName: BeetleGland
+    keyAsset:
+      address: RoR2/Base/BeetleGland/BeetleGland.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBeetleGland
+      displayPrefab:
+        address: RoR2/Base/BeetleGland/DisplayBeetleGland.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.00114, y: 0.00273, z: -0.00226}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.00065, y: 0.00065, z: 0.00065}
+      limbMask: 0
+  - keyAssetName: BleedOnHitAndExplode
+    keyAsset:
+      address: RoR2/Base/BleedOnHitAndExplode/BleedOnHitAndExplode.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBleedOnHitAndExplode
+      displayPrefab:
+        address: RoR2/Base/BleedOnHitAndExplode/DisplayBleedOnHitAndExplode.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00158, y: 0.0029, z: -0.00246}
+      localAngles: {x: 0, y: 0, z: 23.6055}
+      localScales: {x: 0.00035, y: 0.00035, z: 0.00035}
+      limbMask: 0
+  - keyAssetName: Knurl
+    keyAsset:
+      address: RoR2/Base/Knurl/Knurl.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayKnurl
+      displayPrefab:
+        address: RoR2/Base/Knurl/DisplayKnurl.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ArmR
+      localPos: {x: 0, y: 0.00167, z: 0.00034}
+      localAngles: {x: 26.56694, y: 267.4987, z: 149.5042}
+      localScales: {x: -0.00054, y: -0.00054, z: -0.00054}
+      limbMask: 0
+  - keyAssetName: LunarTrinket
+    keyAsset:
+      address: RoR2/Base/LunarTrinket/LunarTrinket.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBeads
+      displayPrefab:
+        address: RoR2/Base/LunarTrinket/DisplayBeads.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Sword
+      localPos: {x: -0.00079, y: 0.01374, z: 0.00016}
+      localAngles: {x: 19.49498, y: 180, z: 324.576}
+      localScales: {x: -0.01, y: -0.01, z: -0.01}
+      limbMask: 0
+  - keyAssetName: GoldOnHit
+    keyAsset:
+      address: RoR2/Base/GoldOnHit/GoldOnHit.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBoneCrown
+      displayPrefab:
+        address: RoR2/Base/GoldOnHit/DisplayBoneCrown.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0.00003, y: 0.00246, z: -0.00024}
+      localAngles: {x: 345.3429, y: 0.75214, z: 0.40474}
+      localScales: {x: 0.01103, y: 0.01103, z: 0.01103}
+      limbMask: 0
+  - keyAssetName: RepeatHeal
+    keyAsset:
+      address: RoR2/Base/RepeatHeal/RepeatHeal.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayCorpseflower
+      displayPrefab:
+        address: RoR2/Base/RepeatHeal/DisplayCorpseflower.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ThighL
+      localPos: {x: 0.0006, y: 0.00299, z: -0.00125}
+      localAngles: {x: 274.0406, y: 236.2021, z: 105.3911}
+      localScales: {x: 0.00206, y: 0.00206, z: 0.00206}
+      limbMask: 0
+  - keyAssetName: MonstersOnShrineUse
+    keyAsset:
+      address: RoR2/Base/MonstersOnShrineUse/MonstersOnShrineUse.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMonstersOnShrineUse
+      displayPrefab:
+        address: RoR2/Base/MonstersOnShrineUse/DisplayMonstersOnShrineUse.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00179, y: -0.00059, z: -0.00056}
+      localAngles: {x: 49.29925, y: 35.93981, z: 352.6223}
+      localScales: {x: 0.00038, y: 0.00038, z: 0.00038}
+      limbMask: 0
+  - keyAssetName: LunarSpecialReplacement
+    keyAsset:
+      address: RoR2/Base/LunarSkillReplacements/LunarSpecialReplacement.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBirdHeart
+      displayPrefab:
+        address: RoR2/Base/LunarSkillReplacements/DisplayBirdHeart.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Base
+      localPos: {x: -0.00665, y: 0.00557, z: -0.01}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - keyAssetName: FocusConvergence
+    keyAsset:
+      address: RoR2/Base/FocusConvergence/FocusConvergence.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFocusedConvergence
+      displayPrefab:
+        address: RoR2/Base/FocusConvergence/DisplayFocusedConvergence.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Base
+      localPos: {x: 0.00735, y: 0, z: -0.00284}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - keyAssetName: AutoCastEquipment
+    keyAsset:
+      address: RoR2/Base/AutoCastEquipment/AutoCastEquipment.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFossil
+      displayPrefab:
+        address: RoR2/Base/AutoCastEquipment/DisplayFossil.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ArmR
+      localPos: {x: -0.00003, y: 0, z: -0.00067}
+      localAngles: {x: 0, y: 277.0074, z: 0}
+      localScales: {x: 0.00592, y: 0.00592, z: 0.00592}
+      limbMask: 0
+  - keyAssetName: LunarSecondaryReplacement
+    keyAsset:
+      address: RoR2/Base/LunarSkillReplacements/LunarSecondaryReplacement.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBirdClaw
+      displayPrefab:
+        address: RoR2/Base/LunarSkillReplacements/DisplayBirdClaw.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: HandR
+      localPos: {x: -0.00027, y: 0.00101, z: -0.00024}
+      localAngles: {x: 353.093, y: 165.7601, z: 14.22053}
+      localScales: {x: -0.00256, y: -0.00256, z: -0.00256}
+      limbMask: 0
+  - keyAssetName: RandomDamageZone
+    keyAsset:
+      address: RoR2/Base/RandomDamageZone/RandomDamageZone.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayRandomDamageZone
+      displayPrefab:
+        address: RoR2/Base/RandomDamageZone/DisplayRandomDamageZone.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00017, y: -0.00048, z: -0.0019}
+      localAngles: {x: 40.83539, y: 0, z: 0}
+      localScales: {x: 0.00055, y: 0.00057, z: 0.00057}
+      limbMask: 0
+  - keyAssetName: LunarDagger
+    keyAsset:
+      address: RoR2/Base/LunarDagger/LunarDagger.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLunarDagger
+      displayPrefab:
+        address: RoR2/Base/LunarDagger/DisplayLunarDagger.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.00197, y: -0.00046, z: -0.00075}
+      localAngles: {x: 12.63575, y: 353.6848, z: 98.38504}
+      localScales: {x: -0.00166, y: -0.00166, z: -0.00166}
+      limbMask: 0
+  - keyAssetName: LunarUtilityReplacement
+    keyAsset:
+      address: RoR2/Base/LunarSkillReplacements/LunarUtilityReplacement.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBirdFoot
+      displayPrefab:
+        address: RoR2/Base/LunarSkillReplacements/DisplayBirdFoot.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: FootR
+      localPos: {x: -0.00038, y: -0.0003, z: -0.00052}
+      localAngles: {x: 1.95491, y: 280.3013, z: 251.5622}
+      localScales: {x: -0.00302, y: -0.00302, z: -0.00302}
+      limbMask: 0
+  - keyAssetName: ShieldOnly
+    keyAsset:
+      address: RoR2/Base/ShieldOnly/ShieldOnly.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayShieldBug
+      displayPrefab:
+        address: RoR2/Base/ShieldOnly/DisplayShieldBug.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: -0.00065, y: 0.00379, z: 0}
+      localAngles: {x: 357.9433, y: 124.367, z: 329.2971}
+      localScales: {x: 0.00226, y: 0.00226, z: -0.00226}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayShieldBug
+      displayPrefab:
+        address: RoR2/Base/ShieldOnly/DisplayShieldBug.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0.00065, y: 0.00379, z: -0.00006}
+      localAngles: {x: 8.39747, y: 60.73721, z: 322.6643}
+      localScales: {x: 0.00226, y: 0.00226, z: 0.00226}
+      limbMask: 0
+  - keyAssetName: LunarPrimaryReplacement
+    keyAsset:
+      address: RoR2/Base/LunarSkillReplacements/LunarPrimaryReplacement.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBirdEye
+      displayPrefab:
+        address: RoR2/Base/LunarSkillReplacements/DisplayBirdEye.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00092, y: 0.00289, z: 0.0021}
+      localAngles: {x: 279.0379, y: 180, z: 180}
+      localScales: {x: 0.00158, y: 0.00158, z: 0.00158}
+      limbMask: 0
+  - keyAssetName: Cleanse
+    keyAsset:
+      address: RoR2/Base/Cleanse/Cleanse.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWaterPack
+      displayPrefab:
+        address: RoR2/Base/Cleanse/DisplayWaterPack.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.00012, y: 0.00224, z: -0.00213}
+      localAngles: {x: 10.2203, y: 0.45454, z: 183.2354}
+      localScales: {x: -0.00113, y: -0.00113, z: -0.00113}
+      limbMask: 0
+  - keyAssetName: CommandMissile
+    keyAsset:
+      address: RoR2/Base/CommandMissile/CommandMissile.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMissileRack
+      displayPrefab:
+        address: RoR2/Base/CommandMissile/DisplayMissileRack.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0, y: 0.00294, z: -0.0022}
+      localAngles: {x: 75.02539, y: 194.2386, z: 15.18204}
+      localScales: {x: 0.00458, y: 0.00458, z: 0.00458}
+      limbMask: 0
+  - keyAssetName: Gateway
+    keyAsset:
+      address: RoR2/Base/Gateway/Gateway.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayVase
+      displayPrefab:
+        address: RoR2/Base/Gateway/DisplayVase.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00202, y: 0.00228, z: 0.00169}
+      localAngles: {x: 0, y: 0, z: 190.5938}
+      localScales: {x: -0.0014, y: -0.0014, z: -0.0014}
+      limbMask: 0
+  - keyAssetName: Fruit
+    keyAsset:
+      address: RoR2/Base/Fruit/Fruit.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFruit
+      displayPrefab:
+        address: RoR2/Base/Fruit/DisplayFruit.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00051, y: 0.00181, z: 0.00135}
+      localAngles: {x: 357.0262, y: 180, z: 180}
+      localScales: {x: -0.00176, y: -0.00176, z: -0.00176}
+      limbMask: 0
+  - keyAssetName: DeathProjectile
+    keyAsset:
+      address: RoR2/Base/DeathProjectile/DeathProjectile.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DeathProjectile
+      displayPrefab:
+        address: RoR2/Base/DeathProjectile/DeathProjectile.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Sword
+      localPos: {x: -0.00029, y: 0.0075, z: 0}
+      localAngles: {x: 87.36203, y: 0, z: 0}
+      localScales: {x: 0.00074, y: 0.00074, z: 0.00074}
+      limbMask: 0
+  - keyAssetName: QuestVolatileBattery
+    keyAsset:
+      address: RoR2/Base/QuestVolatileBattery/QuestVolatileBattery.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBatteryArray
+      displayPrefab:
+        address: RoR2/Base/QuestVolatileBattery/DisplayBatteryArray.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0, y: 0.00197, z: 0.00231}
+      localAngles: {x: 14.38887, y: 0, z: 0}
+      localScales: {x: 0.00163, y: 0.00163, z: 0.00163}
+      limbMask: 0
+  - keyAssetName: TeamWarCry
+    keyAsset:
+      address: RoR2/Base/TeamWarCry/TeamWarCry.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTeamWarCry
+      displayPrefab:
+        address: RoR2/Base/TeamWarCry/DisplayTeamWarCry.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0, y: 0.0039, z: -0.0026}
+      localAngles: {x: 344.1095, y: 182.6242, z: 359.281}
+      localScales: {x: 0.00045, y: 0.00045, z: 0.00045}
+      limbMask: 0
+  - keyAssetName: GainArmor
+    keyAsset:
+      address: RoR2/Base/GainArmor/GainArmor.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayElephantFigure
+      displayPrefab:
+        address: RoR2/Base/GainArmor/DisplayElephantFigure.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ThighR
+      localPos: {x: 0.00118, y: 0.00297, z: 0.00021}
+      localAngles: {x: 75.77747, y: 63.61393, z: 344.6869}
+      localScales: {x: 0.00494, y: 0.00494, z: 0.00494}
+      limbMask: 0
+  - keyAssetName: Jetpack
+    keyAsset:
+      address: 'RoR2/Base/Jetpack/Jetpack.asset '
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBugWings
+      displayPrefab:
+        address: RoR2/Base/Jetpack/DisplayBugWings.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0, y: 0.00254, z: -0.00172}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.0013, y: 0.0013, z: 0.0013}
+      limbMask: 0
+  - keyAssetName: CritOnUse
+    keyAsset:
+      address: RoR2/Base/CritOnUse/CritOnUse.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayNeuralImplant
+      displayPrefab:
+        address: RoR2/Base/CritOnUse/DisplayNeuralImplant.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0, y: 0.00285, z: 0.00429}
+      localAngles: {x: 348.1165, y: 0, z: 0}
+      localScales: {x: -0.00281, y: -0.00281, z: -0.00281}
+      limbMask: 0
+  - keyAssetName: BFG
+    keyAsset:
+      address: RoR2/Base/BFG/BFG.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBFG
+      displayPrefab:
+        address: RoR2/Base/BFG/DisplayBFG.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ShoulderL
+      localPos: {x: 0.00083, y: 0.00016, z: 0.00028}
+      localAngles: {x: 51.46466, y: 5.1794, z: 271.1675}
+      localScales: {x: 0.00342, y: 0.00342, z: 0.00342}
+      limbMask: 0
+  - keyAssetName: Blackhole
+    keyAsset:
+      address: RoR2/Base/Blackhole/Blackhole.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGravCube
+      displayPrefab:
+        address: RoR2/Base/Blackhole/DisplayGravCube.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Base
+      localPos: {x: 0.00869, y: 0.00252, z: 0.00211}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: Scanner
+    keyAsset:
+      address: RoR2/Base/Scanner/Scanner.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayScanner
+      displayPrefab:
+        address: RoR2/Base/Scanner/DisplayScanner.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00013, y: 0.0009, z: 0.00208}
+      localAngles: {x: 357.3345, y: 274.2015, z: 2.48175}
+      localScales: {x: 0.00046, y: 0.00046, z: 0.00046}
+      limbMask: 0
+  - keyAssetName: Recycle
+    keyAsset:
+      address: RoR2/Base/Recycle/Recycle.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayRecycler
+      displayPrefab:
+        address: RoR2/Base/Recycle/DisplayRecycler.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00013, y: 0.00079, z: 0.00215}
+      localAngles: {x: 0.08185, y: 271.0128, z: 353.5576}
+      localScales: {x: 0.0006, y: 0.0006, z: 0.0006}
+      limbMask: 0
+  - keyAssetName: Lightning
+    keyAsset:
+      address: RoR2/Base/Lightning/Lightning.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLightningArmRight
+      displayPrefab:
+        address: RoR2/Base/Lightning/DisplayLightningArmRight.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ShoulderR
+      localPos: {x: 0.00075, y: 0.00358, z: -0.00089}
+      localAngles: {x: 292.6368, y: 108.969, z: 297.0084}
+      localScales: {x: 0.00382, y: 0.00382, z: 0.00382}
+      limbMask: 0
+  - keyAssetName: Saw
+    keyAsset:
+      address: RoR2/Base/Saw/Saw.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySawmerangFollower
+      displayPrefab:
+        address: RoR2/Base/Saw/DisplaySawmerangFollower.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Base
+      localPos: {x: 0.00749, y: 0.0002, z: 0.00092}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.001, y: 0.001, z: 0.001}
+      limbMask: 0
+  - keyAssetName: LifestealOnHit
+    keyAsset:
+      address: RoR2/Base/LifestealOnHit/LifestealOnHit.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLifestealOnHit
+      displayPrefab:
+        address: RoR2/Base/LifestealOnHit/DisplayLifestealOnHit.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: -0.00145, y: 0.00165, z: -0.00038}
+      localAngles: {x: 349.8672, y: 17.82439, z: 79.26771}
+      localScales: {x: 0.00137, y: 0.00137, z: 0.00137}
+      limbMask: 0
+  - keyAssetName: DroneBackup
+    keyAsset:
+      address: RoR2/Base/DroneBackup/DroneBackup.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayRadio
+      displayPrefab:
+        address: RoR2/Base/DroneBackup/DisplayRadio.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.00124, y: -0.00072, z: 0.00106}
+      localAngles: {x: 354.2077, y: 306.6313, z: 353.9087}
+      localScales: {x: 0.00309, y: 0.00309, z: 0.00309}
+      limbMask: 0
+  - keyAssetName: GoldGat
+    keyAsset:
+      address: RoR2/Base/GoldGat/GoldGat.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGoldGat
+      displayPrefab:
+        address: RoR2/Base/GoldGat/DisplayGoldGat.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ShoulderL
+      localPos: {x: 0.00369, y: 0.0029, z: -0.00015}
+      localAngles: {x: 33.99031, y: 168.8576, z: 235.9107}
+      localScales: {x: -0.0016, y: -0.0016, z: -0.0016}
+      limbMask: 0
+  - keyAssetName: FireBallDash
+    keyAsset:
+      address: ' RoR2/Base/FireBallDash/FireBallDash.asset '
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEgg
+      displayPrefab:
+        address: RoR2/Base/FireBallDash/DisplayEgg.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00079, y: 0.00155, z: 0.00223}
+      localAngles: {x: 61.09521, y: 261.8885, z: 260.7529}
+      localScales: {x: -0.00163, y: -0.00163, z: -0.00163}
+      limbMask: 0
+  - keyAssetName: CrippleWard
+    keyAsset:
+      address: RoR2/Base/CrippleWard/CrippleWard.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEffigy
+      displayPrefab:
+        address: RoR2/Base/CrippleWard/DisplayEffigy.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.00001, y: 0.00036, z: 0.00212}
+      localAngles: {x: 349.3293, y: 176.1489, z: 0.71412}
+      localScales: {x: 0.00259, y: 0.00259, z: 0.00259}
+      limbMask: 0
+  - keyAssetName: Meteor
+    keyAsset:
+      address: 'RoR2/Base/Meteor/Meteor.asset '
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMeteor
+      displayPrefab:
+        address: RoR2/Base/Meteor/DisplayMeteor.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Base
+      localPos: {x: 0.00751, y: 0, z: 0.00303}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.75, y: 0.75, z: 0.75}
+      limbMask: 0
+  - keyAssetName: BurnNearby
+    keyAsset:
+      address: RoR2/Base/BurnNearby/BurnNearby.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayPotion
+      displayPrefab:
+        address: RoR2/Base/BurnNearby/DisplayPotion.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00002, y: 0.00355, z: -0.00269}
+      localAngles: {x: 346.7816, y: 181.4925, z: 149.2244}
+      localScales: {x: -0.00032, y: -0.00032, z: -0.00032}
+      limbMask: 0
+  - keyAssetName: Tonic
+    keyAsset:
+      address: RoR2/Base/Tonic/Tonic.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTonic
+      displayPrefab:
+        address: RoR2/Base/Tonic/DisplayTonic.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0, y: 0.00254, z: -0.00234}
+      localAngles: {x: 357.3987, y: 179.6513, z: 178.8232}
+      localScales: {x: -0.00373, y: -0.00373, z: -0.00373}
+      limbMask: 0
+  - keyAssetName: EliteIceEquipment
+    keyAsset:
+      address: RoR2/Base/EliteIce/EliteIceEquipment.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteIceCrown
+      displayPrefab:
+        address: RoR2/Base/EliteIce/DisplayEliteIceCrown.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: -0.00001, y: 0.00352, z: -0.00062}
+      localAngles: {x: 65.80632, y: 350.1547, z: 351.0828}
+      localScales: {x: -0.00023, y: -0.00021, z: -0.00023}
+      limbMask: 0
+  - keyAssetName: EliteFireEquipment
+    keyAsset:
+      address: RoR2/Base/EliteFire/EliteFireEquipment.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteHorn
+      displayPrefab:
+        address: RoR2/Base/EliteFire/DisplayEliteHorn.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0.0005, y: 0.0031, z: 0.00052}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.00107, y: 0.00107, z: 0.00107}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayEliteHorn
+      displayPrefab:
+        address: RoR2/Base/EliteFire/DisplayEliteHorn.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: -0.0005, y: 0.0031, z: 0.00052}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: -0.00107, y: 0.00107, z: 0.00107}
+      limbMask: 0
+  - keyAssetName: EliteLightningEquipment
+    keyAsset:
+      address: RoR2/Base/EliteLightning/EliteLightningEquipment.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteRhinoHorn
+      displayPrefab:
+        address: RoR2/Base/EliteLightning/DisplayEliteRhinoHorn.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: -0.00013, y: 0.00334, z: 0.00144}
+      localAngles: {x: 311.7019, y: 2.52726, z: 0.61481}
+      localScales: {x: 0.00215, y: 0.00215, z: 0.00215}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayEliteRhinoHorn
+      displayPrefab:
+        address: RoR2/Base/EliteLightning/DisplayEliteRhinoHorn.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: -0.00012, y: 0.00369, z: 0.00092}
+      localAngles: {x: 311.7019, y: 2.52726, z: 0.61481}
+      localScales: {x: 0.00155, y: 0.00155, z: 0.00155}
+      limbMask: 0
+  - keyAssetName: ElitePoisonEquipment
+    keyAsset:
+      address: RoR2/Base/ElitePoison/ElitePoisonEquipment.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteUrchinCrown
+      displayPrefab:
+        address: RoR2/Base/ElitePoison/DisplayEliteUrchinCrown.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0.00015, y: 0.00301, z: -0.00049}
+      localAngles: {x: 285.1958, y: 177.8746, z: 187.8732}
+      localScales: {x: 0.00058, y: 0.00058, z: 0.00058}
+      limbMask: 0
+  - keyAssetName: EliteLunarEquipment
+    keyAsset:
+      address: RoR2/Base/EliteLunar/EliteLunarEquipment.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteLunar,Eye
+      displayPrefab:
+        address: RoR2/Base/EliteLunar/DisplayEliteLunar,Eye.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 77.3035, y: 338.5667, z: 339.6214}
+      localScales: {x: -0.007, y: -0.007, z: -0.007}
+      limbMask: 0
+  - keyAssetName: EliteHauntedEquipment
+    keyAsset:
+      address: RoR2/Base/EliteHaunted/EliteHauntedEquipment.asset
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteStealthCrown
+      displayPrefab:
+        address: RoR2/Base/EliteHaunted/DisplayEliteStealthCrown.prefab
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: -0.00018, y: 0.00365, z: -0.00026}
+      localAngles: {x: 283.5157, y: 177.2808, z: 188.3912}
+      localScales: {x: 0.00056, y: 0.00056, z: 0.00056}
+      limbMask: 0

@@ -136,7 +136,7 @@ namespace Moonstorm.Starstorm2.Components
         public void SpawnEnemy(Transform exitSpot)
         {
 
-            DirectorCard dCard = currentStageMonsters[rng.RangeInt(0, currentStageMonsters.Length)];
+            DirectorCard dCard = currentStageMonsters[rng.RangeInt(0, currentStageMonsters.Length)]; //problem line
 
             if (dCard != null)
             {

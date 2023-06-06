@@ -13,310 +13,270 @@ MonoBehaviour:
   m_Name: iddX4
   m_EditorClassIdentifier: 
   keyAsset: {fileID: 11400000, guid: dbe2e61a82db08842bd96a2983ea2b09, type: 2}
+  displayPrefabs:
+  - {fileID: 5024432339377985050, guid: c20e22a9be34bb546bfa94046f7f1609, type: 3}
   displayPrefab: {fileID: 5024432339377985050, guid: c20e22a9be34bb546bfa94046f7f1609,
     type: 3}
   namedDisplayDictionary:
-  - idrs:
+  - idrsName: idrsCommando
+    idrs:
       address: RoR2/Base/Commando/idrsCommando.asset
       useDirectReference: 0
       asset: {fileID: 0}
     displayRules:
     - ruleType: 0
-      childName: UpperArmL
-      localPos: {x: -0.10633, y: -0.06645, z: 0.0231}
+      displayPrefabIndex: 0
+      childName: UpperArmR
+      localPos: {x: -0.09178473, y: -0.07762709, z: 0.01980581}
       localAngles: {x: 29.498, y: 78.549, z: 146.83}
       localScales: {x: 2, y: 2, z: 2}
       limbMask: 0
-      finishedRule:
-        ruleType: 0
-        followerPrefab: {fileID: 0}
-        childName: 
-        localPos: {x: 0, y: 0, z: 0}
-        localAngles: {x: 0, y: 0, z: 0}
-        localScale: {x: 0, y: 0, z: 0}
-        limbMask: 0
-  - idrs:
+  - idrsName: idrsHuntress
+    idrs:
       address: RoR2/Base/Huntress/idrsHuntress.asset
       useDirectReference: 0
       asset: {fileID: 0}
     displayRules:
     - ruleType: 0
+      displayPrefabIndex: 0
       childName: UpperArmL
       localPos: {x: 0.1142, y: 0.1054, z: -0.1184}
       localAngles: {x: 313.253, y: 15.883, z: 278.439}
       localScales: {x: 2, y: 2, z: 2}
       limbMask: 0
-      finishedRule:
-        ruleType: 0
-        followerPrefab: {fileID: 0}
-        childName: 
-        localPos: {x: 0, y: 0, z: 0}
-        localAngles: {x: 0, y: 0, z: 0}
-        localScale: {x: 0, y: 0, z: 0}
-        limbMask: 0
-  - idrs:
+  - idrsName: idrsBandit2
+    idrs:
       address: RoR2/Base/Bandit2/idrsBandit2.asset
       useDirectReference: 0
       asset: {fileID: 0}
     displayRules:
     - ruleType: 0
+      displayPrefabIndex: 0
       childName: UpperArmL
       localPos: {x: 0.1199, y: 0.25604, z: -0.1105}
       localAngles: {x: 331.0558, y: 14.52002, z: 280.6304}
       localScales: {x: 2, y: 2, z: 2}
       limbMask: 0
-      finishedRule:
-        ruleType: 0
-        followerPrefab: {fileID: 0}
-        childName: 
-        localPos: {x: 0, y: 0, z: 0}
-        localAngles: {x: 0, y: 0, z: 0}
-        localScale: {x: 0, y: 0, z: 0}
-        limbMask: 0
-  - idrs:
+  - idrsName: idrsToolbot
+    idrs:
       address: RoR2/Base/Toolbot/idrsToolbot.asset
       useDirectReference: 0
       asset: {fileID: 0}
     displayRules:
     - ruleType: 0
+      displayPrefabIndex: 0
       childName: LowerArmL
       localPos: {x: 0.1100142, y: -0.002782, z: 1.67109}
       localAngles: {x: 48.29166, y: 235.4264, z: 246.4741}
       localScales: {x: 15, y: 15, z: 15}
       limbMask: 0
-      finishedRule:
-        ruleType: 0
-        followerPrefab: {fileID: 0}
-        childName: 
-        localPos: {x: 0, y: 0, z: 0}
-        localAngles: {x: 0, y: 0, z: 0}
-        localScale: {x: 0, y: 0, z: 0}
-        limbMask: 0
-  - idrs:
+  - idrsName: idrsMage
+    idrs:
       address: RoR2/Base/Mage/idrsMage.asset
       useDirectReference: 0
       asset: {fileID: 0}
     displayRules:
     - ruleType: 0
+      displayPrefabIndex: 0
       childName: UpperArmL
       localPos: {x: 0.11788, y: -0.002214, z: -0.012536}
       localAngles: {x: 7.1624, y: 350.1284, z: 269.3908}
       localScales: {x: 1.5, y: 1.5, z: 1.5}
       limbMask: 0
-      finishedRule:
-        ruleType: 0
-        followerPrefab: {fileID: 0}
-        childName: 
-        localPos: {x: 0, y: 0, z: 0}
-        localAngles: {x: 0, y: 0, z: 0}
-        localScale: {x: 0, y: 0, z: 0}
-        limbMask: 0
-  - idrs:
+  - idrsName: idrsMerc
+    idrs:
       address: RoR2/Base/Merc/idrsMerc.asset
       useDirectReference: 0
       asset: {fileID: 0}
     displayRules:
     - ruleType: 0
+      displayPrefabIndex: 0
       childName: Base
       localPos: {x: 0, y: 0, z: 0}
       localAngles: {x: 0, y: 0, z: 0}
       localScales: {x: 0, y: 0, z: 0}
       limbMask: 0
-      finishedRule:
-        ruleType: 0
-        followerPrefab: {fileID: 0}
-        childName: 
-        localPos: {x: 0, y: 0, z: 0}
-        localAngles: {x: 0, y: 0, z: 0}
-        localScale: {x: 0, y: 0, z: 0}
-        limbMask: 0
-  - idrs:
+  - idrsName: idrsEngi
+    idrs:
       address: RoR2/Base/Engi/idrsEngi.asset
       useDirectReference: 0
       asset: {fileID: 0}
     displayRules:
     - ruleType: 0
+      displayPrefabIndex: 0
       childName: Base
       localPos: {x: 0, y: 0, z: 0}
       localAngles: {x: 0, y: 0, z: 0}
       localScales: {x: 0, y: 0, z: 0}
       limbMask: 0
-      finishedRule:
-        ruleType: 0
-        followerPrefab: {fileID: 0}
-        childName: 
-        localPos: {x: 0, y: 0, z: 0}
-        localAngles: {x: 0, y: 0, z: 0}
-        localScale: {x: 0, y: 0, z: 0}
-        limbMask: 0
-  - idrs:
+  - idrsName: idrsEngiTurret
+    idrs:
       address: RoR2/Base/Engi/idrsEngiTurret.asset
       useDirectReference: 0
       asset: {fileID: 0}
     displayRules:
     - ruleType: 0
+      displayPrefabIndex: 0
       childName: Base
       localPos: {x: 0, y: 0, z: 0}
       localAngles: {x: 0, y: 0, z: 0}
       localScales: {x: 0, y: 0, z: 0}
       limbMask: 0
-      finishedRule:
-        ruleType: 0
-        followerPrefab: {fileID: 0}
-        childName: 
-        localPos: {x: 0, y: 0, z: 0}
-        localAngles: {x: 0, y: 0, z: 0}
-        localScale: {x: 0, y: 0, z: 0}
-        limbMask: 0
-  - idrs:
+  - idrsName: idrsEngiWalkerTurret
+    idrs:
       address: RoR2/Base/Engi/idrsEngiWalkerTurret.asset
       useDirectReference: 0
       asset: {fileID: 0}
     displayRules:
     - ruleType: 0
+      displayPrefabIndex: 0
       childName: Base
       localPos: {x: 0, y: 0, z: 0}
       localAngles: {x: 0, y: 0, z: 0}
       localScales: {x: 0, y: 0, z: 0}
       limbMask: 0
-      finishedRule:
-        ruleType: 0
-        followerPrefab: {fileID: 0}
-        childName: 
-        localPos: {x: 0, y: 0, z: 0}
-        localAngles: {x: 0, y: 0, z: 0}
-        localScale: {x: 0, y: 0, z: 0}
-        limbMask: 0
-  - idrs:
+  - idrsName: idrsTreebot
+    idrs:
       address: RoR2/Base/Treebot/idrsTreebot.asset
       useDirectReference: 0
       asset: {fileID: 0}
     displayRules:
     - ruleType: 0
+      displayPrefabIndex: 0
       childName: WeaponPlatform
       localPos: {x: -0.0029, y: -0.65802, z: 0.4007}
       localAngles: {x: 338.188, y: 177.828, z: 183.314}
       localScales: {x: 4, y: 4, z: 4}
       limbMask: 0
-      finishedRule:
-        ruleType: 0
-        followerPrefab: {fileID: 0}
-        childName: 
-        localPos: {x: 0, y: 0, z: 0}
-        localAngles: {x: 0, y: 0, z: 0}
-        localScale: {x: 0, y: 0, z: 0}
-        limbMask: 0
-  - idrs:
+  - idrsName: idrsLoader
+    idrs:
       address: RoR2/Base/Loader/idrsLoader.asset
       useDirectReference: 0
       asset: {fileID: 0}
     displayRules:
     - ruleType: 0
+      displayPrefabIndex: 0
       childName: MechHandR
       localPos: {x: -0.11924, y: 0.03774, z: 0.22066}
       localAngles: {x: 47.4533, y: 144.3902, z: 169.9509}
       localScales: {x: 2, y: 2, z: 2}
       limbMask: 0
-      finishedRule:
-        ruleType: 0
-        followerPrefab: {fileID: 0}
-        childName: 
-        localPos: {x: 0, y: 0, z: 0}
-        localAngles: {x: 0, y: 0, z: 0}
-        localScale: {x: 0, y: 0, z: 0}
-        limbMask: 0
-  - idrs:
+  - idrsName: idrsCroco
+    idrs:
       address: RoR2/Base/Croco/idrsCroco.asset
       useDirectReference: 0
       asset: {fileID: 0}
     displayRules:
     - ruleType: 0
+      displayPrefabIndex: 0
       childName: Neck
       localPos: {x: -1.48209, y: 0.10507, z: -2.7948}
       localAngles: {x: 289.9952, y: 292.7036, z: 110.5522}
       localScales: {x: 20, y: 20, z: 20}
       limbMask: 0
-      finishedRule:
-        ruleType: 0
-        followerPrefab: {fileID: 0}
-        childName: 
-        localPos: {x: 0, y: 0, z: 0}
-        localAngles: {x: 0, y: 0, z: 0}
-        localScale: {x: 0, y: 0, z: 0}
-        limbMask: 0
-  - idrs:
+  - idrsName: idrsCaptain
+    idrs:
       address: RoR2/Base/Captain/idrsCaptain.asset
       useDirectReference: 0
       asset: {fileID: 0}
     displayRules:
     - ruleType: 0
+      displayPrefabIndex: 0
       childName: UpperArmL
       localPos: {x: -0.09517, y: -0.07433, z: -0.017097}
       localAngles: {x: 287.0108, y: 8.722416, z: 17.05664}
       localScales: {x: 2, y: 2, z: 2}
       limbMask: 0
-      finishedRule:
-        ruleType: 0
-        followerPrefab: {fileID: 0}
-        childName: 
-        localPos: {x: 0, y: 0, z: 0}
-        localAngles: {x: 0, y: 0, z: 0}
-        localScale: {x: 0, y: 0, z: 0}
-        limbMask: 0
-  - idrs:
+  - idrsName: idrsRailGunner
+    idrs:
       address: RoR2/DLC1/Railgunner/idrsRailGunner.asset
       useDirectReference: 0
       asset: {fileID: 0}
     displayRules:
     - ruleType: 0
-      childName: 
-      localPos: {x: 0, y: 0, z: 0}
-      localAngles: {x: 0, y: 0, z: 0}
-      localScales: {x: 0, y: 0, z: 0}
+      displayPrefabIndex: 0
+      childName: CalfL
+      localPos: {x: 0.05430384, y: 0.3690419, z: -0.06446562}
+      localAngles: {x: 359.1031, y: 251.5614, z: 49.19096}
+      localScales: {x: 1.125, y: 1.125, z: 1.125}
       limbMask: 0
-      finishedRule:
-        ruleType: 0
-        followerPrefab: {fileID: 0}
-        childName: 
-        localPos: {x: 0, y: 0, z: 0}
-        localAngles: {x: 0, y: 0, z: 0}
-        localScale: {x: 0, y: 0, z: 0}
-        limbMask: 0
-  - idrs:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: CalfL
+      localPos: {x: 0.04375244, y: 0.3066677, z: -0.0878096}
+      localAngles: {x: 290.6642, y: 321.7059, z: 5.505594}
+      localScales: {x: 1.125, y: 1.125, z: 1.125}
+      limbMask: 0
+  - idrsName: idrsVoidSurvivor
+    idrs:
       address: RoR2/DLC1/Characters/VoidSurvivor/idrsVoidSurvivor.asset
       useDirectReference: 0
       asset: {fileID: 0}
     displayRules:
     - ruleType: 0
-      childName: Base
-      localPos: {x: 0, y: 0, z: 0}
-      localAngles: {x: 0, y: 0, z: 0}
-      localScales: {x: 0, y: 0, z: 0}
+      displayPrefabIndex: 0
+      childName: Chest
+      localPos: {x: -0.2744095, y: 0.2094368, z: 0.0935849}
+      localAngles: {x: 328.7935, y: 147.4784, z: 347.0555}
+      localScales: {x: 1.125, y: 1.125, z: 1.125}
       limbMask: 0
-      finishedRule:
-        ruleType: 0
-        followerPrefab: {fileID: 0}
-        childName: 
-        localPos: {x: 0, y: 0, z: 0}
-        localAngles: {x: 0, y: 0, z: 0}
-        localScale: {x: 0, y: 0, z: 0}
-        limbMask: 0
-  - idrs:
+  - idrsName: idrsScav
+    idrs:
       address: RoR2/Base/Scav/idrsScav.asset
       useDirectReference: 0
       asset: {fileID: 0}
     displayRules:
     - ruleType: 0
-      childName: Chest
-      localPos: {x: 7.543, y: 3.28477, z: -6.4121}
-      localAngles: {x: 348.744, y: 310.255, z: 335.994}
-      localScales: {x: 50, y: 50, z: 50}
+      displayPrefabIndex: 0
+      childName: UpperArmL
+      localPos: {x: 0.1401539, y: -1.773115, z: 2.686977}
+      localAngles: {x: 287.1522, y: 312.8199, z: 205.6581}
+      localScales: {x: 35, y: 35, z: 35}
       limbMask: 0
-      finishedRule:
-        ruleType: 0
-        followerPrefab: {fileID: 0}
-        childName: 
-        localPos: {x: 0, y: 0, z: 0}
-        localAngles: {x: 0, y: 0, z: 0}
-        localScale: {x: 0, y: 0, z: 0}
-        limbMask: 0
+  - idrsName: idrsNemCommando
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: ThighR
+      localPos: {x: -0.1460227, y: 0.9178675, z: 0.6366345}
+      localAngles: {x: 41.24359, y: 174.0998, z: 190.3859}
+      localScales: {x: 5, y: 5, z: 5}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: ThighR
+      localPos: {x: -0.1663833, y: 1.331956, z: 0.6105568}
+      localAngles: {x: 72.75739, y: 193.3664, z: 207.2132}
+      localScales: {x: 5, y: 5, z: 5}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: ThighR
+      localPos: {x: -0.3125053, y: 1.423436, z: 0.4276445}
+      localAngles: {x: 73.96093, y: 219.4217, z: 285.6435}
+      localScales: {x: 5, y: 5, z: 5}
+      limbMask: 0
+  - idrsName: idrsExecutioner2
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: ShoulderL
+      localPos: {x: 0.09568721, y: 0.03113619, z: -0.06191053}
+      localAngles: {x: 308.1014, y: 205.0547, z: 85.01106}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: ShoulderL
+      localPos: {x: 0.08904479, y: 0.05888069, z: -0.0810748}
+      localAngles: {x: 314.6904, y: 236.7416, z: 53.77388}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0

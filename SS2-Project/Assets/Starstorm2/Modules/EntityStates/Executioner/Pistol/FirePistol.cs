@@ -36,7 +36,7 @@ namespace EntityStates.Executioner
             characterBody.SetAimTimer(2f);
             muzzleString = "Muzzle";
             hasFired = false;
-            PlayAnimation("Gesture, Override", "Primary", "Primary.playbackRate", duration * 2f);
+            PlayCrossfade("Gesture, Override", "Primary", "Primary.playbackRate", duration * 2.5f, 0.05f);
             Shoot();
         }
 
@@ -72,6 +72,8 @@ namespace EntityStates.Executioner
                 {
                     float dmg = damageCoefficient * damageStat;
                     Ray r = GetAimRay();
+
+
                     BulletAttack bullet = new BulletAttack
                     {
                         aimVector = r.direction,
@@ -80,7 +82,7 @@ namespace EntityStates.Executioner
                         damageType = DamageType.Generic,
                         damageColorIndex = DamageColorIndex.Default,
                         minSpread = 0f,
-                        maxSpread = characterBody.spreadBloomAngle * 0.5f,
+                        maxSpread = characterBody.spreadBloomAngle,
                         falloffModel = BulletAttack.FalloffModel.None,
                         force = force,
                         isCrit = isCrit,

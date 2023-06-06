@@ -20,7 +20,7 @@ namespace Moonstorm.Starstorm2.Buffs
             bool triggerGougeProc = false;
             if (NetworkServer.active)
             {
-                if (damageInfo.dotIndex == index && damageInfo.procCoefficient == 0f)
+                if (damageInfo.dotIndex == index && damageInfo.procCoefficient == 0f && self.alive)
                 {
                     if (damageInfo.attacker)
                     {
@@ -30,14 +30,14 @@ namespace Moonstorm.Starstorm2.Buffs
                             damageInfo.crit = Util.CheckRoll(attackerBody.crit, attackerBody.master);
                         }
                     }
-                    damageInfo.procCoefficient = 0.3f;
+                    damageInfo.procCoefficient = 0.2f;
                     triggerGougeProc = true;
                 }
             }
 
             orig(self, damageInfo);
 
-            if (NetworkServer.active && !damageInfo.rejected)
+            if (NetworkServer.active && !damageInfo.rejected && self.alive)
             {
                 if (triggerGougeProc)
                 {

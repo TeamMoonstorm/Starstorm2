@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: EntityStates.Executioner.AxeSlam
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.Executioner.AxeSlam, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: baseDamageCoefficient
+      fieldValue:
+        stringValue: 12
+        objectValue: {fileID: 0}
+    - fieldName: forceDamageCoefficient
+      fieldValue:
+        stringValue: 0.5
+        objectValue: {fileID: 0}
+    - fieldName: procCoefficient
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: maxDuration
+      fieldValue:
+        stringValue: 10
+        objectValue: {fileID: 0}
+    - fieldName: upwardDuration
+      fieldValue:
+        stringValue: 0.7
+        objectValue: {fileID: 0}
+    - fieldName: slamRadius
+      fieldValue:
+        stringValue: 14
+        objectValue: {fileID: 0}
+    - fieldName: recoil
+      fieldValue:
+        stringValue: 8
+        objectValue: {fileID: 0}
+    - fieldName: rechargePerKill
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: downwardAcceleration
+      fieldValue:
+        stringValue: -125
+        objectValue: {fileID: 0}
+    - fieldName: upwardSpeedCoefficientCurve
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 11400000, guid: 3e6d7a37f17526441b794354b8b884c1, type: 2}
+    - fieldName: slamEffect
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1145431817363450728, guid: dd374145b213fba47916b21991973647,
+          type: 3}
+    - fieldName: axeEffect
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 2470660948922612364, guid: a2a3e29c9484da947918f6d789e45d57,
+          type: 3}
+    - fieldName: slamCameraPosition
+      fieldValue:
+        stringValue: 0 0 -17.5
+        objectValue: {fileID: 0}

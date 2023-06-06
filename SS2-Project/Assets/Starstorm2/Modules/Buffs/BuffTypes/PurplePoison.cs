@@ -7,7 +7,7 @@ namespace Moonstorm.Starstorm2.Buffs
 {
     public sealed class PurplePoison : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdPurplePoison", SS2Bundle.Equipments);
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdPurplePoison", SS2Bundle.Indev);
         //public static DotController.DotIndex index;
 
         public override void Initialize()
@@ -18,7 +18,7 @@ namespace Moonstorm.Starstorm2.Buffs
         public sealed class Behavior : BaseBuffBodyBehavior
         {
             [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => SS2Assets.LoadAsset<BuffDef>("bdPurplePoison", SS2Bundle.Equipments);
+            private static BuffDef GetBuffDef() => SS2Assets.LoadAsset<BuffDef>("bdPurplePoison", SS2Bundle.Indev);
         }
     }
 }

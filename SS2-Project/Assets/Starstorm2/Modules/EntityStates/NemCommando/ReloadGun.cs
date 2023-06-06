@@ -4,6 +4,7 @@ using UnityEngine;
 using Moonstorm;
 using RoR2;
 using UnityEngine.AddressableAssets;
+using Moonstorm.Starstorm2;
 
 namespace EntityStates.NemCommando
 {
@@ -27,7 +28,7 @@ namespace EntityStates.NemCommando
         {
             get
             {
-                return baseDuration / skillLocator.secondary.cooldownScale;
+                return baseDuration * skillLocator.secondary.cooldownScale;
             }
         }
 
@@ -37,12 +38,15 @@ namespace EntityStates.NemCommando
 
             animator = GetModelAnimator();
 
-            PlayCrossfade("Gesture, Override, LeftArm", "LowerGun", "FireGun.playbackRate", duration, 0.03f);
+            PlayCrossfade("Gesture, Override, LeftArm", "LowerGun", "FireGun.playbackRate", duration, 0.3f);
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+
+            //SS2Log.Info("Oooooooohhhhh");
+
             if (animator.GetFloat("ejectMag") >= 0.1 && !hasEjectedMag)
             {
                 hasEjectedMag = true;
@@ -60,7 +64,13 @@ namespace EntityStates.NemCommando
             {
                 return;
             }
-            outer.SetNextStateToMain();
+            if (inputBank.skill2.down)
+            {
+                outer.SetNextState(new ShootGun2());
+                skillLocator.secondary.stock -= 1;
+            }
+            else
+                outer.SetNextStateToMain();
         }
 
         public override void OnExit()

@@ -50,7 +50,7 @@ namespace Moonstorm.Starstorm2.Unlocks.Pickups
                 {
                     ItemDef warbannerDef = RoR2Content.Items.WardOnLevel;
                     int warbannerCount = currentInventory.GetItemCount(warbannerDef);
-                    if (warbannerCount >= 5)
+                    if (warbannerCount >= 4)
                     {
                         Grant();
                     }

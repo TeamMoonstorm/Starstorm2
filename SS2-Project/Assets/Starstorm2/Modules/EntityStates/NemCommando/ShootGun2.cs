@@ -1,4 +1,5 @@
 ﻿using Moonstorm;
+using Moonstorm.Starstorm2;
 using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -68,8 +69,15 @@ namespace EntityStates.NemCommando
         public override void OnExit()
         {
             base.OnExit();
-
-            float rechargeTime = Mathf.Clamp(skillLocator.secondary.finalRechargeInterval, 0.25f, Mathf.Infinity);
+            //SS2Log.Info("Ahhhh");
+            //if(skillLocator.secondary.stock != skillLocator.secondary.maxStock)
+            //{
+            //    ReloadGun nextState = new ReloadGun();
+            //    outer.SetNextState(nextState);
+            //}
+            //ReloadGun nextState = new ReloadGun();
+            //outer.SetNextState(nextState);
+            //float rechargeTime = Mathf.Clamp(skillLocator.secondary.finalRechargeInterval, 0.25f, Mathf.Infinity);
         }
 
         
@@ -91,6 +99,14 @@ namespace EntityStates.NemCommando
                 Ray aimRay = GetAimRay();
                 AddRecoil(-1f * recoil, -2f * recoil, -0.5f * recoil, 0.5f * recoil);
 
+                float minSpread = 0f;
+                float maxSpread = characterBody.spreadBloomAngle;
+                if (teamComponent.teamIndex != TeamIndex.Player)
+                {
+                    minSpread += 2f;
+                    maxSpread += 4f;
+                }
+
                 BulletAttack bulletAttack = new BulletAttack
                 {
                     bulletCount = 1,
@@ -103,8 +119,8 @@ namespace EntityStates.NemCommando
                     maxDistance = range,
                     force = force,
                     hitMask = LayerIndex.CommonMasks.bullet,
-                    minSpread = 0f,
-                    maxSpread = characterBody.spreadBloomAngle,
+                    minSpread = minSpread,
+                    maxSpread = maxSpread,
                     isCrit = isCrit,
                     owner = gameObject,
                     muzzleName = muzzleString,
@@ -116,8 +132,8 @@ namespace EntityStates.NemCommando
                     stopperMask = LayerIndex.CommonMasks.bullet,
                     weapon = null,
                     tracerEffectPrefab = tracerEffectPrefab,
-                    spreadPitchScale = 0f,
-                    spreadYawScale = 0f,
+                    spreadPitchScale = 1f,
+                    spreadYawScale = 1f,
                     queryTriggerInteraction = QueryTriggerInteraction.UseGlobal,
                     hitEffectPrefab = Commando.CommandoWeapon.FirePistol2.hitEffectPrefab
                 };
@@ -126,7 +142,7 @@ namespace EntityStates.NemCommando
 
                 FindModelChild("casingParticle").GetComponent<ParticleSystem>().Emit(1);
 
-                characterBody.AddSpreadBloom(1.5f);
+                characterBody.AddSpreadBloom(3f);
             }
         }
 
@@ -136,7 +152,9 @@ namespace EntityStates.NemCommando
             
             base.FixedUpdate();
 
-            if (fixedAge >= fireTime)
+            //SS2Log.Info("Aaahh");
+
+            if (fixedAge >= fireTime * duration)
             {
                 Fire();
             }
@@ -149,8 +167,13 @@ namespace EntityStates.NemCommando
                     skillLocator.secondary.stock -= 1;
                     return;
                 }
-                outer.SetNextStateToMain();
-                return;
+                if(fixedAge >= 1.5f * duration)
+                {
+                    outer.SetNextState(new ReloadGun());
+                    return;
+                }
+                //outer.SetNextStateToMain();
+                //return;
             }
         }
 

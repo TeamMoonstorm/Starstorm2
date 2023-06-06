@@ -2,10 +2,12 @@
   "strings": {
     "SS2_NEMCOMMANDO_NAME": "Nemesis Commando",
     "SS2_NEMCOMMANDO_SUBTITLE": "Lone Echo",
-    "SS2_NEMCOMMANDO_DESCRIPTION": "The Nemesis Commando is a wildcard on the battlefield, capable of turning any situation to his favor.\n\n<color=#CCD3E0>< ! > Single Tap can be used to deal with foes at any distance. Combine it with Blade of Cessation up close to shred foes.\n\n< ! > Gouge is a powerful debuff that can critical hit and activate item effects, on top of heavy damage.\n\n< ! > Proper balance of melee and ranged combat is key, and Tactical Roll grants high armor to help enter and exit battles.\n\n< ! > Disrupt enemies with Submission, whether it be to aid in an escape or get the jump on an unsuspecting target.",
+    "SS2_NEMCOMMANDO_DESCRIPTION": "The Nemesis Commando is a wildcard on the battlefield, capable of turning any situation to his favor.\n\n<color=#CCD3E0>< ! > Single Tap can be used to deal with foes at any distance. Combine it with Blade of Cessation up close to shred foes.\n\n< ! > Gouge is a powerful debuff that can critical hit and activate item effects, on top of its heavy damage.\n\n< ! > Proper balance of melee and ranged combat is key, and Tactical Roll grants high armor to help enter and exit battles.\n\n< ! > Disrupt enemies with Submission, whether it be to aid in an escape or get the jump on an unsuspecting target.",
     "SS2_NEMCOMMANDO_OUTRO_FLAVOR": "..and so he left, newfound sense of humanity within.",
     "SS2_NEMCOMMANDO_OUTRO_FAILURE": "..and so he returned, humanity lost without a trace.",
-    "SS2_NEMCOMMANDO_LORE": "He lays to rest by a fire, setting the weapons he carries within an arm's reach. Checking his surroundings, hoping the cave he hid in would be enough shelter. Some would say, it isn't wise to be overly cautious. He would say, <color=#FFCCED>they haven't seen enough.</color>\n\nThe service pistol he got when he enlisted. Well used, dirtied, and loved. It's brought him through thick and thin, no matter which mission he took on. Some would say, only a fool would trust their weapon. He would say, <color=#FFCCED>your weapon is all you can trust.</color>\n\nThe blade of a fallen brother of war. Picked from what he could scavenge of the last of humanity he's seen. Some would say, it keeps their spirits united. He would say, <color=#FFCCED>it's to keep their spirits from joining for as long as possible.</color>\n\nThe loads of cargo that landed with him. Each item picked from a chest, keeping him alive in one way or another. Dozens of shipments to anyone but him. Some would say, they aren't his to take. He would say, <color=#FFCCED>if he doesn't take them, then no one will.</color>\n\nThe glow of a violet light coming from deeper within the cave. Calming, warming... beckoning. Welcoming him deeper and deeper, promising safety. Some would say, what sounds too good to be true usually is. He would say, <color=#FFCCED>Faust was a wise man.</color>",
+    "SS2_NEMCOMMANDO_LORE": "He lays to rest by a fire, setting the weapons he carries within an arm's reach. Checking his surroundings, hoping the cave he hid in would be enough shelter. Some would say it is not wise to be overly cautious. He would say, <link=\"textShaky\">they have not seen enough</link>.\n\nThe service pistol he got when he enlisted. Well used, dirtied, and loved. It's brought him through thick and thin, no matter the circumstance. Some would say that only a fool would trust their weapon. He would say, <link=\"textShaky\">your weapon is all you can trust.</link>\n\nThe blade of a fallen brother of war. Picked from what he could scavenge of the last of humanity he's seen. Some would say it keeps their spirits united. He would say, <link=\"textShaky\">it keeps their spirits from joining for as long as possible.</link>\n\nThe loads of cargo that landed with him. Each item picked from a chest, keeping him alive in one way or another. Dozens of shipments to anyone but him. Some would say they aren't his to take. He would say, <link=\"textShaky\">if he doesn't take them, then no one else will</link>.\n\nThe glow of a violet light coming from deeper within the cave. Calming, warming... beckoning. Welcoming him deeper and deeper, promising safety. Some would say that what sounds too good to be true usually is. He would say, <link=\"textWavy\">Faust was a wise man</link>.",
+
+    "SS2_NEMCOMMANDO_EMERGE":  "Emerge",
 
     "SS2_KEYWORD_GOUGE2": "<style=cKeywordName>Gouge</style><style=cSub>Applies 200% damage over time. Capable of critical hits and activating item effects.",
 
@@ -33,13 +35,38 @@
     "SS2_NEMCOMMANDO_SPECIAL_SUBMISSION_DESCRIPTION": "<style=cIsDamage>Stunning</style>. Fire repeatedly for <style=cIsDamage>6x80% damage</style> per shot. The number of shots increases with attack speed.",
 
     "SS2_NEMCOMMANDO_SPECIAL_BOSS_NAME": "Decisive Strike",
-    "SS2_NEMCOMMANDO_SPECIAL_BOSS_DESCRIPTION": "<style=cIsDamage>Gouging</style>. <style=cIsUtility>Charge up</style>, then <style=cIsUtility>dash forward</style> and unleash a devastating series of slashes for <style=cIsDamage>{1}% damage</style> per slash. The number of slashes increases with attack speed and charge duration.",
+    "SS2_NEMCOMMANDO_SPECIAL_BOSS_DESCRIPTION": "<style=cIsDamage>Gouging</style>. <style=cIsUtility>Charge up</style>, then <style=cIsUtility>dash forward</style> and unleash a devastating series of up to <style=cIsDamage>6</style> slashes for <style=cIsDamage>360% damage</style> per slash.",
 
     "SS2_NEMCOMMANDO_SPECIAL_SCEPSUBMISSION_NAME": "Subjunction",
     "SS2_NEMCOMMANDO_SPECIAL_SCEPSUBMISSION_DESCRIPTION": "<style=cIsUtility>Agile.</style> <style=cDeath>Rending.</style> <style=cIsUtility>Charge up</style>, then fire a barrage of up to <style=cIsDamage>6 blasts of 4x70%.</style>. <style=cIsUtility>The number of shots increases with attack speed</style>. \n<color=#d299ff>SCEPTER: Additionally fires up to {0} lasers which deal {2}% damage.</color>",
 
     "SS2_NEMCOMMANDO_SPECIAL_SCEPBOSS_NAME": "Judgement Cut",
-    "SS2_NEMCOMMANDO_SPECIAL_SCEPBOSS_DESCRIPTION": "<style=cIsDamage>Gouging.</style> <style=cIsUtility>Charge up</style>, then <style=cIsUtility>dash forward</style> and unleash a devastating barrage of up to <style=cIsDamage>{0} slashes</style> that deal up to <style=cIsDamage>{1}% damage each</style>. <style=cIsUtility>The number of slashes increases with attack speed</style>. \n<color=#d299ff>SCEPTER: At full charge, briefly vanish, then unleash all of your strikes at once.</color>"
+    "SS2_NEMCOMMANDO_SPECIAL_SCEPBOSS_DESCRIPTION": "<style=cIsDamage>Gouging.</style> <style=cIsUtility>Charge up</style>, then <style=cIsUtility>dash forward</style> and unleash a devastating barrage of up to <style=cIsDamage>{0} slashes</style> that deal up to <style=cIsDamage>{1}% damage each</style>. <style=cIsUtility>The number of slashes increases with attack speed</style>. \n<color=#d299ff>SCEPTER: At full charge, briefly vanish, then unleash all of your strikes at once.</color>",
 
+    "SS2_SKIN_NEMCOMMANDO_DEFAULT": "Default",
+    "SS2_SKIN_NEMCOMMANDO_MASTERY": "Wasp",
+    "SS2_SKIN_NEMCOMMANDO_GRANDMASTERY": "Minuano",
+    "SS2_SKIN_NEMCOMMANDO_COMMANDO": "Soldier",
+
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_NAME": "Lone Echo",
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_DESC": "Defeat Commando's Vestige.",
+
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_MASTERY_NAME": "Nemesis Commmando: Mastery",
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_MASTERY_DESC": "As Nemesis Commando, beat the game or obliterate on Monsoon or harder.",
+
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_GRANDMASTERY_NAME": "Nemesis Commando: Grand Mastery",
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_GRANDMASTERY_DESC": "As Nemesis Commando, beat the game or obliterate on Typhoon.",
+
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_NEMESIS_NAME": "Nemesis Commando: Cornered Gunslinger",
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_NEMESIS_DESC": "As Nemesis Commando, defeat Commando's vestige.",
+
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_BOSSATTACK_NAME": "Nemesis Commando: Zandatsu",
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_BOSSATTACK_DESC": "As Nemesis Commando, apply 8 or more stacks of Gouge to a single target at once.",
+
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_GRENADE_NAME": "Nemesis Commando: Completely Corrupted",
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_GRENADE_DESC": "As Nemesis Commando, carry at least 20 Lunar items on Stage 8.",
+
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_SWORDBEAM_NAME": "Nemesis Commando: The Ripper",
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_SWORDBEAM_DESC": "As Nemesis Commando, reach 100% bleed chance."
   }
 }

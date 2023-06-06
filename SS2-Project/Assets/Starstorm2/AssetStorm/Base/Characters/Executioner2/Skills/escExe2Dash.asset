@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: escExe2Dash
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.Executioner2.Dash, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: baseDuration
+      fieldValue:
+        stringValue: 0.6
+        objectValue: {fileID: 0}
+    - fieldName: speedMultiplier
+      fieldValue:
+        stringValue: 3
+        objectValue: {fileID: 0}
+    - fieldName: debuffRadius
+      fieldValue:
+        stringValue: 14
+        objectValue: {fileID: 0}
+    - fieldName: debuffDuration
+      fieldValue:
+        stringValue: 4
+        objectValue: {fileID: 0}
+    - fieldName: dashEffect
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1206030623417033904, guid: 76c3532e53092dd4c96ac0b57b84693d,
+          type: 3}
+    - fieldName: hopVelocity
+      fieldValue:
+        stringValue: 17
+        objectValue: {fileID: 0}
+    - fieldName: debuffCheckInterval
+      fieldValue:
+        stringValue: 0.0333
+        objectValue: {fileID: 0}
+    - fieldName: ExhaustL
+      fieldValue:
+        stringValue: ExhaustL
+        objectValue: {fileID: 0}
+    - fieldName: ExhaustR
+      fieldValue:
+        stringValue: ExhaustR
+        objectValue: {fileID: 0}
+    - fieldName: dashEffectMastery
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1206030623417033904, guid: 6891210f464ce064f85ad818a1ccd7f7,
+          type: 3}
+    - fieldName: dashMasteryMaterial
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 2100000, guid: f15f7e5112095574dbe162a9a7423b2d, type: 2}

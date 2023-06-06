@@ -13,17 +13,20 @@ namespace Moonstorm.Starstorm2.Items
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfForce", SS2Bundle.Items);
 
-        [ConfigurableField(ConfigDesc = "Damage coefficient for subsequent hits. (1 = 100% of total damage)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Attack speed reduction and cooldown increase per stack. (1 = 100% slower attack speed and longer cooldowns)")]
         [TokenModifier("SS2_ITEM_RELICOFFORCE_DESC", StatTypes.MultiplyByN, 0, "100")]
-        public static float damageMultiplier = 1;
-
-        [ConfigurableField(ConfigDesc = "Attack speed reduction and cooldown increase per stack. (1 = 100% slower attack speed and longer cooldowns)")]
-        [TokenModifier("SS2_ITEM_RELICOFFORCE_DESC", StatTypes.MultiplyByN, 1, "100")]
         public static float forcePenalty = .4f;
 
-        [ConfigurableField(ConfigDesc = "Delay between additional hits. (1 = 1 second)")]
-        [TokenModifier("SS2_ITEM_RELICOFFORCE_DESC", StatTypes.MultiplyByN, 2, "100")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Delay between additional hits. (1 = 1 second)")]
         public static float hitDelay = .2f;
+
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Increased damage per additional hits. (1 = 100%)")]
+        [TokenModifier("SS2_ITEM_RELICOFFORCE_DESC", StatTypes.MultiplyByN, 1, "100")]
+        public static float hitIncrease = .05f;
+
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Increased damage cap for additional hits. (1 = 100%)")]
+        [TokenModifier("SS2_ITEM_RELICOFFORCE_DESC", StatTypes.MultiplyByN, 2, "100")]
+        public static float hitMax = 1f;
 
         public static DamageAPI.ModdedDamageType relicForceDamageType;
 
@@ -38,6 +41,10 @@ namespace Moonstorm.Starstorm2.Items
             {
                 SS2Log.Info("GOTCE Compat - Not adding Force hook");
             }
+
+            relicForceDamageType = DamageAPI.ReserveDamageType();
+
+
         }
 
         private float ForceSkillFinalRecharge2(On.RoR2.GenericSkill.orig_CalculateFinalRechargeInterval orig, GenericSkill self)
@@ -155,7 +162,7 @@ namespace Moonstorm.Starstorm2.Items
 
             public void CallMoreHits(DamageReport damageReport, int count)
             {
-                if(hitCount * .05f < 1)
+                if(hitCount * hitIncrease < hitMax)
                 {
                     hitCount++;
                 }
@@ -170,12 +177,12 @@ namespace Moonstorm.Starstorm2.Items
                 var victimHealthComp = damageReport.victimBody.healthComponent;
                 var initalHit = damageReport.damageInfo;
 
-                float hitMult = hitCount * .05f;
+                float hitMult = hitCount * hitIncrease;
                 
                 for (int i = 0; i < count; i++)
                 {
                     DamageInfo damageInfo = new DamageInfo();
-                    damageInfo.damage = damageReport.damageDealt * damageMultiplier * hitMult;
+                    damageInfo.damage = damageReport.damageDealt * hitMult;
                     damageInfo.attacker = attacker;
                     damageInfo.inflictor = initalHit.inflictor;
                     damageInfo.force = Vector3.zero;
@@ -193,7 +200,7 @@ namespace Moonstorm.Starstorm2.Items
                     {
                         damageInfo.position = victim.transform.position;
                         victimHealthComp.TakeDamage(damageInfo);
-                        GlobalEventManager.instance.OnHitEnemy(damageInfo, victimHealthComp.gameObject);
+                        GlobalEventManager.instance.OnHitEnemy(damageInfo, victimHealthComp.gameObject); //what
                         GlobalEventManager.instance.OnHitAll(damageInfo, victimHealthComp.gameObject);
                         EffectData effectData = new EffectData
                         {
