@@ -12,7 +12,7 @@ using UnityEngine.AddressableAssets;
 namespace Moonstorm.Starstorm2
 {
     //LASCIATE OGNI SPERANZA, VOI CH'ENTRATE
-    class Ethereal
+    public class Ethereal
     {
         public static Ethereal instance { get; private set; }
         public static Color32 ethColor = new Color32(18, 93, 74, 255);
@@ -55,10 +55,11 @@ namespace Moonstorm.Starstorm2
             Debug.Log("completed ethereals: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
         }
 
-        private static void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)
+        public static void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)
         {
             if (self.teleporterInstance)
             {
+
                 var position = Vector3.zero;
                 var rotation = Quaternion.Euler(-90, 0, 0);
                 var currStage = SceneManager.GetActiveScene().name;
@@ -146,8 +147,9 @@ namespace Moonstorm.Starstorm2
                 }
                 var term = Object.Instantiate(SS2Assets.LoadAsset<GameObject>("ShrineEthereal", SS2Bundle.Indev), position, rotation);
                 Debug.Log("placed shrine at: " + position + "pos & " + rotation + "rot");
-                orig(self);
             }
+
+            orig(self);
 
             Debug.Log("completed ethereals: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
             if (teleIsEthereal)
@@ -286,7 +288,7 @@ namespace Moonstorm.Starstorm2
         {
             orig(self);
 
-            if (teleIsEthereal && !teleUpgraded)
+            if (teleIsEthereal && !teleUpgraded && NetworkServer.active)
             {
                 Debug.Log("tele changing...");
                 //flag the teleporter as modified

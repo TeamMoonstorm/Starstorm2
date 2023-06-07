@@ -1,32 +1,31 @@
-﻿using Moonstorm;
-using Moonstorm.Starstorm2.Components;
+﻿using Moonstorm.Starstorm2.Components;
 using RoR2;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 namespace EntityStates.NemCaptain
 {
-    public class MachinePistol : BaseSkillState
+    public class FireRifle : BaseSkillState
     {
         public static float damageCoefficient;
         public static float procCoefficient;
         public static float baseDuration;
-        public static float minimumDuration;
         public static float force;
         public static float recoil;
         public static float range;
-        public static string muzzleString;
         public static string soundString;
+        public static string muzzleString;
 
         [HideInInspector]
-        public static GameObject tracerEffectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/GoldGat/TracerGoldGat.prefab").WaitForCompletion();
+        public static GameObject tracerEffectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/Railgunner/TracerRailgun.prefab").WaitForCompletion();
 
         private float fireTime;
         private bool hasFired;
-        private Animator animator;
 
         private NemCaptainController ncc;
-        
+
         private float duration
         {
             get
@@ -35,26 +34,18 @@ namespace EntityStates.NemCaptain
             }
         }
 
-        
         public override void OnEnter()
         {
             base.OnEnter();
             characterBody.outOfCombatStopwatch = 0f;
             fireTime = 0.1f * duration;
-            characterBody.SetAimTimer(2f);
-            animator = GetModelAnimator();
+
+            hasFired = false;
 
             ncc = characterBody.GetComponent<NemCaptainController>();
 
-            //PlayCrossfade("Gesture, Override, LeftArm", "FireGun", "FireGun.playbackRate", baseDuration, 0.005f);
+            //play animation
         }
-
-        public override void OnExit()
-        {
-            base.OnExit();
-        }
-
-        
 
         private void Fire()
         {
@@ -62,16 +53,23 @@ namespace EntityStates.NemCaptain
                 return;
             hasFired = true;
             bool isCrit = RollCrit();
-            //EffectManager.SimpleMuzzleFlash(Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab, gameObject, muzzleString, false);
-            
+            //muzzleflash
 
             if (soundString != string.Empty)
                 Util.PlaySound(soundString, gameObject);
-            
+
             if (isAuthority)
             {
                 Ray aimRay = GetAimRay();
                 AddRecoil(-1f * recoil, -2f * recoil, -0.5f * recoil, 0.5f * recoil);
+
+                float minSpread = 0f + (4f * ncc.stressFraction);
+                float maxSpread = characterBody.spreadBloomAngle + (8f * ncc.stressFraction);
+                if (teamComponent.teamIndex != TeamIndex.Player)
+                {
+                    minSpread += 2f * (2f * ncc.stressFraction);
+                    maxSpread += 2f + (4f * ncc.stressFraction);
+                }
 
                 BulletAttack bulletAttack = new BulletAttack
                 {
@@ -80,26 +78,26 @@ namespace EntityStates.NemCaptain
                     origin = aimRay.origin,
                     damage = damageCoefficient * damageStat,
                     damageColorIndex = DamageColorIndex.Default,
-                    damageType = DamageType.Generic,
+                    damageType = DamageType.Stun1s,
                     falloffModel = BulletAttack.FalloffModel.DefaultBullet,
                     maxDistance = range,
                     force = force,
                     hitMask = LayerIndex.CommonMasks.bullet,
-                    minSpread = 0f + (2f * ncc.stressFraction),
-                    maxSpread = characterBody.spreadBloomAngle + (2f * ncc.stressFraction),
+                    minSpread = minSpread,
+                    maxSpread = maxSpread,
                     isCrit = isCrit,
                     owner = gameObject,
-                    muzzleName = muzzleString,
+                    //muzzleName = muzzleString,
                     smartCollision = true,
                     procChainMask = default(ProcChainMask),
                     procCoefficient = procCoefficient,
-                    radius = 0.75f,
+                    radius = 1.5f,
                     sniper = false,
                     stopperMask = LayerIndex.CommonMasks.bullet,
                     weapon = null,
                     tracerEffectPrefab = tracerEffectPrefab,
-                    spreadPitchScale = 1f + (2f * ncc.stressFraction),
-                    spreadYawScale = 1f + (2f * ncc.stressFraction),
+                    spreadPitchScale = 1f + (4f * ncc.stressFraction),
+                    spreadYawScale = 1f + (4f * ncc.stressFraction),
                     queryTriggerInteraction = QueryTriggerInteraction.UseGlobal,
                     hitEffectPrefab = Commando.CommandoWeapon.FirePistol2.hitEffectPrefab
                 };
@@ -108,28 +106,19 @@ namespace EntityStates.NemCaptain
 
                 //FindModelChild("casingParticle").GetComponent<ParticleSystem>().Emit(1);
 
-                characterBody.AddSpreadBloom(0.2f + (0.8f * ncc.stressFraction));
+                characterBody.AddSpreadBloom(3f);
             }
         }
 
-       
         public override void FixedUpdate()
         {
             base.FixedUpdate();
 
-            if (fixedAge >= fireTime)
-            {
+            if (fixedAge >= fireTime * duration && !hasFired)
                 Fire();
-            }
 
             if (fixedAge >= duration && isAuthority)
             {
-                if (inputBank.skill1.down & skillLocator.primary.stock >= 1)
-                {
-                    outer.SetNextState(new MachinePistol());
-                    skillLocator.primary.stock -= 1;
-                    return;
-                }
                 outer.SetNextStateToMain();
                 return;
             }
@@ -137,12 +126,7 @@ namespace EntityStates.NemCaptain
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            if (fixedAge <= minimumDuration)
-            {
-                return InterruptPriority.PrioritySkill;
-            }
-
-            return InterruptPriority.Any;
+            return InterruptPriority.PrioritySkill;
         }
     }
 }

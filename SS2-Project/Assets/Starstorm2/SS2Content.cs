@@ -211,6 +211,8 @@ namespace Moonstorm.Starstorm2
             public static BuffDef BuffEchelon;
 
             public static BuffDef BuffBane;
+
+            public static BuffDef bdOverstress;
         }
 
         public static class Elites
@@ -232,6 +234,8 @@ namespace Moonstorm.Starstorm2
             public static SurvivorDef SurvivorNemmando;
 
             public static SurvivorDef survivorNemCommando;
+
+            public static SurvivorDef survivorNemCaptain;
 
             //public static SurvivorDef SurvivorPyro;
         }
