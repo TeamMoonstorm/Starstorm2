@@ -2873,6 +2873,11 @@ GameObject:
   - component: {fileID: 8578835051055927170}
   - component: {fileID: 4235575520358850007}
   - component: {fileID: 2120333452702808520}
+  - component: {fileID: -8895812555022209055}
+  - component: {fileID: 766899857383436856}
+  - component: {fileID: -6421377625998616615}
+  - component: {fileID: 263349432300893736}
+  - component: {fileID: 5612468648286512462}
   m_Layer: 0
   m_Name: NemCaptainBody
   m_TagString: Player
@@ -3199,7 +3204,7 @@ MonoBehaviour:
   m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillFamily: {fileID: 11400000, guid: 36e0e15e190c2904388be08f6e650967, type: 2}
+  _skillFamily: {fileID: 11400000, guid: 524bbec3794b7894dbf01250dfca08ee, type: 2}
   skillName: 
   hideInCharacterSelect: 0
   hasExecutedSuccessfully: 0
@@ -3215,7 +3220,7 @@ MonoBehaviour:
   m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillFamily: {fileID: 11400000, guid: 36e0e15e190c2904388be08f6e650967, type: 2}
+  _skillFamily: {fileID: 11400000, guid: 241124904d1cf9948b98b1c743e9fdeb, type: 2}
   skillName: 
   hideInCharacterSelect: 0
   hasExecutedSuccessfully: 0
@@ -3248,6 +3253,7 @@ MonoBehaviour:
   - {fileID: 2520711261745657046}
   - {fileID: 7175763700555500974}
   - {fileID: 366375999665050324}
+  - {fileID: 5612468648286512462}
 --- !u!114 &2520711261745657046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3536,6 +3542,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterBody: {fileID: 7994026586980312019}
   characterAnimator: {fileID: 2280356976782772585}
+  deck: {fileID: 11400000, guid: 427f593700ccf7141aa7e4abea80eae3, type: 2}
+  hand1: {fileID: -8895812555022209055}
+  hand2: {fileID: 766899857383436856}
+  hand3: {fileID: -6421377625998616615}
+  hand4: {fileID: 263349432300893736}
   minStress: 0
   maxStress: 100
   stressPerSecondInCombat: 2
@@ -3550,6 +3561,87 @@ MonoBehaviour:
   overlayPrefab: {fileID: 1894802512682313, guid: 7aa69281e0edca147beeff3020ab1703,
     type: 3}
   overlayChildLocatorEntry: CrosshairExtras
+--- !u!114 &-8895812555022209055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6087713977417582395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillFamily: {fileID: 11400000, guid: 427f593700ccf7141aa7e4abea80eae3, type: 2}
+  skillName: hand1
+  hideInCharacterSelect: 1
+  hasExecutedSuccessfully: 0
+--- !u!114 &766899857383436856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6087713977417582395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillFamily: {fileID: 11400000, guid: 427f593700ccf7141aa7e4abea80eae3, type: 2}
+  skillName: hand2
+  hideInCharacterSelect: 1
+  hasExecutedSuccessfully: 0
+--- !u!114 &-6421377625998616615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6087713977417582395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillFamily: {fileID: 11400000, guid: 427f593700ccf7141aa7e4abea80eae3, type: 2}
+  skillName: hand3
+  hideInCharacterSelect: 1
+  hasExecutedSuccessfully: 0
+--- !u!114 &263349432300893736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6087713977417582395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillFamily: {fileID: 11400000, guid: 427f593700ccf7141aa7e4abea80eae3, type: 2}
+  skillName: hand4
+  hideInCharacterSelect: 1
+  hasExecutedSuccessfully: 0
+--- !u!114 &5612468648286512462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6087713977417582395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1297580292, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customName: Skillswap
+  initialStateType:
+    _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  mainStateType:
+    _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1 &6114954042290170794
 GameObject:
   m_ObjectHideFlags: 0

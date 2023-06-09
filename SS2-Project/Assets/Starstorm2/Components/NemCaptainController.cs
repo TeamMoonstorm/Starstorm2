@@ -1,5 +1,6 @@
 ﻿using RoR2;
 using RoR2.HudOverlay;
+using RoR2.Skills;
 using RoR2.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
+using UnityEngine.UI;
+using EntityStates;
 
 namespace Moonstorm.Starstorm2.Components
 {
@@ -17,6 +20,15 @@ namespace Moonstorm.Starstorm2.Components
         [Header("Cached Components")]
         public CharacterBody characterBody;
         public Animator characterAnimator;
+
+        [Header("Drone Orders")]
+        public SkillFamily deck;
+        public GenericSkill hand1;
+        public GenericSkill hand2;
+        public GenericSkill hand3;
+        public GenericSkill hand4;
+        private List<SkillDef> drawnSkillDefs = new List<SkillDef>();
+        private bool initialDeck = true;
 
         [Header("Stress Values")]
         public float minStress;
@@ -31,7 +43,7 @@ namespace Moonstorm.Starstorm2.Components
         public float stressGainedOnKill;
         public float stressGainedOnItem;
 
-        [Header("UI")]
+        [Header("Stress UI")]
         [SerializeField]
         public GameObject overlayPrefab;
 
@@ -40,7 +52,7 @@ namespace Moonstorm.Starstorm2.Components
         private ChildLocator overlayInstanceChildlocator;
         private OverlayController overlayController;
         private List<ImageFillController> fillUiList = new List<ImageFillController>();
-        private TextMeshProUGUI uiStressText;
+        private Text uiStressText;
 
         private int itemCount;
 
@@ -127,7 +139,7 @@ namespace Moonstorm.Starstorm2.Components
 
         private void OnEnable()
         {
-            //prefab stuff
+            //add prefab & necessary hooks
             OverlayCreationParams overlayCreationParams = new OverlayCreationParams
             {
                 prefab = overlayPrefab,
@@ -137,13 +149,129 @@ namespace Moonstorm.Starstorm2.Components
             overlayController.onInstanceAdded += OnOverlayInstanceAdded;
             overlayController.onInstanceRemove += OnOverlayInstanceRemoved;
 
+            //check for a characterbody .. just in case
             if (characterBody)
             {
                 //characterBody.OnInventoryChanged += OnInventoryChanged;
                 if (NetworkServer.active)
                 {
                     HealthComponent.onCharacterHealServer += OnCharacterHealServer;
+
+                    //setup cards
+                    InitializeCards();
                 }
+            }
+        }
+
+        private void InitializeCards()
+        {
+            //reset on start
+            if (initialDeck)
+            {
+                drawnSkillDefs.Clear();
+                initialDeck = false;
+                Debug.Log("did initial clear");
+            }
+
+            //give each hand an order
+            //Debug.Log("random skill : " + GetRandomSkillDefFromDeck().skillNameToken);
+            if (hand1.skillDef == null)
+                hand1.UnsetSkillOverride(gameObject, hand1.skillDef, GenericSkill.SkillOverridePriority.Replacement);
+
+            hand1.SetSkillOverride(gameObject, GetRandomSkillDefFromDeck(), GenericSkill.SkillOverridePriority.Replacement);
+            //hand1.SetBaseSkill(GetRandomSkillDefFromDeck());
+            //hand1.SetSkillInternal(GetRandomSkillDefFromDeck());
+            Debug.Log("gave hand 1 skill : " + hand1.skillDef);
+            hand2.SetSkillOverride(gameObject, GetRandomSkillDefFromDeck(), GenericSkill.SkillOverridePriority.Replacement);
+
+            if (hand2.skillDef == null)
+                hand2.UnsetSkillOverride(gameObject, hand2.skillDef, GenericSkill.SkillOverridePriority.Replacement);
+            Debug.Log("gave hand 2 skill: " + hand2.skillDef);
+            hand3.SetSkillOverride(gameObject, GetRandomSkillDefFromDeck(), GenericSkill.SkillOverridePriority.Replacement);
+
+            if (hand3.skillDef == null)
+                hand3.UnsetSkillOverride(gameObject, hand3.skillDef, GenericSkill.SkillOverridePriority.Replacement);
+            Debug.Log("gave hand 3 skill: " + hand3.skillDef);
+            hand4.SetSkillOverride(gameObject, GetRandomSkillDefFromDeck(), GenericSkill.SkillOverridePriority.Replacement);
+
+            if (hand4.skillDef == null)
+                hand4.UnsetSkillOverride(gameObject, hand4.skillDef, GenericSkill.SkillOverridePriority.Replacement);
+            Debug.Log("gave hand 4 skill: " + hand4.skillDef);
+        }
+
+        public SkillDef GetRandomSkillDefFromDeck()
+        {
+            //check if the entire deck is used
+            if (drawnSkillDefs.Count == deck.variants.Length)
+            {
+                Debug.Log("deck fully used; clearing");
+                drawnSkillDefs.Clear();
+            }
+
+            Debug.Log("starting to get random skill from deck");
+
+            //loop until an unused order is found
+            SkillDef randomSkillDef;
+            do
+            {
+                var randomVariantIndex = Random.Range(0, deck.variants.Length);
+                Debug.Log("random variant index attempt : " + deck.variants[randomVariantIndex].skillDef);
+                randomSkillDef = deck.variants[randomVariantIndex].skillDef;
+            }
+            while (drawnSkillDefs.Contains(randomSkillDef));
+
+            Debug.Log("randomSkillDef : " + randomSkillDef.name);
+
+            //mark order as used
+            drawnSkillDefs.Add(randomSkillDef);
+
+            Debug.Log("added skill to list : " + randomSkillDef.name);
+
+            return randomSkillDef;
+        }
+
+        public void DiscardCardFromHand(int handIndex)
+        {
+            GenericSkill hand = GetHandByIndex(handIndex);
+            if (hand != null)
+            {
+                //to-do: 'empty' skill
+                Debug.Log("discarded hand");
+                hand.UnsetSkillOverride(gameObject, hand.skillDef, GenericSkill.SkillOverridePriority.Replacement);
+                hand.SetSkillOverride(gameObject, null, GenericSkill.SkillOverridePriority.Loadout);
+            }
+        }
+
+        public void DiscardCardsAndReplace()
+        {
+            DiscardCardFromHand(1);
+            Debug.Log("discarded hand 1");
+            DiscardCardFromHand(2);
+            Debug.Log("discarded hand 2");
+            DiscardCardFromHand(3);
+            Debug.Log("discarded hand 3");
+            DiscardCardFromHand(4);
+            Debug.Log("discarded hand 4");
+
+            //full reset
+            InitializeCards();
+        }
+
+        //lol
+        private GenericSkill GetHandByIndex(int handIndex)
+        {
+            switch (handIndex)
+            {
+                case 1:
+                    return hand1;
+                case 2:
+                    return hand2;
+                case 3:
+                    return hand3;
+                case 4:
+                    return hand4;
+                default:
+                    return null;
             }
         }
 
@@ -169,10 +297,10 @@ namespace Moonstorm.Starstorm2.Components
         private void OnOverlayInstanceAdded(OverlayController controller, GameObject instance)
         {
             fillUiList.Add(instance.GetComponent<ImageFillController>());
-            uiStressText = instance.GetComponent<TextMeshProUGUI>();
-            uiStressText.font = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/VoidSurvivor/animVoidSurvivorCorruptionUI.controller").WaitForCompletion().GetComponent<TextMeshProUGUI>().font;
-            uiStressText.fontSharedMaterial = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/VoidSurvivor/animVoidSurvivorCorruptionUI.controller").WaitForCompletion().GetComponent<TextMeshProUGUI>().fontSharedMaterial;
-            uiStressText.fontMaterial = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/VoidSurvivor/animVoidSurvivorCorruptionUI.controller").WaitForCompletion().GetComponent<TextMeshProUGUI>().fontMaterial;
+            uiStressText = instance.GetComponent<Text>();
+            //uiStressText.font = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/VoidSurvivor/animVoidSurvivorCorruptionUI.controller").WaitForCompletion().GetComponent<TextMeshProUGUI>().font;
+            //uiStressText.fontSharedMaterial = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/VoidSurvivor/animVoidSurvivorCorruptionUI.controller").WaitForCompletion().GetComponent<TextMeshProUGUI>().fontSharedMaterial;
+            //uiStressText.fontMaterial = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/VoidSurvivor/animVoidSurvivorCorruptionUI.controller").WaitForCompletion().GetComponent<TextMeshProUGUI>().fontMaterial;
 
             overlayInstanceChildlocator = instance.GetComponent<ChildLocator>();
         }
@@ -196,7 +324,7 @@ namespace Moonstorm.Starstorm2.Components
 
             UpdateUI();
 
-
+            //overstress toggle
             if (NetworkServer.active)
             {
                 if (stress >= maxStress && !isOverstressed)
@@ -226,7 +354,7 @@ namespace Moonstorm.Starstorm2.Components
             {
                 StringBuilder stringBuilder = StringBuilderPool.RentStringBuilder();
                 stringBuilder.AppendInt(Mathf.FloorToInt(stress), 1U, 3U).Append("%");
-                uiStressText.SetText(stringBuilder);
+                uiStressText.text = stringBuilder.ToString();
                 StringBuilderPool.ReturnStringBuilder(stringBuilder);
             }
         }
@@ -259,7 +387,7 @@ namespace Moonstorm.Starstorm2.Components
 
         private void OnStressModified(float newStress)
         {
-            //ui stuff
+            //probably ui stuff here later gulp
             Network_stress = newStress;
         }
 
@@ -271,6 +399,7 @@ namespace Moonstorm.Starstorm2.Components
         {
         }
 
+        //magic idk
         public override bool OnSerialize(NetworkWriter writer, bool forceAll)
         {
             if (forceAll)
