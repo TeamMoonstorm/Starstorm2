@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
+--- !u!114 &-3576180096776599551
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,16 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3695521163bdd74fa2845bbd3438240, type: 3}
-  m_Name: swuffBuild
+  m_Script: {fileID: 11500000, guid: 50df4f9027e15e04b931a8d460fb22c5, type: 3}
+  m_Name: ExecutePipeline
   m_EditorClassIdentifier: 
-  Data:
-  - {fileID: 1865877500085563225}
-  - {fileID: 317633807484698766}
-  - {fileID: 7532684020014524547}
-  QuickAccess: 1
-  manifest: {fileID: 11400000, guid: bcbdefdb47e2f8f45bdd7a2a4559b405, type: 2}
---- !u!114 &317633807484698766
+  Active: 1
+  OverrideManifest: 1
+  targetpipeline: {fileID: 11400000, guid: 4e0ada562e823934dad284255704129a, type: 2}
+--- !u!114 &-216652644370084839
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,8 +38,8 @@ MonoBehaviour:
   SourceRequired: 0
   EstablishDestination: 1
   Source: <BuildPath>
-  Destination: <swuffTestingPath>
---- !u!114 &1865877500085563225
+  Destination: <BunsTestingPath>
+--- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -51,13 +48,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50df4f9027e15e04b931a8d460fb22c5, type: 3}
-  m_Name: ExecutePipeline
+  m_Script: {fileID: 11500000, guid: a3695521163bdd74fa2845bbd3438240, type: 3}
+  m_Name: BunsBuild
   m_EditorClassIdentifier: 
-  Active: 1
-  OverrideManifest: 1
-  targetpipeline: {fileID: 11400000, guid: 4e0ada562e823934dad284255704129a, type: 2}
---- !u!114 &7532684020014524547
+  Data:
+  - {fileID: -3576180096776599551}
+  - {fileID: -216652644370084839}
+  - {fileID: 6698980336153669172}
+  QuickAccess: 0
+  manifest: {fileID: 11400000, guid: bcbdefdb47e2f8f45bdd7a2a4559b405, type: 2}
+--- !u!114 &6698980336153669172
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -70,4 +70,4 @@ MonoBehaviour:
   m_Name: ChangeAssemblyBuildMode
   m_EditorClassIdentifier: 
   Active: 1
-  buildMode: 1
+  buildMode: 0

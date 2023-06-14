@@ -18,7 +18,7 @@ namespace EntityStates.Nemmando
             base.OnEnter();
             //base.characterBody.enabled = false;
             //We know its nemmando and that he has a model... but lets make it generic
-            if (NetworkServer.active) characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
+            if (NetworkServer.active) characterBody.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, minimumIdleDuration);
             characterModel = null;
             if (characterBody.modelLocator && characterBody.modelLocator.modelTransform)
             {
@@ -55,7 +55,6 @@ namespace EntityStates.Nemmando
                     hasSpawnedPrefab = true;
                 }
                 if (inputBank.interact.down)*/
-                if (NetworkServer.active) characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility);
                 outer.SetNextState(new Appear());
             }
         }

@@ -44,7 +44,7 @@ namespace EntityStates.Nemmando
 				modelTransform.GetComponent<PrintController>().enabled = true;
 			}*/
 
-            if (NetworkServer.active) characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
+            if (NetworkServer.active) characterBody.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, duration * 1.2f);
         }
         public override void Update()
         {
@@ -68,7 +68,6 @@ namespace EntityStates.Nemmando
             {
                 this.modelAnimator.SetFloat(AnimationParameters.aimWeight, 1f);
             }
-            if (NetworkServer.active) characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility);
             base.OnExit();
         }
         public override InterruptPriority GetMinimumInterruptPriority() //Shouldnt ever die but just in case lol
