@@ -34,8 +34,12 @@ namespace EntityStates.NemCaptain.Weapon
         public override void OnEnter()
         {
             base.OnEnter();
+
             Debug.Log("base call drone start");
-            ncc = characterBody.GetComponent<NemCaptainController>();
+ 
+    ncc = characterBody.GetComponent<NemCaptainController>();
+            activatorSkillSlot.UnsetSkillOverride(gameObject, activatorSkillSlot.skillDef, GenericSkill.SkillOverridePriority.Replacement);
+            activatorSkillSlot.SetSkillOverride(gameObject, ncc.nullSkill, GenericSkill.SkillOverridePriority.Loadout);
             if (isAuthority)
             {
                 placementInfo = SetupDroneOrders.GetPlacementInfo(GetAimRay(), gameObject);
@@ -43,7 +47,6 @@ namespace EntityStates.NemCaptain.Weapon
                 {
                     Debug.Log("uhhh i hope this is right.. some other info: ");
                     Debug.Log("activatorSkillSlot name : " + activatorSkillSlot.name);
-                    //ncc.DiscardCardFromHand(activatorSkillSlot.);
                 }
             }
             if (placementInfo.ok)
@@ -51,10 +54,10 @@ namespace EntityStates.NemCaptain.Weapon
                 //SimpleMuzzleFlash(muzzleFlashEffect, gameObject, muzzleString, false);
                 characterBody.SetAimTimer(3f);
                 //animation
-                if (NetworkServer.active)
+                if (NetworkServer.active && dronePrefab != null)
                 {
                     Debug.Log("deploying!");
-                    /*GameObject droneObject = UnityEngine.Object.Instantiate<GameObject>(dronePrefab, placementInfo.position, placementInfo.rotation);
+                    GameObject droneObject = UnityEngine.Object.Instantiate<GameObject>(dronePrefab, placementInfo.position, placementInfo.rotation);
                     droneObject.GetComponent<TeamFilter>().teamIndex = teamComponent.teamIndex;
                     droneObject.GetComponent<GenericOwnership>().ownerObject = gameObject;
 
@@ -65,7 +68,7 @@ namespace EntityStates.NemCaptain.Weapon
                         //characterBody.master.AddDeployable(component,)
                     }
 
-                    NetworkServer.Spawn(gameObject);*/
+                    NetworkServer.Spawn(gameObject);
                 }
             }
             else

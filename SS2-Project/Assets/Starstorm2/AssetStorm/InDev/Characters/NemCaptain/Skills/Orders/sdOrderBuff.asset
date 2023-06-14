@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1391837873, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: sdOrderA
+  m_Name: sdOrderBuff
   m_EditorClassIdentifier: 
   skillName: 
-  skillNameToken: SS2_NEMCAPTAIN_ORDERA_NAME
-  skillDescriptionToken: SS2_NEMCAPTAIN_ORDERA_DESC
+  skillNameToken: SS2_NEMCAPTAIN_ORDERB_NAME
+  skillDescriptionToken: SS2_NEMCAPTAIN_ORDERB_DESC
   keywordTokens: []
-  icon: {fileID: 21300000, guid: 2d93c7f8b0b4d604b82ae7fa78f5dbd6, type: 3}
+  icon: {fileID: 21300000, guid: f870fd3b1ad0215409e17f3b8e51a76c, type: 3}
   activationStateMachineName: Weapon
   activationState:
-    _typeName: EntityStates.NemCaptain.Weapon.DroneA, Starstorm2, Version=1.0.0.0,
+    _typeName: EntityStates.NemCaptain.Weapon.DroneBuff, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   interruptPriority: 2
   baseRechargeInterval: 0.2

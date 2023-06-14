@@ -3547,6 +3547,7 @@ MonoBehaviour:
   hand2: {fileID: 766899857383436856}
   hand3: {fileID: -6421377625998616615}
   hand4: {fileID: 263349432300893736}
+  nullSkill: {fileID: 11400000, guid: a85b61327144de74abb09f5859554dec, type: 2}
   minStress: 0
   maxStress: 100
   stressPerSecondInCombat: 2
@@ -3558,6 +3559,7 @@ MonoBehaviour:
   stressGainedOnCrit: -0.2
   stressGainedOnKill: -0.5
   stressGainedOnItem: -1
+  stressOnOutOfOrders: 35
   overlayPrefab: {fileID: 1894802512682313, guid: 7aa69281e0edca147beeff3020ab1703,
     type: 3}
   overlayChildLocatorEntry: CrosshairExtras

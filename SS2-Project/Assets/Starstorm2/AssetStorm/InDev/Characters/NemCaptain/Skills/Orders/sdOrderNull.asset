@@ -10,29 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1391837873, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: sdNemCapSpecial
+  m_Name: sdOrderNull
   m_EditorClassIdentifier: 
   skillName: 
-  skillNameToken: SS2_NEMCAPTAIN_ORDERS_NAME
-  skillDescriptionToken: SS2_NEMCAPTAIN_ORDERS_DESCRIPTION
+  skillNameToken: SS2_NEMCAPTAIN_ORDERNULL_NAME
+  skillDescriptionToken: SS2_NEMCAPTAIN_ORDERNULL_DESC
   keywordTokens: []
-  icon: {fileID: 21300000, guid: 0c1e0b0817d88de4397951d01139ce78, type: 3}
-  activationStateMachineName: Skillswap
+  icon: {fileID: 21300000, guid: 902eaeee8bef7bf4088a0b167bf18b04, type: 3}
+  activationStateMachineName: Weapon
   activationState:
-    _typeName: EntityStates.NemCaptain.Weapon.SetupDroneOrders, Starstorm2, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   interruptPriority: 2
-  baseRechargeInterval: 4
-  baseMaxStock: 1
-  rechargeStock: 1
+  baseRechargeInterval: 0
+  baseMaxStock: 0
+  rechargeStock: 0
   requiredStock: 1
-  stockToConsume: 1
+  stockToConsume: 0
   resetCooldownTimerOnUse: 0
-  fullRestockOnAssign: 1
+  fullRestockOnAssign: 0
   dontAllowPastMaxStocks: 0
   beginSkillCooldownOnSkillEnd: 0
   cancelSprintingOnActivation: 1
   forceSprintDuringState: 0
-  canceledFromSprinting: 1
+  canceledFromSprinting: 0
   isCombatSkill: 1
   mustKeyPress: 0

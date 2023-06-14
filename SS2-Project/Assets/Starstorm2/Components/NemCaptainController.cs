@@ -27,7 +27,8 @@ namespace Moonstorm.Starstorm2.Components
         public GenericSkill hand2;
         public GenericSkill hand3;
         public GenericSkill hand4;
-        private List<SkillDef> drawnSkillDefs = new List<SkillDef>();
+        public SkillDef nullSkill;
+        private List<int> drawnSkillIndicies = new List<int>();
         private bool initialDeck = true;
 
         [Header("Stress Values")]
@@ -42,6 +43,7 @@ namespace Moonstorm.Starstorm2.Components
         public float stressGainedOnCrit;
         public float stressGainedOnKill;
         public float stressGainedOnItem;
+        public float stressOnOutOfOrders;
 
         [Header("Stress UI")]
         [SerializeField]
@@ -168,14 +170,14 @@ namespace Moonstorm.Starstorm2.Components
             //reset on start
             if (initialDeck)
             {
-                drawnSkillDefs.Clear();
+                drawnSkillIndicies.Clear();
                 initialDeck = false;
                 Debug.Log("did initial clear");
             }
 
             //give each hand an order
             //Debug.Log("random skill : " + GetRandomSkillDefFromDeck().skillNameToken);
-            if (hand1.skillDef == null)
+            if (hand1.skillDef == nullSkill)
                 hand1.UnsetSkillOverride(gameObject, hand1.skillDef, GenericSkill.SkillOverridePriority.Replacement);
 
             hand1.SetSkillOverride(gameObject, GetRandomSkillDefFromDeck(), GenericSkill.SkillOverridePriority.Replacement);
@@ -184,17 +186,17 @@ namespace Moonstorm.Starstorm2.Components
             Debug.Log("gave hand 1 skill : " + hand1.skillDef);
             hand2.SetSkillOverride(gameObject, GetRandomSkillDefFromDeck(), GenericSkill.SkillOverridePriority.Replacement);
 
-            if (hand2.skillDef == null)
+            if (hand2.skillDef == nullSkill)
                 hand2.UnsetSkillOverride(gameObject, hand2.skillDef, GenericSkill.SkillOverridePriority.Replacement);
             Debug.Log("gave hand 2 skill: " + hand2.skillDef);
             hand3.SetSkillOverride(gameObject, GetRandomSkillDefFromDeck(), GenericSkill.SkillOverridePriority.Replacement);
 
-            if (hand3.skillDef == null)
+            if (hand3.skillDef == nullSkill)
                 hand3.UnsetSkillOverride(gameObject, hand3.skillDef, GenericSkill.SkillOverridePriority.Replacement);
             Debug.Log("gave hand 3 skill: " + hand3.skillDef);
             hand4.SetSkillOverride(gameObject, GetRandomSkillDefFromDeck(), GenericSkill.SkillOverridePriority.Replacement);
 
-            if (hand4.skillDef == null)
+            if (hand4.skillDef == nullSkill)
                 hand4.UnsetSkillOverride(gameObject, hand4.skillDef, GenericSkill.SkillOverridePriority.Replacement);
             Debug.Log("gave hand 4 skill: " + hand4.skillDef);
         }
@@ -202,32 +204,30 @@ namespace Moonstorm.Starstorm2.Components
         public SkillDef GetRandomSkillDefFromDeck()
         {
             //check if the entire deck is used
-            if (drawnSkillDefs.Count == deck.variants.Length)
+            if (drawnSkillIndicies.Count == deck.variants.Length)
             {
                 Debug.Log("deck fully used; clearing");
-                drawnSkillDefs.Clear();
+                drawnSkillIndicies.Clear();
             }
 
             Debug.Log("starting to get random skill from deck");
 
             //loop until an unused order is found
-            SkillDef randomSkillDef;
+            int randomVariantIndex;
             do
             {
-                var randomVariantIndex = Random.Range(0, deck.variants.Length);
-                Debug.Log("random variant index attempt : " + deck.variants[randomVariantIndex].skillDef);
-                randomSkillDef = deck.variants[randomVariantIndex].skillDef;
+                randomVariantIndex = Random.Range(0, deck.variants.Length);
             }
-            while (drawnSkillDefs.Contains(randomSkillDef));
+            while (drawnSkillIndicies.Contains(randomVariantIndex));
 
-            Debug.Log("randomSkillDef : " + randomSkillDef.name);
+            //Debug.Log("randomSkillDef : " + randomSkillDef.name);
 
             //mark order as used
-            drawnSkillDefs.Add(randomSkillDef);
+            drawnSkillIndicies.Add(randomVariantIndex);
 
-            Debug.Log("added skill to list : " + randomSkillDef.name);
+            //Debug.Log("added skill to list : " + deck.variants[randomVariantIndex].skillDef.name);
 
-            return randomSkillDef;
+            return deck.variants[randomVariantIndex].skillDef;
         }
 
         public void DiscardCardFromHand(int handIndex)
@@ -238,7 +238,7 @@ namespace Moonstorm.Starstorm2.Components
                 //to-do: 'empty' skill
                 Debug.Log("discarded hand");
                 hand.UnsetSkillOverride(gameObject, hand.skillDef, GenericSkill.SkillOverridePriority.Replacement);
-                hand.SetSkillOverride(gameObject, null, GenericSkill.SkillOverridePriority.Loadout);
+                hand.SetSkillOverride(gameObject, nullSkill, GenericSkill.SkillOverridePriority.Loadout);
             }
         }
 
@@ -324,7 +324,7 @@ namespace Moonstorm.Starstorm2.Components
 
             UpdateUI();
 
-            //overstress toggle
+            //overstress toggle && check for empty hand
             if (NetworkServer.active)
             {
                 if (stress >= maxStress && !isOverstressed)
@@ -335,6 +335,15 @@ namespace Moonstorm.Starstorm2.Components
                 if (stress <= minStress && isOverstressed)
                 {
                     characterBody.SetBuffCount(SS2Content.Buffs.bdOverstress.buffIndex, 0);
+                }
+
+                if (hand1.skillDef == nullSkill && hand2.skillDef == nullSkill && hand3.skillDef == nullSkill && hand4.skillDef == nullSkill)
+                {
+                    InitializeCards();
+                    if (!isOverstressed)
+                    {
+                        AddStress(stressOnOutOfOrders);
+                    }
                 }
             }
         }
