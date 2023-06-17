@@ -134,18 +134,18 @@ namespace Moonstorm.Starstorm2
                     case "skymeadow":
                         position = new Vector3(65.9f, 127.4f, -293.9f);
                         rotation = Quaternion.Euler(0, 194.8f, 0);
+                        //on top of the tallest rock spire, opposite side of map from the moon
                         break;
-                    //on top of the tallest rock spire, opposite side of map from the moon
                     case "snowyforest":
                         position = new Vector3(-38.7f, 112.7f, 153.1f);
                         rotation = Quaternion.Euler(0, 54.1f, 0);
+                        //on top of a lone elevated platform on a tree
                         break;
-                    //on top of a lone elevated platform on a tree
                     case "ancientloft":
                         position = new Vector3(-133.4f, 33.5f, -280f);
                         rotation = Quaternion.Euler(0, 354.5f, 0);
+                        //on a branch under the main platform in the back corner of the map
                         break;
-                    //on a branch under the main platform in the back corner of the map
                     case "sulfurpools":
                         position = new Vector3(-33.6f, 36.8f, 164.1f);
                         rotation = Quaternion.Euler(0, 187f, 0);
@@ -153,11 +153,17 @@ namespace Moonstorm.Starstorm2
                         break;
                 }
 
+                Debug.Log("POS : " + position);
+                Debug.Log("ROT : " + rotation);
+                Debug.Log("SHRINEPREFAB : " + shrinePrefab);
                 //CmdSpawnTerm(position, rotation);
 
-                Debug.Log("HI MOM");
-                GameObject term = Instantiate(shrinePrefab, position, rotation);
-                NetworkServer.Spawn(term);
+                if (NetworkServer.active)
+                {
+                    GameObject term = Instantiate(shrinePrefab, position, rotation);
+                    NetworkServer.Spawn(term);
+                    Debug.Log("TERM : " + term);
+                }
 
                 Debug.Log("placed shrine at: " + position + "pos & " + rotation + "rot");
             }
