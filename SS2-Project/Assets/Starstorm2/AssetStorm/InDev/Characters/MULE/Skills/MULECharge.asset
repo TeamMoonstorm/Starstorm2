@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1391837873, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: MULESpin
+  m_Name: MULECharge
   m_EditorClassIdentifier: 
-  skillName: MULESpin
-  skillNameToken: SS2_MULE_SPIN_NAME
-  skillDescriptionToken: SS2_MULE_SPIN_DESC
+  skillName: MULECharge
+  skillNameToken: SS2_MULE_CHARGE_NAME
+  skillDescriptionToken: SS2_MULE_CHARGE_DESC
   keywordTokens:
-  - SS2_MULE_KEYWORD_OVERCLOCKING2
+  - SS2_MULE_KEYWORD_CALIBRATING
   icon: {fileID: 21300000, guid: fd10bde9020a8bd49adbe20f9d1b1d77, type: 3}
   activationStateMachineName: Weapon
   activationState:
-    _typeName: EntityStates.MULE.MULESpinStart, Starstorm2, Version=1.0.0.0, Culture=neutral,
+    _typeName: EntityStates.MULE.MULEChargeSlam, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
   interruptPriority: 2
-  baseRechargeInterval: 6
+  baseRechargeInterval: 5
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 1

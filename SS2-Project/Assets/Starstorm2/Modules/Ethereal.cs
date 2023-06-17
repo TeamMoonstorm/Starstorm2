@@ -12,7 +12,7 @@ using UnityEngine.AddressableAssets;
 namespace Moonstorm.Starstorm2
 {
     //LASCIATE OGNI SPERANZA, VOI CH'ENTRATE
-    public class Ethereal
+    public class Ethereal : NetworkBehaviour
     {
         public static Ethereal instance { get; private set; }
         public static Color32 ethColor = new Color32(18, 93, 74, 255);
@@ -21,11 +21,16 @@ namespace Moonstorm.Starstorm2
         public static bool teleIsEthereal;
         private static float storedScalingValue;
 
+        public static GameObject shrinePrefab;
+
         public static bool teleUpgraded;
         internal static void Init()
         {
-            //Initialize Scavenger trading
+            //Initialize trader trading
             Components.TraderController.Initialize();
+
+            //Initialize related prefabs
+            shrinePrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("ShrineEthereal", SS2Bundle.Indev), "EtherealSapling", true);
 
             //Hooks
             Run.onRunStartGlobal += Run_onRunStartGlobal;
@@ -35,8 +40,8 @@ namespace Moonstorm.Starstorm2
             On.RoR2.TeleporterInteraction.FixedUpdate += TeleporterInteraction_FixedUpdate;
             On.RoR2.TeleporterInteraction.Start += TeleporterInteraction_Start;
 
-            //DISABLING ALL OF THIS CONTENT IS AS SIMPLE AS JUST DISABLING THIS HOOK!!!
-            //obv won't prevent content loading - that should go without saying, but will make it all inaccessible by player via standard gameplay
+            //DISABLING ALL OF THIS CONTENT FROM GAMEPLAY IS AS SIMPLE AS JUST DISABLING THIS HOOK!!!
+            //obv won't prevent content loading - that should go without saying, but will make everything inaccessible by player via standard gameplay
             On.RoR2.SceneDirector.Start += SceneDirector_Start;
         }
 
@@ -57,6 +62,8 @@ namespace Moonstorm.Starstorm2
 
         public static void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)
         {
+            orig(self);
+
             if (self.teleporterInstance)
             {
 
@@ -128,28 +135,32 @@ namespace Moonstorm.Starstorm2
                         position = new Vector3(65.9f, 127.4f, -293.9f);
                         rotation = Quaternion.Euler(0, 194.8f, 0);
                         break;
-                        //on top of the tallest rock spire, opposite side of map from the moon
+                    //on top of the tallest rock spire, opposite side of map from the moon
                     case "snowyforest":
                         position = new Vector3(-38.7f, 112.7f, 153.1f);
                         rotation = Quaternion.Euler(0, 54.1f, 0);
                         break;
-                        //on top of a lone elevated platform on a tree
+                    //on top of a lone elevated platform on a tree
                     case "ancientloft":
                         position = new Vector3(-133.4f, 33.5f, -280f);
                         rotation = Quaternion.Euler(0, 354.5f, 0);
                         break;
-                        //on a branch under the main platform in the back corner of the map
+                    //on a branch under the main platform in the back corner of the map
                     case "sulfurpools":
                         position = new Vector3(-33.6f, 36.8f, 164.1f);
                         rotation = Quaternion.Euler(0, 187f, 0);
                         //in the corner, atop of one of the columns
                         break;
                 }
-                var term = Object.Instantiate(SS2Assets.LoadAsset<GameObject>("ShrineEthereal", SS2Bundle.Indev), position, rotation);
+
+                //CmdSpawnTerm(position, rotation);
+
+                Debug.Log("HI MOM");
+                GameObject term = Instantiate(shrinePrefab, position, rotation);
+                NetworkServer.Spawn(term);
+
                 Debug.Log("placed shrine at: " + position + "pos & " + rotation + "rot");
             }
-
-            orig(self);
 
             Debug.Log("completed ethereals: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
             if (teleIsEthereal)
@@ -214,7 +225,7 @@ namespace Moonstorm.Starstorm2
                         {
                             RuleChoiceDef ruleChoiceDef = run.ruleBook.GetRuleChoice(i);
 
-                            switch(ruleChoiceDef.difficultyIndex)
+                            switch (ruleChoiceDef.difficultyIndex)
                             {
                                 //drizzle
                                 case DifficultyIndex.Easy:
@@ -261,12 +272,20 @@ namespace Moonstorm.Starstorm2
 
                         Debug.Log(run.difficultyCoefficient + " - run difficulty coef");
                     }
-        
+
                     string diffToken = curDiff.nameToken;
                     Debug.Log(DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).scalingValue + " - current scaling value");
                     Debug.Log("ethereals completed: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
                 }
             }
+        }
+
+        [Command]
+        static void CmdSpawnTerm(Vector3 pos, Quaternion rot)
+        {
+            Debug.Log("HI MOM");
+            GameObject term = Instantiate(shrinePrefab, pos, rot);
+            NetworkServer.Spawn(term);
         }
 
         private static void TeleporterInteraction_Start(On.RoR2.TeleporterInteraction.orig_Start orig, TeleporterInteraction self)

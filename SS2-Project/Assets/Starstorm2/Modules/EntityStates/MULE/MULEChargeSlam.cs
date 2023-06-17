@@ -9,7 +9,7 @@ using RoR2.Skills;
 
 namespace EntityStates.MULE
 {
-    public class MULEChargeSlam : BaseSkillState, SteppedSkillDef.IStepSetter
+    public class MULEChargeSlam : BaseSkillState
     {
         public static float baseChargeDuration = 1.25f;
         private float chargeDuration;
@@ -18,6 +18,9 @@ namespace EntityStates.MULE
         public int swingSide;
 
         private bool hasAnimated;
+        private bool maxCharge = false;
+        public static string maxChargeSound;
+
 
         public override void OnEnter()
         {
@@ -25,23 +28,6 @@ namespace EntityStates.MULE
             hasAnimated = false;
             chargeDuration = baseChargeDuration / attackSpeedStat;
             animator = GetModelAnimator();
-            characterBody.SetBuffCount(SS2Content.Buffs.bdHiddenSlow20.buffIndex, 0);
-        }
-
-        void SteppedSkillDef.IStepSetter.SetStep(int i)
-        {
-            swingSide = i;
-        }
-
-        public override void OnSerialize(NetworkWriter writer)
-        {
-            base.OnSerialize(writer);
-            writer.Write((byte)swingSide);
-        }
-        public override void OnDeserialize(NetworkReader reader)
-        {
-            base.OnDeserialize(reader);
-            swingSide = (int)reader.ReadByte();
         }
 
         public override void FixedUpdate()
@@ -49,64 +35,80 @@ namespace EntityStates.MULE
             base.FixedUpdate();
             float charge = CalcCharge();
 
-            debuffTimer += fixedAge;
-            if (debuffTimer >= chargeDuration * 0.2f)
-            {
-                debuffTimer = 0f;
-
-                if (isAuthority)
-                    characterBody.AddBuff(SS2Content.Buffs.bdHiddenSlow20);
-            }
-
-            if (charge >= 0.125f && !hasAnimated)
+            if (charge >= 0.01f && !hasAnimated)
             {
                 hasAnimated = true;
                 PlayAnimation();
+            }
+
+            if (charge >= 1f)
+            {
+                charge = 1f;
+                if (!maxCharge)
+                {
+                    maxCharge = true;
+                    Util.PlaySound(maxChargeSound, gameObject);
+                }
             }
 
             characterBody.SetSpreadBloom(Util.Remap(charge, 0f, 1f, 0f, 3f), true);
 
             StartAimMode();
 
-            if (isAuthority && (charge >= 1f || (!IsKeyDownAuthority() && fixedAge >= 0.01f)))
+            if (isAuthority && fixedAge >= 0.01f)
             {
-                if (charge <= 0.125f)
+                //Spin
+                if (!IsKeyDownAuthority())
                 {
-                    //Punch
-                    Debug.Log("Punch " + charge);
-                    MULEPunch nextState = new MULEPunch();
-                    nextState.swingSide = swingSide;
-                    outer.SetNextState(nextState);
-                    return;
-                }
-                if (charge < 1f && isGrounded)
-                {
-                    //Normal Slam
-                    Debug.Log("Normal Slam " + charge);
-                    MULESlam nextState = new MULESlam();
+                    Debug.Log("Key released");
+                    MULESpinFling nextState = new MULESpinFling();
                     nextState.charge = charge;
                     outer.SetNextState(nextState);
                     return;
                 }
 
-                if (charge >= 1f && isGrounded)
+                //Slam Variants
+                if (inputBank.skill1.down)
                 {
-                    //Mega Slam
-                    Debug.Log("Max Slam " + charge);
-                    MULESuperSlam nextState = new MULESuperSlam();
+                    if (charge < 1f && isGrounded)
+                    {
+                        //Normal Slam
+                        Debug.Log("Normal Slam " + charge);
+                        MULESlam nextState = new MULESlam();
+                        nextState.charge = charge;
+                        outer.SetNextState(nextState);
+                        return;
+                    }
+
+                    if (charge >= 1f && isGrounded)
+                    {
+                        //Mega Slam
+                        Debug.Log("Max Slam " + charge);
+                        MULESuperSlam nextState = new MULESuperSlam();
+                        nextState.charge = charge;
+                        outer.SetNextState(nextState);
+                        return;
+                    }
+                    if (!isGrounded)
+                    {
+                        //Air Slam
+                        Debug.Log("Air Slam " + charge);
+                        MULEAirSlam nextState = new MULEAirSlam();
+                        nextState.charge = charge;
+                        outer.SetNextState(nextState);
+                        return;
+                    }
+                }
+
+                //Jump
+                if (inputBank.jump.down && isGrounded)
+                {
+                    Debug.Log("Released at: " + charge);
+                    MULEJump nextState = new MULEJump();
                     nextState.charge = charge;
                     outer.SetNextState(nextState);
-                    return;
                 }
-                if (!isGrounded && charge >= 0.125f)
-                {
-                    //Air Slam
-                    Debug.Log("Air Slam " + charge);
-                    MULEAirSlam nextState = new MULEAirSlam();
-                    nextState.charge = charge;
-                    outer.SetNextState(nextState);
-                    return;
-                }
+
                 Debug.Log("Released at: " + charge);
             }
         }
@@ -124,6 +126,7 @@ namespace EntityStates.MULE
         public override void OnExit()
         {
             Debug.Log("Exiting!");
+            activatorSkillSlot.DeductStock(1);
             base.OnExit();
         }
 
