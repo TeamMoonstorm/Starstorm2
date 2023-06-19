@@ -8,8 +8,8 @@ namespace Moonstorm.Starstorm2
 {
     public class ShrineEtherealBehavior : NetworkBehaviour
     {
-        public int maxPurchaseCount = 1;
-        public int purchaseCount;
+        public int maxPurchaseCount = 2;
+        public int purchaseCount = 0;
         private float refreshTimer;
         private bool waitingForRefresh;
 
@@ -21,6 +21,8 @@ namespace Moonstorm.Starstorm2
             Debug.Log("starting ethereal shrine behavior");
             purchaseInteraction = GetComponent<PurchaseInteraction>();
             purchaseInteraction.onPurchase.AddListener(ActivateEtherealTerminal);
+
+            purchaseCount = 0;
 
             if (purchaseInteraction == null)
                 Debug.Log("pi null");
@@ -42,35 +44,62 @@ namespace Moonstorm.Starstorm2
             }
         }
 
-        [Server]
         public void ActivateEtherealTerminal(Interactor interactor)
         {
-            Debug.Log("Beginning to activate ethereal terminal");
-            if (!NetworkServer.active)
-                return;
-
-            purchaseInteraction.SetAvailable(false);
-            waitingForRefresh = true;
-
-            if (TeleporterInteraction.instance != null)
-            {
-                Ethereal.teleIsEthereal = true;
-                Debug.Log("Set ethereal to true");
-            }
-            else
-                Debug.Log("Teleporter null");
-
-            CharacterBody body = interactor.GetComponent<CharacterBody>();
-            Chat.SendBroadcastChat(new Chat.SubjectFormatChatMessage
-            {
-                subjectAsCharacterBody = body,
-                baseToken = "SS2_SHRINE_ETHEREAL_USE_MESSAGE",
-            });
             //Add shrine use effect EffectManager.SpawnEffect() https://github.com/Flanowski/Moonstorm/blob/0.4/Starstorm%202/Cores/EtherealCore.cs
 
-            purchaseCount++;
-            refreshTimer = 2;
-            Debug.Log("Finished ethereal setup from shrine");
+            if (purchaseCount == 0)
+            {
+                Debug.Log("Processed first ethereal terminal use...");
+                purchaseInteraction.SetAvailable(false);
+                purchaseInteraction.contextToken = "SS2_ETHEREAL_WARNING2";
+                purchaseInteraction.displayNameToken = "SS2_ETHEREAL_NAME2";
+                purchaseCount++;
+                refreshTimer = 2;
+
+                waitingForRefresh = true;
+            }
+
+            else
+            {
+                Debug.Log("Beginning to activate ethereal terminal.");
+                /*if (!NetworkServer.active)
+                    return;*/
+
+                purchaseInteraction.SetAvailable(false);
+                waitingForRefresh = true;
+
+                if (TeleporterInteraction.instance != null)
+                {
+                    GameObject teleporterInstance = GameObject.Find("Teleporter1(Clone)");
+                    if (teleporterInstance == null)
+                    {
+                        Debug.Log("Could not find teleporter!");
+                        return;
+                    }
+
+                    TeleporterUpgradeController tuc = teleporterInstance.GetComponent<TeleporterUpgradeController>();
+                    if (tuc != null)
+                        tuc.CmdUpdateIsEthereal(true);
+                    else
+                        return;
+
+                    Ethereal.teleIsEthereal = true;
+
+                    Debug.Log("Set ethereal to true");
+                }
+
+                CharacterBody body = interactor.GetComponent<CharacterBody>();
+                Chat.SendBroadcastChat(new Chat.SubjectFormatChatMessage
+                {
+                    subjectAsCharacterBody = body,
+                    baseToken = "SS2_SHRINE_ETHEREAL_USE_MESSAGE",
+                });
+                
+                purchaseCount++;
+                refreshTimer = 2;
+                Debug.Log("Finished ethereal setup from shrine.");
+            }
         }
     }
 }

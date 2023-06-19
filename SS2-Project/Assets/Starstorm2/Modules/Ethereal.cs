@@ -30,14 +30,19 @@ namespace Moonstorm.Starstorm2
             Components.TraderController.Initialize();
 
             //Initialize related prefabs
+            Debug.Log("Initializing Ethereal Sapling prefab...");
             shrinePrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("ShrineEthereal", SS2Bundle.Indev), "EtherealSapling", true);
+
+            //Add teleporter upgrading component to teleporters
+            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/Teleporter1.prefab").WaitForCompletion().AddComponent<TeleporterUpgradeController>();
+            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/LunarTeleporter Variant.prefab").WaitForCompletion().AddComponent<TeleporterUpgradeController>();
 
             //Hooks
             Run.onRunStartGlobal += Run_onRunStartGlobal;
             Run.onRunDestroyGlobal += Run_onRunDestroyGlobal;
             TeleporterInteraction.onTeleporterBeginChargingGlobal += TeleporterInteraction_onTeleporterBeginChargingGlobal;
             TeleporterInteraction.onTeleporterFinishGlobal += TeleporterInteraction_onTeleporterFinishGlobal;
-            On.RoR2.TeleporterInteraction.FixedUpdate += TeleporterInteraction_FixedUpdate;
+            //On.RoR2.TeleporterInteraction.FixedUpdate += TeleporterInteraction_FixedUpdate;
             On.RoR2.TeleporterInteraction.Start += TeleporterInteraction_Start;
 
             //DISABLING ALL OF THIS CONTENT FROM GAMEPLAY IS AS SIMPLE AS JUST DISABLING THIS HOOK!!!
@@ -64,12 +69,16 @@ namespace Moonstorm.Starstorm2
         {
             orig(self);
 
+            var currStage = SceneManager.GetActiveScene().name;
+
             if (self.teleporterInstance)
             {
+                TeleporterUpgradeController tuc = self.teleporterInstance.GetComponent<TeleporterUpgradeController>();
+                if (tuc != null)
+                    tuc.isEthereal = false;
 
                 var position = Vector3.zero;
                 var rotation = Quaternion.Euler(-90, 0, 0);
-                var currStage = SceneManager.GetActiveScene().name;
 
                 //add the ethereal terminal to a unique position per stage
                 //i hope you aren't here to cheat...
@@ -169,7 +178,7 @@ namespace Moonstorm.Starstorm2
             }
 
             Debug.Log("completed ethereals: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
-            if (teleIsEthereal)
+            if (teleIsEthereal && currStage != "artifactworld")
             {
                 ChatMessage.Send("SS2_ETHEREAL_DIFFICULTY_WARNING");
                 teleIsEthereal = false;
@@ -284,15 +293,19 @@ namespace Moonstorm.Starstorm2
                     Debug.Log("ethereals completed: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
                 }
             }
+            else
+            {
+                teleIsEthereal = false;
+            }
         }
 
-        [Command]
+        /*[Command]
         static void CmdSpawnTerm(Vector3 pos, Quaternion rot)
         {
             Debug.Log("HI MOM");
             GameObject term = Instantiate(shrinePrefab, pos, rot);
             NetworkServer.Spawn(term);
-        }
+        }*/
 
         private static void TeleporterInteraction_Start(On.RoR2.TeleporterInteraction.orig_Start orig, TeleporterInteraction self)
         {
@@ -309,11 +322,100 @@ namespace Moonstorm.Starstorm2
             teleBeacon.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
         }
 
-        private static void TeleporterInteraction_FixedUpdate(On.RoR2.TeleporterInteraction.orig_FixedUpdate orig, TeleporterInteraction self)
+        /*[Command]
+        public static void CmdUpgradeTeleporter()
+        {
+            if (teleIsEthereal && !teleUpgraded)
+            {
+                Debug.Log("tele changing...");
+                //flag the teleporter as modified
+                teleUpgraded = true;
+
+                //set a bunch of variables we'll be using for teleporter modifications:
+                var newTeleMat = SS2Assets.LoadAsset<Material>("matEtherealFresnelOverlay", SS2Bundle.Indev);
+                var teleBase = GameObject.Find("TeleporterBaseMesh").gameObject;
+                var teleProngs = teleBase.transform.Find("TeleporterProngMesh").gameObject;
+                var teleBeacon = teleBase.transform.Find("SurfaceHeight").Find("TeleporterBeacon").gameObject;
+                var teleParticleSphere = teleBase.transform.Find("BuiltInEffects").Find("PassiveParticle, Sphere").gameObject;
+                var teleParticleCenter = teleBase.transform.Find("BuiltInEffects").Find("PassiveParticle, Center").gameObject;
+
+                //update the fresnel material from red to green
+                teleBase.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
+                teleProngs.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
+                teleBeacon.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
+
+                //resize & reposition the teleporter
+                teleBase.transform.localScale *= 1.5f;
+                teleBase.transform.position = new Vector3(teleBase.transform.position.x, teleBase.transform.position.y + 2.5f, teleBase.transform.position.z);
+                //teleProngs.transform.localScale *= 2f;
+                teleBeacon.transform.localScale *= 0.5f;
+
+                //resize & recolor large teleporter particles
+                ParticleSystem telePassiveParticles = teleParticleSphere.GetComponent<ParticleSystem>();
+                teleParticleSphere.transform.localScale *= 2f;
+                telePassiveParticles.startColor = new Color(.8f, .32f, .39f);
+
+                //resize & recolor particles above teleporter well
+                ParticleSystem teleCenterParticles = teleParticleCenter.GetComponent<ParticleSystem>();
+                teleCenterParticles.startColor = new Color(.8f, .32f, .39f);
+
+                //there's so many vfx to replace and recolor.
+                //it'd maybe be easier to make a new prefab entirely although i can't help but feel it makes more sense to just edit the existing...
+                //maybe particle system prefabs in unity & code to adjust scale / pos of the objects?
+                //hell either way.
+            }
+            if (!teleIsEthereal && teleUpgraded)
+                teleUpgraded = false;
+        }*/
+
+        /*
+        [ClientRpc]
+        public static void UpgradeTeleporterClientRpc()
+        {
+            Debug.Log("tele changing...");
+            //flag the teleporter as modified
+            teleUpgraded = true;
+
+            //set a bunch of variables we'll be using for teleporter modifications:
+            var newTeleMat = SS2Assets.LoadAsset<Material>("matEtherealFresnelOverlay", SS2Bundle.Indev);
+            var teleBase = GameObject.Find("TeleporterBaseMesh").gameObject;
+            var teleProngs = teleBase.transform.Find("TeleporterProngMesh").gameObject;
+            var teleBeacon = teleBase.transform.Find("SurfaceHeight").Find("TeleporterBeacon").gameObject;
+            var teleParticleSphere = teleBase.transform.Find("BuiltInEffects").Find("PassiveParticle, Sphere").gameObject;
+            var teleParticleCenter = teleBase.transform.Find("BuiltInEffects").Find("PassiveParticle, Center").gameObject;
+
+            //update the fresnel material from red to green
+            teleBase.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
+            teleProngs.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
+            teleBeacon.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
+
+            //resize & reposition the teleporter
+            teleBase.transform.localScale *= 1.5f;
+            teleBase.transform.position = new Vector3(teleBase.transform.position.x, teleBase.transform.position.y + 2.5f, teleBase.transform.position.z);
+            //teleProngs.transform.localScale *= 2f;
+            teleBeacon.transform.localScale *= 0.5f;
+
+            //resize & recolor large teleporter particles
+            ParticleSystem telePassiveParticles = teleParticleSphere.GetComponent<ParticleSystem>();
+            teleParticleSphere.transform.localScale *= 2f;
+            telePassiveParticles.startColor = new Color(.8f, .32f, .39f);
+
+            //resize & recolor particles above teleporter well
+            ParticleSystem teleCenterParticles = teleParticleCenter.GetComponent<ParticleSystem>();
+            teleCenterParticles.startColor = new Color(.8f, .32f, .39f);
+
+            //there's so many vfx to replace and recolor.
+            //it'd maybe be easier to make a new prefab entirely although i can't help but feel it makes more sense to just edit the existing...
+            //maybe particle system prefabs in unity & code to adjust scale / pos of the objects?
+            //hell either way.
+        }
+        */
+
+        /*private static void TeleporterInteraction_FixedUpdate(On.RoR2.TeleporterInteraction.orig_FixedUpdate orig, TeleporterInteraction self)
         {
             orig(self);
 
-            if (teleIsEthereal && !teleUpgraded && NetworkServer.active)
+            if (teleIsEthereal && !teleUpgraded)
             {
                 Debug.Log("tele changing...");
                 //flag the teleporter as modified
@@ -354,7 +456,7 @@ namespace Moonstorm.Starstorm2
             }
             if (!teleIsEthereal && teleUpgraded)
                 teleUpgraded = false;
-        }
+        }*/
 
         private static void TeleporterInteraction_onTeleporterBeginChargingGlobal(TeleporterInteraction tele)
         {
@@ -362,8 +464,8 @@ namespace Moonstorm.Starstorm2
             {
                 if (NetworkServer.active)
                 {
-                    TeleporterInteraction.instance.holdoutZoneController.calcRadius += HoldoutZoneController_calcRadius;
-                    TeleporterInteraction.instance.holdoutZoneController.calcChargeRate += HoldoutZoneController_calcChargeRate;
+                    //TeleporterInteraction.instance.holdoutZoneController.calcRadius += HoldoutZoneController_calcRadius;
+                    //TeleporterInteraction.instance.holdoutZoneController.calcChargeRate += HoldoutZoneController_calcChargeRate;
 
                     Debug.Log("ethereals completed: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
 
@@ -374,28 +476,28 @@ namespace Moonstorm.Starstorm2
                     }
                     if (tele.bonusDirector)
                     {
-                        tele.bonusDirector.monsterCredit += (float)(int)(300f * Mathf.Pow(Run.instance.compensatedDifficultyCoefficient, 0.5f));
+                        tele.bonusDirector.monsterCredit += (float)(int)(200f * Mathf.Pow(Run.instance.compensatedDifficultyCoefficient, 0.5f));
                         Debug.Log("added to bonus monstercred");
                     }
                 }
             }
         }
 
-        private static void HoldoutZoneController_calcRadius(ref float radius)
+        /*private static void HoldoutZoneController_calcRadius(ref float radius)
         {
             if (teleIsEthereal)
             {
                 radius *= 1.5f;
             }
-        }
+        }*/
 
-        private static void HoldoutZoneController_calcChargeRate(ref float rate)
+        /*private static void HoldoutZoneController_calcChargeRate(ref float rate)
         {
             if (teleIsEthereal)
             {
                 rate *= 0.75f;
             }
-        }
+        }*/
 
         private static void TeleporterInteraction_onTeleporterFinishGlobal(TeleporterInteraction obj)
         {

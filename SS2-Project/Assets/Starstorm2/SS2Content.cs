@@ -257,6 +257,17 @@ namespace Moonstorm.Starstorm2
         {
             base.Init();
 
+            Typhoon.Init();
+            Events.Init();
+            
+            Bulwark.Init();
+
+            Ethereal.Init();
+            Deluge.Init();
+            Tempest.Init();
+            Cyclone.Init();
+            SuperTyphoon.Init();
+
             LoadDispatchers = new Action[]
             {
                 delegate
@@ -291,43 +302,6 @@ namespace Moonstorm.Starstorm2
                 {
                     new Modules.Elites().Initialize();
                 },
-				
-                Typhoon.Init,
-                Events.Init,
-                Ethereal.Init,
-                Bulwark.Init,
-				
-                //delegate
-                //{
-                //    //Deluge.Init();
-                //},
-                //delegate
-                //{
-                //    //Tempest.Init();
-                //},
-                //delegate
-                //{
-                //    //Cyclone.Init();
-                //},
-                //delegate
-                //{
-                //    Typhoon.Init();
-                //},
-                //delegate
-                //{
-                //    //SuperTyphoon.Init();
-                //},
-                //delegate
-                //{
-                //    Ethereal.Init();
-                //},
-                //delegate
-                //{
-                //    if(SS2Config.EnableEvents.Value)
-                //    {
-                //        Events.Init();
-                //    }
-                //},
                 delegate
                 {
                     new Modules.Characters().Initialize();

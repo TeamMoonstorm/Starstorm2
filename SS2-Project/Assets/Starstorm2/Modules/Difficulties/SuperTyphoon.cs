@@ -23,8 +23,6 @@ namespace Moonstorm.Starstorm2
         {
             SuperTyphoonDef = SS2Assets.LoadAsset<R2API.ScriptableObjects.SerializableDifficultyDef>("SuperTyphoon", SS2Bundle.Base);
             //SuperTyphoonDef.hideFromDifficultySelection = true; // THANK YOU NEBBY
-            rcd = RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(SuperTyphoonDef.nameToken));
-            rcd.excludeByDefault = true;
             DifficultyAPI.AddDifficulty(SuperTyphoonDef);
             Run.onRunStartGlobal += Run_onRunStartGlobal;
             Run.onRunDestroyGlobal += Run_onRunDestroyGlobal;
