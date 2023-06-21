@@ -23,8 +23,8 @@ That said, if you are looking to contribute to the project, set-up instructions 
 
 * You'll need:
     * Unity Hub
-    * Unity version 2019.4.26f1
-    * A GIT client (IE: GithubDesktop, Gitkraken, etc)
+    * Unity version 2019.4.26f1 (Available from: https://unity.com/releases/editor/archive)
+    * A Git client (IE: GithubDesktop, Gitkraken, etc)
 
 * Begin by cloning the repository to your hard drive
 
@@ -120,10 +120,11 @@ Q: How do I build?
     * On the Copy job, click Destination, make sure the destination is the same name as your Path asset, enclosed by <>
     * Click the "TestingPath" asset
     * On the Constant path component, set the value to your R2ModMan profile's plugins folder
+        * You can find the plugins folder for your profile by going to Settings->Browse Profile Folder
     * Running the build pipeline should output the built mod into your r2modman profile
 
 Q: Any mods I should have on my r2modman development profile?
-* A: We recommend using the following profile code, as this profile code contains all the dependencies and configuration: ``https://cdn.discordapp.com/attachments/1060999373846229132/1113650552266575872/SS2Dev_1685585348913.r2z`
+* A: We recommend using the `SS2Dev_1685585348913.r2z` found in the Docs/ folder, as this profile code contains all the dependencies and configuration. You can import a r2modman profile from a file by clicking the "Import/Update" button on the r2modman profile selection screen. 
 
 Q: When I build my project using the pipelines no DLL is created
 * A: Check the pipeline log, it usually logs anything and everything regarding issues with the build process, there's also a high chance that a duplicate MMHook assembly (such as AssemblyCSharp mmhook) is causing issues. If this is the case, go into HookGenPatcher's plugins folder and delete MMHOOK_AssemblyCSharp.dll
