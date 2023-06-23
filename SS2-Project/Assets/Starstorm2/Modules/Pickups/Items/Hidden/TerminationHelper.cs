@@ -24,6 +24,7 @@ namespace Moonstorm.Starstorm2.Items
             float maxTime = 30;
             public Transform pointerToken;
             int i = 0;
+            public bool activeRing;
             public new void Awake()
             {
                 base.Awake();
@@ -101,6 +102,7 @@ namespace Moonstorm.Starstorm2.Items
             {
                 if (markRing)
                 {
+                    
                     float ratio = timer / maxTime;
                     if (ratio < 1)
                     {
@@ -111,6 +113,12 @@ namespace Moonstorm.Starstorm2.Items
                         //SS2Log.Info("timer " + ratio + " | " + amount);
                         timer += Time.fixedDeltaTime;
                     }
+                    else if(activeRing)
+                    {
+                        markRing.SetActive(false);
+                        activeRing = false;
+                    }
+                    
                     //terminationMark.transform.Find("Ring");
                 }
                 else if(i < 25)
@@ -135,6 +143,7 @@ namespace Moonstorm.Starstorm2.Items
                                 //SS2Log.Info("posind: " + markRing);
                                 //markRing = pointerToken.gameObject;
                                 sizeCurve = AnimationCurve.Linear(0, .235f, 1, .066f);
+                                activeRing = true;
                             }
                         }
                     }

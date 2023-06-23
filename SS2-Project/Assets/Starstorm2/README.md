@@ -45,6 +45,11 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 ## Changelog
 
 **Warning: content spoilers below!**
+### 0.4.6
+* Items
+    * Adjusted Relic of Termination's drop rates.
+    * Relic of Termination's marker now immediately disappears upon killing the marked enemy.
+    * Detritive Trematode can no longer be applied to the Artifact Reliquary. 
 
 ### 0.4.5
 * General
