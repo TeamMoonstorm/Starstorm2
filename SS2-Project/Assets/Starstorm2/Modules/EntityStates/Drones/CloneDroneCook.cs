@@ -33,6 +33,8 @@ namespace EntityStates.CloneDrone
 
         private SphereSearch sphereSearch;
 
+        private float originalMoveSpeed;
+
         private bool isInterrupted = false;
 
         public override void OnEnter()
@@ -41,6 +43,8 @@ namespace EntityStates.CloneDrone
             childLocator = GetModelChildLocator();
             targetIndicatorVfxPrefab = SS2Assets.LoadAsset<GameObject>("DuplicatingCircleVFX", SS2Bundle.Indev);
             pickupTier = gpc.pickupIndex.pickupDef.itemTier;
+
+            originalMoveSpeed = characterBody.moveSpeed;
 
             if (targetIndicatorVfxPrefab)
             {
@@ -125,8 +129,7 @@ namespace EntityStates.CloneDrone
 
             if (isAuthority)
             {
-                rigidbodyMotor.moveVector = Vector3.zero;
-                rigidbody.velocity = new Vector3(rigidbody.velocity.x * 0.95f, rigidbody.velocity.y * 0.95f, rigidbody.velocity.z * 0.95f);
+                characterBody.moveSpeed = originalMoveSpeed * 0.1f;
 
                 //checks if item still exists - if not, end the skill
                 if (gpc == null && !isInterrupted)
@@ -231,12 +234,11 @@ namespace EntityStates.CloneDrone
                 targetIndicatorVfxInstance = null;
             }
 
+            //restore movespeed
+            characterBody.moveSpeed = originalMoveSpeed;
+
             //set stock to 0 again :slight_smile:
             skillLocator.primary.DeductStock(1);
-
-            //remove slow effect
-            //if (isAuthority)
-            //characterBody.SetBuffCount(SS2Content.Buffs.bdHiddenSlow20.buffIndex, 0);
 
             //destroy sparks effect
             if (sparksObj != null)

@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 6690403988594969723, guid: 2c95ace7239362c49bc9dea3862e23a9, type: 3}
   sendOverNetwork: 1
-  hullSize: 0
+  hullSize: 1
   nodeGraphType: 0
   requiredFlags: 0
   forbiddenFlags: 8
-  directorCreditCost: 15
+  directorCreditCost: 40
   occupyPosition: 0
   eliteRules: 0
   orientToFloor: 1
@@ -28,18 +28,19 @@ MonoBehaviour:
   maxSpawnsPerStage: -1
   directorCard:
     spawnCard: {fileID: 11400000}
-    selectionWeight: 7
+    selectionWeight: 2
     spawnDistance: 0
     preventOverhead: 0
-    minimumStageCompletions: 0
+    minimumStageCompletions: 2
     requiredUnlockable: 
     forbiddenUnlockable: 
     requiredUnlockableDef: {fileID: 0}
     forbiddenUnlockableDef: {fileID: 0}
   interactableCategory: 5
   customCategory: 
-  stages: 134349248
-  customStages: []
+  stages: 201458113
+  customStages:
+  - FBLScene
   requiredExpansions:
   - address: 
     useDirectReference: 1

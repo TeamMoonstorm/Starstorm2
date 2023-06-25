@@ -55,13 +55,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 408004310501597702}
-  m_LocalRotation: {x: -0.70710605, y: -0, z: -0, w: 0.7071076}
+  m_LocalRotation: {x: -0.4323909, y: -0.71020114, z: 0.20296963, w: 0.51716125}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3954991526508743226}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -89.99988, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -9.145, y: -112.80701, z: 56.586002}
 --- !u!198 &509664152529154977
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -330,7 +330,7 @@ ParticleSystem:
     serializedVersion: 6
     enabled: 1
     type: 4
-    angle: 0
+    angle: 8.14
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
@@ -2716,6 +2716,8 @@ GameObject:
   - component: {fileID: 8943784962045327746}
   - component: {fileID: 3855790972206781255}
   - component: {fileID: 5995491642686737711}
+  - component: {fileID: 6009338359168333875}
+  - component: {fileID: 8094683891642711409}
   m_Layer: 0
   m_Name: Drone
   m_TagString: Untagged
@@ -2784,6 +2786,32 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!135 &6009338359168333875
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5044944093039417076}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.3026346
+  m_Center: {x: 0.08172631, y: 4.9721338e-11, z: -0.051750187}
+--- !u!114 &8094683891642711409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5044944093039417076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1161602148, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entity: {fileID: 6690403988594969723}
 --- !u!1 &6585708497670371253
 GameObject:
   m_ObjectHideFlags: 0
@@ -5463,10 +5491,10 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 3997483284155751395}
         m_MethodName: OpenSummon
-        m_Mode: 2
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: RoR2.Interactor, RoR2
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -8054,7 +8082,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7477336791194679783}
   m_LocalRotation: {x: 0.32477966, y: 0.012094004, z: -0.56733334, w: 0.7566405}
-  m_LocalPosition: {x: -0.04, y: -0.355, z: -0.355}
+  m_LocalPosition: {x: -0.04, y: 0.96, z: -0.673}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6586935922890912141}

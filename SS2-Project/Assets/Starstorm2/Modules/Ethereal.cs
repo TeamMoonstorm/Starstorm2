@@ -32,6 +32,7 @@ namespace Moonstorm.Starstorm2
             //Initialize related prefabs
             Debug.Log("Initializing Ethereal Sapling prefab...");
             shrinePrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("ShrineEthereal", SS2Bundle.Indev), "EtherealSapling", true);
+            shrinePrefab.RegisterNetworkPrefab();
 
             //Add teleporter upgrading component to teleporters
             Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/Teleporter1.prefab").WaitForCompletion().AddComponent<TeleporterUpgradeController>();

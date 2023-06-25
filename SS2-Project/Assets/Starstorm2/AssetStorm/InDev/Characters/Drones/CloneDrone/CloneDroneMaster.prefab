@@ -271,9 +271,9 @@ MonoBehaviour:
   activationRequiresTargetLoS: 0
   activationRequiresAimTargetLoS: 0
   activationRequiresAimConfirmation: 0
-  movementType: 1
+  movementType: 2
   moveInputScale: 1
-  aimType: 1
+  aimType: 4
   ignoreNodeGraph: 0
   shouldSprint: 0
   shouldFireEquipment: 0
@@ -304,7 +304,7 @@ MonoBehaviour:
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 10
+  minDistance: 20
   maxDistance: Infinity
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
@@ -347,8 +347,8 @@ MonoBehaviour:
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 5
-  maxDistance: 10
+  minDistance: 10
+  maxDistance: 20
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
@@ -402,7 +402,7 @@ MonoBehaviour:
   activationRequiresAimConfirmation: 1
   movementType: 3
   moveInputScale: 1
-  aimType: 1
+  aimType: 4
   ignoreNodeGraph: 0
   shouldSprint: 0
   shouldFireEquipment: 0
@@ -433,8 +433,8 @@ MonoBehaviour:
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 8
-  maxDistance: 12
+  minDistance: 10
+  maxDistance: 20
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
@@ -445,7 +445,7 @@ MonoBehaviour:
   activationRequiresAimConfirmation: 0
   movementType: 2
   moveInputScale: 1
-  aimType: 1
+  aimType: 4
   ignoreNodeGraph: 0
   shouldSprint: 0
   shouldFireEquipment: 0
@@ -486,7 +486,7 @@ MonoBehaviour:
   activationRequiresTargetLoS: 0
   activationRequiresAimTargetLoS: 0
   activationRequiresAimConfirmation: 0
-  movementType: 1
+  movementType: 2
   moveInputScale: 1
   aimType: 3
   ignoreNodeGraph: 0
@@ -519,7 +519,7 @@ MonoBehaviour:
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 4
+  minDistance: 8
   maxDistance: Infinity
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
@@ -529,7 +529,7 @@ MonoBehaviour:
   activationRequiresTargetLoS: 0
   activationRequiresAimTargetLoS: 0
   activationRequiresAimConfirmation: 1
-  movementType: 1
+  movementType: 2
   moveInputScale: 1
   aimType: 4
   ignoreNodeGraph: 0

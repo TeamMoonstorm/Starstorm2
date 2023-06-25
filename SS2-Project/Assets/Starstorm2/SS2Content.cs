@@ -215,6 +215,12 @@ namespace Moonstorm.Starstorm2
             public static BuffDef bdOverstress;
 
             public static BuffDef bdNemCapDroneBuff;
+
+            public static BuffDef bdShield;
+
+            public static BuffDef bdParry;
+
+            public static BuffDef bdKnightBuff;
         }
 
         public static class Elites
