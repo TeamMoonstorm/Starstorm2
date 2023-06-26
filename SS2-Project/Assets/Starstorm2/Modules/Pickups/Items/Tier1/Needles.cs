@@ -75,6 +75,7 @@ namespace Moonstorm.Starstorm2.Items
                 if (damageInfo.attacker)
                 {
                     CharacterBody attackerBody = damageInfo.attacker.GetComponent<CharacterBody>();
+
                     if (attackerBody && !damageInfo.rejected && NetworkServer.active && self.body.teamComponent.teamIndex != attackerBody.teamComponent.teamIndex) // && damageInfo.procCoefficient > 0f) //then dots can't apply stacks
                     {
                         //SS2Log.Info("original if");
