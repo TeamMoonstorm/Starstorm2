@@ -3,151 +3,345 @@ using Moonstorm.Starstorm2.Components;
 using R2API;
 using RoR2;
 using RoR2.Items;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Moonstorm.Starstorm2.Interactables
 {
-    [DisabledContent]
     public sealed class DroneTable : InteractableBase
     {
-        public override GameObject Interactable { get => interactable; }
+        public override GameObject Interactable { get; } = SS2Assets.LoadAsset<GameObject>("DroneTablePrefab", SS2Bundle.Indev);
 
         private static GameObject interactable;
 
-        public static CostTypeDef voidCostDef;
-        public static int voidCostTypeIndex;
+        //private static List<InteractableSpawnCard> interactableSpawnCards = new List<InteractableSpawnCard>();
+        //private static List<CharacterBody> characterBodies = new List<CharacterBody>();
+        //
+        //private static List<BodyIndex> illegalMarks = new List<BodyIndex>();
+
+
+        /// <summary>
+        /// List of drone and interactable cost pairs. String is the body.name, int is the price a player pays, not the director.
+        /// </summary>
+        public static Dictionary<string, int> dronePairs = new Dictionary<string, int>();
+
+        public static CostTypeDef droneCostDef;
+        public static int droneCostIndex;
 
         public override MSInteractableDirectorCard InteractableDirectorCard { get; } = SS2Assets.LoadAsset<MSInteractableDirectorCard>("midcDroneTable");
 
         public override void Initialize()
         {
-            CostTypeCatalog.modHelper.getAdditionalEntries += addVoidCostType;
+            CostTypeCatalog.modHelper.getAdditionalEntries += addDroneCostType;
             //On.RoR2.PurchaseInteraction.GetDisplayName += MonolithName;
             interactable = InteractableDirectorCard.prefab;
 
-            var interactionToken = interactable.AddComponent<PortalInteractableToken>();
+            var interactionToken = interactable.AddComponent<RefabricatorInteractionToken>();
             interactionToken.PurchaseInteraction = interactable.GetComponent<PurchaseInteraction>();
             interactionToken.symbolTransform = null;
 
+            //list = StringFinder.Instance.InteractableSpawnCards;
+            //getInteractableCards();
 
+            SetupDroneValueList();
         }
 
-        private void addVoidCostType(List<CostTypeDef> obj)
+        private void SetupDroneValueList()
         {
-            //CostTypeIndex voidItem = new CostTypeIndex();
-            voidCostDef = new CostTypeDef();
-            voidCostDef.costStringFormatToken = "VV_COST_VOIDITEM_FORMAT";
-            voidCostDef.isAffordable = new CostTypeDef.IsAffordableDelegate(VoidItemCostTypeHelper.IsAffordable);
-            voidCostDef.payCost = new CostTypeDef.PayCostDelegate(VoidItemCostTypeHelper.PayCost);
-            voidCostDef.colorIndex = ColorCatalog.ColorIndex.Interactable;
-            voidCostDef.saturateWorldStyledCostString = true;
-            voidCostDef.darkenWorldStyledCostString = false;
-            voidCostTypeIndex = CostTypeCatalog.costTypeDefs.Length + obj.Count;
-            //LanguageAPI.Add("VV_COST_VOIDITEM_FORMAT", "1 Item(s)");
-            obj.Add(voidCostDef);
+            dronePairs.Add("Turret1Body", 35);
+            dronePairs.Add("Drone1Body", 40); //gunner
+            dronePairs.Add("Drone2Body", 40); //healing
+            dronePairs.Add("MissileDroneBody", 60);
+            dronePairs.Add("EquipmentDroneBody", 60); //takes equipment so uhhhh i dunno
+            dronePairs.Add("EmergencyDroneBody", 100);
+            dronePairs.Add("FlameDroneBody", 100);
+            dronePairs.Add("MegaDroneBody", 350);
+
+            dronePairs.Add("ShockDroneBody", 40);
+            
+            //dronePairs.Add("", 15);
+            //dronePairs.Add("", 15);
+
+            //foreach (string bodyName in defaultBodyNames)
+            //{
+            //    BodyIndex index = BodyCatalog.FindBodyIndexCaseInsensitive(bodyName);
+            //    if (index != BodyIndex.None)
+            //    {
+            //        AddBodyToIllegalTerminationList(index);
+            //    }
+            //}
         }
 
-        //private string MonolithName(On.RoR2.PurchaseInteraction.orig_GetDisplayName orig, PurchaseInteraction self)
+        //private void getInteractableCards() //
         //{
-        //    //Debug.Log("name: " + self.displayNameToken + " | cost: ");
-        //    if (self.displayNameToken == $"VV_INTERACTABLE_{InteractableLangToken}_NAME")
+        //    GatherAddressableAssets<InteractableSpawnCard>("/isc", (asset) => interactableSpawnCards.Add(asset));
+        //    On.RoR2.ClassicStageInfo.Start += AddCurrentStageIscsToCache;
+        //    //On.RoR2.ClassicStageInfo.Start += GetValidBodies;
+        //}
+        //
+        //private void GetValidBodies(On.RoR2.ClassicStageInfo.orig_Start orig, ClassicStageInfo self)
+        //{
+        //    orig(self);
+        //    GameObject[] list = BodyCatalog.allBodyPrefabs.ToArray();
+        //    foreach(var body in list)
         //    {
-        //        return InteractableName;
+        //        var cbody = body.GetComponent<CharacterBody>();
+        //        if((cbody.bodyFlags & CharacterBody.BodyFlags.Mechanical) > CharacterBody.BodyFlags.None){
+        //            characterBodies.Add(cbody);
+        //        }
         //    }
-        //    return orig(self);
+        //}
+        //
+        //private static void GatherAddressableAssets<T>(string filterKey, Action<T> onAssetLoaded)
+        //{
+        //    RoR2Application.onLoad += () =>
+        //    {
+        //        foreach (var resourceLocator in Addressables.ResourceLocators)
+        //        {
+        //            foreach (var key in resourceLocator.Keys)
+        //            {
+        //                var keyString = key.ToString();
+        //                if (keyString.Contains(filterKey))
+        //                {
+        //                    var iscLoadRequest = Addressables.LoadAssetAsync<T>(keyString);
+        //
+        //                    iscLoadRequest.Completed += (completedAsyncOperation) =>
+        //                    {
+        //                        if (completedAsyncOperation.Status == AsyncOperationStatus.Succeeded)
+        //                        {
+        //                            onAssetLoaded(completedAsyncOperation.Result);
+        //                        }
+        //                    };
+        //                }
+        //            }
+        //        }
+        //    };
+        //}
+        //
+        //// There is no real good way to query for all custom iscs afaik
+        //// So let's lazily add them as the player encounter stages
+        //private void AddCurrentStageIscsToCache(On.RoR2.ClassicStageInfo.orig_Start orig, ClassicStageInfo self)
+        //{
+        //    orig(self);
+        //    var iscsOfCurrentStage =
+        //        self.interactableCategories.categories.
+        //        SelectMany(category => category.cards).
+        //        Select(directorCard => directorCard.spawnCard).
+        //        Where(spawnCard => interactableSpawnCards.All(existingIsc => existingIsc.name != spawnCard.name)).
+        //        Cast<InteractableSpawnCard>();
+        //    interactableSpawnCards.AddRange(iscsOfCurrentStage);
+        //
+        //
+        //    GameObject[] list = BodyCatalog.allBodyPrefabs.ToArray();
+        //    foreach (var body in list)
+        //    {
+        //        var cbody = body.GetComponent<CharacterBody>();
+        //        if ((cbody.bodyFlags & CharacterBody.BodyFlags.Mechanical) > CharacterBody.BodyFlags.None)
+        //        {
+        //            characterBodies.Add(cbody);
+        //        }
+        //    }
+        //
+        //    foreach(var card in interactableSpawnCards)
+        //    {
+        //        var summon = card.prefab.GetComponent<SummonMasterBehavior>();
+        //        if (summon)
+        //        {
+        //            SS2Log.Info("summon master for " + card.name + " is " + summon.masterPrefab);
+        //            foreach(var body in characterBodies)
+        //            {
+        //                if(body.master.name == "")
+        //                {
+        //
+        //                }
+        //            }
+        //        }
+        //    }
+        //
         //}
 
-        private static class VoidItemCostTypeHelper
+        private void addDroneCostType(List<CostTypeDef> obj)
+        {
+            //CostTypeIndex voidItem = new CostTypeIndex();
+            droneCostDef = new CostTypeDef();
+            droneCostDef.costStringFormatToken = "SS2_COST_DRONE_FORMAT";
+            droneCostDef.isAffordable = new CostTypeDef.IsAffordableDelegate(DroneCostTypeHelper.IsAffordable);
+            droneCostDef.payCost = new CostTypeDef.PayCostDelegate(DroneCostTypeHelper.PayCost);
+            droneCostDef.colorIndex = ColorCatalog.ColorIndex.Interactable;
+            droneCostDef.saturateWorldStyledCostString = true;
+            droneCostDef.darkenWorldStyledCostString = false;
+            droneCostIndex = CostTypeCatalog.costTypeDefs.Length + obj.Count;
+            //LanguageAPI.Add("VV_COST_VOIDITEM_FORMAT", "1 Item(s)");
+            obj.Add(droneCostDef);
+        }
+
+        private static class DroneCostTypeHelper
         {
             public static bool IsAffordable(CostTypeDef costTypeDef, CostTypeDef.IsAffordableContext context)
             {
-                CharacterBody component = context.activator.GetComponent<CharacterBody>();
-                if (!component)
+                CharacterBody body = context.activator.GetComponent<CharacterBody>();
+                if (!body)
                 {
                     return false;
                 }
-                Inventory inventory = component.inventory;
+                Inventory inventory = body.inventory;
                 if (!inventory)
                 {
                     return false;
                 }
                 int cost = context.cost;
                 //int num = 0;
-                var minions = CharacterMaster.readOnlyInstancesList.Where(el => el.minionOwnership.ownerMaster == component.master);
-                List<CharacterMaster> validMinions = new List<CharacterMaster>();
-                foreach(var minion in minions)
-                {
 
-                    SS2Log.Info(minion.miscFlags);
-                    var minionBody = minion.GetComponent<CharacterBody>();
-                    if (minionBody)
+                //MinionOwnership.MinionGroup minionGroup;
+
+                if ((body != null) ? body.master : null)
+                {
+                    MinionOwnership.MinionGroup minionGroup = MinionOwnership.MinionGroup.FindGroup(body.master.netId);
+                    if (minionGroup != null)
                     {
-                        SS2Log.Info(minionBody.bodyIndex + " | " + minionBody.name);
+                        var members = minionGroup.members;
+                        List<CharacterMaster> validMinions = new List<CharacterMaster>();
+                        foreach (var drone in members)
+                        {
+                            //SS2Log.Info("hi | " + members.Length);
+                            if (drone)
+                            {
+                                CharacterMaster master = drone.GetComponent<CharacterMaster>();
+                                if (master)
+                                {
+                                    var droneBody = master.GetBody();
+                                    
+                                    //SS2Log.Info("flags: " + master.miscFlags + " | ind: " + master.masterIndex + " | body flags " + droneBody.bodyFlags + " | " + droneBody);
+                                    if((droneBody.bodyFlags & CharacterBody.BodyFlags.Mechanical) > CharacterBody.BodyFlags.None)
+                                    {
+                                        foreach(var pair in dronePairs)
+                                        {
+                                            //SS2Log.Info("testing " + pair.Key + " || " + droneBody.bodyIndex + " | " + BodyCatalog.FindBodyIndex(pair.Key));
+                                            if (droneBody.bodyIndex == BodyCatalog.FindBodyIndex(pair.Key))
+                                            {
+                                                validMinions.Add(master);
+                                                //SS2Log.Info("Added " + pair.Key + " | " + droneBody.name);
+                                                break;
+                                            }
+                                        }
+                                        //SpawnCard spawnCard = LegacyResourcesAPI.Load<SpawnCard>("SpawnCards/InteractableSpawnCard/" + text)
+                                        //validMinions.Add(master);
+                                    }
+                                    //validMinions.Add(master);
+                                }
+                                //SS2Log.Info("flags: " + master.miscFlags + " | ind: " + master.masterIndex + " | " + master);
+                            }
+                            if (validMinions.Count >= cost)
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                            //CharacterMaster master = drone.GetComponent<CharacterMaster>();
+                            //SS2Log.Info("flags: " + master.miscFlags + " | ind: " + master.masterIndex + " | " + master);
+
+                        }
                     }
-
-                    //if("is a drone"){
-                    //validMinions.Add(minion);
-                    //}
                 }
-
-                int itemCount = inventory.GetTotalItemCountOfTier(ItemTier.VoidTier1) + inventory.GetTotalItemCountOfTier(ItemTier.VoidTier2) + inventory.GetTotalItemCountOfTier(ItemTier.VoidTier3) + inventory.GetTotalItemCountOfTier(ItemTier.VoidBoss);
-                
-                if (itemCount >= cost)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return false;
             }
 
             public static void PayCost(CostTypeDef costTypeDef, CostTypeDef.PayCostContext context)
             {
-                Inventory inventory = context.activator.GetComponent<CharacterBody>().inventory;
+
+                //SS2Log.Debug("all bodies: " + BodyCatalog.allBodyPrefabs.ToString());
+                GameObject[] list = BodyCatalog.allBodyPrefabs.ToArray();
+                int a = 0;
+                foreach(GameObject obj in list)
+                {
+                    var body1 = obj.GetComponent<CharacterBody>();
+                    if (body1)
+                    {
+                        //SS2Log.Info("body " + a + " name token: " + body1.baseNameToken + " | " + body1.name);
+                    }
+                    //SS2Log.Debug(a + " - obj name: " + obj.name);
+                    ++a;
+                }
+
+                CharacterBody body = context.activator.GetComponent<CharacterBody>();
                 int cost = context.cost;
 
-                List<ItemIndex> list = new List<ItemIndex>(inventory.itemAcquisitionOrder);
-
-                List<ItemIndex> optionList = new List<ItemIndex>();
-                foreach (ItemIndex item in list)
+                MinionOwnership.MinionGroup minionGroup = MinionOwnership.MinionGroup.FindGroup(body.master.netId);
+                if (minionGroup != null)
                 {
-                    ItemDef itemDef = ItemCatalog.GetItemDef(item);
-                    if (itemDef.tier == ItemTier.VoidTier1 || itemDef.tier == ItemTier.VoidTier2 || itemDef.tier == ItemTier.VoidTier3 || itemDef.tier == ItemTier.VoidBoss)
+                    var members = minionGroup.members;
+                    List<CharacterMaster> validMinions = new List<CharacterMaster>();
+                    foreach (var drone in members)
                     {
-                        optionList.Add(item);
+                        //SS2Log.Info("hi | " + members.Length);
+                        if (drone)
+                        {
+                            CharacterMaster master = drone.GetComponent<CharacterMaster>();
+                            if (master)
+                            {
+                                var droneBody = master.GetBody();
+
+                                //SS2Log.Info("flags: " + master.miscFlags + " | ind: " + master.masterIndex + " | body flags " + droneBody.bodyFlags + " | " + droneBody.baseNameToken);
+                                if ((droneBody.bodyFlags & CharacterBody.BodyFlags.Mechanical) > CharacterBody.BodyFlags.None)
+                                {
+                                    foreach (var pair in dronePairs)
+                                    {
+                                        //SS2Log.Info("testing " + pair.Key);
+                                        if (droneBody.bodyIndex == BodyCatalog.FindBodyIndex(pair.Key))
+                                        {
+                                            validMinions.Add(master);
+                                        }
+                                    }
+                                }
+                            }
+                            //SS2Log.Info("flags: " + master.miscFlags + " | ind: " + master.masterIndex + " | " + master);
+                        }
+                        //CharacterMaster master = drone.GetComponent<CharacterMaster>();
+                        //SS2Log.Info("flags: " + master.miscFlags + " | ind: " + master.masterIndex + " | " + master);
+
                     }
 
-                }
-                Util.ShuffleList(optionList, context.rng);
+                    Util.ShuffleList(validMinions, context.rng);
 
-                for (int k = 0; k < cost; k++)
-                {
-                    TakeOne();
-                }
-                MultiShopCardUtils.OnNonMoneyPurchase(context);
-                void TakeOne()//Inventory inventory, CostTypeDef.PayCostContext context, int cost)
-                {
-                    for (int i = 0; i < optionList.Count(); i++)
+                    for (int k = 0; k < cost; k++)
                     {
-                        if (inventory.GetItemCount(optionList[i]) > 0)
+                        TakeOne();
+                    }
+                    MultiShopCardUtils.OnNonMoneyPurchase(context);
+                    void TakeOne()//Inventory inventory, CostTypeDef.PayCostContext context, int cost)
+                    {
+                        for (int i = 0; i < validMinions.Count(); i++)
                         {
+                            if (validMinions[i])
+                            {
+                                foreach (var pair in dronePairs)
+                                {
+                                    //SS2Log.Info("testing " + pair.Key);
+                                    if (validMinions[i].GetBody().bodyIndex == BodyCatalog.FindBodyIndex(pair.Key))
+                                    {
+                                        SS2Log.Info("IOU one item with value modifier " + pair.Value);
+                                    }
+                                }
 
-                            inventory.RemoveItem(optionList[i]);
-                            context.results.itemsTaken.Add(optionList[i]);
-                            break;
+                                validMinions[i].GetBody().healthComponent.Suicide();
+                                //SS2Log.Info("IOU one item ");
+                                break;
 
+                            }
                         }
                     }
                 }
             }
         }
 
-        public class PortalInteractableToken : NetworkBehaviour
+        public class RefabricatorInteractionToken : NetworkBehaviour
         {
             //public CharacterBody Owner;
             public CharacterBody LastActivator;
@@ -161,7 +355,7 @@ namespace Moonstorm.Starstorm2.Interactables
                 {
                     PurchaseInteraction.SetAvailableTrue();
                 }
-                PurchaseInteraction.costType = (CostTypeIndex)1;
+                PurchaseInteraction.costType = (CostTypeIndex)droneCostIndex;
                 PurchaseInteraction.onPurchase.AddListener(DronePurchaseAttempt);
 
                 //InteractableBodyModelPrefab.transform.Find("Symbol");
@@ -192,35 +386,9 @@ namespace Moonstorm.Starstorm2.Interactables
 
                         //symbolTransform.gameObject.SetActive(false);
                         PurchaseInteraction.SetAvailable(false);
-
-
                     }
                 }
-
             }
-
-            //private bool AttemptSpawnVoidPortal()
-            //{
-            //    //InteractableSpawnCard portalSpawnCard = Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/PortalShop/iscShopPortal.asset").WaitForCompletion();
-            //    string spawnMessageToken = "<color=#DD7AC6>The rift opens...</color>";
-            //    GameObject exists = DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(ShatteredMonolith.VoidFieldsPortalCard, new DirectorPlacementRule
-            //    {
-            //        minDistance = 1,
-            //        maxDistance = 25,
-            //        placementMode = DirectorPlacementRule.PlacementMode.Approximate,
-            //        position = base.transform.position,
-            //        spawnOnTarget = transform
-            //    }, Run.instance.stageRng));
-            //    if (exists && !string.IsNullOrEmpty(spawnMessageToken))
-            //    {
-            //        Chat.SendBroadcastChat(new Chat.SimpleChatMessage
-            //        {
-            //            baseToken = spawnMessageToken
-            //        });
-            //    }
-            //    return exists;
-            //}
-
         }
 
         //public override void Initialize()
