@@ -221,6 +221,10 @@ namespace Moonstorm.Starstorm2
             public static BuffDef bdParry;
 
             public static BuffDef bdKnightBuff;
+
+            public static BuffDef bdFortified;
+
+            public static BuffDef bdKnightCharged;
         }
 
         public static class Elites
@@ -269,10 +273,12 @@ namespace Moonstorm.Starstorm2
             Bulwark.Init();
 
             Ethereal.Init();
+            
             Deluge.Init();
             Tempest.Init();
             Cyclone.Init();
             SuperTyphoon.Init();
+            
 
             LoadDispatchers = new Action[]
             {

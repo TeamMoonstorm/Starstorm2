@@ -344,6 +344,7 @@ Transform:
   - {fileID: 1530482910268357985}
   - {fileID: 3501989340578363766}
   - {fileID: 5075115903348733019}
+  - {fileID: 105977163627165152}
   m_Father: {fileID: 5338677609978241709}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -362,7 +363,32 @@ MonoBehaviour:
   body: {fileID: 6802710447747796191}
   itemDisplayRuleSet: {fileID: 0}
   autoPopulateLightInfos: 1
-  baseRendererInfos: []
+  baseRendererInfos:
+  - renderer: {fileID: 1816673806540844275}
+    defaultMaterial: {fileID: 2100000, guid: 1f291e58dcb47c14caacdae64c06f0dc, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+  - renderer: {fileID: 177831144303089406}
+    defaultMaterial: {fileID: 2100000, guid: 8050e8ef5b06c3048818cf02071cc9c0, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+  - renderer: {fileID: 5534462557743390596}
+    defaultMaterial: {fileID: 2100000, guid: 1c5124d6207ebf5478243fc24613cb3b, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 1
+    hideOnDeath: 0
+  - renderer: {fileID: 2062217364945566543}
+    defaultMaterial: {fileID: 2100000, guid: d0bb5e8a1a65dc049bee3ed42c32c734, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+  - renderer: {fileID: 5075002410357232588}
+    defaultMaterial: {fileID: 2100000, guid: 1c5124d6207ebf5478243fc24613cb3b, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 1
+    hideOnDeath: 0
   baseLightInfos: []
 --- !u!114 &3613692770415794392
 MonoBehaviour:
@@ -383,6 +409,8 @@ MonoBehaviour:
     transform: {fileID: 7302376613148457202}
   - name: SwingCenterSmall
     transform: {fileID: 1530482910268357985}
+  - name: SwingCenter
+    transform: {fileID: 105977163627165152}
 --- !u!114 &5354951539887432511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -490,7 +518,8 @@ MonoBehaviour:
   m_Script: {fileID: 1533710874, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skins: []
+  skins:
+  - {fileID: 11400000, guid: 7ce7401e0032ce84b9c050b1988aba42, type: 2}
 --- !u!114 &363171908372190744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1712,6 +1741,36 @@ Transform:
   m_Father: {fileID: 6534499726194685731}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3413695715665285391
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 105977163627165152}
+  m_Layer: 0
+  m_Name: SwingCenter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &105977163627165152
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3413695715665285391}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.704, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6495548290132083682}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3448749809915839242
 GameObject:
   m_ObjectHideFlags: 0
@@ -2484,7 +2543,7 @@ Transform:
   m_GameObject: {fileID: 4315628210007588601}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1.16, z: 0}
-  m_LocalScale: {x: 10, y: 7, z: 10}
+  m_LocalScale: {x: 16, y: 10, z: 16}
   m_Children: []
   m_Father: {fileID: 6495548290132083682}
   m_RootOrder: 11
@@ -2911,7 +2970,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4626578641989141405}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1729739714371754476}
@@ -2925,12 +2984,12 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4626578641989141405}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.43476555
-  m_Height: 2.542761
+  m_Radius: 0.64855194
+  m_Height: 2.5
   m_Direction: 2
-  m_Center: {x: 0.0158737, y: -3.4147964e-15, z: 1.2402952}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3713251310404334644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2970,6 +3029,7 @@ GameObject:
   - component: {fileID: 5668635971825929985}
   - component: {fileID: 4870912649457852264}
   - component: {fileID: 5479383588645697360}
+  - component: {fileID: 1154157721926660740}
   - component: {fileID: 4711279544257399699}
   - component: {fileID: 2335031687536918489}
   - component: {fileID: 998475165724459940}
@@ -3002,7 +3062,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4655597582345404589}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.22, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5338677609978241709}
@@ -3059,7 +3119,7 @@ MonoBehaviour:
   bodyIndex: -1
   baseNameToken: SS2_KNIGHT_BODY_NAME
   subtitleNameToken: SS2_KNIGHT_BODY_SUBTITLE
-  bodyFlags: 0
+  bodyFlags: 16
   rootMotionInMainState: 0
   mainRootSpeed: 0
   baseMaxHealth: 160
@@ -3071,7 +3131,7 @@ MonoBehaviour:
   baseDamage: 12
   baseAttackSpeed: 1
   baseCrit: 1
-  baseArmor: 30
+  baseArmor: 12
   baseVisionDistance: Infinity
   baseJumpCount: 1
   sprintingSpeedMultiplier: 1.45
@@ -3228,10 +3288,10 @@ MonoBehaviour:
   m_Script: {fileID: 306635731, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  primary: {fileID: 5093032342421688179}
-  secondary: {fileID: 5668635971825929985}
-  utility: {fileID: 4870912649457852264}
-  special: {fileID: 5479383588645697360}
+  primary: {fileID: 5668635971825929985}
+  secondary: {fileID: 4870912649457852264}
+  utility: {fileID: 5479383588645697360}
+  special: {fileID: 1154157721926660740}
   passiveSkill:
     enabled: 0
     skillNameToken: 
@@ -3254,8 +3314,8 @@ MonoBehaviour:
   m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillFamily: {fileID: 11400000, guid: 08737776e531dcb45acf7dd2a104616a, type: 2}
-  skillName: 
+  _skillFamily: {fileID: 11400000, guid: e7290a945c0796447a7b745878bb48cc, type: 2}
+  skillName: passive
   hideInCharacterSelect: 0
   hasExecutedSuccessfully: 0
 --- !u!114 &5668635971825929985
@@ -3270,8 +3330,8 @@ MonoBehaviour:
   m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillFamily: {fileID: 11400000, guid: 5fb4edd7ae499c44993c471180dd55cc, type: 2}
-  skillName: 
+  _skillFamily: {fileID: 11400000, guid: 08737776e531dcb45acf7dd2a104616a, type: 2}
+  skillName: primary
   hideInCharacterSelect: 0
   hasExecutedSuccessfully: 0
 --- !u!114 &4870912649457852264
@@ -3286,8 +3346,8 @@ MonoBehaviour:
   m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillFamily: {fileID: 11400000, guid: 473206d75e84c4940a8963e6cd6221e2, type: 2}
-  skillName: 
+  _skillFamily: {fileID: 11400000, guid: 5fb4edd7ae499c44993c471180dd55cc, type: 2}
+  skillName: secondary
   hideInCharacterSelect: 0
   hasExecutedSuccessfully: 0
 --- !u!114 &5479383588645697360
@@ -3302,8 +3362,24 @@ MonoBehaviour:
   m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _skillFamily: {fileID: 11400000, guid: 473206d75e84c4940a8963e6cd6221e2, type: 2}
+  skillName: utility
+  hideInCharacterSelect: 0
+  hasExecutedSuccessfully: 0
+--- !u!114 &1154157721926660740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4655597582345404589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: 4071100462a1d7b43b99a95701dd9a27, type: 2}
-  skillName: 
+  skillName: special
   hideInCharacterSelect: 0
   hasExecutedSuccessfully: 0
 --- !u!114 &4711279544257399699
@@ -3554,7 +3630,7 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 1.82
+  m_Height: 2.429188
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7653471131008266651
@@ -3573,7 +3649,7 @@ MonoBehaviour:
   Capsule: {fileID: 7914638963653905234}
   Rigidbody: {fileID: 8733670004473316705}
   CapsuleRadius: 0.5
-  CapsuleHeight: 1.82
+  CapsuleHeight: 2.429188
   CapsuleYOffset: 0
   CapsulePhysicsMaterial: {fileID: 0}
   DetectDiscreteCollisions: 0
@@ -4809,7 +4885,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5980688063288723733}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.598, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3061729389230409665}
@@ -5052,7 +5128,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6389519727943313521}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.898, z: 0}
+  m_LocalPosition: {x: 0, y: -1.22, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6495548290132083682}

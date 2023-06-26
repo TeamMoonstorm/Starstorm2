@@ -35,6 +35,11 @@ namespace Moonstorm.Starstorm2.Buffs
                         }
                     }
 
+                    body.AddBuff(SS2Content.Buffs.bdFortified.buffIndex);
+                    body.AddBuff(SS2Content.Buffs.bdFortified.buffIndex);
+                    if (body.GetBuffCount(SS2Content.Buffs.bdFortified.buffIndex) > 3)
+                        body.SetBuffCount(SS2Content.Buffs.bdFortified.buffIndex, 3);
+
                     Util.PlaySound("NemmandoDecisiveStrikeReady", gameObject);
 
                     NetworkStateMachine nsm = body.GetComponent<NetworkStateMachine>();

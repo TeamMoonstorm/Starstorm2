@@ -23,7 +23,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: baseDuration
       fieldValue:
-        stringValue: 1.2
+        stringValue: 0.8
         objectValue: {fileID: 0}
     - fieldName: damageCoefficient
       fieldValue:
@@ -36,7 +36,8 @@ MonoBehaviour:
     - fieldName: hitEffectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 0}
+        objectValue: {fileID: 3988118091893689303, guid: 902610936f9ce564aa163fec3c1becd3,
+          type: 3}
     - fieldName: procCoefficient
       fieldValue:
         stringValue: 1
@@ -56,10 +57,11 @@ MonoBehaviour:
     - fieldName: swingEffectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 0}
+        objectValue: {fileID: 3741879095020577079, guid: 600738f2c2b299b448a969768f309261,
+          type: 3}
     - fieldName: swingEffectMuzzleString
       fieldValue:
-        stringValue: SwingSpin
+        stringValue: SwingCenter
         objectValue: {fileID: 0}
     - fieldName: mecanimHitboxActiveParameter
       fieldValue:
@@ -67,7 +69,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: shorthopVelocityFromHit
       fieldValue:
-        stringValue: 6.5
+        stringValue: 9
         objectValue: {fileID: 0}
     - fieldName: beginStateSoundString
       fieldValue:
@@ -102,3 +104,7 @@ MonoBehaviour:
         stringValue: 
         objectValue: {fileID: 1703809909102045, guid: bf8e2245939c26e458c06fb893df9129,
           type: 3}
+    - fieldName: hopVelocity
+      fieldValue:
+        stringValue: 17
+        objectValue: {fileID: 0}

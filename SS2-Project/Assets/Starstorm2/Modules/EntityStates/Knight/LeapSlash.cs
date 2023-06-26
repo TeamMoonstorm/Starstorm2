@@ -1,4 +1,6 @@
-﻿using RoR2;
+﻿using Moonstorm.Starstorm2;
+using RoR2;
+using RoR2.Projectile;
 using UnityEngine;
 
 namespace EntityStates.Knight
@@ -25,13 +27,35 @@ namespace EntityStates.Knight
         private float swingCount;
         public float stopwatchBetweenSwings;
 
+        public static GameObject beamProjectile;
+
+        private Animator animator;
+        public static float hitPauseDuration;
+        public static float shorthopVelocityFromHit;
+        protected float hitPauseTimer;
+        protected Vector3 storedHitPauseVelocity;
+
+        public static GameObject swingEffectPrefab;
+        public static string swingSoundString;
+        public static string swingEffectMuzzleString;
+        private GameObject swingEffectInstance;
+
         private BlastAttack blastAttack;
         private bool swingSide;
+
+        protected bool authorityInHitPause
+        {
+            get
+            {
+                return hitPauseTimer > 0f;
+            }
+        }
 
         public override void OnEnter()
         {
             base.OnEnter();
 
+            animator = GetModelAnimator();
             duration = baseDuration;
             durationBetweenSwings = baseDurationBetweenSwings / attackSpeedStat;
             swingCount = baseSwingCount * attackSpeedStat;
@@ -72,9 +96,25 @@ namespace EntityStates.Knight
                 Vector3 b2 = new Vector3(direction.x, 0f, direction.z).normalized * forwardVelocity;
                 characterMotor.Motor.ForceUnground();
                 characterMotor.velocity = a + b + b2;
-            }
+            } 
+        }
 
-            
+        protected virtual void BeginMeleeAttackEffect()
+        {
+            Util.PlaySound(swingSoundString, gameObject);
+            if (swingEffectPrefab)
+            {
+                Transform muzzle = FindModelChild(swingEffectMuzzleString);
+                if (muzzle)
+                {
+                    swingEffectInstance = Object.Instantiate(swingEffectPrefab, muzzle);
+                    ScaleParticleSystemDuration spsd = swingEffectInstance.GetComponent<ScaleParticleSystemDuration>();
+                    if (spsd)
+                    {
+                        spsd.newDuration = spsd.initialDuration;
+                    }
+                }
+            }
         }
 
         public override void FixedUpdate()
@@ -90,31 +130,94 @@ namespace EntityStates.Knight
                 totalSwings++; 
             }
 
+            if (isAuthority)
+                AuthorityFixedUpdate();
             
-            if (fixedAge >= duration || (fixedAge >= duration * 0.1f && isGrounded))
+            if (totalSwings == swingCount || fixedAge >= duration)
             {
                 outer.SetNextStateToMain();
             }
+        }
+
+        private void AuthorityFixedUpdate()
+        {
+            if (authorityInHitPause)
+            {
+                hitPauseTimer -= Time.fixedDeltaTime;
+                if (characterMotor)
+                    characterMotor.velocity = Vector3.zero;
+                fixedAge -= Time.fixedDeltaTime;
+                if (!authorityInHitPause)
+                    AuthorityExitHitPause();
+            }
+        }
+
+        protected virtual void AuthorityExitHitPause()
+        {
+            hitPauseTimer = 0f;
+            storedHitPauseVelocity.y = Mathf.Max(storedHitPauseVelocity.y, shorthopVelocityFromHit / Mathf.Sqrt(attackSpeedStat));
+            if (characterMotor)
+            {
+                characterMotor.velocity = storedHitPauseVelocity;
+            }
+            storedHitPauseVelocity = Vector3.zero;
+            if (animator)
+                animator.speed = 1f;
+        }
+
+        private void AuthorityTriggerHitPause()
+        {
+            if (characterMotor)
+            {
+                storedHitPauseVelocity += characterMotor.velocity;
+                characterMotor.velocity = Vector3.zero;
+            }
+            if (animator)
+                animator.speed = 0f;
+            hitPauseTimer = hitPauseDuration / attackSpeedStat;
         }
 
         private void Swing()
         {
             if (isAuthority)
             {
-                blastAttack.position = characterBody.corePosition;
+                blastAttack.position = FindModelChild(swingEffectMuzzleString).position;
                 int hitcount = blastAttack.Fire().hitCount;
-                if (hitcount > 0) Util.PlaySound(Merc.GroundLight.hitSoundString, gameObject);
+                if (hitcount > 0)
+                {
+                    Util.PlaySound(Merc.GroundLight.hitSoundString, gameObject);
+                    AuthorityTriggerHitPause();
+                }
+
+                BeginMeleeAttackEffect();
 
                 string animationStateName = swingSide ? "SwingSword1" : "SwingSword2";
-                PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", durationBetweenSwings * 0.5f, 0.02f);
+                PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", durationBetweenSwings, 0.02f);
                 swingSide = !swingSide;
+
+                if (characterBody.HasBuff(SS2Content.Buffs.bdKnightBuff) && isAuthority)
+                    ProjectileManager.instance.FireProjectile(
+                        beamProjectile,
+                        GetAimRay().origin,
+                        Util.QuaternionSafeLookRotation(GetAimRay().direction),
+                        gameObject,
+                        damageStat * baseDamageCoefficient,
+                        0f,
+                        RollCrit(),
+                        DamageColorIndex.Default,
+                        null,
+                        80f);
             }
+
+            
         }
 
         public override void OnExit()
         {
             characterMotor.airControl = previousAirControl;
             characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage;
+            if (authorityInHitPause)
+                AuthorityExitHitPause();
             base.OnExit();
         }
 

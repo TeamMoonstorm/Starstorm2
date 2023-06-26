@@ -20,6 +20,9 @@ namespace EntityStates.Knight
         {
             base.OnEnter();
 
+            characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
+            characterBody.AddBuff(SS2Content.Buffs.bdKnightCharged);
+
             animator = GetModelAnimator();
         }
 
@@ -39,6 +42,9 @@ namespace EntityStates.Knight
             {
                 outer.SetNextState(new Shield());
             }
+
+            characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility);
+
             base.OnExit();
         }
         public override void AuthorityModifyOverlapAttack(OverlapAttack overlapAttack)

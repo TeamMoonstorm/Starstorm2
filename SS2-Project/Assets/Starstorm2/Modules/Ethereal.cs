@@ -55,6 +55,7 @@ namespace Moonstorm.Starstorm2
         {
             //Debug.Log("Setting up Ethereals..");
             etherealsCompleted = 0;
+            storedScalingValue = DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).scalingValue;
             teleIsEthereal = false;
             Debug.Log("completed: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
         }
