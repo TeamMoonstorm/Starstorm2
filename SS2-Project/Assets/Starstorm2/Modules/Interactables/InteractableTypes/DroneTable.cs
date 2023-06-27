@@ -91,8 +91,8 @@ namespace Moonstorm.Starstorm2.Interactables
                 Sprite sprite = Sprite.Create(tex2d, new Rect(0, 0, tex2d.width, tex2d.height), new Vector2(tex2d.width / 2, tex2d.height / 2));
                 self.iconSpriteRenderer.sprite = sprite;
 
-                Color color = ColorCatalog.GetColor(ColorCatalog.ColorIndex.Tier2Item);
-                self.trailToColor.startColor *= color;
+                Color color = ColorCatalog.GetColor(ColorCatalog.ColorIndex.Tier1Item);
+                self.trailToColor.startColor = color;
                 self.trailToColor.endColor *= color;
                 for (int i = 0; i < self.particlesToColor.Length; i++)
                 {
@@ -409,7 +409,7 @@ namespace Moonstorm.Starstorm2.Interactables
                                         {
                                             origin = drone.corePosition,
                                             genericFloat = 1.5f,
-                                            genericUInt = 0,
+                                            genericUInt = (uint)j,
                                             genericBool = true
                                         };
 
