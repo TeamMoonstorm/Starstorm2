@@ -19,7 +19,7 @@ MonoBehaviour:
     serializedFields:
     - fieldName: scanRadius
       fieldValue:
-        stringValue: 40
+        stringValue: 70
         objectValue: {fileID: 0}
     - fieldName: scanDuration
       fieldValue:
@@ -29,10 +29,6 @@ MonoBehaviour:
       fieldValue:
         stringValue: 10
         objectValue: {fileID: 0}
-    - fieldName: maxHolograms
-      fieldValue:
-        stringValue: 8
-        objectValue: {fileID: 0}
     - fieldName: hologramPrefab
       fieldValue:
         stringValue: 
@@ -40,9 +36,21 @@ MonoBehaviour:
           type: 3}
     - fieldName: targetedHolograms
       fieldValue:
-        stringValue: 6
+        stringValue: 3
         objectValue: {fileID: 0}
     - fieldName: randomHolograms
       fieldValue:
-        stringValue: 2
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: targetedHologramOffset
+      fieldValue:
+        stringValue: 8
+        objectValue: {fileID: 0}
+    - fieldName: maxHologramYOffsetInsideUnitSphereIdk
+      fieldValue:
+        stringValue: 0.25
+        objectValue: {fileID: 0}
+    - fieldName: minimumRandomHologramDistance
+      fieldValue:
+        stringValue: 15
         objectValue: {fileID: 0}

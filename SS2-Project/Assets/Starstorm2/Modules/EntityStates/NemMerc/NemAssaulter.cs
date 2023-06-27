@@ -11,6 +11,8 @@ namespace EntityStates.NemMerc
 	public class NemAssaulter : BaseState
 	{
 		public bool hasHit;
+		public bool dashVectorLocked;
+		public HurtBox target;
 
 		private bool m2Buffered;
 
@@ -40,12 +42,19 @@ namespace EntityStates.NemMerc
 				//}
 			}
 
-			this.dashSpeed = NemAssaulter.dashDistance / NemAssaulter.dashDuration;
-			this.dashSpeed /= this.attackSpeedStat;
+			this.dashSpeed = NemAssaulter.dashDistance / (NemAssaulter.dashDuration / this.attackSpeedStat);
+			//this.dashSpeed *= this.attackSpeedStat;
 
 			base.SmallHop(base.characterMotor, Assaulter.smallHopVelocity);
 			base.PlayAnimation("FullBody, Override", "AssaulterPrep", "AssaulterPrep.playbackRate", Assaulter.dashPrepDuration);
+
 			this.dashVector = base.inputBank.aimDirection;
+			if(this.target)
+            {
+				this.dashVectorLocked = true;
+				this.dashVector = this.target.transform.position - base.transform.position;
+            }
+			
 			this.overlapAttack = base.InitMeleeOverlap(NemAssaulter.damageCoefficient, Assaulter.hitEffectPrefab, this.modelTransform, "Assaulter");
 			this.overlapAttack.damageType = DamageType.Stun1s;
 			if (NetworkServer.active)
@@ -89,7 +98,8 @@ namespace EntityStates.NemMerc
 			if (this.stopwatch > NemAssaulter.dashPrepDuration / this.attackSpeedStat && !this.isDashing)
 			{
 				this.isDashing = true;
-				this.dashVector = base.inputBank.aimDirection;
+				this.dashVector = this.target ? this.target.transform.position - base.transform.position : base.inputBank.aimDirection;
+
 				this.CreateDashEffect();
 				base.PlayCrossfade("FullBody, Override", "AssaulterLoop", 0.1f);
 				base.gameObject.layer = LayerIndex.fakeActor.intVal;
@@ -130,8 +140,9 @@ namespace EntityStates.NemMerc
 							this.m2Buffered = false;
 							base.skillLocator.secondary.DeductStock(1);
 							this.hitPauseTimer += NemAssaulter.m2HitPauseDuration / this.attackSpeedStat;
-							// SHOULD BE ITS OWN STATE
-							// really need to make a whirlwindbase
+							this.inM2HitPause = true;
+							this.stopwatch -= NemAssaulter.m2ExtraDashDuration;
+
 							if (this.weapon) this.weapon.SetNextState(new WhirlwindAssaulter());
                         }
 
@@ -150,9 +161,12 @@ namespace EntityStates.NemMerc
 				}
 				else
 				{
+					if(this.inM2HitPause) this.dashVector = base.inputBank.aimDirection;
+
 					this.hitPauseTimer -= Time.fixedDeltaTime;
 					if (this.hitPauseTimer < 0f)
 					{
+						this.inM2HitPause = false;
 						this.inHitPause = false;
 					}
 				}
@@ -202,11 +216,13 @@ namespace EntityStates.NemMerc
 
 		public static float smallHopVelocity;
 
+		public static float m2ExtraDashDuration = 0.1f;
+
 		public static float m2HitPauseDuration = 0.33f;
 
 		public static float dashPrepDuration = 0.75f;
 
-		public static float dashDistance = 40f;
+		public static float dashDistance = 30f;
 
 		public static float dashDuration = 0.2f;
 
@@ -250,6 +266,8 @@ namespace EntityStates.NemMerc
 
 		[NonSerialized]
 		public bool inHitPause;
+		[NonSerialized]
+		public bool inM2HitPause;
 
 		[NonSerialized]
 		public float hitPauseTimer;

@@ -12,7 +12,6 @@ namespace Moonstorm.Starstorm2.ScriptableObjects
 
 	//Activate on press, then again on release
 
-	//this might be the worst possible way of tdoing this
 	public class DuplexSkillDef : SkillDef
 	{
         public override BaseSkillInstanceData OnAssigned([NotNull] GenericSkill skillSlot)

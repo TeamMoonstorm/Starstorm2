@@ -15,7 +15,6 @@ namespace EntityStates.NemMerc
         public static float aimVelocity = 4f;
         public static float minimumY = -0.4f;
         public static float maximumY = 0.4f;
-        public static float minimumDuration = 0.125f;
         public static float airControl = 0.75f;
         public static float riposteDuration = 1.5f;
         public static float collisionRadius = 5f;
@@ -32,10 +31,10 @@ namespace EntityStates.NemMerc
             //anim
             //vfx
             //sound
+            // SHOULD USE ROOT MOTION INSTEAD of velocity 
             this.weapon = EntityStateMachine.FindByCustomName(base.gameObject, "Weapon");
 
-            Riposter riposter = base.gameObject.AddComponent<Riposter>();
-            riposter.duration = Lunge.riposteDuration;
+            
 
             Vector3 direction = base.GetAimRay().direction;
 
@@ -51,10 +50,14 @@ namespace EntityStates.NemMerc
                 base.characterMotor.Motor.ForceUnground();
                 base.characterMotor.velocity = a;
             }
-            if(NetworkServer.active)
-            {
-                base.characterBody.AddTimedBuff(SS2Content.Buffs.BuffRiposte, Lunge.riposteDuration);
-            }
+
+            ///maybe maybe not
+            //if(NetworkServer.active)
+            //{
+            //    base.characterBody.AddTimedBuff(SS2Content.Buffs.BuffRiposte, Lunge.riposteDuration);
+            //}
+            //Riposter riposter = base.gameObject.AddComponent<Riposter>();
+            //riposter.duration = Lunge.riposteDuration;
 
             base.characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
 
@@ -65,7 +68,7 @@ namespace EntityStates.NemMerc
         {
             bool hit = Util.CharacterSpherecast(this.characterBody.gameObject, new Ray(base.characterBody.corePosition, Vector3.up), Lunge.collisionRadius, out RaycastHit hitInfo,
                 0, LayerIndex.entityPrecise.mask, QueryTriggerInteraction.UseGlobal);
-            hit |= TestHit(hitInfo);
+            hit &= TestHit(hitInfo);
 
             return hit;
         }
@@ -83,11 +86,25 @@ namespace EntityStates.NemMerc
                     if (healthComponent && healthComponent.alive
                         && teams.HasTeam(healthComponent.body.teamComponent.teamIndex))
                     {
+                        ForceFlinch(healthComponent.body);
                         return true;
                     }
                 }
             }
             return false;
+        }
+
+        protected virtual void ForceFlinch(CharacterBody body)
+        {
+            SetStateOnHurt component = body.healthComponent.GetComponent<SetStateOnHurt>();
+            if (component == null)
+            {
+                return;
+            }
+            if (component.canBeHitStunned)
+            {
+                component.SetPain();
+            }
         }
 
         public override void FixedUpdate()
@@ -99,7 +116,7 @@ namespace EntityStates.NemMerc
 
             base.characterMotor.moveDirection = base.inputBank.moveVector;
 
-            if(base.fixedAge >= Lunge.minimumDuration && this.CheckCollisions())
+            if(this.CheckCollisions())
             {
                 this.outer.SetNextStateToMain();
                 if(this.weapon)

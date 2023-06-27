@@ -4,6 +4,9 @@ using System.Linq;
 using RoR2;
 using EntityStates;
 using UnityEngine;
+using R2API;
+using Moonstorm.Starstorm2.DamageTypes;
+
 namespace EntityStates.NemMerc
 {
     public class FireShotgun : GenericBulletBaseState
@@ -38,6 +41,7 @@ namespace EntityStates.NemMerc
         {
             base.ModifyBullet(bulletAttack);
             bulletAttack.falloffModel = BulletAttack.FalloffModel.DefaultBullet;
+            bulletAttack.AddModdedDamageType(RedirectHologram.damageType);
         }
         public override InterruptPriority GetMinimumInterruptPriority()
         {

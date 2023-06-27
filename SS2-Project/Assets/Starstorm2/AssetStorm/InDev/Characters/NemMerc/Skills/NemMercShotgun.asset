@@ -31,7 +31,7 @@ MonoBehaviour:
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
   beginSkillCooldownOnSkillEnd: 0
-  cancelSprintingOnActivation: 1
+  cancelSprintingOnActivation: 0
   forceSprintDuringState: 0
   canceledFromSprinting: 0
   isCombatSkill: 1
@@ -40,4 +40,4 @@ MonoBehaviour:
     _typeName: EntityStates.NemMerc.Reload, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
   reloadInterruptPriority: 0
-  graceDuration: 0.25
+  graceDuration: 0.75

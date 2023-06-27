@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
+using R2API;
+using Moonstorm.Starstorm2.DamageTypes;
 
 namespace EntityStates.NemMerc
 {
@@ -48,6 +50,8 @@ namespace EntityStates.NemMerc
         private OverlapAttack attack;
         private float timesAttacked;
 
+        [NonSerialized]
+        public bool hitEnemy;
 
         private bool isInHitPause;
         private float hitPauseTimer;
@@ -63,10 +67,25 @@ namespace EntityStates.NemMerc
             this.duration = this.baseDuration / this.attackSpeedStat;
             this.timeBetweenAttacks = this.duration / numAttacks;
 
-            this.attack = base.InitMeleeOverlap(this.damageCoefficient, this.hitEffectPrefab, base.GetModelTransform(), "Whirlwind");
+            this.attack = base.InitMeleeOverlap(this.damageCoefficient, this.hitEffectPrefab, base.GetModelTransform(), this.hitboxGroupName);
+            this.attack.AddModdedDamageType(RedirectHologram.damageType);
+
             base.characterMotor.velocity = Vector3.zero;
-            
             base.characterMotor.walkSpeedPenaltyCoefficient = this.walkSpeedCoefficient;
+
+
+            //"momentum"
+            //i dont like it          
+            //if(this.hitEnemy) 
+            //{
+            //    base.characterMotor.velocity = Vector3.zero;
+            //    base.characterMotor.walkSpeedPenaltyCoefficient = this.walkSpeedCoefficient;
+            //}
+            //else
+            //{
+            //    base.characterMotor.velocity *= this.walkSpeedCoefficient;
+            //}
+
         }
 
         public override void FixedUpdate()
@@ -99,6 +118,12 @@ namespace EntityStates.NemMerc
                 if (this.attack.Fire())
                 {
                     this.OnHitEnemyAuthority();
+                    //if(!this.hitEnemy)
+                    //{
+                    //    this.hitEnemy = true;
+                    //    base.characterMotor.velocity = Vector3.zero;
+                    //    base.characterMotor.walkSpeedPenaltyCoefficient = this.walkSpeedCoefficient;
+                    //}
                 }
 
                 if (this.hitPauseTimer <= 0f && this.isInHitPause)

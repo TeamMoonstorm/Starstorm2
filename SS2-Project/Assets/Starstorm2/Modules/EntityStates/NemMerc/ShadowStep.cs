@@ -48,7 +48,6 @@ namespace EntityStates.NemMerc
             this.duration = ShadowStep.baseDuration * (this.targetIsHologram ? hologramDurationCoefficient : 1); // movespeedstat ?
             float teleportTime = this.targetIsHologram ? this.duration : this.duration * ShadowStep.teleportTime;
             float distanceBehind = targetIsHologram ? 0 : ShadowStep.teleportBehindDistance;
-
             Vector3 between = target.transform.position - base.transform.position;
             float distance = between.magnitude;
             Vector3 direction = between.normalized;
@@ -82,13 +81,21 @@ namespace EntityStates.NemMerc
                 this.teleportTarget.y = Mathf.Max(this.target.transform.position.y + teleportYBonus, teleportTarget.y);
             }
         }
+
+        private void UpdateBodyInputs()
+        {
+            if(base.skillLocator)
+            {
+            }
+        }
         public override void FixedUpdate()
         {
             base.FixedUpdate();
 
             this.UpdateTarget();
 
-            if(base.isAuthority && base.fixedAge >= this.duration)
+            base.characterMotor.velocity = Vector3.zero;
+
             {
                 if(this.camera)
                     this.camera.EndCameraFlip();
@@ -116,7 +123,7 @@ namespace EntityStates.NemMerc
                 Destroy(this.camera);
             }
 
-            base.characterMotor.useGravity = this.usedGravity;
+            base.characterMotor.useGravity = true;
 
             if (NetworkServer.active)
             {
@@ -128,20 +135,23 @@ namespace EntityStates.NemMerc
 
         // no point in this being a monobehavior but i stpid
         //orbits the camera around a gameobject while looking at it
+        //continues to look at the object for short period after player regains control
         public class CameraFlipper : MonoBehaviour, ICameraStateProvider
         {
-            
-
+            public static bool userLook = false;
+            public static bool userControl = false;
             public static bool doOffset = true;
             public static float maxOffset = 12;
             public static float endLerpDuration = 0.5f;
             public static float wallCushion = 0.1f;
+            public static float shitNumber = 0.9f;
 
             public AnimationCurve movementCurve;
             public AnimationCurve fovCurve;
 
             private Vector3 cameraStartPosition;
-            private Vector3 cameraEndPosition;
+            public Vector3 cameraEndPosition;
+
             private Vector3 cameraPivot;
             private Vector3 orbitDirection;
             private GameObject target;
@@ -153,9 +163,9 @@ namespace EntityStates.NemMerc
             public void UpdateCamera(float dt)
             {
                 this.overrideStopwatch += dt;
-
                 if (this.target)
                     this.cameraPivot = this.target.transform.position;
+             
             }
             // x^2 curve
             private float EvaluateOffsetCurve(float f)
@@ -165,15 +175,12 @@ namespace EntityStates.NemMerc
 
             public void StartCameraFlip(Vector3 endPoint, GameObject target, float duration)
             {
-                Vector3 idealLocalCameraPos = Vector3.zero;
                 foreach (CameraRigController cameraRigController in CameraRigController.readOnlyInstancesList)
                 {
                     if (cameraRigController.target == base.gameObject)
                     {
                         //might bug out with spectators? idk
                         this.cameraStartPosition = cameraRigController.currentCameraState.position;
-                        idealLocalCameraPos = cameraRigController.targetParams.cameraParams.data.idealLocalCameraPos.value;
-                        idealLocalCameraPos.y += cameraRigController.targetParams.cameraParams.data.pivotVerticalOffset.value;
                         cameraRigController.SetOverrideCam(this, 0.25f);
                     }
                     else if (cameraRigController.IsOverrideCam(this))
@@ -186,16 +193,15 @@ namespace EntityStates.NemMerc
                 this.overrideDuration = duration;
 
                 Vector3 between = endPoint - base.transform.position;
-                Vector3 pushDirection = base.transform.right * -1f;
+                Vector3 f = new Vector3(between.x, 0, between.z).normalized;
+                Vector3 pushDirection = Quaternion.Euler(0, -90, 0) * f;
 
                 this.target = target;
                 this.cameraPivot = this.target.transform.position;
                 this.orbitDirection = pushDirection;
-                this.orbitDistance = Mathf.Min(between.magnitude / 2f, maxOffset);
-                Vector3 endOffset = Util.QuaternionSafeLookRotation(between.normalized * -1) * idealLocalCameraPos;
-                this.cameraEndPosition = endPoint + endOffset;
-
                 
+                this.orbitDistance = Mathf.Min(between.magnitude / 2f, maxOffset);
+                this.cameraEndPosition = endPoint;
             }
             public void EndCameraFlip()
             {
@@ -215,18 +221,21 @@ namespace EntityStates.NemMerc
             public void GetCameraState(CameraRigController cameraRigController, ref CameraState cameraState)
             {
                 float t = this.movementCurve.Evaluate(Mathf.Clamp01(overrideStopwatch / overrideDuration));
-                Vector3 position = Vector3.Lerp(cameraStartPosition, cameraEndPosition, t);
+                Vector3 target = this.target ? this.target.transform.position : this.cameraPivot;
                 float offsetMagnitude = EvaluateOffsetCurve(t * 2) * orbitDistance;
-                Vector3 offset = offsetMagnitude * orbitDirection;
+                Vector3 orbitOffset = offsetMagnitude * orbitDirection;
+                Vector3 cameraPosition = Vector3.Lerp(cameraStartPosition, cameraEndPosition, t) + orbitOffset;
+                Vector3 direction = target - cameraPosition;
 
-                Vector3 position2 = doOffset ? position + offset : position;
-                Quaternion lookDirection = Util.QuaternionSafeLookRotation((this.cameraPivot - position2).normalized);
+                Vector3 cameraLocalPos = cameraRigController.targetParams.currentCameraParamsData.idealLocalCameraPos.value;
+                cameraLocalPos.y += cameraRigController.targetParams.currentCameraParamsData.pivotVerticalOffset.value + shitNumber;
+                cameraLocalPos += (cameraRigController.targetParams.cameraPivotTransform ? cameraRigController.targetParams.cameraPivotTransform.localPosition : Vector3.zero);
+                cameraPosition += Util.QuaternionSafeLookRotation(direction.normalized) * cameraLocalPos;
 
-                // wall cushion ][
-                Vector3 between = position2 - this.cameraPivot;
-
-                float distanceFromPivot = Raycast(new Ray(this.cameraPivot, between.normalized), between.magnitude, CameraFlipper.wallCushion-0.01f);
-                Vector3 finalPosition = (between.normalized * distanceFromPivot) + this.cameraPivot; 
+                Quaternion lookDirection = Util.QuaternionSafeLookRotation((target - cameraPosition).normalized);
+                Vector3 between = cameraPosition - target;
+                float distanceFromPivot = Raycast(new Ray(target, between.normalized), between.magnitude, CameraFlipper.wallCushion-0.01f);
+                Vector3 finalPosition = (between.normalized * distanceFromPivot) + target;
 
                 cameraState.position = finalPosition;
                 cameraState.rotation = lookDirection;
@@ -250,6 +259,11 @@ namespace EntityStates.NemMerc
                     }
                 }
                 return num;
+            }
+            public float GetPitchFromLookVector(Vector3 lookVector)
+            {
+                float x = Mathf.Sqrt(lookVector.x * lookVector.x + lookVector.z * lookVector.z);
+                return Mathf.Atan2(-lookVector.y, x) * 57.29578f;
             }
 
             public bool IsHudAllowed(CameraRigController cameraRigController)

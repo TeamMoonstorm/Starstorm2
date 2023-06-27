@@ -28,11 +28,12 @@ namespace Moonstorm.Starstorm2.Components
 			return this.trackingTarget;
 		}
 
-		//xD?
+		//xd?
 		public bool IsTargetHologram()
-        {
-			return this.trackingTarget.GetComponent<NemMercHologram>();
-        }
+		{
+			return GetTrackingTarget() && this.targetIsHologram;
+		}
+
 		public void OnEnable()
 		{
 			this.indicator.active = true;
@@ -56,8 +57,10 @@ namespace Moonstorm.Starstorm2.Components
 		// prioritize holograms
 		public void SearchForTarget(Ray aimRay)
 		{
+			this.targetIsHologram = false;
+
 			RaycastHit[] hits = Physics.SphereCastAll(aimRay.origin, this.hologramRayRadius, aimRay.direction,
-				this.maxTrackingDistance, LayerIndex.fakeActor.collisionMask, QueryTriggerInteraction.Collide);
+				NemMercTracker.hologramTrackingDistance, LayerIndex.fakeActor.collisionMask, QueryTriggerInteraction.Collide);
 			foreach(RaycastHit hit in hits)
             {
 
@@ -68,6 +71,7 @@ namespace Moonstorm.Starstorm2.Components
 					if (hologram)
 					{
 						this.trackingTarget = hologram.gameObject;
+						this.targetIsHologram = true;
 						return;
 					}
 				}
@@ -87,7 +91,12 @@ namespace Moonstorm.Starstorm2.Components
 			this.trackingTarget = hurtBox ? hurtBox.gameObject : null;
 		}
 
-		public float hologramRayRadius = 3f;
+		public bool targetIsHologram;
+
+		[NonSerialized]
+		public static float hologramTrackingDistance = 256f;
+
+		public float hologramRayRadius = 6f;
 
 		public float maxTrackingDistance = 50f;
 
