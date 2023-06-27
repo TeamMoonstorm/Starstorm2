@@ -57,6 +57,13 @@ namespace Moonstorm.Starstorm2
                 purchaseCount++;
                 refreshTimer = 2;
 
+                CharacterBody body = interactor.GetComponent<CharacterBody>();
+                Chat.SendBroadcastChat(new Chat.SubjectFormatChatMessage
+                {
+                    subjectAsCharacterBody = body,
+                    baseToken = "SS2_SHRINE_ETHEREAL_WARN_MESSAGE",
+                });
+
                 waitingForRefresh = true;
             }
 

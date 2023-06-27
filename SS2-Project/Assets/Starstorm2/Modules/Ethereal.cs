@@ -22,8 +22,11 @@ namespace Moonstorm.Starstorm2
         private static float storedScalingValue;
 
         public static GameObject shrinePrefab;
+        public static GameObject portalPrefab;
 
         public static bool teleUpgraded;
+
+        private Xoroshiro128Plus rng;
         internal static void Init()
         {
             //Initialize trader trading
@@ -33,6 +36,8 @@ namespace Moonstorm.Starstorm2
             Debug.Log("Initializing Ethereal Sapling prefab...");
             shrinePrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("ShrineEthereal", SS2Bundle.Indev), "EtherealSapling", true);
             shrinePrefab.RegisterNetworkPrefab();
+            portalPrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("PortalStranger1", SS2Bundle.Stages), "StrangerPortal", true);
+            portalPrefab.RegisterNetworkPrefab();
 
             //Add teleporter upgrading component to teleporters
             Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/Teleporter1.prefab").WaitForCompletion().AddComponent<TeleporterUpgradeController>();
@@ -42,7 +47,8 @@ namespace Moonstorm.Starstorm2
             Run.onRunStartGlobal += Run_onRunStartGlobal;
             Run.onRunDestroyGlobal += Run_onRunDestroyGlobal;
             TeleporterInteraction.onTeleporterBeginChargingGlobal += TeleporterInteraction_onTeleporterBeginChargingGlobal;
-            TeleporterInteraction.onTeleporterFinishGlobal += TeleporterInteraction_onTeleporterFinishGlobal;
+            //TeleporterInteraction.onTeleporterFinishGlobal += TeleporterInteraction_onTeleporterFinishGlobal;
+            TeleporterInteraction.onTeleporterChargedGlobal += TeleporterInteraction_onTeleporterChargedGlobal;
             //On.RoR2.TeleporterInteraction.FixedUpdate += TeleporterInteraction_FixedUpdate;
             On.RoR2.TeleporterInteraction.Start += TeleporterInteraction_Start;
 
@@ -501,9 +507,112 @@ namespace Moonstorm.Starstorm2
             }
         }*/
 
-        private static void TeleporterInteraction_onTeleporterFinishGlobal(TeleporterInteraction obj)
+        private static void TeleporterInteraction_onTeleporterChargedGlobal(TeleporterInteraction obj)
         {
-            //nothing yet lol
+            Debug.Log("tele finished");
+            if (teleIsEthereal)
+            {
+                if (NetworkServer.active)
+                {
+                    Debug.Log("spawning portal");
+                    var currStage = SceneManager.GetActiveScene().name;
+
+                    var position = Vector3.zero;
+                    var rotation = Quaternion.Euler(-90, 0, 0);
+
+                    //add the ethereal terminal to a unique position per stage
+                    //i hope you aren't here to cheat...
+                    switch (currStage)
+                    {
+                        case "blackbeach":
+                            position = new Vector3(-60, -47.2f, -231);
+                            rotation = Quaternion.Euler(0, 0, 0);
+                            //high cliff in the middle of the map
+                            break;
+                        case "blackbeach2":
+                            position = new Vector3(-101.4f, 5.5f, 20.1f);
+                            rotation = Quaternion.Euler(0, 292.8f, 0);
+                            //between two knocked-over pillars near the gate
+                            break;
+                        case "golemplains":
+                            position = new Vector3(283.7f, -46.0f, -154.7f);
+                            rotation = Quaternion.Euler(0, 321, 0);
+                            //top of the cliff, near debugging plains area
+                            //home.
+                            break;
+                        case "golemplains2":
+                            position = new Vector3(9.8f, 131.5f, -251.8f);
+                            rotation = Quaternion.Euler(0, 5, 0);
+                            //on the cliff where the middle giant ring meets the ground
+                            break;
+                        case "goolake":
+                            position = new Vector3(53.9f, -41.9f, -219.6f);
+                            rotation = Quaternion.Euler(0, 190, 0);
+                            //on the clifftop near the ancient gate
+                            break;
+                        case "foggyswamp":
+                            position = new Vector3(-83.74f, -79.8f, 39.09f);
+                            rotation = Quaternion.Euler(0, 104.27f, 0);
+                            //on the wall / dam across from where two newt altars spawn
+                            break;
+                        case "frozenwall":
+                            position = new Vector3(-230.7f, 136, 239.4f);
+                            rotation = Quaternion.Euler(0, 167, 0);
+                            //on cliff near water, next to the lone tree
+                            break;
+                        case "wispgraveyard":
+                            position = new Vector3(-341.5f, 83, 0.5f);
+                            rotation = Quaternion.Euler(0, 145, 0);
+                            //small cliff outcrop above playable area, same large island with artifact code
+                            break;
+                        case "dampcavesimple":
+                            position = new Vector3(157.5f, -39.1f, -188.9f);
+                            rotation = Quaternion.Euler(0, 318.4f, 0);
+                            //on the overhang above rex w/ 3 big rocks
+                            break;
+                        case "shipgraveyard":
+                            position = new Vector3(20.5f, -19.7f, 185.1f);
+                            rotation = Quaternion.Euler(0, 173.6f, 0);
+                            //in the cave entrance nearest to the cliff, on the spire below the land bridge
+                            break;
+                        case "rootjungle":
+                            position = new Vector3(-196.6f, 190.1f, -204.5f);
+                            rotation = Quaternion.Euler(0, 80, 0);
+                            //top of the highest root in the upper / back area
+                            break;
+                        case "skymeadow":
+                            position = new Vector3(65.9f, 127.4f, -293.9f);
+                            rotation = Quaternion.Euler(0, 194.8f, 0);
+                            //on top of the tallest rock spire, opposite side of map from the moon
+                            break;
+                        case "snowyforest":
+                            position = new Vector3(-38.7f, 116.7f, 153.1f);
+                            rotation = Quaternion.Euler(0, 54.1f, 0);
+                            //on top of a lone elevated platform on a tree
+                            break;
+                        case "ancientloft":
+                            position = new Vector3(-133.4f, 37.5f, -280f);
+                            rotation = Quaternion.Euler(0, 354.5f, 0);
+                            //on a branch under the main platform in the back corner of the map
+                            break;
+                        case "sulfurpools":
+                            position = new Vector3(-33.6f, 40.8f, 164.1f);
+                            rotation = Quaternion.Euler(0, 187f, 0);
+                            //in the corner, atop of one of the columns
+                            break;
+                    }
+
+                    Debug.Log("POS : " + position);
+                    Debug.Log("ROT : " + rotation);
+                    Debug.Log("PORTALPREFAB : " + portalPrefab);
+                    //CmdSpawnTerm(position, rotation);
+                    GameObject portal = Instantiate(portalPrefab, position, rotation);
+                    NetworkServer.Spawn(portal);
+                    Debug.Log("TERM : " + portal);
+
+                    Debug.Log("placed portal at: " + position + "pos & " + rotation + "rot");
+                }
+            }
         }
     }
 }

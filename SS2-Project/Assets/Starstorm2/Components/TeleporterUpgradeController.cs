@@ -70,7 +70,7 @@ namespace Moonstorm.Starstorm2
 
             //update teleporter holdout zone / directors / etc.
             hzc.baseRadius *= 1.5f;
-            hzc.baseChargeDuration *= 1.25f;
+            hzc.baseChargeDuration *= 0.25f;
             var cd = ti.bonusDirector;
             cd.maxConsecutiveCheapSkips = 2; //:slight_smile:
             cd.maximumNumberToSpawnBeforeSkipping = 10;
