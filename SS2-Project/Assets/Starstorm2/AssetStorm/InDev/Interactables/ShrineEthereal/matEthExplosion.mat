@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: matTPShockwave
-  m_Shader: {fileID: 4800000, guid: 3d1748ac609897c409bf756085a41223, type: 2}
-  m_ShaderKeywords: CLOUDOFFSET USE_CLOUDS _EMISSION
+  m_Name: matEthExplosion
+  m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
+  m_ShaderKeywords: USE_CLOUDS VERTEXCOLOR _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -20,36 +20,36 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Cloud1Tex:
-        m_Texture: {fileID: 2800000, guid: 5a27721ec04735941a5534489c782834, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Cloud2Tex:
-        m_Texture: {fileID: 2800000, guid: 511b6d3cd8d4f6f4d9d5b6221ba8c0ad, type: 3}
+        m_Texture: {fileID: 2800000, guid: b004d600cc1e9dc438de3ef14f58a9d3, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 05bb7397967eac94c9d6f39caa267a18, type: 3}
+        m_Texture: {fileID: 2800000, guid: e3d14d10bd475ec4681ff8c5fc410507, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RemapTex:
-        m_Texture: {fileID: 2800000, guid: 8ecf1a1ae132e3843aa5fe66ccf22c09, type: 3}
+        m_Texture: {fileID: 2800000, guid: 66e6e5dab07e9644387da1ebb6b67471, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _AlphaBias: 0
-    - _AlphaBoost: 4.51
+    - _AlphaBoost: 1.81
     - _AlphaThreshold: 0.03
-    - _Boost: 1
+    - _Boost: 2.92
     - _BumpScale: 1
     - _CalcTextureAlphaOn: 0
-    - _CloudOffsetOn: 1
+    - _CloudOffsetOn: 0
     - _CloudsOn: 1
     - _Cull: 0
-    - _Cutoff: 0.5
+    - _Cutoff: 0.855
     - _DepthOffset: 0
     - _DetailNormalMapScale: 1
     - _DisableRemapOn: 0
-    - _DistortionStrength: -0.21
+    - _DistortionStrength: 0.1
     - _DstBlend: 1
     - _ExternalAlpha: 1
     - _Fade: 1
@@ -61,7 +61,7 @@ Material:
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _InternalSimpleBlendMode: 0
-    - _InvFade: 11.21
+    - _InvFade: 2.7
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -77,12 +77,12 @@ Material:
     - _UseColor: 0
     - _UseUV1On: 0
     - _VertexAlphaOn: 0
-    - _VertexColorOn: 0
+    - _VertexColorOn: 1
     - _VertexOffsetOn: 0
     - _ZTest: 4
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _CutoffScroll: {r: 0, g: -10, b: 0, a: -8}
+    - _CutoffScroll: {r: 15, g: 15, b: 13, a: 13}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _TintColor: {r: 1, g: 1, b: 1, a: 1}

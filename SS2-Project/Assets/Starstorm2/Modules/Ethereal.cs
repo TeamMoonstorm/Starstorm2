@@ -487,17 +487,21 @@ namespace Moonstorm.Starstorm2
                         tele.bonusDirector.monsterCredit += (float)(int)(200f * Mathf.Pow(Run.instance.compensatedDifficultyCoefficient, 0.5f));
                         Debug.Log("added to bonus monstercred");
                     }
+
+                    
+
+                    //tele.holdoutZoneController.baseRadius = tele.holdoutZoneController.baseRadius * 1.5f;
                 }
             }
         }
 
-        /*private static void HoldoutZoneController_calcRadius(ref float radius)
+        private static void HoldoutZoneController_calcRadius(ref float radius)
         {
             if (teleIsEthereal)
             {
                 radius *= 1.5f;
             }
-        }*/
+        }
 
         /*private static void HoldoutZoneController_calcChargeRate(ref float rate)
         {
