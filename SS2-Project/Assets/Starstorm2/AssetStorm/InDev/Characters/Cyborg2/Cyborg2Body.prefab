@@ -66,7 +66,7 @@ Transform:
   m_GameObject: {fileID: 200647726769310275}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_Children:
   - {fileID: 5162146017664162037}
   - {fileID: 1979257243711150998}
@@ -396,8 +396,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1053258832129032426}
   m_LocalRotation: {x: 0.00000008146034, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 1.0317562, z: 0}
-  m_LocalScale: {x: 1.2011347, y: 1.2011347, z: 1.2011347}
+  m_LocalPosition: {x: -0, y: 0.913, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5148479284469705930}
   m_Father: {fileID: 2969737018289612977}
@@ -534,6 +534,7 @@ GameObject:
   - component: {fileID: 8467841194318990007}
   - component: {fileID: 4269496153077987429}
   - component: {fileID: 1004718732815417702}
+  - component: {fileID: 3442275506670629444}
   m_Layer: 0
   m_Name: Cyborg2Body
   m_TagString: Player
@@ -606,7 +607,7 @@ MonoBehaviour:
   bodyIndex: -1
   baseNameToken: SS2_CYBORG2_BODY_NAME
   subtitleNameToken: SS2_CYBORG2_BODY_SUBTITLE
-  bodyFlags: 0
+  bodyFlags: 2
   rootMotionInMainState: 0
   mainRootSpeed: 0
   baseMaxHealth: 110
@@ -662,13 +663,13 @@ MonoBehaviour:
   hideCrosshair: 0
   aimOriginTransform: {fileID: 5994769941687464914}
   hullClassification: 0
-  portraitIcon: {fileID: 2800000, guid: 7d90bd0331ab07e45b04215c5f0c9308, type: 3}
+  portraitIcon: {fileID: 2800000, guid: 569d613e909cca4429fa126c8fc9f44e, type: 3}
   bodyColor: {r: 0.43529415, g: 0.58431375, b: 0.5647059, a: 1}
   isChampion: 0
   currentVehicle: {fileID: 0}
   preferredPodPrefab: {fileID: 0}
   preferredInitialStateType:
-    _typeName: RoR2.RouletteChestController+Idle, RoR2, Version=0.0.0.0, Culture=neutral,
+    _typeName: EntityStates.GenericCharacterMain, RoR2, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   skinIndex: 0
   customKillTotalStatName: 
@@ -685,7 +686,7 @@ MonoBehaviour:
   m_Script: {fileID: -1699741063, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _modelTransform: {fileID: 0}
+  _modelTransform: {fileID: 2969737018289612977}
   modelBaseTransform: {fileID: 8665420764453311449}
   autoUpdateModelTransform: 1
   dontDetatchFromParent: 0
@@ -785,7 +786,7 @@ MonoBehaviour:
   m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillFamily: {fileID: 0}
+  _skillFamily: {fileID: 11400000, guid: 81f5796e03c274f4aa7f51bc42384bcc, type: 2}
   skillName: 
   hideInCharacterSelect: 0
   hasExecutedSuccessfully: 0
@@ -801,7 +802,7 @@ MonoBehaviour:
   m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillFamily: {fileID: 0}
+  _skillFamily: {fileID: 11400000, guid: dbd3d78e1519f8b48ae18786056d24a6, type: 2}
   skillName: 
   hideInCharacterSelect: 0
   hasExecutedSuccessfully: 0
@@ -817,7 +818,7 @@ MonoBehaviour:
   m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillFamily: {fileID: 0}
+  _skillFamily: {fileID: 11400000, guid: c93ba762327933d4cbdf6d539276a8cf, type: 2}
   skillName: SecondaryCharged
   hideInCharacterSelect: 0
   hasExecutedSuccessfully: 0
@@ -833,7 +834,7 @@ MonoBehaviour:
   m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillFamily: {fileID: 0}
+  _skillFamily: {fileID: 11400000, guid: 932f5f4e53762a6408e15612535effe4, type: 2}
   skillName: 
   hideInCharacterSelect: 0
   hasExecutedSuccessfully: 0
@@ -849,7 +850,7 @@ MonoBehaviour:
   m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillFamily: {fileID: 0}
+  _skillFamily: {fileID: 11400000, guid: 54dea37afeac0ba4aba8cc59ca2c0b06, type: 2}
   skillName: 
   hideInCharacterSelect: 0
   hasExecutedSuccessfully: 0
@@ -938,7 +939,7 @@ MonoBehaviour:
   m_Script: {fileID: -1067940895, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraParams: {fileID: 0}
+  cameraParams: {fileID: 11400000, guid: 8b1c3ca137f97d44da86b7650a2ee0b5, type: 2}
   cameraPivotTransform: {fileID: 0}
   fovOverride: 0
   recoil: {x: 0, y: 0}
@@ -1160,6 +1161,19 @@ MonoBehaviour:
   canBeHitStunned: 0
   canBeStunned: 0
   canBeFrozen: 1
+--- !u!114 &3442275506670629444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2260960647979714696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 781b7ea1a3994694eb82233928e954db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  primaryBuffDuration: 5
 --- !u!1 &2344722888769638743
 GameObject:
   m_ObjectHideFlags: 0
@@ -1691,7 +1705,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5734287030914820030}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4549960456625340505}
@@ -1708,7 +1722,7 @@ GameObject:
   - component: {fileID: 1234420586814448423}
   - component: {fileID: 4155064016416877018}
   - component: {fileID: 937228765377335665}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Hurtbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}

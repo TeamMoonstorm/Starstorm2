@@ -18,10 +18,11 @@ GameObject:
   - component: {fileID: 3823113393451570404}
   - component: {fileID: 873040815566630765}
   - component: {fileID: 4506577062129598372}
-  - component: {fileID: 2036875717403525302}
   - component: {fileID: 1184314225091819833}
   - component: {fileID: 1409126240315283302}
-  m_Layer: 0
+  - component: {fileID: 5139893156558139203}
+  - component: {fileID: 5931549400823739087}
+  m_Layer: 17
   m_Name: MagnetProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +104,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4503017066129919853
 MonoBehaviour:
@@ -152,9 +153,9 @@ MonoBehaviour:
   m_Script: {fileID: -1819008361, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifetime: 2.25
+  lifetime: 3
   lifetimeExpiredEffect: {fileID: 0}
-  desiredForwardSpeed: 30
+  desiredForwardSpeed: 22
   updateAfterFiring: 0
   enableVelocityOverLifetime: 0
   velocityOverLifetime:
@@ -213,7 +214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   falloffModel: 2
-  blastRadius: 18
+  blastRadius: 25
   blastDamageCoefficient: 1
   blastProcCoefficient: 1
   blastAttackerFiltering: 0
@@ -249,37 +250,10 @@ MonoBehaviour:
   destroyOnWorld: 1
   impactOnWorld: 0
   timerAfterImpact: 0
-  lifetime: 0
+  lifetime: 2.25
   lifetimeAfterImpact: 0
   lifetimeRandomOffset: 0
   transformSpace: 0
---- !u!114 &2036875717403525302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6055536033811015727}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1810124184, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fuse: 3
-  onFuse:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4506577062129598372}
-        m_MethodName: Detonate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1184314225091819833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,7 +268,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 25
   damping: 0.5
-  forceMagnitude: -1200
+  forceMagnitude: -1500
   forceCoefficientAtEdge: 0.5
   tetherVfxOrigin: {fileID: 1409126240315283302}
 --- !u!114 &1409126240315283302
@@ -310,6 +284,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tetherPrefab: {fileID: 0}
+--- !u!114 &5139893156558139203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6055536033811015727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1294804675, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groupName: Hitbox
+  hitBoxes:
+  - {fileID: 3171056118236630994}
+--- !u!114 &5931549400823739087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6055536033811015727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -899414464, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageCoefficient: 0.1
+  impactEffect: {fileID: 0}
+  forceVector: {x: 0, y: 0, z: 0}
+  overlapProcCoefficient: 0.1
+  maximumOverlapTargets: 100
+  onServerHit:
+    m_PersistentCalls:
+      m_Calls: []
+  fireFrequency: 60
+  resetInterval: 0.25
 --- !u!1 &6719685182788637804
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,8 +331,8 @@ GameObject:
   m_Component:
   - component: {fileID: 70393788034512050}
   - component: {fileID: 3171056118236630994}
-  m_Layer: 0
-  m_Name: GameObject
+  m_Layer: 12
+  m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -336,7 +347,7 @@ Transform:
   m_GameObject: {fileID: 6719685182788637804}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 7, y: 5, z: 7}
   m_Children: []
   m_Father: {fileID: 3812967791171488419}
   m_RootOrder: 0

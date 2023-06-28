@@ -7,10 +7,8 @@ using RoR2.Skills;
 using System;
 namespace Moonstorm.Starstorm2.Components
 {
-    public class ProjectileTeleporter : MonoBehaviour
+    public class TeleporterProjectile : MonoBehaviour
     {
-        public static SkillDef teleportSkillDef;
-
         private ProjectileController controller;
         private GameObject owner;
         private ProjectileTeleporterOwnership ownership;
@@ -21,10 +19,11 @@ namespace Moonstorm.Starstorm2.Components
 
             if(this.owner)
             {
-                this.ownership = this.owner.GetComponent<ProjectileTeleporterOwnership>();
+                //this.ownership = this.owner.GetComponent<ProjectileTeleporterOwnership>(); 
                 if(!this.ownership)
                 {
                     this.ownership = this.owner.AddComponent<ProjectileTeleporterOwnership>();
+                    this.ownership.teleporter = this;
                 }
             }
         }
@@ -33,26 +32,43 @@ namespace Moonstorm.Starstorm2.Components
             //lol
             return base.transform.position;
         }
+        public void OnTeleport()
+        {
+            //vfx
+            //sound
+            //teleporter anim??
+            Destroy(base.gameObject);
+        }
 
         public class ProjectileTeleporterOwnership : MonoBehaviour
         {
-            public ProjectileTeleporter teleporter;
+            public TeleporterProjectile teleporter;
+            private SkillDef teleportSkillDef;
             private CharacterBody body;
             private SkillLocator skillLocator;
             private void Awake()
             {
                 this.body = base.GetComponent<CharacterBody>();
+
+                this.teleportSkillDef = SS2Assets.LoadAsset<SkillDef>("Cyborg2Teleport", SS2Bundle.Indev);
                 if(this.body)
                 {
                     this.skillLocator = body.skillLocator;
-                    this.skillLocator.utility.SetSkillOverride(this, ProjectileTeleporter.teleportSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+                    this.skillLocator.utility.SetSkillOverride(this, teleportSkillDef, GenericSkill.SkillOverridePriority.Contextual);
                 }
             }
+
+            public void DoTeleport()
+            {
+                this.teleporter.OnTeleport();
+                this.UnsetOverride();
+            }
+
             public void UnsetOverride()
             {
                 if(this.skillLocator)
                 {
-                    this.skillLocator.utility.UnsetSkillOverride(this, ProjectileTeleporter.teleportSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+                    this.skillLocator.utility.UnsetSkillOverride(this, teleportSkillDef, GenericSkill.SkillOverridePriority.Contextual);
                 }
                 Destroy(this);
             }

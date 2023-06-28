@@ -22,12 +22,12 @@ namespace EntityStates.NemMerc
 
         private float duration;
 
+        private Vector3 teleportStartPosition;
         private Vector3 teleportTarget;
 
         private CameraFlipper camera;
         private GameObject target;
-        private bool usedGravity;
-        private bool targetIsHologram;
+
         public override void OnEnter()
         {
             base.OnEnter();
@@ -37,32 +37,21 @@ namespace EntityStates.NemMerc
             //sound
             // overlay material
             //need to fix teleport near walls
-         
-            
 
             NemMercTracker tracker = base.GetComponent<NemMercTracker>();
             this.target = tracker.GetTrackingTarget();
 
-            this.targetIsHologram = this.target.GetComponent<NemMercHologram>();
+            this.duration = ShadowStep.baseDuration; //movespeedstat ??
 
-            this.duration = ShadowStep.baseDuration * (this.targetIsHologram ? hologramDurationCoefficient : 1); // movespeedstat ?
-            float teleportTime = this.targetIsHologram ? this.duration : this.duration * ShadowStep.teleportTime;
-            float distanceBehind = targetIsHologram ? 0 : ShadowStep.teleportBehindDistance;
-            Vector3 between = target.transform.position - base.transform.position;
-            float distance = between.magnitude;
-            Vector3 direction = between.normalized;
-            
-            this.teleportTarget = direction * (distance + distanceBehind) + base.transform.position;
-            this.teleportTarget.y = Mathf.Max(this.target.transform.position.y + teleportYBonus, teleportTarget.y);
+            this.teleportStartPosition = base.transform.position;
+            this.UpdateTarget();
 
             this.camera = base.gameObject.AddComponent<CameraFlipper>();
-            this.camera.StartCameraFlip(this.teleportTarget, target, this.duration * teleportTime);
+            this.camera.StartCameraFlip(this.teleportTarget, target, this.duration * ShadowStep.teleportTime);
             this.camera.movementCurve = ShadowStep.cameraMovementCurve;
-
-            this.usedGravity = base.characterMotor.useGravity;
-            base.characterMotor.useGravity = false;
+                          
             base.characterMotor.velocity = Vector3.zero;
-
+            
             if (NetworkServer.active)
             {
                 base.characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
@@ -73,12 +62,13 @@ namespace EntityStates.NemMerc
         {
             if(this.target)
             {
-                Vector3 between = target.transform.position - base.transform.position;
+                Vector3 between = target.transform.position - this.teleportStartPosition;
                 float distance = between.magnitude;
                 Vector3 direction = between.normalized;
-                float distanceBehind = targetIsHologram ? 0 : ShadowStep.teleportBehindDistance;
-                this.teleportTarget = direction * (distance + distanceBehind) + base.transform.position;
+                this.teleportTarget = direction * (distance + ShadowStep.teleportBehindDistance) + base.transform.position;
                 this.teleportTarget.y = Mathf.Max(this.target.transform.position.y + teleportYBonus, teleportTarget.y);
+                if (this.camera)
+                    this.camera.cameraEndPosition = this.teleportTarget;
             }
         }
 
@@ -86,6 +76,7 @@ namespace EntityStates.NemMerc
         {
             if(base.skillLocator)
             {
+
             }
         }
         public override void FixedUpdate()
@@ -96,6 +87,7 @@ namespace EntityStates.NemMerc
 
             base.characterMotor.velocity = Vector3.zero;
 
+            if (base.isAuthority && base.fixedAge >= this.duration)
             {
                 if(this.camera)
                     this.camera.EndCameraFlip();

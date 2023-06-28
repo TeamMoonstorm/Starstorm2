@@ -17,31 +17,38 @@ namespace EntityStates.Cyborg2
 		public static float bloom = 0.5f;
 		public static float recoilAmplitude = 7f;
 		public static float baseDuration = 1.5f;
-		public static float earlyExitTime = 0.2f;
-		public static float damageCoefficient = 3f;
+		public static float earlyExitTime = 0.5f;
+		public static float damageCoefficient = 20f;
 		public static float force = 1500f;
+		public static float chargeTime = 0.33f;
 
 		private float duration;
+		private bool hasFired;
 		public override void OnEnter()
 		{
 			base.OnEnter();
 			this.duration = baseDuration / attackSpeedStat;
 			StartAimMode();
-			Fire();
 			//anim
 		}
 
 		public override void FixedUpdate()
 		{
 			base.FixedUpdate();
+			if(base.fixedAge >= this.duration * chargeTime && !this.hasFired)
+            {
+				this.Fire();
+            }
 			if (base.fixedAge >= this.duration && base.isAuthority)
 			{
 				outer.SetNextStateToMain();
 			}
 		}
 
+
 		private void Fire()
 		{
+			this.hasFired = true;
 			Util.PlaySound(soundString, base.gameObject);
 			EffectManager.SimpleMuzzleFlash(muzzleEffectPrefab, base.gameObject, "CannonR", true);
 			AddRecoil(-1f * recoilAmplitude, -1.5f * recoilAmplitude, -0.25f * recoilAmplitude, 0.25f * recoilAmplitude);
@@ -63,7 +70,7 @@ namespace EntityStates.Cyborg2
 
 		public override InterruptPriority GetMinimumInterruptPriority()
 		{
-			return (base.fixedAge >= this.duration * earlyExitTime) ? InterruptPriority.Any : InterruptPriority.PrioritySkill;
+			return (base.fixedAge >= this.duration * earlyExitTime) ? InterruptPriority.Any : InterruptPriority.Pain;
 		}
 	}
 }

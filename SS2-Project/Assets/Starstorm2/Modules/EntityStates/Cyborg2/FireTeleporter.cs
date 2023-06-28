@@ -6,58 +6,41 @@ using System.Threading.Tasks;
 using RoR2;
 using UnityEngine;
 using RoR2.Projectile;
+using UnityEngine.AddressableAssets;
 namespace EntityStates.Cyborg2
 {
-	public class FireTeleporter : BaseSkillState
+	public class FireTeleporter : AimThrowableBase
 	{
 		public static GameObject projectilePrefab;
 		public static string soundString = "Play_engi_M2_throw";
 		public static GameObject muzzleEffectPrefab;
 
-		public static float bloom = 0.5f;
-		public static float recoilAmplitude = 7f;
-		public static float baseDuration = 1.5f;
-		public static float earlyExitTime = 0.2f;
+		private static GameObject INDICATOR = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/BasicThrowableVisualizer.prefab").WaitForCompletion();
 
-		private float duration;
+
+		private static float maxDistanceee = 40f;
+
+		//stupid
 		public override void OnEnter()
 		{
+			this.arcVisualizerPrefab = INDICATOR;
+			this.endpointVisualizerPrefab = Huntress.ArrowRain.areaIndicatorPrefab;
+			this.rayRadius = 0.5f;
+			this.useGravity = true;
+			this.endpointVisualizerRadiusScale = 0.5f;
+			this.maxDistance = maxDistanceee;
+			base.projectilePrefab = FireTeleporter.projectilePrefab;
+			this.damageCoefficient = 0f;
+			this.baseMinimumDuration = 0.15f;
+
 			base.OnEnter();
-			this.duration = baseDuration / attackSpeedStat;
 			StartAimMode();
-			Fire();
 			//anim
-		}
-		public override void FixedUpdate()
-		{
-			base.FixedUpdate();
-			if (base.fixedAge >= this.duration && base.isAuthority)
-			{
-				outer.SetNextStateToMain();
-			}
-		}
-		private void Fire()
-		{
-			Util.PlaySound(soundString, base.gameObject);
-			EffectManager.SimpleMuzzleFlash(muzzleEffectPrefab, base.gameObject, "CannonR", true);
-			AddRecoil(-1f * recoilAmplitude, -1.5f * recoilAmplitude, -0.25f * recoilAmplitude, 0.25f * recoilAmplitude);
-			base.characterBody.AddSpreadBloom(bloom);
-			Ray aimRay = GetAimRay();
-			if (base.isAuthority)
-			{
-				FireProjectileInfo fireProjectileInfo = default(FireProjectileInfo);
-				fireProjectileInfo.projectilePrefab = projectilePrefab;
-				fireProjectileInfo.position = aimRay.origin;
-				fireProjectileInfo.rotation = Util.QuaternionSafeLookRotation(aimRay.direction);
-				fireProjectileInfo.owner = base.gameObject;
-				fireProjectileInfo.crit = RollCrit();
-				ProjectileManager.instance.FireProjectile(fireProjectileInfo);
-			}
 		}
 
 		public override InterruptPriority GetMinimumInterruptPriority()
 		{
-			return (base.fixedAge >= this.duration * earlyExitTime) ? InterruptPriority.Any : InterruptPriority.PrioritySkill;
+			return InterruptPriority.Any;
 		}
 	}
 }

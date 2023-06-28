@@ -10,12 +10,13 @@ namespace EntityStates.Cyborg2
 {
     public class DoubleCannon : BaseSkillState
     {
-        public static float baseDuration;
-        public static float bulletMaxDistance;
-        public static float bulletRadius;
+        public static float baseDuration = 1.33f;
+        public static float bulletMaxDistance = 256;
+        public static float bulletRadius = 1;
+        public static float secondShotTime = 0.125f;
 
         [NonSerialized]
-        public static GameObject TRACERTEMP = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Huntress/TracerHuntressSnipe.prefab").WaitForCompletion();
+        private static GameObject TRACERTEMP = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Huntress/TracerHuntressSnipe.prefab").WaitForCompletion();
 
         [SerializeField]
         public float damageCoefficient = 2f;
@@ -30,11 +31,13 @@ namespace EntityStates.Cyborg2
         [SerializeField]
         public GameObject muzzleFlashPrefab;
         [SerializeField]
-        public string fireSoundString = "Play_lunar_golem_attack1_launch";
+        public string fireSoundString = "Play_lunar_golem_attack1_launch"; //"Play_MULT_m1_snipe_shoot"
         [SerializeField]
         public float recoil = 1;
         [SerializeField]
-        public float fireSoundPitch;
+        public float bloom = .4f;
+        [SerializeField]
+        public float fireSoundPitch = 1;
 
         private float duration;
         private bool hasFiredSecondShot;
@@ -52,10 +55,15 @@ namespace EntityStates.Cyborg2
         {
             base.FixedUpdate();
 
-            if(base.fixedAge >= this.duration / 2 && !this.hasFiredSecondShot)
+            if(base.fixedAge >= this.duration * secondShotTime && !this.hasFiredSecondShot)
             {
                 this.hasFiredSecondShot = true;
                 Fire("CannonL");
+            }
+
+            if(base.fixedAge >= this.duration)
+            {
+                this.outer.SetNextStateToMain();
             }
         }
         public override void OnExit()
@@ -71,14 +79,11 @@ namespace EntityStates.Cyborg2
             Util.PlayAttackSpeedSound(this.fireSoundString, base.gameObject, this.fireSoundPitch);
             EffectManager.SimpleMuzzleFlash(this.muzzleFlashPrefab, base.gameObject, muzzleName, false);
             //anim
+            base.characterBody.AddSpreadBloom(this.bloom);
             base.AddRecoil(-1f * this.recoil, -1.5f * this.recoil, -1f * this.recoil, 1f * this.recoil);
 
             Ray aimRay = base.GetAimRay();
             float spreadAngle = 0f;
-            if (base.characterBody)
-            {
-                spreadAngle = base.characterBody.spreadBloomAngle;
-            }
             new BulletAttack
             {
                 aimVector = aimRay.direction,
@@ -97,7 +102,7 @@ namespace EntityStates.Cyborg2
                 isCrit = base.RollCrit(),
                 muzzleName = muzzleName,
                 minSpread = 0,
-                maxSpread = spreadAngle,
+                maxSpread = 0,
                 hitEffectPrefab = this.hitEffectPrefab,
                 smartCollision = true,
                 tracerEffectPrefab = this.tracerPrefab

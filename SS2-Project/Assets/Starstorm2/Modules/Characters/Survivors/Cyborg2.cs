@@ -34,6 +34,10 @@ namespace Moonstorm.Starstorm2.Survivors
             var cb = BodyPrefab.GetComponent<CharacterBody>();
             cb._defaultCrosshairPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/StandardCrosshair.prefab").WaitForCompletion();
             cb.GetComponent<ModelLocator>().modelTransform.GetComponent<FootstepHandler>().footstepDustPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/GenericFootstepDust.prefab").WaitForCompletion();
+
+            GameObject p = SS2Assets.LoadAsset<GameObject>("MagnetProjectile", SS2Bundle.Indev);
+            p.GetComponent<RoR2.Projectile.ProjectileController>().ghostPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/BFG/BeamSphereGhost.prefab").WaitForCompletion();
+            p.GetComponent<RoR2.Projectile.ProjectileExplosion>().explosionEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/BFG/BeamSphereExplosion.prefab").WaitForCompletion();
         }
     }
 }
