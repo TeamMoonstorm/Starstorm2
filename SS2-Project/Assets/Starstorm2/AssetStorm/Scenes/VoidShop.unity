@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 539968692}
+  m_Sun: {fileID: 0}
   m_IndirectSpecularColor: {r: 0.083333254, g: 0.083333254, b: 0.16666651, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
@@ -5033,6 +5033,131 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 35821843}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &52475067
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 52475068}
+  - component: {fileID: 52475070}
+  - component: {fileID: 52475069}
+  m_Layer: 0
+  m_Name: Directional Light (SUN)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &52475068
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 52475067}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1533333761}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &52475069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 52475067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1654260760, guid: 06dd3d5416bf43ea368cc39ff96e6d5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NGSS_KEEP_ONDISABLE: 1
+  NGSS_NO_UPDATE_ON_PLAY: 0
+  NGSS_SHADOWS_RESOLUTION: 256
+  NGSS_SAMPLING_TEST: 16
+  NGSS_SAMPLING_FILTER: 48
+  NGSS_SAMPLING_DISTANCE: 75
+  NGSS_SHADOWS_SOFTNESS: 1
+  NGSS_PCSS_ENABLED: 0
+  NGSS_PCSS_SOFTNESS_NEAR: 0.125
+  NGSS_PCSS_SOFTNESS_FAR: 1
+  NGSS_NOISE_TO_DITHERING_SCALE: 0
+  NGSS_NOISE_TEXTURE: {fileID: 0}
+  NGSS_DENOISER_ENABLED: 1
+  NGSS_DENOISER_ITERATIONS: 2
+  NGSS_DENOISER_BLUR: 0.25
+  NGSS_DENOISER_EDGE_TOLERANCE: 0.5
+  NGSS_RECEIVER_PLANE_BIAS: 0
+  NGSS_CASCADES_BLENDING: 1
+  NGSS_CASCADES_BLENDING_VALUE: 1
+  NGSS_CASCADES_SOFTNESS_NORMALIZATION: 1
+--- !u!108 &52475070
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 52475067}
+  m_Enabled: 1
+  serializedVersion: 10
+  m_Type: 1
+  m_Shape: 0
+  m_Color: {r: 0.39607844, g: 0.75686276, b: 1, a: 1}
+  m_Intensity: 3
+  m_Range: 10
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize: 150
+  m_Shadows:
+    m_Type: 2
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 8600000, guid: e21abdde7d2273041b182c0dfb0d2ab7, type: 2}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!1001 &52845227
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6926,8 +7051,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 7317754273265066030, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &229483910
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -8474,8 +8598,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 7317754273265066030, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &483569861
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -9147,132 +9270,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 537068963}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &539968691
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 539968693}
-  - component: {fileID: 539968692}
-  - component: {fileID: 539968694}
-  m_Layer: 0
-  m_Name: Directional Light (SUN)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!108 &539968692
-Light:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 539968691}
-  m_Enabled: 1
-  serializedVersion: 10
-  m_Type: 1
-  m_Shape: 0
-  m_Color: {r: 0.39607844, g: 0.75686276, b: 1, a: 1}
-  m_Intensity: 3
-  m_Range: 10
-  m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
-  m_CookieSize: 150
-  m_Shadows:
-    m_Type: 2
-    m_Resolution: -1
-    m_CustomResolution: -1
-    m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
-    m_CullingMatrixOverride:
-      e00: 1
-      e01: 0
-      e02: 0
-      e03: 0
-      e10: 0
-      e11: 1
-      e12: 0
-      e13: 0
-      e20: 0
-      e21: 0
-      e22: 1
-      e23: 0
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    m_UseCullingMatrixOverride: 0
-  m_Cookie: {fileID: 8600000, guid: e21abdde7d2273041b182c0dfb0d2ab7, type: 2}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingLayerMask: 1
-  m_Lightmapping: 4
-  m_LightShadowCasterMode: 0
-  m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
-  m_UseBoundingSphereOverride: 0
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
---- !u!4 &539968693
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 539968691}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -10.826276, y: -9.480627, z: 43.338623}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1533333761}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &539968694
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 539968691}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1654260760, guid: 06dd3d5416bf43ea368cc39ff96e6d5a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NGSS_KEEP_ONDISABLE: 1
-  NGSS_NO_UPDATE_ON_PLAY: 0
-  NGSS_SHADOWS_RESOLUTION: 256
-  NGSS_SAMPLING_TEST: 16
-  NGSS_SAMPLING_FILTER: 48
-  NGSS_SAMPLING_DISTANCE: 75
-  NGSS_SHADOWS_SOFTNESS: 1
-  NGSS_PCSS_ENABLED: 0
-  NGSS_PCSS_SOFTNESS_NEAR: 0.125
-  NGSS_PCSS_SOFTNESS_FAR: 1
-  NGSS_NOISE_TO_DITHERING_SCALE: 0
-  NGSS_NOISE_TEXTURE: {fileID: -7261684554061668849, guid: 00000000000000000000000000000000,
-    type: 0}
-  NGSS_DENOISER_ENABLED: 1
-  NGSS_DENOISER_ITERATIONS: 2
-  NGSS_DENOISER_BLUR: 0.25
-  NGSS_DENOISER_EDGE_TOLERANCE: 0.5
-  NGSS_RECEIVER_PLANE_BIAS: 0
-  NGSS_CASCADES_BLENDING: 1
-  NGSS_CASCADES_BLENDING_VALUE: 1
-  NGSS_CASCADES_SOFTNESS_NORMALIZATION: 1
 --- !u!1 &556973606
 GameObject:
   m_ObjectHideFlags: 0
@@ -22103,8 +22100,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 7317754273265066030, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &856702924
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -23037,8 +23033,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 8951765037430703497, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &972199809
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -26857,7 +26852,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 539968693}
+  - {fileID: 52475068}
   - {fileID: 14997267}
   - {fileID: 247407172}
   - {fileID: 756878023}
@@ -37580,8 +37575,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 8951765037430703497, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &13821101861721373
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -37803,8 +37797,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 8951765037430703497, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &501693978770927644
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -38109,8 +38102,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 7317754273265066030, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &1461483318482894969
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -38315,8 +38307,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 7317754273265066030, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &1710500339994020227
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -38463,8 +38454,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 8951765037430703497, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!33 &2041014091699602387
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -38562,8 +38552,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 7317754273265066030, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &2197531736297641757
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -38926,8 +38915,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 2328346994976287871, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &2820884868341599553
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -39013,8 +39001,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 8951765037430703497, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &2831609849152520066
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -39061,8 +39048,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 7317754273265066030, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &2925703080410297825
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -39258,8 +39244,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 7317754273265066030, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &3360951140180851055
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -39532,8 +39517,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 7317754273265066030, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &3819451664516390896
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -39722,8 +39706,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 8951765037430703497, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &4107284279461245855
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -39770,8 +39753,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 2328346994976287871, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &4115589413441548208
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -39831,8 +39813,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 8951765037430703497, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &4283825593639946255
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -40210,8 +40191,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 7317754273265066030, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &5168138277083113519
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -40427,8 +40407,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 2328346994976287871, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &5523384895252199933
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -40588,8 +40567,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 2328346994976287871, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &5868348467615280802
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -40740,8 +40718,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 7317754273265066030, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &6284437228153344987
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -40788,8 +40765,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 7317754273265066030, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &6381969068516063442
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -40922,8 +40898,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 7317754273265066030, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &6490119671508628879
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -41056,8 +41031,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 2328346994976287871, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &6546967210584763915
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -41118,8 +41092,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 8951765037430703497, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &6670162118638071645
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -41219,8 +41192,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 7317754273265066030, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &6746608091204518000
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -41281,8 +41253,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 7317754273265066030, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &6972713137989692764
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -41368,8 +41339,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 8951765037430703497, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &7121228748606221938
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -41533,8 +41503,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 7317754273265066030, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &7328173602365947226
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -41635,8 +41604,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 2328346994976287871, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &7788486053710635914
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -41683,8 +41651,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 7317754273265066030, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &7822970341344719335
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -42278,8 +42245,7 @@ MonoBehaviour:
   m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceDef: {fileID: 7317754273265066030, guid: 00000000000000000000000000000000,
-    type: 0}
+  surfaceDef: {fileID: 0}
 --- !u!64 &8548496908213571650
 MeshCollider:
   m_ObjectHideFlags: 0
