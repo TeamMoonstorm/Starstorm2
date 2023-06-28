@@ -33,6 +33,8 @@ namespace Moonstorm.Starstorm2.Interactables
         /// </summary>
         public static List<KeyValuePair<string, int>> dronePairs2 = new List<KeyValuePair<string, int>>();
 
+        public static Dictionary<string, Sprite> droneSpritePairs = new Dictionary<string, Sprite>();
+
         public static CostTypeDef droneCostDef;
         public static int droneCostIndex;
 
@@ -71,31 +73,39 @@ namespace Moonstorm.Starstorm2.Interactables
                 var gameobject = BodyCatalog.FindBodyPrefab(pair.Key);
                 var body = gameobject.GetComponent<CharacterBody>();
 
-                var portrait = body.portraitIcon;
+                Sprite output = null;
+                bool success = droneSpritePairs.TryGetValue(pair.Key, out output);
+                if (!success)
+                {
+                    Texture icon = body.portraitIcon;
 
-                SS2Log.Info("boolean was true! " + boolean + " | " + value + " | " + pair.Key + " | " + pair.Value + " | ||| " + portrait.name);
+                    Rect rect = new Rect(0, 0, icon.width, icon.height);
+                    icon.filterMode = FilterMode.Point;
+                    RenderTexture rt = RenderTexture.GetTemporary(icon.width, icon.height);
+                    rt.filterMode = FilterMode.Point;
+                    RenderTexture.active = rt;
+                    Graphics.Blit(icon, rt);
+                    Texture2D tex2d = new Texture2D((int)rect.width, (int)rect.height, TextureFormat.RGBA32, false);
+                    tex2d.ReadPixels(new Rect(rect.x, icon.height - rect.height - rect.y, rect.width, rect.height), 0, 0);
+                    tex2d.Apply();
 
-                Texture icon = body.portraitIcon;
-                //Texture2D icon = body.portraitIcon as Texture2D;
-                Rect rect = new Rect(0, 0, icon.width, icon.height);
-                icon.filterMode = FilterMode.Point;
-                RenderTexture rt = RenderTexture.GetTemporary(icon.width, icon.height);
-                rt.filterMode = FilterMode.Point;
-                RenderTexture.active = rt;
-                Graphics.Blit(icon, rt);
-                Texture2D tex2d = new Texture2D((int)rect.width, (int)rect.height, TextureFormat.RGBA32, false);
-                tex2d.ReadPixels(new Rect(rect.x, icon.height - rect.height - rect.y, rect.width, rect.height), 0, 0);
-                tex2d.Apply();
-                RenderTexture.active = null;
+                    RenderTexture.active = null;
+                    tex2d.wrapMode = TextureWrapMode.Clamp;
+                    tex2d.filterMode = FilterMode.Bilinear;
+                    output = Sprite.Create(tex2d, new Rect(0, 0, tex2d.width, tex2d.height), new Vector2(.5f, .5f), 25);
+                    //output.pixelsPerUnit = 25;
+                    output.name = body.portraitIcon.name + "Refabricator";
+                    
+                    droneSpritePairs.Add(pair.Key, output);
+                }
 
-                Sprite sprite = Sprite.Create(tex2d, new Rect(0, 0, tex2d.width, tex2d.height), new Vector2(tex2d.width / 2, tex2d.height / 2));
-                self.iconSpriteRenderer.sprite = sprite;
+                self.iconSpriteRenderer.sprite = output;
 
                 Color color = ColorCatalog.GetColor(ColorCatalog.ColorIndex.Tier1Item);
-                self.trailToColor.startColor = color;
+                self.trailToColor.startColor *= color;
                 self.trailToColor.endColor *= color;
                 for (int i = 0; i < self.particlesToColor.Length; i++)
-                {
+                {   
                     ParticleSystem particleSystem = self.particlesToColor[i];
                     var main = particleSystem.main;
                     main.startColor = color;
@@ -109,12 +119,8 @@ namespace Moonstorm.Starstorm2.Interactables
             }
             else
             {
-                SS2Log.Info("boolean was false!!!!!!!!!!! " + boolean + " | " + value);
                 orig(self);
             }
-
-
-            orig(self);
         }
 
         private void overrideDroneImpact(On.EntityStates.Drone.DeathState.orig_OnImpactServer orig, EntityStates.Drone.DeathState self, Vector3 contactPoint)
@@ -128,17 +134,6 @@ namespace Moonstorm.Starstorm2.Interactables
 
         private void SetupDroneValueList()
         {
-            //dronePairs.Add("Turret1Body", 35);
-            //dronePairs.Add("Drone1Body", 40); //gunner
-            //dronePairs.Add("Drone2Body", 40); //healing
-            //dronePairs.Add("MissileDroneBody", 60);
-            //dronePairs.Add("EquipmentDroneBody", 60); //takes equipment so uhhhh i dunno
-            //dronePairs.Add("EmergencyDroneBody", 100);
-            //dronePairs.Add("FlameDroneBody", 100);
-            //dronePairs.Add("MegaDroneBody", 350);
-            //
-            //dronePairs.Add("ShockDroneBody", 40);
-
             dronePairs2.Add(new KeyValuePair<string, int>("Turret1Body", 35));
             dronePairs2.Add(new KeyValuePair<string, int>("Drone1Body", 40)); //gunner
             dronePairs2.Add(new KeyValuePair<string, int>("Drone2Body", 40)); //healing
@@ -149,106 +144,7 @@ namespace Moonstorm.Starstorm2.Interactables
             dronePairs2.Add(new KeyValuePair<string, int>("MegaDroneBody", 350));
 
             dronePairs2.Add(new KeyValuePair<string, int>("ShockDroneBody", 40));
-            //dronePairs.Add("", 15);
-            //dronePairs.Add("", 15);
-
-            //foreach (string bodyName in defaultBodyNames)
-            //{
-            //    BodyIndex index = BodyCatalog.FindBodyIndexCaseInsensitive(bodyName);
-            //    if (index != BodyIndex.None)
-            //    {
-            //        AddBodyToIllegalTerminationList(index);
-            //    }
-            //}
         }
-
-        //private void getInteractableCards() //
-        //{
-        //    GatherAddressableAssets<InteractableSpawnCard>("/isc", (asset) => interactableSpawnCards.Add(asset));
-        //    On.RoR2.ClassicStageInfo.Start += AddCurrentStageIscsToCache;
-        //    //On.RoR2.ClassicStageInfo.Start += GetValidBodies;
-        //}
-        //
-        //private void GetValidBodies(On.RoR2.ClassicStageInfo.orig_Start orig, ClassicStageInfo self)
-        //{
-        //    orig(self);
-        //    GameObject[] list = BodyCatalog.allBodyPrefabs.ToArray();
-        //    foreach(var body in list)
-        //    {
-        //        var cbody = body.GetComponent<CharacterBody>();
-        //        if((cbody.bodyFlags & CharacterBody.BodyFlags.Mechanical) > CharacterBody.BodyFlags.None){
-        //            characterBodies.Add(cbody);
-        //        }
-        //    }
-        //}
-        //
-        //private static void GatherAddressableAssets<T>(string filterKey, Action<T> onAssetLoaded)
-        //{
-        //    RoR2Application.onLoad += () =>
-        //    {
-        //        foreach (var resourceLocator in Addressables.ResourceLocators)
-        //        {
-        //            foreach (var key in resourceLocator.Keys)
-        //            {
-        //                var keyString = key.ToString();
-        //                if (keyString.Contains(filterKey))
-        //                {
-        //                    var iscLoadRequest = Addressables.LoadAssetAsync<T>(keyString);
-        //
-        //                    iscLoadRequest.Completed += (completedAsyncOperation) =>
-        //                    {
-        //                        if (completedAsyncOperation.Status == AsyncOperationStatus.Succeeded)
-        //                        {
-        //                            onAssetLoaded(completedAsyncOperation.Result);
-        //                        }
-        //                    };
-        //                }
-        //            }
-        //        }
-        //    };
-        //}
-        //
-        //// There is no real good way to query for all custom iscs afaik
-        //// So let's lazily add them as the player encounter stages
-        //private void AddCurrentStageIscsToCache(On.RoR2.ClassicStageInfo.orig_Start orig, ClassicStageInfo self)
-        //{
-        //    orig(self);
-        //    var iscsOfCurrentStage =
-        //        self.interactableCategories.categories.
-        //        SelectMany(category => category.cards).
-        //        Select(directorCard => directorCard.spawnCard).
-        //        Where(spawnCard => interactableSpawnCards.All(existingIsc => existingIsc.name != spawnCard.name)).
-        //        Cast<InteractableSpawnCard>();
-        //    interactableSpawnCards.AddRange(iscsOfCurrentStage);
-        //
-        //
-        //    GameObject[] list = BodyCatalog.allBodyPrefabs.ToArray();
-        //    foreach (var body in list)
-        //    {
-        //        var cbody = body.GetComponent<CharacterBody>();
-        //        if ((cbody.bodyFlags & CharacterBody.BodyFlags.Mechanical) > CharacterBody.BodyFlags.None)
-        //        {
-        //            characterBodies.Add(cbody);
-        //        }
-        //    }
-        //
-        //    foreach(var card in interactableSpawnCards)
-        //    {
-        //        var summon = card.prefab.GetComponent<SummonMasterBehavior>();
-        //        if (summon)
-        //        {
-        //            SS2Log.Info("summon master for " + card.name + " is " + summon.masterPrefab);
-        //            foreach(var body in characterBodies)
-        //            {
-        //                if(body.master.name == "")
-        //                {
-        //
-        //                }
-        //            }
-        //        }
-        //    }
-        //
-        //}
 
         private void addDroneCostType(List<CostTypeDef> obj)
         {
@@ -261,11 +157,8 @@ namespace Moonstorm.Starstorm2.Interactables
             droneCostDef.saturateWorldStyledCostString = true;
             droneCostDef.darkenWorldStyledCostString = false;
             droneCostIndex = CostTypeCatalog.costTypeDefs.Length + obj.Count;
-            //LanguageAPI.Add("VV_COST_VOIDITEM_FORMAT", "1 Item(s)");
             obj.Add(droneCostDef);
         }
-
-
 
         private static class DroneCostTypeHelper
         {
@@ -323,21 +216,6 @@ namespace Moonstorm.Starstorm2.Interactables
 
             public static void PayCost(CostTypeDef costTypeDef, CostTypeDef.PayCostContext context)
             {
-
-                //SS2Log.Debug("all bodies: " + BodyCatalog.allBodyPrefabs.ToString());
-                GameObject[] list = BodyCatalog.allBodyPrefabs.ToArray();
-                int a = 0;
-                foreach (GameObject obj in list)
-                {
-                    var body1 = obj.GetComponent<CharacterBody>();
-                    if (body1)
-                    {
-                        //SS2Log.Info("body " + a + " name token: " + body1.baseNameToken + " | " + body1.name);
-                    }
-                    //SS2Log.Debug(a + " - obj name: " + obj.name);
-                    ++a;
-                }
-
                 CharacterBody body = context.activator.GetComponent<CharacterBody>();
                 int cost = context.cost;
 
@@ -348,7 +226,6 @@ namespace Moonstorm.Starstorm2.Interactables
                     List<CharacterMaster> validMinions = new List<CharacterMaster>();
                     foreach (var drone in members)
                     {
-                        //SS2Log.Info("hi | " + members.Length);
                         if (drone)
                         {
                             CharacterMaster master = drone.GetComponent<CharacterMaster>();
@@ -356,7 +233,6 @@ namespace Moonstorm.Starstorm2.Interactables
                             {
                                 var droneBody = master.GetBody();
 
-                                //SS2Log.Info("flags: " + master.miscFlags + " | ind: " + master.masterIndex + " | body flags " + droneBody.bodyFlags + " | " + droneBody.baseNameToken);
                                 if ((droneBody.bodyFlags & CharacterBody.BodyFlags.Mechanical) > CharacterBody.BodyFlags.None)
                                 {
                                     foreach (var pair in dronePairs2)
@@ -369,11 +245,7 @@ namespace Moonstorm.Starstorm2.Interactables
                                     }
                                 }
                             }
-                            //SS2Log.Info("flags: " + master.miscFlags + " | ind: " + master.masterIndex + " | " + master);
                         }
-                        //CharacterMaster master = drone.GetComponent<CharacterMaster>();
-                        //SS2Log.Info("flags: " + master.miscFlags + " | ind: " + master.masterIndex + " | " + master);
-
                     }
 
                     Util.ShuffleList(validMinions, context.rng);
@@ -383,21 +255,13 @@ namespace Moonstorm.Starstorm2.Interactables
                         TakeOne();
                     }
                     MultiShopCardUtils.OnNonMoneyPurchase(context);
-                    void TakeOne()//Inventory inventory, CostTypeDef.PayCostContext context, int cost)
+                    void TakeOne()
                     {
                         for (int i = 0; i < validMinions.Count(); ++i)
                         {
                             if (validMinions[i])
                             {
                                 var drone = validMinions[i].GetBody();
-                                //foreach (var pair in dronePairs2)
-                                //{
-                                //    //SS2Log.Info("testing " + pair.Key);
-                                //    if (drone.bodyIndex == BodyCatalog.FindBodyIndex(pair.Key))
-                                //    {
-                                //        SS2Log.Info("IOU one item with value modifier " + pair.Value);
-                                //    }
-                                //}
 
                                 for (int j = 0; j < dronePairs2.Count; ++j)
                                 {
@@ -415,28 +279,12 @@ namespace Moonstorm.Starstorm2.Interactables
 
                                         effectData.SetNetworkedObjectReference(context.purchasedObject);
                                         EffectManager.SpawnEffect(itemTakenOrb, effectData, true);
+                                        drone.gameObject.AddComponent<RefabricatorHardDeathToken>();
+                                        drone.healthComponent.Suicide();
                                         break;
                                     }
                                 }
-
-                                //itemTakenOrb.
-                                //EffectData effectData = new EffectData
-                                //{
-                                //    origin = drone.corePosition,
-                                //    genericFloat = 1.5f,
-                                //    genericUInt = 0 //impossible for items 
-                                //};
-                                
-                                //context.purchasedObject.transform
-                                //effectData.SetNetworkedObjectReference(context.purchasedObject);
-                                //EffectManager.SpawnEffect(itemTakenOrb, effectData, true);
-
-                                drone.gameObject.AddComponent<RefabricatorHardDeathToken>();
-                                drone.healthComponent.Suicide();
-
-                                //SS2Log.Info("IOU one item ");
                                 break;
-
                             }
                         }
                     }
