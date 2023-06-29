@@ -1,4 +1,5 @@
 ﻿using EntityStates;
+using EntityStates.DroneTable;
 using Moonstorm.Starstorm2.Components;
 using R2API;
 using RoR2;
@@ -44,7 +45,7 @@ namespace Moonstorm.Starstorm2.Interactables
         {
             CostTypeCatalog.modHelper.getAdditionalEntries += addDroneCostType;
 
-            On.EntityStates.Drone.DeathState.OnImpactServer += overrideDroneImpact;
+            //On.EntityStates.Drone.DeathState.OnImpactServer += overrideDroneImpact;
             On.EntityStates.Drone.DeathState.OnEnter += overrideDroneCorpse;
             On.RoR2.Orbs.ItemTakenOrbEffect.Start += overrideItemIcon;
 
@@ -309,6 +310,7 @@ namespace Moonstorm.Starstorm2.Interactables
             //public Transform selfpos;
             public PurchaseInteraction PurchaseInteraction;
             public Transform symbolTransform;
+            public EntityStateMachine esm;
 
             public void Start()
             {
@@ -318,7 +320,7 @@ namespace Moonstorm.Starstorm2.Interactables
                 }
                 PurchaseInteraction.costType = (CostTypeIndex)droneCostIndex;
                 PurchaseInteraction.onPurchase.AddListener(DronePurchaseAttempt);
-
+                esm = GetComponent<EntityStateMachine>();
                 //InteractableBodyModelPrefab.transform.Find("Symbol");
                 //BuffBrazierStateMachine = EntityStateMachine.FindByCustomName(gameObject, "Body");
 
@@ -346,9 +348,10 @@ namespace Moonstorm.Starstorm2.Interactables
                         LastActivator = body;
 
                         //symbolTransform.gameObject.SetActive(false);
-                        PurchaseInteraction.SetAvailable(false);
+                        //PurchaseInteraction.SetAvailable(false);
                         //play animation
-                        StartCoroutine(reenableAvailablity());
+                        esm.SetNextState(new DestroyLeadin());
+                        //StartCoroutine(reenableAvailablity());
                     }
                 }
             }
