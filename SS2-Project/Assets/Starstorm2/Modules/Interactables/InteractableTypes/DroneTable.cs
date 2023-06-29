@@ -45,7 +45,7 @@ namespace Moonstorm.Starstorm2.Interactables
             CostTypeCatalog.modHelper.getAdditionalEntries += addDroneCostType;
 
             On.EntityStates.Drone.DeathState.OnImpactServer += overrideDroneImpact;
-
+            On.EntityStates.Drone.DeathState.OnEnter += overrideDroneCorpse;
             On.RoR2.Orbs.ItemTakenOrbEffect.Start += overrideItemIcon;
 
             //On.RoR2.PurchaseInteraction.GetDisplayName += MonolithName;
@@ -61,6 +61,16 @@ namespace Moonstorm.Starstorm2.Interactables
             itemTakenOrb = LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/OrbEffects/ItemTakenOrbEffect");
             //itemTakenOrb = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Effects/OrbEffects/ItemTakenOrbEffect"), "DroneTableOrbEffect", false);
             SetupDroneValueList();  
+        }
+
+        private void overrideDroneCorpse(On.EntityStates.Drone.DeathState.orig_OnEnter orig, EntityStates.Drone.DeathState self)
+        {
+            orig(self);
+            var hardToken = self.characterBody.GetComponent<RefabricatorHardDeathToken>();
+            if (hardToken)
+            {
+                EntityState.Destroy(self.gameObject);
+            }
         }
 
         private void overrideItemIcon(On.RoR2.Orbs.ItemTakenOrbEffect.orig_Start orig, RoR2.Orbs.ItemTakenOrbEffect self)
