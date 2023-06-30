@@ -32,7 +32,7 @@ namespace Moonstorm.Starstorm2.Interactables
         /// <summary>
         /// List of drone and interactable cost pairs. String is the body.name, int is the price a player pays, not the director.
         /// </summary>
-        public static List<KeyValuePair<string, int>> dronePairs2 = new List<KeyValuePair<string, int>>();
+        public static List<KeyValuePair<string, int>> dronePairs = new List<KeyValuePair<string, int>>();
 
         public static Dictionary<string, Sprite> droneSpritePairs = new Dictionary<string, Sprite>();
 
@@ -80,7 +80,7 @@ namespace Moonstorm.Starstorm2.Interactables
             uint value = self.GetComponent<EffectComponent>().effectData.genericUInt;
             if (boolean) //IDs are subtracted by one, meaning a value of zero is impossible -> therefore it's drone time babey
             {
-                var pair = dronePairs2[(int)value];
+                var pair = dronePairs[(int)value];
                 var gameobject = BodyCatalog.FindBodyPrefab(pair.Key);
                 var body = gameobject.GetComponent<CharacterBody>();
 
@@ -145,16 +145,16 @@ namespace Moonstorm.Starstorm2.Interactables
 
         private void SetupDroneValueList()
         {
-            dronePairs2.Add(new KeyValuePair<string, int>("Turret1Body", 35));
-            dronePairs2.Add(new KeyValuePair<string, int>("Drone1Body", 40)); //gunner
-            dronePairs2.Add(new KeyValuePair<string, int>("Drone2Body", 40)); //healing
-            dronePairs2.Add(new KeyValuePair<string, int>("MissileDroneBody", 60));
-            dronePairs2.Add(new KeyValuePair<string, int>("EquipmentDroneBody", 60)); //takes equipment so uhhhh i dunno
-            dronePairs2.Add(new KeyValuePair<string, int>("EmergencyDroneBody", 100));
-            dronePairs2.Add(new KeyValuePair<string, int>("FlameDroneBody", 100));
-            dronePairs2.Add(new KeyValuePair<string, int>("MegaDroneBody", 350));
-
-            dronePairs2.Add(new KeyValuePair<string, int>("ShockDroneBody", 40));
+            dronePairs.Add(new KeyValuePair<string, int>("Turret1Body", 35));
+            dronePairs.Add(new KeyValuePair<string, int>("Drone1Body", 40)); //gunner
+            dronePairs.Add(new KeyValuePair<string, int>("Drone2Body", 40)); //healing
+            dronePairs.Add(new KeyValuePair<string, int>("MissileDroneBody", 60));
+            dronePairs.Add(new KeyValuePair<string, int>("EquipmentDroneBody", 60)); //takes equipment so uhhhh i dunno
+            dronePairs.Add(new KeyValuePair<string, int>("EmergencyDroneBody", 100));
+            dronePairs.Add(new KeyValuePair<string, int>("FlameDroneBody", 100));
+            dronePairs.Add(new KeyValuePair<string, int>("MegaDroneBody", 350));
+            
+            dronePairs.Add(new KeyValuePair<string, int>("ShockDroneBody", 40));
         }
 
         private void addDroneCostType(List<CostTypeDef> obj)
@@ -202,20 +202,27 @@ namespace Moonstorm.Starstorm2.Interactables
                                 if (master)
                                 {
                                     var droneBody = master.GetBody();
-                                    if ((droneBody.bodyFlags & CharacterBody.BodyFlags.Mechanical) > CharacterBody.BodyFlags.None)
+                                    if (droneBody)
                                     {
-                                        foreach (var pair in dronePairs2)
+                                        if ((droneBody.bodyFlags & CharacterBody.BodyFlags.Mechanical) > CharacterBody.BodyFlags.None)
                                         {
-                                            if (droneBody.bodyIndex == BodyCatalog.FindBodyIndex(pair.Key))
+                                            foreach (var pair in dronePairs)
                                             {
-                                                validMinions.Add(master);
-                                                break;
+                                                if (droneBody.bodyIndex == BodyCatalog.FindBodyIndex(pair.Key))
+                                                {
+                                                    validMinions.Add(master);
+                                                    break;
+                                                }
+                                            }
+                                            if (validMinions.Count >= cost)
+                                            {
+                                                return true;
                                             }
                                         }
-                                        if (validMinions.Count >= cost)
-                                        {
-                                            return true;
-                                        }
+                                    }
+                                    else
+                                    {
+                                        SS2Log.Info("Drone " + master.name + " didn't have a body? affordab;e");
                                     }
                                 }
                             }
@@ -243,17 +250,23 @@ namespace Moonstorm.Starstorm2.Interactables
                             if (master)
                             {
                                 var droneBody = master.GetBody();
-
-                                if ((droneBody.bodyFlags & CharacterBody.BodyFlags.Mechanical) > CharacterBody.BodyFlags.None)
+                                if (droneBody)
                                 {
-                                    foreach (var pair in dronePairs2)
+                                    if ((droneBody.bodyFlags & CharacterBody.BodyFlags.Mechanical) > CharacterBody.BodyFlags.None)
                                     {
-                                        //SS2Log.Info("testing " + pair.Key);
-                                        if (droneBody.bodyIndex == BodyCatalog.FindBodyIndex(pair.Key))
+                                        foreach (var pair in dronePairs)
                                         {
-                                            validMinions.Add(master);
+                                            //SS2Log.Info("testing " + pair.Key);
+                                            if (droneBody.bodyIndex == BodyCatalog.FindBodyIndex(pair.Key))
+                                            {
+                                                validMinions.Add(master);
+                                            }
                                         }
                                     }
+                                }
+                                else
+                                {
+                                    SS2Log.Info("Drone " + master.name + " didn't have a body?");
                                 }
                             }
                         }
@@ -274,9 +287,9 @@ namespace Moonstorm.Starstorm2.Interactables
                             {
                                 var drone = validMinions[i].GetBody();
 
-                                for (int j = 0; j < dronePairs2.Count; ++j)
+                                for (int j = 0; j < dronePairs.Count; ++j)
                                 {
-                                    var pair = dronePairs2[j];
+                                    var pair = dronePairs[j];
                                     if (drone.bodyIndex == BodyCatalog.FindBodyIndex(pair.Key))
                                     {
                                         SS2Log.Info("IOU one item with value modifier " + pair.Value);
@@ -321,6 +334,7 @@ namespace Moonstorm.Starstorm2.Interactables
                 PurchaseInteraction.costType = (CostTypeIndex)droneCostIndex;
                 PurchaseInteraction.onPurchase.AddListener(DronePurchaseAttempt);
                 esm = GetComponent<EntityStateMachine>();
+                SS2Log.Info("esm: " + esm);
                 //InteractableBodyModelPrefab.transform.Find("Symbol");
                 //BuffBrazierStateMachine = EntityStateMachine.FindByCustomName(gameObject, "Body");
 

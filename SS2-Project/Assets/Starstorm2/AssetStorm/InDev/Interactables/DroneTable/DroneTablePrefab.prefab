@@ -40,7 +40,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4414057232303016072}
-  - component: {fileID: 8342502911403791282}
   m_Layer: 0
   m_Name: mdlDroneTable
   m_TagString: Untagged
@@ -64,25 +63,6 @@ Transform:
   m_Father: {fileID: 1968428531696665609}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &8342502911403791282
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3893978730176582194}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4b4b78b0099c9114d8211ba95e971590, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5101895515673484817
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,6 +318,7 @@ GameObject:
   - component: {fileID: 3620852547452075733}
   - component: {fileID: -7152812518454148544}
   - component: {fileID: 4765972761811497701}
+  - component: {fileID: 3197637895611518450}
   m_Layer: 0
   m_Name: DroneTablePrefab
   m_TagString: Untagged
@@ -553,6 +534,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateMachines:
   - {fileID: -7152812518454148544}
+--- !u!95 &3197637895611518450
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8861224231238927695}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4b4b78b0099c9114d8211ba95e971590, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9150171266266331468
 GameObject:
   m_ObjectHideFlags: 0

@@ -24,7 +24,7 @@ namespace EntityStates.DroneTable
         public override void OnEnter()
         {
             SS2Log.Info("entered destroy action");
-            PlayCrossfade("Body", "Action", "Action.playbackRate", duration, 0.05f);
+            PlayCrossfade("Main", "Action", "Action.playbackRate", duration, 0.05f);
 
         }
 
@@ -39,7 +39,8 @@ namespace EntityStates.DroneTable
         public override void OnExit()
         {
             SS2Log.Info("destroy action finished");
-            outer.SetNextStateToMain();
+            base.OnExit();
+            //outer.SetNextStateToMain();
         }
     }
 }
