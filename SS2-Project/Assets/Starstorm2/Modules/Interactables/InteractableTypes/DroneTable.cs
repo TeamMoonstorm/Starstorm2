@@ -76,8 +76,10 @@ namespace Moonstorm.Starstorm2.Interactables
 
         private void overrideItemIcon(On.RoR2.Orbs.ItemTakenOrbEffect.orig_Start orig, RoR2.Orbs.ItemTakenOrbEffect self)
         {
-            bool boolean = self.GetComponent<EffectComponent>().effectData.genericBool;
-            uint value = self.GetComponent<EffectComponent>().effectData.genericUInt;
+            var efc = self.GetComponent<EffectComponent>();
+            bool boolean = efc.effectData.genericBool;
+            uint value = efc.effectData.genericUInt;
+            //efc.parentToReferencedTransform = true;
             if (boolean) //IDs are subtracted by one, meaning a value of zero is impossible -> therefore it's drone time babey
             {
                 var pair = dronePairs[(int)value];
@@ -301,10 +303,30 @@ namespace Moonstorm.Starstorm2.Interactables
                                             genericBool = true
                                         };
 
-                                        effectData.SetNetworkedObjectReference(context.purchasedObject);
+                                        var model = context.purchasedObject;
+                                        
+                                        //var intermediate = model.transform.Find("mdlDroneTable");
+
+                                        var target = model.transform.Find("OrbTarget").gameObject; //???
+                                        SS2Log.Info(model.transform.name + " | " + target);
+
+                                        effectData.SetNetworkedObjectReference(context.purchasedObject);  //behaves strangely if target is networked ref
                                         EffectManager.SpawnEffect(itemTakenOrb, effectData, true);
+
                                         drone.gameObject.AddComponent<RefabricatorHardDeathToken>();
                                         drone.healthComponent.Suicide();
+
+                                        var esm = model.GetComponent<EntityStateMachine>();
+                                        if (esm)
+                                        {
+                                            SS2Log.Info("aaa  " + esm);
+                                            DestroyLeadin nextState = new DestroyLeadin();
+                                            nextState.droneObject = validMinions[i].bodyPrefab;
+                                            nextState.value = pair.Value;
+
+                                            esm.SetNextState(nextState);
+                                        }
+
                                         break;
                                     }
                                 }
@@ -368,12 +390,6 @@ namespace Moonstorm.Starstorm2.Interactables
                         //StartCoroutine(reenableAvailablity());
                     }
                 }
-            }
-
-            IEnumerator reenableAvailablity()
-            {
-                yield return new WaitForSeconds(1.5f);
-                PurchaseInteraction.SetAvailable(true);
             }
         }
 

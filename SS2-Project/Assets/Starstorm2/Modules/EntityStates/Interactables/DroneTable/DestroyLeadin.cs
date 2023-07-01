@@ -11,6 +11,10 @@ namespace EntityStates.DroneTable
     {
         public static float duration;
 
+        public GameObject droneObject;
+
+        public float value;
+
         protected override bool enableInteraction
         {
             get
@@ -30,7 +34,13 @@ namespace EntityStates.DroneTable
         {
             base.FixedUpdate();
             if (fixedAge > duration)
-                outer.SetNextState(new DestroyAction());
+            {
+                DestroyAction nextState = new DestroyAction();
+                nextState.droneObject = this.droneObject;
+                nextState.value = this.value;
+                outer.SetNextState(nextState);
+            }
+               
         }
 
         // Update is called once per frame
