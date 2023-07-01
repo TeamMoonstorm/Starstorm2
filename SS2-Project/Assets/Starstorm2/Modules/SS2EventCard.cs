@@ -1,13 +1,11 @@
-﻿using Moonstorm.Config;
-using Moonstorm.Starstorm2.ScriptableObjects;
-using System;
-using TMPro;
+﻿using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using RiskOfOptions.OptionConfigs;
-using Object = UnityEngine.Object;
-using BepInEx.Configuration;
-using static System.Collections.Specialized.BitVector32;
+using Moonstorm.AddressableAssets;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using RoR2;
+using R2API;
+using UnityEngine.AddressableAssets;
 
 namespace Moonstorm.Starstorm2
 {
@@ -19,6 +17,8 @@ namespace Moonstorm.Starstorm2
             public R2API.DirectorAPI.Stage stageEnum;
             public string customStageName;
             public GameObject effectPrefab;
+
+            public GameObject EffectPrefab { get; internal set; }
         }
 
         private static List<SS2EventCard> instances = new List<SS2EventCard>();
@@ -49,32 +49,61 @@ namespace Moonstorm.Starstorm2
                 }
             });
         }
+
+        private bool checkRequiredItem() 
+        {
+            if (requiredItem == null)
+            {
+                return true;
+            } else {
+                foreach (var player in PlayerCharacterMasterController.instances)
+                {
+                    var playerBody = player.master.GetBody();
+
+                    if (playerBody != null)
+                    {
+                        var itemDef = Addressables.LoadAssetAsync<ItemDef>(requiredItem.address).WaitForCompletion();
+
+                        var invetoryCount = player.body.inventory.GetItemCount(itemDef.itemIndex);
+
+                        return invetoryCount > 0;
+                    }
+                    
+                }
+            }
+            return true;
+        }
         public override bool IsAvailable()
         {
             var flag = base.IsAvailable();
+
             if(!flag)
                 return flag;
-            flag = true // TODO: Some method that checks if any player has the required item
+
+            flag = checkRequiredItem(); // TODO: Some method that checks if any player has the required item
+
             return flag;
         }
 
         private void CreateVFXDictionary()
         {
             Dictionary<R2API.DirectorAPI.Stage, GameObject> dict1 = new Dictionary<R2API.DirectorAPI.Stage, GameObject>();;
-            Dictionary<string, GameObject> dict2 = new Dictioanry<string, GameObject>();
+            Dictionary<string, GameObject> dict2 = new Dictionary<string, GameObject>();
+
             foreach(EventVFX vfx in eventVFX)
             {
-            if(vfx.stageEnum == DirectorAPI.Stage.Custom)
-            {
-                dict2[vfx.customStageName] = vfx.effectPrefab;
+                if(vfx.stageEnum == DirectorAPI.Stage.Custom)
+                {
+                    dict2[vfx.customStageName] = vfx.effectPrefab;
+                }
+                else
+                {
+                    dict1[vfx.stageEnum] = vfx.EffectPrefab;
+                }
             }
-            else
-            {
-                dict1[vfx.stageEnum] = vfx.EffectPrefab;
-            }
-            }
-            vanillaStageToFXPrefab = new ReadOnlyDictioanry(dict1);
-            customStageToFXPrefab = new ReadOnlyDictioanry(dict2);
+
+            vanillaStageToFXPrefab = new ReadOnlyDictionary<R2API.DirectorAPI.Stage, GameObject>(dict1);
+            customStageToFXPrefab = new ReadOnlyDictionary<string, GameObject>(dict2);
             eventVFX = Array.Empty<EventVFX>();
         }
     }
