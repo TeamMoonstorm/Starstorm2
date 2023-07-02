@@ -17,8 +17,6 @@ namespace Moonstorm.Starstorm2
             public R2API.DirectorAPI.Stage stageEnum;
             public string customStageName;
             public GameObject effectPrefab;
-
-            public GameObject EffectPrefab { get; internal set; }
         }
 
         private static List<SS2EventCard> instances = new List<SS2EventCard>();
@@ -52,26 +50,30 @@ namespace Moonstorm.Starstorm2
 
         private bool checkRequiredItem() 
         {
-            if (requiredItem == null)
+            if (!requiredItem)
             {
                 return true;
-            } else {
-                foreach (var player in PlayerCharacterMasterController.instances)
+            } 
+
+            foreach (var player in PlayerCharacterMasterController.instances)
+            {
+                var playerBody = player.master.GetBody();
+
+                if (!playerBody)
                 {
-                    var playerBody = player.master.GetBody();
+                    var itemDef = Addressables.LoadAssetAsync<ItemDef>(requiredItem.address).WaitForCompletion();
 
-                    if (playerBody != null)
-                    {
-                        var itemDef = Addressables.LoadAssetAsync<ItemDef>(requiredItem.address).WaitForCompletion();
+                    var invetoryCount = player.body.inventory.GetItemCount(itemDef.itemIndex);
 
-                        var invetoryCount = player.body.inventory.GetItemCount(itemDef.itemIndex);
-
-                        return invetoryCount > 0;
-                    }
-                    
+                   if (invetoryCount > 0)
+                   {
+                        return true;
+                   }
                 }
+                    
             }
-            return true;
+           
+            return false;
         }
         public override bool IsAvailable()
         {
@@ -98,7 +100,7 @@ namespace Moonstorm.Starstorm2
                 }
                 else
                 {
-                    dict1[vfx.stageEnum] = vfx.EffectPrefab;
+                    dict1[vfx.stageEnum] = vfx.effectPrefab;
                 }
             }
 
