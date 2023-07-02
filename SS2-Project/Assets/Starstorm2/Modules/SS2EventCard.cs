@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using RoR2;
 using R2API;
 using UnityEngine.AddressableAssets;
+using Moonstorm.Starstorm2.ScriptableObjects;
 
 namespace Moonstorm.Starstorm2
 {
@@ -20,7 +21,7 @@ namespace Moonstorm.Starstorm2
         }
 
         private static List<SS2EventCard> instances = new List<SS2EventCard>();
-        public AddressableItemDef requiredItem;
+        public AddressableItemDef requiredItemAddressable;
         public GameObject fallbackVFX;
         public EventVFX[] eventVFX = Array.Empty<EventVFX>();
         
@@ -29,7 +30,8 @@ namespace Moonstorm.Starstorm2
 
         private void Awake()
         {
-            instances?.Add(this);    
+            instances?.Add(this);   
+
         }
         private void OnDestroy()
         {
@@ -50,7 +52,7 @@ namespace Moonstorm.Starstorm2
 
         private bool checkRequiredItem() 
         {
-            if (!requiredItem)
+            if (!requiredItemAddressable)
             {
                 return true;
             } 
@@ -61,9 +63,7 @@ namespace Moonstorm.Starstorm2
 
                 if (!playerBody)
                 {
-                    var itemDef = Addressables.LoadAssetAsync<ItemDef>(requiredItem.address).WaitForCompletion();
-
-                    var invetoryCount = player.body.inventory.GetItemCount(itemDef.itemIndex);
+                   var invetoryCount = player.body.inventory.GetItemCount(requiredItemAddressable.Asset.itemIndex);
 
                    if (invetoryCount > 0)
                    {
