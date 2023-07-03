@@ -50,6 +50,10 @@ namespace Moonstorm.Starstorm2
             });
         }
 
+        /// <summary>
+        /// Checks if a player in the game has the required item to activate the event.
+        /// If no item is specified return true. 
+        /// </summary>
         private bool checkRequiredItem() 
         {
             if (!requiredItemAddressable)
@@ -82,30 +86,30 @@ namespace Moonstorm.Starstorm2
             if(!flag)
                 return flag;
 
-            flag = checkRequiredItem(); // TODO: Some method that checks if any player has the required item
+            flag = checkRequiredItem();
 
             return flag;
         }
 
         private void CreateVFXDictionary()
         {
-            Dictionary<R2API.DirectorAPI.Stage, GameObject> dict1 = new Dictionary<R2API.DirectorAPI.Stage, GameObject>();;
-            Dictionary<string, GameObject> dict2 = new Dictionary<string, GameObject>();
+            Dictionary<R2API.DirectorAPI.Stage, GameObject> vanillaStageDict = new Dictionary<R2API.DirectorAPI.Stage, GameObject>();;
+            Dictionary<string, GameObject> customStageDict = new Dictionary<string, GameObject>();
 
             foreach(EventVFX vfx in eventVFX)
             {
                 if(vfx.stageEnum == DirectorAPI.Stage.Custom)
                 {
-                    dict2[vfx.customStageName] = vfx.effectPrefab;
+                    customStageDict[vfx.customStageName] = vfx.effectPrefab;
                 }
                 else
                 {
-                    dict1[vfx.stageEnum] = vfx.effectPrefab;
+                    vanillaStageDict[vfx.stageEnum] = vfx.effectPrefab;
                 }
             }
 
-            vanillaStageToFXPrefab = new ReadOnlyDictionary<R2API.DirectorAPI.Stage, GameObject>(dict1);
-            customStageToFXPrefab = new ReadOnlyDictionary<string, GameObject>(dict2);
+            vanillaStageToFXPrefab = new ReadOnlyDictionary<R2API.DirectorAPI.Stage, GameObject>(vanillaStageDict);
+            customStageToFXPrefab = new ReadOnlyDictionary<string, GameObject>(customStageDict);
             eventVFX = Array.Empty<EventVFX>();
         }
     }
