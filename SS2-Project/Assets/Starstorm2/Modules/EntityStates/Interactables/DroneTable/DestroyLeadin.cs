@@ -1,6 +1,7 @@
 ﻿using BepInEx;
 using EntityStates.DroneTable;
 using Moonstorm.Starstorm2;
+using RoR2;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +14,7 @@ namespace EntityStates.DroneTable
 
         public GameObject droneObject;
 
-        public float value;
+        public PickupIndex index;
 
         protected override bool enableInteraction
         {
@@ -23,11 +24,9 @@ namespace EntityStates.DroneTable
             }
         }
 
-        // Start is called before the first frame update
         public override void OnEnter()
         {
             base.OnEnter();
-            SS2Log.Info("leadin enter");
         }   
 
         public override void FixedUpdate()
@@ -37,16 +36,14 @@ namespace EntityStates.DroneTable
             {
                 DestroyAction nextState = new DestroyAction();
                 nextState.droneObject = this.droneObject;
-                nextState.value = this.value;
+                nextState.index = this.index;
                 outer.SetNextState(nextState);
             }
                
         }
 
-        // Update is called once per frame
         public override void OnExit()
         {
-            SS2Log.Info("destroy leadin finished");
             base.OnExit();
         }
     }

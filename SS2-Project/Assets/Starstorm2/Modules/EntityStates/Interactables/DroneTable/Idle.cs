@@ -10,8 +10,6 @@ namespace EntityStates.DroneTable
 {
     public class Idle : DroneTableBaseState
     {
-        //protected RefabricatorInteractionToken refabController;
-        //protected PurchaseInteraction purchaseInter;
 
         protected override bool enableInteraction
         {
@@ -25,23 +23,6 @@ namespace EntityStates.DroneTable
         public override void OnEnter()
         {
             base.OnEnter();
-            SS2Log.Info("idle enter");
-            //refabController = GetComponent<RefabricatorInteractionToken>();
-            //purchaseInter = GetComponent<PurchaseInteraction>();
-            //purchaseInter.SetAvailable(enableInteraction);
         }
-
-
-        // Start is called before the first frame update
-        //void Start()
-        //{
-        //    
-        //}
-        //
-        //// Update is called once per frame
-        //void Update()
-        //{
-        //    
-        //}
     }
 }

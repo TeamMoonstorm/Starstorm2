@@ -5,7 +5,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 namespace EntityStates.DroneTable
 {
     public class DestroyAction : DroneTableBaseState
@@ -15,9 +14,13 @@ namespace EntityStates.DroneTable
 
         public GameObject droneObject;
 
-        public static Xoroshiro128Plus droneTableRNG;
+        public PickupIndex index;
 
-        public float value;
+        public GameObject tempDrone;
+
+        public static Material whiteHoloMaterial = SS2Assets.LoadAsset<Material>("matHoloWhite");
+        public static Material greenHoloMaterial = SS2Assets.LoadAsset<Material>("matHoloGreen");
+        public static Material redHoloMaterial = SS2Assets.LoadAsset<Material>("matHoloRed");
 
         protected override bool enableInteraction
         {
@@ -27,10 +30,78 @@ namespace EntityStates.DroneTable
             }
         }
 
-        // Start is called before the first frame update
         public override void OnEnter()
         {
-            SS2Log.Info("entered destroy action");
+            base.OnEnter();
+            tempDrone = null;
+            var holo = this.gameObject.transform.Find("DroneHologramRoot");
+            var locator = droneObject.GetComponent<ModelLocator>();
+            if (locator)
+            {
+                var doubleTempDrone = locator.modelTransform.gameObject;
+                tempDrone = UnityEngine.Object.Instantiate<GameObject>(doubleTempDrone, holo);
+                //var curve = new AnimationCurve();
+                //curve.AddKey(0, 1);
+                //curve.AddKey(1, 0);
+                //var controller = tempDrone.AddComponent<PrintController>();
+                //controller.characterModel = tempDrone.GetComponent<CharacterModel>();
+                //controller.printTime = .75f;
+                //controller.enabled = true;
+                //controller.disableWhenFinished = true;
+                //controller.startingPrintHeight = 1;
+                //controller.startingPrintBias = 1f;
+                //controller.maxPrintBias = 3.5f;
+                //controller.maxPrintHeight = 1;
+                //controller.animateFlowmapPower = true;
+                //controller.startingFlowmapPower = 1.14f;
+                //controller.maxFlowmapPower = 30f;
+                //controller.printCurve = AnimationCurve.EaseInOut(0, 1, 1, 0);
+                //
+                //TemporaryOverlay overlay = tempDrone.AddComponent<TemporaryOverlay>();
+                //overlay.duration = .75f;
+                //overlay.animateShaderAlpha = true;
+                //overlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
+                //overlay.destroyComponentOnEnd = true;
+                //overlay.originalMaterial = RoR2.LegacyResourcesAPI.Load<Material>("Materials/matClayGooDebuff");
+                //overlay.AddToCharacerModel(controller.characterModel);
+                var cm = tempDrone.GetComponent<CharacterModel>();
+                if (cm)
+                {
+                    
+                    SS2Log.Info("index.pickupDef.itemTier: " + index.pickupDef.itemTier);
+                    switch (index.pickupDef.itemTier)
+                    {
+                        case ItemTier.Tier1:
+                            var render1 = cm.baseRendererInfos;
+                            for (int i = 0; i < render1.Length; ++i)
+                            {
+                                render1[i].defaultMaterial = whiteHoloMaterial;
+                            }
+                            break;
+
+                        case ItemTier.Tier2:
+                            var render2 = cm.baseRendererInfos;
+                            for (int i = 0; i < render2.Length; ++i)
+                            {
+                                render2[i].defaultMaterial = greenHoloMaterial;
+                            }
+                            break;
+
+                        case ItemTier.Tier3:
+                            var render3 = cm.baseRendererInfos;
+                            for (int i = 0; i < render3.Length; ++i)
+                            {
+                                render3[i].defaultMaterial = redHoloMaterial;
+                            }
+                            break;
+
+                        default:
+    
+                            break;
+                    }
+                }
+            }
+            //SS2Log.Info("entered destroy action");
             PlayCrossfade("Main", "Action", "Action.playbackRate", duration, 0.05f);
         }
 
@@ -44,64 +115,16 @@ namespace EntityStates.DroneTable
         // Update is called once per frame
         public override void OnExit()
         {
-            SS2Log.Info("destroy action finished");
+            //SS2Log.Info("destroy action finished");
             base.OnExit();
-            Vector3 vector = Quaternion.AngleAxis(0, Vector3.up) * (Vector3.up * 20f);
-            DroneTableDropTable dropTable = new DroneTableDropTable();
-            if (droneTableRNG == null)
+            var target = this.gameObject.transform.Find("PickupOrigin");
+            if (tempDrone)
             {
-                droneTableRNG = new Xoroshiro128Plus(Run.instance.seed);
+                Destroy(tempDrone);
             }
-            PickupIndex ind = dropTable.GenerateDropPreReplacement(droneTableRNG, (int)Mathf.Sqrt(value));
-            PickupDropletController.CreatePickupDroplet(ind, this.gameObject.transform.position, vector);
-            //outer.SetNextStateToMain();
+            Vector3 vec = Vector3.up * 10 + target.forward * 3.5f;
+            PickupDropletController.CreatePickupDroplet(index, target.position, vec);
+
         }
-
-
     }
-
-    public class DroneTableDropTable : BasicPickupDropTable
-    {
-        private void AddNew(List<PickupIndex> sourceDropList, float listWeight)
-        {
-            if (listWeight <= 0f || sourceDropList.Count == 0)
-            {
-                return;
-            }
-            float weight = listWeight / (float)sourceDropList.Count;
-            foreach (PickupIndex value in sourceDropList)
-            {
-                selector.AddChoice(value, weight);
-            }
-        }
-
-        public PickupIndex GenerateDropPreReplacement(Xoroshiro128Plus rng, int count)
-        {
-            selector.Clear();
-            AddNew(Run.instance.availableTier1DropList, tier1Weight);
-            AddNew(Run.instance.availableTier2DropList, tier2Weight * (float)count);
-            AddNew(Run.instance.availableTier3DropList, tier3Weight * Mathf.Pow((float)count, 1.75f)); //this is basically the shipping request code but with a slightly lower red weight scaling
-
-            return PickupDropTable.GenerateDropFromWeightedSelection(rng, selector);
-        }
-
-        public override int GetPickupCount()
-        {
-            return selector.Count;
-        }
-
-        public override PickupIndex[] GenerateUniqueDropsPreReplacement(int maxDrops, Xoroshiro128Plus rng)
-        {
-            return PickupDropTable.GenerateUniqueDropsFromWeightedSelection(maxDrops, rng, selector);
-        }
-
-        new private float tier1Weight = .79f; //.316f;
-
-        new private float tier2Weight = .20f; //.08f;
-
-        new private float tier3Weight = .01f; //.004f;
-
-        new private readonly WeightedSelection<PickupIndex> selector = new WeightedSelection<PickupIndex>(8);
-    }
-
 }

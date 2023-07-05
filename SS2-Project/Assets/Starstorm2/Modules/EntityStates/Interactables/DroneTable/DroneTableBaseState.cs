@@ -26,9 +26,6 @@ namespace EntityStates.DroneTable
             refabController = GetComponent<RefabricatorInteractionToken>();
             purchaseInter = GetComponent<PurchaseInteraction>();
             purchaseInter.SetAvailable(enableInteraction);
-
-            SS2Log.Info("aaaaa base state enter");
-
         }
     }
 }

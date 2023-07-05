@@ -38,6 +38,9 @@ namespace Moonstorm.Starstorm2.Interactables
 
         public static CostTypeDef droneCostDef;
         public static int droneCostIndex;
+        public static DroneTableDropTable droneDropTable;
+
+        //public static Material GreenHoloMaterial = SS2Assets.LoadAsset<Material>("matHoloGreen");
 
         public override MSInteractableDirectorCard InteractableDirectorCard { get; } = SS2Assets.LoadAsset<MSInteractableDirectorCard>("midcDroneTable");
 
@@ -58,6 +61,7 @@ namespace Moonstorm.Starstorm2.Interactables
 
             //list = StringFinder.Instance.InteractableSpawnCards;
             //getInteractableCards();
+            droneDropTable = new DroneTableDropTable();
 
             itemTakenOrb = LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/OrbEffects/ItemTakenOrbEffect");
             //itemTakenOrb = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Effects/OrbEffects/ItemTakenOrbEffect"), "DroneTableOrbEffect", false);
@@ -133,15 +137,6 @@ namespace Moonstorm.Starstorm2.Interactables
             else
             {
                 orig(self);
-            }
-        }
-
-        private void overrideDroneImpact(On.EntityStates.Drone.DeathState.orig_OnImpactServer orig, EntityStates.Drone.DeathState self, Vector3 contactPoint)
-        {
-            var hardToken = self.characterBody.GetComponent<RefabricatorHardDeathToken>();
-            if (!hardToken)
-            { 
-                orig(self, contactPoint);
             }
         }
 
@@ -294,7 +289,7 @@ namespace Moonstorm.Starstorm2.Interactables
                                     var pair = dronePairs[j];
                                     if (drone.bodyIndex == BodyCatalog.FindBodyIndex(pair.Key))
                                     {
-                                        SS2Log.Info("IOU one item with value modifier " + pair.Value);
+                                        //SS2Log.Info("IOU one item with value modifier " + pair.Value);
                                         EffectData effectData = new EffectData
                                         {
                                             origin = drone.corePosition,
@@ -307,8 +302,8 @@ namespace Moonstorm.Starstorm2.Interactables
                                         
                                         //var intermediate = model.transform.Find("mdlDroneTable");
 
-                                        var target = model.transform.Find("OrbTarget").gameObject; //???
-                                        SS2Log.Info(model.transform.name + " | " + target);
+                                        //var target = model.transform.Find("OrbTarget").gameObject; //???
+                                        //SS2Log.Info(model.transform.name + " | " + target);
 
                                         effectData.SetNetworkedObjectReference(context.purchasedObject);  //behaves strangely if target is networked ref
                                         EffectManager.SpawnEffect(itemTakenOrb, effectData, true);
@@ -316,14 +311,22 @@ namespace Moonstorm.Starstorm2.Interactables
                                         drone.gameObject.AddComponent<RefabricatorHardDeathToken>();
                                         drone.healthComponent.Suicide();
 
+                                        if (!droneDropTable)
+                                        {
+                                            droneDropTable = new DroneTableDropTable();
+                                        }
+                                        int dropvalue = Mathf.RoundToInt((Mathf.Sqrt(pair.Value) - 5.65f) * 2.2f);
+                                        //int val = Mathf.RoundToInt(Mathf.Pow(Mathf.Sqrt(pair.Value) / 3, 1.35f) - 1.5f);
+                                        PickupIndex ind = droneDropTable.GenerateDropPreReplacement(context.rng, dropvalue);
+
                                         var esm = model.GetComponent<EntityStateMachine>();
                                         if (esm)
                                         {
-                                            SS2Log.Info("aaa  " + esm);
+                                            //SS2Log.Info("aaa  " + esm);
                                             DestroyLeadin nextState = new DestroyLeadin();
                                             nextState.droneObject = validMinions[i].bodyPrefab;
-                                            nextState.value = pair.Value;
-
+                                            nextState.index = ind;
+                                            SS2Log.Info("entrance index: " + ind + " of value " + dropvalue);
                                             esm.SetNextState(nextState);
                                         }
 
@@ -345,7 +348,7 @@ namespace Moonstorm.Starstorm2.Interactables
             //public Transform selfpos;
             public PurchaseInteraction PurchaseInteraction;
             public Transform symbolTransform;
-            public EntityStateMachine esm;
+            //public EntityStateMachine esm;
 
             public void Start()
             {
@@ -355,8 +358,8 @@ namespace Moonstorm.Starstorm2.Interactables
                 }
                 PurchaseInteraction.costType = (CostTypeIndex)droneCostIndex;
                 PurchaseInteraction.onPurchase.AddListener(DronePurchaseAttempt);
-                esm = GetComponent<EntityStateMachine>();
-                SS2Log.Info("esm: " + esm);
+                //esm = GetComponent<EntityStateMachine>();
+                //SS2Log.Info("esm: " + esm);
                 //InteractableBodyModelPrefab.transform.Find("Symbol");
                 //BuffBrazierStateMachine = EntityStateMachine.FindByCustomName(gameObject, "Body");
 
@@ -374,7 +377,7 @@ namespace Moonstorm.Starstorm2.Interactables
                 {
                     if (NetworkServer.active)
                     {
-                        SS2Log.Info("Purchase Successful");
+                        //SS2Log.Info("Purchase Successful");
                         //AttemptSpawnVoidPortal();
                         GameObject effectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/ShrineUseEffect.prefab").WaitForCompletion();
                         EffectManager.SimpleImpactEffect(effectPrefab, this.transform.position, new Vector3(0, 0, 0), true);
@@ -386,7 +389,7 @@ namespace Moonstorm.Starstorm2.Interactables
                         //symbolTransform.gameObject.SetActive(false);
                         //PurchaseInteraction.SetAvailable(false);
                         //play animation
-                        esm.SetNextState(new DestroyLeadin());
+                        //esm.SetNextState(new DestroyLeadin());
                         //StartCoroutine(reenableAvailablity());
                     }
                 }
@@ -397,93 +400,49 @@ namespace Moonstorm.Starstorm2.Interactables
         {
 
         }
-        //public override void Initialize()
-        //{
-        //    //DirectorAPI.MonsterActions += HandleAvailableMonsters;
-        //
-        //    var survivorPod = Resources.Load<GameObject>("prefabs/networkedobjects/SurvivorPod");
-        //    interactable = PrefabAPI.InstantiateClone(survivorPod, "DropPod", false);
-        //
-        //    Interactable.transform.position = Vector3.zero;
-        //
-        //    DestroyUneededObjectsAndComponents();
-        //    EnableObjects();
-        //    ModifyExistingComponents();
-        //    AddNewComponents();
-        //
-        //    HG.ArrayUtils.ArrayAppend(ref SS2Content.Instance.SerializableContentPack.networkedObjectPrefabs, Interactable);
-        //    InteractableDirectorCard.prefab = Interactable;
-        //}
-        //
-        //private void HandleAvailableMonsters(System.Collections.Generic.List<DirectorAPI.DirectorCardHolder> arg1, DirectorAPI.StageInfo arg2)
-        //{
-        //    DropPodController.currentStageMonsters = arg1.Where(cardHolder => cardHolder.MonsterCategory == DirectorAPI.MonsterCategory.BasicMonsters)
-        //                                                 .Select(cardHolder => cardHolder.Card)
-        //                                                 .ToArray();
-        //}
-        //
-        //private void DestroyUneededObjectsAndComponents()
-        //{
-        //    Object.Destroy(Interactable.GetComponent<SurvivorPodController>());
-        //    Object.Destroy(Interactable.GetComponent<VehicleSeat>());
-        //    //Interactable.GetComponents<InstantiatePrefabOnStart>().ToList().ForEach(component => Object.Destroy(component));
-        //    Object.Destroy(Interactable.GetComponent<BuffPassengerWhileSeated>());
-        //
-        //    var flames = Interactable.transform.Find("Base/mdlEscapePod/EscapePodArmature/Base/Flames");
-        //    Object.Destroy(flames.gameObject);
-        //
-        //    var donut = Interactable.transform.Find("Base/mdlEscapePod/EscapePodArmature/Base/FireDonut");
-        //    Object.Destroy(donut.gameObject);
-        //
-        //    /*var mdl = Interactable.transform.Find("Base/mdlEscapePod");
-        //    Object.Destroy(mdl.GetComponent<Animator>());*/
-        //}
-        //
-        //private void EnableObjects()
-        //{
-        //    var debris = Interactable.transform.Find("Base/mdlEscapePod/EscapePodArmature/Base/DebrisParent");
-        //    debris.gameObject.SetActive(true);
-        //}
-        //
-        //private void ModifyExistingComponents()
-        //{
-        //    var stateMachine = Interactable.GetComponent<EntityStateMachine>();
-        //    stateMachine.initialStateType = new SerializableEntityStateType(typeof(EntityStates.DropPod.Idle));
-        //    stateMachine.mainStateType = new SerializableEntityStateType(typeof(Idle));
-        //
-        //    var modelLocator = Interactable.GetComponent<ModelLocator>();
-        //    modelLocator.enabled = true;
-        //    modelLocator.modelBaseTransform = null;
-        //
-        //    var exitPos = Interactable.transform.Find("Base/mdlEscapePod/EscapePodArmature/ExitPosition");
-        //    exitPos.transform.localPosition = new Vector3(0, -2, 0);
-        //    var cLocator = modelLocator.modelTransform.GetComponent<ChildLocator>();
-        //    HG.ArrayUtils.ArrayAppend(ref cLocator.transformPairs, new ChildLocator.NameTransformPair { name = "ExitPos", transform = exitPos });
-        //}
-        //
-        //private void AddNewComponents()
-        //{
-        //    var networkTransform = Interactable.AddComponent<NetworkTransform>();
-        //    networkTransform.transformSyncMode = NetworkTransform.TransformSyncMode.SyncTransform;
-        //    Interactable.AddComponent<GenericDisplayNameProvider>().displayToken = "SS2_INTERACTABLE_DROPPOD_NAME";
-        //    Interactable.AddComponent<DropPodController>();
-        //
-        //    PaintDetailsBelow details = Interactable.AddComponent<PaintDetailsBelow>();
-        //    details.influenceOuter = 2;
-        //    details.influenceInner = 1;
-        //    details.layer = 0;
-        //    details.density = 0.5f;
-        //    details.densityPower = 3;
-        //
-        //    details = Interactable.AddComponent<PaintDetailsBelow>();
-        //    details.influenceOuter = 2;
-        //    details.influenceInner = 1;
-        //    details.layer = 1;
-        //    details.density = 0.3f;
-        //    details.densityPower = 3;
-        //
-        //    var podMesh = Interactable.transform.Find("Base/mdlEscapePod/EscapePodArmature/Base").gameObject;
-        //    podMesh.AddComponent<EntityLocator>().entity = Interactable;
-        //}
+
+        public class DroneTableDropTable : BasicPickupDropTable
+        {
+            private void AddNew(List<PickupIndex> sourceDropList, float listWeight)
+            {
+                if (listWeight <= 0f || sourceDropList.Count == 0)
+                {
+                    return;
+                }
+                float weight = listWeight / (float)sourceDropList.Count;
+                foreach (PickupIndex value in sourceDropList)
+                {
+                    selector.AddChoice(value, weight);
+                }
+            }
+
+            public PickupIndex GenerateDropPreReplacement(Xoroshiro128Plus rng, int count)
+            {
+                selector.Clear();
+                AddNew(Run.instance.availableTier1DropList, tier1Weight);
+                AddNew(Run.instance.availableTier2DropList, tier2Weight * (float)count);
+                AddNew(Run.instance.availableTier3DropList, tier3Weight * Mathf.Pow((float)count, 2f)); //this is basically the shipping request code but with a slightly lower red weight scaling
+
+                return PickupDropTable.GenerateDropFromWeightedSelection(rng, selector);
+            }
+
+            public override int GetPickupCount()
+            {
+                return selector.Count;
+            }
+
+            public override PickupIndex[] GenerateUniqueDropsPreReplacement(int maxDrops, Xoroshiro128Plus rng)
+            {
+                return PickupDropTable.GenerateUniqueDropsFromWeightedSelection(maxDrops, rng, selector);
+            }
+
+            new private float tier1Weight = .7925f; //.316f;
+
+            new private float tier2Weight = .20f; //.08f;
+
+            new private float tier3Weight = .0075f; //.004f;
+
+            new private readonly WeightedSelection<PickupIndex> selector = new WeightedSelection<PickupIndex>(8);
+        }
     }
 }
