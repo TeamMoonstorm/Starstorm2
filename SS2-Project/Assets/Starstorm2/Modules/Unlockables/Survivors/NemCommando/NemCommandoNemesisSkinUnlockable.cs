@@ -10,41 +10,52 @@ namespace Moonstorm.Starstorm2.Unlocks.NemCommando
 
         public sealed class NemCommandoNemesisSkinAchievement : BaseAchievement
         {
-            public BodyIndex nemCommandoBodyIndex
-            {
-                get
-                {
-                    var nemCommandoBodyPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoBody", SS2Bundle.NemCommando);
-                    if (nemCommandoBodyPrefab)
-                    {
-                        return nemCommandoBodyPrefab.GetComponent<CharacterBody>().bodyIndex;
-                    }
-                    return BodyIndex.None;
-                }
-            }
-
-            public override BodyIndex LookUpRequiredBodyIndex()
-            {
-                return nemCommandoBodyIndex;
-            }
             public override void OnInstall()
             {
                 base.OnInstall();
-                EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal += OnNemCommandoDefeated;
+                SetServerTracked(true);
             }
 
             public override void OnUninstall()
             {
-                EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal -= OnNemCommandoDefeated;
                 base.OnUninstall();
             }
 
-            private void OnNemCommandoDefeated(CharacterBody obj)
+            private class NemCommandoNemesisSkinServerAchievement : BaseServerAchievement
             {
-                if (obj.bodyIndex == nemCommandoBodyIndex && meetsBodyRequirement)
+                public BodyIndex nemCommandoBodyIndex
                 {
-                    Grant();
+                    get
+                    {
+                        var nemCommandoBodyPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoBody", SS2Bundle.NemCommando);
+                        if (nemCommandoBodyPrefab)
+                        {
+                            return nemCommandoBodyPrefab.GetComponent<CharacterBody>().bodyIndex;
+                        }
+                        return BodyIndex.None;
+                    }
                 }
+
+                public override void OnInstall()
+                {
+                    base.OnInstall();
+                    EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal += OnNemCommandoDefeated;
+                }
+
+                public override void OnUninstall()
+                {
+                    EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal -= OnNemCommandoDefeated;
+                    base.OnUninstall();
+                }
+
+                private void OnNemCommandoDefeated(CharacterBody obj)
+                {
+                    if (obj.bodyIndex == nemCommandoBodyIndex && networkUser.GetCurrentBody().bodyIndex == nemCommandoBodyIndex)
+                    {
+                        Grant();
+                    }
+                }
+
             }
         }
     }

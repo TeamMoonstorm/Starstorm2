@@ -225,6 +225,8 @@ namespace Moonstorm.Starstorm2
             public static BuffDef bdFortified;
 
             public static BuffDef bdKnightCharged;
+
+            public static BuffDef bdLampBuff;
         }
 
         public static class Elites

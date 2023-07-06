@@ -81,8 +81,14 @@ namespace Moonstorm.Starstorm2
                     GameObject teleporterInstance = GameObject.Find("Teleporter1(Clone)");
                     if (teleporterInstance == null)
                     {
-                        Debug.Log("Could not find teleporter!");
-                        return;
+                        Debug.Log("Failed to find regular teleporter, searching for Lunar..");
+                        teleporterInstance = GameObject.Find("LunarTeleporter Variant(Clone)");
+                        if (teleporterInstance == null)
+                        {
+                            Debug.Log("Could not find teleporter!");
+                            return;
+                        }
+
                     }
 
                     TeleporterUpgradeController tuc = teleporterInstance.GetComponent<TeleporterUpgradeController>();
