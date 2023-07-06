@@ -36,6 +36,11 @@ namespace Moonstorm.Starstorm2.Interactables
 
         public static Dictionary<string, Sprite> droneSpritePairs = new Dictionary<string, Sprite>();
 
+        /// <summary>
+        /// List of drone string (body.name) and the required pseudo-transform required to make it sit nicely on the table. The drone hologram is a child of a specific node on the table, so you should just be able to edit the drone itself's transforms, and then input them here.
+        /// </summary>
+        public static Dictionary<string, RefabricatorTriple> droneTripletPairs = new Dictionary<string, RefabricatorTriple>(); //i guess you cant make transforms without an object and i didnt want to make dummy objects
+
         public static CostTypeDef droneCostDef;
         public static int droneCostIndex;
         public static DroneTableDropTable droneDropTable;
@@ -57,7 +62,7 @@ namespace Moonstorm.Starstorm2.Interactables
 
             var interactionToken = interactable.AddComponent<RefabricatorInteractionToken>();
             interactionToken.PurchaseInteraction = interactable.GetComponent<PurchaseInteraction>();
-            interactionToken.symbolTransform = null;
+            //interactionToken.symbolTransform = null;
 
             //list = StringFinder.Instance.InteractableSpawnCards;
             //getInteractableCards();
@@ -83,8 +88,7 @@ namespace Moonstorm.Starstorm2.Interactables
             var efc = self.GetComponent<EffectComponent>();
             bool boolean = efc.effectData.genericBool;
             uint value = efc.effectData.genericUInt;
-            //efc.parentToReferencedTransform = true;
-            if (boolean) //IDs are subtracted by one, meaning a value of zero is impossible -> therefore it's drone time babey
+            if (boolean) //regular ItemTakenOrbs have their genericBool set to false, so if it's true, it's supposed to be a drone
             {
                 var pair = dronePairs[(int)value];
                 var gameobject = BodyCatalog.FindBodyPrefab(pair.Key);
@@ -152,11 +156,23 @@ namespace Moonstorm.Starstorm2.Interactables
             dronePairs.Add(new KeyValuePair<string, int>("MegaDroneBody", 350));
             
             dronePairs.Add(new KeyValuePair<string, int>("ShockDroneBody", 40));
+
+
+            droneTripletPairs.Add("Turret1Body", new RefabricatorTriple(new Vector3(0, -0.515f, 0), new Vector3(0, 90, 0), new Vector3(0.1f, 0.1f, 0.1f)));
+            droneTripletPairs.Add("Drone1Body", new RefabricatorTriple(new Vector3(0, -.275f, 0), new Vector3(0, 180, 0), new Vector3(1.5f, 1.45f, 1.45f)));
+            droneTripletPairs.Add("Drone2Body", new RefabricatorTriple(new Vector3(0, -.035f, 0), new Vector3(0, 90, 0), new Vector3(.36f, .36f, .36f)));
+            droneTripletPairs.Add("MissileDroneBody", new RefabricatorTriple(new Vector3(.325f, 0, 0), new Vector3(0, 90, 180), new Vector3(4, 4, 4))); //added 90 to middle b/c mdl needed 90 in middle
+            droneTripletPairs.Add("EquipmentDroneBody", new RefabricatorTriple(new Vector3(-.185f, 0, 0), new Vector3(0, 90, 180), new Vector3(.505f, .505f, .505f)));
+            droneTripletPairs.Add("EmergencyDroneBody", new RefabricatorTriple(new Vector3(0, -.225f, 0), new Vector3(0, 90, 0), new Vector3(.185f, .185f, .185f)));
+            droneTripletPairs.Add("FlameDroneBody", new RefabricatorTriple(new Vector3(.2f, -.09f, 0), new Vector3(0, 90, 180), new Vector3(.375f, .375f, .375f)));
+            droneTripletPairs.Add("MegaDroneBody", new RefabricatorTriple(new Vector3(0, -0.025f, 0), new Vector3(0, 90, 0), new Vector3(.125f, .125f, .125f)));
+
+            droneTripletPairs.Add("ShockDroneBody", new RefabricatorTriple(new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(1, 1, 1)));
+
         }
 
         private void addDroneCostType(List<CostTypeDef> obj)
         {
-            //CostTypeIndex voidItem = new CostTypeIndex();
             droneCostDef = new CostTypeDef();
             droneCostDef.costStringFormatToken = "SS2_COST_DRONE_FORMAT";
             droneCostDef.isAffordable = new CostTypeDef.IsAffordableDelegate(DroneCostTypeHelper.IsAffordable);
@@ -329,7 +345,6 @@ namespace Moonstorm.Starstorm2.Interactables
                                             SS2Log.Info("entrance index: " + ind + " of value " + dropvalue);
                                             esm.SetNextState(nextState);
                                         }
-
                                         break;
                                     }
                                 }
@@ -343,11 +358,9 @@ namespace Moonstorm.Starstorm2.Interactables
 
         public class RefabricatorInteractionToken : MonoBehaviour
         {
-            //public CharacterBody Owner;
             public CharacterBody LastActivator;
-            //public Transform selfpos;
             public PurchaseInteraction PurchaseInteraction;
-            public Transform symbolTransform;
+            //public Transform symbolTransform;
             //public EntityStateMachine esm;
 
             public void Start()
@@ -358,6 +371,8 @@ namespace Moonstorm.Starstorm2.Interactables
                 }
                 PurchaseInteraction.costType = (CostTypeIndex)droneCostIndex;
                 PurchaseInteraction.onPurchase.AddListener(DronePurchaseAttempt);
+
+                
                 //esm = GetComponent<EntityStateMachine>();
                 //SS2Log.Info("esm: " + esm);
                 //InteractableBodyModelPrefab.transform.Find("Symbol");
@@ -366,8 +381,8 @@ namespace Moonstorm.Starstorm2.Interactables
                 //ConstructFlameChoice();
                 //BaseCostDetermination = (int)(PurchaseInteraction.cost * ChosenBuffBrazierBuff.CostModifier);
                 //SetCost();
-
             }
+
             public void DronePurchaseAttempt(Interactor interactor)
             {
                 if (!interactor) { return; }
@@ -436,13 +451,28 @@ namespace Moonstorm.Starstorm2.Interactables
                 return PickupDropTable.GenerateUniqueDropsFromWeightedSelection(maxDrops, rng, selector);
             }
 
-            new private float tier1Weight = .7925f; //.316f;
+            new private float tier1Weight = .793f; //.316f;
 
             new private float tier2Weight = .20f; //.08f;
 
-            new private float tier3Weight = .0075f; //.004f;
+            new private float tier3Weight = .007f; //.004f;
 
             new private readonly WeightedSelection<PickupIndex> selector = new WeightedSelection<PickupIndex>(8);
         }
+
+        public class RefabricatorTriple : MonoBehaviour
+        {
+            public Vector3 position;
+            //public Quaternion rotation;
+            public Vector3 rotation;
+            public Vector3 scale;
+            public RefabricatorTriple(Vector3 pos, Vector3 rot, Vector3 size)
+            {
+                position = pos;
+                rotation = rot;
+                scale = size;
+            }
+        }
+
     }
 }

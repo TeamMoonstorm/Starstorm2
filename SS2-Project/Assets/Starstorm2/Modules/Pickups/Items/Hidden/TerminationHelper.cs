@@ -25,6 +25,8 @@ namespace Moonstorm.Starstorm2.Items
             public Transform pointerToken;
             int i = 0;
             public bool activeRing;
+            public bool conceded = false;
+
             public new void Awake()
             {
                 base.Awake();
@@ -102,15 +104,12 @@ namespace Moonstorm.Starstorm2.Items
             {
                 if (markRing)
                 {
-                    
                     float ratio = timer / maxTime;
                     if (ratio < 1)
                     {
-                        //SS2Log.Info("updating ring " + ratio);
                         float amount = sizeCurve.Evaluate(ratio);
                         Vector3 vec = new Vector3(amount, amount, amount);
                         markRing.transform.localScale = vec;
-                        //SS2Log.Info("timer " + ratio + " | " + amount);
                         timer += Time.fixedDeltaTime;
                     }
                     else if(activeRing)
@@ -118,42 +117,31 @@ namespace Moonstorm.Starstorm2.Items
                         markRing.SetActive(false);
                         activeRing = false;
                     }
-                    
-                    //terminationMark.transform.Find("Ring");
                 }
                 else if(i < 25)
                 {
                     pointerToken = body.transform.Find("TerminationPositionIndicator(Clone)");
-                    //pointerToken = body.gameObject.GetComponentInChildren<TerminationPointerToken>();
-                    //SS2Log.Info("pointer token: " + pointerToken);
                     if (pointerToken)
                     {
                         var posind = pointerToken.GetComponent<PositionIndicator>();
-                        //SS2Log.Info("posind: " + posind);
                         if (posind)
                         {
                             var insobj = posind.insideViewObject;
-                            //SS2Log.Info("posind: " + insobj);
-                            //insobj.GetComponent
-                            //insobj
-                            //curve = insobj.GetComponent<ObjectScaleCurve>();
                             if (insobj)
                             {
                                 markRing = insobj.transform.Find("Ring").gameObject;
-                                //SS2Log.Info("posind: " + markRing);
-                                //markRing = pointerToken.gameObject;
                                 sizeCurve = AnimationCurve.Linear(0, .235f, 1, .066f);
                                 activeRing = true;
                             }
                         }
                     }
                     ++i;
-                    if(!(i < 25))
+                    if(!(i < 25) && !conceded)
                     {
                         SS2Log.Info("Giving up on finding termination ring for " + body.name); //this is so that it's less shit that im doing getcomponent in fixedupdate listen its ok
+                        conceded = true; // lol oopps
                     }
                 }
-
             }
 
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
