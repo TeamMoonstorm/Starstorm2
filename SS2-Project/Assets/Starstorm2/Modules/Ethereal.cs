@@ -26,6 +26,8 @@ namespace Moonstorm.Starstorm2
 
         public static bool teleUpgraded;
 
+        public static bool adversityEnabled;
+
         private Xoroshiro128Plus rng;
         internal static void Init()
         {
@@ -82,8 +84,10 @@ namespace Moonstorm.Starstorm2
             if (self.teleporterInstance)
             {
                 TeleporterUpgradeController tuc = self.teleporterInstance.GetComponent<TeleporterUpgradeController>();
-                if (tuc != null)
+                if (tuc != null && !(currStage == "skymeadow" && adversityEnabled))
                     tuc.isEthereal = false;
+
+                Debug.Log("Adversity : " + adversityEnabled);
 
                 var position = Vector3.zero;
                 var rotation = Quaternion.Euler(-90, 0, 0);
@@ -148,11 +152,11 @@ namespace Moonstorm.Starstorm2
                         rotation = Quaternion.Euler(0, 80, 0);
                         //top of the highest root in the upper / back area
                         break;
-                    case "skymeadow":
+                    /*case "skymeadow":
                         position = new Vector3(65.9f, 127.4f, -293.9f);
                         rotation = Quaternion.Euler(0, 194.8f, 0);
                         //on top of the tallest rock spire, opposite side of map from the moon
-                        break;
+                        break;*/
                     case "snowyforest":
                         position = new Vector3(-38.7f, 112.7f, 153.1f);
                         rotation = Quaternion.Euler(0, 54.1f, 0);
@@ -316,9 +320,7 @@ namespace Moonstorm.Starstorm2
         }*/
 
         private static void TeleporterInteraction_Start(On.RoR2.TeleporterInteraction.orig_Start orig, TeleporterInteraction self)
-        {
-            orig(self);
-
+        {            
             //on start: grab the teleporter model, and set the fresnel back to the regular red
             Debug.Log("setting tp back");
             var newTeleMat = SS2Assets.LoadAsset<Material>("matEtherealFresnelOverlayOG", SS2Bundle.Indev);
@@ -328,6 +330,8 @@ namespace Moonstorm.Starstorm2
             teleBase.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
             teleProngs.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
             teleBeacon.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
+
+            orig(self);
         }
 
         /*[Command]

@@ -31,7 +31,7 @@ namespace Moonstorm.Starstorm2
 
         //private SpriteRenderer teleporterSprite;
 
-        private void Start()
+        private void Awake()
         {
             Debug.Log("TELEPORTER UPGRADE CONTROLLER AWAKE");
             hzc = GetComponent<HoldoutZoneController>();
@@ -83,11 +83,13 @@ namespace Moonstorm.Starstorm2
             //UpgradeTeleporter();
         }
 
-        private void UpgradeTeleporter()
+        public void UpgradeTeleporter()
         {
             Debug.Log("UPGRADING TELEPORTER");
             //check for sky meadows (lunar tp)
             var currStage = SceneManager.GetActiveScene().name;
+
+            Ethereal.teleIsEthereal = true;
 
             //update teleporter holdout zone / directors / etc.
             hzc.baseRadius *= 1.5f;

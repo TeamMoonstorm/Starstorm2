@@ -72,7 +72,7 @@ namespace EntityStates.LampBoss
                 {
                     timer = 0;
                     FireProjectile();
-                    Debug.Log("firing projectile");
+                    //Debug.Log("firing projectile");
                 }
             }
 
