@@ -42,7 +42,7 @@ namespace EntityStates.NemMerc
 				//}
 			}
 
-			this.dashSpeed = NemAssaulter.dashDistance / (NemAssaulter.dashDuration / this.attackSpeedStat);
+			this.dashSpeed = NemAssaulter.dashDistance / (NemAssaulter.dashDuration);// / this.attackSpeedStat);
 			//this.dashSpeed *= this.attackSpeedStat;
 
 			base.SmallHop(base.characterMotor, Assaulter.smallHopVelocity);
@@ -69,7 +69,7 @@ namespace EntityStates.NemMerc
 			GenericSkill secondary = base.skillLocator.secondary;
 			//nametoken is stupid and lazy
 			if (base.inputBank.skill2.justPressed && secondary.IsReady() 
-				&& secondary.skillDef.skillNameToken == "SS2_NEMESIS_MERCENARY_SECONDARY_NAME")
+				&& secondary.skillDef.skillNameToken == "SS2_NEMESIS_MERCENARY_SECONDARY_SLASH_NAME")
             {				
 				this.m2Buffered = true;
             }
@@ -94,8 +94,9 @@ namespace EntityStates.NemMerc
 
 			this.GatherInputs();
 
+			float totalDuration = NemAssaulter.dashDuration + NemAssaulter.dashPrepDuration;
 			base.characterDirection.forward = this.dashVector;
-			if (this.stopwatch > NemAssaulter.dashPrepDuration / this.attackSpeedStat && !this.isDashing)
+			if (this.stopwatch > NemAssaulter.dashPrepDuration && !this.isDashing)
 			{
 				this.isDashing = true;
 				this.dashVector = this.target ? this.target.transform.position - base.transform.position : base.inputBank.aimDirection;
@@ -141,7 +142,11 @@ namespace EntityStates.NemMerc
 							base.skillLocator.secondary.DeductStock(1);
 							this.hitPauseTimer += NemAssaulter.m2HitPauseDuration / this.attackSpeedStat;
 							this.inM2HitPause = true;
-							this.stopwatch -= NemAssaulter.m2ExtraDashDuration;
+
+							//add extra time only to the END of the dash
+							float extraTime = (this.stopwatch + NemAssaulter.m2ExtraDashDuration) - totalDuration;
+							if(extraTime > 0)
+								this.stopwatch -= extraTime;
 
 							if (this.weapon) this.weapon.SetNextState(new WhirlwindAssaulter());
                         }
@@ -171,7 +176,7 @@ namespace EntityStates.NemMerc
 					}
 				}
 			}
-			if (this.stopwatch >= NemAssaulter.dashDuration + NemAssaulter.dashPrepDuration / this.attackSpeedStat && base.isAuthority)
+			if (this.stopwatch >= totalDuration && base.isAuthority)
 			{
 				this.outer.SetNextStateToMain();
 			}
@@ -222,7 +227,7 @@ namespace EntityStates.NemMerc
 
 		public static float dashPrepDuration = 0.75f;
 
-		public static float dashDistance = 30f;
+		public static float dashDistance = 35f;
 
 		public static float dashDuration = 0.2f;
 

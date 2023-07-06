@@ -87,9 +87,9 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!135 &4873242154438091429
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -261,5 +261,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chargeSound: Play_railgunner_shift_chargeUp
   chargeTime: 0.75
-  orbDuration: 0.5
+  orbDuration: 0.25
   charging: 0

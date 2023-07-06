@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: NemMercBlink
   m_EditorClassIdentifier: 
   skillName: ShadowStep
-  skillNameToken: SS2_NEMESIS_MERCENARY_BLINK_NAME
-  skillDescriptionToken: SS2_NEMESIS_MERCENARY_BLINK_DESCRIPTION
+  skillNameToken: SS2_NEMESIS_MERCENARY_UTILITY_BLINK_NAME
+  skillDescriptionToken: SS2_NEMESIS_MERCENARY_UTILITY_BLINK_DESCRIPTION
   keywordTokens: []
   icon: {fileID: 21300000, guid: 082483431a61e9640bac3220e680da5c, type: 3}
   activationStateMachineName: Body
@@ -22,7 +22,7 @@ MonoBehaviour:
     _typeName: EntityStates.NemMerc.ShadowStep, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
   interruptPriority: 2
-  baseRechargeInterval: 3.5
+  baseRechargeInterval: 4.5
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 1

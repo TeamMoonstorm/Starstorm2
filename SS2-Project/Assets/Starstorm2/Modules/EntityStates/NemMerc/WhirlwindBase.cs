@@ -41,7 +41,7 @@ namespace EntityStates.NemMerc
         [SerializeField]
         public GameObject swingEffectPrefab;
         [SerializeField]
-        public  InterruptPriority interruptPriority = InterruptPriority.Skill;
+        public  InterruptPriority interruptPriority = InterruptPriority.PrioritySkill;
 
         private Animator animator;
         private float duration;
@@ -73,6 +73,7 @@ namespace EntityStates.NemMerc
             base.characterMotor.velocity = Vector3.zero;
             base.characterMotor.walkSpeedPenaltyCoefficient = this.walkSpeedCoefficient;
 
+            base.PlayAnimation("FullBody, Override", "SecondarySlash", "Secondary.playbackRate", this.duration * 0.9f);
 
             //"momentum"
             //i dont like it          
@@ -141,7 +142,6 @@ namespace EntityStates.NemMerc
             
         }
 
-        //confusing
         private void FireAttack()
         {
             Util.PlayAttackSpeedSound(this.attackSoundString, base.gameObject, this.attackSoundPitch);
@@ -169,7 +169,7 @@ namespace EntityStates.NemMerc
         {             
             if (!this.isInHitPause)
             {
-                this.hitStopCachedState = base.CreateHitStopCachedState(base.characterMotor, this.animator, "Whirlwind.playbackRate");
+                this.hitStopCachedState = base.CreateHitStopCachedState(base.characterMotor, this.animator, "Secondary.playbackRate");
                 this.hitPauseTimer = this.hitPauseDuration / this.attackSpeedStat;
                 this.isInHitPause = true;
             }
@@ -178,7 +178,7 @@ namespace EntityStates.NemMerc
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return this.interruptPriority;
+            return this.timesAttacked < this.numAttacks ? InterruptPriority.PrioritySkill : InterruptPriority.Skill;/////////////////////////////////////////////////
         }
     }
 }

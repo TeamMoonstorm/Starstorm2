@@ -37,7 +37,7 @@ namespace Moonstorm.Starstorm2.Components
         private float searchFrequency;
         private float searchStopwatch;
 
-        private Indicator indicator;
+        private PositionIndicator indicator;
         private float stopwatch;
         private bool isRevealed;
         private SphereSearch search = new SphereSearch();
@@ -45,10 +45,8 @@ namespace Moonstorm.Starstorm2.Components
 
         private void Start()
         {
-            this.indicator = new Indicator(this.owner, this.hologramIndicatorPrefab);
-            this.indicator.targetTransform = base.transform;
-            this.indicator.active = true;
-            // could use an offscreen indicator
+            this.indicator = GameObject.Instantiate(this.hologramIndicatorPrefab, base.transform.position, Quaternion.identity).GetComponent<PositionIndicator>();
+            this.indicator.targetTransform = this.indicatorStartTransform;
         }
 
 
@@ -103,6 +101,7 @@ namespace Moonstorm.Starstorm2.Components
                 }
             }
 
+            this.indicator.yOffset = 0; // XD????
             this.indicator.targetTransform = base.transform;
 
         }
@@ -115,17 +114,18 @@ namespace Moonstorm.Starstorm2.Components
             return false;
         }
 
+        private void OnDestroy()
+        {
+            if (this.indicator) Destroy(this.indicator.gameObject);
+        }
+
         public void OnEnable()
         {
             GlobalEventManager.onServerDamageDealt += CheckNewTargetOnDamage;
-            if (this.indicator != null)
-                this.indicator.active = true;
         }
         public void OnDisable()
         {
             GlobalEventManager.onServerDamageDealt -= CheckNewTargetOnDamage;
-            if (this.indicator != null)
-                this.indicator.active = false;
         }
         private void SearchForTarget()
         {

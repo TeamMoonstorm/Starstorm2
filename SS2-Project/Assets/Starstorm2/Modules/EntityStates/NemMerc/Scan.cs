@@ -146,7 +146,6 @@ namespace EntityStates.NemMerc
             //max spheresearch holograms = 2
             //missed spheresearch holograms instead go to random holograms (in smaller radius)
 
-            //targetting interactables could be neat. would double as a "combat" hologram near the teleporter
             int targetedHolograms = Mathf.Min(Scan.targetedHolograms, hurtBoxes.Count);
             for (int i = 0; i < targetedHolograms; i++)
             {
@@ -165,9 +164,13 @@ namespace EntityStates.NemMerc
                 }
 
                 Vector2 circle = UnityEngine.Random.insideUnitCircle;
-                Vector3 direction = new Vector3(circle.x, 0, circle.y);              
-                Vector3 position = target.transform.position + (direction * Scan.targetedHologramOffset);
+                Vector3 direction = new Vector3(circle.x, 0, circle.y);
                 
+                Vector3 position = target.transform.position + (direction * Scan.targetedHologramOffset);
+                if(Physics.Raycast(target.transform.position, direction, out RaycastHit hit, Scan.targetedHologramOffset, LayerIndex.world.collisionMask))
+                {
+                    position = hit.point;
+                }
 
                 this.SpawnHologramSingle(position, target);
             }
@@ -199,13 +202,13 @@ namespace EntityStates.NemMerc
                     position.y += 4f;
                 }
 
-                Debug.Log("------RANDOM HOLOGRAM " + i + "------");
-                Debug.Log("NUM AIR NODES IN RANGE: " + numAir);
-                Debug.Log("NUM GROUND NODES IN RANGE: " + numGround);
-                Debug.Log("CHANCE TO USE AIR NODES: " + numAir / (numAir + numGround));
-                Debug.Log("USED AIR NODES: " + useAir);
-                Debug.Log("NODE INDEX: " + indexDebug.nodeIndex);
-                Debug.Log("NODE POSITION " + position.ToString());
+                //Debug.Log("------RANDOM HOLOGRAM " + i + "------");
+                //Debug.Log("NUM AIR NODES IN RANGE: " + numAir);
+                //Debug.Log("NUM GROUND NODES IN RANGE: " + numGround);
+                //Debug.Log("CHANCE TO USE AIR NODES: " + numAir / (numAir + numGround));
+                //Debug.Log("USED AIR NODES: " + useAir);
+                //Debug.Log("NODE INDEX: " + indexDebug.nodeIndex);
+                //Debug.Log("NODE POSITION " + position.ToString());
 
                 this.SpawnHologramSingle(position, null);
             }

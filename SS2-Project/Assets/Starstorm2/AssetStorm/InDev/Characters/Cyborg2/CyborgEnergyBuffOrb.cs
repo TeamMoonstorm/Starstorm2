@@ -31,6 +31,8 @@ namespace Moonstorm.Starstorm2.Components
 
             SkillLocator skillLocator = this.target.healthComponent.body.skillLocator;
 
+
+            //DIPSHITTTTTTTTTTTTTTTTTTTTTT
             EntityStateMachine weapon = EntityStateMachine.FindByCustomName(this.target.healthComponent.gameObject, "Weapon");
             if (weapon && !weapon.SetInterruptState(new CatchZapper(), EntityStates.InterruptPriority.Any))
             {

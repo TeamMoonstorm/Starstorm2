@@ -22,6 +22,8 @@ namespace EntityStates.Cyborg2
 			maxDistance = 1000f;
 			muzzleName = "CannonR";
 			spreadBloomValue = 5f;
+			recoilAmplitudeX = 2;
+			recoilAmplitudeY = 2;
 			//muzzleFlashPrefab = Assets.muzzleFlashRailgun;
 
 			base.OnEnter();

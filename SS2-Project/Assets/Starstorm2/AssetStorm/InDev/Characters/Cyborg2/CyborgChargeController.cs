@@ -22,6 +22,12 @@ namespace Moonstorm.Starstorm2.Components
         public float chargeExpireTime = 5f;
         private void Awake()
         {
+            ///
+            ///////
+            //NEED UI FOR THIS 
+            ///
+            //
+            //
             this.body = base.GetComponent<CharacterBody>();
             this.skillLocator = base.GetComponent<SkillLocator>();
             this.secondary = skillLocator.secondary;

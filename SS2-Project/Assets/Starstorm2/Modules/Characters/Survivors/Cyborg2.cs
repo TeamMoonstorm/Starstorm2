@@ -38,6 +38,11 @@ namespace Moonstorm.Starstorm2.Survivors
             GameObject p = SS2Assets.LoadAsset<GameObject>("MagnetProjectile", SS2Bundle.Indev);
             p.GetComponent<RoR2.Projectile.ProjectileController>().ghostPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/BFG/BeamSphereGhost.prefab").WaitForCompletion();
             p.GetComponent<RoR2.Projectile.ProjectileExplosion>().explosionEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/BFG/BeamSphereExplosion.prefab").WaitForCompletion();
+
+            GameObject p2 = SS2Assets.LoadAsset<GameObject>("AntimatterProjectile", SS2Bundle.Indev);
+            p2.GetComponent<RoR2.Projectile.ProjectileController>().ghostPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/LunarGolem/LunarGolemTwinShotProjectileGhost.prefab").WaitForCompletion();
+            p2.GetComponent<RoR2.Projectile.ProjectileExplosion>().explosionEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/LunarGolem/LunarGolemTwinShotExplosion.prefab").WaitForCompletion();
+
         }
     }
 }

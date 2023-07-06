@@ -14,10 +14,7 @@ namespace Moonstorm.Starstorm2.Components
         public float orbDuration = 0.5f;
         public bool charging;
         private float chargeStopwatch;
-        void Start()
-        {
 
-        }
         public void StartCharge()
         {
             this.charging = true;

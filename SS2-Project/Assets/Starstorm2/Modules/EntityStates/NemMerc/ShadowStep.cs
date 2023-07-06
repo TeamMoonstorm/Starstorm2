@@ -40,6 +40,12 @@ namespace EntityStates.NemMerc
 
             NemMercTracker tracker = base.GetComponent<NemMercTracker>();
             this.target = tracker.GetTrackingTarget();
+            if (!this.target)
+            {
+                this.outer.SetNextStateToMain();
+                this.activatorSkillSlot.AddOneStock();
+                return;
+            }
 
             this.duration = ShadowStep.baseDuration; //movespeedstat ??
 
@@ -71,14 +77,6 @@ namespace EntityStates.NemMerc
                     this.camera.cameraEndPosition = this.teleportTarget;
             }
         }
-
-        private void UpdateBodyInputs()
-        {
-            if(base.skillLocator)
-            {
-
-            }
-        }
         public override void FixedUpdate()
         {
             base.FixedUpdate();
@@ -95,6 +93,8 @@ namespace EntityStates.NemMerc
                 TeleportHelper.TeleportBody(base.characterBody, this.teleportTarget);
                 base.characterDirection.forward = base.GetAimRay().direction;
                 base.SmallHop(base.characterMotor, ShadowStep.smallHopVelocity);
+
+                //base.skillLocator.primary.stock = 2; /////////////////////
                 this.outer.SetNextStateToMain();
                 return;
             }
@@ -265,12 +265,12 @@ namespace EntityStates.NemMerc
 
             public bool IsUserControlAllowed(CameraRigController cameraRigController)
             {
-                return false;
+                return true;
             }
 
             public bool IsUserLookAllowed(CameraRigController cameraRigController)
             {
-                return false;
+                return true;
             }
         }
 

@@ -22,21 +22,24 @@ namespace EntityStates.NemMerc
         public float baseSpeed;
 
         private float previousAirControl;
-
+        private Vector3 direction;
         private EntityStateMachine weapon;
+
+        private Transform collisionTransform;
         public override void OnEnter()
         {
             base.OnEnter();
 
             //anim
+            base.PlayAnimation("FullBody, Override", "Lunge", "Utility.playbackRate", .3f);
             //vfx
             //sound
             // SHOULD USE ROOT MOTION INSTEAD of velocity 
             this.weapon = EntityStateMachine.FindByCustomName(base.gameObject, "Weapon");
 
-            
 
-            Vector3 direction = base.GetAimRay().direction;
+            this.collisionTransform = base.FindModelChild("WhirlwindCollision");
+            this.direction = base.GetAimRay().direction;
 
             this.previousAirControl = base.characterMotor.airControl;
             base.characterMotor.airControl = Lunge.airControl;
@@ -66,31 +69,43 @@ namespace EntityStates.NemMerc
 
         public bool CheckCollisions()
         {
-            bool hit = Util.CharacterSpherecast(this.characterBody.gameObject, new Ray(base.characterBody.corePosition, Vector3.up), Lunge.collisionRadius, out RaycastHit hitInfo,
-                0, LayerIndex.entityPrecise.mask, QueryTriggerInteraction.UseGlobal);
-            hit &= TestHit(hitInfo);
+            //bool hit = Util.CharacterSpherecast(this.characterBody.gameObject, new Ray(base.characterBody.corePosition, Vector3.up), Lunge.collisionRadius, out RaycastHit hitInfo,
+            //    0, LayerIndex.entityPrecise.mask, QueryTriggerInteraction.UseGlobal);
 
-            return hit;
+            if(this.collisionTransform)
+            {
+                Transform transform = this.collisionTransform;
+                Vector3 center = transform.position;
+                Vector3 halfExtents = transform.lossyScale * 0.5f;
+                Quaternion rotation = transform.rotation;
+
+                Collider[] hits = Physics.OverlapBox(center, halfExtents, rotation, LayerIndex.entityPrecise.mask);
+                return ProcessHits(hits);
+            }
+            
+            return false;
         }
 
-        public bool TestHit(RaycastHit raycastHit)
+        public bool ProcessHits(Collider[] hits)
         {
-            Collider collider = raycastHit.collider;
-            if (collider)
+            foreach(Collider collider in hits)
             {
-                HurtBox hurtBox = collider.GetComponent<HurtBox>();
-                if (hurtBox)
+                if (collider)
                 {
-                    HealthComponent healthComponent = hurtBox.healthComponent;
-                    TeamMask teams = TeamMask.GetUnprotectedTeams(this.characterBody.teamComponent.teamIndex);
-                    if (healthComponent && healthComponent.alive
-                        && teams.HasTeam(healthComponent.body.teamComponent.teamIndex))
+                    HurtBox hurtBox = collider.GetComponent<HurtBox>();
+                    if (hurtBox)
                     {
-                        ForceFlinch(healthComponent.body);
-                        return true;
+                        HealthComponent healthComponent = hurtBox.healthComponent;
+                        TeamMask teams = TeamMask.GetUnprotectedTeams(this.characterBody.teamComponent.teamIndex);
+                        if (healthComponent && healthComponent.alive
+                            && teams.HasTeam(healthComponent.body.teamComponent.teamIndex))
+                        {
+                            ForceFlinch(healthComponent.body);
+                            return true;
+                        }
                     }
                 }
-            }
+            }        
             return false;
         }
 
@@ -114,7 +129,8 @@ namespace EntityStates.NemMerc
             if (!base.isAuthority || !base.characterMotor)
                 return;
 
-            base.characterMotor.moveDirection = base.inputBank.moveVector;
+            base.characterMotor.moveDirection = this.direction;
+            base.characterDirection.forward = this.direction;
 
             if(this.CheckCollisions())
             {

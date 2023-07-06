@@ -70,6 +70,7 @@ namespace Moonstorm.Starstorm2.Components
 					NemMercHologram hologram = collider.GetComponent<NemMercHologram>();
 					if (hologram)
 					{
+						//make indicator do animation or smth?
 						this.trackingTarget = hologram.gameObject;
 						this.targetIsHologram = true;
 						return;

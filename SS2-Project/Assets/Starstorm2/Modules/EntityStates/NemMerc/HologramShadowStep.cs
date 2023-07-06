@@ -92,6 +92,7 @@ namespace EntityStates.NemMerc
             {
                 TeleportHelper.TeleportBody(base.characterBody, this.teleportTarget);
                 base.characterDirection.forward = base.GetAimRay().direction;
+                //base.skillLocator.primary.stock = 2; /////////////////////
                 this.outer.SetNextStateToMain();
                 return;
             }
@@ -178,6 +179,10 @@ namespace EntityStates.NemMerc
                 
             }
 
+            private void OnDestroy()
+            {
+                this.StopLook();
+            }
             public bool IsHudAllowed(CameraRigController cameraRigController)
             {
                 return true;
@@ -185,7 +190,7 @@ namespace EntityStates.NemMerc
 
             public bool IsUserControlAllowed(CameraRigController cameraRigController)
             {
-                return false;
+                return true;
             }
 
             public bool IsUserLookAllowed(CameraRigController cameraRigController)

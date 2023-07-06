@@ -22,6 +22,7 @@ namespace EntityStates.NemMerc
 
             this.duration = Reload.baseDuration / this.attackSpeedStat;
             //anim
+            base.PlayCrossfade("Gesture, Override", "Reload2", "Reload.playbackRate", this.duration * 0.9f, 0.1f);
             //sound
             //vfx
         }

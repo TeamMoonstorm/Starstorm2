@@ -94,7 +94,7 @@ namespace EntityStates.Cyborg2
             return InterruptPriority.Pain;
         }
 
-        //move camera to position
+        //move camera to position. keep player camera control
         public class CameraMover : MonoBehaviour, ICameraStateProvider
         {
             public static float endLerpTime = 0.2f;
