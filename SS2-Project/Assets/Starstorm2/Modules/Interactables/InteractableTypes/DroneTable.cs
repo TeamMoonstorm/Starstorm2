@@ -158,14 +158,14 @@ namespace Moonstorm.Starstorm2.Interactables
             dronePairs.Add(new KeyValuePair<string, int>("ShockDroneBody", 40));
 
 
-            droneTripletPairs.Add("Turret1Body", new RefabricatorTriple(new Vector3(0, -0.515f, 0), new Vector3(0, 90, 0), new Vector3(0.1f, 0.1f, 0.1f)));
-            droneTripletPairs.Add("Drone1Body", new RefabricatorTriple(new Vector3(0, -.275f, 0), new Vector3(0, 180, 0), new Vector3(1.5f, 1.45f, 1.45f)));
-            droneTripletPairs.Add("Drone2Body", new RefabricatorTriple(new Vector3(0, -.035f, 0), new Vector3(0, 90, 0), new Vector3(.36f, .36f, .36f)));
-            droneTripletPairs.Add("MissileDroneBody", new RefabricatorTriple(new Vector3(.325f, 0, 0), new Vector3(0, 90, 180), new Vector3(4, 4, 4))); //added 90 to middle b/c mdl needed 90 in middle
-            droneTripletPairs.Add("EquipmentDroneBody", new RefabricatorTriple(new Vector3(-.185f, 0, 0), new Vector3(0, 90, 180), new Vector3(.505f, .505f, .505f)));
-            droneTripletPairs.Add("EmergencyDroneBody", new RefabricatorTriple(new Vector3(0, -.225f, 0), new Vector3(0, 90, 0), new Vector3(.185f, .185f, .185f)));
-            droneTripletPairs.Add("FlameDroneBody", new RefabricatorTriple(new Vector3(.2f, -.09f, 0), new Vector3(0, 90, 180), new Vector3(.375f, .375f, .375f)));
-            droneTripletPairs.Add("MegaDroneBody", new RefabricatorTriple(new Vector3(0, -0.025f, 0), new Vector3(0, 90, 0), new Vector3(.125f, .125f, .125f)));
+            droneTripletPairs.Add("Turret1Body", new RefabricatorTriple(new Vector3(0, -0.575f, -.2f), new Vector3(0, 180, 0), new Vector3(.09f, .09f, .09f)));
+            droneTripletPairs.Add("Drone1Body", new RefabricatorTriple(new Vector3(0, -0.28f, 0), new Vector3(0, 156, 0), new Vector3(1.475f, 1.475f, 1.475f)));
+            droneTripletPairs.Add("Drone2Body", new RefabricatorTriple(new Vector3(0, -0.0125f, 0), new Vector3(0, 0, 0), new Vector3(.355f, .355f, .355f)));
+            droneTripletPairs.Add("MissileDroneBody", new RefabricatorTriple(new Vector3(0.36f, 0, 0), new Vector3(0, 0, 90), new Vector3(4, 4, 4)));
+            droneTripletPairs.Add("EquipmentDroneBody", new RefabricatorTriple(new Vector3(-.185f, 0, 0), new Vector3(0, 0, 90), new Vector3(.505f, .505f, .505f)));
+            droneTripletPairs.Add("EmergencyDroneBody", new RefabricatorTriple(new Vector3(0, -.225f, 0), new Vector3(0, 0, 0), new Vector3(.18f, .18f, .18f)));
+            droneTripletPairs.Add("FlameDroneBody", new RefabricatorTriple(new Vector3(0.165f, -0.05f, 0), new Vector3(0, 0, 90), new Vector3(0.45f, 0.45f, 0.45f)));
+            droneTripletPairs.Add("MegaDroneBody", new RefabricatorTriple(new Vector3(0, -0.025f, 0), new Vector3(0, 0, 0), new Vector3(0.1225f, 0.1225f, 0.1225f)));
 
             droneTripletPairs.Add("ShockDroneBody", new RefabricatorTriple(new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(1, 1, 1)));
 
@@ -315,7 +315,7 @@ namespace Moonstorm.Starstorm2.Interactables
                                         };
 
                                         var model = context.purchasedObject;
-                                        
+
                                         //var intermediate = model.transform.Find("mdlDroneTable");
 
                                         //var target = model.transform.Find("OrbTarget").gameObject; //???
@@ -331,10 +331,47 @@ namespace Moonstorm.Starstorm2.Interactables
                                         {
                                             droneDropTable = new DroneTableDropTable();
                                         }
-                                        int dropvalue = Mathf.RoundToInt((Mathf.Sqrt(pair.Value) - 5.65f) * 2.2f);
+                                        int dropvalue = Mathf.RoundToInt((Mathf.Pow(pair.Value, 1.01f) * .15f) - 4);
+                                        //int dropvalue = Mathf.RoundToInt((Mathf.Sqrt(pair.Value) - 5.65f) * 2.2f);
                                         //int val = Mathf.RoundToInt(Mathf.Pow(Mathf.Sqrt(pair.Value) / 3, 1.35f) - 1.5f);
                                         PickupIndex ind = droneDropTable.GenerateDropPreReplacement(context.rng, dropvalue);
 
+                                        //some weird catches to try help make drones give roughly their 'tier' but like i dunno man
+                                        if (ind.pickupDef.itemTier != ItemTier.Tier1 && pair.Value < 60)
+                                        {
+                                            PickupIndex ind2 = droneDropTable.GenerateDropPreReplacement(context.rng, dropvalue);
+                                            if (ind2.pickupDef.itemTier != ItemTier.Tier3)
+                                            {
+                                                ind = ind2;
+                                            }  
+                                        }
+
+                                        if (ind.pickupDef.itemTier == ItemTier.Tier3 && pair.Value >= 60 && pair.Value < 350)
+                                        {
+                                            {
+                                                PickupIndex ind2 = droneDropTable.GenerateDropPreReplacement(context.rng, dropvalue);
+                                                if (ind2.pickupDef.itemTier != ItemTier.Tier1)
+                                                {
+                                                    ind = ind2;
+                                                }
+                                            }
+                                        }
+
+                                        if (ind.pickupDef.itemTier != ItemTier.Tier3 && pair.Value >= 350)
+                                        {
+                                            {
+                                                PickupIndex ind2 = droneDropTable.GenerateDropPreReplacement(context.rng, dropvalue);
+                                                if (ind2.pickupDef.itemTier != ItemTier.Tier1)
+                                                {
+                                                    ind = ind2;
+                                                    PickupIndex ind3 = droneDropTable.GenerateDropPreReplacement(context.rng, dropvalue);
+                                                    if (ind3.pickupDef.itemTier != ItemTier.Tier1)
+                                                    {
+                                                        ind = ind3;
+                                                    }
+                                                }
+                                            }
+                                        }
                                         var esm = model.GetComponent<EntityStateMachine>();
                                         if (esm)
                                         {

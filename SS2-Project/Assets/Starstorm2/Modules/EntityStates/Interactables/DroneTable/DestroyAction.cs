@@ -1,6 +1,7 @@
 ﻿using EntityStates.DroneTable;
 using Moonstorm.Starstorm2;
 using RoR2;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,17 +20,13 @@ namespace EntityStates.DroneTable
 
         public GameObject tempDrone;
 
-        RefabricatorTriple outvar;
-
-        public static Material whiteHoloMaterial = SS2Assets.LoadAsset<Material>("matHoloWhite");
-        public static Material greenHoloMaterial = SS2Assets.LoadAsset<Material>("matHoloGreen");
-        public static Material redHoloMaterial = SS2Assets.LoadAsset<Material>("matHoloRed");
+        public static Material whiteHoloMaterial;// = SS2Assets.LoadAsset<Material>("matHoloWhite");
+        public static Material greenHoloMaterial;// = SS2Assets.LoadAsset<Material>("matHoloGreen");
+        public static Material redHoloMaterial;// = SS2Assets.LoadAsset<Material>("matHoloRed");
 
         public CharacterModel tempModel;
 
-        public Quaternion fuck2;
-
-        public Vector3 fuck3;
+        public uint soundID;
 
         protected override bool enableInteraction
         {
@@ -45,35 +42,26 @@ namespace EntityStates.DroneTable
             tempDrone = null;
             
             var holo = this.gameObject.transform.Find("DroneHologramRoot");
+            var scrapRoot = this.gameObject.transform.Find("ScrapRoot").gameObject;
+            scrapRoot.SetActive(true);
+
             var locator = droneObject.GetComponent<ModelLocator>();
             var body = droneObject.GetComponent<CharacterBody>();
-            var rad = body.bestFitRadius;
 
+            soundID = Util.PlaySound("Play_MULT_m1_sawblade_impact_loop", this.gameObject); //awesome
             if (locator)
             {
                 var doubleTempDrone = locator.modelTransform.gameObject;
                 SS2Log.Info("dronheobject name : " + droneObject.name);
+                RefabricatorTriple outvar;
                 bool success = droneTripletPairs.TryGetValue(droneObject.name, out outvar);
                 if (success)
                 {
-                    Vector3 fuck = holo.rotation.eulerAngles;
-                    fuck += outvar.rotation;
-                    //tempDrone = UnityEngine.Object.Instantiate<GameObject>(doubleTempDrone, outvar.position + holo.position, new Quaternion(0, 0, 0, 0), holo);
-                    ////tempDrone.transform.localPosition = outvar.position;
-                    //fuck2 = Quaternion.Euler(this.gameObject.transform.rotation.eulerAngles + outvar.rotation);
-                    
-                    fuck3 = new Vector3(0, 0, 0);
-                    fuck3.x += outvar.rotation.x;
-                    fuck3.y += outvar.rotation.y;
-                    fuck3.z += outvar.rotation.z;
-
-
-                    tempDrone = UnityEngine.Object.Instantiate<GameObject>(doubleTempDrone, outvar.position, Quaternion.Euler(new Vector3(0,0,0)), holo);
-                    tempDrone.transform.localPosition = outvar.position;
+                    tempDrone = UnityEngine.Object.Instantiate<GameObject>(doubleTempDrone, outvar.position, Quaternion.Euler(new Vector3(0,0,0)), holo); //i fucking hate rotations 
                     SS2Log.Info(tempDrone.transform.rotation.eulerAngles + " | " + outvar.rotation);
-                    
-                    tempDrone.transform.localScale = outvar.scale;
-                    
+                    tempDrone.transform.localPosition = outvar.position;
+                    tempDrone.transform.localEulerAngles = outvar.rotation;
+                    tempDrone.transform.localScale = outvar.scale;  
                 }
                 else
                 {
@@ -90,8 +78,14 @@ namespace EntityStates.DroneTable
 
                 if(droneObject.name == "MegaDroneBody")
                 {
-                    //var ps = droneObject.AddComponent<ParticleSystem>();
-                    //ps.Stop(true);
+                    try
+                    {
+                        tempDrone.transform.Find("MegaDroneArmature").Find("Base").gameObject.SetActive(false);
+                    }
+                    catch (NullReferenceException e)
+                    {
+                        Debug.Log("failed to turn off megadrone stuff (" + e + ")");
+                    }
                 }
 
                 var hurtboxes = tempDrone.GetComponent<HurtBoxGroup>();
@@ -156,10 +150,10 @@ namespace EntityStates.DroneTable
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (fixedAge > duration/2)
-            {
-                tempDrone.transform.rotation = Quaternion.Euler(fuck3);
-            }
+            //if (fixedAge > duration/2)
+            //{
+                //tempDrone.transform.rotation = Quaternion.Euler(fuck3);
+            //}
 
             if (fixedAge > duration)
                 outer.SetNextStateToMain();
@@ -170,11 +164,15 @@ namespace EntityStates.DroneTable
         {
             //SS2Log.Info("destroy action finished");
             base.OnExit();
-            var target = this.gameObject.transform.Find("PickupOrigin");
+
+            AkSoundEngine.StopPlayingID(soundID);
+
             if (tempDrone)
             {
                 Destroy(tempDrone);
             }
+
+            var target = this.gameObject.transform.Find("PickupOrigin");
             Vector3 vec = Vector3.up * 10 + target.forward * 3.5f;
             PickupDropletController.CreatePickupDroplet(index, target.position, vec);
 

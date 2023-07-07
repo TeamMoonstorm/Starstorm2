@@ -23,6 +23,8 @@ namespace EntityStates.DroneTable
         public override void OnEnter()
         {
             base.OnEnter();
+            var scrapRoot = this.gameObject.transform.Find("ScrapRoot").gameObject;
+            scrapRoot.SetActive(false);
         }
     }
 }
