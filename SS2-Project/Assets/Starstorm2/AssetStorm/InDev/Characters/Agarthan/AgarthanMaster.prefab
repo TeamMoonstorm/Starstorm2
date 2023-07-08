@@ -146,7 +146,7 @@ MonoBehaviour:
   isHealer: 0
   enemyAttention: 0
   aimVectorDampTime: 0.05
-  aimVectorMaxSpeed: 180
+  aimVectorMaxSpeed: 90
   selectedSkilldriverName: 
   debugEnemyHurtBox: {fileID: 0}
 --- !u!114 &6495939233140612475
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customName: ChaseAndBiteOffNodegraphWhileSlowingDown
+  customName: StrafeAndBiteOffNodegraphWhileSlowingDown
   skillSlot: 1
   requiredSkill: {fileID: 0}
   requireSkillReady: 0
@@ -190,7 +190,7 @@ MonoBehaviour:
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
   minDistance: 0
-  maxDistance: 5
+  maxDistance: 8
   selectionRequiresTargetLoS: 1
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
@@ -198,8 +198,8 @@ MonoBehaviour:
   moveTargetType: 0
   activationRequiresTargetLoS: 0
   activationRequiresAimTargetLoS: 0
-  activationRequiresAimConfirmation: 0
-  movementType: 1
+  activationRequiresAimConfirmation: 1
+  movementType: 2
   moveInputScale: 0.4
   aimType: 1
   ignoreNodeGraph: 1
@@ -236,14 +236,14 @@ MonoBehaviour:
   maxDistance: 20
   selectionRequiresTargetLoS: 1
   selectionRequiresOnGround: 0
-  selectionRequiresAimTarget: 0
+  selectionRequiresAimTarget: 1
   maxTimesSelected: -1
   moveTargetType: 0
   activationRequiresTargetLoS: 0
   activationRequiresAimTargetLoS: 0
   activationRequiresAimConfirmation: 0
   movementType: 1
-  moveInputScale: 1
+  moveInputScale: 0.6
   aimType: 1
   ignoreNodeGraph: 1
   shouldSprint: 0
@@ -286,7 +286,7 @@ MonoBehaviour:
   activationRequiresAimTargetLoS: 0
   activationRequiresAimConfirmation: 1
   movementType: 2
-  moveInputScale: 1
+  moveInputScale: 0.8
   aimType: 1
   ignoreNodeGraph: 0
   shouldSprint: 0
@@ -329,7 +329,7 @@ MonoBehaviour:
   activationRequiresAimTargetLoS: 0
   activationRequiresAimConfirmation: 0
   movementType: 2
-  moveInputScale: 1
+  moveInputScale: 0.8
   aimType: 4
   ignoreNodeGraph: 0
   shouldSprint: 0

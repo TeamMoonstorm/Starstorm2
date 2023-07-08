@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 1888044482090775759}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2474275625120657546}
   - {fileID: 2226170606958839242}
@@ -3223,7 +3223,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 1}
+        key0: {r: 1, g: 1, b: 1, a: 0.5882353}
         key1: {r: 1, g: 1, b: 1, a: 0}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
@@ -8446,7 +8446,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 1}
+        key0: {r: 1, g: 1, b: 1, a: 0.7058824}
         key1: {r: 1, g: 1, b: 1, a: 0}
         key2: {r: 0.9764706, g: 0.9764706, b: 0.9764706, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
@@ -10972,8 +10972,8 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 0}
-        key1: {r: 1, g: 1, b: 1, a: 1}
-        key2: {r: 1, g: 0.003921569, b: 0, a: 1}
+        key1: {r: 1, g: 1, b: 1, a: 0.7058824}
+        key2: {r: 1, g: 0.003921569, b: 0, a: 0.7058824}
         key3: {r: 0.8901961, g: 0.7568628, b: 0.1960784, a: 0}
         key4: {r: 0.9137255, g: 0.1647059, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
@@ -16040,10 +16040,10 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 0}
-        key1: {r: 1, g: 1, b: 1, a: 1}
-        key2: {r: 0, g: 0, b: 0, a: 1}
+        key1: {r: 1, g: 1, b: 1, a: 0.7058824}
+        key2: {r: 0, g: 0, b: 0, a: 0.7058824}
         key3: {r: 0, g: 0, b: 0, a: 0}
-        key4: {r: 0, g: 0, b: 0, a: 0.5019608}
+        key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0.6117647}
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
@@ -16059,7 +16059,7 @@ ParticleSystem:
         atime1: 16384
         atime2: 49151
         atime3: 65535
-        atime4: 14745
+        atime4: 65535
         atime5: 16384
         atime6: 21823
         atime7: 0

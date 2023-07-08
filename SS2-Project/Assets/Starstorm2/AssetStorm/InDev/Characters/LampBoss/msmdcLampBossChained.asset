@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0777505d690470442828b06f82250916, type: 3}
-  m_Name: msmdcLampBoss
+  m_Name: msmdcLampBossChained
   m_EditorClassIdentifier: 
   prefab: {fileID: 1255514408908605, guid: 60a903a9f1f936a4ab9f3c9eab0f8788, type: 3}
   sendOverNetwork: 1
@@ -28,7 +28,7 @@ MonoBehaviour:
     - body: {fileID: 1862279346882973295, guid: 69ec42ad4658e104e81feb700f18a317,
         type: 3}
       skillChoices: []
-      skinChoice: {fileID: 11400000, guid: 2fe1aec748ccec84ba15d76e948ce9d9, type: 2}
+      skinChoice: {fileID: 11400000, guid: 5dc94a76fea0ebe4c8c59fcefc65dd96, type: 2}
   inventoryToCopy: {fileID: 0}
   equipmentToGrant: []
   itemsToGrant: []
@@ -45,7 +45,7 @@ MonoBehaviour:
   monsterCategory: 4
   customCategory: 
   customCategoryWeight: 1
-  stages: 34525221
+  stages: 64
   customStages:
   - fblscene
   requiredExpansions: []

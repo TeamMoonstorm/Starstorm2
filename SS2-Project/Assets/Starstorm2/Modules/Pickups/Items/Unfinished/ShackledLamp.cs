@@ -1,6 +1,7 @@
 ﻿using RoR2;
 using RoR2.Items;
 using RoR2.Projectile;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Moonstorm.Starstorm2.Items
@@ -18,9 +19,15 @@ namespace Moonstorm.Starstorm2.Items
             private static GameObject projectilePrefab = SS2Assets.LoadAsset<GameObject>("LampBulletPlayer", SS2Bundle.Indev);
             private float attackCounter;
 
+            private List<GameObject> lampDisplay;
+            private Transform displayPos = null;
+
             private void Start()
             {
                 body.onSkillActivatedAuthority += ChainEffect;
+                lampDisplay = body.modelLocator.modelTransform.GetComponent<CharacterModel>().GetItemDisplayObjects(SS2Content.Items.ShackledLamp.itemIndex);
+                if (lampDisplay != null)
+                    displayPos = lampDisplay[0].transform;
             }
 
             private void ChainEffect(GenericSkill skill)
@@ -34,8 +41,17 @@ namespace Moonstorm.Starstorm2.Items
                     attackCounter %= 5f;
                     //Util.PlayAttackSpeedSound(EntityStates.GravekeeperBoss.FireHook.soundString, body.gameObject, body.attackSpeed);
                     float damage = body.damage * (2f + stack);
-                    ProjectileManager.instance.FireProjectile(projectilePrefab, body.inputBank.aimOrigin, Util.QuaternionSafeLookRotation(body.inputBank.aimDirection), body.gameObject,
-                        damage, 40f, Util.CheckRoll(body.crit, body.master));
+                    Vector3 muzzlePos = body.inputBank.aimOrigin;
+                    if (displayPos != null)
+                        muzzlePos = displayPos.position;
+                    ProjectileManager.instance.FireProjectile(
+                        projectilePrefab, 
+                        muzzlePos, 
+                        Util.QuaternionSafeLookRotation(body.inputBank.aimDirection), 
+                        body.gameObject,
+                        damage, 
+                        40f, 
+                        Util.CheckRoll(body.crit, body.master));
                 }
             }
             private void OnDestroy()

@@ -33,7 +33,7 @@ namespace Moonstorm.Starstorm2.Modules
             On.EntityStates.Toolbot.BaseNailgunState.FireBullet += BaseNailgunState_FireBullet;
             On.EntityStates.Toolbot.FireSpear.FireBullet += FireSpear_FireBullet;
             On.EntityStates.Toolbot.ToolbotDualWield.OnEnter += ToolbotDualWield_OnEnter;
-            On.EntityStates.Toolbot.ToolbotDash.OnEnter += ToolbotDash_OnEnter;
+            //On.EntityStates.Toolbot.ToolbotDash.OnEnter += ToolbotDash_OnEnter;
             //On.EntityStates.Toolbot.ToolbotDash.OnExit += ToolbotDash_OnExit;
         }
 

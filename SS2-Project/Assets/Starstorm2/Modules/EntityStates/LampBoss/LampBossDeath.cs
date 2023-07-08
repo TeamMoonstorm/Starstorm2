@@ -9,7 +9,9 @@ namespace EntityStates.LampBoss
     public class LampBossDeath : GenericCharacterDeath
     {
         public static GameObject deathVFX;
+        public static GameObject deathVFXblue;
         public static GameObject initialVFX;
+        public static GameObject initialVFXblue;
         public static float duration;
         public static string mecanimPerameter;
         private float timer;
@@ -17,6 +19,8 @@ namespace EntityStates.LampBoss
         private bool hasPlayedEffect;
         public static string muzzleString;
         private Transform muzzle;
+
+        private bool isBlue;
 
         public override void OnEnter()
         {
@@ -29,6 +33,7 @@ namespace EntityStates.LampBoss
                 characterMotor.enabled = false;
             //if (modelLocator && initialEffect)
                 //EffectManager.
+            isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
         }
 
         public override void FixedUpdate()
@@ -39,7 +44,8 @@ namespace EntityStates.LampBoss
                 if (animator.GetFloat(mecanimPerameter) > 0.5f && !hasPlayedEffect)
                 {
                     hasPlayedEffect = true;
-                    EffectManager.SimpleEffect(deathVFX, muzzle.position, muzzle.rotation, true);
+                    var effect = isBlue ? deathVFXblue : deathVFX;
+                    EffectManager.SimpleEffect(effect, muzzle.position, muzzle.rotation, true);
                     DestroyBodyAsapServer();
                     DestroyModel();
                     Destroy(gameObject);

@@ -15,6 +15,7 @@ namespace EntityStates.LampBoss
         public static string mecanimPerameter;
         public static float baseTimeBetweenShots;
         public static GameObject projectilePrefab;
+        public static GameObject blueProjectilePrefab;
         public static string muzzleString;
 
         private float timer;
@@ -45,10 +46,13 @@ namespace EntityStates.LampBoss
                 AddRecoil(-2f * recoil, -3f * recoil, -1f * recoil, 1f * recoil);
                 characterBody.AddSpreadBloom(0.33f * recoil);
 
+                bool isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
+                var projectile = isBlue ? blueProjectilePrefab : projectilePrefab;
+
                 Vector3 angle = Quaternion.Euler(Random.Range(-20f, 20f), Random.Range(-20f, 20f), 0f) * aimRay.direction;
 
                 ProjectileManager.instance.FireProjectile(
-                    projectilePrefab,
+                    projectile,
                     muzzle.position,
                     Util.QuaternionSafeLookRotation(angle), 
                     gameObject, 
