@@ -21,6 +21,8 @@ namespace EntityStates.Lamp
         private Transform muzzle;
         private Animator animator;
 
+        private float originalMoveSpeed;
+
         public override void OnEnter()
         {
             base.OnEnter();
@@ -29,6 +31,8 @@ namespace EntityStates.Lamp
             muzzle = GetModelChildLocator().FindChild(muzzleString);
             animator = GetModelAnimator();
             hasFired = false;
+
+            originalMoveSpeed = characterBody.moveSpeed;
 
             PlayCrossfade("Body", "Attack", "Primary.playbackRate", duration, 0.05f);
         }
@@ -60,6 +64,8 @@ namespace EntityStates.Lamp
         {
             base.FixedUpdate();
 
+            characterBody.moveSpeed = originalMoveSpeed * 0.5f;
+
             if (animator.GetFloat("Fire") >= 0.5f && !hasFired)
             {
                 hasFired = true;
@@ -68,6 +74,12 @@ namespace EntityStates.Lamp
 
             if (fixedAge >= duration && isAuthority)
                 outer.SetNextStateToMain();
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+            characterBody.moveSpeed = originalMoveSpeed;
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

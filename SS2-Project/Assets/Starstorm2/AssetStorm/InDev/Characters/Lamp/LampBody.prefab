@@ -36,6 +36,7 @@ GameObject:
   - component: {fileID: 3940742301105877644}
   - component: {fileID: 962474072067677813}
   - component: {fileID: 8457613671406238986}
+  - component: {fileID: 239533959399909896}
   m_Layer: 0
   m_Name: LampBody
   m_TagString: Untagged
@@ -538,7 +539,8 @@ MonoBehaviour:
   deathState:
     _typeName: EntityStates.Lamp.LampDeath, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  idleStateMachine: []
+  idleStateMachine:
+  - {fileID: 9117432844966720990}
 --- !u!114 &3940742301105877644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -590,6 +592,27 @@ MonoBehaviour:
   bossDropTable: {fileID: 0}
   bossPickup:
     pickupName: 
+--- !u!114 &239533959399909896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2041233120209123290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 952828898, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSound: FollowerVO
+  barkSound: FollowerVO
+  openSound: 
+  landingSound: 
+  fallDamageSound: 
+  aliveLoopStart: FollowerIdleStart
+  aliveLoopStop: FollowerIdleStop
+  sprintLoopStart: 
+  sprintLoopStop: 
 --- !u!1 &7729338257434927947
 GameObject:
   m_ObjectHideFlags: 0

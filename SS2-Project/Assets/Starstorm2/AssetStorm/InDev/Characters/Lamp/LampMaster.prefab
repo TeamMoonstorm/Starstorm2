@@ -220,7 +220,7 @@ MonoBehaviour:
   maxTargetHealthFraction: Infinity
   minDistance: 25
   maxDistance: Infinity
-  selectionRequiresTargetLoS: 1
+  selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
   maxTimesSelected: -1
@@ -295,7 +295,7 @@ MonoBehaviour:
   m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customName: SoftLeashAttack
+  customName: AttackFromDistance
   skillSlot: 0
   requiredSkill: {fileID: 0}
   requireSkillReady: 0
@@ -304,8 +304,8 @@ MonoBehaviour:
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 0
-  maxDistance: 30
+  minDistance: 20
+  maxDistance: 40
   selectionRequiresTargetLoS: 1
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
@@ -314,15 +314,15 @@ MonoBehaviour:
   activationRequiresTargetLoS: 1
   activationRequiresAimTargetLoS: 0
   activationRequiresAimConfirmation: 1
-  movementType: 2
+  movementType: 0
   moveInputScale: 1
-  aimType: 4
+  aimType: 2
   ignoreNodeGraph: 0
   shouldSprint: 0
   shouldFireEquipment: 0
   shouldTapButton: 0
   buttonPressType: 0
-  driverUpdateTimerOverride: 1.5
+  driverUpdateTimerOverride: 1
   resetCurrentEnemyOnNextDriverSelection: 1
   noRepeat: 1
   nextHighPriorityOverride: {fileID: 0}
@@ -390,8 +390,8 @@ MonoBehaviour:
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 5
-  maxDistance: 25
+  minDistance: 0
+  maxDistance: 20
   selectionRequiresTargetLoS: 1
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
@@ -402,7 +402,7 @@ MonoBehaviour:
   activationRequiresAimConfirmation: 1
   movementType: 3
   moveInputScale: 1
-  aimType: 4
+  aimType: 2
   ignoreNodeGraph: 0
   shouldSprint: 0
   shouldFireEquipment: 0
@@ -433,7 +433,7 @@ MonoBehaviour:
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 5
+  minDistance: 0
   maxDistance: 20
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0

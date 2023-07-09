@@ -1,6 +1,7 @@
 Event	ID	Name			Wwise Object Path	Notes
 	82574964	NemmandoSaberHit			\Default Work Unit\Nemmando\NemmandoSaberHit	
 	113243767	NemmandoSwingSaber			\Default Work Unit\Nemmando\NemmandoSwingSaber	
+	134703416	FollowerSpawn			\Default Work Unit\Follower\FollowerSpawn	
 	263522455	Play_Soft_Rain			\Default Work Unit\Environment\Ambient\Play_Soft_Rain	
 	342360847	WastelanderSecondary			\Default Work Unit\Executioner\WastelanderSecondary	
 	420124658	NucleatorChargePrimary			\Default Work Unit\Nucleator\NucleatorChargePrimary	
@@ -22,12 +23,10 @@ Event	ID	Name			Wwise Object Path	Notes
 	1177423987	NemmandoCSS			\Default Work Unit\Nemmando\NemmandoCSS	
 	1235706518	JetBootsExplosion			\Default Work Unit\Items\JetBootsExplosion	
 	1250309938	NemmandoDecisiveStrikeCharge			\Default Work Unit\Nemmando\NemmandoDecisiveStrikeCharge	
-	1295112049	FollowerIdle			\Default Work Unit\Follower\FollowerIdle	
 	1319272055	WastelanderPrimaryCrit			\Default Work Unit\Executioner\WastelanderPrimaryCrit	
 	1373732423	CyborgSpecialPlace			\Default Work Unit\Cyborg\CyborgSpecialPlace	
 	1499433712	ExecutionerSpecialCast			\Default Work Unit\Executioner\ExecutionerSpecialCast	
 	1642533830	NemmandoSwingDecisive			\Default Work Unit\Nemmando\NemmandoSwingDecisive	
-	1678428150	WayfarerIdle			\Default Work Unit\Wayfarer\WayfarerIdle	
 	1681111803	MoltenCoin			\Default Work Unit\Items\MoltenCoin	
 	1710620195	NemmandoFireBeam			\Default Work Unit\Nemmando\NemmandoFireBeam	
 	1862847105	NemmandoReloadGun			\Default Work Unit\Nemmando\NemmandoReloadGun	
@@ -36,6 +35,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	2068834138	NemmandoSubmissionCharge			\Default Work Unit\Nemmando\NemmandoSubmissionCharge	
 	2165644167	NemmandoChargeBeam			\Default Work Unit\Nemmando\NemmandoChargeBeam	
 	2187217924	SpawnMGR			\Default Work Unit\Nemmando\SpawnMGR	
+	2250290942	WayfarerIdleStart			\Default Work Unit\Wayfarer\WayfarerIdleStart	
 	2276677644	NemmandoJCEClick			\Default Work Unit\Nemmando\NemmandoJCEClick	
 	2308605527	ExecutionerSpecialImpact			\Default Work Unit\Executioner\ExecutionerSpecialImpact	
 	2333188815	WastelanderPrimary			\Default Work Unit\Executioner\WastelanderPrimary	
@@ -47,13 +47,16 @@ Event	ID	Name			Wwise Object Path	Notes
 	2730174275	ChirrSprintLoop			\Default Work Unit\Chirr\ChirrSprintLoop	
 	2734889455	CyborgSpecialTeleport			\Default Work Unit\Cyborg\CyborgSpecialTeleport	
 	2772373803	NemmandoFireBeam2			\Default Work Unit\Nemmando\NemmandoFireBeam2	
+	2787513641	FollowerIdleStop			\Default Work Unit\Follower\FollowerIdleStop	
 	2800331071	SigilActivation			\Default Work Unit\Items\SigilActivation	
 	2830854628	ExecutionerUtility			\Default Work Unit\Executioner\ExecutionerUtility	
 	2901870699	GreaterWarbanner			\Default Work Unit\Items\GreaterWarbanner	
+	2970410379	FollowerIdleStart			\Default Work Unit\Follower\FollowerIdleStart	
 	3002414883	ChirrSprintStart			\Default Work Unit\Chirr\ChirrSprintStart	
 	3008432276	NemmandoSwing			\Default Work Unit\Nemmando\NemmandoSwing	
 	3105092465	CyborgPrimary			\Default Work Unit\Cyborg\CyborgPrimary	
 	3118940775	DroidHead			\Default Work Unit\Items\DroidHead	
+	3127064350	WayfarerIdleStop			\Default Work Unit\Wayfarer\WayfarerIdleStop	
 	3141162423	NemmandoChargeBeam2			\Default Work Unit\Nemmando\NemmandoChargeBeam2	
 	3153874552	NemmandoSwingCrit			\Default Work Unit\Nemmando\NemmandoSwingCrit	
 	3251339703	ChirrStep			\Default Work Unit\Chirr\ChirrStep	
@@ -66,6 +69,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	3892678859	NemmandoShootGun			\Default Work Unit\Nemmando\NemmandoShootGun	
 	3982623506	StirringSoul			\Default Work Unit\Items\StirringSoul	
 	4193594557	CyborgSecondary			\Default Work Unit\Cyborg\CyborgSecondary	
+	4234730185	Stop_Soft_Rain			\Default Work Unit\Environment\Ambient\Stop_Soft_Rain	
 	4278514587	NemmandoShoot			\Default Work Unit\Nemmando\NemmandoShoot	
 
 Game Parameter	ID	Name			Wwise Object Path	Notes
@@ -131,6 +135,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	530421127	WastelanderShoot3	C:\Users\hanan\OneDrive\Documents\GitHub\sStarstorm2\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\WastelanderShoot3_0D5756A9.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Executioner\WastelanderShoot\WastelanderShoot3		8729
 	546895763	wayfarer_idle_VO_06	C:\Users\hanan\OneDrive\Documents\GitHub\sStarstorm2\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\wayfarer_idle_VO_06_0D5756A9.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Wayfarer\idleVO\wayfarer_idle_VO_06		23570
 	555558067	item_proc_swiftSkateboard_01	C:\Users\hanan\OneDrive\Documents\GitHub\sStarstorm2\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_proc_swiftSkateboard_01_0D5756A9.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\SwiftSkateboard\item_proc_swiftSkateboard_01		12317
+	567254298	FollowerSpawn	C:\Users\hanan\OneDrive\Documents\GitHub\sStarstorm2\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\FollowerSpawn_3F75BDB9.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Follower\FollowerSpawn		21003
 	579606469	item_proc_fireonequip_v2_01	C:\Users\hanan\OneDrive\Documents\GitHub\sStarstorm2\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_proc_fireonequip_v2_01_0D5756A9.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\HotSauce\item_proc_fireonequip_v2_01		29146
 	591344468	VoidEliteSpawn	C:\Users\hanan\OneDrive\Documents\GitHub\sStarstorm2\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\VoidEliteSpawn_0D5756A9.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Enemies\VoidEliteSpawn		50140
 	603837612	VoidAmbience3	C:\Users\hanan\OneDrive\Documents\GitHub\sStarstorm2\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\VoidAmbience3_0D5756A9.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Enemies\VoidAmbience\VoidAmbience3		226102

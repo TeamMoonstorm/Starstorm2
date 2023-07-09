@@ -11,7 +11,7 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="866530374" Language="SFX" Hash="517676834">
+		<SoundBank Id="866530374" Language="SFX" Hash="3846417665">
 			<ObjectPath>\SoundBanks\Default Work Unit\Starstorm2</ObjectPath>
 			<ShortName>Starstorm2</ShortName>
 			<Path>Starstorm2.bnk</Path>
@@ -221,7 +221,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="1295112049" Name="FollowerIdle" ObjectPath="\Events\Default Work Unit\Follower\FollowerIdle" MaxAttenuation="300.000000" DurationType="OneShot" DurationMin="10.361203" DurationMax="10.361203">
+				<Event Id="2970410379" Name="FollowerIdleStart" ObjectPath="\Events\Default Work Unit\Follower\FollowerIdleStart" MaxAttenuation="300.000000" DurationType="OneShot" DurationMin="10.361203" DurationMax="10.361203">
 					<IncludedMemoryFiles>
 						<File Id="344160986" Language="SFX">
 							<ShortName>wayfarer_idle_loop_01.wav</ShortName>
@@ -242,6 +242,15 @@
 						<File Id="1055144826" Language="SFX">
 							<ShortName>wayfarer_idle_loop_02.wav</ShortName>
 							<Path>SFX\wayfarer_idle_loop_02_0D5756A9.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2787513641" Name="FollowerIdleStop" ObjectPath="\Events\Default Work Unit\Follower\FollowerIdleStop" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
+				<Event Id="134703416" Name="FollowerSpawn" ObjectPath="\Events\Default Work Unit\Follower\FollowerSpawn" DurationType="OneShot" DurationMin="1.741500" DurationMax="1.741500">
+					<IncludedMemoryFiles>
+						<File Id="567254298" Language="SFX">
+							<ShortName>FollowerSpawn.wav</ShortName>
+							<Path>SFX\FollowerSpawn_3F75BDB9.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -601,6 +610,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
+				<Event Id="4234730185" Name="Stop_Soft_Rain" ObjectPath="\Events\Default Work Unit\Environment\Ambient\Stop_Soft_Rain" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="3750145159" Name="StrangeCan" ObjectPath="\Events\Default Work Unit\Items\StrangeCan" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="0.963347" DurationMax="1.362379">
 					<IncludedMemoryFiles>
 						<File Id="89003483" Language="SFX">
@@ -697,7 +707,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="1678428150" Name="WayfarerIdle" ObjectPath="\Events\Default Work Unit\Wayfarer\WayfarerIdle" MaxAttenuation="300.000000" DurationType="OneShot" DurationMin="18.461565" DurationMax="18.461565">
+				<Event Id="2250290942" Name="WayfarerIdleStart" ObjectPath="\Events\Default Work Unit\Wayfarer\WayfarerIdleStart" MaxAttenuation="300.000000" DurationType="OneShot" DurationMin="26.108593" DurationMax="26.108593">
 					<IncludedMemoryFiles>
 						<File Id="344160986" Language="SFX">
 							<ShortName>wayfarer_idle_loop_01.wav</ShortName>
@@ -721,6 +731,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
+				<Event Id="3127064350" Name="WayfarerIdleStop" ObjectPath="\Events\Default Work Unit\Wayfarer\WayfarerIdleStop" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="2393435613" Name="WayfarerVO" ObjectPath="\Events\Default Work Unit\Wayfarer\WayfarerVO" MaxAttenuation="300.000000" DurationType="OneShot" DurationMin="2.850408" DurationMax="3.307279">
 					<IncludedMemoryFiles>
 						<File Id="171627018" Language="SFX">

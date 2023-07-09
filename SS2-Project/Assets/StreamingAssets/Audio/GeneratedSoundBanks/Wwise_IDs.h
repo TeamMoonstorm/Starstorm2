@@ -33,7 +33,9 @@ namespace AK
         static const AkUniqueID EXECUTIONERSPECIALIMPACT = 2308605527U;
         static const AkUniqueID EXECUTIONERSUPERCHARGE = 3396808549U;
         static const AkUniqueID EXECUTIONERUTILITY = 2830854628U;
-        static const AkUniqueID FOLLOWERIDLE = 1295112049U;
+        static const AkUniqueID FOLLOWERIDLESTART = 2970410379U;
+        static const AkUniqueID FOLLOWERIDLESTOP = 2787513641U;
+        static const AkUniqueID FOLLOWERSPAWN = 134703416U;
         static const AkUniqueID FOLLOWERVO = 2589904694U;
         static const AkUniqueID GREATERWARBANNER = 2901870699U;
         static const AkUniqueID HOTTESTSAUCE = 571024191U;
@@ -73,6 +75,7 @@ namespace AK
         static const AkUniqueID SPAWNMGR = 2187217924U;
         static const AkUniqueID SS_WINDAMBIENCE = 892248604U;
         static const AkUniqueID STIRRINGSOUL = 3982623506U;
+        static const AkUniqueID STOP_SOFT_RAIN = 4234730185U;
         static const AkUniqueID STRANGECAN = 3750145159U;
         static const AkUniqueID SWIFTSKATEBOARD = 961366952U;
         static const AkUniqueID VOIDAMBIENT = 2533932213U;
@@ -80,7 +83,8 @@ namespace AK
         static const AkUniqueID WASTELANDERPRIMARY = 2333188815U;
         static const AkUniqueID WASTELANDERPRIMARYCRIT = 1319272055U;
         static const AkUniqueID WASTELANDERSECONDARY = 342360847U;
-        static const AkUniqueID WAYFARERIDLE = 1678428150U;
+        static const AkUniqueID WAYFARERIDLESTART = 2250290942U;
+        static const AkUniqueID WAYFARERIDLESTOP = 3127064350U;
         static const AkUniqueID WAYFARERVO = 2393435613U;
     } // namespace EVENTS
 
