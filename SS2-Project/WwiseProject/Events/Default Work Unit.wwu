@@ -898,6 +898,16 @@
 										</Reference>
 									</ReferenceList>
 								</Action>
+								<Action Name="" ID="{DEF5BFA0-B1FC-4246-B851-5BE23A20BA6A}" ShortID="733842684">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="2"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="idleLoop" ID="{913962DE-D6EA-4B72-B41E-65F2E5D80750}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
 							</ChildrenList>
 						</Event>
 						<Event Name="WayfarerVO" ID="{B5D4F381-98A8-4CAD-837E-F13B74978E2C}">
@@ -993,6 +1003,48 @@
 									<ReferenceList>
 										<Reference Name="Target">
 											<ObjectRef Name="SS2_Music_System" ID="{4BC128DE-77C0-4BBA-8ED4-00A2A8E01DCA}" WorkUnitID="{F233C913-3B4E-4D63-9074-90CE5295641F}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+					</ChildrenList>
+				</Folder>
+				<Folder Name="Follower" ID="{0995BF22-6792-473B-B8FF-20036EC98681}" ShortID="430803294">
+					<ChildrenList>
+						<Event Name="FollowerIdle" ID="{5EBEE7DF-F8AB-4866-AAD1-77360F9B82C6}">
+							<ChildrenList>
+								<Action Name="" ID="{992BEC26-C2FF-42E5-89CA-CA5F1EB2CCC2}" ShortID="616721082">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="idleLoop" ID="{6CCD95A5-F692-4A5D-8381-7457ECD4B3B6}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+								<Action Name="" ID="{BA748BFC-B3E0-4EFB-BCF3-41EFD51C4E74}" ShortID="467247874">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="2"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="idleLoop" ID="{6CCD95A5-F692-4A5D-8381-7457ECD4B3B6}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="FollowerVO" ID="{5263AA10-8040-4866-B599-87DC9E70FC2D}">
+							<ChildrenList>
+								<Action Name="" ID="{E91DED88-8BEF-4979-A2D7-4E2311767C82}" ShortID="1044360150">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="idleVO" ID="{CE1D07C9-7D95-410F-A716-66FF0C232AEB}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>

@@ -2323,6 +2323,11 @@
 								<Sound Name="superCharge" ID="{7719350E-FE3A-4B1C-B429-D65EACA8038A}" ShortID="601941653">
 									<PropertyList>
 										<Property Name="3DSpatialization" Type="int16" Value="1"/>
+										<Property Name="Inclusion" Type="bool">
+											<ValueList>
+												<Value>False</Value>
+											</ValueList>
+										</Property>
 										<Property Name="OverridePositioning" Type="bool" Value="True"/>
 									</PropertyList>
 									<ReferenceList>
@@ -4476,6 +4481,330 @@
 										</Sound>
 									</ChildrenList>
 								</Folder>
+							</ChildrenList>
+						</Folder>
+						<Folder Name="Follower" ID="{E5D54719-750D-4803-8BAC-C49FEC131772}" ShortID="789289246">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="9"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+							<ChildrenList>
+								<RandomSequenceContainer Name="idleLoop" ID="{6CCD95A5-F692-4A5D-8381-7457ECD4B3B6}" ShortID="141552620">
+									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="1"/>
+										<Property Name="Lowpass" Type="int16">
+											<ValueList>
+												<Value>50</Value>
+											</ValueList>
+										</Property>
+										<Property Name="OverridePositioning" Type="bool" Value="True"/>
+										<Property Name="Pitch" Type="int32">
+											<ValueList>
+												<Value>1000</Value>
+											</ValueList>
+											<ModifierList>
+												<ModifierInfo>
+													<Modifier Name="" ID="{73F52BCB-259E-4355-9523-2D6E0BDB3B3D}"/>
+												</ModifierInfo>
+											</ModifierList>
+										</Property>
+										<Property Name="PlayMechanismStepOrContinuous" Type="int16" Value="0"/>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>-12</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Attenuation">
+											<ObjectRef Name="EliteAttenuation" ID="{95B01EB5-085C-4AE6-ABDD-2AC73786503B}" WorkUnitID="{01E36904-BE25-433F-9547-3A046044CA56}"/>
+										</Reference>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="wayfarer_idle_loop_04" ID="{7E308580-A100-4D19-BD40-C521DDF69B85}" ShortID="710429607">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="wayfarer_idle_loop_04" ID="{EDFEDA99-99A8-4CFE-B244-3640A81FA1CC}">
+													<Language>SFX</Language>
+													<AudioFile>wayfarer_idle_loop_04.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="686485429"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="wayfarer_idle_loop_04" ID="{EDFEDA99-99A8-4CFE-B244-3640A81FA1CC}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="wayfarer_idle_loop_05" ID="{BBA93CF4-F498-496F-B717-45A7BE78D068}" ShortID="460193116">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="wayfarer_idle_loop_05" ID="{3CC7BDE6-75D2-4984-B9C8-0758D094B63B}">
+													<Language>SFX</Language>
+													<AudioFile>wayfarer_idle_loop_05.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="445232879"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="wayfarer_idle_loop_05" ID="{3CC7BDE6-75D2-4984-B9C8-0758D094B63B}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="wayfarer_idle_loop_03" ID="{75DC5305-C187-49DC-8045-4E4A3278510D}" ShortID="1073115949">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="wayfarer_idle_loop_03" ID="{1AB57907-8200-46E4-8A58-BC1C15513C4D}">
+													<Language>SFX</Language>
+													<AudioFile>wayfarer_idle_loop_03.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="987711244"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="wayfarer_idle_loop_03" ID="{1AB57907-8200-46E4-8A58-BC1C15513C4D}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="wayfarer_idle_loop_02" ID="{B0A1275B-0CC9-47F5-9BCC-15CC83D58423}" ShortID="478375787">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="wayfarer_idle_loop_02" ID="{67BF67EA-D38C-4D08-B04D-9C540D1A8C1E}">
+													<Language>SFX</Language>
+													<AudioFile>wayfarer_idle_loop_02.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="1055144826"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="wayfarer_idle_loop_02" ID="{67BF67EA-D38C-4D08-B04D-9C540D1A8C1E}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="wayfarer_idle_loop_01" ID="{E6955646-E42E-47A7-82EC-22C286AA2D43}" ShortID="925317247">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="wayfarer_idle_loop_01" ID="{8B63973C-5D02-405C-B8A4-07302284956F}">
+													<Language>SFX</Language>
+													<AudioFile>wayfarer_idle_loop_01.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="344160986"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="wayfarer_idle_loop_01" ID="{8B63973C-5D02-405C-B8A4-07302284956F}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</RandomSequenceContainer>
+								<RandomSequenceContainer Name="idleVO" ID="{CE1D07C9-7D95-410F-A716-66FF0C232AEB}" ShortID="216670979">
+									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="1"/>
+										<Property Name="Highpass" Type="int16">
+											<ValueList>
+												<Value>50</Value>
+											</ValueList>
+										</Property>
+										<Property Name="OverridePositioning" Type="bool" Value="True"/>
+										<Property Name="Pitch" Type="int32">
+											<ValueList>
+												<Value>1000</Value>
+											</ValueList>
+										</Property>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>-4</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Attenuation">
+											<ObjectRef Name="EliteAttenuation" ID="{95B01EB5-085C-4AE6-ABDD-2AC73786503B}" WorkUnitID="{01E36904-BE25-433F-9547-3A046044CA56}"/>
+										</Reference>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="wayfarer_idle_VO_05" ID="{8B6A24B0-CE5B-45FA-A109-EF0E34F18979}" ShortID="589542448">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="wayfarer_idle_VO_05" ID="{5857B01F-B0B1-4424-910B-7DE5D294BC70}">
+													<Language>SFX</Language>
+													<AudioFile>wayfarer_idle_VO_05.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="196979575"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="wayfarer_idle_VO_05" ID="{5857B01F-B0B1-4424-910B-7DE5D294BC70}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="wayfarer_idle_VO_03" ID="{7FED86A2-E06D-4784-BFC4-3353CA04ECE3}" ShortID="750051937">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="wayfarer_idle_VO_03" ID="{76936037-48E1-4932-9673-E6372A15459A}">
+													<Language>SFX</Language>
+													<AudioFile>wayfarer_idle_VO_03.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="955562662"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="wayfarer_idle_VO_03" ID="{76936037-48E1-4932-9673-E6372A15459A}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="wayfarer_idle_VO_02" ID="{8BA89ED3-0C67-4880-8B52-EC9E9581258D}" ShortID="28711305">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="wayfarer_idle_VO_02" ID="{4073CC41-AA35-4549-B2E1-0CB8BE709356}">
+													<Language>SFX</Language>
+													<AudioFile>wayfarer_idle_VO_02.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="819498529"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="wayfarer_idle_VO_02" ID="{4073CC41-AA35-4549-B2E1-0CB8BE709356}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="wayfarer_idle_VO_06" ID="{6C2923DC-45A3-4706-A429-CEA14FBF4F32}" ShortID="753048119">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="wayfarer_idle_VO_06" ID="{D57EFB49-1E36-4BC6-8C13-3DD17202DC2F}">
+													<Language>SFX</Language>
+													<AudioFile>wayfarer_idle_VO_06.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="546895763"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="wayfarer_idle_VO_06" ID="{D57EFB49-1E36-4BC6-8C13-3DD17202DC2F}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="wayfarer_idle_VO_04" ID="{94E4BEEE-18FA-4769-BAAE-8728044787FC}" ShortID="74136052">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="wayfarer_idle_VO_04" ID="{C096DB6D-8BB7-4E3D-ABB8-F1308378D95F}">
+													<Language>SFX</Language>
+													<AudioFile>wayfarer_idle_VO_04.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="906121422"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="wayfarer_idle_VO_04" ID="{C096DB6D-8BB7-4E3D-ABB8-F1308378D95F}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="wayfarer_idle_VO_01" ID="{E505DDA7-16CC-41C1-8FC2-885492EEBB64}" ShortID="741029342">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="wayfarer_idle_VO_01" ID="{3ED7E48B-691D-4965-9EE0-506FBE9E2650}">
+													<Language>SFX</Language>
+													<AudioFile>wayfarer_idle_VO_01.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="171627018"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="wayfarer_idle_VO_01" ID="{3ED7E48B-691D-4965-9EE0-506FBE9E2650}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</RandomSequenceContainer>
 							</ChildrenList>
 						</Folder>
 					</ChildrenList>

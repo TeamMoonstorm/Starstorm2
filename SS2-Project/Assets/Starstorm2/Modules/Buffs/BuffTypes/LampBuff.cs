@@ -15,10 +15,11 @@ namespace Moonstorm.Starstorm2.Buffs
         {
             [BuffDefAssociation]
             private static BuffDef GetBuffDef() => SS2Content.Buffs.bdLampBuff;
+
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
             {
-                args.attackSpeedMultAdd += 0.25f;
-                args.moveSpeedMultAdd += 0.25f;
+                args.primaryCooldownMultAdd += 0.3f;
+                args.moveSpeedMultAdd += 0.5f;
             }
         }
     }

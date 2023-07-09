@@ -33,6 +33,8 @@ namespace AK
         static const AkUniqueID EXECUTIONERSPECIALIMPACT = 2308605527U;
         static const AkUniqueID EXECUTIONERSUPERCHARGE = 3396808549U;
         static const AkUniqueID EXECUTIONERUTILITY = 2830854628U;
+        static const AkUniqueID FOLLOWERIDLE = 1295112049U;
+        static const AkUniqueID FOLLOWERVO = 2589904694U;
         static const AkUniqueID GREATERWARBANNER = 2901870699U;
         static const AkUniqueID HOTTESTSAUCE = 571024191U;
         static const AkUniqueID JETBOOTSEXPLOSION = 1235706518U;
