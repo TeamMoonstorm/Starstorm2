@@ -886,21 +886,11 @@
 				</Folder>
 				<Folder Name="Wayfarer" ID="{5152EE09-9763-4C4B-A053-05266A17B0D5}" ShortID="921127672">
 					<ChildrenList>
-						<Event Name="WayfarerIdle" ID="{86C3F1C4-132B-4080-8092-2DD4E975EC46}">
+						<Event Name="WayfarerIdleStart" ID="{86C3F1C4-132B-4080-8092-2DD4E975EC46}">
 							<ChildrenList>
 								<Action Name="" ID="{BC48EFCB-1047-45FB-B469-9CBBFC5EC0D5}" ShortID="289671218">
 									<PropertyList>
 										<Property Name="ActionType" Type="int16" Value="1"/>
-									</PropertyList>
-									<ReferenceList>
-										<Reference Name="Target">
-											<ObjectRef Name="idleLoop" ID="{913962DE-D6EA-4B72-B41E-65F2E5D80750}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
-										</Reference>
-									</ReferenceList>
-								</Action>
-								<Action Name="" ID="{DEF5BFA0-B1FC-4246-B851-5BE23A20BA6A}" ShortID="733842684">
-									<PropertyList>
-										<Property Name="ActionType" Type="int16" Value="2"/>
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Target">
@@ -919,6 +909,20 @@
 									<ReferenceList>
 										<Reference Name="Target">
 											<ObjectRef Name="idleVO" ID="{77A36208-5F6B-417A-8DD8-5734178FD6C2}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="WayfarerIdleStop" ID="{EED69057-9B6F-496C-9F94-BC31CEF59440}">
+							<ChildrenList>
+								<Action Name="" ID="{23DDE61A-3A0E-4ACA-AE55-AD5DC470829F}" ShortID="678311620">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="2"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="idleLoop" ID="{913962DE-D6EA-4B72-B41E-65F2E5D80750}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
@@ -988,6 +992,32 @@
 										</Action>
 									</ChildrenList>
 								</Event>
+								<Event Name="Stop_Soft_Rain" ID="{3AAAE252-BC17-42B4-BCD9-4144FD39EC4F}">
+									<ChildrenList>
+										<Action Name="" ID="{76B9BA48-AE97-4BDA-ACD9-E87D6B1466FB}" ShortID="1058568117">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="2"/>
+												<Property Name="FadeTime" Type="Real64" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="RainAmbience1" ID="{9F7C5A1E-5AE5-40A0-B8AC-CE44ABB32851}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{6D25D201-10FB-4728-910C-DFB6FFDB3213}" ShortID="483358456">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="2"/>
+												<Property Name="FadeTime" Type="Real64" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="RainAmbience2" ID="{4876730F-BF9C-4299-9007-0260073C59E8}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
 							</ChildrenList>
 						</Folder>
 					</ChildrenList>
@@ -1012,21 +1042,11 @@
 				</Folder>
 				<Folder Name="Follower" ID="{0995BF22-6792-473B-B8FF-20036EC98681}" ShortID="430803294">
 					<ChildrenList>
-						<Event Name="FollowerIdle" ID="{5EBEE7DF-F8AB-4866-AAD1-77360F9B82C6}">
+						<Event Name="FollowerIdleStart" ID="{5EBEE7DF-F8AB-4866-AAD1-77360F9B82C6}">
 							<ChildrenList>
 								<Action Name="" ID="{992BEC26-C2FF-42E5-89CA-CA5F1EB2CCC2}" ShortID="616721082">
 									<PropertyList>
 										<Property Name="ActionType" Type="int16" Value="1"/>
-									</PropertyList>
-									<ReferenceList>
-										<Reference Name="Target">
-											<ObjectRef Name="idleLoop" ID="{6CCD95A5-F692-4A5D-8381-7457ECD4B3B6}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
-										</Reference>
-									</ReferenceList>
-								</Action>
-								<Action Name="" ID="{BA748BFC-B3E0-4EFB-BCF3-41EFD51C4E74}" ShortID="467247874">
-									<PropertyList>
-										<Property Name="ActionType" Type="int16" Value="2"/>
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Target">
@@ -1045,6 +1065,34 @@
 									<ReferenceList>
 										<Reference Name="Target">
 											<ObjectRef Name="idleVO" ID="{CE1D07C9-7D95-410F-A716-66FF0C232AEB}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="FollowerIdleStop" ID="{47D109DC-FC0E-43B4-B247-6FF96DF37632}">
+							<ChildrenList>
+								<Action Name="" ID="{B98B1EA7-E8C7-408F-B49C-354D97521136}" ShortID="149185294">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="2"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="idleLoop" ID="{6CCD95A5-F692-4A5D-8381-7457ECD4B3B6}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="FollowerSpawn" ID="{E4A1B32B-3017-4C2C-89AB-CC07BC2F7A6A}">
+							<ChildrenList>
+								<Action Name="" ID="{F3BDFE9C-787B-4D82-8990-45DDF3C3B786}" ShortID="555460442">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="FollowerSpawn" ID="{16A423EC-DA6E-4707-BDC4-19798F41927C}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
