@@ -46,34 +46,31 @@ namespace EntityStates.DroneTable
             scrapRoot.SetActive(true);
 
             var locator = droneObject.GetComponent<ModelLocator>();
-            var body = droneObject.GetComponent<CharacterBody>();
 
             soundID = Util.PlaySound("Play_MULT_m1_sawblade_impact_loop", this.gameObject); //awesome
             if (locator)
             {
                 var doubleTempDrone = locator.modelTransform.gameObject;
-                SS2Log.Info("dronheobject name : " + droneObject.name);
                 RefabricatorTriple outvar;
                 bool success = droneTripletPairs.TryGetValue(droneObject.name, out outvar);
                 if (success)
                 {
-                    tempDrone = UnityEngine.Object.Instantiate<GameObject>(doubleTempDrone, outvar.position, Quaternion.Euler(new Vector3(0,0,0)), holo); //i fucking hate rotations 
-                    SS2Log.Info(tempDrone.transform.rotation.eulerAngles + " | " + outvar.rotation);
+                    tempDrone = UnityEngine.Object.Instantiate<GameObject>(doubleTempDrone, outvar.position, Quaternion.Euler(new Vector3(0,0,0)), holo);
                     tempDrone.transform.localPosition = outvar.position;
                     tempDrone.transform.localEulerAngles = outvar.rotation;
                     tempDrone.transform.localScale = outvar.scale;  
                 }
                 else
                 {
-                    var cm = doubleTempDrone.GetComponent<CharacterModel>();
-                    var obj = cm.baseRendererInfos[0].renderer.bounds;
-                    SS2Log.Info(obj);
-                    var center = new Vector3(obj.center.x, obj.center.y, obj.center.z);
-                    var transform = new Vector3(doubleTempDrone.transform.position.x, doubleTempDrone.transform.position.y, doubleTempDrone.transform.position.z);
-                    var difference = transform - center;
+                    //var cm = doubleTempDrone.GetComponent<CharacterModel>();
+                    //var obj = cm.baseRendererInfos[0].renderer.bounds;
+                    ////SS2Log.Info(obj);
+                    //var center = new Vector3(obj.center.x, obj.center.y, obj.center.z);
+                    //var transform = new Vector3(doubleTempDrone.transform.position.x, doubleTempDrone.transform.position.y, doubleTempDrone.transform.position.z);
+                    //var difference = transform - center;
                     //holo.position -= difference;
                     //tempDrone = UnityEngine.Object.Instantiate<GameObject>(doubleTempDrone, holo);
-                    tempDrone = UnityEngine.Object.Instantiate<GameObject>(doubleTempDrone, holo.position + difference, holo.rotation, holo);
+                    tempDrone = UnityEngine.Object.Instantiate<GameObject>(doubleTempDrone, holo.position, holo.rotation, holo);
                 }
 
                 if(droneObject.name == "MegaDroneBody")
@@ -85,6 +82,15 @@ namespace EntityStates.DroneTable
                     catch (NullReferenceException e)
                     {
                         Debug.Log("failed to turn off megadrone stuff (" + e + ")");
+                    }
+                }
+
+                var fans = droneObject.GetComponentsInChildren<RotateObject>(true);
+                if(fans.Length > 0)
+                {
+                    foreach (var fan in fans)
+                    {
+                        fan.enabled = false;
                     }
                 }
 
@@ -108,7 +114,6 @@ namespace EntityStates.DroneTable
                 tempModel = tempDrone.GetComponent<CharacterModel>();
                 if (tempModel)
                 { 
-                    SS2Log.Info("index.pickupDef.itemTier: " + index.pickupDef.itemTier);
                     var render = tempModel.baseRendererInfos;
                     switch (index.pickupDef.itemTier)
                     {
@@ -116,7 +121,6 @@ namespace EntityStates.DroneTable
                             for (int i = 0; i < render.Length; ++i)
                             {
                                 render[i].defaultMaterial = whiteHoloMaterial;
-                                render[i].renderer.material = whiteHoloMaterial;
                             }
                             break;
 
@@ -124,7 +128,6 @@ namespace EntityStates.DroneTable
                             for (int i = 0; i < render.Length; ++i)
                             {
                                 render[i].defaultMaterial = greenHoloMaterial;
-                                render[i].renderer.material = greenHoloMaterial;
                             }
                             break;
 
@@ -132,7 +135,6 @@ namespace EntityStates.DroneTable
                             for (int i = 0; i < render.Length; ++i)
                             {
                                 render[i].defaultMaterial = redHoloMaterial;
-                                render[i].renderer.material = redHoloMaterial;
                             }
                             break;
 
@@ -150,19 +152,13 @@ namespace EntityStates.DroneTable
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            //if (fixedAge > duration/2)
-            //{
-                //tempDrone.transform.rotation = Quaternion.Euler(fuck3);
-            //}
 
             if (fixedAge > duration)
                 outer.SetNextStateToMain();
         }
 
-        // Update is called once per frame
         public override void OnExit()
         {
-            //SS2Log.Info("destroy action finished");
             base.OnExit();
 
             AkSoundEngine.StopPlayingID(soundID);

@@ -2,6 +2,7 @@
 using RoR2;
 using RoR2.EntitlementManagement;
 using RoR2.Items;
+using RoR2.UI;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -56,12 +57,17 @@ namespace Moonstorm.Starstorm2.Items
 
         public static Xoroshiro128Plus terminationRNG;
 
+        TerminationDropTable dropTable;
+
+        List<PickupIndex> bossOptions;
+
         override public void Initialize()
         {
             CharacterBody.onBodyStartGlobal += TerminationSpawnHook;
             GlobalEventManager.onCharacterDeathGlobal += TerminationDeathHook;
             On.RoR2.Util.GetBestBodyName += AddTerminalName;
             RoR2.Inventory.onInventoryChangedGlobal += CheckTerminationBuff;
+            On.RoR2.TeamComponent.SetupIndicator += OverrideTerminalBossMarker;
 
             markEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationTargetMark", SS2Bundle.Items);
             failEffect = SS2Assets.LoadAsset<GameObject>("NemmandoScepterSlashAppear", SS2Bundle.Nemmando);
@@ -70,6 +76,34 @@ namespace Moonstorm.Starstorm2.Items
             globalMarkEffectTwo = SS2Assets.LoadAsset<GameObject>("TerminationPositionIndicator", SS2Bundle.Items);
             spawnRock1VFX = SS2Assets.LoadAsset<GameObject>("TerminationDebris1", SS2Bundle.Items);
             spawnRock2VFX = SS2Assets.LoadAsset<GameObject>("TerminationDebris2", SS2Bundle.Items);
+
+            dropTable = new TerminationDropTable();
+            bossOptions = new List<PickupIndex>();
+        }
+
+        private void OverrideTerminalBossMarker(On.RoR2.TeamComponent.orig_SetupIndicator orig, TeamComponent self)
+        {
+            if (self.body)
+            {
+                if (self.body.inventory)
+                {
+                    if (self.body.inventory.GetItemCount(SS2Content.Items.TerminationHelper) > 0 && self.gameObject.GetComponent<TerminationMarkerToken>() == null)
+                    {
+                        //SS2Log.Info("giving termination marker instead of boss marker");
+                        self.indicator = UnityEngine.Object.Instantiate<GameObject>(globalMarkEffectTwo, self.transform);
+                        self.indicator.GetComponent<PositionIndicator>().targetTransform = self.body.coreTransform;
+                        Nameplate np = self.indicator.GetComponent<Nameplate>();
+                        if (np)
+                        {
+                            np.SetBody(self.body);
+                        }
+                        self.gameObject.AddComponent<TerminationMarkerToken>();
+                        //self.indicator = null;
+                        return;
+                    }
+                }
+            }
+            orig(self);
         }
 
         private void CheckTerminationBuff(Inventory obj)
@@ -149,15 +183,35 @@ namespace Moonstorm.Starstorm2.Items
                     Vector3 vector = Quaternion.AngleAxis(0, Vector3.up) * (Vector3.up * 20f);
                     List<PickupIndex> dropList;
 
-                    TerminationDropTable dropTable = new TerminationDropTable();
+                    if(dropTable == null)
+                    {
+                        dropTable = new TerminationDropTable();
+                        //dropTable = (TerminationDropTable)ScriptableObject.CreateInstance("TerminationDropTable");
+                    }
 
                     if (terminationRNG == null)
                     {
                         terminationRNG = new Xoroshiro128Plus(Run.instance.seed);
                     }
-                    PickupIndex ind = dropTable.GenerateDropPreReplacement(terminationRNG, count);
-                    
-                    PickupDropletController.CreatePickupDroplet(ind, obj.victim.transform.position, vector);
+                    if (token.isBoss)
+                    {
+                        if(bossOptions.Count == 0)
+                        {
+                            var selection = Run.instance.availableBossDropList;
+                            foreach (var item in selection)
+                            {
+                                bossOptions.Add(item);
+                                //SS2Log.Info("item: " + item.pickupDef.nameToken);
+                            }
+                        }
+                        Util.ShuffleList<PickupIndex>(bossOptions);
+                        PickupDropletController.CreatePickupDroplet(bossOptions[0], obj.victim.transform.position, vector);
+                    }
+                    else
+                    {
+                        PickupIndex ind = dropTable.GenerateDropPreReplacement(terminationRNG, count);
+                        PickupDropletController.CreatePickupDroplet(ind, obj.victim.transform.position, vector);
+                    }
 
                     EffectData effectData = new EffectData
                     {
@@ -208,27 +262,33 @@ namespace Moonstorm.Starstorm2.Items
                                         count = 1; //doing this so that if for some reason if get this buff (aetherium potion) it still does something
                                     }
 
-                                    obj.inventory.GiveItem(SS2Content.Items.TerminationHelper);
                                     var token = obj.gameObject.AddComponent<TerminationToken>();
-
+                                    
                                     token.itemCount = count;
                                     token.initalTime = Time.time;
                                     token.owner = holderToken;
-                                    
+
                                     holderToken.target = token;
                                     holderToken.body = playerbody;
 
                                     float timeMult = Mathf.Pow(1 - timeReduction, token.itemCount - 1);
                                     float compmaxTime = maxTime * timeMult;
 
-                                    token.timeLimit = compmaxTime;
+                                    if (obj.isBoss)
+                                    {
+                                        //SS2Log.Info("object is boss " + obj.isBoss);
+                                        token.isBoss = true;
+                                        compmaxTime *= 2;
+                                    }
 
+                                    token.timeLimit = compmaxTime;
                                     if (!NetworkServer.active)
                                     {
                                         return;
                                     }
 
                                     obj.AddBuff(SS2Content.Buffs.BuffTerminationVFX);
+                                    obj.inventory.GiveItem(SS2Content.Items.TerminationHelper);
 
                                     EffectData effectData = new EffectData
                                     {
@@ -237,6 +297,7 @@ namespace Moonstorm.Starstorm2.Items
                                     
                                     };
                                     EffectManager.SpawnEffect(spawnRock1VFX, effectData, transmit: true);
+
 
                                     for (int i = 0; i < Mathf.Ceil(compmaxTime); i++)
                                     {
@@ -391,6 +452,11 @@ namespace Moonstorm.Starstorm2.Items
             }
         }
 
+        public class TerminationMarkerToken : MonoBehaviour
+        {
+            //i swear this makes sense
+        }
+
         public class TerminationToken : MonoBehaviour
         {
             //helps keep track of the target and player responsible
@@ -399,6 +465,7 @@ namespace Moonstorm.Starstorm2.Items
             public float initalTime;
             public TerminationHolderToken owner;
             public float timeLimit = 30;
+            public bool isBoss = false;
         }
 
         public class TerminationHolderToken : MonoBehaviour

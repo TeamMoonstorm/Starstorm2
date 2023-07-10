@@ -4,6 +4,7 @@ using RoR2;
 using RoR2.Items;
 using System;
 using UnityEngine;
+using static Moonstorm.Starstorm2.Items.RelicOfTermination;
 
 namespace Moonstorm.Starstorm2.Items
 {
@@ -20,12 +21,14 @@ namespace Moonstorm.Starstorm2.Items
             private static AnimationCurve sizeCurve;
             public GameObject terminationMark;
             public GameObject markRing;
+            public GameObject markSpinBoss;
             float timer = 0;
             float maxTime = 30;
             public Transform pointerToken;
             int i = 0;
             public bool activeRing;
-            public bool conceded = false;
+
+            public RelicOfTermination.TerminationToken token;
 
             public new void Awake()
             {
@@ -60,44 +63,25 @@ namespace Moonstorm.Starstorm2.Items
                     printController.maxPrintHeight = 100;
                 }
 
-                body.teamComponent.RequestDefaultIndicator(globalMarkEffectTwo);
+                //body.teamComponent.indicator
+                if (!body.isBoss)
+                {
+                    body.teamComponent.RequestDefaultIndicator(globalMarkEffectTwo);
+                }
                 
-                //body.gameObject.AddComponent<Fuck>();
-                //pointerToken = body.transform.Find("TerminationPositionIndicator(Clone)"); //the default indicator might not be in by now so it wont find it
-                //Transform[] tranf = body.gameObject.GetComponentsInChildren<Transform>();
-                //foreach(Transform trans in tranf)
+                //var comps = body.gameObject.GetComponents<Component>();
+                //foreach(var comp in comps)
                 //{
-                //    SS2Log.Info(trans.name + " | " + trans);
+                //    /SS2Log.Info(comp.name + " | " + comp.GetType());
                 //}
-                //pointerToken = body.transform.Find("TerminationPositionIndicator");
-                //pointerToken = body.gameObject.GetComponentInChildren<TerminationPointerToken>();
-                //SS2Log.Info("pointer token: " + pointerToken);
-                //if (pointerToken)
-                //{
-                //    var posind = this.GetComponent<PositionIndicator>();
-                //    SS2Log.Info("posind: " + posind);
-                //    if (posind)
-                //    {
-                //        var insobj = posind.insideViewObject;
-                //        SS2Log.Info("posind: " + insobj);
-                //        //insobj.GetComponent
-                //        //insobj
-                //        //curve = insobj.GetComponent<ObjectScaleCurve>();
-                //        if (insobj)
-                //        {
-                //            markRing = insobj.transform.Find("Ring").gameObject;
-                //            SS2Log.Info("posind: " + markRing);
-                //            //markRing = pointerToken.gameObject;
-                //        }
-                //    }
-                //}
-                //insobj.transform.Find("Ring").gameObject;
-                //terminationMark = body.transform.Find("TerminationPositionIndicator").gameObject;
-                //markRing = terminationMark.transform.Find("Ring").gameObject;
-                //body.gameObject.AddComponent<Fuck>();
-                //var ind = globalMarkEffectTwo.GetComponent<PositionIndicator>();
 
-                //ind.targetTransform = body.transform;
+                token = body.gameObject.GetComponent<TerminationToken>();
+
+                if (token)
+                {
+                    //SS2Log.Info("limit: " + token.timeLimit + " from " + maxTime);
+                    maxTime = token.timeLimit;
+                }
             }
 
             public void FixedUpdate()
@@ -130,16 +114,21 @@ namespace Moonstorm.Starstorm2.Items
                             if (insobj)
                             {
                                 markRing = insobj.transform.Find("Ring").gameObject;
+                                if (body.isBoss)
+                                {
+                                    insobj.transform.Find("Crosshair2").gameObject.SetActive(true);
+                                    SS2Log.Info("object is boss helper");
+                                }
                                 sizeCurve = AnimationCurve.Linear(0, .235f, 1, .066f);
                                 activeRing = true;
                             }
                         }
                     }
                     ++i;
-                    if(!(i < 25) && !conceded)
+                    if(!(i < 25))
                     {
                         SS2Log.Info("Giving up on finding termination ring for " + body.name); //this is so that it's less shit that im doing getcomponent in fixedupdate listen its ok
-                        conceded = true; // lol oopps
+                        //conceded = true; // lol oopps
                     }
                 }
             }
@@ -153,9 +142,5 @@ namespace Moonstorm.Starstorm2.Items
             }
 
         }
-    }
-    public class Fuck : MonoBehaviour
-    {
-
     }
 }

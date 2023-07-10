@@ -34,12 +34,15 @@ namespace Moonstorm.Starstorm2.Interactables
         /// </summary>
         public static List<KeyValuePair<string, int>> dronePairs = new List<KeyValuePair<string, int>>();
 
-        public static Dictionary<string, Sprite> droneSpritePairs = new Dictionary<string, Sprite>();
-
         /// <summary>
-        /// List of drone string (body.name) and the required pseudo-transform required to make it sit nicely on the table. The drone hologram is a child of a specific node on the table, so you should just be able to edit the drone itself's transforms, and then input them here.
+        /// Dictonary of drone string (body.name) and the required pseudo-transform required to make it sit nicely on the table. The drone hologram is a child of a specific node on the table, so you should just be able to edit the drone itself's local transforms, and then input them here.
         /// </summary>
         public static Dictionary<string, RefabricatorTriple> droneTripletPairs = new Dictionary<string, RefabricatorTriple>(); //i guess you cant make transforms without an object and i didnt want to make dummy objects
+        
+        /// <summary>
+        /// Dictonary of drone names and runtime-made drone sprites.
+        /// </summary>
+        public static Dictionary<string, Sprite> droneSpritePairs = new Dictionary<string, Sprite>();
 
         public static CostTypeDef droneCostDef;
         public static int droneCostIndex;
@@ -113,7 +116,7 @@ namespace Moonstorm.Starstorm2.Interactables
                     RenderTexture.active = null;
                     tex2d.wrapMode = TextureWrapMode.Clamp;
                     tex2d.filterMode = FilterMode.Bilinear;
-                    output = Sprite.Create(tex2d, new Rect(0, 0, tex2d.width, tex2d.height), new Vector2(.5f, .5f), 25);
+                    output = Sprite.Create(tex2d, new Rect(0, 0, 128, 128), new Vector2(.5f, .5f), 25);
                     //output.pixelsPerUnit = 25;
                     output.name = body.portraitIcon.name + "Refabricator";
                     
@@ -132,11 +135,11 @@ namespace Moonstorm.Starstorm2.Interactables
                     main.startColor = color;
                     particleSystem.Play();
                 }
+
                 for (int j = 0; j < self.spritesToColor.Length; j++)
                 {
                     self.spritesToColor[j].color = color;
                 }
-
             }
             else
             {
@@ -156,7 +159,6 @@ namespace Moonstorm.Starstorm2.Interactables
             dronePairs.Add(new KeyValuePair<string, int>("MegaDroneBody", 350));
             
             dronePairs.Add(new KeyValuePair<string, int>("ShockDroneBody", 40));
-
 
             droneTripletPairs.Add("Turret1Body", new RefabricatorTriple(new Vector3(0, -0.575f, -.2f), new Vector3(0, 180, 0), new Vector3(.09f, .09f, .09f)));
             droneTripletPairs.Add("Drone1Body", new RefabricatorTriple(new Vector3(0, -0.28f, 0), new Vector3(0, 156, 0), new Vector3(1.475f, 1.475f, 1.475f)));
@@ -235,7 +237,7 @@ namespace Moonstorm.Starstorm2.Interactables
                                     }
                                     else
                                     {
-                                        SS2Log.Info("Drone " + master.name + " didn't have a body? affordab;e");
+                                        //SS2Log.Info("Drone " + master.name + " didn't have a body? affordab;e");
                                     }
                                 }
                             }
@@ -279,7 +281,7 @@ namespace Moonstorm.Starstorm2.Interactables
                                 }
                                 else
                                 {
-                                    SS2Log.Info("Drone " + master.name + " didn't have a body?");
+                                    //SS2Log.Info("Drone " + master.name + " didn't have a body?");
                                 }
                             }
                         }
@@ -312,6 +314,7 @@ namespace Moonstorm.Starstorm2.Interactables
                                             genericFloat = 1.5f,
                                             genericUInt = (uint)j,
                                             genericBool = true
+                                            
                                         };
 
                                         var model = context.purchasedObject;
@@ -372,6 +375,7 @@ namespace Moonstorm.Starstorm2.Interactables
                                                 }
                                             }
                                         }
+
                                         var esm = model.GetComponent<EntityStateMachine>();
                                         if (esm)
                                         {
@@ -500,9 +504,9 @@ namespace Moonstorm.Starstorm2.Interactables
         public class RefabricatorTriple : MonoBehaviour
         {
             public Vector3 position;
-            //public Quaternion rotation;
             public Vector3 rotation;
             public Vector3 scale;
+
             public RefabricatorTriple(Vector3 pos, Vector3 rot, Vector3 size)
             {
                 position = pos;

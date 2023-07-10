@@ -28,7 +28,7 @@ Starstorm 2 is currently being developed and maintained by...
 * Nebby, prod, swuff★, Zenithrium
 
 With previous and one-off code contributions by...
-* Anreol, bread, Flan, Gaforb, GrooveSalad, HIFU, KevinFromHPCustomerService, malfaisant, Moffein, Nebby, Noop, Phreel, rob, swuff★, sebacame, Shared, TheTimesweeper, Vale-X, xpcybic, Xubas
+* Anreol, bread, Flan, Gaforb, GrooveSalad, HIFU, KevinFromHPCustomerService, MagicGonads, malfaisant, Moffein, Nebby, Noop, Phreel, rob, swuff★, sebacame, Shared, TheTimesweeper, Vale-X, xpcybic, Xubas
 
 With Art/Modelling/Animation contributions by...
 * Alexstarwras, Anreol, Bolty, bread, bruh, Cexeub, dotflare, Draymarc, Domi, JestAnotherAnimator, Gem, goodguy, GrooveSalad, LucidInceptor, Neik, KevinFromHPCustomerService, PapaZach, Plexus, prodzpod, QuietAnon, redacted, rob, SkeletorChampion, SOM, Spenny, swuff★, xpcybic, Reithierion, UnknownGlaze, Zenithrium
@@ -47,6 +47,7 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 **Warning: content spoilers below!**
 ### 0.4.6
 * Items
+    * Relic of Termination now grants double time for bosses and drops the boss's relevant boss item. The mark now properly works on bosses as well.
     * Adjusted Relic of Termination's drop rates.
     * Relic of Termination's marker now immediately disappears upon killing the marked enemy.
     * Detritive Trematode can no longer be applied to the Artifact Reliquary. 
