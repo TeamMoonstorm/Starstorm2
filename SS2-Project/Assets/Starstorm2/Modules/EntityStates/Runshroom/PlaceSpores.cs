@@ -45,8 +45,8 @@ namespace EntityStates.Runshroom
                 {
                     hasWaited = true;
                     GameObject chargeEffectPrefabInstance = Object.Instantiate(chargeEffectPrefab);
-                    chargeEffectPrefabInstance.transform.position = Vector3.zero;
                     chargeEffectPrefabInstance.transform.SetParent(childLocator.FindChild("TippyTop"));
+                    chargeEffectPrefabInstance.transform.position = Vector3.zero;
                     PlayCrossfade("Body", "Attack", "Primary.playbackRate", duration, 0.1f);
                 }
             }
