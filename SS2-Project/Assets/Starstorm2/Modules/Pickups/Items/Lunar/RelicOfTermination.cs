@@ -181,7 +181,7 @@ namespace Moonstorm.Starstorm2.Items
                 {
                     int count = token.itemCount;
                     Vector3 vector = Quaternion.AngleAxis(0, Vector3.up) * (Vector3.up * 20f);
-                    List<PickupIndex> dropList;
+                    //List<PickupIndex> dropList;
 
                     if(dropTable == null)
                     {
@@ -324,9 +324,9 @@ namespace Moonstorm.Starstorm2.Items
             }
             return result;
         }
-        public sealed class Behavior : BaseItemBodyBehavior//, IOnKilledServerReceiver//, IOnKilledOtherServerReceiver 
-        {
 
+        public sealed class TerminationBehavior : BaseItemBodyBehavior//, IOnKilledServerReceiver//, IOnKilledOtherServerReceiver 
+        {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.RelicOfTermination;
 

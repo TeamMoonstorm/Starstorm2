@@ -117,7 +117,7 @@ namespace Moonstorm.Starstorm2.Items
                                 if (body.isBoss)
                                 {
                                     insobj.transform.Find("Crosshair2").gameObject.SetActive(true);
-                                    SS2Log.Info("object is boss helper");
+                                    //SS2Log.Info("object is boss helper");
                                 }
                                 sizeCurve = AnimationCurve.Linear(0, .235f, 1, .066f);
                                 activeRing = true;

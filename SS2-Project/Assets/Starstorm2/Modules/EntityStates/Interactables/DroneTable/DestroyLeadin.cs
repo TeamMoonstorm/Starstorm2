@@ -38,8 +38,7 @@ namespace EntityStates.DroneTable
                 nextState.droneObject = this.droneObject;
                 nextState.index = this.index;
                 outer.SetNextState(nextState);
-            }
-               
+            }           
         }
 
         public override void OnExit()

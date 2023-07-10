@@ -62,14 +62,6 @@ namespace EntityStates.DroneTable
                 }
                 else
                 {
-                    //var cm = doubleTempDrone.GetComponent<CharacterModel>();
-                    //var obj = cm.baseRendererInfos[0].renderer.bounds;
-                    ////SS2Log.Info(obj);
-                    //var center = new Vector3(obj.center.x, obj.center.y, obj.center.z);
-                    //var transform = new Vector3(doubleTempDrone.transform.position.x, doubleTempDrone.transform.position.y, doubleTempDrone.transform.position.z);
-                    //var difference = transform - center;
-                    //holo.position -= difference;
-                    //tempDrone = UnityEngine.Object.Instantiate<GameObject>(doubleTempDrone, holo);
                     tempDrone = UnityEngine.Object.Instantiate<GameObject>(doubleTempDrone, holo.position, holo.rotation, holo);
                 }
 
@@ -171,7 +163,6 @@ namespace EntityStates.DroneTable
             var target = this.gameObject.transform.Find("PickupOrigin");
             Vector3 vec = Vector3.up * 10 + target.forward * 3.5f;
             PickupDropletController.CreatePickupDroplet(index, target.position, vec);
-
         }
     }
 }
