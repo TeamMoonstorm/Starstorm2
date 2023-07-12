@@ -32,6 +32,66 @@ Transform:
   m_Father: {fileID: 5586194814970321357}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &477106462732276099
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1520215578704442427}
+  m_Layer: 0
+  m_Name: FootR
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1520215578704442427
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 477106462732276099}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 91626704000764429}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &825428493988288941
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2222672905258555419}
+  m_Layer: 0
+  m_Name: FootL
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2222672905258555419
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825428493988288941}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 481157800389522022}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &891847436474180465
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,7 +148,8 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0.6121235, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1520215578704442427}
   m_Father: {fileID: 9211830649547481133}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -198,6 +259,7 @@ GameObject:
   - component: {fileID: 8196372553167727598}
   - component: {fileID: 2109078474452853361}
   - component: {fileID: 3634462245888766995}
+  - component: {fileID: 429329899549256795}
   m_Layer: 12
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -251,6 +313,19 @@ MonoBehaviour:
   damageModifier: 0
   hurtBoxGroup: {fileID: 5911579599854173512}
   indexInGroup: 3
+--- !u!114 &429329899549256795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577605870246886822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaceDef: {fileID: 11400000, guid: ed1ea007e1c7d484e9cfcdb6f354e6db, type: 2}
 --- !u!1 &2497888634562810260
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,6 +593,7 @@ GameObject:
   - component: {fileID: 4664431938125243402}
   - component: {fileID: 7467580272368580151}
   - component: {fileID: 4701638328054263423}
+  - component: {fileID: 5767358675212207564}
   m_Layer: 12
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -571,6 +647,19 @@ MonoBehaviour:
   damageModifier: 0
   hurtBoxGroup: {fileID: 5911579599854173512}
   indexInGroup: 2
+--- !u!114 &5767358675212207564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3577845722442747669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaceDef: {fileID: 11400000, guid: ed1ea007e1c7d484e9cfcdb6f354e6db, type: 2}
 --- !u!1 &3727876061427628661
 GameObject:
   m_ObjectHideFlags: 0
@@ -644,6 +733,7 @@ GameObject:
   - component: {fileID: 5596573646458617866}
   - component: {fileID: 3665017370430103539}
   - component: {fileID: 5301134521580898858}
+  - component: {fileID: 175935695268772519}
   m_Layer: 12
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -697,6 +787,19 @@ MonoBehaviour:
   damageModifier: 0
   hurtBoxGroup: {fileID: 5911579599854173512}
   indexInGroup: 4
+--- !u!114 &175935695268772519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4024866109814654444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaceDef: {fileID: 11400000, guid: ed1ea007e1c7d484e9cfcdb6f354e6db, type: 2}
 --- !u!1 &4041973457577433445
 GameObject:
   m_ObjectHideFlags: 0
@@ -860,6 +963,7 @@ GameObject:
   - component: {fileID: 4937379999168642250}
   - component: {fileID: 4177050183037807827}
   - component: {fileID: 6691285536973568259}
+  - component: {fileID: 2871681280071145212}
   m_Layer: 12
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -913,6 +1017,19 @@ MonoBehaviour:
   damageModifier: 0
   hurtBoxGroup: {fileID: 5911579599854173512}
   indexInGroup: 1
+--- !u!114 &2871681280071145212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5780451122550280789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaceDef: {fileID: 11400000, guid: ed1ea007e1c7d484e9cfcdb6f354e6db, type: 2}
 --- !u!1 &5790520984157419433
 GameObject:
   m_ObjectHideFlags: 0
@@ -1054,6 +1171,7 @@ GameObject:
   - component: {fileID: 3742054957623083278}
   - component: {fileID: 6444819483669976982}
   - component: {fileID: 6709519264308490212}
+  - component: {fileID: 5605973532786149672}
   m_Layer: 12
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -1107,6 +1225,19 @@ MonoBehaviour:
   damageModifier: 0
   hurtBoxGroup: {fileID: 5911579599854173512}
   indexInGroup: 5
+--- !u!114 &5605973532786149672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6334928850996470607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaceDef: {fileID: 11400000, guid: ed1ea007e1c7d484e9cfcdb6f354e6db, type: 2}
 --- !u!1 &6640935296351398871
 GameObject:
   m_ObjectHideFlags: 0
@@ -1346,6 +1477,12 @@ MonoBehaviour:
     transform: {fileID: 5897133674409299381}
   - name: TippyTop
     transform: {fileID: 4764691151711333384}
+  - name: BurrowCenter
+    transform: {fileID: 4764691151711333384}
+  - name: FootL
+    transform: {fileID: 2222672905258555419}
+  - name: FootR
+    transform: {fileID: 1520215578704442427}
 --- !u!114 &5911579599854173512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1379,12 +1516,13 @@ MonoBehaviour:
   m_Script: {fileID: 1480773730, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseFootstepString: Play_player_footstep
+  baseFootstepString: Play_minimushroom_step
   baseFootliftString: 
   sprintFootstepOverrideString: 
   sprintFootliftOverrideString: 
   enableFootstepDust: 1
-  footstepDustPrefab: {fileID: 0}
+  footstepDustPrefab: {fileID: 1581438006475099, guid: e97bdc6bbe332ef4cb3c2bfa60097ea9,
+    type: 3}
 --- !u!114 &462002329503849363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1664,14 +1802,14 @@ MonoBehaviour:
   baseRegen: 0
   baseMaxShield: 0
   baseMoveSpeed: 25
-  baseAcceleration: 80
-  baseJumpPower: 15
-  baseDamage: 8
+  baseAcceleration: 160
+  baseJumpPower: 0
+  baseDamage: 10
   baseAttackSpeed: 1
   baseCrit: 1
   baseArmor: 0
   baseVisionDistance: Infinity
-  baseJumpCount: 1
+  baseJumpCount: 0
   sprintingSpeedMultiplier: 1
   autoCalculateLevelStats: 1
   levelMaxHealth: 42
@@ -1679,7 +1817,7 @@ MonoBehaviour:
   levelMaxShield: 0
   levelMoveSpeed: 0
   levelJumpPower: 0
-  levelDamage: 1.6
+  levelDamage: 2
   levelAttackSpeed: 0
   levelCrit: 0
   levelArmor: 0
@@ -1774,7 +1912,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customName: Body
   initialStateType:
-    _typeName: EntityStates.SpawnTeleporterState, RoR2, Version=0.0.0.0, Culture=neutral,
+    _typeName: EntityStates.MiniMushroom.SpawnState, RoR2, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   mainStateType:
     _typeName: EntityStates.GenericCharacterMain, RoR2, Version=0.0.0.0, Culture=neutral,
@@ -1851,11 +1989,11 @@ MonoBehaviour:
   m_Script: {fileID: 952828898, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathSound: Play_ui_player_death
-  barkSound: 
+  deathSound: Play_minimushroom_death
+  barkSound: Play_minimushroom_idle_VO
   openSound: 
-  landingSound: Play_char_land
-  fallDamageSound: Play_char_land_fall_damage
+  landingSound: Play_minimushroom_step
+  fallDamageSound: 
   aliveLoopStart: 
   aliveLoopStop: 
   sprintLoopStart: 
@@ -1947,7 +2085,7 @@ MonoBehaviour:
   rootMotionAccumulator: {fileID: 0}
   modelAnimator: {fileID: 0}
   driveFromRootRotation: 0
-  turnSpeed: 360
+  turnSpeed: 1080
   turnSoundName: 
 --- !u!114 &4540304744849864423
 MonoBehaviour:
@@ -2205,6 +2343,7 @@ GameObject:
   - component: {fileID: 8001577861419901160}
   - component: {fileID: 3329992404926938998}
   - component: {fileID: 3841774821876586746}
+  - component: {fileID: 5791965066913495727}
   m_Layer: 12
   m_Name: MainHurtbox
   m_TagString: Untagged
@@ -2258,6 +2397,19 @@ MonoBehaviour:
   damageModifier: 2
   hurtBoxGroup: {fileID: 5911579599854173512}
   indexInGroup: 0
+--- !u!114 &5791965066913495727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8474760254300593048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaceDef: {fileID: 11400000, guid: ed1ea007e1c7d484e9cfcdb6f354e6db, type: 2}
 --- !u!1 &8913389045096989503
 GameObject:
   m_ObjectHideFlags: 0
@@ -2284,7 +2436,8 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0.6121235, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 2222672905258555419}
   m_Father: {fileID: 3568784064806696661}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

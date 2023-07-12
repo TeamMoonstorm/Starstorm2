@@ -9,7 +9,7 @@ namespace Moonstorm.Starstorm2.Artifacts
 {
     public class Adversity : ArtifactBase
     {
-        public override ArtifactDef ArtifactDef { get; } = SS2Assets.LoadAsset<ArtifactDef>("Prestige", SS2Bundle.Artifacts);
+        public override ArtifactDef ArtifactDef { get; } = SS2Assets.LoadAsset<ArtifactDef>("Adversity", SS2Bundle.Artifacts);
 
         private static bool shouldUpgradeTP;
         private static float timer;
@@ -33,7 +33,7 @@ namespace Moonstorm.Starstorm2.Artifacts
             orig(self);
 
             var currStage = SceneManager.GetActiveScene().name;
-            if (self.teleporterInstance && currStage == "skymeadow")
+            if (self.teleporterInstance && (currStage == "skymeadow" || currStage == "slumberingsatellite"))
             {
                 TeleporterUpgradeController tuc = self.teleporterInstance.GetComponent<TeleporterUpgradeController>();
                 if (tuc != null)

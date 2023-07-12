@@ -26,6 +26,8 @@ namespace EntityStates.Runshroom
             base.OnEnter();
             projectilePrefab = MiniMushroom.SporeGrenade.projectilePrefab;
             originalMoveSpeed = characterBody.moveSpeed;
+            characterBody.moveSpeed = 0f;
+            PlayCrossfade("Body", "ToIdle", 0.05f);
             duration = baseDuration / attackSpeedStat;
             childLocator = GetModelChildLocator();
             //characterBody.SetAimTimer(duration * 1.5f);
@@ -37,16 +39,18 @@ namespace EntityStates.Runshroom
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            
-            if (fixedAge >= duration * 0.5f)
+
+            characterBody.moveSpeed = 0f;
+
+            if (fixedAge >= duration * 0.2f)
             {
-                characterBody.moveSpeed = originalMoveSpeed * 0.1f;
                 if (!hasWaited)
                 {
                     hasWaited = true;
                     GameObject chargeEffectPrefabInstance = Object.Instantiate(chargeEffectPrefab);
                     chargeEffectPrefabInstance.transform.SetParent(childLocator.FindChild("TippyTop"));
-                    chargeEffectPrefabInstance.transform.position = Vector3.zero;
+                    //chargeEffectPrefabInstance.transform.position = Vector3.zero;
+                    chargeEffectPrefabInstance.transform.position = childLocator.FindChild("TippyTop").position;
                     PlayCrossfade("Body", "Attack", "Primary.playbackRate", duration, 0.1f);
                 }
             }
@@ -57,7 +61,7 @@ namespace EntityStates.Runshroom
                 FireProjectile();
             }
 
-            if (fixedAge >= duration * 1.5f && hasFired)
+            if (fixedAge >= duration * 1.2f && hasFired)
                 outer.SetNextStateToMain();
         }
 

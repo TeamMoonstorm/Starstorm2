@@ -880,6 +880,7 @@ GameObject:
   - component: {fileID: 7541522564853801511}
   - component: {fileID: 5515380506599413127}
   - component: {fileID: 8505292085328052202}
+  - component: {fileID: 4197784983264089358}
   m_Layer: 12
   m_Name: HeadHurtbox
   m_TagString: Untagged
@@ -933,6 +934,19 @@ MonoBehaviour:
   damageModifier: 2
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 2
+--- !u!114 &4197784983264089358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739762634579581940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaceDef: {fileID: 11400000, guid: 069a53afb7d97aa46a0928e44e19f53c, type: 2}
 --- !u!1 &741167906213861598
 GameObject:
   m_ObjectHideFlags: 0
@@ -1006,6 +1020,7 @@ GameObject:
   - component: {fileID: 5722851608619848898}
   - component: {fileID: 5887292574789673639}
   - component: {fileID: 279924304162967569}
+  - component: {fileID: 8381888822941335290}
   m_Layer: 12
   m_Name: RLegHurtbox2
   m_TagString: Untagged
@@ -1059,6 +1074,19 @@ MonoBehaviour:
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 11
+--- !u!114 &8381888822941335290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 781696421571536066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaceDef: {fileID: 11400000, guid: 069a53afb7d97aa46a0928e44e19f53c, type: 2}
 --- !u!1 &819442680842630303
 GameObject:
   m_ObjectHideFlags: 0
@@ -1162,6 +1190,7 @@ GameObject:
   - component: {fileID: 8370921764115035702}
   - component: {fileID: 9102037988098628216}
   - component: {fileID: 8924323144468828630}
+  - component: {fileID: 373293276295987696}
   m_Layer: 12
   m_Name: LHandHurtbox
   m_TagString: Untagged
@@ -1215,6 +1244,19 @@ MonoBehaviour:
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 7
+--- !u!114 &373293276295987696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825465450037260939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaceDef: {fileID: 11400000, guid: 069a53afb7d97aa46a0928e44e19f53c, type: 2}
 --- !u!1 &866876273527315337
 GameObject:
   m_ObjectHideFlags: 0
@@ -1593,6 +1635,7 @@ GameObject:
   - component: {fileID: 2705547030526692234}
   - component: {fileID: 4283447703911140103}
   - component: {fileID: 3502204629056486735}
+  - component: {fileID: 5452809787134115652}
   m_Layer: 12
   m_Name: RHandHurtbox
   m_TagString: Untagged
@@ -1646,6 +1689,19 @@ MonoBehaviour:
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 3
+--- !u!114 &5452809787134115652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289420838866686317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaceDef: {fileID: 11400000, guid: 069a53afb7d97aa46a0928e44e19f53c, type: 2}
 --- !u!1 &1310146147582100036
 GameObject:
   m_ObjectHideFlags: 0
@@ -2511,6 +2567,7 @@ GameObject:
   - component: {fileID: 4114746808780577886}
   - component: {fileID: 6974877965481999587}
   - component: {fileID: 8184195956271989660}
+  - component: {fileID: 228565533983279284}
   m_Layer: 12
   m_Name: RLanternHitbox
   m_TagString: Untagged
@@ -2564,6 +2621,19 @@ MonoBehaviour:
   damageModifier: 2
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 16
+--- !u!114 &228565533983279284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2148604845227884893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaceDef: {fileID: 11400000, guid: 069a53afb7d97aa46a0928e44e19f53c, type: 2}
 --- !u!1 &2153967224452901130
 GameObject:
   m_ObjectHideFlags: 0
@@ -2670,6 +2740,7 @@ GameObject:
   - component: {fileID: 3030525570365448261}
   - component: {fileID: 5310152978750565139}
   - component: {fileID: 3427031248618177471}
+  - component: {fileID: 5493987471320948201}
   m_Layer: 12
   m_Name: LArmHurtbox3
   m_TagString: Untagged
@@ -2723,6 +2794,19 @@ MonoBehaviour:
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 8
+--- !u!114 &5493987471320948201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2274265211850764474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaceDef: {fileID: 11400000, guid: 069a53afb7d97aa46a0928e44e19f53c, type: 2}
 --- !u!1 &2282027813667502926
 GameObject:
   m_ObjectHideFlags: 0
@@ -2825,6 +2909,7 @@ GameObject:
   - component: {fileID: 5717203163365638}
   - component: {fileID: 2197768927192789909}
   - component: {fileID: 5296140012881146384}
+  - component: {fileID: 6548670687080571822}
   m_Layer: 12
   m_Name: RArmHurtbox
   m_TagString: Untagged
@@ -2878,6 +2963,19 @@ MonoBehaviour:
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 6
+--- !u!114 &6548670687080571822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2370363084449124621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaceDef: {fileID: 11400000, guid: 069a53afb7d97aa46a0928e44e19f53c, type: 2}
 --- !u!1 &2445855359802334275
 GameObject:
   m_ObjectHideFlags: 0
@@ -3263,6 +3361,7 @@ GameObject:
   - component: {fileID: 3899668138913437704}
   - component: {fileID: 4971545028365977510}
   - component: {fileID: 3277018816176130751}
+  - component: {fileID: 2757358287593691859}
   m_Layer: 12
   m_Name: RLegHurtbox1
   m_TagString: Untagged
@@ -3316,6 +3415,19 @@ MonoBehaviour:
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 12
+--- !u!114 &2757358287593691859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2789540882402068940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaceDef: {fileID: 11400000, guid: 069a53afb7d97aa46a0928e44e19f53c, type: 2}
 --- !u!1 &2804301489670857773
 GameObject:
   m_ObjectHideFlags: 0
@@ -3509,6 +3621,7 @@ GameObject:
   - component: {fileID: 500194489429538599}
   - component: {fileID: 6650504902842553591}
   - component: {fileID: 2950681265253728716}
+  - component: {fileID: 4949906575388241126}
   m_Layer: 12
   m_Name: ChestHurtbox
   m_TagString: Untagged
@@ -3562,6 +3675,19 @@ MonoBehaviour:
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 0
+--- !u!114 &4949906575388241126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2914727224319511699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaceDef: {fileID: 11400000, guid: 069a53afb7d97aa46a0928e44e19f53c, type: 2}
 --- !u!1 &2986650798063862450
 GameObject:
   m_ObjectHideFlags: 0
@@ -4059,7 +4185,7 @@ Transform:
   m_GameObject: {fileID: 3502845028911919073}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -9, z: 0}
-  m_LocalScale: {x: 80, y: 80, z: 80}
+  m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children:
   - {fileID: 172256369711596597}
   - {fileID: 559634049775750924}
@@ -4367,6 +4493,7 @@ GameObject:
   - component: {fileID: 5728828781991894129}
   - component: {fileID: 1911960361983378707}
   - component: {fileID: 8103817308700756483}
+  - component: {fileID: 5741127343693135032}
   m_Layer: 12
   m_Name: PelvisHurtbox
   m_TagString: Untagged
@@ -4420,6 +4547,19 @@ MonoBehaviour:
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 1
+--- !u!114 &5741127343693135032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3612772216051745967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaceDef: {fileID: 11400000, guid: 069a53afb7d97aa46a0928e44e19f53c, type: 2}
 --- !u!1 &3630016518682979814
 GameObject:
   m_ObjectHideFlags: 0
@@ -4431,6 +4571,7 @@ GameObject:
   - component: {fileID: 5884796115226582610}
   - component: {fileID: 8555370712821813881}
   - component: {fileID: 5034444996282677419}
+  - component: {fileID: 6408807010297419626}
   m_Layer: 12
   m_Name: LArmHurtbox2
   m_TagString: Untagged
@@ -4484,6 +4625,19 @@ MonoBehaviour:
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 9
+--- !u!114 &6408807010297419626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3630016518682979814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaceDef: {fileID: 11400000, guid: 069a53afb7d97aa46a0928e44e19f53c, type: 2}
 --- !u!1 &3643434518558410745
 GameObject:
   m_ObjectHideFlags: 0
@@ -5130,6 +5284,7 @@ GameObject:
   - component: {fileID: 3210254176944430560}
   - component: {fileID: 8404205653102289941}
   - component: {fileID: 6367490628315892619}
+  - component: {fileID: 4753867427037887647}
   m_Layer: 12
   m_Name: LLegHurtbox1
   m_TagString: Untagged
@@ -5183,6 +5338,19 @@ MonoBehaviour:
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 14
+--- !u!114 &4753867427037887647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4147919446056596208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaceDef: {fileID: 11400000, guid: 069a53afb7d97aa46a0928e44e19f53c, type: 2}
 --- !u!1 &4168226339975565529
 GameObject:
   m_ObjectHideFlags: 0
@@ -6176,6 +6344,7 @@ GameObject:
   - component: {fileID: 8059111294826735158}
   - component: {fileID: 5167658999730704799}
   - component: {fileID: 5003916964655196345}
+  - component: {fileID: 6761451935816452898}
   m_Layer: 12
   m_Name: RArmHurtbox3
   m_TagString: Untagged
@@ -6229,6 +6398,19 @@ MonoBehaviour:
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 4
+--- !u!114 &6761451935816452898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5224246151461188630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaceDef: {fileID: 11400000, guid: 069a53afb7d97aa46a0928e44e19f53c, type: 2}
 --- !u!1 &5247134748394609105
 GameObject:
   m_ObjectHideFlags: 0
@@ -6456,6 +6638,7 @@ GameObject:
   - component: {fileID: 1686642355063878831}
   - component: {fileID: 8320908388778596165}
   - component: {fileID: 2831360478713781136}
+  - component: {fileID: 8811937139756464081}
   m_Layer: 12
   m_Name: LArmHurtbox1
   m_TagString: Untagged
@@ -6509,6 +6692,19 @@ MonoBehaviour:
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 10
+--- !u!114 &8811937139756464081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5544913055593790326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaceDef: {fileID: 11400000, guid: 069a53afb7d97aa46a0928e44e19f53c, type: 2}
 --- !u!1 &5549482022274416600
 GameObject:
   m_ObjectHideFlags: 0
@@ -7166,6 +7362,7 @@ GameObject:
   - component: {fileID: 7564883965393270628}
   - component: {fileID: 4744357623599982524}
   - component: {fileID: 879672873567487076}
+  - component: {fileID: 7610703064521009333}
   m_Layer: 12
   m_Name: RArmHurtbox2
   m_TagString: Untagged
@@ -7219,6 +7416,19 @@ MonoBehaviour:
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 5
+--- !u!114 &7610703064521009333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6136180151074665477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaceDef: {fileID: 11400000, guid: 069a53afb7d97aa46a0928e44e19f53c, type: 2}
 --- !u!1 &6159199286775111575
 GameObject:
   m_ObjectHideFlags: 0
@@ -8739,9 +8949,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 1.5
-  m_Height: 16
+  m_Height: 20
   m_Direction: 1
-  m_Center: {x: 0, y: 2, z: 0}
+  m_Center: {x: 0, y: 4, z: 0}
 --- !u!114 &8290727853726698904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8758,8 +8968,8 @@ MonoBehaviour:
   Capsule: {fileID: 33950296212032868}
   Rigidbody: {fileID: 235377538818672711}
   CapsuleRadius: 1.5
-  CapsuleHeight: 16
-  CapsuleYOffset: 2
+  CapsuleHeight: 20
+  CapsuleYOffset: 4
   CapsulePhysicsMaterial: {fileID: 0}
   DetectDiscreteCollisions: 0
   GroundDetectionExtraDistance: 0
@@ -9861,6 +10071,7 @@ GameObject:
   - component: {fileID: 5501001066544178425}
   - component: {fileID: 7676157608934107599}
   - component: {fileID: 1699998301748734869}
+  - component: {fileID: 4255728180273183820}
   m_Layer: 12
   m_Name: LLanternHitbox
   m_TagString: Untagged
@@ -9914,6 +10125,19 @@ MonoBehaviour:
   damageModifier: 2
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 15
+--- !u!114 &4255728180273183820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7494643829073808519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaceDef: {fileID: 11400000, guid: 069a53afb7d97aa46a0928e44e19f53c, type: 2}
 --- !u!1 &7511546538028594483
 GameObject:
   m_ObjectHideFlags: 0
@@ -11262,6 +11486,7 @@ GameObject:
   - component: {fileID: 4533651147550239952}
   - component: {fileID: 1441631298714026706}
   - component: {fileID: 6408868758460856140}
+  - component: {fileID: 2640834146595706734}
   m_Layer: 12
   m_Name: LLegHurtbox2
   m_TagString: Untagged
@@ -11315,6 +11540,19 @@ MonoBehaviour:
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 13
+--- !u!114 &2640834146595706734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8378168536257357419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1052602003, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaceDef: {fileID: 11400000, guid: 069a53afb7d97aa46a0928e44e19f53c, type: 2}
 --- !u!1 &8380090512199092590
 GameObject:
   m_ObjectHideFlags: 0
