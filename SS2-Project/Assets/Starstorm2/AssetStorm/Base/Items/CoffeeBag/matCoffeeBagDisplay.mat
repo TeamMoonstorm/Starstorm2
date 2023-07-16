@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: matNeedles
+  m_Name: matCoffeeBagDisplay
   m_Shader: {fileID: 4800000, guid: 9b2024ee08a5bfc418ff897991e84323, type: 2}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: DITHER
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -80,7 +80,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 025ad3d6ef08a1241a470ba9626a2f18, type: 3}
+        m_Texture: {fileID: 2800000, guid: 634d034ad55d6364995b12cc1907a0e9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -88,7 +88,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: d6e9aeeb469863d47ad7e46c05368ffc, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -121,7 +121,7 @@ Material:
     - _DecalLayer: 0
     - _Depth: 0.2
     - _DetailNormalMapScale: 1
-    - _DitherOn: 0
+    - _DitherOn: 1
     - _DstBlend: 0
     - _EliteBrightnessMax: 1
     - _EliteBrightnessMin: 0

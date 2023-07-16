@@ -383,7 +383,7 @@ namespace Moonstorm.Starstorm2.Interactables
                                             DestroyLeadin nextState = new DestroyLeadin();
                                             nextState.droneObject = validMinions[i].bodyPrefab;
                                             nextState.index = ind;
-                                            SS2Log.Info("entrance index: " + ind + " of value " + dropvalue);
+                                            //SS2Log.Info("entrance index: " + ind + " of value " + dropvalue);
                                             esm.SetNextState(nextState);
                                         }
                                         break;

@@ -19,7 +19,6 @@ namespace EntityStates.DroneTable
             }
         }
 
-
         public override void OnEnter()
         {
             base.OnEnter();

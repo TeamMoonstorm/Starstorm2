@@ -7,10 +7,10 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: matNeedles
+  m_Name: matNeedlesDisplay
   m_Shader: {fileID: 4800000, guid: 9b2024ee08a5bfc418ff897991e84323, type: 2}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
+  m_ShaderKeywords: DITHER
+  m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -83,6 +83,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 025ad3d6ef08a1241a470ba9626a2f18, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _MaskTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -112,25 +116,39 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _BlendOp: 0
     - _BlueChannelBias: 0
     - _BlueChannelSmoothness: 0
     - _BumpScale: 1
+    - _CameraFadingEnabled: 0
+    - _CameraFarFadeDistance: 2
+    - _CameraNearFadeDistance: 1
     - _ColorsOn: 0
     - _Cull: 2
     - _Cutoff: 0.5
     - _DecalLayer: 0
     - _Depth: 0.2
     - _DetailNormalMapScale: 1
-    - _DitherOn: 0
+    - _DistanceModulationMagnitude: 0.5
+    - _DistanceModulationOn: 0
+    - _DistortionBlend: 0.5
+    - _DistortionEnabled: 0
+    - _DistortionStrength: 1
+    - _DistortionStrengthScaled: 0
+    - _DitherOn: 1
     - _DstBlend: 0
     - _EliteBrightnessMax: 1
     - _EliteBrightnessMin: 0
     - _EliteIndex: 0
     - _EmPower: 1
+    - _EmissionEnabled: 0
     - _EnableCutout: 0
     - _FEON: 0
     - _Fade: 1
     - _FadeBias: 0
+    - _FarFadeOneDistance: 200000
+    - _FarFadeZeroDistance: 250000
+    - _FlipbookMode: 0
     - _FlowEmissionStrength: 1
     - _FlowHeightBias: 0
     - _FlowHeightPower: 1
@@ -147,12 +165,18 @@ Material:
     - _GlossyReflections: 1
     - _GreenChannelBias: 0
     - _GreenChannelSmoothness: 0
+    - _InvFade: 0.1
+    - _LightingEnabled: 1
     - _LimbPrimeMask: 1
     - _LimbRemovalOn: 0
+    - _Magnitude: 0.05
     - _Metallic: 0
     - _Mode: 0
+    - _NearFadeOneDistance: 5
+    - _NearFadeZeroDistance: 0
     - _NormalStrength: 1
     - _OcclusionStrength: 1
+    - _Opacity: 0
     - _Parallax: 0.02
     - _PrintBias: 0
     - _PrintBoost: 1
@@ -165,6 +189,9 @@ Material:
     - _SliceHeight: 5
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
+    - _SoftParticlesEnabled: 0
+    - _SoftParticlesFarFadeDistance: 1
+    - _SoftParticlesNearFadeDistance: 0
     - _SpecularExponent: 1
     - _SpecularHighlights: 1
     - _SpecularStrength: 0
@@ -174,7 +201,11 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
+    - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _DistortionColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FlashColor: {r: 0, g: 0, b: 0, a: 1}
+    - _OpacityColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
