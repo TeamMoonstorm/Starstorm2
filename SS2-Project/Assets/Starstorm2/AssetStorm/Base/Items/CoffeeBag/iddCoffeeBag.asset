@@ -226,3 +226,29 @@ MonoBehaviour:
       localAngles: {x: 6.144023, y: 278.6568, z: 134.975}
       localScales: {x: 0.05, y: 0.05, z: 0.05}
       limbMask: 0
+  - idrsName: idrsEngiTurret
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0.7138401, y: 0.4148038, z: 1.544829}
+      localAngles: {x: 0, y: 90, z: 0}
+      localScales: {x: 0.125, y: 0.125, z: 0.125}
+      limbMask: 0
+  - idrsName: idrsEngiWalkerTurret
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Base
+      localPos: {x: 0, y: 0.8906902, z: 0.435376}
+      localAngles: {x: 0, y: 270, z: 335.2248}
+      localScales: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
