@@ -39,8 +39,6 @@ namespace EntityStates.Lamp
 
         public virtual void FireProjectile()
         {
-            if (isAuthority)
-            {
                 float damage = damageCoefficient * damageStat;
                 AddRecoil(-2f * recoil, -3f * recoil, -1f * recoil, 1f * recoil);
                 characterBody.AddSpreadBloom(0.33f * recoil);
@@ -57,7 +55,6 @@ namespace EntityStates.Lamp
                     DamageColorIndex.Default,
                     null,
                     projectileSpeed);
-            }
         }
 
         public override void FixedUpdate()

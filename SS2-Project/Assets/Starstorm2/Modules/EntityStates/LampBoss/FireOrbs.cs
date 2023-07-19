@@ -35,13 +35,13 @@ namespace EntityStates.LampBoss
             animator = GetModelAnimator();
             aimRay = GetAimRay();
 
+            Util.PlayAttackSpeedSound("WayfarerAttack", gameObject, attackSpeedStat);
+
             PlayCrossfade("FullBody, Override", "HoldLamp", "Primary.playbackRate", duration, 0.05f);
         }
 
         public virtual void FireProjectile()
         {
-            if (isAuthority)
-            {
                 float damage = damageCoefficient * damageStat;
                 AddRecoil(-2f * recoil, -3f * recoil, -1f * recoil, 1f * recoil);
                 characterBody.AddSpreadBloom(0.33f * recoil);
@@ -62,7 +62,6 @@ namespace EntityStates.LampBoss
                     DamageColorIndex.Default, 
                     null, 
                     projectileSpeed);
-            }
         }
 
         public override void FixedUpdate()

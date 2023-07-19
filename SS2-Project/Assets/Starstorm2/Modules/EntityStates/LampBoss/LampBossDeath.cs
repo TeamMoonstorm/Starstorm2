@@ -46,6 +46,7 @@ namespace EntityStates.LampBoss
                     hasPlayedEffect = true;
                     var effect = isBlue ? deathVFXblue : deathVFX;
                     EffectManager.SimpleEffect(effect, muzzle.position, muzzle.rotation, true);
+                    Util.PlaySound("WayfarerDeath", gameObject);
                     DestroyBodyAsapServer();
                     DestroyModel();
                     Destroy(gameObject);

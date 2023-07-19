@@ -1,6 +1,7 @@
 ﻿using Moonstorm.Starstorm2;
 using Moonstorm.Starstorm2.Buffs;
 using Moonstorm.Starstorm2.Components;
+using R2API;
 using RoR2;
 using System.Linq;
 using UnityEngine;
@@ -29,9 +30,27 @@ namespace EntityStates.Events
         public override void OnEnter()
         {
             base.OnEnter();
-            if (effectPrefab)
+            GameObject fxPrefab = null;
+            SS2EventCard card = (SS2EventCard)eventCard;
+            DirectorAPI.Stage stageEnum = DirectorAPI.GetStageEnumFromSceneDef(SceneInfo.instance.sceneDef);
+            if (stageEnum == DirectorAPI.Stage.Custom)
             {
-                effectInstance = Object.Instantiate(effectPrefab);
+                var sceneName = SceneInfo.instance.sceneDef.baseSceneName.ToLowerInvariant();
+                card.customStageToFXPrefab.TryGetValue(sceneName, out fxPrefab);
+            }
+            else
+            {
+                card.vanillaStageToFXPrefab.TryGetValue(stageEnum, out fxPrefab);
+            }
+
+            if (!fxPrefab)
+            {
+                fxPrefab = card.fallbackVFX;
+            }
+
+            if (fxPrefab)
+            {
+                effectInstance = Object.Instantiate(fxPrefab);
                 eventStateEffect = effectInstance.GetComponent<EventStateEffect>();
                 if (eventStateEffect)
                 {
