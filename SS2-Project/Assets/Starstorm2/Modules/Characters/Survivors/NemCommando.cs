@@ -30,10 +30,10 @@ namespace Moonstorm.Starstorm2.Survivors
             }
 
             On.RoR2.CharacterSelectBarController.Awake += CharacterSelectBarController_Awake;
-            On.RoR2.GenericSkill.RecalculateMaxStock += CheckNemmandoMag;
+            //On.RoR2.GenericSkill.RecalculateMaxStock += CheckNemmandoMag;
         }
 
-        private void CheckNemmandoMag(On.RoR2.GenericSkill.orig_RecalculateMaxStock orig, GenericSkill self)
+        private void CheckNemmandoMag(On.RoR2.GenericSkill.orig_RecalculateMaxStock orig, GenericSkill self) //this code sucks!!!
         {
             orig(self);
             if (self.characterBody) //this makes sure this function doesnt happen on CaptainSupplyDropSkillDef, because it doesn't have a skillNameToken

@@ -135,10 +135,11 @@ namespace Moonstorm.Starstorm2.Items
 
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
             {
-                args.healthMultAdd += RelicOfTermination.healthMult;
+                args.healthMultAdd += RelicOfTermination.hpMult;
                 args.damageMultAdd += RelicOfTermination.damageMult;
                 args.moveSpeedMultAdd += RelicOfTermination.speedMult;
                 args.attackSpeedMultAdd += RelicOfTermination.atkSpeedMult;
+                args.baseHealthAdd += RelicOfTermination.hpAdd + ((RelicOfTermination.hpAdd / 4) * (body.level - 1));
             }
 
         }

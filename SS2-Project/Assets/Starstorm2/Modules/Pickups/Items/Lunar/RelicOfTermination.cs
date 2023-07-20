@@ -31,7 +31,11 @@ namespace Moonstorm.Starstorm2.Items
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Health multiplier which is added to the marked enemy. (1 = 100% more health).")]
         [TokenModifier(token, StatTypes.MultiplyByN, 3, "100")]
-        public static float healthMult = 6f;
+        public static float hpMult = 2.5f;
+
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Flat additional health which is added to the marked enemy. (1 = 100% more health).")]
+        [TokenModifier(token, StatTypes.MultiplyByN, 7, "100")]
+        public static float hpAdd = 225;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Speed multiplier which is added to the marked enemy. (1 = 100% more speed).")]
         [TokenModifier(token, StatTypes.MultiplyByN, 4, "100")]
@@ -143,10 +147,11 @@ namespace Moonstorm.Starstorm2.Items
                 {
                     body.RemoveBuff(SS2Content.Buffs.BuffTerminationFailed);
                 }
-                token.owner.target = null;  // :)
-
-                float timeMult = Mathf.Pow(1 - timeReduction, token.itemCount - 1);
-                float compmaxTime = maxTime * timeMult;
+                var timeLimit = token.owner.target.timeLimit;
+                token.owner.target = null; // :)
+                SS2Log.Info("time limit: " + timeLimit);
+                //float timeMult = Mathf.Pow(1 - timeReduction, token.itemCount - 1);
+                //float compmaxTime = maxTime * timeMult;
 
                 var pointerToken = obj.victimBody.transform.Find("TerminationPositionIndicator(Clone)");
                 if (pointerToken)
@@ -177,7 +182,7 @@ namespace Moonstorm.Starstorm2.Items
                     }
                 }
 
-                if (!(now - inital > compmaxTime))
+                if (!(now - inital > timeLimit))
                 {
                     int count = token.itemCount;
                     Vector3 vector = Quaternion.AngleAxis(0, Vector3.up) * (Vector3.up * 20f);
@@ -195,17 +200,27 @@ namespace Moonstorm.Starstorm2.Items
                     }
                     if (token.isBoss)
                     {
-                        if(bossOptions.Count == 0)
+                        var deathRewards = ((obj.victimBody != null) ? obj.victimBody.GetComponent<DeathRewards>() : null);
+                        if (deathRewards)
                         {
-                            var selection = Run.instance.availableBossDropList;
-                            foreach (var item in selection)
-                            {
-                                bossOptions.Add(item);
-                                //SS2Log.Info("item: " + item.pickupDef.nameToken);
-                            }
+                            //SS2Log.Info("a: " + deathRewards.bossDropTable.GenerateDrop(terminationRNG) + " | " + deathRewards.bossPickup);
+                            PickupDropletController.CreatePickupDroplet(deathRewards.bossDropTable.GenerateDrop(terminationRNG), obj.victim.transform.position, vector);
                         }
-                        Util.ShuffleList<PickupIndex>(bossOptions);
-                        PickupDropletController.CreatePickupDroplet(bossOptions[0], obj.victim.transform.position, vector);
+                        else
+                        {
+                            if (bossOptions.Count == 0)
+                            {
+                                var selection = Run.instance.availableBossDropList;
+                                foreach (var item in selection)
+                                {
+                                    bossOptions.Add(item);
+                                    //SS2Log.Info("item: " + item.pickupDef.nameToken);
+                                }
+                            }
+                            Util.ShuffleList<PickupIndex>(bossOptions);
+                            PickupDropletController.CreatePickupDroplet(bossOptions[0], obj.victim.transform.position, vector);
+                        }
+                        
                     }
                     else
                     {

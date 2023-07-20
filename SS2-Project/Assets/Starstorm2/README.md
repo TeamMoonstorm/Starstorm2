@@ -46,11 +46,19 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 
 **Warning: content spoilers below!**
 ### 0.4.6
+* General
+    * Fixed a bug with how Nemesis Commando checks to reload after Single Tap's stock count changes.
 * Items
+    * All items and equipment have better positioning in the logbook. 
     * Relic of Termination now grants double time for bosses and drops the boss's relevant boss item. The mark now properly works on bosses as well.
     * Adjusted Relic of Termination's drop rates.
+    * Adjusted how Relic of Termination scales marked enemy health - it has a lower multiplier, but also grants an additional flat amount of health.
     * Relic of Termination's marker now immediately disappears upon killing the marked enemy.
     * Detritive Trematode can no longer be applied to the Artifact Reliquary. 
+    * Adjusted how Relic of Force adjusts skill cooldowns to fix some mod incompatabilities.
+    * X4 and Termination's icons have been cleaned up.
+    * Coffee Bag and Needles now have item displays.
+    * Disabled Baby's Toys. The item does work, but it has a lot of issues which would take a decent amount of time to address, so it's being disabled for now.
 
 ### 0.4.5
 * General
@@ -63,7 +71,6 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 	* Fixed kill assists not counting towards Ion Manipulator stocks and increased window for which attacks will count as kill assists.
 * Items
     * Needles no longer spams debug logs, and also now checks that the target is not on the same team as the attacker when applying the debuff.
-
 
 ### 0.4.4
 * General
@@ -128,13 +135,3 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Invading Nemesis Commando has been rebalanced.
     * Mending Orbs no longer gain elite effects during elite events.
     * Married Lemurians no longer have their elite type overriden during elite events.
-
-### 0.3.50
-* Items
-    * Fixed Hunter's Sigil adding 20000% damage and not 20%. Additionally fixed its description still mentioning crit chance and not damage.
-
-### 0.3.49
-* General
-    * Fixed Spanish translation not appearing.
-* Survivors
-    * Nemesis Commando's sword now actually does damage again.

@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 7876079597329169236}
   - component: {fileID: 3613398014096565432}
   m_Layer: 0
-  m_Name: PickupCoffeeBagDisplay
+  m_Name: DisplayCoffeeBag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rendererInfos:
   - renderer: {fileID: 7876079597331462580}
-    defaultMaterial: {fileID: 0}
+    defaultMaterial: {fileID: 2100000, guid: 9b3a94580e014a8458bf2db22154eaca, type: 2}
     defaultShadowCastingMode: 0
     ignoreOverlays: 0
     hideOnDeath: 0
