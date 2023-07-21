@@ -145,6 +145,7 @@ namespace EntityStates.NemMerc
             //initial bullseyesearch holograms = 2
             //max spheresearch holograms = 2
             //missed spheresearch holograms instead go to random holograms (in smaller radius)
+            //targetting interactables could be funny
 
             int targetedHolograms = Mathf.Min(Scan.targetedHolograms, hurtBoxes.Count);
             for (int i = 0; i < targetedHolograms; i++)

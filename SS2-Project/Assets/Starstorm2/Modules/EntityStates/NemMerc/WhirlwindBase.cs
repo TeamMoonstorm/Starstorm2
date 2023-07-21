@@ -92,27 +92,28 @@ namespace EntityStates.NemMerc
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            this.hitPauseTimer -= Time.fixedDeltaTime;
-            this.attackStopwatch -= Time.fixedDeltaTime;
-
-            base.characterMotor.velocity.y = Mathf.Max(base.characterMotor.velocity.y, 0);
-
-            if (this.attackStopwatch <= 0f && this.timesAttacked < this.numAttacks)
+            if(!this.isInHitPause)
             {
-                //vfx
-                //sound  
-                this.FireAttack();
-
-                if(this.timesAttacked == this.numAttacks && !base.isGrounded)
+                this.attackStopwatch -= Time.fixedDeltaTime;
+                base.characterMotor.velocity.y = Mathf.Max(base.characterMotor.velocity.y, 0);
+                if (this.attackStopwatch <= 0f && this.timesAttacked < this.numAttacks)
                 {
-                    base.SmallHop(base.characterMotor, this.smallHopVelocity);
-                    base.characterMotor.walkSpeedPenaltyCoefficient = 1;
+                    //vfx
+                    //sound  
+                    this.FireAttack();
+                    if (this.timesAttacked == this.numAttacks && !base.isGrounded)
+                    {
+                        base.SmallHop(base.characterMotor, this.smallHopVelocity);
+                        base.characterMotor.walkSpeedPenaltyCoefficient = 1;
+                    }
                 }
-                    
-                 
             }
-
-            
+            else
+            {
+                base.characterMotor.velocity = Vector3.zero;
+                this.hitPauseTimer -= Time.fixedDeltaTime;
+                this.animator.SetFloat("Whirlwind.playbackRate", 0f);
+            }          
             if (base.isAuthority)
             {
                 // if ANIM PARAM

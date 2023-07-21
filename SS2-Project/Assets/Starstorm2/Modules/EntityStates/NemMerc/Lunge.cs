@@ -127,10 +127,7 @@ namespace EntityStates.NemMerc
             base.FixedUpdate();
 
             if (!base.isAuthority || !base.characterMotor)
-                return;
-
-            base.characterMotor.moveDirection = this.direction;
-            base.characterDirection.forward = this.direction;
+                return;         
 
             if(this.CheckCollisions())
             {
@@ -152,6 +149,12 @@ namespace EntityStates.NemMerc
             }
         }
 
+        public override void Update()
+        {
+            base.Update();
+            base.characterMotor.moveDirection = this.direction;
+            base.characterDirection.forward = this.direction;
+        }
         public override void OnExit()
         {
             base.OnExit();
