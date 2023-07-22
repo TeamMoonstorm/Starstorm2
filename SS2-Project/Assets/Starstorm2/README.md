@@ -50,7 +50,7 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Fixed a bug with how Nemesis Commando checks to reload after Single Tap's stock count changes.
 * Items
     * All items and equipment have better positioning in the logbook. 
-    * Relic of Termination now grants double time for bosses and drops the boss's relevant boss item. The mark now properly works on bosses as well.
+    * Relic of Termination now grants double time for bosses and drops the boss's relevant boss item, assuming it has one. The mark now properly works on bosses as well.
     * Adjusted Relic of Termination's drop rates.
     * Adjusted how Relic of Termination scales marked enemy health - it has a lower multiplier, but also grants an additional flat amount of health.
     * Relic of Termination's marker now immediately disappears upon killing the marked enemy.

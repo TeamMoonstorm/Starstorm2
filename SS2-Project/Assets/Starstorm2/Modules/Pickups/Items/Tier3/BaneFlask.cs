@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Moonstorm.Starstorm2.Items
 {
-    [DisabledContent]
+
     public sealed class BaneFlask : ItemBase
     {
 
@@ -81,77 +81,114 @@ namespace Moonstorm.Starstorm2.Items
                 }
 
                 CharacterBody victimBody = damageReport.victimBody;
-                CharacterBody attackerBody = damageReport.attackerBody;
+                CharacterBody attackerBody = damageReport.attackerBody;             
 
-                DotController dotController = DotController.FindDotController(damageReport.victim.gameObject);
-                
-
-                BuffIndex[] buffList = victimBody.activeBuffsList;
-                int[] buffList2 = victimBody.buffs;
+                //BuffIndex[] buffList = victimBody.activeBuffsList;
+                //int[] buffList2 = victimBody.buffs;
                 //int[] buffList2 = victimBody.buff;
 
-                List<CharacterBody.TimedBuff> a = victimBody.timedBuffs;
+                //foreach (BuffDef def in BuffCatalog.buffDefs)
+                //{
+                //    SS2Log.Info("Testing " + def.name + " | " + def);
+                //    if (victimBody.HasBuff(def))
+                //    {
+                //        SS2Log.Debug("0: has " + def); //seems like on death the enemy no longer "has" these buffs, so this won't work (what deathmark does) 
+                //        //num14++;
+                //    }
+                //}
+                //
 
-                foreach (BuffDef def in BuffCatalog.buffDefs)
-                {
-                    SS2Log.Info("Testing " + def.name + " | " + def);
-                    if (victimBody.HasBuff(def))
-                    {
-                        SS2Log.Debug("0: has " + def); //seems like on death the enemy no longer "has" these buffs, so this won't work (what deathmark does) 
-                        //num14++;
-                    }
-                }
+                //
+                ////DotController dotControlle2r = DotController.FindDotController(damageReport.victim.gameObject);
+                //if (dotController)
+                //{
+                //    for (DotController.DotIndex dotIndex = DotController.DotIndex.Bleed; dotIndex < DotController.DotIndex.Count; dotIndex++)
+                //    {
+                //        SS2Log.Info("Testing DOT " + dotIndex + " | " + DotController.GetDotDef(dotIndex));
+                //        if (dotController.HasDotActive(dotIndex))
+                //        {
+                //            SS2Log.Info("2: dot active index: " + dotIndex); //finds active dots
+                //        }
+                //    }
+                //}
 
-                foreach (CharacterBody.TimedBuff buff in a)
+                //notes: 
+                //timed buffs have the same index as regular buffs, so i can just check the timed list and then skip it in normal buffs
+                //dots seem to behave as two things - a dot and a buffdef
+
+                List<CharacterBody.TimedBuff> timeddebuffs = victimBody.timedBuffs;
+                Dictionary<BuffIndex, CharacterBody.TimedBuff> timedBuffs = new Dictionary<BuffIndex, CharacterBody.TimedBuff>();
+
+                foreach (CharacterBody.TimedBuff buff in timeddebuffs)
                 {
                     SS2Log.Info("1: timed buff: " + buff + " | " + buff.buffIndex + " | " + buff.timer); //finds active timed buffs
-                }
-
-                //DotController dotControlle2r = DotController.FindDotController(damageReport.victim.gameObject);
-                if (dotController)
-                {
-                    for (DotController.DotIndex dotIndex = DotController.DotIndex.Bleed; dotIndex < DotController.DotIndex.Count; dotIndex++)
+                    bool real = timedBuffs.TryGetValue(buff.buffIndex, out var output);
+                    if (!real && BuffCatalog.GetBuffDef(buff.buffIndex).isDebuff)
                     {
-                        SS2Log.Info("Testing DOT " + dotIndex + " | " + DotController.GetDotDef(dotIndex));
-                        if (dotController.HasDotActive(dotIndex))
-                        {
-                            SS2Log.Info("2: dot active index: " + dotIndex); //finds active dots
-                        }
+                        timedBuffs.Add(buff.buffIndex, buff);
                     }
                 }
 
+                DotController dotController = DotController.FindDotController(damageReport.victim.gameObject);
+                Dictionary<BuffIndex, DotController.DotStack> uniqueDots = new Dictionary<BuffIndex, DotController.DotStack>();
 
                 if (dotController)
                 {
                     List<DotController.DotStack> dotList = dotController.dotStackList;
                     foreach (DotController.DotStack dot in dotList)
                     {
-                        SS2Log.Info("3: dot: " + dot + " | def: " + dot.dotDef + " | ind: " + dot.dotIndex); //gets DOT stacks 
+                        SS2Log.Info("3: dot: " + dot + " | def: " + dot.dotDef + " | ind: " + dot.dotIndex + " | buff index " + dot.dotDef.associatedBuff.buffIndex); //gets DOT stacks 
+                        bool real = uniqueDots.TryGetValue(dot.dotDef.associatedBuff.buffIndex, out var current);
+                        if (!real)
+                        {
+                            uniqueDots.Add(dot.dotDef.associatedBuff.buffIndex, dot);
+                        }
+                        else
+                        {
+                            if(current.timer < dot.timer)
+                            {
+                                SS2Log.Info("overriding original debuff because old duration was " + current.timer + " and new one is " + dot.timer + " which is more awesome");
+                                uniqueDots.Remove(dot.dotDef.associatedBuff.buffIndex);
+                                uniqueDots.Add(dot.dotDef.associatedBuff.buffIndex, dot);
+                            }
+                        }
                     }
                 }
 
+                BuffIndex[] buffList = victimBody.activeBuffsList;
+                List<BuffIndex> infDebuffs = new List<BuffIndex>();
 
-                foreach(BuffIndex ind in buffList)
+                foreach (BuffIndex ind in buffList)
                 {
-                    SS2Log.Info("4: buff: " + ind + " | def: " + BuffCatalog.GetBuffDef(ind));
-                    if (body.HasBuff(ind))
+                    if (victimBody.HasBuff(ind))
                     {
-                        SS2Log.Info("yeah they actually have " + BuffCatalog.GetBuffDef(ind));
+                        var relevantDef = BuffCatalog.GetBuffDef(ind);
+                        SS2Log.Info("yeah they actually have " + BuffCatalog.GetBuffDef(ind) + " | " + victimBody.GetBuffCount(BuffCatalog.GetBuffDef(ind)));
+                        bool real1 = uniqueDots.TryGetValue(ind, out _);
+                        bool real2 = timedBuffs.TryGetValue(ind, out _);
+                        if (relevantDef.isDebuff && !real1 && !real2)
+                        {
+                            //debuffDict.Add(ind, )
+                            SS2Log.Info("Adding " + BuffCatalog.GetBuffDef(ind) + " because it's a perm buff");
+                            infDebuffs.Add(ind);
+                        }
                     }
                 }
 
-                //foreach(int ind in buffList2)
-                //{
-                //    SS2Log.Info("total buffs: " + BuffCatalog.buffCount);
-                //    if(BuffCatalog.buffCount >= ind)
-                //    {
-                //        SS2Log.Info("ind: " + ind + " | " + BuffCatalog.GetBuffDef((BuffIndex)ind));
-                //    }
-                //    else
-                //    {
-                //        SS2Log.Info("ind: " + ind + " | " + "invalid index");
-                //    }
-                //}
+                foreach(var debuff in infDebuffs)
+                {
+                    SS2Log.Info("inf debuffs: " + debuff + " | " + BuffCatalog.GetBuffDef(debuff));
+                }
+
+                foreach (var dot in uniqueDots)
+                {
+                    SS2Log.Info("dots: " + dot.Key + " | " + dot.Value.dotDef.associatedBuff.name + " | " + dot.Value.dotDef.damageCoefficient);
+                }
+
+                foreach (var timed in timedBuffs)
+                {
+                    SS2Log.Info("timed: " + timed.Key + " | " + BuffCatalog.GetBuffDef(timed.Value.buffIndex).name + " | " + timed.Value.timer);
+                }
 
                 if (attackerBody.inventory)
                 {
@@ -197,7 +234,7 @@ namespace Moonstorm.Starstorm2.Items
                             if (hurtBox.healthComponent)
                             {
                                 //hurtBox.healthComponent.body.AddTimedBuffAuthority(Buffs.Bane.index, duration);
-                                var dotInfo = new InflictDotInfo()
+                                var dotInfo = new InflictDotInfo() //add bane
                                 {
                                     attackerObject = body.gameObject,
                                     victimObject = hurtBox.healthComponent.gameObject,
@@ -206,7 +243,29 @@ namespace Moonstorm.Starstorm2.Items
                                     damageMultiplier = stack
                                 };
                                 DotController.InflictDot(ref dotInfo);
-                                
+
+                                foreach(var dot in uniqueDots) //add all dots
+                                {
+                                    var dotInfoTemp = new InflictDotInfo()
+                                    {
+                                        attackerObject = body.gameObject,
+                                        victimObject = hurtBox.healthComponent.gameObject,
+                                        dotIndex = dot.Value.dotIndex,
+                                        duration = damageReport.damageInfo.procCoefficient * dot.Value.timer,
+                                        damageMultiplier = dot.Value.damage
+                                    };
+                                    DotController.InflictDot(ref dotInfoTemp);
+                                }
+
+                                foreach(var timed in timedBuffs) //add all timed debuffs
+                                {
+                                    hurtBox.healthComponent.body.AddTimedBuffAuthority(timed.Key, timed.Value.timer);
+                                }
+
+                                foreach(var inf in infDebuffs) //add all infinite debuffs
+                                {
+                                    hurtBox.healthComponent.body.AddBuff(inf);
+                                }
                             }
                         }
                         baneAOEHurtBoxBuffer.Clear();

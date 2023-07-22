@@ -15,7 +15,7 @@ namespace Assets.Starstorm2.ScriptableObjects
 			base.OnFixedUpdate(skillSlot);
 			ReloadSkillDef.InstanceData instanceData = (ReloadSkillDef.InstanceData)skillSlot.skillInstanceData;
 			instanceData.currentStock = skillSlot.stock;
-			if (instanceData.currentStock < (this.GetMaxStock(skillSlot) + skillSlot.bonusStockFromBody))
+			if (instanceData.currentStock < (this.GetMaxStock(skillSlot) + skillSlot.bonusStockFromBody)) //lets reload skill defs account for stock changes properly 
 			{
 				if (skillSlot.stateMachine && !skillSlot.stateMachine.HasPendingState() && skillSlot.stateMachine.CanInterruptState(this.reloadInterruptPriority))
 				{

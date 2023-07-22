@@ -15,8 +15,6 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Moonstorm.Starstorm2.Interactables
 {
-    [DisabledContent]
-
     public sealed class DroneTable : InteractableBase
     {
         public override GameObject Interactable { get; } = SS2Assets.LoadAsset<GameObject>("DroneTablePrefab", SS2Bundle.Indev);
