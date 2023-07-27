@@ -59,6 +59,9 @@ namespace Moonstorm.Starstorm2.Interactables
             //On.EntityStates.Drone.DeathState.OnImpactServer += overrideDroneImpact;
             On.EntityStates.Drone.DeathState.OnEnter += overrideDroneCorpse;
             On.RoR2.Orbs.ItemTakenOrbEffect.Start += overrideItemIcon;
+            
+            //On.RoR2.Util.PlaySound_string_GameObject += tellMeTheSoundPlease;
+
 
             //On.RoR2.PurchaseInteraction.GetDisplayName += MonolithName;
             interactable = InteractableDirectorCard.prefab;
@@ -76,12 +79,19 @@ namespace Moonstorm.Starstorm2.Interactables
             SetupDroneValueList();  
         }
 
+        private uint tellMeTheSoundPlease(On.RoR2.Util.orig_PlaySound_string_GameObject orig, string soundString, GameObject gameObject)
+        {
+            SS2Log.Info("soundstring: " + soundString);
+            return orig(soundString, gameObject);
+        }
+
         private void overrideDroneCorpse(On.EntityStates.Drone.DeathState.orig_OnEnter orig, EntityStates.Drone.DeathState self)
         {
             orig(self);
             var hardToken = self.characterBody.GetComponent<RefabricatorHardDeathToken>();
             if (hardToken)
             {
+                //SS2Log.Info(self.gameObject.name + " | " + self.characterBody + " | " + self.characterBody.name);
                 EntityState.Destroy(self.gameObject);
             }
         }
@@ -327,6 +337,12 @@ namespace Moonstorm.Starstorm2.Interactables
                                         effectData.SetNetworkedObjectReference(context.purchasedObject);  //behaves strangely if target is networked ref
                                         EffectManager.SpawnEffect(itemTakenOrb, effectData, true);
 
+                                        if (drone.baseNameToken == "TURRET1_BODY_NAME" || drone.name == "Turret1Body(Clone)")
+                                        {
+                                            Util.PlaySound("Play_drone_deathpt1", drone.gameObject);
+                                            Util.PlaySound("Play_drone_deathpt2", drone.gameObject);
+                                            //Util.PlaySound("RefabricatorSelect2", model);
+                                        }
                                         drone.gameObject.AddComponent<RefabricatorHardDeathToken>();
                                         drone.healthComponent.Suicide();
 
@@ -375,6 +391,8 @@ namespace Moonstorm.Starstorm2.Interactables
                                                 }
                                             }
                                         }
+
+                                        Util.PlaySound("RefabricatorSelect2", model);
 
                                         var esm = model.GetComponent<EntityStateMachine>();
                                         if (esm)
@@ -435,8 +453,8 @@ namespace Moonstorm.Starstorm2.Interactables
                     {
                         //SS2Log.Info("Purchase Successful");
                         //AttemptSpawnVoidPortal();
-                        GameObject effectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/ShrineUseEffect.prefab").WaitForCompletion();
-                        EffectManager.SimpleImpactEffect(effectPrefab, this.transform.position, new Vector3(0, 0, 0), true);
+                        //GameObject effectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/ShrineUseEffect.prefab").WaitForCompletion();
+                        //EffectManager.SimpleImpactEffect(effectPrefab, this.transform.position, new Vector3(0, 0, 0), true);
 
                         //GameObject portal = UnityEngine.Object.Instantiate<GameObject>(ShatteredMonolith.voidFieldPortalObject, this.transform.position, new Quaternion(0, 70, 0, 0));
                         //NetworkServer.Spawn(portal);

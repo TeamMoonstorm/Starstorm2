@@ -26,8 +26,6 @@ namespace EntityStates.DroneTable
 
         public CharacterModel tempModel;
 
-        public uint soundID;
-
         protected override bool enableInteraction
         {
             get
@@ -47,7 +45,8 @@ namespace EntityStates.DroneTable
 
             var locator = droneObject.GetComponent<ModelLocator>();
 
-            soundID = Util.PlaySound("Play_MULT_m1_sawblade_impact_loop", this.gameObject); //awesome
+            //soundID = Util.PlaySound("Play_MULT_m1_sawblade_impact_loop", this.gameObject); //awesome
+            Util.PlaySound("RefabricatorAction", this.gameObject);
             if (locator)
             {
                 var doubleTempDrone = locator.modelTransform.gameObject;
@@ -152,8 +151,8 @@ namespace EntityStates.DroneTable
         public override void OnExit()
         {
             base.OnExit();
-
-            AkSoundEngine.StopPlayingID(soundID);
+            
+            //AkSoundEngine.StopPlayingID(soundID);
 
             if (tempDrone)
             {
