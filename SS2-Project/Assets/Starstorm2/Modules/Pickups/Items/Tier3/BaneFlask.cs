@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Moonstorm.Starstorm2.Items
 {
-
+    [DisabledContent]
     public sealed class BaneFlask : ItemBase
     {
 
@@ -85,7 +85,7 @@ namespace Moonstorm.Starstorm2.Items
 
                         foreach (CharacterBody.TimedBuff buff in timeddebuffs)
                         {
-                            SS2Log.Info("1: timed buff: " + buff + " | " + buff.buffIndex + " | " + buff.timer); //finds active timed buffs
+                            //SS2Log.Info("1: timed buff: " + buff + " | " + buff.buffIndex + " | " + buff.timer); //finds active timed buffs
                             bool real = timedBuffs.TryGetValue(buff.buffIndex, out var current);
                             if (!real && BuffCatalog.GetBuffDef(buff.buffIndex).isDebuff)
                             {
@@ -95,7 +95,7 @@ namespace Moonstorm.Starstorm2.Items
                             {
                                 if (current.timer < buff.timer)
                                 {
-                                    SS2Log.Info("overriding original debuff because old duration was " + current.timer + " and new one is " + buff.timer + " which is more awesome");
+                                    //SS2Log.Info("overriding original debuff because old duration was " + current.timer + " and new one is " + buff.timer + " which is more awesome");
                                     timedBuffs.Remove(buff.buffIndex);
                                     timedBuffs.Add(buff.buffIndex, buff);
                                 }
@@ -110,7 +110,7 @@ namespace Moonstorm.Starstorm2.Items
                             List<DotController.DotStack> dotList = dotController.dotStackList;
                             foreach (DotController.DotStack dot in dotList)
                             {
-                                SS2Log.Info("3: dot: " + dot + " | def: " + dot.dotDef + " | ind: " + dot.dotIndex + " | buff index " + dot.dotDef.associatedBuff.buffIndex); //gets DOT stacks 
+                                //SS2Log.Info("3: dot: " + dot + " | def: " + dot.dotDef + " | ind: " + dot.dotIndex + " | buff index " + dot.dotDef.associatedBuff.buffIndex); //gets DOT stacks 
                                 bool real = uniqueDots.TryGetValue(dot.dotDef.associatedBuff.buffIndex, out var current);
                                 if (!real)
                                 {
@@ -120,7 +120,7 @@ namespace Moonstorm.Starstorm2.Items
                                 {
                                     if (current.timer < dot.timer)
                                     {
-                                        SS2Log.Info("overriding original dot because old duration was " + current.timer + " and new one is " + dot.timer + " which is more awesome");
+                                        //SS2Log.Info("overriding original dot because old duration was " + current.timer + " and new one is " + dot.timer + " which is more awesome");
                                         uniqueDots.Remove(dot.dotDef.associatedBuff.buffIndex);
                                         uniqueDots.Add(dot.dotDef.associatedBuff.buffIndex, dot);
                                     }
@@ -136,12 +136,12 @@ namespace Moonstorm.Starstorm2.Items
                             if (victimBody.HasBuff(ind))
                             {
                                 var relevantDef = BuffCatalog.GetBuffDef(ind);
-                                SS2Log.Info("yeah they actually have " + BuffCatalog.GetBuffDef(ind) + " | " + victimBody.GetBuffCount(BuffCatalog.GetBuffDef(ind)));
+                                //SS2Log.Info("yeah they actually have " + BuffCatalog.GetBuffDef(ind) + " | " + victimBody.GetBuffCount(BuffCatalog.GetBuffDef(ind)));
                                 bool real1 = uniqueDots.TryGetValue(ind, out _);
                                 bool real2 = timedBuffs.TryGetValue(ind, out _);
                                 if (relevantDef.isDebuff && !real1 && !real2)
                                 {
-                                    SS2Log.Info("Adding " + BuffCatalog.GetBuffDef(ind) + " because it's a perm buff");
+                                    //SS2Log.Info("Adding " + BuffCatalog.GetBuffDef(ind) + " because it's a perm buff");
                                     infDebuffs.Add(ind);
                                 }
                             }
