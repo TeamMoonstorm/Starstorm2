@@ -21,14 +21,6 @@ namespace Moonstorm.Starstorm2.Items
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
         public static float trematodeSlow = 0.2f;
 
-        //[ConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of Trematode debuff, in seconds.")]
-        //[TokenModifier(token, StatTypes.Default, 3)]
-        //public static float dotDuration = 4;
-
-        //[ConfigurableField(SS2Config.IDItem, ConfigDesc = "Damage dealt by the Trematode debuff, per second. (1 = 100%)")]
-        //[TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
-        //public static float trematodeDamage = 1f;
-
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
         {
             [ItemDefAssociation]
@@ -41,6 +33,9 @@ namespace Moonstorm.Starstorm2.Items
                 bool hasDot = false;
                 if (dotController)
                     hasDot = dotController.HasDotActive(Trematodes.index);
+
+                if (victim.body.bodyIndex == BodyCatalog.FindBodyIndexCaseInsensitive("ArtifactShellBody"))
+                    return;
 
                 if (victim.combinedHealthFraction < missingHealthPercentage && !hasDot && (victim.gameObject != attacker))
                 {

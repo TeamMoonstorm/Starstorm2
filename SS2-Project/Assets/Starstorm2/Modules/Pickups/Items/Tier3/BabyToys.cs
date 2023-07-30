@@ -13,6 +13,8 @@ using static RoR2.Items.BaseItemBodyBehavior;
 
 namespace Moonstorm.Starstorm2.Items
 {
+    [DisabledContent] //sorry groove
+
     public sealed class BabyToys : ItemBase
     {
         private const string pickupToken = "SS2_ITEM_BABYTOYS_PICKUP";

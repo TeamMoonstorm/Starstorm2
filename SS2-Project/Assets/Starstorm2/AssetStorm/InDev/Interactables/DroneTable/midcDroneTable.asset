@@ -17,8 +17,8 @@ MonoBehaviour:
   hullSize: 0
   nodeGraphType: 0
   requiredFlags: 0
-  forbiddenFlags: 16
-  directorCreditCost: 1
+  forbiddenFlags: 0
+  directorCreditCost: 5
   occupyPosition: 1
   eliteRules: 0
   orientToFloor: 1
@@ -28,17 +28,18 @@ MonoBehaviour:
   maxSpawnsPerStage: -1
   directorCard:
     spawnCard: {fileID: 11400000}
-    selectionWeight: 5
+    selectionWeight: 10
     spawnDistance: 0
     preventOverhead: 0
-    minimumStageCompletions: 0
+    minimumStageCompletions: 3
     requiredUnlockable: 
     forbiddenUnlockable: 
     requiredUnlockableDef: {fileID: 0}
     forbiddenUnlockableDef: {fileID: 0}
-  interactableCategory: 4
+  interactableCategory: 8
   customCategory: 
-  stages: -1
+  customCategoryWeight: 1
+  stages: 238305712
   customStages: []
   requiredExpansions:
   - address: 

@@ -67,6 +67,9 @@ namespace AK
         static const AkUniqueID NUCLEATORCHARGEPRIMARY = 420124658U;
         static const AkUniqueID PLAY_SOFT_RAIN = 263522455U;
         static const AkUniqueID PLAY_SS2_MUSIC_SYSTEM = 3480457898U;
+        static const AkUniqueID REFABRICATORACTION = 2808251015U;
+        static const AkUniqueID REFABRICATORSELECT1 = 1630810942U;
+        static const AkUniqueID REFABRICATORSELECT2 = 1630810941U;
         static const AkUniqueID SIGILACTIVATION = 2800331071U;
         static const AkUniqueID SPAWNMGR = 2187217924U;
         static const AkUniqueID SS_WINDAMBIENCE = 892248604U;
