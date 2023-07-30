@@ -52,7 +52,7 @@ namespace EntityStates.NemCommando
         public override void PlayAnimation()
         {
             string animationStateName = (swingSide == 0) ? "Primary1TreeNew" : "Primary2TreeNew";
-            PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.01f);   
+            PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.1f);   
         }
 
         void SteppedSkillDef.IStepSetter.SetStep(int i)

@@ -2851,6 +2851,7 @@ GameObject:
   - component: {fileID: 2226322760843735569}
   - component: {fileID: 2196301728555140223}
   - component: {fileID: 5616537615862492254}
+  - component: {fileID: -5086431638041983372}
   - component: {fileID: 711173282977369456}
   - component: {fileID: 8088283001040087884}
   - component: {fileID: 8306923874295302173}
@@ -2871,6 +2872,12 @@ GameObject:
   - component: {fileID: 5663139035234426318}
   - component: {fileID: 8578835051055927170}
   - component: {fileID: 4235575520358850007}
+  - component: {fileID: 2120333452702808520}
+  - component: {fileID: -8895812555022209055}
+  - component: {fileID: 766899857383436856}
+  - component: {fileID: -6421377625998616615}
+  - component: {fileID: 263349432300893736}
+  - component: {fileID: 5612468648286512462}
   m_Layer: 0
   m_Name: NemCaptainBody
   m_TagString: Player
@@ -3128,7 +3135,7 @@ MonoBehaviour:
   utility: {fileID: 8306923874295302173}
   special: {fileID: 3026157821763874476}
   passiveSkill:
-    enabled: 1
+    enabled: 0
     skillNameToken: SS2_NEMCAPTAIN_PASSIVE_NAME
     skillDescriptionToken: SS2_NEMCAPTAIN_PASSIVE_DESCRIPTION
     keywordToken: 
@@ -3137,6 +3144,22 @@ MonoBehaviour:
   secondaryBonusStockOverrideSkill: {fileID: 0}
   utilityBonusStockOverrideSkill: {fileID: 0}
   specialBonusStockOverrideSkill: {fileID: 0}
+--- !u!114 &-5086431638041983372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6087713977417582395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillFamily: {fileID: 11400000, guid: 527a4e9b2d5782045a6696fa20c69d0b, type: 2}
+  skillName: 
+  hideInCharacterSelect: 0
+  hasExecutedSuccessfully: 0
 --- !u!114 &711173282977369456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3165,7 +3188,7 @@ MonoBehaviour:
   m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillFamily: {fileID: 11400000, guid: 524bbec3794b7894dbf01250dfca08ee, type: 2}
+  _skillFamily: {fileID: 11400000, guid: 36e0e15e190c2904388be08f6e650967, type: 2}
   skillName: 
   hideInCharacterSelect: 0
   hasExecutedSuccessfully: 0
@@ -3197,7 +3220,7 @@ MonoBehaviour:
   m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillFamily: {fileID: 11400000, guid: 524bbec3794b7894dbf01250dfca08ee, type: 2}
+  _skillFamily: {fileID: 11400000, guid: 241124904d1cf9948b98b1c743e9fdeb, type: 2}
   skillName: 
   hideInCharacterSelect: 0
   hasExecutedSuccessfully: 0
@@ -3230,6 +3253,7 @@ MonoBehaviour:
   - {fileID: 2520711261745657046}
   - {fileID: 7175763700555500974}
   - {fileID: 366375999665050324}
+  - {fileID: 5612468648286512462}
 --- !u!114 &2520711261745657046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3504,6 +3528,122 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8116c4cf0c0d72d448d34ec52f612b86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2120333452702808520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6087713977417582395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 724fe7b8d0789f341a3723ab5079b36c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterBody: {fileID: 7994026586980312019}
+  characterAnimator: {fileID: 2280356976782772585}
+  deck: {fileID: 11400000, guid: 427f593700ccf7141aa7e4abea80eae3, type: 2}
+  hand1: {fileID: -8895812555022209055}
+  hand2: {fileID: 766899857383436856}
+  hand3: {fileID: -6421377625998616615}
+  hand4: {fileID: 263349432300893736}
+  nullSkill: {fileID: 11400000, guid: a85b61327144de74abb09f5859554dec, type: 2}
+  minStress: 0
+  maxStress: 100
+  stressPerSecondInCombat: 2
+  stressPerSecondOutOfCombat: -3
+  stressPerSecondWhileOverstressed: -12.5
+  stressGainedOnFullDamage: 70
+  stressGainedOnOSP: 0
+  stressGainedOnHeal: -40
+  stressGainedOnCrit: -0.2
+  stressGainedOnKill: -0.5
+  stressGainedOnItem: -1
+  stressOnOutOfOrders: 35
+  overlayPrefab: {fileID: 1894802512682313, guid: 7aa69281e0edca147beeff3020ab1703,
+    type: 3}
+  overlayChildLocatorEntry: CrosshairExtras
+--- !u!114 &-8895812555022209055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6087713977417582395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillFamily: {fileID: 11400000, guid: 427f593700ccf7141aa7e4abea80eae3, type: 2}
+  skillName: hand1
+  hideInCharacterSelect: 1
+  hasExecutedSuccessfully: 0
+--- !u!114 &766899857383436856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6087713977417582395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillFamily: {fileID: 11400000, guid: 427f593700ccf7141aa7e4abea80eae3, type: 2}
+  skillName: hand2
+  hideInCharacterSelect: 1
+  hasExecutedSuccessfully: 0
+--- !u!114 &-6421377625998616615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6087713977417582395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillFamily: {fileID: 11400000, guid: 427f593700ccf7141aa7e4abea80eae3, type: 2}
+  skillName: hand3
+  hideInCharacterSelect: 1
+  hasExecutedSuccessfully: 0
+--- !u!114 &263349432300893736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6087713977417582395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillFamily: {fileID: 11400000, guid: 427f593700ccf7141aa7e4abea80eae3, type: 2}
+  skillName: hand4
+  hideInCharacterSelect: 1
+  hasExecutedSuccessfully: 0
+--- !u!114 &5612468648286512462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6087713977417582395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1297580292, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customName: Skillswap
+  initialStateType:
+    _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  mainStateType:
+    _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1 &6114954042290170794
 GameObject:
   m_ObjectHideFlags: 0

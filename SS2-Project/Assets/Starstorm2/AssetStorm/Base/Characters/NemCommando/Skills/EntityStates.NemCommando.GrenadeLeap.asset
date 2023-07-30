@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: EntityStates.NemCommando.GrenadeLeap
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.NemCommando.GrenadeLeap, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: baseDuration
+      fieldValue:
+        stringValue: 0.4
+        objectValue: {fileID: 0}
+    - fieldName: airControl
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: upwardVelocity
+      fieldValue:
+        stringValue: 4
+        objectValue: {fileID: 0}
+    - fieldName: forwardVelocity
+      fieldValue:
+        stringValue: 6
+        objectValue: {fileID: 0}
+    - fieldName: minimumY
+      fieldValue:
+        stringValue: 0.5
+        objectValue: {fileID: 0}
+    - fieldName: aimVelocity
+      fieldValue:
+        stringValue: 4
+        objectValue: {fileID: 0}
+    - fieldName: projectilePrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 2347692766690552467, guid: f14371b854e65464090a82f46e86e6a5,
+          type: 3}
+    - fieldName: damageCoefficient
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: projectileSpeed
+      fieldValue:
+        stringValue: 60
+        objectValue: {fileID: 0}

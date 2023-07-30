@@ -7,12 +7,15 @@ using System;
 
 namespace Moonstorm.Starstorm2.Survivors
 {
-    [DisabledContent]
+    //[DisabledContent]
     public sealed class NemesisHuntress : SurvivorBase
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemHuntress2Body", SS2Bundle.Indev);
         public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemmandoMonsterMaster", SS2Bundle.Nemmando);
         public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("survivorNemHuntress2", SS2Bundle.Indev);
+
+        public static BodyIndex bodyIndex;
+        public static GameObject crosshairPrefab; 
 
         GameObject footstepDust { get; set; } = Resources.Load<GameObject>("Prefabs/GenericFootstepDust");
 
@@ -24,33 +27,23 @@ namespace Moonstorm.Starstorm2.Survivors
                 //ScepterCompat();
             }
 
-            On.RoR2.Projectile.ProjectileSingleTargetImpact.OnProjectileImpact += PSTI_OPI;
+            bodyIndex = BodyPrefab.GetComponent<CharacterBody>().bodyIndex;
+            crosshairPrefab = BodyPrefab.GetComponent<CharacterBody>().defaultCrosshairPrefab;
+
+            //On.RoR2.Projectile.ProjectileSingleTargetImpact.OnProjectileImpact += PSTI_OPI;
+            On.RoR2.UI.CrosshairManager.UpdateCrosshair += CrosshairManager_UpdateCrosshair;
         }
 
-        private void PSTI_OPI(On.RoR2.Projectile.ProjectileSingleTargetImpact.orig_OnProjectileImpact orig, RoR2.Projectile.ProjectileSingleTargetImpact self, ProjectileImpactInfo impactInfo)
+        private void CrosshairManager_UpdateCrosshair(On.RoR2.UI.CrosshairManager.orig_UpdateCrosshair orig, RoR2.UI.CrosshairManager self, CharacterBody characterBody, Vector3 crosshairWorldPosition, Camera uiCamera)
         {
-            //Debug.Log("Processing Nemesis Huntress crit.");
-            if (self.projectileDamage.damageType == DamageType.WeakPointHit)
+            if (characterBody.baseNameToken == "SS2_NEMHUNTRESS2_BODY_NAME" && characterBody.isSprinting)
             {
-                //Debug.Log("Arrow is WeakPointHit");
-                Collider collider = impactInfo.collider;
-                if (collider)
-                {
-                    //Debug.Log("Collider found");
-                    HurtBox component = collider.GetComponent<HurtBox>();
-                    if (component && component.hurtBoxGroup)
-                    {
-                        //Debug.Log("Hurtbox found");
-                        if (component.isSniperTarget)
-                        {
-                            //Debug.Log("Sniper target found + attempting to alter damage to crit.");
-                            self.projectileDamage.crit = true;
-                        }
-                    }
-                }
+                //Debug.Log("overriding crosshair");
+                self.currentCrosshairPrefab = characterBody.defaultCrosshairPrefab;
+                return;
             }
 
-            orig(self, impactInfo);
+            orig(self, characterBody, crosshairWorldPosition, uiCamera);
         }
 
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]

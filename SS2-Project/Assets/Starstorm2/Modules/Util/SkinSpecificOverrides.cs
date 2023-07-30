@@ -17,6 +17,8 @@ namespace Moonstorm.Starstorm2.Modules
         public static SkillDef phaseRoundDef;
         public static EntityStateConfiguration phaseRoundESC;
 
+        private static GameObject toolbotLunarSpear = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Huntress/TracerHuntressSnipe.prefab").WaitForCompletion();
+
         internal static Material matLunarGolem;
         [SystemInitializer]
         public static void Initialize()
@@ -31,7 +33,7 @@ namespace Moonstorm.Starstorm2.Modules
             On.EntityStates.Toolbot.BaseNailgunState.FireBullet += BaseNailgunState_FireBullet;
             On.EntityStates.Toolbot.FireSpear.FireBullet += FireSpear_FireBullet;
             On.EntityStates.Toolbot.ToolbotDualWield.OnEnter += ToolbotDualWield_OnEnter;
-            On.EntityStates.Toolbot.ToolbotDash.OnEnter += ToolbotDash_OnEnter;
+            //On.EntityStates.Toolbot.ToolbotDash.OnEnter += ToolbotDash_OnEnter;
             //On.EntityStates.Toolbot.ToolbotDash.OnExit += ToolbotDash_OnExit;
         }
 
@@ -205,7 +207,7 @@ namespace Moonstorm.Starstorm2.Modules
             if (self.GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[self.characterBody.skinIndex].nameToken == "SS2_SKIN_TOOLBOT_GRANDMASTERY")
             {
                 isLunar = true;
-                self.tracerEffectPrefab = Resources.Load<GameObject>("Prefabs/Effects/Tracers/TracerHuntressSnipe"); // this too
+                self.tracerEffectPrefab = toolbotLunarSpear;
             }
 
             //call self

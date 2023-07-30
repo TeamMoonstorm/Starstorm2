@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 6902491977645087779}
   - component: {fileID: 6383042446268525730}
   - component: {fileID: 2633876825743998819}
+  - component: {fileID: -8798934544087373604}
   m_Layer: 0
   m_Name: ShrineEthereal
   m_TagString: Untagged
@@ -131,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac203263823542b4bb91ead273717753, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPurchaseCount: 1
+  maxPurchaseCount: 2
   purchaseCount: 0
   purchaseInteraction: {fileID: 0}
 --- !u!114 &6902491977645087779
@@ -186,6 +187,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 733712478, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-8798934544087373604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1756738345324778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1647272892, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5169857541188304056

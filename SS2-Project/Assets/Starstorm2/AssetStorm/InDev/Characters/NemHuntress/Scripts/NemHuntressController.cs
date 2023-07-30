@@ -19,14 +19,21 @@ namespace Moonstorm.Starstorm2.Components
         public OverlayController overlayController;
         public GameObject scopeOverlayPrefab;
 
+        private GenericSkill primary;
+        public GameObject baseArrow;
+        public GameObject currentArrow;
+
         public void Awake()
         {
             characterBody = GetComponent<CharacterBody>();
+            primary = GetComponent<SkillLocator>().primary;
         }
 
         public void Start()
         {
             skillLocator = characterBody.skillLocator;
+            currentArrow = baseArrow;
+            primary.stock = 1;
         }
 
         //check if body is in combat - enable combat headset if so.

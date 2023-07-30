@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: matReactorBuffOverlay
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
-  m_ShaderKeywords: FRESNEL VERTEXOFFSET _EMISSION
+  m_ShaderKeywords: VERTEXOFFSET _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -32,14 +32,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RemapTex:
-        m_Texture: {fileID: 2800000, guid: 5a36bd05b2ad385428b992168dc23e69, type: 2}
+        m_Texture: {fileID: 2800000, guid: b22d0935ef1fd374c8948674c287791d, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _AlphaBias: 0.2
     - _AlphaBoost: 0.8
     - _AlphaThreshold: 0.295
-    - _Boost: 1.2
+    - _Boost: 2.4
     - _BumpScale: 1
     - _CalcTextureAlphaOn: 0
     - _CloudOffsetOn: 0
@@ -55,17 +55,17 @@ Material:
     - _Fade: 1
     - _FadeCloseDistance: 0.5
     - _FadeCloseOn: 0
-    - _FresnelOn: 1
-    - _FresnelPower: 2
+    - _FresnelOn: 0
+    - _FresnelPower: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _InternalSimpleBlendMode: 0
-    - _InvFade: 1
+    - _InvFade: 0
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _OffsetAmount: 0.01
+    - _OffsetAmount: 0.06
     - _Parallax: 0.02
     - _RimPower: 0.5
     - _SinRate: 0
@@ -88,4 +88,4 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 0.6827586, b: 0, a: 0}
     - _TimeScale: {r: 25, g: 10, b: 1, a: 1}
-    - _TintColor: {r: 0, g: 0.34534234, b: 1.3999999, a: 1}
+    - _TintColor: {r: 0, g: 1.4980392, b: 0.41568628, a: 1}

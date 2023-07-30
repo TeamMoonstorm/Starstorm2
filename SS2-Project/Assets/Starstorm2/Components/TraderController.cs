@@ -76,12 +76,12 @@ namespace Moonstorm.Starstorm2.Components
                 Transform juice = panel.Find("Juice");
                 Transform label = juice.Find("Label");
 
-                GameObject priceLabel = Instantiate(label.gameObject);
+                priceLabel = Instantiate(label.gameObject);
                 priceLabel.AddComponent<FavoriteTooltipManager>();
                 RectTransform priceLabelRect = priceLabel.GetComponent<RectTransform>();
                 priceLabelRect.SetPositionAndRotation(new Vector3(priceLabelRect.localPosition.x, priceLabelRect.localPosition.y - 45, priceLabelRect.localPosition.z), priceLabelRect.rotation);
 
-                /*if (label.Find("Label(Clone") == null)
+                if (label.Find("Label(Clone") == null)
                 {
                     priceLabel = Instantiate(label.gameObject);
                     priceLabel.transform.SetParent(label);
@@ -89,7 +89,7 @@ namespace Moonstorm.Starstorm2.Components
                 else
                     Debug.Log("pricelabel null, returning"); return;
                 
-                //ltmcPrice = priceLabel.GetComponent<LanguageTextMeshController>();
+                ltmcPrice = priceLabel.GetComponent<LanguageTextMeshController>();
 
                 //Set 'favorite item' label
                 if (ltmcPrice != null)
@@ -98,7 +98,7 @@ namespace Moonstorm.Starstorm2.Components
                     ltmcPrice.token = combinedString;
                 }
                 else
-                    Debug.Log("ltmc2 null");*/
+                    Debug.Log("ltmc2 null");
             }
 
             Debug.Log("hi");
@@ -126,10 +126,10 @@ namespace Moonstorm.Starstorm2.Components
 
             //Create the 'favorite item' label
             GameObject priceLabel = Instantiate(label.gameObject);
-            priceLabel.transform.SetParent(label);
             priceLabel.AddComponent<FavoriteTooltipManager>();
             RectTransform priceLabelRect = priceLabel.GetComponent<RectTransform>();
             priceLabelRect.SetPositionAndRotation(new Vector3(priceLabelRect.localPosition.x, priceLabelRect.localPosition.y - 45, priceLabelRect.localPosition.z), priceLabelRect.rotation);
+            priceLabel.transform.SetParent(label);
 
             //Add tooltips to every item
             Transform iconContainer = juice.Find("IconContainer");

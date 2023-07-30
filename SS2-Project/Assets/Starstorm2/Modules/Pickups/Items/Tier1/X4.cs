@@ -56,7 +56,7 @@ namespace Moonstorm.Starstorm2.Items
 
         public static ProcChainMask ignoredProcs;
 
-        public static ItemDisplay itemDisplay;
+        public static string displayName = "DisplayX4(Clone)";
 
         public static Dictionary<string, bool> specialSkillNames;
 
@@ -87,11 +87,20 @@ namespace Moonstorm.Starstorm2.Items
             [ItemDefAssociation]    
             private static ItemDef GetItemDef() => SS2Content.Items.X4;
 
+            private List<GameObject> x4display;
+            private ParticleSystem x4ps;
+
             public void Start()
             {
                 body.onSkillActivatedAuthority += X4HealOnSkillActivation;
                 //SS2Log.Info("hook added on " + body + " |");
                 //SS2Log.Info("hook added on " + body.baseNameToken + " |");
+                //FindDisplay(body.modelLocator.modelTransform.);
+                x4display = body.modelLocator.modelTransform.GetComponent<CharacterModel>().GetItemDisplayObjects(SS2Content.Items.X4.itemIndex);
+                //x4ps = x4display[0].GetComponent<ParticleSystem>();
+                if (x4display != null)
+                    x4ps = x4display[0].GetComponentInChildren<ParticleSystem>();
+                Debug.Log("x4ps : " + x4ps.gameObject.name);
             }
 
             private void X4HealOnSkillActivation(GenericSkill skill)
@@ -179,6 +188,8 @@ namespace Moonstorm.Starstorm2.Items
                                 {
                                     //SS2Log.Info("aghhhh 1 | " + buffCount + " | " + buffcap);
                                     charbody.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
+                                    if (x4ps != null)
+                                        x4ps.Play();
                                     //self.RemoveOldestTimedBuff(SS2Content.Buffs.BuffX4.buffIndex);
                                 }
                                 else if (buffCount == buffcap && buffCount >= 1)
@@ -191,7 +202,8 @@ namespace Moonstorm.Starstorm2.Items
 
                                     //charbody.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
                                     SS2Util.RefreshOldestBuffStack(charbody, SS2Content.Buffs.BuffX4, regenDuration);
-
+                                    if (x4ps != null)
+                                        x4ps.Play();
                                 }
                                 //else if(buffCount == buffcap && buffCount == 1)
                                 //{
@@ -231,6 +243,8 @@ namespace Moonstorm.Starstorm2.Items
                             {
                                 //SS2Log.Info("pee shit explosion!!!");
                                 charbody.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
+                                if (x4ps != null)
+                                    x4ps.Play();
                                 int buffCount = charbody.GetBuffCount(SS2Content.Buffs.BuffX4);
                                 if (buffCount != 0)
                                 {

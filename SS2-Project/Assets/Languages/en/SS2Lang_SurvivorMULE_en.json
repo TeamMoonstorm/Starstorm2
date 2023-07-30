@@ -13,20 +13,28 @@
 		"SS2_MULE_PASSIVE_DRONE_NAME": "Fail-Safe Assistance",
 		"SS2_MULE_PASSIVE_DRONE_DESC": "Taking damage to below <style=cIsHealth>25% health</style>activates your personal <style=cIsHealing>Repair Drone</style>, healing for <style=cIsHealing>50%</style> of your health. Has a <style=cIsUtility>60</style> second cooldown.",
 
-		"SS2_MULE_SLAM_NAME": "Interference Removal",
-		"SS2_MULE_SLAM_DESC": "<style=cIsDamage>Tap</style> to punch enemies for <style=cIsDamage>280% damage</style>. <style=cIsDamage>Hold</style> to charge up a mighty slam, dealing up to <style=cIsDamage>1200%</style> damage and creating a shockwave for <style=cIsDamage>400%</style>.",
+		"SS2_MULE_PUNCH_NAME": "Interference Removal",
+		"SS2_MULE_PUNCH_DESC": "Punch enemies for <style=cIsDamage>330% damage</style>.",
+		"SS2_MULE_KEYWORD_PUNCH_CALIBRATED": "<style=cKeywordName>Calibrated</style></style=cSub><style=cSub>Slam the ground in front of you, dealing higher damage and sending out a shockwave. (%s tbd)</style>",
 
-		"SS2_MULE_PUNCH_NAME": "Centrifugal Smash",
-		"SS2_MULE_PUNCH_DESC": "<style=cIsUtility>Overclocking</style>. <style=cIsUtility>Stunning</style>. Wind up, and throw a mighty punch forward for <style=cIsDamage>280% damage</style>. <style=cIsDamage>Damage is multiplied by charge level, up to 4x</style>.",
+		"SS2_MULE_UPHEAVAL_NAME": "Upheaval",
+		"SS2_MULE_UPHEAVAL_DESC": "<style=cIsDamage>Stunning</style>. Punch the ground in front of you, raising a <style=cIsUtility>boulder</style> for <style=cIsDamage>450% damage</style>. <style=cIsDamage>Boulders can be punched to be rolled.</style>",
+		"SS2_MULE_KEYWORD_UPHEAVAL_CALIBRATED": "<style=cKeywordName>Calibrated</style></style=cSub>Punch the ground in front of you, raising up to 3 boulders at once.",
+
+		"SS2_MULE_OLDPUNCH_NAME": "Centrifugal Smash",
+		"SS2_MULE_OLDPUNCH_DESC": "<style=cIsUtility>Overclocking</style>. <style=cIsUtility>Stunning</style>. Wind up, and throw a mighty punch forward for <style=cIsDamage>280% damage</style>. <style=cIsDamage>Damage is multiplied by charge level, up to 4x</style>.",
 
 		"SS2_MULE_JUMP_NAME": "Relocate",
-		"SS2_MULE_JUMP_DESC":  "<style=cIsUtility>Hold to charge</style> a powerful upwards leap.",
+		"SS2_MULE_JUMP_DESC": "<style=cIsUtility>Hold to charge</style> a powerful upwards leap.",
 
 		"SS2_MULE_SPIN_NAME": "Torque Calibration",
 		"SS2_MULE_SPIN_DESC": "<style=cIsUtility>Overclocking</style>. Rapidly spin, gradually increasing <style=cIsUtility>movement speed</style> and <style=cIsUtility>increasing armor</style> while dealing <style=cIsDamage>100% damage</style> per rotation.",
 
 		"SS2_MULE_NET_NAME": "Immobilize",
-		"SS2_MULE_NET_DESC": "Launch a <style=cIsUtility>net</style>, holding enemies within <style=cIsUtility>12m</style> of impact in place and preventing them from attacking for <style=cIsUtility>5</style> seconds. <style=cIsUtility>Flying enemies are grounded</style>."
+		"SS2_MULE_NET_DESC": "Launch a <style=cIsUtility>net</style>, holding enemies within <style=cIsUtility>12m</style> of impact in place and preventing them from attacking for <style=cIsUtility>5</style> seconds. <style=cIsUtility>Flying enemies are grounded</style>.",
 
+		"SS2_MULE_CHARGE_NAME": "Torque Calibration",
+		"SS2_MULE_CHARGE_DESC": "<style=cIsUtility>Calibrating</style>. <style=cIsUtility>Hold to charge up</style>, and release to <style=cIsUtility>fling forward</style> whilst spinning for <style=cIsDamage>(medium-high damage TBD)% damage</style>.",
 
+		"SS2_MULE_KEYWORD_CALIBRATING": "<style=cKeywordName>Calibrating</style><style=cSub>Can be canceled with primary, secondary, or jump to perform more powerful \"calibrated\" variants of those actions.</style>"
 	}
