@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: escLampBossDeath
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.LampBoss.LampBossDeath, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: deathVFX
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 7343809610932689416, guid: 7bd6fd36bfbd12d4e897662ea8328a0c,
+          type: 3}
+    - fieldName: initialVFX
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: duration
+      fieldValue:
+        stringValue: 2.4
+        objectValue: {fileID: 0}
+    - fieldName: mecanimPerameter
+      fieldValue:
+        stringValue: Death
+        objectValue: {fileID: 0}
+    - fieldName: muzzleString
+      fieldValue:
+        stringValue: Chest
+        objectValue: {fileID: 0}
+    - fieldName: deathVFXblue
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 4897782124029945635, guid: 42969c961dfc51340a0c18d157ecf942,
+          type: 3}
+    - fieldName: initialVFXblue
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}

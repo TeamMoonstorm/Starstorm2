@@ -87,6 +87,7 @@ namespace EntityStates.Executioner2
 
                 areaIndicatorInstance = UnityEngine.Object.Instantiate(areaIndicator);
                 areaIndicatorInstanceOOB = UnityEngine.Object.Instantiate(areaIndicatorOOB);
+                areaIndicatorInstance.SetActive(true);
             }
         }
 
@@ -114,16 +115,16 @@ namespace EntityStates.Executioner2
                 if (Physics.Raycast(aimRay, out raycastHit, maxDistance, LayerIndex.CommonMasks.bullet))
                 {
                     imAFilthyFuckingLiar = true;
-                    areaIndicatorInstance.SetActive(true);
-                    areaIndicatorInstanceOOB.SetActive(false);
+                    //areaIndicatorInstance.SetActive(true);
+                    //areaIndicatorInstanceOOB.SetActive(false);
                     areaIndicatorInstance.transform.position = raycastHit.point;
                     areaIndicatorInstance.transform.up = raycastHit.normal;
                 }
                 else
                 {
                     imAFilthyFuckingLiar = false;
-                    areaIndicatorInstance.SetActive(false);
-                    areaIndicatorInstanceOOB.SetActive(true);
+                    //areaIndicatorInstance.SetActive(false);
+                    //areaIndicatorInstanceOOB.SetActive(true);
                     areaIndicatorInstanceOOB.transform.position = aimRay.GetPoint(maxDistance);
                     areaIndicatorInstanceOOB.transform.up = -aimRay.direction;
                 }

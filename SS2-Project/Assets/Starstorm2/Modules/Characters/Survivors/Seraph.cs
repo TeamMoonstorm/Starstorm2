@@ -18,8 +18,6 @@ namespace Moonstorm.Starstorm2.Survivors
             base.Initialize();
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-
         public override void ModifyPrefab()
         {
             var cb = BodyPrefab.GetComponent<CharacterBody>();

@@ -1,0 +1,98 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e6292b2c06870d4495f009f912b9600, type: 3}
+  m_Name: ppPurpleRain
+  m_EditorClassIdentifier: 
+  settings:
+  - {fileID: 3957629253242655531}
+  - {fileID: 7359474861030790408}
+--- !u!114 &3957629253242655531
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 2011136271, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: RampFog
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  fogIntensity:
+    overrideState: 1
+    value: 1
+  fogPower:
+    overrideState: 1
+    value: 0.15
+  fogZero:
+    overrideState: 1
+    value: 0
+  fogOne:
+    overrideState: 1
+    value: 1
+  fogHeightStart:
+    overrideState: 1
+    value: 35
+  fogHeightEnd:
+    overrideState: 1
+    value: 210
+  fogHeightIntensity:
+    overrideState: 1
+    value: 3.2
+  fogColorStart:
+    overrideState: 1
+    value: {r: 0.14901961, g: 0.09803922, b: 0.15686275, a: 0.29411766}
+  fogColorMid:
+    overrideState: 1
+    value: {r: 0.2784314, g: 0.1751513, b: 0.28235295, a: 0.6627451}
+  fogColorEnd:
+    overrideState: 1
+    value: {r: 0.22352941, g: 0.17254902, b: 0.2509804, a: 1}
+  skyboxStrength:
+    overrideState: 1
+    value: 0
+--- !u!114 &7359474861030790408
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 986234029, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: SobelRain
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  rainIntensity:
+    overrideState: 1
+    value: 1
+  outlineScale:
+    overrideState: 1
+    value: 0.24
+  rainDensity:
+    overrideState: 1
+    value: 0.91
+  rainTexture:
+    overrideState: 1
+    value: {fileID: 2800000, guid: 224494f6d6a11bd4083e311dbae79986, type: 2}
+    defaultState: 1
+  rainColor:
+    overrideState: 1
+    value: {r: 0.6745098, g: 0.43921572, b: 0.7372549, a: 1}

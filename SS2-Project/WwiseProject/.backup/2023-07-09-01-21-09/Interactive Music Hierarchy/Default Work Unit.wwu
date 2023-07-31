@@ -1,0 +1,843 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{F233C913-3B4E-4D63-9074-90CE5295641F}" SchemaVersion="97">
+	<InteractiveMusic>
+		<WorkUnit Name="Default Work Unit" ID="{F233C913-3B4E-4D63-9074-90CE5295641F}" PersistMode="Standalone">
+			<ChildrenList>
+				<MusicSwitchContainer Name="SS2_Music_System" ID="{4BC128DE-77C0-4BBA-8ED4-00A2A8E01DCA}" ShortID="867870899">
+					<PropertyList>
+						<Property Name="ContinuePlay" Type="bool" Value="False"/>
+						<Property Name="ListenerRelativeRouting" Type="bool" Value="False"/>
+						<Property Name="Tempo" Type="Real64" Value="172"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-6</Value>
+							</ValueList>
+							<RTPCList>
+								<RTPC Name="" ID="{B8D2C5F1-49B2-4685-97F1-097666C8676D}" ShortID="258873039">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="Volume_MSX" ID="{6C63E699-94A8-48B8-81A5-39AFAEC39B49}" WorkUnitID="{4E4C0F5E-9CE9-403D-9E94-4785BD5A6B13}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{3BAD524E-FEB8-4B77-B3BF-6F4B1C61EB5D}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="3"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>-200</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>100</XPos>
+												<YPos>0</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<MusicPlaylistContainer Name="Canticum_Vitae_Start" ID="{4EFB8D4A-97A1-4ADB-8DF7-E89BF2DECAD4}" ShortID="491126556">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicSegment Name="Canticum_Vitae_Start_A" ID="{84807198-79C1-4127-8238-8EA27BFE5057}" ShortID="963890332">
+									<PropertyList>
+										<Property Name="EndPosition" Type="Real64" Value="11162.7891156463"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<MusicTrack Name="Canticum_Vitae_Start_A" ID="{1A7C8239-2AF1-45B8-A245-CF28C86B1C2F}" ShortID="38627265">
+											<ReferenceList>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Canticum_Vitae_Start_A" ID="{790B33C0-0903-496E-A7C5-3BF669010768}">
+													<Language>SFX</Language>
+													<AudioFile>Canticum_Vitae_Start_A.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="542161795"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<TransitionList>
+												<MusicTransition Name="Root" ID="{663D316E-060F-465B-95D0-A5607363B5B8}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</TransitionList>
+											<SequenceList>
+												<MusicTrackSequence Name="" ID="{F7ADDAA5-6424-4077-A898-818E43D6B7C2}">
+													<ClipList>
+														<MusicClip Name="Canticum_Vitae_Start_A" ID="{B3DFC75C-34FD-4993-ADDB-0F4CFD705530}">
+															<PropertyList>
+																<Property Name="EndTrimOffset" Type="Real64" Value="11162.7891156463"/>
+																<Property Name="FadeInMode" Type="int16" Value="0"/>
+																<Property Name="FadeOutMode" Type="int16" Value="0"/>
+															</PropertyList>
+															<AudioSourceRef Name="Canticum_Vitae_Start_A" ID="{790B33C0-0903-496E-A7C5-3BF669010768}"/>
+														</MusicClip>
+													</ClipList>
+												</MusicTrackSequence>
+											</SequenceList>
+										</MusicTrack>
+									</ChildrenList>
+									<CueList>
+										<MusicCue Name="Entry Cue" ID="{4A10FB7E-AB82-4D98-966E-A369771B235F}"/>
+										<MusicCue Name="Exit Cue" ID="{D62E6C3D-BD11-4EB0-BAE3-3D86ED51AB99}">
+											<PropertyList>
+												<Property Name="CueType" Type="int16" Value="1"/>
+												<Property Name="TimeMs" Type="Real64" Value="11162.7891156463"/>
+											</PropertyList>
+										</MusicCue>
+									</CueList>
+								</MusicSegment>
+								<MusicSegment Name="Canticum_Vitae_Start_B" ID="{8FD4690E-92A0-4EAD-A467-94E532306D8C}" ShortID="909073595">
+									<PropertyList>
+										<Property Name="EndPosition" Type="Real64" Value="11162.7891156463"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<MusicTrack Name="Canticum_Vitae_Start_B" ID="{0FD4DAF6-CAD9-4252-AC0E-7BA8DA93B69E}" ShortID="723844281">
+											<ReferenceList>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Canticum_Vitae_Start_B" ID="{5F0A972C-1703-4035-871A-1ADB9ECF03D8}">
+													<Language>SFX</Language>
+													<AudioFile>Canticum_Vitae_Start_B.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="41584387"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<TransitionList>
+												<MusicTransition Name="Root" ID="{28526649-F863-46AB-952E-E7063F253717}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</TransitionList>
+											<SequenceList>
+												<MusicTrackSequence Name="" ID="{B724DFC0-F938-4EDD-92AC-3BF9B21C4014}">
+													<ClipList>
+														<MusicClip Name="Canticum_Vitae_Start_B" ID="{8AE6B9BF-105D-4511-849A-212C7351AAC1}">
+															<PropertyList>
+																<Property Name="EndTrimOffset" Type="Real64" Value="11162.7891156463"/>
+																<Property Name="FadeInMode" Type="int16" Value="0"/>
+																<Property Name="FadeOutMode" Type="int16" Value="0"/>
+															</PropertyList>
+															<AudioSourceRef Name="Canticum_Vitae_Start_B" ID="{5F0A972C-1703-4035-871A-1ADB9ECF03D8}"/>
+														</MusicClip>
+													</ClipList>
+												</MusicTrackSequence>
+											</SequenceList>
+										</MusicTrack>
+									</ChildrenList>
+									<CueList>
+										<MusicCue Name="Entry Cue" ID="{40231D83-3D98-4413-803A-1D95C3F96443}"/>
+										<MusicCue Name="Exit Cue" ID="{6D5344E2-8ABC-46FE-AC07-982D981A0955}">
+											<PropertyList>
+												<Property Name="CueType" Type="int16" Value="1"/>
+												<Property Name="TimeMs" Type="Real64" Value="11162.7891156463"/>
+											</PropertyList>
+										</MusicCue>
+										<MusicCue Name="Enter Main" ID="{5451CAB8-8C02-4D74-86A7-5DD18540E5F1}">
+											<PropertyList>
+												<Property Name="CueType" Type="int16" Value="2"/>
+												<Property Name="TimeMs" Type="Real64" Value="2790.6976744186"/>
+											</PropertyList>
+										</MusicCue>
+										<MusicCue Name="Enter Main" ID="{A7E83F11-C19E-4682-81CE-18F0D7759567}">
+											<PropertyList>
+												<Property Name="CueType" Type="int16" Value="2"/>
+												<Property Name="TimeMs" Type="Real64" Value="5618.42750749589"/>
+											</PropertyList>
+										</MusicCue>
+										<MusicCue Name="" ID="{902B3A52-75AA-46F2-B3DC-E6BE289B306A}">
+											<PropertyList>
+												<Property Name="CueType" Type="int16" Value="2"/>
+											</PropertyList>
+										</MusicCue>
+										<MusicCue Name="Enter Main" ID="{431F212B-3F3C-4DD7-AFC8-ED754C7143B0}">
+											<PropertyList>
+												<Property Name="CueType" Type="int16" Value="2"/>
+												<Property Name="TimeMs" Type="Real64" Value="8380.02746880743"/>
+											</PropertyList>
+										</MusicCue>
+									</CueList>
+								</MusicSegment>
+							</ChildrenList>
+							<TransitionList>
+								<MusicTransition Name="Root" ID="{C70A25C7-EE4B-44C2-97CF-BFBFBD521CB1}">
+									<PropertyList>
+										<Property Name="IsFolder" Type="bool" Value="True"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicTransition Name="Transition" ID="{6E116D9C-E8C7-445E-ABFC-5925979B2686}">
+											<TransitionInfo/>
+										</MusicTransition>
+									</ChildrenList>
+									<TransitionInfo/>
+								</MusicTransition>
+							</TransitionList>
+							<Playlist>
+								<MusicPlaylistItem Name="" ID="{1BE2E38F-E754-4757-B036-E8DBA0665325}" ShortID="1019537374">
+									<ChildrenList>
+										<MusicPlaylistItem Name="" ID="{03F74F44-2753-4DEB-80AC-3BA2765A0F9F}" ShortID="938881820">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<SegmentRef Name="Canticum_Vitae_Start_A" ID="{84807198-79C1-4127-8238-8EA27BFE5057}"/>
+										</MusicPlaylistItem>
+										<MusicPlaylistItem Name="" ID="{14CF8D08-84FD-4E3A-8ECC-6CF02CD1F786}" ShortID="474605064">
+											<PropertyList>
+												<Property Name="LoopCount" Type="int16" Value="0"/>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<SegmentRef Name="Canticum_Vitae_Start_B" ID="{8FD4690E-92A0-4EAD-A467-94E532306D8C}"/>
+										</MusicPlaylistItem>
+									</ChildrenList>
+								</MusicPlaylistItem>
+							</Playlist>
+						</MusicPlaylistContainer>
+						<MusicPlaylistContainer Name="Canticum_Vitae_Main" ID="{7785E4D6-0318-4882-8732-856AF0F50CE3}" ShortID="475604857">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicSegment Name="Canticum_Vitae_Transition_B" ID="{F5323A1D-4679-46C7-B370-FC58820F52CD}" ShortID="552937231">
+									<PropertyList>
+										<Property Name="EndPosition" Type="Real64" Value="29302.335600907"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<MusicTrack Name="Canticum_Vitae_Transition_B" ID="{8C8594D8-684F-400F-9470-5959F9D1A862}" ShortID="321453374">
+											<ReferenceList>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Canticum_Vitae_Transition_B" ID="{D98FDC2F-82B6-47DC-B40D-149C37467871}">
+													<Language>SFX</Language>
+													<AudioFile>Canticum_Vitae_Transition_B.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="342415295"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<TransitionList>
+												<MusicTransition Name="Root" ID="{8DB3B5D6-061B-41DD-B9B3-2476DDC36C97}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</TransitionList>
+											<SequenceList>
+												<MusicTrackSequence Name="" ID="{0AFFAC4E-A678-4EB3-8D85-DEF83E84AECC}">
+													<ClipList>
+														<MusicClip Name="Canticum_Vitae_Transition_B" ID="{A18EAF5F-4710-4124-8B79-CED74EEDB52F}">
+															<PropertyList>
+																<Property Name="EndTrimOffset" Type="Real64" Value="29302.335600907"/>
+																<Property Name="FadeInMode" Type="int16" Value="0"/>
+																<Property Name="FadeOutMode" Type="int16" Value="0"/>
+															</PropertyList>
+															<AudioSourceRef Name="Canticum_Vitae_Transition_B" ID="{D98FDC2F-82B6-47DC-B40D-149C37467871}"/>
+														</MusicClip>
+													</ClipList>
+												</MusicTrackSequence>
+											</SequenceList>
+										</MusicTrack>
+									</ChildrenList>
+									<CueList>
+										<MusicCue Name="Entry Cue" ID="{5BE5DA94-B39C-4E92-BA56-C225DECC4215}">
+											<PropertyList>
+												<Property Name="TimeMs" Type="Real64" Value="1395.3488372093"/>
+											</PropertyList>
+										</MusicCue>
+										<MusicCue Name="Exit Cue" ID="{AFEC6151-CD88-467C-AB5E-F134022DBA60}">
+											<PropertyList>
+												<Property Name="CueType" Type="int16" Value="1"/>
+												<Property Name="TimeMs" Type="Real64" Value="23720.9302325581"/>
+											</PropertyList>
+										</MusicCue>
+									</CueList>
+								</MusicSegment>
+								<MusicSegment Name="Canticum_Vitae_Transition_A" ID="{02F5B1B0-C0E2-4321-8A2C-C6FC5A82E99D}" ShortID="110807017">
+									<PropertyList>
+										<Property Name="EndPosition" Type="Real64" Value="25116.2811791383"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<MusicTrack Name="Canticum_Vitae_Transition_A" ID="{E180E711-0101-45B3-9CF4-36BD16A99CAE}" ShortID="194007823">
+											<ReferenceList>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Canticum_Vitae_Transition_A" ID="{ABBB9B7D-C4B2-432B-BE2C-BDE69FA145F0}">
+													<Language>SFX</Language>
+													<AudioFile>Canticum_Vitae_Transition_A.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="417465332"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<TransitionList>
+												<MusicTransition Name="Root" ID="{B2C573DB-32AC-407A-8980-3A45C894D578}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</TransitionList>
+											<SequenceList>
+												<MusicTrackSequence Name="" ID="{B3A385D6-46BE-43AE-B5E5-A3EDC15D1E98}">
+													<ClipList>
+														<MusicClip Name="Canticum_Vitae_Transition_A" ID="{07144C8B-B308-49E3-A894-EBF19BF9B82D}">
+															<PropertyList>
+																<Property Name="EndTrimOffset" Type="Real64" Value="25116.2811791383"/>
+																<Property Name="FadeInMode" Type="int16" Value="0"/>
+																<Property Name="FadeOutMode" Type="int16" Value="0"/>
+															</PropertyList>
+															<AudioSourceRef Name="Canticum_Vitae_Transition_A" ID="{ABBB9B7D-C4B2-432B-BE2C-BDE69FA145F0}"/>
+														</MusicClip>
+													</ClipList>
+												</MusicTrackSequence>
+											</SequenceList>
+										</MusicTrack>
+									</ChildrenList>
+									<CueList>
+										<MusicCue Name="Entry Cue" ID="{1CDAD8D6-8714-4C68-BCC5-116F1316A00A}"/>
+										<MusicCue Name="Exit Cue" ID="{7E256B65-06FF-40DF-AE02-BD8C42862487}">
+											<PropertyList>
+												<Property Name="CueType" Type="int16" Value="1"/>
+												<Property Name="TimeMs" Type="Real64" Value="25116.2811791383"/>
+											</PropertyList>
+										</MusicCue>
+									</CueList>
+								</MusicSegment>
+								<MusicSegment Name="Canticum_Vitae_Loop_B" ID="{6B259F6E-8CFC-417D-B2AE-71A5643EFCF4}" ShortID="635166687">
+									<PropertyList>
+										<Property Name="EndPosition" Type="Real64" Value="56162.7906976744"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<MusicTrack Name="Canticum_Vitae_Loop_B" ID="{A5DA992A-8A2B-4479-81B7-2A1E8A46FD1A}" ShortID="803919751">
+											<ReferenceList>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Canticum_Vitae_Loop_B" ID="{F9843CF2-0E01-4AE7-8F47-06FB34F26F60}">
+													<Language>SFX</Language>
+													<AudioFile>Canticum_Vitae_Loop_B.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="516513095"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<TransitionList>
+												<MusicTransition Name="Root" ID="{87AB9506-F0B0-462D-A0F8-2DEEEBA0354B}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</TransitionList>
+											<SequenceList>
+												<MusicTrackSequence Name="" ID="{B06FE30B-7397-4E46-9EC1-AF6F55733167}">
+													<ClipList>
+														<MusicClip Name="Canticum_Vitae_Loop_B" ID="{3DD356B1-711B-4C6E-9F98-A22827422A57}">
+															<PropertyList>
+																<Property Name="EndTrimOffset" Type="Real64" Value="56162.7891156463"/>
+																<Property Name="FadeInMode" Type="int16" Value="0"/>
+																<Property Name="FadeOutMode" Type="int16" Value="0"/>
+															</PropertyList>
+															<AudioSourceRef Name="Canticum_Vitae_Loop_B" ID="{F9843CF2-0E01-4AE7-8F47-06FB34F26F60}"/>
+														</MusicClip>
+													</ClipList>
+												</MusicTrackSequence>
+											</SequenceList>
+										</MusicTrack>
+									</ChildrenList>
+									<CueList>
+										<MusicCue Name="Entry Cue" ID="{AE4E5F22-5D9E-46E5-B5F2-23DB39F930F5}"/>
+										<MusicCue Name="Exit Cue" ID="{B0631DFB-5A90-42CE-8F3C-6884A1F2DD41}">
+											<PropertyList>
+												<Property Name="CueType" Type="int16" Value="1"/>
+												<Property Name="TimeMs" Type="Real64" Value="55813.9534883721"/>
+											</PropertyList>
+										</MusicCue>
+									</CueList>
+								</MusicSegment>
+								<MusicSegment Name="Canticum_Vitae_Loop_A" ID="{72E0C779-AE96-43B5-A098-A1C8C2A37852}" ShortID="859983439">
+									<PropertyList>
+										<Property Name="EndPosition" Type="Real64" Value="61395.3514739229"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<MusicTrack Name="Canticum_Vitae_Loop_A" ID="{E3EAD861-93E6-424A-8D1B-4D1E5FC47239}" ShortID="649262721">
+											<ReferenceList>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Canticum_Vitae_Loop_A" ID="{0E5E4AA7-B19C-4707-8C12-E8E168BB2482}">
+													<Language>SFX</Language>
+													<AudioFile>Canticum_Vitae_Loop_A.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="324234268"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<TransitionList>
+												<MusicTransition Name="Root" ID="{9953144E-5F57-41B7-B568-8C5BE54E1053}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</TransitionList>
+											<SequenceList>
+												<MusicTrackSequence Name="" ID="{7C54B131-78BF-4AA5-A085-68262B6ABAA7}">
+													<ClipList>
+														<MusicClip Name="Canticum_Vitae_Loop_A" ID="{69F15915-322C-4F39-8414-C235D8BDC9D9}">
+															<PropertyList>
+																<Property Name="EndTrimOffset" Type="Real64" Value="61395.3514739229"/>
+																<Property Name="FadeInMode" Type="int16" Value="0"/>
+																<Property Name="FadeOutMode" Type="int16" Value="0"/>
+															</PropertyList>
+															<AudioSourceRef Name="Canticum_Vitae_Loop_A" ID="{0E5E4AA7-B19C-4707-8C12-E8E168BB2482}"/>
+														</MusicClip>
+													</ClipList>
+												</MusicTrackSequence>
+											</SequenceList>
+										</MusicTrack>
+									</ChildrenList>
+									<CueList>
+										<MusicCue Name="Entry Cue" ID="{29A2FD2C-01F5-44F0-8A56-DB214E6498EF}"/>
+										<MusicCue Name="Exit Cue" ID="{70F404FB-9621-44BA-93B4-BC2CFCD2CEFA}">
+											<PropertyList>
+												<Property Name="CueType" Type="int16" Value="1"/>
+												<Property Name="TimeMs" Type="Real64" Value="61395.3514739229"/>
+											</PropertyList>
+										</MusicCue>
+									</CueList>
+								</MusicSegment>
+								<MusicSegment Name="Canticum_Vitae_Main" ID="{3F84CA5E-5741-408C-9A9B-04B207732823}" ShortID="647541571">
+									<PropertyList>
+										<Property Name="EndPosition" Type="Real64" Value="14302.3255813953"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<MusicTrack Name="Canticum_Vitae_Start_C" ID="{F620E63D-41F3-43D6-B86B-4A78B4A17901}" ShortID="913986859">
+											<ReferenceList>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Canticum_Vitae_Start_C" ID="{BA8907C0-1D12-41BC-BD60-BBA1FAA3A0A7}">
+													<Language>SFX</Language>
+													<AudioFile>Canticum_Vitae_Start_C.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="920998419"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<TransitionList>
+												<MusicTransition Name="Root" ID="{8F237784-954D-4D41-AE82-B2BFE0186230}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</TransitionList>
+											<SequenceList>
+												<MusicTrackSequence Name="" ID="{3C5BBBF9-86EE-4EB8-BC27-655B42B1A13F}">
+													<ClipList>
+														<MusicClip Name="Canticum_Vitae_Start_C" ID="{88BA8083-0AEE-4194-A6A9-12C6DF13D1C2}">
+															<PropertyList>
+																<Property Name="EndTrimOffset" Type="Real64" Value="14302.3255813953"/>
+																<Property Name="FadeInMode" Type="int16" Value="0"/>
+																<Property Name="FadeOutMode" Type="int16" Value="0"/>
+															</PropertyList>
+															<AudioSourceRef Name="Canticum_Vitae_Start_C" ID="{BA8907C0-1D12-41BC-BD60-BBA1FAA3A0A7}"/>
+															<PropertyCurveList>
+																<PropertyCurve PropertyName="Highpass">
+																	<Curve Name="" ID="{50C5455F-32C1-4C50-916A-CCE2C50C42D6}">
+																		<PropertyList>
+																			<Property Name="Flags" Type="int32" Value="1"/>
+																		</PropertyList>
+																		<PointList>
+																			<Point>
+																				<XPos>0</XPos>
+																				<YPos>0</YPos>
+																				<Flags>5</Flags>
+																			</Point>
+																			<Point>
+																				<XPos>14.30233</XPos>
+																				<YPos>0</YPos>
+																				<Flags>37</Flags>
+																			</Point>
+																		</PointList>
+																	</Curve>
+																</PropertyCurve>
+																<PropertyCurve PropertyName="Lowpass">
+																	<Curve Name="" ID="{493C672A-6A23-4B09-AEE4-EDB68C1EB0D0}">
+																		<PropertyList>
+																			<Property Name="Flags" Type="int32" Value="1"/>
+																		</PropertyList>
+																		<PointList>
+																			<Point>
+																				<XPos>0</XPos>
+																				<YPos>0</YPos>
+																				<Flags>5</Flags>
+																			</Point>
+																			<Point>
+																				<XPos>14.30233</XPos>
+																				<YPos>0</YPos>
+																				<Flags>37</Flags>
+																			</Point>
+																		</PointList>
+																	</Curve>
+																</PropertyCurve>
+																<PropertyCurve PropertyName="Volume">
+																	<Curve Name="" ID="{219DA737-D1A8-4AF7-A2D6-C73733EFA5B9}">
+																		<PropertyList>
+																			<Property Name="Flags" Type="int32" Value="3"/>
+																		</PropertyList>
+																		<PointList>
+																			<Point>
+																				<XPos>0</XPos>
+																				<YPos>0</YPos>
+																				<Flags>5</Flags>
+																			</Point>
+																			<Point>
+																				<XPos>14.30233</XPos>
+																				<YPos>0</YPos>
+																				<Flags>37</Flags>
+																			</Point>
+																		</PointList>
+																	</Curve>
+																</PropertyCurve>
+															</PropertyCurveList>
+														</MusicClip>
+													</ClipList>
+												</MusicTrackSequence>
+											</SequenceList>
+										</MusicTrack>
+										<MusicTrack Name="Canticum_Vitae_Start_B" ID="{18CA27B5-6308-42AE-B87F-5F56F25A8078}" ShortID="1001559165">
+											<ReferenceList>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Canticum_Vitae_Start_B" ID="{2E2016A9-EE07-473A-B4B6-A7BC0BE688DB}">
+													<Language>SFX</Language>
+													<AudioFile>Canticum_Vitae_Start_B.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="41584387"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<TransitionList>
+												<MusicTransition Name="Root" ID="{AC21E875-C4D5-4F14-A839-3A7A691468F9}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</TransitionList>
+											<SequenceList>
+												<MusicTrackSequence Name="" ID="{F6398ABC-DB54-4055-9ED5-BDF207F4FDBA}">
+													<ClipList>
+														<MusicClip Name="Canticum_Vitae_Start_B" ID="{C9ABFAA9-7590-4BD7-8C48-8F994201E33C}">
+															<PropertyList>
+																<Property Name="EndTrimOffset" Type="Real64" Value="11162.7891156463"/>
+																<Property Name="FadeInMode" Type="int16" Value="0"/>
+																<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																<Property Name="PlayAt" Type="Real64" Value="1395.3488372093"/>
+															</PropertyList>
+															<AudioSourceRef Name="Canticum_Vitae_Start_B" ID="{2E2016A9-EE07-473A-B4B6-A7BC0BE688DB}"/>
+														</MusicClip>
+													</ClipList>
+												</MusicTrackSequence>
+											</SequenceList>
+										</MusicTrack>
+									</ChildrenList>
+									<CueList>
+										<MusicCue Name="Entry Cue" ID="{1EB858FB-D6E3-458E-9B36-D240413735E2}">
+											<PropertyList>
+												<Property Name="TimeMs" Type="Real64" Value="1395.3488372093"/>
+											</PropertyList>
+										</MusicCue>
+										<MusicCue Name="Exit Cue" ID="{95FEF0DD-F8BC-4390-9F77-A6AF886114DA}">
+											<PropertyList>
+												<Property Name="CueType" Type="int16" Value="1"/>
+												<Property Name="TimeMs" Type="Real64" Value="12558.1395348837"/>
+											</PropertyList>
+										</MusicCue>
+									</CueList>
+								</MusicSegment>
+							</ChildrenList>
+							<TransitionList>
+								<MusicTransition Name="Root" ID="{B51949A6-50AF-4CE4-B9C1-1AA88D95945B}">
+									<PropertyList>
+										<Property Name="IsFolder" Type="bool" Value="True"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicTransition Name="Transition" ID="{184C732B-4C63-4E31-BED0-C3DB4114C373}">
+											<TransitionInfo/>
+										</MusicTransition>
+									</ChildrenList>
+									<TransitionInfo/>
+								</MusicTransition>
+							</TransitionList>
+							<Playlist>
+								<MusicPlaylistItem Name="" ID="{15A406F7-537E-4F2F-AAF2-DFA2C67BE3B3}" ShortID="191620316">
+									<PropertyList>
+										<Property Name="LoopCount" Type="int16" Value="0"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicPlaylistItem Name="" ID="{4D88E14A-FF23-4B54-804D-DD0762F42D0E}" ShortID="801761883">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<SegmentRef Name="Canticum_Vitae_Main" ID="{3F84CA5E-5741-408C-9A9B-04B207732823}"/>
+										</MusicPlaylistItem>
+										<MusicPlaylistItem Name="" ID="{E5515913-25FD-41B0-BEAB-94089EC6BD79}" ShortID="594318720">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<SegmentRef Name="Canticum_Vitae_Loop_A" ID="{72E0C779-AE96-43B5-A098-A1C8C2A37852}"/>
+										</MusicPlaylistItem>
+										<MusicPlaylistItem Name="" ID="{7BC87EB2-7AA0-401B-97D2-06C6A4A4A303}" ShortID="478289607">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<SegmentRef Name="Canticum_Vitae_Transition_A" ID="{02F5B1B0-C0E2-4321-8A2C-C6FC5A82E99D}"/>
+										</MusicPlaylistItem>
+										<MusicPlaylistItem Name="" ID="{2A1E0388-2E2B-4BB7-BD8A-0270A20B46BA}" ShortID="138816898">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<SegmentRef Name="Canticum_Vitae_Loop_B" ID="{6B259F6E-8CFC-417D-B2AE-71A5643EFCF4}"/>
+										</MusicPlaylistItem>
+										<MusicPlaylistItem Name="" ID="{DB69E3E5-FE60-44BE-BA7F-3D5CFE32C96F}" ShortID="393240081">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<SegmentRef Name="Canticum_Vitae_Transition_B" ID="{F5323A1D-4679-46C7-B370-FC58820F52CD}"/>
+										</MusicPlaylistItem>
+									</ChildrenList>
+								</MusicPlaylistItem>
+							</Playlist>
+						</MusicPlaylistContainer>
+						<MusicPlaylistContainer Name="Canticum_Vitae_End" ID="{AC240B75-5912-45E6-9B36-3BBEEC6B6173}" ShortID="251897479">
+							<PropertyList>
+								<Property Name="Tempo" Type="Real64" Value="172"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+								</Reference>
+							</ReferenceList>
+							<TransitionList>
+								<MusicTransition Name="Root" ID="{5F0EB845-FCE3-4FFF-8966-CD953696A37D}">
+									<PropertyList>
+										<Property Name="IsFolder" Type="bool" Value="True"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicTransition Name="Transition" ID="{454058F0-733F-476F-B011-8F8642B59106}">
+											<TransitionInfo/>
+										</MusicTransition>
+									</ChildrenList>
+									<TransitionInfo/>
+								</MusicTransition>
+							</TransitionList>
+							<Playlist>
+								<MusicPlaylistItem Name="" ID="{7C03C0EB-F29E-4EB1-B71C-9139760E6FE5}" ShortID="602081173"/>
+							</Playlist>
+						</MusicPlaylistContainer>
+					</ChildrenList>
+					<TransitionList>
+						<MusicTransition Name="Root" ID="{9B7FEBE6-205C-4703-8FD9-C3C9BEA32C90}">
+							<PropertyList>
+								<Property Name="IsFolder" Type="bool" Value="True"/>
+							</PropertyList>
+							<ChildrenList>
+								<MusicTransition Name="Transition" ID="{E65011C8-E18D-4B49-8F54-53918D443D57}">
+									<TransitionInfo/>
+								</MusicTransition>
+								<MusicTransition Name="Transition" ID="{BE834D3A-CA0B-48FE-AC76-F3A56B247FCA}">
+									<PropertyList>
+										<Property Name="DestinationContextType" Type="int16" Value="2"/>
+										<Property Name="DestinationPlaylistJumpTo" Type="int16" Value="1"/>
+										<Property Name="SourceContextType" Type="int16" Value="2"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="DestinationContextObject">
+											<ObjectRef Name="Canticum_Vitae_Main" ID="{7785E4D6-0318-4882-8732-856AF0F50CE3}" WorkUnitID="{F233C913-3B4E-4D63-9074-90CE5295641F}"/>
+										</Reference>
+										<Reference Name="SourceContextObject">
+											<ObjectRef Name="Canticum_Vitae_Start" ID="{4EFB8D4A-97A1-4ADB-8DF7-E89BF2DECAD4}" WorkUnitID="{F233C913-3B4E-4D63-9074-90CE5295641F}"/>
+										</Reference>
+									</ReferenceList>
+									<TransitionInfo>
+										<JumpToPlaylistItemRef Name="" ID="{4D88E14A-FF23-4B54-804D-DD0762F42D0E}"/>
+									</TransitionInfo>
+								</MusicTransition>
+								<MusicTransition Name="Transition" ID="{B3A1FF4F-6F21-4B7E-BEA9-8C3E93ACE282}">
+									<PropertyList>
+										<Property Name="DestinationContextType" Type="int16" Value="1"/>
+										<Property Name="EnableSourceFadeOut" Type="bool" Value="True"/>
+										<Property Name="ExitSourceAt" Type="int16" Value="2"/>
+									</PropertyList>
+									<TransitionInfo>
+										<SourceFadeOut>
+											<MusicFade Name="Source Fade-out" ID="{CFFC2AEF-EBE0-4358-B4C3-1412FC243DDE}">
+												<PropertyList>
+													<Property Name="FadeCurve" Type="int16" Value="1"/>
+													<Property Name="FadeTime" Type="Real64" Value="0.5"/>
+													<Property Name="FadeType" Type="int16" Value="1"/>
+												</PropertyList>
+											</MusicFade>
+										</SourceFadeOut>
+									</TransitionInfo>
+								</MusicTransition>
+								<MusicTransition Name="Transition" ID="{F6096E77-5375-4EB6-BDCF-555457B6EDE2}">
+									<PropertyList>
+										<Property Name="EnableDestinationFadeIn" Type="bool" Value="True"/>
+										<Property Name="SourceContextType" Type="int16" Value="1"/>
+									</PropertyList>
+									<TransitionInfo>
+										<DestinationFadeIn>
+											<MusicFade Name="Destination Fade-in" ID="{59B00519-F051-4578-B126-0DDF896F320C}">
+												<PropertyList>
+													<Property Name="FadeCurve" Type="int16" Value="1"/>
+													<Property Name="FadeTime" Type="Real64" Value="1"/>
+												</PropertyList>
+											</MusicFade>
+										</DestinationFadeIn>
+									</TransitionInfo>
+								</MusicTransition>
+							</ChildrenList>
+							<TransitionInfo/>
+						</MusicTransition>
+					</TransitionList>
+					<ArgumentList>
+						<ArgumentRef Name="gameplaySongChoice" ID="{AF662067-146B-45F4-BD5B-EA995963753C}"/>
+					</ArgumentList>
+					<EntryList>
+						<Entry>
+							<Path>
+								<PathElementRef Name="song_nemesis_start" ID="{F82465D1-6966-4764-BA13-7E2C759DC645}"/>
+							</Path>
+							<AudioNodeInfo>
+								<AudioNodeRef Name="Canticum_Vitae_Start" ID="{4EFB8D4A-97A1-4ADB-8DF7-E89BF2DECAD4}" WorkUnitID="{F233C913-3B4E-4D63-9074-90CE5295641F}" Platform="Linked"/>
+							</AudioNodeInfo>
+						</Entry>
+						<Entry>
+							<Path>
+								<PathElementRef Name="song_nemesis_main" ID="{E440A5C1-C4B8-4ECE-BC38-109416605313}"/>
+							</Path>
+							<AudioNodeInfo>
+								<AudioNodeRef Name="Canticum_Vitae_Main" ID="{7785E4D6-0318-4882-8732-856AF0F50CE3}" WorkUnitID="{F233C913-3B4E-4D63-9074-90CE5295641F}" Platform="Linked"/>
+							</AudioNodeInfo>
+						</Entry>
+					</EntryList>
+				</MusicSwitchContainer>
+			</ChildrenList>
+		</WorkUnit>
+	</InteractiveMusic>
+</WwiseDocument>

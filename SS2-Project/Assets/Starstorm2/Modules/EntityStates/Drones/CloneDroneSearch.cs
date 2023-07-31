@@ -36,10 +36,13 @@ namespace EntityStates.CloneDrone
                 sphereSearch.radius = radius;
             }
 
-            //Search();
+            Search();
             //this doesn't work - intent is to prevent player from cloning the new clone.
             //unsure how to implement.
             //suffering.
+
+            //looking back on this months later ... wtf was bro on about.
+            //shit.
         }
         public void Search()
         {
@@ -91,6 +94,8 @@ namespace EntityStates.CloneDrone
                 //Debug.Log("closest item pickup: " + gpc.GetDisplayName());
                 Clone();
             }
+            else
+                outer.SetNextStateToMain();
         }
 
         public bool IsWhitelistTier(PickupDef pickupDef)

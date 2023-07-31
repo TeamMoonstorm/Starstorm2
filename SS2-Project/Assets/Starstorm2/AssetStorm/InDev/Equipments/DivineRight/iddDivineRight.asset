@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c9c430476270cb42ae82672a367a0e1, type: 3}
+  m_Name: iddDivineRight
+  m_EditorClassIdentifier: 
+  keyAsset: {fileID: 11400000, guid: c322556cec92abc4d9f1c674d146dc41, type: 2}
+  displayPrefabs:
+  - {fileID: 6457238427376068943, guid: 08a8504ecbf6ec74faf07c5185733660, type: 3}
+  - {fileID: 9160581942787960827, guid: 04174803b8c295948ade0f87165e4a24, type: 3}
+  displayPrefab: {fileID: 6457238427376068943, guid: 08a8504ecbf6ec74faf07c5185733660,
+    type: 3}
+  namedDisplayDictionary:
+  - idrsName: idrsCommando
+    idrs:
+      address: RoR2/Base/Commando/idrsCommando.asset
+      useDirectReference: 0
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Root
+      localPos: {x: 0.73959, y: 0.34396, z: -1.32037}
+      localAngles: {x: 359.7034, y: 293.3716, z: 342.1949}
+      localScales: {x: 0.4, y: 0.4, z: 0.4}
+      limbMask: 0

@@ -886,7 +886,7 @@
 				</Folder>
 				<Folder Name="Wayfarer" ID="{5152EE09-9763-4C4B-A053-05266A17B0D5}" ShortID="921127672">
 					<ChildrenList>
-						<Event Name="WayfarerIdle" ID="{86C3F1C4-132B-4080-8092-2DD4E975EC46}">
+						<Event Name="WayfarerIdleStart" ID="{86C3F1C4-132B-4080-8092-2DD4E975EC46}">
 							<ChildrenList>
 								<Action Name="" ID="{BC48EFCB-1047-45FB-B469-9CBBFC5EC0D5}" ShortID="289671218">
 									<PropertyList>
@@ -909,6 +909,62 @@
 									<ReferenceList>
 										<Reference Name="Target">
 											<ObjectRef Name="idleVO" ID="{77A36208-5F6B-417A-8DD8-5734178FD6C2}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="WayfarerIdleStop" ID="{EED69057-9B6F-496C-9F94-BC31CEF59440}">
+							<ChildrenList>
+								<Action Name="" ID="{23DDE61A-3A0E-4ACA-AE55-AD5DC470829F}" ShortID="678311620">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="2"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="idleLoop" ID="{913962DE-D6EA-4B72-B41E-65F2E5D80750}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="WayfarerAttack" ID="{75C51D00-5965-4EBF-A8A5-0D4799F79A1E}">
+							<ChildrenList>
+								<Action Name="" ID="{3692E6AB-39EC-476F-96E4-79B51930DEE1}" ShortID="847286251">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="attack" ID="{7D6415C1-A1C5-41A7-A543-F25FB484A9E6}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="WayfarerSpawn" ID="{EB444ECD-8D92-445A-85E7-0EC8479E0D7E}">
+							<ChildrenList>
+								<Action Name="" ID="{30BCEB20-4D0D-4828-9382-5503C106CE48}" ShortID="745433231">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="WayfarerSpawn" ID="{DDE67998-E00D-467F-A39E-F3E7E331B4C9}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="WayfarerDeath" ID="{97A9C9E3-65FA-41AB-853F-9C08D33B4F07}">
+							<ChildrenList>
+								<Action Name="" ID="{AE725E5B-28EB-404D-ABC0-EAAE6025BD97}" ShortID="429143721">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="WayfarerDeath" ID="{50EDF1BD-92A2-4E6A-9E8C-2358392A8FB7}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
@@ -978,6 +1034,32 @@
 										</Action>
 									</ChildrenList>
 								</Event>
+								<Event Name="Stop_Soft_Rain" ID="{3AAAE252-BC17-42B4-BCD9-4144FD39EC4F}">
+									<ChildrenList>
+										<Action Name="" ID="{76B9BA48-AE97-4BDA-ACD9-E87D6B1466FB}" ShortID="1058568117">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="2"/>
+												<Property Name="FadeTime" Type="Real64" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="RainAmbience1" ID="{9F7C5A1E-5AE5-40A0-B8AC-CE44ABB32851}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{6D25D201-10FB-4728-910C-DFB6FFDB3213}" ShortID="483358456">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="2"/>
+												<Property Name="FadeTime" Type="Real64" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="RainAmbience2" ID="{4876730F-BF9C-4299-9007-0260073C59E8}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
 							</ChildrenList>
 						</Folder>
 					</ChildrenList>
@@ -993,6 +1075,112 @@
 									<ReferenceList>
 										<Reference Name="Target">
 											<ObjectRef Name="SS2_Music_System" ID="{4BC128DE-77C0-4BBA-8ED4-00A2A8E01DCA}" WorkUnitID="{F233C913-3B4E-4D63-9074-90CE5295641F}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+					</ChildrenList>
+				</Folder>
+				<Folder Name="Follower" ID="{0995BF22-6792-473B-B8FF-20036EC98681}" ShortID="430803294">
+					<ChildrenList>
+						<Event Name="FollowerIdleStart" ID="{5EBEE7DF-F8AB-4866-AAD1-77360F9B82C6}">
+							<ChildrenList>
+								<Action Name="" ID="{992BEC26-C2FF-42E5-89CA-CA5F1EB2CCC2}" ShortID="616721082">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="idleLoop" ID="{6CCD95A5-F692-4A5D-8381-7457ECD4B3B6}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="FollowerVO" ID="{5263AA10-8040-4866-B599-87DC9E70FC2D}">
+							<ChildrenList>
+								<Action Name="" ID="{E91DED88-8BEF-4979-A2D7-4E2311767C82}" ShortID="1044360150">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="idleVO" ID="{CE1D07C9-7D95-410F-A716-66FF0C232AEB}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="FollowerIdleStop" ID="{47D109DC-FC0E-43B4-B247-6FF96DF37632}">
+							<ChildrenList>
+								<Action Name="" ID="{B98B1EA7-E8C7-408F-B49C-354D97521136}" ShortID="149185294">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="2"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="idleLoop" ID="{6CCD95A5-F692-4A5D-8381-7457ECD4B3B6}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="FollowerSpawn" ID="{E4A1B32B-3017-4C2C-89AB-CC07BC2F7A6A}">
+							<ChildrenList>
+								<Action Name="" ID="{F3BDFE9C-787B-4D82-8990-45DDF3C3B786}" ShortID="555460442">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="FollowerSpawn" ID="{16A423EC-DA6E-4707-BDC4-19798F41927C}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+					</ChildrenList>
+				</Folder>
+				<Folder Name="Nemesis Huntress" ID="{CC591652-3A6B-4EBF-AC0A-C55FAB27902E}" ShortID="937343913">
+					<ChildrenList>
+						<Event Name="NemHuntessChargeBow" ID="{A5ECA558-71D8-48FD-8692-1565DE3BB680}">
+							<ChildrenList>
+								<Action Name="" ID="{7E6D8B99-C140-4BCF-8262-629D751807B4}" ShortID="984179780">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="BowPull" ID="{8D262C68-9436-4EAE-8F4B-C3FAB99CA12C}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="NemHuntessBowMax" ID="{7563CF18-842B-4780-B41C-B80AAF6926A0}">
+							<ChildrenList>
+								<Action Name="" ID="{48AA7F5A-7988-4318-AA5B-D2F2FE400C9C}" ShortID="498904764">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="BowMax" ID="{86417B5F-084A-4847-A3CC-65DC83655F97}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="NemHuntessFireBow" ID="{69BEAD45-C653-42A5-A8C0-674C1C75DA42}">
+							<ChildrenList>
+								<Action Name="" ID="{6704306D-6BE9-4C33-8D4E-D8A32162725A}" ShortID="670553240">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="BowFire" ID="{58F99558-D3BF-4583-9941-188A8388AC1C}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>

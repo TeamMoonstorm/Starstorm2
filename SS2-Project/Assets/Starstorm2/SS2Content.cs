@@ -38,6 +38,8 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef NemBossHelper;
 
+            public static ItemDef VoidRock;
+
             public static ItemDef BloodTester;
 
             public static ItemDef FieldAccelerator;
@@ -108,6 +110,8 @@ namespace Moonstorm.Starstorm2
             public static EquipmentDef ElitePurpleEquipment;
 
             public static EquipmentDef EliteKineticEquipment;
+
+            public static EquipmentDef equipDivineRight;
 
             public static EquipmentDef BackThruster;
 
@@ -215,6 +219,22 @@ namespace Moonstorm.Starstorm2
             public static BuffDef BuffCyborgPrimary;
 
             public static BuffDef BuffCyborgTeleporter;
+            
+            public static BuffDef bdOverstress;
+
+            public static BuffDef bdNemCapDroneBuff;
+
+            public static BuffDef bdShield;
+
+            public static BuffDef bdParry;
+
+            public static BuffDef bdKnightBuff;
+
+            public static BuffDef bdFortified;
+
+            public static BuffDef bdKnightCharged;
+
+            public static BuffDef bdLampBuff;
         }
 
         public static class Elites
@@ -240,6 +260,8 @@ namespace Moonstorm.Starstorm2
 
             public static SurvivorDef survivorNemCommando;
 
+            public static SurvivorDef survivorNemCaptain;
+
             //public static SurvivorDef SurvivorPyro;
         }
 
@@ -257,6 +279,19 @@ namespace Moonstorm.Starstorm2
         public override void Init()
         {
             base.Init();
+
+            Typhoon.Init();
+            Events.Init();
+            
+            Bulwark.Init();
+
+            Ethereal.Init();
+            
+            Deluge.Init();
+            Tempest.Init();
+            Cyclone.Init();
+            SuperTyphoon.Init();
+            
 
             LoadDispatchers = new Action[]
             {
@@ -292,41 +327,6 @@ namespace Moonstorm.Starstorm2
                 {
                     new Modules.Elites().Initialize();
                 },
-				
-                Typhoon.Init,
-                Events.Init,
-				
-                //delegate
-                //{
-                //    //Deluge.Init();
-                //},
-                //delegate
-                //{
-                //    //Tempest.Init();
-                //},
-                //delegate
-                //{
-                //    //Cyclone.Init();
-                //},
-                //delegate
-                //{
-                //    Typhoon.Init();
-                //},
-                //delegate
-                //{
-                //    //SuperTyphoon.Init();
-                //},
-                //delegate
-                //{
-                //    Ethereal.Init();
-                //},
-                //delegate
-                //{
-                //    if(SS2Config.EnableEvents.Value)
-                //    {
-                //        Events.Init();
-                //    }
-                //},
                 delegate
                 {
                     new Modules.Characters().Initialize();
