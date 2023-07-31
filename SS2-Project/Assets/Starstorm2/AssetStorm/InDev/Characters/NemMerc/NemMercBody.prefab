@@ -3351,7 +3351,7 @@ MonoBehaviour:
   levelCrit: 0
   levelArmor: 0
   wasLucky: 0
-  spreadBloomDecayTime: 0.7
+  spreadBloomDecayTime: 1
   spreadBloomCurve:
     serializedVersion: 2
     m_Curve:
@@ -3381,7 +3381,7 @@ MonoBehaviour:
   aimOriginTransform: {fileID: 8905998632993778413}
   hullClassification: 0
   portraitIcon: {fileID: 2800000, guid: 7d90bd0331ab07e45b04215c5f0c9308, type: 3}
-  bodyColor: {r: 1, g: 1, b: 1, a: 1}
+  bodyColor: {r: 1, g: 0.48472303, b: 0, a: 1}
   isChampion: 0
   currentVehicle: {fileID: 0}
   preferredPodPrefab: {fileID: 0}
@@ -3895,7 +3895,7 @@ MonoBehaviour:
   targetIsHologram: 0
   hologramRayRadius: 6
   maxTrackingDistance: 50
-  maxTrackingAngle: 75
+  maxTrackingAngle: 40
   trackerUpdateFrequency: 10
 --- !u!1 &8609686412036953287
 GameObject:

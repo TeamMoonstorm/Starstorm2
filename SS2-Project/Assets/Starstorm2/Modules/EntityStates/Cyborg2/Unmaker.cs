@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 using RoR2;
 using UnityEngine;
 using Moonstorm.Starstorm2;
-
+using RoR2.Skills;
 namespace EntityStates.Cyborg2
 {
-    public class Unmaker : BaseSkillState
+    public class Unmaker : BaseSkillState, SteppedSkillDef.IStepSetter
     {
-        public static float baseDuration = 0.4f;
-        public static float baseExtraDuration = 0.25f;
+        public static float baseDuration = 0.45f;
         public static float bulletMaxDistance = 256;
         public static float bulletRadius = 1;
 
@@ -30,38 +29,21 @@ namespace EntityStates.Cyborg2
         public static float bloom = .4f;
         public static float fireSoundPitch = 1;
 
-        private float fireTime;
-        private float fireStopwatch;
-        private int numShots;
-        private int shotsFired;
         private float duration;
-        private bool hasFiredSecondShot;
+        private bool hasFired;
+        private string muzzleString;
         public override void OnEnter()
         {
             base.OnEnter();
-
             tracerPrefab = TRACERTEMP;
-
-            numShots = 1 + base.characterBody.GetBuffCount(SS2Content.Buffs.BuffCyborgPrimary);
-            float baseFireDuration = Unmaker.baseDuration + numShots * Unmaker.extraDurationPerShot;
-            float baseDuration = baseFireDuration + Unmaker.baseExtraDuration;
             duration = Unmaker.baseDuration / base.attackSpeedStat;
-            fireTime = baseFireDuration / numShots / base.attackSpeedStat;
             base.StartAimMode();
+            Fire();
 
         }
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-
-            fireStopwatch -= Time.fixedDeltaTime;
-            if (fireStopwatch <= 0 && shotsFired < numShots)
-            {
-                fireStopwatch = fireTime;
-                Fire(shotsFired % 2 == 1 ? "CannonR" : "CannonL");
-
-            }
-
             if (base.fixedAge >= duration)
             {
                 outer.SetNextStateToMain();
@@ -69,32 +51,24 @@ namespace EntityStates.Cyborg2
         }
         public override void OnExit()
         {
-            if (shotsFired < numShots)
+            if (!this.outer.destroying && !this.hasFired)
             {
-                Fire(shotsFired % 2 == 1 ? "CannonR" : "CannonL");
+                Fire();
             }
 
             base.OnExit();
         }
-        private void Fire(string muzzleName)
+        private void Fire()
         {
-            shotsFired++;
 
-            if (shotsFired > 1)
-            {
-                base.characterBody.ClearTimedBuffs(SS2Content.Buffs.BuffCyborgPrimary);
-            }
-
-
-            EffectManager.SimpleMuzzleFlash(muzzleFlashPrefab, base.gameObject, muzzleName, false);
+            EffectManager.SimpleMuzzleFlash(muzzleFlashPrefab, base.gameObject, muzzleString, false);
             //anim
             base.characterBody.AddSpreadBloom(bloom);
             base.AddRecoil(-1f * recoil, -1.5f * recoil, -1f * recoil, 1f * recoil);
 
+            this.hasFired = true;
 
-            float t = Mathf.Clamp01((shotsFired - 1) / (numShotsForMaxDamage - 1));
-            float damage = Mathf.Lerp(minDamageCoefficient, damageCoefficient, t);
-            Util.PlayAttackSpeedSound(fireSoundString, base.gameObject, fireSoundPitch * (t + 1));
+            Util.PlayAttackSpeedSound(fireSoundString, base.gameObject, fireSoundPitch);
             if (base.isAuthority)
             {
                 Ray aimRay = base.GetAimRay();
@@ -103,7 +77,7 @@ namespace EntityStates.Cyborg2
                     aimVector = aimRay.direction,
                     origin = aimRay.origin,
                     owner = base.gameObject,
-                    damage = damageStat * damage,
+                    damage = damageStat * damageCoefficient,
                     damageColorIndex = DamageColorIndex.Default,
                     damageType = DamageType.Generic,
                     falloffModel = BulletAttack.FalloffModel.DefaultBullet,
@@ -114,7 +88,7 @@ namespace EntityStates.Cyborg2
                     maxDistance = Unmaker.bulletMaxDistance,
                     radius = Unmaker.bulletRadius,
                     isCrit = base.RollCrit(),
-                    muzzleName = muzzleName,
+                    muzzleName = muzzleString,
                     minSpread = 0,
                     maxSpread = 0,
                     hitEffectPrefab = hitEffectPrefab,
@@ -128,6 +102,11 @@ namespace EntityStates.Cyborg2
         public override InterruptPriority GetMinimumInterruptPriority()
         {
             return InterruptPriority.Skill;
+        }
+
+        public void SetStep(int i)
+        {
+            this.muzzleString = i == 0 ? "CannonR" : "CannonL";
         }
     }
 }

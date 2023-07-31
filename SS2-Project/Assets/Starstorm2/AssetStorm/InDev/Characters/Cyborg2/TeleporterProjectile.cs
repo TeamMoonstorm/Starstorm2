@@ -37,7 +37,8 @@ namespace Moonstorm.Starstorm2.Components
             //vfx
             //sound
             //teleporter anim??
-            Destroy(base.gameObject);
+
+            //Destroy(base.gameObject);
         }
 
         public class ProjectileTeleporterOwnership : MonoBehaviour
@@ -46,6 +47,8 @@ namespace Moonstorm.Starstorm2.Components
             private SkillDef teleportSkillDef;
             private CharacterBody body;
             private SkillLocator skillLocator;
+
+            public static bool destroyOnFirstTeleport = false;
             private void Awake()
             {
                 this.body = base.GetComponent<CharacterBody>();
@@ -61,7 +64,9 @@ namespace Moonstorm.Starstorm2.Components
             public void DoTeleport()
             {
                 this.teleporter.OnTeleport();
-                this.UnsetOverride();
+
+                if(destroyOnFirstTeleport)
+                    this.UnsetOverride();
             }
 
             public void UnsetOverride()

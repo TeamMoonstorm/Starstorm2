@@ -514,7 +514,6 @@ GameObject:
   - component: {fileID: 4265021402231107003}
   - component: {fileID: 7957800586144485770}
   - component: {fileID: 3653285797090997835}
-  - component: {fileID: 3265145000341747020}
   - component: {fileID: 478096141060234615}
   - component: {fileID: 7663097847803219210}
   - component: {fileID: 6566283443525670134}
@@ -534,7 +533,6 @@ GameObject:
   - component: {fileID: 8467841194318990007}
   - component: {fileID: 4269496153077987429}
   - component: {fileID: 1004718732815417702}
-  - component: {fileID: 3442275506670629444}
   m_Layer: 0
   m_Name: Cyborg2Body
   m_TagString: Player
@@ -619,7 +617,7 @@ MonoBehaviour:
   baseDamage: 12
   baseAttackSpeed: 1
   baseCrit: 1
-  baseArmor: 0
+  baseArmor: 12
   baseVisionDistance: Infinity
   baseJumpCount: 1
   sprintingSpeedMultiplier: 1.45
@@ -744,8 +742,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customName: Weapon
   initialStateType:
-    _typeName: RoR2.RouletteChestController+Idle, RoR2, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   mainStateType:
     _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &4265021402231107003
@@ -804,22 +801,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: dbd3d78e1519f8b48ae18786056d24a6, type: 2}
   skillName: 
-  hideInCharacterSelect: 0
-  hasExecutedSuccessfully: 0
---- !u!114 &3265145000341747020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2260960647979714696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _skillFamily: {fileID: 11400000, guid: c93ba762327933d4cbdf6d539276a8cf, type: 2}
-  skillName: SecondaryCharged
   hideInCharacterSelect: 0
   hasExecutedSuccessfully: 0
 --- !u!114 &478096141060234615
@@ -1161,19 +1142,6 @@ MonoBehaviour:
   canBeHitStunned: 0
   canBeStunned: 0
   canBeFrozen: 1
---- !u!114 &3442275506670629444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2260960647979714696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 781b7ea1a3994694eb82233928e954db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  primaryBuffDuration: 5
 --- !u!1 &2344722888769638743
 GameObject:
   m_ObjectHideFlags: 0

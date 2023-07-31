@@ -9,17 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28da249e5d4524148933fec6169235c2, type: 3}
+  m_Script: {fileID: 1391837873, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: Cyborg2Primary
   m_EditorClassIdentifier: 
-  skillName: DualCannon
+  skillName: FireCannon
   skillNameToken: SS2_CYBORG2_PRIMARY_CANNON_NAME
   skillDescriptionToken: SS2_CYBORG2_PRIMARY_CANNON_DESCRIPTION
   keywordTokens: []
   icon: {fileID: 21300000, guid: 34f1b24043b693c47ad43610fcd7f233, type: 3}
   activationStateMachineName: Weapon
   activationState:
-    _typeName: EntityStates.Cyborg2.DoubleCannon, Starstorm2, Version=1.0.0.0, Culture=neutral,
+    _typeName: EntityStates.Cyborg2.Unmaker, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
   interruptPriority: 0
   baseRechargeInterval: 0
@@ -36,7 +36,3 @@ MonoBehaviour:
   canceledFromSprinting: 0
   isCombatSkill: 1
   mustKeyPress: 0
-  buffState:
-    _typeName: EntityStates.Cyborg2.DoubleCannonEmpowered, Starstorm2, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  targetBuff: {fileID: 11400000, guid: 4525a9086c2bce84fb7ff50069a181cf, type: 2}

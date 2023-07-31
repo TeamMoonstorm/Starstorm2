@@ -18,9 +18,12 @@ namespace EntityStates.Cyborg2
 		public static float recoilAmplitude = 7f;
 		public static float baseDuration = 1.5f;
 		public static float earlyExitTime = 0.5f;
-		public static float damageCoefficient = 20f;
-		public static float force = 1500f;
+		public static float damageCoefficient = 6f;
+		public static float force = 500f;
 		public static float chargeTime = 0.33f;
+
+		[NonSerialized]
+		public static float selfKnockbackForce = 4400f;
 
 		private float duration;
 		private bool hasFired;
@@ -54,8 +57,15 @@ namespace EntityStates.Cyborg2
 			AddRecoil(-1f * recoilAmplitude, -1.5f * recoilAmplitude, -0.25f * recoilAmplitude, 0.25f * recoilAmplitude);
 			base.characterBody.AddSpreadBloom(bloom);
 			Ray aimRay = GetAimRay();
+
+
 			if (base.isAuthority)
 			{
+				if (base.characterMotor && !base.characterMotor.isGrounded)
+				{
+					base.characterMotor.ApplyForce((aimRay.direction * -1f) * selfKnockbackForce);
+				}
+
 				FireProjectileInfo fireProjectileInfo = default(FireProjectileInfo);
 				fireProjectileInfo.projectilePrefab = projectilePrefab;
 				fireProjectileInfo.position = aimRay.origin;

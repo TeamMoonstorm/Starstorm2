@@ -22,14 +22,14 @@ MonoBehaviour:
     _typeName: EntityStates.Cyborg2.Teleport, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
   interruptPriority: 3
-  baseRechargeInterval: 0
+  baseRechargeInterval: 4
   baseMaxStock: 1
-  rechargeStock: 0
-  requiredStock: 0
-  stockToConsume: 0
+  rechargeStock: 1
+  requiredStock: 1
+  stockToConsume: 1
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 1
-  dontAllowPastMaxStocks: 0
+  dontAllowPastMaxStocks: 1
   beginSkillCooldownOnSkillEnd: 1
   cancelSprintingOnActivation: 0
   forceSprintDuringState: 0

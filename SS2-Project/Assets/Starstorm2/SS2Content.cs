@@ -213,6 +213,8 @@ namespace Moonstorm.Starstorm2
             public static BuffDef BuffRiposte;
 
             public static BuffDef BuffCyborgPrimary;
+
+            public static BuffDef BuffCyborgTeleporter;
         }
 
         public static class Elites

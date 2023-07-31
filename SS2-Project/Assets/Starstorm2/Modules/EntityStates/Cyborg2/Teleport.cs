@@ -11,12 +11,15 @@ namespace EntityStates.Cyborg2
 {
     public class Teleport : BaseSkillState
     {
-        public static float smallHopVelocity = 12f;
+        public static float exitHopVelocity = 12f;
         public static float baseDuration = 0.33f;
         private float duration;
         private CameraMover camera;
         private TeleporterProjectile.ProjectileTeleporterOwnership teleporterOwnership;
         private Vector3 teleportTarget;
+
+        public static float exitVelocityCoefficient = 1.5f;
+        private Vector3 storedVelocity;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -36,6 +39,8 @@ namespace EntityStates.Cyborg2
             this.camera = base.gameObject.AddComponent<CameraMover>();
             this.camera.lerpTime = this.duration;
             this.camera.position = this.teleportTarget;
+
+            this.storedVelocity = base.characterMotor.velocity;
 
             if (NetworkServer.active)
             {
@@ -62,9 +67,22 @@ namespace EntityStates.Cyborg2
 
             if (base.isAuthority && base.fixedAge >= this.duration)
             {
-                TeleportHelper.TeleportBody(base.characterBody, this.teleportTarget);
-                base.characterDirection.forward = base.GetAimRay().direction;
-                base.SmallHop(base.characterMotor, Teleport.smallHopVelocity);
+                //for some reason its 0,0,0 on the same frame the teleporter disappears
+                if(this.teleportTarget != Vector3.zero)
+                {
+                    TeleportHelper.TeleportBody(base.characterBody, this.teleportTarget);
+                    base.characterDirection.forward = base.GetAimRay().direction;
+                    float magnitude = this.storedVelocity.magnitude * exitVelocityCoefficient;
+                    Vector3 direction = new Vector3(base.inputBank.moveVector.x, 0, base.inputBank.moveVector.z);
+                    Vector3 force = direction * magnitude;
+                    force.y = this.storedVelocity.y;
+                    base.characterMotor.ApplyForce(force);
+
+                    base.SmallHop(base.characterMotor, Teleport.exitHopVelocity);
+                }
+                
+                
+                
                 this.outer.SetNextStateToMain();
                 return;
             }

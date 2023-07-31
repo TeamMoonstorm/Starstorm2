@@ -40,7 +40,7 @@ namespace EntityStates.Cyborg2
 
 		public override InterruptPriority GetMinimumInterruptPriority()
 		{
-			return InterruptPriority.Any;
+			return InterruptPriority.PrioritySkill;
 		}
 	}
 }

@@ -78,8 +78,9 @@ namespace Moonstorm.Starstorm2.Components
 				}
 			}
 
-
-			this.search.teamMaskFilter = TeamMask.GetUnprotectedTeams(this.teamComponent.teamIndex);
+			TeamMask filter = TeamMask.allButNeutral;
+			filter.RemoveTeam(this.teamComponent.teamIndex);
+			this.search.teamMaskFilter = filter;
 			this.search.filterByLoS = true;
 			this.search.searchOrigin = aimRay.origin;
 			this.search.searchDirection = aimRay.direction;
@@ -101,7 +102,7 @@ namespace Moonstorm.Starstorm2.Components
 
 		public float maxTrackingDistance = 50f;
 
-		public float maxTrackingAngle = 75f;
+		public float maxTrackingAngle = 40f;
 
 		public float trackerUpdateFrequency = 10f;
 

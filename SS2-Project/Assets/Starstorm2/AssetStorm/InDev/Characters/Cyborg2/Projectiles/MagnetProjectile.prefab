@@ -20,8 +20,7 @@ GameObject:
   - component: {fileID: 4506577062129598372}
   - component: {fileID: 1184314225091819833}
   - component: {fileID: 1409126240315283302}
-  - component: {fileID: 5139893156558139203}
-  - component: {fileID: 5931549400823739087}
+  - component: {fileID: 8548933317365835191}
   m_Layer: 17
   m_Name: MagnetProjectile
   m_TagString: Untagged
@@ -39,8 +38,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 70393788034512050}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -214,7 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   falloffModel: 2
-  blastRadius: 25
+  blastRadius: 15
   blastDamageCoefficient: 1
   blastProcCoefficient: 1
   blastAttackerFiltering: 0
@@ -266,9 +264,9 @@ MonoBehaviour:
   m_Script: {fileID: 1324642361, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 25
-  damping: 0.5
-  forceMagnitude: -1500
+  radius: 18
+  damping: 0.3
+  forceMagnitude: -1000
   forceCoefficientAtEdge: 0.5
   tetherVfxOrigin: {fileID: 1409126240315283302}
 --- !u!114 &1409126240315283302
@@ -284,7 +282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tetherPrefab: {fileID: 0}
---- !u!114 &5139893156558139203
+--- !u!114 &8548933317365835191
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -293,74 +291,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6055536033811015727}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1294804675, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groupName: Hitbox
-  hitBoxes:
-  - {fileID: 3171056118236630994}
---- !u!114 &5931549400823739087
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6055536033811015727}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -899414464, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageCoefficient: 0.05
-  impactEffect: {fileID: 0}
-  forceVector: {x: 0, y: 0, z: 0}
-  overlapProcCoefficient: 0.1
-  maximumOverlapTargets: 100
-  onServerHit:
-    m_PersistentCalls:
-      m_Calls: []
-  fireFrequency: 60
-  resetInterval: 0.25
---- !u!1 &6719685182788637804
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 70393788034512050}
-  - component: {fileID: 3171056118236630994}
-  m_Layer: 12
-  m_Name: Hitbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &70393788034512050
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6719685182788637804}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 7, y: 5, z: 7}
-  m_Children: []
-  m_Father: {fileID: 3812967791171488419}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3171056118236630994
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6719685182788637804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1783796254, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Script: {fileID: 11500000, guid: a93e1f10958334646be0ce29955232b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

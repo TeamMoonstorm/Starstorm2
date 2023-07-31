@@ -24,7 +24,7 @@ namespace EntityStates.NemMerc
         [SerializeField]
         public float numAttacks = 2;
         [SerializeField]
-        public float hitPauseDuration = 0.1f;
+        public float hitPauseDuration = 0.05f;
         [SerializeField]
         public float entryVelocityDamp = 0.5f;
         [SerializeField]
@@ -112,7 +112,7 @@ namespace EntityStates.NemMerc
             {
                 base.characterMotor.velocity = Vector3.zero;
                 this.hitPauseTimer -= Time.fixedDeltaTime;
-                this.animator.SetFloat("Whirlwind.playbackRate", 0f);
+                this.animator.SetFloat("Secondary.playbackRate", 0f);
             }          
             if (base.isAuthority)
             {

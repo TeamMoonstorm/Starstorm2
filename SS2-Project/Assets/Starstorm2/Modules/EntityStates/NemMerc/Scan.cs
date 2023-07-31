@@ -55,9 +55,13 @@ namespace EntityStates.NemMerc
             if (!NetworkServer.active) return;
             
             Ray aimRay = base.GetAimRay();
+
+            TeamMask filter = TeamMask.allButNeutral;
+            filter.RemoveTeam(this.teamComponent.teamIndex);
+
             BullseyeSearch search = new BullseyeSearch
             {
-                teamMaskFilter = TeamMask.GetEnemyTeams(this.teamComponent.teamIndex),
+                teamMaskFilter = filter,
                 filterByLoS = false,
                 searchOrigin = aimRay.origin,
                 searchDirection = aimRay.direction,
