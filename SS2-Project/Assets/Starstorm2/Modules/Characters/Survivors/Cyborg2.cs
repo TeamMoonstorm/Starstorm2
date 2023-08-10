@@ -3,7 +3,7 @@ using UnityEngine;
 using RoR2.Skills;
 using System.Runtime.CompilerServices;
 using UnityEngine.AddressableAssets;
-
+using R2API;
 namespace Moonstorm.Starstorm2.Survivors
 {
     //[DisabledContent]
@@ -13,9 +13,18 @@ namespace Moonstorm.Starstorm2.Survivors
         public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemmandoMonsterMaster", SS2Bundle.Indev);
         public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("survivorCyborg2", SS2Bundle.Indev);
 
+        //configgggggggg
+        public static int maxTeleporters = 1;
+        public static int maxBloonTraps = 3;
+        public static int maxShockMines = 8;
+
+        public static DeployableSlot teleporter;
+        public static DeployableSlot bloonTrap;
+        public static DeployableSlot shockMine;
         public override void Initialize()
         {
             base.Initialize();
+            this.CreateDeployables();
             if (Starstorm.ScepterInstalled)
             {
                 //ScepterCompat();
@@ -35,14 +44,24 @@ namespace Moonstorm.Starstorm2.Survivors
             cb._defaultCrosshairPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/StandardCrosshair.prefab").WaitForCompletion();
             cb.GetComponent<ModelLocator>().modelTransform.GetComponent<FootstepHandler>().footstepDustPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/GenericFootstepDust.prefab").WaitForCompletion();
 
-            GameObject p = SS2Assets.LoadAsset<GameObject>("MagnetProjectile", SS2Bundle.Indev);
-            p.GetComponent<RoR2.Projectile.ProjectileController>().ghostPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/BFG/BeamSphereGhost.prefab").WaitForCompletion();
-            p.GetComponent<RoR2.Projectile.ProjectileExplosion>().explosionEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/BFG/BeamSphereExplosion.prefab").WaitForCompletion();
 
-            GameObject p2 = SS2Assets.LoadAsset<GameObject>("AntimatterProjectile", SS2Bundle.Indev);
-            p2.GetComponent<RoR2.Projectile.ProjectileController>().ghostPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/LunarGolem/LunarGolemTwinShotProjectileGhost.prefab").WaitForCompletion();
-            p2.GetComponent<RoR2.Projectile.ProjectileExplosion>().explosionEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/LunarGolem/LunarGolemTwinShotExplosion.prefab").WaitForCompletion();
 
+        }
+
+        public void CreateDeployables()
+        {
+            
+
+            teleporter = DeployableAPI.RegisterDeployableSlot( (self, deployableCountMultiplier) => { return maxTeleporters; } );
+            bloonTrap = DeployableAPI.RegisterDeployableSlot((self, deployableCountMultiplier) => { return maxBloonTraps; }); 
+            shockMine = DeployableAPI.RegisterDeployableSlot((self, deployableCountMultiplier) => { return maxShockMines; });
+
+            GameObject g1 = SS2Assets.LoadAsset<GameObject>("CyborgBuffTeleporter", SS2Bundle.Indev);
+            g1.GetComponent<RoR2.Projectile.ProjectileDeployToOwner>().deployableSlot = teleporter;
+            GameObject g2 = SS2Assets.LoadAsset<GameObject>("BloonTrap", SS2Bundle.Indev);
+            g2.GetComponent<RoR2.Projectile.ProjectileDeployToOwner>().deployableSlot = bloonTrap;
+            GameObject g3 = SS2Assets.LoadAsset<GameObject>("ShockMine", SS2Bundle.Indev);
+            g3.GetComponent<RoR2.Projectile.ProjectileDeployToOwner>().deployableSlot = shockMine;
         }
     }
 }

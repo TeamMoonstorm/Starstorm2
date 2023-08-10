@@ -14,7 +14,8 @@ namespace Moonstorm.Starstorm2.Components
     {
         [NonSerialized]
         public static bool lockDash;
-
+        [NonSerialized]
+        public static DeployableSlot deployableSlot = Survivors.NemMerc.hologram;
         [NonSerialized]
         public float timeUntilReveal;
         [NonSerialized]
@@ -47,6 +48,20 @@ namespace Moonstorm.Starstorm2.Components
         {
             this.indicator = GameObject.Instantiate(this.hologramIndicatorPrefab, base.transform.position, Quaternion.identity).GetComponent<PositionIndicator>();
             this.indicator.targetTransform = this.indicatorStartTransform;
+
+
+            if (this.owner)
+            {
+                CharacterBody component = owner.GetComponent<CharacterBody>();
+                if (component)
+                {
+                    CharacterMaster master = component.master;
+                    if (master)
+                    {
+                        master.AddDeployable(base.GetComponent<Deployable>(), deployableSlot);
+                    }
+                }
+            }
         }
 
 

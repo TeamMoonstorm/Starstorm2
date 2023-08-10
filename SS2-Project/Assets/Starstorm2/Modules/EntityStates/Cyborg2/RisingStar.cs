@@ -30,11 +30,8 @@ namespace EntityStates.Cyborg2
         public static int maxShots = 3;
 
         public static float walkSpeedPenaltyCoefficient = 0.33f;
-        [NonSerialized]
-        private static GameObject TRACERTEMP = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Huntress/TracerHuntressSnipe.prefab").WaitForCompletion();
 
-        [NonSerialized]
-        private static GameObject EXPLOSIONTEMP_USE_ESC_PLS = Moonstorm.Starstorm2.SS2Assets.LoadAsset<GameObject>("EmbedderExplosionEffect", Moonstorm.Starstorm2.SS2Bundle.Indev);
+        public static GameObject explosionEffectPrefab;
         public static GameObject tracerPrefab;
         public static GameObject hitEffectPrefab;
         public static GameObject muzzleFlashPrefab;
@@ -174,7 +171,7 @@ namespace EntityStates.Cyborg2
                 if (hurtBox)
                     this.RemoveIndicator(hurtBox);
 
-                EffectManager.SpawnEffect(EXPLOSIONTEMP_USE_ESC_PLS, new EffectData
+                EffectManager.SpawnEffect(explosionEffectPrefab, new EffectData
                 {
                     origin = position,
                     scale = blastRadius,
@@ -187,7 +184,7 @@ namespace EntityStates.Cyborg2
                 };
                 int muzzleIndex = base.GetModelChildLocator().FindChildIndex("CannonR"); ///////// XXXXXXXDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
                 effectData.SetChildLocatorTransformReference(base.gameObject, muzzleIndex);
-                EffectManager.SpawnEffect(TRACERTEMP, effectData, true);
+                EffectManager.SpawnEffect(tracerPrefab, effectData, true);
 
                 new BlastAttack
                 {

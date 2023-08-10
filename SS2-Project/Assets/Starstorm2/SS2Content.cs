@@ -219,7 +219,9 @@ namespace Moonstorm.Starstorm2
             public static BuffDef BuffCyborgPrimary;
 
             public static BuffDef BuffCyborgTeleporter;
-            
+
+            public static BuffDef BuffBloonTrap;
+
             public static BuffDef bdOverstress;
 
             public static BuffDef bdNemCapDroneBuff;

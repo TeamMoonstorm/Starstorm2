@@ -227,6 +227,7 @@ namespace EntityStates.NemMerc
             hologram.lifetime = Scan.hologramDuration;
             hologram.owner = base.gameObject;
             hologram.target = target;
+            NetworkServer.Spawn(hologram.gameObject);
         }
         
     }

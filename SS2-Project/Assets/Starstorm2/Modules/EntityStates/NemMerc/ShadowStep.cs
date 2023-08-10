@@ -94,7 +94,6 @@ namespace EntityStates.NemMerc
                 base.characterDirection.forward = base.GetAimRay().direction;
                 base.SmallHop(base.characterMotor, ShadowStep.smallHopVelocity);
 
-                //base.skillLocator.primary.stock = 2; /////////////////////
                 this.outer.SetNextStateToMain();
                 return;
             }

@@ -2012,6 +2012,7 @@ GameObject:
   - component: {fileID: 4200892962297606216}
   - component: {fileID: 2563497962724480886}
   - component: {fileID: 2162534801083197555}
+  - component: {fileID: -4269483029595532377}
   m_Layer: 15
   m_Name: NemMercHologram
   m_TagString: Untagged
@@ -2101,6 +2102,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 3
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-4269483029595532377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5381057290776391523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 662316482, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onUndeploy:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5905705529540798091
 GameObject:
   m_ObjectHideFlags: 0
