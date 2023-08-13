@@ -1,0 +1,569 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c9c430476270cb42ae82672a367a0e1, type: 3}
+  m_Name: iddNeedles
+  m_EditorClassIdentifier: 
+  keyAsset: {fileID: 11400000, guid: fa0051101a35ace40bfc4745c0daaed4, type: 2}
+  displayPrefabs:
+  - {fileID: 4842982564617537136, guid: dad5812f280ba8d498f0a5e106b615b0, type: 3}
+  displayPrefab: {fileID: 4842982564617537136, guid: dad5812f280ba8d498f0a5e106b615b0,
+    type: 3}
+  namedDisplayDictionary:
+  - idrsName: idrsBandit2
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: UpperArmR
+      localPos: {x: -0.01534097, y: 0.363851, z: -0.03981714}
+      localAngles: {x: 50.70306, y: 224.0942, z: 351.1517}
+      localScales: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: UpperArmR
+      localPos: {x: -0.0222378, y: 0.3670381, z: -0.0341377}
+      localAngles: {x: 326.6653, y: 0.179335, z: 17.51762}
+      localScales: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: UpperArmR
+      localPos: {x: -0.01256819, y: 0.3853428, z: -0.05224272}
+      localAngles: {x: 27.94973, y: 247.9526, z: 357.7955}
+      localScales: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+  - idrsName: idrsCaptain
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: UpperArmR
+      localPos: {x: -0.05377744, y: 0.006877183, z: -0.08179499}
+      localAngles: {x: 321.9402, y: 287.8975, z: 75.57228}
+      localScales: {x: 0.2875, y: 0.2875, z: 0.2875}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: UpperArmR
+      localPos: {x: -0.02144049, y: 0.03753171, z: -0.1040113}
+      localAngles: {x: 359.3825, y: 90.21454, z: 255.9328}
+      localScales: {x: 0.2875, y: 0.2875, z: 0.2875}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: UpperArmR
+      localPos: {x: -0.06090615, y: 0.04522063, z: -0.07535287}
+      localAngles: {x: 322.4774, y: 79.79983, z: 281.623}
+      localScales: {x: 0.2875, y: 0.2875, z: 0.2875}
+      limbMask: 0
+  - idrsName: idrsCommando
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: UpperArmL
+      localPos: {x: 0.03819331, y: 0.004076517, z: -0.01045811}
+      localAngles: {x: 300.2961, y: 59.64821, z: 141.2447}
+      localScales: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: UpperArmL
+      localPos: {x: 0.002189725, y: -0.00563924, z: -0.009007919}
+      localAngles: {x: 316.7508, y: 298.3436, z: 211.8608}
+      localScales: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: UpperArmL
+      localPos: {x: 0.01704371, y: -0.01528665, z: -0.04135314}
+      localAngles: {x: 350.7885, y: 330.4572, z: 211.49}
+      localScales: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: UpperArmR
+      localPos: {x: -0.02500017, y: -0.04436771, z: -0.03970841}
+      localAngles: {x: 34.20942, y: 57.88487, z: 107.7043}
+      localScales: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: UpperArmR
+      localPos: {x: 0, y: -0.05323337, z: -0.067669}
+      localAngles: {x: 39.58902, y: 25.63637, z: 98.27225}
+      localScales: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: UpperArmR
+      localPos: {x: -0.04189213, y: -0.03410671, z: -0.07068154}
+      localAngles: {x: 17.24379, y: 3.774906, z: 76.98847}
+      localScales: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+  - idrsName: idrsCroco
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: UpperArmR
+      localPos: {x: 0.7737828, y: 0.6068611, z: 1.386037}
+      localAngles: {x: 40.41306, y: 222.9138, z: 176.1803}
+      localScales: {x: 2.75, y: 2.75, z: 2.75}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: UpperArmR
+      localPos: {x: 0.3085577, y: 0.9939425, z: 1.157166}
+      localAngles: {x: 3.232666, y: 247.8889, z: 250.571}
+      localScales: {x: 2.75, y: 2.75, z: 2.75}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: UpperArmR
+      localPos: {x: 0.6680836, y: 1.233235, z: 1.211569}
+      localAngles: {x: 14.67578, y: 257.96, z: 289.9248}
+      localScales: {x: 2.75, y: 2.75, z: 2.75}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: UpperArmR
+      localPos: {x: 0.9720645, y: 1.111118, z: 1.332117}
+      localAngles: {x: 0.9182523, y: 298.1544, z: 245.7818}
+      localScales: {x: 2.75, y: 2.75, z: 2.75}
+      limbMask: 0
+  - idrsName: idrsEngi
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: CannonHeadL
+      localPos: {x: 0.1441268, y: 0.1298743, z: 0.09723136}
+      localAngles: {x: 316.5265, y: 11.58962, z: 187.2838}
+      localScales: {x: 0.225, y: 0.225, z: 0.225}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: CannonHeadL
+      localPos: {x: 0.1155006, y: 0.1311176, z: 0.06077285}
+      localAngles: {x: 326.2177, y: 89.61636, z: 130.0548}
+      localScales: {x: 0.225, y: 0.225, z: 0.225}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: CannonHeadR
+      localPos: {x: -0.1263739, y: 0.131128, z: 0.06088754}
+      localAngles: {x: 356.1793, y: 61.67378, z: 106.2609}
+      localScales: {x: 0.225, y: 0.225, z: 0.225}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: CannonHeadR
+      localPos: {x: -0.1506968, y: 0.1311377, z: 0.06096289}
+      localAngles: {x: 329.6976, y: 9.669708, z: 125.2575}
+      localScales: {x: 0.225, y: 0.225, z: 0.225}
+      limbMask: 0
+  - idrsName: idrsExecutioner2
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: ShoulderR
+      localPos: {x: -0.003661449, y: -0.0386495, z: -0.03487042}
+      localAngles: {x: 320.4131, y: 241.6602, z: 88.63208}
+      localScales: {x: 0.1875, y: 0.1875, z: 0.1875}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: ShoulderR
+      localPos: {x: -0.003661449, y: -0.0386495, z: -0.03487042}
+      localAngles: {x: 275.0233, y: 289.3095, z: 70.73709}
+      localScales: {x: 0.1875, y: 0.1875, z: 0.1875}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: ShoulderR
+      localPos: {x: -0.01427421, y: -0.04199523, z: -0.01339607}
+      localAngles: {x: 347.8528, y: 336.784, z: 92.38802}
+      localScales: {x: 0.1875, y: 0.1875, z: 0.1875}
+      limbMask: 0
+  - idrsName: idrsHuntress
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: UpperArmR
+      localPos: {x: 0.01107517, y: 0.2917719, z: -0.05028839}
+      localAngles: {x: 331.8131, y: 83.36396, z: 250.0951}
+      localScales: {x: 0.155, y: 0.155, z: 0.155}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: UpperArmR
+      localPos: {x: 0.02257312, y: 0.2743708, z: -0.03945548}
+      localAngles: {x: 27.72162, y: 77.75866, z: 270.6445}
+      localScales: {x: 0.155, y: 0.155, z: 0.155}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: UpperArmR
+      localPos: {x: -0.007393113, y: 0.2993701, z: 0.00475955}
+      localAngles: {x: 308.8555, y: 196.9473, z: 256.449}
+      localScales: {x: 0.155, y: 0.155, z: 0.155}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: UpperArmR
+      localPos: {x: -0.007393113, y: 0.2993701, z: 0.00475955}
+      localAngles: {x: 7.776405, y: 175.4839, z: 209.9402}
+      localScales: {x: 0.155, y: 0.155, z: 0.155}
+      limbMask: 0
+  - idrsName: idrsLoader
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: MechLowerArmR
+      localPos: {x: 0.04389956, y: 0.4189138, z: 0.01675906}
+      localAngles: {x: 21.05048, y: 328.8392, z: 205.8537}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: MechLowerArmR
+      localPos: {x: 0.07486595, y: 0.4498889, z: -0.03391928}
+      localAngles: {x: 4.243499, y: 4.075778, z: 232.2328}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: MechLowerArmR
+      localPos: {x: 0.07447816, y: 0.4959311, z: -0.01376323}
+      localAngles: {x: 286.546, y: 275.364, z: 314.6151}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - idrsName: idrsMage
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Chest
+      localPos: {x: 0.1740894, y: -0.0578901, z: -0.3228729}
+      localAngles: {x: 328.3457, y: 226.4346, z: 62.93695}
+      localScales: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Chest
+      localPos: {x: 0.1917271, y: -0.06291904, z: -0.2963551}
+      localAngles: {x: 292.852, y: 211.5891, z: 52.02753}
+      localScales: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Chest
+      localPos: {x: -0.1868927, y: -0.02290223, z: -0.2738571}
+      localAngles: {x: 334.8563, y: 344.1607, z: 26.21815}
+      localScales: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Chest
+      localPos: {x: -0.1870672, y: -0.03306305, z: -0.2756834}
+      localAngles: {x: 23.05463, y: 332.4926, z: 78.37287}
+      localScales: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - idrsName: idrsMerc
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: UpperArmR
+      localPos: {x: -0.1006854, y: 0.1601741, z: -0.1138844}
+      localAngles: {x: 347.6648, y: 283.7105, z: 56.57222}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: UpperArmR
+      localPos: {x: -0.1237241, y: 0.157485, z: -0.09445366}
+      localAngles: {x: 57.40977, y: 258.166, z: 12.37614}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: UpperArmL
+      localPos: {x: 0.08871878, y: 0.2126324, z: -0.09672181}
+      localAngles: {x: 61.82699, y: 115.6095, z: 294.7083}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: UpperArmL
+      localPos: {x: 0.09625965, y: 0.2157598, z: -0.06818639}
+      localAngles: {x: 330.1208, y: 33.43694, z: 246.8737}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - idrsName: idrsNemCommando
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: ShoulderL
+      localPos: {x: 0.5171478, y: 0.1315453, z: -0.4177749}
+      localAngles: {x: 275.4886, y: 102.4438, z: 177.9835}
+      localScales: {x: 0.75, y: 0.75, z: 0.75}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: ShoulderL
+      localPos: {x: 0.4266503, y: 0.1000775, z: -0.3765476}
+      localAngles: {x: 328.411, y: 241.0822, z: 78.8042}
+      localScales: {x: 0.75, y: 0.75, z: 0.75}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: ShoulderL
+      localPos: {x: 0.4352762, y: 0.09995549, z: -0.3275776}
+      localAngles: {x: 347.0313, y: 209.5509, z: 100.9321}
+      localScales: {x: 0.75, y: 0.75, z: 0.75}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: ShoulderR
+      localPos: {x: -0.5341977, y: -0.02339186, z: 0.4012153}
+      localAngles: {x: 346.6448, y: 262.1304, z: 181.9433}
+      localScales: {x: 0.75, y: 0.75, z: 0.75}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: ShoulderR
+      localPos: {x: -0.534458, y: -0.01855953, z: 0.405233}
+      localAngles: {x: 294.119, y: 58.55282, z: 61.60498}
+      localScales: {x: 0.75, y: 0.75, z: 0.75}
+      limbMask: 0
+  - idrsName: idrsRailGunner
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Backpack
+      localPos: {x: -0.2302852, y: 0.3827638, z: 0.03114525}
+      localAngles: {x: 9.323322, y: 4.411703, z: 3.75454}
+      localScales: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Backpack
+      localPos: {x: -0.2515706, y: 0.3508544, z: -0.006621481}
+      localAngles: {x: 315.2341, y: 61.50618, z: 343.7985}
+      localScales: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Backpack
+      localPos: {x: -0.2412878, y: 0.3953781, z: -0.0560365}
+      localAngles: {x: 357.3567, y: 346.4563, z: 10.56985}
+      localScales: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+  - idrsName: idrsScav
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Chest
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - idrsName: idrsToolbot
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: LowerArmL
+      localPos: {x: -0.4875749, y: 1.583781, z: 0.4262525}
+      localAngles: {x: 61.64936, y: 82.79354, z: 100.7112}
+      localScales: {x: 1.5, y: 1.5, z: 1.5}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: LowerArmL
+      localPos: {x: -0.6534194, y: 2.560125, z: -0.2969427}
+      localAngles: {x: 53.09676, y: 329.7119, z: 42.89041}
+      localScales: {x: 1.5, y: 1.5, z: 1.5}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: LowerArmL
+      localPos: {x: -0.4255396, y: 1.85516, z: -0.5628238}
+      localAngles: {x: 66.49948, y: 338.6433, z: 94.76706}
+      localScales: {x: 1.5, y: 1.5, z: 1.5}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: LowerArmL
+      localPos: {x: 0.1688939, y: 2.024558, z: 0.8583449}
+      localAngles: {x: 51.49212, y: 216.4579, z: 215.0705}
+      localScales: {x: 1.5, y: 1.5, z: 1.5}
+      limbMask: 0
+  - idrsName: idrsTreebot
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: CalfFrontL
+      localPos: {x: 0.01979813, y: 0.4522457, z: -0.05157708}
+      localAngles: {x: 337.6304, y: 337.9929, z: 28.14827}
+      localScales: {x: 0.4, y: 0.4, z: 0.4}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: CalfFrontL
+      localPos: {x: -0.006887435, y: 0.4741569, z: -0.03637424}
+      localAngles: {x: 33.40429, y: 332.4672, z: 359.8849}
+      localScales: {x: 0.4, y: 0.4, z: 0.4}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: CalfFrontL
+      localPos: {x: -0.006887435, y: 0.4741569, z: -0.03637424}
+      localAngles: {x: 26.12654, y: 55.07289, z: 68.75383}
+      localScales: {x: 0.4, y: 0.4, z: 0.4}
+      limbMask: 0
+  - idrsName: idrsVoidSurvivor
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: UpperArmR
+      localPos: {x: 0.1004616, y: -0.07031413, z: 0.1798986}
+      localAngles: {x: 54.35389, y: 186.8834, z: 219.6241}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: UpperArmR
+      localPos: {x: 0.08130983, y: -0.05379497, z: 0.2047489}
+      localAngles: {x: 338.1052, y: 259.1624, z: 230.1371}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: UpperArmR
+      localPos: {x: 0.0946398, y: -0.06299437, z: 0.1785927}
+      localAngles: {x: 64.77713, y: 279.3867, z: 294.1575}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - idrsName: idrsEngiTurret
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0.3802318, y: 0.5447093, z: 1.258595}
+      localAngles: {x: 0, y: 0, z: 289.5272}
+      localScales: {x: 0.75, y: 0.75, z: 0.75}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0.4746851, y: 0.5890325, z: 1.28668}
+      localAngles: {x: 315.941, y: 257.3317, z: 330.2167}
+      localScales: {x: 0.75, y: 0.75, z: 0.75}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0.515266, y: 0.5700899, z: 1.27176}
+      localAngles: {x: 309.1972, y: 227.4458, z: 16.29732}
+      localScales: {x: 0.75, y: 0.75, z: 0.75}
+      limbMask: 0
+  - idrsName: idrsEngiWalkerTurret
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0.5799115, y: 1.150007, z: -1.472813}
+      localAngles: {x: 310.4083, y: 267.1979, z: 8.060307}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0.595616, y: 1.149943, z: -1.5442}
+      localAngles: {x: 316.9049, y: 324.4997, z: 343.8276}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0.595616, y: 1.040865, z: -1.5442}
+      localAngles: {x: 321.5287, y: 215.1206, z: 69.92087}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
