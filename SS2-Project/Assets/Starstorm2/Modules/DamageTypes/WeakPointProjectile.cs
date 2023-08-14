@@ -16,11 +16,11 @@ namespace Moonstorm.Starstorm2.DamageTypes
         public override void Initialize()
         {
             weakPointProjectile = ModdedDamageType;
-            On.RoR2.Projectile.ProjectileSingleTargetImpact.OnProjectileImpact += PSTI_OPI;
         }
 
         public override void Delegates()
         {
+            On.RoR2.Projectile.ProjectileSingleTargetImpact.OnProjectileImpact += PSTI_OPI;
         }
 
 
