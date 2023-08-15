@@ -41,10 +41,9 @@ namespace AK
         static const AkUniqueID HOTTESTSAUCE = 571024191U;
         static const AkUniqueID JETBOOTSEXPLOSION = 1235706518U;
         static const AkUniqueID MOLTENCOIN = 1681111803U;
-        static const AkUniqueID NEMHUNTRESSBOWMAX = 1389751463U;
-        static const AkUniqueID NEMHUNTRESSCHARGEBOW = 415529083U;
-        static const AkUniqueID NEMHUNTRESSFIREBOW = 3663148423U;
-        static const AkUniqueID NEMHUNTRESSHEADSHOT = 2770265387U;
+        static const AkUniqueID NEMHUNTESSBOWMAX = 4245110589U;
+        static const AkUniqueID NEMHUNTESSCHARGEBOW = 396560513U;
+        static const AkUniqueID NEMHUNTESSFIREBOW = 479003465U;
         static const AkUniqueID NEMMANDOCHARACTERSELECT = 3733468431U;
         static const AkUniqueID NEMMANDOCHARGEBEAM = 2165644167U;
         static const AkUniqueID NEMMANDOCHARGEBEAM2 = 3141162423U;
@@ -75,9 +74,6 @@ namespace AK
         static const AkUniqueID NUCLEATORCHARGEPRIMARY = 420124658U;
         static const AkUniqueID PLAY_SOFT_RAIN = 263522455U;
         static const AkUniqueID PLAY_SS2_MUSIC_SYSTEM = 3480457898U;
-        static const AkUniqueID REFABRICATORACTION = 2808251015U;
-        static const AkUniqueID REFABRICATORSELECT1 = 1630810942U;
-        static const AkUniqueID REFABRICATORSELECT2 = 1630810941U;
         static const AkUniqueID SIGILACTIVATION = 2800331071U;
         static const AkUniqueID SPAWNMGR = 2187217924U;
         static const AkUniqueID SS_WINDAMBIENCE = 892248604U;
@@ -86,7 +82,6 @@ namespace AK
         static const AkUniqueID STRANGECAN = 3750145159U;
         static const AkUniqueID SWIFTSKATEBOARD = 961366952U;
         static const AkUniqueID VOIDAMBIENT = 2533932213U;
-        static const AkUniqueID VOIDELITESPAWN = 665745181U;
         static const AkUniqueID WASTELANDERPRIMARY = 2333188815U;
         static const AkUniqueID WASTELANDERPRIMARYCRIT = 1319272055U;
         static const AkUniqueID WASTELANDERSECONDARY = 342360847U;
