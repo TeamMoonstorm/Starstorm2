@@ -127,9 +127,11 @@ namespace EntityStates.NemMerc
             base.FixedUpdate();
 
             if (!base.isAuthority || !base.characterMotor)
-                return;         
+                return;
 
-            if(this.CheckCollisions())
+            base.characterDirection.forward = this.direction;
+
+            if (this.CheckCollisions())
             {
                 this.outer.SetNextStateToMain();
                 if(this.weapon)

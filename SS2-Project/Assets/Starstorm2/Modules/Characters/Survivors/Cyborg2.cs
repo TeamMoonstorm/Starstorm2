@@ -15,8 +15,8 @@ namespace Moonstorm.Starstorm2.Survivors
 
         //configgggggggg
         public static int maxTeleporters = 1;
-        public static int maxBloonTraps = 3;
-        public static int maxShockMines = 8;
+        public static int maxBloonTraps = 1;
+        public static int maxShockMines = 6;
 
         public static DeployableSlot teleporter;
         public static DeployableSlot bloonTrap;

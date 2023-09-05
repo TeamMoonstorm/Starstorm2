@@ -7,7 +7,7 @@ using Moonstorm.Starstorm2.Components;
 using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
-
+using Moonstorm.Starstorm2;
 namespace EntityStates.NemMerc
 {
     public class ShadowStep : BaseSkillState
@@ -20,6 +20,10 @@ namespace EntityStates.NemMerc
         public static float hologramDurationCoefficient = 0.5f;
         public static AnimationCurve cameraMovementCurve;
 
+        public static GameObject blinkPrefab;
+        public static GameObject blinkDestinationPrefab;
+
+        private GameObject destinationInstance;
         private float duration;
 
         private Vector3 teleportStartPosition;
@@ -27,7 +31,8 @@ namespace EntityStates.NemMerc
 
         private CameraFlipper camera;
         private GameObject target;
-
+        private CharacterModel characterModel;
+        private Transform modelTransform;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -57,7 +62,27 @@ namespace EntityStates.NemMerc
             this.camera.movementCurve = ShadowStep.cameraMovementCurve;
                           
             base.characterMotor.velocity = Vector3.zero;
-            
+
+            this.modelTransform = base.GetModelTransform();
+            if (modelTransform)
+            {
+                this.characterModel = modelTransform.GetComponent<CharacterModel>();
+            }
+            if (this.characterModel)
+            {
+                this.characterModel.invisibilityCount++;
+            }
+            if (ShadowStep.blinkPrefab)
+            {
+                GameObject g = UnityEngine.Object.Instantiate<GameObject>(ShadowStep.blinkPrefab, base.characterBody.corePosition, Quaternion.identity);
+                g.GetComponent<ScaleParticleSystemDuration>().newDuration = this.duration;
+            }
+            if (ShadowStep.blinkDestinationPrefab)
+            {
+                this.destinationInstance = UnityEngine.Object.Instantiate<GameObject>(ShadowStep.blinkDestinationPrefab, this.teleportTarget, Quaternion.identity);
+                this.destinationInstance.GetComponent<ScaleParticleSystemDuration>().newDuration = this.duration;
+            }
+
             if (NetworkServer.active)
             {
                 base.characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
@@ -66,22 +91,30 @@ namespace EntityStates.NemMerc
 
         private void UpdateTarget()
         {
+            
             if(this.target)
             {
                 Vector3 between = target.transform.position - this.teleportStartPosition;
                 float distance = between.magnitude;
                 Vector3 direction = between.normalized;
                 this.teleportTarget = direction * (distance + ShadowStep.teleportBehindDistance) + base.transform.position;
+                if (Physics.Raycast(target.transform.position, direction, out RaycastHit hit, ShadowStep.teleportBehindDistance, LayerIndex.world.mask))
+                {
+                    this.teleportTarget = hit.point;
+                }
                 this.teleportTarget.y = Mathf.Max(this.target.transform.position.y + teleportYBonus, teleportTarget.y);
                 if (this.camera)
                     this.camera.cameraEndPosition = this.teleportTarget;
+                if (this.destinationInstance)
+                {
+                    this.destinationInstance.transform.position = this.teleportTarget;
+            }
             }
         }
+
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-
-            this.UpdateTarget();
 
             base.characterMotor.velocity = Vector3.zero;
 
@@ -102,16 +135,37 @@ namespace EntityStates.NemMerc
         public override void Update()
         {
             base.Update();
+
+
+            this.UpdateTarget();
+            
+
             if (this.camera)
                 this.camera.UpdateCamera(Time.deltaTime);
         }
         public override void OnExit()
         {
             base.OnExit();
+            if (this.characterModel)
+            {
+                this.characterModel.invisibilityCount--;
+            }
             if (this.camera)
             {      
                 this.camera.EndCameraFlip();
                 Destroy(this.camera);
+            }
+            //if (this.destinationInstance) Destroy(this.destinationInstance);
+
+            if (this.modelTransform)
+            {
+                TemporaryOverlay temporaryOverlay2 = this.modelTransform.gameObject.AddComponent<TemporaryOverlay>();
+                temporaryOverlay2.duration = 0.25f;
+                temporaryOverlay2.animateShaderAlpha = true;
+                temporaryOverlay2.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
+                temporaryOverlay2.destroyComponentOnEnd = true;
+                temporaryOverlay2.originalMaterial = SS2Assets.LoadAsset<Material>("matNemergize", SS2Bundle.Indev);
+                temporaryOverlay2.AddToCharacerModel(this.modelTransform.GetComponent<CharacterModel>());
             }
 
             base.characterMotor.useGravity = true;

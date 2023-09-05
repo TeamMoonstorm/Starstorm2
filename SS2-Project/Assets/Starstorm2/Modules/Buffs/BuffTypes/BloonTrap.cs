@@ -2,6 +2,8 @@
 using Moonstorm.Starstorm2.Items;
 using R2API;
 using RoR2;
+using System;
+using UnityEngine;
 
 namespace Moonstorm.Starstorm2.Buffs
 {
@@ -21,7 +23,7 @@ namespace Moonstorm.Starstorm2.Buffs
             HealthComponent.HealthBarValues result = orig.Invoke(self);
             if (!self.body.bodyFlags.HasFlag(CharacterBody.BodyFlags.ImmuneToExecutes) && self.body.HasBuff(SS2Content.Buffs.BuffBloonTrap))
             {
-                result.cullFraction += .15f;
+                result.cullFraction = Mathf.Max(result.cullFraction, 0.2f);
             }
             return result;
         }

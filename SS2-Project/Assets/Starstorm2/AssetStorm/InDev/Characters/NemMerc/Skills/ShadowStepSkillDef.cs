@@ -16,6 +16,7 @@ namespace Moonstorm.Starstorm2.ScriptableObjects
 
 		public Sprite hologramOverrideIcon;
 		public SerializableEntityStateType hologramOverrideState;
+		public string hologramOverrideStateMachine = "Body";
 		public override BaseSkillInstanceData OnAssigned([NotNull] GenericSkill skillSlot)
 		{
 			return new ShadowStepSkillDef.InstanceData
@@ -26,12 +27,38 @@ namespace Moonstorm.Starstorm2.ScriptableObjects
 
         public override void OnExecute([NotNull] GenericSkill skillSlot)
         {
-            base.OnExecute(skillSlot);
-			if(TargetIsHologram(skillSlot))
+			EntityStateMachine body = EntityStateMachine.FindByCustomName(skillSlot.gameObject, hologramOverrideStateMachine);
+
+			if(body && TargetIsHologram(skillSlot))
+            {
+				body.SetInterruptState(this.InstantiateNextState(skillSlot), this.interruptPriority);
+			}
+			else
+			{
+				skillSlot.stateMachine.SetInterruptState(this.InstantiateNextState(skillSlot), this.interruptPriority);
+			}
+				
+
+			if (this.cancelSprintingOnActivation)
+			{
+				skillSlot.characterBody.isSprinting = false;
+			}
+			skillSlot.stock -= this.stockToConsume;
+			if (this.resetCooldownTimerOnUse)
+			{
+				skillSlot.rechargeStopwatch = 0f;
+			}
+			if (skillSlot.characterBody)
+			{
+				skillSlot.characterBody.OnSkillActivated(skillSlot);
+			}
+
+			if (TargetIsHologram(skillSlot))
             {
 				skillSlot.stock += base.stockToConsume;
             }
         }
+
         public override EntityState InstantiateNextState([NotNull] GenericSkill skillSlot)
         {
 			SerializableEntityStateType state = TargetIsHologram(skillSlot) ? hologramOverrideState : this.activationState;

@@ -61,6 +61,7 @@ namespace EntityStates.NemMerc
         {
             base.OnEnter();
 
+            base.StartAimMode();
             this.animator = base.GetModelAnimator();
             //anim
 

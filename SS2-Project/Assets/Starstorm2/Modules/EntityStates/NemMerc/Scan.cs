@@ -26,7 +26,7 @@ namespace EntityStates.NemMerc
         public static GameObject hologramPrefab;
 
         // xdd
-        private static GameObject scanEffect = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/RadarTower/ActivateRadarTowerEffect.prefab").WaitForCompletion();
+        public static GameObject scanEffect;// = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/RadarTower/ActivateRadarTowerEffect.prefab").WaitForCompletion();
         public override void OnEnter()
         {
             base.OnEnter();
@@ -172,7 +172,7 @@ namespace EntityStates.NemMerc
                 Vector3 direction = new Vector3(circle.x, 0, circle.y);
                 
                 Vector3 position = target.transform.position + (direction * Scan.targetedHologramOffset);
-                if(Physics.Raycast(target.transform.position, direction, out RaycastHit hit, Scan.targetedHologramOffset, LayerIndex.world.collisionMask))
+                if(Physics.Raycast(target.transform.position, direction, out RaycastHit hit, Scan.targetedHologramOffset, LayerIndex.world.mask))
                 {
                     position = hit.point;
                 }

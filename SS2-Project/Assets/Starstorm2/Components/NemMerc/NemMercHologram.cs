@@ -35,6 +35,12 @@ namespace Moonstorm.Starstorm2.Components
         public GameObject model;
         public float targetSearchRadius = 25f;
         public float targetLostDistance = 35f;
+
+        public float ownerMagnetRadius = 15f;
+        public float ownerMagnetTimer = 1f;
+
+        public float ownerCollisionRadius = 4f;
+
         private float searchFrequency;
         private float searchStopwatch;
 
@@ -42,7 +48,7 @@ namespace Moonstorm.Starstorm2.Components
         private float stopwatch;
         private bool isRevealed;
         private SphereSearch search = new SphereSearch();
-
+        private EntityStateMachine ownerBodyMachine;
 
         private void Start()
         {
@@ -61,6 +67,7 @@ namespace Moonstorm.Starstorm2.Components
                         master.AddDeployable(base.GetComponent<Deployable>(), deployableSlot);
                     }
                 }
+                this.ownerBodyMachine = EntityStateMachine.FindByCustomName(this.owner, "Body");
             }
         }
 
@@ -104,6 +111,28 @@ namespace Moonstorm.Starstorm2.Components
                 Destroy(base.gameObject);
             }
 
+            if(this.OwnerInCollisionRadius())
+            {
+                Vector3 direction = Vector3.zero;
+                if (this.target) direction = (this.target.transform.position - base.transform.position).normalized;
+                
+                if (ownerBodyMachine && ownerBodyMachine.SetInterruptState(new NemAssaulter { dashVector = lockDash ? direction : Vector3.zero }, InterruptPriority.Pain))
+                {
+                    Destroy(base.gameObject);
+                }
+            }
+
+            if (this.OwnerCanMagnet())
+            {
+                this.ownerMagnetTimer -= Time.fixedDeltaTime;
+                if (this.ownerMagnetTimer <= 0f)
+                {
+                    ownerBodyMachine.SetInterruptState(new HologramShadowStep { target = base.gameObject }, InterruptPriority.Pain);
+                }
+            }
+            else
+                this.ownerMagnetTimer = 1.5f;
+
 
             if(this.ShouldUpdateTarget())
             {
@@ -119,6 +148,17 @@ namespace Moonstorm.Starstorm2.Components
             this.indicator.yOffset = 0; // XD????
             this.indicator.targetTransform = base.transform;
 
+        }
+
+        private bool OwnerInCollisionRadius()
+        {
+            return this.owner && (this.owner.transform.position - base.transform.position).magnitude <= this.ownerCollisionRadius;
+        }
+
+        private bool OwnerCanMagnet()
+        {
+            return this.owner && (this.owner.transform.position - base.transform.position).magnitude <= this.ownerMagnetRadius 
+                && this.ownerBodyMachine && this.ownerBodyMachine.IsInMainState();
         }
 
         private bool ShouldUpdateTarget()
@@ -150,27 +190,6 @@ namespace Moonstorm.Starstorm2.Components
             this.search.mask = LayerIndex.entityPrecise.mask;
             this.search.queryTriggerInteraction = QueryTriggerInteraction.Ignore;
             this.target = this.search.RefreshCandidates().FilterCandidatesByHurtBoxTeam(mask).FilterCandidatesByDistinctHurtBoxEntities().GetHurtBoxes().FirstOrDefault();
-        }
-
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject != this.owner) return;
-
-            GameObject bodyObject = other.gameObject;
-            HurtBox hurtBox = other.GetComponent<HurtBox>();
-            if(hurtBox && hurtBox.healthComponent)
-            {
-                bodyObject = hurtBox.healthComponent.gameObject;
-            }
-
-            Vector3 direction = Vector3.zero;
-            if (this.target) direction = (this.target.transform.position - base.transform.position).normalized;
-            EntityStateMachine body = EntityStateMachine.FindByCustomName(bodyObject, "Body");
-            if (body && body.SetInterruptState(new NemAssaulter { dashVector = lockDash ? direction : Vector3.zero }, InterruptPriority.Pain))
-            {
-                Destroy(base.gameObject);
-            }        
         }
 
         private void Update()

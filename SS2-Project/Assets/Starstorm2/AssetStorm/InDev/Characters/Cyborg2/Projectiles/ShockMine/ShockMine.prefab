@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: -1819008361, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifetime: 999
+  lifetime: 30
   lifetimeExpiredEffect: {fileID: 0}
   desiredForwardSpeed: 35
   updateAfterFiring: 0
@@ -270,7 +270,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onUndeploy:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -4162285714112444707}
+        m_MethodName: DestroyGameObject
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5068215066494859696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,7 +319,7 @@ MonoBehaviour:
   m_Script: {fileID: 1220875036, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookRange: 8
+  lookRange: 6.5
   targetSearchInterval: 0.5
   onlySearchIfNoTarget: 1
   allowTargetLoss: 1

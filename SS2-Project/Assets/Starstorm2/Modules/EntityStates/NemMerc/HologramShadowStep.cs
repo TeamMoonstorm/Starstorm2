@@ -20,7 +20,7 @@ namespace EntityStates.NemMerc
 
         private float duration;
         private Vector3 teleportTarget;
-        private GameObject target;
+        public GameObject target;
         private Vector3 startPosition;
 
         private CameraLooker camera;
@@ -34,9 +34,14 @@ namespace EntityStates.NemMerc
             //sound
             // overlay material
 
-            NemMercTracker tracker = base.GetComponent<NemMercTracker>();
-            this.target = tracker.GetTrackingTarget();
             GameObject cameraTarget = null;
+
+            if (!this.target)
+            {
+                NemMercTracker tracker = base.GetComponent<NemMercTracker>();
+                this.target = tracker.GetTrackingTarget();                
+            }
+          
             if(this.target)
             {
                 NemMercHologram hologram = this.target.GetComponent<NemMercHologram>();

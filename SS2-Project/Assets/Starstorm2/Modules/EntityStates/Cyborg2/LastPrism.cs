@@ -69,7 +69,7 @@ namespace EntityStates.Cyborg2
             if (this.beamEffectComponent)
             {
                 Vector3 point = this.currentAimVector * this.range + base.transform.position;
-                if (Util.CharacterRaycast(base.gameObject, new Ray(base.inputBank.aimOrigin, this.currentAimVector), out RaycastHit raycastHit, LastPrism.maxRange, LayerIndex.world.mask, QueryTriggerInteraction.UseGlobal))
+                if (Util.CharacterRaycast(base.gameObject, new Ray(base.inputBank.aimOrigin, this.currentAimVector), out RaycastHit raycastHit, this.range, LayerIndex.world.mask, QueryTriggerInteraction.UseGlobal))
                 {
                     point = raycastHit.point;
                 }
@@ -84,7 +84,7 @@ namespace EntityStates.Cyborg2
 
             float t = base.fixedAge / this.maxChargeTime;
             float damageCoefficient = Mathf.Lerp(minDamageCoefficientPerSecond, maxDamageCoefficientPerSecond, t) * (1 / baseTicksPerSecond);
-            this.turnSpeedAngle = Mathf.Lerp(maxTurnAnglePerSecond, minTurnAnglePerSecond, t);
+            this.turnSpeedAngle = Mathf.Lerp(maxTurnAnglePerSecond, minTurnAnglePerSecond * base.characterBody.attackSpeed, t);
             this.range = Mathf.Lerp(minRange, maxRange, t);
 
             this.tickDamageStopwatch -= Time.fixedDeltaTime;
@@ -135,9 +135,9 @@ namespace EntityStates.Cyborg2
                     maxSpread = 0f,
                     radius = LastPrism.bulletRadius,
                     falloffModel = BulletAttack.FalloffModel.None,
-                    smartCollision = false,
-                    stopperMask = default(LayerMask),
-                    hitMask = LayerIndex.entityPrecise.mask,
+                    smartCollision = true,
+                    stopperMask = LayerIndex.world.mask,
+                    hitMask = LayerIndex.CommonMasks.bullet,
                     damage = damageCoefficient * this.damageStat,
                     procCoefficient = LastPrism.procCoefficientPerSecond / baseTicksPerSecond,
                     force = LastPrism.forcePerSecond / baseTicksPerSecond,

@@ -9,10 +9,8 @@ using System.Text;
 using R2API;
 namespace Moonstorm.Starstorm2.Components
 {
-    public class BloonTrap : MonoBehaviour, IInteractable
+    public class BloonTrap : MonoBehaviour
     {
-		private static readonly StringBuilder sharedStringBuilder = new StringBuilder();
-
 		public float moneyMultiplier;
 		public int baseMaxMoney = 25;
         public EntityStateMachine machine;
@@ -20,6 +18,7 @@ namespace Moonstorm.Starstorm2.Components
 		public TetherVfxOrigin tetherVfxOrigin;
 		public float radius = 14f;
 		public float grantEliteBuffRadius = 64f;
+		public float eliteBuffDuration = 30f;
 		public string contextToken;
 		public float maxDuration = 16f;
 
@@ -37,8 +36,12 @@ namespace Moonstorm.Starstorm2.Components
 			this.sphereSearch = new SphereSearch();
 
 			this.suckedBodies = new List<CharacterBody>();
-			this.owner = base.GetComponent<ProjectileController>().owner;
+			
 			this.maxMoney = Run.instance.GetDifficultyScaledCost(baseMaxMoney, Run.instance.difficultyCoefficient);
+		}
+        private void Start()
+        {
+			this.owner = base.GetComponent<ProjectileController>().owner;
 		}
         private void OnEnable()
         {
@@ -149,7 +152,8 @@ namespace Moonstorm.Starstorm2.Components
 
 		private void TrySuck(CharacterBody body)
         {
-
+			if (body.healthComponent.alive && (body.bodyFlags & CharacterBody.BodyFlags.ImmuneToExecutes) > CharacterBody.BodyFlags.None)
+				return;
 			if(!IsFull() && body.healthComponent.combinedHealthFraction <= this.executeThreshold && !suckedBodies.Contains(body))
             {
 				SUCK(body);
@@ -173,82 +177,64 @@ namespace Moonstorm.Starstorm2.Components
 				Destroy(body.modelLocator.modelTransform.gameObject);
 				// VFX/ sounD
 			}
+			
+			
+			if(body.isElite)
+            {
+				GameObject radialEffectPrefab = SS2Assets.LoadAsset<GameObject>("RadialEliteBuffEffect", SS2Bundle.Indev);
+
+				TeamMask mask = default(TeamMask);
+				mask.AddTeam(this.teamFilter.teamIndex);
+				SphereSearch search = new SphereSearch
+				{
+					mask = LayerIndex.entityPrecise.mask,
+					origin = base.transform.position,
+					radius = grantEliteBuffRadius
+				};
+
+				HurtBox[] hurtBoxes = search.RefreshCandidates().FilterCandidatesByHurtBoxTeam(mask).FilterCandidatesByDistinctHurtBoxEntities().GetHurtBoxes();
+				Color eliteColor = Color.red;
+				for (int k = 0; k < BuffCatalog.eliteBuffIndices.Length; k++)
+				{
+					BuffIndex buffIndex = BuffCatalog.eliteBuffIndices[k];
+					BuffDef buffDef = BuffCatalog.GetBuffDef(buffIndex);
+
+					eliteColor = buffDef.eliteDef.color;
+
+					if (body.HasBuff(buffIndex))
+					{			
+						foreach (HurtBox hurtBox in hurtBoxes)
+						{
+							hurtBox.healthComponent.body.AddTimedBuff(buffIndex, eliteBuffDuration);
+	
+						}
+					}
+				}
+
+				EffectData effectData1 = new EffectData
+				{
+					origin = base.transform.position, //////CHILDLOCATRORRRRRRRRRRRRRRRRR
+					scale = this.grantEliteBuffRadius,
+					color = eliteColor,
+				};
+				EffectManager.SpawnEffect(radialEffectPrefab, effectData1, true);
+			}
+			
 
 			GameObject effectPrefab = SS2Assets.LoadAsset<GameObject>("SuckedOffOrbEffect", SS2Bundle.Indev);
-			EffectData effectData = new EffectData
+			EffectData effectData2 = new EffectData
 			{
 				origin = body.corePosition,
 				genericFloat = 1f,
 				genericUInt = (uint)(body.bodyIndex + 1)
 			};
-			effectData.SetNetworkedObjectReference(base.gameObject);
-			EffectManager.SpawnEffect(effectPrefab, effectData, true);
+			effectData2.SetNetworkedObjectReference(base.gameObject);
+			EffectManager.SpawnEffect(effectPrefab, effectData2, true);
 		}
 
-		private void KillBody(HealthComponent healthComponent)
-        {
-			float combinedHealth = healthComponent.combinedHealth;
-			DamageInfo damageInfo = new DamageInfo();
-			damageInfo.damage = healthComponent.combinedHealth;
-			damageInfo.position = base.transform.position;
-			damageInfo.damageType = DamageType.Generic;
-			damageInfo.procCoefficient = 1f;
-			damageInfo.attacker = this.owner;
-			damageInfo.inflictor = base.gameObject;
-			healthComponent.Networkhealth = 0f;
-			DamageReport damageReport = new DamageReport(damageInfo, healthComponent, damageInfo.damage, combinedHealth);
-			healthComponent.killingDamageType = damageInfo.damageType;
-			IOnKilledServerReceiver[] components = base.GetComponents<IOnKilledServerReceiver>();
-			for (int i = 0; i < components.Length; i++)
-			{
-				components[i].OnKilledServer(damageReport);
-			}
-			GlobalEventManager.instance.OnCharacterDeath(damageReport);
-		}
         public bool IsFull()
         {
             return currentMoney >= maxMoney || this.stopwatch >= this.maxDuration;
-        }
-
-        public string GetContextString([NotNull] Interactor activator)
-        {
-			BloonTrap.sharedStringBuilder.Clear();
-			BloonTrap.sharedStringBuilder.Append(Language.GetString(this.contextToken));
-
-			BloonTrap.sharedStringBuilder.Append(" <nobr>(");
-			CostTypeCatalog.GetCostTypeDef(CostTypeIndex.Money).BuildCostStringStyled(this.currentMoney, BloonTrap.sharedStringBuilder, false, true);
-			BloonTrap.sharedStringBuilder.Append(")</nobr>");
-			
-			return BloonTrap.sharedStringBuilder.ToString();
-		}
-
-        public Interactability GetInteractability([NotNull] Interactor activator)
-        {
-			return IsFull() ? Interactability.Available : Interactability.ConditionsNotMet;
-        }
-
-        public void OnInteractionBegin([NotNull] Interactor activator)
-        {
-			CharacterBody body = activator.GetComponent<CharacterBody>();
-			if(body)
-            {
-				body.master.GiveMoney((uint)this.currentMoney);
-				//VFX SOUND ETC
-
-				Destroy(base.gameObject);
-
-
-            }
-        }
-
-        public bool ShouldIgnoreSpherecastForInteractibility([NotNull] Interactor activator)
-        {
-            return false;
-        }
-
-        public bool ShouldShowOnScanner()
-        {
-            return false;
         }
     }
 
