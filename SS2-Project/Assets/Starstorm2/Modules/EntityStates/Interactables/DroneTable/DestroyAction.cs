@@ -151,8 +151,19 @@ namespace EntityStates.DroneTable
         public override void OnExit()
         {
             base.OnExit();
-            
+
             //AkSoundEngine.StopPlayingID(soundID);
+
+            var hungry = this.gameObject.transform.Find("Hungry");
+            //hungry.localPosition.y = 0.005;
+            if (hungry)
+            {
+                hungry.localPosition += new Vector3(0, .0048f, 0); //appears after 21 drones (.1 / 21)
+                if (hungry.localPosition.y > 1.277f)
+                {
+                    Destroy(hungry.gameObject);
+                }
+            }
 
             if (tempDrone)
             {

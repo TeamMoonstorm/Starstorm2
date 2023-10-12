@@ -149,7 +149,7 @@ namespace Moonstorm.Starstorm2.Items
                 }
                 var timeLimit = token.owner.target.timeLimit;
                 token.owner.target = null; // :)
-                SS2Log.Info("time limit: " + timeLimit);
+                //SS2Log.Info("time limit: " + timeLimit);
                 //float timeMult = Mathf.Pow(1 - timeReduction, token.itemCount - 1);
                 //float compmaxTime = maxTime * timeMult;
 
