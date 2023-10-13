@@ -22,7 +22,15 @@ namespace Moonstorm.Starstorm2.Survivors
         public override void Initialize()
         {
             base.Initialize();
-            this.CreateDeployables();
+
+            clone = DeployableAPI.RegisterDeployableSlot((self, deployableCountMultiplier) =>
+            {
+                if (self.bodyInstanceObject)
+                    return self.bodyInstanceObject.GetComponent<SkillLocator>().special.maxStock;
+                return 1;
+            });
+            hologram = DeployableAPI.RegisterDeployableSlot((self, deployableCountMultiplier) => { return maxHolograms; });
+            
             if (Starstorm.ScepterInstalled)
             {
                 //ScepterCompat();
@@ -38,6 +46,7 @@ namespace Moonstorm.Starstorm2.Survivors
 
 
         //makes AI not shit itself when targetting objects without a characterbody
+        //which nemmerc AI needs to target holograms
         private bool HopefullyHarmlessAIFix(On.RoR2.CharacterAI.BaseAI.Target.orig_GetBullseyePosition orig, RoR2.CharacterAI.BaseAI.Target self, out Vector3 position)
         {
             if(!self.characterBody && self.gameObject)
@@ -66,17 +75,6 @@ namespace Moonstorm.Starstorm2.Survivors
 
             GameObject g1 = SS2Assets.LoadAsset<GameObject>("KnifeProjectile", SS2Bundle.NemMercenary);
             g1.AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>().Add(DamageTypes.RedirectHologram.damageType);
-        }
-
-        public void CreateDeployables()
-        {
-            clone = DeployableAPI.RegisterDeployableSlot((self, deployableCountMultiplier) => 
-            { 
-                if (self.bodyInstanceObject) 
-                    return self.bodyInstanceObject.GetComponent<SkillLocator>().special.maxStock; 
-                return 1; 
-            });
-            hologram = DeployableAPI.RegisterDeployableSlot((self, deployableCountMultiplier) => { return maxHolograms; });
         }
     }
 }
