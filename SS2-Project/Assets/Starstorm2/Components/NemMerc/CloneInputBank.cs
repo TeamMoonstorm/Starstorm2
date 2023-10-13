@@ -55,7 +55,7 @@ namespace Moonstorm.Starstorm2.Components
                     this.ownerInputBank = ownerBody.inputBank;
                     
                 }
-                owner.AddDeployable(base.GetComponent<Deployable>(), deployableSlot);
+                owner.AddDeployable(base.GetComponent<Deployable>(), Survivors.NemMerc.clone);
             }
         }
 
@@ -99,7 +99,7 @@ namespace Moonstorm.Starstorm2.Components
 
         public void OnReactivation()
         {
-            if(this.bodyStateMachine)
+            if(this.body && this.body.healthComponent.alive && this.bodyStateMachine)
             {
                 this.bodyStateMachine.SetNextState(new CloneDash { target = ownerInputBank.gameObject });
             }

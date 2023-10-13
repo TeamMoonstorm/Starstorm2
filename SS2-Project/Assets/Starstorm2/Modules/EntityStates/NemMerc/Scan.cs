@@ -27,6 +27,8 @@ namespace EntityStates.NemMerc
 
         // xdd
         public static GameObject scanEffect;// = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/RadarTower/ActivateRadarTowerEffect.prefab").WaitForCompletion();
+        public static string soundString;// should be on the effect but im lazy
+        
         public override void OnEnter()
         {
             base.OnEnter();
@@ -44,6 +46,8 @@ namespace EntityStates.NemMerc
                 scale = scanRadius,
             }, false);
             this.outer.SetNextStateToMain();
+            //sound
+            Util.PlaySound(soundString, base.gameObject);
         }
 
 

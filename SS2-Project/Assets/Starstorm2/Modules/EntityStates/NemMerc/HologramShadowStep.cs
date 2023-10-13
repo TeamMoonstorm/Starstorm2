@@ -25,13 +25,18 @@ namespace EntityStates.NemMerc
 
         private CameraLooker camera;
 
+        private Vector3 toHologramTarget;
+        private Vector3 lastKnownTargetPosition;
         public override void OnEnter()
         {
             base.OnEnter();
 
             //vfx
             //anim
+
             //sound
+            Util.PlaySound("Play_nemmerc_utility_enter", base.gameObject);
+            base.StartAimMode();
             // overlay material
 
             GameObject cameraTarget = null;
@@ -48,7 +53,9 @@ namespace EntityStates.NemMerc
                 if(hologram && hologram.target)
                 {
                     cameraTarget = hologram.target.gameObject;
+                    this.toHologramTarget = hologram.target.transform.position - this.target.transform.position;
                 }    
+                
             }
             else
             {
@@ -59,8 +66,11 @@ namespace EntityStates.NemMerc
 
             this.duration = HologramShadowStep.baseDuration;
 
+            this.startPosition = base.transform.position;
             this.teleportTarget = this.target.transform.position;
+            this.lastKnownTargetPosition = this.teleportTarget;
 
+            base.characterDirection.forward = this.teleportTarget - base.transform.position;
             base.characterMotor.velocity = Vector3.zero;
 
             this.camera = base.gameObject.AddComponent<CameraLooker>();
@@ -80,11 +90,12 @@ namespace EntityStates.NemMerc
         {
             if (this.target)
             {
-                Vector3 between = target.transform.position - base.transform.position;
-                float distance = between.magnitude;
-                Vector3 direction = between.normalized;
-                this.teleportTarget = direction * distance + base.transform.position;
+                this.lastKnownTargetPosition = target.transform.position;            
             }
+            Vector3 between = this.lastKnownTargetPosition - base.transform.position;
+            float distance = between.magnitude;
+            Vector3 direction = between.normalized;
+            this.teleportTarget = direction * distance + base.transform.position;
         }
         public override void FixedUpdate()
         {
@@ -96,9 +107,9 @@ namespace EntityStates.NemMerc
             if (base.isAuthority && base.fixedAge >= this.duration)
             {
                 TeleportHelper.TeleportBody(base.characterBody, this.teleportTarget);
-                base.characterDirection.forward = base.GetAimRay().direction;
-                //base.skillLocator.primary.stock = 2; /////////////////////
+                base.characterDirection.forward = this.toHologramTarget != Vector3.zero  ? this.toHologramTarget : this.startPosition - base.transform.position;
                 this.outer.SetNextStateToMain();
+                base.StartAimMode();
                 return;
             }
 

@@ -31,9 +31,10 @@ namespace EntityStates.NemMerc
             base.OnEnter();
 
             //anim
-            base.PlayAnimation("FullBody, Override", "Lunge", "Utility.playbackRate", .3f);
+            base.PlayAnimation("FullBody, Override", "Lunge", "Secondary.playbackRate", .3f);
             //vfx
             //sound
+            Util.PlaySound("Play_nemmerc_secondary_lunge", base.gameObject);
             // SHOULD USE ROOT MOTION INSTEAD of velocity 
             this.weapon = EntityStateMachine.FindByCustomName(base.gameObject, "Weapon");
 

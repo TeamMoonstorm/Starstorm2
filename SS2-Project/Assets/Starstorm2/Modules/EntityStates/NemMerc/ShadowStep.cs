@@ -33,16 +33,21 @@ namespace EntityStates.NemMerc
         private GameObject target;
         private CharacterModel characterModel;
         private Transform modelTransform;
+
+        private Vector3 lastKnownTargetPosition;
         public override void OnEnter()
         {
             base.OnEnter();
 
             //vfx
-            //anim
-            //sound
             // overlay material
             //need to fix teleport near walls
+            // still fucking teleports to 0,0 sometimes. when target disappears on the smae frame.
+            // ^^^ MOSTLY happens to the clone version which is separate
 
+            base.StartAimMode();
+            base.PlayAnimation("FullBody, Override", "ShadowStep", "Utility.playbackRate", baseDuration);
+            Util.PlaySound("Play_nemmerc_utility_enter", base.gameObject);
             NemMercTracker tracker = base.GetComponent<NemMercTracker>();
             this.target = tracker.GetTrackingTarget();
             if (!this.target)
@@ -56,6 +61,8 @@ namespace EntityStates.NemMerc
 
             this.teleportStartPosition = base.transform.position;
             this.UpdateTarget();
+            this.lastKnownTargetPosition = this.target.transform.position;
+            base.characterDirection.forward = this.teleportTarget - base.transform.position;
 
             this.camera = base.gameObject.AddComponent<CameraFlipper>();
             this.camera.StartCameraFlip(this.teleportTarget, target, this.duration * ShadowStep.teleportTime);
@@ -68,20 +75,21 @@ namespace EntityStates.NemMerc
             {
                 this.characterModel = modelTransform.GetComponent<CharacterModel>();
             }
-            if (this.characterModel)
-            {
-                this.characterModel.invisibilityCount++;
-            }
-            if (ShadowStep.blinkPrefab)
-            {
-                GameObject g = UnityEngine.Object.Instantiate<GameObject>(ShadowStep.blinkPrefab, base.characterBody.corePosition, Quaternion.identity);
-                g.GetComponent<ScaleParticleSystemDuration>().newDuration = this.duration;
-            }
-            if (ShadowStep.blinkDestinationPrefab)
-            {
-                this.destinationInstance = UnityEngine.Object.Instantiate<GameObject>(ShadowStep.blinkDestinationPrefab, this.teleportTarget, Quaternion.identity);
-                this.destinationInstance.GetComponent<ScaleParticleSystemDuration>().newDuration = this.duration;
-            }
+            //if (this.characterModel)
+            //{
+            //    this.characterModel.invisibilityCount++;
+            //}
+
+            //if (ShadowStep.blinkPrefab)
+            //{
+            //    GameObject g = UnityEngine.Object.Instantiate<GameObject>(ShadowStep.blinkPrefab, base.characterBody.corePosition, Quaternion.identity);
+            //    g.GetComponent<ScaleParticleSystemDuration>().newDuration = this.duration;
+            //}
+            //if (ShadowStep.blinkDestinationPrefab)
+            //{
+            //    this.destinationInstance = UnityEngine.Object.Instantiate<GameObject>(ShadowStep.blinkDestinationPrefab, this.teleportTarget, Quaternion.identity);
+            //    this.destinationInstance.GetComponent<ScaleParticleSystemDuration>().newDuration = this.duration;
+            //}
 
             if (NetworkServer.active)
             {
@@ -89,43 +97,57 @@ namespace EntityStates.NemMerc
             }
         }
 
-        private void UpdateTarget()
-        {
-            
+        private void UpdateTarget() // shitcode. im getting desparate. it keeps teleporting to 0,0 and i dont know why
+        {         
             if(this.target)
             {
-                Vector3 between = target.transform.position - this.teleportStartPosition;
-                float distance = between.magnitude;
-                Vector3 direction = between.normalized;
-                this.teleportTarget = direction * (distance + ShadowStep.teleportBehindDistance) + base.transform.position;
-                if (Physics.Raycast(target.transform.position, direction, out RaycastHit hit, ShadowStep.teleportBehindDistance, LayerIndex.world.mask))
-                {
-                    this.teleportTarget = hit.point;
-                }
-                this.teleportTarget.y = Mathf.Max(this.target.transform.position.y + teleportYBonus, teleportTarget.y);
-                if (this.camera)
-                    this.camera.cameraEndPosition = this.teleportTarget;
-                if (this.destinationInstance)
-                {
-                    this.destinationInstance.transform.position = this.teleportTarget;
+                this.lastKnownTargetPosition = this.target.transform.position;             
             }
+
+            Vector3 between = this.lastKnownTargetPosition - this.teleportStartPosition;
+            float distance = between.magnitude;
+            Vector3 direction = between.normalized;
+            this.teleportTarget = direction * (distance + ShadowStep.teleportBehindDistance) + base.transform.position;
+
+            if (Physics.Raycast(this.lastKnownTargetPosition, direction, out RaycastHit hit, ShadowStep.teleportBehindDistance, LayerIndex.world.mask))
+            {
+                this.teleportTarget = hit.point;
+            }
+            this.teleportTarget.y = Mathf.Max(this.lastKnownTargetPosition.y + teleportYBonus, teleportTarget.y);
+            if (this.camera)
+                this.camera.cameraEndPosition = this.teleportTarget;
+            if (this.destinationInstance)
+            {
+                this.destinationInstance.transform.position = this.teleportTarget;
             }
         }
 
+
+        bool s;
+        [NonSerialized]
+        public static float bitch = 0.66f; // I DONT CARE I DONCA RE STFU STFU STFU
         public override void FixedUpdate()
         {
             base.FixedUpdate();
 
             base.characterMotor.velocity = Vector3.zero;
 
+            if (base.fixedAge >= this.duration * bitch && !s) // XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+            {
+                s = true;
+                Util.PlaySound("Play_nemmerc_utility_exit", base.gameObject);
+            }
+
             if (base.isAuthority && base.fixedAge >= this.duration)
             {
                 if(this.camera)
                     this.camera.EndCameraFlip();
 
+                
                 TeleportHelper.TeleportBody(base.characterBody, this.teleportTarget);
-                base.characterDirection.forward = base.GetAimRay().direction;
+                base.characterDirection.forward = this.lastKnownTargetPosition - base.transform.position;
                 base.SmallHop(base.characterMotor, ShadowStep.smallHopVelocity);
+                base.StartAimMode();
 
                 this.outer.SetNextStateToMain();
                 return;
@@ -146,10 +168,10 @@ namespace EntityStates.NemMerc
         public override void OnExit()
         {
             base.OnExit();
-            if (this.characterModel)
-            {
-                this.characterModel.invisibilityCount--;
-            }
+            //if (this.characterModel)
+            //{
+            //    this.characterModel.invisibilityCount--;
+            //}
             if (this.camera)
             {      
                 this.camera.EndCameraFlip();
@@ -160,7 +182,7 @@ namespace EntityStates.NemMerc
             if (this.modelTransform)
             {
                 TemporaryOverlay temporaryOverlay2 = this.modelTransform.gameObject.AddComponent<TemporaryOverlay>();
-                temporaryOverlay2.duration = 0.25f;
+                temporaryOverlay2.duration = 0.67f;
                 temporaryOverlay2.animateShaderAlpha = true;
                 temporaryOverlay2.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
                 temporaryOverlay2.destroyComponentOnEnd = true;

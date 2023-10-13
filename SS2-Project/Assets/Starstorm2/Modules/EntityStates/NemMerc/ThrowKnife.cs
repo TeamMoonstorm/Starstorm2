@@ -18,7 +18,7 @@ namespace EntityStates.NemMerc
 		public string muzzleName;
 		public static float bloom = 1f;
 		public static float recoilAmplitude = 1f;
-		public static float fireTime = 0.1f;
+		public static float fireTime = 0.5f;
 		public static float baseDuration = 0.5f;
 		public static float damageCoefficient = 2f;
 		public static float force = 100f;
@@ -30,12 +30,15 @@ namespace EntityStates.NemMerc
 
 		public static float autoAimRadius = 2.5f;
 		public static float autoAimDistance = 50f;
+
+
 		public override void OnEnter()
 		{
 			base.OnEnter();
 			this.duration = baseDuration / attackSpeedStat;
 			StartAimMode();
-			PlayAnimation("Gesture, Override", "FireSpecial", "fireSpecial.playbackRate", duration);
+			PlayAnimation("Gesture, Override", "ThrowKnife", "Secondary.playbackRate", duration * 2);
+			Util.PlaySound("Play_nemmerc_secondary_lunge", base.gameObject);
 
 		}
 
@@ -59,7 +62,7 @@ namespace EntityStates.NemMerc
 
 		private void Fire()
 		{
-			Util.PlaySound("Play_gup_attack1_shoot", base.gameObject);
+			Util.PlaySound("Play_nemmerc_knife_throw", base.gameObject);
 			EffectManager.SimpleMuzzleFlash(muzzleEffectPrefab, base.gameObject, this.muzzleName, true);
 			AddRecoil(-1f * recoilAmplitude, -1.5f * recoilAmplitude, -0.25f * recoilAmplitude, 0.25f * recoilAmplitude);
 			base.characterBody.AddSpreadBloom(bloom);

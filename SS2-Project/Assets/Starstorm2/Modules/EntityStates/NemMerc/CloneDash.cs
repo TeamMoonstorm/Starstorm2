@@ -10,6 +10,8 @@ using Moonstorm.Starstorm2;
 namespace EntityStates.NemMerc
 {
 	//copy pasted merc assaulter x3
+
+	// in hindsight a base assaulter state mightve been better?
 	public class CloneDash : BaseSkillState
 	{
 		public bool hasHit;
@@ -39,6 +41,11 @@ namespace EntityStates.NemMerc
 				this.characterModel = this.modelTransform.GetComponent<CharacterModel>();
 				this.childLocator = this.modelTransform.GetComponent<ChildLocator>();
 				this.hurtboxGroup = this.modelTransform.GetComponent<HurtBoxGroup>();
+
+				if (this.childLocator)
+				{
+					this.childLocator.FindChild("PreDashEffect").gameObject.SetActive(true);
+				}
 			}
 
 			this.overlapAttack = base.InitMeleeOverlap(CloneDash.damageCoefficient, CloneDash.hitEffectPrefab, this.modelTransform, "Assaulter");
@@ -48,7 +55,7 @@ namespace EntityStates.NemMerc
 			Vector3 dashTarget = base.GetAimRay().GetPoint(CloneDash.baseDashDistance);
 
 			CloneInputBank.CloneOwnership clonership = base.GetComponent<CloneInputBank.CloneOwnership>();
-			if(clonership)
+			if(clonership && clonership.clone)
             {
 				Vector3 between = clonership.clone.body.transform.position - base.transform.position;
 				float distance = between.magnitude;
@@ -73,7 +80,7 @@ namespace EntityStates.NemMerc
 			base.SmallHop(base.characterMotor, CloneDash.smallHopVelocity);
 
 			//reuse assaulter anim
-			base.PlayAnimation("FullBody, Override", "CloneDash", "CloneDashPrep.playbackRate", CloneDash.dashDuration);
+			base.PlayAnimation("FullBody, Override", "AssaulterPrep", "AssaulterPrep.playbackRate", CloneDash.dashDuration);
 
 			if (this.modelTransform)
 			{
@@ -111,6 +118,7 @@ namespace EntityStates.NemMerc
 		public void CreateDashEffect()
 		{
 			Transform transform = this.childLocator.FindChild("DashCenter");
+			//Util.PlaySound("Play_nemmerc_dash", base.gameObject); // this dash is too fast for this
 			if (transform && CloneDash.dashPrefab)
 			{
 				UnityEngine.Object.Instantiate<GameObject>(CloneDash.dashPrefab, transform.position, Util.QuaternionSafeLookRotation(this.dashVector), transform);
@@ -141,7 +149,7 @@ namespace EntityStates.NemMerc
 				if (this.modelTransform)
 				{
 					TemporaryOverlay temporaryOverlay = this.modelTransform.gameObject.AddComponent<TemporaryOverlay>();
-					temporaryOverlay.duration = 0.7f;
+					temporaryOverlay.duration = 1.2f;
 					temporaryOverlay.animateShaderAlpha = true;
 					temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
 					temporaryOverlay.destroyComponentOnEnd = true;
@@ -169,12 +177,20 @@ namespace EntityStates.NemMerc
 						this.inHitPause = true;
 						this.hitPauseTimer = CloneDash.hitPauseDuration / this.attackSpeedStat;
 
+
 						if (this.m2Buffered)
 						{
+							// NNEED A BETTER DASH START SOUND HERE
+							Util.PlaySound(NemAssaulter.beginSoundString, base.gameObject); // THIS SUCKS I THINK
+
 							this.m2Buffered = false;
 							base.skillLocator.secondary.DeductStock(1);
 							this.hitPauseTimer += CloneDash.m2HitPauseDuration / this.attackSpeedStat;
 							this.inM2HitPause = true;
+
+							// prevent clipping when redirecting/extending the dash
+							base.gameObject.layer = LayerIndex.fakeActor.intVal;
+							base.characterMotor.Motor.RebuildCollidableLayers();
 
 							//add extra time only to the END of the dash
 							float extraTime = (this.stopwatch + CloneDash.m2ExtraDashDuration) - totalDuration;
@@ -230,7 +246,7 @@ namespace EntityStates.NemMerc
 			{
 				aimRequest.Dispose();
 			}
-			this.PlayAnimation("FullBody, Override", "EvisLoopExit");
+			this.PlayAnimation("FullBody, Override", "EvisLoopExit", "Special.playbackRate", 1f);
 			if (NetworkServer.active)
 			{
 				base.characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility.buffIndex);

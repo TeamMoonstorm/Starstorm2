@@ -52,14 +52,17 @@ namespace EntityStates.NemMerc
 			}
 
 			float distance = NemAssaulter.dashDistance + minBehindDistance;
+
 			this.dashVector = base.inputBank.aimDirection;
-			if (this.target)
-			{
-				this.dashVectorLocked = true;
-				this.dashVector = this.target.transform.position - base.transform.position;
-				distance = this.dashVector.magnitude + minBehindDistance;
-			}
-			base.characterDirection.forward = this.dashVector;
+
+			if(this.target)
+            {
+				Vector3 between = this.target.transform.position - base.transform.position;
+				distance = Mathf.Min(between.magnitude + minBehindDistance, distance + graceDistance); // extra distance incase enemy wanders away before the dash
+			}				
+			
+
+			base.characterDirection.forward = this.dashVector.normalized;
 
 			distance = Mathf.Max(distance, NemAssaulter.dashDistance);
 			this.dashSpeed = distance / (NemAssaulter.dashDuration);// / this.attackSpeedStat);
@@ -95,6 +98,7 @@ namespace EntityStates.NemMerc
         public void CreateDashEffect()
 		{
 			Transform transform = this.childLocator.FindChild("DashCenter");
+			Util.PlaySound("Play_nemmerc_dash", base.gameObject);
 			if (transform && NemAssaulter.dashPrefab)
 			{
 				UnityEngine.Object.Instantiate<GameObject>(NemAssaulter.dashPrefab, transform.position, Util.QuaternionSafeLookRotation(this.dashVector), transform);
@@ -112,11 +116,11 @@ namespace EntityStates.NemMerc
 			this.GatherInputs();
 
 			float totalDuration = NemAssaulter.dashDuration + NemAssaulter.dashPrepDuration;
-			base.characterDirection.forward = this.dashVector;
+			base.characterDirection.forward = this.dashVector; 
 			if (this.stopwatch > NemAssaulter.dashPrepDuration && !this.isDashing)
 			{
 				this.isDashing = true;
-				this.dashVector = this.target ? this.target.transform.position - base.transform.position : base.inputBank.aimDirection;
+				this.dashVector = base.inputBank.aimDirection;
 
 				this.CreateDashEffect();
 				base.PlayCrossfade("FullBody, Override", "AssaulterLoop", 0.1f);
@@ -125,7 +129,7 @@ namespace EntityStates.NemMerc
 				if (this.modelTransform)
 				{
 					TemporaryOverlay temporaryOverlay = this.modelTransform.gameObject.AddComponent<TemporaryOverlay>();
-					temporaryOverlay.duration = 0.7f;
+					temporaryOverlay.duration = 1.2f;
 					temporaryOverlay.animateShaderAlpha = true;
 					temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
 					temporaryOverlay.destroyComponentOnEnd = true;
@@ -155,6 +159,9 @@ namespace EntityStates.NemMerc
 
 						if(this.m2Buffered)
                         {
+							// NNEED A BETTER DASH START SOUND HERE
+							Util.PlaySound(NemAssaulter.beginSoundString, base.gameObject); // THIS SUCKS I THINK
+
 							this.m2Buffered = false;
 							base.skillLocator.secondary.DeductStock(1);
 							this.hitPauseTimer += NemAssaulter.m2HitPauseDuration / this.attackSpeedStat;
@@ -218,7 +225,7 @@ namespace EntityStates.NemMerc
             {
                 this.childLocator.FindChild("PreDashEffect").gameObject.SetActive(false);
             }
-            this.PlayAnimation("FullBody, Override", "EvisLoopExit");
+            this.PlayAnimation("FullBody, Override", "EvisLoopExit", "Special.playbackRate", 1f);
 			if (NetworkServer.active)
 			{
 				base.characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility.buffIndex);
@@ -261,6 +268,8 @@ namespace EntityStates.NemMerc
 		public static float hitPauseDuration = 0.15f;
 
 		private static float minBehindDistance = 5f;
+
+		private static float graceDistance = 10f;
 		private float dashSpeed;
 
 		[NonSerialized]

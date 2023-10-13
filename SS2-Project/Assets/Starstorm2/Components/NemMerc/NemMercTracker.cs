@@ -60,7 +60,8 @@ namespace Moonstorm.Starstorm2.Components
 			this.targetIsHologram = false;
 
 			RaycastHit[] hits = Physics.SphereCastAll(aimRay.origin, this.hologramRayRadius, aimRay.direction,
-				this.hologramTrackingDistance, LayerIndex.entityPrecise.mask, QueryTriggerInteraction.Collide);
+				this.hologramTrackingDistance, LayerIndex.noCollision.mask, QueryTriggerInteraction.Collide);
+
 			foreach(RaycastHit hit in hits)
             {
 
@@ -68,7 +69,8 @@ namespace Moonstorm.Starstorm2.Components
 				if (collider)
 				{
 					NemMercHologram hologram = collider.GetComponent<NemMercHologram>();
-					if (hologram)
+					// idk why teamfilter is ever null but /shrug
+					if (hologram &&  hologram.teamFilter && hologram.teamFilter.teamIndex == this.teamComponent.teamIndex)
 					{
 						//make indicator do animation or smth?
 						this.trackingTarget = hologram.gameObject;

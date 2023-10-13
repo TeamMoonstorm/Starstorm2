@@ -66,11 +66,8 @@ namespace EntityStates.NemMerc
 			base.SmallHop(base.characterMotor, TargetDash.smallHopVelocity);
 
 			//reuse assaulter anim
-			base.PlayAnimation("FullBody, Override", "TargetDash", "TargetDashPrep.playbackRate", TargetDash.dashDuration);
-
-
 			this.CreateDashEffect();
-			base.PlayCrossfade("FullBody, Override", "TargetDashLoop", 0.1f);
+			base.PlayCrossfade("FullBody, Override", "AssaulterLoop", 0.1f);
 
 			this.entryLayer = base.gameObject.layer;
 			base.gameObject.layer = this.target ? LayerIndex.noCollision.intVal : LayerIndex.debris.intVal;
@@ -79,7 +76,7 @@ namespace EntityStates.NemMerc
 			if (this.modelTransform)
 			{
 				TemporaryOverlay temporaryOverlay = this.modelTransform.gameObject.AddComponent<TemporaryOverlay>();
-				temporaryOverlay.duration = 0.7f;
+				temporaryOverlay.duration = 1.2f;
 				temporaryOverlay.animateShaderAlpha = true;
 				temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
 				temporaryOverlay.destroyComponentOnEnd = true;
@@ -147,6 +144,10 @@ namespace EntityStates.NemMerc
 							this.hitPauseTimer += TargetDash.m2HitPauseDuration / this.attackSpeedStat;
 							this.inM2HitPause = true;
 
+							// prevent clipping when redirecting/extending the dash
+							base.gameObject.layer = LayerIndex.fakeActor.intVal;
+							base.characterMotor.Motor.RebuildCollidableLayers();
+
 							if (this.weapon) this.weapon.SetNextState(new WhirlwindAssaulter());
 						}
 
@@ -196,7 +197,7 @@ namespace EntityStates.NemMerc
 			{
 				aimRequest.Dispose();
 			}
-			this.PlayAnimation("FullBody, Override", "EvisLoopExit");
+			this.PlayAnimation("FullBody, Override", "EvisLoopExit", "Special.playbackRate", 1f);
 			if (NetworkServer.active)
 			{
 				base.characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility.buffIndex);

@@ -264,6 +264,8 @@ namespace Moonstorm.Starstorm2
 
             public static SurvivorDef survivorNemCaptain;
 
+            public static SurvivorDef survivorNemMerc;
+
             //public static SurvivorDef SurvivorPyro;
         }
 

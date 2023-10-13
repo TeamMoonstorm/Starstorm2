@@ -36,7 +36,8 @@ namespace EntityStates.NemMerc
         {
             base.OnEnter();
 
-            //anim
+            base.PlayAnimation("Body", "SlideStart");
+            base.GetModelAnimator().SetFloat("inSlideState", 1);
 
             Util.PlaySound(Commando.SlideState.soundString, base.gameObject);//sound
 
@@ -124,6 +125,9 @@ namespace EntityStates.NemMerc
         public override void OnExit()
         {
             base.OnExit();
+
+            base.PlayAnimation("Body", "SlideEnd");
+            base.GetModelAnimator().SetFloat("inSlideState", 0);
 
             if (this.slideEffectInstance)
             {

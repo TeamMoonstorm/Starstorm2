@@ -8,6 +8,8 @@ using RoR2;
 using EntityStates;
 using EntityStates.NemMerc;
 using UnityEngine.Networking;
+using RoR2.CharacterAI;
+
 namespace Moonstorm.Starstorm2.Components
 {
     public class NemMercHologram : NetworkBehaviour
@@ -26,6 +28,8 @@ namespace Moonstorm.Starstorm2.Components
         [NonSerialized]
         public HurtBox target;
 
+        public TeamFilter teamFilter;
+
         public Transform indicatorStartTransform;
         public Transform indicatorTransform;
         public GameObject lineRenderer;
@@ -41,7 +45,8 @@ namespace Moonstorm.Starstorm2.Components
 
         public float ownerCollisionRadius = 4f;
 
-        private float searchFrequency;
+        
+        private float searchFrequency = 6;
         private float searchStopwatch;
 
         private PositionIndicator indicator;
@@ -50,11 +55,16 @@ namespace Moonstorm.Starstorm2.Components
         private SphereSearch search = new SphereSearch();
         private EntityStateMachine ownerBodyMachine;
 
+
+        private BaseAI ownerAI;
+
         private void Start()
         {
             this.indicator = GameObject.Instantiate(this.hologramIndicatorPrefab, base.transform.position, Quaternion.identity).GetComponent<PositionIndicator>();
             this.indicator.targetTransform = this.indicatorStartTransform;
 
+            this.teamFilter = base.GetComponent<TeamFilter>();
+            
 
             if (this.owner)
             {
@@ -64,7 +74,9 @@ namespace Moonstorm.Starstorm2.Components
                     CharacterMaster master = component.master;
                     if (master)
                     {
-                        master.AddDeployable(base.GetComponent<Deployable>(), deployableSlot);
+                        master.AddDeployable(base.GetComponent<Deployable>(), Survivors.NemMerc.hologram);
+                        this.ownerAI = component.master.GetComponent<BaseAI>();
+                        if (this.teamFilter) this.teamFilter.teamIndex = master.teamIndex;
                     }
                 }
                 this.ownerBodyMachine = EntityStateMachine.FindByCustomName(this.owner, "Body");
@@ -116,22 +128,23 @@ namespace Moonstorm.Starstorm2.Components
                 Vector3 direction = Vector3.zero;
                 if (this.target) direction = (this.target.transform.position - base.transform.position).normalized;
                 
-                if (ownerBodyMachine && ownerBodyMachine.SetInterruptState(new NemAssaulter { dashVector = lockDash ? direction : Vector3.zero }, InterruptPriority.Pain))
+                if (ownerBodyMachine && ownerBodyMachine.SetInterruptState(new NemAssaulter { target = this.target }, InterruptPriority.Pain))
                 {
                     Destroy(base.gameObject);
                 }
             }
 
-            if (this.OwnerCanMagnet())
-            {
-                this.ownerMagnetTimer -= Time.fixedDeltaTime;
-                if (this.ownerMagnetTimer <= 0f)
-                {
-                    ownerBodyMachine.SetInterruptState(new HologramShadowStep { target = base.gameObject }, InterruptPriority.Pain);
-                }
-            }
-            else
-                this.ownerMagnetTimer = 1.5f;
+            //dumb+
+            //if (this.OwnerCanMagnet())
+            //{
+            //    this.ownerMagnetTimer -= Time.fixedDeltaTime;
+            //    if (this.ownerMagnetTimer <= 0f)
+            //    {
+            //        ownerBodyMachine.SetInterruptState(new HologramShadowStep { target = base.gameObject }, InterruptPriority.Pain);
+            //    }
+            //}
+            //else
+            //    this.ownerMagnetTimer = 1.5f;
 
 
             if(this.ShouldUpdateTarget())
@@ -144,6 +157,12 @@ namespace Moonstorm.Starstorm2.Components
                     this.SearchForTarget();
                 }
             }
+
+            if (this.ownerAI && this.target)
+            {
+                this.ownerAI.customTarget.gameObject = base.gameObject;              
+            }
+
 
             this.indicator.yOffset = 0; // XD????
             this.indicator.targetTransform = base.transform;

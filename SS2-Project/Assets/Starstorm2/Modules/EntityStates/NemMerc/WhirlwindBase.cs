@@ -74,8 +74,8 @@ namespace EntityStates.NemMerc
             base.characterMotor.velocity = Vector3.zero;
             base.characterMotor.walkSpeedPenaltyCoefficient = this.walkSpeedCoefficient;
 
-            base.PlayAnimation("FullBody, Override", "SecondarySlash", "Secondary.playbackRate", this.duration * 0.9f);
-
+            base.PlayAnimation("FullBody, Override", "SecondarySlash", "Secondary.playbackRate", this.duration * 0.825f);
+            base.PlayAnimation("Gesture, Override", "SecondarySlash", "Secondary.playbackRate", this.duration * 0.825f);
             //"momentum"
             //i dont like it          
             //if(this.hitEnemy) 
@@ -158,6 +158,7 @@ namespace EntityStates.NemMerc
             base.OnExit();
 
             base.characterMotor.walkSpeedPenaltyCoefficient = 1f;
+            //base.PlayAnimation("Gesture, Override", "KnifeToShotgun", "KnifeToShotgun.playbackRate", 1f);
 
             while (this.timesAttacked < this.numAttacks)
             {
