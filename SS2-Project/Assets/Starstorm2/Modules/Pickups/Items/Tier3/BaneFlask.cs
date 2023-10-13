@@ -39,7 +39,7 @@ namespace Moonstorm.Starstorm2.Items
 
         public override void Initialize()
         {
-            explosionGross = SS2Assets.LoadAsset<GameObject>("BaneVFX", SS2Bundle.Items);
+            explosionGross = SS2Assets.LoadAsset<GameObject>("BaneGrayVFX", SS2Bundle.Items);
             particleBase = SS2Assets.LoadAsset<GameObject>("BaneHitsparkVFX", SS2Bundle.Items);
             floorGloop = SS2Assets.LoadAsset<GameObject>("BaneGrayGoop", SS2Bundle.Items);
             //DotController.onDotInflictedServerGlobal += RefreshInsects;

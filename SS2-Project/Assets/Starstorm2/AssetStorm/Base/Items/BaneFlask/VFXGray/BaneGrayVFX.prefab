@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3263742498634331303}
   - component: {fileID: 3121571616076782925}
   m_Layer: 0
-  m_Name: BaneVFX
+  m_Name: BaneGrayVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -333,8 +333,8 @@ ParticleSystem:
       maxColor: {r: 0.014061192, g: 0.5943396, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0.08386879, g: 0.5377358, b: 0, a: 1}
-        key1: {r: 0.5923171, g: 0.6698113, b: 0, a: 1}
+        key0: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 1}
+        key1: {r: 0.3207547, g: 0.3207547, b: 0.3207547, a: 1}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -4893,7 +4893,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3b95b333c02c3274f801dd600fb8a67f, type: 2}
+  - {fileID: 2100000, guid: f99709bc6cb8f084d8ec60979e5b6b36, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -14524,7 +14524,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2e39ecd8740b42a4993c79c9ec04e96d, type: 2}
+  - {fileID: 2100000, guid: c1b75a1c0573a8841bd565014f66ceb5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -14789,8 +14789,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 0.62730336, g: 0.745283, b: 0.010546438, a: 1}
-      maxColor: {r: 0.13569812, g: 0.5471698, b: 0, a: 1}
+      minColor: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
+      maxColor: {r: 0.6320754, g: 0.6320754, b: 0.6320754, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -19335,7 +19335,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: af503f26662282c438cbc06a2d59a29e, type: 2}
+  - {fileID: 2100000, guid: d552fbb68ab9980428782f8e800463eb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
