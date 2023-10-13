@@ -5072,6 +5072,104 @@
 										<ActiveSource Name="BowShoot" ID="{991A357A-4E96-41C2-A374-F862144B8679}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
+						</Folder>
+						<Folder Name="Interactables" ID="{CBE494B2-F389-4C62-9B6E-820AD40DB02D}" ShortID="369111019">
+							<ChildrenList>
+								<Folder Name="Refabricator" ID="{D7B0FEEC-7B42-412A-A6C1-97F64E8E6C0C}" ShortID="994124576">
+									<ChildrenList>
+										<Sound Name="interactable_dronetable_action" ID="{D46411F5-0E34-4CF1-8AEA-AB5F172551D8}" ShortID="349284995">
+											<PropertyList>
+												<Property Name="3DSpatialization" Type="int16" Value="1"/>
+												<Property Name="OverridePositioning" Type="bool" Value="True"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Attenuation">
+													<ObjectRef Name="SurvivorAttenuation" ID="{A986EB11-7B06-4BE3-9630-2DEB2646D5C4}" WorkUnitID="{01E36904-BE25-433F-9547-3A046044CA56}"/>
+												</Reference>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="ui_drone_table_process01" ID="{AB9D74DD-9947-44E6-A8EB-2D046AB8188B}">
+													<PropertyList>
+														<Property Name="LoopBegin" Type="Real64" Value="-0.001"/>
+														<Property Name="LoopEnd" Type="Real64" Value="-0.001"/>
+														<Property Name="TrimBegin" Type="Real64" Value="-0.001"/>
+														<Property Name="TrimEnd" Type="Real64" Value="-0.001"/>
+													</PropertyList>
+													<Language>SFX</Language>
+													<AudioFile>ui_drone_table_process01.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="379909187"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="ui_drone_table_process01" ID="{AB9D74DD-9947-44E6-A8EB-2D046AB8188B}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="interactable_drionetable_select_item1" ID="{248FDCF1-5487-46D6-822C-7014BDC6FF4B}" ShortID="148766312">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="UI_3D_printer_selectItem_01" ID="{5C14FC7A-B8B9-407B-98F4-CD9B4293ADFC}">
+													<PropertyList>
+														<Property Name="LoopBegin" Type="Real64" Value="-0.001"/>
+														<Property Name="LoopEnd" Type="Real64" Value="-0.001"/>
+														<Property Name="TrimBegin" Type="Real64" Value="-0.001"/>
+														<Property Name="TrimEnd" Type="Real64" Value="-0.001"/>
+													</PropertyList>
+													<Language>SFX</Language>
+													<AudioFile>UI_3D_printer_selectItem_01.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="943685154"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="UI_3D_printer_selectItem_01" ID="{5C14FC7A-B8B9-407B-98F4-CD9B4293ADFC}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="interactable_drionetable_select_item2" ID="{0AFC594A-8BB1-4554-AF25-94DDF83E1381}" ShortID="770896059">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="UI_3D_printer_itemIntoPrinter_01" ID="{2CCC7F07-92F3-493A-A27E-069D081AC8EF}">
+													<PropertyList>
+														<Property Name="LoopBegin" Type="Real64" Value="-0.001"/>
+														<Property Name="LoopEnd" Type="Real64" Value="-0.001"/>
+														<Property Name="TrimBegin" Type="Real64" Value="-0.001"/>
+														<Property Name="TrimEnd" Type="Real64" Value="-0.001"/>
+													</PropertyList>
+													<Language>SFX</Language>
+													<AudioFile>UI_3D_printer_itemIntoPrinter_01.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="152621449"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="UI_3D_printer_itemIntoPrinter_01" ID="{2CCC7F07-92F3-493A-A27E-069D081AC8EF}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</Folder>
 							</ChildrenList>
 						</Folder>
 					</ChildrenList>

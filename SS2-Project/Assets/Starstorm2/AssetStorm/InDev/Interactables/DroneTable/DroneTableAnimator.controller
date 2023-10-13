@@ -29,14 +29,14 @@ AnimatorStateMachine:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Base Layer
+  m_Name: Main
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 867796793773677963}
-    m_Position: {x: 80, y: 190, z: 0}
+    m_Position: {x: 30, y: 190, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6446303837671782936}
-    m_Position: {x: 80, y: 290, z: 0}
+    m_Position: {x: 30, y: 290, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -77,10 +77,16 @@ AnimatorController:
   m_PrefabAsset: {fileID: 0}
   m_Name: DroneTableAnimator
   serializedVersion: 5
-  m_AnimatorParameters: []
+  m_AnimatorParameters:
+  - m_Name: Action.playbackRate
+    m_Type: 1
+    m_DefaultFloat: 1
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
-    m_Name: Base Layer
+    m_Name: Main
     m_StateMachine: {fileID: -6823350573174203811}
     m_Mask: {fileID: 0}
     m_Motions: []
@@ -134,13 +140,13 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_SpeedParameterActive: 0
+  m_SpeedParameterActive: 1
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 885944232402757753, guid: afa2f97f4318a624583a3960b08030b9, type: 3}
   m_Tag: 
-  m_SpeedParameter: 
+  m_SpeedParameter: Action.playbackRate
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 

@@ -1,0 +1,254 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c9c430476270cb42ae82672a367a0e1, type: 3}
+  m_Name: iddCoffeeBag
+  m_EditorClassIdentifier: 
+  keyAsset: {fileID: 11400000, guid: 191b35a7f9fda9c40a2651397d099235, type: 2}
+  displayPrefabs:
+  - {fileID: 7876079597329459060, guid: a2768b6cfe780d248af124dd4f76f148, type: 3}
+  displayPrefab: {fileID: 7876079597329459060, guid: a2768b6cfe780d248af124dd4f76f148,
+    type: 3}
+  namedDisplayDictionary:
+  - idrsName: idrsBandit2
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: ThighL
+      localPos: {x: -0.03899507, y: 0.1302836, z: 0.0906041}
+      localAngles: {x: 349.126, y: 12.9236, z: 187.468}
+      localScales: {x: 0.05, y: 0.05, z: 0.05}
+      limbMask: 0
+  - idrsName: idrsCaptain
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Stomach
+      localPos: {x: 0.3606909, y: 0.1380431, z: -0.05503528}
+      localAngles: {x: 331.6824, y: 91.51992, z: 11.18737}
+      localScales: {x: 0.065, y: 0.065, z: 0.065}
+      limbMask: 0
+  - idrsName: idrsCommando
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: ThighR
+      localPos: {x: 0.02812564, y: 0.03575845, z: 0.1177116}
+      localAngles: {x: 13.63339, y: 345.7751, z: 178.2626}
+      localScales: {x: 0.05, y: 0.05, z: 0.05}
+      limbMask: 0
+  - idrsName: idrsCroco
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: ThighR
+      localPos: {x: -0.7457449, y: -0.7613146, z: -0.5035888}
+      localAngles: {x: 22.09568, y: 248.2776, z: 225.3382}
+      localScales: {x: 0.4, y: 0.4, z: 0.4}
+      limbMask: 0
+  - idrsName: idrsEngi
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: CannonHeadR
+      localPos: {x: 0, y: 0.08933032, z: 0.1317437}
+      localAngles: {x: 47.08036, y: -0.0003533519, z: 0}
+      localScales: {x: 0.055, y: 0.055, z: 0.055}
+      limbMask: 0
+  - idrsName: idrsExecutioner2
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Pelvis
+      localPos: {x: -0.09177806, y: -0.01287456, z: -0.1275374}
+      localAngles: {x: 358.655, y: 208.4561, z: 178.7447}
+      localScales: {x: 0.035, y: 0.035, z: 0.035}
+      limbMask: 0
+  - idrsName: idrsHuntress
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: ThighR
+      localPos: {x: -0.05078165, y: 0.07011985, z: 0.1853134}
+      localAngles: {x: 16.62687, y: 328.181, z: 188.33}
+      localScales: {x: 0.04, y: 0.04, z: 0.04}
+      limbMask: 0
+  - idrsName: idrsLoader
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: MechBase
+      localPos: {x: -0.2391655, y: -0.001780221, z: 0.079295}
+      localAngles: {x: 359.1848, y: 271.188, z: 359.4275}
+      localScales: {x: 0.055, y: 0.055, z: 0.055}
+      limbMask: 0
+  - idrsName: idrsMage
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Chest
+      localPos: {x: 0.209652, y: -0.162589, z: -0.3121919}
+      localAngles: {x: 344.9481, y: 122.0046, z: 6.770137}
+      localScales: {x: 0.04, y: 0.04, z: 0.04}
+      limbMask: 0
+  - idrsName: idrsMerc
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: ThighL
+      localPos: {x: 0.0168665, y: 0.03754609, z: 0.146938}
+      localAngles: {x: 13.75127, y: 28.03429, z: 177.3065}
+      localScales: {x: 0.05, y: 0.05, z: 0.05}
+      limbMask: 0
+  - idrsName: idrsNemCommando
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: ThighL
+      localPos: {x: 0.5251169, y: -0.3986772, z: -0.07698923}
+      localAngles: {x: 15.20662, y: 103.9857, z: 144.604}
+      localScales: {x: 0.135, y: 0.135, z: 0.135}
+      limbMask: 0
+  - idrsName: idrsRailGunner
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: ThighR
+      localPos: {x: -0.09055299, y: -0.03923273, z: -0.06344005}
+      localAngles: {x: 9.604342, y: 251.266, z: 189.3253}
+      localScales: {x: 0.06, y: 0.06, z: 0.06}
+      limbMask: 0
+  - idrsName: idrsScav
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Chest
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - idrsName: idrsToolbot
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Hip
+      localPos: {x: -0.8840311, y: 0.02388149, z: 0.7424992}
+      localAngles: {x: 355.618, y: 301.6225, z: 177.3396}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - idrsName: idrsTreebot
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: FlowerBase
+      localPos: {x: -0.2592353, y: 0.09362996, z: 0.4652956}
+      localAngles: {x: 0, y: 273.5518, z: 0}
+      localScales: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - idrsName: idrsVoidSurvivor
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: ThighR
+      localPos: {x: -0.141487, y: 0.1550659, z: 0.04581757}
+      localAngles: {x: 6.144023, y: 278.6568, z: 134.975}
+      localScales: {x: 0.05, y: 0.05, z: 0.05}
+      limbMask: 0
+  - idrsName: idrsEngiTurret
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0.7138401, y: 0.4148038, z: 1.544829}
+      localAngles: {x: 0, y: 90, z: 0}
+      localScales: {x: 0.125, y: 0.125, z: 0.125}
+      limbMask: 0
+  - idrsName: idrsEngiWalkerTurret
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Base
+      localPos: {x: 0, y: 0.8906902, z: 0.435376}
+      localAngles: {x: 0, y: 270, z: 335.2248}
+      localScales: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0

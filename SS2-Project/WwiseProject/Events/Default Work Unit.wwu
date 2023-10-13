@@ -1188,6 +1188,52 @@
 						</Event>
 					</ChildrenList>
 				</Folder>
+				<Folder Name="Interactables" ID="{E61809FD-6073-4B47-AE1C-C6F2DFD9B196}" ShortID="506695642">
+					<ChildrenList>
+						<Event Name="RefabricatorAction" ID="{A647617D-81BD-4C4D-9BC8-99E9BAE2CC89}">
+							<ChildrenList>
+								<Action Name="" ID="{80ABF21F-82E5-4757-93C8-2CB055E774BB}" ShortID="984316195">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="interactable_dronetable_action" ID="{D46411F5-0E34-4CF1-8AEA-AB5F172551D8}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="RefabricatorSelect1" ID="{EFFD7BB6-CDDB-45C4-B1B4-BF553D40267E}">
+							<ChildrenList>
+								<Action Name="" ID="{2F2824E9-74A4-4997-8E42-AB06F600DDD6}" ShortID="964108967">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="interactable_drionetable_select_item1" ID="{248FDCF1-5487-46D6-822C-7014BDC6FF4B}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="RefabricatorSelect2" ID="{D1708CF2-D4F7-4AEE-AE1E-9E1A8BC2A39F}">
+							<ChildrenList>
+								<Action Name="" ID="{2B447AA1-5CAC-498A-B6A6-5B640FC78ECD}" ShortID="597000023">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="interactable_drionetable_select_item2" ID="{0AFC594A-8BB1-4554-AF25-94DDF83E1381}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+					</ChildrenList>
+				</Folder>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>
