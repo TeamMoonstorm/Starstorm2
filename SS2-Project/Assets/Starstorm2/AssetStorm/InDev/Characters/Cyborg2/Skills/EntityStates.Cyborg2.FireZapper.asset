@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: EntityStates.Cyborg2.FireZapper
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.Cyborg2.FireZapper, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: baseDuration
+      fieldValue:
+        stringValue: 1.5
+        objectValue: {fileID: 0}
+    - fieldName: damageCoefficient
+      fieldValue:
+        stringValue: 3
+        objectValue: {fileID: 0}
+    - fieldName: force
+      fieldValue:
+        stringValue: 150
+        objectValue: {fileID: 0}
+    - fieldName: projectilePrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 6055536033811015727, guid: 421d076698b1f7a4fabf0e7887e14b68,
+          type: 3}
+    - fieldName: soundString
+      fieldValue:
+        stringValue: Play_captain_m2_tazer_shoot
+        objectValue: {fileID: 0}
+    - fieldName: muzzleEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: bloom
+      fieldValue:
+        stringValue: 0.5
+        objectValue: {fileID: 0}
+    - fieldName: recoilAmplitude
+      fieldValue:
+        stringValue: 7
+        objectValue: {fileID: 0}
+    - fieldName: earlyExitTime
+      fieldValue:
+        stringValue: 0.25
+        objectValue: {fileID: 0}
