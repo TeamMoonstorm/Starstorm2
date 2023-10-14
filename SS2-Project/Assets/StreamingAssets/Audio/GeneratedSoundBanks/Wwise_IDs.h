@@ -44,7 +44,6 @@ namespace AK
         static const AkUniqueID NEMHUNTRESSBOWMAX = 1389751463U;
         static const AkUniqueID NEMHUNTRESSCHARGEBOW = 415529083U;
         static const AkUniqueID NEMHUNTRESSFIREBOW = 3663148423U;
-        static const AkUniqueID NEMHUNTRESSHEADSHOT = 2770265387U;
         static const AkUniqueID NEMMANDOCHARACTERSELECT = 3733468431U;
         static const AkUniqueID NEMMANDOCHARGEBEAM = 2165644167U;
         static const AkUniqueID NEMMANDOCHARGEBEAM2 = 3141162423U;

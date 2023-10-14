@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="12" SoundbankVersion="135">
 	<RootPaths>
-		<ProjectRoot>C:\Users\hanan\OneDrive\Documents\GitHub\sStarstorm2\Starstorm2\SS2-Project\WwiseProject\</ProjectRoot>
-		<SourceFilesRoot>C:\Users\hanan\OneDrive\Documents\GitHub\sStarstorm2\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\</SourceFilesRoot>
-		<SoundBanksRoot>C:\Users\hanan\OneDrive\Documents\GitHub\sStarstorm2\Starstorm2\SS2-Project\Assets\StreamingAssets\Audio\GeneratedSoundBanks\Windows\</SoundBanksRoot>
+		<ProjectRoot>D:\ror2modstuff\Starstorm2UnityProject\Starstorm2\SS2-Project\WwiseProject\</ProjectRoot>
+		<SourceFilesRoot>D:\ror2modstuff\Starstorm2UnityProject\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\</SourceFilesRoot>
+		<SoundBanksRoot>D:\ror2modstuff\Starstorm2UnityProject\Starstorm2\SS2-Project\Assets\StreamingAssets\Audio\GeneratedSoundBanks\Windows\</SoundBanksRoot>
 		<ExternalSourcesInputFile></ExternalSourcesInputFile>
-		<ExternalSourcesOutputRoot>C:\Users\hanan\OneDrive\Documents\GitHub\sStarstorm2\Starstorm2\SS2-Project\WwiseProject\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
+		<ExternalSourcesOutputRoot>D:\ror2modstuff\Starstorm2UnityProject\Starstorm2\SS2-Project\WwiseProject\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
 	</RootPaths>
 	<DialogueEvents/>
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="866530374" Language="SFX" Hash="2879994973">
+		<SoundBank Id="866530374" Language="SFX" Hash="137941287">
 			<ObjectPath>\SoundBanks\Default Work Unit\Starstorm2</ObjectPath>
 			<ShortName>Starstorm2</ShortName>
 			<Path>Starstorm2.bnk</Path>
@@ -346,14 +346,6 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="2770265387" Name="NemHuntressHeadshot" ObjectPath="\Events\Default Work Unit\Nemesis Huntress\NemHuntressHeadshot" DurationType="OneShot" DurationMin="0.778298" DurationMax="0.824578">
-					<IncludedMemoryFiles>
-						<File Id="899666269" Language="SFX">
-							<ShortName>Minecraft Bow.wav</ShortName>
-							<Path>SFX\Minecraft Bow_D8C07C79.wem</Path>
-						</File>
-					</IncludedMemoryFiles>
-				</Event>
 				<Event Id="3733468431" Name="NemmandoCharacterSelect" ObjectPath="\Events\Default Work Unit\Nemmando\NemmandoCharacterSelect" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="1.000000" DurationMax="1.000000">
 					<IncludedMemoryFiles>
 						<File Id="917508447" Language="SFX">
@@ -610,6 +602,30 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
+				<Event Id="2808251015" Name="RefabricatorAction" ObjectPath="\Events\Default Work Unit\Interactables\RefabricatorAction" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="3.086893" DurationMax="3.086893">
+					<IncludedMemoryFiles>
+						<File Id="379909187" Language="SFX">
+							<ShortName>ui_drone_table_process01.wav</ShortName>
+							<Path>SFX\ui_drone_table_process01_D8C07C79.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1630810942" Name="RefabricatorSelect1" ObjectPath="\Events\Default Work Unit\Interactables\RefabricatorSelect1" DurationType="OneShot" DurationMin="0.919773" DurationMax="0.919773">
+					<IncludedMemoryFiles>
+						<File Id="943685154" Language="SFX">
+							<ShortName>UI_3D_printer_selectItem_01.wav</ShortName>
+							<Path>SFX\UI_3D_printer_selectItem_01_D8C07C79.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1630810941" Name="RefabricatorSelect2" ObjectPath="\Events\Default Work Unit\Interactables\RefabricatorSelect2" DurationType="OneShot" DurationMin="0.922812" DurationMax="0.922812">
+					<IncludedMemoryFiles>
+						<File Id="152621449" Language="SFX">
+							<ShortName>UI_3D_printer_itemIntoPrinter_01.wav</ShortName>
+							<Path>SFX\UI_3D_printer_itemIntoPrinter_01_D8C07C79.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
 				<Event Id="2800331071" Name="SigilActivation" ObjectPath="\Events\Default Work Unit\Items\SigilActivation" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="1.357029" DurationMax="1.357029">
 					<IncludedMemoryFiles>
 						<File Id="320726770" Language="SFX">
@@ -798,7 +814,7 @@
 			<ShortName>SS2Init</ShortName>
 			<Path>SS2Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="2545819644" Language="SFX">
+		<SoundBank Id="2545819644" Language="SFX" Hash="2144817749">
 			<ObjectPath>\SoundBanks\Default Work Unit\SS2Music</ObjectPath>
 			<ShortName>SS2Music</ShortName>
 			<Path>SS2Music.bnk</Path>

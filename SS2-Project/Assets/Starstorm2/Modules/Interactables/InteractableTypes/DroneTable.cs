@@ -15,7 +15,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Moonstorm.Starstorm2.Interactables
 {
-    //[DisabledContent]
+    [DisabledContent]
 
     public sealed class DroneTable : InteractableBase
     {
@@ -25,6 +25,7 @@ namespace Moonstorm.Starstorm2.Interactables
 
         private static GameObject itemTakenOrb;
 
+        
         //private static List<InteractableSpawnCard> interactableSpawnCards = new List<InteractableSpawnCard>();
         //private static List<CharacterBody> characterBodies = new List<CharacterBody>();
         //
@@ -52,7 +53,7 @@ namespace Moonstorm.Starstorm2.Interactables
 
         //public static Material GreenHoloMaterial = SS2Assets.LoadAsset<Material>("matHoloGreen");
 
-        public override MSInteractableDirectorCard InteractableDirectorCard { get; } = SS2Assets.LoadAsset<MSInteractableDirectorCard>("midcDroneTable");
+        public override MSInteractableDirectorCard InteractableDirectorCard { get; } = SS2Assets.LoadAsset<MSInteractableDirectorCard>("midcDroneTable", SS2Bundle.Indev);
 
         public override void Initialize()
         {
