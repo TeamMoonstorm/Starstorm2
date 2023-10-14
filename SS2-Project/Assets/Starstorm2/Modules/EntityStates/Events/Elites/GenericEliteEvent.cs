@@ -73,8 +73,8 @@ namespace EntityStates.Events
 
         public override void OnExit()
         {
-            base.OnExit();
             onEventClearGlobal?.Invoke();
+            base.OnExit();
             if (eventStateEffect)
             {
                 eventStateEffect.OnEndingStart(fadeDuration);
