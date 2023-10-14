@@ -2,13 +2,13 @@
 using RoR2.Achievements;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Unlocks.NemCommando
+namespace Moonstorm.Starstorm2.Unlocks.Executioner2
 {
-    public sealed class NemCommandoUnlockable : UnlockableBase
+    public sealed class ElectrocutionerUnlockable : UnlockableBase
     {
-        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.survivor.nemcommando", SS2Bundle.NemCommando);
+        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skin.executioner2.electro", SS2Bundle.Executioner2);
 
-        public sealed class NemCommandoAchievement : BaseAchievement
+        public sealed class ElectrocutionerAchievement : BaseAchievement
         {
             public override void OnInstall()
             {
@@ -21,16 +21,16 @@ namespace Moonstorm.Starstorm2.Unlocks.NemCommando
                 base.OnUninstall();
             }
 
-            private class NemCommandoUnlockableServerAchievement : BaseServerAchievement
+            private class ElectrocutionerServerAchievement : BaseServerAchievement
             {
-                public BodyIndex nemCommandoBodyIndex
+                public BodyIndex exeuctioner2BodyIndex
                 {
                     get
                     {
-                        var nemCommandoBodyPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoBody", SS2Bundle.NemCommando);
-                        if (nemCommandoBodyPrefab)
+                        var exe2BodyPrefab = SS2Assets.LoadAsset<GameObject>("Exeuctioner2Body", SS2Bundle.Executioner2);
+                        if (exe2BodyPrefab)
                         {
-                            return nemCommandoBodyPrefab.GetComponent<CharacterBody>().bodyIndex;
+                            return exe2BodyPrefab.GetComponent<CharacterBody>().bodyIndex;
                         }
                         return BodyIndex.None;
                     }
@@ -38,21 +38,19 @@ namespace Moonstorm.Starstorm2.Unlocks.NemCommando
                 public override void OnInstall()
                 {
                     base.OnInstall();
-                    EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal += OnNemCommandoDefeated;
+                    EntityStates.Events.OverloadingEventState.onEventClearGlobal += OnEventCleared;
                 }
 
                 public override void OnUninstall()
                 {
-                    EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal -= OnNemCommandoDefeated;
+                    EntityStates.Events.OverloadingEventState.onEventClearGlobal -= OnEventCleared;
                     base.OnUninstall();
                 }
 
-                private void OnNemCommandoDefeated(CharacterBody obj)
+                private void OnEventCleared()
                 {
-                    if (obj.bodyIndex == nemCommandoBodyIndex)
-                    {
+                    if (networkUser.GetCurrentBody().bodyIndex == exeuctioner2BodyIndex)
                         Grant();
-                    }
                 }
             }
         }
