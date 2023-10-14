@@ -60,6 +60,16 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Coffee Bag and Needles now have item displays.
     * Disabled Baby's Toys. The item does work, but it has a lot of issues which would take a decent amount of time to address, so it's being disabled for now.
 
+### 0.4.6
+* Nemesis Commando
+    * Single Tap reload speed now scales with attack speed.
+    * Distant Gash no longer resets skill cooldown on use.
+    * Fixed materials not dithering when close to camera.
+* Executioner
+    * Fixed materials not dithering when close to camera.
+* Events
+    * Fixed the Fog event making the world entirely unseeable when viewed from underwater.
+
 ### 0.4.5
 * General
     * Fixed a crash caused by a conflict with other mods.
