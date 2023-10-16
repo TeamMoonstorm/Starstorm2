@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Moonstorm.Starstorm2.Items
 {
-    [DisabledContent]
+    //[DisabledContent]
     public sealed class BaneFlask : ItemBase
     {
 
@@ -14,19 +14,24 @@ namespace Moonstorm.Starstorm2.Items
         public static DotController.DotIndex DotIndex;
         //public static float duration = 2;
 
-        [RooConfigurableField(ConfigDesc = "Debuff Damage per Second. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Debuff Damage per Second. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float debuffDamage = .3f;
 
-        [RooConfigurableField(ConfigDesc = "Duration of applied Bane debuff. (1 = 1 second)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of applied Bane debuff. (1 = 1 second)")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static float debuffDuration = 5;
 
-        [RooConfigurableField(ConfigDesc = "Range of on-death AOE. For reference, Gasoline's base range is 12m. (1 = 1m)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Range of on-death AOE. For reference, Gasoline's base range is 12m. (1 = 1m)")]
         [TokenModifier(token, StatTypes.Default, 2)]
         public static float aoeRange = 15;
 
         public static GameObject explosionGross;
+        public static GameObject particleBase;
+        public static GameObject floorGloop;
+
+        public static Dictionary<BuffIndex, GameObject> buffColors = new Dictionary<BuffIndex, GameObject>();
+
 
         //[ConfigurableField(ConfigDesc = "Max active warbanners for each character.")]
         //[TokenModifier(token, StatTypes.Default, 3)]
@@ -34,7 +39,9 @@ namespace Moonstorm.Starstorm2.Items
 
         public override void Initialize()
         {
-            explosionGross = SS2Assets.LoadAsset<GameObject>("BaneVFX", SS2Bundle.Items);
+            explosionGross = SS2Assets.LoadAsset<GameObject>("BaneGrayVFX", SS2Bundle.Items);
+            particleBase = SS2Assets.LoadAsset<GameObject>("BaneHitsparkVFX", SS2Bundle.Items);
+            floorGloop = SS2Assets.LoadAsset<GameObject>("BaneGrayGoop", SS2Bundle.Items);
             //DotController.onDotInflictedServerGlobal += RefreshInsects;
         }
          
@@ -201,16 +208,41 @@ namespace Moonstorm.Starstorm2.Items
                                         damageMultiplier = dot.Value.damage
                                     };
                                     DotController.InflictDot(ref dotInfoTemp);
+
+                                    EffectData effectDataTemp = new EffectData
+                                    {
+                                        origin = victimBody.transform.position,
+                                        color = dot.Value.dotDef.associatedBuff.buffColor,
+                                        scale = 1// * (float)obj.victimBody.hullClassification
+                                    };
+                                    EffectManager.SpawnEffect(particleBase, effectDataTemp, transmit: true);
                                 }
 
                                 foreach(var timed in timedBuffs) //add all timed debuffs
                                 {
                                     hurtBox.healthComponent.body.AddTimedBuffAuthority(timed.Key, timed.Value.timer);
+
+                                    EffectData effectDataTemp = new EffectData
+                                    {
+                                        origin = victimBody.transform.position,
+                                        color = BuffCatalog.GetBuffDef(timed.Value.buffIndex).buffColor,                                        
+                                        scale = 1// * (float)obj.victimBody.hullClassification
+                                    };
+                                    EffectManager.SpawnEffect(particleBase, effectDataTemp, transmit: true);
+
                                 }
 
                                 foreach(var inf in infDebuffs) //add all infinite debuffs
                                 {
                                     hurtBox.healthComponent.body.AddBuff(inf);
+
+                                    EffectData effectDataTemp = new EffectData
+                                    {
+                                        origin = victimBody.transform.position,
+                                        color = BuffCatalog.GetBuffDef(inf).buffColor,
+                                        scale = 1// * (float)obj.victimBody.hullClassification
+                                    };
+                                    EffectManager.SpawnEffect(particleBase, effectDataTemp, transmit: true);
                                 }
                             }
                         }
@@ -220,10 +252,20 @@ namespace Moonstorm.Starstorm2.Items
                         EffectData effectData = new EffectData
                         {
                             origin = victimBody.transform.position,
+                            //
                             scale = 1// * (float)obj.victimBody.hullClassification
                         };
                         EffectManager.SpawnEffect(explosionGross, effectData, transmit: true);
-
+                        if (victimBody.characterMotor.isGrounded)
+                        {
+                            EffectData efd2 = new EffectData()
+                            {
+                                origin = victimBody.transform.position,
+                                scale = 1
+                            };
+                            EffectManager.SpawnEffect(floorGloop, efd2, transmit: true);
+                        }
+                        //Util.PlaySound("Play_acid_larva_impact", victimBody.gameObject);
                         //EffectManager.SpawnEffect(iceDeathAOEObject, new EffectData
                         //{
                         //    origin = corePosition,

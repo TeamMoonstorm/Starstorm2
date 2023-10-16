@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 1788389205, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 2
+  duration: 4
   resetAgeOnDisable: 0
 --- !u!1 &2391062400526049620
 GameObject:
@@ -224,7 +224,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 4
-      minScalar: 2.25
+      minScalar: 1.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -276,8 +276,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 48
-      minScalar: 90
+      scalar: 24
+      minScalar: 12
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -713,9 +713,9 @@ ParticleSystem:
     rotation3D: 0
     gravityModifier:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 0.325
-      minScalar: 0
+      minMaxState: 3
+      scalar: 0.4
+      minScalar: 0.275
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1083,8 +1083,8 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 3
-        scalar: 24
-        minScalar: 12
+        scalar: 4
+        minScalar: 4
         maxCurve:
           serializedVersion: 2
           m_Curve:
@@ -1488,9 +1488,9 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 0}
-        key1: {r: 1, g: 1, b: 1, a: 1}
+        key1: {r: 1, g: 1, b: 1, a: 0.78431374}
         key2: {r: 1, g: 1, b: 1, a: 1}
-        key3: {r: 0, g: 0, b: 0, a: 0}
+        key3: {r: 1, g: 1, b: 1, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
         key6: {r: 0, g: 0, b: 0, a: 0}
@@ -1498,13 +1498,13 @@ ParticleSystem:
         ctime0: 0
         ctime1: 62258
         ctime2: 65535
-        ctime3: 0
+        ctime3: 65535
         ctime4: 0
         ctime5: 0
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 27178
+        atime1: 9830
         atime2: 63569
         atime3: 65535
         atime4: 0
@@ -9788,7 +9788,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5913859287490958828}
   serializedVersion: 6
-  lengthInSec: 2.5
+  lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 1
@@ -9969,8 +9969,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 0
-      minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      minColor: {r: 0.627451, g: 0.74509805, b: 0.011764706, a: 1}
+      maxColor: {r: 0.8018868, g: 0.8018868, b: 0.8018868, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 0.064079754, g: 0.3018868, b: 0.21480255, a: 0}
@@ -11119,7 +11119,7 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 1, g: 1, b: 1, a: 0.81960785}
+        key1: {r: 1, g: 1, b: 1, a: 1}
         key2: {r: 0.003921569, g: 0.454902, b: 0.28627452, a: 0}
         key3: {r: 0.46274513, g: 0.6509804, b: 0.21960786, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -11135,7 +11135,7 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 25829
+        atime1: 43253
         atime2: 65535
         atime3: 65535
         atime4: 0
@@ -14608,7 +14608,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6576407805920728088}
   serializedVersion: 6
-  lengthInSec: 2
+  lengthInSec: 0.75
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 1
@@ -15542,9 +15542,9 @@ ParticleSystem:
       time: 0
       countCurve:
         serializedVersion: 2
-        minMaxState: 0
+        minMaxState: 3
         scalar: 5
-        minScalar: 30
+        minScalar: 3
         maxCurve:
           serializedVersion: 2
           m_Curve:

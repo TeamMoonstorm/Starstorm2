@@ -67,6 +67,14 @@ namespace Moonstorm.Starstorm2.Items
             public void Start()
             {
                 body.onSkillActivatedAuthority += X4HealOnSkillActivation;
+                //SS2Log.Info("hook added on " + body + " |");
+                //SS2Log.Info("hook added on " + body.baseNameToken + " |");
+                //FindDisplay(body.modelLocator.modelTransform.);
+                //x4display = body.modelLocator.modelTransform.GetComponent<CharacterModel>().GetItemDisplayObjects(SS2Content.Items.X4.itemIndex);
+                //x4ps = x4display[0].GetComponent<ParticleSystem>();
+                //if (x4display != null)
+                    //x4ps = x4display[0].GetComponentInChildren<ParticleSystem>();
+                //Debug.Log("x4ps : " + x4ps.gameObject.name);
             }
 
             private void X4HealOnSkillActivation(GenericSkill skill)
@@ -121,10 +129,16 @@ namespace Moonstorm.Starstorm2.Items
                                 if (buffCount < buffcap)
                                 {
                                     charbody.AddTimedBuffAuthority(SS2Content.Buffs.BuffX4.buffIndex, regenDuration);
+                                    //if (x4ps != null)
+                                    //    x4ps.Play();
+                                    //self.RemoveOldestTimedBuff(SS2Content.Buffs.BuffX4.buffIndex);
+
                                 }
                                 else if (buffCount == buffcap && buffCount >= 1)
                                 {
                                     SS2Util.RefreshOldestBuffStack(charbody, SS2Content.Buffs.BuffX4, regenDuration);
+                                    //if (x4ps != null)
+                                    //    x4ps.Play();
                                 }
                             }
                             else if (skill == skill.characterBody.skillLocator.secondaryBonusStockSkill) // if the skill is spammable, cap the buff count at 1

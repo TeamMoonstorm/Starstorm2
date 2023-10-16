@@ -15,7 +15,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Moonstorm.Starstorm2.Interactables
 {
-    [DisabledContent]
+    //[DisabledContent]
 
     public sealed class DroneTable : InteractableBase
     {
@@ -421,6 +421,7 @@ namespace Moonstorm.Starstorm2.Interactables
         {
             public CharacterBody LastActivator;
             public PurchaseInteraction PurchaseInteraction;
+            
             //public Transform symbolTransform;
             //public EntityStateMachine esm;
 
