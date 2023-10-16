@@ -80,7 +80,7 @@ namespace EntityStates.NemMerc
 				temporaryOverlay.animateShaderAlpha = true;
 				temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
 				temporaryOverlay.destroyComponentOnEnd = true;
-				temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matNemergize", SS2Bundle.Indev);
+				temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matNemergize", SS2Bundle.NemMercenary);
 				temporaryOverlay.AddToCharacerModel(this.modelTransform.GetComponent<CharacterModel>());
 			}
 
@@ -158,7 +158,7 @@ namespace EntityStates.NemMerc
 							temporaryOverlay2.animateShaderAlpha = true;
 							temporaryOverlay2.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
 							temporaryOverlay2.destroyComponentOnEnd = true;
-							temporaryOverlay2.originalMaterial = SS2Assets.LoadAsset<Material>("matNemergize", SS2Bundle.Indev);
+							temporaryOverlay2.originalMaterial = SS2Assets.LoadAsset<Material>("matNemergize", SS2Bundle.NemMercenary);
 							temporaryOverlay2.AddToCharacerModel(this.modelTransform.GetComponent<CharacterModel>());
 						}
 					}

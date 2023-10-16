@@ -22,6 +22,7 @@ namespace EntityStates.NemMerc
 
         public static GameObject blinkPrefab;
         public static GameObject blinkDestinationPrefab;
+        public static GameObject blinkArrivalPrefab;
 
         private GameObject destinationInstance;
         private float duration;
@@ -35,6 +36,8 @@ namespace EntityStates.NemMerc
         private Transform modelTransform;
 
         private Vector3 lastKnownTargetPosition;
+
+        private GameObject bossEffect;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -42,7 +45,7 @@ namespace EntityStates.NemMerc
             //vfx
             // overlay material
             //need to fix teleport near walls
-            // still fucking teleports to 0,0 sometimes. when target disappears on the smae frame.
+            // still fucking teleports to 0,0 sometimes. when target disappears on the smae frame. (?)
             // ^^^ MOSTLY happens to the clone version which is separate
 
             base.StartAimMode();
@@ -74,22 +77,35 @@ namespace EntityStates.NemMerc
             if (modelTransform)
             {
                 this.characterModel = modelTransform.GetComponent<CharacterModel>();
+                ChildLocator childLocator = base.GetModelChildLocator();
+                if(childLocator)
+                {
+                    Transform chest = childLocator.FindChild("Chest");
+                    if(chest)
+                    {
+                        Transform bossEffect = chest.Find("NemMercenaryBossEffect(Clone)");
+                        if (bossEffect)
+                        {
+                            this.bossEffect = bossEffect.gameObject;
+                            this.bossEffect.SetActive(false);
+                        }
+                    }
+                }
+                
             }
-            //if (this.characterModel)
-            //{
-            //    this.characterModel.invisibilityCount++;
-            //}
+            if (this.characterModel)
+            {
+                this.characterModel.invisibilityCount++;
+            }
 
-            //if (ShadowStep.blinkPrefab)
-            //{
-            //    GameObject g = UnityEngine.Object.Instantiate<GameObject>(ShadowStep.blinkPrefab, base.characterBody.corePosition, Quaternion.identity);
-            //    g.GetComponent<ScaleParticleSystemDuration>().newDuration = this.duration;
-            //}
-            //if (ShadowStep.blinkDestinationPrefab)
-            //{
-            //    this.destinationInstance = UnityEngine.Object.Instantiate<GameObject>(ShadowStep.blinkDestinationPrefab, this.teleportTarget, Quaternion.identity);
-            //    this.destinationInstance.GetComponent<ScaleParticleSystemDuration>().newDuration = this.duration;
-            //}
+            if(ShadowStep.blinkPrefab)
+            {
+                EffectManager.SimpleEffect(blinkPrefab, base.characterBody.corePosition, Util.QuaternionSafeLookRotation(teleportTarget - teleportStartPosition), false);
+            }
+            if (ShadowStep.blinkDestinationPrefab)
+            {
+                this.destinationInstance = UnityEngine.Object.Instantiate<GameObject>(ShadowStep.blinkDestinationPrefab, this.teleportTarget, Quaternion.identity);
+            }
 
             if (NetworkServer.active)
             {
@@ -124,8 +140,10 @@ namespace EntityStates.NemMerc
 
 
         bool s;
-        [NonSerialized]
+
+        [NonSerialized] // WHY DOESNT NONSERIALIZED WORK ALL OF A SUDDEN ???????????????????????????????????????
         public static float bitch = 0.66f; // I DONT CARE I DONCA RE STFU STFU STFU
+
         public override void FixedUpdate()
         {
             base.FixedUpdate();
@@ -143,8 +161,23 @@ namespace EntityStates.NemMerc
                 if(this.camera)
                     this.camera.EndCameraFlip();
 
-                
+                if (this.teleportTarget.magnitude < 5)
+                {
+                    SS2Log.Error("SHADOWSTEP WENT TO 0,0");
+                    SS2Log.Error("TeleportTarget: " + this.teleportTarget);
+                    SS2Log.Error("target: " + this.target);
+                    SS2Log.Error("lastKnownTargetPosition: " + this.lastKnownTargetPosition);
+                    SS2Log.Error("NemMercTrackerComponent target: " + base.GetComponent<NemMercTracker>().GetTrackingTarget());
+                }
+
+
                 TeleportHelper.TeleportBody(base.characterBody, this.teleportTarget);
+
+                if(blinkArrivalPrefab)
+                {
+                    EffectManager.SimpleEffect(blinkArrivalPrefab, this.teleportTarget, Quaternion.identity, true);
+                }
+
                 base.characterDirection.forward = this.lastKnownTargetPosition - base.transform.position;
                 base.SmallHop(base.characterMotor, ShadowStep.smallHopVelocity);
                 base.StartAimMode();
@@ -168,16 +201,19 @@ namespace EntityStates.NemMerc
         public override void OnExit()
         {
             base.OnExit();
-            //if (this.characterModel)
-            //{
-            //    this.characterModel.invisibilityCount--;
-            //}
+            if(this.bossEffect)
+            {
+                this.bossEffect.SetActive(true);
+            }
+            if (this.characterModel)
+            {
+                this.characterModel.invisibilityCount--;
+            }
             if (this.camera)
             {      
                 this.camera.EndCameraFlip();
                 Destroy(this.camera);
             }
-            //if (this.destinationInstance) Destroy(this.destinationInstance);
 
             if (this.modelTransform)
             {
@@ -186,7 +222,7 @@ namespace EntityStates.NemMerc
                 temporaryOverlay2.animateShaderAlpha = true;
                 temporaryOverlay2.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
                 temporaryOverlay2.destroyComponentOnEnd = true;
-                temporaryOverlay2.originalMaterial = SS2Assets.LoadAsset<Material>("matNemergize", SS2Bundle.Indev);
+                temporaryOverlay2.originalMaterial = SS2Assets.LoadAsset<Material>("matNemergize", SS2Bundle.NemMercenary);
                 temporaryOverlay2.AddToCharacerModel(this.modelTransform.GetComponent<CharacterModel>());
             }
 

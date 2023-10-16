@@ -46,6 +46,8 @@ namespace Moonstorm.Starstorm2.ScriptableObjects
         {
             if (NetworkServer.active && Run.instance)
             {
+                inv.GiveItem(RoR2Content.Items.TeleportWhenOob); // teleport we noob
+
                 float itemsPerMin = 0.5f;
                 float itemsDev = 0.2f;
                 int runTimeMins = (int)Math.Round(Run.instance.GetRunStopwatch() / 60);
@@ -66,6 +68,7 @@ namespace Moonstorm.Starstorm2.ScriptableObjects
                         inv.GiveItem(selected.itemDef.Asset, UnityEngine.Random.Range(selected.minStacks, selected.maxStacks));
                     }
                 }
+               
 
                 List<string> log = new List<string>();
                 foreach (ItemIndex i in inv.itemAcquisitionOrder)

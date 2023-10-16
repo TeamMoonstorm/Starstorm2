@@ -7,6 +7,7 @@ using Moonstorm.Starstorm2.Components;
 using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
+using Moonstorm.Starstorm2;
 
 namespace EntityStates.NemMerc
 {
@@ -27,6 +28,8 @@ namespace EntityStates.NemMerc
 
         private Vector3 toHologramTarget;
         private Vector3 lastKnownTargetPosition;
+
+        private GameObject bossEffect;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -63,6 +66,20 @@ namespace EntityStates.NemMerc
                 return;
             }
 
+            ChildLocator childLocator = base.GetModelChildLocator();
+            if (childLocator)
+            {
+                Transform chest = childLocator.FindChild("Chest");
+                if (chest)
+                {
+                    Transform bossEffect = chest.Find("NemMercenaryBossEffect(Clone)");
+                    if (bossEffect)
+                    {
+                        this.bossEffect = bossEffect.gameObject;
+                        this.bossEffect.SetActive(false);
+                    }
+                }
+            }
 
             this.duration = HologramShadowStep.baseDuration;
 
@@ -79,6 +96,11 @@ namespace EntityStates.NemMerc
             this.camera.target = cameraTarget;
             this.camera.startLerpDuration = this.duration * cameraLerpTime;
             this.camera.StartLook();
+
+            if (ShadowStep.blinkPrefab)
+            {
+                EffectManager.SimpleEffect(ShadowStep.blinkPrefab, base.characterBody.corePosition, Util.QuaternionSafeLookRotation(teleportTarget - base.transform.position), false);
+            }
 
             if (NetworkServer.active)
             {
@@ -106,8 +128,22 @@ namespace EntityStates.NemMerc
 
             if (base.isAuthority && base.fixedAge >= this.duration)
             {
+                if (this.teleportTarget.magnitude < 5)
+                {
+                    SS2Log.Error("SHADOWSTEP WENT TO 0,0");
+                    SS2Log.Error("TeleportTarget: " + this.teleportTarget);
+                    SS2Log.Error("target: " + this.target);
+                    SS2Log.Error("lastKnownTargetPosition: " + this.lastKnownTargetPosition);
+                    SS2Log.Error("NemMercTrackerComponent target: " + base.GetComponent<NemMercTracker>().GetTrackingTarget());
+                }
+
+
                 TeleportHelper.TeleportBody(base.characterBody, this.teleportTarget);
                 base.characterDirection.forward = this.toHologramTarget != Vector3.zero  ? this.toHologramTarget : this.startPosition - base.transform.position;
+                if (ShadowStep.blinkArrivalPrefab)
+                {
+                    EffectManager.SimpleEffect(ShadowStep.blinkArrivalPrefab, this.teleportTarget, Quaternion.identity, true);
+                }
                 this.outer.SetNextStateToMain();
                 base.StartAimMode();
                 return;
@@ -117,7 +153,10 @@ namespace EntityStates.NemMerc
         public override void OnExit()
         {
             base.OnExit();
-
+            if (this.bossEffect)
+            {
+                this.bossEffect.SetActive(true);
+            }
 
             if (this.camera)
             {

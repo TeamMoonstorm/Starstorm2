@@ -33,7 +33,7 @@ namespace Moonstorm.Starstorm2.Survivors
             
             if (Starstorm.ScepterInstalled)
             {
-                //ScepterCompat();
+                ScepterCompat();
             }
         }
 
@@ -61,20 +61,23 @@ namespace Moonstorm.Starstorm2.Survivors
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         public void ScepterCompat()
         {
-            //AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(SS2Assets.LoadAsset<SkillDef>("NemmandoScepterSubmission"), "NemmandoBody", SkillSlot.Special, 0);
-            //AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(SS2Assets.LoadAsset<SkillDef>("NemmandoScepterBossAttack"), "NemmandoBody", SkillSlot.Special, 1);
+            AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(SS2Assets.LoadAsset<SkillDef>("NemMercScepterSpecial", SS2Bundle.NemMercenary), "NemMercBody", SkillSlot.Special, 0);
+            AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(SS2Assets.LoadAsset<SkillDef>("NemMercScepterClone", SS2Bundle.NemMercenary), "NemMercBody", SkillSlot.Special, 1);
         }
 
         public override void ModifyPrefab()
         {
             var cb = BodyPrefab.GetComponent<CharacterBody>();
-            cb._defaultCrosshairPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/StandardCrosshair.prefab").WaitForCompletion();
+            //cb._defaultCrosshairPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/StandardCrosshair.prefab").WaitForCompletion();
             ///  ??????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
             
             cb.GetComponent<ModelLocator>().modelTransform.GetComponent<FootstepHandler>().footstepDustPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/GenericFootstepDust.prefab").WaitForCompletion();
 
             GameObject g1 = SS2Assets.LoadAsset<GameObject>("KnifeProjectile", SS2Bundle.NemMercenary);
             g1.AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>().Add(DamageTypes.RedirectHologram.damageType);
+
+            GameObject g2 = SS2Assets.LoadAsset<GameObject>("NemMercHologram", SS2Bundle.NemMercenary);
+            g2.RegisterNetworkPrefab();
         }
     }
 }

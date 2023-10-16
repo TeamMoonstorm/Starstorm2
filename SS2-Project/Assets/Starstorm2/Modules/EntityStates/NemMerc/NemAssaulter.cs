@@ -46,7 +46,7 @@ namespace EntityStates.NemMerc
 				temporaryOverlay.animateShaderAlpha = true;
 				temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 				temporaryOverlay.destroyComponentOnEnd = true;
-				temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matNemergize", SS2Bundle.Indev);
+				temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matNemergize", SS2Bundle.NemMercenary);
 				temporaryOverlay.AddToCharacerModel(this.characterModel);
 				
 			}
@@ -133,7 +133,7 @@ namespace EntityStates.NemMerc
 					temporaryOverlay.animateShaderAlpha = true;
 					temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
 					temporaryOverlay.destroyComponentOnEnd = true;
-					temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matNemergize", SS2Bundle.Indev);
+					temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matNemergize", SS2Bundle.NemMercenary);
 					temporaryOverlay.AddToCharacerModel(this.characterModel);
 				}
 			}
@@ -238,7 +238,17 @@ namespace EntityStates.NemMerc
 			return InterruptPriority.Pain;
         }
 
-        [NonSerialized]
+        public override void OnSerialize(NetworkWriter writer)
+        {
+			writer.Write(HurtBoxReference.FromHurtBox(this.target));
+		}
+
+		public override void OnDeserialize(NetworkReader reader)
+		{
+			this.target = reader.ReadHurtBoxReference().ResolveHurtBox();
+		}
+
+		[NonSerialized]
 		public Transform modelTransform;
 
 		public static GameObject dashPrefab;

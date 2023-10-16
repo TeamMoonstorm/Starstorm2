@@ -80,6 +80,7 @@ namespace AK
         static const AkUniqueID PLAY_NEMMERC_KNIFE_THROW = 2890061578U;
         static const AkUniqueID PLAY_NEMMERC_PRIMARY_FIRE = 2406586433U;
         static const AkUniqueID PLAY_NEMMERC_PRIMARY_FIRE2 = 282242657U;
+        static const AkUniqueID PLAY_NEMMERC_PRIMARY_FIRE3 = 282242656U;
         static const AkUniqueID PLAY_NEMMERC_PRIMARY_RELOAD = 1171975898U;
         static const AkUniqueID PLAY_NEMMERC_SECONDARY_LUNGE = 576705642U;
         static const AkUniqueID PLAY_NEMMERC_SPECIAL = 428808189U;

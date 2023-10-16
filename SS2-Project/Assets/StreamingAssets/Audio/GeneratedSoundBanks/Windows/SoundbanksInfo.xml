@@ -11,7 +11,7 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="866530374" Language="SFX" Hash="1790531993">
+		<SoundBank Id="866530374" Language="SFX" Hash="1065005857">
 			<ObjectPath>\SoundBanks\Default Work Unit\Starstorm2</ObjectPath>
 			<ShortName>Starstorm2</ShortName>
 			<Path>Starstorm2.bnk</Path>
@@ -614,7 +614,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="1731428284" Name="Play_nemmerc_knife_impact" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_knife_impact" DurationType="OneShot" DurationMin="1.716354" DurationMax="1.716354">
+				<Event Id="1731428284" Name="Play_nemmerc_knife_impact" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_knife_impact" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="1.716354" DurationMax="1.716354">
 					<IncludedMemoryFiles>
 						<File Id="330789530" Language="SFX">
 							<ShortName>knife_NM_impact.wav</ShortName>
@@ -622,7 +622,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="646660983" Name="Play_nemmerc_knife_rip" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_knife_rip" DurationType="OneShot" DurationMin="1.788458" DurationMax="1.788458">
+				<Event Id="646660983" Name="Play_nemmerc_knife_rip" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_knife_rip" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="1.788458" DurationMax="1.788458">
 					<IncludedMemoryFiles>
 						<File Id="497498619" Language="SFX">
 							<ShortName>knife_NM_pull_2.wav</ShortName>
@@ -630,7 +630,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="2890061578" Name="Play_nemmerc_knife_throw" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_knife_throw" DurationType="OneShot" DurationMin="1.509625" DurationMax="1.509625">
+				<Event Id="2890061578" Name="Play_nemmerc_knife_throw" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_knife_throw" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="1.509625" DurationMax="1.509625">
 					<IncludedMemoryFiles>
 						<File Id="23053059" Language="SFX">
 							<ShortName>knife_NM_thrown_stright.wav</ShortName>
@@ -648,9 +648,17 @@
 				</Event>
 				<Event Id="282242657" Name="Play_nemmerc_primary_fire2" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_primary_fire2" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="1.432814" DurationMax="1.562495">
 					<IncludedMemoryFiles>
-						<File Id="335661959" Language="SFX">
-							<ShortName>nemmercshot2_2.wav</ShortName>
-							<Path>SFX\nemmercshot2_2_D8C07C79.wem</Path>
+						<File Id="559235054" Language="SFX">
+							<ShortName>nemmercshot2_3.wav</ShortName>
+							<Path>SFX\nemmercshot2_3_D8C07C79.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="282242656" Name="Play_nemmerc_primary_fire3" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_primary_fire3" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="2.587541" DurationMax="3.260097">
+					<IncludedMemoryFiles>
+						<File Id="51700066" Language="SFX">
+							<ShortName>PF_NM_2.wav</ShortName>
+							<Path>SFX\PF_NM_2_D8C07C79.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>

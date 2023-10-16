@@ -19,13 +19,27 @@ namespace EntityStates.NemMerc
         public static float maxRange = 50f;
         public static bool copyInventory;
 
+        [SerializeField]
+        public int numRecasts = 1;
+
         private NemMercTracker tracker;
+
+
+        private uint primary;
+        private uint secondary;
+        private uint utility;
+        private uint special;
 
         public override void OnEnter()
         {
             base.OnEnter();
 
             this.tracker = base.GetComponent<NemMercTracker>();
+
+            primary = base.characterBody.master.loadout.bodyLoadoutManager.GetSkillVariant(base.characterBody.bodyIndex, 0);
+            secondary = base.characterBody.master.loadout.bodyLoadoutManager.GetSkillVariant(base.characterBody.bodyIndex, 1);
+            utility = base.characterBody.master.loadout.bodyLoadoutManager.GetSkillVariant(base.characterBody.bodyIndex, 2);
+            special = base.characterBody.master.loadout.bodyLoadoutManager.GetSkillVariant(base.characterBody.bodyIndex, 3);
 
             this.SpawnHolograms();
 
@@ -79,13 +93,19 @@ namespace EntityStates.NemMerc
 
         private void SpawnHologramSingle(Vector3 position)
         {
-            // LOADOUTS MAKE NO FUCKING SENSE
-            uint primary = base.characterBody.master.loadout.bodyLoadoutManager.GetSkillVariant(base.characterBody.bodyIndex, 0);
-            uint secondary = base.characterBody.master.loadout.bodyLoadoutManager.GetSkillVariant(base.characterBody.bodyIndex, 1);
-            uint utility = base.characterBody.master.loadout.bodyLoadoutManager.GetSkillVariant(base.characterBody.bodyIndex, 2);
-            uint special = base.characterBody.master.loadout.bodyLoadoutManager.GetSkillVariant(base.characterBody.bodyIndex, 3);
+            // LOADOUTS MAKE NO FUCKING SENSE           
 
-            new MasterSummon
+            CharacterMaster holo = hologramPrefab.GetComponent<CharacterMaster>();
+            Loadout loadout = new Loadout();
+            holo.loadout.Copy(loadout);
+            BodyIndex index = holo.bodyPrefab.GetComponent<CharacterBody>().bodyIndex;
+
+            loadout.bodyLoadoutManager.SetSkillVariant(index, 0, primary);
+            loadout.bodyLoadoutManager.SetSkillVariant(index, 1, secondary);
+            loadout.bodyLoadoutManager.SetSkillVariant(index, 2, utility);
+            loadout.bodyLoadoutManager.SetSkillVariant(index, 3, special);
+
+            CloneInputBank clone = new MasterSummon
             {
                 masterPrefab = hologramPrefab,
                 position = position,
@@ -93,7 +113,7 @@ namespace EntityStates.NemMerc
                 inventoryToCopy = copyInventory ? base.characterBody.inventory : null,
                 inventoryItemCopyFilter = ItemFilter,
                 summonerBodyObject = base.gameObject,
-                loadout = base.characterBody.master.loadout,  /// ?????????????????????????????????????????? DOESNT FUCKING DO ANYTHING?????????????????????             
+                loadout = loadout,
                 preSpawnSetupCallback = (master) =>
                 {
                     master.gameObject.AddComponent<MasterSuicideOnTimer>().lifeTimer = cloneLifetime;
@@ -102,7 +122,7 @@ namespace EntityStates.NemMerc
                         body.GetComponent<NemMercCloneTracker>().ownerTracker = this.tracker;
 
                         //COPY BAND COOLDOWNS
-
+                        // SHOULD PROBABLY JUST DISABLE BANDS LMAO
                         float ringcd = base.characterBody.GetBuffCount(RoR2Content.Buffs.ElementalRingsCooldown);
                         int num12 = 1; //  c v
                         while ((float)num12 <= ringcd)
@@ -110,9 +130,10 @@ namespace EntityStates.NemMerc
                             body.AddTimedBuff(RoR2Content.Buffs.ElementalRingsCooldown, (float)num12);
                             num12++;
                         }
-                        
+
 
                         //COPY SKILL STOCK/COOLDOWNS
+                        // (DOESNT FUCKING WORK ?????????????????????????????????????????????????????))))))))))))))))))))))))
                         body.skillLocator.primary.stock = base.skillLocator.primary.stock;
                         body.skillLocator.primary.rechargeStopwatch = base.skillLocator.primary.rechargeStopwatch;
                         body.skillLocator.secondary.stock = base.skillLocator.secondary.stock;
@@ -121,20 +142,14 @@ namespace EntityStates.NemMerc
                         body.skillLocator.utility.rechargeStopwatch = base.skillLocator.utility.rechargeStopwatch;
                         body.skillLocator.special.stock = base.skillLocator.special.stock;
                         body.skillLocator.special.rechargeStopwatch = base.skillLocator.special.rechargeStopwatch;
-                        ///////////////////////////???????????????????????????????????????????????????????????????????????????????????
-                        Loadout loadout = new Loadout();
-                        body.master.loadout.Copy(loadout);
-
-                        loadout.bodyLoadoutManager.SetSkillVariant(body.bodyIndex, 0, primary);
-                        loadout.bodyLoadoutManager.SetSkillVariant(body.bodyIndex, 1, secondary);
-                        loadout.bodyLoadoutManager.SetSkillVariant(body.bodyIndex, 2, utility);
-                        loadout.bodyLoadoutManager.SetSkillVariant(body.bodyIndex, 3, special);
-
-                        body.master.SetLoadoutServer(loadout);
-                        body.SetLoadoutServer(loadout);
                     };
                 }
-            }.Perform();
+            }.Perform().GetComponent<CloneInputBank>();
+
+            clone.ownerMasterObject = this.characterBody.master.gameObject;
+            clone.maxRecasts = this.numRecasts;
+
+            
 
         }
 

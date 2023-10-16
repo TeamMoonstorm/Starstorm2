@@ -4,6 +4,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	134703416	FollowerSpawn			\Default Work Unit\Follower\FollowerSpawn	
 	263522455	Play_Soft_Rain			\Default Work Unit\Environment\Ambient\Play_Soft_Rain	
 	280596056	Play_nemmerc_dash			\Default Work Unit\Nemesis Mercenary\Play_nemmerc_dash	
+	282242656	Play_nemmerc_primary_fire3			\Default Work Unit\Nemesis Mercenary\Play_nemmerc_primary_fire3	
 	282242657	Play_nemmerc_primary_fire2			\Default Work Unit\Nemesis Mercenary\Play_nemmerc_primary_fire2	
 	342360847	WastelanderSecondary			\Default Work Unit\Executioner\WastelanderSecondary	
 	396560513	NemHuntessChargeBow			\Default Work Unit\Nemesis Huntress\NemHuntessChargeBow	
@@ -108,6 +109,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	23250849	ExecutionerSecondary	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\Shoot2_752A8D69.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Executioner\ExecutionerSecondary		46392
 	43053855	chirr_step_01	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\chirr_step_01_752A8D69.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Chirr\Step\chirr_step_01		6252
 	43533750	fullChargeExe	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\fullCharge_752A8D69.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Executioner\fullChargeExe		57153
+	51700066	PF_NM_2	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\PF_NM_2_D8C07C79.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Nemesis Mercenary\maybe\brian\PF_NM_2		56831
 	57255358	NemmandoShoot2Crit	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\NemmandoShoot2Crit_752A8D69.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Nemesis Commando\NemmandoShootCrit\NemmandoShoot2Crit		26232
 	58295564	chirr_step_02	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\chirr_step_02_752A8D69.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Chirr\Step\chirr_step_02		5534
 	59938249	chargeExe	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\charge_752A8D69.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Executioner\chargeExe		27351
@@ -150,7 +152,6 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	330789530	knife_NM_impact	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\knife_NM_impact_D8C07C79.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Nemesis Mercenary\maybe\brian\knife_NM_impact		36869
 	332193265	item_proc_droneOnKill_02	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_proc_droneOnKill_02_752A8D69.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\DroidHead\item_proc_droneOnKill_02		33314
 	334027601	item_proc_droneOnKill_04	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_proc_droneOnKill_04_752A8D69.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\DroidHead\item_proc_droneOnKill_04		35138
-	335661959	nemmercshot2_2	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\nemmercshot2_2_D8C07C79.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Nemesis Mercenary\maybe\nemmerc_primary_fire\nemmercshot2_2		25177
 	344160986	wayfarer_idle_loop_01	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\wayfarer_idle_loop_01_752A8D69.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Follower\idleLoop\wayfarer_idle_loop_01		45919
 	354162060	NemmandoSwing1	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\NemmandoSwing1_752A8D69.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Nemesis Commando\NemmandoSwing\NemmandoSwing1		15923
 	356582938	nemmandoGashChargeC	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\nemmandoGashChargeC_752A8D69.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Nemesis Commando\nemmandoGashChargeC		40306
@@ -170,6 +171,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	530421127	WastelanderShoot3	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\WastelanderShoot3_752A8D69.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Executioner\WastelanderShoot\WastelanderShoot3		11100
 	546895763	wayfarer_idle_VO_06	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\wayfarer_idle_VO_06_752A8D69.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Follower\idleVO\wayfarer_idle_VO_06		29615
 	555558067	item_proc_swiftSkateboard_01	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_proc_swiftSkateboard_01_752A8D69.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\SwiftSkateboard\item_proc_swiftSkateboard_01		20051
+	559235054	nemmercshot2_3	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\nemmercshot2_3_D8C07C79.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Nemesis Mercenary\maybe\nemmerc_primary_fire\nemmercshot2_3		25431
 	567254298	FollowerSpawn	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\FollowerSpawn_D8C07C79.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Follower\FollowerSpawn		28959
 	579606469	item_proc_fireonequip_v2_01	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_proc_fireonequip_v2_01_752A8D69.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\HotSauce\item_proc_fireonequip_v2_01		43590
 	584826101	WayfarerVO1	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\cry3_D8C07C79.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Wayfarer\idleVO\WayfarerVO1		91917

@@ -101,7 +101,9 @@ namespace EntityStates.NemMerc
                         if (healthComponent && healthComponent.alive
                             && teams.HasTeam(healthComponent.body.teamComponent.teamIndex))
                         {
-                            ForceFlinch(healthComponent.body);
+                            if(NetworkServer.active)
+                                ForceFlinch(healthComponent.body);
+
                             return true;
                         }
                     }
@@ -126,9 +128,6 @@ namespace EntityStates.NemMerc
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-
-            if (!base.isAuthority || !base.characterMotor)
-                return;
 
             base.characterDirection.forward = this.direction;
 

@@ -15,7 +15,7 @@ namespace Moonstorm.Starstorm2.Components
 	{
 		public void Awake()
 		{
-			this.indicator = new Indicator(base.gameObject, LegacyResourcesAPI.Load<GameObject>("Prefabs/HuntressTrackingIndicator"));
+			this.indicator = new Indicator(base.gameObject, SS2Assets.LoadAsset<GameObject>("NemMercTrackingIndicator", SS2Bundle.NemMercenary));
 		}
 		public void Start()
 		{
@@ -70,11 +70,15 @@ namespace Moonstorm.Starstorm2.Components
 				{
 					NemMercHologram hologram = collider.GetComponent<NemMercHologram>();
 					// idk why teamfilter is ever null but /shrug
-					if (hologram &&  hologram.teamFilter && hologram.teamFilter.teamIndex == this.teamComponent.teamIndex)
+					if (hologram && hologram.teamFilter && hologram.teamFilter.teamIndex == this.teamComponent.teamIndex)
 					{
-						//make indicator do animation or smth?
-						this.trackingTarget = hologram.gameObject;
-						this.targetIsHologram = true;
+						// TEMPORARY!!!!!!!!!!! I WANT ALLY NEMMERCS TO USE EACHOTHERS HOLOGRAMS
+						if(hologram.owner == base.gameObject)
+                        {
+							//make indicator do animation or smth?
+							this.trackingTarget = hologram.gameObject;
+							this.targetIsHologram = true;
+						}						
 						return;
 					}
 				}

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using RoR2;
 using RoR2.Projectile;
+using UnityEngine.Networking;
 
 namespace EntityStates.NemMerc
 {
@@ -48,6 +49,7 @@ namespace EntityStates.NemMerc
 			if (!this.hasFired && base.fixedAge >= this.duration * fireTime)
 			{
 				this.hasFired = true;
+				
 				this.Fire();
 			}
 
@@ -66,6 +68,7 @@ namespace EntityStates.NemMerc
 			EffectManager.SimpleMuzzleFlash(muzzleEffectPrefab, base.gameObject, this.muzzleName, true);
 			AddRecoil(-1f * recoilAmplitude, -1.5f * recoilAmplitude, -0.25f * recoilAmplitude, 0.25f * recoilAmplitude);
 			base.characterBody.AddSpreadBloom(bloom);
+
 			Ray aimRay = GetAimRay();
 			Vector3 direction = aimRay.direction;
 

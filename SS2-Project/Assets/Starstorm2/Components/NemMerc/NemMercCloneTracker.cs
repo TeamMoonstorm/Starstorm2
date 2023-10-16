@@ -8,7 +8,7 @@ using RoR2;
 
 namespace Moonstorm.Starstorm2.Components
 {
-	public class NemMercCloneTracker : NemMercTracker
+	public class NemMercCloneTracker : NemMercTracker // this should absolutely just be in NemMercTracker but i wanted to see how inhereting monobehaviors worked
 	{
 		public override GameObject GetTrackingTarget()
 		{

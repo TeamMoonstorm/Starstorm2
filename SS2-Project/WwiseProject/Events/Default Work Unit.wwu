@@ -1282,7 +1282,7 @@
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Target">
-											<ObjectRef Name="knife_NM_pull_2" ID="{F3AE0542-AFEA-4B5C-B308-28103FE18B9C}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+											<ObjectRef Name="knifee_NM_pull_3" ID="{43648783-B91A-456D-A3E6-876F8882FAC6}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
@@ -1372,22 +1372,22 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="Play_nemmerc_primary_fire3" ID="{148B2AEC-FFE6-4F67-A53D-93BF754675DE}">
+							<ChildrenList>
+								<Action Name="" ID="{AF3701FD-3AA8-409D-B471-F4A6B0AFE8FB}" ShortID="621246181">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="PF_NM_2" ID="{08A43265-8642-4BBB-AF0F-DD38DF3BC305}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
-				<Event Name="Play_nemmerc_primary_fire3" ID="{148B2AEC-FFE6-4F67-A53D-93BF754675DE}">
-					<ChildrenList>
-						<Action Name="" ID="{AF3701FD-3AA8-409D-B471-F4A6B0AFE8FB}" ShortID="621246181">
-							<PropertyList>
-								<Property Name="ActionType" Type="int16" Value="1"/>
-							</PropertyList>
-							<ReferenceList>
-								<Reference Name="Target">
-									<ObjectRef Name="PF_NM_2" ID="{08A43265-8642-4BBB-AF0F-DD38DF3BC305}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
-								</Reference>
-							</ReferenceList>
-						</Action>
-					</ChildrenList>
-				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

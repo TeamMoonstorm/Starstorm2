@@ -11,8 +11,12 @@ using UnityEngine.Networking;
 namespace Moonstorm.Starstorm2.Components
 {
     [RequireComponent(typeof(ProjectileStickOnImpact))]
-    class NemMercKnifeProjectile : MonoBehaviour
+    class NemMercKnifeProjectile : NetworkBehaviour
     {
+        // NETWORKING THIS IS FUCKED UP
+        // IM JUST TURNING OFF PREDICTION
+        // YOU WILL LAG
+
 
         private ProjectileStickOnImpact projectileStickOnImpact;
 
@@ -23,13 +27,23 @@ namespace Moonstorm.Starstorm2.Components
 
         private GameObject owner;
         private GameObject cloneOwner;
-        private EntityStateMachine ownerBodyMachine;
         private TeamFilter teamFilter;
-        private bool alive = false;
+
+        private ProjectileController controller;
+
+        [SyncVar]
+        private bool alive;
+        private bool wasAlive;
+        [SyncVar]
+        private bool bitch;
+
 
         public GameObject pullEffectPrefab;
         public ParticleSystem[] stickParticleSystem;
+        public GameObject enemyHitEffectPrefab;
         public GameObject[] stickObject;
+        public GameObject inFlightObject;
+
         private void Awake()
         {
             this.projectileStickOnImpact = base.GetComponent<ProjectileStickOnImpact>();
@@ -37,30 +51,57 @@ namespace Moonstorm.Starstorm2.Components
         }
         private void Start()
         {
-            this.owner = base.GetComponent<ProjectileController>().owner;
+            this.controller = base.GetComponent<ProjectileController>();
+            this.owner = this.controller.owner;
             NemMercCloneTracker clone = this.owner.GetComponent<NemMercCloneTracker>();
             if(clone)
             {
                 this.cloneOwner = clone.ownerTracker.gameObject;
             }
-            this.ownerBodyMachine = EntityStateMachine.FindByCustomName(this.owner, "Body");
         }
 
         private void FixedUpdate()
         {
+            if(bitch && !NetworkServer.active) // :3
+            {
+                if (this.inFlightObject)
+                {
+                    this.inFlightObject.SetActive(false);
+                }
+            }
+            if(alive && !wasAlive && !NetworkServer.active) // IM SO FUCKING CRIG SRY
+            {
+                wasAlive = true;
+                if (this.inFlightObject)
+                {
+                    this.inFlightObject.SetActive(false);
+                }
+                ParticleSystem[] array = this.stickParticleSystem;
+                for (int i = 0; i < array.Length; i++)
+                {
+                    array[i].Play();
+                }
+                GameObject[] array2 = this.stickObject;
+                for (int i = 0; i < array2.Length; i++)
+                {
+                    array2[i].SetActive(true);
+                }
+            }
+
+            if (!NetworkServer.active) return;
+            
             if (this.alive) this.pullTimer -= Time.fixedDeltaTime;
             else this.pullTimer = 0.67f;
-
             if (this.projectileStickOnImpact)
             {
                 bool newAlive = this.projectileStickOnImpact.stuckBody;
-                if(newAlive && !this.alive)
+                if (newAlive && !this.alive)
                 {
                     newAlive = TeamMask.GetEnemyTeams(this.teamFilter.teamIndex).HasTeam(this.projectileStickOnImpact.stuckBody.teamComponent.teamIndex);
                     if (newAlive)
                         OnEnemyBodyStuck();
                 }
-                else if(!newAlive && this.alive)
+                else if (!newAlive && this.alive)
                 {
                     this.OnEnemyBodyLost();
                 }
@@ -69,14 +110,14 @@ namespace Moonstorm.Starstorm2.Components
 
             if (this.alive && this.pullTimer <= 0f)
             {
-                if(CheckPullKnife(this.owner) || CheckPullKnife(this.cloneOwner))
+                if (CheckPullKnife(this.owner) || CheckPullKnife(this.cloneOwner))
                 {
                     this.alive = false;
                     this.PullKnife();
                 }
             }
-
             
+                
         }
 
         public void OnEnemyBodyStuck()
@@ -90,14 +131,26 @@ namespace Moonstorm.Starstorm2.Components
             for (int i = 0; i < array2.Length; i++)
             {
                 array2[i].SetActive(true);
+            }        
+            if(this.enemyHitEffectPrefab)
+            {
+                if(NetworkServer.active)
+                    EffectManager.SimpleEffect(this.enemyHitEffectPrefab, base.transform.position, base.transform.rotation, true);
             }
+
+            if (this.inFlightObject)
+            {
+                this.inFlightObject.SetActive(false); // lol haha :P WHYHY DONT YOU WORK EVERYTHING ELSE IN THIS METHOD WORKS YOU FUCKER
+            }
+
+
         }
         public void OnEnemyBodyLost()
         {
             ParticleSystem[] array = this.stickParticleSystem;
             for (int i = 0; i < array.Length; i++)
             {
-                array[i].Stop();
+                array[i].gameObject.SetActive(false); /////// XD :)
             }
             GameObject[] array2 = this.stickObject;
             for (int i = 0; i < array2.Length; i++)
@@ -115,12 +168,10 @@ namespace Moonstorm.Starstorm2.Components
 
         public void PullKnife()
         {
-            EffectManager.SimpleEffect(this.pullEffectPrefab, base.transform.position, base.transform.rotation, false); //vfx
-            Util.PlaySound("Play_nemmerc_knife_rip", base.gameObject); //sound
-
             if (!NetworkServer.active) return;
 
-            if (!this.projectileStickOnImpact) return;
+            EffectManager.SimpleEffect(this.pullEffectPrefab, base.transform.position, base.transform.rotation, true);
+            //Util.PlaySound("Play_nemmerc_knife_rip", base.gameObject); //moved this to the effect
 
             GameObject target = this.projectileStickOnImpact.victim;
             if (!target) return;
@@ -151,10 +202,13 @@ namespace Moonstorm.Starstorm2.Components
 
 
         //projectiles are so fucking dogshit mannnnnnnnnnnnnnnnnnnnnnn
-        //public void OnProjectileImpact(ProjectileImpactInfo impactInfo)
-        //{
-        //    if (!this.alive && !impactInfo.collider.GetComponent<HurtBox>())
-        //        Destroy(base.gameObject);
-        //}
+        public void OnProjectileImpact(ProjectileImpactInfo impactInfo)
+        {
+            bitch = true;
+            if (this.inFlightObject)
+            {
+                this.inFlightObject.SetActive(false); // XXXXXXXXDDDDDDDDDDDDDDDDDDDDD
+            }
+        }
     }
 }

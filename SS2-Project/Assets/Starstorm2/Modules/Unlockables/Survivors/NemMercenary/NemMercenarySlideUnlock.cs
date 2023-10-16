@@ -35,6 +35,8 @@ namespace Moonstorm.Starstorm2.Unlocks.NemMercenary
             private ToggleAction teleporterCheck;
 
             private bool hasEverTouchedGround = false;
+            public static float gracePeriod = 0.5f;
+            private float graceTimer;
 
             public override BodyIndex LookUpRequiredBodyIndex()
             {
@@ -42,11 +44,11 @@ namespace Moonstorm.Starstorm2.Unlocks.NemMercenary
             }
             private void SubscribeGroundCheck()
             {
-                RoR2Application.onFixedUpdate += this.CheckGrounded;
+                RoR2Application.onFixedUpdate += this.FixedUpdateCheckGrounded;
             }
             private void UnsubscribeGroundCheck()
             {
-                RoR2Application.onFixedUpdate -= this.CheckGrounded;
+                RoR2Application.onFixedUpdate -= this.FixedUpdateCheckGrounded;
             }
             private void SubscribeTeleporterCheck()
             {
@@ -60,8 +62,9 @@ namespace Moonstorm.Starstorm2.Unlocks.NemMercenary
             {
                 this.failed = false;
                 this.hasEverTouchedGround = false;
+                this.graceTimer = NemMercenarySlideAchievement.gracePeriod;
             }
-            private void CheckGrounded()
+            private void FixedUpdateCheckGrounded()
             {
                 SS2Log.Info("-------------------");
                 SS2Log.Info("Failed: " + this.failed);
@@ -69,9 +72,17 @@ namespace Moonstorm.Starstorm2.Unlocks.NemMercenary
 
                 if (!this.hasEverTouchedGround && this.motor && this.motor.isGrounded) this.hasEverTouchedGround = true;
 
-                if (this.hasEverTouchedGround && this.motor && !this.motor.isGrounded)
+
+                if (this.hasEverTouchedGround && this.motor)
                 {
-                    this.Fail();
+                    if (!this.motor.isGrounded)
+                    {
+                        this.graceTimer -= Time.fixedDeltaTime;
+                        if (this.graceTimer <= 0f)
+                            this.Fail();
+                    }
+                    else
+                        this.graceTimer = NemMercenarySlideAchievement.gracePeriod;                
                 }
             }
             private void CheckTeleporter(TeleporterInteraction teleporterInteraction)

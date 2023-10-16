@@ -16,15 +16,15 @@ MonoBehaviour:
   skillNameToken: SS2_NEMESIS_MERCENARY_SPECIAL_CLONE_DASH_NAME
   skillDescriptionToken: SS2_NEMESIS_MERCENARY_SPECIAL_CLONE_DASH_DESCRIPTION
   keywordTokens: []
-  icon: {fileID: 21300000, guid: f854d0a8d71b92045a966773cc397aa6, type: 3}
+  icon: {fileID: 21300000, guid: 21773d316c343924587e763523a46253, type: 3}
   activationStateMachineName: Body
   activationState:
     _typeName: EntityStates.NemMerc.CloneDash, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
   interruptPriority: 2
-  baseRechargeInterval: 0
+  baseRechargeInterval: 2
   baseMaxStock: 1
-  rechargeStock: 0
+  rechargeStock: 1
   requiredStock: 1
   stockToConsume: 1
   resetCooldownTimerOnUse: 0

@@ -5757,7 +5757,14 @@
 												</Reference>
 											</ReferenceList>
 											<ChildrenList>
-												<Sound Name="nemmercshot2_2" ID="{323758C5-A51C-4871-94EC-195FDE72D3CE}" ShortID="1053013220">
+												<Sound Name="nemmercshot2_3" ID="{E07F3A5D-B224-47A2-B6C6-BCF3F84CA020}" ShortID="97140030">
+													<PropertyList>
+														<Property Name="Volume" Type="Real64">
+															<ValueList>
+																<Value>2</Value>
+															</ValueList>
+														</Property>
+													</PropertyList>
 													<ReferenceList>
 														<Reference Name="Conversion">
 															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
@@ -5767,7 +5774,7 @@
 														</Reference>
 													</ReferenceList>
 													<ChildrenList>
-														<AudioFileSource Name="nemmercshot2_2" ID="{D874CE1C-970D-4140-9B9D-F6C5803EC814}">
+														<AudioFileSource Name="nemmercshot2_3" ID="{A76E7BC5-80D0-40A4-B136-C4EAAB19ADBD}">
 															<PropertyList>
 																<Property Name="LoopBegin" Type="Real64" Value="-0.001"/>
 																<Property Name="LoopEnd" Type="Real64" Value="-0.001"/>
@@ -5775,14 +5782,14 @@
 																<Property Name="TrimEnd" Type="Real64" Value="-0.001"/>
 															</PropertyList>
 															<Language>SFX</Language>
-															<AudioFile>nemmercshot2_2.wav</AudioFile>
+															<AudioFile>nemmercshot2_3.wav</AudioFile>
 															<MediaIDList>
-																<MediaID ID="335661959"/>
+																<MediaID ID="559235054"/>
 															</MediaIDList>
 														</AudioFileSource>
 													</ChildrenList>
 													<ActiveSourceList>
-														<ActiveSource Name="nemmercshot2_2" ID="{D874CE1C-970D-4140-9B9D-F6C5803EC814}" Platform="Linked"/>
+														<ActiveSource Name="nemmercshot2_3" ID="{A76E7BC5-80D0-40A4-B136-C4EAAB19ADBD}" Platform="Linked"/>
 													</ActiveSourceList>
 												</Sound>
 											</ChildrenList>
@@ -6466,7 +6473,18 @@
 										<Folder Name="brian" ID="{33B1BD80-5FDC-4135-83A1-DE36FB00F474}" ShortID="317311997">
 											<ChildrenList>
 												<Sound Name="knife_NM_impact" ID="{A976C92F-9734-4750-B35D-34DB903F6A2A}" ShortID="98027685">
+													<PropertyList>
+														<Property Name="OverridePositioning" Type="bool" Value="True"/>
+														<Property Name="Volume" Type="Real64">
+															<ValueList>
+																<Value>-3</Value>
+															</ValueList>
+														</Property>
+													</PropertyList>
 													<ReferenceList>
+														<Reference Name="Attenuation">
+															<ObjectRef Name="BodyAttenuation" ID="{A986EB11-7B06-4BE3-9630-2DEB2646D5C4}" WorkUnitID="{01E36904-BE25-433F-9547-3A046044CA56}"/>
+														</Reference>
 														<Reference Name="Conversion">
 															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
 														</Reference>
@@ -6494,7 +6512,18 @@
 													</ActiveSourceList>
 												</Sound>
 												<Sound Name="knife_NM_pull_2" ID="{F3AE0542-AFEA-4B5C-B308-28103FE18B9C}" ShortID="887637657">
+													<PropertyList>
+														<Property Name="OverridePositioning" Type="bool" Value="True"/>
+														<Property Name="Volume" Type="Real64">
+															<ValueList>
+																<Value>-3</Value>
+															</ValueList>
+														</Property>
+													</PropertyList>
 													<ReferenceList>
+														<Reference Name="Attenuation">
+															<ObjectRef Name="BodyAttenuation" ID="{A986EB11-7B06-4BE3-9630-2DEB2646D5C4}" WorkUnitID="{01E36904-BE25-433F-9547-3A046044CA56}"/>
+														</Reference>
 														<Reference Name="Conversion">
 															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
 														</Reference>
@@ -6522,7 +6551,31 @@
 													</ActiveSourceList>
 												</Sound>
 												<Sound Name="knife_NM_thrown_stright" ID="{7D1EDA2D-7375-4BC5-A1F9-4C1BF6B4906B}" ShortID="1065638889">
+													<PropertyList>
+														<Property Name="OverridePositioning" Type="bool" Value="True"/>
+														<Property Name="Pitch" Type="int32">
+															<ModifierList>
+																<ModifierInfo>
+																	<Modifier Name="" ID="{17CB83DB-14F1-4E4B-8B52-DD4E1C422B26}">
+																		<PropertyList>
+																			<Property Name="Enabled" Type="bool" Value="True"/>
+																			<Property Name="Max" Type="Real64" Value="200"/>
+																			<Property Name="Min" Type="Real64" Value="-75"/>
+																		</PropertyList>
+																	</Modifier>
+																</ModifierInfo>
+															</ModifierList>
+														</Property>
+														<Property Name="Volume" Type="Real64">
+															<ValueList>
+																<Value>-3</Value>
+															</ValueList>
+														</Property>
+													</PropertyList>
 													<ReferenceList>
+														<Reference Name="Attenuation">
+															<ObjectRef Name="BodyAttenuation" ID="{A986EB11-7B06-4BE3-9630-2DEB2646D5C4}" WorkUnitID="{01E36904-BE25-433F-9547-3A046044CA56}"/>
+														</Reference>
 														<Reference Name="Conversion">
 															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
 														</Reference>
@@ -6577,14 +6630,15 @@
 																</ModifierInfo>
 															</ModifierList>
 														</Property>
+														<Property Name="OverridePositioning" Type="bool" Value="True"/>
 														<Property Name="Pitch" Type="int32">
 															<ModifierList>
 																<ModifierInfo>
 																	<Modifier Name="" ID="{7FD99E4F-0528-4633-8DCA-5051B5C9046D}">
 																		<PropertyList>
 																			<Property Name="Enabled" Type="bool" Value="True"/>
-																			<Property Name="Max" Type="Real64" Value="100"/>
-																			<Property Name="Min" Type="Real64" Value="-100"/>
+																			<Property Name="Max" Type="Real64" Value="200"/>
+																			<Property Name="Min" Type="Real64" Value="-200"/>
 																		</PropertyList>
 																	</Modifier>
 																</ModifierInfo>
@@ -6592,6 +6646,9 @@
 														</Property>
 													</PropertyList>
 													<ReferenceList>
+														<Reference Name="Attenuation">
+															<ObjectRef Name="BodyAttenuation" ID="{A986EB11-7B06-4BE3-9630-2DEB2646D5C4}" WorkUnitID="{01E36904-BE25-433F-9547-3A046044CA56}"/>
+														</Reference>
 														<Reference Name="Conversion">
 															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
 														</Reference>
@@ -6618,8 +6675,74 @@
 														<ActiveSource Name="PF_NM_2" ID="{CFAB2919-B583-4B1A-8023-CB2CEADB78A3}" Platform="Linked"/>
 													</ActiveSourceList>
 												</Sound>
+												<Sound Name="knifee_NM_pull_3" ID="{43648783-B91A-456D-A3E6-876F8882FAC6}" ShortID="511722715">
+													<PropertyList>
+														<Property Name="Volume" Type="Real64">
+															<ValueList>
+																<Value>-3</Value>
+															</ValueList>
+														</Property>
+													</PropertyList>
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="knifee_NM_pull_3" ID="{BC72B57E-0AA1-47E3-B849-D36E9C079247}">
+															<PropertyList>
+																<Property Name="LoopBegin" Type="Real64" Value="-0.001"/>
+																<Property Name="LoopEnd" Type="Real64" Value="-0.001"/>
+																<Property Name="TrimBegin" Type="Real64" Value="-0.001"/>
+																<Property Name="TrimEnd" Type="Real64" Value="-0.001"/>
+															</PropertyList>
+															<Language>SFX</Language>
+															<AudioFile>knifee_NM_pull_3.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="175474904"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="knifee_NM_pull_3" ID="{BC72B57E-0AA1-47E3-B849-D36E9C079247}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
 											</ChildrenList>
 										</Folder>
+										<Sound Name="nemmercshot2_2" ID="{323758C5-A51C-4871-94EC-195FDE72D3CE}" ShortID="1053013220">
+											<ReferenceList>
+												<Reference Name="Attenuation">
+													<ObjectRef Name="BodyAttenuation" ID="{A986EB11-7B06-4BE3-9630-2DEB2646D5C4}" WorkUnitID="{01E36904-BE25-433F-9547-3A046044CA56}"/>
+												</Reference>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="nemmercshot2_2" ID="{D874CE1C-970D-4140-9B9D-F6C5803EC814}">
+													<PropertyList>
+														<Property Name="LoopBegin" Type="Real64" Value="-0.001"/>
+														<Property Name="LoopEnd" Type="Real64" Value="-0.001"/>
+														<Property Name="TrimBegin" Type="Real64" Value="-0.001"/>
+														<Property Name="TrimEnd" Type="Real64" Value="-0.001"/>
+													</PropertyList>
+													<Language>SFX</Language>
+													<AudioFile>nemmercshot2_2.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="335661959"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="nemmercshot2_2" ID="{D874CE1C-970D-4140-9B9D-F6C5803EC814}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
 									</ChildrenList>
 								</Folder>
 								<Folder Name="Mercenary" ID="{289BB804-3C60-44DA-8530-D4C65F683561}" ShortID="594981031">
