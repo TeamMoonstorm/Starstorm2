@@ -102,7 +102,7 @@ MonoBehaviour:
   shakeOnStart: 1
   shakeOnEnable: 0
   wave:
-    amplitude: 0.2
+    amplitude: 0.15
     frequency: 60
     cycleOffset: 0
   duration: 0.2
@@ -223,7 +223,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 0.23529412, g: 0.23529412, b: 0.23529412, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -7674,7 +7674,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 0.38975376, b: 0, a: 1}
-  m_Intensity: 39.02
+  m_Intensity: 22
   m_Range: 20
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208

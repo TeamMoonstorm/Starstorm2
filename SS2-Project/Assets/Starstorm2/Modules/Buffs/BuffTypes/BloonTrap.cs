@@ -8,14 +8,21 @@ using UnityEngine;
 namespace Moonstorm.Starstorm2.Buffs
 {
     //[DisabledContent]
-    public sealed class BloonTrap : BuffBase
+    public sealed class BloonTrap : BuffBase, IBodyStatArgModifier
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffBloonTrap", SS2Bundle.Indev);
+
+        private static float slowAmount = 0.5f;
 
         public override void Initialize()
         {
             base.Initialize();
             On.RoR2.HealthComponent.GetHealthBarValues += AddSuck;
+        }
+
+        public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+        {
+            args.moveSpeedMultAdd -= slowAmount;
         }
 
         private HealthComponent.HealthBarValues AddSuck(On.RoR2.HealthComponent.orig_GetHealthBarValues orig, HealthComponent self)
@@ -26,16 +33,6 @@ namespace Moonstorm.Starstorm2.Buffs
                 result.cullFraction = Mathf.Max(result.cullFraction, 0.2f);
             }
             return result;
-        }
-        public sealed class SuckedOffBehavior : BaseBuffBodyBehavior, IBodyStatArgModifier
-        {
-            [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffBloonTrap;
-            private static float slowAmount = 0.5f;
-            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
-            {
-                args.moveSpeedMultAdd -= slowAmount;
-            }
         }
     }
 }

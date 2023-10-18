@@ -9057,7 +9057,7 @@ CharacterJoint:
     limit: 40
     bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_BreakForce: Infinity
@@ -9796,6 +9796,7 @@ GameObject:
   - component: {fileID: 9164132031281168824}
   - component: {fileID: 4216306498782577534}
   - component: {fileID: 3700115842132098059}
+  - component: {fileID: 9100886814950759521}
   m_Layer: 17
   m_Name: Chest
   m_TagString: Untagged
@@ -9850,6 +9851,51 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!144 &9100886814950759521
+CharacterJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4581847006197637220}
+  m_ConnectedBody: {fileID: 5938616619920862638}
+  m_Anchor: {x: 0, y: 0, z: 0}
+  m_Axis: {x: 1, y: 0, z: 0}
+  m_AutoConfigureConnectedAnchor: 1
+  m_ConnectedAnchor: {x: 1.9895197e-13, y: 0.22076495, z: -0.00000013411045}
+  serializedVersion: 2
+  m_SwingAxis: {x: 0, y: 1, z: 0}
+  m_TwistLimitSpring:
+    spring: 0
+    damper: 0
+  m_LowTwistLimit:
+    limit: -20
+    bounciness: 0
+    contactDistance: 0
+  m_HighTwistLimit:
+    limit: 70
+    bounciness: 0
+    contactDistance: 0
+  m_SwingLimitSpring:
+    spring: 0
+    damper: 0
+  m_Swing1Limit:
+    limit: 40
+    bounciness: 0
+    contactDistance: 0
+  m_Swing2Limit:
+    limit: 40
+    bounciness: 0
+    contactDistance: 0
+  m_EnableProjection: 0
+  m_ProjectionDistance: 0.1
+  m_ProjectionAngle: 180
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!1 &4681942116261343917
 GameObject:
   m_ObjectHideFlags: 0
@@ -11188,7 +11234,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0.28, y: 0.28, z: 0.25}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &6233160943562085839
 Rigidbody:
@@ -11459,7 +11505,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 8492389264479114442}
-  itemDisplayRuleSet: {fileID: 11400000, guid: d376e3b444a57d34d9407c9ceebc29a8, type: 2}
+  itemDisplayRuleSet: {fileID: 0}
   autoPopulateLightInfos: 1
   baseRendererInfos:
   - renderer: {fileID: 2466952346865569324}
@@ -11852,7 +11898,7 @@ Transform:
   - {fileID: 8905998632993778413}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 180, y: 86.559006, z: 180}
+  m_LocalEulerAnglesHint: {x: 180, y: 180, z: 180}
 --- !u!114 &763771620528857997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11913,7 +11959,7 @@ MonoBehaviour:
   baseDamage: 12
   baseAttackSpeed: 1
   baseCrit: 1
-  baseArmor: 0
+  baseArmor: 20
   baseVisionDistance: Infinity
   baseJumpCount: 1
   sprintingSpeedMultiplier: 1.45

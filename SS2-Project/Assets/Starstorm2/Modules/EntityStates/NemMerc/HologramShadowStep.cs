@@ -140,6 +140,7 @@ namespace EntityStates.NemMerc
 
                 TeleportHelper.TeleportBody(base.characterBody, this.teleportTarget);
                 base.characterDirection.forward = this.toHologramTarget != Vector3.zero  ? this.toHologramTarget : this.startPosition - base.transform.position;
+
                 if (ShadowStep.blinkArrivalPrefab)
                 {
                     EffectManager.SimpleEffect(ShadowStep.blinkArrivalPrefab, this.teleportTarget, Quaternion.identity, true);
