@@ -3,7 +3,7 @@ using UnityEngine;
 using RoR2.CharacterAI;
 namespace Moonstorm.Starstorm2.Components
 {
-    public class MonsterAIDebug : MonoBehaviour
+    public class MonsterAIDebug : MonoBehaviour // should expand on this and make some UI. its pretty useful
     {
         private BaseAI ai;
         private AISkillDriver selection;

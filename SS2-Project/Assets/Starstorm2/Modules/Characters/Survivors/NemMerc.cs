@@ -47,6 +47,7 @@ namespace Moonstorm.Starstorm2.Survivors
 
         //makes AI not shit itself when targetting objects without a characterbody
         //which nemmerc AI needs to target holograms
+        //99% certain this doesnt effect anything otherwise
         private bool HopefullyHarmlessAIFix(On.RoR2.CharacterAI.BaseAI.Target.orig_GetBullseyePosition orig, RoR2.CharacterAI.BaseAI.Target self, out Vector3 position)
         {
             if(!self.characterBody && self.gameObject)

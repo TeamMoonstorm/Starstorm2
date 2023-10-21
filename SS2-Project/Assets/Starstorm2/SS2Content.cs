@@ -78,6 +78,8 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef StirringSoul;
 
+            public static ItemDef Remuneration;
+
             public static ItemDef RelicOfDuality;
 
             public static ItemDef RelicOfExtinction;

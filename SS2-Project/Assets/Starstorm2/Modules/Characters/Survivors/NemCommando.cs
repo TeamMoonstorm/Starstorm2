@@ -186,6 +186,7 @@ namespace Moonstorm.Starstorm2.Survivors
         private void CharacterSelectBarController_Awake(On.RoR2.CharacterSelectBarController.orig_Awake orig, CharacterSelectBarController self)
         {
             //hide nemcommando from css proper
+            SS2Content.Survivors.survivorNemMerc.hidden = !SurvivorCatalog.SurvivorIsUnlockedOnThisClient(SS2Content.Survivors.survivorNemMerc.survivorIndex); // hello nem comado
             SS2Content.Survivors.survivorNemCommando.hidden = !SurvivorCatalog.SurvivorIsUnlockedOnThisClient(SS2Content.Survivors.survivorNemCommando.survivorIndex);
             orig(self);
         }

@@ -3,7 +3,7 @@
 
 namespace Moonstorm.Starstorm2.Components
 {
-    public class EnableRandomOnStart : MonoBehaviour
+    public class EnableRandomOnStart : MonoBehaviour // not networked. just used for visuals (nemmerc hologram poses)
     {
         public Transform[] transforms;
         private void Start()
