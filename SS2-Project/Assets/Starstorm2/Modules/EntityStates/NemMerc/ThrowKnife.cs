@@ -39,6 +39,8 @@ namespace EntityStates.NemMerc
 			this.duration = baseDuration / attackSpeedStat;
 			StartAimMode();
 			PlayAnimation("Gesture, Override", "ThrowKnife", "Secondary.playbackRate", duration * 2);
+			if(!base.isGrounded)
+				PlayAnimation("Body", "Jump");
 			Util.PlaySound("Play_nemmerc_secondary_lunge", base.gameObject);
 
 		}

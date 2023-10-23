@@ -3,9 +3,20 @@ using RoR2;
 using RoR2.Items;
 using UnityEngine;
 using UnityEngine.Networking;
+using R2API;
+using UnityEngine.AddressableAssets;
+using Mono.Cecil.Cil;
+using MonoMod.Cil;
+using System;
 
 namespace Moonstorm.Starstorm2.Items
 {
+    // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION 
+    // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION 
+    // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION 
+    // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION 
+    // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION 
+    // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION 
     public sealed class Remuneration : ItemBase
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Remuneration", SS2Bundle.Items);
@@ -17,9 +28,48 @@ namespace Moonstorm.Starstorm2.Items
         //[RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Soul gain chance cap. (1 = 100%)")]
         //public static float maxChance = 0.1f;
 
+
+        public static GameObject remunerationControllerPrefab;
+
+        // LAZY SHITCODE ALL TIME EVER. SRY. SHOULD BE TEMPORARY. NEMESIS MERCENARY MUST RELEASE
+        // ALL THE BEHAVIOR IS SPLIT UP IN LIKE 10 DIFFERENT CLASSES. HAHA LOL!. IT WILL EVENTUALLY MAKE SENSE WHEN ITS NOT JUST RED ITEMS. UNLESS I DIE BEFORE THEN.
+        public static GameObject HOPEFULLYTEMPORARYREMUNERATIONSHOPOPTIONPREFABLOL;
         public override void Initialize()
         {
             base.Initialize();
+            remunerationControllerPrefab = SS2Assets.LoadAsset<GameObject>("RemunerationController", SS2Bundle.Items);
+            HOPEFULLYTEMPORARYREMUNERATIONSHOPOPTIONPREFABLOL = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/MultiShopTerminal/ShopTerminal.prefab").WaitForCompletion(), "PENISWENIS");
+            HOPEFULLYTEMPORARYREMUNERATIONSHOPOPTIONPREFABLOL.GetComponent<PurchaseInteraction>().cost = 0;
+            GameObject.Destroy(HOPEFULLYTEMPORARYREMUNERATIONSHOPOPTIONPREFABLOL.GetComponent<RoR2.Hologram.HologramProjector>());
+            HOPEFULLYTEMPORARYREMUNERATIONSHOPOPTIONPREFABLOL.GetComponent<PurchaseInteraction>().available = false;
+            HOPEFULLYTEMPORARYREMUNERATIONSHOPOPTIONPREFABLOL.GetComponent<ShopTerminalBehavior>().itemTier = ItemTier.Tier3;
+            HOPEFULLYTEMPORARYREMUNERATIONSHOPOPTIONPREFABLOL.AddComponent<RemunerationChoiceBehavior>();
+            Transform t = HOPEFULLYTEMPORARYREMUNERATIONSHOPOPTIONPREFABLOL.transform.Find("Display/Cylinder (5)/PickupDisplay");
+            t.localScale = Vector3.one * 0.9f;
+            t.localPosition = Vector3.up * -0.33f;
+            t.GetComponent<PickupDisplay>().spinSpeed = 75f; // ?
+
+            On.RoR2.PickupDisplay.RebuildModel += EnableVoidParticles;
+        }
+
+
+
+
+        // this works for all sibylline items but i dont know where to put general hooks like that
+
+        // also MSU is apparently supposed to be able to do this. can remove this whenever thats fixed
+        private void EnableVoidParticles(On.RoR2.PickupDisplay.orig_RebuildModel orig, PickupDisplay self)
+        {
+            orig(self);            
+            PickupDef pickupDef = PickupCatalog.GetPickupDef(self.pickupIndex);
+            ItemIndex itemIndex = (pickupDef != null) ? pickupDef.itemIndex : ItemIndex.None;
+            if (itemIndex != ItemIndex.None && ItemCatalog.GetItemDef(itemIndex).tier == SS2Content.ItemTierDefs.Sibylline.tier)
+            {
+                if (self.voidParticleEffect)
+                {
+                    self.voidParticleEffect.SetActive(true);
+                }             
+            }
         }
 
         public sealed class RemunerationBehavior : BaseItemMasterBehavior
@@ -32,11 +82,23 @@ namespace Moonstorm.Starstorm2.Items
                 Stage.onServerStageBegin += TrySpawnShop;
             }
 
-            private void TrySpawnShop(Stage stage)
+            private void OnDestroy()
             {
+                Stage.onServerStageBegin -= TrySpawnShop;
+            }
 
-                Chat.AddMessage("Remuneration moment");
+            private void TrySpawnShop(Stage stage)
+            {    
+                if(stage.sceneDef && stage.sceneDef.sceneType == SceneType.Stage)
+                    base.GetComponent<CharacterMaster>().onBodyStart += SpawnPortalOnBody;
+            }
 
+            // should only happen the first time a master spawns each stage
+            private void SpawnPortalOnBody(CharacterBody body)
+            {
+                GameObject controller = GameObject.Instantiate(remunerationControllerPrefab, body.coreTransform);
+                controller.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(body.gameObject);
+                body.master.onBodyStart -= SpawnPortalOnBody;
             }
         }
     }

@@ -5576,16 +5576,13 @@
 												</Property>
 												<Property Name="OverridePositioning" Type="bool" Value="True"/>
 												<Property Name="Pitch" Type="int32">
-													<ValueList>
-														<Value>-30</Value>
-													</ValueList>
 													<ModifierList>
 														<ModifierInfo>
 															<Modifier Name="" ID="{92695C37-E3F5-4411-AF6E-3D06B3884F14}">
 																<PropertyList>
 																	<Property Name="Enabled" Type="bool" Value="True"/>
-																	<Property Name="Max" Type="Real64" Value="250"/>
-																	<Property Name="Min" Type="Real64" Value="-250"/>
+																	<Property Name="Max" Type="Real64" Value="200"/>
+																	<Property Name="Min" Type="Real64" Value="-200"/>
 																</PropertyList>
 															</Modifier>
 														</ModifierInfo>
@@ -5593,7 +5590,7 @@
 												</Property>
 												<Property Name="Volume" Type="Real64">
 													<ValueList>
-														<Value>2</Value>
+														<Value>1.3</Value>
 													</ValueList>
 												</Property>
 											</PropertyList>
