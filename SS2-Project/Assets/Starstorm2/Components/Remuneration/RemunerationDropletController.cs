@@ -11,7 +11,12 @@ namespace Moonstorm.Starstorm2.Components
 	{
 		//what the droplet will spawn
 		public static GameObject shopOptionPrefab;
-
+		public static GameObject dropletPrefab;
+		[SystemInitializer]
+		private static void Init()
+        {
+			dropletPrefab = SS2Assets.LoadAsset<GameObject>("RemunerationDroplet", SS2Bundle.Items);
+        }
 
 		//[SyncVar]
 		//[NonSerialized]
@@ -19,6 +24,7 @@ namespace Moonstorm.Starstorm2.Components
 
 		// ^^^ IDK HOW PICKUPS WORK REALLY. SHOULD FIGURE IT OUT. HAHA
 
+		[SyncVar]
 		private bool alive = true;
 
 		public RemunerationShopBehavior shop;
@@ -34,6 +40,7 @@ namespace Moonstorm.Starstorm2.Components
                 {
 					choice.shop = this.shop;
                 }
+				NetworkServer.Spawn(gameObject);
 				UnityEngine.Object.Destroy(base.gameObject);
 			}
 		}

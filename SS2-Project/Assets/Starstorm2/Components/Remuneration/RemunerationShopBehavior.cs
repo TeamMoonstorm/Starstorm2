@@ -71,7 +71,7 @@ namespace Moonstorm.Starstorm2.Components
             foreach(RemunerationChoiceBehavior choice in this.choices)
             {
                 choice.alive = true;
-                choice.temp_peniswenis.available = true;
+                choice.temp_peniswenis.SetAvailable(true);
             }
         }
 
@@ -94,9 +94,8 @@ namespace Moonstorm.Starstorm2.Components
         // 3 am shitcode. so lazy. must releaes. sry
         public void SpawnDroplet(Vector3 position, Vector3 velocity)
         {
-            GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(PickupDropletController.pickupDropletPrefab, position, Quaternion.identity);
-            Destroy(gameObject.GetComponent<PickupDropletController>()); // XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-            RemunerationDropletController component = gameObject.AddComponent<RemunerationDropletController>(); //// :3
+            GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(RemunerationDropletController.dropletPrefab, position, Quaternion.identity);
+            RemunerationDropletController component = gameObject.GetComponent<RemunerationDropletController>(); //// :3
             component.shop = this;
             Rigidbody component2 = gameObject.GetComponent<Rigidbody>();
             component2.velocity = velocity;

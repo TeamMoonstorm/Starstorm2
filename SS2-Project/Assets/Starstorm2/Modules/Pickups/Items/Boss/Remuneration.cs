@@ -38,6 +38,12 @@ namespace Moonstorm.Starstorm2.Items
         {
             base.Initialize();
             remunerationControllerPrefab = SS2Assets.LoadAsset<GameObject>("RemunerationController", SS2Bundle.Items);
+
+            On.RoR2.PickupDisplay.RebuildModel += EnableVoidParticles;
+        }
+
+        public static void InitTEMP()
+        {
             HOPEFULLYTEMPORARYREMUNERATIONSHOPOPTIONPREFABLOL = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/MultiShopTerminal/ShopTerminal.prefab").WaitForCompletion(), "PENISWENIS");
             HOPEFULLYTEMPORARYREMUNERATIONSHOPOPTIONPREFABLOL.GetComponent<PurchaseInteraction>().cost = 0;
             GameObject.Destroy(HOPEFULLYTEMPORARYREMUNERATIONSHOPOPTIONPREFABLOL.GetComponent<RoR2.Hologram.HologramProjector>());
@@ -48,11 +54,7 @@ namespace Moonstorm.Starstorm2.Items
             t.localScale = Vector3.one * 0.9f;
             t.localPosition = Vector3.up * -0.33f;
             t.GetComponent<PickupDisplay>().spinSpeed = 75f; // ?
-
-            On.RoR2.PickupDisplay.RebuildModel += EnableVoidParticles;
         }
-
-
 
 
         // this works for all sibylline items but i dont know where to put general hooks like that
@@ -98,7 +100,10 @@ namespace Moonstorm.Starstorm2.Items
             {
                 GameObject controller = GameObject.Instantiate(remunerationControllerPrefab, body.coreTransform);
                 controller.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(body.gameObject);
+                //NetworkServer.Spawn(controller);
+
                 body.master.onBodyStart -= SpawnPortalOnBody;
+                
             }
         }
     }

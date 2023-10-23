@@ -291,6 +291,7 @@ namespace Moonstorm.Starstorm2
             
             Bulwark.Init();
 
+            Moonstorm.Starstorm2.Items.Remuneration.InitTEMP(); // TEMPORARY. JUST NEED TO CLONE A PLACEHOLDER VANILLA PREFAB EARLIER.
             Ethereal.Init();
             
             Deluge.Init();
