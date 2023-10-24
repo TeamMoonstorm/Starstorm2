@@ -8,6 +8,8 @@ using RoR2;
 using UnityEngine.Networking;
 using Moonstorm.Starstorm2.Components;
 using RoR2.Navigation;
+using Moonstorm.Starstorm2;
+
 namespace EntityStates.NemMerc
 {
     public class Scan : BaseSkillState
@@ -44,8 +46,40 @@ namespace EntityStates.NemMerc
 
             //anim
             //HELMET GLOW!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            Transform modelTransform = base.GetModelTransform();
+            TemporaryOverlay temporaryOverlay = modelTransform.gameObject.AddComponent<TemporaryOverlay>();
+            temporaryOverlay.duration = Scan.hologramDuration;
+            temporaryOverlay.alphaCurve = AnimationCurve.Constant(0, 1, 1);
+            temporaryOverlay.animateShaderAlpha = true; // hopoo shitcode. stopwatch doesnt run w/o this
+            temporaryOverlay.destroyComponentOnEnd = true;
+            temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matNemMercGlow", SS2Bundle.NemMercenary);
+            temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
+
 
             // GAS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            ChildLocator childLocator = base.GetModelChildLocator();
+            if(childLocator)
+            {
+                Transform left = childLocator.FindChild("GasL");
+                if(left)
+                {
+                    ParticleSystem particle = left.GetComponent<ParticleSystem>();
+                    var main = particle.main;
+                    main.duration = Scan.hologramDuration;
+                    particle.Play();
+                }
+                Transform right = childLocator.FindChild("GasR");
+                if (right)
+                {
+                    ParticleSystem particle = right.GetComponent<ParticleSystem>();
+                    var main = particle.main;
+                    main.duration = Scan.hologramDuration;
+                    particle.Play();
+                }
+            }
+
+
+
             EffectManager.SpawnEffect(scanEffect, new EffectData
             {
                 origin = base.transform.position,

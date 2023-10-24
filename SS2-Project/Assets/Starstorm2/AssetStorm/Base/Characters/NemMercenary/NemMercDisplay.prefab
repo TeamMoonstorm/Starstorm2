@@ -10326,9 +10326,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hurtBoxes:
-  - {fileID: 1732711029575048593}
-  mainHurtBox: {fileID: 1732711029575048593}
-  bullseyeCount: 1
+  - {fileID: 0}
+  mainHurtBox: {fileID: 0}
+  bullseyeCount: 0
 --- !u!114 &1358834249051731122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11248,8 +11248,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4453014332301376044}
-  - component: {fileID: 1355367733289574954}
-  - component: {fileID: 1732711029575048593}
   m_Layer: 12
   m_Name: MainHurtbox
   m_TagString: Untagged
@@ -11271,38 +11269,6 @@ Transform:
   m_Father: {fileID: 5559359767115465780}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &1355367733289574954
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8877868193458870408}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.35
-  m_Height: 2.16
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1732711029575048593
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8877868193458870408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 0}
-  isBullseye: 1
-  isSniperTarget: 1
-  damageModifier: 0
-  hurtBoxGroup: {fileID: 5958296786896604664}
-  indexInGroup: 0
 --- !u!1 &8993068326687174289
 GameObject:
   m_ObjectHideFlags: 0
