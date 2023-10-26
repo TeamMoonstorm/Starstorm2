@@ -9,9 +9,9 @@ namespace EntityStates.NemHuntress2
         public override void OnEnter()
         {
             base.OnEnter();
-            characterBody.skillLocator.primary.stock += 2;
+            /*characterBody.skillLocator.primary.stock += 2;
             if (characterBody.skillLocator.primary.stock > 7)
-                characterBody.skillLocator.primary.stock = 7;
+                characterBody.skillLocator.primary.stock = 7;*/
         }
 
         public override void OnExit()

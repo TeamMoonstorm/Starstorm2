@@ -32,8 +32,6 @@ namespace Moonstorm.Starstorm2.Artifacts
         {
             orig(self);
 
-            
-
             var currStage = SceneManager.GetActiveScene().name;
             if (self.teleporterInstance && (currStage == "skymeadow" || currStage == "slumberingsatellite"))
             {

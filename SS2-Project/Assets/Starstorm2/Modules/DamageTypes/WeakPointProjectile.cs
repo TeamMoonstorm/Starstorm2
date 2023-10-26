@@ -49,6 +49,12 @@ namespace Moonstorm.Starstorm2.DamageTypes
                             self.projectileDamage.damageColorIndex = DamageColorIndex.WeakPoint;
                             EffectManager.SimpleImpactEffect(miniCritPrefab, impactInfo.estimatedPointOfImpact, impactInfo.estimatedImpactNormal, true);
                             self.hitSoundString = "NemHuntressHeadshot";
+
+                            if (self.projectileController.gameObject.GetComponent<ProjectileExplosion>() != null)
+                            {
+                                ProjectileExplosion pe = self.projectileController.gameObject.GetComponent<ProjectileExplosion>();
+                                pe.Detonate();
+                            }
                         }
                     }
                 }

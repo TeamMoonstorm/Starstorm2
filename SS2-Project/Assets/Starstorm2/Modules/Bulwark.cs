@@ -9,7 +9,7 @@ namespace Moonstorm.Starstorm2
 {
     class Bulwark
     {
-        public static bool swordBulwark = true; //always true for now for testing purposes.
+        public static bool swordBulwark = false; //always true for now for testing purposes.
 
         internal static void Init()
         {
@@ -23,6 +23,7 @@ namespace Moonstorm.Starstorm2
             //nothing now; maybe later?
             if (SceneManager.GetActiveScene().name == "artifactworld" && swordBulwark && NetworkServer.active)
             {
+                Debug.Log("cool sword!");
             }
         }
 

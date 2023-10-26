@@ -15,7 +15,7 @@ using EntityStates;
 
 namespace Moonstorm.Starstorm2.Components
 {
-    public class NemCaptainController : NetworkBehaviour
+    public class NemCaptainController : NetworkBehaviour, IOnTakeDamageServerReceiver, IOnDamageDealtServerReceiver
     {
         [Header("Cached Components")]
         public CharacterBody characterBody;
@@ -47,14 +47,23 @@ namespace Moonstorm.Starstorm2.Components
 
         [Header("Stress UI")]
         [SerializeField]
-        public GameObject overlayPrefab;
+        public GameObject stressOverlayPrefab;
 
         [SerializeField]
-        public string overlayChildLocatorEntry;
-        private ChildLocator overlayInstanceChildlocator;
-        private OverlayController overlayController;
+        public string stressOverlayChildLocatorEntry;
+        private ChildLocator stressOverlayInstanceChildlocator;
+        private OverlayController stressOverlayController;
         private List<ImageFillController> fillUiList = new List<ImageFillController>();
         private Text uiStressText;
+
+        [Header("Hand UI")]
+        [SerializeField]
+        public GameObject cardOverlayPrefab;
+
+        [SerializeField]
+        public string cardOverlayChildLocatorEntry;
+        private ChildLocator cardOverlayInstanceChildlocator;
+        private OverlayController cardOverlayController;
 
         private int itemCount;
 
@@ -144,15 +153,15 @@ namespace Moonstorm.Starstorm2.Components
             //add prefab & necessary hooks
             OverlayCreationParams overlayCreationParams = new OverlayCreationParams
             {
-                prefab = overlayPrefab,
-                childLocatorEntry = overlayChildLocatorEntry
+                prefab = stressOverlayPrefab,
+                childLocatorEntry = stressOverlayChildLocatorEntry
             };
-            overlayController = HudOverlayManager.AddOverlay(gameObject, overlayCreationParams);
-            overlayController.onInstanceAdded += OnOverlayInstanceAdded;
-            overlayController.onInstanceRemove += OnOverlayInstanceRemoved;
+            stressOverlayController = HudOverlayManager.AddOverlay(gameObject, overlayCreationParams);
+            stressOverlayController.onInstanceAdded += OnOverlayInstanceAdded;
+            stressOverlayController.onInstanceRemove += OnOverlayInstanceRemoved;
 
             //check for a characterbody .. just in case
-            if (characterBody)
+            if (characterBody != null)
             {
                 //characterBody.OnInventoryChanged += OnInventoryChanged;
                 if (NetworkServer.active)
@@ -277,12 +286,12 @@ namespace Moonstorm.Starstorm2.Components
 
         private void OnDisable()
         {
-            if (overlayController != null)
+            if (stressOverlayController != null)
             {
-                overlayController.onInstanceAdded -= OnOverlayInstanceAdded;
-                overlayController.onInstanceRemove -= OnOverlayInstanceRemoved;
+                stressOverlayController.onInstanceAdded -= OnOverlayInstanceAdded;
+                stressOverlayController.onInstanceRemove -= OnOverlayInstanceRemoved;
                 fillUiList.Clear();
-                HudOverlayManager.RemoveOverlay(overlayController);
+                HudOverlayManager.RemoveOverlay(stressOverlayController);
             }
             if (characterBody)
             {
@@ -302,7 +311,7 @@ namespace Moonstorm.Starstorm2.Components
             //uiStressText.fontSharedMaterial = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/VoidSurvivor/animVoidSurvivorCorruptionUI.controller").WaitForCompletion().GetComponent<TextMeshProUGUI>().fontSharedMaterial;
             //uiStressText.fontMaterial = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/VoidSurvivor/animVoidSurvivorCorruptionUI.controller").WaitForCompletion().GetComponent<TextMeshProUGUI>().fontMaterial;
 
-            overlayInstanceChildlocator = instance.GetComponent<ChildLocator>();
+            stressOverlayInstanceChildlocator = instance.GetComponent<ChildLocator>();
         }
 
         private void OnOverlayInstanceRemoved(OverlayController controller, GameObject instance)
@@ -354,9 +363,9 @@ namespace Moonstorm.Starstorm2.Components
             {
                 imageFillController.SetTValue(stress / maxStress);
             }
-            if (overlayInstanceChildlocator)
+            if (stressOverlayInstanceChildlocator)
             {
-                overlayInstanceChildlocator.FindChild("StressThreshold").rotation = Quaternion.Euler(0f, 0f, Mathf.InverseLerp(0f, maxStress, stress) * -360f);
+                stressOverlayInstanceChildlocator.FindChild("StressThreshold").rotation = Quaternion.Euler(0f, 0f, Mathf.InverseLerp(0f, maxStress, stress) * -360f);
                 //overlayInstanceChildlocator.FindChild("MinStressShreshold");
             }
             if (uiStressText)
