@@ -15,7 +15,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Moonstorm.Starstorm2.Interactables
 {
-    //[DisabledContent]
+    [DisabledContent]
 
     public sealed class DroneTable : InteractableBase
     {
