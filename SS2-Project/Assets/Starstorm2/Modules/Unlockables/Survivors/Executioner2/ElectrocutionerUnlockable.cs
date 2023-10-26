@@ -16,6 +16,23 @@ namespace Moonstorm.Starstorm2.Unlocks.Executioner2
                 base.SetServerTracked(true);
             }
 
+            public override BodyIndex LookUpRequiredBodyIndex()
+            {
+                return BodyCatalog.FindBodyIndex("Executioner2Body");
+            }
+
+            public override void OnBodyRequirementMet()
+            {
+                base.OnBodyRequirementMet();
+                SetServerTracked(true);
+            }
+
+            public override void OnBodyRequirementBroken()
+            {
+                SetServerTracked(false);
+                base.OnBodyRequirementBroken();
+            }
+
             public override void OnUninstall()
             {
                 base.OnUninstall();
@@ -23,7 +40,7 @@ namespace Moonstorm.Starstorm2.Unlocks.Executioner2
 
             private class ElectrocutionerServerAchievement : BaseServerAchievement
             {
-                public BodyIndex exeuctioner2BodyIndex
+                /*public BodyIndex exeuctioner2BodyIndex
                 {
                     get
                     {
@@ -34,24 +51,29 @@ namespace Moonstorm.Starstorm2.Unlocks.Executioner2
                         }
                         return BodyIndex.None;
                     }
-                }
+                }*/
+
+                private BodyIndex reminderBodyIndex;
+
                 public override void OnInstall()
                 {
                     base.OnInstall();
-                    EntityStates.Events.OverloadingEventState.onEventClearGlobal += OnEventCleared;
+                    reminderBodyIndex = BodyCatalog.FindBodyIndex("ElectricWormBody");
+                    GlobalEventManager.onCharacterDeathGlobal += ElectroTracker;
+                }
+
+                private void ElectroTracker(DamageReport damageReport)
+                {
+                    if (damageReport.victimBodyIndex == reminderBodyIndex && IsCurrentBody(damageReport.attackerBody) && damageReport.damageInfo.damageType == DamageType.BypassOneShotProtection)
+                        Grant();
                 }
 
                 public override void OnUninstall()
                 {
-                    EntityStates.Events.OverloadingEventState.onEventClearGlobal -= OnEventCleared;
+                    GlobalEventManager.onCharacterDeathGlobal -= ElectroTracker;
                     base.OnUninstall();
                 }
 
-                private void OnEventCleared()
-                {
-                    if (networkUser.GetCurrentBody().bodyIndex == exeuctioner2BodyIndex)
-                        Grant();
-                }
             }
         }
     }

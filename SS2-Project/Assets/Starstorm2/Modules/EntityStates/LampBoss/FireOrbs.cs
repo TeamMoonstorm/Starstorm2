@@ -47,7 +47,7 @@ namespace EntityStates.LampBoss
                 characterBody.AddSpreadBloom(0.33f * recoil);
 
                 bool isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
-                var projectile = isBlue ? blueProjectilePrefab : projectilePrefab;
+                GameObject projectile = isBlue ? blueProjectilePrefab : projectilePrefab;
 
                 Vector3 angle = Quaternion.Euler(Random.Range(-20f, 20f), Random.Range(-20f, 20f), 0f) * aimRay.direction;
 
