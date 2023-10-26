@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="12" SoundbankVersion="135">
 	<RootPaths>
-		<ProjectRoot>D:\ror2modstuff\Starstorm2UnityProject\Starstorm2\SS2-Project\WwiseProject\</ProjectRoot>
-		<SourceFilesRoot>D:\ror2modstuff\Starstorm2UnityProject\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\</SourceFilesRoot>
-		<SoundBanksRoot>D:\ror2modstuff\Starstorm2UnityProject\Starstorm2\SS2-Project\Assets\StreamingAssets\Audio\GeneratedSoundBanks\Windows\</SoundBanksRoot>
+		<ProjectRoot>D:\ror2modstuff\Starstorm2UnityProject\Starstorm2Again\Starstorm2\SS2-Project\WwiseProject\</ProjectRoot>
+		<SourceFilesRoot>D:\ror2modstuff\Starstorm2UnityProject\Starstorm2Again\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\</SourceFilesRoot>
+		<SoundBanksRoot>D:\ror2modstuff\Starstorm2UnityProject\Starstorm2Again\Starstorm2\SS2-Project\Assets\StreamingAssets\Audio\GeneratedSoundBanks\Windows\</SoundBanksRoot>
 		<ExternalSourcesInputFile></ExternalSourcesInputFile>
-		<ExternalSourcesOutputRoot>D:\ror2modstuff\Starstorm2UnityProject\Starstorm2\SS2-Project\WwiseProject\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
+		<ExternalSourcesOutputRoot>D:\ror2modstuff\Starstorm2UnityProject\Starstorm2Again\Starstorm2\SS2-Project\WwiseProject\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
 	</RootPaths>
 	<DialogueEvents/>
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="866530374" Language="SFX" Hash="137941287">
+		<SoundBank Id="866530374" Language="SFX" Hash="103301053">
 			<ObjectPath>\SoundBanks\Default Work Unit\Starstorm2</ObjectPath>
 			<ShortName>Starstorm2</ShortName>
 			<Path>Starstorm2.bnk</Path>
@@ -322,7 +322,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="4245110589" Name="NemHuntessBowMax" ObjectPath="\Events\Default Work Unit\Nemesis Huntress\NemHuntessBowMax" DurationType="OneShot" DurationMin="0.622045" DurationMax="0.659033">
+				<Event Id="1389751463" Name="NemHuntressBowMax" ObjectPath="\Events\Default Work Unit\Nemesis Huntress\NemHuntressBowMax" DurationType="OneShot" DurationMin="0.622045" DurationMax="0.659033">
 					<IncludedMemoryFiles>
 						<File Id="230559016" Language="SFX">
 							<ShortName>bow_arrow_slide.wav</ShortName>
@@ -330,7 +330,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="396560513" Name="NemHuntessChargeBow" ObjectPath="\Events\Default Work Unit\Nemesis Huntress\NemHuntessChargeBow" DurationType="OneShot" DurationMin="0.546019" DurationMax="0.578487">
+				<Event Id="415529083" Name="NemHuntressChargeBow" ObjectPath="\Events\Default Work Unit\Nemesis Huntress\NemHuntressChargeBow" DurationType="OneShot" DurationMin="0.546019" DurationMax="0.578487">
 					<IncludedMemoryFiles>
 						<File Id="685104325" Language="SFX">
 							<ShortName>bow_shoot_pull.wav</ShortName>
@@ -338,7 +338,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="479003465" Name="NemHuntessFireBow" ObjectPath="\Events\Default Work Unit\Nemesis Huntress\NemHuntessFireBow" DurationType="OneShot" DurationMin="1.078489" DurationMax="1.142619">
+				<Event Id="3663148423" Name="NemHuntressFireBow" ObjectPath="\Events\Default Work Unit\Nemesis Huntress\NemHuntressFireBow" DurationType="OneShot" DurationMin="1.078489" DurationMax="1.142619">
 					<IncludedMemoryFiles>
 						<File Id="403555265" Language="SFX">
 							<ShortName>bow_shoot.wav</ShortName>
@@ -743,6 +743,9 @@
 						<File Id="152621449" Language="SFX">
 							<ShortName>UI_3D_printer_itemIntoPrinter_01.wav</ShortName>
 							<Path>SFX\UI_3D_printer_itemIntoPrinter_01_D8C07C79.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
 				<Event Id="159540939" Name="RemunerationSpawn" ObjectPath="\Events\Default Work Unit\Items\RemunerationSpawn" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="2.094445" DurationMax="2.094445">
 					<IncludedMemoryFiles>
 						<File Id="28672179" Language="SFX">
@@ -751,11 +754,11 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="3276263843" Name="RemunerationSpawn2" ObjectPath="\Events\Default Work Unit\Items\RemunerationSpawn2" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="2.010272" DurationMax="2.010272">
+				<Event Id="3276263843" Name="RemunerationSpawn2" ObjectPath="\Events\Default Work Unit\Items\RemunerationSpawn2" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="2.094445" DurationMax="2.094445">
 					<IncludedMemoryFiles>
-						<File Id="258431528" Language="SFX">
-							<ShortName>coinflip z.wav</ShortName>
-							<Path>SFX\coinflip z_D8C07C79.wem</Path>
+						<File Id="28672179" Language="SFX">
+							<ShortName>coinflipgoodenoughidc.wav</ShortName>
+							<Path>SFX\coinflipgoodenoughidc_D8C07C79.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -947,7 +950,7 @@
 			<ShortName>SS2Init</ShortName>
 			<Path>SS2Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="2545819644" Language="SFX" Hash="2144817749">
+		<SoundBank Id="2545819644" Language="SFX" Hash="3496262155">
 			<ObjectPath>\SoundBanks\Default Work Unit\SS2Music</ObjectPath>
 			<ShortName>SS2Music</ShortName>
 			<Path>SS2Music.bnk</Path>
