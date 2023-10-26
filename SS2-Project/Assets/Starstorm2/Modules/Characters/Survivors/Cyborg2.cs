@@ -6,7 +6,7 @@ using UnityEngine.AddressableAssets;
 using R2API;
 namespace Moonstorm.Starstorm2.Survivors
 {
-    //[DisabledContent]
+    [DisabledContent]
     public sealed class Cyborg2 : SurvivorBase
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("Cyborg2Body", SS2Bundle.Indev);

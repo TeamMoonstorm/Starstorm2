@@ -44,9 +44,9 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.63072395, g: 0, b: 1, a: 1}
-  m_Intensity: 16
-  m_Range: 28.09
+  m_Color: {r: 0.78144306, g: 0.4285333, b: 0.8490566, a: 1}
+  m_Intensity: 12
+  m_Range: 26
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -13140,6 +13140,7 @@ GameObject:
   - component: {fileID: 1307277791170784703}
   - component: {fileID: 2145986383333036054}
   - component: {fileID: 191581260879378846}
+  - component: {fileID: 4164515635145727044}
   m_Layer: 0
   m_Name: RemunerationPortal
   m_TagString: Untagged
@@ -13229,6 +13230,26 @@ MonoBehaviour:
   m_Script: {fileID: -335047464, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4164515635145727044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6345844228709408264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 2137989374, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialDuration: 2
+  particleSystems:
+  - {fileID: 717897654018237909}
+  - {fileID: 2204131658802134375}
+  - {fileID: 4242569449051792590}
+  - {fileID: 1292706158603851216}
+  - {fileID: 8596484706926882799}
+  - {fileID: 5850532747444669373}
 --- !u!1 &6850282047833225901
 GameObject:
   m_ObjectHideFlags: 0

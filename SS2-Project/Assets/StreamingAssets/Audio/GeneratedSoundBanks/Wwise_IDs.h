@@ -88,6 +88,8 @@ namespace AK
         static const AkUniqueID PLAY_NEMMERC_UTILITY_EXIT = 3128507003U;
         static const AkUniqueID PLAY_SOFT_RAIN = 263522455U;
         static const AkUniqueID PLAY_SS2_MUSIC_SYSTEM = 3480457898U;
+        static const AkUniqueID REMUNERATIONSPAWN = 159540939U;
+        static const AkUniqueID REMUNERATIONSPAWN2 = 3276263843U;
         static const AkUniqueID SIGILACTIVATION = 2800331071U;
         static const AkUniqueID SPAWNMGR = 2187217924U;
         static const AkUniqueID SS_WINDAMBIENCE = 892248604U;

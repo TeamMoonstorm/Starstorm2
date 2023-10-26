@@ -160,7 +160,7 @@ namespace EntityStates.Events
 
                 master.onBodyStart += (body) =>
                 {
-                    if (NetworkServer.active) body.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
+                    body.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
                 };
 
                 //nemesisBossBody.gameObject.AddComponent<NemesisResistances>();

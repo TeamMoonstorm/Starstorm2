@@ -11,7 +11,7 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="866530374" Language="SFX" Hash="1065005857">
+		<SoundBank Id="866530374" Language="SFX" Hash="951368637">
 			<ObjectPath>\SoundBanks\Default Work Unit\Starstorm2</ObjectPath>
 			<ShortName>Starstorm2</ShortName>
 			<Path>Starstorm2.bnk</Path>
@@ -606,7 +606,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="1211800949" Name="Play_nemmerc_dash_start" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_dash_start" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="1.037259" DurationMax="1.384575">
+				<Event Id="1211800949" Name="Play_nemmerc_dash_start" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_dash_start" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="1.049312" DurationMax="1.322050">
 					<IncludedMemoryFiles>
 						<File Id="307841691" Language="SFX">
 							<ShortName>fuck2001.wav</ShortName>
@@ -622,15 +622,15 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="646660983" Name="Play_nemmerc_knife_rip" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_knife_rip" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="1.788458" DurationMax="1.788458">
+				<Event Id="646660983" Name="Play_nemmerc_knife_rip" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_knife_rip" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="1.774042" DurationMax="1.774042">
 					<IncludedMemoryFiles>
-						<File Id="497498619" Language="SFX">
-							<ShortName>knife_NM_pull_2.wav</ShortName>
-							<Path>SFX\knife_NM_pull_2_D8C07C79.wem</Path>
+						<File Id="175474904" Language="SFX">
+							<ShortName>knifee_NM_pull_3.wav</ShortName>
+							<Path>SFX\knifee_NM_pull_3_D8C07C79.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="2890061578" Name="Play_nemmerc_knife_throw" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_knife_throw" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="1.509625" DurationMax="1.509625">
+				<Event Id="2890061578" Name="Play_nemmerc_knife_throw" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_knife_throw" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="1.344923" DurationMax="1.576462">
 					<IncludedMemoryFiles>
 						<File Id="23053059" Language="SFX">
 							<ShortName>knife_NM_thrown_stright.wav</ShortName>
@@ -719,6 +719,22 @@
 						<File Id="655304851" Language="SFX">
 							<ShortName>RainAmbience2.wav</ShortName>
 							<Path>SFX\RainAmbience2_E4CE20E7.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="159540939" Name="RemunerationSpawn" ObjectPath="\Events\Default Work Unit\Items\RemunerationSpawn" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="2.094445" DurationMax="2.094445">
+					<IncludedMemoryFiles>
+						<File Id="28672179" Language="SFX">
+							<ShortName>coinflipgoodenoughidc.wav</ShortName>
+							<Path>SFX\coinflipgoodenoughidc_D8C07C79.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3276263843" Name="RemunerationSpawn2" ObjectPath="\Events\Default Work Unit\Items\RemunerationSpawn2" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="2.010272" DurationMax="2.010272">
+					<IncludedMemoryFiles>
+						<File Id="258431528" Language="SFX">
+							<ShortName>coinflip z.wav</ShortName>
+							<Path>SFX\coinflip z_D8C07C79.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>

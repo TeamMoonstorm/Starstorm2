@@ -8,6 +8,7 @@ using RoR2;
 using JetBrains.Annotations;
 using UnityEngine.Networking;
 using UnityEngine.AddressableAssets;
+using R2API;
 namespace Moonstorm.Starstorm2.Components
 {
     public class RemunerationShopBehavior : NetworkBehaviour
@@ -17,7 +18,10 @@ namespace Moonstorm.Starstorm2.Components
         [SystemInitializer]
         private static void Init()
         {
-            deleteEffectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Nullifier/NullifierExplosion.prefab").WaitForCompletion();
+            //TEMP HOPEFULLY
+            deleteEffectPrefab = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Nullifier/NullifierExplosion.prefab").WaitForCompletion(), "WAWA");
+            deleteEffectPrefab.GetComponent<EffectComponent>().soundName = "Play_nullifier_death_vortex_explode";
+            ContentAddition.AddEffect(deleteEffectPrefab); // i think this is how r2api works? not gonna look it up tehe
         }
 
         public float effectScale = 6f;// need for unityexplorer
@@ -65,7 +69,6 @@ namespace Moonstorm.Starstorm2.Components
             }
         }
 
-        //enable choices 
         public void OnAllChoicesDiscovered()
         {
             foreach(RemunerationChoiceBehavior choice in this.choices)
@@ -75,7 +78,6 @@ namespace Moonstorm.Starstorm2.Components
             }
         }
 
-        //destroy others
         public void OnChoicePicked(RemunerationChoiceBehavior choice)
         {
             foreach(RemunerationChoiceBehavior chois in this.choices)
@@ -87,6 +89,7 @@ namespace Moonstorm.Starstorm2.Components
                     scale = effectScale,
                 };
                 EffectManager.SpawnEffect(deleteEffectPrefab, data, true);
+                Util.PlaySound("Play_nullifier_death_vortex_explode", base.gameObject); // im rarted sry
                 Destroy(chois.gameObject);
             }
         }

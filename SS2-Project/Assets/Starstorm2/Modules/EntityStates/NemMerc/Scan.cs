@@ -45,6 +45,8 @@ namespace EntityStates.NemMerc
                 this.SpawnHolograms();
 
             //anim
+
+            // POST PROCESSING!!! NEED TO LEARN THIS REAL QUICK
             //HELMET GLOW!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             Transform modelTransform = base.GetModelTransform();
             TemporaryOverlay temporaryOverlay = modelTransform.gameObject.AddComponent<TemporaryOverlay>();

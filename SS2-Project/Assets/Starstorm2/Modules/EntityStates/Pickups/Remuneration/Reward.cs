@@ -40,18 +40,19 @@ namespace EntityStates.Pickups.Remuneration
                 {
                     
                     this.portalTransform = childLocator.FindChild("Portal");
+                    // should probably find out why portaltransform can ever be fucking null ??????????????????????? wat
                     EffectData data = new EffectData
                     {
-                        origin = portalTransform.position,
+                        origin = portalTransform ? portalTransform.position : base.transform.position, 
                         rotation = Quaternion.identity,
                         scale = effectScale,
                     };
                     EffectManager.SpawnEffect(explosionPrefab, data, true);
                 }
                 while(itemsDropped < numItems)
-                {
+                {                 
+                    this.DropItem();
                     itemsDropped++;
-                    this.DropItem();                 
                 }
                 
             }
@@ -61,9 +62,15 @@ namespace EntityStates.Pickups.Remuneration
 
         private void DropItem()
         {
-
-            float angle = (-numItems / 2 + itemsDropped) * dropletSpreadAngle + dropletSpreadAngle / 2;
-
+            //0
+            //-15 15
+            //-30 0 30
+            //-45 -15 15 45
+            //-60 -30 0 30 60
+            //float angle = (-numItems / 2 + itemsDropped) * dropletSpreadAngle + dropletSpreadAngle / 2;
+            //angle = (itemsDropped * dropletSpreadAngle) - dropletSpreadAngle;
+            float startingAngle = -(dropletSpreadAngle / 2) * (numItems-1);
+            float angle = startingAngle + itemsDropped * dropletSpreadAngle;
             Vector3 direction = Quaternion.Euler(0, angle, 0) * (this.portalTransform ? this.portalTransform.forward : base.transform.forward);
             Vector3 velocity = Vector3.up * dropletUpVelocity + direction * dropletForwardVelocity;
             this.shop.SpawnDroplet(this.portalTransform ? this.portalTransform.position : base.transform.position, velocity);

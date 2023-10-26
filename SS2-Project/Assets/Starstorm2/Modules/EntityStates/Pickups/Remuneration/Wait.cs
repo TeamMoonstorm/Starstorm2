@@ -8,7 +8,7 @@ namespace EntityStates.Pickups.Remuneration
 {
     public class Wait : BaseState
     {
-        public static float duration = 1f;
+        public static float duration = 1.75f;
 
         public override void OnEnter()
         {
