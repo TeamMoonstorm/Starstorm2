@@ -26,14 +26,17 @@ namespace EntityStates.NemMerc
         private EntityStateMachine weapon;
 
         private Transform collisionTransform;
+
+        private bool hadFallDamageImmunity;
         public override void OnEnter()
         {
             base.OnEnter();
 
             //anim
-            base.PlayAnimation("FullBody, Override", "Lunge", "Utility.playbackRate", .3f);
+            base.PlayAnimation("FullBody, Override", "Lunge", "Secondary.playbackRate", .3f);
             //vfx
             //sound
+            Util.PlaySound("Play_nemmerc_secondary_lunge", base.gameObject);
             // SHOULD USE ROOT MOTION INSTEAD of velocity 
             this.weapon = EntityStateMachine.FindByCustomName(base.gameObject, "Weapon");
 
@@ -62,6 +65,9 @@ namespace EntityStates.NemMerc
             //Riposter riposter = base.gameObject.AddComponent<Riposter>();
             //riposter.duration = Lunge.riposteDuration;
 
+
+            //will break if something gives us ignorefalldamage
+            this.hadFallDamageImmunity = base.characterBody.bodyFlags.HasFlag(CharacterBody.BodyFlags.IgnoreFallDamage);
             base.characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
 
         }
@@ -100,7 +106,9 @@ namespace EntityStates.NemMerc
                         if (healthComponent && healthComponent.alive
                             && teams.HasTeam(healthComponent.body.teamComponent.teamIndex))
                         {
-                            ForceFlinch(healthComponent.body);
+                            if(NetworkServer.active)
+                                ForceFlinch(healthComponent.body);
+
                             return true;
                         }
                     }
@@ -126,10 +134,9 @@ namespace EntityStates.NemMerc
         {
             base.FixedUpdate();
 
-            if (!base.isAuthority || !base.characterMotor)
-                return;         
+            base.characterDirection.forward = this.direction;
 
-            if(this.CheckCollisions())
+            if (this.CheckCollisions())
             {
                 this.outer.SetNextStateToMain();
                 if(this.weapon)
@@ -160,7 +167,8 @@ namespace EntityStates.NemMerc
             base.OnExit();
 
             base.characterMotor.airControl = this.previousAirControl;
-            base.characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage;
+            if(!this.hadFallDamageImmunity)
+                base.characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage;
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

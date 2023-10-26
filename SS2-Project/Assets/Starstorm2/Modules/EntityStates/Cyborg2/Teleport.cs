@@ -18,7 +18,7 @@ namespace EntityStates.Cyborg2
         private TeleporterProjectile.ProjectileTeleporterOwnership teleporterOwnership;
         private Vector3 teleportTarget;
 
-        public static float exitVelocityCoefficient = 1.5f;
+        public static float exitVelocityCoefficient = 400f;
         private Vector3 storedVelocity;
         public override void OnEnter()
         {
@@ -61,6 +61,7 @@ namespace EntityStates.Cyborg2
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+
             this.UpdateTarget();
 
             base.characterMotor.velocity = Vector3.zero;
@@ -72,11 +73,13 @@ namespace EntityStates.Cyborg2
                 {
                     TeleportHelper.TeleportBody(base.characterBody, this.teleportTarget);
                     base.characterDirection.forward = base.GetAimRay().direction;
-                    float magnitude = this.storedVelocity.magnitude * exitVelocityCoefficient;
-                    Vector3 direction = new Vector3(base.inputBank.moveVector.x, 0, base.inputBank.moveVector.z);
-                    Vector3 force = direction * magnitude;
-                    force.y = this.storedVelocity.y;
-                    base.characterMotor.ApplyForce(force);
+                    Vector3 velocity = Vector3.zero;
+                    if(this.teleporterOwnership && this.teleporterOwnership.teleporter)
+                    {
+                        velocity = this.teleporterOwnership.teleporter.GetComponent<Rigidbody>().velocity;
+                    }
+                    velocity *= Teleport.exitVelocityCoefficient;
+                    base.characterMotor.ApplyForce(velocity);
 
                     base.SmallHop(base.characterMotor, Teleport.exitHopVelocity);
                 }

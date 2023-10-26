@@ -72,11 +72,27 @@ namespace AK
         static const AkUniqueID NEMMANDOSWINGSABER = 113243767U;
         static const AkUniqueID NEMMANDOSWINGSABERDECISIVE = 1052053089U;
         static const AkUniqueID NUCLEATORCHARGEPRIMARY = 420124658U;
+        static const AkUniqueID PLAY_NEMMERC_CLONE_SPAWN = 3212416563U;
+        static const AkUniqueID PLAY_NEMMERC_DASH = 280596056U;
+        static const AkUniqueID PLAY_NEMMERC_DASH_START = 1211800949U;
+        static const AkUniqueID PLAY_NEMMERC_KNIFE_IMPACT = 1731428284U;
+        static const AkUniqueID PLAY_NEMMERC_KNIFE_RIP = 646660983U;
+        static const AkUniqueID PLAY_NEMMERC_KNIFE_THROW = 2890061578U;
+        static const AkUniqueID PLAY_NEMMERC_PRIMARY_FIRE = 2406586433U;
+        static const AkUniqueID PLAY_NEMMERC_PRIMARY_FIRE2 = 282242657U;
+        static const AkUniqueID PLAY_NEMMERC_PRIMARY_FIRE3 = 282242656U;
+        static const AkUniqueID PLAY_NEMMERC_PRIMARY_RELOAD = 1171975898U;
+        static const AkUniqueID PLAY_NEMMERC_SECONDARY_LUNGE = 576705642U;
+        static const AkUniqueID PLAY_NEMMERC_SPECIAL = 428808189U;
+        static const AkUniqueID PLAY_NEMMERC_UTILITY_ENTER = 1611310971U;
+        static const AkUniqueID PLAY_NEMMERC_UTILITY_EXIT = 3128507003U;
         static const AkUniqueID PLAY_SOFT_RAIN = 263522455U;
         static const AkUniqueID PLAY_SS2_MUSIC_SYSTEM = 3480457898U;
         static const AkUniqueID REFABRICATORACTION = 2808251015U;
         static const AkUniqueID REFABRICATORSELECT1 = 1630810942U;
         static const AkUniqueID REFABRICATORSELECT2 = 1630810941U;
+        static const AkUniqueID REMUNERATIONSPAWN = 159540939U;
+        static const AkUniqueID REMUNERATIONSPAWN2 = 3276263843U;
         static const AkUniqueID SIGILACTIVATION = 2800331071U;
         static const AkUniqueID SPAWNMGR = 2187217924U;
         static const AkUniqueID SS_WINDAMBIENCE = 892248604U;
@@ -142,6 +158,18 @@ namespace AK
     namespace BUSSES
     {
         static const AkUniqueID MASTER_AUDIO_BUS = 3803692087U;
+    } // namespace BUSSES
+
+    namespace AUDIO_DEVICES
+    {
+        static const AkUniqueID NO_OUTPUT = 2317455096U;
+        static const AkUniqueID SYSTEM = 3859886410U;
+    } // namespace AUDIO_DEVICES
+
+}// namespace AK
+
+#endif // __WWISE_IDS_H__
+3803692087U;
     } // namespace BUSSES
 
     namespace AUDIO_DEVICES

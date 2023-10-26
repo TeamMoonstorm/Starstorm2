@@ -732,6 +732,34 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="RemunerationSpawn" ID="{1DD71AB7-48F6-4F7E-A9C7-9D4DC1AB0CFE}">
+							<ChildrenList>
+								<Action Name="" ID="{FB3B51AE-B850-496F-A73A-F9AD5B60005F}" ShortID="973270854">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="coinflipgoodenoughidc" ID="{B050698D-53C9-4319-94F5-736009574D73}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="RemunerationSpawn2" ID="{A79A7D99-F9DF-45FA-918E-960A00FE5D67}">
+							<ChildrenList>
+								<Action Name="" ID="{7CB54975-8055-4E33-91C6-069C354B081D}" ShortID="402263092">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="coinflipgoodenoughidc" ID="{B050698D-53C9-4319-94F5-736009574D73}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Event Name="VoidAmbient" ID="{096E8867-684C-49FD-9847-D8B99D9E53EC}">
@@ -1227,6 +1255,206 @@
 									<ReferenceList>
 										<Reference Name="Target">
 											<ObjectRef Name="interactable_drionetable_select_item2" ID="{0AFC594A-8BB1-4554-AF25-94DDF83E1381}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+					</ChildrenList>
+				</Folder>
+				<Folder Name="Nemesis Mercenary" ID="{08711AC6-8742-4325-BD1D-7D992E614C4D}" ShortID="1024204966">
+					<ChildrenList>
+						<Event Name="Play_nemmerc_dash" ID="{7AD2D221-77D4-46B1-81D4-59D33E4E6750}">
+							<ChildrenList>
+								<Action Name="" ID="{C9D27806-1A84-4F64-8648-11417279197E}" ShortID="376346371">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="dash again" ID="{D72AB604-5AF1-47DF-ABDF-4B1B6D06B635}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_nemmerc_primary_reload" ID="{D6FB1D79-65D8-46C3-977C-85266FEA4B8D}">
+							<ChildrenList>
+								<Action Name="" ID="{0CEED7E5-6008-4122-A9E9-72D9AB179E5C}" ShortID="259520803">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="nemmerc_primary_reload" ID="{F3797BFB-F6D1-4EF0-942B-0429141626BA}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_nemmerc_primary_fire" ID="{8824EADC-63A9-438C-A0F9-F1AE8E5C9757}">
+							<ChildrenList>
+								<Action Name="" ID="{F8281607-7945-4933-A632-D56684914474}" ShortID="902770347">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="final" ID="{93EA8234-8A1F-4555-BE04-E72D2AFE6261}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_nemmerc_dash_start" ID="{9A9A687D-456E-48E1-89CF-F84DAE85570B}">
+							<ChildrenList>
+								<Action Name="" ID="{27D99E09-8702-4E4D-A02F-9700DFDB4CA4}" ShortID="496805170">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="fuck2001" ID="{AB6737C5-5F9E-4FE2-9EA1-B9D58E61C30E}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_nemmerc_special" ID="{73F17D20-A498-4E47-B4AD-48FAF6C1367F}">
+							<ChildrenList>
+								<Action Name="" ID="{C036B425-28EB-4EA8-BC57-2879F2978407}" ShortID="179699224">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="HE ULTED MONKAW" ID="{FA32E04B-44F9-4526-9BB6-A5C1C5945B13}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_nemmerc_primary_fire2" ID="{38B93637-EBBB-408D-AE96-A743A3CEFBDD}">
+							<ChildrenList>
+								<Action Name="" ID="{0064E4FE-9C20-45BF-B63C-C2BD1BA7249B}" ShortID="150426074">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="nemmerc_primary_fire" ID="{E6CB4BE7-685A-42AF-A469-DDFB0C98D2CB}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_nemmerc_knife_rip" ID="{A58B83BF-5F36-4D0C-B66B-160423EC5E49}">
+							<ChildrenList>
+								<Action Name="" ID="{B0A69797-4FB7-4641-B202-523D7408C5B7}" ShortID="488524347">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="knifee_NM_pull_3" ID="{43648783-B91A-456D-A3E6-876F8882FAC6}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_nemmerc_knife_impact" ID="{40D8D552-5AC2-4971-BE92-2B881C280ACC}">
+							<ChildrenList>
+								<Action Name="" ID="{4789A2B8-EABA-47E9-A9FF-A170907DCF10}" ShortID="879676776">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="knife_NM_impact" ID="{A976C92F-9734-4750-B35D-34DB903F6A2A}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_nemmerc_secondary_lunge" ID="{02A6E3A3-AF68-4D8E-893D-BF0BC9DB9EF6}">
+							<ChildrenList>
+								<Action Name="" ID="{C183007C-50AB-4CC8-89AF-CBF5AFD0205E}" ShortID="187930780">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="nemmerc_secondary_lunge" ID="{E1104DA9-4319-4ABF-B3B0-F3187DC9C266}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_nemmerc_utility_exit" ID="{0C3C02A1-BEC7-4F87-BD9C-1B474661027E}">
+							<ChildrenList>
+								<Action Name="" ID="{E372DE6B-F19A-4D38-B486-6CF816387296}" ShortID="1032667924">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="maybeBlinkEnd" ID="{C6BA7E47-113A-432D-A345-519CA7D25521}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_nemmerc_knife_throw" ID="{53A88606-59FA-4702-B43C-4AED1813FA72}">
+							<ChildrenList>
+								<Action Name="" ID="{CB671CA2-1AB5-4796-8041-9B2C8A85EF0D}" ShortID="130683921">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="knife_NM_thrown_stright" ID="{7D1EDA2D-7375-4BC5-A1F9-4C1BF6B4906B}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_nemmerc_utility_enter" ID="{DB176DD5-FEFD-4604-AAE9-080CD80AB3D2}">
+							<ChildrenList>
+								<Action Name="" ID="{16ECC779-A0F1-4399-9735-C1AE0B9B48C9}" ShortID="901505115">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="maybeBlinkStart" ID="{46AD5F87-A802-464B-9B0F-F40E5438FDB7}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_nemmerc_clone_spawn" ID="{F157342F-BD68-471E-85CC-10DDBC024E20}">
+							<ChildrenList>
+								<Action Name="" ID="{E998BF9E-7555-416B-BC0F-4F3C1C6500AB}" ShortID="833268631">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="maybeCloneSpawn" ID="{DADF0D47-DC07-40E8-BE09-25036FA67AF9}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_nemmerc_primary_fire3" ID="{148B2AEC-FFE6-4F67-A53D-93BF754675DE}">
+							<ChildrenList>
+								<Action Name="" ID="{AF3701FD-3AA8-409D-B471-F4A6B0AFE8FB}" ShortID="621246181">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="PF_NM_2" ID="{08A43265-8642-4BBB-AF0F-DD38DF3BC305}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>

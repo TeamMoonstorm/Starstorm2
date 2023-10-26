@@ -322,7 +322,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="1389751463" Name="NemHuntressBowMax" ObjectPath="\Events\Default Work Unit\Nemesis Huntress\NemHuntressBowMax" DurationType="OneShot" DurationMin="0.622045" DurationMax="0.659033">
+				<Event Id="4245110589" Name="NemHuntessBowMax" ObjectPath="\Events\Default Work Unit\Nemesis Huntress\NemHuntessBowMax" DurationType="OneShot" DurationMin="0.622045" DurationMax="0.659033">
 					<IncludedMemoryFiles>
 						<File Id="230559016" Language="SFX">
 							<ShortName>bow_arrow_slide.wav</ShortName>
@@ -330,7 +330,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="415529083" Name="NemHuntressChargeBow" ObjectPath="\Events\Default Work Unit\Nemesis Huntress\NemHuntressChargeBow" DurationType="OneShot" DurationMin="0.546019" DurationMax="0.578487">
+				<Event Id="396560513" Name="NemHuntessChargeBow" ObjectPath="\Events\Default Work Unit\Nemesis Huntress\NemHuntessChargeBow" DurationType="OneShot" DurationMin="0.546019" DurationMax="0.578487">
 					<IncludedMemoryFiles>
 						<File Id="685104325" Language="SFX">
 							<ShortName>bow_shoot_pull.wav</ShortName>
@@ -338,7 +338,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="3663148423" Name="NemHuntressFireBow" ObjectPath="\Events\Default Work Unit\Nemesis Huntress\NemHuntressFireBow" DurationType="OneShot" DurationMin="1.078489" DurationMax="1.142619">
+				<Event Id="479003465" Name="NemHuntessFireBow" ObjectPath="\Events\Default Work Unit\Nemesis Huntress\NemHuntessFireBow" DurationType="OneShot" DurationMin="1.078489" DurationMax="1.142619">
 					<IncludedMemoryFiles>
 						<File Id="403555265" Language="SFX">
 							<ShortName>bow_shoot.wav</ShortName>
@@ -590,6 +590,126 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
+				<Event Id="3212416563" Name="Play_nemmerc_clone_spawn" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_clone_spawn" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="2.416470" DurationMax="2.873683">
+					<IncludedMemoryFiles>
+						<File Id="934322958" Language="SFX">
+							<ShortName>draven_skin13_sfx_audio_56.wav</ShortName>
+							<Path>SFX\draven_skin13_sfx_audio_56_D8C07C79.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="280596056" Name="Play_nemmerc_dash" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_dash" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="1.674177" DurationMax="1.879201">
+					<IncludedMemoryFiles>
+						<File Id="884406925" Language="SFX">
+							<ShortName>dash again.wav</ShortName>
+							<Path>SFX\dash again_D8C07C79.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1211800949" Name="Play_nemmerc_dash_start" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_dash_start" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="1.049312" DurationMax="1.322050">
+					<IncludedMemoryFiles>
+						<File Id="307841691" Language="SFX">
+							<ShortName>fuck2001.wav</ShortName>
+							<Path>SFX\fuck2001_D8C07C79.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1731428284" Name="Play_nemmerc_knife_impact" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_knife_impact" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="1.716354" DurationMax="1.716354">
+					<IncludedMemoryFiles>
+						<File Id="330789530" Language="SFX">
+							<ShortName>knife_NM_impact.wav</ShortName>
+							<Path>SFX\knife_NM_impact_D8C07C79.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="646660983" Name="Play_nemmerc_knife_rip" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_knife_rip" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="1.774042" DurationMax="1.774042">
+					<IncludedMemoryFiles>
+						<File Id="175474904" Language="SFX">
+							<ShortName>knifee_NM_pull_3.wav</ShortName>
+							<Path>SFX\knifee_NM_pull_3_D8C07C79.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2890061578" Name="Play_nemmerc_knife_throw" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_knife_throw" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="1.344923" DurationMax="1.576462">
+					<IncludedMemoryFiles>
+						<File Id="23053059" Language="SFX">
+							<ShortName>knife_NM_thrown_stright.wav</ShortName>
+							<Path>SFX\knife_NM_thrown_stright_D8C07C79.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2406586433" Name="Play_nemmerc_primary_fire" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_primary_fire" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="0.687927" DurationMax="0.822826">
+					<IncludedMemoryFiles>
+						<File Id="634299537" Language="SFX">
+							<ShortName>Futuristic Shotgun Single Shot.wav</ShortName>
+							<Path>SFX\Futuristic Shotgun Single Shot_D8C07C79.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="282242657" Name="Play_nemmerc_primary_fire2" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_primary_fire2" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="1.432814" DurationMax="1.562495">
+					<IncludedMemoryFiles>
+						<File Id="559235054" Language="SFX">
+							<ShortName>nemmercshot2_3.wav</ShortName>
+							<Path>SFX\nemmercshot2_3_D8C07C79.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="282242656" Name="Play_nemmerc_primary_fire3" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_primary_fire3" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="2.587541" DurationMax="3.260097">
+					<IncludedMemoryFiles>
+						<File Id="51700066" Language="SFX">
+							<ShortName>PF_NM_2.wav</ShortName>
+							<Path>SFX\PF_NM_2_D8C07C79.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1171975898" Name="Play_nemmerc_primary_reload" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_primary_reload" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="0.717010" DurationMax="0.857304">
+					<IncludedMemoryFiles>
+						<File Id="162523517" Language="SFX">
+							<ShortName>pump1.wav</ShortName>
+							<Path>SFX\pump1_D8C07C79.wem</Path>
+						</File>
+						<File Id="594033405" Language="SFX">
+							<ShortName>pump2.wav</ShortName>
+							<Path>SFX\pump2_D8C07C79.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="576705642" Name="Play_nemmerc_secondary_lunge" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_secondary_lunge" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="1.154752" DurationMax="1.154752">
+					<IncludedMemoryFiles>
+						<File Id="20548445" Language="SFX">
+							<ShortName>draven_skin13_sfx_audio_43.wav</ShortName>
+							<Path>SFX\draven_skin13_sfx_audio_43_D8C07C79.wem</Path>
+						</File>
+						<File Id="191170539" Language="SFX">
+							<ShortName>leather.wav</ShortName>
+							<Path>SFX\leather_D8C07C79.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="428808189" Name="Play_nemmerc_special" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_special" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="12.115167" DurationMax="12.115167">
+					<IncludedMemoryFiles>
+						<File Id="22802676" Language="SFX">
+							<ShortName>HE ULTED MONKAW.wav</ShortName>
+							<Path>SFX\HE ULTED MONKAW_D8C07C79.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1611310971" Name="Play_nemmerc_utility_enter" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_utility_enter" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="0.792615" DurationMax="1.058014">
+					<IncludedMemoryFiles>
+						<File Id="951110745" Language="SFX">
+							<ShortName>draven_skin13_sfx_audio_47.wav</ShortName>
+							<Path>SFX\draven_skin13_sfx_audio_47_D8C07C79.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3128507003" Name="Play_nemmerc_utility_exit" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_utility_exit" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="1.308183" DurationMax="1.555700">
+					<IncludedMemoryFiles>
+						<File Id="594019862" Language="SFX">
+							<ShortName>draven_skin13_sfx_audio_36.wav</ShortName>
+							<Path>SFX\draven_skin13_sfx_audio_36_D8C07C79.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
 				<Event Id="263522455" Name="Play_Soft_Rain" ObjectPath="\Events\Default Work Unit\Environment\Ambient\Play_Soft_Rain" DurationType="Infinite">
 					<IncludedMemoryFiles>
 						<File Id="634982983" Language="SFX">
@@ -623,6 +743,19 @@
 						<File Id="152621449" Language="SFX">
 							<ShortName>UI_3D_printer_itemIntoPrinter_01.wav</ShortName>
 							<Path>SFX\UI_3D_printer_itemIntoPrinter_01_D8C07C79.wem</Path>
+				<Event Id="159540939" Name="RemunerationSpawn" ObjectPath="\Events\Default Work Unit\Items\RemunerationSpawn" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="2.094445" DurationMax="2.094445">
+					<IncludedMemoryFiles>
+						<File Id="28672179" Language="SFX">
+							<ShortName>coinflipgoodenoughidc.wav</ShortName>
+							<Path>SFX\coinflipgoodenoughidc_D8C07C79.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3276263843" Name="RemunerationSpawn2" ObjectPath="\Events\Default Work Unit\Items\RemunerationSpawn2" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="2.010272" DurationMax="2.010272">
+					<IncludedMemoryFiles>
+						<File Id="258431528" Language="SFX">
+							<ShortName>coinflip z.wav</ShortName>
+							<Path>SFX\coinflip z_D8C07C79.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -809,7 +942,7 @@
 				<GameParameter Id="3673881719" Name="Volume_SFX" ObjectPath="\Game Parameters\Default Work Unit\Volume_SFX"/>
 			</GameParameters>
 		</SoundBank>
-		<SoundBank Id="1355168291" Language="SFX" Hash="3150713172">
+		<SoundBank Id="1355168291" Language="SFX" Hash="2180450582">
 			<ObjectPath>SS2Init</ObjectPath>
 			<ShortName>SS2Init</ShortName>
 			<Path>SS2Init.bnk</Path>

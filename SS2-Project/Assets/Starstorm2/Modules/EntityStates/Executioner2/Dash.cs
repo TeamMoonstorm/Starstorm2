@@ -129,6 +129,11 @@ namespace EntityStates.Executioner2
                     if (body && body != base.characterBody)
                     {
                         body.AddTimedBuff(SS2Content.Buffs.BuffFear, debuffDuration);
+
+                        if(body.master && body.master.aiComponents[0])
+                        {
+                            body.master.aiComponents[0].stateMachine.SetNextState(new AI.Walker.Fear { fearTarget = base.gameObject });
+                        }
                     }
                 }
             }

@@ -7,7 +7,7 @@ using Moonstorm.Starstorm2.Components;
 using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
-
+using Moonstorm.Starstorm2;
 namespace EntityStates.NemMerc
 {
     public class ShadowStep : BaseSkillState
@@ -20,6 +20,11 @@ namespace EntityStates.NemMerc
         public static float hologramDurationCoefficient = 0.5f;
         public static AnimationCurve cameraMovementCurve;
 
+        public static GameObject blinkPrefab;
+        public static GameObject blinkDestinationPrefab;
+        public static GameObject blinkArrivalPrefab;
+
+        private GameObject destinationInstance;
         private float duration;
 
         private Vector3 teleportStartPosition;
@@ -27,17 +32,25 @@ namespace EntityStates.NemMerc
 
         private CameraFlipper camera;
         private GameObject target;
+        private CharacterModel characterModel;
+        private Transform modelTransform;
 
+        private Vector3 lastKnownTargetPosition;
+
+        private GameObject bossEffect;
         public override void OnEnter()
         {
             base.OnEnter();
 
             //vfx
-            //anim
-            //sound
             // overlay material
             //need to fix teleport near walls
+            // still fucking teleports to 0,0 sometimes. when target disappears on the smae frame. (?)
+            // ^^^ MOSTLY happens to the clone version which is separate
 
+            base.StartAimMode();
+            base.PlayAnimation("FullBody, Override", "ShadowStep", "Utility.playbackRate", baseDuration);
+            Util.PlaySound("Play_nemmerc_utility_enter", base.gameObject);
             NemMercTracker tracker = base.GetComponent<NemMercTracker>();
             this.target = tracker.GetTrackingTarget();
             if (!this.target)
@@ -51,50 +64,124 @@ namespace EntityStates.NemMerc
 
             this.teleportStartPosition = base.transform.position;
             this.UpdateTarget();
+            this.lastKnownTargetPosition = this.target.transform.position;
+            base.characterDirection.forward = this.teleportTarget - base.transform.position;
 
             this.camera = base.gameObject.AddComponent<CameraFlipper>();
             this.camera.StartCameraFlip(this.teleportTarget, target, this.duration * ShadowStep.teleportTime);
             this.camera.movementCurve = ShadowStep.cameraMovementCurve;
                           
             base.characterMotor.velocity = Vector3.zero;
-            
+
+            this.modelTransform = base.GetModelTransform();
+            if (modelTransform)
+            {
+                this.characterModel = modelTransform.GetComponent<CharacterModel>();
+                ChildLocator childLocator = base.GetModelChildLocator();
+                if(childLocator)
+                {
+                    Transform chest = childLocator.FindChild("Chest");
+                    if(chest)
+                    {
+                        Transform bossEffect = chest.Find("NemMercenaryBossEffect(Clone)");
+                        if (bossEffect)
+                        {
+                            this.bossEffect = bossEffect.gameObject;
+                            this.bossEffect.SetActive(false);
+                        }
+                    }
+                }
+                
+            }
+            if (this.characterModel)
+            {
+                this.characterModel.invisibilityCount++;
+            }
+
+            if(ShadowStep.blinkPrefab)
+            {
+                EffectManager.SimpleEffect(blinkPrefab, base.characterBody.corePosition, Util.QuaternionSafeLookRotation(teleportTarget - teleportStartPosition), false);
+            }
+            if (ShadowStep.blinkDestinationPrefab)
+            {
+                this.destinationInstance = UnityEngine.Object.Instantiate<GameObject>(ShadowStep.blinkDestinationPrefab, this.teleportTarget, Quaternion.identity);
+            }
+
             if (NetworkServer.active)
             {
                 base.characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
             }
         }
 
-        private void UpdateTarget()
-        {
+        private void UpdateTarget() // shitcode. im getting desparate. it keeps teleporting to 0,0 and i dont know why
+        {         
             if(this.target)
             {
-                Vector3 between = target.transform.position - this.teleportStartPosition;
-                float distance = between.magnitude;
-                Vector3 direction = between.normalized;
-                this.teleportTarget = direction * (distance + ShadowStep.teleportBehindDistance) + base.transform.position;
-                this.teleportTarget.y = Mathf.Max(this.target.transform.position.y + teleportYBonus, teleportTarget.y);
-                if (this.camera)
-                    this.camera.cameraEndPosition = this.teleportTarget;
+                this.lastKnownTargetPosition = this.target.transform.position;             
+            }
+
+            Vector3 between = this.lastKnownTargetPosition - this.teleportStartPosition;
+            float distance = between.magnitude;
+            Vector3 direction = between.normalized;
+            this.teleportTarget = direction * (distance + ShadowStep.teleportBehindDistance) + base.transform.position;
+
+            if (Physics.Raycast(this.lastKnownTargetPosition, direction, out RaycastHit hit, ShadowStep.teleportBehindDistance, LayerIndex.world.mask))
+            {
+                this.teleportTarget = hit.point;
+            }
+            this.teleportTarget.y = Mathf.Max(this.lastKnownTargetPosition.y + teleportYBonus, teleportTarget.y);
+            if (this.camera)
+                this.camera.cameraEndPosition = this.teleportTarget;
+            if (this.destinationInstance)
+            {
+                this.destinationInstance.transform.position = this.teleportTarget;
             }
         }
+
+
+        bool s;
+
+        [NonSerialized] // WHY DOESNT NONSERIALIZED WORK ALL OF A SUDDEN ???????????????????????????????????????
+        public static float bitch = 0.66f; // I DONT CARE I DONCA RE STFU STFU STFU
+
         public override void FixedUpdate()
         {
             base.FixedUpdate();
 
-            this.UpdateTarget();
-
             base.characterMotor.velocity = Vector3.zero;
+
+            if (base.fixedAge >= this.duration * bitch && !s) // XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+            {
+                s = true;
+                Util.PlaySound("Play_nemmerc_utility_exit", base.gameObject);
+            }
 
             if (base.isAuthority && base.fixedAge >= this.duration)
             {
                 if(this.camera)
                     this.camera.EndCameraFlip();
 
-                TeleportHelper.TeleportBody(base.characterBody, this.teleportTarget);
-                base.characterDirection.forward = base.GetAimRay().direction;
-                base.SmallHop(base.characterMotor, ShadowStep.smallHopVelocity);
+                if (this.teleportTarget.magnitude < 5)
+                {
+                    SS2Log.Error("SHADOWSTEP WENT TO 0,0");
+                    SS2Log.Error("TeleportTarget: " + this.teleportTarget);
+                    SS2Log.Error("target: " + this.target);
+                    SS2Log.Error("lastKnownTargetPosition: " + this.lastKnownTargetPosition);
+                    SS2Log.Error("NemMercTrackerComponent target: " + base.GetComponent<NemMercTracker>().GetTrackingTarget());
+                }
 
-                //base.skillLocator.primary.stock = 2; /////////////////////
+
+                TeleportHelper.TeleportBody(base.characterBody, this.teleportTarget);
+
+                if(blinkArrivalPrefab)
+                {
+                    EffectManager.SimpleEffect(blinkArrivalPrefab, this.teleportTarget, Quaternion.identity, true);
+                }
+
+                base.characterDirection.forward = this.lastKnownTargetPosition - base.transform.position;
+                base.SmallHop(base.characterMotor, ShadowStep.smallHopVelocity);
+                base.StartAimMode();
+
                 this.outer.SetNextStateToMain();
                 return;
             }
@@ -103,16 +190,40 @@ namespace EntityStates.NemMerc
         public override void Update()
         {
             base.Update();
+
+
+            this.UpdateTarget();
+            
+
             if (this.camera)
                 this.camera.UpdateCamera(Time.deltaTime);
         }
         public override void OnExit()
         {
             base.OnExit();
+            if(this.bossEffect)
+            {
+                this.bossEffect.SetActive(true);
+            }
+            if (this.characterModel)
+            {
+                this.characterModel.invisibilityCount--;
+            }
             if (this.camera)
             {      
                 this.camera.EndCameraFlip();
                 Destroy(this.camera);
+            }
+
+            if (this.modelTransform)
+            {
+                TemporaryOverlay temporaryOverlay2 = this.modelTransform.gameObject.AddComponent<TemporaryOverlay>();
+                temporaryOverlay2.duration = 0.67f;
+                temporaryOverlay2.animateShaderAlpha = true;
+                temporaryOverlay2.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
+                temporaryOverlay2.destroyComponentOnEnd = true;
+                temporaryOverlay2.originalMaterial = SS2Assets.LoadAsset<Material>("matNemergize", SS2Bundle.NemMercenary);
+                temporaryOverlay2.AddToCharacerModel(this.modelTransform.GetComponent<CharacterModel>());
             }
 
             base.characterMotor.useGravity = true;

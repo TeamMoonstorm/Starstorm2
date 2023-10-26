@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2dc8cbdb9720c418fcff8f84588cab, type: 3}
+  m_Name: ss2.skill.nemmercenary.knife
+  m_EditorClassIdentifier: 
+  nameToken: ???
+  displayModelPath: Prefabs/NullModel
+  displayModelPrefab: {fileID: 0}
+  hidden: 0
+  achievementIcon: {fileID: 21300000, guid: 4f68c45000e8c2642b8168426b75ed83, type: 3}
+  achievementCondition:
+    assemblyQualifiedName: Moonstorm.Starstorm2.Unlocks.NemMercenary.NemMercenaryKnifeUnlock+NemMercenaryKnifeAchievement,
+      Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  serverTracked: 0
+  baseServerAchievement:
+    assemblyQualifiedName: 
+  achievementNameToken: SS2_ACHIEVEMENT_NEMESIS_MERCENARY_KNIFE_NAME
+  achievementDescToken: SS2_ACHIEVEMENT_NEMESIS_MERCENARY_KNIFE_DESC
+  achievedIcon: {fileID: 21300000, guid: 3148cf08c2048624189835a220f28245, type: 3}
+  unachievedIcon: {fileID: 21300000, guid: 3148cf08c2048624189835a220f28245, type: 3}
+  prerequisiteAchievement:
+    AchievementIdentifier: 
+    UnlockableDef: {fileID: 11400000, guid: fbd6c871b7e3f784eb0ad6b3e9a142f2, type: 2}

@@ -8,59 +8,93 @@ using RoR2;
 using EntityStates;
 using EntityStates.NemMerc;
 using UnityEngine.Networking;
+using RoR2.CharacterAI;
+
 namespace Moonstorm.Starstorm2.Components
 {
     public class NemMercHologram : NetworkBehaviour
     {
         [NonSerialized]
-        public static bool lockDash;
-
-        [NonSerialized]
-        public float timeUntilReveal;
+        public static DeployableSlot deployableSlot = Survivors.NemMerc.hologram;
         [NonSerialized]
         public float lifetime;
-        [NonSerialized]
-        public GameObject owner;
 
-        [NonSerialized]
-        public HurtBox target;
+
+        public GameObject owner
+        {
+            get => _owner;
+            set
+            {
+                if (value != _owner)
+                    dirty = true;
+                _owner = value;
+            }
+        }
+        private GameObject _owner;
+
+        public HurtBox target
+        {
+            get => _target;
+            set
+            {
+                if (value != _target)
+                    dirty = true;
+                _target = value;
+            }
+        }
+        private HurtBox _target;
+        private bool dirty;
+
+        public TeamFilter teamFilter;
 
         public Transform indicatorStartTransform;
         public Transform indicatorTransform;
         public GameObject lineRenderer;
         public GameObject hologramIndicatorPrefab;
 
-        public SphereCollider collider;
-        public GameObject model;
         public float targetSearchRadius = 25f;
         public float targetLostDistance = 35f;
-        private float searchFrequency;
+        public float ownerCollisionRadius = 4f;
+
+
+        private float searchFrequency = 6;
         private float searchStopwatch;
 
         private PositionIndicator indicator;
         private float stopwatch;
         private bool isRevealed;
         private SphereSearch search = new SphereSearch();
+        private EntityStateMachine ownerBodyMachine;
 
+
+        private BaseAI ownerAI;
 
         private void Start()
         {
             this.indicator = GameObject.Instantiate(this.hologramIndicatorPrefab, base.transform.position, Quaternion.identity).GetComponent<PositionIndicator>();
             this.indicator.targetTransform = this.indicatorStartTransform;
+
+            this.teamFilter = base.GetComponent<TeamFilter>();
+
+            if (this.owner)
+            {
+                CharacterBody component = owner.GetComponent<CharacterBody>();
+                if (component)
+                {
+                    CharacterMaster master = component.master;
+                    if (master)
+                    {
+                        if (NetworkServer.active)
+                            master.AddDeployable(base.GetComponent<Deployable>(), Survivors.NemMerc.hologram);
+
+                        this.ownerAI = component.master.GetComponent<BaseAI>();
+                        if (this.teamFilter) this.teamFilter.teamIndex = master.teamIndex;
+                    }
+                }
+                this.ownerBodyMachine = EntityStateMachine.FindByCustomName(this.owner, "Body");
+            }
         }
 
-
-        /// <summary>
-        /// 
-        /// 
-        /// 
-        // / NETWORK THE FUCKING TARGET DIPSHIT ITS NOT HARD
-        /// 
-        /// 
-        /// 
-        /// 
-        /// </summary>
-        /// <param name="damageReport"></param>
         private void CheckNewTargetOnDamage(DamageReport damageReport)
         {
             if (!damageReport.victim || !damageReport.attacker) return;
@@ -69,7 +103,7 @@ namespace Moonstorm.Starstorm2.Components
             {
                 Vector3 between = damageReport.damageInfo.position - base.transform.position;
                 if(between.magnitude <= this.targetSearchRadius)
-                {
+                {                    
                     this.target = damageReport.victim.body.mainHurtBox;
                 }
             }
@@ -78,17 +112,19 @@ namespace Moonstorm.Starstorm2.Components
         private void FixedUpdate()
         {
             this.stopwatch += Time.fixedDeltaTime;
-            if (this.stopwatch >= timeUntilReveal && !isRevealed)
-            {
-                isRevealed = true;
-                if (this.model) this.model.SetActive(true);
-                if (this.collider) this.collider.enabled = true;
-            }
-            if (stopwatch >= lifetime)
+
+            if (NetworkServer.active && stopwatch >= lifetime)
             {
                 Destroy(base.gameObject);
             }
 
+            if(this.OwnerInCollisionRadius())
+            {
+                if (ownerBodyMachine && ownerBodyMachine.SetInterruptState(new NemAssaulter { target = this.target }, InterruptPriority.Pain))
+                {
+                    Destroy(base.gameObject);
+                }
+            }
 
             if(this.ShouldUpdateTarget())
             {
@@ -101,9 +137,22 @@ namespace Moonstorm.Starstorm2.Components
                 }
             }
 
+            if (this.ownerAI && this.target)
+            {
+                this.ownerAI.customTarget.gameObject = base.gameObject;              
+            }
+
+
             this.indicator.yOffset = 0; // XD????
             this.indicator.targetTransform = base.transform;
 
+        }
+
+
+        // NEED TO GO BACK TO COLLIDERS SO U CAN USE ALLY HOLOGRAMS
+        private bool OwnerInCollisionRadius()
+        {
+            return this.owner && (this.owner.transform.position - base.transform.position).magnitude <= this.ownerCollisionRadius;
         }
 
         private bool ShouldUpdateTarget()
@@ -127,6 +176,22 @@ namespace Moonstorm.Starstorm2.Components
         {
             GlobalEventManager.onServerDamageDealt -= CheckNewTargetOnDamage;
         }
+
+
+        // im supposed to do bit shit here but idk how it works :^)
+
+        public override bool OnSerialize(NetworkWriter writer, bool initialState)
+        {
+            writer.Write(this.owner);
+            writer.Write(HurtBoxReference.FromHurtBox(this.target));
+            return dirty;
+        }
+        public override void OnDeserialize(NetworkReader reader, bool initialState)
+        {
+            this.owner = reader.ReadGameObject();
+            this.target = reader.ReadHurtBoxReference().ResolveHurtBox();
+        }
+
         private void SearchForTarget()
         {
             TeamMask mask = TeamMask.GetEnemyTeams(TeamComponent.GetObjectTeam(this.owner));
@@ -137,32 +202,14 @@ namespace Moonstorm.Starstorm2.Components
             this.target = this.search.RefreshCandidates().FilterCandidatesByHurtBoxTeam(mask).FilterCandidatesByDistinctHurtBoxEntities().GetHurtBoxes().FirstOrDefault();
         }
 
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject != this.owner) return;
-
-            GameObject bodyObject = other.gameObject;
-            HurtBox hurtBox = other.GetComponent<HurtBox>();
-            if(hurtBox && hurtBox.healthComponent)
-            {
-                bodyObject = hurtBox.healthComponent.gameObject;
-            }
-
-            Vector3 direction = Vector3.zero;
-            if (this.target) direction = (this.target.transform.position - base.transform.position).normalized;
-            EntityStateMachine body = EntityStateMachine.FindByCustomName(bodyObject, "Body");
-            if (body && body.SetInterruptState(new NemAssaulter { dashVector = lockDash ? direction : Vector3.zero }, InterruptPriority.Pain))
-            {
-                Destroy(base.gameObject);
-            }        
-        }
-
         private void Update()
-        {
-            if(Util.HasEffectiveAuthority(this.owner))
-                this.UpdateVisualizer();
+        {           
+            this.UpdateVisualizer();
         }
+
+        //  NEED TO CONDITIONALLY SHOW POSITION INDICATOR
+        //  YES IF ENEMY NEMMERC
+        //  NO IF ALLY NEMMERC (UNLESS YOU ARE ALSO NEMMERC)
         public void UpdateVisualizer()
         {
             if (this.target != this.lineRenderer.activeSelf)

@@ -7,7 +7,7 @@ using System;
 
 namespace Moonstorm.Starstorm2.Survivors
 {
-    //[DisabledContent]
+    [DisabledContent]
     public sealed class NemesisHuntress : SurvivorBase
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemHuntress2Body", SS2Bundle.Indev);
@@ -31,7 +31,7 @@ namespace Moonstorm.Starstorm2.Survivors
             crosshairPrefab = BodyPrefab.GetComponent<CharacterBody>().defaultCrosshairPrefab;
 
             //On.RoR2.Projectile.ProjectileSingleTargetImpact.OnProjectileImpact += PSTI_OPI;
-            On.RoR2.UI.CrosshairManager.UpdateCrosshair += CrosshairManager_UpdateCrosshair;
+            //On.RoR2.UI.CrosshairManager.UpdateCrosshair += CrosshairManager_UpdateCrosshair;
         }
 
         private void CrosshairManager_UpdateCrosshair(On.RoR2.UI.CrosshairManager.orig_UpdateCrosshair orig, RoR2.UI.CrosshairManager self, CharacterBody characterBody, Vector3 crosshairWorldPosition, Camera uiCamera)

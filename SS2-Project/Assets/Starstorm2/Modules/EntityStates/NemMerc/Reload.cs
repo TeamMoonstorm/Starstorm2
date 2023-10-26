@@ -10,8 +10,9 @@ namespace EntityStates.NemMerc
     public class Reload : BaseState
     {
         public static float baseDuration = 1f;
+        public static string reloadSoundString;
 
-        public float reloadTime = 0.5f; // could(should?) use animator param
+        public float reloadTime = 0.5f;
 
         private float duration;
         private bool hasReloaded;
@@ -22,8 +23,12 @@ namespace EntityStates.NemMerc
 
             this.duration = Reload.baseDuration / this.attackSpeedStat;
             //anim
+
+            /// NEED TO SYNC SOUNDS AN ANIMATIONS
+            /// MAYBE JUST USE ANIMATION EVENTS FOR RELOAD SOUNDS
+            /// ALSO SHELLS
             base.PlayCrossfade("Gesture, Override", "Reload2", "Reload.playbackRate", this.duration * 0.9f, 0.1f);
-            //sound
+            Util.PlaySound(reloadSoundString, base.gameObject);
             //vfx
         }
 
@@ -36,7 +41,8 @@ namespace EntityStates.NemMerc
             {
                 this.hasReloaded = true;
                 this.AddStock();
-
+                //sound
+                
             }
 
             if(base.fixedAge >= this.duration)

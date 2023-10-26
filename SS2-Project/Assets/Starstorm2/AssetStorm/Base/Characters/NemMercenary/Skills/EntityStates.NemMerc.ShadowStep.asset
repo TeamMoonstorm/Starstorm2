@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: EntityStates.NemMerc.ShadowStep
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.NemMerc.ShadowStep, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: baseDuration
+      fieldValue:
+        stringValue: 0.5
+        objectValue: {fileID: 0}
+    - fieldName: teleportBehindDistance
+      fieldValue:
+        stringValue: 5
+        objectValue: {fileID: 0}
+    - fieldName: teleportTime
+      fieldValue:
+        stringValue: 0.7
+        objectValue: {fileID: 0}
+    - fieldName: smallHopVelocity
+      fieldValue:
+        stringValue: 4
+        objectValue: {fileID: 0}
+    - fieldName: cameraMovementCurve
+      fieldValue:
+        stringValue: '{"preWrapMode":8,"postWrapMode":8,"keys":[{"time":0.0,"value":0.0,"inTangent":8.707021713256836,"outTangent":8.707021713256836,"inWeight":0.0,"outWeight":0.11240188032388687,"weightedMode":3,"tangentMode":0},{"time":0.19132566452026368,"value":0.6941178441047669,"inTangent":1.8831195831298829,"outTangent":1.8831195831298829,"inWeight":0.3333333432674408,"outWeight":0.2136065512895584,"weightedMode":3,"tangentMode":0},{"time":1.0,"value":1.0,"inTangent":0.0,"outTangent":0.0,"inWeight":0.0,"outWeight":0.0,"weightedMode":0,"tangentMode":0}]}'
+        objectValue: {fileID: 0}
+    - fieldName: teleportYBonus
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: hologramDurationCoefficient
+      fieldValue:
+        stringValue: 0.5
+        objectValue: {fileID: 0}
+    - fieldName: blinkPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1843891229009739, guid: fd62f5949551f544fb708ce196ce2c1c,
+          type: 3}
+    - fieldName: blinkDestinationPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1306624141666123, guid: 52a47d44be035ae4fad2d42ccd8bbc90,
+          type: 3}
+    - fieldName: bitch
+      fieldValue:
+        stringValue: 0.66
+        objectValue: {fileID: 0}
+    - fieldName: blinkArrivalPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1918834535135409, guid: 3e449fa4f1cf399449a024cecc8085e1,
+          type: 3}

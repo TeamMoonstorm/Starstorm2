@@ -26,6 +26,7 @@ namespace Moonstorm.Starstorm2
         Executioner2,
         Nemmando,
         NemCommando,
+        NemMercenary,
         Equipments,
         Items,
         Events,
@@ -46,6 +47,7 @@ namespace Moonstorm.Starstorm2
         private const string EXECUTIONER2 = "ss2executioner2";
         private const string NEMMANDO = "ss2nemmando";
         private const string NEMCOMMANDO = "ss2nemcommando";
+        private const string NEMMERCENARY = "ss2nemmercenary";
         private const string EQUIPS = "ss2equipments";
         private const string ITEMS = "ss2items";
         private const string EVENTS = "ss2events";
@@ -156,6 +158,7 @@ namespace Moonstorm.Starstorm2
                     case EXECUTIONER2: LoadAndAssign(path, SS2Bundle.Executioner2); break;
                     case NEMMANDO: LoadAndAssign(path, SS2Bundle.Nemmando); break;
                     case NEMCOMMANDO: LoadAndAssign(path, SS2Bundle.NemCommando); break;
+                    case NEMMERCENARY: LoadAndAssign(path, SS2Bundle.NemMercenary); break;
                     case EQUIPS: LoadAndAssign(path, SS2Bundle.Equipments); break;
                     case ITEMS: LoadAndAssign(path, SS2Bundle.Items); break;
                     case EVENTS: LoadAndAssign(path, SS2Bundle.Events); break;

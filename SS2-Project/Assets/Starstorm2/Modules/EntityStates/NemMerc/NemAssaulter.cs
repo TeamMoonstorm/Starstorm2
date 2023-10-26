@@ -2,8 +2,7 @@
 using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
-using EntityStates.Merc;
-
+using Moonstorm.Starstorm2;
 namespace EntityStates.NemMerc
 {
 
@@ -21,7 +20,7 @@ namespace EntityStates.NemMerc
 		public override void OnEnter()
 		{
 			base.OnEnter();
-			Util.PlaySound(Assaulter.beginSoundString, base.gameObject);
+			Util.PlaySound(NemAssaulter.beginSoundString, base.gameObject);
 			this.modelTransform = base.GetModelTransform();
 
 			this.weapon = EntityStateMachine.FindByCustomName(base.gameObject, "Weapon");
@@ -30,32 +29,51 @@ namespace EntityStates.NemMerc
 			{
 				this.aimRequest = base.cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
 			}
+			
 			if (this.modelTransform)
 			{
 				this.animator = this.modelTransform.GetComponent<Animator>();
 				this.characterModel = this.modelTransform.GetComponent<CharacterModel>();
 				this.childLocator = this.modelTransform.GetComponent<ChildLocator>();
 				this.hurtboxGroup = this.modelTransform.GetComponent<HurtBoxGroup>();
-				//if (this.childLocator)
-				//{
-				//	this.childLocator.FindChild("PreDashEffect").gameObject.SetActive(true);
-				//}
+                if (this.childLocator)
+                {
+                    this.childLocator.FindChild("PreDashEffect").gameObject.SetActive(true);
+                }
+
+				TemporaryOverlay temporaryOverlay = this.modelTransform.gameObject.AddComponent<TemporaryOverlay>();
+				temporaryOverlay.duration = NemAssaulter.dashPrepDuration;
+				temporaryOverlay.animateShaderAlpha = true;
+				temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
+				temporaryOverlay.destroyComponentOnEnd = true;
+				temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matNemergize", SS2Bundle.NemMercenary);
+				temporaryOverlay.AddToCharacerModel(this.characterModel);
+				
 			}
 
-			this.dashSpeed = NemAssaulter.dashDistance / (NemAssaulter.dashDuration);// / this.attackSpeedStat);
-			//this.dashSpeed *= this.attackSpeedStat;
-
-			base.SmallHop(base.characterMotor, Assaulter.smallHopVelocity);
-			base.PlayAnimation("FullBody, Override", "AssaulterPrep", "AssaulterPrep.playbackRate", Assaulter.dashPrepDuration);
+			float distance = NemAssaulter.dashDistance + minBehindDistance;
 
 			this.dashVector = base.inputBank.aimDirection;
+
 			if(this.target)
             {
-				this.dashVectorLocked = true;
-				this.dashVector = this.target.transform.position - base.transform.position;
-            }
+				Vector3 between = this.target.transform.position - base.transform.position;
+				distance = Mathf.Min(between.magnitude + minBehindDistance, distance + graceDistance); // extra distance incase enemy wanders away before the dash
+			}				
 			
-			this.overlapAttack = base.InitMeleeOverlap(NemAssaulter.damageCoefficient, Assaulter.hitEffectPrefab, this.modelTransform, "Assaulter");
+
+			base.characterDirection.forward = this.dashVector.normalized;
+
+			distance = Mathf.Max(distance, NemAssaulter.dashDistance);
+			this.dashSpeed = distance / (NemAssaulter.dashDuration);// / this.attackSpeedStat);
+			//this.dashSpeed *= this.attackSpeedStat;
+
+			base.SmallHop(base.characterMotor, NemAssaulter.smallHopVelocity);
+			base.PlayAnimation("FullBody, Override", "AssaulterPrep", "AssaulterPrep.playbackRate", NemAssaulter.dashPrepDuration);
+
+			
+			
+			this.overlapAttack = base.InitMeleeOverlap(NemAssaulter.damageCoefficient, NemAssaulter.hitEffectPrefab, this.modelTransform, "Assaulter");
 			this.overlapAttack.damageType = DamageType.Stun1s;
 			if (NetworkServer.active)
 			{
@@ -72,21 +90,24 @@ namespace EntityStates.NemMerc
 				&& secondary.skillDef.skillNameToken == "SS2_NEMESIS_MERCENARY_SECONDARY_SLASH_NAME")
             {				
 				this.m2Buffered = true;
+
+				//vfx and sound
             }
         }
 
         public void CreateDashEffect()
 		{
 			Transform transform = this.childLocator.FindChild("DashCenter");
-			if (transform && Assaulter.dashPrefab)
+			Util.PlaySound("Play_nemmerc_dash", base.gameObject);
+			if (transform && NemAssaulter.dashPrefab)
 			{
-				UnityEngine.Object.Instantiate<GameObject>(Assaulter.dashPrefab, transform.position, Util.QuaternionSafeLookRotation(this.dashVector), transform);
+				UnityEngine.Object.Instantiate<GameObject>(NemAssaulter.dashPrefab, transform.position, Util.QuaternionSafeLookRotation(this.dashVector), transform);
 			}
-			//if (this.childLocator)
-			//{
-			//	this.childLocator.FindChild("PreDashEffect").gameObject.SetActive(false);
-			//}
-		}
+            if (this.childLocator)
+            {
+                this.childLocator.FindChild("PreDashEffect").gameObject.SetActive(false);
+            }
+        }
 
 		public override void FixedUpdate()
 		{
@@ -95,11 +116,11 @@ namespace EntityStates.NemMerc
 			this.GatherInputs();
 
 			float totalDuration = NemAssaulter.dashDuration + NemAssaulter.dashPrepDuration;
-			base.characterDirection.forward = this.dashVector;
+			base.characterDirection.forward = this.dashVector; 
 			if (this.stopwatch > NemAssaulter.dashPrepDuration && !this.isDashing)
 			{
 				this.isDashing = true;
-				this.dashVector = this.target ? this.target.transform.position - base.transform.position : base.inputBank.aimDirection;
+				this.dashVector = base.inputBank.aimDirection;
 
 				this.CreateDashEffect();
 				base.PlayCrossfade("FullBody, Override", "AssaulterLoop", 0.1f);
@@ -108,12 +129,12 @@ namespace EntityStates.NemMerc
 				if (this.modelTransform)
 				{
 					TemporaryOverlay temporaryOverlay = this.modelTransform.gameObject.AddComponent<TemporaryOverlay>();
-					temporaryOverlay.duration = 0.7f;
+					temporaryOverlay.duration = 1.2f;
 					temporaryOverlay.animateShaderAlpha = true;
 					temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
 					temporaryOverlay.destroyComponentOnEnd = true;
-					temporaryOverlay.originalMaterial = LegacyResourcesAPI.Load<Material>("Materials/matMercEnergized");
-					temporaryOverlay.AddToCharacerModel(this.modelTransform.GetComponent<CharacterModel>());
+					temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matNemergize", SS2Bundle.NemMercenary);
+					temporaryOverlay.AddToCharacerModel(this.characterModel);
 				}
 			}
 			if (!this.isDashing)
@@ -138,6 +159,9 @@ namespace EntityStates.NemMerc
 
 						if(this.m2Buffered)
                         {
+							// NNEED A BETTER DASH START SOUND HERE
+							Util.PlaySound(NemAssaulter.beginSoundString, base.gameObject); // THIS SUCKS I THINK
+
 							this.m2Buffered = false;
 							base.skillLocator.secondary.DeductStock(1);
 							this.hitPauseTimer += NemAssaulter.m2HitPauseDuration / this.attackSpeedStat;
@@ -154,12 +178,12 @@ namespace EntityStates.NemMerc
 						if (this.modelTransform)
 						{
 							TemporaryOverlay temporaryOverlay2 = this.modelTransform.gameObject.AddComponent<TemporaryOverlay>();
-							temporaryOverlay2.duration = Assaulter.hitPauseDuration / this.attackSpeedStat;
+							temporaryOverlay2.duration = NemAssaulter.hitPauseDuration / this.attackSpeedStat;
 							temporaryOverlay2.animateShaderAlpha = true;
 							temporaryOverlay2.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
 							temporaryOverlay2.destroyComponentOnEnd = true;
 							temporaryOverlay2.originalMaterial = LegacyResourcesAPI.Load<Material>("Materials/matMercEvisTarget");
-							temporaryOverlay2.AddToCharacerModel(this.modelTransform.GetComponent<CharacterModel>());
+							temporaryOverlay2.AddToCharacerModel(this.characterModel);
 						}
 					}
 					base.characterMotor.rootMotion += this.dashVector * this.dashSpeed * Time.fixedDeltaTime;
@@ -186,22 +210,22 @@ namespace EntityStates.NemMerc
 		{
 			base.gameObject.layer = LayerIndex.defaultLayer.intVal;
 			base.characterMotor.Motor.RebuildCollidableLayers();
-			Util.PlaySound(Assaulter.endSoundString, base.gameObject);
+			Util.PlaySound(NemAssaulter.endSoundString, base.gameObject);
 			if (base.isAuthority)
 			{
 				base.characterMotor.velocity *= 0.1f;
-				base.SmallHop(base.characterMotor, Assaulter.smallHopVelocity);
+				base.SmallHop(base.characterMotor, NemAssaulter.smallHopVelocity);
 			}
 			CameraTargetParams.AimRequest aimRequest = this.aimRequest;
 			if (aimRequest != null)
 			{
 				aimRequest.Dispose();
 			}
-			//if (this.childLocator)
-			//{
-			//	this.childLocator.FindChild("PreDashEffect").gameObject.SetActive(false);
-			//}
-			this.PlayAnimation("FullBody, Override", "EvisLoopExit");
+            if (this.childLocator)
+            {
+                this.childLocator.FindChild("PreDashEffect").gameObject.SetActive(false);
+            }
+            this.PlayAnimation("FullBody, Override", "EvisLoopExit", "Special.playbackRate", 1f);
 			if (NetworkServer.active)
 			{
 				base.characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility.buffIndex);
@@ -214,7 +238,17 @@ namespace EntityStates.NemMerc
 			return InterruptPriority.Pain;
         }
 
-        [NonSerialized]
+        public override void OnSerialize(NetworkWriter writer)
+        {
+			writer.Write(HurtBoxReference.FromHurtBox(this.target));
+		}
+
+		public override void OnDeserialize(NetworkReader reader)
+		{
+			this.target = reader.ReadHurtBoxReference().ResolveHurtBox();
+		}
+
+		[NonSerialized]
 		public Transform modelTransform;
 
 		public static GameObject dashPrefab;
@@ -243,6 +277,9 @@ namespace EntityStates.NemMerc
 
 		public static float hitPauseDuration = 0.15f;
 
+		private static float minBehindDistance = 5f;
+
+		private static float graceDistance = 10f;
 		private float dashSpeed;
 
 		[NonSerialized]

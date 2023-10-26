@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: EntityStates.NemMerc.FireShotgun
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.NemMerc.FireShotgun, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: selfKnockbackForce
+      fieldValue:
+        stringValue: 800
+        objectValue: {fileID: 0}
+    - fieldName: baseDuration
+      fieldValue:
+        stringValue: 0.125
+        objectValue: {fileID: 0}
+    - fieldName: bulletCount
+      fieldValue:
+        stringValue: 6
+        objectValue: {fileID: 0}
+    - fieldName: maxDistance
+      fieldValue:
+        stringValue: 128
+        objectValue: {fileID: 0}
+    - fieldName: bulletRadius
+      fieldValue:
+        stringValue: 0.75
+        objectValue: {fileID: 0}
+    - fieldName: useSmartCollision
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: damageCoefficient
+      fieldValue:
+        stringValue: 0.8
+        objectValue: {fileID: 0}
+    - fieldName: procCoefficient
+      fieldValue:
+        stringValue: 0.7
+        objectValue: {fileID: 0}
+    - fieldName: force
+      fieldValue:
+        stringValue: 125
+        objectValue: {fileID: 0}
+    - fieldName: minSpread
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: maxSpread
+      fieldValue:
+        stringValue: 3.5
+        objectValue: {fileID: 0}
+    - fieldName: spreadPitchScale
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: spreadYawScale
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: spreadBloomValue
+      fieldValue:
+        stringValue: 14
+        objectValue: {fileID: 0}
+    - fieldName: recoilAmplitudeY
+      fieldValue:
+        stringValue: 6
+        objectValue: {fileID: 0}
+    - fieldName: recoilAmplitudeX
+      fieldValue:
+        stringValue: 3
+        objectValue: {fileID: 0}
+    - fieldName: muzzleName
+      fieldValue:
+        stringValue: MuzzleShotgun
+        objectValue: {fileID: 0}
+    - fieldName: fireSoundString
+      fieldValue:
+        stringValue: Play_nemmerc_primary_fire2
+        objectValue: {fileID: 0}
+    - fieldName: muzzleFlashPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1115046405791074, guid: ffd596ac16eaf5a44b6b43c2803635de,
+          type: 3}
+    - fieldName: tracerEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1155134562493520, guid: 98ef23d492ecc6940bc5cf1f7c6e6ef8,
+          type: 3}
+    - fieldName: hitEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1918834535135409, guid: 005a772d345da1948a8c6dd2a268f642,
+          type: 3}
