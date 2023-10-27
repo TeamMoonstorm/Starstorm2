@@ -18,8 +18,18 @@ namespace Moonstorm.Starstorm2.Buffs
 
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
             {
-                args.primaryCooldownMultAdd += 0.3f;
-                args.moveSpeedMultAdd += 0.5f;
+                if (body.HasBuff(SS2Content.Buffs.bdLampBuff) && body.bodyIndex != BodyCatalog.FindBodyIndex("LampBossBody"))
+                {
+                    args.primaryCooldownMultAdd += 0.5f;
+                    args.secondaryCooldownMultAdd += 0.25f;
+                    args.damageMultAdd += 0.2f;
+                    args.moveSpeedMultAdd += 1f;
+                }
+            }
+
+            public void OnDestroy()
+            {
+                body.RecalculateStats();
             }
         }
     }

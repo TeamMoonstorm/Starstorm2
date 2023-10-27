@@ -37,7 +37,7 @@ namespace EntityStates.NemCaptain.Weapon
 
             Debug.Log("base call drone start");
  
-    ncc = characterBody.GetComponent<NemCaptainController>();
+            ncc = characterBody.GetComponent<NemCaptainController>();
             activatorSkillSlot.UnsetSkillOverride(gameObject, activatorSkillSlot.skillDef, GenericSkill.SkillOverridePriority.Replacement);
             activatorSkillSlot.SetSkillOverride(gameObject, ncc.nullSkill, GenericSkill.SkillOverridePriority.Loadout);
             if (isAuthority)

@@ -27,7 +27,7 @@ namespace Moonstorm.Starstorm2.Items
                 body.onSkillActivatedAuthority += ChainEffect;
                 lampDisplay = body.modelLocator.modelTransform.GetComponent<CharacterModel>().GetItemDisplayObjects(SS2Content.Items.ShackledLamp.itemIndex);
                 if (lampDisplay != null)
-                    displayPos = lampDisplay[0].transform;
+                    displayPos = lampDisplay[0].transform.FindChild("mdlLamp").transform;
             }
 
             private void ChainEffect(GenericSkill skill)
@@ -50,7 +50,7 @@ namespace Moonstorm.Starstorm2.Items
                         Util.QuaternionSafeLookRotation(body.inputBank.aimDirection), 
                         body.gameObject,
                         damage, 
-                        40f, 
+                        60f, 
                         Util.CheckRoll(body.crit, body.master));
                 }
             }

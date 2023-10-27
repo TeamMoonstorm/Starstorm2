@@ -3550,19 +3550,22 @@ MonoBehaviour:
   nullSkill: {fileID: 11400000, guid: a85b61327144de74abb09f5859554dec, type: 2}
   minStress: 0
   maxStress: 100
-  stressPerSecondInCombat: 2
+  stressPerSecondInCombat: 0
   stressPerSecondOutOfCombat: -3
   stressPerSecondWhileOverstressed: -12.5
-  stressGainedOnFullDamage: 70
+  stressGainedOnFullDamage: 55
   stressGainedOnOSP: 0
   stressGainedOnHeal: -40
   stressGainedOnCrit: -0.2
-  stressGainedOnKill: -0.5
+  stressGainedOnKill: -2
   stressGainedOnItem: -1
   stressOnOutOfOrders: 35
-  overlayPrefab: {fileID: 1894802512682313, guid: 7aa69281e0edca147beeff3020ab1703,
+  stressOverlayPrefab: {fileID: 1894802512682313, guid: 7aa69281e0edca147beeff3020ab1703,
     type: 3}
-  overlayChildLocatorEntry: CrosshairExtras
+  stressOverlayChildLocatorEntry: CrosshairExtras
+  cardOverlayPrefab: {fileID: 8985026593791032563, guid: 9c7c1324371f81e42a59560166b77d9e,
+    type: 3}
+  cardOverlayChildLocatorEntry: BottomRightCluster
 --- !u!114 &-8895812555022209055
 MonoBehaviour:
   m_ObjectHideFlags: 0

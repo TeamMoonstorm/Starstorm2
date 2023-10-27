@@ -27,9 +27,9 @@ namespace Moonstorm.Starstorm2
         {
             if (IncreaseSpawnCap)
             {
-                self.creditMultiplier *= 1.25f;
-                self.expRewardCoefficient *= 0.8f;
-                self.goldRewardCoefficient *= 0.8f;
+                self.creditMultiplier *= 1.5f;
+                //self.expRewardCoefficient *= 0.8f;
+                //self.goldRewardCoefficient *= 0.8f;
                 //Debug.Log("creditMultiplier = " + self.creditMultiplier);
                 //Debug.Log("expRewardCoefficient = " + self.expRewardCoefficient);
                 //Debug.Log("goldRewardCoefficient = " + self.goldRewardCoefficient);

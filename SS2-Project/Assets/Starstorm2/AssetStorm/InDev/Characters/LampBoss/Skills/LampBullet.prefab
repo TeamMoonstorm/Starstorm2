@@ -269,13 +269,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lookRange: 40
-  lookCone: 90
+  lookCone: 120
   targetSearchInterval: 0.5
   onlySearchIfNoTarget: 1
-  allowTargetLoss: 0
+  allowTargetLoss: 1
   testLoS: 0
   ignoreAir: 0
-  flierAltitudeTolerance: Infinity
+  flierAltitudeTolerance: 30
   onNewTargetFound:
     m_PersistentCalls:
       m_Calls: []
@@ -295,7 +295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yAxisOnly: 0
-  rotationSpeed: 20
+  rotationSpeed: 30
 --- !u!114 &585382038847608727
 MonoBehaviour:
   m_ObjectHideFlags: 0

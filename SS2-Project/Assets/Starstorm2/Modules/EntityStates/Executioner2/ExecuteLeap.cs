@@ -27,6 +27,7 @@ namespace EntityStates.Executioner2
 
         private string skinNameToken;
         private bool hasPlacedCrosshair = false;
+        private bool controlledExit = false;
 
         public static GameObject areaIndicator;
         public static GameObject areaIndicatorOOB;
@@ -173,6 +174,7 @@ namespace EntityStates.Executioner2
         {
             if (fixedAge >= duration)
             {
+                controlledExit = true;
                 if (inputBank.skill4.down)
                 {
                     ExecuteHold nextState = new ExecuteHold();
@@ -198,7 +200,7 @@ namespace EntityStates.Executioner2
         {
             base.OnExit();
             characterBody.hideCrosshair = false;
-            if (exeController != null)
+            if (exeController != null && controlledExit == false)
                 exeController.meshExeAxe.SetActive(false);
             if (cameraTargetParams)
             {

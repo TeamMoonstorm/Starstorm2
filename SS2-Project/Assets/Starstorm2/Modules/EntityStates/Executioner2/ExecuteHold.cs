@@ -31,6 +31,7 @@ namespace EntityStates.Executioner2
         public static GameObject areaIndicatorInstanceOOB;
 
         private ExecutionerController exeController;
+        private bool controlledExit = false;
 
         public bool imAFilthyFuckingLiar = false;
 
@@ -154,7 +155,7 @@ namespace EntityStates.Executioner2
 
             characterBody.hideCrosshair = false;
 
-            if (exeController != null)
+            if (exeController != null && controlledExit == false)
                 exeController.meshExeAxe.SetActive(false);
 
             if (cameraTargetParams)

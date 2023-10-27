@@ -89,8 +89,6 @@ namespace AK
         static const AkUniqueID PLAY_SOFT_RAIN = 263522455U;
         static const AkUniqueID PLAY_SS2_MUSIC_SYSTEM = 3480457898U;
         static const AkUniqueID REFABRICATORACTION = 2808251015U;
-        static const AkUniqueID REFABRICATORSELECT1 = 1630810942U;
-        static const AkUniqueID REFABRICATORSELECT2 = 1630810941U;
         static const AkUniqueID REMUNERATIONSPAWN = 159540939U;
         static const AkUniqueID REMUNERATIONSPAWN2 = 3276263843U;
         static const AkUniqueID SIGILACTIVATION = 2800331071U;
@@ -101,7 +99,6 @@ namespace AK
         static const AkUniqueID STRANGECAN = 3750145159U;
         static const AkUniqueID SWIFTSKATEBOARD = 961366952U;
         static const AkUniqueID VOIDAMBIENT = 2533932213U;
-        static const AkUniqueID VOIDELITESPAWN = 665745181U;
         static const AkUniqueID WASTELANDERPRIMARY = 2333188815U;
         static const AkUniqueID WASTELANDERPRIMARYCRIT = 1319272055U;
         static const AkUniqueID WASTELANDERSECONDARY = 342360847U;

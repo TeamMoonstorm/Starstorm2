@@ -6024,7 +6024,7 @@ MonoBehaviour:
   healthComponent: {fileID: 1815109087204470018}
   isBullseye: 0
   isSniperTarget: 1
-  damageModifier: 2
+  damageModifier: 0
   hurtBoxGroup: {fileID: 5563432461909112862}
   indexInGroup: 1
 --- !u!1 &2620172576964390036
@@ -14615,8 +14615,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _defaultCrosshairPrefab: {fileID: 4674457198108186508, guid: ccb7fbf60ab9c5a4093f602a66392901,
-    type: 3}
+  _defaultCrosshairPrefab: {fileID: 0}
   hideCrosshair: 0
   aimOriginTransform: {fileID: 4796324569657094398}
   hullClassification: 0
