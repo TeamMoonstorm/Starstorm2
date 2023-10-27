@@ -41,9 +41,9 @@ namespace AK
         static const AkUniqueID HOTTESTSAUCE = 571024191U;
         static const AkUniqueID JETBOOTSEXPLOSION = 1235706518U;
         static const AkUniqueID MOLTENCOIN = 1681111803U;
-        static const AkUniqueID NEMHUNTESSBOWMAX = 4245110589U;
-        static const AkUniqueID NEMHUNTESSCHARGEBOW = 396560513U;
-        static const AkUniqueID NEMHUNTESSFIREBOW = 479003465U;
+        static const AkUniqueID NEMHUNTRESSBOWMAX = 1389751463U;
+        static const AkUniqueID NEMHUNTRESSCHARGEBOW = 415529083U;
+        static const AkUniqueID NEMHUNTRESSFIREBOW = 3663148423U;
         static const AkUniqueID NEMMANDOCHARACTERSELECT = 3733468431U;
         static const AkUniqueID NEMMANDOCHARGEBEAM = 2165644167U;
         static const AkUniqueID NEMMANDOCHARGEBEAM2 = 3141162423U;
@@ -89,8 +89,6 @@ namespace AK
         static const AkUniqueID PLAY_SOFT_RAIN = 263522455U;
         static const AkUniqueID PLAY_SS2_MUSIC_SYSTEM = 3480457898U;
         static const AkUniqueID REFABRICATORACTION = 2808251015U;
-        static const AkUniqueID REFABRICATORSELECT1 = 1630810942U;
-        static const AkUniqueID REFABRICATORSELECT2 = 1630810941U;
         static const AkUniqueID REMUNERATIONSPAWN = 159540939U;
         static const AkUniqueID REMUNERATIONSPAWN2 = 3276263843U;
         static const AkUniqueID SIGILACTIVATION = 2800331071U;
