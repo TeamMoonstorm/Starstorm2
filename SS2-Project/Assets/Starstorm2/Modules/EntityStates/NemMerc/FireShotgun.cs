@@ -34,9 +34,8 @@ namespace EntityStates.NemMerc
         public override void PlayFireAnimation()
         {
             base.PlayFireAnimation();
-            string anim = base.skillLocator.primary.stock > 1 ? "FireShotgun" : "FireShotgun2";
             base.PlayAnimation("FullBody, Override", "BufferEmpty");
-            base.PlayAnimation("Gesture, Override", "FireShotgun2");
+            base.PlayAnimation("Gesture, Override", "FireShotgun");
         }
 
         public override void ModifyBullet(BulletAttack bulletAttack)

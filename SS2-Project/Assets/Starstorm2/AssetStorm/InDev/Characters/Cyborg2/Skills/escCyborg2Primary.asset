@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: escCyborg2Primary
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.Cyborg2.Unmaker, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: damageCoefficient
+      fieldValue:
+        stringValue: 2.5
+        objectValue: {fileID: 0}
+    - fieldName: baseDuration
+      fieldValue:
+        stringValue: 0.45
+        objectValue: {fileID: 0}
+    - fieldName: bulletMaxDistance
+      fieldValue:
+        stringValue: 256
+        objectValue: {fileID: 0}
+    - fieldName: bulletRadius
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: procCoefficient
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: force
+      fieldValue:
+        stringValue: 200
+        objectValue: {fileID: 0}
+    - fieldName: tracerPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 4275159396759543758, guid: da633f15ac40f1348ab65d3a28078815,
+          type: 3}
+    - fieldName: hitEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1307249055376804, guid: f2d8edaf3ba2a7b46ac78c1355073fc0,
+          type: 3}
+    - fieldName: muzzleFlashPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1968089659388908, guid: 9686e4cea1742cd468a8917fe9f2ac16,
+          type: 3}
+    - fieldName: fireSoundString
+      fieldValue:
+        stringValue: Play_MULT_m1_snipe_shoot
+        objectValue: {fileID: 0}
+    - fieldName: recoil
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: bloom
+      fieldValue:
+        stringValue: 2
+        objectValue: {fileID: 0}
+    - fieldName: fireSoundPitch
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}

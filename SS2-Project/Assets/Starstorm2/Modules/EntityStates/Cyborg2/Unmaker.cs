@@ -15,9 +15,6 @@ namespace EntityStates.Cyborg2
         public static float bulletMaxDistance = 256;
         public static float bulletRadius = 1;
 
-        [NonSerialized]
-        private static GameObject TRACERTEMP = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Huntress/TracerHuntressSnipe.prefab").WaitForCompletion();
-
         public static float damageCoefficient = 2.5f;
         public static float procCoefficient = 1f;
         public static float force = 150f;
@@ -35,7 +32,6 @@ namespace EntityStates.Cyborg2
         public override void OnEnter()
         {
             base.OnEnter();
-            tracerPrefab = TRACERTEMP;
             duration = Unmaker.baseDuration / base.attackSpeedStat;
             base.StartAimMode();
             Fire();

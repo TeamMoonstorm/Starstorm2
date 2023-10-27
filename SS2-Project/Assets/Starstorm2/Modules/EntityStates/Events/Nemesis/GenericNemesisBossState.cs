@@ -157,6 +157,12 @@ namespace EntityStates.Events
                 CharacterMaster master = spawnResult.spawnedInstance.GetComponent<CharacterMaster>();
                 //master.gameObject.AddComponent<NemesisResistances>();
                 nemesisBossBody = master.GetBody();
+
+                master.onBodyStart += (body) =>
+                {
+                    body.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
+                };
+
                 //nemesisBossBody.gameObject.AddComponent<NemesisResistances>();
                 new NemesisSpawnCard.SyncBaseStats(nemesisBossBody).Send(R2API.Networking.NetworkDestination.Clients);
                 combatSquad.AddMember(master);

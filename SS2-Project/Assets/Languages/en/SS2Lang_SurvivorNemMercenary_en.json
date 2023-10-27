@@ -2,34 +2,70 @@
   "strings": {
     "SS2_NEMESIS_MERCENARY_NAME": "Nemesis Mercenary",
     "SS2_NEMESIS_MERCENARY_BODY_NAME": "Nemesis Mercenary",
-    "SS2_NEMESIS_MERCENARY_SUBTITLE": "Avenging Deserter",
-    "SS2_NEMESIS_MERCENARY_DESCRIPTION": "The Nemesis Mercenary is a ",
-    "SS2_NEMESIS_MERCENARY_OUTRO_FLAVOR": "..and so he left, ",
-    "SS2_NEMESIS_MERCENARY_OUTRO_FAILURE": "..and so he returned, ",
-    "SS2_NEMESIS_MERCENARY_LORE": "xD",
+    "SS2_NEMESIS_MERCENARY_SUBTITLE": "Vengeful Deserter",
+    "SS2_NEMESIS_MERCENARY_DESCRIPTION": "The Nemesis Mercenary is a fast-paced, short-range survivor, with the tools to dominate any combat encounter - no matter the odds. \n\n<color=#CCD3E0>< ! > Splatter deals devastating damage at close range. Use your other skills to close the distance.\n\n< ! > Use Cutthroat to interrupt attacks, or to redirect your dash towards more enemies.\n\n< ! > Dispatch is a powerful mobility option in combat, and doesn't interrupt your reload.\n\n< ! > Attack Vectors can be blinked to with no cooldown. This makes Exploit a key skill in navigating intense situations.",
+    "SS2_NEMESIS_MERCENARY_OUTRO_FLAVOR": "..and so he left, with newfound purpose in every shell.",
+    "SS2_NEMESIS_MERCENARY_OUTRO_FAILURE": "..and so he vanished, with emptied munitions and an emptier heart.",
+    "SS2_NEMESIS_MERCENARY_LORE": "\u201CHey!\u201C\n\n
+A figure slowly hobbled out from the sandy Martian dunes, tuning into Fort Laughn's external communications. \u201CHey, mind letting me in? Dust out here is killing me.\u201C\n\n
+ 
+One of the stationed guards on the outer fence quipped back from a booth. \u201C...You got credentials, sir?\u201C\n\n
 
-    "SS2_KEYWORD_STAGGER": "<style=cKeywordName>Stagger</style><style=cSub>Interrupts certain actions.",
+\u201CCome on, you don't recognize me? Let me guess- new recruit? Something like that?\u201C The figure continued walking nonchalantly toward the fence as a second guard piped up. \u201CHold on. Is that Vantre?\u201C The guest laughed, still wandering every-which-way as he came closer to the fence. \u201CGuilty as charged. Thought I'd stop by while I'm in the area. Say hey to some old comrades, maybe.\u201C\n\n
+
+The guards paused, then, on a separate line, rang up their CO. \u201CCommanding Officer Byren, Vantre's at the outer fence. He appears non-threatening, which is an immediate red flag. What're your orders?\u201C\n\n
+
+Byren's scratchy, exasperated voice chirped back through the receiver. \u201CUgh, damnit… Page the suppression crew. Make sure he's not trying anything, alright? Keep him busy until you've got more people out there.\u201C The guard relayed the order- \u201CGet a crew out here. I'll make sure Vantre doesn't try anything stupid.\u201C The recruit replied with a question: \u201CSure, but, uhh… Where'd he go?\u201C\n\n
+
+Sure enough, Vantre had vanished while the two were distracted, leaving nothing but sparks in the air where he once stood. It took the entirety of the fort's stationed force about ten minutes to figure out what was going on- and they found out at about the same time they found their commanding officer dead in his quarters, the back of his head blasted to smithereens.
+",
+
+    "SS2_KEYWORD_STAGGER": "<style=cKeywordName>Stagger</style><style=cSub>Interrupts enemies.",
+    "SS2_KEYWORD_BLEEDING": "<style=cKeywordName>Bleeding</style><style=cSub>Deals <style=cIsDamage>240% base damage</style> over 3s. <i>Bleeding can stack. </i>",
 
     "SS2_NEMESIS_MERCENARY_PRIMARY_SHOTGUN_NAME": "Splatter",
     "SS2_NEMESIS_MERCENARY_PRIMARY_SHOTGUN_DESCRIPTION": "<style=cIsUtility>Agile</style>. Fire a shotgun blast for <style=cIsDamage>6x80% damage</style>, and again when released. Can hold up to 2 shells.",
 
     "SS2_NEMESIS_MERCENARY_SECONDARY_SLASH_NAME": "Cutthroat",
-    "SS2_NEMESIS_MERCENARY_SECONDARY_SLASH_DESCRIPTION": "Lunge and slash for <style=cIsDamage>2x300% damage</style>. Can be <style=cIsUtility>added</style> to your other <style=cIsDamage>melee attacks</style>.",
+    "SS2_NEMESIS_MERCENARY_SECONDARY_SLASH_DESCRIPTION": "<style=cIsDamage>Staggering.</style> Lunge and slash for <style=cIsDamage>2x300% damage</style>.  <style=cIsUtility>Can be used while dashing</style>.",
+
+    "SS2_NEMESIS_MERCENARY_SECONDARY_KNIFE_NAME": "Perforator",
+    "SS2_NEMESIS_MERCENARY_SECONDARY_KNIFE_DESCRIPTION": "<style=cIsHealth>Bleeding.</style> Throw a knife for <style=cIsDamage>100% damage</style>.\n<style=cIsDamage>Slayer.</style> Rip it out to deal <style=cIsDamage>400% damage</style>.",
+
 
     "SS2_NEMESIS_MERCENARY_UTILITY_BLINK_NAME": "Dispatch",
     "SS2_NEMESIS_MERCENARY_UTILITY_BLINK_DESCRIPTION": "<style=cIsUtility>Blink</style> behind an enemy or <style=cIsUtility>attack vector.</style>",
 
-    "SS2_NEMESIS_MERCENARY_SPECIAL_SCAN_NAME": "idk",
+    "SS2_NEMESIS_MERCENARY_UTILITY_SLIDE_NAME": "Devitalize",
+    "SS2_NEMESIS_MERCENARY_UTILITY_SLIDE_DESCRIPTION": "<style=cIsDamage>Stunning.</style> Hold to <style=cIsUtility>slide</style> while preparing a targeted dash that deals <style=cIsDamage>300% damage</style>.",
+
+    "SS2_NEMESIS_MERCENARY_SPECIAL_SCAN_NAME": "Exploit",
     "SS2_NEMESIS_MERCENARY_SPECIAL_SCAN_DESCRIPTION": "Reveal <style=cIsUtility>attack vectors</style> around up to <style=cIsDamage>4</style> nearby enemies. <style=cIsUtility>Move into position</style> to dash forward, dealing <style=cIsDamage>1500% damage</style>.",
 
-    "SS2_NEMESIS_MERCENARY_SPECIAL_SCEPTER_SCAN_NAME": "idk2",
-    "SS2_NEMESIS_MERCENARY_SPECIAL_SCEPTER_SCAN_DESCRIPTION": ":3",
+    "SS2_NEMESIS_MERCENARY_SPECIAL_CLONE_NAME": "Proliferate",
+    "SS2_NEMESIS_MERCENARY_SPECIAL_CLONE_DESCRIPTION": "Summon a <style=cIsUtility>clone</style> that <style=cIsDamage>copies your abilities</style>. Recast to dash to it, dealing <style=cIsDamage>800% damage</style>.",
+
+    "SS2_NEMESIS_MERCENARY_SPECIAL_CLONE_DASH_NAME": "Fakeout",
+    "SS2_NEMESIS_MERCENARY_SPECIAL_CLONE_DASH_DESCRIPTION": "Dash to your clone, dealing <style=cIsDamage>800% damage</style>.",
+
+
+    "SS2_NEMESIS_MERCENARY_SPECIAL_SCEPTER_SCAN_NAME": "Extirpate",
+    "SS2_NEMESIS_MERCENARY_SPECIAL_SCEPTER_SCAN_DESCRIPTION": "Reveal <style=cIsUtility>attack vectors</style> around up to <style=cIsDamage>6</style> nearby enemies. <style=cIsUtility>Move into position</style> to dash forward, dealing <style=cIsDamage>1500% damage</style>.",
+
+    "SS2_NEMESIS_MERCENARY_SPECIAL_SCEPTER_CLONE_NAME": "Tour de Force",
+    "SS2_NEMESIS_MERCENARY_SPECIAL_SCEPTER_CLONE_DESCRIPTION": "Summon a <style=cIsUtility>clone</style> that <style=cIsDamage>copies your abilities</style>. Recast to dash to it, dealing <style=cIsDamage>800% damage</style>, up to <style=cIsUtility>2</style> times.",
+
+
+    "SS2_ACHIEVEMENT_NEMMERC_NAME": "Vengeful Deserter",
+    "SS2_ACHIEVEMENT_NEMMERC_DESC": "Defeat Mercenary's Vestige.",
 
     "SS2_SKIN_NEMESIS_MERCENARY_DEFAULT": "Default",
-    "SS2_SKIN_NEMESIS_MERCENARY_MASTERY": "Highwayman",
-    "SS2_SKIN_NEMESIS_MERCENARY_GRANDMASTERY": "wat",
+    "SS2_SKIN_NEMESIS_MERCENARY_MASTERY": "[NYI] Highwayman",
+    "SS2_SKIN_NEMESIS_MERCENARY_GRANDMASTERY": "[NYI] Corporate",
+    "SS2_SKIN_NEMESIS_MERCENARY_NEMESIS": "Hushed",
+    "SS2_SKIN_MERCENARY_NEMESIS": "Ballistic",
 
-    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_NAME": "Avenging Deserter",
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_NAME": "Vengeful Deserter",
     "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_DESC": "Defeat Mercenary's Vestige.",
 
     "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_MASTERY_NAME": "Nemesis Mercenary: Mastery",
@@ -38,16 +74,16 @@
     "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_GRANDMASTERY_NAME": "Nemesis Mercenary: Grand Mastery",
     "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_GRANDMASTERY_DESC": "As Nemesis Mercenary, beat the game or obliterate on Typhoon.",
 
-    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_NEMESIS_NAME": "Nemesis Mercenary: Cornered Gunslinger",
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_NEMESIS_NAME": "Nemesis Mercenary: Hollow Renegade",
     "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_NEMESIS_DESC": "As Nemesis Mercenary, defeat Mercenary's vestige.",
 
-    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_BOSSATTACK_NAME": "Nemesis Mercenary: Zandatsu",
-    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_BOSSATTACK_DESC": "As Nemesis Mercenary, apply 8 or more stacks of Gouge to a single target at once.",
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_CLONE_NAME": "Nemesis Mercenary: Duped",
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_CLONE_DESC": "As Nemesis Mercenary, purchase a Duplicator Drone.",
 
-    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_GRENADE_NAME": "Nemesis Mercenary: Completely Corrupted",
-    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_GRENADE_DESC": "As Nemesis Mercenary, carry at least 20 Lunar items on Stage 8.",
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_KNIFE_NAME": "Nemesis Mercenary: Turncoat",
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_KNIFE_DESC": "As Nemesis Mercenary, defeat another vestige.",
 
-    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_SWORDBEAM_NAME": "Nemesis Mercenary: The Ripper",
-    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_SWORDBEAM_DESC": "As Nemesis Mercenary, reach 100% bleed chance."
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_SLIDE_NAME": "Nemesis Mercenary: Grounded",
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_SLIDE_DESC": "As Nemesis Mercenary, complete a stage without leaving the ground."
   }
 }

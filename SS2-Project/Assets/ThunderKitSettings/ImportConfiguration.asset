@@ -441,8 +441,8 @@ MonoBehaviour:
   - submoduleName: R2API_Deployable
     description: API for adding custom deployables
     dependedncyID: RiskofThunder-R2API_Deployable
-    shouldInstall: 0
-    isHardDependency: 0
+    shouldInstall: 1
+    isHardDependency: 1
     dependencies:
     - HookGenPatcher
     - BepInExPack
@@ -489,8 +489,8 @@ MonoBehaviour:
   - submoduleName: R2API_Items
     description: API for adding custom items
     dependedncyID: RiskofThunder-R2API_Items
-    shouldInstall: 0
-    isHardDependency: 0
+    shouldInstall: 1
+    isHardDependency: 1
     dependencies:
     - HookGenPatcher
     - R2API_ContentManagement
@@ -499,8 +499,8 @@ MonoBehaviour:
   - submoduleName: R2API_Language
     description: API for modifying the language localisation of the game
     dependedncyID: RiskofThunder-R2API_Language
-    shouldInstall: 0
-    isHardDependency: 0
+    shouldInstall: 1
+    isHardDependency: 1
     dependencies:
     - HookGenPatcher
     - BepInExPack
@@ -508,8 +508,8 @@ MonoBehaviour:
   - submoduleName: R2API_Loadout
     description: API for registering skills, skins and entity states
     dependedncyID: RiskofThunder-R2API_Loadout
-    shouldInstall: 0
-    isHardDependency: 0
+    shouldInstall: 1
+    isHardDependency: 1
     dependencies:
     - HookGenPatcher
     - R2API_ContentManagement
@@ -519,8 +519,8 @@ MonoBehaviour:
   - submoduleName: R2API_LobbyConfig
     description: API for modifying the in-game lobby rules
     dependedncyID: RiskofThunder-R2API_LobbyConfig
-    shouldInstall: 0
-    isHardDependency: 0
+    shouldInstall: 1
+    isHardDependency: 1
     dependencies:
     - HookGenPatcher
     - BepInExPack
@@ -537,8 +537,8 @@ MonoBehaviour:
   - submoduleName: R2API_Orb
     description: API for creation and management of custom Orb types.
     dependedncyID: RiskofThunder-R2API_Orb
-    shouldInstall: 0
-    isHardDependency: 0
+    shouldInstall: 1
+    isHardDependency: 1
     dependencies:
     - HookGenPatcher
     - BepInExPack
@@ -605,6 +605,15 @@ MonoBehaviour:
     dependedncyID: RiskofThunder-R2API_Stages
     shouldInstall: 1
     isHardDependency: 1
+    dependencies:
+    - HookGenPatcher
+    - BepInExPack
+    - R2API_Core
+  - submoduleName: R2API_StringSerializerExtensions
+    description: Increased string serializer support
+    dependedncyID: RiskofThunder-R2API_StringSerializerExtensions
+    shouldInstall: 0
+    isHardDependency: 0
     dependencies:
     - HookGenPatcher
     - BepInExPack

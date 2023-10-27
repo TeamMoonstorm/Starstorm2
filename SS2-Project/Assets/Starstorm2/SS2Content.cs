@@ -78,6 +78,8 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef StirringSoul;
 
+            public static ItemDef Remuneration;
+
             public static ItemDef RelicOfDuality;
 
             public static ItemDef RelicOfExtinction;
@@ -219,7 +221,9 @@ namespace Moonstorm.Starstorm2
             public static BuffDef BuffCyborgPrimary;
 
             public static BuffDef BuffCyborgTeleporter;
-            
+
+            public static BuffDef BuffBloonTrap;
+
             public static BuffDef bdOverstress;
 
             public static BuffDef bdNemCapDroneBuff;
@@ -262,6 +266,8 @@ namespace Moonstorm.Starstorm2
 
             public static SurvivorDef survivorNemCaptain;
 
+            public static SurvivorDef survivorNemMerc;
+
             //public static SurvivorDef SurvivorPyro;
         }
 
@@ -285,6 +291,7 @@ namespace Moonstorm.Starstorm2
             
             Bulwark.Init();
 
+            Moonstorm.Starstorm2.Items.Remuneration.InitTEMP(); // TEMPORARY. JUST NEED TO CLONE A PLACEHOLDER VANILLA PREFAB EARLIER.
             Ethereal.Init();
             
             Deluge.Init();
