@@ -286,7 +286,6 @@ namespace Moonstorm.Starstorm2
             //Bulwark.Init();
 
             //Ethereal.Init();
-            
 
             LoadDispatchers = new Action[]
             {

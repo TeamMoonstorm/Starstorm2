@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseSkins:
   - {fileID: 11400000, guid: fce2219708ddbb0499ac302a36929286, type: 2}
-  icon: {fileID: 21300000, guid: 164a533590f476c4990f2df44ab228e4, type: 3}
+  icon: {fileID: 21300000, guid: 41a3c478f686ac846b20523992796009, type: 3}
   nameToken: SS2_SKIN_EXECUTIONER2_ELECTRO
   unlockableName: texExecutionerSkin
   unlockableDef: {fileID: 11400000, guid: 0fd7c41466f6aa64a91feeb936955db4, type: 2}
@@ -33,6 +33,12 @@ MonoBehaviour:
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
+  - renderer: {fileID: 8966749530243362934, guid: 18c30c6bbe052f04eb5058bbd75ba580,
+      type: 3}
+    defaultMaterial: {fileID: 2100000, guid: 1a68683dc84008749804ed43aaa6bc54, type: 2}
+    defaultShadowCastingMode: 0
+    ignoreOverlays: 1
+    hideOnDeath: 1
   gameObjectActivations:
   - gameObject: {fileID: 7981336349453850921, guid: 18c30c6bbe052f04eb5058bbd75ba580,
       type: 3}

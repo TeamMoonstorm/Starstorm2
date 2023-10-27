@@ -18,6 +18,7 @@ namespace EntityStates.LampBoss
         private Animator animator;
         private bool hasPlayedEffect;
         public static string muzzleString;
+        private GameObject particles;
         private Transform muzzle;
 
         private bool isBlue;
@@ -33,7 +34,10 @@ namespace EntityStates.LampBoss
             if (characterMotor)
                 characterMotor.enabled = false;
             //if (modelLocator && initialEffect)
-                //EffectManager.
+            //EffectManager.
+
+            FindModelChild("GlowParticles").gameObject.SetActive(true);
+
             isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
         }
 

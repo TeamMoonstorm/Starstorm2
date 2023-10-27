@@ -17,6 +17,7 @@ namespace EntityStates.LampBoss
         public static string mecanimParameter;
         private float timer;
         public float blinkDistance = 18f;
+        public GameObject particles;
         private Vector3 blinkDestination = Vector3.zero;
 
         public override void OnEnter()
@@ -25,6 +26,8 @@ namespace EntityStates.LampBoss
             hasBuffed = false;
             animator = GetModelAnimator();
             duration = baseDuration / attackSpeedStat;
+
+            FindModelChild("GlowParticles").gameObject.SetActive(true);
 
             CalculateBlinkDestination();
 
@@ -38,6 +41,7 @@ namespace EntityStates.LampBoss
             if (animator.GetFloat(mecanimParameter) >= 0.5f && !hasBuffed)
             {
                 hasBuffed = true;
+                FindModelChild("GlowParticles").gameObject.SetActive(false);
                 SetPosition(blinkDestination);
                 characterBody.AddTimedBuffAuthority(RoR2Content.Buffs.Cloak.buffIndex, 8f);
                 characterBody.AddTimedBuffAuthority(RoR2Content.Buffs.CloakSpeed.buffIndex, 8f);
