@@ -15,7 +15,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Moonstorm.Starstorm2.Interactables
 {
-    [DisabledContent]
+    //[DisabledContent]
 
     public sealed class DroneTable : InteractableBase
     {
@@ -80,12 +80,6 @@ namespace Moonstorm.Starstorm2.Interactables
             itemTakenOrb = LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/OrbEffects/ItemTakenOrbEffect");
             //itemTakenOrb = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Effects/OrbEffects/ItemTakenOrbEffect"), "DroneTableOrbEffect", false);
             SetupDroneValueList();  
-        }
-
-        private uint tellMeTheSoundPlease(On.RoR2.Util.orig_PlaySound_string_GameObject orig, string soundString, GameObject gameObject)
-        {
-            SS2Log.Info("soundstring: " + soundString);
-            return orig(soundString, gameObject);
         }
 
         private void overrideDroneCorpse(On.EntityStates.Drone.DeathState.orig_OnEnter orig, EntityStates.Drone.DeathState self)
@@ -172,6 +166,8 @@ namespace Moonstorm.Starstorm2.Interactables
             dronePairs.Add(new KeyValuePair<string, int>("MegaDroneBody", 350));
             
             dronePairs.Add(new KeyValuePair<string, int>("ShockDroneBody", 40));
+            dronePairs.Add(new KeyValuePair<string, int>("CloneDroneBody", 40));
+
 
             droneTripletPairs.Add("Turret1Body", new RefabricatorTriple(new Vector3(0, -0.575f, -.2f), new Vector3(0, 180, 0), new Vector3(.09f, .09f, .09f)));
             droneTripletPairs.Add("Drone1Body", new RefabricatorTriple(new Vector3(0, -0.28f, 0), new Vector3(0, 156, 0), new Vector3(1.475f, 1.475f, 1.475f)));
@@ -182,7 +178,8 @@ namespace Moonstorm.Starstorm2.Interactables
             droneTripletPairs.Add("FlameDroneBody", new RefabricatorTriple(new Vector3(0.165f, -0.05f, 0), new Vector3(0, 0, 90), new Vector3(0.45f, 0.45f, 0.45f)));
             droneTripletPairs.Add("MegaDroneBody", new RefabricatorTriple(new Vector3(0, -0.025f, 0), new Vector3(0, 0, 0), new Vector3(0.1225f, 0.1225f, 0.1225f)));
 
-            droneTripletPairs.Add("ShockDroneBody", new RefabricatorTriple(new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(1, 1, 1)));
+            droneTripletPairs.Add("ShockDroneBody", new RefabricatorTriple(new Vector3(.55f, .025f, 0), new Vector3(0, 0, 90), new Vector3(.2f, .2f, .2f)));
+            droneTripletPairs.Add("CloneDroneBody", new RefabricatorTriple(new Vector3(0, 0, 0), new Vector3(0, 0, 90), new Vector3(.35f, .35f, .35f)));
 
         }
 
