@@ -85,8 +85,8 @@ namespace EntityStates.NemCaptain
                     maxDistance = range,
                     force = force,
                     hitMask = LayerIndex.CommonMasks.bullet,
-                    minSpread = 0f + (2f * ncc.stressFraction),
-                    maxSpread = characterBody.spreadBloomAngle + (2f * ncc.stressFraction),
+                    minSpread = 0.2f * ncc.stressFraction,
+                    maxSpread = characterBody.spreadBloomAngle + ncc.stressFraction,
                     isCrit = isCrit,
                     owner = gameObject,
                     muzzleName = muzzleString,
@@ -98,8 +98,8 @@ namespace EntityStates.NemCaptain
                     stopperMask = LayerIndex.CommonMasks.bullet,
                     weapon = null,
                     tracerEffectPrefab = tracerEffectPrefab,
-                    spreadPitchScale = 1f + (2f * ncc.stressFraction),
-                    spreadYawScale = 1f + (2f * ncc.stressFraction),
+                    spreadPitchScale = 2f * ncc.stressFraction,
+                    spreadYawScale = 2f * ncc.stressFraction,
                     queryTriggerInteraction = QueryTriggerInteraction.UseGlobal,
                     hitEffectPrefab = Commando.CommandoWeapon.FirePistol2.hitEffectPrefab
                 };
@@ -108,7 +108,7 @@ namespace EntityStates.NemCaptain
 
                 //FindModelChild("casingParticle").GetComponent<ParticleSystem>().Emit(1);
 
-                characterBody.AddSpreadBloom(0.2f + (0.8f * ncc.stressFraction));
+                characterBody.AddSpreadBloom(0.2f + (0.3f * ncc.stressFraction));
             }
         }
 

@@ -16,16 +16,17 @@ MonoBehaviour:
   eventState:
     _typeName: EntityStates.Events.GlacialEventState, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  requiredStateMachine: 
   startMessageToken: SS2_EVENT_GLACIALELITE_START
   endMessageToken: SS2_EVENT_GLACIALELITE_END
   messageColor: {r: 0.5882353, g: 0.8117648, b: 0.85098046, a: 1}
   startSound: {fileID: 0}
-  availableStages: 201736702
+  availableStages: 201605176
   customStageNames: []
   category: CommonEvents
   selectionWeight: 33
   cost: 1550
-  repeatedSelectionCostCoefficient: 1.3
+  repeatedSelectionCostCoefficient: 4
   minimumStageCompletions: 5
   requiredUnlockableDef:
     address: 

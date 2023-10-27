@@ -18,6 +18,7 @@ namespace EntityStates.LampBoss
         private Animator animator;
         private bool hasPlayedEffect;
         public static string muzzleString;
+        private GameObject particles;
         private Transform muzzle;
 
         private bool isBlue;
@@ -28,11 +29,15 @@ namespace EntityStates.LampBoss
             animator = GetModelAnimator();
             PlayCrossfade("FullBody, Override", "BufferEmpty", 0.01f);
             muzzle = GetModelChildLocator().FindChild(muzzleString);
+            Util.PlaySound("WayfarerVO", gameObject);
             hasPlayedEffect = false;
             if (characterMotor)
                 characterMotor.enabled = false;
             //if (modelLocator && initialEffect)
-                //EffectManager.
+            //EffectManager.
+
+            FindModelChild("GlowParticles").gameObject.SetActive(true);
+
             isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
         }
 
@@ -41,7 +46,7 @@ namespace EntityStates.LampBoss
             base.FixedUpdate();
             if (animator)
             {
-                if (animator.GetFloat(mecanimPerameter) > 0.5f && !hasPlayedEffect)
+                if ((animator.GetFloat(mecanimPerameter) > 0.5f) || (fixedAge > 2.7f) && !hasPlayedEffect)
                 {
                     hasPlayedEffect = true;
                     var effect = isBlue ? deathVFXblue : deathVFX;

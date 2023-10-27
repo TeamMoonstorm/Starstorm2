@@ -289,7 +289,7 @@ namespace Moonstorm.Starstorm2
             Typhoon.Init();
             Events.Init();
             
-            Bulwark.Init();
+            //Bulwark.Init();
 
             Moonstorm.Starstorm2.Items.Remuneration.InitTEMP(); // TEMPORARY. JUST NEED TO CLONE A PLACEHOLDER VANILLA PREFAB EARLIER.
             Ethereal.Init();
@@ -299,6 +299,7 @@ namespace Moonstorm.Starstorm2
             Cyclone.Init();
             SuperTyphoon.Init();
             
+            //Ethereal.Init();
 
             LoadDispatchers = new Action[]
             {

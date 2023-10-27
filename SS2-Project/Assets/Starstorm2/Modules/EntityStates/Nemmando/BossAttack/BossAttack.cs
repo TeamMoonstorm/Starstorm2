@@ -59,6 +59,8 @@ namespace EntityStates.Nemmando
             //nemmandoController = GetComponent<NemmandoController>();
             characterBody.hideCrosshair = false;
 
+            characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
+
             skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
 
             if (skinNameToken != "SS2_SKIN_NEMCOMMANDO_DEFAULT" && skinNameToken != "SS2_SKIN_NEMCOMMANDO_GRANDMASTERY")
@@ -181,6 +183,8 @@ namespace EntityStates.Nemmando
             base.OnExit();
 
             emission = 0f;
+
+            characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage;
 
             if (cameraTargetParams)
             {

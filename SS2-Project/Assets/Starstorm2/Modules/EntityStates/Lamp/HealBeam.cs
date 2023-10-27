@@ -78,7 +78,7 @@ namespace EntityStates.Lamp
         {
             base.FixedUpdate();
             characterBody.moveSpeed = originalMoveSpeed * 0.1f;
-            if (fixedAge >= duration && isAuthority)
+            if ((fixedAge >= duration && isAuthority) || (fixedAge >= duration * 0.05f && target.healthComponent.alive == false))
                 outer.SetNextStateToMain();
         }
 

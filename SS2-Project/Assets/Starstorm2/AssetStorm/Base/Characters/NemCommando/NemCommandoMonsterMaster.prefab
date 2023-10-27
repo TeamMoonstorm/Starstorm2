@@ -19,10 +19,10 @@ GameObject:
   - component: {fileID: 114823277263010625}
   - component: {fileID: 114096479851911499}
   - component: {fileID: 114046010642803824}
+  - component: {fileID: 114031117987699380}
   - component: {fileID: 114671651622625854}
   - component: {fileID: 114141924517834723}
   - component: {fileID: 114060791859614262}
-  - component: {fileID: 114031117987699380}
   - component: {fileID: 114590313893935611}
   - component: {fileID: 114079173201994287}
   - component: {fileID: 114802156785795105}
@@ -217,7 +217,7 @@ MonoBehaviour:
   shouldTapButton: 0
   buttonPressType: 0
   driverUpdateTimerOverride: 0.8
-  resetCurrentEnemyOnNextDriverSelection: 1
+  resetCurrentEnemyOnNextDriverSelection: 0
   noRepeat: 1
   nextHighPriorityOverride: {fileID: 0}
 --- !u!114 &114823277263010625
@@ -259,9 +259,9 @@ MonoBehaviour:
   shouldFireEquipment: 0
   shouldTapButton: 0
   buttonPressType: 1
-  driverUpdateTimerOverride: 0.14
+  driverUpdateTimerOverride: 3
   resetCurrentEnemyOnNextDriverSelection: 0
-  noRepeat: 1
+  noRepeat: 0
   nextHighPriorityOverride: {fileID: 114746262821470696}
 --- !u!114 &114096479851911499
 MonoBehaviour:
@@ -284,7 +284,7 @@ MonoBehaviour:
   maxUserHealthFraction: 0.8
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 6
+  minDistance: 4
   maxDistance: 18
   selectionRequiresTargetLoS: 1
   selectionRequiresOnGround: 0
@@ -293,7 +293,7 @@ MonoBehaviour:
   moveTargetType: 0
   activationRequiresTargetLoS: 1
   activationRequiresAimTargetLoS: 0
-  activationRequiresAimConfirmation: 1
+  activationRequiresAimConfirmation: 0
   movementType: 2
   moveInputScale: 1
   aimType: 1
@@ -321,14 +321,14 @@ MonoBehaviour:
   customName: RetreatEntry
   skillSlot: 2
   requiredSkill: {fileID: 0}
-  requireSkillReady: 1
+  requireSkillReady: 0
   requireEquipmentReady: 0
   minUserHealthFraction: -Infinity
   maxUserHealthFraction: 0.5
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 8
-  maxDistance: 16
+  minDistance: 0
+  maxDistance: 6
   selectionRequiresTargetLoS: 1
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
@@ -347,6 +347,49 @@ MonoBehaviour:
   buttonPressType: 1
   driverUpdateTimerOverride: 0.2
   resetCurrentEnemyOnNextDriverSelection: 1
+  noRepeat: 0
+  nextHighPriorityOverride: {fileID: 114802156785795105}
+--- !u!114 &114031117987699380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637141559875700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customName: DashCloser
+  skillSlot: 2
+  requiredSkill: {fileID: 0}
+  requireSkillReady: 0
+  requireEquipmentReady: 0
+  minUserHealthFraction: -Infinity
+  maxUserHealthFraction: Infinity
+  minTargetHealthFraction: -Infinity
+  maxTargetHealthFraction: Infinity
+  minDistance: 6
+  maxDistance: 80
+  selectionRequiresTargetLoS: 1
+  selectionRequiresOnGround: 0
+  selectionRequiresAimTarget: 0
+  maxTimesSelected: -1
+  moveTargetType: 0
+  activationRequiresTargetLoS: 0
+  activationRequiresAimTargetLoS: 0
+  activationRequiresAimConfirmation: 0
+  movementType: 1
+  moveInputScale: 1
+  aimType: 1
+  ignoreNodeGraph: 0
+  shouldSprint: 1
+  shouldFireEquipment: 0
+  shouldTapButton: 0
+  buttonPressType: 0
+  driverUpdateTimerOverride: 0.15
+  resetCurrentEnemyOnNextDriverSelection: 0
   noRepeat: 0
   nextHighPriorityOverride: {fileID: 114802156785795105}
 --- !u!114 &114671651622625854
@@ -371,7 +414,7 @@ MonoBehaviour:
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
   minDistance: 0
-  maxDistance: 6.5
+  maxDistance: 8
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
@@ -413,10 +456,10 @@ MonoBehaviour:
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 36
+  minDistance: 8
   maxDistance: 48
   selectionRequiresTargetLoS: 1
-  selectionRequiresOnGround: 0
+  selectionRequiresOnGround: 1
   selectionRequiresAimTarget: 0
   maxTimesSelected: -1
   moveTargetType: 0
@@ -431,9 +474,9 @@ MonoBehaviour:
   shouldFireEquipment: 0
   shouldTapButton: 0
   buttonPressType: 0
-  driverUpdateTimerOverride: 0.01
+  driverUpdateTimerOverride: 0
   resetCurrentEnemyOnNextDriverSelection: 0
-  noRepeat: 1
+  noRepeat: 0
   nextHighPriorityOverride: {fileID: 114031117987699380}
 --- !u!114 &114060791859614262
 MonoBehaviour:
@@ -473,54 +516,11 @@ MonoBehaviour:
   shouldSprint: 0
   shouldFireEquipment: 0
   shouldTapButton: 0
-  buttonPressType: 1
+  buttonPressType: 2
   driverUpdateTimerOverride: 0.01
   resetCurrentEnemyOnNextDriverSelection: 0
   noRepeat: 1
   nextHighPriorityOverride: {fileID: 114730536219071666}
---- !u!114 &114031117987699380
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1637141559875700}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  customName: DashCloser
-  skillSlot: 2
-  requiredSkill: {fileID: 0}
-  requireSkillReady: 1
-  requireEquipmentReady: 0
-  minUserHealthFraction: -Infinity
-  maxUserHealthFraction: Infinity
-  minTargetHealthFraction: -Infinity
-  maxTargetHealthFraction: Infinity
-  minDistance: 12
-  maxDistance: 80
-  selectionRequiresTargetLoS: 1
-  selectionRequiresOnGround: 0
-  selectionRequiresAimTarget: 0
-  maxTimesSelected: -1
-  moveTargetType: 0
-  activationRequiresTargetLoS: 0
-  activationRequiresAimTargetLoS: 0
-  activationRequiresAimConfirmation: 0
-  movementType: 1
-  moveInputScale: 1
-  aimType: 1
-  ignoreNodeGraph: 0
-  shouldSprint: 1
-  shouldFireEquipment: 0
-  shouldTapButton: 0
-  buttonPressType: 0
-  driverUpdateTimerOverride: 0.15
-  resetCurrentEnemyOnNextDriverSelection: 0
-  noRepeat: 0
-  nextHighPriorityOverride: {fileID: 114802156785795105}
 --- !u!114 &114590313893935611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -542,7 +542,7 @@ MonoBehaviour:
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 16
+  minDistance: 13
   maxDistance: 25
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
@@ -560,7 +560,7 @@ MonoBehaviour:
   shouldFireEquipment: 0
   shouldTapButton: 0
   buttonPressType: 0
-  driverUpdateTimerOverride: 1
+  driverUpdateTimerOverride: 0
   resetCurrentEnemyOnNextDriverSelection: 0
   noRepeat: 0
   nextHighPriorityOverride: {fileID: 114079173201994287}

@@ -41,9 +41,9 @@ namespace AK
         static const AkUniqueID HOTTESTSAUCE = 571024191U;
         static const AkUniqueID JETBOOTSEXPLOSION = 1235706518U;
         static const AkUniqueID MOLTENCOIN = 1681111803U;
-        static const AkUniqueID NEMHUNTRESSBOWMAX = 1389751463U;
-        static const AkUniqueID NEMHUNTRESSCHARGEBOW = 415529083U;
-        static const AkUniqueID NEMHUNTRESSFIREBOW = 3663148423U;
+        static const AkUniqueID NEMHUNTESSBOWMAX = 4245110589U;
+        static const AkUniqueID NEMHUNTESSCHARGEBOW = 396560513U;
+        static const AkUniqueID NEMHUNTESSFIREBOW = 479003465U;
         static const AkUniqueID NEMMANDOCHARACTERSELECT = 3733468431U;
         static const AkUniqueID NEMMANDOCHARGEBEAM = 2165644167U;
         static const AkUniqueID NEMMANDOCHARGEBEAM2 = 3141162423U;
@@ -101,7 +101,6 @@ namespace AK
         static const AkUniqueID STRANGECAN = 3750145159U;
         static const AkUniqueID SWIFTSKATEBOARD = 961366952U;
         static const AkUniqueID VOIDAMBIENT = 2533932213U;
-        static const AkUniqueID VOIDELITESPAWN = 665745181U;
         static const AkUniqueID WASTELANDERPRIMARY = 2333188815U;
         static const AkUniqueID WASTELANDERPRIMARYCRIT = 1319272055U;
         static const AkUniqueID WASTELANDERSECONDARY = 342360847U;

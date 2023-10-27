@@ -36,6 +36,12 @@ namespace Moonstorm.Starstorm2
             //Initialize trader trading
             Components.TraderController.Initialize();
 
+            //Initialize new difficulties
+            Deluge.Init();
+            Tempest.Init();
+            Cyclone.Init();
+            SuperTyphoon.Init();
+
             //Save level cap for later use
             storedLevelCap = Run.ambientLevelCap;
 

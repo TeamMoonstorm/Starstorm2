@@ -8,11 +8,12 @@ Event	ID	Name			Wwise Object Path	Notes
 	282242656	Play_nemmerc_primary_fire3			\Default Work Unit\Nemesis Mercenary\Play_nemmerc_primary_fire3	
 	282242657	Play_nemmerc_primary_fire2			\Default Work Unit\Nemesis Mercenary\Play_nemmerc_primary_fire2	
 	342360847	WastelanderSecondary			\Default Work Unit\Executioner\WastelanderSecondary	
-	415529083	NemHuntressChargeBow			\Default Work Unit\Nemesis Huntress\NemHuntressChargeBow	
+	396560513	NemHuntessChargeBow			\Default Work Unit\Nemesis Huntress\NemHuntessChargeBow	
 	420124658	NucleatorChargePrimary			\Default Work Unit\Nucleator\NucleatorChargePrimary	
 	428808189	Play_nemmerc_special			\Default Work Unit\Nemesis Mercenary\Play_nemmerc_special	
 	429550690	ExecutionerPrimaryCrit			\Default Work Unit\Executioner\ExecutionerPrimaryCrit	
 	430199870	NemmandoDecisiveStrikeFire			\Default Work Unit\Nemmando\NemmandoDecisiveStrikeFire	
+	479003465	NemHuntessFireBow			\Default Work Unit\Nemesis Huntress\NemHuntessFireBow	
 	566193013	ExecutionerGainCharge			\Default Work Unit\Executioner\ExecutionerGainCharge	
 	571024191	HottestSauce			\Default Work Unit\Items\HottestSauce	
 	576705642	Play_nemmerc_secondary_lunge			\Default Work Unit\Nemesis Mercenary\Play_nemmerc_secondary_lunge	
@@ -36,7 +37,6 @@ Event	ID	Name			Wwise Object Path	Notes
 	1250309938	NemmandoDecisiveStrikeCharge			\Default Work Unit\Nemmando\NemmandoDecisiveStrikeCharge	
 	1319272055	WastelanderPrimaryCrit			\Default Work Unit\Executioner\WastelanderPrimaryCrit	
 	1373732423	CyborgSpecialPlace			\Default Work Unit\Cyborg\CyborgSpecialPlace	
-	1389751463	NemHuntressBowMax			\Default Work Unit\Nemesis Huntress\NemHuntressBowMax	
 	1499433712	ExecutionerSpecialCast			\Default Work Unit\Executioner\ExecutionerSpecialCast	
 	1611310971	Play_nemmerc_utility_enter			\Default Work Unit\Nemesis Mercenary\Play_nemmerc_utility_enter	
 	1630810941	RefabricatorSelect2			\Default Work Unit\Interactables\RefabricatorSelect2	
@@ -86,7 +86,6 @@ Event	ID	Name			Wwise Object Path	Notes
 	3276263843	RemunerationSpawn2			\Default Work Unit\Items\RemunerationSpawn2	
 	3331522399	NemmandoSubmissionReady			\Default Work Unit\Nemmando\NemmandoSubmissionReady	
 	3396808549	ExecutionerSupercharge			\Default Work Unit\Executioner\ExecutionerSupercharge	
-	3663148423	NemHuntressFireBow			\Default Work Unit\Nemesis Huntress\NemHuntressFireBow	
 	3671834949	NemmandoShootClassic			\Default Work Unit\Nemmando\NemmandoShootClassic	
 	3733468431	NemmandoCharacterSelect			\Default Work Unit\Nemmando\NemmandoCharacterSelect	
 	3750145159	StrangeCan			\Default Work Unit\Items\StrangeCan	
@@ -95,6 +94,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	3982623506	StirringSoul			\Default Work Unit\Items\StirringSoul	
 	4193594557	CyborgSecondary			\Default Work Unit\Cyborg\CyborgSecondary	
 	4234730185	Stop_Soft_Rain			\Default Work Unit\Environment\Ambient\Stop_Soft_Rain	
+	4245110589	NemHuntessBowMax			\Default Work Unit\Nemesis Huntress\NemHuntessBowMax	
 	4278514587	NemmandoShoot			\Default Work Unit\Nemmando\NemmandoShoot	
 
 Game Parameter	ID	Name			Wwise Object Path	Notes
@@ -239,4 +239,3 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	1055144826	wayfarer_idle_loop_02	D:\ror2modstuff\Starstorm2UnityProject\Starstorm2Again\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\wayfarer_idle_loop_02_752A8D69.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Follower\idleLoop\wayfarer_idle_loop_02		45946
 	1057107243	sheathesound	D:\ror2modstuff\Starstorm2UnityProject\Starstorm2Again\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\sheathesound_752A8D69.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Nemesis Commando\sheathesound		10587
 	1072703392	NemmandoFireBeam	D:\ror2modstuff\Starstorm2UnityProject\Starstorm2Again\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\NemmandoFireBeam_752A8D69.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Nemesis Commando\NemmandoFireBeam		11649
-
