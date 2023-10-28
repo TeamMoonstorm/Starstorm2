@@ -190,13 +190,13 @@ MonoBehaviour:
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
   minDistance: 0
-  maxDistance: 8
+  maxDistance: 6
   selectionRequiresTargetLoS: 1
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
   maxTimesSelected: -1
   moveTargetType: 0
-  activationRequiresTargetLoS: 1
+  activationRequiresTargetLoS: 0
   activationRequiresAimTargetLoS: 0
   activationRequiresAimConfirmation: 0
   movementType: 1
@@ -234,16 +234,16 @@ MonoBehaviour:
   maxTargetHealthFraction: Infinity
   minDistance: 0
   maxDistance: 25
-  selectionRequiresTargetLoS: 1
+  selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
-  selectionRequiresAimTarget: 1
+  selectionRequiresAimTarget: 0
   maxTimesSelected: -1
   moveTargetType: 0
   activationRequiresTargetLoS: 0
   activationRequiresAimTargetLoS: 0
   activationRequiresAimConfirmation: 0
   movementType: 1
-  moveInputScale: 1
+  moveInputScale: 0.7
   aimType: 1
   ignoreNodeGraph: 0
   shouldSprint: 0
@@ -261,7 +261,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 320081282386812563}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
@@ -276,7 +276,7 @@ MonoBehaviour:
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
   minDistance: 0
-  maxDistance: 4
+  maxDistance: 6
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
@@ -292,7 +292,7 @@ MonoBehaviour:
   shouldSprint: 0
   shouldFireEquipment: 0
   shouldTapButton: 0
-  buttonPressType: 0
+  buttonPressType: 1
   driverUpdateTimerOverride: -1
   resetCurrentEnemyOnNextDriverSelection: 0
   noRepeat: 0
@@ -318,7 +318,7 @@ MonoBehaviour:
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 3
+  minDistance: 6
   maxDistance: 40
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0

@@ -1124,7 +1124,27 @@ MonoBehaviour:
   body: {fileID: 2213452646676285854}
   itemDisplayRuleSet: {fileID: 0}
   autoPopulateLightInfos: 1
-  baseRendererInfos: []
+  baseRendererInfos:
+  - renderer: {fileID: 5048156362134690329}
+    defaultMaterial: {fileID: 2100000, guid: d989dc54c824d6040a6885d669f3e164, type: 2}
+    defaultShadowCastingMode: 0
+    ignoreOverlays: 1
+    hideOnDeath: 0
+  - renderer: {fileID: 6674801514480755418}
+    defaultMaterial: {fileID: 2100000, guid: 7fc95306e3cf83742b7280f42b048753, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+  - renderer: {fileID: 4881648509222127615}
+    defaultMaterial: {fileID: 2100000, guid: 9d0d1198351a60d4c97193af565293ef, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+  - renderer: {fileID: 6333524017941096609}
+    defaultMaterial: {fileID: 2100000, guid: 7fc95306e3cf83742b7280f42b048753, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
   baseLightInfos: []
 --- !u!1 &9131843083804833670
 GameObject:

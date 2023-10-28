@@ -25,7 +25,7 @@ namespace Moonstorm.Starstorm2.Interactables
         {
             base.Initialize();
 
-            //add sound events
+            //add sound events, the bad way
             interactable = InteractableDirectorCard.prefab;
             smb = interactable.GetComponent<SummonMasterBehavior>();
             cm = smb.masterPrefab.GetComponent<CharacterMaster>();

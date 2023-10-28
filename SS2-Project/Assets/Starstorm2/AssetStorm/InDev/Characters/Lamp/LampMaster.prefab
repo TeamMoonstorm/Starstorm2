@@ -206,7 +206,7 @@ MonoBehaviour:
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
   minDistance: 0
-  maxDistance: 4
+  maxDistance: 2
   selectionRequiresTargetLoS: 1
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
@@ -225,7 +225,7 @@ MonoBehaviour:
   buttonPressType: 0
   driverUpdateTimerOverride: -1
   resetCurrentEnemyOnNextDriverSelection: 0
-  noRepeat: 1
+  noRepeat: 0
   nextHighPriorityOverride: {fileID: 0}
 --- !u!114 &4243435258436112120
 MonoBehaviour:
@@ -344,7 +344,7 @@ MonoBehaviour:
   activationRequiresTargetLoS: 1
   activationRequiresAimTargetLoS: 0
   activationRequiresAimConfirmation: 1
-  movementType: 0
+  movementType: 2
   moveInputScale: 1
   aimType: 2
   ignoreNodeGraph: 0

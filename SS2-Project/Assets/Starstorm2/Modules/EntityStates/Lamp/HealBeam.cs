@@ -48,7 +48,7 @@ namespace EntityStates.Lamp
                 bullseyeSearch.RefreshCandidates();
                 bullseyeSearch.FilterOutGameObject(gameObject);
                 target = bullseyeSearch.GetResults().FirstOrDefault();
-                if (transform && target)
+                if (transform && target && !target.healthComponent.body.hasCloakBuff)
                 {
                     GameObject beamInstance = Object.Instantiate(healBeamPrefab, transform);
                     healBeamController = beamInstance.GetComponent<HealBeamController>();
