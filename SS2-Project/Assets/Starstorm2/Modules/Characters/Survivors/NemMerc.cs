@@ -41,6 +41,15 @@ namespace Moonstorm.Starstorm2.Survivors
         {
             base.Hook();
             On.RoR2.CharacterAI.BaseAI.Target.GetBullseyePosition += HopefullyHarmlessAIFix;
+
+            // TEMP ITEM DISPLAY DEBUG
+            On.RoR2.CharacterModel.InstantiateDisplayRuleGroup += CharacterModel_InstantiateDisplayRuleGroup;
+        }
+
+        private void CharacterModel_InstantiateDisplayRuleGroup(On.RoR2.CharacterModel.orig_InstantiateDisplayRuleGroup orig, CharacterModel self, DisplayRuleGroup displayRuleGroup, ItemIndex itemIndex, EquipmentIndex equipmentIndex)
+        {
+            SS2Log.Info(ItemCatalog.GetItemDef(itemIndex).nameToken);
+            orig(self, displayRuleGroup, itemIndex, equipmentIndex);
         }
 
 

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b2a16891c8108e48883bce0009b7835, type: 3}
-  m_Name: nidrsNemMercenary 1
+  m_Name: nidrsNemMercenary
   m_EditorClassIdentifier: 
   idrs: {fileID: 11400000, guid: d376e3b444a57d34d9407c9ceebc29a8, type: 2}
   namedRuleGroups:
@@ -601,24 +601,6 @@ MonoBehaviour:
       localAngles: {x: 57.0603, y: 182.0744, z: 2.47136}
       localScales: {x: 0.45, y: 0.45, z: 0.54}
       limbMask: 0
-  - keyAssetName: CooldownOnCrit
-    keyAsset:
-      address: 
-      useDirectReference: 1
-      asset: {fileID: 0}
-      loadAssetFrom: 0
-    rules:
-    - ruleType: 0
-      displayPrefabName: DisplaySkull
-      displayPrefab:
-        address: 
-        useDirectReference: 1
-        asset: {fileID: 0}
-      childName: 
-      localPos: {x: 0, y: 0, z: 0}
-      localAngles: {x: 0, y: 0, z: 0}
-      localScales: {x: 0, y: 0, z: 0}
-      limbMask: 0
   - keyAssetName: CrippleWard
     keyAsset:
       address: 
@@ -812,10 +794,10 @@ MonoBehaviour:
         address: 
         useDirectReference: 1
         asset: {fileID: 0}
-      childName: 
-      localPos: {x: 0, y: 0, z: 0}
-      localAngles: {x: 0, y: 0, z: 0}
-      localScales: {x: 0, y: 0, z: 0}
+      childName: UpperLegL
+      localPos: {x: -0.0678, y: 0.24654, z: -0.14444}
+      localAngles: {x: 333.7517, y: 212.6867, z: 194.7858}
+      localScales: {x: 0.1, y: 0.1, z: 0.1}
       limbMask: 0
   - keyAssetName: DroneBackup
     keyAsset:
@@ -834,42 +816,6 @@ MonoBehaviour:
       localPos: {x: -0.20045, y: -0.06045, z: -0.10179}
       localAngles: {x: 353.146, y: 247.5104, z: 180.5473}
       localScales: {x: 0.6, y: 0.6, z: 0.6}
-      limbMask: 0
-  - keyAssetName: DroneWeaponsDisplay1
-    keyAsset:
-      address: 
-      useDirectReference: 1
-      asset: {fileID: 0}
-      loadAssetFrom: 0
-    rules:
-    - ruleType: 0
-      displayPrefabName: DisplayDroneWeaponMinigun
-      displayPrefab:
-        address: 
-        useDirectReference: 1
-        asset: {fileID: 0}
-      childName: 
-      localPos: {x: 0, y: 0, z: 0}
-      localAngles: {x: 0, y: 0, z: 0}
-      localScales: {x: 0, y: 0, z: 0}
-      limbMask: 0
-  - keyAssetName: DroneWeaponsDisplay2
-    keyAsset:
-      address: 
-      useDirectReference: 1
-      asset: {fileID: 0}
-      loadAssetFrom: 0
-    rules:
-    - ruleType: 0
-      displayPrefabName: DisplayDroneWeaponLauncher
-      displayPrefab:
-        address: 
-        useDirectReference: 1
-        asset: {fileID: 0}
-      childName: 
-      localPos: {x: 0, y: 0, z: 0}
-      localAngles: {x: 0, y: 0, z: 0}
-      localScales: {x: 0, y: 0, z: 0}
       limbMask: 0
   - keyAssetName: ElementalRingVoid
     keyAsset:
@@ -914,7 +860,7 @@ MonoBehaviour:
         useDirectReference: 1
         asset: {fileID: 0}
       childName: Head
-      localPos: {x: -0.00122, y: -0.00813, z: -0.04388}
+      localPos: {x: -0.00151, y: 0.22892, z: 0.04091}
       localAngles: {x: 0, y: 0, z: 0}
       localScales: {x: 0.5, y: 0.5, z: 0.5}
       limbMask: 0
@@ -932,7 +878,7 @@ MonoBehaviour:
         useDirectReference: 1
         asset: {fileID: 0}
       childName: Head
-      localPos: {x: 0.04124, y: 0.04942, z: 0.05286}
+      localPos: {x: 0.0412, y: 0.20124, z: 0.05195}
       localAngles: {x: 0.4241, y: 336.9572, z: 1.24518}
       localScales: {x: 0.075, y: 0.075, z: 0.075}
       limbMask: 0
@@ -943,8 +889,8 @@ MonoBehaviour:
         useDirectReference: 1
         asset: {fileID: 0}
       childName: Head
-      localPos: {x: -0.04568, y: 0.05004, z: 0.05516}
-      localAngles: {x: 0, y: 16.24314, z: 0}
+      localPos: {x: -0.0412, y: 0.20124, z: 0.05195}
+      localAngles: {x: 359.5759, y: 23.04278, z: 1.24518}
       localScales: {x: -0.075, y: 0.075, z: 0.075}
       limbMask: 0
   - keyAssetName: EliteHauntedEquipment
@@ -961,7 +907,7 @@ MonoBehaviour:
         useDirectReference: 1
         asset: {fileID: 0}
       childName: Head
-      localPos: {x: 0, y: 0.07655, z: -0.0186}
+      localPos: {x: 0.00014, y: 0.24438, z: -0.03313}
       localAngles: {x: 282.4926, y: 180, z: 180}
       localScales: {x: 0.05, y: 0.05, z: 0.05}
       limbMask: 0
@@ -979,7 +925,7 @@ MonoBehaviour:
         useDirectReference: 1
         asset: {fileID: 0}
       childName: Head
-      localPos: {x: 0, y: 0.06345, z: -0.04085}
+      localPos: {x: -0.0002, y: 0.2657, z: -0.03656}
       localAngles: {x: 282, y: 180, z: 180}
       localScales: {x: 0.02177, y: 0.02177, z: 0.02177}
       limbMask: 0
@@ -997,8 +943,8 @@ MonoBehaviour:
         useDirectReference: 1
         asset: {fileID: 0}
       childName: Head
-      localPos: {x: 0.00889, y: 0.07484, z: 0.08041}
-      localAngles: {x: 0, y: 0, z: 0}
+      localPos: {x: 0.00872, y: 0.21302, z: 0.10707}
+      localAngles: {x: 316.6265, y: 359.9645, z: 359.8888}
       localScales: {x: 0.15, y: 0.15, z: 0.15}
       limbMask: 0
     - ruleType: 0
@@ -1008,8 +954,8 @@ MonoBehaviour:
         useDirectReference: 1
         asset: {fileID: 0}
       childName: Head
-      localPos: {x: 0.00889, y: 0.11702, z: 0.08132}
-      localAngles: {x: 336.8789, y: 0, z: 0}
+      localPos: {x: 0.00889, y: 0.23748, z: 0.06268}
+      localAngles: {x: 299.5983, y: 0.03174, z: 359.8414}
       localScales: {x: 0.1, y: 0.1, z: 0.1}
       limbMask: 0
   - keyAssetName: EliteLunarEquipment
@@ -1026,9 +972,9 @@ MonoBehaviour:
         useDirectReference: 1
         asset: {fileID: 0}
       childName: Head
-      localPos: {x: 0, y: 0, z: 0}
-      localAngles: {x: 270.6007, y: 180, z: 180}
-      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      localPos: {x: -0.00154, y: 0.16669, z: 0.15917}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.1, y: 0.1, z: 0.1}
       limbMask: 0
   - keyAssetName: ElitePoisonEquipment
     keyAsset:
@@ -1044,7 +990,7 @@ MonoBehaviour:
         useDirectReference: 1
         asset: {fileID: 0}
       childName: Head
-      localPos: {x: 0, y: 0.1196, z: 0.01146}
+      localPos: {x: 0.00018, y: 0.242, z: 0.00082}
       localAngles: {x: 276.1823, y: 180, z: 180}
       localScales: {x: 0.03, y: 0.03, z: 0.03}
       limbMask: 0
@@ -1062,27 +1008,9 @@ MonoBehaviour:
         useDirectReference: 1
         asset: {fileID: 0}
       childName: Head
-      localPos: {x: 0, y: 0.07503, z: 0.11025}
-      localAngles: {x: 83.32104, y: 0, z: 0}
+      localPos: {x: 0.00019, y: 0.1361, z: 0.11706}
+      localAngles: {x: 83.32107, y: 0, z: 0}
       localScales: {x: 0.07, y: 0.07, z: 0.07}
-      limbMask: 0
-  - keyAssetName: EmpowerAlways
-    keyAsset:
-      address: 
-      useDirectReference: 1
-      asset: {fileID: 0}
-      loadAssetFrom: 0
-    rules:
-    - ruleType: 0
-      displayPrefabName: DisplaySunHead
-      displayPrefab:
-        address: 
-        useDirectReference: 1
-        asset: {fileID: 0}
-      childName: 
-      localPos: {x: 0, y: 0, z: 0}
-      localAngles: {x: 0, y: 0, z: 0}
-      localScales: {x: 0, y: 0, z: 0}
       limbMask: 0
   - keyAssetName: EnergizedOnEquipmentUse
     keyAsset:
@@ -2033,7 +1961,7 @@ MonoBehaviour:
       childName: ShoulderR
       localPos: {x: 0, y: 0, z: 0}
       localAngles: {x: 0, y: 0, z: 0}
-      localScales: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.9, y: 0.9, z: 0.9}
       limbMask: 0
   - keyAssetName: LightningStrikeOnHit
     keyAsset:
@@ -2157,9 +2085,9 @@ MonoBehaviour:
         useDirectReference: 1
         asset: {fileID: 0}
       childName: Head
-      localPos: {x: 0.00245, y: 0.17107, z: 0.13097}
+      localPos: {x: 0.00248, y: 0.10808, z: -0.00494}
       localAngles: {x: 356.9942, y: 0.58206, z: 345.0201}
-      localScales: {x: 0.3, y: 0.3, z: 0.3}
+      localScales: {x: 1, y: 1, z: 1}
       limbMask: 0
     - ruleType: 0
       displayPrefabName: DisplaySunHeadNeck
@@ -2168,9 +2096,9 @@ MonoBehaviour:
         useDirectReference: 1
         asset: {fileID: 0}
       childName: Head
-      localPos: {x: 0.00245, y: 0.17107, z: 0.13097}
-      localAngles: {x: 356.9942, y: 0.58206, z: 345.0201}
-      localScales: {x: 0.3, y: 0.3, z: 0.3}
+      localPos: {x: -0.00014, y: -0.13382, z: 0.01137}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 1.6, y: 1.6, z: 1.6}
       limbMask: 0
   - keyAssetName: LunarTrinket
     keyAsset:
@@ -2240,9 +2168,9 @@ MonoBehaviour:
         useDirectReference: 1
         asset: {fileID: 0}
       childName: Base
-      localPos: {x: 0, y: 0, z: 0}
+      localPos: {x: -0.61674, y: 1.75845, z: 0.59225}
       localAngles: {x: 0, y: 0, z: 0}
-      localScales: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.8, y: 0.8, z: 0.8}
       limbMask: 0
   - keyAssetName: MinorConstructOnKill
     keyAsset:
@@ -2646,9 +2574,9 @@ MonoBehaviour:
         address: 
         useDirectReference: 1
         asset: {fileID: 0}
-      childName: HandL
-      localPos: {x: 0.00001, y: 0.06218, z: 0.05959}
-      localAngles: {x: 0, y: 0, z: 0}
+      childName: Pelvis
+      localPos: {x: 0.17911, y: 0.13477, z: 0.11717}
+      localAngles: {x: 0, y: 23.50462, z: 357.161}
       localScales: {x: 0.17132, y: 0.17132, z: 0.17132}
       limbMask: 0
     - ruleType: 0
@@ -2657,9 +2585,9 @@ MonoBehaviour:
         address: 
         useDirectReference: 1
         asset: {fileID: 0}
-      childName: HandL
-      localPos: {x: 0.00001, y: 0.06218, z: 0.05959}
-      localAngles: {x: 0, y: 0, z: 0}
+      childName: Pelvis
+      localPos: {x: 0.10052, y: 0.1047, z: 0.15606}
+      localAngles: {x: 0, y: 0, z: 2.54732}
       localScales: {x: 0.17132, y: 0.17132, z: 0.17132}
       limbMask: 0
     - ruleType: 0
@@ -2668,9 +2596,9 @@ MonoBehaviour:
         address: 
         useDirectReference: 1
         asset: {fileID: 0}
-      childName: HandL
-      localPos: {x: 0.00001, y: 0.06218, z: 0.05959}
-      localAngles: {x: 0, y: 0, z: 0}
+      childName: Pelvis
+      localPos: {x: 0.01318, y: 0.06102, z: 0.15584}
+      localAngles: {x: 0.44257, y: 359.1865, z: 28.54581}
       localScales: {x: 0.17132, y: 0.17132, z: 0.17132}
       limbMask: 0
   - keyAssetName: QuestVolatileBattery
@@ -3166,7 +3094,7 @@ MonoBehaviour:
         useDirectReference: 1
         asset: {fileID: 0}
       childName: Base
-      localPos: {x: -0.44113, y: 1.76671, z: 0.63638}
+      localPos: {x: 0.58414, y: 1.76671, z: 0.65233}
       localAngles: {x: 0, y: 0, z: 0}
       localScales: {x: 0.6, y: 0.6, z: 0.6}
       limbMask: 0
@@ -3188,24 +3116,6 @@ MonoBehaviour:
       localAngles: {x: 0, y: 191.5227, z: 0}
       localScales: {x: 0.08, y: 0.08, z: 0.08}
       limbMask: 0
-  - keyAssetName: TempestOnKill
-    keyAsset:
-      address: 
-      useDirectReference: 1
-      asset: {fileID: 0}
-      loadAssetFrom: 0
-    rules:
-    - ruleType: 0
-      displayPrefabName: DisplayWaxBird
-      displayPrefab:
-        address: 
-        useDirectReference: 1
-        asset: {fileID: 0}
-      childName: 
-      localPos: {x: 0, y: 0, z: 0}
-      localAngles: {x: 0, y: 0, z: 0}
-      localScales: {x: 0, y: 0, z: 0}
-      limbMask: 0
   - keyAssetName: Thorns
     keyAsset:
       address: 
@@ -3220,9 +3130,9 @@ MonoBehaviour:
         useDirectReference: 1
         asset: {fileID: 0}
       childName: LowerArmL
-      localPos: {x: 0.00439, y: 0.15436, z: -0.00616}
-      localAngles: {x: 272.3033, y: 136.1306, z: 220.9084}
-      localScales: {x: 0.13338, y: 0.13338, z: 0.13338}
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.5, y: 0.8, z: 0.8}
       limbMask: 0
   - keyAssetName: TitanGoldDuringTP
     keyAsset:
