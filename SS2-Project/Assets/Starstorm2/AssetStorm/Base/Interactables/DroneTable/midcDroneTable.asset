@@ -26,6 +26,23 @@ MonoBehaviour:
   skipSpawnWhenSacrificeArtifactEnabled: 0
   weightScalarWhenSacrificeArtifactEnabled: 1
   maxSpawnsPerStage: -1
+  addressReferencedDirectorCard:
+    spawnCard:
+      _asset: {fileID: 0}
+      _address: 
+      _useDirectReference: 0
+    selectionWeight: 0
+    spawnDistance: 0
+    preventOverhead: 0
+    minimumStageCompletions: 0
+    requiredUnlockableDef:
+      _asset: {fileID: 0}
+      _address: 
+      _useDirectReference: 0
+    forbiddenUnlockableDef:
+      _asset: {fileID: 0}
+      _address: 
+      _useDirectReference: 0
   directorCard:
     spawnCard: {fileID: 11400000}
     selectionWeight: 10
@@ -41,6 +58,7 @@ MonoBehaviour:
   customCategoryWeight: 1
   stages: 238305712
   customStages: []
+  requiredExpansionDefs: []
   requiredExpansions:
   - address: 
     useDirectReference: 1

@@ -88,7 +88,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7356048965544985628}
-  - component: {fileID: 2439598497133196147}
+  - component: {fileID: 5813661446989934023}
   m_Layer: 0
   m_Name: DisplayLowQualitySpeaker
   m_TagString: Untagged
@@ -111,7 +111,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2439598497133196147
+--- !u!114 &5813661446989934023
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,7 +126,7 @@ MonoBehaviour:
   rendererInfos:
   - renderer: {fileID: 8446613070437404834}
     defaultMaterial: {fileID: 2100000, guid: 0b1c108b36ae96b46aa2a063be77f4b9, type: 2}
-    defaultShadowCastingMode: 1
+    defaultShadowCastingMode: 0
     ignoreOverlays: 0
     hideOnDeath: 0
   hideOnDeathObjects: []

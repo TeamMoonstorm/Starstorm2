@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3325041495086781227}
-  - component: {fileID: 6230729608642548352}
+  - component: {fileID: 560585769608919035}
   m_Layer: 0
   m_Name: DisplayJetBoots
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6230729608642548352
+--- !u!114 &560585769608919035
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47,7 +47,7 @@ MonoBehaviour:
   rendererInfos:
   - renderer: {fileID: 2595335531045574695}
     defaultMaterial: {fileID: 2100000, guid: 4be4838e1f8f01446ab742a5f955af46, type: 2}
-    defaultShadowCastingMode: 1
+    defaultShadowCastingMode: 0
     ignoreOverlays: 0
     hideOnDeath: 0
   hideOnDeathObjects: []
