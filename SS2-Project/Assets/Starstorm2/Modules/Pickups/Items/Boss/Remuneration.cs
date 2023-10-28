@@ -33,27 +33,12 @@ namespace Moonstorm.Starstorm2.Items
 
         // LAZY SHITCODE ALL TIME EVER. SRY. SHOULD BE TEMPORARY. NEMESIS MERCENARY MUST RELEASE
         // ALL THE BEHAVIOR IS SPLIT UP IN LIKE 10 DIFFERENT CLASSES. HAHA LOL!. IT WILL EVENTUALLY MAKE SENSE WHEN ITS NOT JUST RED ITEMS. UNLESS I DIE BEFORE THEN.
-        public static GameObject HOPEFULLYTEMPORARYREMUNERATIONSHOPOPTIONPREFABLOL;
         public override void Initialize()
         {
             base.Initialize();
             remunerationControllerPrefab = SS2Assets.LoadAsset<GameObject>("RemunerationController", SS2Bundle.Items);
 
             On.RoR2.PickupDisplay.RebuildModel += EnableVoidParticles;
-        }
-
-        public static void InitTEMP()
-        {
-            HOPEFULLYTEMPORARYREMUNERATIONSHOPOPTIONPREFABLOL = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/MultiShopTerminal/ShopTerminal.prefab").WaitForCompletion(), "PENISWENIS");
-            HOPEFULLYTEMPORARYREMUNERATIONSHOPOPTIONPREFABLOL.GetComponent<PurchaseInteraction>().cost = 0;
-            GameObject.Destroy(HOPEFULLYTEMPORARYREMUNERATIONSHOPOPTIONPREFABLOL.GetComponent<RoR2.Hologram.HologramProjector>());
-            HOPEFULLYTEMPORARYREMUNERATIONSHOPOPTIONPREFABLOL.GetComponent<PurchaseInteraction>().available = false;
-            HOPEFULLYTEMPORARYREMUNERATIONSHOPOPTIONPREFABLOL.GetComponent<ShopTerminalBehavior>().itemTier = ItemTier.Tier3;
-            HOPEFULLYTEMPORARYREMUNERATIONSHOPOPTIONPREFABLOL.AddComponent<RemunerationChoiceBehavior>();
-            Transform t = HOPEFULLYTEMPORARYREMUNERATIONSHOPOPTIONPREFABLOL.transform.Find("Display/Cylinder (5)/PickupDisplay");
-            t.localScale = Vector3.one * 0.9f;
-            t.localPosition = Vector3.up * -0.33f;
-            t.GetComponent<PickupDisplay>().spinSpeed = 75f; // ?
         }
 
 

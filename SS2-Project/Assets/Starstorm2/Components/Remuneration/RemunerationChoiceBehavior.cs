@@ -36,14 +36,14 @@ namespace Moonstorm.Starstorm2.Components
         // ^^^^^^^^^^^^^^^^^ THIS SHIT WILL BE USED ONCE VOID PORTAL AND VOID TOKENS ARE IMPLEMENTED. UNTIL THEN WE JUST USE VANILLA SHOP TERMINALS
 
         public RemunerationShopBehavior shop;
-        public PurchaseInteraction temp_peniswenis;
+        public PurchaseInteraction interaction;
         [SyncVar]
         public bool alive;
 
         void Start()
         {
-            this.temp_peniswenis = base.GetComponent<PurchaseInteraction>();
-            this.temp_peniswenis.onPurchase.AddListener(OnPurchased);
+            this.interaction = base.GetComponent<PurchaseInteraction>();
+            this.interaction.onPurchase.AddListener(OnPurchased);
             if (this.shop)
             {
                 this.shop.DiscoverChoice(this);

@@ -290,8 +290,6 @@ namespace Moonstorm.Starstorm2
             Events.Init();
             
             //Bulwark.Init();
-
-            Moonstorm.Starstorm2.Items.Remuneration.InitTEMP(); // TEMPORARY. JUST NEED TO CLONE A PLACEHOLDER VANILLA PREFAB EARLIER.
             Ethereal.Init();
             
             Deluge.Init();

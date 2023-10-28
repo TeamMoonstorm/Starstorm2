@@ -13,14 +13,12 @@ namespace Moonstorm.Starstorm2.Components
 {
     public class RemunerationShopBehavior : NetworkBehaviour
     {
-        //cringe
 
         [SystemInitializer]
         private static void Init()
         {
-            //TEMP HOPEFULLY
             deleteEffectPrefab = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Nullifier/NullifierExplosion.prefab").WaitForCompletion(), "WAWA");
-            deleteEffectPrefab.GetComponent<EffectComponent>().soundName = "Play_nullifier_death_vortex_explode";
+            deleteEffectPrefab.GetComponent<EffectComponent>().soundName = "Play_nullifier_death_vortex_explode"; // cringe.
             ContentAddition.AddEffect(deleteEffectPrefab); // i think this is how r2api works? not gonna look it up tehe
         }
 
@@ -32,6 +30,7 @@ namespace Moonstorm.Starstorm2.Components
         //private Xoroshiro128Plus rng;
 
         public int numDrops = 3;
+        public float soundPitch = 2f;
 
         public int choicesDropped;
 
@@ -74,7 +73,7 @@ namespace Moonstorm.Starstorm2.Components
             foreach(RemunerationChoiceBehavior choice in this.choices)
             {
                 choice.alive = true;
-                choice.temp_peniswenis.SetAvailable(true);
+                choice.interaction.SetAvailable(true);
             }
         }
 
@@ -89,7 +88,7 @@ namespace Moonstorm.Starstorm2.Components
                     scale = effectScale,
                 };
                 EffectManager.SpawnEffect(deleteEffectPrefab, data, true);
-                Util.PlaySound("Play_nullifier_death_vortex_explode", base.gameObject); // im rarted sry
+                Util.PlayAttackSpeedSound("Play_nullifier_death_vortex_explode", base.gameObject, soundPitch); // im rarted sry
                 Destroy(chois.gameObject);
             }
         }

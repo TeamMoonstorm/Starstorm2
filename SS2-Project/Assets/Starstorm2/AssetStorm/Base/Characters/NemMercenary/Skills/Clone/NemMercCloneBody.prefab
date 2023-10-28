@@ -10634,8 +10634,6 @@ GameObject:
   - component: {fileID: 6794473200184041306}
   - component: {fileID: 2463335901170261704}
   - component: {fileID: 8066301587927731045}
-  - component: {fileID: 123723285962256348}
-  - component: {fileID: 8014032008033003312}
   - component: {fileID: 868568403903713166}
   - component: {fileID: 6509649447136515251}
   - component: {fileID: 6827134144552373619}
@@ -10746,38 +10744,6 @@ MonoBehaviour:
     transform: {fileID: 1619276954017484973}
   - name: PreDashEffect
     transform: {fileID: 292812106782270141}
---- !u!114 &123723285962256348
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8531258824506576496}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1480773730, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseFootstepString: Play_player_footstep
-  baseFootliftString: 
-  sprintFootstepOverrideString: 
-  sprintFootliftOverrideString: 
-  enableFootstepDust: 1
-  footstepDustPrefab: {fileID: 0}
---- !u!114 &8014032008033003312
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8531258824506576496}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -517518216, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bones: []
-  componentsToDisableOnRagdoll: []
 --- !u!95 &868568403903713166
 Animator:
   serializedVersion: 3
