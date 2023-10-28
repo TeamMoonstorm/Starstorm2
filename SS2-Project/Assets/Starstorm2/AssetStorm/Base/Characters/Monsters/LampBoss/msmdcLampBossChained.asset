@@ -32,6 +32,23 @@ MonoBehaviour:
   inventoryToCopy: {fileID: 0}
   equipmentToGrant: []
   itemsToGrant: []
+  addressReferencedDirectorCard:
+    spawnCard:
+      _asset: {fileID: 11400000}
+      _address: 
+      _useDirectReference: 1
+    selectionWeight: 1
+    spawnDistance: 0
+    preventOverhead: 0
+    minimumStageCompletions: 0
+    requiredUnlockableDef:
+      _asset: {fileID: 0}
+      _address: 
+      _useDirectReference: 0
+    forbiddenUnlockableDef:
+      _asset: {fileID: 0}
+      _address: 
+      _useDirectReference: 0
   directorCard:
     spawnCard: {fileID: 11400000}
     selectionWeight: 1
@@ -48,4 +65,5 @@ MonoBehaviour:
   stages: 64
   customStages:
   - fblscene
+  requiredExpansionDefs: []
   requiredExpansions: []

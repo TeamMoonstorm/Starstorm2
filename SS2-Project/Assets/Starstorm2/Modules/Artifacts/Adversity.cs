@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 namespace Moonstorm.Starstorm2.Artifacts
 {
+    [DisabledContent]
     public class Adversity : ArtifactBase
     {
         public override ArtifactDef ArtifactDef { get; } = SS2Assets.LoadAsset<ArtifactDef>("Adversity", SS2Bundle.Artifacts);

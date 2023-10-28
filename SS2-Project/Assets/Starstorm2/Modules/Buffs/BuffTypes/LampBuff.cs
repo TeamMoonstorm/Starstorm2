@@ -8,9 +8,9 @@ namespace Moonstorm.Starstorm2.Buffs
 {
     public sealed class LampBuff : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdLampBuff", SS2Bundle.Indev);
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdLampBuff", SS2Bundle.Monsters);
 
-        public override Material OverlayMaterial { get; } = SS2Assets.LoadAsset<Material>("matLampBuffOverlay", SS2Bundle.Indev);
+        public override Material OverlayMaterial { get; } = SS2Assets.LoadAsset<Material>("matLampBuffOverlay", SS2Bundle.Monsters);
         public sealed class Behavior : BaseBuffBodyBehavior, IBodyStatArgModifier
         {
             [BuffDefAssociation]
