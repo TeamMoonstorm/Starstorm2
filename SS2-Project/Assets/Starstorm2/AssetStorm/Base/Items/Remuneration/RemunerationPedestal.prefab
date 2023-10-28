@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 3051483434201333281}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.5, z: 0}
-  m_LocalScale: {x: 2, y: 4, z: 2}
+  m_LocalScale: {x: 3, y: 5, z: 3}
   m_Children: []
   m_Father: {fileID: 7623619010754872824}
   m_RootOrder: 4
@@ -125,6 +125,15 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
+      time: 0.25792122
+      value: 1.1033785
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
       time: 1
       value: 1
       inSlope: 0
@@ -136,7 +145,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  timeMax: 0.5
+  timeMax: 1
 --- !u!1 &3972942253212031217
 GameObject:
   m_ObjectHideFlags: 0
@@ -10341,7 +10350,7 @@ MonoBehaviour:
   pickupDisplay: {fileID: 1598248352297693125}
   dropTransform: {fileID: 8709015421842929912}
   dropTable: {fileID: 0}
-  dropVelocity: {x: 0, y: 20, z: 3}
+  dropVelocity: {x: 0, y: 20, z: 0}
   animator: {fileID: 0}
   itemTier: 2
   bannedItemTag: 0

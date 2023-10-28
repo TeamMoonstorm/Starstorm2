@@ -22,7 +22,7 @@ namespace Moonstorm.Starstorm2.Components
             ContentAddition.AddEffect(deleteEffectPrefab); // i think this is how r2api works? not gonna look it up tehe
         }
 
-        public float effectScale = 6f;// need for unityexplorer
+        public float effectScale = 4.5f;// need for unityexplorer
         public static GameObject deleteEffectPrefab;
 
         public List<RemunerationChoiceBehavior> choices;
@@ -30,7 +30,7 @@ namespace Moonstorm.Starstorm2.Components
         //private Xoroshiro128Plus rng;
 
         public int numDrops = 3;
-        public float soundPitch = 2f;
+        public float soundPitch = 1.5f;
 
         public int choicesDropped;
 
@@ -79,7 +79,8 @@ namespace Moonstorm.Starstorm2.Components
 
         public void OnChoicePicked(RemunerationChoiceBehavior choice)
         {
-            foreach(RemunerationChoiceBehavior chois in this.choices)
+            Util.PlayAttackSpeedSound("Play_nullifier_death_vortex_explode", base.gameObject, soundPitch); // im rarted!!!!!!!
+            foreach (RemunerationChoiceBehavior chois in this.choices)
             {
                 EffectData data = new EffectData
                 {
@@ -87,8 +88,7 @@ namespace Moonstorm.Starstorm2.Components
                     rotation = Quaternion.identity,
                     scale = effectScale,
                 };
-                EffectManager.SpawnEffect(deleteEffectPrefab, data, true);
-                Util.PlayAttackSpeedSound("Play_nullifier_death_vortex_explode", base.gameObject, soundPitch); // im rarted sry
+                EffectManager.SpawnEffect(deleteEffectPrefab, data, true);              
                 Destroy(chois.gameObject);
             }
         }

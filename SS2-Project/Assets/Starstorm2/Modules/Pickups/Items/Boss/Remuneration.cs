@@ -83,7 +83,7 @@ namespace Moonstorm.Starstorm2.Items
             // should only happen the first time a master spawns each stage
             private void SpawnPortalOnBody(CharacterBody body)
             {
-                GameObject controller = GameObject.Instantiate(remunerationControllerPrefab, body.coreTransform);
+                GameObject controller = GameObject.Instantiate(remunerationControllerPrefab, body.coreTransform.position, body.coreTransform.rotation);
                 controller.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(body.gameObject);
                 //NetworkServer.Spawn(controller);
 
