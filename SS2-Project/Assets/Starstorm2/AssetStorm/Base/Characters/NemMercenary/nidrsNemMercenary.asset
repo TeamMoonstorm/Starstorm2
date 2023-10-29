@@ -263,7 +263,7 @@ MonoBehaviour:
         asset: {fileID: 0}
       childName: Shotgun
       localPos: {x: -0.09608, y: -0.22327, z: -0.54324}
-      localAngles: {x: 64.37355, y: 359.9323, z: 179.3585}
+      localAngles: {x: 329.4874, y: 252.4357, z: 118.931}
       localScales: {x: 0.08, y: 0.08, z: 0.08}
       limbMask: 0
   - keyAssetName: BFG
@@ -564,24 +564,6 @@ MonoBehaviour:
       localPos: {x: 0.09953, y: 0.23687, z: -0.03886}
       localAngles: {x: 37.33166, y: 96.80486, z: 344.4705}
       localScales: {x: 0.4, y: 0.4, z: 0.4}
-      limbMask: 0
-  - keyAssetName: CoffeeBag
-    keyAsset:
-      address: 
-      useDirectReference: 1
-      asset: {fileID: 0}
-      loadAssetFrom: 0
-    rules:
-    - ruleType: 0
-      displayPrefabName: PickupCoffeeBagDisplay
-      displayPrefab:
-        address: 
-        useDirectReference: 1
-        asset: {fileID: 0}
-      childName: Pelvis
-      localPos: {x: 0, y: 0, z: 0}
-      localAngles: {x: 0, y: 0, z: 0}
-      localScales: {x: 0, y: 0, z: 0}
       limbMask: 0
   - keyAssetName: CommandMissile
     keyAsset:
@@ -1172,7 +1154,7 @@ MonoBehaviour:
       childName: LowerLegL
       localPos: {x: 0, y: 0.25331, z: -0.01878}
       localAngles: {x: 0, y: 0, z: 0}
-      localScales: {x: 0.35, y: 0.35, z: 0.35}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
       limbMask: 0
     - ruleType: 0
       displayPrefabName: DisplayGravBoots
@@ -1183,7 +1165,7 @@ MonoBehaviour:
       childName: LowerLegR
       localPos: {x: 0, y: 0.25331, z: -0.01878}
       localAngles: {x: 0, y: 0, z: 0}
-      localScales: {x: 0.35, y: 0.35, z: 0.35}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
       limbMask: 0
   - keyAssetName: Feather
     keyAsset:
@@ -1751,8 +1733,8 @@ MonoBehaviour:
         asset: {fileID: 0}
       childName: Head
       localPos: {x: -0.07213, y: 0.15227, z: 0.02292}
-      localAngles: {x: 4.11899, y: 69.4587, z: 359.1831}
-      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      localAngles: {x: -4.11899, y: -69.4587, z: 359.1831}
+      localScales: {x: -0.25, y: 0.25, z: 0.25}
       limbMask: 0
   - keyAssetName: Incubator
     keyAsset:
@@ -1999,24 +1981,6 @@ MonoBehaviour:
       localAngles: {x: 43.52345, y: 96.19049, z: 86.41486}
       localScales: {x: 0.3, y: 0.3, z: 0.3}
       limbMask: 0
-  - keyAssetName: LunarPortalOnUse
-    keyAsset:
-      address: 
-      useDirectReference: 1
-      asset: {fileID: 0}
-      loadAssetFrom: 0
-    rules:
-    - ruleType: 0
-      displayPrefabName: DisplayLunarPortalOnUse
-      displayPrefab:
-        address: 
-        useDirectReference: 1
-        asset: {fileID: 0}
-      childName: 
-      localPos: {x: 0, y: 0, z: 0}
-      localAngles: {x: 0, y: 0, z: 0}
-      localScales: {x: 0, y: 0, z: 0}
-      limbMask: 0
   - keyAssetName: LunarPrimaryReplacement
     keyAsset:
       address: 
@@ -2150,9 +2114,9 @@ MonoBehaviour:
         useDirectReference: 1
         asset: {fileID: 0}
       childName: Chest
-      localPos: {x: -0.00254, y: -0.05134, z: -0.25689}
-      localAngles: {x: 273.8155, y: 284.6844, z: 259.2045}
-      localScales: {x: 0.8, y: 0.8, z: 0.8}
+      localPos: {x: -0.13888, y: -0.1923, z: -0.15926}
+      localAngles: {x: 275.7224, y: 176.0203, z: 35.79197}
+      localScales: {x: 0.6, y: 0.6, z: 0.6}
       limbMask: 0
   - keyAssetName: Meteor
     keyAsset:
@@ -2369,24 +2333,6 @@ MonoBehaviour:
       localPos: {x: -0.00001, y: -0.06771, z: 0.00001}
       localAngles: {x: 0, y: 0, z: 0}
       localScales: {x: 0.1, y: 0.1, z: 0.1}
-      limbMask: 0
-  - keyAssetName: Needles
-    keyAsset:
-      address: 
-      useDirectReference: 1
-      asset: {fileID: 0}
-      loadAssetFrom: 0
-    rules:
-    - ruleType: 0
-      displayPrefabName: DisplayNeedles
-      displayPrefab:
-        address: 
-        useDirectReference: 1
-        asset: {fileID: 0}
-      childName: Pelvis
-      localPos: {x: 0, y: 0, z: 0}
-      localAngles: {x: 0, y: 0, z: 0}
-      localScales: {x: 0, y: 0, z: 0}
       limbMask: 0
   - keyAssetName: NovaOnHeal
     keyAsset:
@@ -3411,4 +3357,220 @@ MonoBehaviour:
       localPos: {x: -0.10021, y: 0.16452, z: 0.15026}
       localAngles: {x: 3.12398, y: 80.98913, z: 89.50486}
       localScales: {x: 2, y: 2, z: 2}
+      limbMask: 0
+  - keyAssetName: ShackledLamp
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLamp
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Base
+      localPos: {x: -0.44373, y: 1.87899, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+  - keyAssetName: equipDivineRight
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDivineRight
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Base
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - keyAssetName: CoffeeBag
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayCoffeeBag
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: 0.20322, y: 0.10473, z: 0.13451}
+      localAngles: {x: 27.23574, y: 41.27724, z: 177.7497}
+      localScales: {x: 0.09, y: 0.09, z: 0.09}
+      limbMask: 0
+  - keyAssetName: LowQualitySpeakers
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLowQualitySpeaker
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ShoulderL
+      localPos: {x: 0.01315, y: 0.13741, z: 0.18574}
+      localAngles: {x: 346.3281, y: 352.2733, z: 286.086}
+      localScales: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+  - keyAssetName: ITEM_ANCIENT_SCEPTER
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: mdlAncientScepterDisplay
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: 0.24585, y: 0.00001, z: 0}
+      localAngles: {x: 58.74231, y: 6.67717, z: 21.20422}
+      localScales: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - keyAssetName: LunarPortalOnUse
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLunarPortalOnUse
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: 
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - keyAssetName: Needles
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayNeedlesSolo
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Shotgun
+      localPos: {x: -0.05345, y: -0.31474, z: -0.68612}
+      localAngles: {x: 62.88132, y: 33.20958, z: 8.08843}
+      localScales: {x: 0.2625, y: 0.3539, z: 0.19144}
+      limbMask: 0
+  - keyAssetName: DroneWeaponsDisplay2
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDroneWeaponLauncher
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: 
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - keyAssetName: DroneWeaponsDisplay1
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDroneWeaponMinigun
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: 
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - keyAssetName: CooldownOnCrit
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySkull
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: 
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - keyAssetName: EmpowerAlways
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySunHead
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: 
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - keyAssetName: TempestOnKill
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWaxBird
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: 
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
       limbMask: 0
