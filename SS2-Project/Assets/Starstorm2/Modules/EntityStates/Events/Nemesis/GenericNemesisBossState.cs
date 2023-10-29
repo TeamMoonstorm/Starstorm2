@@ -180,14 +180,21 @@ namespace EntityStates.Events
         public virtual void OnBodyDeath()
         {
             onNemesisDefeatedGlobal?.Invoke(nemesisBossBody);
-            outer.SetNextStateToMain();
+
+
+            // need to do outro here instead of destroying
+            if (musicTrack)
+                Destroy(musicTrack.gameObject);
+
+            // we dont want to go back to main state, since we only want one nemesis boss per stage
+            //outer.SetNextStateToMain();
         }
 
         public override void OnExit()
         {
             base.OnExit();
-            if (musicTrack)
-                Destroy(musicTrack.gameObject);
+
+            
             /*if (eventStateEffect)
                 eventStateEffect.OnEndingStart(fadeDuration);*/
         }
