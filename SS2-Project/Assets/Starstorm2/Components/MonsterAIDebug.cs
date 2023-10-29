@@ -32,7 +32,7 @@ namespace Moonstorm.Starstorm2.Components
                 Chat.AddMessage("-----------------------");
                 Chat.AddMessage("AISkillDriver: " + (ai.skillDriverEvaluation.dominantSkillDriver ? ai.skillDriverEvaluation.dominantSkillDriver.customName : "None") );
                 Chat.AddMessage("Target: " + (ai.skillDriverEvaluation.aimTarget != null ? ai.skillDriverEvaluation.aimTarget.gameObject.name : "None"));
-                Chat.AddMessage("Distance: " + ai.skillDriverEvaluation.separationSqrMagnitude);
+                Chat.AddMessage("Distance: " + Mathf.Sqrt(ai.skillDriverEvaluation.separationSqrMagnitude));
                 Chat.AddMessage("-----------------------");
 
                 this.target = ai.skillDriverEvaluation.aimTarget != null ? ai.skillDriverEvaluation.aimTarget.gameObject : null;

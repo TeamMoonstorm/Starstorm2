@@ -8,20 +8,26 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: metNemmandoChargeShadow2
-  m_Shader: {fileID: 211, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _ALPHABLEND_ON _EMISSION
+  m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
+  m_ShaderKeywords: FADECLOSE USE_CLOUDS VERTEXCOLOR _ALPHABLEND_ON _EMISSION
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
-  stringTagMap:
-    RenderType: Transparent
-  disabledShaderPasses:
-  - ALWAYS
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Cloud1Tex:
+        m_Texture: {fileID: 2800000, guid: 838a4a98f47a3cf4384eb9cbb26fc141, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Cloud2Tex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -57,32 +63,53 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _RemapTex:
+        m_Texture: {fileID: 2800000, guid: e15410bf2e6b50b46ae0a42b2cabde84, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _AlphaBias: 0
+    - _AlphaBoost: 1.65
     - _BlendOp: 0
+    - _Boost: 1.46
     - _BumpScale: 1
+    - _CalcTextureAlphaOn: 0
     - _CameraFadingEnabled: 0
     - _CameraFarFadeDistance: 2
     - _CameraNearFadeDistance: 1
+    - _CloudOffsetOn: 0
+    - _CloudsOn: 1
     - _ColorMode: 0
     - _Cull: 2
     - _Cutoff: 0.5
+    - _DepthOffset: 0
     - _DetailNormalMapScale: 1
+    - _DisableRemapOn: 0
     - _DistortionBlend: 0.5
     - _DistortionEnabled: 0
-    - _DistortionStrength: 1
+    - _DistortionStrength: -0.02
     - _DistortionStrengthScaled: 0
     - _DstBlend: 10
     - _EmissionEnabled: 1
+    - _ExternalAlpha: 1
+    - _Fade: 1
+    - _FadeCloseDistance: 0.5
+    - _FadeCloseOn: 1
     - _FlipbookMode: 0
+    - _FresnelOn: 0
+    - _FresnelPower: -3.1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _InternalSimpleBlendMode: 0
     - _InvFade: 1
     - _LightingEnabled: 0
     - _Metallic: 0
     - _Mode: 2
     - _OcclusionStrength: 1
+    - _OffsetAmount: 0
     - _Parallax: 0.02
+    - _SkyboxOnly: 0
     - _SmoothnessTextureChannel: 0
     - _SoftParticlesEnabled: 0
     - _SoftParticlesFarFadeDistance: 1
@@ -90,11 +117,17 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 5
     - _UVSec: 0
+    - _UseUV1On: 0
+    - _VertexAlphaOn: 0
+    - _VertexColorOn: 1
+    - _VertexOffsetOn: 0
+    - _ZTest: 4
     - _ZWrite: 0
     m_Colors:
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorAddSubDiff: {r: -1, g: 0, b: 0, a: 0}
+    - _CutoffScroll: {r: 43.8, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0.48235294, g: 0.011614433, b: 0.011614433, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
-    - _TintColor: {r: 1, g: 1, b: 1, a: 0.63529414}
+    - _TintColor: {r: 1, g: 1, b: 1, a: 1}

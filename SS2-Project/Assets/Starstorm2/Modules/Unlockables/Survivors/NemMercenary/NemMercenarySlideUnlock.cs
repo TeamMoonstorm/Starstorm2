@@ -66,9 +66,9 @@ namespace Moonstorm.Starstorm2.Unlocks.NemMercenary
             }
             private void FixedUpdateCheckGrounded()
             {
-                SS2Log.Info("-------------------");
-                SS2Log.Info("Failed: " + this.failed);
-                SS2Log.Info("Grounded: " + this.motor.isGrounded);
+                //SS2Log.Info("-------------------");
+                //SS2Log.Info("Failed: " + this.failed);
+                //SS2Log.Info("Grounded: " + this.motor.isGrounded);
 
                 if (!this.hasEverTouchedGround && this.motor && this.motor.isGrounded) this.hasEverTouchedGround = true;
 
