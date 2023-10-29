@@ -6,7 +6,7 @@ namespace Moonstorm.Starstorm2.Items
 {
     public sealed class VoidRock : ItemBase
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("VoidRock", SS2Bundle.Items);
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("VoidRock", SS2Bundle.Indev);
 
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier
         {

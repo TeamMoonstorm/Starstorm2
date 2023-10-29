@@ -10,9 +10,9 @@ namespace Moonstorm.Starstorm2.Components
     public class CloneDroneCooldownComponent : NetworkBehaviour
     {
         [SerializeField]
-        public static Material defaultMat = SS2Assets.LoadAsset<Material>("matCloneDroneLight", SS2Bundle.Indev);
+        public static Material defaultMat = SS2Assets.LoadAsset<Material>("matCloneDroneLight", SS2Bundle.Interactables);
         [SerializeField]
-        public static Material disableMat = SS2Assets.LoadAsset<Material>("matCloneDroneLightInvalid", SS2Bundle.Indev);
+        public static Material disableMat = SS2Assets.LoadAsset<Material>("matCloneDroneLightInvalid", SS2Bundle.Interactables);
 
         private ModelLocator modelLocator;
         private GameObject model;

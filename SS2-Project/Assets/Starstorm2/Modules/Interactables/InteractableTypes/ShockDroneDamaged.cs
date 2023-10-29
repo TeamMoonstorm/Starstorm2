@@ -12,14 +12,14 @@ namespace Moonstorm.Starstorm2.Interactables
     //[DisabledContent]
     public sealed class ShockDroneDamaged : InteractableBase
     {
-        public override GameObject Interactable { get; } = SS2Assets.LoadAsset<GameObject>("ShockDroneBroken", SS2Bundle.Indev);
+        public override GameObject Interactable { get; } = SS2Assets.LoadAsset<GameObject>("ShockDroneBroken", SS2Bundle.Interactables);
         private GameObject interactable;
         private SummonMasterBehavior smb;
         private CharacterMaster cm;
         private GameObject bodyPrefab;
         private AkEvent[] droneAkEvents;
 
-        public override MSInteractableDirectorCard InteractableDirectorCard { get; } = SS2Assets.LoadAsset<MSInteractableDirectorCard>("msidcShockDrone", SS2Bundle.Indev);
+        public override MSInteractableDirectorCard InteractableDirectorCard { get; } = SS2Assets.LoadAsset<MSInteractableDirectorCard>("msidcShockDrone", SS2Bundle.Interactables);
 
         public override void Initialize()
         {
