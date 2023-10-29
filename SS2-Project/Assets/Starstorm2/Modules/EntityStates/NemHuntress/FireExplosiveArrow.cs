@@ -47,7 +47,7 @@ namespace EntityStates.NemHuntress
             bool moving = animator.GetBool("isMoving");
             bool grounded = animator.GetBool("isGrounded");
 
-            skillLocator.primary.UnsetSkillOverride(skillLocator.primary, SwapArrowExplosive.skillDef, GenericSkill.SkillOverridePriority.Contextual);
+            //skillLocator.primary.UnsetSkillOverride(skillLocator.primary, SwapArrowExplosive.skillDef, GenericSkill.SkillOverridePriority.Contextual);
 
             if (!moving && grounded)
             {

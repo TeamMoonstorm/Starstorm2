@@ -28,7 +28,7 @@ namespace EntityStates.NemCommando
         {
             get
             {
-                return baseDuration * skillLocator.secondary.cooldownScale;
+                return (baseDuration / attackSpeedStat ) * skillLocator.secondary.cooldownScale;
             }
         }
 
@@ -54,7 +54,7 @@ namespace EntityStates.NemCommando
                 FindModelChild("magParticle").GetComponent<ParticleSystem>().Emit(1);
             }
 
-            if (fixedAge >= duration / 1.6 && !hasReloaded)
+            if (fixedAge >= duration * 0.6 && !hasReloaded)
             {
                 Util.PlayAttackSpeedSound(enterSoundString, gameObject, enterSoundPitch);
                 skillLocator.secondary.stock = skillLocator.secondary.maxStock;

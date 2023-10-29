@@ -35,7 +35,7 @@ namespace Moonstorm.Starstorm2.Items
                 //What the fuck? To-do: Full rewrite this.
 
                 //N: full rewrite my ass, this doesnt need a full rewrite you dummy.
-                float metronomeCharge = Time.fixedDeltaTime;
+                float metronomeCharge = Time.fixedDeltaTime * 0.75f * stack;
                 if (!body.isSprinting)
                 {
                     metronomeCharge *= buildCoefficient;

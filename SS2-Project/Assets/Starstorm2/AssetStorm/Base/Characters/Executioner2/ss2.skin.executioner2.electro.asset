@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2dc8cbdb9720c418fcff8f84588cab, type: 3}
+  m_Name: ss2.skin.executioner2.electro
+  m_EditorClassIdentifier: 
+  nameToken: ???
+  displayModelPath: Prefabs/NullModel
+  displayModelPrefab: {fileID: 0}
+  hidden: 0
+  achievementIcon: {fileID: 21300000, guid: d9aca4303178e4246b9727b9f17a9fca, type: 3}
+  achievementCondition:
+    assemblyQualifiedName: Moonstorm.Starstorm2.Unlocks.Executioner2.ElectrocutionerUnlockable+ElectrocutionerAchievement,
+      Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  serverTracked: 1
+  baseServerAchievement:
+    assemblyQualifiedName: Moonstorm.Starstorm2.Unlocks.Executioner2.ElectrocutionerUnlockable+ElectrocutionerAchievement+ElectrocutionerServerAchievement,
+      Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  achievementNameToken: SS2_ACHIEVEMENT_EXECUTIONER_ELECTRO_NAME
+  achievementDescToken: SS2_ACHIEVEMENT_EXECUTIONER_ELECTRO_DESC
+  achievedIcon: {fileID: 21300000, guid: d9aca4303178e4246b9727b9f17a9fca, type: 3}
+  unachievedIcon: {fileID: 21300000, guid: d9aca4303178e4246b9727b9f17a9fca, type: 3}
+  prerequisiteAchievement:
+    AchievementIdentifier: 
+    UnlockableDef: {fileID: 0}

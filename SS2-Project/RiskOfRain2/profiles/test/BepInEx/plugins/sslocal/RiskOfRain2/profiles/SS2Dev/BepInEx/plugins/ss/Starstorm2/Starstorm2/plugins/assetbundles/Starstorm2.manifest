@@ -1,0 +1,143 @@
+ManifestFileVersion: 0
+CRC: 390646936
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: msuassets
+      Dependencies: {}
+    Info_1:
+      Name: ss2main
+      Dependencies:
+        Dependency_0: ss2executioner
+        Dependency_1: ss2nemmando
+        Dependency_2: ss2equipments
+        Dependency_3: ss2items
+        Dependency_4: ss2events
+        Dependency_5: ss2dev
+        Dependency_6: ss2nemcommando
+        Dependency_7: ss2executioner2
+    Info_2:
+      Name: ss2base
+      Dependencies:
+        Dependency_0: msuassets
+        Dependency_1: ss2artifacts
+        Dependency_2: ss2items
+        Dependency_3: ss2events
+        Dependency_4: ss2vanilla
+        Dependency_5: ss2shared
+    Info_3:
+      Name: ss2artifacts
+      Dependencies:
+        Dependency_0: msuassets
+        Dependency_1: ss2main
+        Dependency_2: ss2base
+        Dependency_3: ss2executioner
+        Dependency_4: ss2nemmando
+        Dependency_5: ss2items
+        Dependency_6: ss2dev
+        Dependency_7: ss2shared
+    Info_4:
+      Name: ss2executioner
+      Dependencies:
+        Dependency_0: msuassets
+        Dependency_1: ss2main
+        Dependency_2: ss2base
+        Dependency_3: ss2nemmando
+        Dependency_4: ss2items
+        Dependency_5: ss2dev
+        Dependency_6: ss2nemcommando
+        Dependency_7: ss2executioner2
+    Info_5:
+      Name: ss2nemmando
+      Dependencies:
+        Dependency_0: msuassets
+        Dependency_1: ss2main
+        Dependency_2: ss2base
+        Dependency_3: ss2executioner
+        Dependency_4: ss2items
+        Dependency_5: ss2vanilla
+        Dependency_6: ss2shared
+        Dependency_7: ss2nemcommando
+    Info_6:
+      Name: ss2equipments
+      Dependencies:
+        Dependency_0: msuassets
+        Dependency_1: ss2main
+        Dependency_2: ss2base
+        Dependency_3: ss2executioner
+        Dependency_4: ss2nemmando
+        Dependency_5: ss2items
+        Dependency_6: ss2executioner2
+    Info_7:
+      Name: ss2items
+      Dependencies:
+        Dependency_0: msuassets
+        Dependency_1: ss2main
+        Dependency_2: ss2base
+        Dependency_3: ss2artifacts
+        Dependency_4: ss2executioner
+        Dependency_5: ss2nemmando
+        Dependency_6: ss2dev
+        Dependency_7: ss2shared
+    Info_8:
+      Name: ss2events
+      Dependencies:
+        Dependency_0: msuassets
+        Dependency_1: ss2main
+        Dependency_2: ss2base
+        Dependency_3: ss2nemmando
+        Dependency_4: ss2items
+        Dependency_5: ss2shared
+        Dependency_6: ss2nemcommando
+    Info_9:
+      Name: ss2vanilla
+      Dependencies:
+        Dependency_0: msuassets
+        Dependency_1: ss2base
+        Dependency_2: ss2nemmando
+        Dependency_3: ss2equipments
+        Dependency_4: ss2dev
+        Dependency_5: ss2shared
+        Dependency_6: ss2nemcommando
+    Info_10:
+      Name: ss2dev
+      Dependencies:
+        Dependency_0: msuassets
+        Dependency_1: ss2main
+        Dependency_2: ss2base
+        Dependency_3: ss2executioner
+        Dependency_4: ss2nemmando
+        Dependency_5: ss2equipments
+        Dependency_6: ss2items
+        Dependency_7: ss2shared
+        Dependency_8: ss2nemcommando
+        Dependency_9: ss2executioner2
+    Info_11:
+      Name: ss2shared
+      Dependencies:
+        Dependency_0: msuassets
+        Dependency_1: ss2nemmando
+        Dependency_2: ss2events
+    Info_12:
+      Name: ss2nemcommando
+      Dependencies:
+        Dependency_0: msuassets
+        Dependency_1: ss2main
+        Dependency_2: ss2base
+        Dependency_3: ss2executioner
+        Dependency_4: ss2nemmando
+        Dependency_5: ss2items
+        Dependency_6: ss2vanilla
+        Dependency_7: ss2dev
+        Dependency_8: ss2shared
+    Info_13:
+      Name: ss2executioner2
+      Dependencies:
+        Dependency_0: msuassets
+        Dependency_1: ss2main
+        Dependency_2: ss2base
+        Dependency_3: ss2executioner
+        Dependency_4: ss2nemmando
+        Dependency_5: ss2items
+        Dependency_6: ss2vanilla
+        Dependency_7: ss2nemcommando

@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 1348642413, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: MULESlamStepped
   m_EditorClassIdentifier: 
-  skillName: MULESlam
-  skillNameToken: SS2_MULE_SLAM_NAME
-  skillDescriptionToken: SS2_MULE_SLAM_DESC
+  skillName: MULEPunch
+  skillNameToken: SS2_MULE_PUNCH_NAME
+  skillDescriptionToken: SS2_MULE_PUNCH_DESC
   keywordTokens: []
   icon: {fileID: 21300000, guid: 5cd90e9d6b8b3e14fa091abee481621c, type: 3}
   activationStateMachineName: Weapon
   activationState:
-    _typeName: EntityStates.MULE.MULEChargeSlam, Starstorm2, Version=1.0.0.0, Culture=neutral,
+    _typeName: EntityStates.MULE.MULEPunch, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
   interruptPriority: 1
   baseRechargeInterval: 0

@@ -76,6 +76,18 @@ namespace EntityStates.DroneTable
                     }
                 }
 
+                var locator2 = tempDrone.GetComponent<ChildLocator>(); //turn off clone drone sparks
+                if (locator2)
+                {
+                    //sparks.FindChildIndex("ChargeSparks");
+                    var sparks = locator2.FindChild(locator2.FindChildIndex("ChargeSparks"));
+                    if (sparks)
+                    {
+                        sparks.gameObject.SetActive(false);
+                    }
+
+                }
+
                 var fans = droneObject.GetComponentsInChildren<RotateObject>(true);
                 if(fans.Length > 0)
                 {
@@ -103,6 +115,7 @@ namespace EntityStates.DroneTable
                 }
 
                 tempModel = tempDrone.GetComponent<CharacterModel>();
+                SS2Log.Info("tempmodel: " + tempModel + " | " + tempModel.body);
                 if (tempModel)
                 { 
                     var render = tempModel.baseRendererInfos;
@@ -151,8 +164,19 @@ namespace EntityStates.DroneTable
         public override void OnExit()
         {
             base.OnExit();
-            
+
             //AkSoundEngine.StopPlayingID(soundID);
+
+            var hungry = this.gameObject.transform.Find("Hungry");
+            //hungry.localPosition.y = 0.005;
+            if (hungry)
+            {
+                hungry.localPosition += new Vector3(0, .0048f, 0); //appears after 21 drones (.1 / 21)
+                if (hungry.localPosition.y > 1.277f)
+                {
+                    Destroy(hungry.gameObject);
+                }
+            }
 
             if (tempDrone)
             {
@@ -160,7 +184,7 @@ namespace EntityStates.DroneTable
             }
 
             var target = this.gameObject.transform.Find("PickupOrigin");
-            Vector3 vec = Vector3.up * 10 + target.forward * 3.5f;
+            Vector3 vec = Vector3.up * 10 + target.forward * 4f;
             PickupDropletController.CreatePickupDroplet(index, target.position, vec);
         }
     }

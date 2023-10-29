@@ -18,8 +18,8 @@ MonoBehaviour:
       useDirectReference: 0
       asset: {fileID: 0}
     weight: 30
-    maxStacks: 4
-    minStacks: 1
+    maxStacks: 3
+    minStacks: 0
   - itemDef:
       address: BarrierOnKill
       useDirectReference: 0
@@ -32,28 +32,28 @@ MonoBehaviour:
       useDirectReference: 0
       asset: {fileID: 0}
     weight: 25
-    maxStacks: 4
+    maxStacks: 3
     minStacks: 0
   - itemDef:
       address: CritGlasses
       useDirectReference: 0
       asset: {fileID: 0}
     weight: 25
-    maxStacks: 4
-    minStacks: 1
+    maxStacks: 3
+    minStacks: 0
   - itemDef:
       address: Crowbar
       useDirectReference: 0
       asset: {fileID: 0}
     weight: 30
-    maxStacks: 3
+    maxStacks: 2
     minStacks: 0
   - itemDef:
       address: Fork
       useDirectReference: 0
       asset: {fileID: 0}
     weight: 20
-    maxStacks: 5
+    maxStacks: 3
     minStacks: 0
   - itemDef:
       address: HealWhileSafe
@@ -67,14 +67,14 @@ MonoBehaviour:
       useDirectReference: 0
       asset: {fileID: 0}
     weight: 45
-    maxStacks: 3
+    maxStacks: 2
     minStacks: 0
   - itemDef:
       address: IgniteOnKill
       useDirectReference: 0
       asset: {fileID: 0}
     weight: 20
-    maxStacks: 3
+    maxStacks: 2
     minStacks: 0
   - itemDef:
       address: MoltenCoin
@@ -88,14 +88,14 @@ MonoBehaviour:
       useDirectReference: 0
       asset: {fileID: 0}
     weight: 60
-    maxStacks: 3
-    minStacks: 1
+    maxStacks: 2
+    minStacks: 0
   - itemDef:
       address: NearbyDamageBonus
       useDirectReference: 0
       asset: {fileID: 0}
     weight: 10
-    maxStacks: 4
+    maxStacks: 3
     minStacks: 0
   - itemDef:
       address: PersonalShield
@@ -199,7 +199,7 @@ MonoBehaviour:
       address: IceRing
       useDirectReference: 0
       asset: {fileID: 0}
-    weight: 2
+    weight: 1
     maxStacks: 2
     minStacks: 0
   - itemDef:
@@ -256,7 +256,7 @@ MonoBehaviour:
       useDirectReference: 0
       asset: {fileID: 0}
     weight: 10
-    maxStacks: 3
+    maxStacks: 1
     minStacks: 0
   - itemDef:
       address: WarCryOnMultiKill
@@ -270,14 +270,14 @@ MonoBehaviour:
       useDirectReference: 0
       asset: {fileID: 0}
     weight: 16
-    maxStacks: 2
+    maxStacks: 1
     minStacks: 0
   - itemDef:
       address: AlienHead
       useDirectReference: 0
       asset: {fileID: 0}
     weight: 1
-    maxStacks: 3
+    maxStacks: 2
     minStacks: 0
   - itemDef:
       address: HealWhileSafe
@@ -298,7 +298,7 @@ MonoBehaviour:
       useDirectReference: 0
       asset: {fileID: 0}
     weight: 1
-    maxStacks: 3
+    maxStacks: 1
     minStacks: 0
   - itemDef:
       address: Behemoth
@@ -315,21 +315,14 @@ MonoBehaviour:
     maxStacks: 2
     minStacks: 0
   - itemDef:
-      address: ExtraLife
-      useDirectReference: 0
-      asset: {fileID: 0}
-    weight: 0.1
-    maxStacks: 1
-    minStacks: 0
-  - itemDef:
-      address: IncreaseHealing
+      address: UtilitySkillMagazine
       useDirectReference: 0
       asset: {fileID: 0}
     weight: 1
     maxStacks: 1
     minStacks: 0
   - itemDef:
-      address: UtilitySkillMagazine
+      address: IncreaseHealing
       useDirectReference: 0
       asset: {fileID: 0}
     weight: 1

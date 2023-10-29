@@ -52,7 +52,7 @@ namespace Moonstorm.Starstorm2
         {
             Sprite icon = SS2Assets.LoadAsset<Sprite>("icon", SS2Bundle.Main);
             ModSettingsManager.SetModIcon(icon, Starstorm.guid, Starstorm.modName);
-            ModSettingsManager.SetModDescription("A general content mod adapting Risk of Rain 1's Starstorm", Starstorm.guid, Starstorm.modName);
+            ModSettingsManager.SetModDescription("A general content mod adapting ideas from Risk of Rain 1's Starstorm", Starstorm.guid, Starstorm.modName);
 
             ConfigMain = CreateConfigFile(IDMain, true);
             ConfigItem = CreateConfigFile(IDItem, true);

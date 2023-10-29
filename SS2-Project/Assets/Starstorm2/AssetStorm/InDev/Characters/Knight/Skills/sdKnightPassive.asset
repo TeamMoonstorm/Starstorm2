@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1348642413, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: sdKnightPassive
+  m_EditorClassIdentifier: 
+  skillName: KnightPassive
+  skillNameToken: SS2_KNIGHT_PASSIVE_NAME
+  skillDescriptionToken: SS2_KNIGHT_PASSIVE_DESC
+  keywordTokens: []
+  icon: {fileID: 21300000, guid: bf66c3d4ad1462a44ad8c08f2e66d6f7, type: 3}
+  activationStateMachineName: Weapon
+  activationState:
+    _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  interruptPriority: 0
+  baseRechargeInterval: 0
+  baseMaxStock: 0
+  rechargeStock: 0
+  requiredStock: 0
+  stockToConsume: 0
+  resetCooldownTimerOnUse: 0
+  fullRestockOnAssign: 1
+  dontAllowPastMaxStocks: 0
+  beginSkillCooldownOnSkillEnd: 0
+  cancelSprintingOnActivation: 1
+  forceSprintDuringState: 0
+  canceledFromSprinting: 0
+  isCombatSkill: 1
+  mustKeyPress: 0
+  stepCount: 2
+  stepGraceDuration: 0.1

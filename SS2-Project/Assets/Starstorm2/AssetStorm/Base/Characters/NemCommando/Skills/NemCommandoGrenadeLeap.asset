@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1391837873, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: NemCommandoGrenadeLeap
+  m_EditorClassIdentifier: 
+  skillName: NemCommandoGrenade
+  skillNameToken: SS2_NEMCOMMANDO_UTILITY_GRENADE_NAME
+  skillDescriptionToken: SS2_NEMCOMMANDO_UTILITY_GRENADE_DESCRIPTION
+  keywordTokens: []
+  icon: {fileID: 21300000, guid: 7396109387b621949897c35a758d1a51, type: 3}
+  activationStateMachineName: Body
+  activationState:
+    _typeName: EntityStates.NemCommando.GrenadeLeap, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  interruptPriority: 2
+  baseRechargeInterval: 7
+  baseMaxStock: 1
+  rechargeStock: 1
+  requiredStock: 1
+  stockToConsume: 1
+  resetCooldownTimerOnUse: 0
+  fullRestockOnAssign: 1
+  dontAllowPastMaxStocks: 0
+  beginSkillCooldownOnSkillEnd: 0
+  cancelSprintingOnActivation: 0
+  forceSprintDuringState: 1
+  canceledFromSprinting: 0
+  isCombatSkill: 0
+  mustKeyPress: 0

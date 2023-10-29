@@ -9,7 +9,7 @@ namespace Moonstorm.Starstorm2.Survivors
     public sealed class MULE : SurvivorBase
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("MULEBody", SS2Bundle.Indev);
-        public override GameObject MasterPrefab { get; } = null; //Assets.Instance.MainAssetBundle.LoadAsset<GameObject>("PyroMonsterMaster");
+        public override GameObject MasterPrefab { get; } = null;
         public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("survivorMULE", SS2Bundle.Indev);
 
         private GameObject projectilePrefab;

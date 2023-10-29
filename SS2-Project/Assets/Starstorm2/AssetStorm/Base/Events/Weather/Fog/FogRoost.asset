@@ -16,6 +16,7 @@ MonoBehaviour:
   eventState:
     _typeName: EntityStates.Events.FogRoostState, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  requiredStateMachine: 
   startMessageToken: SS2_EVENT_FOG_START
   endMessageToken: SS2_EVENT_FOG_END
   messageColor: {r: 0.754717, g: 0.754717, b: 0.754717, a: 1}
@@ -23,7 +24,7 @@ MonoBehaviour:
   availableStages: 4
   customStageNames: []
   category: CommonEvents
-  selectionWeight: 50
+  selectionWeight: 20
   cost: 550
   repeatedSelectionCostCoefficient: 2
   minimumStageCompletions: 0

@@ -1,4 +1,5 @@
 ﻿using Moonstorm;
+using Moonstorm.Starstorm2.Components;
 using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -23,6 +24,8 @@ namespace EntityStates.NemCaptain
         private float fireTime;
         private bool hasFired;
         private Animator animator;
+
+        private NemCaptainController ncc;
         
         private float duration
         {
@@ -40,6 +43,8 @@ namespace EntityStates.NemCaptain
             fireTime = 0.1f * duration;
             characterBody.SetAimTimer(2f);
             animator = GetModelAnimator();
+
+            ncc = characterBody.GetComponent<NemCaptainController>();
 
             //PlayCrossfade("Gesture, Override, LeftArm", "FireGun", "FireGun.playbackRate", baseDuration, 0.005f);
         }
@@ -80,8 +85,8 @@ namespace EntityStates.NemCaptain
                     maxDistance = range,
                     force = force,
                     hitMask = LayerIndex.CommonMasks.bullet,
-                    minSpread = 0f,
-                    maxSpread = characterBody.spreadBloomAngle,
+                    minSpread = 0.2f * ncc.stressFraction,
+                    maxSpread = characterBody.spreadBloomAngle + ncc.stressFraction,
                     isCrit = isCrit,
                     owner = gameObject,
                     muzzleName = muzzleString,
@@ -93,8 +98,8 @@ namespace EntityStates.NemCaptain
                     stopperMask = LayerIndex.CommonMasks.bullet,
                     weapon = null,
                     tracerEffectPrefab = tracerEffectPrefab,
-                    spreadPitchScale = 1f,
-                    spreadYawScale = 1f,
+                    spreadPitchScale = 2f * ncc.stressFraction,
+                    spreadYawScale = 2f * ncc.stressFraction,
                     queryTriggerInteraction = QueryTriggerInteraction.UseGlobal,
                     hitEffectPrefab = Commando.CommandoWeapon.FirePistol2.hitEffectPrefab
                 };
@@ -103,7 +108,7 @@ namespace EntityStates.NemCaptain
 
                 //FindModelChild("casingParticle").GetComponent<ParticleSystem>().Emit(1);
 
-                characterBody.AddSpreadBloom(0.2f);
+                characterBody.AddSpreadBloom(0.2f + (0.3f * ncc.stressFraction));
             }
         }
 

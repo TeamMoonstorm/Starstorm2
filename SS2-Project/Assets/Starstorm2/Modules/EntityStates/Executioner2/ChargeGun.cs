@@ -1,6 +1,7 @@
 ﻿using Moonstorm.Starstorm2;
 using RoR2;
 using RoR2.Skills;
+using System;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
@@ -101,7 +102,7 @@ namespace EntityStates.Executioner2
                 return;
             }
 
-            duration = baseDuration / skillLocator.secondary.cooldownScale;
+            duration = (baseDuration * skillLocator.secondary.cooldownScale);
 
             PlayCrossfade("Gesture, Override", "FireIonGunStart", "Secondary.playbackRate", duration, 0.3f);
 
@@ -195,7 +196,7 @@ namespace EntityStates.Executioner2
             else
                 timer = 0f;
 
-            if (timer >= timeBetweenStocks * skillLocator.secondary.cooldownScale && characterBody.skillLocator.secondary.stock < characterBody.skillLocator.secondary.maxStock)
+            if (timer >= (timeBetweenStocks * skillLocator.secondary.cooldownScale) / attackSpeedStat && characterBody.skillLocator.secondary.stock < characterBody.skillLocator.secondary.maxStock)
             {
                 timer = 0f;
 
@@ -235,9 +236,9 @@ namespace EntityStates.Executioner2
                 ChildLocator cl = modelLocator.modelTransform.GetComponent<ChildLocator>();
                 Transform muzzle = cl.FindChild("ExhaustGun");
                 if (skinNameToken == "SS2_SKIN_EXECUTIONER_MASTERY")
-                    chargeEffectInstance = Object.Instantiate(masteryChargeEffectPrefab, muzzle.position, muzzle.rotation);
+                    chargeEffectInstance = UnityEngine.Object.Instantiate(masteryChargeEffectPrefab, muzzle.position, muzzle.rotation);
                 else
-                    chargeEffectInstance = Object.Instantiate(defaultChargeEffectPrefab, muzzle.position, muzzle.rotation);
+                    chargeEffectInstance = UnityEngine.Object.Instantiate(defaultChargeEffectPrefab, muzzle.position, muzzle.rotation);
                 chargeEffectInstance.transform.parent = muzzle.transform;
             }
         }

@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: escKnightSword
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.Knight.SwingSword, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: swingTimeCoefficient
+      fieldValue:
+        stringValue: 1.41
+        objectValue: {fileID: 0}
+    - fieldName: baseDuration
+      fieldValue:
+        stringValue: 0.5
+        objectValue: {fileID: 0}
+    - fieldName: damageCoefficient
+      fieldValue:
+        stringValue: 2.4
+        objectValue: {fileID: 0}
+    - fieldName: hitBoxGroupName
+      fieldValue:
+        stringValue: SwordHitbox
+        objectValue: {fileID: 0}
+    - fieldName: hitEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 3988118091893689303, guid: 902610936f9ce564aa163fec3c1becd3,
+          type: 3}
+    - fieldName: procCoefficient
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: pushAwayForce
+      fieldValue:
+        stringValue: 40
+        objectValue: {fileID: 0}
+    - fieldName: forceVector
+      fieldValue:
+        stringValue: 0 0 0
+        objectValue: {fileID: 0}
+    - fieldName: hitPauseDuration
+      fieldValue:
+        stringValue: 0.14
+        objectValue: {fileID: 0}
+    - fieldName: swingEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 7249953071962714612, guid: d6238779a9bc2924dbd47cf6d73674f0,
+          type: 3}
+    - fieldName: swingEffectMuzzleString
+      fieldValue:
+        stringValue: SwingLeft
+        objectValue: {fileID: 0}
+    - fieldName: mecanimHitboxActiveParameter
+      fieldValue:
+        stringValue: SwingSword
+        objectValue: {fileID: 0}
+    - fieldName: shorthopVelocityFromHit
+      fieldValue:
+        stringValue: 6.5
+        objectValue: {fileID: 0}
+    - fieldName: beginStateSoundString
+      fieldValue:
+        stringValue: NemmandoSwing
+        objectValue: {fileID: 0}
+    - fieldName: beginSwingSoundString
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: impactSound
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: forceForwardVelocity
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: forwardVelocityCurve
+      fieldValue:
+        stringValue: '{"preWrapMode":8,"postWrapMode":8,"keys":[]}'
+        objectValue: {fileID: 0}
+    - fieldName: scaleHitPauseDurationAndVelocityWithAttackSpeed
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: ignoreAttackSpeed
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: beamProjectile
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1166276589453209, guid: b427d6842457eba47a8e3aeed1c0883a,
+          type: 3}

@@ -16,6 +16,7 @@ MonoBehaviour:
   eventState:
     _typeName: EntityStates.Events.NemCommandoBossState, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  requiredStateMachine: 
   startMessageToken: SS2_EVENT_GENERICNEMESIS_START
   endMessageToken: SS2_EVENT_GENERICNEMESIS_END
   messageColor: {r: 0.6698113, g: 0.16745283, b: 0.16745283, a: 1}
@@ -25,7 +26,7 @@ MonoBehaviour:
   category: CommonEvents
   selectionWeight: 80
   cost: 900
-  repeatedSelectionCostCoefficient: 1
+  repeatedSelectionCostCoefficient: 10000
   minimumStageCompletions: 6
   requiredUnlockableDef:
     address: 

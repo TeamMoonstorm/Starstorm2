@@ -771,8 +771,82 @@
 									<PropertyList>
 										<Property Name="DecayTime" Type="Real32" Value="4.9"/>
 										<Property Name="Density" Type="Real32" Value="70"/>
-										<Property Name="DryLevel" Type="Real32" Value="-2"/>
-										<Property Name="ERLevel" Type="Real32" Value="-23"/>
+										<Property Name="DryLevel" Type="Real32" Value="0">
+											<RTPCList>
+												<RTPC Name="" ID="{893F1A6F-C9C1-419C-BFEE-3A1485F060F1}" ShortID="800732271">
+													<ReferenceList>
+														<Reference Name="ControlInput">
+															<ObjectRef Name="playerhealth" ID="{C6C20C13-C1D4-49AF-AA84-DB1245C05EC2}" WorkUnitID="{4E4C0F5E-9CE9-403D-9E94-4785BD5A6B13}"/>
+														</Reference>
+													</ReferenceList>
+													<Curve Name="" ID="{57574C30-5854-4D67-B126-7162F874F927}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="3"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>-96.3</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>25</XPos>
+																<YPos>-96.3</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>60</XPos>
+																<YPos>0</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>0</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</RTPC>
+											</RTPCList>
+										</Property>
+										<Property Name="ERLevel" Type="Real32" Value="-9">
+											<RTPCList>
+												<RTPC Name="" ID="{5C8C1DC5-7384-4038-ACE3-7250F215784F}" ShortID="241462187">
+													<ReferenceList>
+														<Reference Name="ControlInput">
+															<ObjectRef Name="playerhealth" ID="{C6C20C13-C1D4-49AF-AA84-DB1245C05EC2}" WorkUnitID="{4E4C0F5E-9CE9-403D-9E94-4785BD5A6B13}"/>
+														</Reference>
+													</ReferenceList>
+													<Curve Name="" ID="{98B7C24A-5CFC-4185-B8BE-D135D304C58E}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="3"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>6</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>25</XPos>
+																<YPos>6</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>60</XPos>
+																<YPos>-96.3</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>-96.3</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</RTPC>
+											</RTPCList>
+										</Property>
 										<Property Name="ERPattern" Type="int32" Value="15"/>
 										<Property Name="Filter1Freq" Type="Real32" Value="590"/>
 										<Property Name="Filter1InsertPos" Type="int32" Value="2"/>
@@ -781,9 +855,46 @@
 										<Property Name="HFDamping" Type="Real32" Value="1.6"/>
 										<Property Name="PreDelay" Type="Real32" Value="75"/>
 										<Property Name="Quality" Type="int32" Value="14"/>
-										<Property Name="ReverbLevel" Type="Real32" Value="-23"/>
+										<Property Name="ReverbLevel" Type="Real32" Value="-96">
+											<RTPCList>
+												<RTPC Name="" ID="{6D72EA84-4A71-43AB-B379-EF686C5945B3}" ShortID="478178736">
+													<ReferenceList>
+														<Reference Name="ControlInput">
+															<ObjectRef Name="playerhealth" ID="{C6C20C13-C1D4-49AF-AA84-DB1245C05EC2}" WorkUnitID="{4E4C0F5E-9CE9-403D-9E94-4785BD5A6B13}"/>
+														</Reference>
+													</ReferenceList>
+													<Curve Name="" ID="{3260E63B-843A-4248-9BED-5B1EC67A8AEB}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="3"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>-0</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>25</XPos>
+																<YPos>0</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>60</XPos>
+																<YPos>-96.3</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>-96.3</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</RTPC>
+											</RTPCList>
+										</Property>
 										<Property Name="RoomShape" Type="Real32" Value="55"/>
-										<Property Name="RoomSize" Type="Real32" Value="49"/>
+										<Property Name="RoomSize" Type="Real32" Value="54"/>
 									</PropertyList>
 								</Effect>
 								<Effect Name="Hall_Medium_Bright" ID="{3C3845B2-C76E-4634-9108-83FA43A5A7BC}" PluginName="Wwise RoomVerb" CompanyID="0" PluginID="118" PluginType="3">

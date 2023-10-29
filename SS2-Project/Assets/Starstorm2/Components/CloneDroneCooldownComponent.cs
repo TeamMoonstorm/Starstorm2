@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using RoR2;
 using UnityEngine.Networking;
+using UnityEngine.AddressableAssets;
 
 namespace Moonstorm.Starstorm2.Components
 {
@@ -20,7 +21,15 @@ namespace Moonstorm.Starstorm2.Components
         private MeshRenderer glowMeshRenderer;
 
         private SkillLocator skillLoc;
-        private bool consoleSpam = false;
+        private bool hasSkill = true;
+        private bool chargeMat;
+
+        private float flickerDur = 4.0f;
+        private float betweenFlicker = 0.25f;
+        private float flickerStopwatch = 0f;
+        private Coroutine flickerCoroutine;
+
+        private AkEvent[] droneAkEvents;
 
         private void Awake()
         {
@@ -30,30 +39,59 @@ namespace Moonstorm.Starstorm2.Components
             glowMesh = childLocator.FindChild("GlowMesh").gameObject;
             glowMeshRenderer = glowMesh.GetComponent<MeshRenderer>();
             skillLoc = GetComponent<SkillLocator>();
+
+            var droneBody = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Drones/Drone1Body.prefab").WaitForCompletion();
+
+            droneAkEvents = droneBody.GetComponents<AkEvent>();
+
+            foreach (AkEvent akEvent in droneAkEvents)
+            {
+                var akEventType = akEvent.GetType();
+                var newComponent = gameObject.AddComponent(akEventType);
+
+                var fields = akEventType.GetFields();
+
+                foreach (var field in fields)
+                {
+                    var value = field.GetValue(akEvent);
+                    field.SetValue(newComponent, value);
+                }
+            }
         }
 
         private void FixedUpdate()
         {
             if (skillLoc.primary.stock < 1)
             {
-                if (!consoleSpam)
+                if (hasSkill)
                 {
-                    consoleSpam = true;
-                    //Debug.Log("CONSOLE SPAM LOL");
+                    hasSkill = false;
+                    glowMeshRenderer.material = disableMat;
                 }
-                if ((skillLoc.primary.cooldownRemaining <= 3 && skillLoc.primary.cooldownRemaining > 2.5) || (skillLoc.primary.cooldownRemaining <= 2 && skillLoc.primary.cooldownRemaining > 1.5) || (skillLoc.primary.cooldownRemaining <= 1 && skillLoc.primary.cooldownRemaining > 0.5) || skillLoc.primary.cooldownRemaining == 0)
+
+                if (skillLoc.primary.cooldownRemaining <= flickerDur && skillLoc.primary.cooldownRemaining > 0)
                 {
-                    //Debug.Log("LESS THAN SIX SECONDS CONSOLE SPAM LOL");
-                    if (glowMeshRenderer.material != defaultMat)
-                        glowMeshRenderer.material = defaultMat;
-                }
-                if ((skillLoc.primary.cooldownRemaining <= 2.5 && skillLoc.primary.cooldownRemaining > 2) || (skillLoc.primary.cooldownRemaining <= 1.5 && skillLoc.primary.cooldownRemaining > 1) || (skillLoc.primary.cooldownRemaining <= 0.5 && skillLoc.primary.cooldownRemaining > 0))
-                {
-                    //Debug.Log("ESS THAN FIVE SECONDS CONSOLE SPAM LOL");
-                    if (glowMeshRenderer.material != disableMat)
-                        glowMeshRenderer.material = disableMat;
+                    flickerStopwatch += Time.fixedDeltaTime;
+                    if (flickerStopwatch >= betweenFlicker)
+                    {
+                        flickerStopwatch = 0f;
+
+                        if (glowMeshRenderer.material == disableMat)
+                            glowMeshRenderer.material = defaultMat;
+                        else
+                            glowMeshRenderer.material = disableMat;
+                    }
                 }
             }
+            else
+            {
+                if (!hasSkill)
+                {
+                    hasSkill = true;
+                    glowMeshRenderer.material = defaultMat;
+                }
+            }
+
         }
     }
 }

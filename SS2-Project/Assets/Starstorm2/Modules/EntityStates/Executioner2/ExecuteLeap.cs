@@ -27,6 +27,7 @@ namespace EntityStates.Executioner2
 
         private string skinNameToken;
         private bool hasPlacedCrosshair = false;
+        private bool controlledExit = false;
 
         public static GameObject areaIndicator;
         public static GameObject areaIndicatorOOB;
@@ -129,6 +130,7 @@ namespace EntityStates.Executioner2
                 hasPlacedCrosshair = true;
                 areaIndicatorInstance = UnityEngine.Object.Instantiate(areaIndicator);
                 areaIndicatorInstanceOOB = UnityEngine.Object.Instantiate(areaIndicatorOOB);
+                areaIndicatorInstance.SetActive(true);
             }
 
             if (isAuthority)
@@ -152,16 +154,16 @@ namespace EntityStates.Executioner2
                 if (Physics.Raycast(aimRay, out raycastHit, maxDistance, LayerIndex.CommonMasks.bullet))
                 {
                     //imAFilthyFuckingLiar = true;
-                    areaIndicatorInstance.SetActive(true);
-                    areaIndicatorInstanceOOB.SetActive(false);
+                    //areaIndicatorInstance.SetActive(true);
+                    //areaIndicatorInstanceOOB.SetActive(false);
                     areaIndicatorInstance.transform.position = raycastHit.point;
                     areaIndicatorInstance.transform.up = raycastHit.normal;
                 }
                 else
                 {
                     //imAFilthyFuckingLiar = false;
-                    areaIndicatorInstance.SetActive(false);
-                    areaIndicatorInstanceOOB.SetActive(true);
+                    //areaIndicatorInstance.SetActive(false);
+                    //areaIndicatorInstanceOOB.SetActive(true);
                     areaIndicatorInstanceOOB.transform.position = aimRay.GetPoint(maxDistance);
                     areaIndicatorInstanceOOB.transform.up = -aimRay.direction;
                 }
@@ -172,6 +174,7 @@ namespace EntityStates.Executioner2
         {
             if (fixedAge >= duration)
             {
+                controlledExit = true;
                 if (inputBank.skill4.down)
                 {
                     ExecuteHold nextState = new ExecuteHold();
@@ -197,7 +200,7 @@ namespace EntityStates.Executioner2
         {
             base.OnExit();
             characterBody.hideCrosshair = false;
-            if (exeController != null)
+            if (exeController != null && controlledExit == false)
                 exeController.meshExeAxe.SetActive(false);
             if (cameraTargetParams)
             {

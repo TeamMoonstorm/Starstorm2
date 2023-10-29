@@ -17,9 +17,8 @@ namespace Moonstorm.Starstorm2.Buffs
             private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffReactor;
             public void OnIncomingDamageServer(DamageInfo damageInfo)
             {
-                damageInfo.damage = 0f;
-                //★ *sips
-                //★ so how do you do your invincibility?
+                if (damageInfo.damageType != DamageType.VoidDeath)
+                    damageInfo.rejected = true;
             }
         }
     }
