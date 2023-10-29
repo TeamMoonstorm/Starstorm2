@@ -22,7 +22,7 @@
 * **New Monsters** - New species of the Planet have come out to put a stop to your invasion of their home.
 
 * **Typhoon** - The Planet grows restless, with fearsome events and monsters coming in greater numbers than ever before. Unlock new skins for survivors* by proving yourself in this new challenge exceeding even Monsoon!
-	 *currently includes Commando, MUL-T, Acrid, Captain, and Commando's Vestige.
+	 *currently includes Commando, Huntress, MUL-T, Acrid, Captain, Executioner, and Commando's Vestige.
 	 
 * **Artifact of Cognation** - A new, unlockable artifact to shape up your runs.
 
