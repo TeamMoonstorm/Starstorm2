@@ -53,7 +53,7 @@ namespace EntityStates.Lamp
                 bullseyeSearch.RefreshCandidates();
                 bullseyeSearch.FilterOutGameObject(gameObject);
                 target = bullseyeSearch.GetResults().FirstOrDefault();
-                if (transform && target && !target.healthComponent.body.hasCloakBuff)
+                if (transform && target && !target.healthComponent.body.hasCloakBuff && target.healthComponent.body.bodyIndex != BodyCatalog.FindBodyIndex("LampBody"))
                 {
                     GameObject beam = isBlue ? healBeamPrefabBlue : healBeamPrefab;
                     GameObject beamInstance = Object.Instantiate(beam, transform);
@@ -65,7 +65,10 @@ namespace EntityStates.Lamp
                     target.healthComponent.body.AddTimedBuff(SS2Content.Buffs.bdLampBuff.buffIndex, duration);
                 }
                 else
+                {
+                    activatorSkillSlot.AddOneStock();
                     outer.SetNextStateToMain();
+                }
             }
         }
 

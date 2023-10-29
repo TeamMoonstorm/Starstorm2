@@ -135,9 +135,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 0}
-  itemDisplayRuleSet: {fileID: 0}
+  itemDisplayRuleSet: {fileID: 11400000, guid: 27883b6e6197d8e439c1de6956daf3ba, type: 2}
   autoPopulateLightInfos: 1
-  baseRendererInfos: []
+  baseRendererInfos:
+  - renderer: {fileID: 5397013561621716845}
+    defaultMaterial: {fileID: 2100000, guid: 66812c14c75d4d74d90d76593b04a96f, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+  - renderer: {fileID: 2857657443346501455}
+    defaultMaterial: {fileID: 2100000, guid: 7bb34a0a50a95084e961b5b1241c9fb1, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+  - renderer: {fileID: 4581141760874201705}
+    defaultMaterial: {fileID: 2100000, guid: 7bb34a0a50a95084e961b5b1241c9fb1, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+  - renderer: {fileID: 6125307808262534236}
+    defaultMaterial: {fileID: 2100000, guid: 2ebb56a22a60dfa488bacb542488c2d5, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+  - renderer: {fileID: 7303768832561182016}
+    defaultMaterial: {fileID: 2100000, guid: 02da7bff0eba29141adefcb74cc97f12, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+  - renderer: {fileID: 4286422566722460641}
+    defaultMaterial: {fileID: 2100000, guid: d989dc54c824d6040a6885d669f3e164, type: 2}
+    defaultShadowCastingMode: 0
+    ignoreOverlays: 1
+    hideOnDeath: 0
   baseLightInfos: []
 --- !u!1 &2069773774686081535
 GameObject:
