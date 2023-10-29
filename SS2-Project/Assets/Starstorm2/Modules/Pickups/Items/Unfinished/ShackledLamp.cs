@@ -9,14 +9,14 @@ namespace Moonstorm.Starstorm2.Items
     //[DisabledContent]
     public sealed class ShackledLamp : ItemBase
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ShackledLamp", SS2Bundle.Indev);
+        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ShackledLamp", SS2Bundle.Items);
 
         public sealed class Behavior : BaseItemBodyBehavior
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.ShackledLamp;
 
-            private static GameObject projectilePrefab = SS2Assets.LoadAsset<GameObject>("LampBulletPlayer", SS2Bundle.Indev);
+            private static GameObject projectilePrefab = SS2Assets.LoadAsset<GameObject>("LampBulletPlayer", SS2Bundle.Items);
             private float attackCounter;
 
             private List<GameObject> lampDisplay;

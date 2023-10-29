@@ -1439,6 +1439,7 @@ GameObject:
   - component: {fileID: 8010538123908625484}
   - component: {fileID: 260741068241964868}
   - component: {fileID: 5924985964426969284}
+  - component: {fileID: 9206172986931743947}
   m_Layer: 0
   m_Name: mdlLamp
   m_TagString: Untagged
@@ -1597,6 +1598,21 @@ MonoBehaviour:
   modelRotation: {x: 0, y: 0, z: 0, w: 1}
   minDistance: 3
   maxDistance: 8
+--- !u!114 &9206172986931743947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7374164075010974851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1533710874, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skins:
+  - {fileID: 11400000, guid: 6adafccaf67ed9a469e037507d6953d6, type: 2}
+  - {fileID: 11400000, guid: 6f414cd4c1e31824ba105be84e8587d3, type: 2}
 --- !u!1 &7381040789808828390
 GameObject:
   m_ObjectHideFlags: 0

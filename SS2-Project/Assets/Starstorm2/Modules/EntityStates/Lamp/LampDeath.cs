@@ -9,7 +9,7 @@ namespace EntityStates.Lamp
     public class LampDeath : GenericCharacterDeath
     {
         public static GameObject deathVFX;
-        //public static GameObject deathVFXblue;
+        public static GameObject deathVFXblue;
         //public static GameObject initialVFX;
         //public static GameObject initialVFXblue;
         public static float duration;
@@ -33,7 +33,7 @@ namespace EntityStates.Lamp
                 characterMotor.enabled = false;
             //if (modelLocator && initialEffect)
                 //EffectManager.
-            //isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
+            isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
         }
 
         public override void FixedUpdate()
@@ -44,8 +44,8 @@ namespace EntityStates.Lamp
                 if (animator.GetFloat(mecanimPerameter) > 0.5f && !hasPlayedEffect)
                 {
                     hasPlayedEffect = true;
-                    //var effect = isBlue ? deathVFXblue : deathVFX;
-                    EffectManager.SimpleEffect(deathVFX, muzzle.position, muzzle.rotation, true);
+                    var effect = isBlue ? deathVFXblue : deathVFX;
+                    EffectManager.SimpleEffect(effect, muzzle.position, muzzle.rotation, true);
                     DestroyBodyAsapServer();
                     DestroyModel();
                     Destroy(gameObject);

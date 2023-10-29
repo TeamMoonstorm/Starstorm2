@@ -15,9 +15,12 @@ namespace EntityStates.Lamp
         private float duration;
         public static float healCoefficient = 5f;
         public static GameObject healBeamPrefab;
+        public static GameObject healBeamPrefabBlue;
         public HurtBox target;
         private HealBeamController healBeamController;
         private float lineWidthRefVelocity;
+
+        private bool isBlue;
 
         private float originalMoveSpeed;
 
@@ -28,6 +31,8 @@ namespace EntityStates.Lamp
             PlayCrossfade("Body", "IdleBuff", 0.3f);
 
             originalMoveSpeed = characterBody.moveSpeed;
+
+            isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
 
             duration = baseDuration / attackSpeedStat;
             float healRate = healCoefficient * damageStat / duration;
@@ -50,7 +55,8 @@ namespace EntityStates.Lamp
                 target = bullseyeSearch.GetResults().FirstOrDefault();
                 if (transform && target && !target.healthComponent.body.hasCloakBuff)
                 {
-                    GameObject beamInstance = Object.Instantiate(healBeamPrefab, transform);
+                    GameObject beam = isBlue ? healBeamPrefabBlue : healBeamPrefab;
+                    GameObject beamInstance = Object.Instantiate(beam, transform);
                     healBeamController = beamInstance.GetComponent<HealBeamController>();
                     healBeamController.healRate = healRate;
                     healBeamController.target = target;
