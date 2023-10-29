@@ -167,7 +167,7 @@ namespace Moonstorm.Starstorm2.Interactables
             dronePairs.Add(new KeyValuePair<string, int>("MegaDroneBody", 350));
             
             dronePairs.Add(new KeyValuePair<string, int>("ShockDroneBody", 40));
-            dronePairs.Add(new KeyValuePair<string, int>("CloneDroneBody", 40));
+            dronePairs.Add(new KeyValuePair<string, int>("CloneDroneBody", 140));
 
 
             droneTripletPairs.Add("Turret1Body", new RefabricatorTriple(new Vector3(0, -0.575f, -.2f), new Vector3(0, 180, 0), new Vector3(.09f, .09f, .09f)));
