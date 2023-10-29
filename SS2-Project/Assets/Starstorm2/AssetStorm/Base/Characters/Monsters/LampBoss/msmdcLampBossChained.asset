@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0777505d690470442828b06f82250916, type: 3}
+  m_Name: msmdcLampBossChained
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1255514408908605, guid: 60a903a9f1f936a4ab9f3c9eab0f8788, type: 3}
+  sendOverNetwork: 1
+  hullSize: 2
+  nodeGraphType: 0
+  requiredFlags: 0
+  forbiddenFlags: 4
+  directorCreditCost: 600
+  occupyPosition: 0
+  eliteRules: 0
+  noElites: 0
+  forbiddenAsBoss: 0
+  _loadout:
+    bodyLoadouts:
+    - body: {fileID: 1862279346882973295, guid: 69ec42ad4658e104e81feb700f18a317,
+        type: 3}
+      skillChoices: []
+      skinChoice: {fileID: 11400000, guid: 5dc94a76fea0ebe4c8c59fcefc65dd96, type: 2}
+  inventoryToCopy: {fileID: 0}
+  equipmentToGrant: []
+  itemsToGrant: []
+  addressReferencedDirectorCard:
+    spawnCard:
+      _asset: {fileID: 11400000}
+      _address: 
+      _useDirectReference: 1
+    selectionWeight: 1
+    spawnDistance: 0
+    preventOverhead: 0
+    minimumStageCompletions: 0
+    requiredUnlockableDef:
+      _asset: {fileID: 0}
+      _address: 
+      _useDirectReference: 0
+    forbiddenUnlockableDef:
+      _asset: {fileID: 0}
+      _address: 
+      _useDirectReference: 0
+  directorCard:
+    spawnCard: {fileID: 11400000}
+    selectionWeight: 1
+    spawnDistance: 0
+    preventOverhead: 0
+    minimumStageCompletions: 0
+    requiredUnlockable: 
+    forbiddenUnlockable: 
+    requiredUnlockableDef: {fileID: 0}
+    forbiddenUnlockableDef: {fileID: 0}
+  monsterCategory: 4
+  customCategory: 
+  customCategoryWeight: 1
+  stages: 64
+  customStages:
+  - fblscene
+  requiredExpansionDefs: []
+  requiredExpansions: []

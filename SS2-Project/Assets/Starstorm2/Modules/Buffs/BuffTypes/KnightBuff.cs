@@ -8,7 +8,7 @@ namespace Moonstorm.Starstorm2.Buffs
 {
     public sealed class KnightBuff : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdKnightBuff", SS2Bundle.Items);
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdKnightBuff", SS2Bundle.Indev);
 
         public override Material OverlayMaterial { get; } = SS2Assets.LoadAsset<Material>("matKnightBuffOverlay", SS2Bundle.Indev);
         public sealed class Behavior : BaseBuffBodyBehavior, IBodyStatArgModifier

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="12" SoundbankVersion="135">
 	<RootPaths>
-		<ProjectRoot>D:\ror2modstuff\Starstorm2UnityProject\Starstorm2Again\Starstorm2\SS2-Project\WwiseProject\</ProjectRoot>
-		<SourceFilesRoot>D:\ror2modstuff\Starstorm2UnityProject\Starstorm2Again\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\</SourceFilesRoot>
-		<SoundBanksRoot>D:\ror2modstuff\Starstorm2UnityProject\Starstorm2Again\Starstorm2\SS2-Project\Assets\StreamingAssets\Audio\GeneratedSoundBanks\Windows\</SoundBanksRoot>
+		<ProjectRoot>C:\Users\hanan\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\</ProjectRoot>
+		<SourceFilesRoot>C:\Users\hanan\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\</SourceFilesRoot>
+		<SoundBanksRoot>C:\Users\hanan\Documents\GitHub\Starstorm2\SS2-Project\Assets\StreamingAssets\Audio\GeneratedSoundBanks\Windows\</SoundBanksRoot>
 		<ExternalSourcesInputFile></ExternalSourcesInputFile>
-		<ExternalSourcesOutputRoot>D:\ror2modstuff\Starstorm2UnityProject\Starstorm2Again\Starstorm2\SS2-Project\WwiseProject\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
+		<ExternalSourcesOutputRoot>C:\Users\hanan\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
 	</RootPaths>
 	<DialogueEvents/>
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="866530374" Language="SFX" Hash="1756574221">
+		<SoundBank Id="866530374" Language="SFX" Hash="1217855856">
 			<ObjectPath>\SoundBanks\Default Work Unit\Starstorm2</ObjectPath>
 			<ShortName>Starstorm2</ShortName>
 			<Path>Starstorm2.bnk</Path>
@@ -221,64 +221,36 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="2970410379" Name="FollowerIdleStart" ObjectPath="\Events\Default Work Unit\Follower\FollowerIdleStart" MaxAttenuation="300.000000" DurationType="OneShot" DurationMin="10.361203" DurationMax="10.361203">
+				<Event Id="3057152170" Name="FollowerCast" ObjectPath="\Events\Default Work Unit\Follower\FollowerCast" DurationType="OneShot" DurationMin="2.420073" DurationMax="2.505417">
 					<IncludedMemoryFiles>
-						<File Id="344160986" Language="SFX">
-							<ShortName>wayfarer_idle_loop_01.wav</ShortName>
-							<Path>SFX\wayfarer_idle_loop_01_BAA9C8D2.wem</Path>
+						<File Id="921835037" Language="SFX">
+							<ShortName>babyability.wav</ShortName>
+							<Path>SFX\babyability_32513D82.wem</Path>
 						</File>
-						<File Id="445232879" Language="SFX">
-							<ShortName>wayfarer_idle_loop_05.wav</ShortName>
-							<Path>SFX\wayfarer_idle_loop_05_BAA9C8D2.wem</Path>
-						</File>
-						<File Id="686485429" Language="SFX">
-							<ShortName>wayfarer_idle_loop_04.wav</ShortName>
-							<Path>SFX\wayfarer_idle_loop_04_BAA9C8D2.wem</Path>
-						</File>
-						<File Id="987711244" Language="SFX">
-							<ShortName>wayfarer_idle_loop_03.wav</ShortName>
-							<Path>SFX\wayfarer_idle_loop_03_BAA9C8D2.wem</Path>
-						</File>
-						<File Id="1055144826" Language="SFX">
-							<ShortName>wayfarer_idle_loop_02.wav</ShortName>
-							<Path>SFX\wayfarer_idle_loop_02_BAA9C8D2.wem</Path>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2970410379" Name="FollowerIdleStart" ObjectPath="\Events\Default Work Unit\Follower\FollowerIdleStart" DurationType="Infinite">
+					<IncludedMemoryFiles>
+						<File Id="198216687" Language="SFX">
+							<ShortName>babyidle.wav</ShortName>
+							<Path>SFX\babyidle_F2BF74AC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
 				<Event Id="2787513641" Name="FollowerIdleStop" ObjectPath="\Events\Default Work Unit\Follower\FollowerIdleStop" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
-				<Event Id="134703416" Name="FollowerSpawn" ObjectPath="\Events\Default Work Unit\Follower\FollowerSpawn" DurationType="OneShot" DurationMin="1.741500" DurationMax="1.741500">
+				<Event Id="134703416" Name="FollowerSpawn" ObjectPath="\Events\Default Work Unit\Follower\FollowerSpawn" DurationType="OneShot" DurationMin="3.062141" DurationMax="3.170128">
 					<IncludedMemoryFiles>
-						<File Id="567254298" Language="SFX">
-							<ShortName>FollowerSpawn.wav</ShortName>
-							<Path>SFX\FollowerSpawn_32513D82.wem</Path>
+						<File Id="386587619" Language="SFX">
+							<ShortName>babyspawn.wav</ShortName>
+							<Path>SFX\babyspawn_32513D82.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="2589904694" Name="FollowerVO" ObjectPath="\Events\Default Work Unit\Follower\FollowerVO" MaxAttenuation="300.000000" DurationType="OneShot" DurationMin="1.599737" DurationMax="1.856148">
+				<Event Id="2589904694" Name="FollowerVO" ObjectPath="\Events\Default Work Unit\Follower\FollowerVO" DurationType="OneShot" DurationMin="3.039822" DurationMax="3.220579">
 					<IncludedMemoryFiles>
-						<File Id="171627018" Language="SFX">
-							<ShortName>wayfarer_idle_VO_01.wav</ShortName>
-							<Path>SFX\wayfarer_idle_VO_01_BAA9C8D2.wem</Path>
-						</File>
-						<File Id="196979575" Language="SFX">
-							<ShortName>wayfarer_idle_VO_05.wav</ShortName>
-							<Path>SFX\wayfarer_idle_VO_05_BAA9C8D2.wem</Path>
-						</File>
-						<File Id="546895763" Language="SFX">
-							<ShortName>wayfarer_idle_VO_06.wav</ShortName>
-							<Path>SFX\wayfarer_idle_VO_06_BAA9C8D2.wem</Path>
-						</File>
-						<File Id="819498529" Language="SFX">
-							<ShortName>wayfarer_idle_VO_02.wav</ShortName>
-							<Path>SFX\wayfarer_idle_VO_02_BAA9C8D2.wem</Path>
-						</File>
-						<File Id="906121422" Language="SFX">
-							<ShortName>wayfarer_idle_VO_04.wav</ShortName>
-							<Path>SFX\wayfarer_idle_VO_04_BAA9C8D2.wem</Path>
-						</File>
-						<File Id="955562662" Language="SFX">
-							<ShortName>wayfarer_idle_VO_03.wav</ShortName>
-							<Path>SFX\wayfarer_idle_VO_03_BAA9C8D2.wem</Path>
+						<File Id="398590803" Language="SFX">
+							<ShortName>babybark.wav</ShortName>
+							<Path>SFX\babybark_32513D82.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -311,6 +283,22 @@
 						<File Id="953880137" Language="SFX">
 							<ShortName>item_proc_explodejump_v3_01.wav</ShortName>
 							<Path>SFX\item_proc_explodejump_v3_01_BAA9C8D2.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1316900923" Name="LampBullet" ObjectPath="\Events\Default Work Unit\Follower\LampBullet" DurationType="OneShot" DurationMin="1.099674" DurationMax="1.138454">
+					<IncludedMemoryFiles>
+						<File Id="657553960" Language="SFX">
+							<ShortName>bulletshoot.wav</ShortName>
+							<Path>SFX\bulletshoot_32513D82.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1573671621" Name="LampImpact" ObjectPath="\Events\Default Work Unit\Follower\LampImpact" DurationType="OneShot" DurationMin="0.757440" DurationMax="0.784152">
+					<IncludedMemoryFiles>
+						<File Id="694986444" Language="SFX">
+							<ShortName>bulletimpact.wav</ShortName>
+							<Path>SFX\bulletimpact_32513D82.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -922,7 +910,7 @@
 			<ShortName>SS2Init</ShortName>
 			<Path>SS2Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="2545819644" Language="SFX" Hash="3288871657">
+		<SoundBank Id="2545819644" Language="SFX">
 			<ObjectPath>\SoundBanks\Default Work Unit\SS2Music</ObjectPath>
 			<ShortName>SS2Music</ShortName>
 			<Path>SS2Music.bnk</Path>

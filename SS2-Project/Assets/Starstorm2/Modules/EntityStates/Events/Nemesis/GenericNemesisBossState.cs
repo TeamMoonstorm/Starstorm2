@@ -163,7 +163,7 @@ namespace EntityStates.Events
                     body.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
                 };
 
-                //nemesisBossBody.gameObject.AddComponent<NemesisResistances>();
+                nemesisBossBody.gameObject.AddComponent<NemesisResistances>();
                 new NemesisSpawnCard.SyncBaseStats(nemesisBossBody).Send(R2API.Networking.NetworkDestination.Clients);
                 combatSquad.AddMember(master);
                 master.onBodyDeath.AddListener(OnBodyDeath);

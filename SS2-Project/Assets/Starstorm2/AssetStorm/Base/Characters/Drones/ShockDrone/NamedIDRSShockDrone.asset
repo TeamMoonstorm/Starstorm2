@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b2a16891c8108e48883bce0009b7835, type: 3}
+  m_Name: NamedIDRSShockDrone
+  m_EditorClassIdentifier: 
+  idrs: {fileID: 11400000, guid: 27883b6e6197d8e439c1de6956daf3ba, type: 2}
+  namedRuleGroups:
+  - keyAssetName: DroneWeaponsDisplay1
+    keyAsset:
+      address: 
+      useDirectReference: 0
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDroneWeaponMinigun
+      displayPrefab:
+        address: 
+        useDirectReference: 0
+        asset: {fileID: 0}
+      childName: Muzzle
+      localPos: {x: 0, y: 5.45388, z: 1.59295}
+      localAngles: {x: 0, y: 90, z: 197.5362}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: DroneWeaponsDisplay2
+    keyAsset:
+      address: 
+      useDirectReference: 0
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDroneWeaponLauncher
+      displayPrefab:
+        address: 
+        useDirectReference: 0
+        asset: {fileID: 0}
+      childName: Muzzle
+      localPos: {x: 0.90264, y: 4.8031, z: 0.07439}
+      localAngles: {x: 0, y: 90, z: 92.94289}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
