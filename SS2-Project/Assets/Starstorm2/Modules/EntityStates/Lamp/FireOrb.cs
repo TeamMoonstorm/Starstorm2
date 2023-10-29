@@ -48,6 +48,8 @@ namespace EntityStates.Lamp
             bool isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
             GameObject projectile = isBlue ? blueProjectilePrefab : projectilePrefab;
 
+            Util.PlayAttackSpeedSound("LampBullet", gameObject, characterBody.attackSpeed);
+
             ProjectileManager.instance.FireProjectile(
                     projectile,
                     muzzle.position,

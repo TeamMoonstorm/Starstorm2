@@ -51,6 +51,8 @@ namespace EntityStates.LampBoss
 
                 Vector3 angle = Quaternion.Euler(Random.Range(-20f, 20f), Random.Range(-20f, 20f), 0f) * aimRay.direction;
 
+                //Util.PlayAttackSpeedSound("LampBullet", gameObject, characterBody.attackSpeed);
+
                 ProjectileManager.instance.FireProjectile(
                     projectile,
                     muzzle.position,

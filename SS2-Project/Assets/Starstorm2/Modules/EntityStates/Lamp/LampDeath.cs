@@ -28,6 +28,7 @@ namespace EntityStates.Lamp
             animator = GetModelAnimator();
             PlayCrossfade("Body", "Death", 0.01f);
             muzzle = GetModelChildLocator().FindChild(muzzleString);
+            //Util.PlaySound("FollowerVO", gameObject);
             hasPlayedEffect = false;
             if (characterMotor)
                 characterMotor.enabled = false;
@@ -45,7 +46,8 @@ namespace EntityStates.Lamp
                 {
                     hasPlayedEffect = true;
                     var effect = isBlue ? deathVFXblue : deathVFX;
-                    EffectManager.SimpleEffect(effect, muzzle.position, muzzle.rotation, true);
+                    //EffectManager.SimpleEffect(effect, muzzle.position, muzzle.rotation, true);
+                    Util.PlaySound("LampImpact", gameObject);
                     DestroyBodyAsapServer();
                     DestroyModel();
                     Destroy(gameObject);

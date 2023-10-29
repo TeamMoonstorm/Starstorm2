@@ -55,6 +55,7 @@ namespace EntityStates.Lamp
                 target = bullseyeSearch.GetResults().FirstOrDefault();
                 if (transform && target && !target.healthComponent.body.hasCloakBuff && target.healthComponent.body.bodyIndex != BodyCatalog.FindBodyIndex("LampBody"))
                 {
+                    Util.PlaySound("FollowerCast", gameObject);
                     GameObject beam = isBlue ? healBeamPrefabBlue : healBeamPrefab;
                     GameObject beamInstance = Object.Instantiate(beam, transform);
                     healBeamController = beamInstance.GetComponent<HealBeamController>();

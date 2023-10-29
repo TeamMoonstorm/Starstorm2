@@ -39,7 +39,7 @@ namespace Moonstorm.Starstorm2.Items
                 if (attackCounter >= 5)
                 {
                     attackCounter %= 5f;
-                    //Util.PlayAttackSpeedSound(EntityStates.GravekeeperBoss.FireHook.soundString, body.gameObject, body.attackSpeed);
+                    Util.PlayAttackSpeedSound("LampBullet", gameObject, body.attackSpeed);
                     float damage = body.damage * (2f + stack);
                     Vector3 muzzlePos = body.inputBank.aimOrigin;
                     if (displayPos != null)
