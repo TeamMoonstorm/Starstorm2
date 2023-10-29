@@ -3,7 +3,7 @@
 	<Attenuations>
 		<WorkUnit Name="Default Work Unit" ID="{01E36904-BE25-433F-9547-3A046044CA56}" PersistMode="Standalone">
 			<ChildrenList>
-				<Attenuation Name="BodyAttenuation" ID="{A986EB11-7B06-4BE3-9630-2DEB2646D5C4}" ShortID="576687896">
+				<Attenuation Name="SurvivorAttenuation" ID="{A986EB11-7B06-4BE3-9630-2DEB2646D5C4}" ShortID="576687896">
 					<PropertyList>
 						<Property Name="RadiusMax" Type="Real64" Value="200"/>
 					</PropertyList>
@@ -95,7 +95,7 @@
 						</FocusUsage>
 					</CurveUsageInfoList>
 				</Attenuation>
-				<Attenuation Name="EliteGlobalAttenuation" ID="{95B01EB5-085C-4AE6-ABDD-2AC73786503B}" ShortID="864432079">
+				<Attenuation Name="EliteAttenuation" ID="{95B01EB5-085C-4AE6-ABDD-2AC73786503B}" ShortID="864432079">
 					<PropertyList>
 						<Property Name="RadiusMax" Type="Real64" Value="300"/>
 					</PropertyList>
