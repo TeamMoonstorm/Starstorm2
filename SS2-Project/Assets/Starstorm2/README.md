@@ -1,13 +1,13 @@
 
 ![Starstorm 2](https://github.com/swuff-star/Starstorm2/blob/main/SS2-Project/Assets/Starstorm2/ReadmeAssets/ss2logopurple.gif?raw=true)
 
-**Starstorm 2** is a work-in-progress adaptation of the Risk of Rain 1 mod "Starstorm". It currently features two new survivors, over 20 new items and equipment, and numerous new challenges to shake up your runs.
+**Starstorm 2** is a work-in-progress adaptation of the Risk of Rain 1 mod "Starstorm". It currently features three new survivors, three new monsters, over 20 new items and equipment, and numerous new challenges to shake up your runs.
 
 ![New Survivors...](https://github.com/swuff-star/Starstorm2/blob/main/SS2-Project/Assets/Starstorm2/ReadmeAssets/ss2survivorpromo.gif?raw=true)
 
 * **Executioner**  - An aggressive, versatile survivor with an arsenal made for picking off targets and chaining kills. His powerful Ion Manipulators gain charges with every kill.
 
-* **???** - A survivor of unknown origin, familiar yet unfamiliar. Under the right conditions, you may meet him on the Planet, but he certainly won't be on your side.
+* **???** - Survivors of unknown origin, familiar yet unfamiliar. Under the right conditions, you may meet them on the Planet, but they certainly won't be on your side.
 
 ![New Items...](https://github.com/swuff-star/Starstorm2/blob/main/SS2-Project/Assets/Starstorm2/ReadmeAssets/ss2itemspromo.gif?raw=true)
 
@@ -17,6 +17,8 @@
 
 * **Events** - Between severe weather, magical buildups, and mysterious invaders, learn to expect the unexpected as forces both natural and supernatural interfere with your runs.
 
+* **New Monsters** - New species of the Planet have come out to put a stop to your invasion of their home.
+
 * **Typhoon** - The Planet grows restless, with fearsome events and monsters coming in greater numbers than ever before. Unlock new skins for survivors* by proving yourself in this new challenge exceeding even Monsoon!
 	 *currently includes Commando, MUL-T, Acrid, Captain, and Commando's Vestige.
 	 
@@ -25,19 +27,19 @@
 ![Credits](https://github.com/swuff-star/Starstorm2/blob/main/SS2-Project/Assets/Starstorm2/ReadmeAssets/ss2credits.gif?raw=true)
 
 Starstorm 2 is currently being developed and maintained by...
-* Nebby, prod, swuff★, Zenithrium
+* Buns, Nebby, orbeezeater22, swuff★, Zenithrium
 
 With previous and one-off code contributions by...
-* Anreol, bread, Flan, Gaforb, GrooveSalad, HIFU, KevinFromHPCustomerService, MagicGonads, malfaisant, Moffein, Nebby, Noop, Phreel, rob, swuff★, sebacame, Shared, TheTimesweeper, Vale-X, xpcybic, Xubas
+* Anreol, bread, Flan, Gaforb, GrooveSalad, HIFU, KevinFromHPCustomerService, MagicGonads, malfaisant, Moffein, Nebby, Noop, Phreel, prod, rob, swuff★, sebacame, Shared, TheTimesweeper, Vale-X, xpcybic, Xubas
 
 With Art/Modelling/Animation contributions by...
-* Alexstarwras, Anreol, Bolty, bread, bruh, Cexeub, dotflare, Draymarc, Domi, JestAnotherAnimator, Gem, goodguy, GrooveSalad, LucidInceptor, Neik, KevinFromHPCustomerService, PapaZach, Plexus, prodzpod, QuietAnon, redacted, rob, SkeletorChampion, SOM, Spenny, swuff★, xpcybic, Reithierion, UnknownGlaze, Zenithrium
+* Alexstarwras, Anreol, Bolty, bread, bruh, Cexeub, dotflare, Draymarc, Domi, JestAnotherAnimator, Gem, goodguy, GrooveSalad, JaceDaDorito, LucidInceptor, Neik, KevinFromHPCustomerService, PapaZach, Plexus, prodzpod, QuietAnon, rekkadraws, redacted, rob, SkeletorChampion, SOM, Spenny, swuff★, xpcybic, Reithierion, UnknownGlaze, Zenithrium
 
 Additional thanks to... 
-* Writing - Blimblam, Lyrical Endymion, swuff★, T_Dimensional, Zenithrium
-* Translations - Anreol (Spanish), MysticSword (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight (Chinese)
+* Writing - Blimblam, Lyrical Endymion, rekkadraws, swuff★, T_Dimensional, Zenithrium
+* Translations - Anreol (Spanish), MysticSword (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight (Chinese), Kauzok (Portuguese)
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze
-* Special thanks - Altzeus, DestroyedClone, Dee'd, don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, valerie ♥ 
+* Special thanks - Altzeus, DestroyedClone, Dee', don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, VioletChaolan, valerie ♥ 
 
 ## Feedback, Bug Reporting & Known Issues
 
@@ -45,6 +47,38 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 ## Changelog
 
 **Warning: content spoilers below!**
+### 0.5.0
+* New Content
+    * Survivor: ???
+    * Monsters: Rushrum, Follower, Wayfarer
+    * Unlockable Skin: Heel (Mercenary)
+    * Grandmastery Skins: Clandestine (Huntress), Electrocutioner (Executioner)
+    * Interactables: Refabricator, Shock Drone, Duplicator Drone
+* Executioner
+    * Slightly buffed the damage of Primary and Special.
+    * Secondary's charge rate now scales with the attack speed stat.
+    * Optimized the performance of the Fear debuff.
+    * Fixed various misplaced item displays.
+* Nemesis Commando
+    * Various visual polishes.
+    * Secondary's reload speed now scales with the attack speed stat.
+    * Rebalanced boss fight and improved boss AI.
+    * Restored boss immunity to being knocked out of bounds and to fall damage.
+    * Fixed various misplaced item displays.
+* Items
+    * Fixed X4 Stimulant cooldown scaling with first stack.
+    * Adjusted Nkota's Heritage pickup model to address various issues.
+    * Slightly tweaks visuals of Stirring Soul.
+* Events
+    * Rebalanced event costs to hopefully make them rarer during loops.
+    * Reworked the Nemesis invasion event so only one boss may spawn per stage.
+* Other
+    * Updated translations for Nemesis Commando and Executioner.
+    * Added PT-BR translations.
+    * Survivor ragdolls no longer disappear when they die off screen.
+    * Survivor models now fade out when near the camera.
+    * ...and so much more!
+ 
 ### 0.4.6
 * General
     * Fixed a bug with how Nemesis Commando checks to reload after Single Tap's stock count changes.
