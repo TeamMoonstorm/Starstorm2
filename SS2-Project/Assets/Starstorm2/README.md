@@ -39,8 +39,8 @@ With Art/Modelling/Animation contributions by...
 
 Additional thanks to... 
 * Writing - Blimblam, Lyrical Endymion, rekkadraws, swuff★, T_Dimensional, Zenithrium
-* Translations - Anreol (Spanish), MysticSword (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight (Chinese), Kauzok (Portuguese)
-* Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze
+* Translations - Anreol, BannyDee (Spanish), MysticSword (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight (Chinese), Kauzok (Portuguese)
+* Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze, nairb zepol
 * Special thanks - Altzeus, DestroyedClone, Dee', don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, VioletChaolan, valerie ♥ 
 
 ## Feedback, Bug Reporting & Known Issues
@@ -51,8 +51,8 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 **Warning: content spoilers below!**
 ### 0.5.0
 * New Content
-    * Survivor: ???
-    * Monsters: Rushrum, Follower, Wayfarer
+    * Monsters: Rushrum, Follower
+    * Bosses: Wayfarer, ???
     * Unlockable Skin: Heel (Mercenary)
     * Grandmastery Skins: Clandestine (Huntress), Electrocutioner (Executioner)
     * Interactables: Refabricator, Shock Drone, Duplicator Drone
