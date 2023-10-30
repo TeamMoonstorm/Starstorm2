@@ -46,6 +46,11 @@ Additional thanks to...
 ## Feedback, Bug Reporting & Known Issues
 
 Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Starstorm2/issues). A list of known & previously reported issues can also be found here. Please include an [Output Log](https://h3vr-modding.github.io/wiki/installing/troubleshooting/log_file.html) and detailed steps to help recreate your error! Feedback about the modded characters pertaining to balance and gameplay can be discussed in our [Discord server](https://discord.com/invite/SgFxwKT7nY).
+
+* Known Issues
+    * Drone Table visuals currently are not networked.
+    * Elite events are currently disabled.
+
 ## Changelog
 
 **Warning: content spoilers below!**
