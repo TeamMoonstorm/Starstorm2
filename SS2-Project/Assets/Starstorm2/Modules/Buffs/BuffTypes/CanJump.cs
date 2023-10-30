@@ -23,7 +23,7 @@ namespace Moonstorm.Starstorm2.Buffs
 
             public void FixedUpdate()
             {
-                if (body.inputBank.jump.justPressed)
+                if (body.inputBank.jump.justPressed) // server doesnt see client inputs so the buff cant be removed by the server. not gonna bother. too lazy. nemmerc must release.
                 {
                     EffectManager.SimpleEffect(SS2Assets.LoadAsset<GameObject>("canExhaust", SS2Bundle.Equipments), body.transform.position, body.transform.rotation, false);
                     body.RemoveBuff(SS2Content.Buffs.bdCanJump.buffIndex);

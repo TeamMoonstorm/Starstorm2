@@ -5,6 +5,7 @@ using RoR2;
 using HG;
 using Moonstorm.Starstorm2;
 using Moonstorm.Starstorm2.Components;
+using UnityEngine.Networking;
 
 namespace EntityStates.CloneDrone
 {
@@ -17,6 +18,7 @@ namespace EntityStates.CloneDrone
         public static float dropForwardVelocityStrength = 3f;
         public static GameObject targetIndicatorVfxPrefab;
         public GenericPickupController gpc;
+        public GameObject target;
 
         private ChildLocator childLocator;
         private ItemTier pickupTier;
@@ -31,17 +33,15 @@ namespace EntityStates.CloneDrone
         private MeshRenderer glowMeshRenderer;
         private Material glowMeshMat;
 
-        private SphereSearch sphereSearch;
-
         private float originalMoveSpeed;
-
-        private bool isInterrupted = false;
 
         public override void OnEnter()
         {
             base.OnEnter();
             childLocator = GetModelChildLocator();
-            targetIndicatorVfxPrefab = SS2Assets.LoadAsset<GameObject>("DuplicatingCircleVFX", SS2Bundle.Indev);
+            targetIndicatorVfxPrefab = SS2Assets.LoadAsset<GameObject>("DuplicatingCircleVFX", SS2Bundle.Interactables);
+
+            this.gpc = this.target.GetComponent<GenericPickupController>(); 
             pickupTier = gpc.pickupIndex.pickupDef.itemTier;
 
             originalMoveSpeed = characterBody.moveSpeed;
@@ -126,102 +126,29 @@ namespace EntityStates.CloneDrone
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-
-            if (isAuthority)
+            characterBody.moveSpeed = originalMoveSpeed * 0.1f;
+            if (!target)
             {
-                characterBody.moveSpeed = originalMoveSpeed * 0.1f;
+                //Debug.Log("was interrupted grabbing item");
+                skillLocator.primary.rechargeStopwatch *= 0.25f; //as a treat
+                outer.SetNextStateToMain();
+                return;
+            }
+            if (duration <= fixedAge)
+            {
+                outer.SetNextStateToMain();
+                //create the item
 
-                //checks if item still exists - if not, end the skill
-                if (gpc == null && !isInterrupted)
-                {
-                    isInterrupted = true;
-                    //Debug.Log("was interrupted grabbing item");
-                    skillLocator.primary.rechargeStopwatch *= 0.25f; //as a treat
-                    outer.SetNextStateToMain();
-                }
-
-                if (duration <= fixedAge)
-                {
-                    outer.SetNextStateToMain();
-                    //create the item
+                if(NetworkServer.active)
                     CreateClone();
-                }
             }
         }
 
         public void CreateClone()
         {
             PickupDropletController.CreatePickupDroplet(gpc.pickupIndex, transform.position, Vector3.up * dropUpVelocityStrength + transform.forward * dropForwardVelocityStrength);
-
-            sphereSearch = new SphereSearch();
-            sphereSearch.origin = transform.position;
-            sphereSearch.mask = LayerIndex.pickups.mask;
-            sphereSearch.queryTriggerInteraction = QueryTriggerInteraction.Collide;
-            sphereSearch.radius = 8f;
-
-            gpc.gameObject.AddComponent<CloneDroneItemMarker>();
-
-            Search();
         }
-
-        public void Search() //this is so fucking stupid man
-        {
-            List<Collider> list = CollectionPool<Collider, List<Collider>>.RentCollection();
-            sphereSearch.ClearCandidates();
-            sphereSearch.RefreshCandidates();
-            sphereSearch.FilterCandidatesByColliderEntities();
-            sphereSearch.OrderCandidatesByDistance();
-            sphereSearch.FilterCandidatesByDistinctColliderEntities();
-            sphereSearch.GetColliders(list);
-            List<GameObject> objectList;
-            objectList = new List<GameObject>();
-
-            foreach (Collider c in list)
-            {
-                GameObject obj = c.transform.parent.gameObject;
-                objectList.Add(obj);
-            }
-
-            GameObject probablyTheObjectIJustSpawnedPleaseFuckGod = null;
-
-            foreach (GameObject obj in objectList)
-            {
-                Debug.Log("beginning to check obj");
-                //are you even an item?
-                if (obj.GetComponent<GenericPickupController>() != null)
-                {
-                    Debug.Log("obj is item");
-                    //do you have dominant or recessive genes?
-                    if (obj.GetComponent<CloneDroneItemMarker>() == null)
-                    {
-                        Debug.Log("obj isnt clone");
-                        GenericPickupController tempGPC = obj.GetComponent<GenericPickupController>();
-                        //check that the item matches the intended item
-                        if (tempGPC.pickupIndex == gpc.pickupIndex)
-                        {
-                            Debug.Log("obj is correct pickup");
-                            float distance = Vector3.Distance(transform.position, obj.transform.position);
-                            //if there's no better candidate, set this one - if a closer one is found, choose that instead
-                            if (probablyTheObjectIJustSpawnedPleaseFuckGod == null || distance < Vector3.Distance(transform.position, probablyTheObjectIJustSpawnedPleaseFuckGod.transform.position))
-                            {
-                                Debug.Log("set predicted obj to: " + obj);
-                                probablyTheObjectIJustSpawnedPleaseFuckGod = obj;
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (probablyTheObjectIJustSpawnedPleaseFuckGod != null)
-            {
-                Debug.Log("probablyobj: " + probablyTheObjectIJustSpawnedPleaseFuckGod.name);
-                probablyTheObjectIJustSpawnedPleaseFuckGod.AddComponent<CloneDroneItemMarker>();
-            }
-            else
-            {
-                Debug.Log("found nothing :(");
-            }
-        }
+        
 
         public override void OnExit()
         {
@@ -254,8 +181,19 @@ namespace EntityStates.CloneDrone
 
             glowMesh = childLocator.FindChild("GlowMesh").gameObject;
             glowMeshRenderer = glowMesh.GetComponent<MeshRenderer>();
-            glowMeshRenderer.material = SS2Assets.LoadAsset<Material>("matCloneDroneLightInvalid", SS2Bundle.Indev);
+            glowMeshRenderer.material = SS2Assets.LoadAsset<Material>("matCloneDroneLightInvalid", SS2Bundle.Interactables);
 
+        }
+
+        public override void OnSerialize(NetworkWriter writer)
+        {
+            base.OnSerialize(writer);
+            writer.Write(this.target);
+        }
+        public override void OnDeserialize(NetworkReader reader)
+        {
+            base.OnDeserialize(reader);
+            this.target = reader.ReadGameObject();
         }
         public override InterruptPriority GetMinimumInterruptPriority()
         {

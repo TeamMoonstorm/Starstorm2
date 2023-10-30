@@ -79,7 +79,7 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Updated translations for Nemesis Commando and Executioner.
     * Added PT-BR translations.
     * Survivor ragdolls no longer disappear when they die off screen.
-    * Survivor models now fade out when near the camera.
+    * Pressurized canister has been disabled while we work on a multiplayer bug.
     * ...and so much more!
  
 ### 0.4.6
