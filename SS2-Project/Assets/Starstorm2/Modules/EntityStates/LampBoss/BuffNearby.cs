@@ -25,7 +25,7 @@ namespace EntityStates.LampBoss
             animator = GetModelAnimator();
             duration = baseDuration / attackSpeedStat;
 
-
+            hasBuffed = false;
 
             PlayCrossfade("FullBody, Override", "SecondaryBuff", "Secondary.playbackRate", duration, 0.05f);
         }
@@ -34,7 +34,7 @@ namespace EntityStates.LampBoss
         {
             base.FixedUpdate();
 
-            if (animator.GetFloat(mecanimParameter) >= 0.5f && !hasBuffed)
+            if (animator.GetFloat(mecanimParameter) >= 0.5f && !hasBuffed && isAuthority)
             {
                 hasBuffed = true;
 

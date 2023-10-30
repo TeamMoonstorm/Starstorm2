@@ -70,7 +70,7 @@ namespace EntityStates.LampBoss
         {
             base.FixedUpdate();
 
-            if (animator.GetFloat("RaiseLamp") >= 0.5f)
+            if (animator.GetFloat("RaiseLamp") >= 0.5f && isAuthority)
             {
                 timer += fixedAge;
                 if (timer >= timeBetweenShots)
