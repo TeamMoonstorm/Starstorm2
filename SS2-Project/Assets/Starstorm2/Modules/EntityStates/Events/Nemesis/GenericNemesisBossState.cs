@@ -181,22 +181,22 @@ namespace EntityStates.Events
         {
             onNemesisDefeatedGlobal?.Invoke(nemesisBossBody);
 
-
-            // need to do outro here instead of destroying
-            if (musicTrack)
-                Destroy(musicTrack.gameObject);
-
             // we dont want to go back to main state, since we only want one nemesis boss per stage
             //outer.SetNextStateToMain();
+            outer.SetNextState(new IdleRestOfStage());
         }
 
         public override void OnExit()
         {
             base.OnExit();
 
-            
+
             /*if (eventStateEffect)
                 eventStateEffect.OnEndingStart(fadeDuration);*/
+
+            // need to do outro here instead of destroying
+            if (musicTrack)
+                Destroy(musicTrack.gameObject);
         }
 
         public override void OnSerialize(NetworkWriter writer)
