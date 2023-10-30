@@ -129,7 +129,7 @@ namespace EntityStates.Executioner2
             {
                 hasPlacedCrosshair = true;
                 areaIndicatorInstance = UnityEngine.Object.Instantiate(areaIndicator);
-                areaIndicatorInstanceOOB = UnityEngine.Object.Instantiate(areaIndicatorOOB);
+                //areaIndicatorInstanceOOB = UnityEngine.Object.Instantiate(areaIndicatorOOB);
                 areaIndicatorInstance.SetActive(true);
             }
 
@@ -164,8 +164,8 @@ namespace EntityStates.Executioner2
                     //imAFilthyFuckingLiar = false;
                     //areaIndicatorInstance.SetActive(false);
                     //areaIndicatorInstanceOOB.SetActive(true);
-                    areaIndicatorInstanceOOB.transform.position = aimRay.GetPoint(maxDistance);
-                    areaIndicatorInstanceOOB.transform.up = -aimRay.direction;
+                    areaIndicatorInstance.transform.position = aimRay.GetPoint(maxDistance);
+                    areaIndicatorInstance.transform.up = -aimRay.direction;
                 }
             }
         }
