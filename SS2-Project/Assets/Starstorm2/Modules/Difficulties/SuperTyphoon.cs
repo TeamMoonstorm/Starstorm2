@@ -64,7 +64,8 @@ namespace Moonstorm.Starstorm2
             if (run.selectedDifficulty == SuperTyphoonIndex)
             {
                 foreach (CharacterMaster cm in run.userMasters.Values)
-                    cm.inventory.GiveItem(RoR2Content.Items.MonsoonPlayerHelper.itemIndex);
+                    if (NetworkServer.active)
+                        cm.inventory.GiveItem(RoR2Content.Items.MonsoonPlayerHelper.itemIndex);
                 if (IncreaseSpawnCapST)
                 {
                     TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit *= 3;
