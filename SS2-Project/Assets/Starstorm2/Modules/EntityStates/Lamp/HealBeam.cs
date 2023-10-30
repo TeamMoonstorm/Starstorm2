@@ -78,7 +78,7 @@ namespace EntityStates.Lamp
             if (healBeamController)
                 healBeamController.BreakServer();
             characterBody.moveSpeed = originalMoveSpeed;
-            if (target)
+            if (target && NetworkServer.active)
                 target.healthComponent.body.RemoveBuff(SS2Content.Buffs.bdLampBuff.buffIndex);
             base.OnExit();
             PlayCrossfade("Body", "Idle", 0.3f);

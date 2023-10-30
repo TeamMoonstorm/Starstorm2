@@ -147,8 +147,12 @@ namespace Moonstorm.Starstorm2.Components
             }
 
 
-            this.indicator.yOffset = 0; // XD????
-            this.indicator.targetTransform = base.transform;
+            if(this.indicator)
+            {
+                this.indicator.yOffset = 0; // XD????
+                this.indicator.targetTransform = base.transform;
+            }
+            
 
         }
 

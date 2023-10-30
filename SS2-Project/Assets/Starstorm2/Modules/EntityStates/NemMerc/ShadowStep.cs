@@ -36,7 +36,7 @@ namespace EntityStates.NemMerc
         private Transform modelTransform;
 
         private Vector3 lastKnownTargetPosition;
-
+        private Vector3 targetSafe;
         private GameObject bossEffect;
         public override void OnEnter()
         {
@@ -114,17 +114,15 @@ namespace EntityStates.NemMerc
         }
 
         private void UpdateTarget() // shitcode. im getting desparate. it keeps teleporting to 0,0 and i dont know why
-        {         
-            if(this.target)
+        {
+            if (this.target)
             {
-                this.lastKnownTargetPosition = this.target.transform.position;             
+                this.lastKnownTargetPosition = this.target.transform.position;
             }
-
             Vector3 between = this.lastKnownTargetPosition - this.teleportStartPosition;
             float distance = between.magnitude;
             Vector3 direction = between.normalized;
             this.teleportTarget = direction * (distance + ShadowStep.teleportBehindDistance) + base.transform.position;
-
             if (Physics.Raycast(this.lastKnownTargetPosition, direction, out RaycastHit hit, ShadowStep.teleportBehindDistance, LayerIndex.world.mask))
             {
                 this.teleportTarget = hit.point;
@@ -144,10 +142,20 @@ namespace EntityStates.NemMerc
         [NonSerialized] // WHY DOESNT NONSERIALIZED WORK ALL OF A SUDDEN ???????????????????????????????????????
         public static float bitch = 0.66f; // I DONT CARE I DONCA RE STFU STFU STFU
 
+
+        private void FixedUpdateTarget()
+        {
+            if(this.target)
+            {
+                this.targetSafe = this.teleportTarget;
+            }
+
+        }
         public override void FixedUpdate()
         {
             base.FixedUpdate();
 
+            this.FixedUpdateTarget();
             base.characterMotor.velocity = Vector3.zero;
 
             if (base.fixedAge >= this.duration * bitch && !s) // XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
@@ -161,21 +169,23 @@ namespace EntityStates.NemMerc
                 if(this.camera)
                     this.camera.EndCameraFlip();
 
-                if (this.teleportTarget.magnitude < 5)
+
+                if (this.targetSafe.magnitude < 5)
                 {
                     SS2Log.Error("SHADOWSTEP WENT TO 0,0");
                     SS2Log.Error("TeleportTarget: " + this.teleportTarget);
+                    SS2Log.Error("targetSafe: " + this.targetSafe);
                     SS2Log.Error("target: " + this.target);
                     SS2Log.Error("lastKnownTargetPosition: " + this.lastKnownTargetPosition);
                     SS2Log.Error("NemMercTrackerComponent target: " + base.GetComponent<NemMercTracker>().GetTrackingTarget());
                 }
 
 
-                TeleportHelper.TeleportBody(base.characterBody, this.teleportTarget);
+                TeleportHelper.TeleportBody(base.characterBody, this.targetSafe);
 
                 if(blinkArrivalPrefab)
                 {
-                    EffectManager.SimpleEffect(blinkArrivalPrefab, this.teleportTarget, Quaternion.identity, true);
+                    EffectManager.SimpleEffect(blinkArrivalPrefab, this.targetSafe, Quaternion.identity, true);
                 }
 
                 base.characterDirection.forward = this.lastKnownTargetPosition - base.transform.position;
