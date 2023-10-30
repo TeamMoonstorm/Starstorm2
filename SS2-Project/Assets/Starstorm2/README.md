@@ -67,10 +67,11 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Rebalanced boss fight and improved boss AI.
     * Restored boss immunity to being knocked out of bounds and to fall damage.
     * Fixed various misplaced item displays.
-* Items
+* Items & Equipment
     * Fixed X4 Stimulant cooldown scaling with first stack.
     * Adjusted Nkota's Heritage pickup model to address various issues.
-    * Slightly tweaks visuals of Stirring Soul.
+    * Slightly tweaked visuals of Stirring Soul.
+    * Disabled Pressurized Cannister.
 * Events
     * Rebalanced event costs to hopefully make them rarer during loops.
     * Reworked the Nemesis invasion event so only one boss may spawn per stage.
