@@ -4,6 +4,7 @@ using RoR2;
 using RoR2.UI;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 namespace Moonstorm.Starstorm2
 {
