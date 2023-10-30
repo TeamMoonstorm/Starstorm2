@@ -73,6 +73,7 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Slightly tweaked visuals of Stirring Soul.
     * Disabled Pressurized Cannister.
 * Events
+    * Temporarily disabled elite events.
     * Rebalanced event costs to hopefully make them rarer during loops.
     * Reworked the Nemesis invasion event so only one boss may spawn per stage.
 * Other
