@@ -29,14 +29,23 @@ MonoBehaviour:
   cost: 1150
   repeatedSelectionCostCoefficient: 4
   minimumStageCompletions: 3
+  requiredUnlock:
+    _asset: {fileID: 0}
+    _address: 
+    _useDirectReference: 0
   requiredUnlockableDef:
     address: 
     useDirectReference: 1
     asset: {fileID: 0}
+  forbiddenUnlock:
+    _asset: {fileID: 0}
+    _address: 
+    _useDirectReference: 0
   forbiddenUnlockableDef:
     address: 
     useDirectReference: 1
     asset: {fileID: 0}
+  requiredExpansionDefs: []
   requiredExpansions: []
   requiredItemAddressable:
     address: 
