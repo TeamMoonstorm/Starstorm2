@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1255927399, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: skinLampBossChained
+  m_EditorClassIdentifier: 
+  baseSkins: []
+  icon: {fileID: 0}
+  nameToken: SS2_SKIN_LAMP_BLUE
+  unlockableName: 
+  unlockableDef: {fileID: 0}
+  rootObject: {fileID: 3502845028911919073, guid: 69ec42ad4658e104e81feb700f18a317,
+    type: 3}
+  rendererInfos:
+  - renderer: {fileID: 7496361300183835963, guid: 69ec42ad4658e104e81feb700f18a317,
+      type: 3}
+    defaultMaterial: {fileID: 2100000, guid: 8108fa8422cd21f40a5f6e28a1c6de19, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+  - renderer: {fileID: 1477914932764974069, guid: 69ec42ad4658e104e81feb700f18a317,
+      type: 3}
+    defaultMaterial: {fileID: 2100000, guid: 519eba80f0a00724da28331978dfc8d9, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+  - renderer: {fileID: 3707033603136325774, guid: 69ec42ad4658e104e81feb700f18a317,
+      type: 3}
+    defaultMaterial: {fileID: 2100000, guid: da4f63859dc40ce499e1d35d5983d4e3, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 1
+    hideOnDeath: 0
+  - renderer: {fileID: 1881196805192751346, guid: 69ec42ad4658e104e81feb700f18a317,
+      type: 3}
+    defaultMaterial: {fileID: 2100000, guid: 519eba80f0a00724da28331978dfc8d9, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+  - renderer: {fileID: 5277884701177061461, guid: 69ec42ad4658e104e81feb700f18a317,
+      type: 3}
+    defaultMaterial: {fileID: 2100000, guid: da4f63859dc40ce499e1d35d5983d4e3, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 1
+    hideOnDeath: 0
+  - renderer: {fileID: 814557101294251739, guid: 69ec42ad4658e104e81feb700f18a317,
+      type: 3}
+    defaultMaterial: {fileID: 2100000, guid: 519eba80f0a00724da28331978dfc8d9, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 1
+    hideOnDeath: 0
+  gameObjectActivations:
+  - gameObject: {fileID: 3776065456716912611, guid: 69ec42ad4658e104e81feb700f18a317,
+      type: 3}
+    shouldActivate: 1
+  meshReplacements: []
+  projectileGhostReplacements: []
+  minionSkinReplacements:
+  - minionBodyPrefab: {fileID: 2041233120209123290, guid: 9b385791f3dae28458f07441dddd4f6e,
+      type: 3}
+    minionSkin: {fileID: 11400000, guid: 6f414cd4c1e31824ba105be84e8587d3, type: 2}

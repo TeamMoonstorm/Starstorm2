@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: escLampSpawn
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.Lamp.LampSpawn, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: spawnVFX
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 8366333857707230014, guid: 85928708162673a4693a39393d6ff240,
+          type: 3}
+    - fieldName: muzzleString
+      fieldValue:
+        stringValue: Head
+        objectValue: {fileID: 0}
+    - fieldName: duration
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: spawnSoundString
+      fieldValue:
+        stringValue: FollowerSpawn
+        objectValue: {fileID: 0}
+    - fieldName: spawnVFXblue
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 8467819452110043384, guid: 152d862610ebc694dba219a2a74409bc,
+          type: 3}

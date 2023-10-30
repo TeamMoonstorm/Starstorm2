@@ -21,6 +21,13 @@ MonoBehaviour:
   directorCreditCost: 0
   occupyPosition: 0
   eliteRules: 0
+  noElites: 0
+  forbiddenAsBoss: 0
+  _loadout:
+    bodyLoadouts: []
+  inventoryToCopy: {fileID: 0}
+  equipmentToGrant: []
+  itemsToGrant: []
   nemesisInventory: {fileID: 11400000, guid: 0900046b3fe37a348a049c17ce478dfe, type: 2}
   useOverrideState: 1
   overrideSpawnState:
@@ -33,6 +40,9 @@ MonoBehaviour:
   - fieldName: baseRegen
     statModifierType: 2
     modifier: 0
+  - fieldName: baseDamage
+    statModifierType: 0
+    modifier: 0.3
   skillOverrides:
   - skillSlot: 3
     skillDef: {fileID: 11400000, guid: 86f90298653afbf408ef281ed13f1c9d, type: 2}

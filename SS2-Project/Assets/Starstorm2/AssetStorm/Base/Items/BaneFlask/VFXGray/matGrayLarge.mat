@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: matGrayLarge
+  m_Shader: {fileID: 4800000, guid: 6294c93e1c9048742a30db0ae205fdf9, type: 2}
+  m_ShaderKeywords: EMISSIONFROMALBEDO
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Cloud1Tex:
+        m_Texture: {fileID: 2800000, guid: ee75094a86c9f384f9500782350c0f0d, type: 3}
+        m_Scale: {x: 3, y: 3}
+        m_Offset: {x: 0, y: 0}
+    - _Cloud2Tex:
+        m_Texture: {fileID: 2800000, guid: ee75094a86c9f384f9500782350c0f0d, type: 3}
+        m_Scale: {x: 2, y: 2}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: afd503511c6df274b8d8727ad43cff20, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RemapTex:
+        m_Texture: {fileID: 2800000, guid: 5eae6901c12bc224395200f9c9f6d6f2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _AlphaBoost: 1.9
+    - _BumpScale: 1
+    - _CloudNormalMap: 0
+    - _Cull: 2
+    - _Cutoff: 0.31
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _EmissionFromAlbedo: 1
+    - _ExternalAlpha: 1
+    - _ExtrusionStrength: 0
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _InvFade: 1.4
+    - _Metallic: 0
+    - _Mode: 0
+    - _NormalStrength: 1
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _RampInfo: 3
+    - _SmoothnessTextureChannel: 0
+    - _SpecularExponent: 1
+    - _SpecularHighlights: 1
+    - _SpecularStrength: 0
+    - _SrcBlend: 1
+    - _UVSec: 0
+    - _VertexAlphaOn: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _CutoffScroll: {r: 3, g: 8, b: 4, a: 6}
+    - _EmissionColor: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 1}
+    - _TintColor: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}

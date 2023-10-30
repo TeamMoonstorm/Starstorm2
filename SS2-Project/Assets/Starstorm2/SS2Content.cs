@@ -38,6 +38,8 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef NemBossHelper;
 
+            public static ItemDef VoidRock;
+
             public static ItemDef BloodTester;
 
             public static ItemDef FieldAccelerator;
@@ -76,6 +78,8 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef StirringSoul;
 
+            public static ItemDef Remuneration;
+
             public static ItemDef RelicOfDuality;
 
             public static ItemDef RelicOfExtinction;
@@ -108,6 +112,8 @@ namespace Moonstorm.Starstorm2
             public static EquipmentDef ElitePurpleEquipment;
 
             public static EquipmentDef EliteKineticEquipment;
+
+            public static EquipmentDef equipDivineRight;
 
             public static EquipmentDef BackThruster;
 
@@ -209,6 +215,30 @@ namespace Moonstorm.Starstorm2
             public static BuffDef BuffEchelon;
 
             public static BuffDef BuffBane;
+
+            public static BuffDef BuffRiposte;
+
+            public static BuffDef BuffCyborgPrimary;
+
+            public static BuffDef BuffCyborgTeleporter;
+
+            public static BuffDef BuffBloonTrap;
+
+            public static BuffDef bdOverstress;
+
+            public static BuffDef bdNemCapDroneBuff;
+
+            public static BuffDef bdShield;
+
+            public static BuffDef bdParry;
+
+            public static BuffDef bdKnightBuff;
+
+            public static BuffDef bdFortified;
+
+            public static BuffDef bdKnightCharged;
+
+            public static BuffDef bdLampBuff;
         }
 
         public static class Elites
@@ -216,7 +246,10 @@ namespace Moonstorm.Starstorm2
             //public static EliteDef edPurple;
             public static EliteDef edKinetic;
         }
-
+        public static class Scenes
+        {
+            public static SceneDef VoidShop;
+        }
         public static class Survivors
         {
             //public static SurvivorDef SurvivorBorg;
@@ -230,6 +263,10 @@ namespace Moonstorm.Starstorm2
             public static SurvivorDef SurvivorNemmando;
 
             public static SurvivorDef survivorNemCommando;
+
+            public static SurvivorDef survivorNemCaptain;
+
+            public static SurvivorDef survivorNemMerc;
 
             //public static SurvivorDef SurvivorPyro;
         }
@@ -248,6 +285,20 @@ namespace Moonstorm.Starstorm2
         public override void Init()
         {
             base.Init();
+
+            Typhoon.Init();
+            Events.Init();
+            
+            //Bulwark.Init();
+            
+            //Ethereal.Init();
+            
+            //Deluge.Init();
+            //Tempest.Init();
+            //Cyclone.Init();
+            //SuperTyphoon.Init();
+            
+            //Ethereal.Init();
 
             LoadDispatchers = new Action[]
             {
@@ -283,41 +334,6 @@ namespace Moonstorm.Starstorm2
                 {
                     new Modules.Elites().Initialize();
                 },
-				
-                Typhoon.Init,
-                Events.Init,
-				
-                //delegate
-                //{
-                //    //Deluge.Init();
-                //},
-                //delegate
-                //{
-                //    //Tempest.Init();
-                //},
-                //delegate
-                //{
-                //    //Cyclone.Init();
-                //},
-                //delegate
-                //{
-                //    Typhoon.Init();
-                //},
-                //delegate
-                //{
-                //    //SuperTyphoon.Init();
-                //},
-                //delegate
-                //{
-                //    Ethereal.Init();
-                //},
-                //delegate
-                //{
-                //    if(SS2Config.EnableEvents.Value)
-                //    {
-                //        Events.Init();
-                //    }
-                //},
                 delegate
                 {
                     new Modules.Characters().Initialize();
@@ -383,6 +399,10 @@ namespace Moonstorm.Starstorm2
                 delegate
                 {
                     PopulateTypeFields(typeof(Elites), ContentPack.eliteDefs);
+                },
+                delegate
+                {
+                    PopulateTypeFields(typeof(Scenes), ContentPack.sceneDefs);
                 },
                 delegate
                 {

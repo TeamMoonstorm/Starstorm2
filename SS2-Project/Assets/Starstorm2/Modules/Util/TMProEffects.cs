@@ -124,7 +124,7 @@ namespace Moonstorm.Starstorm2
 
                                 anythingChanged = true;
 
-                                var shakeAmount = 6f * charInfo.scale;
+                                var shakeAmount = 3f * charInfo.scale;
                                 var origVerts = cachedMeshInfo[charInfo.materialReferenceIndex].vertices;
                                 var origColors = cachedMeshInfo[charInfo.materialReferenceIndex].colors32;
                                 var destVerts = textInfo.meshInfo[charInfo.materialReferenceIndex].vertices;

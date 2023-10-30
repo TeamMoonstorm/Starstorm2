@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1255927399, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: SkinKnightDefault
+  m_EditorClassIdentifier: 
+  baseSkins: []
+  icon: {fileID: 21300000, guid: 7afa810fc113d6c44ae95ba1dcf779c4, type: 3}
+  nameToken: SS2_SKIN_KNIGHT_DEFAULT
+  unlockableName: texKnightSkin
+  unlockableDef: {fileID: 0}
+  rootObject: {fileID: 6095575928926857498, guid: d71decbedbdd9a74c8af9c7152019bfa,
+    type: 3}
+  rendererInfos:
+  - renderer: {fileID: 1968459994568438803, guid: d71decbedbdd9a74c8af9c7152019bfa,
+      type: 3}
+    defaultMaterial: {fileID: 2100000, guid: 1f291e58dcb47c14caacdae64c06f0dc, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+  - renderer: {fileID: 2212001759952729741, guid: d71decbedbdd9a74c8af9c7152019bfa,
+      type: 3}
+    defaultMaterial: {fileID: 2100000, guid: 8050e8ef5b06c3048818cf02071cc9c0, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+  - renderer: {fileID: 4515503323399973481, guid: d71decbedbdd9a74c8af9c7152019bfa,
+      type: 3}
+    defaultMaterial: {fileID: 2100000, guid: 1c5124d6207ebf5478243fc24613cb3b, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 1
+    hideOnDeath: 0
+  - renderer: {fileID: 1908797617424318619, guid: d71decbedbdd9a74c8af9c7152019bfa,
+      type: 3}
+    defaultMaterial: {fileID: 2100000, guid: d0bb5e8a1a65dc049bee3ed42c32c734, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+  - renderer: {fileID: 1057076124018806292, guid: d71decbedbdd9a74c8af9c7152019bfa,
+      type: 3}
+    defaultMaterial: {fileID: 2100000, guid: 715f2c567a4eba74f9d3a640ffeac029, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 1
+    hideOnDeath: 0
+  gameObjectActivations: []
+  meshReplacements:
+  - renderer: {fileID: 1816673806540844275, guid: d71decbedbdd9a74c8af9c7152019bfa,
+      type: 3}
+    mesh: {fileID: 4300000, guid: 6c7f0ac0ef8818b44a426dc0cae9fedb, type: 2}
+  - renderer: {fileID: 177831144303089406, guid: d71decbedbdd9a74c8af9c7152019bfa,
+      type: 3}
+    mesh: {fileID: 4300000, guid: 0f124e621c654d84798bd948f73c98f3, type: 2}
+  - renderer: {fileID: 5534462557743390596, guid: d71decbedbdd9a74c8af9c7152019bfa,
+      type: 3}
+    mesh: {fileID: 4300000, guid: db3d7cd720d4a3f42a4353a8851356b1, type: 2}
+  - renderer: {fileID: 2062217364945566543, guid: d71decbedbdd9a74c8af9c7152019bfa,
+      type: 3}
+    mesh: {fileID: 4300000, guid: 38098b3b403d7eb499d62f76418e2b11, type: 2}
+  - renderer: {fileID: 5075002410357232588, guid: d71decbedbdd9a74c8af9c7152019bfa,
+      type: 3}
+    mesh: {fileID: 4300000, guid: a62a44b3bcb3f8b4f92b971e1080dee7, type: 2}
+  projectileGhostReplacements: []
+  minionSkinReplacements: []

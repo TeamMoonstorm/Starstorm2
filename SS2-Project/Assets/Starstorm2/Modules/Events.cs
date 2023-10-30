@@ -83,6 +83,12 @@ namespace Moonstorm.Starstorm2
                     EventCatalog.AddCard(evt);
             }
 
+            if (EnableEvents) foreach (var edcs in SS2Assets.LoadAllAssetsOfType<EventDirectorCategorySelection>(SS2Bundle.Events))
+            {
+                EventCatalog.AddCategory(edcs);
+                Debug.Log("added category: " + edcs.name);
+            }
+
             SS2Config.MakeConfigurableBool(true, b =>
             {
                 b.Section = "Visuals";
@@ -102,6 +108,8 @@ namespace Moonstorm.Starstorm2
                     }
                 };
             }).DoConfigure();
+
+            Moonstorm.Components.EventDirector.AddNewEntityStateMachine("Nemesis");
         }
 
         private static void StormOnMenu(Scene scene, LoadSceneMode mode)

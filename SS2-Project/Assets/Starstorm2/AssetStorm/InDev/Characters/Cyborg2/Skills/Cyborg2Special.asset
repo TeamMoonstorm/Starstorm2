@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1391837873, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: Cyborg2Special
+  m_EditorClassIdentifier: 
+  skillName: Special
+  skillNameToken: SS2_CYBORG2_SPECIAL_MAGNETBALL_NAME
+  skillDescriptionToken: SS2_CYBORG2_SPECIAL_MAGNETBALL_DESCRIPTION
+  keywordTokens: []
+  icon: {fileID: 21300000, guid: 8607213de25223c45b83fde7b11bf021, type: 3}
+  activationStateMachineName: Weapon
+  activationState:
+    _typeName: EntityStates.Cyborg2.FireMagnetBall, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  interruptPriority: 2
+  baseRechargeInterval: 12
+  baseMaxStock: 1
+  rechargeStock: 1
+  requiredStock: 1
+  stockToConsume: 1
+  resetCooldownTimerOnUse: 0
+  fullRestockOnAssign: 0
+  dontAllowPastMaxStocks: 0
+  beginSkillCooldownOnSkillEnd: 1
+  cancelSprintingOnActivation: 0
+  forceSprintDuringState: 0
+  canceledFromSprinting: 0
+  isCombatSkill: 1
+  mustKeyPress: 1

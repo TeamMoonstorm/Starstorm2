@@ -21,7 +21,7 @@ namespace Moonstorm.Starstorm2.Unlocks.NemCommando
                 base.OnUninstall();
             }
 
-            private class NemCommandoServerAchievement : BaseServerAchievement
+            private class NemCommandoUnlockableServerAchievement : BaseServerAchievement
             {
                 public BodyIndex nemCommandoBodyIndex
                 {

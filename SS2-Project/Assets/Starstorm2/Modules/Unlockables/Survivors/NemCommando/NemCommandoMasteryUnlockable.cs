@@ -7,11 +7,6 @@ namespace Moonstorm.Starstorm2.Unlocks.NemCommando
     {
         public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skin.nemcommando.mastery", SS2Bundle.NemCommando);
 
-        /*public override void Initialize()
-        {
-            AddRequiredType<Survivors.Nemmando>();
-        }*/
-
         public sealed class NemCommandoMasteryAchievement : GenericMasteryAchievement
         {
             public override float RequiredDifficultyCoefficient { get; set; } = 3.0f;

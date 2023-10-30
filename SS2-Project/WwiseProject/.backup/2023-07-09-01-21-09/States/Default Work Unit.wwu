@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{C9DA9C86-229B-4FF2-87DC-B23EFC806633}" SchemaVersion="97">
+	<States>
+		<WorkUnit Name="Default Work Unit" ID="{C9DA9C86-229B-4FF2-87DC-B23EFC806633}" PersistMode="Standalone">
+			<ChildrenList>
+				<StateGroup Name="gameplaySongChoice" ID="{AF662067-146B-45F4-BD5B-EA995963753C}">
+					<PropertyList>
+						<Property Name="DefaultTransitionTime" Type="Real64" Value="0.5"/>
+					</PropertyList>
+					<ChildrenList>
+						<State Name="None" ID="{619DB315-B40F-44E9-BA62-93394E8812EA}"/>
+						<State Name="song_nemesis_start" ID="{F82465D1-6966-4764-BA13-7E2C759DC645}"/>
+						<State Name="song_nemesis_main" ID="{E440A5C1-C4B8-4ECE-BC38-109416605313}"/>
+					</ChildrenList>
+				</StateGroup>
+			</ChildrenList>
+		</WorkUnit>
+	</States>
+</WwiseDocument>

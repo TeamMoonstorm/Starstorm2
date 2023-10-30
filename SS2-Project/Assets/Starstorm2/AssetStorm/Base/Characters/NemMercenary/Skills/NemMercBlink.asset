@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7b222c1b86f5eb4d8cc713d0bfc38e4, type: 3}
+  m_Name: NemMercBlink
+  m_EditorClassIdentifier: 
+  skillName: ShadowStep
+  skillNameToken: SS2_NEMESIS_MERCENARY_UTILITY_BLINK_NAME
+  skillDescriptionToken: SS2_NEMESIS_MERCENARY_UTILITY_BLINK_DESCRIPTION
+  keywordTokens: []
+  icon: {fileID: 21300000, guid: dc0a043fba064c841a6d44f3c1622ca0, type: 3}
+  activationStateMachineName: Body
+  activationState:
+    _typeName: EntityStates.NemMerc.ShadowStep, Starstorm2, Version=1.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  interruptPriority: 2
+  baseRechargeInterval: 4.5
+  baseMaxStock: 1
+  rechargeStock: 1
+  requiredStock: 1
+  stockToConsume: 1
+  resetCooldownTimerOnUse: 0
+  fullRestockOnAssign: 1
+  dontAllowPastMaxStocks: 0
+  beginSkillCooldownOnSkillEnd: 0
+  cancelSprintingOnActivation: 0
+  forceSprintDuringState: 0
+  canceledFromSprinting: 0
+  isCombatSkill: 1
+  mustKeyPress: 1
+  hologramOverrideIcon: {fileID: 21300000, guid: 3256a90b1ccf65e449dae197d046a46a,
+    type: 3}
+  hologramOverrideState:
+    _typeName: EntityStates.NemMerc.HologramShadowStep, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  hologramOverrideStateMachine: Body

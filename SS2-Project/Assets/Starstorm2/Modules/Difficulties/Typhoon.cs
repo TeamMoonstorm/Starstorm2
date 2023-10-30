@@ -2,6 +2,7 @@
 using R2API.Utils;
 using RoR2;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Moonstorm.Starstorm2
 {
@@ -27,9 +28,9 @@ namespace Moonstorm.Starstorm2
         {
             if (IncreaseSpawnCap)
             {
-                self.creditMultiplier *= 1.25f;
-                self.expRewardCoefficient *= 0.8f;
-                self.goldRewardCoefficient *= 0.8f;
+                self.creditMultiplier *= 1.5f;
+                //self.expRewardCoefficient *= 0.8f;
+                //self.goldRewardCoefficient *= 0.8f;
                 //Debug.Log("creditMultiplier = " + self.creditMultiplier);
                 //Debug.Log("expRewardCoefficient = " + self.expRewardCoefficient);
                 //Debug.Log("goldRewardCoefficient = " + self.goldRewardCoefficient);
@@ -43,7 +44,8 @@ namespace Moonstorm.Starstorm2
             if (run.selectedDifficulty == TyphoonIndex)
             {
                 foreach (CharacterMaster cm in run.userMasters.Values)
-                    cm.inventory.GiveItem(RoR2Content.Items.MonsoonPlayerHelper.itemIndex);
+                    if(NetworkServer.active)
+                        cm.inventory.GiveItem(RoR2Content.Items.MonsoonPlayerHelper.itemIndex);
                 if (IncreaseSpawnCap)
                 {
                     TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit *= 2;

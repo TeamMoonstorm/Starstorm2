@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: escAgarthanBite
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.Agarthan.Bite, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: baseDuration
+      fieldValue:
+        stringValue: 0.8
+        objectValue: {fileID: 0}
+    - fieldName: damageCoefficient
+      fieldValue:
+        stringValue: 2
+        objectValue: {fileID: 0}
+    - fieldName: hitBoxGroupName
+      fieldValue:
+        stringValue: BiteHitbox
+        objectValue: {fileID: 0}
+    - fieldName: hitEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: procCoefficient
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: pushAwayForce
+      fieldValue:
+        stringValue: 200
+        objectValue: {fileID: 0}
+    - fieldName: forceVector
+      fieldValue:
+        stringValue: 0 0 0
+        objectValue: {fileID: 0}
+    - fieldName: hitPauseDuration
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: swingEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: swingEffectMuzzleString
+      fieldValue:
+        stringValue: JawMuzzle
+        objectValue: {fileID: 0}
+    - fieldName: mecanimHitboxActiveParameter
+      fieldValue:
+        stringValue: Bite.hitboxActive
+        objectValue: {fileID: 0}
+    - fieldName: shorthopVelocityFromHit
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: beginStateSoundString
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: beginSwingSoundString
+      fieldValue:
+        stringValue: Play_lemurian_bite_attack
+        objectValue: {fileID: 0}
+    - fieldName: impactSound
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: forceForwardVelocity
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: forwardVelocityCurve
+      fieldValue:
+        stringValue: '{"preWrapMode":8,"postWrapMode":8,"keys":[{"time":0.0039840638637542728,"value":0.0,"inTangent":0.0,"outTangent":0.0,"inWeight":0.3333333432674408,"outWeight":0.3333333432674408,"weightedMode":0,"tangentMode":136},{"time":0.19900000095367433,"value":0.00274658203125,"inTangent":0.027742134407162668,"outTangent":0.027742134407162668,"inWeight":0.3333333432674408,"outWeight":0.3333333432674408,"weightedMode":0,"tangentMode":136},{"time":0.4000000059604645,"value":0.800000011920929,"inTangent":0.0,"outTangent":0.0,"inWeight":0.3333333432674408,"outWeight":0.3333333432674408,"weightedMode":0,"tangentMode":136},{"time":1.0039840936660767,"value":-0.0034129691775888206,"inTangent":0.0,"outTangent":0.0,"inWeight":0.3333333432674408,"outWeight":0.3333333432674408,"weightedMode":0,"tangentMode":136}]}'
+        objectValue: {fileID: 0}
+    - fieldName: scaleHitPauseDurationAndVelocityWithAttackSpeed
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: ignoreAttackSpeed
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}

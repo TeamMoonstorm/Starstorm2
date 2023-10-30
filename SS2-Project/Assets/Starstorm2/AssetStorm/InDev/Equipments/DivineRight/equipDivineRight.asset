@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1512808244, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: equipDivineRight
+  m_EditorClassIdentifier: 
+  pickupModelPrefab: {fileID: 9160581942787960827, guid: 04174803b8c295948ade0f87165e4a24,
+    type: 3}
+  cooldown: 18
+  nameToken: SS2_EQUIP_DIVINERIGHT_NAME
+  pickupToken: SS2_EQUIP_DIVINERIGHT_PICKUP
+  descriptionToken: SS2_EQUIP_DIVINERIGHT_DESC
+  loreToken: SS2_EQUIP_DIVINERIGHT_LORE
+  pickupIconSprite: {fileID: 21300000, guid: 1b089c02b6f35d74fa0a986c181fbf58, type: 3}
+  unlockableDef: {fileID: 0}
+  colorIndex: 5
+  canDrop: 0
+  dropOnDeathChance: 0
+  canBeRandomlyTriggered: 0
+  enigmaCompatible: 0
+  isLunar: 0
+  isBoss: 1
+  passiveBuffDef: {fileID: 0}
+  appearsInSinglePlayer: 1
+  appearsInMultiPlayer: 1
+  requiredExpansion: {fileID: 0}
+  mageElement: 0

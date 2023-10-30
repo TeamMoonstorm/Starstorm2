@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: escLamp2
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.Lamp.HealBeam, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: baseDuration
+      fieldValue:
+        stringValue: 4
+        objectValue: {fileID: 0}
+    - fieldName: healCoefficient
+      fieldValue:
+        stringValue: 4
+        objectValue: {fileID: 0}
+    - fieldName: healBeamPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1735081237257143, guid: 89a7f84c004abd543b7d81aa7e7c6012,
+          type: 3}
+    - fieldName: healBeamPrefabBlue
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 3025222034792280126, guid: 62da9443e7df4fe42abde8a7ad92b16a,
+          type: 3}

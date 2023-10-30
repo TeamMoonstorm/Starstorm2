@@ -19,8 +19,6 @@ namespace Moonstorm.Starstorm2
         {
             TempestDef = SS2Assets.LoadAsset<R2API.ScriptableObjects.SerializableDifficultyDef>("Tempest", SS2Bundle.Base);
             DifficultyAPI.AddDifficulty(TempestDef);
-            rcd = RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(TempestDef.nameToken));
-            rcd.excludeByDefault = true;
             Run.onRunDestroyGlobal += Run_onRunDestroyGlobal;
             Run.onRunStartGlobal += Run_onRunStartGlobal;
         }

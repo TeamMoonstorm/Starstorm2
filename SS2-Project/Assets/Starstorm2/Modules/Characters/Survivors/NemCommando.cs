@@ -28,13 +28,13 @@ namespace Moonstorm.Starstorm2.Survivors
                 ScepterCompat();
                 //CreateNemesisPod();
             }
-
             On.RoR2.CharacterSelectBarController.Awake += CharacterSelectBarController_Awake;
         }
 
         private void CharacterSelectBarController_Awake(On.RoR2.CharacterSelectBarController.orig_Awake orig, CharacterSelectBarController self)
         {
             //hide nemcommando from css proper
+            SS2Content.Survivors.survivorNemMerc.hidden = !SurvivorCatalog.SurvivorIsUnlockedOnThisClient(SS2Content.Survivors.survivorNemMerc.survivorIndex); // hello nem comado
             SS2Content.Survivors.survivorNemCommando.hidden = !SurvivorCatalog.SurvivorIsUnlockedOnThisClient(SS2Content.Survivors.survivorNemCommando.survivorIndex);
             orig(self);
         }
@@ -54,15 +54,6 @@ namespace Moonstorm.Starstorm2.Survivors
         public void CreateNemesisPod()
         {   
             //later
-        }
-
-        public override void ModifyPrefab()
-        {
-            var cb = BodyPrefab.GetComponent<CharacterBody>();
-            //cb.preferredPodPrefab = Resources.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod");
-            //cb._defaultCrosshairPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/SimpleDotCrosshair.prefab").WaitForCompletion();
-            cb._defaultCrosshairPrefab = SS2Assets.LoadAsset<GameObject>("HalfCrosshair.prefab", SS2Bundle.NemCommando);
-            //cb.GetComponent<ModelLocator>().modelTransform.GetComponent<FootstepHandler>().footstepDustPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/GenericFootstepDust.prefab").WaitForCompletion();
         }
     }
 

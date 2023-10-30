@@ -19,8 +19,6 @@ namespace Moonstorm.Starstorm2
         {
             DelugeDef = SS2Assets.LoadAsset<R2API.ScriptableObjects.SerializableDifficultyDef>("Deluge", SS2Bundle.Base);
             DifficultyAPI.AddDifficulty(DelugeDef);
-            rcd = RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(DelugeDef.nameToken));
-            rcd.excludeByDefault = true;
             Run.onRunDestroyGlobal += Run_onRunDestroyGlobal;
             Run.onRunStartGlobal += Run_onRunStartGlobal;
         }

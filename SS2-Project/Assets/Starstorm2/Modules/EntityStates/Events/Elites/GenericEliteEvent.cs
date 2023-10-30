@@ -2,6 +2,7 @@
 using Moonstorm.Starstorm2.Buffs;
 using Moonstorm.Starstorm2.Components;
 using RoR2;
+using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -18,9 +19,10 @@ namespace EntityStates.Events
         public string equipmentName;
         public static float fadeDuration = 7f;
 
-
         private GameObject effectInstance;
         private EventStateEffect eventStateEffect;
+
+        public static event Action onEventClearGlobal;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -28,7 +30,7 @@ namespace EntityStates.Events
             //Debug.Log("current equipmentDef: " + equipmentDef);
             if (effectPrefab)
             {
-                effectInstance = Object.Instantiate(effectPrefab);
+                effectInstance = UnityEngine.Object.Instantiate(effectPrefab);
                 eventStateEffect = effectInstance.GetComponent<EventStateEffect>();
                 if (eventStateEffect)
                 {
@@ -71,6 +73,7 @@ namespace EntityStates.Events
 
         public override void OnExit()
         {
+            onEventClearGlobal?.Invoke();
             base.OnExit();
             if (eventStateEffect)
             {

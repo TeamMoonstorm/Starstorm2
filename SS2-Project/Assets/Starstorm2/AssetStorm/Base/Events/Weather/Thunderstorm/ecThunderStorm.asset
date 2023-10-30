@@ -1,0 +1,104 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 714a7ca2776afba4fb8b263d3c207dbd, type: 3}
+  m_Name: ecThunderStorm
+  m_EditorClassIdentifier: 
+  eventFlags: 0
+  eventState:
+    _typeName: EntityStates.Events.ThunderstormState, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  requiredStateMachine: 
+  startMessageToken: SS2_EVENT_THUNDERSTORM_START
+  endMessageToken: SS2_EVENT_THUNDERSTORM_END
+  messageColor: {r: 0.756141, g: 0.8289838, b: 0.9056604, a: 1}
+  startSound: {fileID: 0}
+  availableStages: 201737214
+  customStageNames:
+  - FBLScene
+  category: CommonEvents
+  selectionWeight: 70
+  cost: 1850
+  repeatedSelectionCostCoefficient: 20
+  minimumStageCompletions: 3
+  requiredUnlock:
+    _asset: {fileID: 0}
+    _address: 
+    _useDirectReference: 0
+  requiredUnlockableDef:
+    address: 
+    useDirectReference: 1
+    asset: {fileID: 0}
+  forbiddenUnlock:
+    _asset: {fileID: 0}
+    _address: 
+    _useDirectReference: 0
+  forbiddenUnlockableDef:
+    address: 
+    useDirectReference: 1
+    asset: {fileID: 0}
+  requiredExpansionDefs: []
+  requiredExpansions: []
+  requiredItemAddressable:
+    address: 
+    useDirectReference: 1
+    asset: {fileID: 0}
+  fallbackVFX: {fileID: 5557705817396211732, guid: b260621917d16e44fa11ff8421c67e1c,
+    type: 3}
+  eventVFX:
+  - stageEnum: 2
+    customStageName: 
+    effectPrefab: {fileID: 6834591030687459918, guid: a8002f38772e93e47b50783a22b451e6,
+      type: 3}
+  - stageEnum: 4
+    customStageName: 
+    effectPrefab: {fileID: 7896580548935264444, guid: f6639e39b99cc644f92e49e80d6b771c,
+      type: 3}
+  - stageEnum: 8
+    customStageName: 
+    effectPrefab: {fileID: 3168637055979823124, guid: 97e1fba49d744894e9817fc2d5ff5b06,
+      type: 3}
+  - stageEnum: 262144
+    customStageName: 
+    effectPrefab: {fileID: 3734003290398296858, guid: ed234b28243a04b47ab7115638ffeffd,
+      type: 3}
+  - stageEnum: 134217728
+    customStageName: 
+    effectPrefab: {fileID: 6894733719401726839, guid: 11f5e0c4efbcb604b8704b26f925d1c4,
+      type: 3}
+  - stageEnum: 256
+    customStageName: 
+    effectPrefab: {fileID: 5918869917671528298, guid: 850746ed1fc514f409ac3eaf783e4655,
+      type: 3}
+  - stageEnum: 16384
+    customStageName: 
+    effectPrefab: {fileID: 4757091994070860457, guid: b321fc47ab8cc134e8e9edcb88dcf0e0,
+      type: 3}
+  - stageEnum: 16
+    customStageName: 
+    effectPrefab: {fileID: 2607978598026306861, guid: 4035075fc8b62db45a40fbdc38a51de4,
+      type: 3}
+  - stageEnum: 64
+    customStageName: 
+    effectPrefab: {fileID: 1137181066004254477, guid: f30be4c3160479549b905e2e49393224,
+      type: 3}
+  - stageEnum: 128
+    customStageName: 
+    effectPrefab: {fileID: 1137181066004254477, guid: f30be4c3160479549b905e2e49393224,
+      type: 3}
+  - stageEnum: 67108864
+    customStageName: 
+    effectPrefab: {fileID: 2822430398392994740, guid: f8e894b4e767a774aae24b92b4a2f52a,
+      type: 3}
+  - stageEnum: 32
+    customStageName: 
+    effectPrefab: {fileID: 2822430398392994740, guid: f8e894b4e767a774aae24b92b4a2f52a,
+      type: 3}

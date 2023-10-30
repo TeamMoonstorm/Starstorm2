@@ -26,12 +26,16 @@ namespace Moonstorm.Starstorm2
         Executioner2,
         Nemmando,
         NemCommando,
+        NemMercenary,
         Equipments,
         Items,
         Events,
+        Stages,
+        VoidShop,
         Vanilla,
         Indev,
-        //Interactables,
+        Interactables,
+        Monsters,
         Shared
     }
     public class SS2Assets : AssetsLoader<SS2Assets>
@@ -44,13 +48,17 @@ namespace Moonstorm.Starstorm2
         private const string EXECUTIONER2 = "ss2executioner2";
         private const string NEMMANDO = "ss2nemmando";
         private const string NEMCOMMANDO = "ss2nemcommando";
+        private const string NEMMERCENARY = "ss2nemmercenary";
         private const string EQUIPS = "ss2equipments";
         private const string ITEMS = "ss2items";
         private const string EVENTS = "ss2events";
+        private const string STAGES = "ss2stages";
         private const string VANILLA = "ss2vanilla";
         private const string DEV = "ss2dev";
-       // private const string INTERACTABLES = "ss2interactables";
+        private const string INTERACTABLES = "ss2interactables";
+        private const string MONSTERS = "ss2monsters";
         private const string SHARED = "ss2shared";
+        
 
         private static Dictionary<SS2Bundle, AssetBundle> assetBundles = new Dictionary<SS2Bundle, AssetBundle>();
         private static AssetBundle[] streamedSceneBundles = Array.Empty<AssetBundle>();
@@ -152,11 +160,14 @@ namespace Moonstorm.Starstorm2
                     case EXECUTIONER2: LoadAndAssign(path, SS2Bundle.Executioner2); break;
                     case NEMMANDO: LoadAndAssign(path, SS2Bundle.Nemmando); break;
                     case NEMCOMMANDO: LoadAndAssign(path, SS2Bundle.NemCommando); break;
+                    case NEMMERCENARY: LoadAndAssign(path, SS2Bundle.NemMercenary); break;
                     case EQUIPS: LoadAndAssign(path, SS2Bundle.Equipments); break;
                     case ITEMS: LoadAndAssign(path, SS2Bundle.Items); break;
                     case EVENTS: LoadAndAssign(path, SS2Bundle.Events); break;
+                    case STAGES: LoadAndAssign(path, SS2Bundle.Stages); break;
                     case VANILLA: LoadAndAssign(path, SS2Bundle.Vanilla); break;
-                    //case INTERACTABLES: LoadBundle(path, SS2Bundle.Interactables); break;
+                    case INTERACTABLES: LoadAndAssign(path, SS2Bundle.Interactables); break;
+                    case MONSTERS: LoadAndAssign(path, SS2Bundle.Monsters); break;
                     case DEV: LoadAndAssign(path, SS2Bundle.Indev); break;
                     case SHARED: LoadAndAssign(path, SS2Bundle.Shared); break;
                     default:
@@ -178,7 +189,7 @@ namespace Moonstorm.Starstorm2
                                 }
                                 SS2Log.Warning($"Invalid or Unexpected file in the AssetBundles folder (File name: {fileName}, Path: {path})");
                             }
-                            catch(Exception e)
+                            catch (Exception e)
                             {
                                 SS2Log.Error($"Default statement on bundle loading method hit, Exception thrown.\n{e}");
                             }

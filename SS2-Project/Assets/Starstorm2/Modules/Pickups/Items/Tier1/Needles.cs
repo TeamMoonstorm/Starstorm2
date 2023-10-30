@@ -51,9 +51,9 @@ namespace Moonstorm.Starstorm2.Items
         //[TokenModifier(token, StatTypes.Default, 4)]
         //public static float needleBuffDuration = 2f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of bonus critical chance per applied per stack. (1 = 1%")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of bonus critical chance per applied per stack of the debuff. (1 = 1%")]
         [TokenModifier(token, StatTypes.Default, 0)]
-        public static float bonusCrit = 1;
+        public static float bonusCrit = 2;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of critical hits allowed per stack. (1 = 1 critical hit per stack before the buff is cleared)")]
         [TokenModifier(token, StatTypes.Default, 1)]
@@ -75,6 +75,7 @@ namespace Moonstorm.Starstorm2.Items
                 if (damageInfo.attacker)
                 {
                     CharacterBody attackerBody = damageInfo.attacker.GetComponent<CharacterBody>();
+
                     if (attackerBody && !damageInfo.rejected && NetworkServer.active && self.body.teamComponent.teamIndex != attackerBody.teamComponent.teamIndex) // && damageInfo.procCoefficient > 0f) //then dots can't apply stacks
                     {
                         //SS2Log.Info("original if");
