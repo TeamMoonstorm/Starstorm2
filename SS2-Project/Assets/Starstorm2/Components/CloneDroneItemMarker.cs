@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 namespace Moonstorm.Starstorm2.Components
 {
-    public class CloneDroneItemMarker : NetworkBehaviour
+    public class CloneDroneItemMarker : MonoBehaviour
     {
         //sorry.
     }

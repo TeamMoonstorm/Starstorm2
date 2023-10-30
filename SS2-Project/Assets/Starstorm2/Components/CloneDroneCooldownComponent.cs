@@ -7,7 +7,7 @@ using UnityEngine.AddressableAssets;
 
 namespace Moonstorm.Starstorm2.Components
 {
-    public class CloneDroneCooldownComponent : NetworkBehaviour
+    public class CloneDroneCooldownComponent : MonoBehaviour
     {
         [SerializeField]
         public static Material defaultMat = SS2Assets.LoadAsset<Material>("matCloneDroneLight", SS2Bundle.Interactables);
