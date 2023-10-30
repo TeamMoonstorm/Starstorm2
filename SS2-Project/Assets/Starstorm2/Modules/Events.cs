@@ -108,6 +108,8 @@ namespace Moonstorm.Starstorm2
                     }
                 };
             }).DoConfigure();
+
+            Moonstorm.Components.EventDirector.AddNewEntityStateMachine("Nemesis");
         }
 
         private static void StormOnMenu(Scene scene, LoadSceneMode mode)

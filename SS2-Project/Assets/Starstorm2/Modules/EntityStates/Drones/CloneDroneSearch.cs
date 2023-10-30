@@ -34,9 +34,10 @@ namespace EntityStates.CloneDrone
                 sphereSearch.mask = LayerIndex.pickups.mask;
                 sphereSearch.queryTriggerInteraction = QueryTriggerInteraction.Collide;
                 sphereSearch.radius = radius;
+                Search();
             }
 
-            Search();
+            
             //this doesn't work - intent is to prevent player from cloning the new clone.
             //unsure how to implement.
             //suffering.
@@ -47,6 +48,7 @@ namespace EntityStates.CloneDrone
         public void Search()
         {
             List<Collider> list = CollectionPool<Collider, List<Collider>>.RentCollection();
+            sphereSearch.mask = LayerIndex.CommonMasks.interactable;
             sphereSearch.ClearCandidates();
             sphereSearch.RefreshCandidates();
             sphereSearch.FilterCandidatesByColliderEntities();
@@ -74,16 +76,12 @@ namespace EntityStates.CloneDrone
                     //filter items that aren't normal world drops or void variants.
                     if (IsWhitelistTier(tempGPC.pickupIndex.pickupDef))
                     {
-                        //check that the item hasn't already been cloned before
-                        if (obj.GetComponent<CloneDroneItemMarker>() == null)
+                        float distance = Vector3.Distance(transform.position, obj.transform.position);
+                        //if no closest object or obj is closer than old closest object
+                        if (closestObject == null || distance < Vector3.Distance(transform.position, closestObject.transform.position))
                         {
-                            float distance = Vector3.Distance(transform.position, obj.transform.position);
-                            //if no closest object or obj is closer than old closest object
-                            if (closestObject == null || distance < Vector3.Distance(transform.position, closestObject.transform.position))
-                            {
-                                closestObject = obj;
-                            }
-                        }
+                            closestObject = obj;
+                        }                      
                     }
                 }
             }
@@ -120,7 +118,7 @@ namespace EntityStates.CloneDrone
         {
             //Debug.Log("setting state with gpc: " + gpc.GetDisplayName());
             CloneDroneCook nextState = new CloneDroneCook();
-            nextState.gpc = gpc;
+            nextState.target = gpc.gameObject;
             outer.SetNextState(nextState); //why doesn't this work????
             //Debug.Log("set next state");
         }

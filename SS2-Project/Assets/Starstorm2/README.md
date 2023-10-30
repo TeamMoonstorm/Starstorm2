@@ -22,7 +22,7 @@
 * **New Monsters** - New species of the Planet have come out to put a stop to your invasion of their home.
 
 * **Typhoon** - The Planet grows restless, with fearsome events and monsters coming in greater numbers than ever before. Unlock new skins for survivors* by proving yourself in this new challenge exceeding even Monsoon!
-	 *currently includes Commando, MUL-T, Acrid, Captain, and Commando's Vestige.
+	 *currently includes Commando, Huntress, MUL-T, Acrid, Captain, Executioner, and Commando's Vestige.
 	 
 * **Artifact of Cognation** - A new, unlockable artifact to shape up your runs.
 
@@ -39,8 +39,8 @@ With Art/Modelling/Animation contributions by...
 
 Additional thanks to... 
 * Writing - Blimblam, Lyrical Endymion, rekkadraws, swuff★, T_Dimensional, Zenithrium
-* Translations - Anreol (Spanish), MysticSword (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight (Chinese), Kauzok (Portuguese)
-* Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze
+* Translations - Anreol, BannyDee (Spanish), MysticSword (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight (Chinese), Kauzok (Portuguese)
+* Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze, nairb zepol
 * Special thanks - Altzeus, DestroyedClone, Dee', don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, VioletChaolan, valerie ♥ 
 
 ## Feedback, Bug Reporting & Known Issues
@@ -51,8 +51,8 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 **Warning: content spoilers below!**
 ### 0.5.0
 * New Content
-    * Survivor: ???
-    * Monsters: Rushrum, Follower, Wayfarer
+    * Monsters: Rushrum, Follower
+    * Bosses: Wayfarer, ???
     * Unlockable Skin: Heel (Mercenary)
     * Grandmastery Skins: Clandestine (Huntress), Electrocutioner (Executioner)
     * Interactables: Refabricator, Shock Drone, Duplicator Drone
@@ -67,10 +67,11 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Rebalanced boss fight and improved boss AI.
     * Restored boss immunity to being knocked out of bounds and to fall damage.
     * Fixed various misplaced item displays.
-* Items
+* Items & Equipment
     * Fixed X4 Stimulant cooldown scaling with first stack.
     * Adjusted Nkota's Heritage pickup model to address various issues.
-    * Slightly tweaks visuals of Stirring Soul.
+    * Slightly tweaked visuals of Stirring Soul.
+    * Disabled Pressurized Cannister.
 * Events
     * Rebalanced event costs to hopefully make them rarer during loops.
     * Reworked the Nemesis invasion event so only one boss may spawn per stage.
@@ -78,7 +79,7 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Updated translations for Nemesis Commando and Executioner.
     * Added PT-BR translations.
     * Survivor ragdolls no longer disappear when they die off screen.
-    * Survivor models now fade out when near the camera.
+    * Pressurized canister has been disabled while we work on a multiplayer bug.
     * ...and so much more!
  
 ### 0.4.6

@@ -1,20 +1,32 @@
-{
+	{
 	"strings": {
 		"SS2_MULE_NAME": "MULA",
 		"SS2_MULE_SUBTITLE": "DIRETIVA: SOBREVIVER",
 		"SS2_MULE_DESCRIPTION": "",
-		"SS2_MULE_OUTRO_FLAVOR": "..e assim foi embora, diretiva cumprida.",
-		"SS2_MULE_OUTRO_FAILURE": "..e assim morreu.",
+		"SS2_MULE_OUTRO_FLAVOR": "... e assim ele se foi, com o motor engasgando e a diretiva cumprida.",
+		"SS2_MULE_OUTRO_FAILURE": "... e assim ele desapareceu, finalmente fora de operação.",
 		"SS2_MULE_LORE": "",
+
+		"SS2_MULE_KEYWORD_OVERCLOCKING": "<style=cKeywordName>Overclocking</style></style=cSub>Segure o butão para extender a duração da habilidade, mas também aumenta o tempo de espera da habilidade.</sub>",
+		"SS2_MULE_KEYWORD_OVERCLOCKING2": "<style=cKeywordName>Overclocking</style></style=cSub>Segure o butão para carregar mais a habilidade, mas também aumenta o tempo de espera da habilidade.</sub>",
 
 		"SS2_MULE_PASSIVE_DRONE_NAME": "ASSISTÊNCIA À PROVA DE FALHAS",
 		"SS2_MULE_PASSIVE_DRONE_DESC": "Receber danos abaixo de <style=cIsHealth>25% de saúde</style> libera um <style=cIsUtility>drone de reparo pessoal</style>, <style=cIsHealing>curando</style> você por <style=cIsHealing>35% </style> de <style=cIsHealing>máximo de saúde</style> e aumentando temporariamente a <style=cIsUtility>armadura</style>.",
-		"SS2_MULE_PRIMARY_PUNCH_NAME": "REMOÇÃO DE INTERFERÊNCIA",
-		"SS2_MULE_PRIMARY_PUNCH_DESC": "SOCA A MERDA DOS LAGARTOS CAUSANDO 280% DE DANO",
-		"SS2_MULE_SECONDARY_SLAM_NAME": "",
-		"SS2_MULE_SECONDARY_SLAM_DESC": "",
-		"SS2_MULE_UTILITY_SPIN_NAME": "CALIBRAÇÃO DE TORQUE",
-		"SS2_MULE_UTILITY_SPIN_DESC": "",
-		"SS2_MULE_SPECIAL_NET_NAME": "IMOBILIZAR",
-		"SS2_MULE_SPECIAL_NET_DESC": "",
+
+		"SS2_MULE_SLAM_NAME": "REMOÇÃO DE INTERFERÊNCIA",
+		"SS2_MULE_SLAM_DESC": "<style=cIsDamage>Aperte</style> para socar os inimigos, causando <style=cIsDamage>280% de dano</style>. <style=cIsDamage>Segure</style> para carregar um golpe poderoso, causando até <style=cIsDamage>1200%</style> de dano e craidno uma onde de choque de <style=cIsDamage>400%</style> de dano.",
+
+		"SS2_MULE_PUNCH_NAME": "ESMAGAMENTO CENTRÍFUGO",
+		"SS2_MULE_PUNCH_DESC": "<style=cIsUtility>Overclocking</style>. <style=cIsUtility>Atordoante</style>. Prepare e desfira um poderoso soco para frente, causando <style=cIsDamage>280% de dano</style>. <style=cIsDamage>O dano é multiplicado pelo nível de carga, até um total de 4x</style>.",
+
+		"SS2_MULE_JUMP_NAME": "REALOCAR",
+		"SS2_MULE_JUMP_DESC":  "<style=cIsUtility>Segure para carregar</style> um poderoso salto para cima.",
+
+		"SS2_MULE_SPIN_NAME": "CALIBRAÇÃO TORQUE",
+		"SS2_MULE_SPIN_DESC": "<style=cIsUtility>Overclocking</style>. Gire rapidamente, gradualmente aumentando sua <style=cIsUtility>velocidade de movimento</style> e <style=cIsUtility>aumentando armadura</style> enquanto causa <style=cIsDamage>100% de dano</style> por rotação.",
+
+		"SS2_MULE_NET_NAME": "IMOBILIZAR",
+		"SS2_MULE_NET_DESC": "Jogue uma <style=cIsUtility>rede</style> que segura inimigos a <style=cIsUtility>12m</style> do impacto, impedindo eles de atacar por <style=cIsUtility>5</style> segundos. <style=cIsUtility>Inimigos voadores caem no chão</style>."
+
+
 	}

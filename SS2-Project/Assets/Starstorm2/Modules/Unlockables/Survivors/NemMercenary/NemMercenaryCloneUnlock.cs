@@ -13,6 +13,7 @@ namespace Moonstorm.Starstorm2.Unlocks.NemMercenary
             public override void OnInstall()
             {
                 base.OnInstall();
+                SS2Log.Warning("NemMercenaryCloneUnlock");
                 SetServerTracked(true);
             }
 
@@ -36,11 +37,12 @@ namespace Moonstorm.Starstorm2.Unlocks.NemMercenary
                     }
                 }
 
+                
                 private void Check(On.RoR2.PurchaseInteraction.orig_OnInteractionBegin orig, PurchaseInteraction self, Interactor activator)
                 {
                     orig(self, activator);
-             
-                    if(self.displayNameToken.Equals("SS2_DRONE_CLONE_INTERACTABLE_NAME")) // idk how else to do it other than adding an event to the interactable prefab (annoying)
+
+                    if (self.displayNameToken.Equals("SS2_DRONE_CLONE_INTERACTABLE_NAME")) // idk how else to do it other than adding an event to the interactable prefab (annoying)
                     {
                         CharacterBody body = activator.GetComponent<CharacterBody>();
                         if (body && body.bodyIndex == nemMercBodyIndex && networkUser.GetCurrentBody() == body)
@@ -54,13 +56,12 @@ namespace Moonstorm.Starstorm2.Unlocks.NemMercenary
                 public override void OnInstall()
                 {
                     base.OnInstall();
-                    On.RoR2.PurchaseInteraction.OnInteractionBegin -= Check;
+                    On.RoR2.PurchaseInteraction.OnInteractionBegin += Check;
                 }
-
                 public override void OnUninstall()
                 {
                     base.OnUninstall();
-                    On.RoR2.PurchaseInteraction.OnInteractionBegin += Check;
+                    On.RoR2.PurchaseInteraction.OnInteractionBegin -= Check;
                 }
 
                 

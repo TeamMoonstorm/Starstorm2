@@ -1,0 +1,3576 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b2a16891c8108e48883bce0009b7835, type: 3}
+  m_Name: nidrsNemMercenary
+  m_EditorClassIdentifier: 
+  idrs: {fileID: 11400000, guid: d376e3b444a57d34d9407c9ceebc29a8, type: 2}
+  namedRuleGroups:
+  - keyAssetName: AlienHead
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayAlienHead
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: 0.17183, y: 0.05915, z: 0.1421}
+      localAngles: {x: 73.66171, y: 11.04328, z: 159.019}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: ArmedBackpack
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: displayArmedBackpack
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00002, y: 0.06791, z: -0.26398}
+      localAngles: {x: 0, y: 168.0799, z: 0}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: ArmorPlate
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayRepulsionArmorPlate
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: UpperArmL
+      localPos: {x: 0.14547, y: 0.17436, z: -0.00275}
+      localAngles: {x: 90, y: 270, z: 0}
+      localScales: {x: 0.43093, y: 0.24909, z: 0.36869}
+      limbMask: 0
+  - keyAssetName: ArmorReductionOnHit
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWarhammer
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: -0.20954, y: -0.09379, z: 0.12732}
+      localAngles: {x: 64.17963, y: 16.26098, z: 264.8758}
+      localScales: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+  - keyAssetName: AttackSpeedAndMoveSpeed
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayCoffee
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: -0.19632, y: -0.02091, z: -0.12081}
+      localAngles: {x: 0.01862, y: 197.788, z: 175.5749}
+      localScales: {x: 0.17, y: 0.17, z: 0.17}
+      limbMask: 0
+  - keyAssetName: AttackSpeedOnCrit
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWolfPelt
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ShoulderR
+      localPos: {x: 0.00368, y: 0.31097, z: -0.01276}
+      localAngles: {x: 285.6202, y: 344.0287, z: 63.20105}
+      localScales: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: AutoCastEquipment
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFossil
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: HandR
+      localPos: {x: -0.04238, y: 0.0769, z: 0.00902}
+      localAngles: {x: 76.57851, y: 206.2972, z: 4.95655}
+      localScales: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+  - keyAssetName: Bandolier
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBandolier
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: -0.00064, y: -0.00327, z: 0.01762}
+      localAngles: {x: 272.3578, y: 26.04672, z: 142.7497}
+      localScales: {x: 0.51828, y: 0.59187, z: 0.4698}
+      limbMask: 0
+  - keyAssetName: BarrierOnKill
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBrooch
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.13431, y: 0.12039, z: 0.139}
+      localAngles: {x: 81.77677, y: 80.33511, z: 109.2961}
+      localScales: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: BarrierOnOverHeal
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayAegis
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: LowerArmR
+      localPos: {x: 0.00001, y: 0.09092, z: -0.03662}
+      localAngles: {x: 86.28922, y: 180, z: 180}
+      localScales: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - keyAssetName: Bear
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBearSit
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ShoulderL
+      localPos: {x: 0.25772, y: 0.22945, z: 0.00546}
+      localAngles: {x: 20.84364, y: 29.33756, z: 289.2166}
+      localScales: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+  - keyAssetName: BearVoid
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBearVoidSit
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ShoulderL
+      localPos: {x: 0.26287, y: 0.20005, z: 0.01843}
+      localAngles: {x: 20.9226, y: 11.08134, z: 284.6845}
+      localScales: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+  - keyAssetName: BeetleGland
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBeetleGland
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: -0.27823, y: 0.12375, z: -0.00294}
+      localAngles: {x: 346.3286, y: 311.791, z: 158.2007}
+      localScales: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - keyAssetName: Behemoth
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBehemoth
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Shotgun
+      localPos: {x: -0.09608, y: -0.22327, z: -0.54324}
+      localAngles: {x: 329.4874, y: 252.4357, z: 118.931}
+      localScales: {x: 0.08, y: 0.08, z: 0.08}
+      limbMask: 0
+  - keyAssetName: BFG
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBFG
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.20925, y: 0.26235, z: -0.05262}
+      localAngles: {x: 351.3677, y: 4.72773, z: 331.1446}
+      localScales: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+  - keyAssetName: Blackhole
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGravCube
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Base
+      localPos: {x: -0.49342, y: 1.81865, z: 0.63603}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+  - keyAssetName: BleedOnHit
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTriTip
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: UpperLegR
+      localPos: {x: -0.12036, y: 0.18262, z: 0.08416}
+      localAngles: {x: 280.4373, y: 177.1782, z: 180}
+      localScales: {x: 0.4, y: 0.4, z: 0.4}
+      limbMask: 0
+  - keyAssetName: BleedOnHitAndExplode
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBleedOnHitAndExplode
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: -0.08534, y: -0.13866, z: 0.20671}
+      localAngles: {x: 15.45561, y: 3.43545, z: 176.8074}
+      localScales: {x: 0.07, y: 0.07, z: 0.07}
+      limbMask: 0
+  - keyAssetName: BleedOnHitVoid
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTriTipVoid
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: UpperArmL
+      localPos: {x: 0.16959, y: 0.03143, z: -0.04359}
+      localAngles: {x: 12.10227, y: 141.4764, z: 267.3747}
+      localScales: {x: 0.22, y: 0.22, z: 0.22}
+      limbMask: 0
+  - keyAssetName: BonusGoldPackOnKill
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTome
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.1806, y: -0.02104, z: 0.13665}
+      localAngles: {x: 347.2572, y: 40.69945, z: 181.4466}
+      localScales: {x: 0.05, y: 0.05, z: 0.05}
+      limbMask: 0
+  - keyAssetName: BossDamageBonus
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayAPRound
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.00248, y: -0.05816, z: 0.20165}
+      localAngles: {x: 73.02589, y: 288.1224, z: 89.28212}
+      localScales: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: BossHunter
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTricornGhost
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0.00385, y: 0.26457, z: -0.071}
+      localAngles: {x: 9.42641, y: 0, z: 0}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayBlunderbuss
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Base
+      localPos: {x: -0.44963, y: 1.69771, z: 0.46153}
+      localAngles: {x: 90, y: 0, z: 0}
+      localScales: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: BossHunterConsumed
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTricornUsed
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0.00385, y: 0.26457, z: -0.071}
+      localAngles: {x: 9.42641, y: 0, z: 0}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: BounceNearby
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayHook
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: UpperArmR
+      localPos: {x: -0.10529, y: -0.04359, z: 0.01896}
+      localAngles: {x: 322.7463, y: 335.9341, z: 51.74094}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - keyAssetName: BurnNearby
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayPotion
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: 0.03002, y: 0.05242, z: 0.18968}
+      localAngles: {x: 25.22983, y: 8.01621, z: 155.1303}
+      localScales: {x: 0.05, y: 0.05, z: 0.05}
+      limbMask: 0
+  - keyAssetName: ChainLightning
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayUkulele
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.15161, y: 0.1218, z: -0.24327}
+      localAngles: {x: 346.8607, y: 191.4534, z: 8.86165}
+      localScales: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: ChainLightningVoid
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayUkuleleVoid
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.17367, y: 0.21925, z: -0.19423}
+      localAngles: {x: 341.0304, y: 163.3707, z: 346.7097}
+      localScales: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: Cleanse
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWaterPack
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0, y: -0.05691, z: 0.137}
+      localAngles: {x: 13.74656, y: 0, z: 0}
+      localScales: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - keyAssetName: Clover
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayClover
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: -0.0147, y: 0.27159, z: -0.13406}
+      localAngles: {x: 31.97001, y: 130.9906, z: 138.4383}
+      localScales: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+  - keyAssetName: CloverVoid
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayCloverVoid
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0.09953, y: 0.23687, z: -0.03886}
+      localAngles: {x: 37.33166, y: 96.80486, z: 344.4705}
+      localScales: {x: 0.4, y: 0.4, z: 0.4}
+      limbMask: 0
+  - keyAssetName: CommandMissile
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMissileRack
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.01068, y: 0.45517, z: -0.16049}
+      localAngles: {x: 57.0603, y: 182.0744, z: 2.47136}
+      localScales: {x: 0.45, y: 0.45, z: 0.54}
+      limbMask: 0
+  - keyAssetName: CrippleWard
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEffigy
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: LowerLegL
+      localPos: {x: -0.00431, y: 0.40814, z: -0.1121}
+      localAngles: {x: 7.20934, y: 3.51128, z: 179.6248}
+      localScales: {x: 0.46908, y: 0.46908, z: 0.46908}
+      limbMask: 0
+  - keyAssetName: CrippleWardOnLevel
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEffigy
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - keyAssetName: CritDamage
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLaserSight
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Shotgun
+      localPos: {x: 0.04094, y: -0.26772, z: -0.54834}
+      localAngles: {x: 333.0073, y: 256.3892, z: 27.88964}
+      localScales: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - keyAssetName: CritGlasses
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGlasses
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0.0002, y: 0.1387, z: 0.11728}
+      localAngles: {x: 3.8163, y: 359.9694, z: 359.898}
+      localScales: {x: 0.2039, y: 0.21763, z: 0.11141}
+      limbMask: 0
+  - keyAssetName: CritGlassesVoid
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGlassesVoid
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0, y: 0.14314, z: 0.1214}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.2085, y: 0.1544, z: 0.19411}
+      limbMask: 0
+  - keyAssetName: CritOnUse
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayNeuralImplant
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0, y: 0.12733, z: 0.223}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.164, y: 0.14516, z: 0.164}
+      limbMask: 0
+  - keyAssetName: Crowbar
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayCrowbar
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: UpperLegR
+      localPos: {x: -0.06135, y: 0.23419, z: 0.12996}
+      localAngles: {x: 4.09937, y: 230.8956, z: 180.8818}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - keyAssetName: Dagger
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDagger
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ShoulderR
+      localPos: {x: -0.09204, y: 0.01588, z: -0.05738}
+      localAngles: {x: 7.99826, y: 230.2508, z: 99.24234}
+      localScales: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+  - keyAssetName: DeathMark
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDeathMark
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: UpperArmR
+      localPos: {x: -0.07068, y: 0.10129, z: 0.12127}
+      localAngles: {x: 81.03498, y: 296.5565, z: 155.8614}
+      localScales: {x: 0.023, y: 0.023, z: 0.023}
+      limbMask: 0
+  - keyAssetName: DeathProjectile
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDeathProjectile
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: -0.13446, y: 0.02431, z: 0.23713}
+      localAngles: {x: 2.09852, y: 338.4011, z: 175.7526}
+      localScales: {x: 0.12, y: 0.12, z: 0.12}
+      limbMask: 0
+  - keyAssetName: DetritiveTrematode
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTrematode
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: UpperLegL
+      localPos: {x: -0.0678, y: 0.24654, z: -0.14444}
+      localAngles: {x: 333.7517, y: 212.6867, z: 194.7858}
+      localScales: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - keyAssetName: DroneBackup
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayRadio
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: -0.20045, y: -0.06045, z: -0.10179}
+      localAngles: {x: 353.146, y: 247.5104, z: 180.5473}
+      localScales: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+  - keyAssetName: ElementalRingVoid
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayVoidRing
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: LowerArmL
+      localPos: {x: 0.00574, y: 0.1481, z: -0.00316}
+      localAngles: {x: 82.40764, y: 34.7828, z: 225.6438}
+      localScales: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayVoidRing
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: LowerArmR
+      localPos: {x: -0.01073, y: 0.14434, z: -0.00417}
+      localAngles: {x: 89.65679, y: 29.02958, z: 235.7503}
+      localScales: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+  - keyAssetName: EliteEarthEquipment
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteMendingAntlers
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: -0.00151, y: 0.22892, z: 0.04091}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: EliteFireEquipment
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteHorn
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0.0412, y: 0.20124, z: 0.05195}
+      localAngles: {x: 0.4241, y: 336.9572, z: 1.24518}
+      localScales: {x: 0.075, y: 0.075, z: 0.075}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayEliteHorn
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: -0.0412, y: 0.20124, z: 0.05195}
+      localAngles: {x: 359.5759, y: 23.04278, z: 1.24518}
+      localScales: {x: -0.075, y: 0.075, z: 0.075}
+      limbMask: 0
+  - keyAssetName: EliteHauntedEquipment
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteStealthCrown
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0.00014, y: 0.24438, z: -0.03313}
+      localAngles: {x: 282.4926, y: 180, z: 180}
+      localScales: {x: 0.05, y: 0.05, z: 0.05}
+      limbMask: 0
+  - keyAssetName: EliteIceEquipment
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteIceCrown
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: -0.0002, y: 0.2657, z: -0.03656}
+      localAngles: {x: 282, y: 180, z: 180}
+      localScales: {x: 0.02177, y: 0.02177, z: 0.02177}
+      limbMask: 0
+  - keyAssetName: EliteLightningEquipment
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteRhinoHorn
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0.00872, y: 0.21302, z: 0.10707}
+      localAngles: {x: 316.6265, y: 359.9645, z: 359.8888}
+      localScales: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayEliteRhinoHorn
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0.00889, y: 0.23748, z: 0.06268}
+      localAngles: {x: 299.5983, y: 0.03174, z: 359.8414}
+      localScales: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - keyAssetName: EliteLunarEquipment
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteLunar,Eye
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: -0.00154, y: 0.16669, z: 0.15917}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - keyAssetName: ElitePoisonEquipment
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteUrchinCrown
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0.00018, y: 0.242, z: 0.00082}
+      localAngles: {x: 276.1823, y: 180, z: 180}
+      localScales: {x: 0.03, y: 0.03, z: 0.03}
+      limbMask: 0
+  - keyAssetName: EliteVoidEquipment
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayAffixVoid
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0.00019, y: 0.1361, z: 0.11706}
+      localAngles: {x: 83.32107, y: 0, z: 0}
+      localScales: {x: 0.07, y: 0.07, z: 0.07}
+      limbMask: 0
+  - keyAssetName: EnergizedOnEquipmentUse
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWarHorn
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: -0.15837, y: 0.04443, z: 0.16723}
+      localAngles: {x: 0, y: 209.9108, z: 0}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - keyAssetName: EquipmentMagazine
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBattery
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.03666, y: 0.12954, z: -0.26929}
+      localAngles: {x: 359.5908, y: 89.95084, z: 0.36219}
+      localScales: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+  - keyAssetName: EquipmentMagazineVoid
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFuelCellVoid
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.03863, y: 0.12804, z: -0.26084}
+      localAngles: {x: 0, y: 0, z: 276.5261}
+      localScales: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - keyAssetName: ExecuteLowHealthElite
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGuillotine
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Knife
+      localPos: {x: 0.0076, y: 0.22236, z: -0.06947}
+      localAngles: {x: 90, y: 270, z: 0}
+      localScales: {x: 0.06282, y: 0.1, z: 0.1}
+      limbMask: 0
+  - keyAssetName: ExplodeOnDeath
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWilloWisp
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: 0.19018, y: 0.00027, z: 0.11737}
+      localAngles: {x: 358.2588, y: 139.3387, z: 181.4951}
+      localScales: {x: 0.06, y: 0.06, z: 0.06}
+      limbMask: 0
+  - keyAssetName: ExplodeOnDeathVoid
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWillowWispVoid
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00202, y: 0.2624, z: -0.25965}
+      localAngles: {x: 289.0671, y: 0, z: 0}
+      localScales: {x: 0.06902, y: 0.06, z: 0.0725}
+      limbMask: 0
+  - keyAssetName: ExtraLife
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayHippo
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0, y: 0.05908, z: 0.14279}
+      localAngles: {x: 0, y: 12.54081, z: 0}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - keyAssetName: ExtraLifeVoid
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayHippoVoid
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0, y: -0.00001, z: 0.13189}
+      localAngles: {x: 341.8148, y: 17.21945, z: 12.24806}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - keyAssetName: FallBoots
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGravBoots
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: LowerLegL
+      localPos: {x: 0, y: 0.25331, z: -0.01878}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayGravBoots
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: LowerLegR
+      localPos: {x: 0, y: 0.25331, z: -0.01878}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - keyAssetName: Feather
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFeather
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: -0.03204, y: 0.23126, z: -0.03407}
+      localAngles: {x: 323.2214, y: 0, z: 0}
+      localScales: {x: 0.02646, y: 0.0213, z: 0.01}
+      limbMask: 0
+  - keyAssetName: FireBallDash
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEgg
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: UpperLegL
+      localPos: {x: 0.14946, y: 0.0817, z: 0.02505}
+      localAngles: {x: 63.68028, y: 287.9108, z: 289.8282}
+      localScales: {x: 0.4, y: 0.4, z: 0.4}
+      limbMask: 0
+  - keyAssetName: FireballsOnHit
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFireballsOnHit
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: 0.20476, y: -0.00576, z: -0.0943}
+      localAngles: {x: 304.4295, y: 19.07486, z: 7.34231}
+      localScales: {x: 0.07, y: 0.07, z: 0.07}
+      limbMask: 0
+  - keyAssetName: FireRing
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFireRing
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: LowerArmR
+      localPos: {x: -0.01076, y: 0.13998, z: -0.0048}
+      localAngles: {x: 84.03294, y: 326.6922, z: 104.3148}
+      localScales: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+  - keyAssetName: Firework
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFirework
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Shotgun
+      localPos: {x: -0.02846, y: -0.41351, z: -0.7231}
+      localAngles: {x: 29.6259, y: 186.1319, z: 183.04}
+      localScales: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - keyAssetName: FlatHealth
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySteakCurved
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: UpperArmR
+      localPos: {x: -0.14805, y: 0.05777, z: -0.02029}
+      localAngles: {x: 343.9647, y: 265.2636, z: 21.07092}
+      localScales: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+  - keyAssetName: FocusConvergence
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFocusedConvergence
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Base
+      localPos: {x: -0.53395, y: 1.70727, z: -0.28824}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.07, y: 0.07, z: 0.07}
+      limbMask: 0
+  - keyAssetName: Fork
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFork
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: UpperLegR
+      localPos: {x: -0.11124, y: 0.16785, z: -0.0804}
+      localAngles: {x: 27.69772, y: 238.3407, z: 23.91954}
+      localScales: {x: 0.03, y: 0.03, z: 0.03}
+      limbMask: 0
+  - keyAssetName: FragileDamageBonus
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDelicateWatch
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: LowerArmL
+      localPos: {x: -0.00352, y: 0.28921, z: 0.00694}
+      localAngles: {x: 82.04653, y: 281.7089, z: 350.7399}
+      localScales: {x: 0.43567, y: 0.92126, z: 0.3685}
+      limbMask: 0
+  - keyAssetName: FreeChest
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayShippingRequestForm
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: -0.11679, y: 0.04988, z: -0.16806}
+      localAngles: {x: 276.9754, y: 335.9544, z: 45.49624}
+      localScales: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: Fruit
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFruit
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.13256, y: 0.0102, z: -0.22428}
+      localAngles: {x: 334.9535, y: 141.1235, z: 39.01412}
+      localScales: {x: 0.3, y: 0.35, z: 0.35}
+      limbMask: 0
+  - keyAssetName: GainArmor
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayElephantFigure
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: UpperLegL
+      localPos: {x: 0.19776, y: 0.19281, z: -0.01214}
+      localAngles: {x: 86.21245, y: 318.2278, z: 223.9337}
+      localScales: {x: 0.8, y: 0.8, z: 0.8}
+      limbMask: 0
+  - keyAssetName: Gateway
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayVase
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: UpperLegL
+      localPos: {x: 0.13778, y: -0.046, z: -0.01128}
+      localAngles: {x: 7.56775, y: 259.2987, z: 188.3877}
+      localScales: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+  - keyAssetName: GhostOnKill
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMask
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0, y: 0.12418, z: 0.09272}
+      localAngles: {x: 345.3141, y: 0, z: 0}
+      localScales: {x: 0.57824, y: 0.61094, z: 0.52399}
+      limbMask: 0
+  - keyAssetName: GoldGat
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGoldGat
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.25844, y: 0.50296, z: -0.04565}
+      localAngles: {x: 60.46502, y: 58.43709, z: 274.8506}
+      localScales: {x: 0.13, y: 0.13, z: 0.13}
+      limbMask: 0
+  - keyAssetName: GoldOnHit
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBoneCrown
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0, y: 0.16813, z: -0.00791}
+      localAngles: {x: 2.9331, y: 0, z: 0}
+      localScales: {x: 0.86076, y: 1, z: 0.88345}
+      limbMask: 0
+  - keyAssetName: GoldOnHurt
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayRollOfPennies
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: -0.18986, y: 0.0123, z: 0.03155}
+      localAngles: {x: 0, y: 0, z: 178.2088}
+      localScales: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+  - keyAssetName: GummyClone
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGummyClone
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: UpperLegL
+      localPos: {x: 0.07227, y: 0.0441, z: -0.06376}
+      localAngles: {x: 348.2609, y: 330.2548, z: 180.3203}
+      localScales: {x: 0.33, y: 0.33, z: 0.33}
+      limbMask: 0
+  - keyAssetName: HalfAttackSpeedHalfCooldowns
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLunarShoulderNature
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ShoulderL
+      localPos: {x: 0.14182, y: 0.28346, z: 0.02734}
+      localAngles: {x: 14.47194, y: 355.6073, z: 287.5786}
+      localScales: {x: 1.12715, y: 1.10332, z: 0.8438}
+      limbMask: 0
+  - keyAssetName: HalfSpeedDoubleHealth
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLunarShoulderStone
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ShoulderR
+      localPos: {x: -0.09241, y: 0.18166, z: -0.10928}
+      localAngles: {x: 1.77208, y: 140.8287, z: 245.8488}
+      localScales: {x: 0.9, y: 0.9, z: 0.9}
+      limbMask: 0
+  - keyAssetName: HeadHunter
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySkullcrown
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0, y: 0.17402, z: 0.01535}
+      localAngles: {x: 355.0699, y: 0, z: 0}
+      localScales: {x: 0.41362, y: 0.16342, z: 0.12649}
+      limbMask: 0
+  - keyAssetName: HealingPotion
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayHealingPotion
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: -0.19225, y: 0.00074, z: 0.08414}
+      localAngles: {x: 358.5167, y: 180.1102, z: 145.7333}
+      localScales: {x: 0.07, y: 0.07, z: 0.07}
+      limbMask: 0
+  - keyAssetName: HealOnCrit
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayScythe
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.06163, y: 0.20253, z: -0.21945}
+      localAngles: {x: 287.88, y: 63.55347, z: 296.4965}
+      localScales: {x: 0.38, y: 0.38, z: 0.38}
+      limbMask: 0
+  - keyAssetName: HealWhileSafe
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySnail
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ShoulderL
+      localPos: {x: 0.21037, y: 0.14262, z: 0.00001}
+      localAngles: {x: 0.48176, y: 352.6358, z: 273.7223}
+      localScales: {x: 0.04, y: 0.04, z: 0.04}
+      limbMask: 0
+  - keyAssetName: Hoof
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayHoof
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: LowerLegR
+      localPos: {x: 0.02446, y: 0.32788, z: 0.04503}
+      localAngles: {x: 76.49223, y: 198.2808, z: 354.2111}
+      localScales: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - keyAssetName: HuntersSigil
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySigil
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.15501, y: -0.05539, z: 0.07362}
+      localAngles: {x: 21.63311, y: 21.44175, z: 2.56324}
+      localScales: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - keyAssetName: IceRing
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayIceRing
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: LowerArmL
+      localPos: {x: 0.0015, y: 0.15011, z: 0.00069}
+      localAngles: {x: 87.42329, y: 71.86211, z: 81.14283}
+      localScales: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+  - keyAssetName: Icicle
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFrostRelic
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Base
+      localPos: {x: 0.55372, y: 1.73296, z: -0.16385}
+      localAngles: {x: 90, y: 0, z: 0}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: IgniteOnKill
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGasoline
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: UpperLegL
+      localPos: {x: 0.12159, y: 0.12888, z: -0.01623}
+      localAngles: {x: 85.08965, y: 287.287, z: 258.5272}
+      localScales: {x: 0.8, y: 0.8, z: 0.8}
+      limbMask: 0
+  - keyAssetName: ImmuneToDebuff
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayRainCoatBelt
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.06259, y: 0.36374, z: -0.02498}
+      localAngles: {x: 38.20873, y: 24.10949, z: 10.39025}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: IncreaseHealing
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayAntler
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0.07213, y: 0.15227, z: 0.02292}
+      localAngles: {x: 4.11899, y: 69.4587, z: 359.1831}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayAntler
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: -0.07213, y: 0.15227, z: 0.02292}
+      localAngles: {x: -4.11899, y: -69.4587, z: 359.1831}
+      localScales: {x: -0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - keyAssetName: Incubator
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayAncestralIncubator
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: 
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - keyAssetName: Infusion
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayInfusion
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.08118, y: 0.01577, z: 0.19641}
+      localAngles: {x: 349.6211, y: 357.2433, z: 338.9442}
+      localScales: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: IrradiatingLaser
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayIrradiatingLaser
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0, y: 0.12823, z: -0.10535}
+      localAngles: {x: 349.1885, y: 0, z: 0}
+      localScales: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - keyAssetName: JetBoots
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayJetBoots
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: LowerLegR
+      localPos: {x: 0.00057, y: 0.44779, z: -0.06103}
+      localAngles: {x: 356.0058, y: 358.3823, z: 180.2256}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayJetBoots
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: LowerLegL
+      localPos: {x: 0.00057, y: 0.44779, z: -0.06103}
+      localAngles: {x: 356.0058, y: 358.3823, z: 180.2256}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: Jetpack
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBugWings
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0, y: 0.11756, z: -0.17373}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.12, y: 0.123, z: 0.12}
+      limbMask: 0
+  - keyAssetName: JumpBoost
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWaxBird
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0, y: -0.36324, z: -0.0913}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: KillEliteFrenzy
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBrainstalk
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0, y: 0.18852, z: 0.00226}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - keyAssetName: Knurl
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayKnurl
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.03787, y: -0.05751, z: 0.17887}
+      localAngles: {x: 67.40393, y: 343.56, z: 152.2917}
+      localScales: {x: 0.05, y: 0.05, z: 0.05}
+      limbMask: 0
+  - keyAssetName: LaserTurbine
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLaserTurbine
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Base
+      localPos: {x: 0.75346, y: 1.72007, z: 0.29264}
+      localAngles: {x: 90, y: 0, z: 0}
+      localScales: {x: 0.35, y: 0.35, z: 0.35}
+      limbMask: 0
+  - keyAssetName: LifestealOnHit
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLifestealOnHit
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: -0.08451, y: 0.35486, z: -0.11512}
+      localAngles: {x: 49.40833, y: 24.60497, z: 337.1144}
+      localScales: {x: 0.08, y: 0.08, z: 0.08}
+      limbMask: 0
+  - keyAssetName: Lightning
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLightningArmRight
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ShoulderR
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.9, y: 0.9, z: 0.9}
+      limbMask: 0
+  - keyAssetName: LightningStrikeOnHit
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayChargedPerforator
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: -0.25362, y: 0.06145, z: -0.01788}
+      localAngles: {x: 345.356, y: 180.9803, z: 165.1216}
+      localScales: {x: 1.6, y: 1.6, z: 1.6}
+      limbMask: 0
+  - keyAssetName: LunarDagger
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLunarDagger
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: UpperLegR
+      localPos: {x: 0.00604, y: 0.3303, z: 0.14181}
+      localAngles: {x: 43.52345, y: 96.19049, z: 86.41486}
+      localScales: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+  - keyAssetName: LunarPrimaryReplacement
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBirdEye
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0.04291, y: 0.13562, z: 0.1335}
+      localAngles: {x: 85.12219, y: -0.00003, z: 172.6439}
+      localScales: {x: 0.20566, y: 0.20566, z: 0.20566}
+      limbMask: 0
+  - keyAssetName: LunarSecondaryReplacement
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBirdClaw
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: LowerArmR
+      localPos: {x: -0.09223, y: 0.13193, z: 0.03755}
+      localAngles: {x: 356.5431, y: 269.937, z: 301.6096}
+      localScales: {x: 0.4, y: 0.4, z: 0.4}
+      limbMask: 0
+  - keyAssetName: LunarSpecialReplacement
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBirdHeart
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Base
+      localPos: {x: -0.78357, y: 1.74968, z: 0.12567}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - keyAssetName: LunarSun
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySunHead
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0.00248, y: 0.10808, z: -0.00494}
+      localAngles: {x: 356.9942, y: 0.58206, z: 345.0201}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplaySunHeadNeck
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: -0.00014, y: -0.13382, z: 0.01137}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 1.6, y: 1.6, z: 1.6}
+      limbMask: 0
+  - keyAssetName: LunarTrinket
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBeads
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: LowerArmL
+      localPos: {x: 0.02987, y: 0.20325, z: 0.03486}
+      localAngles: {x: 4.71637, y: 2.89257, z: 307.0075}
+      localScales: {x: 1.17974, y: 1.27838, z: 1.06494}
+      limbMask: 0
+  - keyAssetName: LunarUtilityReplacement
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBirdFoot
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: FootR
+      localPos: {x: -0.07622, y: -0.01889, z: 0.30976}
+      localAngles: {x: 358.4129, y: 274.5276, z: 331.7501}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: Medkit
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMedkit
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.13888, y: -0.1923, z: -0.15926}
+      localAngles: {x: 275.7224, y: 176.0203, z: 35.79197}
+      localScales: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+  - keyAssetName: Meteor
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMeteor
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Base
+      localPos: {x: -0.61674, y: 1.75845, z: 0.59225}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.8, y: 0.8, z: 0.8}
+      limbMask: 0
+  - keyAssetName: MinorConstructOnKill
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDefenseNucleus
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Base
+      localPos: {x: -0.26406, y: 1.78284, z: -0.5322}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+  - keyAssetName: Missile
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMissileLauncher
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.33643, y: 0.62404, z: -0.0173}
+      localAngles: {x: 349.5985, y: 4.95297, z: 334.3589}
+      localScales: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - keyAssetName: MissileVoid
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMissileLauncherVoid
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.31314, y: 0.61492, z: -0.03629}
+      localAngles: {x: 347.1074, y: 6.41339, z: 333.2622}
+      localScales: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - keyAssetName: Molotov
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMolotov
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Base
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - keyAssetName: MonstersOnShrineUse
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMonstersOnShrineUse
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.19291, y: -0.06344, z: -0.1832}
+      localAngles: {x: 330.0717, y: 328.1591, z: 0}
+      localScales: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - keyAssetName: MoreMissile
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayICBM
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Shotgun
+      localPos: {x: 0.00001, y: -0.36557, z: -0.41194}
+      localAngles: {x: 334.3043, y: 102.9377, z: 240.7743}
+      localScales: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - keyAssetName: MoveSpeedOnKill
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGrappleHook
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Knife
+      localPos: {x: 0, y: -0.06537, z: 0.00001}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - keyAssetName: MultiShopCard
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayExecutiveCard
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.05932, y: 0.01209, z: 0.10852}
+      localAngles: {x: 41.98515, y: 278.0526, z: 86.64003}
+      localScales: {x: 0.7, y: 0.7, z: 0.7}
+      limbMask: 0
+  - keyAssetName: Mushroom
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMushroom
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: UpperArmR
+      localPos: {x: -0.08671, y: 0.03781, z: 0.02758}
+      localAngles: {x: 276.327, y: 184.6678, z: 284.5671}
+      localScales: {x: 0.07, y: 0.07, z: 0.07}
+      limbMask: 0
+  - keyAssetName: MushroomVoid
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMushroomVoid
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: UpperArmR
+      localPos: {x: -0.11693, y: 0.06441, z: 0.05089}
+      localAngles: {x: 350.8724, y: 15.36988, z: 101.053}
+      localScales: {x: 0.07, y: 0.07, z: 0.07}
+      limbMask: 0
+  - keyAssetName: NearbyDamageBonus
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDiamond
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Knife
+      localPos: {x: -0.00001, y: -0.06771, z: 0.00001}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - keyAssetName: NovaOnHeal
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDevilHorns
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: -0.0454, y: 0.11602, z: -0.01098}
+      localAngles: {x: 26.97552, y: 2.97416, z: 343.5225}
+      localScales: {x: -0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayDevilHorns
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0.0454, y: 0.11602, z: -0.01098}
+      localAngles: {x: 26.97552, y: -2.97416, z: -343.5225}
+      localScales: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+  - keyAssetName: NovaOnLowHealth
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayJellyGuts
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.09183, y: -0.06442, z: -0.07253}
+      localAngles: {x: 52.6241, y: 11.65774, z: 163.11}
+      localScales: {x: 0.23592, y: 0.21007, z: 0.20285}
+      limbMask: 0
+  - keyAssetName: OutOfCombatArmor
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayOddlyShapedOpal
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.00015, y: 0.11035, z: 0.12247}
+      localAngles: {x: 352.1042, y: 8.02036, z: 3.4145}
+      localScales: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - keyAssetName: ParentEgg
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayParentEgg
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00009, y: 0.4347, z: -0.21202}
+      localAngles: {x: 333.9153, y: 179.7141, z: 2.40653}
+      localScales: {x: 0.07, y: 0.07, z: 0.07}
+      limbMask: 0
+  - keyAssetName: Pearl
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayPearl
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 89.25981, y: 180, z: 180}
+      localScales: {x: 0.24896, y: 0.24896, z: 0.24896}
+      limbMask: 0
+  - keyAssetName: PermanentDebuffOnHit
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayScorpion
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: UpperLegL
+      localPos: {x: -0.01191, y: 0.10748, z: -0.08473}
+      localAngles: {x: 0, y: 329.9206, z: 0}
+      localScales: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+  - keyAssetName: PersonalShield
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayShieldGenerator
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00005, y: 0.24835, z: -0.22042}
+      localAngles: {x: 65.04854, y: 180, z: 180}
+      localScales: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - keyAssetName: Phasing
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayStealthkit
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: LowerLegL
+      localPos: {x: 0.07949, y: 0.15535, z: -0.01966}
+      localAngles: {x: 276.3584, y: 70.10165, z: 12.30765}
+      localScales: {x: 0.24173, y: 0.35645, z: 0.22368}
+      limbMask: 0
+  - keyAssetName: Plant
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayInterstellarDeskPlant
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0, y: 0.3107, z: 0}
+      localAngles: {x: 270, y: 0, z: 0}
+      localScales: {x: 0.08, y: 0.08, z: 0.08}
+      limbMask: 0
+  - keyAssetName: PrimarySkillShuriken
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayShuriken
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: 0.17911, y: 0.13477, z: 0.11717}
+      localAngles: {x: 0, y: 23.50462, z: 357.161}
+      localScales: {x: 0.17132, y: 0.17132, z: 0.17132}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayShuriken
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: 0.10052, y: 0.1047, z: 0.15606}
+      localAngles: {x: 0, y: 0, z: 2.54732}
+      localScales: {x: 0.17132, y: 0.17132, z: 0.17132}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayShuriken
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: 0.01318, y: 0.06102, z: 0.15584}
+      localAngles: {x: 0.44257, y: 359.1865, z: 28.54581}
+      localScales: {x: 0.17132, y: 0.17132, z: 0.17132}
+      limbMask: 0
+  - keyAssetName: QuestVolatileBattery
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBatteryArray
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00001, y: 0.07725, z: -0.29144}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - keyAssetName: RandomDamageZone
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayRandomDamageZone
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00003, y: 0.29476, z: -0.40628}
+      localAngles: {x: 3.57904, y: 0, z: 0}
+      localScales: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+  - keyAssetName: RandomEquipmentTrigger
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBottledChaos
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: -0.12893, y: 0.16292, z: 0.15835}
+      localAngles: {x: 350.3899, y: 159.2496, z: 176.6619}
+      localScales: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - keyAssetName: RandomlyLunar
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDomino
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Base
+      localPos: {x: 0.34757, y: 1.76911, z: 0.74625}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: Recycle
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayRecycler
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.15739, y: -0.00003, z: -0.27576}
+      localAngles: {x: 0, y: 111.0779, z: 0}
+      localScales: {x: 0.08, y: 0.08, z: 0.08}
+      limbMask: 0
+  - keyAssetName: RegeneratingScrap
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayRegeneratingScrap
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.23118, y: 0.24711, z: -0.1502}
+      localAngles: {x: 14.68595, y: 304.3098, z: 16.00072}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - keyAssetName: RepeatHeal
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayCorpseflower
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.14183, y: 0.19682, z: 0.11695}
+      localAngles: {x: 82.14562, y: 0.00001, z: 331.1058}
+      localScales: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - keyAssetName: Saw
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySawmerang
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Base
+      localPos: {x: -0.49765, y: 1.73492, z: 0.58607}
+      localAngles: {x: 89.92088, y: 0, z: 0}
+      localScales: {x: 0.08, y: 0.08, z: 0.08}
+      limbMask: 0
+  - keyAssetName: Scanner
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayScanner
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.04674, y: 0.301, z: -0.16875}
+      localAngles: {x: 291.8336, y: 271.4564, z: 190.7862}
+      localScales: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - keyAssetName: SecondarySkillMagazine
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDoubleMag
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Shotgun
+      localPos: {x: -0.06638, y: -0.06749, z: -0.12769}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.06, y: 0.06, z: 0.06}
+      limbMask: 0
+  - keyAssetName: Seed
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySeed
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: UpperArmL
+      localPos: {x: -0.0432, y: 0.21176, z: -0.11939}
+      localAngles: {x: 329.8205, y: 293.3795, z: 4.00496}
+      localScales: {x: 0.05, y: 0.05, z: 0.05}
+      limbMask: 0
+  - keyAssetName: ShieldOnly
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayShieldBug
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0.04621, y: 0.25936, z: 0.04365}
+      localAngles: {x: 356.6082, y: 251.4522, z: 0}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayShieldBug
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: -0.04621, y: 0.25936, z: 0.04365}
+      localAngles: {x: -356.6082, y: -251.4522, z: 0}
+      localScales: {x: -0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - keyAssetName: ShinyPearl
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayShinyPearl
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 86.31034, y: 180, z: 180}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - keyAssetName: ShockNearby
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTeslaCoil
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: UpperArmR
+      localPos: {x: -0.09463, y: 0.03102, z: -0.01865}
+      localAngles: {x: 300.0991, y: 202.771, z: 255.2476}
+      localScales: {x: 0.4, y: 0.4, z: 0.4}
+      limbMask: 0
+  - keyAssetName: SiphonOnLowHealth
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySiphonOnLowHealth
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: 0.04662, y: 0.11999, z: 0.21762}
+      localAngles: {x: 350.0878, y: 359.0728, z: 185.3712}
+      localScales: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - keyAssetName: SlowOnHit
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBauble
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: UpperLegL
+      localPos: {x: -0.04325, y: 0.68904, z: 0.30037}
+      localAngles: {x: 16.62588, y: 37.38056, z: 167.273}
+      localScales: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: SlowOnHitVoid
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBaubleVoid
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: UpperLegL
+      localPos: {x: -0.07462, y: 0.7216, z: 0.08379}
+      localAngles: {x: 354.9053, y: 105.6634, z: 142.0271}
+      localScales: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: SprintArmor
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBuckler
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: LowerArmL
+      localPos: {x: 0.0487, y: 0.21635, z: 0.00085}
+      localAngles: {x: 356.201, y: 98.54395, z: 178.1704}
+      localScales: {x: 0.26, y: 0.26, z: 0.26}
+      limbMask: 0
+  - keyAssetName: SprintBonus
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySoda
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: -0.22323, y: 0.0394, z: -0.03475}
+      localAngles: {x: 85.39564, y: 49.27012, z: 70.991}
+      localScales: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+  - keyAssetName: SprintOutOfCombat
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWhip
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.13125, y: 0.10138, z: -0.26856}
+      localAngles: {x: 347.6329, y: 119.6027, z: 359.1675}
+      localScales: {x: 0.45, y: 0.45, z: 0.45}
+      limbMask: 0
+  - keyAssetName: SprintWisp
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBrokenMask
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: UpperLegL
+      localPos: {x: 0.08826, y: 0.40077, z: 0.09103}
+      localAngles: {x: 341.7379, y: 38.56606, z: 181.3252}
+      localScales: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - keyAssetName: Squid
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySquidTurret
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ShoulderL
+      localPos: {x: 0.08513, y: 0.21757, z: -0.19735}
+      localAngles: {x: 291.4027, y: -0.00001, z: 334.7796}
+      localScales: {x: 0.07, y: 0.07, z: 0.07}
+      limbMask: 0
+  - keyAssetName: StickyBomb
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayStickyBomb
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: 0.24233, y: 0.05398, z: -0.06659}
+      localAngles: {x: 0.1214, y: 34.78214, z: 3.45508}
+      localScales: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+  - keyAssetName: StrengthenBurn
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGasTank
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.12443, y: 0.04691, z: -0.23951}
+      localAngles: {x: 346.2929, y: 222.9525, z: 8.1822}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - keyAssetName: StunChanceOnHit
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayStunGrenade
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: 0.25324, y: 0.03653, z: 0.02801}
+      localAngles: {x: 75.28531, y: 199.8394, z: 200.1826}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: Syringe
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySyringeCluster
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: UpperLegR
+      localPos: {x: -0.10904, y: 0.1807, z: 0.05089}
+      localAngles: {x: 285.7092, y: 267.2139, z: 193.5177}
+      localScales: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+  - keyAssetName: Talisman
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTalisman
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Base
+      localPos: {x: 0.58414, y: 1.76671, z: 0.65233}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+  - keyAssetName: TeamWarCry
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTeamWarCry
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: -0.01153, y: 0.00001, z: -0.22453}
+      localAngles: {x: 0, y: 191.5227, z: 0}
+      localScales: {x: 0.08, y: 0.08, z: 0.08}
+      limbMask: 0
+  - keyAssetName: Thorns
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayRazorwireLeft
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: LowerArmL
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.5, y: 0.8, z: 0.8}
+      limbMask: 0
+  - keyAssetName: TitanGoldDuringTP
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGoldHeart
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: 0.14107, y: 0.10273, z: -0.20043}
+      localAngles: {x: 333.1757, y: 276.813, z: 178.553}
+      localScales: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - keyAssetName: Tonic
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTonic
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: -0.05757, y: 0.04064, z: 0.16548}
+      localAngles: {x: 10.77507, y: 1.83543, z: 189.7264}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - keyAssetName: Tooth
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayToothMeshLarge
+      displayPrefab:
+        address: 
+        useDirectReference: 0
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.00212, y: 0.15435, z: 0.12441}
+      localAngles: {x: 333.9478, y: 0, z: 0}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayToothMeshSmall1
+      displayPrefab:
+        address: 
+        useDirectReference: 0
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.03634, y: 0.16271, z: 0.11421}
+      localAngles: {x: 326.1859, y: 349.3777, z: 43.45803}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayToothMeshSmall1
+      displayPrefab:
+        address: 
+        useDirectReference: 0
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.02938, y: 0.16084, z: 0.11484}
+      localAngles: {x: 339.3073, y: 349.6596, z: 332.9598}
+      localScales: {x: -1, y: 1, z: 1}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayToothMeshSmall2
+      displayPrefab:
+        address: 
+        useDirectReference: 0
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.05547, y: 0.18911, z: 0.10684}
+      localAngles: {x: 353.148, y: 350.9744, z: 311.7939}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayToothMeshSmall2
+      displayPrefab:
+        address: 
+        useDirectReference: 0
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.05673, y: 0.19182, z: 0.101}
+      localAngles: {x: 326.3442, y: 15.74838, z: 49.44501}
+      localScales: {x: -1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: TPHealingNova
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGlowFlower
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: -0.19648, y: 0.07406, z: 0.12551}
+      localAngles: {x: 9.0589, y: 319.6402, z: 6.83261}
+      localScales: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+  - keyAssetName: TreasureCache
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayKey
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: -0.14674, y: -0.12077, z: 0.17097}
+      localAngles: {x: 345.335, y: 50.48375, z: 274.7236}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: TreasureCacheVoid
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayKeyVoid
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: -0.14737, y: -0.10963, z: 0.15653}
+      localAngles: {x: 0.81927, y: 30.79155, z: 280.966}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: UtilitySkillMagazine
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayAfterburnerShoulderRing
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0, y: 0.21556, z: -0.12236}
+      localAngles: {x: 66.46584, y: 180, z: 180}
+      localScales: {x: 0.86, y: 0.86, z: 0.86}
+      limbMask: 0
+  - keyAssetName: VendingMachine
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayVendingMachine
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: -0.24333, y: 0.06071, z: -0.03503}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - keyAssetName: VoidMegaCrabItem
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMegaCrabItem
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ShoulderL
+      localPos: {x: 0.2186, y: 0.21456, z: 0.03228}
+      localAngles: {x: 346.0044, y: 87.04837, z: 283.2593}
+      localScales: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - keyAssetName: WarCryOnCombat
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayPauldron
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: UpperArmL
+      localPos: {x: 0.18308, y: 0.06411, z: -0.01614}
+      localAngles: {x: 55.60266, y: 89.96758, z: 346.5467}
+      localScales: {x: 0.8, y: 0.8, z: 0.8}
+      limbMask: 0
+  - keyAssetName: WarCryOnMultiKill
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayPauldron
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: UpperArmL
+      localPos: {x: 0.18308, y: 0.06411, z: -0.01614}
+      localAngles: {x: 55.60266, y: 89.96758, z: 346.5467}
+      localScales: {x: 0.8, y: 0.8, z: 0.8}
+      limbMask: 0
+  - keyAssetName: WardOnLevel
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWarbanner
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Chest
+      localPos: {x: 0.02121, y: 0.39744, z: -0.17135}
+      localAngles: {x: 305.6499, y: 0, z: 90}
+      localScales: {x: 0.4, y: 0.4, z: 0.4}
+      limbMask: 0
+  - keyAssetName: X4
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayX4
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: UpperLegR
+      localPos: {x: -0.10021, y: 0.16452, z: 0.15026}
+      localAngles: {x: 3.12398, y: 80.98913, z: 89.50486}
+      localScales: {x: 2, y: 2, z: 2}
+      limbMask: 0
+  - keyAssetName: ShackledLamp
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLamp
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Base
+      localPos: {x: -0.44373, y: 1.87899, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+  - keyAssetName: equipDivineRight
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDivineRight
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Base
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - keyAssetName: CoffeeBag
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayCoffeeBag
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: 0.20322, y: 0.10473, z: 0.13451}
+      localAngles: {x: 27.23574, y: 41.27724, z: 177.7497}
+      localScales: {x: 0.09, y: 0.09, z: 0.09}
+      limbMask: 0
+  - keyAssetName: LowQualitySpeakers
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLowQualitySpeaker
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ShoulderL
+      localPos: {x: 0.01315, y: 0.13741, z: 0.18574}
+      localAngles: {x: 346.3281, y: 352.2733, z: 286.086}
+      localScales: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+  - keyAssetName: ITEM_ANCIENT_SCEPTER
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: mdlAncientScepterDisplay
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Pelvis
+      localPos: {x: 0.24585, y: 0.00001, z: 0}
+      localAngles: {x: 58.74231, y: 6.67717, z: 21.20422}
+      localScales: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - keyAssetName: LunarPortalOnUse
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLunarPortalOnUse
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: 
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - keyAssetName: Needles
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayNeedlesSolo
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Shotgun
+      localPos: {x: -0.05345, y: -0.31474, z: -0.68612}
+      localAngles: {x: 62.88132, y: 33.20958, z: 8.08843}
+      localScales: {x: 0.2625, y: 0.3539, z: 0.19144}
+      limbMask: 0
+  - keyAssetName: DroneWeaponsDisplay2
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDroneWeaponLauncher
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: 
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - keyAssetName: DroneWeaponsDisplay1
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDroneWeaponMinigun
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: 
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - keyAssetName: CooldownOnCrit
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySkull
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: 
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - keyAssetName: EmpowerAlways
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySunHead
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: 
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - keyAssetName: TempestOnKill
+    keyAsset:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+      loadAssetFrom: 0
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWaxBird
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: 
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0

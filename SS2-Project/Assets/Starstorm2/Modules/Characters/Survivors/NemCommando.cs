@@ -28,7 +28,6 @@ namespace Moonstorm.Starstorm2.Survivors
                 ScepterCompat();
                 //CreateNemesisPod();
             }
-
             On.RoR2.CharacterSelectBarController.Awake += CharacterSelectBarController_Awake;
         }
 
