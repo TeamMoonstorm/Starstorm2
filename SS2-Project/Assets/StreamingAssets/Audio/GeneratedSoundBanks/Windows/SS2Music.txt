@@ -8,16 +8,23 @@ State	ID	Name	State Group			Notes
 	231224994	song_nemesis_start	gameplaySongChoice			
 	617747445	song_nemesis_main	gameplaySongChoice			
 	748895195	None	gameplaySongChoice			
+	818387697	song_nemesis_end	gameplaySongChoice			
+	4271331250	song_nemesis_main_b	gameplaySongChoice			
 
 Game Parameter	ID	Name			Wwise Object Path	Notes
+	151362964	playerhealth			\Default Work Unit\playerhealth	
 	3729143042	Volume_MSX			\Default Work Unit\Volume_MSX	
 
+Effect plug-ins	ID	Name	Type				Notes
+	1203617187	Machine_Gun_Hangar	Wwise RoomVerb			
+
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
-	41584387	Canticum_Vitae_Start_B	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\Canticum_Vitae_Start_B_EF685D2C.wem		\Interactive Music Hierarchy\Default Work Unit\SS2_Music_System\Canticum_Vitae_Main\Canticum_Vitae_Main\Canticum_Vitae_Start_B		347782
-	324234268	Canticum_Vitae_Loop_A	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\Canticum_Vitae_Loop_A_EF685D2C.wem		\Interactive Music Hierarchy\Default Work Unit\SS2_Music_System\Canticum_Vitae_Main\Canticum_Vitae_Loop_A\Canticum_Vitae_Loop_A		2250615
-	342415295	Canticum_Vitae_Transition_B	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\Canticum_Vitae_Transition_B_EF685D2C.wem		\Interactive Music Hierarchy\Default Work Unit\SS2_Music_System\Canticum_Vitae_Main\Canticum_Vitae_Transition_B\Canticum_Vitae_Transition_B		912285
-	417465332	Canticum_Vitae_Transition_A	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\Canticum_Vitae_Transition_A_EF685D2C.wem		\Interactive Music Hierarchy\Default Work Unit\SS2_Music_System\Canticum_Vitae_Main\Canticum_Vitae_Transition_A\Canticum_Vitae_Transition_A		697883
-	516513095	Canticum_Vitae_Loop_B	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\Canticum_Vitae_Loop_B_EF685D2C.wem		\Interactive Music Hierarchy\Default Work Unit\SS2_Music_System\Canticum_Vitae_Main\Canticum_Vitae_Loop_B\Canticum_Vitae_Loop_B		2068082
-	542161795	Canticum_Vitae_Start_A	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\Canticum_Vitae_Start_A_EF685D2C.wem		\Interactive Music Hierarchy\Default Work Unit\SS2_Music_System\Canticum_Vitae_Start\Canticum_Vitae_Start_A\Canticum_Vitae_Start_A		305740
-	920998419	Canticum_Vitae_Start_C	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\Canticum_Vitae_Start_C_EF685D2C.wem		\Interactive Music Hierarchy\Default Work Unit\SS2_Music_System\Canticum_Vitae_Main\Canticum_Vitae_Main\Canticum_Vitae_Start_C		352214
+	41584387	Canticum_Vitae_Start_B	C:\Users\mincr\OneDrive\Documents\Repos\meowstorm-2\SS2-Project\WwiseProject\.cache\Windows\SFX\Canticum_Vitae_Start_B_2EB51506.wem		\Interactive Music Hierarchy\Default Work Unit\SS2_Music_System\Canticum_Vitae_Main\Canticum_Vitae_Main\Canticum_Vitae_Start_B		370815
+	324234268	Canticum_Vitae_Loop_A	C:\Users\mincr\OneDrive\Documents\Repos\meowstorm-2\SS2-Project\WwiseProject\.cache\Windows\SFX\Canticum_Vitae_Loop_A_2EB51506.wem		\Interactive Music Hierarchy\Default Work Unit\SS2_Music_System\Canticum_Vitae_Main\Canticum_Vitae_Loop_A\Canticum_Vitae_Loop_A		2095201
+	342415295	Canticum_Vitae_Transition_B	C:\Users\mincr\OneDrive\Documents\Repos\meowstorm-2\SS2-Project\WwiseProject\.cache\Windows\SFX\Canticum_Vitae_Transition_B_2EB51506.wem		\Interactive Music Hierarchy\Default Work Unit\SS2_Music_System\Canticum_Vitae_Main_b\Canticum_Vitae_Transition_B\Canticum_Vitae_Transition_B		955861
+	417465332	Canticum_Vitae_Transition_A	C:\Users\mincr\OneDrive\Documents\Repos\meowstorm-2\SS2-Project\WwiseProject\.cache\Windows\SFX\Canticum_Vitae_Transition_A_2EB51506.wem		\Interactive Music Hierarchy\Default Work Unit\SS2_Music_System\Canticum_Vitae_Main\Canticum_Vitae_Transition_A\Canticum_Vitae_Transition_A		800411
+	516513095	Canticum_Vitae_Loop_B	C:\Users\mincr\OneDrive\Documents\Repos\meowstorm-2\SS2-Project\WwiseProject\.cache\Windows\SFX\Canticum_Vitae_Loop_B_2EB51506.wem		\Interactive Music Hierarchy\Default Work Unit\SS2_Music_System\Canticum_Vitae_Main_b\Canticum_Vitae_Loop_B\Canticum_Vitae_Loop_B		1982327
+	542161795	Canticum_Vitae_Start_A	C:\Users\mincr\OneDrive\Documents\Repos\meowstorm-2\SS2-Project\WwiseProject\.cache\Windows\SFX\Canticum_Vitae_Start_A_2EB51506.wem		\Interactive Music Hierarchy\Default Work Unit\SS2_Music_System\Canticum_Vitae_Start\Canticum_Vitae_Start_A\Canticum_Vitae_Start_A		414207
+	656524023	Canticum Vitae - end	C:\Users\mincr\OneDrive\Documents\Repos\meowstorm-2\SS2-Project\WwiseProject\.cache\Windows\SFX\Canticum Vitae - end_6AD26A56.wem		\Interactive Music Hierarchy\Default Work Unit\SS2_Music_System\Canticum_Vitae_End\Canticum Vitae - end\Canticum Vitae - end		1179093
+	920998419	Canticum_Vitae_Start_C	C:\Users\mincr\OneDrive\Documents\Repos\meowstorm-2\SS2-Project\WwiseProject\.cache\Windows\SFX\Canticum_Vitae_Start_C_2EB51506.wem		\Interactive Music Hierarchy\Default Work Unit\SS2_Music_System\Canticum_Vitae_Main\Canticum_Vitae_Main\Canticum_Vitae_Start_C		437167
 
