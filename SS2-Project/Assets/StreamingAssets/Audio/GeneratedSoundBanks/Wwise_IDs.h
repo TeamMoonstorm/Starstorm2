@@ -13,6 +13,7 @@ namespace AK
 {
     namespace EVENTS
     {
+        static const AkUniqueID AUGURY = 202915568U;
         static const AkUniqueID CHIRRSPRINTLOOP = 2730174275U;
         static const AkUniqueID CHIRRSPRINTSTART = 3002414883U;
         static const AkUniqueID CHIRRSPRINTSTOP = 1060087585U;
@@ -43,6 +44,7 @@ namespace AK
         static const AkUniqueID JETBOOTSEXPLOSION = 1235706518U;
         static const AkUniqueID LAMPBULLET = 1316900923U;
         static const AkUniqueID LAMPIMPACT = 1573671621U;
+        static const AkUniqueID LIGHTNING_AUGURY = 2831146217U;
         static const AkUniqueID MOLTENCOIN = 1681111803U;
         static const AkUniqueID NEMHUNTRESSBOWMAX = 1389751463U;
         static const AkUniqueID NEMHUNTRESSCHARGEBOW = 415529083U;
@@ -122,7 +124,9 @@ namespace AK
             namespace STATE
             {
                 static const AkUniqueID NONE = 748895195U;
+                static const AkUniqueID SONG_NEMESIS_END = 818387697U;
                 static const AkUniqueID SONG_NEMESIS_MAIN = 617747445U;
+                static const AkUniqueID SONG_NEMESIS_MAIN_B = 4271331250U;
                 static const AkUniqueID SONG_NEMESIS_START = 231224994U;
             } // namespace STATE
         } // namespace GAMEPLAYSONGCHOICE
@@ -144,6 +148,7 @@ namespace AK
 
     namespace GAME_PARAMETERS
     {
+        static const AkUniqueID PLAYERHEALTH = 151362964U;
         static const AkUniqueID VOLUME_MSX = 3729143042U;
         static const AkUniqueID VOLUME_SFX = 3673881719U;
     } // namespace GAME_PARAMETERS
