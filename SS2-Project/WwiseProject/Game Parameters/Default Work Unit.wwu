@@ -3,8 +3,22 @@
 	<GameParameters>
 		<WorkUnit Name="Default Work Unit" ID="{4E4C0F5E-9CE9-403D-9E94-4785BD5A6B13}" PersistMode="Standalone">
 			<ChildrenList>
-				<GameParameter Name="Volume_SFX" ID="{61D029DC-EBF5-4025-B398-AAFF0378BC38}"/>
-				<GameParameter Name="Volume_MSX" ID="{6C63E699-94A8-48B8-81A5-39AFAEC39B49}"/>
+				<GameParameter Name="Volume_SFX" ID="{61D029DC-EBF5-4025-B398-AAFF0378BC38}">
+					<PropertyList>
+						<Property Name="InitialValue" Type="Real64" Value="100"/>
+					</PropertyList>
+				</GameParameter>
+				<GameParameter Name="Volume_MSX" ID="{6C63E699-94A8-48B8-81A5-39AFAEC39B49}">
+					<PropertyList>
+						<Property Name="InitialValue" Type="Real64" Value="100"/>
+					</PropertyList>
+				</GameParameter>
+				<GameParameter Name="playerhealth" ID="{AE335B17-7031-4B25-90D7-4E16F58D6F32}">
+					<PropertyList>
+						<Property Name="InitialValue" Type="Real64" Value="100"/>
+						<Property Name="RTPCRamping" Type="int16" Value="1"/>
+					</PropertyList>
+				</GameParameter>
 			</ChildrenList>
 		</WorkUnit>
 	</GameParameters>
