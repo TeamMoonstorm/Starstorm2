@@ -1,42 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="12" SoundbankVersion="135">
 	<RootPaths>
-		<ProjectRoot>C:\Users\hanan\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\</ProjectRoot>
-		<SourceFilesRoot>C:\Users\hanan\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\</SourceFilesRoot>
-		<SoundBanksRoot>C:\Users\hanan\Documents\GitHub\Starstorm2\SS2-Project\Assets\StreamingAssets\Audio\GeneratedSoundBanks\Windows\</SoundBanksRoot>
+		<ProjectRoot>C:\Users\mincr\OneDrive\Documents\Repos\meowstorm-2\SS2-Project\WwiseProject\</ProjectRoot>
+		<SourceFilesRoot>C:\Users\mincr\OneDrive\Documents\Repos\meowstorm-2\SS2-Project\WwiseProject\.cache\Windows\</SourceFilesRoot>
+		<SoundBanksRoot>C:\Users\mincr\OneDrive\Documents\Repos\meowstorm-2\SS2-Project\Assets\StreamingAssets\Audio\GeneratedSoundBanks\Windows\</SoundBanksRoot>
 		<ExternalSourcesInputFile></ExternalSourcesInputFile>
-		<ExternalSourcesOutputRoot>C:\Users\hanan\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
+		<ExternalSourcesOutputRoot>C:\Users\mincr\OneDrive\Documents\Repos\meowstorm-2\SS2-Project\WwiseProject\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
 	</RootPaths>
 	<DialogueEvents/>
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="866530374" Language="SFX" Hash="28832387">
+		<SoundBank Id="866530374" Language="SFX" Hash="670034534">
 			<ObjectPath>\SoundBanks\Default Work Unit\Starstorm2</ObjectPath>
 			<ShortName>Starstorm2</ShortName>
 			<Path>Starstorm2.bnk</Path>
 			<IncludedEvents>
+				<Event Id="202915568" Name="Augury" ObjectPath="\Events\Default Work Unit\Items\Augury" MaxAttenuation="600.000000" DurationType="OneShot" DurationMin="13.502209" DurationMax="13.502209">
+					<IncludedMemoryFiles>
+						<File Id="878249463" Language="SFX">
+							<ShortName>Augury\augury main.wav</ShortName>
+							<Path>SFX\Augury\augury main_B2D14CFC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
 				<Event Id="2730174275" Name="ChirrSprintLoop" ObjectPath="\Events\Default Work Unit\Chirr\ChirrSprintLoop" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="11.374149" DurationMax="11.374149">
 					<IncludedMemoryFiles>
 						<File Id="123604037" Language="SFX">
 							<ShortName>chirr_sprint_loop_01.wav</ShortName>
-							<Path>SFX\chirr_sprint_loop_01_BAA9C8D2.wem</Path>
+							<Path>SFX\chirr_sprint_loop_01_324331BC.wem</Path>
 						</File>
 						<File Id="632799382" Language="SFX">
 							<ShortName>chirr_sprint_loop_04.wav</ShortName>
-							<Path>SFX\chirr_sprint_loop_04_BAA9C8D2.wem</Path>
+							<Path>SFX\chirr_sprint_loop_04_324331BC.wem</Path>
 						</File>
 						<File Id="692098495" Language="SFX">
 							<ShortName>chirr_sprint_loop_02.wav</ShortName>
-							<Path>SFX\chirr_sprint_loop_02_BAA9C8D2.wem</Path>
+							<Path>SFX\chirr_sprint_loop_02_324331BC.wem</Path>
 						</File>
 						<File Id="762350638" Language="SFX">
 							<ShortName>chirr_sprint_loop_05.wav</ShortName>
-							<Path>SFX\chirr_sprint_loop_05_BAA9C8D2.wem</Path>
+							<Path>SFX\chirr_sprint_loop_05_324331BC.wem</Path>
 						</File>
 						<File Id="1037024320" Language="SFX">
 							<ShortName>chirr_sprint_loop_03.wav</ShortName>
-							<Path>SFX\chirr_sprint_loop_03_BAA9C8D2.wem</Path>
+							<Path>SFX\chirr_sprint_loop_03_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -44,7 +52,7 @@
 					<IncludedMemoryFiles>
 						<File Id="116836686" Language="SFX">
 							<ShortName>chirr_sprint_start_01.wav</ShortName>
-							<Path>SFX\chirr_sprint_start_01_BAA9C8D2.wem</Path>
+							<Path>SFX\chirr_sprint_start_01_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -52,7 +60,7 @@
 					<IncludedMemoryFiles>
 						<File Id="453785391" Language="SFX">
 							<ShortName>chirr_sprint_end_01.wav</ShortName>
-							<Path>SFX\chirr_sprint_end_01_BAA9C8D2.wem</Path>
+							<Path>SFX\chirr_sprint_end_01_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -60,31 +68,31 @@
 					<IncludedMemoryFiles>
 						<File Id="43053855" Language="SFX">
 							<ShortName>chirr_step_01.wav</ShortName>
-							<Path>SFX\chirr_step_01_BAA9C8D2.wem</Path>
+							<Path>SFX\chirr_step_01_324331BC.wem</Path>
 						</File>
 						<File Id="58295564" Language="SFX">
 							<ShortName>chirr_step_02.wav</ShortName>
-							<Path>SFX\chirr_step_02_BAA9C8D2.wem</Path>
+							<Path>SFX\chirr_step_02_324331BC.wem</Path>
 						</File>
 						<File Id="148389898" Language="SFX">
 							<ShortName>chirr_step_03.wav</ShortName>
-							<Path>SFX\chirr_step_03_BAA9C8D2.wem</Path>
+							<Path>SFX\chirr_step_03_324331BC.wem</Path>
 						</File>
 						<File Id="235333974" Language="SFX">
 							<ShortName>chirr_step_07.wav</ShortName>
-							<Path>SFX\chirr_step_07_BAA9C8D2.wem</Path>
+							<Path>SFX\chirr_step_07_324331BC.wem</Path>
 						</File>
 						<File Id="673620894" Language="SFX">
 							<ShortName>chirr_step_04.wav</ShortName>
-							<Path>SFX\chirr_step_04_BAA9C8D2.wem</Path>
+							<Path>SFX\chirr_step_04_324331BC.wem</Path>
 						</File>
 						<File Id="818318347" Language="SFX">
 							<ShortName>chirr_step_06.wav</ShortName>
-							<Path>SFX\chirr_step_06_BAA9C8D2.wem</Path>
+							<Path>SFX\chirr_step_06_324331BC.wem</Path>
 						</File>
 						<File Id="1004833416" Language="SFX">
 							<ShortName>chirr_step_05.wav</ShortName>
-							<Path>SFX\chirr_step_05_BAA9C8D2.wem</Path>
+							<Path>SFX\chirr_step_05_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -92,7 +100,7 @@
 					<IncludedMemoryFiles>
 						<File Id="688307028" Language="SFX">
 							<ShortName>CyborgPrimary.wav</ShortName>
-							<Path>SFX\CyborgPrimary_BAA9C8D2.wem</Path>
+							<Path>SFX\CyborgPrimary_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -100,7 +108,7 @@
 					<IncludedMemoryFiles>
 						<File Id="410466958" Language="SFX">
 							<ShortName>CyborgSecondary.wav</ShortName>
-							<Path>SFX\CyborgSecondary_BAA9C8D2.wem</Path>
+							<Path>SFX\CyborgSecondary_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -108,7 +116,7 @@
 					<IncludedMemoryFiles>
 						<File Id="144766640" Language="SFX">
 							<ShortName>CyborgSpecialPlace.wav</ShortName>
-							<Path>SFX\CyborgSpecialPlace_BAA9C8D2.wem</Path>
+							<Path>SFX\CyborgSpecialPlace_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -116,7 +124,7 @@
 					<IncludedMemoryFiles>
 						<File Id="1050674871" Language="SFX">
 							<ShortName>CyborgSpecialTeleport.wav</ShortName>
-							<Path>SFX\CyborgSpecialTeleport_BAA9C8D2.wem</Path>
+							<Path>SFX\CyborgSpecialTeleport_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -124,7 +132,7 @@
 					<IncludedMemoryFiles>
 						<File Id="82598891" Language="SFX">
 							<ShortName>CyborgUtility.wav</ShortName>
-							<Path>SFX\CyborgUtility_BAA9C8D2.wem</Path>
+							<Path>SFX\CyborgUtility_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -132,7 +140,7 @@
 					<IncludedMemoryFiles>
 						<File Id="239656552" Language="SFX">
 							<ShortName>item_proc_diaryLevel_01.wav</ShortName>
-							<Path>SFX\item_proc_diaryLevel_01_BAA9C8D2.wem</Path>
+							<Path>SFX\item_proc_diaryLevel_01_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -140,19 +148,19 @@
 					<IncludedMemoryFiles>
 						<File Id="86342755" Language="SFX">
 							<ShortName>item_proc_droneOnKill_03.wav</ShortName>
-							<Path>SFX\item_proc_droneOnKill_03_BAA9C8D2.wem</Path>
+							<Path>SFX\item_proc_droneOnKill_03_324331BC.wem</Path>
 						</File>
 						<File Id="332193265" Language="SFX">
 							<ShortName>item_proc_droneOnKill_02.wav</ShortName>
-							<Path>SFX\item_proc_droneOnKill_02_BAA9C8D2.wem</Path>
+							<Path>SFX\item_proc_droneOnKill_02_324331BC.wem</Path>
 						</File>
 						<File Id="334027601" Language="SFX">
 							<ShortName>item_proc_droneOnKill_04.wav</ShortName>
-							<Path>SFX\item_proc_droneOnKill_04_BAA9C8D2.wem</Path>
+							<Path>SFX\item_proc_droneOnKill_04_324331BC.wem</Path>
 						</File>
 						<File Id="1040351984" Language="SFX">
 							<ShortName>item_proc_droneOnKill_01.wav</ShortName>
-							<Path>SFX\item_proc_droneOnKill_01_BAA9C8D2.wem</Path>
+							<Path>SFX\item_proc_droneOnKill_01_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -160,7 +168,7 @@
 					<IncludedMemoryFiles>
 						<File Id="59938249" Language="SFX">
 							<ShortName>charge.wav</ShortName>
-							<Path>SFX\charge_BAA9C8D2.wem</Path>
+							<Path>SFX\charge_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -168,7 +176,7 @@
 					<IncludedMemoryFiles>
 						<File Id="43533750" Language="SFX">
 							<ShortName>fullCharge.wav</ShortName>
-							<Path>SFX\fullCharge_BAA9C8D2.wem</Path>
+							<Path>SFX\fullCharge_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -176,7 +184,7 @@
 					<IncludedMemoryFiles>
 						<File Id="125821321" Language="SFX">
 							<ShortName>ExecutionerPrimary.wav</ShortName>
-							<Path>SFX\ExecutionerPrimary_BAA9C8D2.wem</Path>
+							<Path>SFX\ExecutionerPrimary_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -184,7 +192,7 @@
 					<IncludedMemoryFiles>
 						<File Id="174347869" Language="SFX">
 							<ShortName>ExecutionerPrimaryCrit.wav</ShortName>
-							<Path>SFX\ExecutionerPrimaryCrit_BAA9C8D2.wem</Path>
+							<Path>SFX\ExecutionerPrimaryCrit_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -192,7 +200,7 @@
 					<IncludedMemoryFiles>
 						<File Id="23250849" Language="SFX">
 							<ShortName>Shoot2.wav</ShortName>
-							<Path>SFX\Shoot2_BAA9C8D2.wem</Path>
+							<Path>SFX\Shoot2_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -200,7 +208,7 @@
 					<IncludedMemoryFiles>
 						<File Id="1016269948" Language="SFX">
 							<ShortName>ExecutionerSpecialActivate.wav</ShortName>
-							<Path>SFX\ExecutionerSpecialActivate_BAA9C8D2.wem</Path>
+							<Path>SFX\ExecutionerSpecialActivate_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -208,7 +216,7 @@
 					<IncludedMemoryFiles>
 						<File Id="253409635" Language="SFX">
 							<ShortName>ExecutionerSpecialImpact.wav</ShortName>
-							<Path>SFX\ExecutionerSpecialImpact_BAA9C8D2.wem</Path>
+							<Path>SFX\ExecutionerSpecialImpact_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -217,7 +225,7 @@
 					<IncludedMemoryFiles>
 						<File Id="423172737" Language="SFX">
 							<ShortName>ExecutionerUtility.wav</ShortName>
-							<Path>SFX\ExecutionerUtility_BAA9C8D2.wem</Path>
+							<Path>SFX\ExecutionerUtility_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -225,7 +233,7 @@
 					<IncludedMemoryFiles>
 						<File Id="921835037" Language="SFX">
 							<ShortName>babyability.wav</ShortName>
-							<Path>SFX\babyability_32513D82.wem</Path>
+							<Path>SFX\babyability_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -233,7 +241,7 @@
 					<IncludedMemoryFiles>
 						<File Id="198216687" Language="SFX">
 							<ShortName>babyidle.wav</ShortName>
-							<Path>SFX\babyidle_F2BF74AC.wem</Path>
+							<Path>SFX\babyidle_6AD26A56.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -242,7 +250,7 @@
 					<IncludedMemoryFiles>
 						<File Id="386587619" Language="SFX">
 							<ShortName>babyspawn.wav</ShortName>
-							<Path>SFX\babyspawn_32513D82.wem</Path>
+							<Path>SFX\babyspawn_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -250,7 +258,7 @@
 					<IncludedMemoryFiles>
 						<File Id="398590803" Language="SFX">
 							<ShortName>babybark.wav</ShortName>
-							<Path>SFX\babybark_32513D82.wem</Path>
+							<Path>SFX\babybark_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -258,7 +266,7 @@
 					<IncludedMemoryFiles>
 						<File Id="368397302" Language="SFX">
 							<ShortName>item_proc_greaterBanner_01.wav</ShortName>
-							<Path>SFX\item_proc_greaterBanner_01_BAA9C8D2.wem</Path>
+							<Path>SFX\item_proc_greaterBanner_01_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -266,11 +274,11 @@
 					<IncludedMemoryFiles>
 						<File Id="140746596" Language="SFX">
 							<ShortName>item_proc_fireonequip_v2_02.wav</ShortName>
-							<Path>SFX\item_proc_fireonequip_v2_02_BAA9C8D2.wem</Path>
+							<Path>SFX\item_proc_fireonequip_v2_02_324331BC.wem</Path>
 						</File>
 						<File Id="579606469" Language="SFX">
 							<ShortName>item_proc_fireonequip_v2_01.wav</ShortName>
-							<Path>SFX\item_proc_fireonequip_v2_01_BAA9C8D2.wem</Path>
+							<Path>SFX\item_proc_fireonequip_v2_01_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -278,11 +286,11 @@
 					<IncludedMemoryFiles>
 						<File Id="848587777" Language="SFX">
 							<ShortName>item_proc_explodejump_v2_02.wav</ShortName>
-							<Path>SFX\item_proc_explodejump_v2_02_BAA9C8D2.wem</Path>
+							<Path>SFX\item_proc_explodejump_v2_02_324331BC.wem</Path>
 						</File>
 						<File Id="953880137" Language="SFX">
 							<ShortName>item_proc_explodejump_v3_01.wav</ShortName>
-							<Path>SFX\item_proc_explodejump_v3_01_BAA9C8D2.wem</Path>
+							<Path>SFX\item_proc_explodejump_v3_01_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -290,15 +298,23 @@
 					<IncludedMemoryFiles>
 						<File Id="657553960" Language="SFX">
 							<ShortName>bulletshoot.wav</ShortName>
-							<Path>SFX\bulletshoot_32513D82.wem</Path>
+							<Path>SFX\bulletshoot_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="1573671621" Name="LampImpact" ObjectPath="\Events\Default Work Unit\Follower\LampImpact" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="0.757440" DurationMax="0.784152">
+				<Event Id="1573671621" Name="LampImpact" ObjectPath="\Events\Default Work Unit\Follower\LampImpact" DurationType="OneShot" DurationMin="0.757440" DurationMax="0.784152">
 					<IncludedMemoryFiles>
 						<File Id="694986444" Language="SFX">
 							<ShortName>bulletimpact.wav</ShortName>
-							<Path>SFX\bulletimpact_32513D82.wem</Path>
+							<Path>SFX\bulletimpact_B2D14CFC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2831146217" Name="Lightning_Augury" ObjectPath="\Events\Default Work Unit\Items\Lightning_Augury" MaxAttenuation="500.000000" DurationType="OneShot" DurationMin="9.000000" DurationMax="9.000000">
+					<IncludedMemoryFiles>
+						<File Id="1041292032" Language="SFX">
+							<ShortName>Augury\Lightning augury.wav</ShortName>
+							<Path>SFX\Augury\Lightning augury_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -306,7 +322,7 @@
 					<IncludedMemoryFiles>
 						<File Id="687716872" Language="SFX">
 							<ShortName>item_proc_goldonignite_01.wav</ShortName>
-							<Path>SFX\item_proc_goldonignite_01_BAA9C8D2.wem</Path>
+							<Path>SFX\item_proc_goldonignite_01_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -314,7 +330,7 @@
 					<IncludedMemoryFiles>
 						<File Id="830750472" Language="SFX">
 							<ShortName>gunshell1.wav</ShortName>
-							<Path>SFX\gunshell1_BAA9C8D2.wem</Path>
+							<Path>SFX\gunshell1_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -322,7 +338,7 @@
 					<IncludedMemoryFiles>
 						<File Id="174116591" Language="SFX">
 							<ShortName>NemmandoChargeBeam.wav</ShortName>
-							<Path>SFX\NemmandoChargeBeam_BAA9C8D2.wem</Path>
+							<Path>SFX\NemmandoChargeBeam_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -330,7 +346,7 @@
 					<IncludedMemoryFiles>
 						<File Id="1072703392" Language="SFX">
 							<ShortName>NemmandoFireBeam.wav</ShortName>
-							<Path>SFX\NemmandoFireBeam_BAA9C8D2.wem</Path>
+							<Path>SFX\NemmandoFireBeam_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -338,7 +354,7 @@
 					<IncludedMemoryFiles>
 						<File Id="917508447" Language="SFX">
 							<ShortName>nemmando_select_swordSwings.wav</ShortName>
-							<Path>SFX\nemmando_select_swordSwings_BAA9C8D2.wem</Path>
+							<Path>SFX\nemmando_select_swordSwings_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -346,7 +362,7 @@
 					<IncludedMemoryFiles>
 						<File Id="174116591" Language="SFX">
 							<ShortName>NemmandoChargeBeam.wav</ShortName>
-							<Path>SFX\NemmandoChargeBeam_BAA9C8D2.wem</Path>
+							<Path>SFX\NemmandoChargeBeam_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -354,7 +370,7 @@
 					<IncludedMemoryFiles>
 						<File Id="356582938" Language="SFX">
 							<ShortName>nemmandoGashChargeC.wav</ShortName>
-							<Path>SFX\nemmandoGashChargeC_BAA9C8D2.wem</Path>
+							<Path>SFX\nemmandoGashChargeC_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -362,7 +378,7 @@
 					<IncludedMemoryFiles>
 						<File Id="215151188" Language="SFX">
 							<ShortName>DecisiveCharge.wav</ShortName>
-							<Path>SFX\DecisiveCharge_BAA9C8D2.wem</Path>
+							<Path>SFX\DecisiveCharge_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -370,7 +386,7 @@
 					<IncludedMemoryFiles>
 						<File Id="917508447" Language="SFX">
 							<ShortName>nemmando_select_swordSwings.wav</ShortName>
-							<Path>SFX\nemmando_select_swordSwings_BAA9C8D2.wem</Path>
+							<Path>SFX\nemmando_select_swordSwings_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -378,7 +394,7 @@
 					<IncludedMemoryFiles>
 						<File Id="760241741" Language="SFX">
 							<ShortName>ChargeDecisiveStrike.wav</ShortName>
-							<Path>SFX\ChargeDecisiveStrike_BAA9C8D2.wem</Path>
+							<Path>SFX\ChargeDecisiveStrike_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -386,7 +402,7 @@
 					<IncludedMemoryFiles>
 						<File Id="848343354" Language="SFX">
 							<ShortName>DecisiveStrikeFire.wav</ShortName>
-							<Path>SFX\DecisiveStrikeFire_BAA9C8D2.wem</Path>
+							<Path>SFX\DecisiveStrikeFire_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -394,7 +410,7 @@
 					<IncludedMemoryFiles>
 						<File Id="659856957" Language="SFX">
 							<ShortName>DecisiveStrikeReady.wav</ShortName>
-							<Path>SFX\DecisiveStrikeReady_BAA9C8D2.wem</Path>
+							<Path>SFX\DecisiveStrikeReady_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -402,7 +418,7 @@
 					<IncludedMemoryFiles>
 						<File Id="1072703392" Language="SFX">
 							<ShortName>NemmandoFireBeam.wav</ShortName>
-							<Path>SFX\NemmandoFireBeam_BAA9C8D2.wem</Path>
+							<Path>SFX\NemmandoFireBeam_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -410,7 +426,7 @@
 					<IncludedMemoryFiles>
 						<File Id="276555501" Language="SFX">
 							<ShortName>nemmandoGashShoot.wav</ShortName>
-							<Path>SFX\nemmandoGashShoot_BAA9C8D2.wem</Path>
+							<Path>SFX\nemmandoGashShoot_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -418,7 +434,7 @@
 					<IncludedMemoryFiles>
 						<File Id="393562851" Language="SFX">
 							<ShortName>GunSpin.wav</ShortName>
-							<Path>SFX\GunSpin_BAA9C8D2.wem</Path>
+							<Path>SFX\GunSpin_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -426,7 +442,7 @@
 					<IncludedMemoryFiles>
 						<File Id="878483494" Language="SFX">
 							<ShortName>JCEclick.wav</ShortName>
-							<Path>SFX\JCEclick_BAA9C8D2.wem</Path>
+							<Path>SFX\JCEclick_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -434,7 +450,7 @@
 					<IncludedMemoryFiles>
 						<File Id="830750472" Language="SFX">
 							<ShortName>gunshell1.wav</ShortName>
-							<Path>SFX\gunshell1_BAA9C8D2.wem</Path>
+							<Path>SFX\gunshell1_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -442,7 +458,7 @@
 					<IncludedMemoryFiles>
 						<File Id="285628454" Language="SFX">
 							<ShortName>nemmandosaberhit.wav</ShortName>
-							<Path>SFX\nemmandosaberhit_BAA9C8D2.wem</Path>
+							<Path>SFX\nemmandosaberhit_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -450,7 +466,7 @@
 					<IncludedMemoryFiles>
 						<File Id="1057107243" Language="SFX">
 							<ShortName>sheathesound.wav</ShortName>
-							<Path>SFX\sheathesound_BAA9C8D2.wem</Path>
+							<Path>SFX\sheathesound_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -458,11 +474,11 @@
 					<IncludedMemoryFiles>
 						<File Id="428394710" Language="SFX">
 							<ShortName>NemmandoShoot2.wav</ShortName>
-							<Path>SFX\NemmandoShoot2_BAA9C8D2.wem</Path>
+							<Path>SFX\NemmandoShoot2_324331BC.wem</Path>
 						</File>
 						<File Id="1040636062" Language="SFX">
 							<ShortName>NemmandoShoot1.wav</ShortName>
-							<Path>SFX\NemmandoShoot1_BAA9C8D2.wem</Path>
+							<Path>SFX\NemmandoShoot1_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -470,7 +486,7 @@
 					<IncludedMemoryFiles>
 						<File Id="278937456" Language="SFX">
 							<ShortName>NemmandoClassicShoot.wav</ShortName>
-							<Path>SFX\NemmandoClassicShoot_BAA9C8D2.wem</Path>
+							<Path>SFX\NemmandoClassicShoot_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -478,11 +494,11 @@
 					<IncludedMemoryFiles>
 						<File Id="57255358" Language="SFX">
 							<ShortName>NemmandoShoot2Crit.wav</ShortName>
-							<Path>SFX\NemmandoShoot2Crit_BAA9C8D2.wem</Path>
+							<Path>SFX\NemmandoShoot2Crit_324331BC.wem</Path>
 						</File>
 						<File Id="981345431" Language="SFX">
 							<ShortName>NemmandoShoot1Crit.wav</ShortName>
-							<Path>SFX\NemmandoShoot1Crit_BAA9C8D2.wem</Path>
+							<Path>SFX\NemmandoShoot1Crit_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -490,7 +506,7 @@
 					<IncludedMemoryFiles>
 						<File Id="269722145" Language="SFX">
 							<ShortName>NemmandoShootGun.wav</ShortName>
-							<Path>SFX\NemmandoShootGun_BAA9C8D2.wem</Path>
+							<Path>SFX\NemmandoShootGun_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -498,7 +514,7 @@
 					<IncludedMemoryFiles>
 						<File Id="5091085" Language="SFX">
 							<ShortName>NemmandoSubmissionCharge.wav</ShortName>
-							<Path>SFX\NemmandoSubmissionCharge_BAA9C8D2.wem</Path>
+							<Path>SFX\NemmandoSubmissionCharge_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -506,7 +522,7 @@
 					<IncludedMemoryFiles>
 						<File Id="903966366" Language="SFX">
 							<ShortName>NemmandoSubmissionFire.wav</ShortName>
-							<Path>SFX\NemmandoSubmissionFire_BAA9C8D2.wem</Path>
+							<Path>SFX\NemmandoSubmissionFire_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -514,7 +530,7 @@
 					<IncludedMemoryFiles>
 						<File Id="679076346" Language="SFX">
 							<ShortName>NemmandoSubmissionReady.wav</ShortName>
-							<Path>SFX\NemmandoSubmissionReady_BAA9C8D2.wem</Path>
+							<Path>SFX\NemmandoSubmissionReady_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -522,11 +538,11 @@
 					<IncludedMemoryFiles>
 						<File Id="216505171" Language="SFX">
 							<ShortName>NemmandoSwing2.wav</ShortName>
-							<Path>SFX\NemmandoSwing2_BAA9C8D2.wem</Path>
+							<Path>SFX\NemmandoSwing2_324331BC.wem</Path>
 						</File>
 						<File Id="354162060" Language="SFX">
 							<ShortName>NemmandoSwing1.wav</ShortName>
-							<Path>SFX\NemmandoSwing1_BAA9C8D2.wem</Path>
+							<Path>SFX\NemmandoSwing1_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -534,11 +550,11 @@
 					<IncludedMemoryFiles>
 						<File Id="216505171" Language="SFX">
 							<ShortName>NemmandoSwing2.wav</ShortName>
-							<Path>SFX\NemmandoSwing2_BAA9C8D2.wem</Path>
+							<Path>SFX\NemmandoSwing2_324331BC.wem</Path>
 						</File>
 						<File Id="354162060" Language="SFX">
 							<ShortName>NemmandoSwing1.wav</ShortName>
-							<Path>SFX\NemmandoSwing1_BAA9C8D2.wem</Path>
+							<Path>SFX\NemmandoSwing1_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -546,7 +562,7 @@
 					<IncludedMemoryFiles>
 						<File Id="805104243" Language="SFX">
 							<ShortName>DecisiveStrike.wav</ShortName>
-							<Path>SFX\DecisiveStrike_BAA9C8D2.wem</Path>
+							<Path>SFX\DecisiveStrike_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -554,11 +570,11 @@
 					<IncludedMemoryFiles>
 						<File Id="129668216" Language="SFX">
 							<ShortName>nemmandoswing22.wav</ShortName>
-							<Path>SFX\nemmandoswing22_BAA9C8D2.wem</Path>
+							<Path>SFX\nemmandoswing22_324331BC.wem</Path>
 						</File>
 						<File Id="246039484" Language="SFX">
 							<ShortName>nemmandosaberswing1.wav</ShortName>
-							<Path>SFX\nemmandosaberswing1_BAA9C8D2.wem</Path>
+							<Path>SFX\nemmandosaberswing1_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -566,7 +582,7 @@
 					<IncludedMemoryFiles>
 						<File Id="465172932" Language="SFX">
 							<ShortName>NemmandoSwingSaberBig.wav</ShortName>
-							<Path>SFX\NemmandoSwingSaberBig_BAA9C8D2.wem</Path>
+							<Path>SFX\NemmandoSwingSaberBig_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -574,7 +590,7 @@
 					<IncludedMemoryFiles>
 						<File Id="438122999" Language="SFX">
 							<ShortName>nucleator_m1_charge_01.wav</ShortName>
-							<Path>SFX\nucleator_m1_charge_01_BAA9C8D2.wem</Path>
+							<Path>SFX\nucleator_m1_charge_01_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -582,7 +598,7 @@
 					<IncludedMemoryFiles>
 						<File Id="934322958" Language="SFX">
 							<ShortName>draven_skin13_sfx_audio_56.wav</ShortName>
-							<Path>SFX\draven_skin13_sfx_audio_56_32513D82.wem</Path>
+							<Path>SFX\draven_skin13_sfx_audio_56_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -590,7 +606,7 @@
 					<IncludedMemoryFiles>
 						<File Id="884406925" Language="SFX">
 							<ShortName>dash again.wav</ShortName>
-							<Path>SFX\dash again_32513D82.wem</Path>
+							<Path>SFX\dash again_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -598,7 +614,7 @@
 					<IncludedMemoryFiles>
 						<File Id="307841691" Language="SFX">
 							<ShortName>fuck2001.wav</ShortName>
-							<Path>SFX\fuck2001_32513D82.wem</Path>
+							<Path>SFX\fuck2001_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -606,7 +622,7 @@
 					<IncludedMemoryFiles>
 						<File Id="330789530" Language="SFX">
 							<ShortName>knife_NM_impact.wav</ShortName>
-							<Path>SFX\knife_NM_impact_32513D82.wem</Path>
+							<Path>SFX\knife_NM_impact_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -614,7 +630,7 @@
 					<IncludedMemoryFiles>
 						<File Id="175474904" Language="SFX">
 							<ShortName>knifee_NM_pull_3.wav</ShortName>
-							<Path>SFX\knifee_NM_pull_3_32513D82.wem</Path>
+							<Path>SFX\knifee_NM_pull_3_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -622,7 +638,7 @@
 					<IncludedMemoryFiles>
 						<File Id="23053059" Language="SFX">
 							<ShortName>knife_NM_thrown_stright.wav</ShortName>
-							<Path>SFX\knife_NM_thrown_stright_32513D82.wem</Path>
+							<Path>SFX\knife_NM_thrown_stright_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -630,7 +646,7 @@
 					<IncludedMemoryFiles>
 						<File Id="634299537" Language="SFX">
 							<ShortName>Futuristic Shotgun Single Shot.wav</ShortName>
-							<Path>SFX\Futuristic Shotgun Single Shot_32513D82.wem</Path>
+							<Path>SFX\Futuristic Shotgun Single Shot_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -638,7 +654,7 @@
 					<IncludedMemoryFiles>
 						<File Id="559235054" Language="SFX">
 							<ShortName>nemmercshot2_3.wav</ShortName>
-							<Path>SFX\nemmercshot2_3_32513D82.wem</Path>
+							<Path>SFX\nemmercshot2_3_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -646,7 +662,7 @@
 					<IncludedMemoryFiles>
 						<File Id="51700066" Language="SFX">
 							<ShortName>PF_NM_2.wav</ShortName>
-							<Path>SFX\PF_NM_2_32513D82.wem</Path>
+							<Path>SFX\PF_NM_2_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -654,11 +670,11 @@
 					<IncludedMemoryFiles>
 						<File Id="162523517" Language="SFX">
 							<ShortName>pump1.wav</ShortName>
-							<Path>SFX\pump1_32513D82.wem</Path>
+							<Path>SFX\pump1_B2D14CFC.wem</Path>
 						</File>
 						<File Id="594033405" Language="SFX">
 							<ShortName>pump2.wav</ShortName>
-							<Path>SFX\pump2_32513D82.wem</Path>
+							<Path>SFX\pump2_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -666,11 +682,11 @@
 					<IncludedMemoryFiles>
 						<File Id="20548445" Language="SFX">
 							<ShortName>draven_skin13_sfx_audio_43.wav</ShortName>
-							<Path>SFX\draven_skin13_sfx_audio_43_32513D82.wem</Path>
+							<Path>SFX\draven_skin13_sfx_audio_43_B2D14CFC.wem</Path>
 						</File>
 						<File Id="191170539" Language="SFX">
 							<ShortName>leather.wav</ShortName>
-							<Path>SFX\leather_32513D82.wem</Path>
+							<Path>SFX\leather_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -678,7 +694,7 @@
 					<IncludedMemoryFiles>
 						<File Id="22802676" Language="SFX">
 							<ShortName>HE ULTED MONKAW.wav</ShortName>
-							<Path>SFX\HE ULTED MONKAW_32513D82.wem</Path>
+							<Path>SFX\HE ULTED MONKAW_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -686,7 +702,7 @@
 					<IncludedMemoryFiles>
 						<File Id="951110745" Language="SFX">
 							<ShortName>draven_skin13_sfx_audio_47.wav</ShortName>
-							<Path>SFX\draven_skin13_sfx_audio_47_32513D82.wem</Path>
+							<Path>SFX\draven_skin13_sfx_audio_47_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -694,7 +710,7 @@
 					<IncludedMemoryFiles>
 						<File Id="594019862" Language="SFX">
 							<ShortName>draven_skin13_sfx_audio_36.wav</ShortName>
-							<Path>SFX\draven_skin13_sfx_audio_36_32513D82.wem</Path>
+							<Path>SFX\draven_skin13_sfx_audio_36_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -702,11 +718,11 @@
 					<IncludedMemoryFiles>
 						<File Id="634982983" Language="SFX">
 							<ShortName>RainAmbience1.wav</ShortName>
-							<Path>SFX\RainAmbience1_EF685D2C.wem</Path>
+							<Path>SFX\RainAmbience1_2EB51506.wem</Path>
 						</File>
 						<File Id="655304851" Language="SFX">
 							<ShortName>RainAmbience2.wav</ShortName>
-							<Path>SFX\RainAmbience2_EF685D2C.wem</Path>
+							<Path>SFX\RainAmbience2_2EB51506.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -714,7 +730,7 @@
 					<IncludedMemoryFiles>
 						<File Id="379909187" Language="SFX">
 							<ShortName>ui_drone_table_process01.wav</ShortName>
-							<Path>SFX\ui_drone_table_process01_32513D82.wem</Path>
+							<Path>SFX\ui_drone_table_process01_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -722,7 +738,7 @@
 					<IncludedMemoryFiles>
 						<File Id="28672179" Language="SFX">
 							<ShortName>coinflipgoodenoughidc.wav</ShortName>
-							<Path>SFX\coinflipgoodenoughidc_32513D82.wem</Path>
+							<Path>SFX\coinflipgoodenoughidc_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -730,7 +746,7 @@
 					<IncludedMemoryFiles>
 						<File Id="28672179" Language="SFX">
 							<ShortName>coinflipgoodenoughidc.wav</ShortName>
-							<Path>SFX\coinflipgoodenoughidc_32513D82.wem</Path>
+							<Path>SFX\coinflipgoodenoughidc_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -738,7 +754,7 @@
 					<IncludedMemoryFiles>
 						<File Id="320726770" Language="SFX">
 							<ShortName>item_proc_buffOnIdle_01.wav</ShortName>
-							<Path>SFX\item_proc_buffOnIdle_01_BAA9C8D2.wem</Path>
+							<Path>SFX\item_proc_buffOnIdle_01_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -746,7 +762,7 @@
 					<IncludedMemoryFiles>
 						<File Id="131170681" Language="SFX">
 							<ShortName>NemmandoSpawnmeme.wav</ShortName>
-							<Path>SFX\NemmandoSpawnmeme_BAA9C8D2.wem</Path>
+							<Path>SFX\NemmandoSpawnmeme_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -754,7 +770,7 @@
 					<IncludedMemoryFiles>
 						<File Id="1019695934" Language="SFX">
 							<ShortName>WindAmbience2.wav</ShortName>
-							<Path>SFX\WindAmbience2_EF685D2C.wem</Path>
+							<Path>SFX\WindAmbience2_2EB51506.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -762,7 +778,7 @@
 					<IncludedMemoryFiles>
 						<File Id="483753104" Language="SFX">
 							<ShortName>item_proc_soulonkillPickup_01.wav</ShortName>
-							<Path>SFX\item_proc_soulonkillPickup_01_BAA9C8D2.wem</Path>
+							<Path>SFX\item_proc_soulonkillPickup_01_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -771,15 +787,15 @@
 					<IncludedMemoryFiles>
 						<File Id="89003483" Language="SFX">
 							<ShortName>item_proc_intoxicateHit_03.wav</ShortName>
-							<Path>SFX\item_proc_intoxicateHit_03_BAA9C8D2.wem</Path>
+							<Path>SFX\item_proc_intoxicateHit_03_324331BC.wem</Path>
 						</File>
 						<File Id="683106128" Language="SFX">
 							<ShortName>item_proc_intoxicateHit_02.wav</ShortName>
-							<Path>SFX\item_proc_intoxicateHit_02_BAA9C8D2.wem</Path>
+							<Path>SFX\item_proc_intoxicateHit_02_324331BC.wem</Path>
 						</File>
 						<File Id="841991385" Language="SFX">
 							<ShortName>item_proc_intoxicateHit_01.wav</ShortName>
-							<Path>SFX\item_proc_intoxicateHit_01_BAA9C8D2.wem</Path>
+							<Path>SFX\item_proc_intoxicateHit_01_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -787,11 +803,11 @@
 					<IncludedMemoryFiles>
 						<File Id="143741125" Language="SFX">
 							<ShortName>item_proc_swiftSkateboard_02.wav</ShortName>
-							<Path>SFX\item_proc_swiftSkateboard_02_BAA9C8D2.wem</Path>
+							<Path>SFX\item_proc_swiftSkateboard_02_324331BC.wem</Path>
 						</File>
 						<File Id="555558067" Language="SFX">
 							<ShortName>item_proc_swiftSkateboard_01.wav</ShortName>
-							<Path>SFX\item_proc_swiftSkateboard_01_BAA9C8D2.wem</Path>
+							<Path>SFX\item_proc_swiftSkateboard_01_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -799,15 +815,15 @@
 					<IncludedMemoryFiles>
 						<File Id="471547935" Language="SFX">
 							<ShortName>VoidAmbience2.wav</ShortName>
-							<Path>SFX\VoidAmbience2_BAA9C8D2.wem</Path>
+							<Path>SFX\VoidAmbience2_324331BC.wem</Path>
 						</File>
 						<File Id="603837612" Language="SFX">
 							<ShortName>VoidAmbience3.wav</ShortName>
-							<Path>SFX\VoidAmbience3_BAA9C8D2.wem</Path>
+							<Path>SFX\VoidAmbience3_324331BC.wem</Path>
 						</File>
 						<File Id="978048950" Language="SFX">
 							<ShortName>VoidAmbience1.wav</ShortName>
-							<Path>SFX\VoidAmbience1_BAA9C8D2.wem</Path>
+							<Path>SFX\VoidAmbience1_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -815,15 +831,15 @@
 					<IncludedMemoryFiles>
 						<File Id="120647268" Language="SFX">
 							<ShortName>WastelanderShoot2.wav</ShortName>
-							<Path>SFX\WastelanderShoot2_BAA9C8D2.wem</Path>
+							<Path>SFX\WastelanderShoot2_324331BC.wem</Path>
 						</File>
 						<File Id="530421127" Language="SFX">
 							<ShortName>WastelanderShoot3.wav</ShortName>
-							<Path>SFX\WastelanderShoot3_BAA9C8D2.wem</Path>
+							<Path>SFX\WastelanderShoot3_324331BC.wem</Path>
 						</File>
 						<File Id="717741475" Language="SFX">
 							<ShortName>WastelanderShoot1.wav</ShortName>
-							<Path>SFX\WastelanderShoot1_BAA9C8D2.wem</Path>
+							<Path>SFX\WastelanderShoot1_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -831,15 +847,15 @@
 					<IncludedMemoryFiles>
 						<File Id="253404114" Language="SFX">
 							<ShortName>WastelanderShootCrit2.wav</ShortName>
-							<Path>SFX\WastelanderShootCrit2_BAA9C8D2.wem</Path>
+							<Path>SFX\WastelanderShootCrit2_324331BC.wem</Path>
 						</File>
 						<File Id="826625557" Language="SFX">
 							<ShortName>WastelanderShootCrit3.wav</ShortName>
-							<Path>SFX\WastelanderShootCrit3_BAA9C8D2.wem</Path>
+							<Path>SFX\WastelanderShootCrit3_324331BC.wem</Path>
 						</File>
 						<File Id="972774711" Language="SFX">
 							<ShortName>WastelanderShootCrit1.wav</ShortName>
-							<Path>SFX\WastelanderShootCrit1_BAA9C8D2.wem</Path>
+							<Path>SFX\WastelanderShootCrit1_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -847,19 +863,19 @@
 					<IncludedMemoryFiles>
 						<File Id="835244512" Language="SFX">
 							<ShortName>WastelanderShootIon1.wav</ShortName>
-							<Path>SFX\WastelanderShootIon1_BAA9C8D2.wem</Path>
+							<Path>SFX\WastelanderShootIon1_324331BC.wem</Path>
 						</File>
 						<File Id="1027913659" Language="SFX">
 							<ShortName>WastelanderShootIon2.wav</ShortName>
-							<Path>SFX\WastelanderShootIon2_BAA9C8D2.wem</Path>
+							<Path>SFX\WastelanderShootIon2_324331BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="2495495812" Name="WayfarerAttack" ObjectPath="\Events\Default Work Unit\Wayfarer\WayfarerAttack" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="6.412000" DurationMax="6.412000">
+				<Event Id="2495495812" Name="WayfarerAttack" ObjectPath="\Events\Default Work Unit\Wayfarer\WayfarerAttack" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="5.712443" DurationMax="7.197227">
 					<IncludedMemoryFiles>
 						<File Id="954426" Language="SFX">
 							<ShortName>attack.wav</ShortName>
-							<Path>SFX\attack_32513D82.wem</Path>
+							<Path>SFX\attack_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -867,15 +883,15 @@
 					<IncludedMemoryFiles>
 						<File Id="116580580" Language="SFX">
 							<ShortName>blow2.wav</ShortName>
-							<Path>SFX\blow2_32513D82.wem</Path>
+							<Path>SFX\blow2_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="2250290942" Name="WayfarerIdleStart" ObjectPath="\Events\Default Work Unit\Wayfarer\WayfarerIdleStart" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="14.654041" DurationMax="14.654041">
+				<Event Id="2250290942" Name="WayfarerIdleStart" ObjectPath="\Events\Default Work Unit\Wayfarer\WayfarerIdleStart" MaxAttenuation="150.000000" DurationType="Infinite">
 					<IncludedMemoryFiles>
 						<File Id="1020440952" Language="SFX">
 							<ShortName>idle.wav</ShortName>
-							<Path>SFX\idle_32513D82.wem</Path>
+							<Path>SFX\idle_6AD26A56.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -884,19 +900,19 @@
 					<IncludedMemoryFiles>
 						<File Id="83181747" Language="SFX">
 							<ShortName>cry1_v2.wav</ShortName>
-							<Path>SFX\cry1_v2_32513D82.wem</Path>
+							<Path>SFX\cry1_v2_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="2393435613" Name="WayfarerVO" ObjectPath="\Events\Default Work Unit\Wayfarer\WayfarerVO" DurationType="OneShot" DurationMin="0.000000" DurationMax="5.006001">
+				<Event Id="2393435613" Name="WayfarerVO" ObjectPath="\Events\Default Work Unit\Wayfarer\WayfarerVO" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="5.006001">
 					<IncludedMemoryFiles>
 						<File Id="176429966" Language="SFX">
 							<ShortName>cry4.wav</ShortName>
-							<Path>SFX\cry4_32513D82.wem</Path>
+							<Path>SFX\cry4_B2D14CFC.wem</Path>
 						</File>
 						<File Id="584826101" Language="SFX">
 							<ShortName>cry3.wav</ShortName>
-							<Path>SFX\cry3_32513D82.wem</Path>
+							<Path>SFX\cry3_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -905,12 +921,12 @@
 				<GameParameter Id="3673881719" Name="Volume_SFX" ObjectPath="\Game Parameters\Default Work Unit\Volume_SFX"/>
 			</GameParameters>
 		</SoundBank>
-		<SoundBank Id="1355168291" Language="SFX" Hash="2180450582">
+		<SoundBank Id="1355168291" Language="SFX" Hash="4211522111">
 			<ObjectPath>SS2Init</ObjectPath>
 			<ShortName>SS2Init</ShortName>
 			<Path>SS2Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="2545819644" Language="SFX">
+		<SoundBank Id="2545819644" Language="SFX" Hash="3818803808">
 			<ObjectPath>\SoundBanks\Default Work Unit\SS2Music</ObjectPath>
 			<ShortName>SS2Music</ShortName>
 			<Path>SS2Music.bnk</Path>
@@ -919,31 +935,35 @@
 					<IncludedMemoryFiles>
 						<File Id="41584387" Language="SFX">
 							<ShortName>Canticum_Vitae_Start_B.wav</ShortName>
-							<Path>SFX\Canticum_Vitae_Start_B_EF685D2C.wem</Path>
+							<Path>SFX\Canticum_Vitae_Start_B_2EB51506.wem</Path>
 						</File>
 						<File Id="324234268" Language="SFX">
 							<ShortName>Canticum_Vitae_Loop_A.wav</ShortName>
-							<Path>SFX\Canticum_Vitae_Loop_A_EF685D2C.wem</Path>
+							<Path>SFX\Canticum_Vitae_Loop_A_2EB51506.wem</Path>
 						</File>
 						<File Id="342415295" Language="SFX">
 							<ShortName>Canticum_Vitae_Transition_B.wav</ShortName>
-							<Path>SFX\Canticum_Vitae_Transition_B_EF685D2C.wem</Path>
+							<Path>SFX\Canticum_Vitae_Transition_B_2EB51506.wem</Path>
 						</File>
 						<File Id="417465332" Language="SFX">
 							<ShortName>Canticum_Vitae_Transition_A.wav</ShortName>
-							<Path>SFX\Canticum_Vitae_Transition_A_EF685D2C.wem</Path>
+							<Path>SFX\Canticum_Vitae_Transition_A_2EB51506.wem</Path>
 						</File>
 						<File Id="516513095" Language="SFX">
 							<ShortName>Canticum_Vitae_Loop_B.wav</ShortName>
-							<Path>SFX\Canticum_Vitae_Loop_B_EF685D2C.wem</Path>
+							<Path>SFX\Canticum_Vitae_Loop_B_2EB51506.wem</Path>
 						</File>
 						<File Id="542161795" Language="SFX">
 							<ShortName>Canticum_Vitae_Start_A.wav</ShortName>
-							<Path>SFX\Canticum_Vitae_Start_A_EF685D2C.wem</Path>
+							<Path>SFX\Canticum_Vitae_Start_A_2EB51506.wem</Path>
+						</File>
+						<File Id="656524023" Language="SFX">
+							<ShortName>Canticum Vitae - end.wav</ShortName>
+							<Path>SFX\Canticum Vitae - end_6AD26A56.wem</Path>
 						</File>
 						<File Id="920998419" Language="SFX">
 							<ShortName>Canticum_Vitae_Start_C.wav</ShortName>
-							<Path>SFX\Canticum_Vitae_Start_C_EF685D2C.wem</Path>
+							<Path>SFX\Canticum_Vitae_Start_C_2EB51506.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 					<SwitchContainers>
@@ -957,10 +977,19 @@
 							<Media>
 								<File Id="41584387"/>
 								<File Id="324234268"/>
-								<File Id="342415295"/>
 								<File Id="417465332"/>
-								<File Id="516513095"/>
 								<File Id="920998419"/>
+							</Media>
+						</SwitchContainer>
+						<SwitchContainer SwitchValue="{334F61F1-1C57-4DB6-BAD7-3094A676FADC}">
+							<Media>
+								<File Id="342415295"/>
+								<File Id="516513095"/>
+							</Media>
+						</SwitchContainer>
+						<SwitchContainer SwitchValue="{9BBAD682-EC6B-428E-B3B8-78ABE8C1AF76}">
+							<Media>
+								<File Id="656524023"/>
 							</Media>
 						</SwitchContainer>
 					</SwitchContainers>
@@ -969,34 +998,39 @@
 			<IncludedMemoryFiles>
 				<File Id="41584387" Language="SFX">
 					<ShortName>Canticum_Vitae_Start_B.wav</ShortName>
-					<Path>SFX\Canticum_Vitae_Start_B_EF685D2C.wem</Path>
+					<Path>SFX\Canticum_Vitae_Start_B_2EB51506.wem</Path>
 				</File>
 				<File Id="324234268" Language="SFX">
 					<ShortName>Canticum_Vitae_Loop_A.wav</ShortName>
-					<Path>SFX\Canticum_Vitae_Loop_A_EF685D2C.wem</Path>
+					<Path>SFX\Canticum_Vitae_Loop_A_2EB51506.wem</Path>
 				</File>
 				<File Id="342415295" Language="SFX">
 					<ShortName>Canticum_Vitae_Transition_B.wav</ShortName>
-					<Path>SFX\Canticum_Vitae_Transition_B_EF685D2C.wem</Path>
+					<Path>SFX\Canticum_Vitae_Transition_B_2EB51506.wem</Path>
 				</File>
 				<File Id="417465332" Language="SFX">
 					<ShortName>Canticum_Vitae_Transition_A.wav</ShortName>
-					<Path>SFX\Canticum_Vitae_Transition_A_EF685D2C.wem</Path>
+					<Path>SFX\Canticum_Vitae_Transition_A_2EB51506.wem</Path>
 				</File>
 				<File Id="516513095" Language="SFX">
 					<ShortName>Canticum_Vitae_Loop_B.wav</ShortName>
-					<Path>SFX\Canticum_Vitae_Loop_B_EF685D2C.wem</Path>
+					<Path>SFX\Canticum_Vitae_Loop_B_2EB51506.wem</Path>
 				</File>
 				<File Id="542161795" Language="SFX">
 					<ShortName>Canticum_Vitae_Start_A.wav</ShortName>
-					<Path>SFX\Canticum_Vitae_Start_A_EF685D2C.wem</Path>
+					<Path>SFX\Canticum_Vitae_Start_A_2EB51506.wem</Path>
+				</File>
+				<File Id="656524023" Language="SFX">
+					<ShortName>Canticum Vitae - end.wav</ShortName>
+					<Path>SFX\Canticum Vitae - end_6AD26A56.wem</Path>
 				</File>
 				<File Id="920998419" Language="SFX">
 					<ShortName>Canticum_Vitae_Start_C.wav</ShortName>
-					<Path>SFX\Canticum_Vitae_Start_C_EF685D2C.wem</Path>
+					<Path>SFX\Canticum_Vitae_Start_C_2EB51506.wem</Path>
 				</File>
 			</IncludedMemoryFiles>
 			<GameParameters>
+				<GameParameter Id="151362964" Name="playerhealth" ObjectPath="\Game Parameters\Default Work Unit\playerhealth"/>
 				<GameParameter Id="3729143042" Name="Volume_MSX" ObjectPath="\Game Parameters\Default Work Unit\Volume_MSX"/>
 			</GameParameters>
 			<StateGroups>
@@ -1005,6 +1039,8 @@
 						<State Id="748895195" Name="None" ObjectPath="\States\Default Work Unit\gameplaySongChoice\None"/>
 						<State Id="231224994" Name="song_nemesis_start" ObjectPath="\States\Default Work Unit\gameplaySongChoice\song_nemesis_start"/>
 						<State Id="617747445" Name="song_nemesis_main" ObjectPath="\States\Default Work Unit\gameplaySongChoice\song_nemesis_main"/>
+						<State Id="4271331250" Name="song_nemesis_main_b" ObjectPath="\States\Default Work Unit\gameplaySongChoice\song_nemesis_main_b"/>
+						<State Id="818387697" Name="song_nemesis_end" ObjectPath="\States\Default Work Unit\gameplaySongChoice\song_nemesis_end"/>
 					</States>
 				</StateGroup>
 			</StateGroups>
