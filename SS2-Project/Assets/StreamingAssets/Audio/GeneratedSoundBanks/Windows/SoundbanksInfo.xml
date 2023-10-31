@@ -11,7 +11,7 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="866530374" Language="SFX" Hash="1217855856">
+		<SoundBank Id="866530374" Language="SFX" Hash="28832387">
 			<ObjectPath>\SoundBanks\Default Work Unit\Starstorm2</ObjectPath>
 			<ShortName>Starstorm2</ShortName>
 			<Path>Starstorm2.bnk</Path>
@@ -294,7 +294,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="1573671621" Name="LampImpact" ObjectPath="\Events\Default Work Unit\Follower\LampImpact" DurationType="OneShot" DurationMin="0.757440" DurationMax="0.784152">
+				<Event Id="1573671621" Name="LampImpact" ObjectPath="\Events\Default Work Unit\Follower\LampImpact" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="0.757440" DurationMax="0.784152">
 					<IncludedMemoryFiles>
 						<File Id="694986444" Language="SFX">
 							<ShortName>bulletimpact.wav</ShortName>
@@ -871,7 +871,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="2250290942" Name="WayfarerIdleStart" ObjectPath="\Events\Default Work Unit\Wayfarer\WayfarerIdleStart" DurationType="OneShot" DurationMin="14.654041" DurationMax="14.654041">
+				<Event Id="2250290942" Name="WayfarerIdleStart" ObjectPath="\Events\Default Work Unit\Wayfarer\WayfarerIdleStart" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="14.654041" DurationMax="14.654041">
 					<IncludedMemoryFiles>
 						<File Id="1020440952" Language="SFX">
 							<ShortName>idle.wav</ShortName>
