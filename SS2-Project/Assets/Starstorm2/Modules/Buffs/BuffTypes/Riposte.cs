@@ -7,7 +7,7 @@ namespace Moonstorm.Starstorm2.Buffs
     //[DisabledContent]
     public sealed class Riposte : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffRiposte", SS2Bundle.Indev);
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffRiposte", SS2Bundle.NemMercenary);
         
         ///////////
         public override Material OverlayMaterial => SS2Assets.LoadAsset<Material>("matReactorBuffOverlay", SS2Bundle.Items);

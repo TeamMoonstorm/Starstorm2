@@ -58,7 +58,8 @@ namespace EntityStates.Runshroom
             if (animator.GetFloat("Attack") > 0.5f && !hasFired)
             {
                 hasFired = true;
-                FireProjectile();
+                if (isAuthority)
+                    FireProjectile();
             }
 
             if (fixedAge >= duration * 1.2f && hasFired)

@@ -163,7 +163,7 @@ namespace Moonstorm.Starstorm2.Items
                     {
                         //float skillCD = body.skillLocator.secondaryBonusStockSkill.baseRechargeInterval; //base cooldown of relevant skill
 
-                        float timeMult = Mathf.Pow(1 - cdReduction, stack - 1);
+                        float timeMult = Mathf.Pow(1 - cdReduction, stack);
                         body.skillLocator.secondaryBonusStockSkill.cooldownScale *= timeMult;
                     }
                 }

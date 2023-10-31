@@ -1,139 +1,186 @@
 {
-    "strings" :
-    {
-        "SS2_DIFFICULTY_TYPHOON_NAME": "Tifón",
-        "SS2_DIFFICULTY_TYPHOON_DESC": "Máxima dificultad. El mundo es una pesadilla, y la supervivencia una mera ilusión. Nadie tiene lo que se necesita.<style=cStack>\n\n>Regeneración de salud del jugador: <style=cIsHealth>-40 %</style>\n>Ajuste de dificultad: <style=cIsHealth>+75 %</style>\n>Límite de monstruos: <style=cIsHealth>+100 %</style>",
-        
-        "SS2_EVENT_THUNDERSTORM_START": "<spritename=\"CloudRight\">\t Se avecina una tormenta...",
-        "SS2_EVENT_THUNDERSTORM_END": "El cielo empieza a despejarse...",
-        
+	"strings": {
+		"SS2_DIFFICULTY_TYPHOON_NAME": "Tifón",
+		"SS2_DIFFICULTY_TYPHOON_DESC": "Máxima dificultad. El mundo es una pesadilla, y la supervivencia una mera ilusión. Nadie tiene lo que se necesita.<style=cStack>\n\n>Regeneración de salud del jugador: <style=cIsHealth>-40 %</style>\n>Ajuste de dificultad: <style=cIsHealth>+75 %</style>\n>Límite de monstruos: <style=cIsHealth>+100 %</style>",
+
+		"SS2_EVENT_THUNDERSTORM_START": "<spritename=\"CloudRight\">\t Se avecina una tormenta...",
+		"SS2_EVENT_THUNDERSTORM_END": "El cielo empieza a despejarse...",
+
 		"SS2_EVENT_BLIZZARD_START": "<spritename=\"CloudRight\">\t Se avecina una ventisca...",
 		"SS2_EVENT_BLIZZARD_END": "La nieve deja de caer...",
-		
-        "SS2_EVENT_NEMMANDOBOSS_START": "Una fuerza anormal emana del vacío...",
-        "SS2_EVENT_NEMMANDOBOSS_END": "La influencia del vacío se dispersa...",
-        
-        "LUNAR_SS2_EVENT_WARNING": "<style=cIsHealth>El Rey manda una prueba...</style>",
-		
-        "VOID_SS2_EVENT_NATURAL_WARNING": "<style=cWorldEvent>The void grows hungry...</style>",
-		
-        "BLAZING_SS2_EVENT_WARNING": "<style=cWorldEvent>El suelo quema tus pies...</style>",
-        "GLACIAL_SS2_EVENT_WARNING": "<style=cWorldEvent>Una ráfaga de frio viento pasa...</style>",
-        "OVERLOADING_SS2_EVENT_WARNING": "<style=cWorldEvent>Electricidad chispea en el aire...</style>",
+
+		"SS2_EVENT_NEMMANDOBOSS_START": "Una fuerza anormal emana del vacío...",
+		"SS2_EVENT_NEMMANDOBOSS_END": "La influencia del vacío se dispersa...",
+
+		"LUNAR_SS2_EVENT_WARNING": "<style=cIsHealth>El Rey manda una prueba...</style>",
+
+		"VOID_SS2_EVENT_NATURAL_WARNING": "<style=cWorldEvent>The void grows hungry...</style>",
+
+		"BLAZING_SS2_EVENT_WARNING": "<style=cWorldEvent>El suelo quema tus pies...</style>",
+		"GLACIAL_SS2_EVENT_WARNING": "<style=cWorldEvent>Una ráfaga de frio viento pasa...</style>",
+		"OVERLOADING_SS2_EVENT_WARNING": "<style=cWorldEvent>Electricidad chispea en el aire...</style>",
 		"DAZING_SS2_EVENT_WARNING": "<style=cWorldEvent>Concentrarse se vuelve difícil ...</style>",
-        
-        "SKYMEADOW_SS2_EVENT_WARNING": "<style=cWorldEvent>Los prados se alejan del planeta...</style>",
-        "AQUEDUCT_SS2_EVENT_WARNING": "<style=cWorldEvent>Alquitrán cae del cielo...</style>",
-		
+
+		"SKYMEADOW_SS2_EVENT_WARNING": "<style=cWorldEvent>Los prados se alejan del planeta...</style>",
+		"AQUEDUCT_SS2_EVENT_WARNING": "<style=cWorldEvent>Alquitrán cae del cielo...</style>",
+
 		"SS2_ARTIFACTCOGNATION_NAME": "Artefacto de Cognación",
 		"SS2_ARTIFACTCOGNATION_DESCRIPTION": "Enemigos dejan una copia suya temporal al morir.",
 
-        "DAZING": "{0} mareante",
-        "DAZING_AFFIX": "Ofuscador Focal",
-        "DAZING_AFFIX_DESC": "Conviértete en un aspecto de la confusión.",
-        "ETHEREAL": "{0} etéreo",
-        "ETHEREAL_ASPECT": "Residuo inestable",
-        "ETHEREAL_ASPECT_DESC": "Conviértete en un aspecto de la eternidad.",
-        "VOID": "{0} astral",
-        "EQUIPMENT_AFFIXVOID_NAME": "Lamento de la condenación",
-        "EQUIPMENT_AFFIXVOID_PICKUP": "Conviértete en un aspecto del vacío astral.",
-        "ULTRA": "Ultra {0}",
-		
+		"DAZING": "{0} mareante",
+		"DAZING_AFFIX": "Ofuscador Focal",
+		"DAZING_AFFIX_DESC": "Conviértete en un aspecto de la confusión.",
+		"ETHEREAL": "{0} etéreo",
+		"ETHEREAL_ASPECT": "Residuo inestable",
+		"ETHEREAL_ASPECT_DESC": "Conviértete en un aspecto de la eternidad.",
+		"VOID": "{0} astral",
+		"EQUIPMENT_AFFIXVOID_NAME": "Lamento de la condenación",
+		"EQUIPMENT_AFFIXVOID_PICKUP": "Conviértete en un aspecto del vacío astral.",
+		"ULTRA": "Ultra {0}",
+
 		"COMMANDO_GRANDMASTERY_SKIN_NAME": "Clásico",
 		"TOOLBOT_GRANDMASTERY_SKIN_NAME": "Constructo",
 		"CROCO_GRANDMASTERY_SKIN_NAME": "Armadura",
 		"CAPTAIN_GRANDMASTERY_SKIN_NAME": "Informante",
+		"HUNTRESS_GRANDMASTERY_SKIN_NAME": "Clandestino",
 
-        "SS2_EXECUTIONER_NAME": "Ejecutor",
-        "SS2_EXECUTIONER_SUBTITLE": "Guillotina Temida",
-        "SS2_EXECUTIONER_DESCRIPTION" : "El Ejecutor es un superviviente de alto riesgo con alta recompensa que trata de tener un número de bajas sin límite.<style=cSub>\r\n\r\n< ! > Usa la Pistola de Servicio, con cada baja reforzando la Ráfaga Ion.\r\n\r\n< ! > Algunos enemigos dan más cargas para Ráfaga Ion - y los jefes la recarga al completo!\n\n< ! > Ejecución es muy efectivo contra muchos enemigos Y contra uno solo. No olvides que el daño que ofrece depende de la cantidad de enemigos afectados!\r\n\r\n< ! > Si los enemigos te están rodeando, Dispersión de masas puede rápidamente quitarte a enemigos de encima.</style>\r\n",
-        "SS2_EXECUTIONER_OUTRO_FLAVOR": "... y se marcho, cascarón vacío en una armadura empapada en sangre.",
-        "SS2_EXECUTIONER_OUTRO_FAILURE": "... y desapareció, libre de lo inevitable.",
-        "SS2_EXECUTIONER_LORE": "Muerte es inevitable. Le llega a todos. Algunos pueden intentar evitarla, o huir de ella. Pero la muerte llega de todos modos. La muerte, sin embargo, es el precio de la guerra. Y muerte en un combate glorioso es una de las mejores muertes un hombre podría pedir.\n\nPero como lo dicho, algunos prefieren buscar una manera de evitarla. Los llamamos por muchos nombres. Desertores, cobardes, renegados. Uno y cada uno de ellos, traidores contra la causa. Estos traidores deben de ser castigados por sus crímenes. Y ese castigo: es lo mismo que intentaban escapar de.\n\nMuerte llegará. No como un espectro con una guadaña. No en una gabardina, revolver en mano. No como enfermedad, ni como el paso del tiempo. No. Para ellos, la muerte llegará con una lustrosa armadura, con pistola de servicio cargada, y los manipuladores de Ion cargados.",
-        "SS2_SKIN_EXECUTIONER_DEFAULT": "[NOTRANSLATION]Default",
-		"SS2_SKIN_EXECUTIONER_MASTERY": "Vigilante",
-        "SS2_SKIN_EXECUTIONER_KNIGHT": "Gladiador",
-        "SS2_SKIN_EXECUTIONER_WASTELANDER": "Páramo",
-        "SS2_SKIN_EXECUTIONER_ELECTRO": "Electrocutor",
-        "SS2_ACHIEVEMENT_EXECUTIONER_NAME": "Overkill",
-        "SS2_ACHIEVEMENT_EXECUTIONER_DESC": "Mata a un enemigo al dañarlo por 1000% o más de su PS total.",
-        "SS2_EXECUTIONER_UNLOCKUNLOCKABLE_UNLOCKABLE_NAME": "Overkill",
-        "SS2_ACHIEVEMENT_EXECUTIONER_MASTERY_NAME": "Ejecutor: Maestría",
-        "SS2_ACHIEVEMENT_EXECUTIONER_MASTERY_DESC": "Con el Ejecutor, completa el juego o destrúyete en Monzón.",
-        "SS2_EXECUTIONER_MASTERYUNLOCKABLE_UNLOCKABLE_NAME": "Ejecutor: Mastery",
-        "SS2_ACHIEVEMENT_EXECUTIONER_GRANDMASTERY_NAME": "Ejecutor: Gran Maestría",
-        "SS2_ACHIEVEMENT_EXECUTIONER_GRANDMASTERY_DESC": "Con el Ejecutor, completa el juego o destrúyete en Tifón.",
-        "SS2_EXECUTIONER_GRANDMASTERYUNLOCKABLE_UNLOCKABLE_NAME": "Ejecutor: Gran Maestría",
-        "SS2_ACHIEVEMENT_EXECUTIONER_WASTELANDER_NAME": "Ejecutor: Saqueador",
-        "SS2_ACHIEVEMENT_EXECUTIONER_WASTELANDER_DESC": "Con el Ejecutor, abre la cámara oculta en el Acueducto abandonado.",
-        "SS2_EXECUTIONER_WASTELANDERUNLOCKABLE_UNLOCKABLE_NAME": "Ejecutor: Saqueador",
-        "SS2_ACHIEVEMENT_EXECUTIONER_ELECTRO_NAME": "Ejecutor: Electrificante",
-        "SS2_ACHIEVEMENT_EXECUTIONER_ELECTRO_DESC": "Con el Ejecutor, mata a 15 enemigos sobrecargados en una misma fase.",
-        "SS2_EXECUTIONER_ELECTROCUTIONERUNLOCKABLE_UNLOCKABLE_NAME": "Ejecutor: Electrificante",
-        "SS2_ACHIEVEMENT_EXECUTIONER_SWINGAXE_NAME": "Ejecutor: Asesino",
-        "SS2_ACHIEVEMENT_EXECUTIONER_SWINGAXE_DESC": "Con el Ejecutor, mata a 12 enemigos con un solo uso de Ejecución.",
-        "SS2_EXECUTIONER_SWINGAXEUNLOCKABLE_UNLOCKABLE_NAME": "Ejecutor: Asesino",
-        "SS2_ACHIEVEMENT_EXECUTIONER_IONBURST_NAME": "Ejecutor: Descarga forzosa",
-        "SS2_ACHIEVEMENT_EXECUTIONER_IONBURST_DESC": "Con el Ejecutor, Sobrecárgate.",
-        "SS2_EXECUTIONER_IONBURSTUNLOCKABLE_UNLOCKABLE_NAME": "Ejecutor: Descarga forzosa",
-        "KEYWORD_SS2_FEAR": "<style=cKeywordName>Miedo</style><style=cSub>Los enemigos afectados dejan de atacar y huyen. También reciben 50% de daño más.</style>",
-        "SS2_EXECUTIONER_PISTOL_NAME": "Pistola de Servicio",
-        "SS2_EXECUTIONER_PISTOL_DESCRIPTION": "Dispara tu pistola por <style=cIsDamage>300% de daño</style>.",
-        "SS2_EXECUTIONER_TASER_NAME": "[NOTRANSLATION]Deadly Voltage",
-        "SS2_EXECUTIONER_TASER_DESCRIPTION": "[NOTRANSLATION]Fire arcs of lightning forward for <style=cIsDamage>{0}% damage</style>.",
+		"SS2_EXECUTIONER2_NAME": "Ejecutor",
+		"SS2_EXECUTIONER2_SUBTITLE": "Guillotina Temida",
+		"SS2_EXECUTIONER2_DESCRIPTION": "El Ejecutor es un superviviente de alto riesgo con alta recompensa que trata de tener un número de bajas sin límite.<style=cSub>\r\n\r\n< ! > Usa la Pistola de Servicio, con cada baja reforzando la Ráfaga Ion.\r\n\r\n< ! > Algunos enemigos dan más cargas para Ráfaga Ion - y los jefes la recarga al completo!\n\n< ! > Ejecución es muy efectivo contra muchos enemigos Y contra uno solo. No olvides que el daño que ofrece depende de la cantidad de enemigos afectados!\r\n\r\n< ! > Si los enemigos te están rodeando, Dispersión de masas puede rápidamente quitarte a enemigos de encima.</style>\r\n", //Old translation
+		"SS2_EXECUTIONER2_OUTRO_FLAVOR": "... y se marcho, cascarón vacío en una armadura empapada en sangre.",
+		"SS2_EXECUTIONER2_OUTRO_FAILURE": "... y desapareció, libre de lo inevitable.",
+		"SS2_EXECUTIONER2_LORE": "Muerte es inevitable. Le llega a todos. Algunos pueden intentar evitarla, o huir de ella. Pero la muerte llega de todos modos. La muerte, sin embargo, es el precio de la guerra. Y muerte en un combate glorioso es una de las mejores muertes un hombre podría pedir.\n\nPero como lo dicho, algunos prefieren buscar una manera de evitarla. Los llamamos por muchos nombres. Desertores, cobardes, renegados. Uno y cada uno de ellos, traidores contra la causa. Estos traidores deben de ser castigados por sus crímenes. Y ese castigo: es lo mismo que intentaban escapar de.\n\nMuerte llegará. No como un espectro con una guadaña. No en una gabardina, revolver en mano. No como enfermedad, ni como el paso del tiempo. No. Para ellos, la muerte llegará con una lustrosa armadura, con pistola de servicio cargada, y los manipuladores de Ion cargados.",
+
+		"SS2_SKIN_EXECUTIONER2_DEFAULT": "[NOTRANSLATION]Default",
+		"SS2_SKIN_EXECUTIONER2_MASTERY": "Guerrero",
+		"SS2_SKIN_EXECUTIONER2_CLASSIC": "Nostalgia",
+		"SS2_SKIN_EXECUTIONER2_ELECTRO": "Electrocutor",
+
+		//"SS2_SKIN_EXECUTIONER_MASTERY": "Vigilante",
+		//"SS2_SKIN_EXECUTIONER_KNIGHT": "Gladiador",
+		//"SS2_SKIN_EXECUTIONER_WASTELANDER": "Páramo",
+
+		//"SS2_ACHIEVEMENT_EXECUTIONER_NAME": "Overkill",
+		//"SS2_ACHIEVEMENT_EXECUTIONER_DESC": "Mata a un enemigo al dañarlo por 1000% o más de su PS total.",
+
+		"SS2_ACHIEVEMENT_EXECUTIONER_MASTERY_NAME": "Ejecutor: Maestría",
+		"SS2_ACHIEVEMENT_EXECUTIONER_MASTERY_DESC": "Con el Ejecutor, completa el juego o destrúyete en Monzón.",
+
+		"SS2_EXECUTIONER_MASTERYUNLOCKABLE_UNLOCKABLE_NAME": "Ejecutor: Mastery",
+		"SS2_ACHIEVEMENT_EXECUTIONER_GRANDMASTERY_NAME": "Ejecutor: Gran Maestría",
+		"SS2_ACHIEVEMENT_EXECUTIONER_GRANDMASTERY_DESC": "Con el Ejecutor, completa el juego o destrúyete en Tifón.",
+		"SS2_EXECUTIONER_GRANDMASTERYUNLOCKABLE_UNLOCKABLE_NAME": "Ejecutor: Gran Maestría",
+		"SS2_ACHIEVEMENT_EXECUTIONER_WASTELANDER_NAME": "Ejecutor: Saqueador",
+		"SS2_ACHIEVEMENT_EXECUTIONER_WASTELANDER_DESC": "Con el Ejecutor, abre la cámara oculta en el Acueducto abandonado.",
+		"SS2_EXECUTIONER_WASTELANDERUNLOCKABLE_UNLOCKABLE_NAME": "Ejecutor: Saqueador",
+		"SS2_ACHIEVEMENT_EXECUTIONER_ELECTRO_NAME": "Ejecutor: Electrificante",
+		"SS2_ACHIEVEMENT_EXECUTIONER_ELECTRO_DESC": "Con el Ejecutor, mata a 15 enemigos sobrecargados en una misma fase.",
+		"SS2_EXECUTIONER_ELECTROCUTIONERUNLOCKABLE_UNLOCKABLE_NAME": "Ejecutor: Electrificante",
+		"SS2_ACHIEVEMENT_EXECUTIONER_SWINGAXE_NAME": "Ejecutor: Asesino",
+		"SS2_ACHIEVEMENT_EXECUTIONER_SWINGAXE_DESC": "Con el Ejecutor, mata a 12 enemigos con un solo uso de Ejecución.",
+		"SS2_EXECUTIONER_SWINGAXEUNLOCKABLE_UNLOCKABLE_NAME": "Ejecutor: Asesino",
+		"SS2_ACHIEVEMENT_EXECUTIONER_IONBURST_NAME": "Ejecutor: Descarga forzosa",
+		"SS2_ACHIEVEMENT_EXECUTIONER_IONBURST_DESC": "Con el Ejecutor, Sobrecárgate.",
+		"SS2_EXECUTIONER_IONBURSTUNLOCKABLE_UNLOCKABLE_NAME": "Ejecutor: Descarga forzosa",
+
+		"SS2_KEYWORD_FEAR2": "<style=cKeywordName>Miedo</style><style=cSub>Los enemigos afectados dejan de atacar y huyen. También reciben 50% de daño más.</style>", //Old translation, not entirely accurate
+		"SS2_KEYWORD_EXECUTING2": "[NOTRANSLATION]<style=cKeywordName>Executing</style><style=cSub>Damage and proc coefficient are doubled if no more than one enemy is hit. Kills double gained Ion Manipulator stocks.</style>",
+		"SS2_KEYWORD_RECHARGING2": "[NOTRANSLATION]<style=cKeywordName>Recharging</style><style=cSub>This skill can recharge additional stocks by holding the button or killing enemies. Additional stocks increase maximum capacity.</style>",
+
+
+		"SS2_EXECUTIONER_PISTOL_NAME": "Pistola de Servicio",
+		"SS2_EXECUTIONER_PISTOL_DESCRIPTION": "Dispara tu pistola por <style=cIsDamage>180% de daño</style>.",
+
+		"SS2_EXECUTIONER2_IONBURST_NAME": "[NOTRANSLATION]Ion Burst",
+		"SS2_EXECUTIONER2_IONBURST_DESC": "[NOTRANSLATION]<style=cIsDamage>Shocking</style>. Rapidly discharge <style=cIsUtility>Ion Manipulator stocks</style> as ion bullets for <style=cIsDamage>350% damage</style> per bullet.",
+
+		"SS2_EXECUTIONER2_IONCHARGE_NAME": "[NOTRANSLATION]Ion Manipulators",
+		"SS2_EXECUTIONER2_IONCHARGE_DESC": "[NOTRANSLATION]Hold to begin building up to <style=cIsUtility>10 stocks</style>, and replace your <style=cIsDamage>primary skill</style>. <style=cIsUtility>Killing enemies also adds stocks.</style>",
+
+		"SS2_EXECUTIONER2_DASH_NAME": "Dispersión de masas",
+		"SS2_EXECUTIONER2_DASH_DESC": "Acelera y aplica <style=cIsUtility>miedo</style> a todos los enemigos cercanos por 4 segundos.",
+
+		"SS2_EXECUTIONER2_EXECUTION_NAME": "Ejecución",
+		"SS2_EXECUTIONER2_EXECUTION_DESC": "Salta y lánzate en picado con tu hacha Ion por <style=cIsDamage>1450% de daño</style>. El daño se <style=cIsDamage>dobla</style> si solo un enemigo es afectado. Provocar muertes <style=cIsUtility>dobla la cantidad de cargas de Secundaria obtenidas</style>.", //Old translation, not entirely accurate
+
+
+		"SS2_EXECUTIONER_TASER_NAME": "[NOTRANSLATION]Deadly Voltage",
+		"SS2_EXECUTIONER_TASER_DESCRIPTION": "[NOTRANSLATION]Fire arcs of lightning forward for <style=cIsDamage>{0}% damage</style>.",
 		"SS2_EXECUTIONER_SWINGAXE_NAME": "[NOTRANSLATION]Ion Axe",
-        "SS2_EXECUTIONER_SWINGAXE_DESCRIPTION": "[NOTRANSLATION]Swing your axe for <style=cIsDamage>% damage</style>. <style=cIsUtility>Each Secondary charge grants 4% maximum health in shield</style>.",
+		"SS2_EXECUTIONER_SWINGAXE_DESCRIPTION": "[NOTRANSLATION]Swing your axe for <style=cIsDamage>% damage</style>. <style=cIsUtility>Each Secondary charge grants 4% maximum health in shield</style>.",
 		"SS2_EXECUTIONER_IONGUN_NAME": "Ráfaga Ion",
-        "SS2_EXECUTIONER_IONGUN_DESCRIPTION": "Descarga una ráfaga de balas, cada una haciendo <style=cIsDamage>380% de daño</style>. <style=cIsUtility>Recarga balas por cada enemigo que matas. Empiezas con 10 cargas</style>.",
-        "SS2_EXECUTIONER_IONBLAST_NAME": "[NOTRANSLATION]Ion Blast",
-        "SS2_EXECUTIONER_IONBLAST_DESCRIPTION": "[NOTRANSLATION]Fire a blast of raw ion energy for <style=cIsDamage>% damage</style>. Can be <style=cIsUtility>charged</style>, using multiple charges at once. <style=cIsUtility>Restocks charges for every enemy you kill, depending on strength</style>.",
-		"SS2_EXECUTIONER_DASH_NAME": "Dispersión de masas",
-        "SS2_EXECUTIONER_DASH_DESCRIPTION": "Acelera y aplica <style=cIsUtility>miedo</style> a todos los enemigos cercanos por 4 segundos.",
-        "SS2_EXECUTIONER_AXE_NAME": "Ejecución",
-        "SS2_EXECUTIONER_AXE_DESCRIPTION": "<style=cIsUtility>Pesado</style>.Salta y lánzate en picado con tu hacha Ion por <style=cIsDamage>1200% de daño</style>. El daño se <style=cIsDamage>dobla</style> si solo un enemigo es afectado. Provocar muertes <style=cIsUtility>dobla la cantidad de cargas de Secundaria obtenidas</style>.",
-        "SS2_EXECUTIONER_AXESCEPTER_NAME": "Ejecución en masa",
-        "SS2_EXECUTIONER_AXESCEPTER_DESCRIPTION": "Salta y lánzate en picado con tu hacha Ion por <style=cIsDamage>3000% de daño</style>. Provocar muertes <style=cIsUtility>dobla la cantidad de cargas de Secundaria ganadas</style>.",
-    
-        "SS2_NEMMANDO_NAME": "Comando Némesis",
-        "SS2_NEMMANDO_SUBTITLE": "Eco solitario",
-        "SS2_NEMMANDO_DESCRIPTION": "Comando Némesis es una carta blanca en el campo de batalla, capaz de girar cualquier situación a su favor.<style=cSub>\r\n\r\n< ! > Espada de Cesación es arriesgada pero puede provocar muchos daños al acumular Efusión.\r\n\r\n< ! > Tajo Distante se puede usar para aplicar Efusión a un grupo de enemigos de forma segura - atraviesa enemigos!\r\n\r\n< ! > Equilibrio de combate cuerpo a cuerpo y combate a distancia es clave, y Voltereta táctica proporciona armadura para entrar y salir de combates.\r\n\r\n< ! > Sumisión se puede utilizar para atacar rápidamente enemigos, sea para escapar o para tener la ventaja sobre un objetivo.</style>\r\n",
-        "SS2_NEMMANDO_OUTRO_FLAVOR": "... y se marcho, descubriendo una nueva sensación: humanidad.",
-        "SS2_NEMMANDO_OUTRO_FAILURE": "... y volvió, acabando su conflicto sin fin.",
-        "SS2_NEMMANDO_LORE": "He lays to rest by a fire, setting the weapons he carries within an arm's reach. Checking his surroundings, hoping the cave he hid in would be enough shelter. Some would say, it isn't wise to be overly cautious. He would say, <color=#FFCCED>they haven't seen enough.</color>\n\nThe service pistol he got when he enlisted. Well used, dirtied, and loved. It's brought him through thick and thin, no matter which mission he took on. Some would say, only a fool would trust their weapon. He would say, <color=#FFCCED>your weapon is all you can trust.</color>\n\nThe blade of a fallen brother of war. Picked from what he could scavenge of the last of humanity he's seen. Some would say, it keeps their spirits united. He would say, <color=#FFCCED>it's to keep their spirits from joining for as long as possible.</color>\n\nThe loads of cargo that landed with him. Each item picked from a chest, keeping him alive in one way or another. Dozens of shipments to anyone but him. Some would say, they aren't his items to take. He would say, <color=#FFCCED>if he doesn't take them, then no one will.</color>\n\nThe glow of a violet light coming from deeper within the cave. Calming, warming... beckoning. Welcoming him deeper and deeper, promising safety. Some would say, what sounds too good to be true probably is. He would say, <color=#FFCCED>Faust was a wise man.</color>",
-        "SS2_SKIN_NEMMANDO_DEFAULT": "Default",
-        "SS2_SKIN_NEMMANDO_MASTERY": "Minuano",
-        "SS2_SKIN_NEMMANDO_CLASSIC": "Clásico",
-        "SS2_SKIN_NEMMANDO_COMMANDO": "Comando",
-        "SS2_SKIN_NEMMANDO_VERGIL": "Motivado",
-        "SS2_ACHIEVEMENT_NEMMANDO_NAME": "???",
-        "SS2_ACHIEVEMENT_NEMMANDO_DESC": "Derrota al vestigio de Comando.",
-        "SS2_NEMMANDO_UNLOCKUNLOCKABLE_UNLOCKABLE_NAME": "???",
-        "SS2_ACHIEVEMENT_NEMMANDO_DESC": "Comando Némesis: Maestría",
-        "SS2_ACHIEVEMENT_NEMMANDO_MASTERY_DESC": "Con Comando Némesis, completa el juego o destrúyete en Monzón.",
-        "SS2_NEMMANDO_MASTERYUNLOCKABLE_UNLOCKABLE_NAME": "Comando Némesis: Maestría",
-        "SS2_ACHIEVEMENT_NEMMANDO_GRANDMASTERY_DESC": "Comando Némesis: Gran Maestría",
-        "SS2_ACHIEVEMENT_NEMMANDO_GRANDMASTERY_DESC": "Con Comando Némesis, completa el juego o destrúyete en Tifón.",
-        "SS2_NEMMANDO_GRANDMASTERYUNLOCKABLE_UNLOCKABLE_NAME": "Comando Némesis: Gran Maestría",
-        "SS2_ACHIEVEMENT_NEMMANDO_SINGLETAP_NAME": "Comando Némesis: Némesis Némesis",
-        "SS2_ACHIEVEMENT_NEMMANDO_SINGLETAP_DESC": "Con Comando Némesis, derrota al vestigio de Comando.",
-        "SS2_NEMMANDO_SINGLETAPUNLOCKABLE_UNLOCKABLE_NAME": "Comando Némesis: Némesis Némesis",
-        "SS2_ACHIEVEMENT_NEMMANDO_BOSS_NAME": "Comando Némesis: Zandatsu",
-        "SS2_ACHIEVEMENT_NEMMANDO_BOSS_DESC": "Con Comando Némesis, inflige Efusión 50 veces en un solo enemigo.",
-        "SS2_NEMMANDO_BOSSUNLOCKABLE_UNLOCKABLE_NAME": "Comando Némesis: Zandatsu",
-        "KEYWORD_SS2_GOUGE": "<style=cKeywordName>Efusión</style><style=cSub>Daña por 120% sobre el paso del tiempo, puede dar golpes críticos.",
-        "SS2_NEMMANDO_PRIMARY_BLADE_NAME": "Espada de Cesación",
-        "SS2_NEMMANDO_PRIMARY_BLADE_DESCRIPTION": "<style=cIsUtility>Ágil.</style> <style=cIsDamage>Efusión.</style> Corta enemigos por <style=cIsDamage>160% de daño</style>.",
-        "SS2_NEMMANDO_SECONDARY_CONCUSSION_NAME": "Tajo Distante",
-        "SS2_NEMMANDO_SECONDARY_CONCUSSION_DESCRIPTION": "<style=cIsDamage>Efusión.</style> Mantén para cargar un haz penetrante de hasta <style=cIsDamage>500% de daño</style>.",
-        "SS2_NEMMANDO_SECONDARY_SHOOT_NAME": "Disparo simple",
-        "SS2_NEMMANDO_SECONDARY_SHOOT_DESCRIPTION": "<style=cIsUtility>Ágil.</style> Dispara tu pistola por <style=cIsDamage>210% de daño</style>.",
-        "SS2_NEMMANDO_UTILITY_DODGE_NAME": "Voltereta táctica",
-        "SS2_NEMMANDO_UTILITY_DODGE_DESCRIPTION": "<style=cIsUtility>Rueda</style> una distancia corta, obteniendo <style=cIsUtility>200 de armadura</style>.",
-        "SS2_NEMMANDO_SPECIAL_SUBMISSION_NAME": "Sumisión",
-        "SS2_NEMMANDO_SPECIAL_SUBMISSION_DESCRIPTION": "<style=cIsUtility>Ágil.</style> <style=cIsUtility>Carga</style>, después dispara una salva de <style=cIsDamage>8 ráfagas de escopeta</style> por <style=cIsDamage>60% de daño</style> cada una. La cantidad de disparos aumenta con la velocidad de ataque.",
-        "SS2_NEMMANDO_SPECIAL_BOSS_NAME": "Golpe Decisivo",
-        "SS2_NEMMANDO_SPECIAL_BOSS_DESCRIPTION": "<style=cIsDamage>Efusión.</style> <style=cIsUtility>Carga</style>, después <style=cIsUtility>embiste hacia delante</style> y desata una salva devastadora de 6 cortes que hacen hasta <style=cIsDamage>380% de daño</style> cada una.",
-		
+		"SS2_EXECUTIONER_IONGUN_DESCRIPTION": "Descarga una ráfaga de balas, cada una haciendo <style=cIsDamage>380% de daño</style>. <style=cIsUtility>Recarga balas por cada enemigo que matas. Empiezas con 10 cargas</style>.",
+		"SS2_EXECUTIONER_IONBLAST_NAME": "[NOTRANSLATION]Ion Blast",
+		"SS2_EXECUTIONER_IONBLAST_DESCRIPTION": "[NOTRANSLATION]Fire a blast of raw ion energy for <style=cIsDamage>% damage</style>. Can be <style=cIsUtility>charged</style>, using multiple charges at once. <style=cIsUtility>Restocks charges for every enemy you kill, depending on strength</style>.",
+		"SS2_EXECUTIONER_AXESCEPTER_NAME": "Ejecución en masa",
+		"SS2_EXECUTIONER_AXESCEPTER_DESCRIPTION": "Salta y lánzate en picado con tu hacha Ion por <style=cIsDamage>3000% de daño</style>. Provocar muertes <style=cIsUtility>dobla la cantidad de cargas de Secundaria ganadas</style>.",
+
+		"SS2_NEMCOMMANDO_NAME": "Comando Némesis",
+		"SS2_NEMCOMMANDO_SUBTITLE": "Eco solitario",
+		"SS2_NEMCOMMANDO_DESCRIPTION": "Comando Némesis es una carta blanca en el campo de batalla, capaz de girar cualquier situación a su favor.<style=cSub>\r\n\r\n< ! > Espada de Cesación es arriesgada pero puede provocar muchos daños al acumular Efusión.\r\n\r\n< ! > Tajo Distante se puede usar para aplicar Efusión a un grupo de enemigos de forma segura - atraviesa enemigos!\r\n\r\n< ! > Equilibrio de combate cuerpo a cuerpo y combate a distancia es clave, y Voltereta táctica proporciona armadura para entrar y salir de combates.\r\n\r\n< ! > Sumisión se puede utilizar para atacar rápidamente enemigos, sea para escapar o para tener la ventaja sobre un objetivo.</style>\r\n",
+		"SS2_NEMCOMMANDO_OUTRO_FLAVOR": "... y se marcho, descubriendo una nueva sensación: humanidad.",
+		"SS2_NEMCOMMANDO_OUTRO_FAILURE": "... y volvió, acabando su conflicto sin fin.",
+		"SS2_NEMCOMMANDO_LORE": "He lays to rest by a fire, setting the weapons he carries within an arm's reach. Checking his surroundings, hoping the cave he hid in would be enough shelter. Some would say, it isn't wise to be overly cautious. He would say, <color=#FFCCED>they haven't seen enough.</color>\n\nThe service pistol he got when he enlisted. Well used, dirtied, and loved. It's brought him through thick and thin, no matter which mission he took on. Some would say, only a fool would trust their weapon. He would say, <color=#FFCCED>your weapon is all you can trust.</color>\n\nThe blade of a fallen brother of war. Picked from what he could scavenge of the last of humanity he's seen. Some would say, it keeps their spirits united. He would say, <color=#FFCCED>it's to keep their spirits from joining for as long as possible.</color>\n\nThe loads of cargo that landed with him. Each item picked from a chest, keeping him alive in one way or another. Dozens of shipments to anyone but him. Some would say, they aren't his items to take. He would say, <color=#FFCCED>if he doesn't take them, then no one will.</color>\n\nThe glow of a violet light coming from deeper within the cave. Calming, warming... beckoning. Welcoming him deeper and deeper, promising safety. Some would say, what sounds too good to be true probably is. He would say, <color=#FFCCED>Faust was a wise man.</color>",
+
+		"SS2_SKIN_NEMCOMMANDO_DEFAULT": "Default",
+		"SS2_SKIN_NEMCOMMANDO_MASTERY": "Avispa",
+		"SS2_SKIN_NEMCOMMANDO_GRANDMASTERY": "Minuano",
+		"SS2_SKIN_NEMCOMMANDO_COMMANDO": "Soldado",
+
+		"SS2_SKIN_NEMMANDO_CLASSIC": "Clásico",
+		"SS2_SKIN_NEMMANDO_VERGIL": "Motivado",
+
+		"SS2_ACHIEVEMENT_NEMCOMMANDO_NAME": "Eco Solitaro",
+		"SS2_ACHIEVEMENT_NEMCOMMANDO_DESC": "Derrota al vestigio de Comando.",
+
+		"SS2_ACHIEVEMENT_NEMCOMMANDO_MASTERY_NAME": "Comando Némesis: Maestría",
+		"SS2_ACHIEVEMENT_NEMCOMMANDO_MASTERY_DESC": "Con Comando Némesis, completa el juego o destrúyete en Monzón.",
+
+		"SS2_ACHIEVEMENT_NEMCOMMANDO_GRANDMASTERY_NAME": "Comando Némesis: Gran Maestría",
+		"SS2_ACHIEVEMENT_NEMCOMMANDO_GRANDMASTERY_DESC": "Con Comando Némesis, completa el juego o destrúyete en Tifón.",
+
+		//"SS2_ACHIEVEMENT_NEMMANDO_SINGLETAP_NAME": "Comando Némesis: Némesis Némesis",
+		//"SS2_ACHIEVEMENT_NEMMANDO_SINGLETAP_DESC": "Con Comando Némesis, derrota al vestigio de Comando.",
+
+		"SS2_ACHIEVEMENT_NEMCOMMANDO_SWORDBEAM_NAME": "Comando Némesis: El Destripador",
+		"SS2_ACHIEVEMENT_NEMCOMMANDO_SWORDBEAM_DESC": "Con Comando Némesis, alcanza 100% de oportunidad a sangrar.",
+
+		//"SS2_NEMMANDO_SINGLETAPUNLOCKABLE_UNLOCKABLE_NAME": "Comando Némesis: Némesis Némesis",
+		"SS2_ACHIEVEMENT_NEMCOMMANDO_BOSSATTACK_NAME": "Comando Némesis: Zandatsu",
+		"SS2_ACHIEVEMENT_NEMCOMMANDO_BOSSATTACK_DESC": "Con Comando Némesis, inflige 8 pilas o más de Efusión en un ememigo.", //old translation: inflige Efusión 8 veces en un solo enemigo
+
+		"SS2_KEYWORD_GOUGE": "<style=cKeywordName>Efusión</style><style=cSub>Daña por 100% sobre el paso del tiempo, puede dar golpes críticos.",
+
+		"SS2_NEMCOMMANDO_PRIMARY_BLADE_NAME": "Espada de Cesación",
+		"SS2_NEMCOMMANDO_PRIMARY_BLADE_DESCRIPTION": "<style=cIsUtility>Ágil.</style> <style=cIsDamage>Efusión.</style> Corta enemigos por <style=cIsDamage>160% de daño</style>.",
+		"SS2_NEMCOMMANDO_SECONDARY_BEAM_NAME": "Tajo Distante",
+		"SS2_NEMCOMMANDO_SECONDARY_BEAM_DESCRIPTION": "<style=cIsDamage>Efusión.</style> Mantén para cargar un haz penetrante de hasta <style=cIsDamage>400% de daño</style>.",
+		"SS2_NEMCOMMANDO_SECONDARY_SHOOT_NAME": "Disparo simple",
+		"SS2_NEMCOMMANDO_SECONDARY_SHOOT_DESCRIPTION": "<style=cIsUtility>Ágil.</style> Dispara tu pistola por <style=cIsDamage>150% de daño</style>.",
+		"SS2_NEMCOMMANDO_UTILITY_DODGE_NAME": "Voltereta táctica",
+		"SS2_NEMCOMMANDO_UTILITY_DODGE_DESCRIPTION": "<style=cIsUtility>Rueda</style> una distancia corta, obteniendo <style=cIsUtility>200 de armadura</style>.",
+		"SS2_NEMCOMMANDO_SPECIAL_SUBMISSION_NAME": "Sumisión",
+		"SS2_NEMCOMMANDO_SPECIAL_SUBMISSION_DESCRIPTION": "<style=cIsUtility>Ágil.</style> <style=cIsUtility>Carga</style>, después dispara una salva de <style=cIsDamage>6 ráfagas de escopeta</style> por <style=cIsDamage>6x80% de daño</style> cada una. La cantidad de disparos aumenta con la velocidad de ataque.",
+		"SS2_NEMCOMMANDO_SPECIAL_BOSS_NAME": "Golpe Decisivo",
+		"SS2_NEMCOMMANDO_SPECIAL_BOSS_DESCRIPTION": "<style=cIsDamage>Efusión.</style> <style=cIsUtility>Carga</style>, después <style=cIsUtility>embiste hacia delante</style> y desata una salva devastadora de 6 cortes que hacen hasta <style=cIsDamage>360% de daño</style> cada una.",
+
+
+		"SS2_ACHIEVEMENT_COMMANDO_GRANDMASTERY_NAME": "[NOTRANSLATION]Commando: Grand Mastery",
+		"SS2_ACHIEVEMENT_COMMANDO_GRANDMASTERY_DESC": "[NOTRANSLATION]As Commando, beat the game or obliterate on Typhoon or Harder.",
+
+		"SS2_ACHIEVEMENT_COMMANDO_NEMESISSKIN_NAME": "[NOTRANSLATION]Commando: Lone Echo",
+		"SS2_ACHIEVEMENT_COMMANDO_NEMESISSKIN_DESC": "[NOTRANSLATION]As Commando, defeat Commando's Vestige.",
+
+		"SS2_ACHIEVEMENT_TOOLBOT_GRANDMASTERY_NAME": "[NOTRANSLATION]MUL-T: Grand Mastery",
+		"SS2_ACHIEVEMENT_TOOLBOT_GRANDMASTERY_DESC": "[NOTRANSLATION]As MUL-T, beat the game or obliterate on Typhoon or Harder.",
+
+		"SS2_ACHIEVEMENT_CROCO_GRANDMASTERY_NAME": "[NOTRANSLATION]Acrid: Grand Mastery",
+		"SS2_ACHIEVEMENT_CROCO_GRANDMASTERY_DESC": "[NOTRANSLATION]As Acrid, beat the game or obliterate on Typhoon or Harder.",
+
+		"SS2_ACHIEVEMENT_CAPTAIN_GRANDMASTERY_NAME": "[NOTRANSLATION]Captain: Grand Mastery",
+		"SS2_ACHIEVEMENT_CAPTAIN_GRANDMASTERY_DESC": "[NOTRANSLATION]As Captain, beat the game or obliterate on Typhoon or Harder.",
+
+
 		"SS2_ACHIEVEMENT_DIARY_NAME": "Querido Diario...",
 		"SS2_ACHIEVEMENT_DIARY_DESC": "Llega al nivel 20.",
 		"SS2_ITEM_DIARY_UNLOCKUNLOCKABLE_UNLOCKABLE_NAME": "Querido Diario...",
@@ -143,7 +190,7 @@
 		"SS2_ACHIEVEMENT_MALICE_NAME": "Malicioso",
 		"SS2_ACHIEVEMENT_MALICE_DESC": "Llega a la fase 3 en dificultad Tifón.",
 		"SS2_ITEM_MALICE_UNLOCKUNLOCKABLE_UNLOCKABLE_NAME": "Malicioso",
-		"SS2_ACHIEVEMENT_BLOODTESTER_DESC": "¡Médico!",
+		"SS2_ACHIEVEMENT_BLOODTESTER_NAME": "¡Médico!",
 		"SS2_ACHIEVEMENT_BLOODTESTER_DESC": "Curate por 5.000 PS en un solo viaje.",
 		"SS2_ITEM_BLOODTESTER_UNLOCKUNLOCKABLE_UNLOCKABLE_DESC": "¡Médico!",
 		"SS2_ACHIEVEMENT_HOTTESTSAUCE_NAME": "Mezcla Picante",
@@ -164,12 +211,12 @@
 		"SS2_ACHIEVEMENT_GREATERWARBANNER_NAME": "Portabanderas",
 		"SS2_ACHIEVEMENT_GREATERWARBANNER_DESC": "Lleva 5 Estandartes de Guerra al mismo tiempo.",
 		"SS2_EQUIP_GREATERWARBANNER_UNLOCKUNLOCKABLE_UNLOCKABLE_NAME": "Portabanderas",
-		
+
 		"SS2_EQUIP_BACKTHRUSTER_NAME": "Propulsa-Lomos",
 		"SS2_EQUIP_BACKTHRUSTER_PICKUP": "Obtén aceleración extra temporalmente.",
 		"SS2_EQUIP_BACKTHRUSTER_DESC": "Obtén aceleración extra temporalmente.",
 		"SS2_EQUIP_BACKTHRUSTER_LORE": "",
-		
+
 		"SS2_EQUIP_CLOAKINGHEADBAND_NAME": "Cinta camuflojadora",
 		"SS2_EQUIP_CLOAKINGHEADBAND_PICKUP": "Vuélvete temporalmente invisible.",
 		"SS2_EQUIP_CLOAKINGHEADBAND_DESC": "Vuélvete <style=cIsUtility>invisible</style> por 8 segundos.",
@@ -190,7 +237,7 @@
 		"SS2_ITEM_COFFEEBAG_PICKUP": "Muévete y ataca más rápido.",
 		"SS2_ITEM_COFFEEBAG_LORE": "Pedido: Café\nNúmero de seguimiento: 917****\nFecha de entrega estimada: 12/06/2056\nForma de envío: Estándar\nDirección de envío: 6430 Deer Lane, Pennsylvania, la Tierra\nDetalles de envío:\n\n¡Hola mama!\n\nHe estado afuera explorando, justo como hiciste tu cuando eras joven... Recuerdo todas las historias que me solías contarme de cuando tenias mi edad. Viajar a sitios como Jamaica, Romania... ¡básicamente toda la Tierra! Espero poder volver a casa para contarte sobre todos los sitios en los que he ido.\n\n¿Recuerdas ese café buenísimo que solías traer a casa? ¿Me parece que era \"Café Tostado Oscuro Neik\"? Viene a ser que, hay este sitio fantástico en Titán en el que cultivan su propio café, ¡y es uno de los mejores! Me hace tener memorias de estar en casa contigo.\n\nEspero volverte a ver pronto. Te echo de menos, y echo de menos a los gatos. ¡Ah y por cierto, Eleni dice hola!\n\nCariño, Hanan\n",
 
-		"SS2_ITEM_DETRITIVETREMATODE_NAME": "Trematoda perniciosa", 
+		"SS2_ITEM_DETRITIVETREMATODE_NAME": "Trematoda perniciosa",
 		"SS2_ITEM_DETRITIVETREMATODE_DESC": "Enemigos en estado crítico reciben una penalización que <style=cIsDamage>daña a paso del tiempo</style> por <style=cIsDamage>100% de daño</style>. <style=cStack>(+100% por acumulación)</style>",
 		"SS2_ITEM_DETRITIVETREMATODE_PICKUP": "Enemigos con poca vida reciben daños a paso del tiempo.",
 		"SS2_ITEM_DETRITIVETREMATODE_LORE": "<style=cMono>$ Transcribing image... done.\n$ Resolving... done.\n$ Outputting text strings... done.\nComplete!\n\n\n</style>This is the logbook of D. Furthen, naturalist aboard the UES [Redacted] in conjunction with the ongoing UES Research and Documentation of Outer Life program. This entry was written at Point Sigma, during an expedition to the dense jungles of Cornea III.\n\n---------------------\n\nI have encountered my first sample of outer life on this planet! What a marvel it is, too. The sample resembles an earthen roundworm, but significantly bigger. I have assigned their common name as 'Detritive Trematode', and will describe their properties below.\n\n• Roughly two inches in diameter, and varying in size from about four inches to a foot and a half in length. White coloration.\n\n• These trematodes were found feasting on a pile of rotting meat in a damp cavern. The meat was of indeterminate origin, but the presence of other, larger animals is exciting nonetheless.\n\n• Upon scooping up a clump of the rotting meat, the trematodes quickly reacted to the movement and began wriggling around, before slowly relaxing. The guard positioned with me, Chevry, I think, was disgusted.\n\n• Upon touching one with an ungloved hand to feel their texture, one of the trematodes latched onto my palm and began chewing. It was extremely painful, both to have the trematode on my hand, and when Chevry cut the thing off. Despite that, other than a light gash on my palm, I believe I am fine.\n",
@@ -221,10 +268,10 @@
 		"SS2_ITEM_MOLTENCOIN_LORE": "Pedido: Molten Coin\nTracking Number: 446*****\nEstimated Delivery: 09/22/2056\nForma de envío: Standard\nDirección de envío: Venetian Police Department, Brithen, Venus\nDetalles de envío:\n\nHey, I found another piece of evidence relating to that bombing at Parathan Square a couple days ago.\n\nSo, you know how the investigators had to postpone their analysis because the area was way too hot? Well, the space finally cooled off this morning, and I managed to find this melted coin stuck to the pavement. A quick chemical test says it's probably made mostly of tungsten with a gold coating, and it also hasn't cooled off since I peeled it off the ground.\n\nI'm not really sure what it could mean, though. Maybe a good luck charm, or a calling card? Either way, I'm sending it to you, since, quite frankly, you need all the help you can get. I mean, 7 people dead, 18 injured, nearly half a million in property damages, and all you've got for evidence is a melted coin and a blown-up cafe? Well, you've got my sympathy, man. Good luck on the case.\n",
 
 		"SS2_ITEM_NEEDLES_NAME": "Agujas",
-		"SS2_ITEM_NEEDLES_DESC": "<style=cIsUtility>8%</style> <style=cStack>(+8% per stack)</style> chance to inflict enemies with a debuff that <style=cIsUtility>guarantees critical strikes against them</style>.",
-		"SS2_ITEM_NEEDLES_PICKUP": "Probabilidad de marcar a enemigos con golpes críticos garantizados.",
+		"SS2_ITEM_NEEDLES_DESC": "[NOTRANSLATION]<style=cIsUtility>8%</style> <style=cStack>(+8% per stack)</style> chance to inflict enemies with a debuff that <style=cIsUtility>guarantees critical strikes against them</style>.",
+		"SS2_ITEM_NEEDLES_PICKUP": "Probabilidad de marcar a enemigos con golpes críticos garantizados.", //Old translation
 		"SS2_ITEM_NEEDLES_LORE": "<style=cMono>UES Delivery Incident Report ID 219560163 found.\n\nPlaying...</style>\n\n\"The delivery personnel Will Stetson, number 604, was admitted to the medical bay aboard the UES [REDACTED], about 22 hours ago, due to complications related to handling aberrant package behavior.\n\nWhile doing his rounds, Will noticed one of the chests suddenly thudded, rather quite loudly, behind him. Concerned that someone might have tried to ship a living animal under Standard protocol, he felt the need to investigate. Instead, what was in the chest was a small plastic package containing a large number of particularly sizable sewing needles, obviously packaged far too tightly for any amount of safety.\n\nFinally, and, likely in a lapse of judgement, Will decided to touch the package. This caused the package to suddenly rupture into his general direction, leaving his upper front side covered in deep gashes. He's lucky someone found him quickly. He seems to be doing fine, but will be recovering from the shock and loss of blood for a while.\"\n\nEnd of report.",
-		
+
 		"SS2_ITEM_BLOODTESTER_NAME": "Analizador de sangre roto",
 		"SS2_ITEM_BLOODTESTER_DESC": "Gana <style=cIsUtility>5 de oro</style> por cada <style=cIsHealing>20% de tus PS</style> que curas. <style=cStack>Oro ganado aumenta con acumulaciones, fases, y PS máximos</style>.",
 		"SS2_ITEM_BLOODTESTER_PICKUP": "Gana dinero al curarte.",
@@ -234,7 +281,7 @@
 		"SS2_ITEM_FIELDACCELERATOR_DESC": "Killing enemies inside of the Teleporter radius grants <style=cIsUtility>+1%</style> <style=cStack>(+1% per stack)</style> <style=cIsUtility>charge</style>.",
 		"SS2_ITEM_FIELDACCELERATOR_PICKUP": "Matar enemigos acelera el Teletransportador.",
 		"SS2_ITEM_FIELDACCELERATOR_LORE": "<style=cMono>//--AUTO-TRANSCRIPTION FROM ROOM 1455A OF UES [Safe Travels]--//</style>\n\n\"Do you have the device?\"\n\n\"Yes, it's right here.\"\n\n\"It works, right?\"\n\n\"Mmmhmm. Flawlessly.\"\n\n\"Excellent. Remember, no one can know about this.\"\n\n\"Yes, yes, I know. Those... altars, on [REDACTED] have fantastic potential. Once we've analyzed them, replicating them should be a cinch. It'll be a massive scientific breakthrough.\"\n\n\"Good. Just keep low, get your analysis, and get out before anyone gets suspicious.\"\n\n\"Will do. Again, thank you so much for your help.\"\n\n\"It's nothing. As long as you're paying me.\"\n\n\"Eh-heh, about that...\"",
-		
+
 		"SS2_ITEM_HOTTESTSAUCE_NAME": "Salsa ardiente",
 		"SS2_ITEM_HOTTESTSAUCE_DESC": "Activating your equipment <style=cIsDamage>ignites</style> enemies within <style=cIsDamage>30m</style> for <style=cIsDamage>6</style> seconds, dealing <style=cIsDamage>150% base damage</style> plus <style=cIsDamage>100% damage per second</style> <style=cStack>(+50% per stack)</style>.",
 		"SS2_ITEM_HOTTESTSAUCE_PICKUP": "Activar tu equipamiento quema a enemigos cercanos.",
@@ -284,20 +331,20 @@
 		"SS2_ITEM_RELICOFMASS_PICKUP": "Dobla tus PS máximos, <style=cDeath>PERO tus movimientos tienen momento.</style>",
 		"SS2_ITEM_RELICOFMASS_DESC": "<style=cIsHealing>Increase maximum health</style> by <style=cIsHealing>100%</style> <style=cStack>(+100% per stack)</style>. <style=cDeath>Reduce acceleration and deceleration</style> by a factor of <style=cDeath>8</style> <style=cStack>(+8 per stack)</style>.",
 		"SS2_ITEM_RELICOFMASS_LORE": "Ah, welcome back! Youngling, what have you found?\n\nHmmm. More scavengings from the blasted heath? Very well. You may keep those things, if you wish. Have you found anything else?\n\nAh, you have? Let me see it then, youngling.\n\nOh! This shape that you've found! It is stalwart, but not loyal. Powerful, but yet also frail at the same time. It is a peculiar shape, to say the least of it. Where did you find this, youngling?\n\n...You found it on the planet? Hmm. Worrisome. This was not created by those sandfolk. Too complex, too powerful. Nor by those Lemurians. Tell me, youngling, you did not steal this, did you?\n\n...You did not. I see. Very well. I would like to keep this shape. This shape is dangerous if you do not understand it.\n\nOh, my youngling, do not look so saddened. This shape is remarkable, and I laud your work regardless of this. I simply want to keep it safe. Here, perhaps a reward is in Pedido. Come with me.",
-		
+
 		"SS2_ITEM_RELICOFDUALITY_NAME": "Reliquia de Dualidad",
 		"SS2_ITEM_RELICOFDUALITY_PICKUP": "Todos tus ataques queman, <style=cDeath>PERO todos los daños te congelan.</style>",
 		"SS2_ITEM_RELICOFDUALITY_DESC": "Damaging enemies burns them for <style=cMono>FIGURE OUT THIS MATH LOL</style> <style=cStack>(+something% per stack)</style>. <style=cDeath>Being hit freezes you for some seconds idfk lol figure out when this item is implemented</style>",
 		"SS2_ITEM_RELICOFDUALITY_LORE": "Hmm? Oh, Youngling! You are back sooner than expected. Have you completed your search?\n\nOh, dear. Youngling, why are you shivering? Has something hurt you?\n\nYou found something that hurt you? Hmm. Peculiar. Do you have it with you, still?\n\n...I see. Let me look at it, then. Come now, and show me what you've found.\n\nHmm. A strange thing, this one. A blazing fire, yet cold to the touch. How unnatural, this is. There's a certain harmony to it, however. As the heat brings warmth and life, the cold tempers it, and keeps it in check. But in that same way, that bitter cold may bring despair and death without the heat to stave it off.\n\n...Oh, but there I go, rambling once more. You need to be taken care of, Youngling. Please, come with me.",
-		
+
 		"SS2_ITEM_RELICOFFORCE_NAME": "Reliquia de Fuerza",
 		"SS2_ITEM_RELICOFFORCE_PICKUP": "Dobla tu daño... <style=cDeath>PERO menos velocidad de ataque y más tiempos de recarga de habilidades</style>",
 		"SS2_ITEM_RELICOFFORCE_DESC": "Increase base damage by <style=cIsDamage>100%</style> <style=cStack>(+100% per stack)</style>. <style=cIsUtility>Reduce skill cooldowns and attack speed by 40%</style> <style=cStack>(-40% per stack).</style>",
 		"SS2_ITEM_RELICOFFORCE_LORE": "Ah, Youngling! You have returned once more, with what seems to be a full bag, too! Full of scavengings, yes?\n\nHmm. The pack is heavy, but it is nearly empty. You... You are not hiding things from me, Youngling?\n\n...You found something very heavy. I see. Forgive me for my suspicions. Show me this thing you have found.\n\nAh! You are correct, Youngling. This thing is small, but difficult to hold. It splinters and fragments, and each piece is just as heavy as the whole. What a remarkable thing, this is!\n\nI will put it with the other wonderful things you have found. A thing like this could be dangerous if it fell into the wrong hands. As for you, Youngling... Hmm, I believe some repairs for your bag are in Pedido. Come with me.",
-		
-		"SS2_ITEM_STIRRINGSOUL_NAME": "<color=#FFCCED>Alma Turbulenta</color>",
+
+		"SS2_ITEM_STIRRINGSOUL_NAME": "Alma Turbulenta",
 		"SS2_ITEM_STIRRINGSOUL_DESC": "Slain monsters leave a <style=cIsUtility>soul</style> which has a <style=cIsUtility>3%</style> chance to <style=cIsUtility>spawn an item</style> on contact.",
-		"SS2_ITEM_STIRRINGSOUL_PICKUP": "<color=#FFCCED>Para que estoy luchando?</color>",
-		"SS2_ITEM_STIRRINGSOUL_LORE": "A spirit of determination..\n<color=#FFCCED>...A spirit to be stopped</color>\nAn unwavering will to survive...\n<color=#FFCCED>...A flickering will to survive</color>\nWilling to desecrate their identity...\n<color=#FFCCED>...Willing to desecrate their memory</color>\nWilling to sacrifice their civilization...\n<color=#FFCCED>...Willing to sacrifice their humanity</color>\n\nTo what lengths will they go to live?\n<color=#FFCCED>To what lengths will they go to bring themselves ruin?</color>\nTo what lengths will they go to escape?\n<color=#FFCCED>To what lengths will they go to destroy?</color>\nAll in the name of self preservation...\n<color=#FFCCED>...All in the name of narcissism</color>\nAll for the sake of an uncertain hope...\n<color=#FFCCED>...All for the sake of a null chance</color>\n\nWhat would happen if given an opportunity?\n<color=#FFCCED>What would happen if given an ally?</color>\nWhat would happen if their fire was stoked?\n<color=#FFCCED>What would happen if they were given false hope?</color>\nMaybe they should be given a chance.\n<color=#FFCCED>Maybe they should be given strength.</color>\nMaybe they should be given an offer.\n<color=#FFCCED>Maybe they should be taken first.</color>"
-    }
+		"SS2_ITEM_STIRRINGSOUL_PICKUP": "<link=\"textWavy\">Para que estoy luchando?</link>",
+		"SS2_ITEM_STIRRINGSOUL_LORE": "A spirit of determination...\n<link=\"textWavy\">...A spirit to be stopped.</link>\nAn unwavering will to survive...\n<link=\"textWavy\">...A flickering will to survive.</link>\n\nWilling to desecrate their identity...\n<link=\"textWavy\">...Willing to desecrate their memory.</link>\nWilling to sacrifice their civilization...\n<link=\"textWavy\">...Willing to sacrifice their humanity.</link>\n\nTo what lengths will they go to live?\n<link=\"textWavy\">To what lengths will they go to bring themselves ruin?</link>\nTo what lengths will they go to escape?\n<link=\"textWavy\">To what lengths will they go to destroy?</link>\n\nAll in the name of self preservation...\n<link=\"textWavy\">...All in the name of narcissism.</link>\nAll for the sake of an uncertain hope...\n<link=\"textWavy\">...All for the sake of a null chance.</link>\n\nWhat would happen if given an opportunity?\n<link=\"textWavy\">What would happen if given an ally?</link>\nWhat would happen if their fire was stoked?\n<link=\"textWavy\">What would happen if they were given false hope?</link>\n\nMaybe they should be given a chance.\n<link=\"textWavy\">Maybe they should be given strength.</link>\nMaybe they should be given an offer.\n<link=\"textWavy\">Maybe they should be taken first.</link>"
+	}
 }

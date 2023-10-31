@@ -5,6 +5,8 @@ using UnityEngine;
 using RoR2;
 using RoR2.Navigation;
 using System.Linq;
+using UnityEngine.Networking;
+using System;
 
 namespace EntityStates.LampBoss
 {
@@ -16,9 +18,19 @@ namespace EntityStates.LampBoss
         private Animator animator;
         public static string mecanimParameter;
         private float timer;
+
+        //blink related
         public float blinkDistance = 18f;
         public GameObject particles;
         private Vector3 blinkDestination = Vector3.zero;
+
+        //summon related
+        private BullseyeSearch enemySearch;
+        public static SpawnCard spawnCard;
+        private float summonTimer;
+        private int summonCount;
+        public static float summonInterval = 0.6f;
+        public static int maxSummonCount = 5;
 
         public override void OnEnter()
         {
@@ -37,6 +49,14 @@ namespace EntityStates.LampBoss
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+
+            summonTimer += Time.fixedDeltaTime;
+            if (NetworkServer.active && summonTimer > 0f && summonCount < maxSummonCount)
+            {
+                summonCount++;
+                summonTimer -= summonInterval;
+                SummonFollower();
+            }
 
             if (animator.GetFloat(mecanimParameter) >= 0.5f && !hasBuffed)
             {
@@ -83,6 +103,39 @@ namespace EntityStates.LampBoss
             groundNodes.GetNodePosition(nodeIndex, out blinkDestination);
             blinkDestination += transform.position - characterBody.footPosition;
             characterDirection.forward = vector;
+        }
+
+        private void SummonFollower()
+        {
+            Transform transform = characterBody.coreTransform;
+            if (transform)
+            {
+                DirectorSpawnRequest request = new DirectorSpawnRequest(spawnCard, new DirectorPlacementRule
+                {
+                    placementMode = DirectorPlacementRule.PlacementMode.Approximate,
+                    minDistance = 3f,
+                    maxDistance = 20f,
+                    spawnOnTarget = transform
+                }, RoR2Application.rng);
+                request.summonerBodyObject = gameObject;
+                DirectorSpawnRequest request2 = request;
+                request2.onSpawnedServer = (Action<SpawnCard.SpawnResult>)Delegate.Combine
+                    (request2.onSpawnedServer, new Action<SpawnCard.SpawnResult>(delegate (SpawnCard.SpawnResult spawnResult)
+                    {
+                        if (spawnResult.success && spawnResult.spawnedInstance && characterBody)
+                        {
+                            Inventory inv = spawnResult.spawnedInstance.GetComponent<Inventory>();
+                            if (inv)
+                            {
+                                inv.CopyEquipmentFrom(characterBody.inventory);
+                            }
+                        }
+                    }));
+                DirectorCore instance = DirectorCore.instance;
+                if (instance == null)
+                    return;
+                instance.TrySpawnObject(request);
+            }
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

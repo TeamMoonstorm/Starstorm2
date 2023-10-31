@@ -9,14 +9,14 @@ namespace Moonstorm.Starstorm2.Components
 {
 	public class RemunerationDropletController : NetworkBehaviour
 	{
-		//what the droplet will spawn
 		public static GameObject shopOptionPrefab;
 		public static GameObject dropletPrefab;
 		[SystemInitializer]
 		private static void Init()
         {
 			dropletPrefab = SS2Assets.LoadAsset<GameObject>("RemunerationDroplet", SS2Bundle.Items);
-        }
+			shopOptionPrefab = SS2Assets.LoadAsset<GameObject>("RemunerationPedestal", SS2Bundle.Items);
+		}
 
 		//[SyncVar]
 		//[NonSerialized]
@@ -34,7 +34,7 @@ namespace Moonstorm.Starstorm2.Components
 			if (NetworkServer.active && this.alive)
 			{
 				this.alive = false;
-				GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(Items.Remuneration.HOPEFULLYTEMPORARYREMUNERATIONSHOPOPTIONPREFABLOL, base.transform.position + Vector3.down, Quaternion.identity);
+				GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(shopOptionPrefab, base.transform.position + Vector3.down, Quaternion.identity);
 				RemunerationChoiceBehavior choice = gameObject.GetComponent<RemunerationChoiceBehavior>();
 				if(choice)
                 {

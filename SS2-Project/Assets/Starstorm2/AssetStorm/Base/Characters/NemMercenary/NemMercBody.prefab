@@ -8173,6 +8173,36 @@ Transform:
   m_Father: {fileID: 2684354257773972975}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0.07518173, y: -0.007314536, z: -11.056157}
+--- !u!1 &798491046709320093
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6744694134072217270}
+  m_Layer: 0
+  m_Name: ParamsTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6744694134072217270
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 798491046709320093}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.423, z: 0.225}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6794473200184041306}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &954224221512032917
 GameObject:
   m_ObjectHideFlags: 0
@@ -8502,7 +8532,7 @@ GameObject:
   - component: {fileID: 3492203217574427022}
   - component: {fileID: 2466952346865569324}
   m_Layer: 0
-  m_Name: NemmercBody
+  m_Name: NemmercMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19902,6 +19932,36 @@ Transform:
   m_Father: {fileID: 7562149630916771622}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 49.62703, y: -173.03986, z: -80.46587}
+--- !u!1 &5767198724958972284
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 458682485355752526}
+  m_Layer: 0
+  m_Name: ParamsSource
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &458682485355752526
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5767198724958972284}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.737, y: 1.866, z: 1.803}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6794473200184041306}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5846134469869382404
 GameObject:
   m_ObjectHideFlags: 0
@@ -21093,6 +21153,8 @@ Transform:
   - {fileID: 7476924312627572028}
   - {fileID: 503140278227454352}
   - {fileID: 9152714428869592721}
+  - {fileID: 6744694134072217270}
+  - {fileID: 458682485355752526}
   m_Father: {fileID: 8479251217882293423}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -21172,7 +21234,7 @@ MonoBehaviour:
     transform: {fileID: 9164132031281168824}
   - name: Pelvis
     transform: {fileID: 7681887790432599265}
-  - name: CollarL
+  - name: ShoulderL
     transform: {fileID: 5214060646071713881}
   - name: UpperArmL
     transform: {fileID: 7320734843067135550}
@@ -21182,7 +21244,7 @@ MonoBehaviour:
     transform: {fileID: 6005381165862510599}
   - name: Shotgun
     transform: {fileID: 1226840733589348828}
-  - name: CollarR
+  - name: ShoulderR
     transform: {fileID: 4839311577092929897}
   - name: UpperArmR
     transform: {fileID: 7675280044484284483}
@@ -21212,6 +21274,10 @@ MonoBehaviour:
     transform: {fileID: 887417958434284359}
   - name: GasR
     transform: {fileID: 8012281693049123193}
+  - name: Base
+    transform: {fileID: 6794473200184041306}
+  - name: Head
+    transform: {fileID: 4650140801694805234}
 --- !u!114 &4745701622652819094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21335,8 +21401,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skins:
   - {fileID: 11400000, guid: fffad6d8356572f489714cca1c6e5aa2, type: 2}
-  - {fileID: 11400000, guid: 64e9945e126888d46a8e0f1fce997ef5, type: 2}
-  - {fileID: 11400000, guid: c261e61c4d147d84a92a35fc5f206aaf, type: 2}
   - {fileID: 11400000, guid: 52560a9dd4290734b89720584a41d092, type: 2}
 --- !u!114 &4763287477861386757
 MonoBehaviour:
@@ -21350,11 +21414,11 @@ MonoBehaviour:
   m_Script: {fileID: -1864444436, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  focusPointTransform: {fileID: 0}
-  cameraPositionTransform: {fileID: 0}
+  focusPointTransform: {fileID: 6744694134072217270}
+  cameraPositionTransform: {fileID: 458682485355752526}
   modelRotation: {x: 0, y: 0, z: 0, w: 1}
-  minDistance: 0.75
-  maxDistance: 2
+  minDistance: 0.81
+  maxDistance: 2.23
 --- !u!114 &5240668506439193548
 MonoBehaviour:
   m_ObjectHideFlags: 0

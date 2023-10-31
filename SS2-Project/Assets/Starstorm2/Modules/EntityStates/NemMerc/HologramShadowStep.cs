@@ -119,6 +119,7 @@ namespace EntityStates.NemMerc
             Vector3 direction = between.normalized;
             this.teleportTarget = direction * distance + base.transform.position;
         }
+
         public override void FixedUpdate()
         {
             base.FixedUpdate();
@@ -130,7 +131,7 @@ namespace EntityStates.NemMerc
             {
                 if (this.teleportTarget.magnitude < 5)
                 {
-                    SS2Log.Error("SHADOWSTEP WENT TO 0,0");
+                    SS2Log.Error("HOLOGRAMSHADOWSTEP WENT TO 0,0");
                     SS2Log.Error("TeleportTarget: " + this.teleportTarget);
                     SS2Log.Error("target: " + this.target);
                     SS2Log.Error("lastKnownTargetPosition: " + this.lastKnownTargetPosition);

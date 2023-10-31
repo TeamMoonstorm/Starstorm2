@@ -33,6 +33,7 @@ namespace AK
         static const AkUniqueID EXECUTIONERSPECIALIMPACT = 2308605527U;
         static const AkUniqueID EXECUTIONERSUPERCHARGE = 3396808549U;
         static const AkUniqueID EXECUTIONERUTILITY = 2830854628U;
+        static const AkUniqueID FOLLOWERCAST = 3057152170U;
         static const AkUniqueID FOLLOWERIDLESTART = 2970410379U;
         static const AkUniqueID FOLLOWERIDLESTOP = 2787513641U;
         static const AkUniqueID FOLLOWERSPAWN = 134703416U;
@@ -40,6 +41,8 @@ namespace AK
         static const AkUniqueID GREATERWARBANNER = 2901870699U;
         static const AkUniqueID HOTTESTSAUCE = 571024191U;
         static const AkUniqueID JETBOOTSEXPLOSION = 1235706518U;
+        static const AkUniqueID LAMPBULLET = 1316900923U;
+        static const AkUniqueID LAMPIMPACT = 1573671621U;
         static const AkUniqueID MOLTENCOIN = 1681111803U;
         static const AkUniqueID NEMHUNTRESSBOWMAX = 1389751463U;
         static const AkUniqueID NEMHUNTRESSCHARGEBOW = 415529083U;

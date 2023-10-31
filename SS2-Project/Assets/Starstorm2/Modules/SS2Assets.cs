@@ -35,6 +35,7 @@ namespace Moonstorm.Starstorm2
         Vanilla,
         Indev,
         Interactables,
+        Monsters,
         Shared
     }
     public class SS2Assets : AssetsLoader<SS2Assets>
@@ -55,6 +56,7 @@ namespace Moonstorm.Starstorm2
         private const string VANILLA = "ss2vanilla";
         private const string DEV = "ss2dev";
         private const string INTERACTABLES = "ss2interactables";
+        private const string MONSTERS = "ss2monsters";
         private const string SHARED = "ss2shared";
         
 
@@ -165,6 +167,7 @@ namespace Moonstorm.Starstorm2
                     case STAGES: LoadAndAssign(path, SS2Bundle.Stages); break;
                     case VANILLA: LoadAndAssign(path, SS2Bundle.Vanilla); break;
                     case INTERACTABLES: LoadAndAssign(path, SS2Bundle.Interactables); break;
+                    case MONSTERS: LoadAndAssign(path, SS2Bundle.Monsters); break;
                     case DEV: LoadAndAssign(path, SS2Bundle.Indev); break;
                     case SHARED: LoadAndAssign(path, SS2Bundle.Shared); break;
                     default:

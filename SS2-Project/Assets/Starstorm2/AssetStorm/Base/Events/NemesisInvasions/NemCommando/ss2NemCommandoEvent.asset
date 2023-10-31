@@ -16,7 +16,7 @@ MonoBehaviour:
   eventState:
     _typeName: EntityStates.Events.NemCommandoBossState, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  requiredStateMachine: 
+  requiredStateMachine: Nemesis
   startMessageToken: SS2_EVENT_GENERICNEMESIS_START
   endMessageToken: SS2_EVENT_GENERICNEMESIS_END
   messageColor: {r: 0.67058825, g: 0.16862746, b: 0.16862746, a: 1}
@@ -27,18 +27,27 @@ MonoBehaviour:
   - drybasin
   - slumberingsatellite
   category: CommonEvents
-  selectionWeight: 40
+  selectionWeight: 80
   cost: 450
   repeatedSelectionCostCoefficient: 1
   minimumStageCompletions: 5
+  requiredUnlock:
+    _asset: {fileID: 0}
+    _address: 
+    _useDirectReference: 0
   requiredUnlockableDef:
     address: 
     useDirectReference: 1
     asset: {fileID: 0}
+  forbiddenUnlock:
+    _asset: {fileID: 0}
+    _address: 
+    _useDirectReference: 0
   forbiddenUnlockableDef:
     address: 
     useDirectReference: 1
     asset: {fileID: 0}
+  requiredExpansionDefs: []
   requiredExpansions: []
   requiredItemAddressable:
     address: 

@@ -26,17 +26,26 @@ MonoBehaviour:
   - FBLScene
   category: CommonEvents
   selectionWeight: 75
-  cost: 1150
-  repeatedSelectionCostCoefficient: 1.5
+  cost: 1500
+  repeatedSelectionCostCoefficient: 3
   minimumStageCompletions: 3
+  requiredUnlock:
+    _asset: {fileID: 0}
+    _address: 
+    _useDirectReference: 0
   requiredUnlockableDef:
     address: 
     useDirectReference: 1
     asset: {fileID: 0}
+  forbiddenUnlock:
+    _asset: {fileID: 0}
+    _address: 
+    _useDirectReference: 0
   forbiddenUnlockableDef:
     address: 
     useDirectReference: 1
     asset: {fileID: 0}
+  requiredExpansionDefs: []
   requiredExpansions:
   - address: 
     useDirectReference: 1

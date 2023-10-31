@@ -11,6 +11,7 @@ namespace EntityStates.LampBoss
         public static float baseDuration;
         private float duration;
         public static GameObject buffWard;
+        public static GameObject blueBuffWard;
         private GameObject wardInstance;
         private bool hasBuffed;
         private Animator animator;
@@ -24,6 +25,8 @@ namespace EntityStates.LampBoss
             animator = GetModelAnimator();
             duration = baseDuration / attackSpeedStat;
 
+            hasBuffed = false;
+
             PlayCrossfade("FullBody, Override", "SecondaryBuff", "Secondary.playbackRate", duration, 0.05f);
         }
 
@@ -31,10 +34,14 @@ namespace EntityStates.LampBoss
         {
             base.FixedUpdate();
 
-            if (animator.GetFloat(mecanimParameter) >= 0.5f && !hasBuffed)
+            if (animator.GetFloat(mecanimParameter) >= 0.5f && !hasBuffed && isAuthority)
             {
                 hasBuffed = true;
-                wardInstance = Object.Instantiate(buffWard);
+
+                bool isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
+                GameObject ward = isBlue ? blueBuffWard : buffWard;
+
+                wardInstance = Object.Instantiate(ward);
                 wardInstance.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
                 wardInstance.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(gameObject);
                 //Util.PlaySound();

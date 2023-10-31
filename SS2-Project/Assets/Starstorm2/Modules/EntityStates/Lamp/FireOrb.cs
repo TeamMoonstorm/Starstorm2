@@ -14,6 +14,7 @@ namespace EntityStates.Lamp
         public static float baseDuration;
         public static string mecanimPeramater;
         public static GameObject projectilePrefab;
+        public static GameObject blueProjectilePrefab;
         public static string muzzleString;
 
         private float duration;
@@ -44,8 +45,13 @@ namespace EntityStates.Lamp
                 characterBody.AddSpreadBloom(0.33f * recoil);
                 Ray aimRay = GetAimRay();
 
-                ProjectileManager.instance.FireProjectile(
-                    projectilePrefab,
+            bool isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
+            GameObject projectile = isBlue ? blueProjectilePrefab : projectilePrefab;
+
+            Util.PlayAttackSpeedSound("LampBullet", gameObject, characterBody.attackSpeed);
+
+            ProjectileManager.instance.FireProjectile(
+                    projectile,
                     muzzle.position,
                     Util.QuaternionSafeLookRotation(aimRay.direction),
                     gameObject,

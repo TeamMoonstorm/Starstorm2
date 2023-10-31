@@ -21,21 +21,30 @@ MonoBehaviour:
   endMessageToken: SS2_EVENT_MENDINGELITE_END
   messageColor: {r: 0.50163424, g: 0.8490566, b: 0.2683339, a: 1}
   startSound: {fileID: 0}
-  availableStages: 67502382
+  availableStages: 0
   customStageNames: []
   category: CommonEvents
   selectionWeight: 33
-  cost: 1800
+  cost: 1900
   repeatedSelectionCostCoefficient: 4
   minimumStageCompletions: 5
+  requiredUnlock:
+    _asset: {fileID: 0}
+    _address: 
+    _useDirectReference: 0
   requiredUnlockableDef:
     address: 
     useDirectReference: 1
     asset: {fileID: 0}
+  forbiddenUnlock:
+    _asset: {fileID: 0}
+    _address: 
+    _useDirectReference: 0
   forbiddenUnlockableDef:
     address: 
     useDirectReference: 1
     asset: {fileID: 0}
+  requiredExpansionDefs: []
   requiredExpansions:
   - address: 
     useDirectReference: 1

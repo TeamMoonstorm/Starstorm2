@@ -78,6 +78,15 @@ namespace Moonstorm.Starstorm2
            
             return false;
         }
+
+        // this is needed to make nemesis events only spawn once per stage/not overlap.
+        // can be removed once MSU is fixed to not allow events to overridde each other on custom state machines.
+        private bool HopefullyTemporaryCheck()
+        {
+            if (!Moonstorm.Components.EventDirector.Instance) return true; // the fuck?  nebby whyyy
+            EntityStateMachine m = EntityStateMachine.FindByCustomName(Moonstorm.Components.EventDirector.Instance.gameObject, "Nemesis");
+            return m && m.IsInMainState();
+        }
         public override bool IsAvailable()
         {
             var flag = base.IsAvailable();
@@ -85,7 +94,7 @@ namespace Moonstorm.Starstorm2
             if(!flag)
                 return flag;
 
-            flag = checkRequiredItem();
+            flag = checkRequiredItem() && HopefullyTemporaryCheck();
 
             return flag;
         }

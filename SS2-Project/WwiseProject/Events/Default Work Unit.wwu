@@ -750,6 +750,34 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="Augury" ID="{51C566EA-92FC-4E38-8E94-52F7A25A36D1}">
+							<ChildrenList>
+								<Action Name="" ID="{0AF81B07-9277-4667-8407-F7BC8F63A1E9}" ShortID="482551834">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="augury main" ID="{1DA0A3EA-C3DE-4AF1-B389-6BD31AD6C729}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Lightning_Augury" ID="{7B8324E4-F891-4288-9557-8F0BC2242BB2}">
+							<ChildrenList>
+								<Action Name="" ID="{DF4E619A-3C44-4E53-BCA4-D7DDF229DB38}" ShortID="312312552">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Lightning augury" ID="{35B35ACD-D527-4028-ACB8-2B2EB14DDB56}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Event Name="VoidAmbient" ID="{096E8867-684C-49FD-9847-D8B99D9E53EC}">
@@ -1142,7 +1170,7 @@
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Target">
-											<ObjectRef Name="idleLoop" ID="{6CCD95A5-F692-4A5D-8381-7457ECD4B3B6}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+											<ObjectRef Name="FollowerIdle" ID="{98C777D1-3021-417A-9331-7D63559C50FE}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
@@ -1156,7 +1184,7 @@
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Target">
-											<ObjectRef Name="idleVO" ID="{CE1D07C9-7D95-410F-A716-66FF0C232AEB}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+											<ObjectRef Name="FollowerBark" ID="{F60EA0B1-1E50-4A03-9C50-805853B4832E}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
@@ -1170,7 +1198,7 @@
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Target">
-											<ObjectRef Name="idleLoop" ID="{6CCD95A5-F692-4A5D-8381-7457ECD4B3B6}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+											<ObjectRef Name="FollowerIdle" ID="{98C777D1-3021-417A-9331-7D63559C50FE}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
@@ -1185,6 +1213,48 @@
 									<ReferenceList>
 										<Reference Name="Target">
 											<ObjectRef Name="FollowerSpawn" ID="{16A423EC-DA6E-4707-BDC4-19798F41927C}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="LampBullet" ID="{D1278B9B-02AA-4E7F-A099-865276D19806}">
+							<ChildrenList>
+								<Action Name="" ID="{DD199C9F-F9C6-4D7B-9E11-1897CF0D7DB9}" ShortID="1035698974">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="BulletSpawn" ID="{AAEEFCE1-B575-49AA-9532-B3516FC1E9C2}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="LampImpact" ID="{A9AFDD3F-FE84-4AA2-8EEF-AF643E0A8F46}">
+							<ChildrenList>
+								<Action Name="" ID="{E0500EE0-E47D-499C-B5C5-9D1C2ED9FD54}" ShortID="7163882">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="BulletImpact" ID="{89502794-685F-4F82-A080-44902C6FFB5E}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="FollowerCast" ID="{18EB388A-B788-4D3E-B16F-3D40146A8372}">
+							<ChildrenList>
+								<Action Name="" ID="{AD8F0E6F-CAB8-45DE-AFA4-071CA4E55F5F}" ShortID="987171827">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="FollowerCast" ID="{153B157B-0A74-4B77-8BED-A3FC3FD26669}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>

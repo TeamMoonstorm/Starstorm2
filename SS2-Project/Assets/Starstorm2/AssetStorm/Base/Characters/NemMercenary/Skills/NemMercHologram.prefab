@@ -360,12 +360,8 @@ MonoBehaviour:
   lineRenderer: {fileID: 3038403140233367812}
   hologramIndicatorPrefab: {fileID: 1227118324689684511, guid: e65571a9c05a9fa4eaa7b730bdb2f8f6,
     type: 3}
-  collider: {fileID: 0}
-  model: {fileID: 2320743888203246199}
   targetSearchRadius: 25
   targetLostDistance: 35
-  ownerMagnetRadius: 15
-  ownerMagnetTimer: 1
   ownerCollisionRadius: 4
 --- !u!114 &-4269483029595532377
 MonoBehaviour:
@@ -502,6 +498,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c3b449da4acfbc94b9b09fbd39297e7c, type: 2}
+    - target: {fileID: -807016080285445826, guid: c556be2911d611c4588fb0854d4fc223,
+        type: 3}
+      propertyPath: m_Name
+      value: NemmercMesh
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c556be2911d611c4588fb0854d4fc223,
         type: 3}
       propertyPath: m_Name
@@ -597,6 +598,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c3b449da4acfbc94b9b09fbd39297e7c, type: 2}
+    - target: {fileID: -807016080285445826, guid: ee0d76740b3f0f54ba4eec385991e0b2,
+        type: 3}
+      propertyPath: m_Name
+      value: NemmercMesh
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ee0d76740b3f0f54ba4eec385991e0b2,
         type: 3}
       propertyPath: m_Name
@@ -692,6 +698,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c3b449da4acfbc94b9b09fbd39297e7c, type: 2}
+    - target: {fileID: -807016080285445826, guid: 749b06f085d838e49925cb0113ab04ca,
+        type: 3}
+      propertyPath: m_Name
+      value: NemmercMesh
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 749b06f085d838e49925cb0113ab04ca,
         type: 3}
       propertyPath: m_Name

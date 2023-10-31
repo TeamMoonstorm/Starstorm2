@@ -13,18 +13,16 @@ namespace Moonstorm.Starstorm2.Components
 {
     public class RemunerationShopBehavior : NetworkBehaviour
     {
-        //cringe
 
         [SystemInitializer]
         private static void Init()
         {
-            //TEMP HOPEFULLY
             deleteEffectPrefab = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Nullifier/NullifierExplosion.prefab").WaitForCompletion(), "WAWA");
-            deleteEffectPrefab.GetComponent<EffectComponent>().soundName = "Play_nullifier_death_vortex_explode";
+            deleteEffectPrefab.GetComponent<EffectComponent>().soundName = "Play_nullifier_death_vortex_explode"; // cringe.
             ContentAddition.AddEffect(deleteEffectPrefab); // i think this is how r2api works? not gonna look it up tehe
         }
 
-        public float effectScale = 6f;// need for unityexplorer
+        public float effectScale = 4.5f;// need for unityexplorer
         public static GameObject deleteEffectPrefab;
 
         public List<RemunerationChoiceBehavior> choices;
@@ -32,6 +30,7 @@ namespace Moonstorm.Starstorm2.Components
         //private Xoroshiro128Plus rng;
 
         public int numDrops = 3;
+        public float soundPitch = 1.5f;
 
         public int choicesDropped;
 
@@ -74,13 +73,14 @@ namespace Moonstorm.Starstorm2.Components
             foreach(RemunerationChoiceBehavior choice in this.choices)
             {
                 choice.alive = true;
-                choice.temp_peniswenis.SetAvailable(true);
+                choice.interaction.SetAvailable(true);
             }
         }
 
         public void OnChoicePicked(RemunerationChoiceBehavior choice)
         {
-            foreach(RemunerationChoiceBehavior chois in this.choices)
+            Util.PlayAttackSpeedSound("Play_nullifier_death_vortex_explode", base.gameObject, soundPitch); // im rarted!!!!!!!
+            foreach (RemunerationChoiceBehavior chois in this.choices)
             {
                 EffectData data = new EffectData
                 {
@@ -88,8 +88,7 @@ namespace Moonstorm.Starstorm2.Components
                     rotation = Quaternion.identity,
                     scale = effectScale,
                 };
-                EffectManager.SpawnEffect(deleteEffectPrefab, data, true);
-                Util.PlaySound("Play_nullifier_death_vortex_explode", base.gameObject); // im rarted sry
+                EffectManager.SpawnEffect(deleteEffectPrefab, data, true);              
                 Destroy(chois.gameObject);
             }
         }

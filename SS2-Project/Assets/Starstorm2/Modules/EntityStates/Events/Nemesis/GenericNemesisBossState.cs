@@ -163,7 +163,7 @@ namespace EntityStates.Events
                     body.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
                 };
 
-                //nemesisBossBody.gameObject.AddComponent<NemesisResistances>();
+                nemesisBossBody.gameObject.AddComponent<NemesisResistances>();
                 new NemesisSpawnCard.SyncBaseStats(nemesisBossBody).Send(R2API.Networking.NetworkDestination.Clients);
                 combatSquad.AddMember(master);
                 master.onBodyDeath.AddListener(OnBodyDeath);
@@ -180,16 +180,23 @@ namespace EntityStates.Events
         public virtual void OnBodyDeath()
         {
             onNemesisDefeatedGlobal?.Invoke(nemesisBossBody);
-            outer.SetNextStateToMain();
+
+            // we dont want to go back to main state, since we only want one nemesis boss per stage
+            //outer.SetNextStateToMain();
+            outer.SetNextState(new IdleRestOfStage());
         }
 
         public override void OnExit()
         {
             base.OnExit();
-            if (musicTrack)
-                Destroy(musicTrack.gameObject);
+
+
             /*if (eventStateEffect)
                 eventStateEffect.OnEndingStart(fadeDuration);*/
+
+            // need to do outro here instead of destroying
+            if (musicTrack)
+                Destroy(musicTrack.gameObject);
         }
 
         public override void OnSerialize(NetworkWriter writer)

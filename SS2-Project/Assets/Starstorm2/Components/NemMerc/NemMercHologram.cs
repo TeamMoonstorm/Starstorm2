@@ -71,13 +71,17 @@ namespace Moonstorm.Starstorm2.Components
 
         private void Start()
         {
-            this.indicator = GameObject.Instantiate(this.hologramIndicatorPrefab, base.transform.position, Quaternion.identity).GetComponent<PositionIndicator>();
-            this.indicator.targetTransform = this.indicatorStartTransform;
+            
 
             this.teamFilter = base.GetComponent<TeamFilter>();
 
             if (this.owner)
             {
+                if(this.ShouldShowIndicator())
+                {
+                    this.indicator = GameObject.Instantiate(this.hologramIndicatorPrefab, base.transform.position, Quaternion.identity).GetComponent<PositionIndicator>();
+                    this.indicator.targetTransform = this.indicatorStartTransform;
+                }        
                 CharacterBody component = owner.GetComponent<CharacterBody>();
                 if (component)
                 {
@@ -143,8 +147,12 @@ namespace Moonstorm.Starstorm2.Components
             }
 
 
-            this.indicator.yOffset = 0; // XD????
-            this.indicator.targetTransform = base.transform;
+            if(this.indicator)
+            {
+                this.indicator.yOffset = 0; // XD????
+                this.indicator.targetTransform = base.transform;
+            }
+            
 
         }
 
@@ -209,15 +217,20 @@ namespace Moonstorm.Starstorm2.Components
 
         //  NEED TO CONDITIONALLY SHOW POSITION INDICATOR
         //  YES IF ENEMY NEMMERC
-        //  NO IF ALLY NEMMERC (UNLESS YOU ARE ALSO NEMMERC)
+        //  NO IF ALLY NEMMERC (UNLESS YOU ARE ALSO NEMMERC (ONLY ONCE ALLY NEMMERCS CAN USE EACHOTHERS HOLOGRAMS))
+        private bool ShouldShowIndicator()
+        {
+            return Util.HasEffectiveAuthority(this.owner);// || this.teamFilter.teamIndex != CharacterMaster.readOnlyInstancesList[0].teamIndex;
+        }
         public void UpdateVisualizer()
         {
+            bool shouldShow = this.target; // && ShouldShowIndicator();
             if (this.target != this.lineRenderer.activeSelf)
             {
-                this.lineRenderer.SetActive(this.target);
-                this.indicatorStartTransform.gameObject.SetActive(this.target);
+                this.lineRenderer.SetActive(shouldShow);
+                this.indicatorStartTransform.gameObject.SetActive(shouldShow);
             }
-            if (!this.target) return;
+            if (!shouldShow) return;
 
             this.indicatorTransform.position = this.target.transform.position;
             this.indicatorStartTransform.position = base.transform.position;

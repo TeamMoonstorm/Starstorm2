@@ -17,12 +17,17 @@ MonoBehaviour:
   - {fileID: 6493827583746707147, guid: 4d61aaa7eafec014396d0ec6691e8cd4, type: 3}
   - {fileID: 3342532623090860830, guid: 32a2ec2343a6e9343a354af53260c88a, type: 3}
   - {fileID: 8600173778514573585, guid: e15a61e1b8d4aa54ba778c08714d1da6, type: 3}
+  - {fileID: 3342532623090860830, guid: 4d59641af6b4d5f41aa95e2455bafa50, type: 3}
   masterPrefabs:
   - {fileID: 1175919788895150, guid: d97f71d977f90044e9c139cb2a51727b, type: 3}
   - {fileID: 2890170479074595321, guid: 3c492b0f3e34776468c9c6829203e593, type: 3}
   - {fileID: 3501035103686766137, guid: 2adb6e0346208b44ca56ab40a3d8f9c8, type: 3}
   - {fileID: 6139168444562241112, guid: 4393cd3a88e8e0d4099e734c9fb1de36, type: 3}
-  projectilePrefabs: []
+  - {fileID: 2890170479074595321, guid: 69c02064f0ab94b448581b3b770ebcc8, type: 3}
+  projectilePrefabs:
+  - {fileID: 4818403562910547815, guid: 264f69ebd75b3e748b14e8172920f9bd, type: 3}
+  - {fileID: 3908654032569045448, guid: 146f54dbfdadf8c46b938267e1832b06, type: 3}
+  - {fileID: 4818403562910547815, guid: 56cf1b35e7ceca647a45032b01277a09, type: 3}
   gameModePrefabs: []
   effectPrefabs:
   - {fileID: 2828564131440228581, guid: 4b7f27f7b3a18244f9657fb1b3f5633f, type: 3}
@@ -35,6 +40,9 @@ MonoBehaviour:
   - {fileID: 5381057290776391523, guid: 0f60d2bba64f2af47a22eb61e8faf4a6, type: 3}
   - {fileID: 1991134740934884636, guid: ecfe12ba07e229d45ae576df52e46bbd, type: 3}
   - {fileID: 2488751257702747221, guid: b3d0c82fd7eb3674f8ac4d76a974d929, type: 3}
+  - {fileID: 7070788904529085381, guid: 958963135d745f44bb197d01ede0b565, type: 3}
+  - {fileID: 4493480365420252623, guid: c8112589686df9e47a320ed0f7335a18, type: 3}
+  - {fileID: 7627125973890066023, guid: b9ebd0f5cc7a9ee47a1bf4a5c6908278, type: 3}
   skillDefs:
   - {fileID: 11400000, guid: 196f75a687d0e064e8e18ca24d36d090, type: 2}
   - {fileID: 11400000, guid: 73b2d5402818fa34ab67897302526be1, type: 2}
@@ -52,7 +60,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f1b32eac071c8e244a541f04c9d32abd, type: 2}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 9f7c79359a725f54b9722b3035f0e1d0, type: 2}
   - {fileID: 11400000, guid: afa4b69e7eecb7b44a72117cfdb378c5, type: 2}
   - {fileID: 11400000, guid: 3e21b21d267aa5543adde97dfcbc10aa, type: 2}
   - {fileID: 11400000, guid: 8d368cba8dee8b042909836f1bda9dd7, type: 2}
@@ -160,7 +168,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4a535f35a298c57479a6152ef5c629d1, type: 2}
   - {fileID: 11400000, guid: 81f5796e03c274f4aa7f51bc42384bcc, type: 2}
   - {fileID: 11400000, guid: dbd3d78e1519f8b48ae18786056d24a6, type: 2}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 3ad4a49c27376d8458e6c87de63973d9, type: 2}
   - {fileID: 11400000, guid: 54dea37afeac0ba4aba8cc59ca2c0b06, type: 2}
   - {fileID: 11400000, guid: 932f5f4e53762a6408e15612535effe4, type: 2}
   - {fileID: 11400000, guid: 36e0e15e190c2904388be08f6e650967, type: 2}
@@ -193,7 +201,10 @@ MonoBehaviour:
   equipmentDefs: []
   buffDefs: []
   eliteDefs: []
-  unlockableDefs: []
+  unlockableDefs:
+  - {fileID: 11400000, guid: b010e133d4f0c95428e9da95c52068ef, type: 2}
+  - {fileID: 11400000, guid: 8ee4988f7a1dd53469d7c99b8b60554f, type: 2}
+  - {fileID: 11400000, guid: 00dbe1ce366fb75429ca1e5c0fd02810, type: 2}
   survivorDefs: []
   artifactDefs: []
   surfaceDefs:
