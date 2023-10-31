@@ -5,6 +5,7 @@ using RoR2;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace EntityStates.DroneTable
 {
@@ -12,9 +13,9 @@ namespace EntityStates.DroneTable
     {
         public static float duration;
 
-        public GameObject droneObject;
+        public int droneIndex;
 
-        public PickupIndex index;
+        public int itemIndex;
 
         protected override bool enableInteraction
         {
@@ -32,11 +33,13 @@ namespace EntityStates.DroneTable
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (fixedAge > duration)
+            if (NetworkServer.active && fixedAge > duration)
             {
                 DestroyAction nextState = new DestroyAction();
-                nextState.droneObject = this.droneObject;
-                nextState.index = this.index;
+                //nextState.droneObject = this.droneObject;
+                nextState.itemIndex = this.itemIndex;
+                nextState.droneIndex = this.droneIndex;
+                //nextState.index = this.index;
                 outer.SetNextState(nextState);
             }           
         }
@@ -45,5 +48,19 @@ namespace EntityStates.DroneTable
         {
             base.OnExit();
         }
+
+        public override void OnSerialize(NetworkWriter writer)
+        {
+            base.OnSerialize(writer);
+            writer.Write(droneIndex);
+            writer.Write(itemIndex);
+        }
+        public override void OnDeserialize(NetworkReader reader)
+        {
+            base.OnDeserialize(reader);
+            droneIndex = reader.ReadInt32();
+            itemIndex = reader.ReadInt32();
+        }
+
     }
 }
