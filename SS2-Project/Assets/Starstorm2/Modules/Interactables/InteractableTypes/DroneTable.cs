@@ -23,14 +23,7 @@ namespace Moonstorm.Starstorm2.Interactables
 
         private static GameObject interactable;
 
-        private static GameObject itemTakenOrb;
-
         private static GameObject bodyOrb = SS2Assets.LoadAsset<GameObject>("CharacterBodyOrbEffect", SS2Bundle.Interactables);
-
-        //private static List<InteractableSpawnCard> interactableSpawnCards = new List<InteractableSpawnCard>();
-        //private static List<CharacterBody> characterBodies = new List<CharacterBody>();
-        //
-        //private static List<BodyIndex> illegalMarks = new List<BodyIndex>();
 
 
         /// <summary>
@@ -60,26 +53,15 @@ namespace Moonstorm.Starstorm2.Interactables
         {
             CostTypeCatalog.modHelper.getAdditionalEntries += addDroneCostType;
 
-            //On.EntityStates.Drone.DeathState.OnImpactServer += overrideDroneImpact;
             On.EntityStates.Drone.DeathState.OnEnter += overrideDroneCorpse;
-            //On.RoR2.Orbs.ItemTakenOrbEffect.Start += overrideItemIcon;
-            
-            //On.RoR2.Util.PlaySound_string_GameObject += tellMeTheSoundPlease;
 
-
-            //On.RoR2.PurchaseInteraction.GetDisplayName += MonolithName;
             interactable = InteractableDirectorCard.prefab;
 
             var interactionToken = interactable.AddComponent<RefabricatorInteractionToken>();
             interactionToken.PurchaseInteraction = interactable.GetComponent<PurchaseInteraction>();
-            //interactionToken.symbolTransform = null;
 
-            //list = StringFinder.Instance.InteractableSpawnCards;
-            //getInteractableCards();
             droneDropTable = new DroneTableDropTable();
 
-            //itemTakenOrb = LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/OrbEffects/ItemTakenOrbEffect");
-            //itemTakenOrb = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Effects/OrbEffects/ItemTakenOrbEffect"), "DroneTableOrbEffect", false);
             SetupDroneValueList();  
         }
 
@@ -179,7 +161,7 @@ namespace Moonstorm.Starstorm2.Interactables
             droneTripletPairs.Add("FlameDroneBody", new RefabricatorTriple(new Vector3(0.165f, -0.05f, 0), new Vector3(0, 0, 90), new Vector3(0.45f, 0.45f, 0.45f)));
             droneTripletPairs.Add("MegaDroneBody", new RefabricatorTriple(new Vector3(0, -0.025f, 0), new Vector3(0, 0, 0), new Vector3(0.1225f, 0.1225f, 0.1225f)));
 
-            droneTripletPairs.Add("ShockDroneBody", new RefabricatorTriple(new Vector3(.55f, .025f, 0), new Vector3(0, 0, 90), new Vector3(.2f, .2f, .2f)));
+            droneTripletPairs.Add("ShockDroneBody", new RefabricatorTriple(new Vector3(.675f, .025f, 0), new Vector3(0, 0, 90), new Vector3(.2f, .2f, .2f)));
             droneTripletPairs.Add("CloneDroneBody", new RefabricatorTriple(new Vector3(0, 0, 0), new Vector3(0, 0, 90), new Vector3(.35f, .35f, .35f)));
 
         }
@@ -318,8 +300,6 @@ namespace Moonstorm.Starstorm2.Interactables
                                     var pair = dronePairs[j];
                                     if (drone.bodyIndex == BodyCatalog.FindBodyIndex(pair.Key))
                                     {
-                                        SS2Log.Info("Grahhhhh " + drone.baseNameToken + " " + drone.bodyIndex);
-                                        //SS2Log.Info("IOU one item with value modifier " + pair.Value);
                                         EffectData effectData = new EffectData
                                         {
                                             origin = drone.corePosition,
@@ -331,13 +311,8 @@ namespace Moonstorm.Starstorm2.Interactables
 
                                         var model = context.purchasedObject;
 
-                                        //var intermediate = model.transform.Find("mdlDroneTable");
-
-                                        //var target = model.transform.Find("OrbTarget").gameObject; //???
-                                        //SS2Log.Info(model.transform.name + " | " + target);
-
                                         effectData.SetNetworkedObjectReference(context.purchasedObject);  //behaves strangely if target is networked ref
-                                        //EffectManager.SpawnEffect(itemTakenOrb, effectData, true);
+
                                         EffectManager.SpawnEffect(bodyOrb, effectData, true);
 
                                         if (drone.baseNameToken == "TURRET1_BODY_NAME" || drone.name == "Turret1Body(Clone)")
@@ -346,8 +321,6 @@ namespace Moonstorm.Starstorm2.Interactables
                                             Util.PlaySound("Play_drone_deathpt2", drone.gameObject);
                                             //Util.PlaySound("RefabricatorSelect2", model);
                                         }
-                                        drone.gameObject.AddComponent<RefabricatorHardDeathToken>();
-                                        drone.healthComponent.Suicide();
 
                                         if (!droneDropTable)
                                         {
@@ -400,13 +373,15 @@ namespace Moonstorm.Starstorm2.Interactables
                                         var esm = model.GetComponent<EntityStateMachine>();
                                         if (esm)
                                         {
-                                            //SS2Log.Info("aaa  " + esm);
                                             DestroyLeadin nextState = new DestroyLeadin();
-                                            nextState.droneObject = validMinions[i].bodyPrefab;
-                                            nextState.index = ind;
-                                            //SS2Log.Info("entrance index: " + ind + " of value " + dropvalue);
+                                            nextState.droneIndex = (int)drone.bodyIndex + 1;
+                                            nextState.itemIndex = (int)ind.pickupDef.itemIndex;
                                             esm.SetNextState(nextState);
                                         }
+
+                                        drone.gameObject.AddComponent<RefabricatorHardDeathToken>();
+                                        drone.healthComponent.Suicide();
+
                                         break;
                                     }
                                 }
@@ -417,6 +392,7 @@ namespace Moonstorm.Starstorm2.Interactables
                 }
             }
         }
+
 
         public class RefabricatorInteractionToken : MonoBehaviour
         {
