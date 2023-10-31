@@ -4518,6 +4518,88 @@
 										</Sound>
 									</ChildrenList>
 								</Folder>
+								<Folder Name="Augury" ID="{C1299710-85E5-4EB8-81C8-492DE13816AD}" ShortID="886053253">
+									<ChildrenList>
+										<Sound Name="augury main" ID="{1DA0A3EA-C3DE-4AF1-B389-6BD31AD6C729}" ShortID="307927841">
+											<PropertyList>
+												<Property Name="OverridePositioning" Type="bool" Value="True"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Attenuation">
+													<ObjectRef Name="Augury" ID="{793F3610-1BC6-44BA-A438-4F2C95759003}" WorkUnitID="{01E36904-BE25-433F-9547-3A046044CA56}"/>
+												</Reference>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="augury main" ID="{A0246A7C-B461-46E9-BC0F-7FCB971EED5F}">
+													<PropertyList>
+														<Property Name="LoopBegin" Type="Real64" Value="-0.001"/>
+														<Property Name="LoopEnd" Type="Real64" Value="-0.001"/>
+														<Property Name="TrimBegin" Type="Real64" Value="-0.001"/>
+														<Property Name="TrimEnd" Type="Real64" Value="-0.001"/>
+													</PropertyList>
+													<Language>SFX</Language>
+													<AudioFile>Augury\augury main.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="878249463"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="augury main" ID="{A0246A7C-B461-46E9-BC0F-7FCB971EED5F}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Lightning augury" ID="{35B35ACD-D527-4028-ACB8-2B2EB14DDB56}" ShortID="837229104">
+											<PropertyList>
+												<Property Name="InitialDelay" Type="Real64">
+													<ValueList>
+														<Value>1</Value>
+													</ValueList>
+												</Property>
+												<Property Name="OverridePositioning" Type="bool" Value="True"/>
+												<Property Name="Volume" Type="Real64">
+													<ValueList>
+														<Value>8</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Attenuation">
+													<ObjectRef Name="augury lightning" ID="{CCE9FA45-B018-4DFF-A21E-E4A1C79D4FC6}" WorkUnitID="{01E36904-BE25-433F-9547-3A046044CA56}"/>
+												</Reference>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Lightning augury" ID="{7B4790B3-5E59-4696-8422-0E7E351BD2BF}">
+													<PropertyList>
+														<Property Name="LoopBegin" Type="Real64" Value="-0.001"/>
+														<Property Name="LoopEnd" Type="Real64" Value="-0.001"/>
+														<Property Name="TrimBegin" Type="Real64" Value="-0.001"/>
+														<Property Name="TrimEnd" Type="Real64" Value="-0.001"/>
+													</PropertyList>
+													<Language>SFX</Language>
+													<AudioFile>Augury\Lightning augury.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="1041292032"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Lightning augury" ID="{7B4790B3-5E59-4696-8422-0E7E351BD2BF}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</Folder>
 							</ChildrenList>
 						</Folder>
 						<Folder Name="Meme Stuff" ID="{E7D33D18-07A7-4747-964D-67A00E93723B}" ShortID="351276811">

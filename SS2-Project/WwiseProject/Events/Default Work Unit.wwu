@@ -750,6 +750,34 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="Augury" ID="{51C566EA-92FC-4E38-8E94-52F7A25A36D1}">
+							<ChildrenList>
+								<Action Name="" ID="{0AF81B07-9277-4667-8407-F7BC8F63A1E9}" ShortID="482551834">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="augury main" ID="{1DA0A3EA-C3DE-4AF1-B389-6BD31AD6C729}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Lightning_Augury" ID="{7B8324E4-F891-4288-9557-8F0BC2242BB2}">
+							<ChildrenList>
+								<Action Name="" ID="{DF4E619A-3C44-4E53-BCA4-D7DDF229DB38}" ShortID="312312552">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Lightning augury" ID="{35B35ACD-D527-4028-ACB8-2B2EB14DDB56}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Event Name="VoidAmbient" ID="{096E8867-684C-49FD-9847-D8B99D9E53EC}">
