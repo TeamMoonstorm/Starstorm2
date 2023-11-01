@@ -54,6 +54,8 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 
 **Warning: content spoilers below!**
 ### 0.5.2
+* General
+    * Ensured all survivors are part of the ExpansionDef.
 * Monsters
     * Reduced the volume of Wayfarer's main attack.
     * Definitely fixed Follower and Wayfarer sounds playing globally.

@@ -6064,8 +6064,8 @@
 													<Modifier Name="" ID="{983B7C21-6820-4544-BE9C-C841ADFE9F66}">
 														<PropertyList>
 															<Property Name="Enabled" Type="bool" Value="True"/>
-															<Property Name="Max" Type="Real64" Value="30"/>
-															<Property Name="Min" Type="Real64" Value="-30"/>
+															<Property Name="Max" Type="Real64" Value="50"/>
+															<Property Name="Min" Type="Real64" Value="-50"/>
 														</PropertyList>
 													</Modifier>
 												</ModifierInfo>
@@ -6073,8 +6073,13 @@
 										</Property>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
-												<Value>-8</Value>
+												<Value>-10</Value>
 											</ValueList>
+											<ModifierList>
+												<ModifierInfo>
+													<Modifier Name="" ID="{4D2FC47B-E4FF-4073-88A5-E88C84325718}"/>
+												</ModifierInfo>
+											</ModifierList>
 										</Property>
 									</PropertyList>
 									<ReferenceList>
@@ -6117,8 +6122,8 @@
 													<Modifier Name="" ID="{1B3C620E-39F1-4A62-A466-521AD5CBD57E}">
 														<PropertyList>
 															<Property Name="Enabled" Type="bool" Value="True"/>
-															<Property Name="Max" Type="Real64" Value="30"/>
-															<Property Name="Min" Type="Real64" Value="-30"/>
+															<Property Name="Max" Type="Real64" Value="50"/>
+															<Property Name="Min" Type="Real64" Value="-50"/>
 														</PropertyList>
 													</Modifier>
 												</ModifierInfo>
