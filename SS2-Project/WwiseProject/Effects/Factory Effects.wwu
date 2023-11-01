@@ -1398,7 +1398,82 @@
 										<Property Name="DecayTime" Type="Real32" Value="4.6"/>
 										<Property Name="Density" Type="Real32" Value="100"/>
 										<Property Name="Diffusion" Type="Real32" Value="53"/>
-										<Property Name="ERLevel" Type="Real32" Value="-15"/>
+										<Property Name="DryLevel" Type="Real32" Value="0">
+											<RTPCList>
+												<RTPC Name="" ID="{2603F212-A22E-449F-9AC3-3A6ECDA26AC8}" ShortID="515434839">
+													<ReferenceList>
+														<Reference Name="ControlInput">
+															<ObjectRef Name="playerhealth" ID="{AE335B17-7031-4B25-90D7-4E16F58D6F32}" WorkUnitID="{4E4C0F5E-9CE9-403D-9E94-4785BD5A6B13}"/>
+														</Reference>
+													</ReferenceList>
+													<Curve Name="" ID="{7309CC44-8C80-487B-B32F-06784C65FDA5}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="3"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>-96.3</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>20</XPos>
+																<YPos>-96.3</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>50</XPos>
+																<YPos>0</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>0</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</RTPC>
+											</RTPCList>
+										</Property>
+										<Property Name="ERLevel" Type="Real32" Value="0">
+											<RTPCList>
+												<RTPC Name="" ID="{1C415249-2212-48B3-956D-A56548EDAD0F}" ShortID="177611256">
+													<ReferenceList>
+														<Reference Name="ControlInput">
+															<ObjectRef Name="playerhealth" ID="{AE335B17-7031-4B25-90D7-4E16F58D6F32}" WorkUnitID="{4E4C0F5E-9CE9-403D-9E94-4785BD5A6B13}"/>
+														</Reference>
+													</ReferenceList>
+													<Curve Name="" ID="{AFDC5D9E-AC2B-43DE-81F2-1264D06CC807}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="3"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>-0</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>20</XPos>
+																<YPos>-0</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>50</XPos>
+																<YPos>-96.3</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>-96.3</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</RTPC>
+											</RTPCList>
+										</Property>
 										<Property Name="ERPattern" Type="int32" Value="30"/>
 										<Property Name="Filter1Freq" Type="Real32" Value="490"/>
 										<Property Name="Filter1Gain" Type="Real32" Value="-4.5"/>
@@ -1608,9 +1683,9 @@
 						<Effect Name="Special_Effect_1" ID="{83317D8A-9D4C-438E-BE8C-BC7D27CAD1B0}" PluginName="Wwise Flanger" CompanyID="0" PluginID="125" PluginType="3">
 							<PropertyList>
 								<Property Name="DelayTime" Type="Real32" Value="10"/>
-								<Property Name="DryLevel" Type="Real32" Value="0"/>
-								<Property Name="ModDepth" Type="Real32" Value="80"/>
-								<Property Name="ModFrequency" Type="Real32" Value="2"/>
+								<Property Name="FeedForwardLevel" Type="Real32" Value="-0.2"/>
+								<Property Name="ModDepth" Type="Real32" Value="22.6"/>
+								<Property Name="ModFrequency" Type="Real32" Value="0.86"/>
 								<Property Name="ModPWM" Type="Real32" Value="0"/>
 							</PropertyList>
 						</Effect>

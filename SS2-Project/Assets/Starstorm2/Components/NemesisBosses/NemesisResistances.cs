@@ -9,7 +9,7 @@ namespace Moonstorm.Starstorm2.Components
         static NemesisResistances()
         {
             On.RoR2.HealthComponent.Suicide += ResistVoid;
-            On.RoR2.MapZone.TryZoneStart += TPBack;
+            //On.RoR2.MapZone.TryZoneStart += TPBack;
         }
 
         private static void ResistVoid(On.RoR2.HealthComponent.orig_Suicide orig, RoR2.HealthComponent self, GameObject killerOverride, GameObject inflictorOverride, DamageType damageType)
@@ -24,6 +24,7 @@ namespace Moonstorm.Starstorm2.Components
                     Debug.Log("master found");
                     if (damageType == DamageType.VoidDeath && body.GetComponent<NemesisResistances>() != null)
                     {
+                        body.SetBodyStateToPreferredInitialState();
                         Debug.Log("void death + nemresistances found");
                         //ChatMessage.SendColored("He laughs in the face of the void.", ColorCatalog.ColorIndex.VoidItem);
 

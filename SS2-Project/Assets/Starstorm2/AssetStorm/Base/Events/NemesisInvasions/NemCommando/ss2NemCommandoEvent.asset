@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 714a7ca2776afba4fb8b263d3c207dbd, type: 3}
+  m_Name: ss2NemCommandoEvent
+  m_EditorClassIdentifier: 
+  eventFlags: 28
+  eventState:
+    _typeName: EntityStates.Events.NemCommandoBossState, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  requiredStateMachine: Nemesis
+  startMessageToken: SS2_EVENT_GENERICNEMESIS_START
+  endMessageToken: SS2_EVENT_GENERICNEMESIS_END
+  messageColor: {r: 0.67058825, g: 0.16862746, b: 0.16862746, a: 1}
+  startSound: {fileID: 0}
+  availableStages: 470176255
+  customStageNames:
+  - fblscene
+  - drybasin
+  - slumberingsatellite
+  category: CommonEvents
+  selectionWeight: 80
+  cost: 450
+  repeatedSelectionCostCoefficient: 1
+  minimumStageCompletions: 5
+  requiredUnlock:
+    _asset: {fileID: 0}
+    _address: 
+    _useDirectReference: 0
+  requiredUnlockableDef:
+    address: 
+    useDirectReference: 1
+    asset: {fileID: 0}
+  forbiddenUnlock:
+    _asset: {fileID: 0}
+    _address: 
+    _useDirectReference: 0
+  forbiddenUnlockableDef:
+    address: 
+    useDirectReference: 1
+    asset: {fileID: 0}
+  requiredExpansionDefs: []
+  requiredExpansions: []
+  requiredItemAddressable:
+    address: 
+    useDirectReference: 1
+    asset: {fileID: 0}
+  fallbackVFX: {fileID: 0}
+  eventVFX: []

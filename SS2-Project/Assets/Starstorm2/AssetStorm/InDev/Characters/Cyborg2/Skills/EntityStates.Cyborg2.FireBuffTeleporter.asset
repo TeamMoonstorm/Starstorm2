@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: EntityStates.Cyborg2.FireBuffTeleporter
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.Cyborg2.FireBuffTeleporter, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: projectilePrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 6055536033811015727, guid: 0158b46db359ff942bd12875d2b98e31,
+          type: 3}
+    - fieldName: soundString
+      fieldValue:
+        stringValue: Play_engi_M2_throw
+        objectValue: {fileID: 0}
+    - fieldName: muzzleEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: maxDistance
+      fieldValue:
+        stringValue: 15
+        objectValue: {fileID: 0}
+    - fieldName: rayRadius
+      fieldValue:
+        stringValue: 0.5
+        objectValue: {fileID: 0}
+    - fieldName: arcVisualizerPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: endpointVisualizerPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: endpointVisualizerRadiusScale
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: setFuse
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: damageCoefficient
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: baseMinimumDuration
+      fieldValue:
+        stringValue: 0.15
+        objectValue: {fileID: 0}

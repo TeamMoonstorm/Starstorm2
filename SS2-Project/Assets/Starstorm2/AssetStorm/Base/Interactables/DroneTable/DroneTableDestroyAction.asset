@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: DroneTableDestroyAction
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.DroneTable.DestroyAction, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: duration
+      fieldValue:
+        stringValue: 1.75
+        objectValue: {fileID: 0}
+    - fieldName: whiteHoloMaterial
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 2100000, guid: 2f4c405c2686534428b3323ebc150457, type: 2}
+    - fieldName: greenHoloMaterial
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 2100000, guid: 16baa788d6d29304889fd3c953b564a5, type: 2}
+    - fieldName: redHoloMaterial
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 2100000, guid: e7291fe9b6709e24496133177952cd1e, type: 2}

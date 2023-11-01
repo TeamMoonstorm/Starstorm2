@@ -154,6 +154,49 @@ Transform:
   m_Father: {fileID: 8436273927193257852}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -2.1707862e-13, y: 0.00000001650615, z: -0.0000029882074}
+--- !u!1 &353200160323604712
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6820521056117838817}
+  - component: {fileID: 4512633642465782543}
+  m_Layer: 14
+  m_Name: HatchetHitbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6820521056117838817
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 353200160323604712}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0.5}
+  m_LocalScale: {x: 5, y: 2, z: 5}
+  m_Children: []
+  m_Father: {fileID: 7556949105897420911}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4512633642465782543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 353200160323604712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1783796254, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &367610570298897188
 GameObject:
   m_ObjectHideFlags: 0
@@ -2004,6 +2047,70 @@ Transform:
   m_Father: {fileID: 4108128683995935006}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 12.083416, y: 8.178655, z: 47.78804}
+--- !u!1 &5276878150380113705
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7608947659274979713}
+  - component: {fileID: 1868478113464986338}
+  - component: {fileID: 7300940019097130857}
+  m_Layer: 12
+  m_Name: MainHurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7608947659274979713
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5276878150380113705}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4108128683995935006}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &1868478113464986338
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5276878150380113705}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.4
+  m_Height: 1.75
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 1}
+--- !u!114 &7300940019097130857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5276878150380113705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 2847268280640029998}
+  isBullseye: 1
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 3697774009543263375}
+  indexInGroup: 0
 --- !u!1 &5331518202608667249
 GameObject:
   m_ObjectHideFlags: 0
@@ -2409,6 +2516,36 @@ Transform:
   m_Father: {fileID: 2926331674628468485}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: 0}
+--- !u!1 &6378105577890090087
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4141978931604276917}
+  m_Layer: 0
+  m_Name: HatchetMuzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4141978931604276917
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6378105577890090087}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7556949105897420911}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6393606541504029458
 GameObject:
   m_ObjectHideFlags: 0
@@ -2590,7 +2727,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6860763026811405530}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7697745305294060519}
@@ -3163,6 +3300,7 @@ GameObject:
   - component: {fileID: 6923660293749369201}
   - component: {fileID: 7800395481553324536}
   - component: {fileID: 8580783956253203961}
+  - component: {fileID: -327527950626745850}
   - component: {fileID: 9146088522668911265}
   - component: {fileID: 8841673127800065127}
   - component: {fileID: 5126033405935345246}
@@ -3185,6 +3323,7 @@ GameObject:
   - component: {fileID: 4813240090288474964}
   - component: {fileID: 6439467252874173149}
   - component: {fileID: 7259781413027647891}
+  - component: {fileID: 6763911367496465940}
   m_Layer: 0
   m_Name: NemHuntress2Body
   m_TagString: Player
@@ -3257,7 +3396,7 @@ MonoBehaviour:
   bodyIndex: -1
   baseNameToken: SS2_NEMHUNTRESS2_BODY_NAME
   subtitleNameToken: SS2_NEMHUNTRESS2_BODY_SUBTITLE
-  bodyFlags: 0
+  bodyFlags: 16
   rootMotionInMainState: 0
   mainRootSpeed: 0
   baseMaxHealth: 90
@@ -3284,37 +3423,38 @@ MonoBehaviour:
   levelCrit: 0
   levelArmor: 0
   wasLucky: 0
-  spreadBloomDecayTime: 0.7
+  spreadBloomDecayTime: 0.2
   spreadBloomCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.35059357
-      value: 0.008666992
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
+      time: 0
+      value: 0
+      inSlope: 5
+      outSlope: 5
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 2
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      value: 5
+      inSlope: 5
+      outSlope: 5
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _defaultCrosshairPrefab: {fileID: 0}
+  _defaultCrosshairPrefab: {fileID: 1359913205165675, guid: ce39c46dcbde645439f6f8878a41a091,
+    type: 3}
   hideCrosshair: 0
   aimOriginTransform: {fileID: 482551254090109300}
   hullClassification: 0
   portraitIcon: {fileID: 2800000, guid: 7d90bd0331ab07e45b04215c5f0c9308, type: 3}
-  bodyColor: {r: 1, g: 1, b: 1, a: 0}
+  bodyColor: {r: 0.08235294, g: 0.77647066, b: 0.654902, a: 1}
   isChampion: 0
   currentVehicle: {fileID: 0}
   preferredPodPrefab: {fileID: 0}
@@ -3335,7 +3475,7 @@ MonoBehaviour:
   m_Script: {fileID: -1699741063, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _modelTransform: {fileID: 0}
+  _modelTransform: {fileID: 7556949105897420911}
   modelBaseTransform: {fileID: 6675878583455452605}
   autoUpdateModelTransform: 1
   dontDetatchFromParent: 0
@@ -3360,6 +3500,7 @@ MonoBehaviour:
   stateMachines:
   - {fileID: 7800395481553324536}
   - {fileID: 8580783956253203961}
+  - {fileID: -327527950626745850}
 --- !u!114 &7800395481553324536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3393,7 +3534,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customName: Weapon
   initialStateType:
-    _typeName: 
+    _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  mainStateType:
+    _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!114 &-327527950626745850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7762074237725960738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1297580292, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customName: Quiver
+  initialStateType:
+    _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   mainStateType:
     _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &9146088522668911265
@@ -3413,11 +3571,11 @@ MonoBehaviour:
   utility: {fileID: 3363930488667583922}
   special: {fileID: 4610620950469440476}
   passiveSkill:
-    enabled: 0
-    skillNameToken: 
-    skillDescriptionToken: 
+    enabled: 1
+    skillNameToken: SS2_NEMESIS_HUNTRESS_PASSIVE_NAME
+    skillDescriptionToken: SS2_NEMESIS_HUNTRESS_PASSIVE_DESC
     keywordToken: 
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: ddf12fd897d7c33479815b9ff49cace4, type: 3}
   primaryBonusStockOverrideSkill: {fileID: 0}
   secondaryBonusStockOverrideSkill: {fileID: 0}
   utilityBonusStockOverrideSkill: {fileID: 0}
@@ -3655,7 +3813,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathStateMachine: {fileID: 7800395481553324536}
   deathState:
-    _typeName: 
+    _typeName: EntityStates.GenericCharacterDeath, RoR2, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   idleStateMachine:
   - {fileID: 8580783956253203961}
   - {fileID: 8580783956253203961}
@@ -3792,6 +3951,29 @@ MonoBehaviour:
   canBeHitStunned: 0
   canBeStunned: 0
   canBeFrozen: 1
+--- !u!114 &6763911367496465940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7762074237725960738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a45e89b477937746b9ef30663db6460, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterModel: {fileID: 4151826494777388207}
+  skillLocator: {fileID: 9146088522668911265}
+  characterBody: {fileID: 8397774932124027451}
+  headsetLowered: 0
+  shouldLowerHeadset: 1
+  scopeOverlayPrefab: {fileID: 4148212665069592564, guid: 8fdc823a86aacb34d8279a991b6fc61e,
+    type: 3}
+  baseArrow: {fileID: 1807285741089333902, guid: 6115caecd8ebd7b429866fd2ea5f4c96,
+    type: 3}
+  currentArrow: {fileID: 1807285741089333902, guid: 6115caecd8ebd7b429866fd2ea5f4c96,
+    type: 3}
 --- !u!1 &7817392914995650307
 GameObject:
   m_ObjectHideFlags: 0
@@ -3854,6 +4036,7 @@ Transform:
   - {fileID: 8852750051054204288}
   - {fileID: 7477022256095746355}
   - {fileID: 8725805552151473477}
+  - {fileID: 7608947659274979713}
   m_Father: {fileID: 7556949105897420911}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -90.00001, y: -0, z: 0}
@@ -4248,6 +4431,7 @@ GameObject:
   - component: {fileID: 7830329383298948851}
   - component: {fileID: 3317849609256004678}
   - component: {fileID: 3068859206369031511}
+  - component: {fileID: 1813122369317025154}
   m_Layer: 0
   m_Name: mdlNemHuntress2
   m_TagString: Untagged
@@ -4270,6 +4454,8 @@ Transform:
   - {fileID: 4108128683995935006}
   - {fileID: 520744962929233808}
   - {fileID: 6517756176093129996}
+  - {fileID: 6820521056117838817}
+  - {fileID: 4141978931604276917}
   m_Father: {fileID: 6675878583455452605}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
@@ -4283,7 +4469,7 @@ Animator:
   m_GameObject: {fileID: 8951376824448589318}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ab3fbed60b04d954aa6fd666760cbe24, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -4321,7 +4507,9 @@ MonoBehaviour:
   m_Script: {fileID: -226763392, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transformPairs: []
+  transformPairs:
+  - name: HatchetMuzzle
+    transform: {fileID: 4141978931604276917}
 --- !u!114 &3697774009543263375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4334,9 +4522,10 @@ MonoBehaviour:
   m_Script: {fileID: -1792105662, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hurtBoxes: []
-  mainHurtBox: {fileID: 0}
-  bullseyeCount: 0
+  hurtBoxes:
+  - {fileID: 7300940019097130857}
+  mainHurtBox: {fileID: 7300940019097130857}
+  bullseyeCount: 1
 --- !u!114 &8794044737969826605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4440,6 +4629,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundCenter: {fileID: 0}
+--- !u!114 &1813122369317025154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8951376824448589318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1294804675, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groupName: HatchetHitbox
+  hitBoxes:
+  - {fileID: 4512633642465782543}
 --- !u!1 &9024860108371722033
 GameObject:
   m_ObjectHideFlags: 0

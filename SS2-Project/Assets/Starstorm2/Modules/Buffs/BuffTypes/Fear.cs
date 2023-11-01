@@ -19,51 +19,53 @@ namespace Moonstorm.Starstorm2.Buffs
 
         public override void Initialize()
         {
-            Hook();
+            ////nuh uh -orb
+            //Hook();
         }
+
         // Make this shit not a hook
         // Note: keep the hook until kevin comes back.
         // Hook wins!!
         // Fuck kevin, lol
-        internal void Hook()
-        {
-            IL.EntityStates.AI.Walker.Combat.UpdateAI += (il) =>
-            {
-                ILCursor curs = new ILCursor(il);
-                //go to where movement type is checked (applying movement vector)
-                curs.GotoNext(x => x.MatchCall<Vector3>("Cross"));
-                curs.Index += 2;
-                curs.Emit(OpCodes.Ldarg_0);
-                curs.Emit(OpCodes.Ldfld, typeof(EntityState).GetFieldCached("outer"));
-                curs.Emit(OpCodes.Ldloc_1);
-                curs.EmitDelegate<Func<EntityStateMachine, AISkillDriver.MovementType, AISkillDriver.MovementType>>((ESM, MoveType) =>
-                {
-                    if (ESM.GetComponent<CharacterMaster>().GetBody().HasBuff(SS2Content.Buffs.BuffFear) && !ESM.GetComponent<CharacterMaster>().GetBody().isChampion)
-                    {
-                        return AISkillDriver.MovementType.FleeMoveTarget;
-                    }
-                    else
-                        return MoveType;
-                });
-                curs.Emit(OpCodes.Stloc_1);
-            };
+        //internal void Hook()
+        //{
+        //    IL.EntityStates.AI.Walker.Combat.UpdateAI += (il) =>
+        //    {
+        //        ILCursor curs = new ILCursor(il);
+        //        //go to where movement type is checked (applying movement vector)
+        //        curs.GotoNext(x => x.MatchCall<Vector3>("Cross"));
+        //        curs.Index += 2;
+        //        curs.Emit(OpCodes.Ldarg_0);
+        //        curs.Emit(OpCodes.Ldfld, typeof(EntityState).GetFieldCached("outer"));
+        //        curs.Emit(OpCodes.Ldloc_1);
+        //        curs.EmitDelegate<Func<EntityStateMachine, AISkillDriver.MovementType, AISkillDriver.MovementType>>((ESM, MoveType) =>
+        //        {
+        //            if (ESM.GetComponent<CharacterMaster>().GetBody().HasBuff(SS2Content.Buffs.BuffFear) && !ESM.GetComponent<CharacterMaster>().GetBody().isChampion)
+        //            {
+        //                return AISkillDriver.MovementType.FleeMoveTarget;
+        //            }
+        //            else
+        //                return MoveType;
+        //        });
+        //        curs.Emit(OpCodes.Stloc_1);
+        //    };
 
-            IL.EntityStates.AI.Walker.Combat.GenerateBodyInputs += (il) =>
-            {
-                ILCursor curs = new ILCursor(il);
-                curs.GotoNext(x => x.MatchLdfld<Combat>("currentSkillMeetsActivationConditions"));
-                curs.Index += 1;
-                curs.Emit(OpCodes.Ldarg_0);
-                curs.Emit(OpCodes.Ldfld, typeof(EntityState).GetFieldCached("outer"));
-                curs.EmitDelegate<Func<bool, EntityStateMachine, bool>>((cond, ESM) =>
-                {
-                    if (ESM.GetComponent<CharacterMaster>().GetBody())
-                        if (ESM.GetComponent<CharacterMaster>().GetBody().HasBuff(SS2Content.Buffs.BuffFear) && !ESM.GetComponent<CharacterMaster>().GetBody().isChampion)
-                            return false;
-                    return cond;
-                });
-            };
-        }
+        //    IL.EntityStates.AI.Walker.Combat.GenerateBodyInputs += (il) =>
+        //    {
+        //        ILCursor curs = new ILCursor(il);
+        //        curs.GotoNext(x => x.MatchLdfld<Combat>("currentSkillMeetsActivationConditions"));
+        //        curs.Index += 1;
+        //        curs.Emit(OpCodes.Ldarg_0);
+        //        curs.Emit(OpCodes.Ldfld, typeof(EntityState).GetFieldCached("outer"));
+        //        curs.EmitDelegate<Func<bool, EntityStateMachine, bool>>((cond, ESM) =>
+        //        {
+        //            if (ESM.GetComponent<CharacterMaster>().GetBody())
+        //                if (ESM.GetComponent<CharacterMaster>().GetBody().HasBuff(SS2Content.Buffs.BuffFear) && !ESM.GetComponent<CharacterMaster>().GetBody().isChampion)
+        //                    return false;
+        //            return cond;
+        //        });
+        //    };
+        //}
 
         public sealed class Behavior : BaseBuffBodyBehavior, IBodyStatArgModifier
         {

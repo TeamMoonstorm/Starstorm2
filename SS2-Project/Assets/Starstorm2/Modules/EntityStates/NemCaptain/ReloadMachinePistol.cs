@@ -4,6 +4,7 @@ using UnityEngine;
 using Moonstorm;
 using RoR2;
 using UnityEngine.AddressableAssets;
+using Moonstorm.Starstorm2.Components;
 
 namespace EntityStates.NemCaptain
 {
@@ -23,11 +24,13 @@ namespace EntityStates.NemCaptain
         private Animator animator;
         private bool hasEjectedMag = false;
 
+        private NemCaptainController ncc;
+
         private float duration
         {
             get
             {
-                return baseDuration / attackSpeedStat;
+                return (baseDuration + (baseDuration * ncc.stressFraction)) / attackSpeedStat;
             }
         }
 
@@ -36,6 +39,7 @@ namespace EntityStates.NemCaptain
             base.OnEnter();
 
             animator = GetModelAnimator();
+            ncc = characterBody.GetComponent<NemCaptainController>();
 
             //PlayCrossfade("Gesture, Override, LeftArm", "LowerGun", "FireGun.playbackRate", duration, 0.03f);
         }

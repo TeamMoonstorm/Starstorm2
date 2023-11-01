@@ -19,8 +19,6 @@ namespace Moonstorm.Starstorm2
         {
             CycloneDef = SS2Assets.LoadAsset<R2API.ScriptableObjects.SerializableDifficultyDef>("Cyclone", SS2Bundle.Base);
             DifficultyAPI.AddDifficulty(CycloneDef);
-            rcd = RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(CycloneDef.nameToken));
-            rcd.excludeByDefault = true;
             Run.onRunDestroyGlobal += Run_onRunDestroyGlobal;
             Run.onRunStartGlobal += Run_onRunStartGlobal;
         }

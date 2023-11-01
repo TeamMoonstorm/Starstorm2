@@ -1,4 +1,6 @@
 ﻿using RoR2;
+using RoR2.Skills;
+using RoR2.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,13 +29,19 @@ namespace EntityStates.NemHuntress2
         public float maxProjectileSpeed;
         [SerializeField]
         public float fireDuration;
-
         [SerializeField]
-        public NetworkSoundEventDef sound;
+        public float maxSpreadAngle;
+
+        //[SerializeField]
+        //public NetworkSoundEventDef sound;
         private bool hasPlayedSound = false;
 
-        [SerializeField]
-        public GameObject projectilePrefab;
+        /*[SerializeField]
+        public GameObject projectilePrefab;*/
+
+        private CrosshairUtils.OverrideRequest crosshairOverrideRequest;
+
+        private float baseSpreadRate;
 
         //public EntityState releaseState;
 
@@ -41,6 +49,10 @@ namespace EntityStates.NemHuntress2
         {
             base.OnEnter();
             chargeDuration = baseChargeDuration / attackSpeedStat;
+            Util.PlayAttackSpeedSound("NemHuntressChargeBow", gameObject, attackSpeedStat);
+            crosshairOverrideRequest = CrosshairUtils.RequestOverrideForBody(characterBody, characterBody.defaultCrosshairPrefab, CrosshairUtils.OverridePriority.PrioritySkill);
+            baseSpreadRate = characterBody.spreadBloomDecayTime;
+            characterBody.spreadBloomDecayTime = 50f;
         }
 
         public override void FixedUpdate()
@@ -48,13 +60,14 @@ namespace EntityStates.NemHuntress2
             base.FixedUpdate();
             float charge = CalcCharge();
 
-            if (charge > 1f)
+            if (charge >= 1f)
             {
                 charge = 1f;
-                if (sound != null && !hasPlayedSound)
+                if (!hasPlayedSound)
                 {
                     hasPlayedSound = true;
-                    EffectManager.SimpleSoundEffect(sound.index, transform.position, true);
+                    Util.PlaySound("NemHuntressBowMax", gameObject);
+                    //EffectManager.SimpleSoundEffect(sound.index, transform.position, true);
                 }
             }
 
@@ -62,11 +75,11 @@ namespace EntityStates.NemHuntress2
 
             StartAimMode();
 
-            if (isAuthority && !IsKeyDownAuthority() && fixedAge >= 0.1f)
+            if (!IsKeyDownAuthority() && fixedAge >= 0.1f)
             {
                 BaseFireArrow nextState = new BaseFireArrow(); //create & modify firing state
                 nextState.charge = charge;
-                nextState.projectilePrefab = projectilePrefab;
+                //nextState.projectilePrefab = projectilePrefab;
                 nextState.maxDamageCoefficient = maxDamageCoefficient;
                 nextState.minDamageCoefficient = minDamageCoefficient;
                 nextState.procCoefficient = procCoefficient;
@@ -75,9 +88,10 @@ namespace EntityStates.NemHuntress2
                 nextState.minProjectileSpeed = minProjectileSpeed;
                 nextState.maxProjectileSpeed = maxProjectileSpeed;
                 nextState.baseDuration = fireDuration;
+                nextState.maxSpreadAngle = maxSpreadAngle;
                 outer.SetNextState(nextState); //set to fire with all our modifications in place 
-            }    
-        }
+            }   //in retrospect i think none of this makes any sense..
+        }   //but it works lol 
 
         protected float CalcCharge()
         {
@@ -87,6 +101,17 @@ namespace EntityStates.NemHuntress2
         public override InterruptPriority GetMinimumInterruptPriority()
         {
             return InterruptPriority.Frozen;
+        }
+
+        public override void OnExit()
+        {
+            CrosshairUtils.OverrideRequest overrideRequest = crosshairOverrideRequest;
+            if (overrideRequest != null)
+            {
+                overrideRequest.Dispose();
+            }
+            base.OnExit();
+            characterBody.spreadBloomDecayTime = baseSpreadRate;
         }
     }
 }

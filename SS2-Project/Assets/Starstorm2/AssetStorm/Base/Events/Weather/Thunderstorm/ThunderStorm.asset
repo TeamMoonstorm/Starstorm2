@@ -16,25 +16,36 @@ MonoBehaviour:
   eventState:
     _typeName: EntityStates.Events.ThunderstormState, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  requiredStateMachine: 
   startMessageToken: SS2_EVENT_THUNDERSTORM_START
   endMessageToken: SS2_EVENT_THUNDERSTORM_END
   messageColor: {r: 0.2509804, g: 0.40000004, b: 0.5568628, a: 1}
   startSound: {fileID: 11400000, guid: f593ecf0d5bd1d5499ee9cfbf6f225b2, type: 2}
-  availableStages: 155583246
-  customStageNames: []
+  availableStages: 155583247
+  customStageNames:
+  - FBLScene
   category: CommonEvents
   selectionWeight: 75
-  cost: 1150
-  repeatedSelectionCostCoefficient: 1.5
+  cost: 1500
+  repeatedSelectionCostCoefficient: 3
   minimumStageCompletions: 3
+  requiredUnlock:
+    _asset: {fileID: 0}
+    _address: 
+    _useDirectReference: 0
   requiredUnlockableDef:
     address: 
     useDirectReference: 1
     asset: {fileID: 0}
+  forbiddenUnlock:
+    _asset: {fileID: 0}
+    _address: 
+    _useDirectReference: 0
   forbiddenUnlockableDef:
     address: 
     useDirectReference: 1
     asset: {fileID: 0}
+  requiredExpansionDefs: []
   requiredExpansions:
   - address: 
     useDirectReference: 1

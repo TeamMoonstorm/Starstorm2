@@ -1,28 +1,71 @@
 {
-  "strings": {
-    "SS2_ITEM_AUGURY_NAME": "Augury",
-    "SS2_ITEM_AUGURY_DESC": "Upon recieving <style=cIsHealth>{0}%</style> of your <style=cIsHealth>maximum health</style> in <style=cIsHealth>damage</style>, unleash a devastating <color=#FFCCED>blackout</color>, <style=cIsDamage>instantly killing</style> all <style=cIsDamage>non-Boss enemies</style> caught in it.",
-    "SS2_ITEM_AUGURY_PICKUP": "<link=\"textWavy\">Can you hear them...? They're coming...</link>",
-    "SS2_ITEM_AUGURY_LORE": "WIP LORE",
+	"strings": {
+		"SS2_ITEM_AUGURY_NAME": "Augury",
+		"SS2_ITEM_AUGURY_DESC": "Upon recieving <style=cIsHealth>{0}%</style> of your <style=cIsHealth>maximum health</style> in <style=cIsHealth>damage</style>, unleash a devastating <color=#FFCCED>blackout</color>, <style=cIsDamage>instantly killing</style> all <style=cIsDamage>non-Boss enemies</style> caught in it.",
+		"SS2_ITEM_AUGURY_PICKUP": "<link=\"textWavy\">Can you hear them...? They're coming...</link>",
+		"SS2_ITEM_AUGURY_LORE": "WIP LORE",
 
-    "SS2_ITEM_SCAVENGERSFORTUNE_NAME": "Scavenger's Fortune",
-    "SS2_ITEM_SCAVENGERSFORTUNE_DESC": "WIP DESC",
-    "SS2_ITEM_SCAVENGERSFORTUNE_PICKUP": "WIP PICKUP",
-    "SS2_ITEM_SCAVENGERSFORTUNE_LORE": "WIP LORE",
+		"SS2_ITEM_SCAVENGERSFORTUNE_NAME": "Scavenger's Fortune",
+		"SS2_ITEM_SCAVENGERSFORTUNE_DESC": "WIP DESC",
+		"SS2_ITEM_SCAVENGERSFORTUNE_PICKUP": "WIP PICKUP",
+		"SS2_ITEM_SCAVENGERSFORTUNE_LORE": "WIP LORE",
 
-    "SS2_ITEM_SHACKLEDLAMP_NAME": "Shackled Lamp",
-    "SS2_ITEM_SHACKLEDLAMP_DESC": "WIP DESC",
-    "SS2_ITEM_SHACKLEDLAMP_PICKUP": "WIP PICKUP",
-    "SS2_ITEM_SHACKLEDLAMP_LORE": "WIP LORE",
+		"SS2_ITEM_SHACKLEDLAMP_NAME": "Haunted Lamp",
+		"SS2_ITEM_SHACKLEDLAMP_PICKUP": "Fire a haunted projectile every 5 primary uses.",
+		"SS2_ITEM_SHACKLEDLAMP_DESC": "Every <style=cIsDamage>5 primary uses</style>, fire a haunted projectile for <style=cIsDamage>200%</style> <style=cStack>(+200% per stack)</style> base damage.",
+		"SS2_ITEM_SHACKLEDLAMP_LORE": "\"Excuse me.\"\n\n\"Yes, over here, please. I need to ask you something.\"\n\n\"Closer, now.\"\n\n\"I need your help. This lantern you see before you, it is merely a fractured piece of a greater body.\"\n\n\"The journey? Ah, yes. It will be long, but do not fret. I will guide you wherever you must go, and, while it may be fraught with danger, it will be nothing I cannot assist you with.\"\n\n\"Hm? What's in it for you, you say?\"\n\n\"Oh, you will see. Your reward will be far greater than you could possibly imagine. Once I have returned to my full splendor, I will protect you. I will keep you safe. Keep you warm. Make you powerful. All your worries will be burned away. Doesn't that sound wonderful?\"\n\n\"You agree? Good. Now, pick up the lantern, quickly.\"\n\n\"We have a long journey ahead of us, friend.\"",
 
-    "SS2_ITEM_STIRRINGSOUL_NAME": "Stirring Soul",
-    "SS2_ITEM_STIRRINGSOUL_DESC": "Slain monsters leave a <style=cIsUtility>soul</style> which has a <style=cIsUtility>{0}%</style> <style=cStack>(+{0}% per unsuccessful roll, resetting on success)</style> chance to <style=cIsUtility>spawn an item</style> on pickup.",
-    "SS2_ITEM_STIRRINGSOUL_PICKUP": "<link=\"textWavy\">What am I fighting for?</link>",
-    "SS2_ITEM_STIRRINGSOUL_LORE": "A spirit of determination...\n<link=\"textWavy\">...A spirit to be stopped.</link>\nAn unwavering will to survive...\n<link=\"textWavy\">...A flickering will to survive.</link>\n\nWilling to desecrate their identity...\n<link=\"textWavy\">...Willing to desecrate their memory.</link>\nWilling to sacrifice their civilization...\n<link=\"textWavy\">...Willing to sacrifice their humanity.</link>\n\nTo what lengths will they go to live?\n<link=\"textWavy\">To what lengths will they go to bring themselves ruin?</link>\nTo what lengths will they go to escape?\n<link=\"textWavy\">To what lengths will they go to destroy?</link>\n\nAll in the name of self preservation...\n<link=\"textWavy\">...All in the name of narcissism.</link>\nAll for the sake of an uncertain hope...\n<link=\"textWavy\">...All for the sake of a null chance.</link>\n\nWhat would happen if given an opportunity?\n<link=\"textWavy\">What would happen if given an ally?</link>\nWhat would happen if their fire was stoked?\n<link=\"textWavy\">What would happen if they were given false hope?</link>\n\nMaybe they should be given a chance.\n<link=\"textWavy\">Maybe they should be given strength.</link>\nMaybe they should be given an offer.\n<link=\"textWavy\">Maybe they should be taken first.</link>",
+		"SS2_ITEM_STIRRINGSOUL_NAME": "Stirring Soul",
+		"SS2_ITEM_STIRRINGSOUL_DESC": "Slain monsters leave a <style=cIsUtility>soul</style> which has a <style=cIsUtility>{0}%</style> <style=cStack>(+{0}% per unsuccessful roll, resetting on success)</style> chance to <style=cIsUtility>spawn an item</style> on pickup.",
+		"SS2_ITEM_STIRRINGSOUL_PICKUP": "<link=\"textWavy\">What am I fighting for?</link>",
+		"SS2_ITEM_STIRRINGSOUL_LORE": "A spirit of determination...\n<link=\"textWavy\">...A spirit to be stopped.</link>\nAn unwavering will to survive...\n<link=\"textWavy\">...A flickering will to survive.</link>\n\nWilling to desecrate their identity...\n<link=\"textWavy\">...Willing to desecrate their memory.</link>\nWilling to sacrifice their civilization...\n<link=\"textWavy\">...Willing to sacrifice their humanity.</link>\n\nTo what lengths will they go to live?\n<link=\"textWavy\">To what lengths will they go to bring themselves ruin?</link>\nTo what lengths will they go to escape?\n<link=\"textWavy\">To what lengths will they go to destroy?</link>\n\nAll in the name of self preservation...\n<link=\"textWavy\">...All in the name of narcissism.</link>\nAll for the sake of an uncertain hope...\n<link=\"textWavy\">...All for the sake of a null chance.</link>\n\nWhat would happen if given an opportunity?\n<link=\"textWavy\">What would happen if given an ally?</link>\nWhat would happen if their fire was stoked?\n<link=\"textWavy\">What would happen if they were given false hope?</link>\n\nMaybe they should be given a chance.\n<link=\"textWavy\">Maybe they should be given strength.</link>\nMaybe they should be given an offer.\n<link=\"textWavy\">Maybe they should be taken first.</link>",
 
-    "SS2_ITEM_MOXIE_NAME": "<color=#FFCCED>Moxie</color>",
-    "SS2_ITEM_MOXIE_DESC": "Increases <style=cIsUtility>ALL stats</style> by <style=cIsUtility>50%</style> during <color=#FFCCED>storms</color>.",
-    "SS2_ITEM_MOXIE_PICKUP": "<color=#FFCCED>How much more?</color>",
-    "SS2_ITEM_MOXIE_LORE": "Hey! You! In this file! You probably shouldn't be here... Keep quiet, okay?"
-  }
+		"SS2_ITEM_MOXIE_NAME": "<color=#FFCCED>Moxie</color>",
+		"SS2_ITEM_MOXIE_DESC": "Increases <style=cIsUtility>ALL stats</style> by <style=cIsUtility>50%</style> during <color=#FFCCED>storms</color>.",
+		"SS2_ITEM_MOXIE_PICKUP": "<color=#FFCCED>How much more?</color>",
+		"SS2_ITEM_MOXIE_LORE": "Hey! You! In this file! You probably shouldn't be here... Keep quiet, okay?",
+
+
+		"SS2_ITEM_REMUNERATION_NAME": "Remuneration",
+		"SS2_ITEM_REMUNERATION_DESC": "A <style=cIsUtility>choice</style> between three <style=cIsHealth>powerful items</style> appears closeby at the <style=cIsUtility>start of each stage</style>.",
+		"SS2_ITEM_REMUNERATION_PICKUP": "<link=\"textWavy\">... At what cost?...</link>",
+		"SS2_REMUNERATION_TERMINAL_NAME": "Pedestal",
+		"SS2_REMUNERATION_TERMINAL_CONTEXT": "<link=\"textWavy\">Complete transaction</link>",
+		"SS2_ITEM_REMUNERATION_LORE": "<link=\"textShaky\">What is your legacy?</link>\n\n
+
+Nothing, but petty vengeance.\n\n
+
+<link=\"textShaky\">What is your identity?</link>\n\n
+
+Nothing, but a name spoken in disgust.\n\n
+
+<link=\"textShaky\">What do you want?</link>\n\n
+
+Nothing, but a new purpose.\n\n
+
+<link=\"textShaky\">What do you need?</link>\n\n
+
+Nothing, but the weapons that I trust.\n\n
+
+<link=\"textShaky\">So, where will you go?</link>\n\n
+
+Wherever you make me go.\n\n
+
+<link=\"textShaky\">Then, what will you do?</link>\n\n
+
+Whatever you say you need.\n\n
+
+<link=\"textShaky\">Is that all, then?</link>\n\n
+
+If you say it so.\n\n
+
+<link=\"textShaky\">Then go there, and die.</link>\n\n
+
+...\n\n
+
+As long as you're paying me.\n\n
+",
+
+
+	}
 }

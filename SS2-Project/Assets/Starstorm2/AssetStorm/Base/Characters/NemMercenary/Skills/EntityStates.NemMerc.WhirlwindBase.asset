@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: EntityStates.NemMerc.WhirlwindBase
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.NemMerc.WhirlwindBase, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: damageCoefficient
+      fieldValue:
+        stringValue: 3.5
+        objectValue: {fileID: 0}
+    - fieldName: smallHopVelocity
+      fieldValue:
+        stringValue: 10
+        objectValue: {fileID: 0}
+    - fieldName: baseDuration
+      fieldValue:
+        stringValue: 0.5
+        objectValue: {fileID: 0}
+    - fieldName: numAttacks
+      fieldValue:
+        stringValue: 2
+        objectValue: {fileID: 0}
+    - fieldName: hitPauseDuration
+      fieldValue:
+        stringValue: 0.05
+        objectValue: {fileID: 0}
+    - fieldName: entryVelocityDamp
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: hitEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1918834535135409, guid: c346201cc40001a48ad4efe1eeaa4f62,
+          type: 3}
+    - fieldName: walkSpeedCoefficient
+      fieldValue:
+        stringValue: 0.75
+        objectValue: {fileID: 0}
+    - fieldName: swingEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 5727692169851993466, guid: c24aadfb4b0eb7e4f9717e6ef3bbdd7e,
+          type: 3}
+    - fieldName: attackSoundPitch
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: muzzleName
+      fieldValue:
+        stringValue: WhirlwindSlash
+        objectValue: {fileID: 0}
+    - fieldName: attackSoundString
+      fieldValue:
+        stringValue: NemmandoFireBeam2
+        objectValue: {fileID: 0}
+    - fieldName: hitboxGroupName
+      fieldValue:
+        stringValue: Whirlwind
+        objectValue: {fileID: 0}
