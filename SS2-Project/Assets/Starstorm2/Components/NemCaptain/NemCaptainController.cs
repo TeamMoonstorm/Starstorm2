@@ -65,6 +65,11 @@ namespace Moonstorm.Starstorm2.Components
         private ChildLocator cardOverlayInstanceChildlocator;
         private OverlayController cardOverlayController;
 
+        private NemCaptainSkillIcon ncsi1;
+        private NemCaptainSkillIcon ncsi2;
+        private NemCaptainSkillIcon ncsi3;
+        private NemCaptainSkillIcon ncsi4;
+
         private int itemCount;
 
         [SyncVar(hook = "OnStressModified")]
@@ -151,14 +156,23 @@ namespace Moonstorm.Starstorm2.Components
         private void OnEnable()
         {
             //add prefab & necessary hooks
-            OverlayCreationParams overlayCreationParams = new OverlayCreationParams
+            OverlayCreationParams stressOverlayCreationParams = new OverlayCreationParams
             {
                 prefab = stressOverlayPrefab,
                 childLocatorEntry = stressOverlayChildLocatorEntry
             };
-            stressOverlayController = HudOverlayManager.AddOverlay(gameObject, overlayCreationParams);
-            stressOverlayController.onInstanceAdded += OnOverlayInstanceAdded;
-            stressOverlayController.onInstanceRemove += OnOverlayInstanceRemoved;
+            stressOverlayController = HudOverlayManager.AddOverlay(gameObject, stressOverlayCreationParams);
+            stressOverlayController.onInstanceAdded += OnStressOverlayInstanceAdded;
+            stressOverlayController.onInstanceRemove += OnStressOverlayInstanceRemoved;
+
+            OverlayCreationParams cardOverlayCreationParams = new OverlayCreationParams
+            {
+                prefab = cardOverlayPrefab,
+                childLocatorEntry = cardOverlayChildLocatorEntry
+            };
+            cardOverlayController = HudOverlayManager.AddOverlay(gameObject, cardOverlayCreationParams);
+            cardOverlayController.onInstanceAdded += OnCardOverlayInstanceAdded;
+            cardOverlayController.onInstanceRemove += OnCardOverlayInstanceRemoved;
 
             //check for a characterbody .. just in case
             if (characterBody != null)
@@ -288,8 +302,8 @@ namespace Moonstorm.Starstorm2.Components
         {
             if (stressOverlayController != null)
             {
-                stressOverlayController.onInstanceAdded -= OnOverlayInstanceAdded;
-                stressOverlayController.onInstanceRemove -= OnOverlayInstanceRemoved;
+                stressOverlayController.onInstanceAdded -= OnStressOverlayInstanceAdded;
+                stressOverlayController.onInstanceRemove -= OnStressOverlayInstanceRemoved;
                 fillUiList.Clear();
                 HudOverlayManager.RemoveOverlay(stressOverlayController);
             }
@@ -303,7 +317,7 @@ namespace Moonstorm.Starstorm2.Components
             }
         }
 
-        private void OnOverlayInstanceAdded(OverlayController controller, GameObject instance)
+        private void OnStressOverlayInstanceAdded(OverlayController controller, GameObject instance)
         {
             fillUiList.Add(instance.GetComponent<ImageFillController>());
             uiStressText = instance.GetComponent<Text>();
@@ -314,7 +328,59 @@ namespace Moonstorm.Starstorm2.Components
             stressOverlayInstanceChildlocator = instance.GetComponent<ChildLocator>();
         }
 
-        private void OnOverlayInstanceRemoved(OverlayController controller, GameObject instance)
+        private void OnStressOverlayInstanceRemoved(OverlayController controller, GameObject instance)
+        {
+            fillUiList.Remove(instance.GetComponent<ImageFillController>());
+        }
+
+        private void OnCardOverlayInstanceAdded(OverlayController controller, GameObject instance)
+        {
+            cardOverlayInstanceChildlocator = instance.GetComponent<ChildLocator>();
+
+            if (cardOverlayInstanceChildlocator == null)
+            {
+                Debug.Log("card overlay instance childlocator null; returning");
+                return;
+            }
+
+            var icon1 = cardOverlayInstanceChildlocator.FindChild("Skill1");
+            if (icon1 != null)
+            {
+                Debug.Log("setting skill 1");
+                ncsi1 = icon1.GetComponent<NemCaptainSkillIcon>();
+                ncsi1.ncc = this;
+                ncsi1.targetSkill = hand1;
+            }
+
+            var icon2 = cardOverlayInstanceChildlocator.FindChild("Skill2");
+            if (icon2 != null)
+            {
+                Debug.Log("setting skill 2");
+                ncsi2 = icon2.GetComponent<NemCaptainSkillIcon>();
+                ncsi2.ncc = this;
+                ncsi2.targetSkill = hand2;
+            }
+
+            var icon3 = cardOverlayInstanceChildlocator.FindChild("Skill3");
+            if (icon3 != null)
+            {
+                Debug.Log("setting skill 3");
+                ncsi3 = icon3.GetComponent<NemCaptainSkillIcon>();
+                ncsi3.ncc = this;
+                ncsi3.targetSkill = hand3;
+            }
+
+            var icon4 = cardOverlayInstanceChildlocator.FindChild("Skill4");
+            if (icon4 != null)
+            {
+                Debug.Log("setting skill 4");
+                ncsi4 = icon4.GetComponent<NemCaptainSkillIcon>();
+                ncsi4.ncc = this;
+                ncsi4.targetSkill = hand4;
+            }
+        }
+
+        private void OnCardOverlayInstanceRemoved(OverlayController controller, GameObject instance)
         {
             fillUiList.Remove(instance.GetComponent<ImageFillController>());
         }

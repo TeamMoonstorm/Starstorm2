@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: -1819008361, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifetime: 5
+  lifetime: 8
   lifetimeExpiredEffect: {fileID: 0}
   desiredForwardSpeed: 15
   updateAfterFiring: 1
@@ -188,7 +188,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.22104658
+  m_Radius: 0.4
   m_Center: {x: 0.125769, y: 0.15318441, z: 0}
 --- !u!114 &3628231092365340093
 MonoBehaviour:
@@ -204,7 +204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   falloffModel: 0
   blastRadius: 1
-  blastDamageCoefficient: 0.2
+  blastDamageCoefficient: 0.8
   blastProcCoefficient: 1
   blastAttackerFiltering: 0
   bonusBlastForce: {x: 0, y: 0, z: 0}
@@ -272,7 +272,7 @@ MonoBehaviour:
   lookCone: 120
   targetSearchInterval: 0.5
   onlySearchIfNoTarget: 1
-  allowTargetLoss: 1
+  allowTargetLoss: 0
   testLoS: 0
   ignoreAir: 0
   flierAltitudeTolerance: 30
