@@ -49,9 +49,18 @@ namespace EntityStates.Lamp
                     var effect = isBlue ? deathVFXblue : deathVFX;
                     EffectManager.SimpleEffect(effect, muzzle.position, muzzle.rotation, true);
                     Util.PlaySound("LampImpact", gameObject);
+
+                    //YOU SHOULD KILL YOURSELF NOW
+                    //NetworkServer.Destroy(gameObject);
+
+                    if (cachedModelTransform)
+                    {
+                        Destroy(cachedModelTransform.gameObject);
+                        cachedModelTransform = null;
+                    }
+
                     DestroyBodyAsapServer();
                     DestroyModel();
-                    //NetworkServer.Destroy(gameObject);
                     Destroy(gameObject);
                 }
             }

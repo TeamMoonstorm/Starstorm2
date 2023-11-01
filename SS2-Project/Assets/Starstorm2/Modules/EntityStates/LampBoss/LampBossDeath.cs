@@ -46,7 +46,7 @@ namespace EntityStates.LampBoss
         {
             base.FixedUpdate();
 
-            if ((animator.GetFloat(mecanimPerameter) > 0.5f) || (fixedAge > 2.7f) && !hasPlayedEffect)
+            if ((animator.GetFloat(mecanimPerameter) > 0.5f) || (fixedAge > 2.7f) && !hasPlayedEffect && NetworkServer.active)
             {
                 hasPlayedEffect = true;
                 var effect = isBlue ? deathVFXblue : deathVFX;
@@ -56,16 +56,17 @@ namespace EntityStates.LampBoss
                     EffectManager.SimpleEffect(effect, muzzle.position, muzzle.rotation, true);
 
                 //YOU SHOULD KILL YOURSELF NOW
-                NetworkServer.Destroy(gameObject);
-                DestroyBodyAsapServer();
-                DestroyModel();
-                Destroy(gameObject);
+                //NetworkServer.Destroy(gameObject);
 
                 if (cachedModelTransform)
                 {
                     Destroy(cachedModelTransform.gameObject);
                     cachedModelTransform = null;
                 }
+
+                DestroyBodyAsapServer();
+                DestroyModel();
+                Destroy(gameObject);
             }
         }
 
