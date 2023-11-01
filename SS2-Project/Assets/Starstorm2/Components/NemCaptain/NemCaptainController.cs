@@ -70,6 +70,20 @@ namespace Moonstorm.Starstorm2.Components
         private NemCaptainSkillIcon ncsi3;
         private NemCaptainSkillIcon ncsi4;
 
+        [Header("Drones & Drone Positions")]
+        [SerializeField]
+        public GameObject droneA;
+        private Transform droneABaseTransform;
+        [SerializeField]
+        public GameObject droneB;
+        private Transform droneBBaseTransform;
+        [SerializeField]
+        public GameObject droneC;
+        private Transform droneCBaseTransform;
+        [SerializeField]
+        public GameObject droneAimRoot;
+        private Transform droneAimRootTransform;
+
         private int itemCount;
 
         [SyncVar(hook = "OnStressModified")]
@@ -173,6 +187,16 @@ namespace Moonstorm.Starstorm2.Components
             cardOverlayController = HudOverlayManager.AddOverlay(gameObject, cardOverlayCreationParams);
             cardOverlayController.onInstanceAdded += OnCardOverlayInstanceAdded;
             cardOverlayController.onInstanceRemove += OnCardOverlayInstanceRemoved;
+
+            //what the fuck are we doing here?
+            if (droneA != null)
+                droneABaseTransform = droneA.transform;
+            if (droneB != null)
+                droneBBaseTransform = droneB.transform;
+            if (droneC != null)
+                droneCBaseTransform = droneC.transform;
+            if (droneAimRoot != null)
+                droneAimRootTransform = droneAimRoot.transform;
 
             //check for a characterbody .. just in case
             if (characterBody != null)
