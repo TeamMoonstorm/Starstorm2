@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="12" SoundbankVersion="135">
 	<RootPaths>
-		<ProjectRoot>C:\Users\mincr\OneDrive\Documents\Repos\meowstorm-2\SS2-Project\WwiseProject\</ProjectRoot>
-		<SourceFilesRoot>C:\Users\mincr\OneDrive\Documents\Repos\meowstorm-2\SS2-Project\WwiseProject\.cache\Windows\</SourceFilesRoot>
-		<SoundBanksRoot>C:\Users\mincr\OneDrive\Documents\Repos\meowstorm-2\SS2-Project\Assets\StreamingAssets\Audio\GeneratedSoundBanks\Windows\</SoundBanksRoot>
+		<ProjectRoot>D:\ror2modstuff\Starstorm2UnityProject\Starstorm2Again\Starstorm2\SS2-Project\WwiseProject\</ProjectRoot>
+		<SourceFilesRoot>D:\ror2modstuff\Starstorm2UnityProject\Starstorm2Again\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\</SourceFilesRoot>
+		<SoundBanksRoot>D:\ror2modstuff\Starstorm2UnityProject\Starstorm2Again\Starstorm2\SS2-Project\Assets\StreamingAssets\Audio\GeneratedSoundBanks\Windows\</SoundBanksRoot>
 		<ExternalSourcesInputFile></ExternalSourcesInputFile>
-		<ExternalSourcesOutputRoot>C:\Users\mincr\OneDrive\Documents\Repos\meowstorm-2\SS2-Project\WwiseProject\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
+		<ExternalSourcesOutputRoot>D:\ror2modstuff\Starstorm2UnityProject\Starstorm2Again\Starstorm2\SS2-Project\WwiseProject\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
 	</RootPaths>
 	<DialogueEvents/>
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="866530374" Language="SFX" Hash="670034534">
+		<SoundBank Id="866530374" Language="SFX" Hash="1280364941">
 			<ObjectPath>\SoundBanks\Default Work Unit\Starstorm2</ObjectPath>
 			<ShortName>Starstorm2</ShortName>
 			<Path>Starstorm2.bnk</Path>
@@ -229,7 +229,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="3057152170" Name="FollowerCast" ObjectPath="\Events\Default Work Unit\Follower\FollowerCast" DurationType="OneShot" DurationMin="2.420073" DurationMax="2.505417">
+				<Event Id="3057152170" Name="FollowerCast" ObjectPath="\Events\Default Work Unit\Follower\FollowerCast" MaxAttenuation="150.000000" DurationType="OneShot" DurationMin="2.420073" DurationMax="2.505417">
 					<IncludedMemoryFiles>
 						<File Id="921835037" Language="SFX">
 							<ShortName>babyability.wav</ShortName>
@@ -237,7 +237,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="2970410379" Name="FollowerIdleStart" ObjectPath="\Events\Default Work Unit\Follower\FollowerIdleStart" DurationType="Infinite">
+				<Event Id="2970410379" Name="FollowerIdleStart" ObjectPath="\Events\Default Work Unit\Follower\FollowerIdleStart" MaxAttenuation="150.000000" DurationType="Infinite">
 					<IncludedMemoryFiles>
 						<File Id="198216687" Language="SFX">
 							<ShortName>babyidle.wav</ShortName>
@@ -246,7 +246,7 @@
 					</IncludedMemoryFiles>
 				</Event>
 				<Event Id="2787513641" Name="FollowerIdleStop" ObjectPath="\Events\Default Work Unit\Follower\FollowerIdleStop" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
-				<Event Id="134703416" Name="FollowerSpawn" ObjectPath="\Events\Default Work Unit\Follower\FollowerSpawn" DurationType="OneShot" DurationMin="3.062141" DurationMax="3.170128">
+				<Event Id="134703416" Name="FollowerSpawn" ObjectPath="\Events\Default Work Unit\Follower\FollowerSpawn" MaxAttenuation="150.000000" DurationType="OneShot" DurationMin="3.062141" DurationMax="3.170128">
 					<IncludedMemoryFiles>
 						<File Id="386587619" Language="SFX">
 							<ShortName>babyspawn.wav</ShortName>
@@ -254,7 +254,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="2589904694" Name="FollowerVO" ObjectPath="\Events\Default Work Unit\Follower\FollowerVO" DurationType="OneShot" DurationMin="3.039822" DurationMax="3.220579">
+				<Event Id="2589904694" Name="FollowerVO" ObjectPath="\Events\Default Work Unit\Follower\FollowerVO" MaxAttenuation="150.000000" DurationType="OneShot" DurationMin="3.039822" DurationMax="3.220579">
 					<IncludedMemoryFiles>
 						<File Id="398590803" Language="SFX">
 							<ShortName>babybark.wav</ShortName>
@@ -294,7 +294,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="1316900923" Name="LampBullet" ObjectPath="\Events\Default Work Unit\Follower\LampBullet" DurationType="OneShot" DurationMin="1.099674" DurationMax="1.138454">
+				<Event Id="1316900923" Name="LampBullet" ObjectPath="\Events\Default Work Unit\Follower\LampBullet" MaxAttenuation="150.000000" DurationType="OneShot" DurationMin="1.087043" DurationMax="1.151682">
 					<IncludedMemoryFiles>
 						<File Id="657553960" Language="SFX">
 							<ShortName>bulletshoot.wav</ShortName>
@@ -302,7 +302,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="1573671621" Name="LampImpact" ObjectPath="\Events\Default Work Unit\Follower\LampImpact" DurationType="OneShot" DurationMin="0.757440" DurationMax="0.784152">
+				<Event Id="1573671621" Name="LampImpact" ObjectPath="\Events\Default Work Unit\Follower\LampImpact" MaxAttenuation="150.000000" DurationType="OneShot" DurationMin="0.748740" DurationMax="0.793263">
 					<IncludedMemoryFiles>
 						<File Id="694986444" Language="SFX">
 							<ShortName>bulletimpact.wav</ShortName>
@@ -926,7 +926,7 @@
 			<ShortName>SS2Init</ShortName>
 			<Path>SS2Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="2545819644" Language="SFX" Hash="3818803808">
+		<SoundBank Id="2545819644" Language="SFX" Hash="1746896393">
 			<ObjectPath>\SoundBanks\Default Work Unit\SS2Music</ObjectPath>
 			<ShortName>SS2Music</ShortName>
 			<Path>SS2Music.bnk</Path>

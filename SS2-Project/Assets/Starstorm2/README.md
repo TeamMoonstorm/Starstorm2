@@ -40,7 +40,7 @@ With Art/Modelling/Animation contributions by...
 Additional thanks to... 
 * Writing - Blimblam, Lyrical Endymion, rekkadraws, swuff★, T_Dimensional, Zenithrium
 * Translations - Anreol, BannyDee (Spanish), MysticSword (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight (Chinese), Kauzok (Portuguese)
-* Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze, nairb zepol
+* Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze, NAIRB zepol
 * Special thanks - Altzeus, DestroyedClone, Dee', don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, VioletChaolan, valerie ♥ 
 
 ## Feedback, Bug Reporting & Known Issues
@@ -65,7 +65,7 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Slightly refined Follower and Wayfarer AIs and body stats. Expect more heavy tuning soon.
     * Adjusted Wayfarer's projectile attack to be much more performance friendly.
 * Interactables
-    * Networked Drone Table visual effects.
+    * Networked Refabricator visual effects.
 
 ### 0.5.1
 * General
@@ -99,7 +99,6 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Fixed X4 Stimulant cooldown scaling with first stack.
     * Adjusted Nkota's Heritage pickup model to address various issues.
     * Slightly tweaked visuals of Stirring Soul.
-    * Disabled Pressurized Cannister.
 * Events
     * Temporarily disabled elite events.
     * Rebalanced event costs to hopefully make them rarer during loops.
