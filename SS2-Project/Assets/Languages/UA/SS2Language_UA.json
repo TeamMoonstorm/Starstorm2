@@ -158,9 +158,9 @@
     "SS2_ITEM_RELICOFDUALITY_LORE": "Hmm? Oh, Youngling! You are back sooner than expected. Have you completed your search?\n\nOh, dear. Youngling, why are you shivering? Has something hurt you?\n\nYou found something that hurt you? Hmm. Peculiar. Do you have it with you, still?\n\n...I see. Let me look at it, then. Come now, and show me what you've found.\n\nHmm. A strange thing, this one. A blazing fire, yet cold to the touch. How unnatural, this is. There's a certain harmony to it, however. As the heat brings warmth and life, the cold tempers it, and keeps it in check. But in that same way, that bitter cold may bring despair and death without the heat to stave it off.\n\n...Oh, but there I go, rambling once more. You need to be taken care of, Youngling. Please, come with me.",
 
     "SS2_ITEM_RELICOFEXTINCTION_NAME": "Реліквія вимирання",
-    "SS2_ITEM_RELICOFEXTINCTION_PICKUP": "[NOTRANSLATION]Every {0} seconds, mark an enemy and strengthen them. If defeated in time, they drop an item; if not, they drop nothing.",
-    "SS2_ITEM_RELICOFEXTINCTION_DESC": "[NOTRANSLATION]Every <style=cIsUtility>{0} seconds</style>, grants a buff which <style=cIsDamage>marks</style> the next spawning enemy. If defeated within <style=cIsUtility>30 seconds</style> <style=cStack>(-10% per stack)</style>, they <style=cIsDamage>drop an item</style> <style=cStack>(item rarity scales with stacks)</style>; if not, they drop <style=cIsDamage>nothing</style> and delay the next mark. <style=cDeath>Marked enemies have significantly increased stats</style>.",
-    "SS2_ITEM_RELICOFEXTINCTION_LORE": "[NOTRANSLATION]Youngling! Ah, I am so excited to see you return! Have you found anything new?\n\nOh? You have! Do show me, little one. There's no need to be shy.\n\nHm... What have you found this time? It's sturdy and hollow, but when you shake it... it sloshes, like an overripe nutapple. What a strange shape we have here...\n\nOh? Oh my. You were chased by a monster, you say... It did not follow you here, correct?\n\n...It did not. But of course, it would be hard to find us here, wouldn't it, Youngling?\n\nHere, I will take this away. Somewhere where it can bring no monsters to us.\n\n...I understand. It is okay to be afraid sometimes, but you cannot let it overwhelm you. Would it not be cruel to another wanderer to find this shape, and suffer dearly for it?\n\nWe will be safe here, Youngling. Come with me. You must be hungry after being out for so long.",
+    "SS2_ITEM_RELICOFEXTINCTION_PICKUP": "Кожні {0} секунд, мітить ворога та підсилює його. Якщо ворог вбитий вчасно - з нього випаде предмет, якщо ні - не випаде.",
+    "SS2_ITEM_RELICOFEXTINCTION_DESC": "Кожні <style=cIsUtility>{0} секунд</style>, <style=cIsDamage>мітить</style> та підсилює ворога, який з'явиться наступним. Якщо ворог вбитий за <style=cIsUtility>30 секунд</style> <style=cStack>(-10% за кожен дублікат)</style>, з нього <style=cIsDamage>падає предмет</style> <style=cStack>(чим більше дублікатів - тим більші шанси на хорошу рідкість)</style>; якщо ні - <style=cIsDamage>з нього нічого не випаде</style> та це збільшить час до появи наступного міченого ворога. <style=cDeath>Мічені вороги мають сильно підвищені характеристики</style>.",
+    "SS2_ITEM_RELICOFEXTINCTION_LORE": "Youngling! Ah, I am so excited to see you return! Have you found anything new?\n\nOh? You have! Do show me, little one. There's no need to be shy.\n\nHm... What have you found this time? It's sturdy and hollow, but when you shake it... it sloshes, like an overripe nutapple. What a strange shape we have here...\n\nOh? Oh my. You were chased by a monster, you say... It did not follow you here, correct?\n\n...It did not. But of course, it would be hard to find us here, wouldn't it, Youngling?\n\nHere, I will take this away. Somewhere where it can bring no monsters to us.\n\n...I understand. It is okay to be afraid sometimes, but you cannot let it overwhelm you. Would it not be cruel to another wanderer to find this shape, and suffer dearly for it?\n\nWe will be safe here, Youngling. Come with me. You must be hungry after being out for so long.",
 
     "SS2_ITEM_RELICOFFORCE_NAME": "Реліквія сили",
     "SS2_ITEM_RELICOFFORCE_PICKUP": "Всі ваші атаки вдаряють ще раз. <style=cDeath>Зменшує швидкість атаки та перезаряджання здібностей</style>.",
@@ -325,9 +325,9 @@
     "SS2_SKIN_PYRO_GRANDMASTERY": "",
 
     "SS2_SKIN_NEMCOMMANDO_DEFAULT": "Стандартний",
-    "SS2_SKIN_NEMCOMMANDO_MASTERY": "[NOTRANSLATION]Wasp",
+    "SS2_SKIN_NEMCOMMANDO_MASTERY": "Шершень",
     "SS2_SKIN_NEMCOMMANDO_GRANDMASTERY": "Мінуано",
-    "SS2_SKIN_NEMCOMMANDO_COMMANDO": "[NOTRANSLATION]Soldier",
+    "SS2_SKIN_NEMCOMMANDO_COMMANDO": "Солдат",
 
     //"SS2_SKIN_NEMMANDO_GRANDMASTERY": "Класичний",
     //"SS2_SKIN_NEMMANDO_COMMANDO": "Командо",
@@ -356,11 +356,11 @@
     "SS2_EXECUTIONER_IONGUN_NAME": "Іонний шквал",
     "SS2_EXECUTIONER_IONGUN_DESCRIPTION": "<style=cIsUtility>Перезаряджається.</style> Стріляє шквалом іонізованих куль, що завдають <style=cIsDamage>{0}% шкоди</style> кожна. <style=cIsUtility>До 5 зарядів вистрілюється за раз</style>.",
 
-    "SS2_EXECUTIONER2_IONBURST_NAME": "[NOTRANSLATION]Ion Burst",
-    "SS2_EXECUTIONER2_IONBURST_DESC": "[NOTRANSLATION]<style=cIsDamage>Shocking</style>. Rapidly discharge <style=cIsUtility>Ion Manipulator stocks</style> as ion bullets for <style=cIsDamage>350% damage</style> per bullet.",
+    "SS2_EXECUTIONER2_IONBURST_NAME": "Іонна черга",
+    "SS2_EXECUTIONER2_IONBURST_DESC": "<style=cIsDamage>Шокує</style>. Швидко розряджає <style=cIsUtility>заряди іонного маніпулятора</style>, стріляючи іонними кулями, що завдають <style=cIsDamage>350% шкоди</style> кожна.",
 
-    "SS2_EXECUTIONER2_IONCHARGE_NAME": "[NOTRANSLATION]Ion Manipulators",
-    "SS2_EXECUTIONER2_IONCHARGE_DESC": "[NOTRANSLATION]Hold to begin building up to <style=cIsUtility>10 stocks</style>, and replace your <style=cIsDamage>primary skill</style>. <style=cIsUtility>Killing enemies also adds stocks.</style>",
+    "SS2_EXECUTIONER2_IONCHARGE_NAME": "Іонні маніпулятор",
+    "SS2_EXECUTIONER2_IONCHARGE_DESC": "Заміняє вашу <style=cIsDamage>основну здібність</style>. Утримуйте, щоб накопичувати до <style=cIsUtility>10 зарядів</style>. <style=cIsUtility>Убивство ворогів також дає заряди.</style>",
 
     "SS2_EXECUTIONER2_DASH_NAME": "Дисперсія натовпу",
     "SS2_EXECUTIONER2_DASH_DESC": "Прискорюйтесь вперед і <style=cIsUtility>лякайте</style> всіх ворогів поряд на <style=cIsUtility>4 секунд</style>.",
@@ -370,9 +370,9 @@
     "SS2_EXECUTIONER_AXESCEPTER_DESCRIPTION": "Здіймається в повітря і вдаряє об землю іонною сокирою, що завдає <style=cIsDamage>3,000% шкоди</style>.",
 
 
-    "SS2_NEMCOMMANDO_NAME": "Немезида Коммандо",
+    "SS2_NEMCOMMANDO_NAME": "Немезида Командо",
     "SS2_NEMCOMMANDO_SUBTITLE": "Самотнє відлуння",
-    "SS2_NEMCOMMANDO_DESCRIPTION": "Немезида Коммандо - це важлива фігура на полі бою, здатна переломити будь-яку ситуацію на свою користь.\n\n<color=#CCD3E0>< ! > Лезо припинення це ризикований, але ефективний метод завдати неймовірної шкоди за допомогою розрізів.\n\n< ! > Віддален калічення може бути використано для безпечного накладення розрізів на групи ворогів!\n\n< ! > Належне балансування між ближнім та дальнім боєм може бути дуже корисним, Тактичний перекид дає велику кількістю броні та допомогає вийти з бою.\n\n< ! > Представлення може бути використане як джерело великої разової шкоди, та може заряджатися під час атак мечем та бігу, що дає можливість накласти трохи розрізів на ворога перед вистрілом.",
+    "SS2_NEMCOMMANDO_DESCRIPTION": "Немезида Командо - це важлива фігура на полі бою, здатна переломити будь-яку ситуацію на свою користь.\n\n<color=#CCD3E0>< ! > Лезо припинення це ризикований, але ефективний метод завдати неймовірної шкоди за допомогою розрізів.\n\n< ! > Віддален калічення може бути використано для безпечного накладення розрізів на групи ворогів!\n\n< ! > Належне балансування між ближнім та дальнім боєм може бути дуже корисним, Тактичний перекид дає велику кількістю броні та допомогає вийти з бою.\n\n< ! > Представлення може бути використане як джерело великої разової шкоди, та може заряджатися під час атак мечем та бігу, що дає можливість накласти трохи розрізів на ворога перед вистрілом.",
     "SS2_NEMCOMMANDO_OUTRO_FLAVOR": "...і він пішов, з віднайденим почуттям людяності в собі.",
     "SS2_NEMCOMMANDO_OUTRO_FAILURE": "...і він вернувся, підсумовуючи свою нескінченну боротьбу.",
     "SS2_NEMCOMMANDO_LORE": "Він ліг відпочити біля вогню, тримаючи зброю, що він ніс, в межах досяжності рук. Оглядаючись, в надії, що печера, в якій він сховався, буде достатнім сховком. Хтось може сказати: \"Хіба це не мудро бути дуже обережним?\". Він скаже, що <color=#FFCCED>вони не бачили достатньо.</color>\n\nСлужбовий пістолет він отримав при зарахуванні. Добре використаний, забруднений та облюблений. Цей пістолет проніс його крізь всі негаразди, не мало значення, яку місію він брав. Хтось може сказати, що тільки дурні можуть довіряти своїй зброї. Він скаже, що <color=#FFCCED>ваша зброя, це все, чому ви можете довіряти.</color>\n\nЛезо, впалого брата війни. Вибрав з того, що зміг зібрати з останніх залишків людства, які він бачив. Хтось може сказати, що він об'єднує їх душі. Він скаже, що <color=#FFCCED>він зберігає їх душі від об'єднання якайдовше.</color>\n\nКупа вантажу призимлилася з ним. Кожен предмет, що він бере з скрині, зберігає його живим в той, чи інший спосіб. Десятки вантажів, для будь-кого, але не для нього. Хтось може сказати, що це не ті предмети, що йому потрібні. Він скаже, <color=#FFCCED>якщо він не візьме їх, то ніхто не візьме.</color>\n\nФіолетове сяйво йде з глибин печери. Заспокоює, зігріває... вабить. Запрошує його глибше і глибше, обіцяючи безпеку. Хтось може сказати, що те, що звучить занадто добре для правди, можливо, нею і є. Він скаже, що <color=#FFCCED>Фауст був мудрою людиною.</color>",
@@ -422,53 +422,53 @@
     "SS2_ACHIEVEMENT_HUNTERSSIGIL_DESC": "Завдайте 1,000 шкоди чи більше одним критичним ударом.",
 
     "SS2_ACHIEVEMENT_MALICE_NAME": "Злісний",
-    "SS2_ACHIEVEMENT_MALICE_DESC": "Дойдіть до етапу 3 на складності Тайфун.",
+    "SS2_ACHIEVEMENT_MALICE_DESC": "Дійдіть до етапу 3 на складності Тайфун.",
 
     "SS2_ACHIEVEMENT_NKOTASHERITAGE_NAME": "Збирач",
     "SS2_ACHIEVEMENT_NKOTASHERITAGE_DESC": "Майте при собі 25 унікальних предметів водночас.",
 
     "SS2_ACHIEVEMENT_STRANGECAN_NAME": "Ще один укус",
-    "SS2_ACHIEVEMENT_STRANGECAN_DESC": "Нанесіть 6 негативних ефектів водночас на одного ворога.",
+    "SS2_ACHIEVEMENT_STRANGECAN_DESC": "Накладіть 6 негативних ефектів водночас на одного ворога.",
 
 
     "SS2_ACHIEVEMENT_EXECUTIONER_MASTERY_NAME": "Кат: Майстерність",
-    "SS2_ACHIEVEMENT_EXECUTIONER_MASTERY_DESC": "As Ката, пройдіть гру або зітріть себе на складності Мусон або вище.",
+    "SS2_ACHIEVEMENT_EXECUTIONER_MASTERY_DESC": "Граючи за Ката, пройдіть гру або зітріть себе на складності Мусон або вище.",
     "SS2_ACHIEVEMENT_EXECUTIONER_GRANDMASTERY_NAME": "Кат: Велична майстерність",
-    "SS2_ACHIEVEMENT_EXECUTIONER_GRANDMASTERY_DESC": "За Ката, пройдіть гру або зітріть себе на складності Тайфун або вище.",
+    "SS2_ACHIEVEMENT_EXECUTIONER_GRANDMASTERY_DESC": "Граючи за Ката, пройдіть гру або зітріть себе на складності Тайфун або вище.",
     "SS2_ACHIEVEMENT_EXECUTIONER_WASTELANDER_NAME": "Кат: Зламати сховище",
-    "SS2_ACHIEVEMENT_EXECUTIONER_WASTELANDER_DESC": "As Ката, відкрити стародавні ворота в Закинутому Акведуку.",
+    "SS2_ACHIEVEMENT_EXECUTIONER_WASTELANDER_DESC": "Граючи за Ката, відкрити стародавні ворота в Закинутому Акведуку.",
     "SS2_ACHIEVEMENT_EXECUTIONER_ELECTRO_NAME": "Кат: Електризація",
-    "SS2_ACHIEVEMENT_EXECUTIONER_ELECTRO_DESC": "As Ката, вбити 15 електризованих ворогів на одному етапі.",
+    "SS2_ACHIEVEMENT_EXECUTIONER_ELECTRO_DESC": "Граючи за Ката, вбити 15 електризованих ворогів на одному етапі.",
     "SS2_ACHIEVEMENT_EXECUTIONER_SWINGAXE_NAME": "Кат: Вбивця",
-    "SS2_ACHIEVEMENT_EXECUTIONER_SWINGAXE_DESC": "За Ката, вбити 12 ворогів на одному етапі використовуючи Страту.",
+    "SS2_ACHIEVEMENT_EXECUTIONER_SWINGAXE_DESC": "Граючи за Ката, вбити 12 ворогів на одному етапі використовуючи Страту.",
     "SS2_ACHIEVEMENT_EXECUTIONER_IONBURST_NAME": "Кат: Примусова розрядка",
-    "SS2_ACHIEVEMENT_EXECUTIONER_IONBURST_DESC": "За Ката, станьте надзарядженим.",
+    "SS2_ACHIEVEMENT_EXECUTIONER_IONBURST_DESC": "Граючи за Ката, станьте надзарядженим.",
 
 
     "SS2_ACHIEVEMENT_NEMCOMMANDO_NAME": "Самотнє ехо",
-    "SS2_ACHIEVEMENT_NEMCOMMANDO_DESC": "Здолати пережиток Коммандо.",
-    "SS2_ACHIEVEMENT_NEMCOMMANDO_MASTERY_NAME": "Немезида Коммандо: Майстерність",
-    "SS2_ACHIEVEMENT_NEMCOMMANDO_MASTERY_DESC": "За Немезиду Коммандо, пройдіть гру або зітріть себе на складності Мусон або вище.",
-    "SS2_ACHIEVEMENT_NEMCOMMANDO_GRANDMASTERY_NAME": "Немезида Коммандо: Велична майстерність",
-    "SS2_ACHIEVEMENT_NEMCOMMANDO_GRANDMASTERY_DESC": "За Немезиду Коммандо, пройдіть гру або зітріть себе на складності Тайфун або вище.",
-    //"SS2_ACHIEVEMENT_NEMCOMMANDO_SINGLETAP_NAME": "Немезида Коммандо: Немезида немезиди",
-    //"SS2_ACHIEVEMENT_NEMCOMMANDO_SINGLETAP_DESC": "За Немезиду Коммандо, здолайте пережиток Коммандо.",
-    "SS2_ACHIEVEMENT_NEMCOMMANDO_SWORDBEAM_NAME": "[NOTRANSLATION]Nemesis Commando: The Ripper",
-    "SS2_ACHIEVEMENT_NEMCOMMANDO_SWORDBEAM_DESC": "[NOTRANSLATION]As Nemesis Commando, reach 100% bleed chance.",
-    "SS2_ACHIEVEMENT_NEMCOMMANDO_BOSSATTACK_NAME": "Немезида Коммандо: Зандацу",
-    "SS2_ACHIEVEMENT_NEMCOMMANDO_BOSSATTACK_DESC": "За Немезиду Коммандо, вбийте ворога з 8 чи більше розрізів.",
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_DESC": "Здолати пережиток Командо.",
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_MASTERY_NAME": "Немезида Командо: Майстерність",
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_MASTERY_DESC": "Граючи за Немезиду Командо, пройдіть гру або зітріть себе на складності Мусон або вище.",
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_GRANDMASTERY_NAME": "Немезида Командо: Велична майстерність",
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_GRANDMASTERY_DESC": "Граючи за Немезиду Командо, пройдіть гру або зітріть себе на складності Тайфун або вище.",
+    //"SS2_ACHIEVEMENT_NEMCOMMANDO_SINGLETAP_NAME": "Немезида Командо: Немезида немезиди",
+    //"SS2_ACHIEVEMENT_NEMCOMMANDO_SINGLETAP_DESC": "Граючи за Немезиду Командо, здолайте пережиток Командо.",
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_SWORDBEAM_NAME": "Немезида Командо: Різник",
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_SWORDBEAM_DESC": "Граючи за Немезиду Командо, отримайте 100% шанс накладання кровотечі.",
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_BOSSATTACK_NAME": "Немезида Командо: Зандацу",
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_BOSSATTACK_DESC": "Граючи за Немезиду Командо, вбийте ворога з 8 чи більше розрізів.",
 
-    "SS2_ACHIEVEMENT_COMMANDO_GRANDMASTERY_NAME": "Коммандо: Велична майстерність.",
-    "SS2_ACHIEVEMENT_COMMANDO_GRANDMASTERY_DESC": "За Коммандо, пройдіть гру або зітріть себе на складності Тайфун або вище.",
+    "SS2_ACHIEVEMENT_COMMANDO_GRANDMASTERY_NAME": "Командо: Велична майстерність.",
+    "SS2_ACHIEVEMENT_COMMANDO_GRANDMASTERY_DESC": "Граючи за Командо, пройдіть гру або зітріть себе на складності Тайфун або вище.",
 
     "SS2_ACHIEVEMENT_TOOLBOT_GRANDMASTERY_NAME": "MUL-T: Велична майстерність.",
-    "SS2_ACHIEVEMENT_TOOLBOT_GRANDMASTERY_DESC": "За MUL-T, пройдіть гру або зітріть себе на складності Тайфун або вище.",
+    "SS2_ACHIEVEMENT_TOOLBOT_GRANDMASTERY_DESC": "Граючи за MUL-T, пройдіть гру або зітріть себе на складності Тайфун або вище.",
 
     "SS2_ACHIEVEMENT_CROCO_GRANDMASTERY_NAME": "Акрид: Велична майстерність",
-    "SS2_ACHIEVEMENT_CROCO_GRANDMASTERY_DESC": "За Акрида, пройдіть гру або зітріть себе на складності Тайфун або вище.",
+    "SS2_ACHIEVEMENT_CROCO_GRANDMASTERY_DESC": "Граючи за Акрида, пройдіть гру або зітріть себе на складності Тайфун або вище.",
 
     "SS2_ACHIEVEMENT_CAPTAIN_GRANDMASTERY_NAME": "Капітан: Велична майстерність",
-    "SS2_ACHIEVEMENT_CAPTAIN_GRANDMASTERY_DESC": "За Капітана, пройдіть гру або зітріть себе на складності Тайфун або вище.",
+    "SS2_ACHIEVEMENT_CAPTAIN_GRANDMASTERY_DESC": "Граючи за Капітана, пройдіть гру або зітріть себе на складності Тайфун або вище.",
 
     "SS2_SKIN_COMMANDO_VESTIGE": "Маскування",
     "SS2_EVENT_MENDINGELITE_START": "Планета починає зцілюватися...",
