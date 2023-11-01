@@ -360,21 +360,21 @@ MonoBehaviour:
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 30
-  maxDistance: 80
+  minDistance: 40
+  maxDistance: 90
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
   maxTimesSelected: -1
   moveTargetType: 0
   activationRequiresTargetLoS: 1
-  activationRequiresAimTargetLoS: 0
+  activationRequiresAimTargetLoS: 1
   activationRequiresAimConfirmation: 1
   movementType: 1
   moveInputScale: 1
   aimType: 2
   ignoreNodeGraph: 0
-  shouldSprint: 0
+  shouldSprint: 1
   shouldFireEquipment: 0
   shouldTapButton: 0
   buttonPressType: 2
@@ -460,7 +460,7 @@ MonoBehaviour:
   moveInputScale: 2
   aimType: 1
   ignoreNodeGraph: 0
-  shouldSprint: 0
+  shouldSprint: 1
   shouldFireEquipment: 0
   shouldTapButton: 0
   buttonPressType: 0

@@ -64,6 +64,8 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Networked Follower and Wayfarer attacks.
     * Slightly refined Follower and Wayfarer AIs and body stats. Expect more heavy tuning soon.
     * Adjusted Wayfarer's projectile attack to be much more performance friendly.
+    * Updated the icon used for the buff provided by Followers and Wayfarer.
+    * Followers now only spawn as a summon from the Wayfarer, rather than showing up in post-loop enemy pools.
 * Interactables
     * Networked Refabricator visual effects.
 

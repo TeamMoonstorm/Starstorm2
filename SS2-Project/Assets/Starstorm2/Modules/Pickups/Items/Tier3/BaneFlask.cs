@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Moonstorm.Starstorm2.Items
 {
-    //[DisabledContent]
+    [DisabledContent]
     public sealed class BaneFlask : ItemBase
     {
 
