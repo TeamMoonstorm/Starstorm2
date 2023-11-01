@@ -18833,7 +18833,7 @@ MonoBehaviour:
   walkSpeedPenaltyCoefficient: 1
   characterDirection: {fileID: 6484702364390787333}
   muteWalkMotion: 0
-  mass: 100
+  mass: 1250
   airControl: 0.25
   disableAirControlUntilCollision: 0
   generateParametersOnAwake: 1
@@ -18891,7 +18891,7 @@ MonoBehaviour:
   rootMotionAccumulator: {fileID: 0}
   modelAnimator: {fileID: 0}
   driveFromRootRotation: 0
-  turnSpeed: 720
+  turnSpeed: 90
   turnSoundName: 
 --- !u!114 &6342970677023390433
 MonoBehaviour:
@@ -19012,7 +19012,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6728286786640769543}
   serializedVersion: 2
-  m_Mass: 100
+  m_Mass: 1250
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 0
@@ -19089,7 +19089,7 @@ MonoBehaviour:
     _typeName: 
   canBeHitStunned: 0
   canBeStunned: 0
-  canBeFrozen: 1
+  canBeFrozen: 0
 --- !u!114 &6148087049430162008
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -52,7 +52,7 @@ namespace EntityStates.LampBoss
                 AddRecoil(-2f * recoil, -3f * recoil, -1f * recoil, 1f * recoil);
                 characterBody.AddSpreadBloom(0.33f * recoil);
 
-                Vector3 angle = Quaternion.Euler(Random.Range(-20f, 20f), Random.Range(-20f, 20f), 0f) * aimRay.direction;
+                Vector3 angle = Quaternion.Euler(Random.Range(-13.5f, 13.5f), Random.Range(-13.5f, 13.5f), 0f) * aimRay.direction;
 
                 //Util.PlayAttackSpeedSound("LampBullet", gameObject, characterBody.attackSpeed);
 
@@ -73,10 +73,11 @@ namespace EntityStates.LampBoss
         {
             base.FixedUpdate();
 
+            timer += Time.fixedDeltaTime;
+
             if (animator.GetFloat("RaiseLamp") >= 0.5f && orbCount < maxOrbCount)
             {
-                timer += Time.fixedDeltaTime;
-                if (timer >= timeBetweenShots)
+                if (timer >= baseTimeBetweenShots / attackSpeedStat)
                 {
                     orbCount++;
                     timer = 0;

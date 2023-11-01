@@ -188,7 +188,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.4
+  m_Radius: 0.6
   m_Center: {x: 0.125769, y: 0.15318441, z: 0}
 --- !u!114 &3628231092365340093
 MonoBehaviour:
@@ -204,7 +204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   falloffModel: 0
   blastRadius: 1
-  blastDamageCoefficient: 0.8
+  blastDamageCoefficient: 1.5
   blastProcCoefficient: 1
   blastAttackerFiltering: 0
   bonusBlastForce: {x: 0, y: 0, z: 0}
@@ -231,7 +231,7 @@ MonoBehaviour:
   maxStacksFromAttacker: 4294967295
   calculateTotalDamage: 0
   totalDamageMultiplier: 0
-  impactEffect: {fileID: 7774853780658318554, guid: b9c14aee315ef6646ae80dd5de5d1465,
+  impactEffect: {fileID: 8366333857707230014, guid: 85928708162673a4693a39393d6ff240,
     type: 3}
   lifetimeExpiredSoundString: 
   lifetimeExpiredSound: {fileID: 0}
