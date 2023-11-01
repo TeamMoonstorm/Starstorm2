@@ -11,7 +11,7 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="866530374" Language="SFX" Hash="670034534">
+		<SoundBank Id="866530374" Language="SFX" Hash="1133035110">
 			<ObjectPath>\SoundBanks\Default Work Unit\Starstorm2</ObjectPath>
 			<ShortName>Starstorm2</ShortName>
 			<Path>Starstorm2.bnk</Path>
@@ -229,7 +229,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="3057152170" Name="FollowerCast" ObjectPath="\Events\Default Work Unit\Follower\FollowerCast" DurationType="OneShot" DurationMin="2.420073" DurationMax="2.505417">
+				<Event Id="3057152170" Name="FollowerCast" ObjectPath="\Events\Default Work Unit\Follower\FollowerCast" MaxAttenuation="150.000000" DurationType="OneShot" DurationMin="2.420073" DurationMax="2.505417">
 					<IncludedMemoryFiles>
 						<File Id="921835037" Language="SFX">
 							<ShortName>babyability.wav</ShortName>
@@ -237,7 +237,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="2970410379" Name="FollowerIdleStart" ObjectPath="\Events\Default Work Unit\Follower\FollowerIdleStart" DurationType="Infinite">
+				<Event Id="2970410379" Name="FollowerIdleStart" ObjectPath="\Events\Default Work Unit\Follower\FollowerIdleStart" MaxAttenuation="150.000000" DurationType="Infinite">
 					<IncludedMemoryFiles>
 						<File Id="198216687" Language="SFX">
 							<ShortName>babyidle.wav</ShortName>
@@ -246,7 +246,7 @@
 					</IncludedMemoryFiles>
 				</Event>
 				<Event Id="2787513641" Name="FollowerIdleStop" ObjectPath="\Events\Default Work Unit\Follower\FollowerIdleStop" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
-				<Event Id="134703416" Name="FollowerSpawn" ObjectPath="\Events\Default Work Unit\Follower\FollowerSpawn" DurationType="OneShot" DurationMin="3.062141" DurationMax="3.170128">
+				<Event Id="134703416" Name="FollowerSpawn" ObjectPath="\Events\Default Work Unit\Follower\FollowerSpawn" MaxAttenuation="150.000000" DurationType="OneShot" DurationMin="3.062141" DurationMax="3.170128">
 					<IncludedMemoryFiles>
 						<File Id="386587619" Language="SFX">
 							<ShortName>babyspawn.wav</ShortName>
@@ -254,7 +254,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="2589904694" Name="FollowerVO" ObjectPath="\Events\Default Work Unit\Follower\FollowerVO" DurationType="OneShot" DurationMin="3.039822" DurationMax="3.220579">
+				<Event Id="2589904694" Name="FollowerVO" ObjectPath="\Events\Default Work Unit\Follower\FollowerVO" MaxAttenuation="150.000000" DurationType="OneShot" DurationMin="3.039822" DurationMax="3.220579">
 					<IncludedMemoryFiles>
 						<File Id="398590803" Language="SFX">
 							<ShortName>babybark.wav</ShortName>
@@ -294,7 +294,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="1316900923" Name="LampBullet" ObjectPath="\Events\Default Work Unit\Follower\LampBullet" DurationType="OneShot" DurationMin="1.099674" DurationMax="1.138454">
+				<Event Id="1316900923" Name="LampBullet" ObjectPath="\Events\Default Work Unit\Follower\LampBullet" MaxAttenuation="150.000000" DurationType="OneShot" DurationMin="1.099674" DurationMax="1.138454">
 					<IncludedMemoryFiles>
 						<File Id="657553960" Language="SFX">
 							<ShortName>bulletshoot.wav</ShortName>
@@ -302,7 +302,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="1573671621" Name="LampImpact" ObjectPath="\Events\Default Work Unit\Follower\LampImpact" DurationType="OneShot" DurationMin="0.757440" DurationMax="0.784152">
+				<Event Id="1573671621" Name="LampImpact" ObjectPath="\Events\Default Work Unit\Follower\LampImpact" MaxAttenuation="150.000000" DurationType="OneShot" DurationMin="0.757440" DurationMax="0.784152">
 					<IncludedMemoryFiles>
 						<File Id="694986444" Language="SFX">
 							<ShortName>bulletimpact.wav</ShortName>
