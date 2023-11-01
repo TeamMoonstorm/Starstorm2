@@ -40,7 +40,7 @@ With Art/Modelling/Animation contributions by...
 Additional thanks to... 
 * Writing - Blimblam, Lyrical Endymion, rekkadraws, swuff★, T_Dimensional, Zenithrium
 * Translations - Anreol, BannyDee (Spanish), MysticSword (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight (Chinese), Kauzok (Portuguese)
-* Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze, nairb zepol
+* Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze, NAIRB zepol
 * Special thanks - Altzeus, DestroyedClone, Dee', don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, VioletChaolan, valerie ♥ 
 
 ## Feedback, Bug Reporting & Known Issues
@@ -48,12 +48,17 @@ Additional thanks to...
 Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Starstorm2/issues). A list of known & previously reported issues can also be found here. Please include an [Output Log](https://h3vr-modding.github.io/wiki/installing/troubleshooting/log_file.html) and detailed steps to help recreate your error! Feedback about the modded characters pertaining to balance and gameplay can be discussed in our [Discord server](https://discord.com/invite/SgFxwKT7nY).
 
 * Known Issues
-    * Drone Table visuals currently are not networked.
     * Elite events are currently disabled.
 
 ## Changelog
 
 **Warning: content spoilers below!**
+### 0.5.2
+* Monsters
+    * Reduced the volume of Wayfarer's main attack.
+* Interactables
+    * Refabricator is now properly networked.
+
 ### 0.5.1
 * General
     * Fixed an incompability with other mods resulting in a crash, notably when loading into FrozenWall with Gunslinger enabled.
@@ -86,7 +91,6 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Fixed X4 Stimulant cooldown scaling with first stack.
     * Adjusted Nkota's Heritage pickup model to address various issues.
     * Slightly tweaked visuals of Stirring Soul.
-    * Disabled Pressurized Cannister.
 * Events
     * Temporarily disabled elite events.
     * Rebalanced event costs to hopefully make them rarer during loops.
