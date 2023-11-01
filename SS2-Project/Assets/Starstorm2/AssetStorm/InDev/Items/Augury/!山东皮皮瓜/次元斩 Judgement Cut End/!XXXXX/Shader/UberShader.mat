@@ -1,0 +1,252 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UberShader
+  m_Shader: {fileID: 4800000, guid: 114d92f5956657d4da09378841696528, type: 3}
+  m_ShaderKeywords: _
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DistorsionTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DitheringMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OverlayTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 4, y: 4}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ShakeTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - ACES_Tonemapping: 0
+    - Aberration_Quality: 1
+    - Blur: 1
+    - Blur_Distorsion: 1
+    - CA_Distorsion: 0
+    - Chromatic_Aberration: 0
+    - Color_Tint: 1
+    - Distorsion: 1
+    - Dithering: 0
+    - Dithering_Colorize: 1
+    - Glitch: 0
+    - HSV_Desaturate_Selected: 1
+    - HSV_Selection: 0
+    - HSV_Transform: 0
+    - Magnification: 1
+    - Mask_Multisampling: 0
+    - Mask_Noise: 0
+    - Mask_Texture: 0
+    - Neon: 0
+    - Overlay_Grid: 0
+    - Overlay_Texture: 0
+    - Overlay_Texture_Sheet: 0
+    - Particle_Render: 0
+    - Pixelization: 0
+    - Posterization: 0
+    - ScreenRotation: 0
+    - Shake: 1
+    - Static_Noise: 0
+    - Texture_Distorsion: 0
+    - Vignette: 0
+    - Wave_Distorsion: 1
+    - _AngleStartFade: 0.289
+    - _BlueInvert: 0
+    - _BlurIterations: 8
+    - _BlurMask: 0.5
+    - _BlurRange: 0.033
+    - _BlurRotation: 0
+    - _BlurRotationSpeed: 5
+    - _Blur_Dithering: 1
+    - _BumpScale: 1
+    - _CA_amplitude: 0.0034913376
+    - _CA_dithering: 1
+    - _CA_factor: 0.7822533
+    - _CA_iterations: 54
+    - _CA_mask: 1
+    - _CA_speed: 0
+    - _ColorAlpha: 0
+    - _Cutoff: 0.5
+    - _DIntensity_X: 0
+    - _DIntensity_Y: 0
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _Glitch_ActiveTime: 0
+    - _Glitch_BlockSize: 10
+    - _Glitch_Blocks: 0
+    - _Glitch_BrokenBlock: 0
+    - _Glitch_BrokenBlock_Chance: 0
+    - _Glitch_ColorShift: 0
+    - _Glitch_ColorShift_Chance: 0
+    - _Glitch_Displace: 0
+    - _Glitch_Displace_Chance: 0
+    - _Glitch_Duration: 0
+    - _Glitch_Grayscale: 0
+    - _Glitch_Grayscale_Chance: 0
+    - _Glitch_Intensity: 0
+    - _Glitch_Interleave: 0
+    - _Glitch_Interleave_Chance: 0
+    - _Glitch_Lines: 0
+    - _Glitch_Macroblock: 0
+    - _Glitch_PeriodTime: 6
+    - _Glitch_Pixelization: 0
+    - _Glitch_Pixelization_Chance: 0
+    - _Glitch_Posterization: 0
+    - _Glitch_Posterization_Chance: 0
+    - _Glitch_Shift: 0
+    - _Glitch_Shift_Chance: 0
+    - _Glitch_UPS: 15
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _Gravitation: 1
+    - _Grayscale: 0
+    - _GreenInvert: 0
+    - _Hue: 1
+    - _HueAnimationSpeed: 0
+    - _HueRange: 0.02
+    - _HueSmoothRange: 0.02
+    - _Info: 20191212
+    - _Lightness: 0
+    - _LightnessRange: 1
+    - _LightnessSmoothRange: 1
+    - _Magnification: 0
+    - _MaskAlpha: 0
+    - _MaskAmount: 0
+    - _MaxAngle: 0.5
+    - _MaxRange: 1000
+    - _Metallic: 0
+    - _MinRange: 999
+    - _Mode: 0
+    - _NeonBrightness: 3
+    - _NeonColorAlpha: 1
+    - _NeonGlow: 1
+    - _NeonOrigColorAlpha: 1
+    - _NeonPosterization: 1
+    - _NeonWidth: 1.5
+    - _OcclusionStrength: 1
+    - _OverlayAnimationSpeed: 0.8
+    - _OverlayColumns: 8
+    - _OverlayOpaque: 0.388
+    - _OverlayRotation: 0
+    - _OverlayRows: 8
+    - _OverlayStartFrame: 0
+    - _OverlayTotalFrames: 16
+    - _OverlayTransparent: 1
+    - _PSize_X: 4
+    - _PSize_Y: 4
+    - _Parallax: 0.02
+    - _PosterizationSteps: 16
+    - _RGBGlitchBlocksPower: 0.01
+    - _RedInvert: 0
+    - _SIntensity_X: 0.2
+    - _SIntensity_Y: 0
+    - _Saturation: 0
+    - _SaturationRange: 0.4
+    - _SaturationSmoothRange: 0.1
+    - _ScreenHorizontalFlip: 0
+    - _ScreenRotation: 0.1
+    - _ScreenRotationSpeed: 2
+    - _ScreenVerticalFlip: 0
+    - _SizeGirls: 0
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _StaticAlpha: 0.17
+    - _StaticBrightness: 1
+    - _StaticIntensity: -0.34
+    - _TimeGirls: 1
+    - _UVSec: 0
+    - _VignetteAlpha: 0.15
+    - _VignetteRounding: 0.5
+    - _VignetteShape: 0.5
+    - _VignetteWidth: 0.5
+    - _ZWrite: 1
+    - _isBlueActive: 1
+    - _isGlitchActive: 0
+    - _isGreenActive: 1
+    - _isRedActive: 1
+    m_Colors:
+    - _BlurCenterOffset: {r: 0, g: 0, b: 0, a: 0}
+    - _BlurColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Brightness: {r: 1, g: 1, b: 1, a: 0}
+    - _CA_centerOffset: {r: 0.43462205, g: 0.6400981, b: 0, a: 0}
+    - _CA_direction: {r: 0.38576126, g: 0.1959467, b: 0, a: 0}
+    - _Color: {r: 0, g: 0, b: 0, a: 1}
+    - _Contrast: {r: 1, g: 1, b: 1, a: 0}
+    - _DistorsionScroll: {r: 0, g: 0, b: 0, a: 0}
+    - _DistorsionWave: {r: 0, g: 0, b: 0, a: 0}
+    - _DistorsionWaveDensity: {r: 8.4, g: 3, b: 0, a: 0}
+    - _DistorsionWaveSpeed: {r: 3.5, g: 3, b: 0, a: 0}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Gamma: {r: 1, g: 1, b: 1, a: 0}
+    - _MaskColor: {r: 1, g: 1, b: 1, a: 0}
+    - _MaskScroll: {r: 0, g: 0, b: 0, a: 0}
+    - _NeonColor: {r: 1, g: 1, b: 1, a: 1}
+    - _NeonOrigColor: {r: 0.21698111, g: 0.21698111, b: 0.21698111, a: 1}
+    - _OverlayScroll: {r: 0.0004, g: 0.0002, b: 0, a: 0}
+    - _OverlayTint: {r: 1, g: 1, b: 1, a: 1}
+    - _ShakeScroll: {r: 2, g: 0, b: 0, a: 0}
+    - _ShakeWave: {r: 0, g: 0, b: 0, a: 0}
+    - _ShakeWaveSpeed: {r: 1000, g: 1000, b: 0, a: 0}
+    - _StaticColour: {r: 1, g: 1, b: 1, a: 1}
+    - _TargetColor: {r: 1, g: 0, b: 0, a: 1}
+    - _TransformColor: {r: 0, g: 0, b: 1, a: 1}
+    - _VignetteColor: {r: 0, g: 0, b: 0, a: 1}

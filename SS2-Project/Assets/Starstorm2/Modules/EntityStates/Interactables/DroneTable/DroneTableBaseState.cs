@@ -1,6 +1,7 @@
 ﻿using Moonstorm.Starstorm2;
 using Moonstorm.Starstorm2.Components;
 using RoR2;
+using UnityEngine.Networking;
 using static Moonstorm.Starstorm2.Interactables.DroneTable;
 
 namespace EntityStates.DroneTable
@@ -25,7 +26,10 @@ namespace EntityStates.DroneTable
             base.OnEnter();
             refabController = GetComponent<RefabricatorInteractionToken>();
             purchaseInter = GetComponent<PurchaseInteraction>();
-            purchaseInter.SetAvailable(enableInteraction);
+            if (NetworkServer.active)
+            {
+                purchaseInter.SetAvailable(enableInteraction);
+            }
         }
     }
 }
