@@ -17,6 +17,8 @@ namespace EntityStates.LampBoss
         public static GameObject projectilePrefab;
         public static GameObject blueProjectilePrefab;
         public static string muzzleString;
+        public static float maxOrbCount;
+        private float orbCount = 0;
 
         private float timer;
         private float duration;
@@ -24,6 +26,7 @@ namespace EntityStates.LampBoss
         private Transform muzzle;
         private Animator animator;
         private Ray aimRay;
+        private GameObject projectile;
 
         public override void OnEnter()
         {
@@ -34,6 +37,9 @@ namespace EntityStates.LampBoss
             muzzle = GetModelChildLocator().FindChild(muzzleString);
             animator = GetModelAnimator();
             aimRay = GetAimRay();
+
+            bool isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
+            projectile = isBlue ? blueProjectilePrefab : projectilePrefab;
 
             Util.PlayAttackSpeedSound("WayfarerAttack", gameObject, attackSpeedStat);
 
@@ -46,10 +52,7 @@ namespace EntityStates.LampBoss
                 AddRecoil(-2f * recoil, -3f * recoil, -1f * recoil, 1f * recoil);
                 characterBody.AddSpreadBloom(0.33f * recoil);
 
-                bool isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
-                GameObject projectile = isBlue ? blueProjectilePrefab : projectilePrefab;
-
-                Vector3 angle = Quaternion.Euler(Random.Range(-20f, 20f), Random.Range(-20f, 20f), 0f) * aimRay.direction;
+                Vector3 angle = Quaternion.Euler(Random.Range(-13.5f, 13.5f), Random.Range(-13.5f, 13.5f), 0f) * aimRay.direction;
 
                 //Util.PlayAttackSpeedSound("LampBullet", gameObject, characterBody.attackSpeed);
 
@@ -59,7 +62,7 @@ namespace EntityStates.LampBoss
                     Util.QuaternionSafeLookRotation(angle), 
                     gameObject, 
                     damage, 
-                    30f, 
+                    20f, 
                     RollCrit(), 
                     DamageColorIndex.Default, 
                     null, 
@@ -70,11 +73,13 @@ namespace EntityStates.LampBoss
         {
             base.FixedUpdate();
 
-            if (animator.GetFloat("RaiseLamp") >= 0.5f && isAuthority)
+            timer += Time.fixedDeltaTime;
+
+            if (animator.GetFloat("RaiseLamp") >= 0.5f && orbCount < maxOrbCount)
             {
-                timer += fixedAge;
-                if (timer >= timeBetweenShots)
+                if (timer >= baseTimeBetweenShots / attackSpeedStat)
                 {
+                    orbCount++;
                     timer = 0;
                     FireProjectile();
                     //Debug.Log("firing projectile");

@@ -32,6 +32,7 @@ namespace EntityStates.Executioner2
         public static GameObject hitPrefabMastery;
         private string skinNameToken;
         public bool fullBurst = false;
+        public bool firstShot = true;
 
         [HideInInspector]
         public static GameObject muzzlePrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/MuzzleflashFMJ.prefab").WaitForCompletion();
@@ -41,6 +42,7 @@ namespace EntityStates.Executioner2
         [HideInInspector]
         public static GameObject hitPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/HitsparkCommandoShotgun.prefab").WaitForCompletion();
 
+        public int shotsToFire;
         public int shotsFired = 0;
 
         private float duration;
@@ -50,7 +52,10 @@ namespace EntityStates.Executioner2
         {
             base.OnEnter();
 
-            if (skillLocator.secondary.stock == 0)
+            if (firstShot)
+                shotsToFire = skillLocator.secondary.stock;
+
+            if (skillLocator.secondary.stock == 0 || shotsToFire == shotsFired)
                 return;
 
             duration = baseDuration / attackSpeedStat;
@@ -91,13 +96,15 @@ namespace EntityStates.Executioner2
 
             if (fixedAge >= duration && isAuthority)
             {
-                if (skillLocator.secondary.stock > 0)
+                if (skillLocator.secondary.stock > 0 && shotsToFire > shotsFired)
                 {
                     FireChargeGun nextState = new FireChargeGun();
                     nextState.shotsFired = shotsFired;
                     nextState.activatorSkillSlot = activatorSkillSlot;
                     if (fullBurst)
                         nextState.fullBurst = true;
+                    nextState.firstShot = false;
+                    nextState.shotsToFire = shotsToFire;
                     outer.SetNextState(nextState);
                     return;
                 }

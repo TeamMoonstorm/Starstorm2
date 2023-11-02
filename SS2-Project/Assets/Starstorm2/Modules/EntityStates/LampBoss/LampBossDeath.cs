@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using RoR2;
 using System;
+using UnityEngine.Networking;
 
 namespace EntityStates.LampBoss
 {
@@ -36,7 +37,7 @@ namespace EntityStates.LampBoss
             //if (modelLocator && initialEffect)
             //EffectManager.
 
-            FindModelChild("GlowParticles").gameObject.SetActive(true);
+            //FindModelChild("GlowParticles").gameObject.SetActive(true);
 
             isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
         }
@@ -44,19 +45,35 @@ namespace EntityStates.LampBoss
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (animator)
+
+            if ((animator.GetFloat(mecanimPerameter) > 0.5f) || (fixedAge > 2.7f) && !hasPlayedEffect && NetworkServer.active)
             {
-                if ((animator.GetFloat(mecanimPerameter) > 0.5f) || (fixedAge > 2.7f) && !hasPlayedEffect)
-                {
-                    hasPlayedEffect = true;
-                    var effect = isBlue ? deathVFXblue : deathVFX;
+                hasPlayedEffect = true;
+                var effect = isBlue ? deathVFXblue : deathVFX;
+                Util.PlaySound("WayfarerDeath", gameObject);
+
+                if (NetworkServer.active)
                     EffectManager.SimpleEffect(effect, muzzle.position, muzzle.rotation, true);
-                    Util.PlaySound("WayfarerDeath", gameObject);
-                    DestroyBodyAsapServer();
-                    DestroyModel();
-                    Destroy(gameObject);
+
+                //YOU SHOULD KILL YOURSELF NOW
+                //NetworkServer.Destroy(gameObject);
+
+                if (cachedModelTransform)
+                {
+                    Destroy(cachedModelTransform.gameObject);
+                    cachedModelTransform = null;
                 }
+
+                DestroyBodyAsapServer();
+                DestroyModel();
+                Destroy(gameObject);
             }
+        }
+
+        public override void OnExit()
+        {
+            
+            base.OnExit();
         }
     }
 }

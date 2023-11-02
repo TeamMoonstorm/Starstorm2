@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Moonstorm.Starstorm2.Unlocks.Executioner2
 {
+    [DisabledContent]
     public sealed class ElectrocutionerUnlockable : UnlockableBase
     {
         public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skin.executioner2.electro", SS2Bundle.Executioner2);

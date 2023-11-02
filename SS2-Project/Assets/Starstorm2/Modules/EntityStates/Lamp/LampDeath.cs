@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using RoR2;
 using System;
+using UnityEngine.Networking;
 
 namespace EntityStates.Lamp
 {
@@ -46,8 +47,18 @@ namespace EntityStates.Lamp
                 {
                     hasPlayedEffect = true;
                     var effect = isBlue ? deathVFXblue : deathVFX;
-                    //EffectManager.SimpleEffect(effect, muzzle.position, muzzle.rotation, true);
+                    EffectManager.SimpleEffect(effect, muzzle.position, muzzle.rotation, true);
                     Util.PlaySound("LampImpact", gameObject);
+
+                    //YOU SHOULD KILL YOURSELF NOW
+                    //NetworkServer.Destroy(gameObject);
+
+                    if (cachedModelTransform)
+                    {
+                        Destroy(cachedModelTransform.gameObject);
+                        cachedModelTransform = null;
+                    }
+
                     DestroyBodyAsapServer();
                     DestroyModel();
                     Destroy(gameObject);
