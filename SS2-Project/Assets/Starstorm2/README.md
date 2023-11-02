@@ -59,6 +59,7 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Ensured all survivors are properly added to the ExpansionDef.
 * Executioner
     * Secondary no longer fires charges gained while already firing unless the button is held.
+    * Added some missing equipment displays.
 * Monsters
     * Actually fixed Follower and Wayfarer sounds playing globally, and adjusted volume.
     * Networked Follower and Wayfarer attacks.
