@@ -85,13 +85,13 @@ namespace EntityStates.Executioner2
                 hasSlammed = true;
                 dashVector = inputBank.aimDirection;
             }
-            if (fixedAge >= duration)
+            /*if (fixedAge >= duration)
             {
                 //if (wasLiedTo)
                 //by request of ts <3
                 GroundSlamPos(characterBody.footPosition);
                 outer.SetNextStateToMain();
-            }
+            }*/
             else
                 HandleMovement();
         }

@@ -147,7 +147,7 @@ namespace EntityStates.Executioner2
         {
             if (areaIndicatorInstance)
             {
-                float maxDistance = moveSpeedStat * 6.8f;
+                float maxDistance = 256f;
 
                 Ray aimRay = GetAimRay();
                 RaycastHit raycastHit;
