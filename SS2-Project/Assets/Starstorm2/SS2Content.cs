@@ -292,13 +292,6 @@ namespace Moonstorm.Starstorm2
             //Bulwark.Init();
             
             //Ethereal.Init();
-            
-            //Deluge.Init();
-            //Tempest.Init();
-            //Cyclone.Init();
-            //SuperTyphoon.Init();
-            
-            //Ethereal.Init();
 
             LoadDispatchers = new Action[]
             {

@@ -72,7 +72,7 @@ namespace EntityStates.NemCommando
                 animString = "Primary3";
 
             PlayCrossfade("Gesture, Override", animString, "Primary.playbackRate", duration * swingTimeCoefficient, 0.05f);
-            Debug.Log("swingSide: " + swingSide);
+            //Debug.Log("swingSide: " + swingSide);
         }
 
         void SteppedSkillDef.IStepSetter.SetStep(int i)

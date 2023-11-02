@@ -18557,11 +18557,11 @@ MonoBehaviour:
   bodyFlags: 0
   rootMotionInMainState: 0
   mainRootSpeed: 0
-  baseMaxHealth: 2500
+  baseMaxHealth: 2800
   baseRegen: 0
   baseMaxShield: 0
-  baseMoveSpeed: 4
-  baseAcceleration: 80
+  baseMoveSpeed: 5
+  baseAcceleration: 30
   baseJumpPower: 15
   baseDamage: 8
   baseAttackSpeed: 1
@@ -18569,9 +18569,9 @@ MonoBehaviour:
   baseArmor: 20
   baseVisionDistance: Infinity
   baseJumpCount: 1
-  sprintingSpeedMultiplier: 1
+  sprintingSpeedMultiplier: 1.2
   autoCalculateLevelStats: 1
-  levelMaxHealth: 750
+  levelMaxHealth: 840
   levelRegen: 0
   levelMaxShield: 0
   levelMoveSpeed: 0
@@ -18833,7 +18833,7 @@ MonoBehaviour:
   walkSpeedPenaltyCoefficient: 1
   characterDirection: {fileID: 6484702364390787333}
   muteWalkMotion: 0
-  mass: 100
+  mass: 1250
   airControl: 0.25
   disableAirControlUntilCollision: 0
   generateParametersOnAwake: 1
@@ -18891,7 +18891,7 @@ MonoBehaviour:
   rootMotionAccumulator: {fileID: 0}
   modelAnimator: {fileID: 0}
   driveFromRootRotation: 0
-  turnSpeed: 720
+  turnSpeed: 90
   turnSoundName: 
 --- !u!114 &6342970677023390433
 MonoBehaviour:
@@ -19012,7 +19012,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6728286786640769543}
   serializedVersion: 2
-  m_Mass: 100
+  m_Mass: 1250
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 0
@@ -19055,9 +19055,9 @@ MonoBehaviour:
   CapsulePhysicsMaterial: {fileID: 0}
   DetectDiscreteCollisions: 0
   GroundDetectionExtraDistance: 0
-  MaxStepHeight: 0.2
+  MaxStepHeight: 0.5
   MinRequiredStepDepth: 0.1
-  MaxStableSlopeAngle: 55
+  MaxStableSlopeAngle: 70
   MaxStableDistanceFromLedge: 0.5
   PreventSnappingOnLedges: 0
   MaxStableDenivelationAngle: 55
@@ -19089,7 +19089,7 @@ MonoBehaviour:
     _typeName: 
   canBeHitStunned: 0
   canBeStunned: 0
-  canBeFrozen: 1
+  canBeFrozen: 0
 --- !u!114 &6148087049430162008
 MonoBehaviour:
   m_ObjectHideFlags: 0

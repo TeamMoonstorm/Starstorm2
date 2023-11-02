@@ -55,14 +55,20 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 **Warning: content spoilers below!**
 ### 0.5.2
 * General
-    * Ensured all survivors are part of the ExpansionDef.
+    * Disabled some WIP content that slipped through. ;)
+    * Ensured all survivors are properly added to the ExpansionDef.
 * Executioner
+    * Secondary no longer fires charges gained while already firing unless the button is held.
     * Added some missing equipment displays.
 * Monsters
-    * Reduced the volume of Wayfarer's main attack.
-    * Definitely fixed Follower and Wayfarer sounds playing globally.
+    * Actually fixed Follower and Wayfarer sounds playing globally, and adjusted volume.
+    * Networked Follower and Wayfarer attacks.
+    * Slightly refined Follower and Wayfarer AIs and body stats. Expect more heavy tuning soon.
+    * Adjusted Wayfarer's projectile attack to be much more performance friendly.
+    * Updated the icon used for the buff provided by Followers and Wayfarer.
+    * Followers now only spawn as a summon from the Wayfarer, rather than showing up in post-loop enemy pools.
 * Interactables
-    * Refabricator is now properly networked.
+    * Networked Refabricator visual effects.
 
 ### 0.5.1
 * General
@@ -121,15 +127,3 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * X4 and Termination's icons have been cleaned up.
     * Coffee Bag and Needles now have item displays.
     * Disabled Baby's Toys. The item does work, but it has a lot of issues which would take a decent amount of time to address, so it's being disabled for now.
-
-### 0.4.5
-* General
-    * Fixed a crash caused by a conflict with other mods.
-    * Fixed specific configs for Needles and Coffee Bag not appearing in the correct config file.
-* Nemesis Commando
-    * Skill unlocks now use updated skill icons.
-    * Fixed a bug where Nemesis Commando would be invulnerable after exiting the portal for the first stage.
-* Executioner
-	* Fixed kill assists not counting towards Ion Manipulator stocks and increased window for which attacks will count as kill assists.
-* Items
-    * Needles no longer spams debug logs, and also now checks that the target is not on the same team as the attacker when applying the debuff.
