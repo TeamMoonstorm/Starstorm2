@@ -206,7 +206,7 @@ MonoBehaviour:
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
   minDistance: 0
-  maxDistance: 2
+  maxDistance: 5
   selectionRequiresTargetLoS: 1
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
@@ -255,7 +255,7 @@ MonoBehaviour:
   selectionRequiresAimTarget: 0
   maxTimesSelected: -1
   moveTargetType: 2
-  activationRequiresTargetLoS: 0
+  activationRequiresTargetLoS: 1
   activationRequiresAimTargetLoS: 0
   activationRequiresAimConfirmation: 0
   movementType: 1
@@ -292,7 +292,7 @@ MonoBehaviour:
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
   minDistance: 0
-  maxDistance: 20
+  maxDistance: 16
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0

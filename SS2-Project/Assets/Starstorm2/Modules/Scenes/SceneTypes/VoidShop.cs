@@ -14,6 +14,7 @@ using RoR2.ContentManagement;
 
 namespace Moonstorm.Starstorm2.Scenes
 {
+    [DisabledContent]
     public sealed class VoidShop : SceneBase
     {
         public override SceneDef SceneDef { get; } = SS2Assets.LoadAsset<SceneDef>("VoidShop", SS2Bundle.Stages);
