@@ -53,6 +53,11 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 ## Changelog
 
 **Warning: content spoilers below!**
+### 0.5.3
+* Executioner
+    * Slightly nerfed Crowd Dispersion: (Cooldown: 5 -> 6, Debuff Duration: 4 -> 3, Reduced movement speed)
+    * Removed the range limit on Execution.
+
 ### 0.5.2
 * General
     * Disabled some WIP content that slipped through. ;)

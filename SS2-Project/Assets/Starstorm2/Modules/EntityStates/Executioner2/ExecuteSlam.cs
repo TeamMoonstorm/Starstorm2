@@ -56,6 +56,8 @@ namespace EntityStates.Executioner2
             characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
             characterMotor.onHitGroundAuthority += GroundSlam;
 
+            characterBody.isSprinting = true;
+
             characterBody.SetAimTimer(duration);
 
 
@@ -98,7 +100,7 @@ namespace EntityStates.Executioner2
 
         public void HandleMovement()
         {
-            characterMotor.rootMotion += dashVector * moveSpeedStat * 15f * Time.fixedDeltaTime;
+            characterMotor.rootMotion += dashVector * moveSpeedStat * 18.5f * Time.fixedDeltaTime;
         }
 
         private void GroundSlamPos(Vector3 position)

@@ -10,21 +10,25 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0777505d690470442828b06f82250916, type: 3}
-  m_Name: msmdcLamp
+  m_Name: msmdcLampBossMoon
   m_EditorClassIdentifier: 
-  prefab: {fileID: 2890170479074595321, guid: 08f84170ba6360245b8dbea75c849fe3, type: 3}
+  prefab: {fileID: 1255514408908605, guid: 60a903a9f1f936a4ab9f3c9eab0f8788, type: 3}
   sendOverNetwork: 1
-  hullSize: 0
-  nodeGraphType: 1
+  hullSize: 2
+  nodeGraphType: 0
   requiredFlags: 0
   forbiddenFlags: 4
-  directorCreditCost: 28
+  directorCreditCost: 600
   occupyPosition: 0
   eliteRules: 0
   noElites: 0
   forbiddenAsBoss: 0
   _loadout:
-    bodyLoadouts: []
+    bodyLoadouts:
+    - body: {fileID: 1862279346882973295, guid: 69ec42ad4658e104e81feb700f18a317,
+        type: 3}
+      skillChoices: []
+      skinChoice: {fileID: 11400000, guid: 5dc94a76fea0ebe4c8c59fcefc65dd96, type: 2}
   inventoryToCopy: {fileID: 0}
   equipmentToGrant: []
   itemsToGrant: []
@@ -55,10 +59,10 @@ MonoBehaviour:
     forbiddenUnlockable: 
     requiredUnlockableDef: {fileID: 0}
     forbiddenUnlockableDef: {fileID: 0}
-  monsterCategory: 2
+  monsterCategory: 4
   customCategory: 
   customCategoryWeight: 1
-  stages: 135176
+  stages: 102945199
   customStages:
   - fblscene
   requiredExpansionDefs: []
