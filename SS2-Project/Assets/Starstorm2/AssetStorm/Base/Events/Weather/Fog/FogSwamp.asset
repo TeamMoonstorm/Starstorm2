@@ -26,16 +26,25 @@ MonoBehaviour:
   category: CommonEvents
   selectionWeight: 20
   cost: 550
-  repeatedSelectionCostCoefficient: 2
+  repeatedSelectionCostCoefficient: 8
   minimumStageCompletions: 0
+  requiredUnlock:
+    _asset: {fileID: 0}
+    _address: 
+    _useDirectReference: 0
   requiredUnlockableDef:
     address: 
     useDirectReference: 1
     asset: {fileID: 0}
+  forbiddenUnlock:
+    _asset: {fileID: 0}
+    _address: 
+    _useDirectReference: 0
   forbiddenUnlockableDef:
     address: 
     useDirectReference: 1
     asset: {fileID: 0}
+  requiredExpansionDefs: []
   requiredExpansions:
   - address: 
     useDirectReference: 1

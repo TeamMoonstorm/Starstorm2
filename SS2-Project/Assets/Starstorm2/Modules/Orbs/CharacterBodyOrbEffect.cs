@@ -17,7 +17,7 @@ namespace Moonstorm.Starstorm2.Orbs
 			GameObject bodyObject = BodyCatalog.GetBodyPrefab((BodyIndex)(Util.UintToIntMinusOne(base.GetComponent<EffectComponent>().effectData.genericUInt)));
 			CharacterBody body = bodyObject.GetComponent<CharacterBody>();
 
-			SS2Log.Info("bodyobject from orb: " + bodyObject + " | " + body.portraitIcon.name + " | ");
+			//SS2Log.Info("bodyobject from orb: " + bodyObject + " | " + body.portraitIcon.name + " | ");
 
 			Color color = ColorCatalog.GetColor(ColorCatalog.ColorIndex.Money);
 			this.trailToColor.startColor = this.trailToColor.startColor * color;

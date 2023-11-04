@@ -21561,6 +21561,7 @@ GameObject:
   - component: {fileID: 3282217448685749954}
   - component: {fileID: 3742524525833750799}
   - component: {fileID: 5690110274354815897}
+  - component: {fileID: 6443355916531715379}
   m_Layer: 0
   m_Name: NemMercBody
   m_TagString: Player
@@ -22226,6 +22227,20 @@ MonoBehaviour:
   maxTrackingDistance: 50
   maxTrackingAngle: 20
   trackerUpdateFrequency: 10
+--- !u!114 &6443355916531715379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8600173778514573585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -144590133, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+  requireEntitlementIfPlayerControlled: 0
 --- !u!1 &8609686412036953287
 GameObject:
   m_ObjectHideFlags: 0

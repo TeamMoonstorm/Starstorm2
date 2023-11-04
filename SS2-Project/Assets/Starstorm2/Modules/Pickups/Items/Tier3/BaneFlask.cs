@@ -44,29 +44,29 @@ namespace Moonstorm.Starstorm2.Items
             floorGloop = SS2Assets.LoadAsset<GameObject>("BaneGrayGoop", SS2Bundle.Items);
             //DotController.onDotInflictedServerGlobal += RefreshInsects;
         }
-         
-        //private void RefreshInsects(DotController dotController, ref InflictDotInfo inflictDotInfo)
-        //{
-        //    if (inflictDotInfo.dotIndex == DotIndex)
-        //    {
-        //        int i = 0;
-        //        int count = dotController.dotStackList.Count;
-        //
-        //        while (i < count)
-        //        {
-        //            if (dotController.dotStackList[i].dotIndex == DotIndex)
-        //            {
-        //                dotController.dotStackList[i].timer = Mathf.Max(dotController.dotStackList[i].timer, duration);
-        //            }
-        //            i++;
-        //        }
-        //    }
-        //}
 
-        public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver
+
+        public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver, IOnDamageDealtServerReceiver
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.BaneFlask;
+
+            public void OnDamageDealtServer(DamageReport damageReport)
+            { 
+                if(damageReport.victimBody.GetBuffCount(SS2Content.Buffs.BuffBane) < 1)
+                {
+                    var dotInfo = new InflictDotInfo() //add bane
+                    {
+                        attackerObject = body.gameObject,
+                        victimObject = damageReport.victimBody.gameObject,
+                        dotIndex = Buffs.Bane.index,
+                        duration = debuffDuration,
+                        damageMultiplier = stack
+                    };
+                    DotController.InflictDot(ref dotInfo);
+                }
+
+            }
 
             public void OnKilledOtherServer(DamageReport damageReport)
             {
@@ -187,15 +187,16 @@ namespace Moonstorm.Starstorm2.Items
                             HurtBox hurtBox = baneAOEHurtBoxBuffer[i];
                             if (hurtBox.healthComponent)
                             {
-                                var dotInfo = new InflictDotInfo() //add bane
-                                {
-                                    attackerObject = body.gameObject,
-                                    victimObject = hurtBox.healthComponent.gameObject,
-                                    dotIndex = Buffs.Bane.index,
-                                    duration = debuffDuration,
-                                    damageMultiplier = stack
-                                };
-                                DotController.InflictDot(ref dotInfo);
+
+                                //var dotInfo = new InflictDotInfo() //add bane
+                                //{
+                                //    attackerObject = body.gameObject,
+                                //    victimObject = hurtBox.healthComponent.gameObject,
+                                //    dotIndex = Buffs.Bane.index,
+                                //    duration = debuffDuration,
+                                //    damageMultiplier = stack
+                                //};
+                                //DotController.InflictDot(ref dotInfo);
 
                                 foreach(var dot in uniqueDots) //add all dots
                                 {

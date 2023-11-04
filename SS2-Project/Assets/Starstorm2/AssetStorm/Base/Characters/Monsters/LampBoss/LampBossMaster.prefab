@@ -260,7 +260,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1255514408908605}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
@@ -275,7 +275,7 @@ MonoBehaviour:
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
   minDistance: 0
-  maxDistance: 15
+  maxDistance: 8
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
@@ -283,10 +283,10 @@ MonoBehaviour:
   moveTargetType: 0
   activationRequiresTargetLoS: 0
   activationRequiresAimTargetLoS: 0
-  activationRequiresAimConfirmation: 0
+  activationRequiresAimConfirmation: 1
   movementType: 3
   moveInputScale: 1
-  aimType: 1
+  aimType: 2
   ignoreNodeGraph: 0
   shouldSprint: 0
   shouldFireEquipment: 0
@@ -294,7 +294,7 @@ MonoBehaviour:
   buttonPressType: 1
   driverUpdateTimerOverride: 4
   resetCurrentEnemyOnNextDriverSelection: 0
-  noRepeat: 0
+  noRepeat: 1
   nextHighPriorityOverride: {fileID: 0}
 --- !u!114 &5896886204542518088
 MonoBehaviour:
@@ -317,19 +317,19 @@ MonoBehaviour:
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 10
-  maxDistance: 25
+  minDistance: 5
+  maxDistance: 45
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
   maxTimesSelected: -1
   moveTargetType: 0
-  activationRequiresTargetLoS: 1
+  activationRequiresTargetLoS: 0
   activationRequiresAimTargetLoS: 0
-  activationRequiresAimConfirmation: 0
+  activationRequiresAimConfirmation: 1
   movementType: 2
-  moveInputScale: 0.6
-  aimType: 1
+  moveInputScale: 0.8
+  aimType: 2
   ignoreNodeGraph: 0
   shouldSprint: 0
   shouldFireEquipment: 0
@@ -360,21 +360,21 @@ MonoBehaviour:
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 20
-  maxDistance: 60
+  minDistance: 40
+  maxDistance: 90
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
   maxTimesSelected: -1
   moveTargetType: 0
   activationRequiresTargetLoS: 1
-  activationRequiresAimTargetLoS: 0
-  activationRequiresAimConfirmation: 0
+  activationRequiresAimTargetLoS: 1
+  activationRequiresAimConfirmation: 1
   movementType: 1
   moveInputScale: 1
-  aimType: 1
+  aimType: 2
   ignoreNodeGraph: 0
-  shouldSprint: 0
+  shouldSprint: 1
   shouldFireEquipment: 0
   shouldTapButton: 0
   buttonPressType: 2
@@ -460,7 +460,7 @@ MonoBehaviour:
   moveInputScale: 2
   aimType: 1
   ignoreNodeGraph: 0
-  shouldSprint: 0
+  shouldSprint: 1
   shouldFireEquipment: 0
   shouldTapButton: 0
   buttonPressType: 0
