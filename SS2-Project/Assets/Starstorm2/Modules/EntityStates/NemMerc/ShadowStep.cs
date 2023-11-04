@@ -42,15 +42,8 @@ namespace EntityStates.NemMerc
         {
             base.OnEnter();
 
-            //vfx
-            // overlay material
-            //need to fix teleport near walls
-            // still fucking teleports to 0,0 sometimes. when target disappears on the smae frame. (?)
-            // ^^^ MOSTLY happens to the clone version which is separate
-
-            base.StartAimMode();
-            base.PlayAnimation("FullBody, Override", "ShadowStep", "Utility.playbackRate", baseDuration);
-            Util.PlaySound("Play_nemmerc_utility_enter", base.gameObject);
+            // still fucking teleports to 0,0 sometimes
+            
             NemMercTracker tracker = base.GetComponent<NemMercTracker>();
             this.target = tracker.GetTrackingTarget();
             if (!this.target)
@@ -59,6 +52,10 @@ namespace EntityStates.NemMerc
                 this.activatorSkillSlot.AddOneStock();
                 return;
             }
+
+            base.StartAimMode();
+            base.PlayAnimation("FullBody, Override", "ShadowStep", "Utility.playbackRate", baseDuration);
+            Util.PlaySound("Play_nemmerc_utility_enter", base.gameObject);
 
             this.duration = ShadowStep.baseDuration; //movespeedstat ??
 

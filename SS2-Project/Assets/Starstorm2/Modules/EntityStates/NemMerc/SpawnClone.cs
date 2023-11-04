@@ -85,7 +85,7 @@ namespace EntityStates.NemMerc
 
         }
 
-        public static bool ItemFilter(ItemIndex itemIndex) // NEEDS CONFIG 
+        public static bool ItemFilter(ItemIndex itemIndex)
         {
             ItemDef itemDef = ItemCatalog.GetItemDef(itemIndex);
             return itemIndex != RoR2Content.Items.ExtraLife.itemIndex && itemIndex != DLC1Content.Items.ExtraLifeVoid.itemIndex;
@@ -152,6 +152,8 @@ namespace EntityStates.NemMerc
             
 
         }
+
+       
 
     }
 }
