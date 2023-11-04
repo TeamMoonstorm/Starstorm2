@@ -20,13 +20,35 @@ namespace EntityStates.Knight
         private bool hasSpun;
         private GameObject wardInstance;
 
+
+        public static float airControl;
+        public static float upwardVelocity;
+        public static float forwardVelocity;
+        public static float minimumY;
+        public static float aimVelocity;
+
+
         public override void OnEnter()
         {
             base.OnEnter();
             hasBuffed = false;
             hasSpun = false;
 
+            characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
             animator = GetModelAnimator();
+
+            Vector3 direction = GetAimRay().direction;
+
+            if (isAuthority)
+            {
+                characterBody.isSprinting = true;
+                direction.y = Mathf.Max(direction.y, minimumY);
+                Vector3 a = direction.normalized * aimVelocity * moveSpeedStat;
+                Vector3 b = Vector3.up * upwardVelocity;
+                Vector3 b2 = new Vector3(direction.x, 0f, direction.z).normalized * forwardVelocity;
+                characterMotor.Motor.ForceUnground();
+                characterMotor.velocity = a + b + b2;
+            }
         }
 
         public override void FixedUpdate()
@@ -50,6 +72,13 @@ namespace EntityStates.Knight
                     SmallHop(characterMotor, hopVelocity);
                 }
             }
+        }
+
+
+        public override void OnExit()
+        {
+            characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage;
+            base.OnExit();
         }
 
         public override void PlayAnimation()

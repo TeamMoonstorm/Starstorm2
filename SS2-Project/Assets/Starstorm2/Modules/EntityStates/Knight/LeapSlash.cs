@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace EntityStates.Knight
 {
+    // TODO: Looks like this is no longer being used.
     public class LeapSlash : BaseState
     {
         public static float baseDamageCoefficient;
