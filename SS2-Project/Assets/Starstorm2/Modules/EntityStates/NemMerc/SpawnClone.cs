@@ -121,15 +121,15 @@ namespace EntityStates.NemMerc
                     {
                         body.GetComponent<NemMercCloneTracker>().ownerTracker = this.tracker;
 
-                        //COPY BAND COOLDOWNS
-                        // SHOULD PROBABLY JUST DISABLE BANDS LMAO
-                        float ringcd = base.characterBody.GetBuffCount(RoR2Content.Buffs.ElementalRingsCooldown);
-                        int num12 = 1; //  c v
-                        while ((float)num12 <= ringcd)
-                        {
-                            body.AddTimedBuff(RoR2Content.Buffs.ElementalRingsCooldown, (float)num12);
-                            num12++;
-                        }
+                        ////COPY BAND COOLDOWNS
+                        //// SHOULD PROBABLY JUST DISABLE BANDS LMAO
+                        //float ringcd = base.characterBody.GetBuffCount(RoR2Content.Buffs.ElementalRingsCooldown);
+                        //int num12 = 1; //  c v
+                        //while ((float)num12 <= ringcd)
+                        //{
+                        //    body.AddTimedBuff(RoR2Content.Buffs.ElementalRingsCooldown, (float)num12);
+                        //    num12++;
+                        //}
 
 
                         //COPY SKILL STOCK/COOLDOWNS

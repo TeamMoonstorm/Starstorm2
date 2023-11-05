@@ -7377,70 +7377,6 @@ Transform:
   m_Father: {fileID: 5070359271281152475}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4469836479486077910
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2457605205375993106}
-  - component: {fileID: 3352084762809693769}
-  - component: {fileID: 1401259172006083683}
-  m_Layer: 12
-  m_Name: MainHurtbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2457605205375993106
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4469836479486077910}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.26, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 5070359271281152475}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &3352084762809693769
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4469836479486077910}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.41
-  m_Height: 1.8321164
-  m_Direction: 1
-  m_Center: {x: 0, y: -0.16853368, z: 0.0011866987}
---- !u!114 &1401259172006083683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4469836479486077910}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 0}
-  isBullseye: 1
-  isSniperTarget: 0
-  damageModifier: 0
-  hurtBoxGroup: {fileID: 1527485740372576500}
-  indexInGroup: 0
 --- !u!1 &4494695340667718237
 GameObject:
   m_ObjectHideFlags: 0
@@ -7811,7 +7747,6 @@ GameObject:
   - component: {fileID: 7118235926632134558}
   - component: {fileID: 414777864887008250}
   - component: {fileID: 7843532820161677302}
-  - component: {fileID: 1527485740372576500}
   - component: {fileID: 1447505728378220437}
   - component: {fileID: 7935458370005383695}
   - component: {fileID: 6499370761150416017}
@@ -7839,7 +7774,6 @@ Transform:
   - {fileID: 7867703057076040046}
   - {fileID: 2829925997591196796}
   - {fileID: 4859085550030880499}
-  - {fileID: 2457605205375993106}
   m_Father: {fileID: 4711602042566521901}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7924,7 +7858,7 @@ MonoBehaviour:
   - name: Muzzle
     transform: {fileID: 5895603747019636471}
   - name: MainHurtbox
-    transform: {fileID: 2457605205375993106}
+    transform: {fileID: 0}
   - name: DashEffect
     transform: {fileID: 0}
 --- !u!114 &6051624393580865757
@@ -8107,22 +8041,6 @@ MonoBehaviour:
   skins:
   - {fileID: 11400000, guid: fce2219708ddbb0499ac302a36929286, type: 2}
   - {fileID: 11400000, guid: 7b89a2afe815acd4b851f64629c8b8d4, type: 2}
---- !u!114 &1527485740372576500
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5070359271281380795}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1792105662, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hurtBoxes:
-  - {fileID: 1401259172006083683}
-  mainHurtBox: {fileID: 1401259172006083683}
-  bullseyeCount: 1
 --- !u!114 &1447505728378220437
 MonoBehaviour:
   m_ObjectHideFlags: 0

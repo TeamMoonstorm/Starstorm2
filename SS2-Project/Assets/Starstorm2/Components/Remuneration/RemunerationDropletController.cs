@@ -51,7 +51,8 @@ namespace Moonstorm.Starstorm2.Components
 			this.stopwatch -= Time.fixedDeltaTime;
 			if(this.stopwatch <= 0 && shop)
             {
-
+				this.shop.FailDroplet(this);
+				Destroy(base.gameObject);
             }
         }
 

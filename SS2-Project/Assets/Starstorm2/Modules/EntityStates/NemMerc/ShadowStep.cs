@@ -38,12 +38,16 @@ namespace EntityStates.NemMerc
         private Vector3 lastKnownTargetPosition;
         private Vector3 targetSafe;
         private GameObject bossEffect;
+
+        [NonSerialized]
+        public static bool FUCKERTESTINGXDDDDDDDDDDDDDDDDDDDDD = true;
         public override void OnEnter()
         {
             base.OnEnter();
 
             // still fucking teleports to 0,0 sometimes
-            
+            this.duration = ShadowStep.baseDuration; //movespeedstat ??
+
             NemMercTracker tracker = base.GetComponent<NemMercTracker>();
             this.target = tracker.GetTrackingTarget();
             if (!this.target)
@@ -57,7 +61,7 @@ namespace EntityStates.NemMerc
             base.PlayAnimation("FullBody, Override", "ShadowStep", "Utility.playbackRate", baseDuration);
             Util.PlaySound("Play_nemmerc_utility_enter", base.gameObject);
 
-            this.duration = ShadowStep.baseDuration; //movespeedstat ??
+            
 
             this.teleportStartPosition = base.transform.position;
             this.UpdateTarget();
@@ -94,7 +98,6 @@ namespace EntityStates.NemMerc
             {
                 this.characterModel.invisibilityCount++;
             }
-
             if(ShadowStep.blinkPrefab)
             {
                 EffectManager.SimpleEffect(blinkPrefab, base.characterBody.corePosition, Util.QuaternionSafeLookRotation(teleportTarget - teleportStartPosition), false);
