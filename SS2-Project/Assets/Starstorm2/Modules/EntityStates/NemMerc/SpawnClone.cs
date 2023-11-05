@@ -110,13 +110,21 @@ namespace EntityStates.NemMerc
                 masterPrefab = hologramPrefab,
                 position = position,
                 rotation = base.characterBody.transform.rotation,
-                inventoryToCopy = copyInventory ? base.characterBody.inventory : null,
-                inventoryItemCopyFilter = ItemFilter,
+                inventoryToCopy = null,//copyInventory ? base.characterBody.inventory : null,
+                //inventoryItemCopyFilter = ItemFilter,
                 summonerBodyObject = base.gameObject,
                 loadout = loadout,
                 preSpawnSetupCallback = (master) =>
                 {
                     master.gameObject.AddComponent<MasterSuicideOnTimer>().lifeTimer = cloneLifetime;
+
+                    // HAVE TO DO THIS MANUALLY. MasterSummon.inventoryItemCopyFilter does NOTHING! HEEHAHAHAEHEAH! GOOD ONE HOPO!!!!!!!!!!
+                    master.inventory.itemAcquisitionOrder.Clear();
+                    int[] array = master.inventory.itemStacks;
+                    int num = 0;
+                    HG.ArrayUtils.SetAll<int>(array, num);
+                    master.inventory.AddItemsFrom(base.characterBody.inventory, ItemFilter);
+
                     master.onBodyStart += (body) =>
                     {
                         body.GetComponent<NemMercCloneTracker>().ownerTracker = this.tracker;
@@ -132,16 +140,17 @@ namespace EntityStates.NemMerc
                         //}
 
 
-                        //COPY SKILL STOCK/COOLDOWNS
-                        // (DOESNT FUCKING WORK ?????????????????????????????????????????????????????))))))))))))))))))))))))
-                        body.skillLocator.primary.stock = base.skillLocator.primary.stock;
-                        body.skillLocator.primary.rechargeStopwatch = base.skillLocator.primary.rechargeStopwatch;
-                        body.skillLocator.secondary.stock = base.skillLocator.secondary.stock;
-                        body.skillLocator.secondary.rechargeStopwatch = base.skillLocator.secondary.rechargeStopwatch;
-                        body.skillLocator.utility.stock = base.skillLocator.utility.stock;
-                        body.skillLocator.utility.rechargeStopwatch = base.skillLocator.utility.rechargeStopwatch;
-                        body.skillLocator.special.stock = base.skillLocator.special.stock;
-                        body.skillLocator.special.rechargeStopwatch = base.skillLocator.special.rechargeStopwatch;
+
+                        var bitch = body.gameObject.AddComponent<StupidFuckingCooldownSetter>();
+                        bitch.primaryStock = base.skillLocator.primary.stock;
+                        bitch.primaryStopwatch = base.skillLocator.primary.rechargeStopwatch;
+                        bitch.secondaryStock = base.skillLocator.secondary.stock;
+                        bitch.secondaryStopwatch = base.skillLocator.secondary.rechargeStopwatch;
+                        bitch.utilityStock = base.skillLocator.utility.stock;
+                        bitch.utilityStopwatch = base.skillLocator.utility.rechargeStopwatch;
+                        bitch.specialStock = base.skillLocator.special.stock;
+                        bitch.specialStopwatch = base.skillLocator.special.rechargeStopwatch;
+
                     };
                 }
             }.Perform().GetComponent<CloneInputBank>();

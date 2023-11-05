@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Moonstorm.Starstorm2
 {
     // overwrites damageInfo.attacker with a specified gameobject
-    // was going to use this for nemmerc but clone needs matching attackspeed and cooldowns
+    // not really tested. could be some unforeseen abuse cases
     // could be useful for chirr, instead of copying inventory. or anything else. idk
     public static class AttackerOverrideManager 
     {
