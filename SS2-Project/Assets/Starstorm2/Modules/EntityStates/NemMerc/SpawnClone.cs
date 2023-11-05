@@ -124,7 +124,7 @@ namespace EntityStates.NemMerc
                     int num = 0;
                     HG.ArrayUtils.SetAll<int>(array, num);
                     master.inventory.AddItemsFrom(base.characterBody.inventory, ItemFilter);
-
+                    master.inventory.CopyEquipmentFrom(base.characterBody.inventory);
                     master.onBodyStart += (body) =>
                     {
                         body.GetComponent<NemMercCloneTracker>().ownerTracker = this.tracker;
