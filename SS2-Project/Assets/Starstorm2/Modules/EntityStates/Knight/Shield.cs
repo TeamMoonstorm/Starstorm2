@@ -6,6 +6,7 @@ using RoR2.Skills;
 
 namespace EntityStates.Knight
 {
+    // Knight's Default Secondary
     public class Shield : BaseState
     {
         public static BuffDef shieldBuff;

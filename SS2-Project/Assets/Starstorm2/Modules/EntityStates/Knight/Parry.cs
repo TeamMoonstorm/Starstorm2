@@ -9,19 +9,24 @@ using UnityEngine.Networking;
 
 namespace EntityStates.Knight
 {
-    class Parry : BasicMeleeAttack
+    // Parry state that is entered/triggered from the bdKnightParryBuff code.
+    public class Parry : BasicMeleeAttack
     {
         public static float swingTimeCoefficient = 1f;
         [TokenModifier("SS2_KNIGHT_SHIELD_BASH_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
         public static float TokenModifier_dmgCoefficient => new ShieldPunch().damageCoefficient;
         public int swingSide;
 
+        private GenericSkill originalPrimarySkill;
+        private GenericSkill originalSecondarySkill;
+        private GenericSkill originalUtilitySkill;
+        private GenericSkill originalSpecialSkill;
+
         public override void OnEnter()
         {
             base.OnEnter();
 
             characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
-            characterBody.AddBuff(SS2Content.Buffs.bdKnightCharged);
 
             animator = GetModelAnimator();
         }

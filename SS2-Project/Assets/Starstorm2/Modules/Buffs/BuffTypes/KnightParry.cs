@@ -16,10 +16,12 @@ namespace Moonstorm.Starstorm2.Buffs
             [BuffDefAssociation]
             private static BuffDef GetBuffDef() => SS2Content.Buffs.bdParry;
 
+            // Called when the body with this buff takes damage
             public void OnIncomingDamageServer(DamageInfo damageInfo)
             {
                 if (damageInfo.attacker != body)
                 {
+                    // We want to ensure that Knight is the one taking damage
                     if (body.baseNameToken != "SS2_KNIGHT_BODY_NAME")
                         return;
 
@@ -28,6 +30,7 @@ namespace Moonstorm.Starstorm2.Buffs
                     SetStateOnHurt ssoh = damageInfo.attacker.GetComponent<SetStateOnHurt>();
                     if (ssoh)
                     {
+                        // Stun the enemy
                         Type state = ssoh.targetStateMachine.state.GetType();
                         if (state != typeof(StunState) && state != typeof(ShockState) && state != typeof(FrozenState))
                         {
@@ -35,22 +38,18 @@ namespace Moonstorm.Starstorm2.Buffs
                         }
                     }
 
-                    body.AddBuff(SS2Content.Buffs.bdFortified.buffIndex);
-                    body.AddBuff(SS2Content.Buffs.bdFortified.buffIndex);
-                    if (body.GetBuffCount(SS2Content.Buffs.bdFortified.buffIndex) > 3)
-                        body.SetBuffCount(SS2Content.Buffs.bdFortified.buffIndex, 3);
-
+                    // TODO: Should we have a custom sound for this?
                     Util.PlaySound("NemmandoDecisiveStrikeReady", gameObject);
 
-                    NetworkStateMachine nsm = body.GetComponent<NetworkStateMachine>();
-                    EntityStateMachine weaponEsm = nsm.stateMachines[1];
-                    weaponEsm.SetNextState(new EntityStates.Knight.Parry());
+                    EntityStateMachine weaponEsm = EntityStateMachine.FindByCustomName(gameObject, "Weapon");
+                    if (weaponEsm != null)
+                    {
+                        weaponEsm.SetNextState(new EntityStates.Knight.Parry());
+                    }
 
                     Destroy(this);
                 }
             }
-
-            //to-do: implement behaviour lol
         }
     }
 }

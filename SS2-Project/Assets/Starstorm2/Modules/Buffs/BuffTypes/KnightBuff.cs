@@ -21,7 +21,7 @@ namespace Moonstorm.Starstorm2.Buffs
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
             {
                 args.attackSpeedMultAdd += 0.4f;
-                args.moveSpeedMultAdd += 0.4f;
+                args.damageMultAdd += 0.4f;
             }
         }
     }
