@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 8142481833274158006}
   - component: {fileID: 2251618351443202947}
   - component: {fileID: 6612899463013399034}
+  - component: {fileID: 7275770626274891369}
   - component: {fileID: 627465162431071110}
   - component: {fileID: 5093032342421688179}
   - component: {fileID: 5668635971825929985}
@@ -293,6 +294,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customName: Shield
+  initialStateType:
+    _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  mainStateType:
+    _typeName: RoR2.RouletteChestController+Idle, RoR2, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+--- !u!114 &7275770626274891369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4655597582345404589}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1297580292, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customName: SkillSwap
   initialStateType:
     _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   mainStateType:
