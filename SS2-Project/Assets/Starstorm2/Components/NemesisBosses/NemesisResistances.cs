@@ -1,11 +1,35 @@
 ﻿using R2API.Utils;
 using RoR2;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Moonstorm.Starstorm2.Components
 {
     public class NemesisResistances : MonoBehaviour
     {
+        private CharacterBody body;
+
+        private void Awake()
+        {
+            this.body = base.GetComponent<CharacterBody>();
+            this.body.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
+        }
+        private void OnEnable()
+        {
+            On.RoR2.FogDamageController.EvaluateTeam += RemoveSelf;
+        }
+        private void OnDisable()
+        {
+            On.RoR2.FogDamageController.EvaluateTeam -= RemoveSelf;
+        }
+        // kinda cringe but theres no other way to do it afaict
+        private void RemoveSelf(On.RoR2.FogDamageController.orig_EvaluateTeam orig, FogDamageController self, TeamIndex teamIndex)
+        {
+            orig(self, teamIndex);
+            if (this.body && self.characterBodyToStacks.ContainsKey(this.body))
+                self.characterBodyToStacks.Remove(this.body);
+        }
+
         static NemesisResistances()
         {
             On.RoR2.HealthComponent.Suicide += ResistVoid;

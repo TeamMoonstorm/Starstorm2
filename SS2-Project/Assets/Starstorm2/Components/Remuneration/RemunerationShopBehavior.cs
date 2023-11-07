@@ -106,6 +106,31 @@ namespace Moonstorm.Starstorm2.Components
         }
 
 
+        private bool hasFailed;
+        public void FailDroplet(RemunerationDropletController droplet)
+        {
+            if(!hasFailed)
+            {
+                this.hasFailed = true;
+                if (NetworkServer.active)
+                {
+                    Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = "SS2_ITEM_REMUNERATION_FAILURE" });
+                    this.OnAllChoicesDiscovered();
+
+                    EffectData data = new EffectData
+                    {
+                        origin = droplet.transform.position,
+                        rotation = Quaternion.identity,
+                        scale = effectScale,
+                    };
+                    EffectManager.SpawnEffect(deleteEffectPrefab, data, true);
+                    Destroy(droplet.gameObject);
+                }
+                    
+            }         
+        }
+
+
 
     }
 }
