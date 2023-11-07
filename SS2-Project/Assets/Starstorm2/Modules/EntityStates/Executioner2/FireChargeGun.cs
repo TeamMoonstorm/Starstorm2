@@ -7,6 +7,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
+using static Moonstorm.Starstorm2.Items.ShackledLamp;
 
 namespace EntityStates.Executioner2
 {
@@ -48,6 +49,8 @@ namespace EntityStates.Executioner2
         private float duration;
         private List<HurtBox> targets;
 
+        private LampBehavior lamp = null;
+
         public override void OnEnter()
         {
             base.OnEnter();
@@ -69,6 +72,8 @@ namespace EntityStates.Executioner2
             }
 
             skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
+
+            lamp = GetModelTransform().GetComponent<CharacterModel>().body.GetComponent<LampBehavior>();
 
             if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
             {
@@ -126,6 +131,9 @@ namespace EntityStates.Executioner2
                 Ray ray = GetAimRay();
 
                 Vector3 vec = ray.direction;
+
+                if (lamp)
+                    lamp.IncrementFire();
 
                 if (useAimAssist)
                 {
@@ -235,6 +243,7 @@ namespace EntityStates.Executioner2
                 }
 
                 bulletAttack.Fire();
+
 
                 if (skillLocator.secondary.stock == 1)
                 {

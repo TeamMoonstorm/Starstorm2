@@ -1,6 +1,7 @@
 ﻿using RoR2;
 using RoR2.Items;
 using RoR2.Projectile;
+using RoR2.Skills;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace Moonstorm.Starstorm2.Items
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ShackledLamp", SS2Bundle.Items);
 
-        public sealed class Behavior : BaseItemBodyBehavior
+        public sealed class LampBehavior : BaseItemBodyBehavior
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.ShackledLamp;
@@ -27,7 +28,10 @@ namespace Moonstorm.Starstorm2.Items
                 body.onSkillActivatedAuthority += ChainEffect;
                 lampDisplay = body.modelLocator.modelTransform.GetComponent<CharacterModel>().GetItemDisplayObjects(SS2Content.Items.ShackledLamp.itemIndex);
                 if (lampDisplay != null)
-                    displayPos = lampDisplay[0].transform.FindChild("mdlLamp").transform;
+                {
+                    SS2Log.Info(lampDisplay[0].name + " | ");
+                    displayPos = lampDisplay[0].transform.Find("mdlLamp").transform;
+                }
             }
 
             private void ChainEffect(GenericSkill skill)
@@ -35,6 +39,15 @@ namespace Moonstorm.Starstorm2.Items
                 if (!body.skillLocator.primary.Equals(skill))
                     return;
 
+                //fuck it 
+                if (skill.skillDef.skillIndex == SkillCatalog.FindSkillIndexByName("ExecutionerFireIonGun"))
+                    return;
+
+                IncrementFire();
+            }
+
+            public void IncrementFire()
+            {
                 attackCounter++;
                 if (attackCounter >= 5)
                 {
@@ -45,15 +58,17 @@ namespace Moonstorm.Starstorm2.Items
                     if (displayPos != null)
                         muzzlePos = displayPos.position;
                     ProjectileManager.instance.FireProjectile(
-                        projectilePrefab, 
-                        muzzlePos, 
-                        Util.QuaternionSafeLookRotation(body.inputBank.aimDirection), 
+                        projectilePrefab,
+                        muzzlePos,
+                        Util.QuaternionSafeLookRotation(body.inputBank.aimDirection),
                         body.gameObject,
-                        damage, 
-                        60f, 
+                        damage,
+                        60f,
                         Util.CheckRoll(body.crit, body.master));
                 }
             }
+
+
             private void OnDestroy()
             {
                 body.onSkillActivatedAuthority -= ChainEffect;
