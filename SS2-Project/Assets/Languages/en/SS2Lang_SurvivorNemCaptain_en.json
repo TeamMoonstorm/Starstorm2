@@ -1,28 +1,61 @@
 {
-  "strings": {
-    "SS2_NEMCAPTAIN_NAME": "Nemesis Captain",
-    "SS2_NEMCAPTAIN_SUBTITLE": "Down with the Ship",
-    "SS2_NEMCAPTAIN_DESCRIPTION": "The Nemesis Captain issues orders to control the battlefield and fight safely from behind his Adaptive Microbots.\n\n<color=#CCD3E0>< ! > Keep your cool.",
-    "SS2_NEMCAPTAIN_OUTRO_FLAVOR": "..and so he left, lighting up a fresh smoke.",
-    "SS2_NEMCAPTAIN_OUTRO_FAILURE": "..and so he returned, retired at last.",
-    "SS2_NEMCAPTAIN_LORE": "This planet sucks man.. *takes hit from cigar*",
+    "strings": {
+        "SS2_NEMCAPTAIN_NAME": "Nemesis Captain",
+        "SS2_NEMCAPTAIN_SUBTITLE": "Down with the Ship",
+        "SS2_NEMCAPTAIN_DESCRIPTION": "The Nemesis Captain issues orders to control the battlefield and fight safely from behind his Adaptive Microbots.\n\n<color=#CCD3E0>< ! > Keep your cool. Using Orders too quickly will build Stress, leaving you vulnerable.",
+        "SS2_NEMCAPTAIN_OUTRO_FLAVOR": "..and so he left, lighting up a fresh smoke.",
+        "SS2_NEMCAPTAIN_OUTRO_FAILURE": "..and so he vanished, retired at last.",
+        "SS2_NEMCAPTAIN_LORE": "This planet sucks man.. *takes hit from cigar*",
 
-    "SS2_NEMCAPTAIN_PASSIVE_NAME": "A War Without End",
-    "SS2_NEMCAPTAIN_PASSIVE_DESCRIPTION": "Prolonged exposure to combat builds <style=cIsHealth>stress</style>, lowering <style=cIsHealing>regeneration</style> and <style=cIsUtility>accuracy</style> as it builds. Stress is lowered away from enemies.",
+        "SS2_NEMCAPTAIN_STRESSPASSIVE_NAME": "idk what to call half of this stuff or how to present it to the player",
+        "SS2_NEMCAPTAIN_STRESSPASSIVE_DESC": "Gain <style=cIsHealth>Stress</style> while in danger. When Stress reaches maximum, temporarily become <style=cIsHealth>Overstressed</style>, reducing <style=cIsUtility>movement speed</style>, <style=cIsUtility>armor</style>, and <style=cIsDamage>damage</style>.",
 
-    "SS2_NEMCAPTAIN_STRESSPASSIVE_NAME": "Captain's Burden",
-    "SS2_NEMCAPTAIN_STRESSPASSIVE_DESC": "<style=cIsHealth>Stress</style> lowers <style=cIsHealth>health regeneration</style> and increases <style=cIsDamage>weapon spread</style> and <style=cIsDamage>reload speed</style>. At full <style=cIsHealth>Stress</style>, become <style=cIsHealth>Overstressed</style>.",
+        "SS2_NEMCAPTAIN_KEYWORD_STRESS": "<style=cKeywordName>Stress</style><style=cSub>Gain Stress by being surrounded by enemies, receiving damage, or using Orders. Reduce Stress by dealing Critical Strikes, healing, killing enemies, using certain Orders, and being out of combat.",
+        "SS2_NEMCAPTAIN_KEYWORD_OVERSTRESS": "<style=cKeywordName>Overstress</style><style=cSub>Become subjected to the effects of maximum Stress, as well as -30% movement speed, -20 armor, and -50% damage until the Stress meter counts down to 0.",
 
-    "SS2_NEMCAPTAIN_KEYWORD_STRESS": "<style=cKeywordName>Stress</style><style=cSub>Gain Stress by being in combat or receiving damage. Reduce Stress by dealing Critical Strikes, healing, killing enemies, and being out of combat.",
-    "SS2_NEMCAPTAIN_KEYWORD_OVERSTRESS":  "<style=cKeywordName>Overstress</style><style=cSub>Become subjected to the effects of maximum Stress, as well as -40 armor, until the Stress meter counts down to 0.",
+        "SS2_NEMCAPTAIN_PRIMARY_NAME": "Standard Issue",
+        "SS2_NEMCAPTAIN_PRIMARY_DESCRIPTION": "Rapidly fire for <style=cIsDamage>90% damage</style> per bullet. Can hold up to 20 bullets.",
 
-    "SS2_NEMCAPTAIN_PRIMARY_NAME": "Standard Issue",
-    "SS2_NEMCAPTAIN_PRIMARY_DESCRIPTION": "Rapidly fire for <style=cIsDamage>90% damage</style> per bullet. Can hold up to 20 bullets.",
+        "SS2_NEMCAPTAIN_SECONDARY_NAME": "Personal Backup",
+        "SS2_NEMCAPTAIN_SECONDARY_DESCRIPTION": "<style=cIsDamage>Stunning</style>. Arm your cane rifle, then fire a shot for <style=cIsDamage>680% damage</style>.",
 
-    "SS2_NEMCAPTAIN_SECONDARY_NAME": "Personal Backup",
-    "SS2_NEMCAPTAIN_SECONDARY_DESCRIPTION": "<style=cIsDamage>Stunning</style>. Arm your cane rifle, then fire a shot for <style=cIsDamage>680% damage</style>.",
+        "SS2_NEMCAPTAIN_PUNCH_NAME": "fujin",
+        "SS2_NEMCAPTAIN_PUNCH_DESCRIPTION": "<style=cIsDamage>Stunning</style>. Throw a punch in front for <style=cIsDamage>150% damage</style>.",
 
-    "SS2_NEMCAPTAIN_ORDERS_NAME": "Adaptive Microbots",
-    "SS2_NEMCAPTAIN_ORDERS_DESCRIPTION": "Deploy 1 of 4 currently held <style=cIsUtility>Microbot Orders</style>. Orders are <style=cIsUtility>discarded</style> after use, and after all 4 are used, <style=cIsUtility>gain 4 more</style>, but also gain <style=cIshealth>35 Stress</style>. <style=cIsHealth>Can not be used while overstressed</style>.",
-  }
+        "SS2_NEMCAPTAIN_HAIDARA_NAME": "raijin",
+        "SS2_NEMCAPTAIN_HAIDARA_DESCRIPTION": "<style=cIsDamage>Shocking</style>. Discharge a thunderbolt in front for <style=cIsDamage>440% damage</style>.",
+
+        "SS2_NEMCAPTAIN_ORDERS_NAME": "Adaptive Microbots",
+        "SS2_NEMCAPTAIN_ORDERS_DESCRIPTION": "Deploy 1 of 4 <style=cIsUtility>Microbot Orders</style>. Using Orders increases <style=cIsHealth>Stress</style>. <style=cIsUtility>Hold the key</style> of an Order to <style=cIsUtility>discard</style> it.",
+
+        "SS2_NEMCAPTAIN_ORDERNULL_NAME": "Refresh Order",
+        "SS2_NEMCAPTAIN_ORDERNULL_DESCRIPTION": "Devise a new plan of attack, slightly increasing <style=cIsHealth>Stress</style>.",
+
+        "SS2_NEMCAPTAIN_ORDERSTRIKE_NAME": "ORDER: Strike",
+        "SS2_NEMCAPTAIN_ORDERSTRIKE_DESCRIPTION": "<style=cIsUtility>Stunning</style>. Aim a Microbot and fire a laser, <style=cIsDamage>exploding</style> for <style=cIsDamage>1400% damage</style>.",
+
+        "SS2_NEMCAPTAIN_ORDERSTRIKETRIPLE_NAME": "ORDER: Strike 3x",
+        "SS2_NEMCAPTAIN_ORDERSTRIKETRIPLE_DESCRIPTION": "<style=cIsUtility>Stunning</style>. Aim a Microbot and fire a laser, <style=cIsDamage>exploding</style> for <style=cIsDamage>600% damage</style>. <style=cIsUtility>Can be fired 3 times.</style>",
+
+        "SS2_NEMCAPTAIN_ORDERSTRIKEFROST_NAME": "ORDER: Strike PSI",
+        "SS2_NEMCAPTAIN_ORDERSTRIKEFROST_DESCRIPTION": "<style=cIsUtility>Freezing</style>. Aim a Microbot and fire a laser, <style=cIsDamage>exploding</style> for <style=cIsDamage>1100% damage</style>.",
+
+        "SS2_NEMCAPTAIN_ORDERSTRIKESHOCK_NAME": "ORDER: Strike KOPPA",
+        "SS2_NEMCAPTAIN_ORDERSTRIKESHOCK_DESCRIPTION": "<style=cIsUtility>Shocking</style>. Aim a Microbot and fire a laser, <style=cIsDamage>exploding</style> for <style=cIsDamage>900% damage</style>.",
+
+        "SS2_NEMCAPTAIN_ORDERREGEN_NAME": "ORDER: Administer Relaxant",
+        "SS2_NEMCAPTAIN_ORDERREGEN_DESCRIPTION": "Temporarily increase the rate at which Stress decreases for <style=cIsUtility>15 seconds</style>.",
+
+        "SS2_NEMCAPTAIN_ORDERREDUCE_NAME": "ORDER: Administer Stimulant",
+        "SS2_NEMCAPTAIN_ORDERREDUCE_DESCRIPTION": "Temporarly decrease the amount of Stress gained from all sources by <style=cIsUtility>50%</style> for <style=cIsUtility>10 seconds.</style>",
+
+        "SS2_NEMCAPTAIN_ORDERRECOVER_NAME": "ORDER: Total Reset",
+        "SS2_NEMCAPTAIN_ORDERRECOVER_DESCRIPTION": "Massively decrease your current amount of stress, while also <style=cIsUtility>discarding all other Orders</style>. Stress removed is increased per Order lost.",
+
+        "SS2_NEMCAPTAIN_ORDERHEAL_NAME": "ORDER: Invigoration Field",
+        "SS2_NEMCAPTAIN_ORDERHEAL_DESCRIPTION": "<style=cIsHealing>Heal</style> nearby allies for </style>6%</style> of their <style=cIsHealth>maximum health</style> every second, and also grant <style=cIsUtility>50 armor</style> and <style=cIsDamage>+20% attack speed</style> for <style=cIsUtility>12 seconds</style.",
+
+        "SS2_NEMCAPTAIN_ORDERGRAVITY_NAME": "ORDER: Gravity Well",
+        "SS2_NEMCAPTAIN_ORDERGRAVITY_DESCRIPTION": "<style=cIsUtility>Pull</syle> nearby enemies for <style=cIsUtility>8 seconds</style>."
+    }
 }

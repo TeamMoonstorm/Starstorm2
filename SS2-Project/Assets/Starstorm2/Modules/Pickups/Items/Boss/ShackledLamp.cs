@@ -2,7 +2,9 @@
 using RoR2.Items;
 using RoR2.Projectile;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
+using System.Linq;
 
 namespace Moonstorm.Starstorm2.Items
 {
@@ -10,6 +12,27 @@ namespace Moonstorm.Starstorm2.Items
     public sealed class ShackledLamp : ItemBase
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ShackledLamp", SS2Bundle.Items);
+        public ItemDef.Pair lampPair;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            lampPair.itemDef1 = SS2Content.Items.ShackledLamp;
+            lampPair.itemDef2 = DLC1Content.Items.VoidMegaCrabItem;
+
+            //ItemCatalog.itemRelationships[DLC1Content.ItemRelationshipTypes.ContagiousItem].AddIfNotInCollection(lampPair); //why isnt it possible...
+
+            /*List<ItemDef.Pair> lampPairs = new List<ItemDef.Pair>();
+            lampPairs.Add(lampPair);
+            var voidPairs = ItemCatalog.itemRelationships[DLC1Content.ItemRelationshipTypes.ContagiousItem];
+            ItemCatalog.itemRelationships[DLC1Content.ItemRelationshipTypes.ContagiousItem] = voidPairs.Union(lampPairs).ToArray();*/
+
+            //something comes up null when doing this
+            //it should probably be its own base or some shit for future additions anyway
+            //will investigate more soon:tm:
+        }
+
 
         public sealed class Behavior : BaseItemBodyBehavior
         {

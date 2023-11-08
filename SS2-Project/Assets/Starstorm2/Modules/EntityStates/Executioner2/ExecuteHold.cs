@@ -25,10 +25,10 @@ namespace EntityStates.Executioner2
         public static GameObject areaIndicatorOOB;
 
         [HideInInspector]
-        public static GameObject areaIndicatorInstance;
+        public GameObject areaIndicatorInstance;
 
         [HideInInspector]
-        public static GameObject areaIndicatorInstanceOOB;
+        public GameObject areaIndicatorInstanceOOB;
 
         private ExecutionerController exeController;
         private bool controlledExit = false;
