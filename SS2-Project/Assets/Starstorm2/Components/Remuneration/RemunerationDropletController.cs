@@ -29,6 +29,7 @@ namespace Moonstorm.Starstorm2.Components
 
 		public RemunerationShopBehavior shop;
 
+		private float stopwatch = 5f;
 		public void OnCollisionEnter(Collision collision)
 		{
 			if (NetworkServer.active && this.alive)
@@ -45,8 +46,17 @@ namespace Moonstorm.Starstorm2.Components
 			}
 		}
 
+        private void FixedUpdate()
+        {
+			this.stopwatch -= Time.fixedDeltaTime;
+			if(this.stopwatch <= 0 && shop)
+            {
+				this.shop.FailDroplet(this);
+				Destroy(base.gameObject);
+            }
+        }
 
-		private void Start()
+        private void Start()
 		{
 			//always void droplet
 			PickupDef pickupDef = PickupCatalog.GetPickupDef(PickupCatalog.FindPickupIndex(DLC1Content.Items.CloverVoid.itemIndex));

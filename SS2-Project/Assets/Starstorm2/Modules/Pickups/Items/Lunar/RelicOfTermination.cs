@@ -54,6 +54,8 @@ namespace Moonstorm.Starstorm2.Items
         public static GameObject globalMarkEffectTwo;
         public static GameObject spawnRock1VFX;
         public static GameObject spawnRock2VFX;
+
+        public static GameObject deathHalo;
         
         public static GameObject markEffect;
         public static GameObject failEffect;
@@ -76,6 +78,8 @@ namespace Moonstorm.Starstorm2.Items
             markEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationTargetMark", SS2Bundle.Items);
             failEffect = SS2Assets.LoadAsset<GameObject>("NemmandoScepterSlashAppear", SS2Bundle.Nemmando);
             buffEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationBuffEffect", SS2Bundle.Items);
+
+            deathHalo = SS2Assets.LoadAsset<GameObject>("TerminationDeathHalo", SS2Bundle.Items);
 
             globalMarkEffectTwo = SS2Assets.LoadAsset<GameObject>("TerminationPositionIndicator", SS2Bundle.Items);
             spawnRock1VFX = SS2Assets.LoadAsset<GameObject>("TerminationDebris1", SS2Bundle.Items);
@@ -140,7 +144,14 @@ namespace Moonstorm.Starstorm2.Items
             if (token)
             {
                 var body = token.owner.body;
-                
+
+                //SS2Log.Info("Attacker: " + obj.attacker); //attacker is ArenaMissionController in void fields, none for jellyfish suicide
+                //SS2Log.Info("AttackerBody: " + obj.attackerBody);
+                //SS2Log.Info("AttackerIndex: " + obj.attackerTeamIndex);
+
+                if(obj.attackerTeamIndex == TeamIndex.None)
+                    return;
+
                 var inital = token.initalTime;
                 var now = Time.time;
                 if (body.HasBuff(SS2Content.Buffs.BuffTerminationFailed))
@@ -228,12 +239,12 @@ namespace Moonstorm.Starstorm2.Items
                         PickupDropletController.CreatePickupDroplet(ind, obj.victim.transform.position, vector);
                     }
 
-                    EffectData effectData = new EffectData
-                    {
-                        origin = obj.victimBody.transform.position,
-                        scale = .5f// * (float)obj.victimBody.hullClassification
-                    };
-                    EffectManager.SpawnEffect(spawnRock1VFX, effectData, transmit: true);
+                    //EffectData effectData = new EffectData
+                    //{
+                    //    origin = obj.victimBody.transform.position,
+                    //    scale = .5f// * (float)obj.victimBody.hullClassification
+                    //};
+                    //EffectManager.SpawnEffect(deathHalo, effectData, transmit: true);
                 }
 
             }

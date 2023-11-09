@@ -35,7 +35,8 @@ namespace Moonstorm.Starstorm2.ScriptableObjects
 				if (skillSlot.stateMachine && !skillSlot.stateMachine.HasPendingState() && skillSlot.stateMachine.CanInterruptState(this.reloadInterruptPriority))
 				{
 					instanceData.graceStopwatch += Time.fixedDeltaTime;
-					if (instanceData.graceStopwatch >= this.graceDuration)
+					float speed = ((skillSlot.characterBody.attackSpeed - 1) * graceAttackSpeedCoefficient) + 1;
+					if (instanceData.graceStopwatch >= this.graceDuration / speed)
 					{
 						skillSlot.stateMachine.SetNextState(EntityStateCatalog.InstantiateState(this.reloadState));
 						return;
@@ -58,7 +59,8 @@ namespace Moonstorm.Starstorm2.ScriptableObjects
 		public InterruptPriority reloadInterruptPriority = InterruptPriority.Skill;
 		[Tooltip("The amount of time to wait between when we COULD reload, and when we actually start")]
 		public float graceDuration;
-
+		[Tooltip("How much attack speed effects the grace duration")]
+		public float graceAttackSpeedCoefficient = 0.5f;
 		public class InstanceData : SkillDef.BaseSkillInstanceData
 		{
 			public int currentStock;
