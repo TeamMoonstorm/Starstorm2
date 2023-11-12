@@ -9,11 +9,11 @@ using UnityEngine.Networking;
 
 namespace EntityStates.Knight
 {
-    class SwingSpecial : BasicMeleeAttack
+    class SpinUtility : BasicMeleeAttack
     {
         public static float swingTimeCoefficient = 1f;
         [TokenModifier("SS2_KNIGHT_SPECIAL_SPIN_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
-        public static float TokenModifier_dmgCoefficient => new SwingSpecial().damageCoefficient;
+        public static float TokenModifier_dmgCoefficient => new SpinUtility().damageCoefficient;
         public static GameObject buffWard;
         public static float hopVelocity;
         private bool hasBuffed;
@@ -39,6 +39,7 @@ namespace EntityStates.Knight
 
             Vector3 direction = GetAimRay().direction;
 
+            // Launch Knight where they are aiming
             if (isAuthority)
             {
                 characterBody.isSprinting = true;
