@@ -2,7 +2,9 @@
 using RoR2.Items;
 using RoR2.Projectile;
 using RoR2.Skills;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Moonstorm.Starstorm2.Items
@@ -11,6 +13,30 @@ namespace Moonstorm.Starstorm2.Items
     public sealed class ShackledLamp : ItemBase
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ShackledLamp", SS2Bundle.Items);
+
+        override public void Initialize()
+        {
+            On.RoR2.Items.ContagiousItemManager.Init += AddZoeaPair;
+
+        }
+
+        private void AddZoeaPair(On.RoR2.Items.ContagiousItemManager.orig_Init orig)
+        {   
+            List<ItemDef.Pair> newVoidPairs = new List<ItemDef.Pair>();
+
+            ItemDef.Pair lampPair = new ItemDef.Pair()
+            {
+                itemDef1 = ItemDef, //nonvoid
+                itemDef2 = RoR2.DLC1Content.Items.VoidMegaCrabItem //void
+            };
+            newVoidPairs.Add(lampPair);
+
+            var voidPairs = ItemCatalog.itemRelationships[DLC1Content.ItemRelationshipTypes.ContagiousItem];
+            ItemCatalog.itemRelationships[DLC1Content.ItemRelationshipTypes.ContagiousItem] = voidPairs.Union(newVoidPairs).ToArray();
+
+            //ItemCatalog.itemRelationships[DLC1Content.ItemRelationshipTypes.ContagiousItem].AddIfNotInCollection(lampPair);
+            orig();
+        }
 
         public sealed class LampBehavior : BaseItemBodyBehavior
         {
@@ -39,9 +65,12 @@ namespace Moonstorm.Starstorm2.Items
                 if (!body.skillLocator.primary.Equals(skill))
                     return;
 
-                //fuck it 
-                if (skill.skillDef.skillIndex == SkillCatalog.FindSkillIndexByName("ExecutionerFireIonGun"))
+                //if (skill.skillDef.skillIndex == SkillCatalog.FindSkillIndexByName("ExecutionerFireIonGun"))
+                //    return;
+                //sorry nebby
+                if (skill.skillNameToken == "SS2_EXECUTIONER2_IONBURST_NAME")
                     return;
+
 
                 IncrementFire();
             }
