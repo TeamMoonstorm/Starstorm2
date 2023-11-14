@@ -25,4 +25,3 @@ public class BannerSpecial : BaseState
         return InterruptPriority.PrioritySkill;
     }
 }
-}
