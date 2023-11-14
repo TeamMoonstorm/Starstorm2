@@ -12,14 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 1391837873, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: sdKnightSpin
   m_EditorClassIdentifier: 
-  skillName: KnightShieldUp
+  skillName: KnightSpinnySpin
   skillNameToken: SS2_KNIGHT_SPECIAL_SPIN_NAME
   skillDescriptionToken: SS2_KNIGHT_SPECIAL_SPIN_DESC
   keywordTokens: []
   icon: {fileID: 21300000, guid: 206dbfc1ae5f6f340ac7003892ad1b35, type: 3}
   activationStateMachineName: Weapon
   activationState:
-    _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    _typeName: EntityStates.Knight.SpinUtility, Starstorm2, Version=1.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   interruptPriority: 2
   baseRechargeInterval: 14
   baseMaxStock: 1
