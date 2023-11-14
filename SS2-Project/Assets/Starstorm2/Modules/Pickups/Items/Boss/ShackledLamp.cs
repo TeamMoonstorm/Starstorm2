@@ -47,16 +47,19 @@ namespace Moonstorm.Starstorm2.Items
             private float attackCounter;
 
             private List<GameObject> lampDisplay;
-            private Transform displayPos = null;
+            private Transform displayPos;
+            private ItemFollower follower;
 
             private void Start()
             {
+                displayPos = null;
                 body.onSkillActivatedAuthority += ChainEffect;
                 lampDisplay = body.modelLocator.modelTransform.GetComponent<CharacterModel>().GetItemDisplayObjects(SS2Content.Items.ShackledLamp.itemIndex);
                 if (lampDisplay != null)
                 {
-                    SS2Log.Info(lampDisplay[0].name + " | ");
-                    displayPos = lampDisplay[0].transform.Find("mdlLamp").transform;
+                    follower = lampDisplay[0].GetComponent<ItemFollower>();
+                    displayPos = follower.followerInstance.transform.Find("mdlLamp").transform;
+                    //displayPos = lampDisplay[0].transform.Find("mdlLamp").transform;
                 }
             }
 
@@ -71,7 +74,6 @@ namespace Moonstorm.Starstorm2.Items
                 if (skill.skillNameToken == "SS2_EXECUTIONER2_IONBURST_NAME")
                     return;
 
-
                 IncrementFire();
             }
 
@@ -84,8 +86,17 @@ namespace Moonstorm.Starstorm2.Items
                     Util.PlayAttackSpeedSound("LampBullet", gameObject, body.attackSpeed);
                     float damage = body.damage * (2f + stack);
                     Vector3 muzzlePos = body.inputBank.aimOrigin;
+                    SS2Log.Info("dsplay pos: " + displayPos + " | " + follower);
                     if (displayPos != null)
+                    {
                         muzzlePos = displayPos.position;
+                    }
+                    else if(lampDisplay != null)
+                    {
+                        follower = lampDisplay[0].GetComponent<ItemFollower>();
+                        displayPos = follower.followerInstance.transform.Find("mdlLamp").transform;
+                        muzzlePos = displayPos.position;
+                    }
                     ProjectileManager.instance.FireProjectile(
                         projectilePrefab,
                         muzzlePos,

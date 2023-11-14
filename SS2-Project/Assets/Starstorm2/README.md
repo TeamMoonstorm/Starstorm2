@@ -53,6 +53,46 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 ## Changelog
 
 **Warning: content spoilers below!**
+### 0.5.4
+* General
+    * Adjusted Clandestine item displays.
+* Items
+    * Haunted Lamp is now corrupted by Newly Hatched Zoea.
+    * Haunted Lamp now fires its projectile from the follower itself, if it exists.
+* Executioner
+    * Actually fixed interaction with Haunted Lamp and Ion Burst.
+* Nemesis Commando
+    * Reduced the strength of some normals. 
+* Drones
+    * Fixed a Duplicator Drone nullref.
+* Interactables
+    * Refabricator no longer has collision.
+    * Refabricator should spawn slightly more often.
+    * Broken Shock Drone's price is now better positioned. 
+
+### 0.5.3
+* General
+    * All survivors now have proper dithering
+* Items
+    * Remuneration is now less memorable
+* Executioner
+    * Fixed unintended interaction with Haunted Lamp and Ion Burst.
+* Nemesis Mercenary
+    * Splatter's reload now scales somewhat better with attack speed.
+    * Devitalize's slide now scales lower with movement speed.
+    * Proliferate can no longer activate equipments or carry items that grant extra lives.
+    * Damage from Proliferate's clone is now attributed to the player.
+    * Item displays now correctly replace limbs.
+    * Added post processing effects to Exploit and Proliferate.
+    * Adjusted various tokens and tooltips.
+    * Fixed Dispatch teleporting to 0,0,0.
+    * Fixed Nemesis Mercenary's collision breaking when using certain dashes together.
+* Events
+    * Vestiges are now immune to void fog.
+* Monsters
+    * Added a trail to Rushrum to help visibility.
+    * Wayfarer now crouches under low ceilings.
+
 ### 0.5.2
 * General
     * Disabled some WIP content that slipped through. ;)
