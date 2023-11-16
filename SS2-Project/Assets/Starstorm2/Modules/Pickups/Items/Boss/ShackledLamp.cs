@@ -20,8 +20,8 @@ namespace Moonstorm.Starstorm2.Items
         {
             base.Initialize();
 
-            lampPair.itemDef1 = SS2Content.Items.ShackledLamp;
-            lampPair.itemDef2 = DLC1Content.Items.VoidMegaCrabItem;
+            //lampPair.itemDef1 = SS2Content.Items.ShackledLamp;
+            //lampPair.itemDef2 = DLC1Content.Items.VoidMegaCrabItem;
 
             //ItemCatalog.itemRelationships[DLC1Content.ItemRelationshipTypes.ContagiousItem].AddIfNotInCollection(lampPair); //why isnt it possible...
 
@@ -33,13 +33,10 @@ namespace Moonstorm.Starstorm2.Items
             //something comes up null when doing this
             //it should probably be its own base or some shit for future additions anyway
             //will investigate more soon:tm:
-        }
+            
+            //so i just did it basically exactly how i did it in vv and it worked 
 
-
-        override public void Initialize()
-        {
             On.RoR2.Items.ContagiousItemManager.Init += AddZoeaPair;
-
         }
 
         private void AddZoeaPair(On.RoR2.Items.ContagiousItemManager.orig_Init orig)
@@ -77,12 +74,12 @@ namespace Moonstorm.Starstorm2.Items
                 displayPos = null;
                 body.onSkillActivatedAuthority += ChainEffect;
                 lampDisplay = body.modelLocator.modelTransform.GetComponent<CharacterModel>().GetItemDisplayObjects(SS2Content.Items.ShackledLamp.itemIndex);
-                if (lampDisplay != null)
-                {
-                    follower = lampDisplay[0].GetComponent<ItemFollower>();
-                    displayPos = follower.followerInstance.transform.Find("mdlLamp").transform;
-                    //displayPos = lampDisplay[0].transform.Find("mdlLamp").transform;
-                }
+                //if (lampDisplay != null)
+                //{
+                //    follower = lampDisplay[0].GetComponent<ItemFollower>();
+                //    displayPos = follower.followerInstance.transform.Find("mdlLamp").transform;
+                //    //displayPos = lampDisplay[0].transform.Find("mdlLamp").transform;
+                //}
             }
 
             private void ChainEffect(GenericSkill skill)
@@ -108,7 +105,6 @@ namespace Moonstorm.Starstorm2.Items
                     Util.PlayAttackSpeedSound("LampBullet", gameObject, body.attackSpeed);
                     float damage = body.damage * (2f + stack);
                     Vector3 muzzlePos = body.inputBank.aimOrigin;
-                    SS2Log.Info("dsplay pos: " + displayPos + " | " + follower);
                     if (displayPos != null)
                     {
                         muzzlePos = displayPos.position;

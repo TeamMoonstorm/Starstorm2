@@ -53,9 +53,15 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 ## Changelog
 
 **Warning: content spoilers below!**
+### 0.5.5
+* General
+    * Properly implemented Portuguse translation. 
+* Drones
+    * Shock and Duplicator drones now properly drop purchaseable interactables when destroyed.
+
 ### 0.5.4
 * General
-    * Adjusted Clandestine item displays.
+    * Updated Portuguese translation. 
 * Items
     * Needles has new VFX.
     * Haunted Lamp is now corrupted by Newly Hatched Zoea.
@@ -157,18 +163,3 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Survivor ragdolls no longer disappear when they die off screen.
     * Pressurized canister has been disabled while we work on a multiplayer bug.
     * ...and so much more!
- 
-### 0.4.6
-* General
-    * Fixed a bug with how Nemesis Commando checks to reload after Single Tap's stock count changes.
-* Items
-    * All items and equipment have better positioning in the logbook. 
-    * Relic of Termination now grants double time for bosses and drops the boss's relevant boss item, assuming it has one. The mark now properly works on bosses as well.
-    * Adjusted Relic of Termination's drop rates.
-    * Adjusted how Relic of Termination scales marked enemy health - it has a lower multiplier, but also grants an additional flat amount of health.
-    * Relic of Termination's marker now immediately disappears upon killing the marked enemy.
-    * Detritive Trematode can no longer be applied to the Artifact Reliquary. 
-    * Adjusted how Relic of Force adjusts skill cooldowns to fix some mod incompatabilities.
-    * X4 and Termination's icons have been cleaned up.
-    * Coffee Bag and Needles now have item displays.
-    * Disabled Baby's Toys. The item does work, but it has a lot of issues which would take a decent amount of time to address, so it's being disabled for now.
