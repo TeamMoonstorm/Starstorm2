@@ -60,7 +60,8 @@ namespace Moonstorm.Starstorm2.Interactables
             var interactionToken = interactable.AddComponent<RefabricatorInteractionToken>();
             interactionToken.PurchaseInteraction = interactable.GetComponent<PurchaseInteraction>();
 
-            droneDropTable = new DroneTableDropTable();
+            //droneDropTable = new DroneTableDropTable();
+            droneDropTable = ScriptableObject.CreateInstance<DroneTableDropTable>();
 
             SetupDroneValueList();  
         }

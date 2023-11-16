@@ -57,8 +57,10 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 * General
     * Adjusted Clandestine item displays.
 * Items
+    * Needles has new VFX.
     * Haunted Lamp is now corrupted by Newly Hatched Zoea.
     * Haunted Lamp now fires its projectile from the follower itself, if it exists.
+    * Relic of Termination's drop table is now properly instantiated.
 * Executioner
     * Actually fixed interaction with Haunted Lamp and Ion Burst.
 * Nemesis Commando
@@ -68,6 +70,7 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 * Interactables
     * Refabricator no longer has collision.
     * Refabricator should spawn slightly more often.
+    * Refabricator's drop table is now properly instantiated.
     * Broken Shock Drone's price is now better positioned. 
 
 ### 0.5.3
