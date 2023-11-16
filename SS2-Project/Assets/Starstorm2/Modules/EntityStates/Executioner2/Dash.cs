@@ -45,6 +45,8 @@ namespace EntityStates.Executioner2
 
             HopIfAirborne();
 
+            characterDirection.turnSpeed = 360f;
+
             hits = new List<HurtBox>();
             fearSearch = new SphereSearch();
             fearSearch.mask = LayerIndex.entityPrecise.mask;
@@ -142,6 +144,7 @@ namespace EntityStates.Executioner2
         public override void OnExit()
         {
             base.OnExit();
+            characterDirection.turnSpeed = 720f;
         }
 
         public override void FixedUpdate()

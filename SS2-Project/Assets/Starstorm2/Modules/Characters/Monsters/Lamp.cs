@@ -1,5 +1,6 @@
 ﻿using RoR2;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Moonstorm.Starstorm2.Monsters
 {
@@ -14,6 +15,7 @@ namespace Moonstorm.Starstorm2.Monsters
         {
             base.Initialize();
             MonsterDirectorCards.Add(defaultCard);
+            //Addressables.LoadAssetAsync<DccsPool>()
         }
     }
 }

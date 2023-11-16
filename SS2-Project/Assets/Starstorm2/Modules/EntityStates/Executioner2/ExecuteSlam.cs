@@ -56,6 +56,8 @@ namespace EntityStates.Executioner2
             characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
             characterMotor.onHitGroundAuthority += GroundSlam;
 
+            characterBody.isSprinting = true;
+
             characterBody.SetAimTimer(duration);
 
 
@@ -85,20 +87,20 @@ namespace EntityStates.Executioner2
                 hasSlammed = true;
                 dashVector = inputBank.aimDirection;
             }
-            if (fixedAge >= duration)
+            /*if (fixedAge >= duration)
             {
                 //if (wasLiedTo)
                 //by request of ts <3
                 GroundSlamPos(characterBody.footPosition);
                 outer.SetNextStateToMain();
-            }
+            }*/
             else
                 HandleMovement();
         }
 
         public void HandleMovement()
         {
-            characterMotor.rootMotion += dashVector * moveSpeedStat * 15f * Time.fixedDeltaTime;
+            characterMotor.rootMotion += dashVector * moveSpeedStat * 18.5f * Time.fixedDeltaTime;
         }
 
         private void GroundSlamPos(Vector3 position)

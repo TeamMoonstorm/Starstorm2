@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: escPunch
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.NemCaptain.Punch, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: baseDuration
+      fieldValue:
+        stringValue: 0.8
+        objectValue: {fileID: 0}
+    - fieldName: damageCoefficient
+      fieldValue:
+        stringValue: 1.5
+        objectValue: {fileID: 0}
+    - fieldName: hitBoxGroupName
+      fieldValue:
+        stringValue: PunchHitbox
+        objectValue: {fileID: 0}
+    - fieldName: hitEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 3988118091893689303, guid: 902610936f9ce564aa163fec3c1becd3,
+          type: 3}
+    - fieldName: procCoefficient
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: pushAwayForce
+      fieldValue:
+        stringValue: 2500
+        objectValue: {fileID: 0}
+    - fieldName: forceVector
+      fieldValue:
+        stringValue: 0 200 0
+        objectValue: {fileID: 0}
+    - fieldName: hitPauseDuration
+      fieldValue:
+        stringValue: 0.2
+        objectValue: {fileID: 0}
+    - fieldName: swingEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 8025535250578712969, guid: 77b2dfc0ae3c8e642a6cfe70b3f7815f,
+          type: 3}
+    - fieldName: swingEffectMuzzleString
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: mecanimHitboxActiveParameter
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: shorthopVelocityFromHit
+      fieldValue:
+        stringValue: 0.1
+        objectValue: {fileID: 0}
+    - fieldName: beginStateSoundString
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: beginSwingSoundString
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: impactSound
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: forceForwardVelocity
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: forwardVelocityCurve
+      fieldValue:
+        stringValue: '{"preWrapMode":8,"postWrapMode":8,"keys":[]}'
+        objectValue: {fileID: 0}
+    - fieldName: scaleHitPauseDurationAndVelocityWithAttackSpeed
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: ignoreAttackSpeed
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}

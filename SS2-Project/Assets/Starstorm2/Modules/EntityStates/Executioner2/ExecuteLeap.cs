@@ -33,10 +33,10 @@ namespace EntityStates.Executioner2
         public static GameObject areaIndicatorOOB;
 
         [HideInInspector]
-        public static GameObject areaIndicatorInstance;
+        public GameObject areaIndicatorInstance;
 
         [HideInInspector]
-        public static GameObject areaIndicatorInstanceOOB;
+        public GameObject areaIndicatorInstanceOOB;
 
         private ExecutionerController exeController;
 
@@ -147,7 +147,7 @@ namespace EntityStates.Executioner2
         {
             if (areaIndicatorInstance)
             {
-                float maxDistance = moveSpeedStat * 6.8f;
+                float maxDistance = 256f;
 
                 Ray aimRay = GetAimRay();
                 RaycastHit raycastHit;

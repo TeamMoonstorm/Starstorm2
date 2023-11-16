@@ -62,6 +62,8 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Haunted Lamp now fires its projectile from the follower itself, if it exists.
     * Relic of Termination's drop table is now properly instantiated.
 * Executioner
+    * Slightly nerfed Crowd Dispersion: (Cooldown: 5 -> 6, Debuff Duration: 4 -> 3, Reduced movement speed)
+    * Removed the range limit on Execution.
     * Actually fixed interaction with Haunted Lamp and Ion Burst.
 * Nemesis Commando
     * Reduced the strength of some normals. 

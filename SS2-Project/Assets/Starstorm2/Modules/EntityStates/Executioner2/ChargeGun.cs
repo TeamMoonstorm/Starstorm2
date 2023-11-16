@@ -149,6 +149,17 @@ namespace EntityStates.Executioner2
             }
         }
 
+        public override void Update()
+        {
+            base.Update();
+
+            if (Input.GetKeyDown(KeyCode.V) && isAuthority)
+            {
+                useAltCamera = !useAltCamera;
+                CameraSwap();
+            }
+        }
+
         public override void FixedUpdate()
         {
             base.FixedUpdate();
@@ -165,14 +176,6 @@ namespace EntityStates.Executioner2
             {
                 thisFuckingSucks = false;
             }
-
-            if (Input.GetKeyDown(KeyCode.V) && isAuthority)
-            {
-                useAltCamera = !useAltCamera;
-                CameraSwap();
-            }
-
-            
 
             /*if (fixedAge >= duration && inputBank.skill2.down)
             {
