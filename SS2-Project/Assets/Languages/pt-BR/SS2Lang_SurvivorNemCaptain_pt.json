@@ -1,19 +1,28 @@
 {
   "strings": {
     "SS2_NEMCAPTAIN_NAME": "Nêmesis Capitão",
-    "SS2_NEMCAPTAIN_SUBTITLE": "Punido Viajante Espacial",
-    "SS2_NEMCAPTAIN_DESCRIPTION": "O Nêmesis Capitão é frágil, ,mas sobrepassa os inimigos com um incrível poder de fogo enquanto se esconde atrás dos destroços da UES Contact Light.\n\n<color=#CCD3E0>< ! > Mantenha a calma.",
+    "SS2_NEMCAPTAIN_SUBTITLE": "Afundar com o Navio",
+    "SS2_NEMCAPTAIN_DESCRIPTION": "O Nêmesis Capitão emite ordens para controlar o campo de batalha e lutar com segurança de trás de seus Microrrobôs Adaptávelis\n\n<color=#CCD3E0>< ! > Mantenha a calma.",
     "SS2_NEMCAPTAIN_OUTRO_FLAVOR": "... e assim ele se foi, acendendo um novo cigarro.",
     "SS2_NEMCAPTAIN_OUTRO_FAILURE": "... e assim ele retornou, de férias ao menos.",
     "SS2_NEMCAPTAIN_LORE": "Esse planeta é uma droga cara... *acende um cigarro*",
 
    "SS2_NEMCAPTAIN_PASSIVE_NAME": "Uma Guerra Interminável",
-   "SS2_NEMCAPTAIN_PASSIVE_DESCRIPTION": "A exposição prolongada ao combate gera <style=cIsHealth>estresse</style>, diminui a <style=cIsHealing>regeneração</style> e a <style=cIsUtility>precisão</style> à medida que se acumula. O estresse diminui quando você está longe de inimigos.",
+   "SS2_NEMCAPTAIN_PASSIVE_DESCRIPTION": "A exposição prolongada ao combate gera <style=cIsHealth>estresse</style>, diminuindo a <style=cIsHealing>regeneração</style> e a <style=cIsUtility>precisão</style> à medida que se acumula. O estresse diminui quando você está longe de inimigos.",
 
+   "SS2_NEMCAPTAIN_STRESSPASSIVE_NAME": "Fardo do Capitão",
+   "SS2_NEMCAPTAIN_STRESSPASSIVE_DESC": "<style=cIsHealth>Estresse</style> diminui a <style=cIsHealth>regeneração de saúde</style> e aumenta a <style=cIsDamage>propagação das armas</style> e a <style=cIsDamage>velocidade de recarregar</style>. Ao ficar com o máximo de <style=cIsHealth>Estresse</style>, torne-se <style=cIsHealth>Ansioso</style>.",
+
+   "SS2_NEMCAPTAIN_KEYWORD_STRESS": "<style=cKeywordName>Estresse</style><style=cSub>Ganhe estresse ao estar em combate ou receber dano. O Estresse é reduzido com Acertos Críticos, cursa, abates, e manter-se fora de combate.",
+   "SS2_NEMCAPTAIN_KEYWORD_OVERSTRESS":  "<style=cKeywordName>Ansioso</style><style=cSub>Trone-se sujeito aos efeitos do Estresse máximo, além de receber -40 de armadura, até o contador de Estresse chegar a 0.",
+    
    "SS2_NEMCAPTAIN_PRIMARY_NAME": "Poblema Padrão",
-   "SS2_NEMCAPTAIN_PRIMARY_DESCRIPTION": "Rapidamente dispara para causar <style=cIsDamage>90% de dano</style> por bala. Pode acumular até 20 balas.",
+   "SS2_NEMCAPTAIN_PRIMARY_DESCRIPTION": "Rapidamente dispara para causar <style=cIsDamage>90% de dano</style> por bala. Máximo de 20 projéteis.",
 
    "SS2_NEMCAPTAIN_SECONDARY_NAME": "Reserva Pessoal",
-   "SS2_NEMCAPTAIN_SECONDARY_DESCRIPTION": "<style=cIsDamage>Atordoante</style>. Pegue sua Pistola de Bengala, e então dispara uma bala <style=cIsDamage>perfurante</style> causando <style=cIsDamage>1100% de dano</style>."
+   "SS2_NEMCAPTAIN_SECONDARY_DESCRIPTION": "<style=cIsDamage>Atordoante</style>. Pegue sua Pistola de Bengala e dispare uma bala <style=cIsDamage>perfurante</style>, causando <style=cIsDamage>1.100% de dano</style>."
+    
+   "SS2_NEMCAPTAIN_ORDERS_NAME": "Microrrobôs Adaptáveis",
+   "SS2_NEMCAPTAIN_ORDERS_DESCRIPTION": "Implante 1 dos 4 <style=cIsUtility>Pedidos de Microrrobôs</style> atuais. Pedidos são <style=cIsUtility>descartados</style> após o uso, e após os 4 serem usados, <style=cIsUtility>ganhe mais 4</style>, mas também ganhe<style=cIshealth>35 de Estresse</style>. <style=cIsHealth>Não pode ser utilizado caso esteja Ansioso</style>.",
   }
 }

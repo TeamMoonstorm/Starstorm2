@@ -1,0 +1,78 @@
+{
+  "strings": {
+    "SS2_NEMESIS_MERCENARY_NAME": "Nêmesis Mercenário",
+    "SS2_NEMESIS_MERCENARY_BODY_NAME": "Nêmesis Mercenário",
+    "SS2_NEMESIS_MERCENARY_SUBTITLE": "Desertor Vingativo",
+    "SS2_NEMESIS_MERCENARY_DESCRIPTION": "O Nêmesis Mercenário é um sobrevivente de curto alcance e ritmo acelerado, com as ferramentas certas para dominar qualquer tipo de combate - não importando as probabilidades. \n\n<color=#CCD3E0>< ! > Respingar causa um dano devastador a curta distância. Use suas outras habilidades para se aproximar.\n\n< ! > Use Degolador para interromper ataques, ou para redirecionar seu arranque para mais inimigos.\n\n< ! > Despachar é uma poderosa opção de mobilidade em combate, e não interrompe seu recarregamento.\n\n< ! > Vetores de Ataque podem ser teleportados sem tempo de recarga. Isso faz com que Aproveitar seja uma habilidade chave para navegar nessas situações.",
+    "SS2_NEMESIS_MERCENARY_OUTRO_FLAVOR": "... e assim ele partiu, com um novo propóstio em cada bala.",
+    "SS2_NEMESIS_MERCENARY_OUTRO_FAILURE": "... e assim ele desapareceu, com munições esgotadas e um coração ainda mais vazio.",
+    "SS2_NEMESIS_MERCENARY_LORE": "\u201CEi!\u201C\n\nUma figura lentamente manca nas arenosas dunas Marcianas, sintonizando nas comunicações externas de Fort Laughn. \u201CEi, se importa se eu entrar? A poeira está me matando.\u201C\n\nUm dos guardas estacionados na cerca externa retrucou de uma cabine. \u201C... Você tem credenciais, senhor?\u201C\n\n\u201CVamos lá, você não está me reconhecendo? Deixa eu adivinhar - novo recruta? Algo do tipo?\u201C A figura continuou a andar despreocupante em direção à cerca, até que um segundo guarda interveio. \u201CEspere. Esse é o Vantre?\u201C O convidado riu, ainda vagando sem rumo à medida que se aproximava da cerca. \u201CCulpado como acusado. Pensei em passar por aqui enquanto estou na área. Dizer oi para alguns velhos camaradas, talvez.\u201C\n\nOs guardar pararam, e então, em uma linha separada, chamaram o comandante deles. \u201CComandante Byren, Vantre está na cerca externa. Ele parece inofensivo, o que é um sinal vermelho imediato. Quais são as suas ordens?\u201C\n\nA voz exasperada e áspera de Bryen ecoou pelo receptor. \u201CAh, droga… Avise a equipe de supervisão. Tenha certeza que ele não vai tentar nada, tudo ben? Mantenha ele ocupado até que haja mais pessoas aqui fora.\u201C O guarda transmitiu a ordem- \u201CTire a equipe daqui. Vou garantir que Vantre não tente nada estúpido.\u201C O recruta respondeu a pergunta: \u201CClaro, mas, uhh… Para onde ele foi?\u201C\n\nCertamente, Vantre desapareceu enquanto os dois estavam distraídos, deixando nada além de faíscas no ar onde ele estava antes. Levou cerca de dez minutos para que toda a força estacionada no forte descobrisse o que estava acontecendo- e eles descobriram na mesma hora em que encontraram seu comandante morto em seus aposentos, com a parte de trás de sua cabeça reduzida a pedaços.",
+
+    "SS2_KEYWORD_STAGGER": "<style=cKeywordName>Cambalear</style><style=cSub>Interrompe Inimigos.",
+    "SS2_KEYWORD_BLEEDING": "<style=cKeywordName>Sangramento</style><style=cSub>Causa <style=cIsDamage>240% de dano base</style> por 3 segundos. <i>Sangramento pode acumular. </i>",
+
+    "SS2_NEMESIS_MERCENARY_PRIMARY_SHOTGUN_NAME": "Respingar",
+    "SS2_NEMESIS_MERCENARY_PRIMARY_SHOTGUN_DESCRIPTION": "<style=cIsUtility>Ágil</style>. Dispare uma rajada de espingarda que causa <style=cIsDamage>6x80% de dano</style>, e novamente quando solta. Máximo de 2 cartuchos.",
+
+    "SS2_NEMESIS_MERCENARY_SECONDARY_SLASH_NAME": "Degolador",
+    "SS2_NEMESIS_MERCENARY_SECONDARY_SLASH_DESCRIPTION": "<style=cIsDamage>Cambaleante.</style> Realize uma investida e golpeie, causando <style=cIsDamage>2x300% de dano</style>.  <style=cIsUtility>Pode ser utilizado enquanto estiver arrancando</style>.",
+
+    "SS2_NEMESIS_MERCENARY_SECONDARY_KNIFE_NAME": "Perfurador",
+    "SS2_NEMESIS_MERCENARY_SECONDARY_KNIFE_DESCRIPTION": "<style=cIsHealth>Sangramento.</style> Arremesse uma faca que causa <style=cIsDamage>100% de dano</style>.\n<style=cIsDamage>Assassino.</style> Retire para causar <style=cIsDamage>400% de dano</style>.",
+
+
+    "SS2_NEMESIS_MERCENARY_UTILITY_BLINK_NAME": "Despachar",
+    "SS2_NEMESIS_MERCENARY_UTILITY_BLINK_DESCRIPTION": "<style=cIsUtility>Teleporte</style> para trás de um inimigo ou para um <style=cIsUtility>vetor de ataque.</style>",
+
+    "SS2_NEMESIS_MERCENARY_UTILITY_SLIDE_NAME": "Desvitalizar",
+    "SS2_NEMESIS_MERCENARY_UTILITY_SLIDE_DESCRIPTION": "<style=cIsDamage>Atordoante.</style> Segure para <style=cIsUtility>deslizar</style> enquanto prepara um avanço direcionado que causa <style=cIsDamage>300% de dano</style>.",
+
+    "SS2_NEMESIS_MERCENARY_SPECIAL_SCAN_NAME": "Aproveitar",
+    "SS2_NEMESIS_MERCENARY_SPECIAL_SCAN_DESCRIPTION": "Revela <style=cIsUtility>vetores de ataque</style> em até <style=cIsDamage>4</style> inimigos próximos. <style=cIsUtility>Mova-se na posição</style> para arrancar à frente, causando <style=cIsDamage>1.500% de dano</style>.",
+
+    "SS2_NEMESIS_MERCENARY_SPECIAL_CLONE_NAME": "Proliferar",
+    "SS2_NEMESIS_MERCENARY_SPECIAL_CLONE_DESCRIPTION": "Crie um <style=cIsUtility>clone</style> que <style=cIsDamage>copia suas habilidades</style>. Lance novamente para ir até ele, causando <style=cIsDamage>800% de dano</style>.",
+
+    "SS2_NEMESIS_MERCENARY_SPECIAL_CLONE_DASH_NAME": "Farsante",
+    "SS2_NEMESIS_MERCENARY_SPECIAL_CLONE_DASH_DESCRIPTION": "Vá para o seu clone, causando <style=cIsDamage>800% de dano</style>.",
+
+
+    "SS2_NEMESIS_MERCENARY_SPECIAL_SCEPTER_SCAN_NAME": "Extripar",
+    "SS2_NEMESIS_MERCENARY_SPECIAL_SCEPTER_SCAN_DESCRIPTION": "Revela <style=cIsUtility>vetores de ataque</style> em até <style=cIsDamage>6</style> inimigos próximos. <style=cIsUtility>Mova-se na posição</style> para arrancar à frente, causando <style=cIsDamage>1.500% de dano</style>.",
+
+    "SS2_NEMESIS_MERCENARY_SPECIAL_SCEPTER_CLONE_NAME": "Tour de Force",
+    "SS2_NEMESIS_MERCENARY_SPECIAL_SCEPTER_CLONE_DESCRIPTION": "Crie um <style=cIsUtility>clone</style> que <style=cIsDamage>copia suas habilidades</style>. Lance novamente para ir até ele, causando <style=cIsDamage>800% de dano</style>, até um total de <style=cIsUtility>2</style> vezes.",
+
+
+    "SS2_ACHIEVEMENT_NEMMERC_NAME": "Desertor Vingativo",
+    "SS2_ACHIEVEMENT_NEMMERC_DESC": "Derrote o Vestígio do Mercenário.",
+
+    "SS2_SKIN_NEMESIS_MERCENARY_DEFAULT": "Padrão",
+	
+    "SS2_SKIN_NEMESIS_MERCENARY_MASTERY": "[NYI] Saltador",
+    "SS2_SKIN_NEMESIS_MERCENARY_GRANDMASTERY": "[NYI] Corporativo",
+    "SS2_SKIN_NEMESIS_MERCENARY_NEMESIS": "Honrado",
+    "SS2_SKIN_MERCENARY_NEMESIS": "Balístico",
+
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_NAME": "Desertor Vingativo",
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_DESC": "Derrote o Vestígio do Mercenário.",
+
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_MASTERY_NAME": "Nêmesis Mercenário: Domínio",
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_MASTERY_DESC": "Como Nêmesis Mercenário, vença o jogo aniquile em Monção ou superior.",
+
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_GRANDMASTERY_NAME": "Nêmesis Mercenário: Grande Domínio",
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_GRANDMASTERY_DESC": "Como Nêmesis Mercenário, vença o jogo ou aniquile em Tufão.",
+
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_NEMESIS_NAME": "Nêmesis Mercenário: Lâmina Contratada",
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_NEMESIS_DESC": "Como Nêmesis Mercenário, derrote o Vestígio do Mercenário.",
+
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_CLONE_NAME": "Nêmesis Mercenário: Enganado",
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_CLONE_DESC": "Como Nêmesis Mercenário, repare e recrute um Drone Duplicador.",
+
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_KNIFE_NAME": "Nêmesis Mercenário: Vira-Casaca",
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_KNIFE_DESC": "Como Nêmesis Mercenário, derrote outro vestígio.",
+
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_SLIDE_NAME": "Nêmesis Mercenário: Aterrissado",
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_SLIDE_DESC": "Como Nêmesis Mercenário, complete um estágio sem sair do chão."
+  }
+}
