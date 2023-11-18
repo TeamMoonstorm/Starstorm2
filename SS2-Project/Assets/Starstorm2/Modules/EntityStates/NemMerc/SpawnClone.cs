@@ -8,6 +8,8 @@ using RoR2;
 using UnityEngine.Networking;
 using Moonstorm.Starstorm2.Components;
 using RoR2.Navigation;
+using Moonstorm.Starstorm2;
+
 namespace EntityStates.NemMerc
 {
     public class SpawnClone : BaseSkillState
@@ -29,6 +31,26 @@ namespace EntityStates.NemMerc
         private uint secondary;
         private uint utility;
         private uint special;
+
+        private static List<ItemDef> illegalItems = new List<ItemDef>
+            {
+                RoR2Content.Items.ExtraLife,
+                DLC1Content.Items.ExtraLifeVoid,
+                RoR2Content.Items.RoboBallBuddy,
+                RoR2Content.Items.BeetleGland,
+                RoR2Content.Items.FocusConvergence,
+                RoR2Content.Items.TPHealingNova,
+                RoR2Content.Items.Squid,
+                DLC1Content.Items.DroneWeapons,
+                DLC1Content.Items.FreeChest,
+                DLC1Content.Items.VoidMegaCrabItem,
+                //DLC1Content.Items.MinorConstructOnKill,
+                RoR2Content.Items.TreasureCache,
+                DLC1Content.Items.TreasureCacheVoid,
+                SS2Content.Items.RelicOfTermination,
+                SS2Content.Items.NkotasHeritage,
+                SS2Content.Items.Remuneration,
+            };
 
         public override void OnEnter()
         {
@@ -87,8 +109,19 @@ namespace EntityStates.NemMerc
 
         public static bool ItemFilter(ItemIndex itemIndex)
         {
-            ItemDef itemDef = ItemCatalog.GetItemDef(itemIndex);
-            return itemIndex != RoR2Content.Items.ExtraLife.itemIndex && itemIndex != DLC1Content.Items.ExtraLifeVoid.itemIndex;
+            var def = ItemCatalog.GetItemDef(itemIndex);
+            if(def.name == "ITEM_ANCIENT_SCEPTER" || def.nameToken == "ITEM_ANCIENT_SCEPTER_NAME")
+            {
+                return false;
+            }
+            foreach(var item in illegalItems)
+            {
+                if(item.itemIndex == itemIndex)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         private void SpawnHologramSingle(Vector3 position)
@@ -161,8 +194,6 @@ namespace EntityStates.NemMerc
             
 
         }
-
-       
 
     }
 }

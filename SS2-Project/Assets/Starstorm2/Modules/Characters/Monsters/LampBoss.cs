@@ -26,7 +26,7 @@ namespace Moonstorm.Starstorm2.Monsters
             MonsterDirectorCards.Add(chainedCard);
             
 
-            RoR2.SceneDirector.onPrePopulateSceneServer += die;
+            //RoR2.SceneDirector.onPrePopulateSceneServer += die;
 
             var comp = BodyPrefab.GetComponent<LampDropOverride>();
             if (!comp)
@@ -102,7 +102,7 @@ namespace Moonstorm.Starstorm2.Monsters
 
         private void die(SceneDirector obj)
         {
-            SS2Log.Info("guh");
+            //SS2Log.Info("guh");
             var comp = BodyPrefab.GetComponent<LampDropOverride>();
             if (!comp)
             {
@@ -133,7 +133,7 @@ namespace Moonstorm.Starstorm2.Monsters
                     SerializablePickupIndex fuck2;
                     fuck2.pickupName = RoR2Content.Items.Pearl.name;
                     drw.bossPickup = fuck2;
-                    SS2Log.Info("done");
+                    //SS2Log.Info("done");
                     //SS2Log.Info("Disabling lamp drop");
                     //BodyPrefab.AddComponent<LampDropOverride>();
 

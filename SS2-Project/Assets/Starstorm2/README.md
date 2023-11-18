@@ -60,6 +60,9 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Updated Portuguese translation.
 * Items
     * Needles's item display now has dithering.
+    * Haunted Lamp no longer drops when disabled. 
+* Nemesis Mercenary
+    * Improved blacklist for Proliferate's clone.
 * Drones
     * Shock and Duplicator drones now properly drop purchaseable interactables when destroyed.
 
