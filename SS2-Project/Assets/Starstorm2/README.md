@@ -56,6 +56,10 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 ### 0.5.5
 * General
     * Properly implemented Portuguse translation. 
+    * Captain GM now has dithering.
+    * Updated Portuguese translation.
+* Items
+    * Needles's item display now has dithering.
 * Drones
     * Shock and Duplicator drones now properly drop purchaseable interactables when destroyed.
 

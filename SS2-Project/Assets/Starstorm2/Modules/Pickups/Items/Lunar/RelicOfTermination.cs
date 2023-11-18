@@ -472,7 +472,7 @@ namespace Moonstorm.Starstorm2.Items
                 if (illegalMarks.Contains(bodyIndex))
                 {
                     GameObject prefab = BodyCatalog.GetBodyPrefab(bodyIndex);
-                    //SS2Log.Info($"Body prefab {prefab} is already in the illegal termination list.");
+                    SS2Log.Info($"Body prefab {prefab} is already in the illegal termination list.");
                     return;
                 }
                 illegalMarks.Add(bodyIndex);

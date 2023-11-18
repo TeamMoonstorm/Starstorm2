@@ -1,6 +1,8 @@
 ﻿using RoR2;
 using System;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using static RoR2.ExplicitPickupDropTable;
 
 namespace Moonstorm.Starstorm2.Monsters
 {
@@ -22,6 +24,23 @@ namespace Moonstorm.Starstorm2.Monsters
         {
             base.Initialize();
             MonsterDirectorCards.Add(chainedCard);
+            
+
+            RoR2.SceneDirector.onPrePopulateSceneServer += die;
+
+            //var lampItem = SS2Assets.LoadAsset<ItemDef>("ShackledLamp", SS2Bundle.Items);
+            //if (lampItem.tier != ItemTier.Boss) // item is disabled
+            //{
+            //    var drw = BodyPrefab.GetComponent<DeathRewards>();
+            //    var edt = ScriptableObject.CreateInstance<ExplicitPickupDropTable>();
+            //    PickupDefEntry pde;
+            //    pde.pickupDef = RoR2Content.Items.Pearl;
+            //    pde.pickupWeight = 1;
+            //    edt.pickupEntries.AddIfNotInCollection(pde);
+            //    drw.bossDropTable = edt;
+            //
+            //    SS2Log.Info("Disabling lamp drop");
+            //}
 
             DateTime currentDate = DateTime.Now;
 
@@ -43,6 +62,53 @@ namespace Moonstorm.Starstorm2.Monsters
                 Debug.Log("You stand alone in the dark. - " + moonPhase);
             }
         }
+
+        private void die(SceneDirector obj)
+        {
+            SS2Log.Info("guh");
+            var comp = BodyPrefab.GetComponent<LampDropOverride>();
+            if (!comp)
+            {
+                var lampItem = SS2Assets.LoadAsset<ItemDef>("ShackledLamp", SS2Bundle.Items);
+                if (lampItem.tier != ItemTier.Boss) // item is disabled
+                {
+                    var drw = BodyPrefab.GetComponent<DeathRewards>();
+                    SS2Log.Info(drw);
+                    var fuck = (ExplicitPickupDropTable)drw.bossDropTable;
+                    //var edt = SS2Assets.LoadAsset<ExplicitPickupDropTable>("dtPearlBackup", SS2Bundle.Items);
+                    //Array.Resize(ref edt.pickupEntries, 1);
+                    PickupDefEntry pde;
+                    pde.pickupDef = RoR2Content.Items.Pearl;
+                    pde.pickupWeight = 1;
+
+                    SS2Log.Info("setting fuck | " + fuck.pickupEntries[0]);
+                    fuck.pickupEntries[0] = pde;
+                    //edt.pickupEntries = new ExplicitPickupDropTable.PickupDefEntry[] {
+                    //new ExplicitPickupDropTable.PickupDefEntry {pickupDef = RoR2Content.Items.Pearl, pickupWeight = 1f} };
+                    //ExplicitPickupDropTable dt = ScriptableObject.CreateInstance<ExplicitPickupDropTable>();
+                    //SS2Log.Info("Made dt");
+                    //dt.pickupEntries = new ExplicitPickupDropTable.PickupDefEntry[]
+                    //{
+                    //    new ExplicitPickupDropTable.PickupDefEntry {pickupDef = RoR2Content.Items.Pearl, pickupWeight = 1f},
+                    //};
+                    //SS2Log.Info("set pe");
+                    //PickupDefEntry pde;
+                    //pde.pickupDef = RoR2Content.Items.Pearl;
+                    //pde.pickupWeight = 1;
+                    ////SS2Log.Info("dt: " + edt.pickupEntries.Length + " | ");
+                    ////for(int i = 0; i < edt.pickupEntries.Length; ++i)
+                    ////{
+                    ////    SS2Log.Info("edt " + i + " | " + edt.pickupEntries[i]);
+                    ////}
+                    ////edt.pickupEntries[0] = pde;
+                    //drw.bossDropTable = edt;
+                    SS2Log.Info("done");
+                    //SS2Log.Info("Disabling lamp drop");
+                    BodyPrefab.AddComponent<LampDropOverride>();
+                }
+            }
+        }
+
         public override void Hook()
         {
             On.RoR2.CharacterBody.AddBuff_BuffDef += CharacterBody_AddBuff_BuffDef;
@@ -69,4 +135,10 @@ namespace Moonstorm.Starstorm2.Monsters
     {
         public string phase;
     }
+
+    public class LampDropOverride : MonoBehaviour
+    {
+        //why is there not a list of yellow items before a run starts
+    }
+
 }

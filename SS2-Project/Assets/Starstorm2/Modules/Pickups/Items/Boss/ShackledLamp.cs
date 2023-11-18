@@ -33,9 +33,9 @@ namespace Moonstorm.Starstorm2.Items
             //something comes up null when doing this
             //it should probably be its own base or some shit for future additions anyway
             //will investigate more soon:tm:
-            
-            //so i just did it basically exactly how i did it in vv and it worked 
 
+            //so i just did it basically exactly how i did it in vv and it worked 
+            //SS2Log.Info("my tier is " + ItemDef.tier);
             On.RoR2.Items.ContagiousItemManager.Init += AddZoeaPair;
         }
 
@@ -68,6 +68,7 @@ namespace Moonstorm.Starstorm2.Items
             private List<GameObject> lampDisplay;
             private Transform displayPos;
             private ItemFollower follower;
+            private bool tried = false;
 
             private void Start()
             {
@@ -105,16 +106,18 @@ namespace Moonstorm.Starstorm2.Items
                     Util.PlayAttackSpeedSound("LampBullet", gameObject, body.attackSpeed);
                     float damage = body.damage * (2f + stack);
                     Vector3 muzzlePos = body.inputBank.aimOrigin;
+                    SS2Log.Info("lampDisplay.Count: " + lampDisplay.Count);
                     if (displayPos != null)
                     {
                         muzzlePos = displayPos.position;
                     }
-                    else if(lampDisplay != null)
+                    else if(lampDisplay.Count != 0)
                     {
                         follower = lampDisplay[0].GetComponent<ItemFollower>();
                         displayPos = follower.followerInstance.transform.Find("mdlLamp").transform;
                         muzzlePos = displayPos.position;
                     }
+
                     ProjectileManager.instance.FireProjectile(
                         projectilePrefab,
                         muzzlePos,
