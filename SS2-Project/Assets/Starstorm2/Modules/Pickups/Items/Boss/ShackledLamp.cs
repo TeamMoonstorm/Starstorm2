@@ -75,12 +75,6 @@ namespace Moonstorm.Starstorm2.Items
                 displayPos = null;
                 body.onSkillActivatedAuthority += ChainEffect;
                 lampDisplay = body.modelLocator.modelTransform.GetComponent<CharacterModel>().GetItemDisplayObjects(SS2Content.Items.ShackledLamp.itemIndex);
-                //if (lampDisplay != null)
-                //{
-                //    follower = lampDisplay[0].GetComponent<ItemFollower>();
-                //    displayPos = follower.followerInstance.transform.Find("mdlLamp").transform;
-                //    //displayPos = lampDisplay[0].transform.Find("mdlLamp").transform;
-                //}
             }
 
             private void ChainEffect(GenericSkill skill)

@@ -28,19 +28,56 @@ namespace Moonstorm.Starstorm2.Monsters
 
             RoR2.SceneDirector.onPrePopulateSceneServer += die;
 
-            //var lampItem = SS2Assets.LoadAsset<ItemDef>("ShackledLamp", SS2Bundle.Items);
-            //if (lampItem.tier != ItemTier.Boss) // item is disabled
-            //{
-            //    var drw = BodyPrefab.GetComponent<DeathRewards>();
-            //    var edt = ScriptableObject.CreateInstance<ExplicitPickupDropTable>();
-            //    PickupDefEntry pde;
-            //    pde.pickupDef = RoR2Content.Items.Pearl;
-            //    pde.pickupWeight = 1;
-            //    edt.pickupEntries.AddIfNotInCollection(pde);
-            //    drw.bossDropTable = edt;
-            //
-            //    SS2Log.Info("Disabling lamp drop");
-            //}
+            var comp = BodyPrefab.GetComponent<LampDropOverride>();
+            if (!comp)
+            {
+                var lampItem = SS2Assets.LoadAsset<ItemDef>("ShackledLamp", SS2Bundle.Items);
+                if (lampItem.tier != ItemTier.Boss) // item is disabled
+                {
+                    //var drw = BodyPrefab.GetComponent<DeathRewards>();
+                    //SS2Log.Info(drw);
+                    //var fuck = (ExplicitPickupDropTable)drw.bossDropTable;
+                    //
+                    //PickupDefEntry pde;
+                    //pde.pickupDef = RoR2Content.Items.Pearl;
+                    //pde.pickupWeight = 1;
+                    //
+                    //SS2Log.Info("setting fuck | " + fuck.pickupEntries[0]);
+                    //try
+                    //{
+                    //    SS2Log.Info("fuck: " + fuck.pickupEntries[0].pickupDef.name);
+                    //}catch(Exception e)
+                    //{
+                    //    SS2Log.Info("exceptionl ol " + e);
+                    //}
+                    //fuck.pickupEntries[0] = pde;
+                    ////SerializablePickupIndex fuck2;
+                    ////fuck2.pickupName = RoR2Content.Items.Pearl.name;
+                    ////drw.bossPickup = fuck2;
+                    //SS2Log.Info("done");
+                    ////SS2Log.Info("Disabling lamp drop");
+                    ////BodyPrefab.AddComponent<LampDropOverride>();
+                    //
+                    //
+                    ////ExplicitPickupDropTable dt = ScriptableObject.CreateInstance<ExplicitPickupDropTable>();
+                    ////dt.pickupEntries = new ExplicitPickupDropTable.PickupDefEntry[]
+                    ////{
+                    ////    new ExplicitPickupDropTable.PickupDefEntry {pickupDef = RoR2Content.Items.Pearl, pickupWeight = 1f},
+                    ////};
+                    ////drw.bossDropTable = dt;
+                    ///
+
+                    DeathRewards deathRewards = BodyPrefab.GetComponent<DeathRewards>();
+                    ExplicitPickupDropTable dt = ScriptableObject.CreateInstance<ExplicitPickupDropTable>();
+                    dt.pickupEntries = new ExplicitPickupDropTable.PickupDefEntry[]
+                    {
+                        new ExplicitPickupDropTable.PickupDefEntry {pickupDef = RoR2Content.Items.Pearl, pickupWeight = 1f},
+                    };
+                    deathRewards.bossDropTable = dt;
+
+
+                }
+            }
 
             DateTime currentDate = DateTime.Now;
 
@@ -75,38 +112,42 @@ namespace Moonstorm.Starstorm2.Monsters
                     var drw = BodyPrefab.GetComponent<DeathRewards>();
                     SS2Log.Info(drw);
                     var fuck = (ExplicitPickupDropTable)drw.bossDropTable;
-                    //var edt = SS2Assets.LoadAsset<ExplicitPickupDropTable>("dtPearlBackup", SS2Bundle.Items);
-                    //Array.Resize(ref edt.pickupEntries, 1);
+
+                    //BasicPickupDropTable
+
                     PickupDefEntry pde;
                     pde.pickupDef = RoR2Content.Items.Pearl;
                     pde.pickupWeight = 1;
 
-                    SS2Log.Info("setting fuck | " + fuck.pickupEntries[0]);
+                    //SS2Log.Info("setting fuck | " + fuck.pickupEntries[0]);
+                    //try
+                    //{
+                    //    SS2Log.Info("fuck: " + fuck.pickupEntries[0].pickupDef.name);
+                    //}
+                    //catch (Exception e)
+                    //{
+                    //    SS2Log.Info("exceptionl ol " + e);
+                    //}
+
                     fuck.pickupEntries[0] = pde;
-                    //edt.pickupEntries = new ExplicitPickupDropTable.PickupDefEntry[] {
-                    //new ExplicitPickupDropTable.PickupDefEntry {pickupDef = RoR2Content.Items.Pearl, pickupWeight = 1f} };
+                    SerializablePickupIndex fuck2;
+                    fuck2.pickupName = RoR2Content.Items.Pearl.name;
+                    drw.bossPickup = fuck2;
+                    SS2Log.Info("done");
+                    //SS2Log.Info("Disabling lamp drop");
+                    //BodyPrefab.AddComponent<LampDropOverride>();
+
+
                     //ExplicitPickupDropTable dt = ScriptableObject.CreateInstance<ExplicitPickupDropTable>();
-                    //SS2Log.Info("Made dt");
                     //dt.pickupEntries = new ExplicitPickupDropTable.PickupDefEntry[]
                     //{
                     //    new ExplicitPickupDropTable.PickupDefEntry {pickupDef = RoR2Content.Items.Pearl, pickupWeight = 1f},
                     //};
-                    //SS2Log.Info("set pe");
-                    //PickupDefEntry pde;
-                    //pde.pickupDef = RoR2Content.Items.Pearl;
-                    //pde.pickupWeight = 1;
-                    ////SS2Log.Info("dt: " + edt.pickupEntries.Length + " | ");
-                    ////for(int i = 0; i < edt.pickupEntries.Length; ++i)
-                    ////{
-                    ////    SS2Log.Info("edt " + i + " | " + edt.pickupEntries[i]);
-                    ////}
-                    ////edt.pickupEntries[0] = pde;
-                    //drw.bossDropTable = edt;
-                    SS2Log.Info("done");
-                    //SS2Log.Info("Disabling lamp drop");
-                    BodyPrefab.AddComponent<LampDropOverride>();
+                    //drw.bossDropTable = dt;
+
                 }
             }
+
         }
 
         public override void Hook()
