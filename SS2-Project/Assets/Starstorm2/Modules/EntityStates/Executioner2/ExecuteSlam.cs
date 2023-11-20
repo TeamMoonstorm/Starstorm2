@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using Moonstorm.Starstorm2.Components;
+using Moonstorm.Starstorm2;
 
 namespace EntityStates.Executioner2
 {
@@ -48,7 +49,11 @@ namespace EntityStates.Executioner2
 
             exeController = GetComponent<ExecutionerController>();
             if (exeController != null)
+            {
                 exeController.meshExeAxe.SetActive(true);
+                exeController.isExec = true;
+            }
+                
 
             characterBody.hideCrosshair = true;
             PlayAnimation("FullBody, Override", "SpecialSwing", "Special.playbackRate", duration * 0.8f);
@@ -81,11 +86,21 @@ namespace EntityStates.Executioner2
 
         private void FixedUpdateAuthority()
         {
+            //if (exeController)
+            //{
+            //    if (exeController.hasOOB)
+            //    {
+            //        SS2Log.Info("Has OOBed");
+            //    }
+            //}
+
             characterDirection.forward = dashVector;
             if (!hasSlammed)
             {
                 hasSlammed = true;
                 dashVector = inputBank.aimDirection;
+                //SS2Log.Info("Haven't started");
+                
             }
             /*if (fixedAge >= duration)
             {
@@ -95,7 +110,21 @@ namespace EntityStates.Executioner2
                 outer.SetNextStateToMain();
             }*/
             else
-                HandleMovement();
+            {
+                if (exeController)
+                {
+                    if (!exeController.hasOOB)
+                    {
+                        HandleMovement();
+                    }
+                    else
+                    {
+                        outer.SetNextStateToMain(); //emergency "everything has failed" stop slamming
+                    }
+                }
+                // HandleMovement();
+            }
+  
         }
 
         public void HandleMovement()
@@ -239,7 +268,11 @@ namespace EntityStates.Executioner2
             base.OnExit();
             characterBody.hideCrosshair = false;
             if (exeController != null)
+            {
                 exeController.meshExeAxe.SetActive(false);
+                exeController.isExec = false;
+                exeController.hasOOB = false;
+            }
             PlayAnimation("FullBody, Override", "SpecialImpact", "Special.playbackRate", duration);
             characterMotor.onHitGroundAuthority -= GroundSlam;
             characterBody.bodyFlags -= CharacterBody.BodyFlags.IgnoreFallDamage;

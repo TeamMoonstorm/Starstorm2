@@ -57,14 +57,15 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 * General
     * Properly implemented Portuguse translation. 
     * Captain GM now has dithering.
-    * Updated Portuguese translation.
 * Items
     * Needles's item display now has dithering.
-    * Haunted Lamp no longer drops when disabled. 
+    * Haunted Lamp no longer drops when disabled.
+* Executioner
+    * Fixed Execution softlocking the player when failing to land when falling out of bounds.
 * Nemesis Mercenary
     * Improved blacklist for Proliferate's clone.
 * Drones
-    * Shock and Duplicator drones now properly drop purchaseable interactables when destroyed.
+    * Shock and Duplicator drones now drop purchaseable interactables when destroyed.
 
 ### 0.5.4
 * General

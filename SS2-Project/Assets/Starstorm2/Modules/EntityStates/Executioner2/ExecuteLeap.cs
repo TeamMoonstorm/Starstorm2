@@ -58,7 +58,11 @@ namespace EntityStates.Executioner2
 
             exeController = GetComponent<ExecutionerController>();
             if (exeController != null)
+            {
                 exeController.meshExeAxe.SetActive(true);
+                exeController.hasOOB = false;
+            }
+
 
             //skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
 
