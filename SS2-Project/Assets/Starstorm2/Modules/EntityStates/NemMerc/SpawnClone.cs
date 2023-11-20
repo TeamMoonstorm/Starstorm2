@@ -41,6 +41,7 @@ namespace EntityStates.NemMerc
                 RoR2Content.Items.FocusConvergence,
                 RoR2Content.Items.TPHealingNova,
                 RoR2Content.Items.Squid,
+                RoR2Content.Items.TitanGoldDuringTP,
                 DLC1Content.Items.DroneWeapons,
                 DLC1Content.Items.FreeChest,
                 DLC1Content.Items.VoidMegaCrabItem,
