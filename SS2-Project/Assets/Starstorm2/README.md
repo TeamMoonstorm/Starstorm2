@@ -53,6 +53,12 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 ## Changelog
 
 **Warning: content spoilers below!**
+### 0.5.6
+* General
+    * Finally finished implementing Portuguse translation.
+* Nemeis Mercenary
+    * Fixed an bug with Proliferate and REX's Seed Barrage.
+
 ### 0.5.5
 * General
     * Properly implemented Portuguse translation. 
@@ -60,12 +66,13 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 * Items
     * Needles's item display now has dithering.
     * Haunted Lamp no longer drops when disabled.
-* Executioner
+    * Haunted Lamp actually fires if the follower doesn't exist.
+* Executioner   
     * Fixed Execution softlocking the player when failing to land when falling out of bounds.
 * Nemesis Mercenary
     * Improved blacklist for Proliferate's clone.
 * Drones
-    * Shock and Duplicator drones now drop purchaseable interactables when destroyed.
+    * Shock and Duplicator drones now drop purchasable interactables when destroyed.
 
 ### 0.5.4
 * General
