@@ -8,8 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: texWhiteFlagWardPlaceholder
-  m_Shader: {fileID: 4800000, guid: 5dfa0015d7b305d4e94f6b67a2105c13, type: 2}
-  m_ShaderKeywords: 
+  m_Shader: {fileID: 4800000, guid: 9b2024ee08a5bfc418ff897991e84323, type: 2}
+  m_ShaderKeywords: USE_CLOUDS
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -24,6 +24,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BlueChannelTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Cloud1Tex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Cloud2Tex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -71,6 +79,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _RemapTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SliceAlphaTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -80,21 +92,34 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _AlphaBias: 0
+    - _AlphaBoost: 1
     - _BlueChannelBias: 0
     - _BlueChannelSmoothness: 0
+    - _Boost: 1
+    - _CalcTextureAlphaOn: 0
+    - _CloudOffsetOn: 0
+    - _CloudsOn: 1
     - _ColorsOn: 0
     - _Cull: 2
     - _DecalLayer: 0
     - _Depth: 0.2
+    - _DepthOffset: 0
+    - _DisableRemapOn: 0
+    - _DistortionStrength: 0.1
     - _DitherOn: 0
+    - _DstBlend: 1
     - _EliteBrightnessMax: 1
     - _EliteBrightnessMin: 0
     - _EliteIndex: 0
     - _EmPower: 1
     - _EnableCutout: 0
+    - _ExternalAlpha: 1
     - _FEON: 0
     - _Fade: 1
     - _FadeBias: 0
+    - _FadeCloseDistance: 0.5
+    - _FadeCloseOn: 0
     - _FlowEmissionStrength: 1
     - _FlowHeightBias: 0
     - _FlowHeightPower: 1
@@ -105,18 +130,23 @@ Material:
     - _FlowmapOn: 0
     - _ForceSpecOn: 0
     - _FresnelBoost: 1
+    - _FresnelOn: 0
     - _FresnelPower: 1
     - _GreenChannelBias: 0
     - _GreenChannelSmoothness: 0
+    - _InternalSimpleBlendMode: 0
+    - _InvFade: 0.1
     - _LimbPrimeMask: 1
     - _LimbRemovalOn: 0
     - _NormalStrength: 1
+    - _OffsetAmount: 0
     - _PrintBias: 0
     - _PrintBoost: 1
     - _PrintDirection: 0
     - _PrintEmissionToAlbedoLerp: 0
     - _PrintOn: 0
     - _RampInfo: 0
+    - _SkyboxOnly: 0
     - _SliceAlphaDepth: 0.1
     - _SliceBandHeight: 1
     - _SliceHeight: 5
@@ -125,7 +155,15 @@ Material:
     - _SpecularStrength: 0
     - _SplatmapOn: 0
     - _SplatmapTileScale: 1
+    - _SrcBlend: 1
+    - _UseUV1On: 0
+    - _VertexAlphaOn: 0
+    - _VertexColorOn: 0
+    - _VertexOffsetOn: 0
+    - _ZTest: 4
     m_Colors:
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _CutoffScroll: {r: 0, g: 0, b: 0, a: 0}
     - _EmColor: {r: 0, g: 0, b: 0, a: 1}
     - _FlashColor: {r: 0, g: 0, b: 0, a: 1}
+    - _TintColor: {r: 1, g: 1, b: 1, a: 1}

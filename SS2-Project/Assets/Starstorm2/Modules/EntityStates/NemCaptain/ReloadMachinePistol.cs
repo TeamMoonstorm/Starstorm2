@@ -30,7 +30,7 @@ namespace EntityStates.NemCaptain
         {
             get
             {
-                return (baseDuration + (baseDuration * ncc.stressFraction)) / attackSpeedStat;
+                return (baseDuration / attackSpeedStat);
             }
         }
 

@@ -133,7 +133,10 @@ namespace EntityStates.Executioner2
                 Vector3 vec = ray.direction;
 
                 if (lamp)
+                {
                     lamp.IncrementFire();
+                    //SS2Log.Info("special lamp incrementing fire");
+                }
 
                 if (useAimAssist)
                 {

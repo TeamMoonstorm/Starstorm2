@@ -78,11 +78,13 @@ namespace Moonstorm.Starstorm2.Items
             {
                 if (NetworkServer.active)
                 {
-                    body.characterMotor.onHitGroundServer += Restock;
+                    if (body.characterMotor != null)
+                        body.characterMotor.onHitGroundServer += Restock;
                 }
                 else
                 {
-                    body.characterMotor.onHitGroundAuthority += Restock;
+                    if (body.characterMotor != null)
+                        body.characterMotor.onHitGroundAuthority += Restock;
                 }
             }
 
@@ -129,11 +131,13 @@ namespace Moonstorm.Starstorm2.Items
             {
                 if (NetworkServer.active)
                 {
-                    body.characterMotor.onHitGroundServer -= Restock;
+                    if (body.characterMotor != null)
+                        body.characterMotor.onHitGroundServer -= Restock;
                 }
                 else
                 {
-                    body.characterMotor.onHitGroundAuthority -= Restock;
+                    if (body.characterMotor != null)
+                        body.characterMotor.onHitGroundAuthority -= Restock;
                 }
             }
 

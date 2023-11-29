@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: 
   skillNameToken: SS2_NEMCAPTAIN_ORDERBLACKHOLE_NAME
-  skillDescriptionToken: SS2_NEMCAPTAIN_ORDERBLACKHOLE_DESC
+  skillDescriptionToken: SS2_NEMCAPTAIN_ORDERBLACKHOLE_DESCRIPTION
   keywordTokens: []
   icon: {fileID: 21300000, guid: 17a196f2757e57f4ea659b67e4ec920c, type: 3}
   activationStateMachineName: Weapon
@@ -37,3 +37,5 @@ MonoBehaviour:
   isCombatSkill: 1
   mustKeyPress: 0
   stressValue: 15
+  canCastIfOverstressed: 0
+  canCastIfWillOverstress: 0

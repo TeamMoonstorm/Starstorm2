@@ -23,6 +23,7 @@ namespace EntityStates.NemCaptain.Weapon
 
         private NemCaptainController ncc;
 
+
         private float duration
         {
             get

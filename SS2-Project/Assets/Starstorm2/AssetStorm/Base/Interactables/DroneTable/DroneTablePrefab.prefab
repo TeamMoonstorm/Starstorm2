@@ -5318,6 +5318,7 @@ GameObject:
   - component: {fileID: 2210701246330051348}
   - component: {fileID: 1111746013746401012}
   - component: {fileID: 4137976870195710372}
+  - component: {fileID: 5619715711419205233}
   m_Layer: 0
   m_Name: DroneTable_low
   m_TagString: Untagged
@@ -5402,7 +5403,7 @@ MeshCollider:
   m_GameObject: {fileID: 6343902410804325105}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
@@ -5420,6 +5421,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entity: {fileID: 8861224231238927695}
+--- !u!65 &5619715711419205233
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6343902410804325105}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.0591338, y: 2.2452288, z: 2.794252}
+  m_Center: {x: 0.00000007431577, y: 1.116282, z: -0.000000634533}
 --- !u!1 &6588483314384294492
 GameObject:
   m_ObjectHideFlags: 0
