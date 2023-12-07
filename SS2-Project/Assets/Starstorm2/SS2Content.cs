@@ -130,9 +130,13 @@ namespace Moonstorm.Starstorm2
         {
             public static BuffDef BuffAffixVoid;
 
-            public static BuffDef BuffBackThruster;
+            public static BuffDef BuffBackThruster;          
 
             public static BuffDef BuffChirrAlly;
+
+            public static BuffDef BuffChirrConfuse;
+
+            public static BuffDef BuffChirrRegen;
 
             public static BuffDef BuffChirrFly;
 

@@ -3,16 +3,16 @@ using UnityEngine;
 using RoR2.Skills;
 using System.Runtime.CompilerServices;
 using UnityEngine.AddressableAssets;
+using R2API;
 
 namespace Moonstorm.Starstorm2.Survivors
 {
     [DisabledContent]
     public sealed class Chirr : SurvivorBase
     {
-        public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("ChirrBody", SS2Bundle.Indev);
+        public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("ChirrBody", SS2Bundle.Chirr);
         public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemmandoMonsterMaster", SS2Bundle.Indev);
-        public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("Chirr", SS2Bundle.Indev);
-
+        public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("Chirr", SS2Bundle.Chirr);
         public override void Initialize()
         {
             base.Initialize();

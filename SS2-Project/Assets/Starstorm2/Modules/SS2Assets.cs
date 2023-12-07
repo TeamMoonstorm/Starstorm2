@@ -24,6 +24,7 @@ namespace Moonstorm.Starstorm2
         Artifacts,
         Executioner,
         Executioner2,
+        Chirr,
         Nemmando,
         NemCommando,
         NemMercenary,
@@ -46,6 +47,7 @@ namespace Moonstorm.Starstorm2
         private const string ARTIFACTS = "ss2artifacts";
         private const string EXECUTIONER = "ss2executioner";
         private const string EXECUTIONER2 = "ss2executioner2";
+        private const string CHIRR = "ss2chirr";
         private const string NEMMANDO = "ss2nemmando";
         private const string NEMCOMMANDO = "ss2nemcommando";
         private const string NEMMERCENARY = "ss2nemmercenary";
@@ -158,6 +160,7 @@ namespace Moonstorm.Starstorm2
                     case ARTIFACTS: LoadAndAssign(path, SS2Bundle.Artifacts); break;
                     case EXECUTIONER: LoadAndAssign(path, SS2Bundle.Executioner); break;
                     case EXECUTIONER2: LoadAndAssign(path, SS2Bundle.Executioner2); break;
+                    case CHIRR: LoadAndAssign(path, SS2Bundle.Chirr); break;
                     case NEMMANDO: LoadAndAssign(path, SS2Bundle.Nemmando); break;
                     case NEMCOMMANDO: LoadAndAssign(path, SS2Bundle.NemCommando); break;
                     case NEMMERCENARY: LoadAndAssign(path, SS2Bundle.NemMercenary); break;
