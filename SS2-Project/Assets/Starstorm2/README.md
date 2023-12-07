@@ -53,6 +53,72 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 ## Changelog
 
 **Warning: content spoilers below!**
+### 0.5.6
+* General
+    * Finally finished implementing Portuguse translation.
+* Nemeis Mercenary
+    * Fixed an bug with Proliferate and REX's Seed Barrage.
+
+### 0.5.5
+* General
+    * Properly implemented Portuguse translation. 
+    * Captain GM now has dithering.
+* Items
+    * Needles's item display now has dithering.
+    * Haunted Lamp no longer drops when disabled.
+    * Haunted Lamp actually fires if the follower doesn't exist.
+* Executioner   
+    * Fixed Execution softlocking the player when failing to land when falling out of bounds.
+* Nemesis Mercenary
+    * Improved blacklist for Proliferate's clone.
+* Drones
+    * Shock and Duplicator drones now drop purchasable interactables when destroyed.
+
+### 0.5.4
+* General
+    * Updated Portuguese translation. 
+* Items
+    * Needles has new VFX.
+    * Haunted Lamp is now corrupted by Newly Hatched Zoea.
+    * Haunted Lamp now fires its projectile from the follower itself, if it exists.
+    * Relic of Termination's drop table is now properly instantiated.
+* Executioner
+    * Slightly nerfed Crowd Dispersion: (Cooldown: 5 -> 6, Debuff Duration: 4 -> 3, Reduced movement speed)
+    * Removed the range limit on Execution.
+    * Actually fixed interaction with Haunted Lamp and Ion Burst.
+* Nemesis Commando
+    * Reduced the strength of some normals. 
+* Drones
+    * Fixed a Duplicator Drone nullref.
+* Interactables
+    * Refabricator no longer has collision.
+    * Refabricator should spawn slightly more often.
+    * Refabricator's drop table is now properly instantiated.
+    * Broken Shock Drone's price is now better positioned. 
+
+### 0.5.3
+* General
+    * All survivors now have proper dithering
+* Items
+    * Remuneration is now less memorable
+* Executioner
+    * Fixed unintended interaction with Haunted Lamp and Ion Burst.
+* Nemesis Mercenary
+    * Splatter's reload now scales somewhat better with attack speed.
+    * Devitalize's slide now scales lower with movement speed.
+    * Proliferate can no longer activate equipments or carry items that grant extra lives.
+    * Damage from Proliferate's clone is now attributed to the player.
+    * Item displays now correctly replace limbs.
+    * Added post processing effects to Exploit and Proliferate.
+    * Adjusted various tokens and tooltips.
+    * Fixed Dispatch teleporting to 0,0,0.
+    * Fixed Nemesis Mercenary's collision breaking when using certain dashes together.
+* Events
+    * Vestiges are now immune to void fog.
+* Monsters
+    * Added a trail to Rushrum to help visibility.
+    * Wayfarer now crouches under low ceilings.
+
 ### 0.5.2
 * General
     * Disabled some WIP content that slipped through. ;)
@@ -112,18 +178,3 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Survivor ragdolls no longer disappear when they die off screen.
     * Pressurized canister has been disabled while we work on a multiplayer bug.
     * ...and so much more!
- 
-### 0.4.6
-* General
-    * Fixed a bug with how Nemesis Commando checks to reload after Single Tap's stock count changes.
-* Items
-    * All items and equipment have better positioning in the logbook. 
-    * Relic of Termination now grants double time for bosses and drops the boss's relevant boss item, assuming it has one. The mark now properly works on bosses as well.
-    * Adjusted Relic of Termination's drop rates.
-    * Adjusted how Relic of Termination scales marked enemy health - it has a lower multiplier, but also grants an additional flat amount of health.
-    * Relic of Termination's marker now immediately disappears upon killing the marked enemy.
-    * Detritive Trematode can no longer be applied to the Artifact Reliquary. 
-    * Adjusted how Relic of Force adjusts skill cooldowns to fix some mod incompatabilities.
-    * X4 and Termination's icons have been cleaned up.
-    * Coffee Bag and Needles now have item displays.
-    * Disabled Baby's Toys. The item does work, but it has a lot of issues which would take a decent amount of time to address, so it's being disabled for now.

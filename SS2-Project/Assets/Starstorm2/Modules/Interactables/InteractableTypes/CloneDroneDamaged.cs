@@ -25,6 +25,8 @@ namespace Moonstorm.Starstorm2.Interactables
         {
             base.Initialize();
 
+            On.EntityStates.Drone.DeathState.OnImpactServer += spawnCloneCorpse;
+
             //add sound events, the bad way
             interactable = InteractableDirectorCard.prefab;
             smb = interactable.GetComponent<SummonMasterBehavior>();
@@ -48,6 +50,32 @@ namespace Moonstorm.Starstorm2.Interactables
                     field.SetValue(newComponent, value);
                 }
             }
+        }
+
+        private void spawnCloneCorpse(On.EntityStates.Drone.DeathState.orig_OnImpactServer orig, EntityStates.Drone.DeathState self, Vector3 contactPoint)
+        {
+            if (self.characterBody.bodyIndex == BodyCatalog.FindBodyIndexCaseInsensitive("CloneDroneBody"))
+            {
+                DirectorPlacementRule placementRule = new DirectorPlacementRule
+                {
+                    placementMode = DirectorPlacementRule.PlacementMode.Direct,
+                    position = contactPoint
+                };
+                GameObject gameObject = DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(InteractableDirectorCard, placementRule, new Xoroshiro128Plus(0UL)));
+                if (gameObject)
+                {
+                    PurchaseInteraction component = gameObject.GetComponent<PurchaseInteraction>();
+                    if (component && component.costType == CostTypeIndex.Money)
+                    {
+                        component.Networkcost = Run.instance.GetDifficultyScaledCost(component.cost);
+                    }
+                }
+            }
+            else
+            {
+                orig(self, contactPoint);
+            }
+
         }
     }
 }

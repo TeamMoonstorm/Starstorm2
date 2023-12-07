@@ -12,28 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d95381666eaf794fb82249aa651f89c, type: 3}
   m_Name: sdOrFrostStrike
   m_EditorClassIdentifier: 
-  skillName: 
-  skillNameToken: SS2_NEMCAPTAIN_ORDERFROSTSTRIKE_NAME
-  skillDescriptionToken: SS2_NEMCAPTAIN_ORDERFROSTSTRIKE_DESC
+  skillName: NemCapDroneStrikeFrost
+  skillNameToken: SS2_NEMCAPTAIN_ORDERSTRIKEFROST_NAME
+  skillDescriptionToken: SS2_NEMCAPTAIN_ORDERSTRIKEFROST_DESCRIPTION
   keywordTokens: []
   icon: {fileID: 21300000, guid: 1b403ae5499f7e9479a6a97c47ce628d, type: 3}
   activationStateMachineName: Weapon
   activationState:
-    _typeName: EntityStates.NemCaptain.Weapon.DroneFrostStrike, Starstorm2, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    _typeName: EntityStates.NemCaptain.Weapon.SetupDronestrikeFrost, Starstorm2,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   interruptPriority: 2
-  baseRechargeInterval: 0.2
+  baseRechargeInterval: 0
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 1
   stockToConsume: 1
-  resetCooldownTimerOnUse: 0
-  fullRestockOnAssign: 0
-  dontAllowPastMaxStocks: 0
+  resetCooldownTimerOnUse: 1
+  fullRestockOnAssign: 1
+  dontAllowPastMaxStocks: 1
   beginSkillCooldownOnSkillEnd: 0
   cancelSprintingOnActivation: 1
   forceSprintDuringState: 0
-  canceledFromSprinting: 0
+  canceledFromSprinting: 1
   isCombatSkill: 1
-  mustKeyPress: 0
+  mustKeyPress: 1
   stressValue: 5
+  canCastIfOverstressed: 0
+  canCastIfWillOverstress: 0

@@ -16,7 +16,14 @@ namespace Moonstorm.Starstorm2.Buffs
             private static BuffDef GetBuffDef() => SS2Content.Buffs.bdOverstress;
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
             {
-                args.armorAdd -= 40f;
+                args.armorAdd -= 20f;
+                args.moveSpeedReductionMultAdd += 0.3f;
+                args.damageMultAdd -= 0.5f;
+            }
+
+            private void OnDestroy()
+            {
+                body.RecalculateStats();
             }
         }
     }

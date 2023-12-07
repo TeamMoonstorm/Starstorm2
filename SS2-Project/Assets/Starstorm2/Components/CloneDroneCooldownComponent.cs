@@ -33,11 +33,17 @@ namespace Moonstorm.Starstorm2.Components
 
         private void Awake()
         {
+            SS2Log.Info("aaaa");
             modelLocator = GetComponent<ModelLocator>();
             model = modelLocator.modelTransform.gameObject;
             childLocator = model.GetComponent<ChildLocator>();
-            glowMesh = childLocator.FindChild("GlowMesh").gameObject;
-            glowMeshRenderer = glowMesh.GetComponent<MeshRenderer>();
+            if (childLocator)
+            {
+                glowMesh = childLocator.FindChild("GlowMesh").gameObject; //
+                glowMeshRenderer = glowMesh.GetComponent<MeshRenderer>();
+            }
+            //glowMesh = childLocator.FindChild("GlowMesh").gameObject; //
+            //glowMeshRenderer = glowMesh.GetComponent<MeshRenderer>();
             skillLoc = GetComponent<SkillLocator>();
 
             var droneBody = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Drones/Drone1Body.prefab").WaitForCompletion();
@@ -66,7 +72,10 @@ namespace Moonstorm.Starstorm2.Components
                 if (hasSkill)
                 {
                     hasSkill = false;
-                    glowMeshRenderer.material = disableMat;
+                    if (glowMeshRenderer)
+                    {
+                        glowMeshRenderer.material = disableMat;
+                    }
                 }
 
                 if (skillLoc.primary.cooldownRemaining <= flickerDur && skillLoc.primary.cooldownRemaining > 0)
@@ -75,11 +84,13 @@ namespace Moonstorm.Starstorm2.Components
                     if (flickerStopwatch >= betweenFlicker)
                     {
                         flickerStopwatch = 0f;
-
-                        if (glowMeshRenderer.material == disableMat)
-                            glowMeshRenderer.material = defaultMat;
-                        else
-                            glowMeshRenderer.material = disableMat;
+                        if (glowMeshRenderer)
+                        {
+                            if (glowMeshRenderer.material == disableMat)
+                                glowMeshRenderer.material = defaultMat;
+                            else
+                                glowMeshRenderer.material = disableMat;
+                        }
                     }
                 }
             }
@@ -88,7 +99,10 @@ namespace Moonstorm.Starstorm2.Components
                 if (!hasSkill)
                 {
                     hasSkill = true;
-                    glowMeshRenderer.material = defaultMat;
+                    if (glowMeshRenderer)
+                    {
+                        glowMeshRenderer.material = defaultMat;
+                    }
                 }
             }
 

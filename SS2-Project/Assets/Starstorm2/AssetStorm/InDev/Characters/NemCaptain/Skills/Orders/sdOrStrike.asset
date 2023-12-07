@@ -12,28 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d95381666eaf794fb82249aa651f89c, type: 3}
   m_Name: sdOrStrike
   m_EditorClassIdentifier: 
-  skillName: 
+  skillName: NemCapDroneStrike
   skillNameToken: SS2_NEMCAPTAIN_ORDERSTRIKE_NAME
-  skillDescriptionToken: SS2_NEMCAPTAIN_ORDERSTRIKE_DESC
+  skillDescriptionToken: SS2_NEMCAPTAIN_ORDERSTRIKE_DESCRIPTION
   keywordTokens: []
   icon: {fileID: 21300000, guid: 93d6485a2391258489f6046e2012d674, type: 3}
   activationStateMachineName: Weapon
   activationState:
-    _typeName: EntityStates.NemCaptain.Weapon.DroneStrike, Starstorm2, Version=1.0.0.0,
+    _typeName: EntityStates.NemCaptain.Weapon.SetupDroneStrike, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   interruptPriority: 2
-  baseRechargeInterval: 0.2
+  baseRechargeInterval: 0
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 1
   stockToConsume: 1
-  resetCooldownTimerOnUse: 0
-  fullRestockOnAssign: 0
-  dontAllowPastMaxStocks: 0
+  resetCooldownTimerOnUse: 1
+  fullRestockOnAssign: 1
+  dontAllowPastMaxStocks: 1
   beginSkillCooldownOnSkillEnd: 0
   cancelSprintingOnActivation: 1
   forceSprintDuringState: 0
-  canceledFromSprinting: 0
+  canceledFromSprinting: 1
   isCombatSkill: 1
-  mustKeyPress: 0
+  mustKeyPress: 1
   stressValue: 4
+  canCastIfOverstressed: 0
+  canCastIfWillOverstress: 0

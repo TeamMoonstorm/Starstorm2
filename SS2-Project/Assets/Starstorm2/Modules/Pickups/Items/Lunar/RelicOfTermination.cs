@@ -85,7 +85,7 @@ namespace Moonstorm.Starstorm2.Items
             spawnRock1VFX = SS2Assets.LoadAsset<GameObject>("TerminationDebris1", SS2Bundle.Items);
             spawnRock2VFX = SS2Assets.LoadAsset<GameObject>("TerminationDebris2", SS2Bundle.Items);
 
-            dropTable = new TerminationDropTable();
+            dropTable = ScriptableObject.CreateInstance<TerminationDropTable>();
             bossOptions = new List<PickupIndex>();
         }
 
@@ -201,7 +201,8 @@ namespace Moonstorm.Starstorm2.Items
 
                     if(dropTable == null)
                     {
-                        dropTable = new TerminationDropTable();
+                        //dropTable = new TerminationDropTable();
+                        dropTable = ScriptableObject.CreateInstance<TerminationDropTable>();
                         //dropTable = (TerminationDropTable)ScriptableObject.CreateInstance("TerminationDropTable");
                     }
 
@@ -471,7 +472,7 @@ namespace Moonstorm.Starstorm2.Items
                 if (illegalMarks.Contains(bodyIndex))
                 {
                     GameObject prefab = BodyCatalog.GetBodyPrefab(bodyIndex);
-                    //SS2Log.Info($"Body prefab {prefab} is already in the illegal termination list.");
+                    SS2Log.Info($"Body prefab {prefab} is already in the illegal termination list.");
                     return;
                 }
                 illegalMarks.Add(bodyIndex);

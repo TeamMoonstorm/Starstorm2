@@ -4,8 +4,6 @@ using UnityEngine;
 using Moonstorm;
 using RoR2;
 using System;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Networking;
 using Moonstorm.Starstorm2.Components;
 using UnityEngine.AddressableAssets;
@@ -33,10 +31,10 @@ namespace EntityStates.Executioner2
         public static GameObject areaIndicatorOOB;
 
         [HideInInspector]
-        public static GameObject areaIndicatorInstance;
+        public GameObject areaIndicatorInstance;
 
         [HideInInspector]
-        public static GameObject areaIndicatorInstanceOOB;
+        public GameObject areaIndicatorInstanceOOB;
 
         private ExecutionerController exeController;
 
@@ -58,7 +56,11 @@ namespace EntityStates.Executioner2
 
             exeController = GetComponent<ExecutionerController>();
             if (exeController != null)
+            {
                 exeController.meshExeAxe.SetActive(true);
+                exeController.hasOOB = false;
+            }
+
 
             //skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
 
@@ -147,7 +149,7 @@ namespace EntityStates.Executioner2
         {
             if (areaIndicatorInstance)
             {
-                float maxDistance = moveSpeedStat * 6.8f;
+                float maxDistance = 256f;
 
                 Ray aimRay = GetAimRay();
                 RaycastHit raycastHit;

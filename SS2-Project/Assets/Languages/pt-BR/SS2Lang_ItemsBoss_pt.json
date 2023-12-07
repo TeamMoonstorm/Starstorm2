@@ -1,28 +1,35 @@
 {
-  "strings": {
-    "SS2_ITEM_AUGURY_NAME": "Augúrio",
-    "SS2_ITEM_AUGURY_DESC": "Ao receber <style=cIsHealth>{0}%</style> de sua <style=cIsHealth>saúde máxima</style> em <style=cIsHealth>dano</style>, desencadeie um devastador <color=#FFCCED>apagão</color>, <style=cIsDamage>matando instantaneamente</style> todos os <style=cIsDamage>inimigos não-chefe</style> capturados por ele.",
-    "SS2_ITEM_AUGURY_PICKUP": "<link=\"textWavy\">Consegue ouví-los...? Eles estão vindo...</link>",
-    "SS2_ITEM_AUGURY_LORE": "História em Construção",
+	"strings": {
+		"SS2_ITEM_AUGURY_NAME": "Augúrio",
+                "SS2_ITEM_AUGURY_DESC": "Ao receber <style=cIsHealth>{0}%</style> de sua <style=cIsHealth>saúde máxima</style> em <style=cIsHealth>dano</style>, desencadeie um devastador <color=#FFCCED>apagão</color>, <style=cIsDamage>abatendo instantaneamente</style> todos os <style=cIsDamage>inimigos que não sejam chefe</style> capturados por ele.",
+                "SS2_ITEM_AUGURY_PICKUP": "<link=\"textWavy\">Consegue ouví-los...? Eles estão vindo...</link>",
+                "SS2_ITEM_AUGURY_LORE": "História em Construção",
 
-    "SS2_ITEM_SCAVENGERSFORTUNE_NAME": "Fortuna do Carniceiro",
-    "SS2_ITEM_SCAVENGERSFORTUNE_DESC": "Descrição em construção",
-    "SS2_ITEM_SCAVENGERSFORTUNE_PICKUP": "Descrição ao obter em construção",
-    "SS2_ITEM_SCAVENGERSFORTUNE_LORE": "História em construção",
+                "SS2_ITEM_SCAVENGERSFORTUNE_NAME": "Fortuna do Saqueador",
+                "SS2_ITEM_SCAVENGERSFORTUNE_DESC": "Descrição em construção",
+                "SS2_ITEM_SCAVENGERSFORTUNE_PICKUP": "Descrição ao obter em construção",
+                "SS2_ITEM_SCAVENGERSFORTUNE_LORE": "História em construção",
 
-    "SS2_ITEM_SHACKLEDLAMP_NAME": "Lâmpada Algemada",
-    "SS2_ITEM_SHACKLEDLAMP_DESC": "Descrição em construção",
-    "SS2_ITEM_SHACKLEDLAMP_PICKUP": "Descrição ao obter em construção",
-    "SS2_ITEM_SHACKLEDLAMP_LORE": "História em construção",
+                "SS2_ITEM_SHACKLEDLAMP_NAME": "Lâmpada Algemada",
+                "SS2_ITEM_SHACKLEDLAMP_PICKUP": "Disapre um projétil assombrado para cada 1 uso da habilidade primária.",
+		"SS2_ITEM_SHACKLEDLAMP_DESC": "A cada <style=cIsDamage>5 usos da habilidade primária</style>, dispare um projétil assombrado que causa <style=cIsDamage>200%</style> <style=cStack>(+200% por acúmulo)</style> de dano base.",
+		"SS2_ITEM_SHACKLEDLAMP_LORE": "\"Me desculpe.\"\n\n\"Sim, por aqui, por favor. Preciso te perguntar uma coisa.\"\n\n\"Chegue mais perto.\"\n\n\"Preciso da sua ajuda. Essa lanterna que você está vendo, é apenas um mero fragmento de um corpo ainda maior.\"\n\n\"A jornada? Ah, sim. Será longa, mas não se preocupe. Eu vou guiá-lo não importa onde, e, embora possa ser perigoso, não será nada que eu não possa ajudar você a superar.\"\n\n\"Hm? O que você ganha com isso, você pergunta?\"\n\n\"Oh, você verá. Sua recompensa será mais grandiosa do que você possa imaginar. Uma vez que eu tenha retornado ao meu esplendor completo, eu irei te proteger. Manterei você seguro. Manterei você aquecido. Farei de você poderoso. Todas as suas preocupações serão queimadas. Não soa maravilhoso?\"\n\n\"Você está de acordo? Ótimo. Agora, pegue a lanterna, rápido.\"\n\n\"Temos uma longa jornada à frente, amigo.\"",
 
-    "SS2_ITEM_STIRRINGSOUL_NAME": "Alma Vivaz",
-    "SS2_ITEM_STIRRINGSOUL_DESC": "Monstros mortos derrubam uma <style=cIsUtility>alma</style> que, ao coletar, tem <style=cIsUtility>{0}%</style> <style=cStack>(+{0}% por rolagem malsucedida, reiniciando em caso de sucesso)</style> de chance de <style=cIsUtility>gerar um item</style>.",
-    "SS2_ITEM_STIRRINGSOUL_PICKUP": "<link=\"textWavy\">Pelo que estou lutando?</link>",
-    "SS2_ITEM_STIRRINGSOUL_LORE": "Um espírito de determinação..\n<link=\"textWavy\">...Um espírito a ser detido</link>\nUma vontade inabalável de sobreviver...\n<link=\"textWavy\">...Uma vontade vacilante de sobreviver</link>\nDispostos a profanar sua identidade...\n<link=\"textWavy\">...Dispostos a profanar sua memória</link>\nDispostos a sacrificar sua civilização...\n<link=\"textWavy\"> >...Dispostos a sacrificar sua humanidade</link>\n\nAté onde eles irão para viver?\n<link=\"textWavy\">Até onde eles irão para se arruinar?</link>\nPara até que ponto eles irão para escapar?\n<link=\"textWavy\">Até que ponto eles irão para destruir?</link>\nTudo em nome da autopreservação...\n<link=\"textWavy\">.. .Tudo em nome do narcisismo</link>\nTudo por uma esperança incerta...\n<link=\"textWavy\">...Tudo por uma chance nula</link>\n\nO que aconteceria se tivesse uma oportunidade?\n<link=\"textWavy\">O que aconteceria se fosse dado um aliado?</link>\nO que aconteceria se o fogo deles fosse atiçado?\n<link=\"textWavy\">O que aconteceria se eles nós estamos receberam falsas esperanças?</link>\nTalvez devam ter uma chance.\n<link=\"textWavy\">Talvez devam receber força.</link>\nTalvez devam receber uma oferta.\n<color= #FFCCED>Talvez eles devam ser tomados primeiro.</link>",
+                "SS2_ITEM_STIRRINGSOUL_NAME": "Alma Vivaz",
+                "SS2_ITEM_STIRRINGSOUL_DESC": "Monstros abatidos derrubam uma <style=cIsUtility>alma</style> que, ao coletar, tem <style=cIsUtility>{0}%</style> <style=cStack>(+{0}% por rolagem malsucedida, reiniciando em caso de sucesso)</style> de chance de <style=cIsUtility>gerar um item</style>.",
+                "SS2_ITEM_STIRRINGSOUL_PICKUP": "<link=\"textWavy\">Pelo que estou lutando?</link>",
+                "SS2_ITEM_STIRRINGSOUL_LORE": "Um espírito de determinação...\n<link=\"textWavy\">...Um espírito a ser detido</link>\nUma vontade inabalável de sobreviver...\n<link=\"textWavy\">...Uma vontade vacilante de sobreviver</link>\nDispostos a profanar sua identidade...\n<link=\"textWavy\">...Dispostos a profanar sua memória</link>\nDispostos a sacrificar sua civilização...\n<link=\"textWavy\"> >...Dispostos a sacrificar sua humanidade</link>\n\nAté onde eles irão para viver?\n<link=\"textWavy\">Até onde eles irão para se arruinar?</link>\nPara até que ponto eles irão para escapar?\n<link=\"textWavy\">Até que ponto eles irão para destruir?</link>\nTudo em nome da autopreservação...\n<link=\"textWavy\">...Tudo em nome do narcisismo</link>\nTudo por uma esperança incerta...\n<link=\"textWavy\">...Tudo por uma chance nula</link>\n\nO que aconteceria se houvesse uma oportunidade?\n<link=\"textWavy\">O que aconteceria se fosse dado um aliado?</link>\nO que aconteceria se o fogo deles fosse atiçado?\n<link=\"textWavy\">O que aconteceria se eles tivessem falsas esperanças?</link>\nTalvez devessem ter uma chance.\n<link=\"textWavy\">Talvez devessem receber força.</link>\nTalvez devessem receber uma oferta.\n<color= #FFCCED>Talvez eles devessem ser tomados primeiro.</link>",
 
-    "SS2_ITEM_MOXIE_NAME": "<color=#FFCCED>Moxie</color>",
-    "SS2_ITEM_MOXIE_DESC": "Aumenta <style=cIsUtility>TODAS as estatísticas</style> em <style=cIsUtility>50%</style> durante as <color=#FFCCED>tempestades</color>.",
-    "SS2_ITEM_MOXIE_PICKUP": "<color=#FFCCED>Quer mais?</color>",
-    "SS2_ITEM_MOXIE_LORE": "Ei! Você! Que está lendo o arquivo! Você provavelmente não deveria estar aqui... Fique quieto, ok?"
-  }
+                "SS2_ITEM_MOXIE_NAME": "<color=#FFCCED>Moxie</color>",
+                "SS2_ITEM_MOXIE_DESC": "Aumenta <style=cIsUtility>TODAS as estatísticas</style> em <style=cIsUtility>50%</style> durante <color=#FFCCED>tempestades</color>.",
+                "SS2_ITEM_MOXIE_PICKUP": "<color=#FFCCED>Quer mais?</color>",
+                "SS2_ITEM_MOXIE_LORE": "Ei! Você! Que está lendo o arquivo! Você provavelmente não deveria estar aqui... Fique quieto, ok?",
+
+		"SS2_ITEM_REMUNERATION_NAME": "Remuneração",
+		"SS2_ITEM_REMUNERATION_DESC": "Uma <style=cIsUtility>escolha</style> entre três <style=cIsHealth>poderosos itens</style> aparecerá proximo ao <style=cIsUtility>início de cada fase</style>.",
+		"SS2_ITEM_REMUNERATION_PICKUP": "<link=\"textWavy\">... A que custo?...</link>",
+		"SS2_REMUNERATION_TERMINAL_NAME": "Pedestal",
+		"SS2_REMUNERATION_TERMINAL_CONTEXT": "<link=\"textWavy\">Transação Concluída</link>",
+		"SS2_ITEM_REMUNERATION_LORE": "<link=\"textShaky\">Qual o seu legado?</link>\n\nNada, além pequena vingança.\n\n<link=\"textShaky\">Qual a sua identidade?</link>\n\nNada, além de um nome falado com desgosto.\n\n<link=\"textShaky\">O que você quert?</link>\n\nNada, além de um novo propósito.\n\n<link=\"textShaky\">O que você precisa?</link>\n\nNada, além das armas que confio.\n\n<link=\"textShaky\">Então, para onde você irá?</link>\n\nPara onde você me fizer ir.\n\n<link=\"textShaky\">Então, o que você fará?</link>\n\nQualquer coisa que você disser que precisa.\n\n<link=\"textShaky\">Isso é tudo então?</link>\n\nSe você está dizendo.\n\n<link=\"textShaky\">Então vá, e morra.</link>\n\n...\n\nContanto que você me pague.\n\n"
+	}
 }

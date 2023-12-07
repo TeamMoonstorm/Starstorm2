@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: escDroneStrikeBasic
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.NemCaptain.Weapon.DroneStrikeBasic, Starstorm2,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: dmgCoefficient
+      fieldValue:
+        stringValue: 14
+        objectValue: {fileID: 0}
+    - fieldName: procCoefficient
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: radius
+      fieldValue:
+        stringValue: 11
+        objectValue: {fileID: 0}
+    - fieldName: explosionPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1391342697477556, guid: 8171997bf1d266b4fbf422049b4f01b4,
+          type: 3}
+    - fieldName: minDur
+      fieldValue:
+        stringValue: 0.2
+        objectValue: {fileID: 0}
+    - fieldName: areaIndicator
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 2742697162327039741, guid: e2a406081165d334bab85e0e540ced3e,
+          type: 3}
+    - fieldName: isFrost
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: isShock
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: dronePrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: maxDistance
+      fieldValue:
+        stringValue: 256
+        objectValue: {fileID: 0}
