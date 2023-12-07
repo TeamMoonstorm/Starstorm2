@@ -174,10 +174,6 @@ namespace Moonstorm.Starstorm2.Components
                 SS2Log.Error("CloneInputBank: Missing InputBanks! inputBank: " + this.inputBank + " | ownerInputBank: " + this.ownerInputBank);
             }
             
-            
-
-            
-
             if(copyMovements)
             {
                 this.inputBank.moveVector = this.ownerInputBank.moveVector;
@@ -212,7 +208,6 @@ namespace Moonstorm.Starstorm2.Components
                 this.bodyStateMachine.SetNextState(new CloneDash { target = ownerInputBank.gameObject });
             }
         }
-
 
         public class CloneOwnership : MonoBehaviour
         {
