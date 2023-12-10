@@ -17,15 +17,16 @@ namespace EntityStates.Chirr
 		public Vector3 initialVelocity;
 		public static GameObject hitGroundEffect = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Beetle/BeetleGuardGroundSlam.prefab").WaitForCompletion();
 
-
+		public float extraGravity;
 		public bool friendlyDrop;
 
-		private bool detonateNextFrame;
+		public bool detonateNextFrame;
 
 		private Collider[] colliders;
 		public static float disableColliderDuration = 0.5f;
 		private bool collidersEnabled;
-
+		private DetonateOnImpact detonateOnImpact;
+		private bool bodyHadGravity = true;
 		public override void OnEnter()
 		{
 			base.OnEnter();
@@ -41,11 +42,22 @@ namespace EntityStates.Chirr
 				modelAnimator.Update(0f);
 			}
 
+			// figure out if we should disable gravity on exit
+			GameObject prefab = BodyCatalog.GetBodyPrefab(this.characterBody.bodyIndex);
+			if (prefab)
+			{
+				Rigidbody rigidbody = prefab.GetComponent<Rigidbody>();
+				if (rigidbody) this.bodyHadGravity = rigidbody.useGravity;
+
+			}
+
+			//disable colliders to avoid colliding with dropper
 			this.colliders = base.gameObject.GetComponentsInChildren<Collider>();
 			foreach(Collider collider in colliders)
             {
 				collider.enabled = false;
             }
+
 
 			if(base.characterMotor)
             {
@@ -53,12 +65,12 @@ namespace EntityStates.Chirr
 				base.characterMotor.disableAirControlUntilCollision = true;
 				base.characterMotor.velocity = initialVelocity;
             }
-			else if(base.rigidbody)
-            {
+			else
+            {				
 				base.rigidbody.velocity = initialVelocity;
-            }
-
-			Chat.AddMessage("BYE BYE");
+				base.rigidbody.useGravity = true;
+				base.gameObject.AddComponent<DetonateOnImpact>().droppedState = this;
+			}
 
 		}
 
@@ -74,14 +86,17 @@ namespace EntityStates.Chirr
 				base.characterMotor.onMovementHit -= DoSplashDamage;
             }
 
+			if (this.detonateOnImpact) Destroy(this.detonateOnImpact);
+
+			base.rigidbody.useGravity = bodyHadGravity;
+
 			if(!this.collidersEnabled)
             {
 				foreach (Collider collider in colliders)
 				{
 					collider.enabled = true;
 				}
-			}
-			
+			}			
 
 			if (NetworkServer.active) base.characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage;
 
@@ -96,16 +111,23 @@ namespace EntityStates.Chirr
 		public override void FixedUpdate()
 		{
 			base.FixedUpdate();
-			if(base.fixedAge >= disableColliderDuration && !this.collidersEnabled) // idk what to do
+			if(base.fixedAge >= disableColliderDuration && !this.collidersEnabled) // idk what else to do
             {
 				foreach (Collider collider in colliders)
 				{
 					collider.enabled = true;
 				}
 			}
+			if (base.characterMotor)
+			{
+				base.characterMotor.velocity += Vector3.up * extraGravity * Time.fixedDeltaTime;
+			}
+			else
+            {
+				base.rigidbody.velocity += Vector3.up * extraGravity * Time.fixedDeltaTime;
+			}
 
-
-			if(detonateNextFrame && (base.characterMotor.Motor.GroundingStatus.IsStableOnGround && !base.characterMotor.Motor.LastGroundingStatus.IsStableOnGround))
+			if (detonateNextFrame && (base.characterMotor.Motor.GroundingStatus.IsStableOnGround && !base.characterMotor.Motor.LastGroundingStatus.IsStableOnGround))
             {
 				base.characterMotor.velocity = Vector3.zero;
 				Util.PlaySound("Hit2", base.gameObject);
@@ -113,7 +135,7 @@ namespace EntityStates.Chirr
 				{
 					EffectManager.SpawnEffect(hitGroundEffect, new EffectData
 					{
-						origin = base.transform.position,
+						origin = base.characterBody.footPosition,
 						scale = 1.25f,
 					}, true);
 
@@ -148,11 +170,24 @@ namespace EntityStates.Chirr
 				this.outer.SetNextStateToMain();
 			}
 		}
+
 		public override InterruptPriority GetMinimumInterruptPriority()
 		{
 			return friendlyDrop ? InterruptPriority.Skill : InterruptPriority.Vehicle; //////////////////////////////////
 		}
 
 
+		public class DetonateOnImpact : MonoBehaviour
+        {
+			public DroppedState droppedState;
+            private void OnCollisionEnter(Collision collision)
+            {
+                if(collision.gameObject.layer == LayerIndex.world.intVal)
+                {
+					this.droppedState.detonateNextFrame = true;
+					Destroy(this);
+                }
+            }
+        }
 	}
 }

@@ -20,6 +20,7 @@ namespace EntityStates.Chirr
 		public static float dropMaxHorizontalVelocity = 20f;
 		public static float dropConeAngle = 45f;
 		public static float maxRayDistance = 50f;
+		public static float extraGravity = -15f;
 		private GameObject areaIndicatorInstance;
 
 		private GrabController grabController;
@@ -41,8 +42,8 @@ namespace EntityStates.Chirr
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-
-			if(!base.inputBank.skill3.down)//!base.IsKeyDownAuthority())
+			
+			if(!base.IsKeyDownAuthority())
             {
 				this.outer.SetNextStateToMain();
             }
@@ -55,7 +56,7 @@ namespace EntityStates.Chirr
 
 		private void CalculateTrajectory()
         {
-			// NEED TO ACCOUNT FOR VICTIM'S HEIGHT/FOOT POSITION. UNDERSHOOTS OTHERWISE
+			// NEED TO ACCOUNT FOR VICTIM'S HEIGHT/FOOT POSITION or something like that. UNDERSHOOTS OTHERWISE
 			// looking straight down, max angle can only be 45 degrees "upwards"
 			Vector3 down = Vector3.down;
 			Vector3 aimOrigin = base.inputBank.aimOrigin;
@@ -74,7 +75,7 @@ namespace EntityStates.Chirr
 			}
 
 			//calculate trajectory with no upwards velocity
-			float flightDuration = Trajectory.CalculateFlightDuration(aimOrigin.y, hitPoint.y, 0f);
+			float flightDuration = Trajectory.CalculateFlightDuration(aimOrigin.y, hitPoint.y, 0f, Physics.gravity.y + extraGravity);
 
 			Vector3 hBetween = hitPoint - aimOrigin;
 			hBetween.y = 0;
@@ -93,16 +94,26 @@ namespace EntityStates.Chirr
 				//if (Util.HasEffectiveAuthority(this.grabController.victimBodyObject))
 					
 				EntityStateMachine bodyMachine = this.grabController.victimInfo.bodyStateMachine;
-				
+				bool isFriend = this.grabController.victimInfo.body.teamComponent.teamIndex == base.GetTeam();
 				this.grabController.AttemptGrab(null);
-				bodyMachine.SetInterruptState(new DroppedState { initialVelocity = this.desiredTrajectory, inflictor = base.gameObject }, InterruptPriority.Vehicle);
-
-				SS2Log.Warning("BITCH THROW");
+				bodyMachine.SetInterruptState(new DroppedState 
+				{ 
+					initialVelocity = this.desiredTrajectory, 
+					inflictor = base.gameObject, 
+					friendlyDrop = isFriend, 
+					extraGravity = extraGravity 
+				}, 	
+				InterruptPriority.Vehicle);
 			}
 			if (this.areaIndicatorInstance)
 			{
 				EntityState.Destroy(this.areaIndicatorInstance.gameObject);
 			}		
 		}
-	}
+
+        public override InterruptPriority GetMinimumInterruptPriority()
+        {
+			return InterruptPriority.Skill;
+        }
+    }
 }

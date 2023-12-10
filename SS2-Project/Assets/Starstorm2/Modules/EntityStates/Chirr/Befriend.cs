@@ -65,10 +65,13 @@ namespace EntityStates.Chirr
             if(NetworkServer.active)
             {
                 OrbManager.instance.AddOrb(new ChirrFriendOrb { 
+                    attacker = base.gameObject,
                     target = this.tracker.GetTrackingTarget(),
                     tracker = this.tracker, 
+                    origin = base.characterBody.corePosition, // muzzle
                     damageType = DamageType.Stun1s, 
-                    procCoefficient = 0 });
+                    procCoefficient = 0 
+                });
             }
 
         }

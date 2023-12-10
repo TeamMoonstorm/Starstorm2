@@ -36,6 +36,7 @@ namespace Moonstorm.Starstorm2.Buffs
             private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffChirrConfuse;
             public static float resetTargetInterval = 3f;
             public static float targetSearchDistance = 30f;
+            public static float aimSpeedCoefficient = 2f;
             private float resetTargetStopwatch;
 
             private BaseAI ai;
@@ -67,6 +68,7 @@ namespace Moonstorm.Starstorm2.Buffs
                 //}
                 if (this.ai)
                 {
+                    this.ai.aimVectorMaxSpeed *= aimSpeedCoefficient;
                     this.ai.targetRefreshTimer = 3.5f;
                     this.ai.currentEnemy.Reset();
                     this.ai.customTarget.Reset();
@@ -85,6 +87,7 @@ namespace Moonstorm.Starstorm2.Buffs
                 }
                 if (this.ai)
                 {
+                    this.ai.aimVectorMaxSpeed /= aimSpeedCoefficient;
                     this.ai.currentEnemy.Reset();
                     this.ai.customTarget.Reset();
                     this.ai.buddy.Reset();

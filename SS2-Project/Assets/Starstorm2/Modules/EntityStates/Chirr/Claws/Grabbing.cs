@@ -5,41 +5,37 @@ using System;
 using RoR2;
 using RoR2.Projectile;
 using System.Linq;
+using RoR2.Skills;
 using Moonstorm.Starstorm2.Components;
 namespace EntityStates.Chirr.Claws
 {
     public class Grabbing : BaseState
     {
+        public static SkillDef overrideDef;
         private GrabController grabController;
-        private EntityStateMachine weapon;
         public override void OnEnter()
         {
             base.OnEnter();
+            //anim
+            //sound
             this.grabController = base.GetComponent<GrabController>();
-            weapon = EntityStateMachine.FindByCustomName(base.gameObject, "Weapon");
-
-            Chat.AddMessage("HAHAHAHAHAHA LOl");
+            base.skillLocator.utility.SetSkillOverride(base.gameObject, overrideDef, GenericSkill.SkillOverridePriority.Contextual);
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
             // if victim is gone or dead
-            //if(this.grabController && (!this.grabController.victimBodyObject || (this.grabController.victimBodyObject && this.grabController.victimInfo.body && this.grabController.victimInfo.body.healthComponent.alive)))
-            //{
-            //    this.outer.SetNextStateToMain();
-            //    return;
-            //}
-
-            if(base.inputBank.skill3.justPressed) // FUCKING TERRIBLE. USE SKILL OVERRIDE OR SOMETHING ASAP!!!!!!!!!!!!!!
-            {               
-                if(weapon && weapon.SetInterruptState(new AimDrop(), InterruptPriority.Skill))
-                {
-                    Chat.AddMessage("WEEEEEEEEEEEEEEEEEEEEEE");
-                    this.outer.SetNextStateToMain();
-                    return;
-                }
+            if (this.grabController && !this.grabController.IsGrabbing())
+            {
+                this.outer.SetNextStateToMain();
+                return;
             }
+        }
+        public override void OnExit()
+        {
+            base.OnExit();
+            base.skillLocator.utility.UnsetSkillOverride(base.gameObject, overrideDef, GenericSkill.SkillOverridePriority.Contextual);
         }
     }
 }

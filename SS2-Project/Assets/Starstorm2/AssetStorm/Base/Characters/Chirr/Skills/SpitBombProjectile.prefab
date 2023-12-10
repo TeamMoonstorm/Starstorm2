@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 2849282778715303265}
   - component: {fileID: 4811216657060050309}
   - component: {fileID: 6317222341959716059}
-  - component: {fileID: 6839449255654164239}
   m_Layer: 14
   m_Name: SpitBombProjectile
   m_TagString: Untagged
@@ -170,7 +169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifetime: 5
   lifetimeExpiredEffect: {fileID: 0}
-  desiredForwardSpeed: 40
+  desiredForwardSpeed: 80
   updateAfterFiring: 0
   enableVelocityOverLifetime: 0
   velocityOverLifetime:
@@ -196,8 +195,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   falloffModel: 1
   blastRadius: 7
-  blastDamageCoefficient: 0
-  blastProcCoefficient: 0
+  blastDamageCoefficient: 1
+  blastProcCoefficient: 1
   blastAttackerFiltering: 0
   bonusBlastForce: {x: 0, y: 0, z: 0}
   canRejectForce: 1
@@ -236,30 +235,3 @@ MonoBehaviour:
   lifetimeAfterImpact: 0
   lifetimeRandomOffset: 0
   transformSpace: 0
---- !u!114 &6839449255654164239
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2861417616241238631}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1810124184, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fuse: 1.5
-  onFuse:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6317222341959716059}
-        m_MethodName: Detonate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2

@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using R2API;
+
 namespace Moonstorm.Starstorm2.Components
 {
     [RequireComponent(typeof(ProjectileController))]
     public class SpitBombZone : MonoBehaviour
     {
-        public float radius = 7f;
+        public float startRadius = 7f;
+        public float endRadius = 14f;
         public float fireFrequency = 3f;
 
         public float damageCoefficientPerSecond = 1f;
@@ -23,12 +25,15 @@ namespace Moonstorm.Starstorm2.Components
         private ProjectileController projectileController;
         private TeamFilter teamFilter;
         private ProjectileDamage projectileDamage;
+        public Transform[] scaledTransforms = new Transform[0];
 
+        private float currentRadius;
         private void Awake()
         {
             this.projectileController = base.GetComponent<ProjectileController>();
             this.teamFilter = base.GetComponent<TeamFilter>();
             this.projectileDamage = base.GetComponent<ProjectileDamage>();
+            this.currentRadius = startRadius;
         }
 
         private bool ShouldGrantRegen(TeamIndex teamIndex)
@@ -43,6 +48,12 @@ namespace Moonstorm.Starstorm2.Components
         private void FixedUpdate()
         {
             this.lifeStopwatch += Time.fixedDeltaTime;
+
+            this.currentRadius = Mathf.Lerp(startRadius, endRadius, this.lifeStopwatch / this.lifetime);
+            for (int i = 0; i < this.scaledTransforms.Length - 1; i++)
+            {
+                scaledTransforms[i].localScale = Vector3.one * (endRadius / startRadius) * (this.lifeStopwatch / this.lifetime);
+            }
             if(this.lifeStopwatch >= this.lifetime)
             {
                 Destroy(base.gameObject);
@@ -66,7 +77,7 @@ namespace Moonstorm.Starstorm2.Components
                 blastAttack.position = base.transform.position;
                 blastAttack.baseDamage = this.projectileDamage.damage * this.damageCoefficientPerSecond / fireFrequency;
                 blastAttack.baseForce = 0f;
-                blastAttack.radius = this.radius;
+                blastAttack.radius = this.currentRadius;
                 blastAttack.attacker = this.projectileController.owner;
                 blastAttack.inflictor = base.gameObject;
                 blastAttack.teamIndex = this.projectileController.teamFilter.teamIndex;
@@ -82,7 +93,7 @@ namespace Moonstorm.Starstorm2.Components
                 BlastAttack.Result result = blastAttack.Fire();
             }
             SphereSearch sphereSearch = new SphereSearch();
-            sphereSearch.radius = this.radius;
+            sphereSearch.radius = this.startRadius;
             sphereSearch.origin = base.transform.position;
             sphereSearch.queryTriggerInteraction = QueryTriggerInteraction.Ignore;
             sphereSearch.mask = LayerIndex.entityPrecise.mask;
@@ -94,7 +105,7 @@ namespace Moonstorm.Starstorm2.Components
                 HealthComponent healthComponent = hurtBoxes[i].healthComponent;
                 if (ShouldGrantRegen(healthComponent.body.teamComponent.teamIndex))
                 {
-                    healthComponent.body.AddTimedBuff(SS2Content.Buffs.BuffChirrRegen, 1f); // yes i am hard coding everything. fuck you and fuck the laggy ass editor
+                    healthComponent.body.AddTimedBuff(SS2Content.Buffs.BuffChirrRegen, 3f); // yes i am hard coding everything. fuck you and fuck the laggy ass editor
                 }
             }
         }

@@ -33,13 +33,13 @@ namespace Moonstorm.Starstorm2.Components
 		public BullseyeSearch search = new BullseyeSearch();
 
 		private CharacterMaster master;
-		public ChirrFriendOwnership friendOwnership;
+		public ChirrFriendController friendOwnership;
 
 		public static float maximumFriendHealthFraction = 0.5f;
 
 		public void Awake()
 		{
-			this.indicator = new Indicator(base.gameObject, SS2Assets.LoadAsset<GameObject>("NemMercTrackingIndicator", SS2Bundle.NemMercenary));
+			this.indicator = new Indicator(base.gameObject, SS2Assets.LoadAsset<GameObject>("ChirrBefriendIndicator", SS2Bundle.Chirr));
 		}
 		public void Start()
 		{
@@ -48,10 +48,10 @@ namespace Moonstorm.Starstorm2.Components
 			if (masterObject) this.master = masterObject.GetComponent<CharacterMaster>();
 			if(this.master)
             {
-				this.friendOwnership = this.master.GetComponent<ChirrFriendOwnership>();
+				this.friendOwnership = this.master.GetComponent<ChirrFriendController>();
 				if(!this.friendOwnership)
                 {
-					this.master.gameObject.AddComponent<ChirrFriendOwnership>();
+					this.friendOwnership = this.master.gameObject.AddComponent<ChirrFriendController>();
                 }
 			}
 				
@@ -62,7 +62,14 @@ namespace Moonstorm.Starstorm2.Components
 
 		public bool ShouldSearchForFriend()
         {
-			return this.friendOwnership && this.friendOwnership.currentFriend.master != null;
+			return this.friendOwnership && !this.friendOwnership.hasFriend;
+        }
+		public bool CheckBody(CharacterBody body)
+        {
+			bool healthRequirement = true;// body.healthComponent.health < body.healthComponent.fullHealth * maximumFriendHealthFraction;
+			bool bossRequirement = !body.isBoss; // scepter
+
+			return healthRequirement && bossRequirement;
         }
         public HurtBox GetTrackingTarget()
 		{
@@ -79,17 +86,27 @@ namespace Moonstorm.Starstorm2.Components
 		}
 		public void FixedUpdate()
 		{
-			if(Util.HasEffectiveAuthority(base.gameObject))
-            {
-				this.trackerUpdateStopwatch += Time.fixedDeltaTime;
-				if (this.trackerUpdateStopwatch >= 1f / this.trackerUpdateFrequency)
-				{
-					this.trackerUpdateStopwatch -= 1f / this.trackerUpdateFrequency;
+			if (!Util.HasEffectiveAuthority(base.gameObject)) return;
+            
+			this.trackerUpdateStopwatch += Time.fixedDeltaTime;
+			if (this.trackerUpdateStopwatch >= 1f / this.trackerUpdateFrequency)
+			{
+				this.trackerUpdateStopwatch -= 1f / this.trackerUpdateFrequency;
+				if(this.ShouldSearchForFriend())
+                {
 					Ray aimRay = new Ray(this.inputBank.aimOrigin, this.inputBank.aimDirection);
 					this.SearchForTarget(aimRay);
 					this.indicator.targetTransform = (this.trackingTarget ? this.trackingTarget.transform : null);
 				}
+				else
+                {
+					this.indicator.targetTransform = null;
+					this.trackingTarget = null;
+                }
+
+					
 			}
+			
 			
 		}
 
@@ -109,15 +126,13 @@ namespace Moonstorm.Starstorm2.Components
 			HurtBox[] hurtBoxes = this.search.GetResults().ToArray();
 			foreach(HurtBox hurtBox in hurtBoxes)
             {
-				if(hurtBox.healthComponent && hurtBox.healthComponent.alive)
-                {
-					if(hurtBox.healthComponent.health < hurtBox.healthComponent.fullHealth * maximumFriendHealthFraction)
-                    {
-						this.trackingTarget = hurtBox;
-						return;
-					}
+				if(hurtBox.healthComponent && CheckBody(hurtBox.healthComponent.body))
+                {					
+					this.trackingTarget = hurtBox;
+					return;					
                 }
-            }		
+            }
+			this.trackingTarget = null;
 		}
 		
 	}

@@ -38,7 +38,7 @@ namespace EntityStates.Chirr
         public override void OnEnter()
         {
             base.OnEnter();
-
+            base.StartAimMode();
             this.duration = baseDuration / this.attackSpeedStat;
             this.fireInterval = duration * fireTime / numShots;
 

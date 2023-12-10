@@ -14,12 +14,15 @@ namespace EntityStates.Chirr.Wings
         {
             base.OnEnter();
             PlayCrossfade("Wings, Override", "Glide", "Primary.playbackRate", 1, 0.05f);
+
+            base.characterBody.bodyFlags |= RoR2.CharacterBody.BodyFlags.SprintAnyDirection;
             //find & enable hover effect
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+            base.characterBody.isSprinting = true;
             if (isAuthority)
             {
                 float fallVelocity = characterMotor.velocity.y;
@@ -40,6 +43,8 @@ namespace EntityStates.Chirr.Wings
         public override void OnExit()
         {
             base.OnExit();
+            base.characterBody.bodyFlags &= ~RoR2.CharacterBody.BodyFlags.SprintAnyDirection;
+
             PlayCrossfade("Wings, Override", "Idle", "Primary.playbackRate", 1, 0.05f);
             //find & disable hovereffect
         }

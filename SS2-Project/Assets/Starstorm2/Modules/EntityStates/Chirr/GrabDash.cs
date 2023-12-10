@@ -23,7 +23,6 @@ namespace EntityStates.Chirr
         private AnimationCurve speedCurve;
 
         private float grabSearchTimer;
-        private GameObject debugSphere;
 
         private GrabController grabController;
         public override void OnEnter()
@@ -31,11 +30,6 @@ namespace EntityStates.Chirr
             base.OnEnter();
             this.speedCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
             this.duration = baseDuration; // ?
-
-            this.debugSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            this.debugSphere.transform.position = base.characterBody.corePosition;
-            this.debugSphere.transform.localScale = Vector3.one * minGrabRadius;
-            Destroy(this.debugSphere.GetComponent<Collider>());
 
             this.currentAimVector = base.inputBank.aimDirection;
             this.grabController = base.GetComponent<GrabController>();
@@ -65,9 +59,6 @@ namespace EntityStates.Chirr
                     
                     float grabRadius = Mathf.Lerp(minGrabRadius, maxGrabRadius, this.stopwatch / duration);
                     this.AttemptGrab(grabRadius);
-
-                    this.debugSphere.transform.position = base.characterBody.corePosition;
-                    this.debugSphere.transform.localScale = Vector3.one * grabRadius;
                 }
             }
 
@@ -82,7 +73,6 @@ namespace EntityStates.Chirr
         public override void OnExit()
         {
             base.OnExit();
-            if (this.debugSphere) Destroy(this.debugSphere);
         }
 
         public void AttemptGrab(float grabRadius)

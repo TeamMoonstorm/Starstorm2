@@ -29,6 +29,26 @@ namespace EntityStates.Chirr
             }
         }
 
+        public override void HandleMovements()
+        {
+            base.HandleMovements();
+
+            // copied code from base.handlemovements
+            // needed so chirr can aim forward while flying and sprinting
+            bool isHovering = !wingsStateMachine.IsInMainState();
+
+           
+            if (isHovering)
+            {
+                Vector3 vector = (this.moveVector == Vector3.zero) ? base.characterDirection.forward : this.moveVector;
+                float num = Vector3.Angle(this.aimDirection, vector);
+                float num2 = Mathf.Max(this.aimAnimator.pitchRangeMax + this.aimAnimator.pitchGiveupRange, this.aimAnimator.yawRangeMax + this.aimAnimator.yawGiveupRange);
+                bool shouldAim = base.characterBody.aimTimer > 0;
+                base.characterDirection.moveVector = ((base.characterBody && shouldAim) ? this.aimDirection : vector); //((base.characterBody && shouldAim && num > num2) ? this.aimDirection : vector);
+            }
+            
+        }
+
         public override void OnExit()
         {
             base.OnExit();

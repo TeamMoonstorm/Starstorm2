@@ -136,7 +136,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 240c594ed9f048843b57fbdd22297b97, type: 2}
+  - {fileID: 2100000, guid: e0dba400fa3854f4097afd9afda518af, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -293,11 +293,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 183e85940fbde8848ad6e7e85e991153, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 7
+  startRadius: 7
+  endRadius: 14
   fireFrequency: 3
   damageCoefficientPerSecond: 1
   procCoefficientPerSecond: 1
-  lifetime: 5
+  lifetime: 4
+  scaledTransforms:
+  - {fileID: 5014247575102229675}
 --- !u!1 &6543941810695622734
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,7 +328,7 @@ Transform:
   m_GameObject: {fileID: 6543941810695622734}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 5573845093474650521}
   - {fileID: 6242917454285878973}

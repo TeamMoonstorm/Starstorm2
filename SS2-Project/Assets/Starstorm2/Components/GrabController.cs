@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 using EntityStates;
 using RoR2.Networking;
-
+using System.Text;
+using System.Linq;
 namespace Moonstorm.Starstorm2.Components
 {
 
@@ -30,6 +31,8 @@ namespace Moonstorm.Starstorm2.Components
 
 		public SerializableEntityStateType grabState;
 
+		public bool shouldForceAllyState;
+
 		private Collider collider;
 
 		private Collider[] victimColliders;
@@ -40,14 +43,17 @@ namespace Moonstorm.Starstorm2.Components
 			public int layer;
         }
 
+		private TeamComponent teamComponent;
 		private void Awake()
 		{
 			this.collider = base.GetComponent<Collider>();
+			this.teamComponent = base.GetComponent<TeamComponent>();
 		}
 
 		private void FixedUpdate()
 		{
 			this.UpdateVictimPosition();
+			this.ForcePassengerState();
 			if (this.victimInfo.characterMotor)
 			{
 				this.victimInfo.characterMotor.velocity = Vector3.zero;
@@ -69,15 +75,48 @@ namespace Moonstorm.Starstorm2.Components
 			}
 		}
 
+		public bool IsGrabbing() /////
+        {
+			return this.victimInfo.body;
+        }
+
+		private bool ShouldForcePassengerState()
+        {
+			return this.victimInfo.body && (this.victimInfo.body.teamComponent.teamIndex != this.teamComponent.teamIndex || shouldForceAllyState);
+        }
+
+		//ugliest code ever
 		private void ForcePassengerState()
 		{
 			if (this.victimInfo.bodyStateMachine && this.victimInfo.hasEffectiveAuthority)
 			{
-				//Type type = this.passengerState.GetType();
-				//if (this.victimInfo.bodyStateMachine.state.GetType() != type)
-				//{
-				//	this.victimInfo.bodyStateMachine.SetInterruptState(EntityStateCatalog.InstantiateState(this.passengerState), InterruptPriority.Vehicle);
-				//}
+				// if victim isnt in grab state
+				if (this.victimInfo.bodyStateMachine.state.GetType() != typeof(GrabbedState) && this.ShouldForcePassengerState()) 
+                {
+					//and if the state is interruptible
+					//and if the state should be interrupted
+					if ((this.victimInfo.bodyStateMachine.CanInterruptState(InterruptPriority.Vehicle) || this.victimInfo.bodyStateMachine.IsInInitialState()))
+					{
+						//interrupt all statemachines
+						this.victimInfo.bodyStateMachine.SetNextState(new GrabbedState());
+						SetStateOnHurt setStateOnHurt = this.victimInfo.body.GetComponent<SetStateOnHurt>();
+						if(setStateOnHurt)
+                        {
+							foreach (EntityStateMachine machine in setStateOnHurt.idleStateMachine)
+							{
+								if (machine.CanInterruptState(InterruptPriority.Vehicle))
+									machine.SetNextStateToMain();
+							}
+						}				
+					}
+				}
+				// or if victim is in grab state and shouldnt be (when an enemy converts to an ally mid grab, for example)
+				else
+                {
+					// return it to main state
+					this.victimInfo.bodyStateMachine.SetNextStateToMain();
+                }
+				
 			}
 		}
 
@@ -152,30 +191,26 @@ namespace Moonstorm.Starstorm2.Components
 
 			this.victimInfo = new VehicleSeat.PassengerInfo(this.victimBodyObject);
 
-			this.victimColliders = this.victimBodyObject.GetComponentsInChildren<Collider>(); // wisps and shit have other random colliders in children
-			foreach(Collider collider in this.victimColliders)
+			
+			this.victimColliders = this.victimBodyObject.GetComponentsInChildren<Collider>(); // wisps and gups and shit have other random colliders and we gotta dig to find them
+			if (this.victimInfo.characterModel)
+			{
+				// oh lord
+				Collider[] modelColliders = this.victimInfo.characterModel.gameObject.GetComponentsInChildren<Collider>().Where(c => !c.GetComponent<HurtBox>()).ToArray();
+				this.victimColliders = HG.ArrayUtils.Join(modelColliders, this.victimColliders);
+			}
+
+			StringBuilder stringBuilder = new StringBuilder();
+			if (shouldLog) SS2Log.Info("Disabling colliders on " + victim);
+			foreach (Collider collider in this.victimColliders)
             {
+				if(shouldLog) stringBuilder.Append("Disabled: ").Append(collider.name).AppendLine();
 				collider.enabled = false;
             }
+			if (shouldLog) SS2Log.Info(stringBuilder.ToString());
 
-			if (this.victimInfo.bodyStateMachine && this.victimInfo.bodyStateMachine.CanInterruptState(InterruptPriority.Vehicle))
-			{
-				this.victimInfo.bodyStateMachine.SetNextState(new EntityStates.Chirr.GrabbedState());
-			}
-			//this.victimColliders = new VictimCollider[colliders.Length];
-			//for(int i = 0; i < victimColliders.Length - 1; i++) // we cant do IgnoreCollision because KinematicCharacterMotor fucking sucks
-			//         {
-			//	this.victimColliders[i] = new VictimCollider { collider = colliders[i], layer = colliders[i].gameObject.layer };
-			//	colliders[i].gameObject.layer = LayerIndex.noCollision.intVal;
-			//         }
-			//if (this.collider)
-			//{
-			//	foreach (VictimCollider collider in this.victimColliders)
-			//	{
+			this.ForcePassengerState();
 
-			//		Physics.IgnoreCollision(this.collider, collider.collider, true);
-			//	}
-			//}
 			if (this.victimInfo.characterMotor)
 			{
 				this.victimInfo.characterMotor.enabled = false;
@@ -187,24 +222,10 @@ namespace Moonstorm.Starstorm2.Components
 		{
 			if (shouldLog) SS2Log.Info("GrabController.EndGrab " + victim);
 
-
 			foreach (Collider collider in this.victimColliders)
 			{
 				collider.enabled = true;
 			}
-
-			//for (int i = 0; i < victimColliders.Length - 1; i++)
-			//{
-			//	this.victimColliders[i].collider.gameObject.layer = this.victimColliders[i].layer;
-			//}
-			//if (this.collider)
-			//{
-			//	foreach (VictimCollider collider in this.victimColliders)
-			//	{
-			//		Physics.IgnoreCollision(this.collider, collider.collider, false);
-			//	}
-			//}
-
 
 			if (this.victimInfo.characterMotor)
 			{
@@ -213,11 +234,11 @@ namespace Moonstorm.Starstorm2.Components
 
 			if (this.victimInfo.hasEffectiveAuthority)
 			{
-				if (this.victimInfo.bodyStateMachine && this.victimInfo.bodyStateMachine.CanInterruptState(InterruptPriority.Vehicle))
+				if (this.victimInfo.bodyStateMachine && (this.victimInfo.bodyStateMachine.CanInterruptState(InterruptPriority.Vehicle)))
 				{
 					this.victimInfo.bodyStateMachine.SetNextStateToMain();
 				}
-				Vector3 newPosition = this.grabTransform.position; //////////////
+				Vector3 newPosition = this.grabTransform.position; ////////////// do properly later
 				TeleportHelper.TeleportGameObject(this.victimInfo.transform.gameObject, newPosition);
 			}
 		}

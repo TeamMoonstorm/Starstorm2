@@ -4,7 +4,7 @@ using UnityEngine;
 using RoR2;
 using UnityEngine.Networking;
 using Moonstorm.Starstorm2;
-namespace EntityStates.Chirr
+namespace EntityStates
 {
 	public class GrabbedState : BaseState
 	{
@@ -39,9 +39,10 @@ namespace EntityStates.Chirr
 			base.FixedUpdate();
 
 			if(base.isAuthority && base.fixedAge >= this.duration)
-				this.outer.SetNextStateToMain();
-			
+				this.outer.SetNextStateToMain();		
 		}
+
+
 		public override InterruptPriority GetMinimumInterruptPriority()
 		{
 			return InterruptPriority.Vehicle;
