@@ -19,6 +19,8 @@ namespace EntityStates.Chirr
             this.rayRadius = 0.5f;
             this.useGravity = true;
             this.maxDistance = maxDistanceee;
+            this.minimumDuration = 0.15f;
+            this.baseMinimumDuration = 0.15f;
             base.OnEnter();
             //Util.PlaySound();
             //base.PlayAnimation();

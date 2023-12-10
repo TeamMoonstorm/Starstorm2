@@ -10,7 +10,7 @@ namespace Moonstorm.Starstorm2.Buffs
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffChirrRegen", SS2Bundle.Chirr);
 
-        public static float percentHealthRegen = 0.1f;
+        public static float percentHealthRegen = 0.05f;
         public override void Initialize()
         {
             base.Initialize();

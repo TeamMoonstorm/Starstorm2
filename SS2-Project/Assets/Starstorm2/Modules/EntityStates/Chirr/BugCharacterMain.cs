@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using RoR2;
+using EntityStates.Chirr.Wings;
 
 namespace EntityStates.Chirr
 {
@@ -22,11 +23,9 @@ namespace EntityStates.Chirr
             if (hasCharacterMotor && hasInputBank && isAuthority)
             {
                 bool isDescending = inputBank.jump.down && characterMotor.velocity.y < 0f && !characterMotor.isGrounded;
-                bool isHovering = wingsStateMachine.state.GetType() == typeof(WingsOn);
+                bool isHovering = !wingsStateMachine.IsInMainState();
                 if (isDescending && !isHovering)
                     wingsStateMachine.SetNextState(new WingsOn());
-                else
-                    wingsStateMachine.SetNextState(new Idle());
             }
         }
 

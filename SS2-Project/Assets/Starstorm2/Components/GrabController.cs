@@ -1,187 +1,226 @@
 ﻿using System;
 using RoR2;
 using UnityEngine;
+using UnityEngine.Networking;
+using EntityStates;
+using RoR2.Networking;
 
 namespace Moonstorm.Starstorm2.Components
 {
-	public class GrabController : MonoBehaviour
+
+	//bastardized vehicleseat
+
+	///VEHICLESEAT:
+	///doesnt handle colliders correctly,
+	///does weird interactible stuff
+	///forces passenger state changes that we dont always want
+	///can only assign passengers on server
+	public class GrabController : NetworkBehaviour
 	{
-		private GameObject extraCollider;
-		private GameObject extraCollider2;
-		private int extraLayer;
-		private int extraLayer2;
-		private bool modelLocatorStartedDisabled;
-		public Transform pivotTransform;
-		public CharacterBody body;
-		public CharacterMotor motor;
-		private CharacterDirection direction;
-		private ModelLocator modelLocator;
-		private Transform modelTransform;
-		private Quaternion originalRotation;
+		public static bool shouldLog;
+
+		[NonSerialized]
+		[SyncVar(hook = "SetVictim")]
+		public GameObject victimBodyObject;
+
+		[NonSerialized]
+		public VehicleSeat.PassengerInfo victimInfo;
+
+		public Transform grabTransform; // USE CHILDLOCATOR
+
+		public SerializableEntityStateType grabState;
+
+		private Collider collider;
+
+		private Collider[] victimColliders;
+
+		public struct VictimCollider
+        {
+			public Collider collider;
+			public int layer;
+        }
+
 		private void Awake()
 		{
-			this.body = base.GetComponent<CharacterBody>();
-			this.motor = base.GetComponent<CharacterMotor>();
-			this.direction = base.GetComponent<CharacterDirection>();
-			this.modelLocator = base.GetComponent<ModelLocator>();
-			if (this.modelLocator)
-			{
-				Transform transform = base.transform.Find("Model Base/mdlGreaterWisp/GreaterWispArmature/HurtBox");
-				if (transform)
-				{
-					this.extraLayer = transform.gameObject.layer;
-					transform.gameObject.layer = LayerIndex.noCollision.intVal;
-				}
-				transform = base.transform.Find("Model Base/mdlGreaterWisp/GreaterWispArmature/ROOT/Mask/StandableSurfacePosition/StandableSurface");
-				if (transform)
-				{
-					this.extraLayer2 = transform.gameObject.layer;
-					transform.gameObject.layer = LayerIndex.noCollision.intVal;
-				}
-			}
-			base.gameObject.layer = LayerIndex.noCollision.intVal;
-			if (this.direction)
-			{
-				this.direction.enabled = false;
-			}
-			if (this.modelLocator)
-			{
-				if (!this.modelLocator.enabled)
-				{
-					this.modelLocatorStartedDisabled = true;
-				}
-				if (this.modelLocator.modelTransform)
-				{
-					this.modelTransform = this.modelLocator.modelTransform;
-					this.originalRotation = this.modelTransform.rotation;
-					this.modelLocator.enabled = false;
-				}
-			}
+			this.collider = base.GetComponent<Collider>();
 		}
 
 		private void FixedUpdate()
 		{
-			if (this.motor)
+			this.UpdateVictimPosition();
+			if (this.victimInfo.characterMotor)
 			{
-				this.motor.disableAirControlUntilCollision = true;
-				this.motor.velocity = Vector3.zero;
-				this.motor.rootMotion = Vector3.zero;
-				this.motor.Motor.SetPosition(this.pivotTransform.position, true);
-			}
-			if (this.pivotTransform)
-			{
-				base.transform.position = this.pivotTransform.position;
-			}
-			if (this.modelTransform)
-			{
-				this.modelTransform.position = this.pivotTransform.position;
-				this.modelTransform.rotation = this.pivotTransform.rotation;
-			}
-			RaycastHit raycastHit;
-			if (Physics.Raycast(new Ray(base.transform.position + Vector3.up * 2f, Vector3.down), out raycastHit, 6f, LayerIndex.world.mask, QueryTriggerInteraction.Collide))
-			{
-				this.lastGroundPosition = raycastHit.point;
+				this.victimInfo.characterMotor.velocity = Vector3.zero;
 			}
 		}
 
-		private Vector3 lastGroundPosition;
-		public void Launch(Vector3 launchVector)
+		public void UpdateVictimPosition()
 		{
-			if (this.modelLocator && !this.modelLocatorStartedDisabled)
+			Vector3 position = this.grabTransform.position;
+			if (this.victimInfo.characterMotor)
 			{
-				this.modelLocator.enabled = true;
+				this.victimInfo.characterMotor.velocity = Vector3.zero;
+				this.victimInfo.characterMotor.Motor.BaseVelocity = Vector3.zero;
+				this.victimInfo.characterMotor.Motor.SetPosition(position, true);
 			}
-			if (this.modelTransform)
+			else if (this.victimInfo.transform)
 			{
-				this.modelTransform.rotation = this.originalRotation;
+				this.victimInfo.transform.position = position;
 			}
-			if (this.direction)
-			{
-				this.direction.enabled = true;
-			}
-			if (this.body.healthComponent && this.body.healthComponent.alive)
-			{
-				if (this.modelLocator)
-				{
-					Transform transform = base.transform.Find("Model Base/mdlGreaterWisp/GreaterWispArmature/HurtBox");
-					if (transform)
-					{
-						transform.gameObject.layer = this.extraLayer;
-					}
-					transform = base.transform.Find("Model Base/mdlGreaterWisp/GreaterWispArmature/ROOT/Mask/StandableSurfacePosition/StandableSurface");
-					if (transform)
-					{
-						transform.gameObject.layer = this.extraLayer2;
-					}
-				}
-				base.gameObject.layer = LayerIndex.defaultLayer.intVal;
-			}
-			RaycastHit raycastHit;
-			if (!Physics.Raycast(new Ray(this.body.footPosition, Vector3.down), out raycastHit, 15f, LayerIndex.world.mask, QueryTriggerInteraction.Collide))
-			{
-				base.transform.position = this.lastGroundPosition;
-			}
-			if (this.motor)
-			{
-				float force = 0.25f;
-				float f = Mathf.Max(140f, motor.mass);
-				force = f / 140f;
-				launchVector *= force;
-				this.motor.ApplyForce(launchVector, false, false);
-			}
-			else
-			{
-				float force = 0.25f;
-				if (body.rigidbody)
-				{
-					float f = Mathf.Max(200f, body.rigidbody.mass);
-					force = f / 200f;
-				}
-				launchVector *= force;
-				DamageInfo damageInfo = new DamageInfo
-				{
-					position = this.body.transform.position,
-					attacker = null,
-					inflictor = null,
-					damage = 0f,
-					damageColorIndex = DamageColorIndex.Default,
-					damageType = DamageType.Generic,
-					crit = false,
-					force = launchVector,
-					procChainMask = default(ProcChainMask),
-					procCoefficient = 0f
-				};
-				this.body.healthComponent.TakeDamageForce(damageInfo, false, false);
-			}
-			GameObject.Destroy(this);
 		}
 
-		public void Release()
+		private void ForcePassengerState()
 		{
-			if (this.modelLocator && !this.modelLocatorStartedDisabled)
+			if (this.victimInfo.bodyStateMachine && this.victimInfo.hasEffectiveAuthority)
 			{
-				this.modelLocator.enabled = true;
+				//Type type = this.passengerState.GetType();
+				//if (this.victimInfo.bodyStateMachine.state.GetType() != type)
+				//{
+				//	this.victimInfo.bodyStateMachine.SetInterruptState(EntityStateCatalog.InstantiateState(this.passengerState), InterruptPriority.Vehicle);
+				//}
 			}
-			if (this.modelTransform)
-			{
-				this.modelTransform.rotation = this.originalRotation;
-			}
-			if (this.direction)
-			{
-				this.direction.enabled = true;
-			}
-			if (this.extraCollider)
-			{
-				this.extraCollider.layer = this.extraLayer;
-			}
-			if (this.extraCollider2)
-			{
-				this.extraCollider2.layer = this.extraLayer2;
-			}
-			base.gameObject.layer = LayerIndex.defaultLayer.intVal;
-			GameObject.Destroy(this);
 		}
 
+        private void OnDestroy()
+        {
+			this.SetVictim(null);
+        }
+
+        public void AttemptGrab(GameObject bodyObject)
+        {
+			if(NetworkServer.active)
+            {
+				if (shouldLog) SS2Log.Info("GrabController.AttemptGrab: NetworkServer.active == true" + bodyObject);
+				this.AssignVictim(bodyObject);
+				return;
+            }
+			if (shouldLog) SS2Log.Info("GrabController.AttemptGrab: NetworkServer.active == false" + bodyObject);
+			this.CmdGrab(bodyObject);
+        }
+		[Command]
+		public void CmdGrab(GameObject bodyObject) // DONT CALL THIS. USE ATTEMPTGRAB
+		{
+			if (shouldLog) SS2Log.Info("GrabController.CmdGrab " + bodyObject);
+			this.AssignVictim(bodyObject);
+		}
+		[Server]
+		public void AssignVictim(GameObject bodyObject)
+        {
+			if (shouldLog) SS2Log.Info("GrabController.AssignVictim " + bodyObject);
+			if (bodyObject)
+			{
+				CharacterBody component = bodyObject.GetComponent<CharacterBody>();
+				if (component && component.currentVehicle)
+				{
+					component.currentVehicle.EjectPassenger(bodyObject);
+				}
+			}
+			this.SetVictim(bodyObject);
+		}
+
+		private void SetVictim(GameObject bodyObject)
+        {
+			if (shouldLog) SS2Log.Info("GrabController.SetVictim " + bodyObject);
+			if(base.syncVarHookGuard) // i think i understand this? stops code from running an extra time during syncvar. vanilla does this
+            {
+				if (shouldLog) SS2Log.Info("GrabController.SetVictim syncVarHookGuard == true");
+				this.victimBodyObject = bodyObject;
+				return;
+            }
+
+			this.SetVictimInternal(bodyObject);
+        }
+		private void SetVictimInternal(GameObject bodyObject)
+		{
+			if (shouldLog) SS2Log.Info("GrabController.SetVictimInternal " + bodyObject);
+			if (this.victimBodyObject)
+            {
+				this.EndGrab(this.victimBodyObject);
+            }
+			this.victimBodyObject = bodyObject;
+			this.victimInfo = default(VehicleSeat.PassengerInfo);
+			this.victimColliders = Array.Empty<Collider>();
+			if(this.victimBodyObject)
+            {
+				this.StartGrab(this.victimBodyObject);
+            }
+		}
+
+		private void StartGrab(GameObject victim)
+		{
+			if (shouldLog) SS2Log.Info("GrabController.StartGrab " + victim);
+
+			this.victimInfo = new VehicleSeat.PassengerInfo(this.victimBodyObject);
+
+			this.victimColliders = this.victimBodyObject.GetComponentsInChildren<Collider>(); // wisps and shit have other random colliders in children
+			foreach(Collider collider in this.victimColliders)
+            {
+				collider.enabled = false;
+            }
+
+			if (this.victimInfo.bodyStateMachine && this.victimInfo.bodyStateMachine.CanInterruptState(InterruptPriority.Vehicle))
+			{
+				this.victimInfo.bodyStateMachine.SetNextState(new EntityStates.Chirr.GrabbedState());
+			}
+			//this.victimColliders = new VictimCollider[colliders.Length];
+			//for(int i = 0; i < victimColliders.Length - 1; i++) // we cant do IgnoreCollision because KinematicCharacterMotor fucking sucks
+			//         {
+			//	this.victimColliders[i] = new VictimCollider { collider = colliders[i], layer = colliders[i].gameObject.layer };
+			//	colliders[i].gameObject.layer = LayerIndex.noCollision.intVal;
+			//         }
+			//if (this.collider)
+			//{
+			//	foreach (VictimCollider collider in this.victimColliders)
+			//	{
+
+			//		Physics.IgnoreCollision(this.collider, collider.collider, true);
+			//	}
+			//}
+			if (this.victimInfo.characterMotor)
+			{
+				this.victimInfo.characterMotor.enabled = false;
+			}
+			
+		}
+
+		private void EndGrab(GameObject victim)
+		{
+			if (shouldLog) SS2Log.Info("GrabController.EndGrab " + victim);
+
+
+			foreach (Collider collider in this.victimColliders)
+			{
+				collider.enabled = true;
+			}
+
+			//for (int i = 0; i < victimColliders.Length - 1; i++)
+			//{
+			//	this.victimColliders[i].collider.gameObject.layer = this.victimColliders[i].layer;
+			//}
+			//if (this.collider)
+			//{
+			//	foreach (VictimCollider collider in this.victimColliders)
+			//	{
+			//		Physics.IgnoreCollision(this.collider, collider.collider, false);
+			//	}
+			//}
+
+
+			if (this.victimInfo.characterMotor)
+			{
+				this.victimInfo.characterMotor.enabled = true;
+			}		
+
+			if (this.victimInfo.hasEffectiveAuthority)
+			{
+				if (this.victimInfo.bodyStateMachine && this.victimInfo.bodyStateMachine.CanInterruptState(InterruptPriority.Vehicle))
+				{
+					this.victimInfo.bodyStateMachine.SetNextStateToMain();
+				}
+				Vector3 newPosition = this.grabTransform.position; //////////////
+				TeleportHelper.TeleportGameObject(this.victimInfo.transform.gameObject, newPosition);
+			}
+		}
 
 	}
 }

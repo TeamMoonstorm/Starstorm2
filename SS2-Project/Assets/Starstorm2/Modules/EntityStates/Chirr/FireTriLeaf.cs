@@ -10,17 +10,21 @@ namespace EntityStates.Chirr
     public class FireTriLeaf : BaseSkillState
     {
         public static GameObject projectilePrefab;
+        public string soundString;
+        public GameObject muzzleEffectPrefab = null;
 
-        public static float baseDuration = 1f;
-        public static float fireTime = 0.5f;
+        public static float baseDuration = 0.8f;
+        public static float fireTime = 0.3f;
         public static int numShots = 3;
+        public static float bloom = 1f;
+        public static float recoilAmplitude = 0.1f;
 
         public static float damageCoefficient;
         public static float procCoefficient;
         public static float force;
 
         public static float minSpread = 0f;
-        public static float maxSpread = 15f;
+        public static float maxSpread = 1f;
 
         private float duration;
         private int shotsFired;
@@ -28,6 +32,9 @@ namespace EntityStates.Chirr
         private float fireStopwatch;
 
         private bool isCrit;
+
+        public static float autoAimRadius = 2.5f;
+        public static float autoAimDistance = 50f;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -44,14 +51,15 @@ namespace EntityStates.Chirr
         {
             base.FixedUpdate();
 
+            this.fireStopwatch -= Time.fixedDeltaTime;
 
-            if(this.fireStopwatch <= 0)
+            if(this.fireStopwatch <= 0 && this.shotsFired < numShots)
             {
                 this.fireStopwatch += this.fireInterval;
                 this.Fire();
             }
 
-            if(this.shotsFired >= numShots)
+            if(base.fixedAge >= this.duration)
             {
                 this.outer.SetNextStateToMain();
                 return;
@@ -68,6 +76,10 @@ namespace EntityStates.Chirr
             this.shotsFired++;
             //Util.PlaySound()
             //Animation??
+            //EffectManager.SimpleMuzzleFlash(muzzleEffectPrefab, base.gameObject, this.muzzleName, true);
+            AddRecoil(-1f * recoilAmplitude, -1.5f * recoilAmplitude, -0.25f * recoilAmplitude, 0.25f * recoilAmplitude);
+            base.characterBody.AddSpreadBloom(bloom);
+
             if (base.isAuthority)
             {
                 Ray aimRay = base.GetAimRay();

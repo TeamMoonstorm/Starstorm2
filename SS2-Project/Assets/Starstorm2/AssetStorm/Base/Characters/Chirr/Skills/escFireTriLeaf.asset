@@ -10,9 +10,47 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: escChirrSecondary
+  m_Name: escFireTriLeaf
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: 
+    assemblyQualifiedName: EntityStates.Chirr.FireTriLeaf, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
-    serializedFields: []
+    serializedFields:
+    - fieldName: projectilePrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 2861417616241238631, guid: 2d275feeb422b3c40bcac2f17f8b4f54,
+          type: 3}
+    - fieldName: baseDuration
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: fireTime
+      fieldValue:
+        stringValue: 0.25
+        objectValue: {fileID: 0}
+    - fieldName: numShots
+      fieldValue:
+        stringValue: 3
+        objectValue: {fileID: 0}
+    - fieldName: damageCoefficient
+      fieldValue:
+        stringValue: 1.2
+        objectValue: {fileID: 0}
+    - fieldName: procCoefficient
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: force
+      fieldValue:
+        stringValue: 100
+        objectValue: {fileID: 0}
+    - fieldName: minSpread
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: maxSpread
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}

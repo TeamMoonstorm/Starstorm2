@@ -44,19 +44,27 @@ namespace Moonstorm.Starstorm2.Buffs
 
             private TeamIndex oldTeamIndex;
 
-            private void Awake()
+            protected override void Awake()
             {
-                if(!base.body.bodyFlags.HasFlag(CharacterBody.BodyFlags.Masterless) && !body.isPlayerControlled)
+                base.Awake();
+                if (!base.body.bodyFlags.HasFlag(CharacterBody.BodyFlags.Masterless) && !body.isPlayerControlled)
                 {
                     this.ai = base.body.master.aiComponents[0];
                 }
 
+                this.enemySearch = new BullseyeSearch();
                 this.OnBuffStart();
             }
+
             private void OnBuffStart()
             {
                 this.oldTeamIndex = base.body.teamComponent.teamIndex;
-                base.body.teamComponent.teamIndex = TeamIndex.None;
+                //base.body.teamComponent.teamIndex = TeamIndex.None;
+                //SetStateOnHurt setStateOnHurt = base.GetComponent<SetStateOnHurt>();
+                //if (setStateOnHurt)
+                //{
+                //    setStateOnHurt.SetPain();
+                //}
                 if (this.ai)
                 {
                     this.ai.targetRefreshTimer = 3.5f;
@@ -67,7 +75,14 @@ namespace Moonstorm.Starstorm2.Buffs
             }
             private void OnBuffEnd()
             {
-                base.body.teamComponent.teamIndex = this.oldTeamIndex;
+                if (!base.body.healthComponent.alive) return; // LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL
+                //base.body.teamComponent.teamIndex = this.oldTeamIndex;
+
+                SetStateOnHurt setStateOnHurt = base.GetComponent<SetStateOnHurt>();
+                if(setStateOnHurt)
+                {
+                    setStateOnHurt.SetPain();
+                }
                 if (this.ai)
                 {
                     this.ai.currentEnemy.Reset();
