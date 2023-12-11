@@ -18,6 +18,7 @@ namespace Moonstorm.Starstorm2.Components
 	///can only assign passengers on server
 	public class GrabController : NetworkBehaviour
 	{
+		public static float disableCollisionsOnExitTime = 0.5f;
 		public static bool shouldLog;
 
 		[NonSerialized]
@@ -111,7 +112,7 @@ namespace Moonstorm.Starstorm2.Components
 					}
 				}
 				// or if victim is in grab state and shouldnt be (when an enemy converts to an ally mid grab, for example)
-				else
+				else if (!ShouldForcePassengerState())
                 {
 					// return it to main state
 					this.victimInfo.bodyStateMachine.SetNextStateToMain();
@@ -226,6 +227,11 @@ namespace Moonstorm.Starstorm2.Components
 			{
 				collider.enabled = true;
 			}
+			DisableCollisionsForDuration component = victim.AddComponent<DisableCollisionsForDuration>();
+			component.collidersSelf = this.victimColliders;
+			component.collidersOther = new Collider[]{ this.collider };
+			component.disableSelfColliders = true;
+			component.timer = disableCollisionsOnExitTime;
 
 			if (this.victimInfo.characterMotor)
 			{

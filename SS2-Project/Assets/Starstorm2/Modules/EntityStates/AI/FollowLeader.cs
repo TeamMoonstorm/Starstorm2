@@ -22,6 +22,7 @@ namespace EntityStates.AI.Walker
 		public static float hardTrailDistance = 16f; // beyond this, path directly to leader. below this, path to targetTrailPosition
 		public static float minTrailDistance = 8f; // minimum distance from leader for pathing
 		public static float trailHeight = 10f;
+		public static float targetReachedDistance = 5f;
 
 		private Vector3 targetTrailPosition;
 		public override void OnEnter()
@@ -99,7 +100,9 @@ namespace EntityStates.AI.Walker
 				if(distanceBetween <= hardTrailDistance)
                 {
 					goalPosition += this.targetTrailPosition;
-				}		
+				}
+				bool targetReached = (goalPosition - bodyPosition).magnitude < targetReachedDistance;
+
 				bool bodyIsFlier = this.body.isFlying || !this.body.characterMotor;
 				if (bodyIsFlier)
                 {
@@ -111,11 +114,12 @@ namespace EntityStates.AI.Walker
 					base.ai.SetGoalPosition(goalPosition);
 				}
 
+				// jank idc
 				base.ai.localNavigator.targetPosition = goalPosition;
 				base.ai.localNavigator.allowWalkOffCliff = true;
 				base.ai.localNavigator.Update(deltaTime);
 
-				this.bodyInputs.moveVector = base.ai.localNavigator.moveVector;
+				this.bodyInputs.moveVector = !targetReached ? base.ai.localNavigator.moveVector : Vector3.zero;
 				this.bodyInputs.moveVector *= d;
 			}
 			if (output.lastPathUpdate > this.lastPathUpdate && !output.targetReachable && this.fallbackNodeStartAge + this.fallbackNodeDuration < base.fixedAge)
@@ -140,6 +144,8 @@ namespace EntityStates.AI.Walker
 			{
 				base.AimAt(ref this.bodyInputs, aimTarget);
 			}
+			else
+				this.bodyInputs.desiredAimDirection = this.bodyInputs.moveVector;
 			base.ModifyInputsForJumpIfNeccessary(ref this.bodyInputs);
 			return this.bodyInputs;
 		}

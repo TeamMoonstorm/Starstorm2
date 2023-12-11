@@ -56,6 +56,13 @@ namespace Moonstorm.Starstorm2.Components
             }
         }
 
+		private void FixedUpdate()
+		{
+			//if (this.master.IsDeadAndOutOfLivesServer() && this.hasFriend)
+   //         {
+			//	this.RemoveFriend(this.currentFriend.master)
+   //         }
+        }
         public void Start()
 		{
 			this.master = base.GetComponent<CharacterMaster>();

@@ -24,6 +24,7 @@ namespace EntityStates.Chirr
 
 		private Collider[] colliders;
 		public static float disableColliderDuration = 0.5f;
+		private Collider inflictorCollider;
 		private bool collidersEnabled;
 		private DetonateOnImpact detonateOnImpact;
 		private bool bodyHadGravity = true;
@@ -52,12 +53,13 @@ namespace EntityStates.Chirr
 			}
 
 			//disable colliders to avoid colliding with dropper
+			if (this.inflictor) this.inflictorCollider = this.inflictor.GetComponent<Collider>();
 			this.colliders = base.gameObject.GetComponentsInChildren<Collider>();
 			foreach(Collider collider in colliders)
             {
 				collider.enabled = false;
+				if (this.inflictorCollider) Physics.IgnoreCollision(collider, inflictorCollider, true);
             }
-
 
 			if(base.characterMotor)
             {
@@ -90,14 +92,12 @@ namespace EntityStates.Chirr
 
 			base.rigidbody.useGravity = bodyHadGravity;
 
-			if(!this.collidersEnabled)
-            {
-				foreach (Collider collider in colliders)
-				{
-					collider.enabled = true;
-				}
-			}			
-
+			foreach (Collider collider in colliders)
+			{
+				collider.enabled = true;
+				if (this.inflictorCollider) Physics.IgnoreCollision(collider, inflictorCollider, false);
+			}
+					
 			if (NetworkServer.active) base.characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage;
 
 			Animator modelAnimator = base.GetModelAnimator();
@@ -127,9 +127,13 @@ namespace EntityStates.Chirr
 				base.rigidbody.velocity += Vector3.up * extraGravity * Time.fixedDeltaTime;
 			}
 
-			if (detonateNextFrame && (base.characterMotor.Motor.GroundingStatus.IsStableOnGround && !base.characterMotor.Motor.LastGroundingStatus.IsStableOnGround))
+			if (detonateNextFrame && (!base.characterMotor || (base.characterMotor.Motor.GroundingStatus.IsStableOnGround && !base.characterMotor.Motor.LastGroundingStatus.IsStableOnGround)))
             {
-				base.characterMotor.velocity = Vector3.zero;
+				if(base.characterMotor) 
+					base.characterMotor.velocity = Vector3.zero;
+				else 
+					base.rigidbody.velocity = Vector3.zero;
+				
 				Util.PlaySound("Hit2", base.gameObject);
 				if (NetworkServer.active)
 				{
