@@ -26,8 +26,6 @@ namespace EntityStates.NemMerc
         private EntityStateMachine weapon;
 
         private Transform collisionTransform;
-
-        private bool hadFallDamageImmunity;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -65,9 +63,6 @@ namespace EntityStates.NemMerc
             //Riposter riposter = base.gameObject.AddComponent<Riposter>();
             //riposter.duration = Lunge.riposteDuration;
 
-
-            //will break if something gives us ignorefalldamage
-            this.hadFallDamageImmunity = base.characterBody.bodyFlags.HasFlag(CharacterBody.BodyFlags.IgnoreFallDamage);
             base.characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
 
         }
@@ -167,8 +162,6 @@ namespace EntityStates.NemMerc
             base.OnExit();
 
             base.characterMotor.airControl = this.previousAirControl;
-            if(!this.hadFallDamageImmunity)
-                base.characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage;
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

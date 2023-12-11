@@ -24,6 +24,8 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef Cognation;
 
+            public static ItemDef ChirrFriendHelper;
+
             public static ItemDef DetritiveTrematode;
 
             public static ItemDef Diary;
@@ -137,6 +139,8 @@ namespace Moonstorm.Starstorm2
             public static BuffDef BuffChirrConfuse;
 
             public static BuffDef BuffChirrConvert;
+
+            public static BuffDef BuffChirrGrabFriend;
 
             public static BuffDef BuffChirrRegen;
 

@@ -24,6 +24,7 @@ namespace EntityStates.AI.Walker
 		public static float trailHeight = 10f;
 		public static float targetReachedDistance = 5f;
 
+
 		private Vector3 targetTrailPosition;
 		public override void OnEnter()
 		{
@@ -101,6 +102,7 @@ namespace EntityStates.AI.Walker
                 {
 					goalPosition += this.targetTrailPosition;
 				}
+
 				bool targetReached = (goalPosition - bodyPosition).magnitude < targetReachedDistance;
 
 				bool bodyIsFlier = this.body.isFlying || !this.body.characterMotor;
@@ -109,13 +111,16 @@ namespace EntityStates.AI.Walker
 					goalPosition.y += trailHeight;
                 }
 
+
 				if (this.fallbackNodeStartAge + this.fallbackNodeDuration < base.fixedAge) //dunno wat this does
 				{
 					base.ai.SetGoalPosition(goalPosition);
 				}
 
+				Vector3 targetPosition = output.nextPosition ?? this.myBodyFootPosition;
+
 				// jank idc
-				base.ai.localNavigator.targetPosition = goalPosition;
+				base.ai.localNavigator.targetPosition = targetPosition;//!targetReached ? goalPosition : bodyPosition;
 				base.ai.localNavigator.allowWalkOffCliff = true;
 				base.ai.localNavigator.Update(deltaTime);
 

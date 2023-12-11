@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 1437310288818831315}
   - component: {fileID: 2481145285323348969}
   - component: {fileID: 4294439361429175789}
+  - component: {fileID: 3895154961832856518}
   m_Layer: 14
   m_Name: ChirrLeafProjectile
   m_TagString: Untagged
@@ -254,6 +255,18 @@ MonoBehaviour:
   onTargetLost:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3895154961832856518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2861417616241238631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee3c4baf1d15c646bb7eebc5ccfee5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6131799636922904007
 GameObject:
   m_ObjectHideFlags: 0

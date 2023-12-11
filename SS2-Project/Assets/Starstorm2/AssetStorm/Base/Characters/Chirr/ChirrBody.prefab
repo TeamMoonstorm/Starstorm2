@@ -264,7 +264,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3994711270148590966}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 1.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8470713182757628779}
@@ -371,10 +371,11 @@ GameObject:
   - component: {fileID: 4356635058328324556}
   - component: {fileID: 5547590287586218428}
   - component: {fileID: 8185657926884690261}
-  - component: {fileID: 4219017455933194736}
   - component: {fileID: 8321146337985884003}
   - component: {fileID: 7337833599192329091}
   - component: {fileID: 1753195248133745781}
+  - component: {fileID: 4219017455933194736}
+  - component: {fileID: 4199051198225955419}
   m_Layer: 0
   m_Name: ChirrBody
   m_TagString: Player
@@ -480,23 +481,23 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.35059357
-      value: 0.008666992
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 2
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -607,9 +608,9 @@ MonoBehaviour:
   utility: {fileID: 6106433074677500060}
   special: {fileID: 2614179309427644324}
   passiveSkill:
-    enabled: 0
-    skillNameToken: 
-    skillDescriptionToken: 
+    enabled: 1
+    skillNameToken: SS2_CHIRR_PASSIVE_NAME
+    skillDescriptionToken: SS2_CHIRR_PASSIVE_DESCRIPTION
     keywordToken: 
     icon: {fileID: 0}
   primaryBonusStockOverrideSkill: {fileID: 0}
@@ -821,7 +822,7 @@ MonoBehaviour:
   m_Script: {fileID: 1512185436, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxInteractionDistance: 3
+  maxInteractionDistance: 3.6
 --- !u!114 &6869196721080466542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -849,10 +850,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathStateMachine: {fileID: 8196995074284836345}
   deathState:
-    _typeName: 
+    _typeName: EntityStates.Commando.DeathState, RoR2, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   idleStateMachine:
   - {fileID: 4024176064970202962}
-  - {fileID: 0}
+  - {fileID: 8321146337985884003}
+  - {fileID: 7337833599192329091}
 --- !u!114 &8857169180336671566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -927,9 +930,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.91
-  m_Height: 3.96
+  m_Height: 3.4
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -0.3, z: 0}
 --- !u!114 &5547590287586218428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -946,8 +949,8 @@ MonoBehaviour:
   Capsule: {fileID: 4356635058328324556}
   Rigidbody: {fileID: 3609274705587973844}
   CapsuleRadius: 0.91
-  CapsuleHeight: 3.96
-  CapsuleYOffset: 0
+  CapsuleHeight: 3.4
+  CapsuleYOffset: -0.3
   CapsulePhysicsMaterial: {fileID: 0}
   DetectDiscreteCollisions: 0
   GroundDetectionExtraDistance: 0
@@ -986,22 +989,6 @@ MonoBehaviour:
   canBeHitStunned: 0
   canBeStunned: 0
   canBeFrozen: 1
---- !u!114 &4219017455933194736
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5486166245231735535}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05a65b078176b2d46abbf40c32841579, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  grabTransform: {fileID: 9167608691977975926}
-  grabState:
-    _typeName: 
-  shouldForceAllyState: 0
 --- !u!114 &8321146337985884003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1052,6 +1039,36 @@ MonoBehaviour:
   maxTrackingAngle: 75
   trackerUpdateFrequency: 10
   friendOwnership: {fileID: 0}
+--- !u!114 &4219017455933194736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5486166245231735535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05a65b078176b2d46abbf40c32841579, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grabTransform: {fileID: 9167608691977975926}
+  grabState:
+    _typeName: EntityStates.GrabbedState, Starstorm2, Version=1.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  shouldForceAllyState: 0
+--- !u!114 &4199051198225955419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5486166245231735535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33e1a42bc0eb63940887f7d64b738884, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buffLingerDuration: 5
 --- !u!1 &7083085482411903062
 GameObject:
   m_ObjectHideFlags: 0

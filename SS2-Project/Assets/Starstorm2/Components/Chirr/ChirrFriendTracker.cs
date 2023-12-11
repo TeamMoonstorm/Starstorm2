@@ -62,7 +62,7 @@ namespace Moonstorm.Starstorm2.Components
 
 		public bool ShouldSearchForFriend()
         {
-			return this.friendOwnership && !this.friendOwnership.hasFriend;
+			return this.friendOwnership;// && !this.friendOwnership.hasFriend;
         }
 		public bool CheckBody(CharacterBody body)
         {

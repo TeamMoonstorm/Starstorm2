@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: SpitBomb
   m_EditorClassIdentifier: 
   skillName: SpitBomb
-  skillNameToken: SS2_CHIRR_SECONDARY_SPITBOMB_NAME
-  skillDescriptionToken: SS2_CHIRR_SECONDARY_SPITBOMB_DESCRIPTION
+  skillNameToken: SS2_CHIRR_SPITBOMB_NAME
+  skillDescriptionToken: SS2_CHIRR_SPITBOMB_DESCRIPTION
   keywordTokens: []
   icon: {fileID: 21300000, guid: d4c03ebd413ce844cb3eba88a4d62a21, type: 3}
   activationStateMachineName: Weapon
@@ -22,7 +22,7 @@ MonoBehaviour:
     _typeName: EntityStates.Chirr.SpitBomb, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
   interruptPriority: 1
-  baseRechargeInterval: 8
+  baseRechargeInterval: 5
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 1

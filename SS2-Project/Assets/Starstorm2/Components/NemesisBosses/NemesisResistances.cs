@@ -11,8 +11,7 @@ namespace Moonstorm.Starstorm2.Components
 
         private void Awake()
         {
-            this.body = base.GetComponent<CharacterBody>();
-            this.body.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
+            this.body = base.GetComponent<CharacterBody>();      
         }
         private void OnEnable()
         {
@@ -28,6 +27,12 @@ namespace Moonstorm.Starstorm2.Components
             orig(self, teamIndex);
             if (this.body && self.characterBodyToStacks.ContainsKey(this.body))
                 self.characterBodyToStacks.Remove(this.body);
+        }
+
+        private void FixedUpdate()
+        {
+            // doing this in fixedupdate cuz some states/effects remove fall damage immunity. 
+            this.body.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
         }
 
         static NemesisResistances()

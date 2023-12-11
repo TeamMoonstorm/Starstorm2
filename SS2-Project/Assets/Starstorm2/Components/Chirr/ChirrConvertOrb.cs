@@ -32,7 +32,6 @@ namespace Moonstorm.Starstorm2.Components
                 convertBehavior.convertHealthFraction = this.convertHealthFraction;
                 convertBehavior.chirrFriendTracker = this.tracker;
                 DotController.InflictDot(this.target.healthComponent.gameObject, this.attacker, Buffs.ChirrConvert.dotIndex, buffDuration);
-
             }
 
         }
@@ -54,7 +53,6 @@ namespace Moonstorm.Starstorm2.Components
             {
                 this.stopwatch += Time.fixedDeltaTime;
                 if (this.stopwatch >= lifetime || !body.HasBuff(SS2Content.Buffs.BuffChirrConvert)) Destroy(this);
-                if (chirrFriendTracker && chirrFriendTracker.friendOwnership.hasFriend) Destroy(this); // DELETE IF LYSATE CELL GIVES EXTRA FRIENDS
             }
             public void OnTakeDamageServer(DamageReport damageReport)
             {
@@ -62,7 +60,7 @@ namespace Moonstorm.Starstorm2.Components
                 {
                     if (chirrFriendTracker && chirrFriendTracker.friendOwnership)
                     {
-                        chirrFriendTracker.friendOwnership.AddFriend(damageReport.victimBody);
+                        chirrFriendTracker.friendOwnership.AddFriend(damageReport.victimMaster);
                         SS2Log.Info("ChirrFriendOrb.OnArrival: added fren :)");
                         Destroy(this);
                     }

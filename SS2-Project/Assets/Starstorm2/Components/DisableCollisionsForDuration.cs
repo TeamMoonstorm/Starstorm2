@@ -11,16 +11,18 @@ namespace Moonstorm.Starstorm2.Components
         public Collider[] collidersSelf;
         public Collider[] collidersOther;
         public float timer;
-        public bool disableSelfColliders;
-        private void Awake()
+        public bool disableSelfColliders; // PHYSICS.IGNORECOLLISION DOESNT WORK ON KINEMATICCHARACTERMOTOR CUZ LULZZZ!!!!!!!!!!!!!!!!!!!!!!! XDDDDDDDDDDDDDDDDDDDDDDDDDDD
+        private void Start()
         {
             foreach (Collider collider1 in collidersSelf)
             {
-                foreach (Collider collider2 in collidersSelf)
+                foreach (Collider collider2 in collidersOther)
                 {
-                    Physics.IgnoreCollision(collider1, collider2, true);
+                    if (collider1 && collider2) // :(
+                        Physics.IgnoreCollision(collider1, collider2, true);
                 }
-                collider1.enabled = !disableSelfColliders;
+                if (collider1)
+                    collider1.enabled = !disableSelfColliders;
             }
         }
 
@@ -31,11 +33,13 @@ namespace Moonstorm.Starstorm2.Components
             {
                 foreach(Collider collider1 in collidersSelf)
                 {
-                    foreach (Collider collider2 in collidersSelf)
+                    foreach (Collider collider2 in collidersOther)
                     {
-                        Physics.IgnoreCollision(collider1, collider2, false);
+                        if(collider1 && collider2)
+                            Physics.IgnoreCollision(collider1, collider2, false);
                     }
-                    collider1.enabled = true;
+                    if(collider1)
+                        collider1.enabled = true;
                 }
                 Destroy(this);
             }

@@ -25,7 +25,7 @@ namespace Moonstorm.Starstorm2.Components
         private ProjectileController projectileController;
         private TeamFilter teamFilter;
         private ProjectileDamage projectileDamage;
-        public Transform[] scaledTransforms = new Transform[0];
+        public Transform[] scaledTransforms;
 
         private float currentRadius;
         private void Awake()
@@ -34,6 +34,7 @@ namespace Moonstorm.Starstorm2.Components
             this.teamFilter = base.GetComponent<TeamFilter>();
             this.projectileDamage = base.GetComponent<ProjectileDamage>();
             this.currentRadius = startRadius;
+            this.fireStopwatch = 1 / this.fireFrequency;
         }
 
         private bool ShouldGrantRegen(TeamIndex teamIndex)
@@ -50,9 +51,9 @@ namespace Moonstorm.Starstorm2.Components
             this.lifeStopwatch += Time.fixedDeltaTime;
 
             this.currentRadius = Mathf.Lerp(startRadius, endRadius, this.lifeStopwatch / this.lifetime);
-            for (int i = 0; i < this.scaledTransforms.Length - 1; i++)
+            foreach (Transform transform in scaledTransforms)
             {
-                scaledTransforms[i].localScale = Vector3.one * (endRadius / startRadius) * (this.lifeStopwatch / this.lifetime);
+                transform.localScale = Vector3.one * this.currentRadius / this.startRadius;
             }
             if(this.lifeStopwatch >= this.lifetime)
             {

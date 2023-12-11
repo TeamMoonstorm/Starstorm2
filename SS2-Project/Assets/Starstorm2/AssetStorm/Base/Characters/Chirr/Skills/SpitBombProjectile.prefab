@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 2849282778715303265}
   - component: {fileID: 4811216657060050309}
   - component: {fileID: 6317222341959716059}
+  - component: {fileID: 6630580104123990304}
   m_Layer: 14
   m_Name: SpitBombProjectile
   m_TagString: Untagged
@@ -193,7 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: -317677761, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  falloffModel: 1
+  falloffModel: 0
   blastRadius: 7
   blastDamageCoefficient: 1
   blastProcCoefficient: 1
@@ -235,3 +236,15 @@ MonoBehaviour:
   lifetimeAfterImpact: 0
   lifetimeRandomOffset: 0
   transformSpace: 0
+--- !u!114 &6630580104123990304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2861417616241238631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee3c4baf1d15c646bb7eebc5ccfee5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
