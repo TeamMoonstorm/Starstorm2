@@ -116,6 +116,11 @@ namespace Moonstorm.Starstorm2.Items
 
         private void CheckTerminationBuff(Inventory obj)
         {
+            if (!obj)
+            {
+                return;
+            }
+
             var master = obj.GetComponent<CharacterMaster>();
             if (master)
             {

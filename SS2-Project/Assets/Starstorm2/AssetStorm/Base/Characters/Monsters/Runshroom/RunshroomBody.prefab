@@ -6647,6 +6647,8 @@ GameObject:
   - component: {fileID: 8327415983774643985}
   - component: {fileID: 9167386497207147202}
   - component: {fileID: 1078543859771596994}
+  - component: {fileID: 5629425424287318704}
+  - component: {fileID: -374894402315744395}
   m_Layer: 0
   m_Name: RunshroomBody
   m_TagString: Player
@@ -7070,8 +7072,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathStateMachine: {fileID: 2943242161096139363}
   deathState:
-    _typeName: EntityStates.GenericCharacterDeath, RoR2, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    _typeName: EntityStates.Runshroom.RushroomDeath, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   idleStateMachine:
   - {fileID: 3166062823340192971}
   - {fileID: 3166062823340192971}
@@ -7225,6 +7227,35 @@ MonoBehaviour:
   bossDropTable: {fileID: 0}
   bossPickup:
     pickupName: 
+--- !u!114 &5629425424287318704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7847564023115206174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8f050498cd9fae4ea50d55fdb5da606, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VFXParticles:
+  - {fileID: 7410417240982731472}
+  - {fileID: 2643095186511839401}
+--- !u!114 &-374894402315744395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7847564023115206174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -144590133, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+  requireEntitlementIfPlayerControlled: 1
 --- !u!1 &8276666144562580628
 GameObject:
   m_ObjectHideFlags: 0
