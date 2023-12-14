@@ -39,7 +39,7 @@ With Art/Modelling/Animation contributions by...
 
 Additional thanks to... 
 * Writing - Blimblam, Lyrical Endymion, rekkadraws, swuff★, T_Dimensional, Zenithrium
-* Translations - Anreol, BannyDee (Spanish), MysticSword (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight (Chinese), Kauzok (Portuguese)
+* Translations - Anreol, BannyDee (Spanish), MysticSword (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight (Chinese), Kauzok (Portuguese), StyleMyk (French)
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze, NAIRB zepol
 * Special thanks - Altzeus, DestroyedClone, Dee', don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, VioletChaolan, valerie ♥ 
 
@@ -55,6 +55,8 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 **Warning: content spoilers below!**
 ### 0.5.7
 * General
+    * Added French translation. Thank you StyleMyk!
+    * Survivors and monsters are better organized in the config.
     * Fixed the footstep visuals for all survivors and footstep sound effects for Executioner and Nemesis Commando.
 
 ### 0.5.6
