@@ -53,6 +53,10 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 ## Changelog
 
 **Warning: content spoilers below!**
+### 0.5.7
+* General
+    * Fixed the footstep visuals for all survivors and footstep sound effects for Executioner and Nemesis Commando.
+
 ### 0.5.6
 * General
     * Finally finished implementing Portuguse translation.
