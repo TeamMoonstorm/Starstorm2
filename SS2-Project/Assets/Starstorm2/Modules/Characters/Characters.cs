@@ -81,7 +81,7 @@ namespace Moonstorm.Starstorm2.Modules
                         name = name.Substring(0, ind - 1);
                     }
 
-                    if (!EnableSurvivors){
+                    if (!EnableMonsters){
                         return false;
                     }
 
