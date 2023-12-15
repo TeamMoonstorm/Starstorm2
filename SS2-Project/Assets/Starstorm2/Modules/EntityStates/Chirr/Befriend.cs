@@ -28,13 +28,21 @@ namespace EntityStates.Chirr
         private bool hasFired;
         private float duration;
         private ChirrFriendTracker tracker;
+
+        [NonSerialized]
+        private static bool additivetest = false;
+        [NonSerialized]
+        private static bool fullbodytest = true;
         public override void OnEnter()
         {
             base.OnEnter();
             this.duration = baseDuration / this.attackSpeedStat;
             this.tracker = base.GetComponent<ChirrFriendTracker>();
+            base.StartAimMode();
             //Util.PlaySound();
-            //base.PlayAnimation();
+            string layerName = fullbodytest ? "FullBody, " : "Gesture, ";
+            layerName += additivetest ? "Additive" : "Override";
+            base.PlayAnimation(layerName, "FireSpecial", "Special.playbackRate", this.duration);
         }
 
         public override void FixedUpdate()

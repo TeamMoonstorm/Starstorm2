@@ -54,10 +54,11 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f8f8036b3589eec429e9d0119c6d73da, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -65,6 +66,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -104,7 +106,7 @@ Transform:
   m_GameObject: {fileID: 2301720588241446923}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
+  m_LocalScale: {x: 1.5, y: 2.7, z: 0.75}
   m_Children: []
   m_Father: {fileID: 1177350812104912912}
   m_RootOrder: 1
@@ -131,6 +133,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -142,6 +145,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -165,6 +169,8 @@ GameObject:
   - component: {fileID: 1177350812104912912}
   - component: {fileID: 8934919160364044406}
   - component: {fileID: 4327626260700569351}
+  - component: {fileID: 6637422397193415298}
+  - component: {fileID: 7547937882244418714}
   m_Layer: 0
   m_Name: ChirrDartGhost
   m_TagString: Untagged
@@ -200,6 +206,7 @@ MonoBehaviour:
   m_Script: {fileID: 678291247, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inheritScaleFromProjectile: 0
 --- !u!114 &4327626260700569351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,3 +223,36 @@ MonoBehaviour:
   vfxIntensity: 0
   optionalLights: []
   secondaryParticleSystem: []
+--- !u!114 &6637422397193415298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7834849732648028603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1395413934, guid: da77c7bbf69f66ab2145560542327715, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 1
+  _slowRotationSpeed: 180
+  _fastRotationSpeed: 20
+  _rotateAroundAxis: 2
+  _relativeTo: 1
+  _reverse: 0
+--- !u!114 &7547937882244418714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7834849732648028603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -455717551, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  setRandomXRotation: 0
+  setRandomYRotation: 0
+  setRandomZRotation: 1

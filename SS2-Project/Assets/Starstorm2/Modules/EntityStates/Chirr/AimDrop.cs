@@ -18,9 +18,14 @@ namespace EntityStates.Chirr
 		public static float splashRadius = 10f;
 		public static float damageCoefficient = 15f;
 		public static float dropMaxHorizontalVelocity = 20f;
+		public static float minimumThrowDistance = 20f;
 		public static float dropConeAngle = 55f;
 		public static float maxRayDistance = 50f;
 		public static float extraGravity = -15f;
+
+		public static float selfAwayForce = 6f;
+		public static float selfUpForce = 6f;
+
 		private GameObject areaIndicatorInstance;
 
 		private GrabController grabController;
@@ -89,7 +94,22 @@ namespace EntityStates.Chirr
 		public override void OnExit()
 		{
 			base.OnExit();
-			if (!this.outer.destroying && this.grabController)
+
+            if (base.isAuthority)
+            {
+                Vector3 awayForce = -1f * base.inputBank.aimDirection * selfAwayForce;
+                awayForce += Vector3.up * selfUpForce;
+                if (base.characterMotor && !base.isGrounded)
+                {
+                    base.characterMotor.velocity += awayForce;// the skilldef has cancel sprint=false, this apparently is stopping sprint anyways
+                    if (EntityStateMachine.FindByCustomName(base.gameObject, "Wings")?.state.GetType() != typeof(Idle)) // jank to keep sprinting while hovering
+                    {
+                        base.characterBody.isSprinting = true;
+                    }
+                }
+            }
+
+            if (!this.outer.destroying && this.grabController)
 			{
 				//if (Util.HasEffectiveAuthority(this.grabController.victimBodyObject))
 

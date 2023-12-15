@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: matNemMerc2
+  m_Name: matNemMercMastery
   m_Shader: {fileID: 4800000, guid: 9b2024ee08a5bfc418ff897991e84323, type: 2}
   m_ShaderKeywords: DITHER LIMBREMOVAL
   m_LightmapFlags: 4
@@ -44,7 +44,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 13ebd759d0b59034697c889ad6bc2120, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -80,7 +80,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: dde4f1f70886699439777c9638c27c36, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5758a8082da88c94da2d9fbb510f61a6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -88,7 +88,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 3a8e6be3889491f4e99738aae644074b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -116,7 +116,7 @@ Material:
     - _BlueChannelSmoothness: 0
     - _BumpScale: 1
     - _ColorsOn: 0
-    - _Cull: 0
+    - _Cull: 2
     - _Cutoff: 0.5
     - _DecalLayer: 0
     - _Depth: 0.2
@@ -126,7 +126,7 @@ Material:
     - _EliteBrightnessMax: 1
     - _EliteBrightnessMin: 0
     - _EliteIndex: 0
-    - _EmPower: 0
+    - _EmPower: 1
     - _EnableCutout: 0
     - _FEON: 0
     - _Fade: 1
@@ -175,6 +175,6 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EmColor: {r: 0.9607844, g: 0.5137255, b: 0.28235295, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FlashColor: {r: 0, g: 0, b: 0, a: 1}

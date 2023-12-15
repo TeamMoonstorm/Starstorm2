@@ -14,7 +14,7 @@ namespace EntityStates.Chirr
         public static float dashSpeed = 9f;
         public static float minGrabRadius = 4f;
         public static float maxGrabRadius = 8f;
-        public static float grabSearchFrequency = 10f;
+        public static float grabSearchFrequency = 20f;
         public static float maxTurnAnglePerSecond = 30f;
 
         private float stopwatch;

@@ -29,13 +29,18 @@ namespace EntityStates.Chirr
 		private bool hasFired;
 		public float duration;
 
-
+		[NonSerialized]
+		private static bool additivetest = true;
+		[NonSerialized]
+		private static bool fullbodytest = true;
 		public override void OnEnter()
 		{
 			base.OnEnter();
 			this.duration = baseDuration / attackSpeedStat;
 			StartAimMode();
-			//PlayAnimation("Gesture, Override", "SpitBomb", "Secondary.playbackRate", duration * 2);
+			string layerName = fullbodytest ? "FullBody, " : "Gesture, ";
+			layerName += additivetest ? "Additive" : "Override";
+			base.PlayAnimation(layerName, "FireSecondary", "Secondary.playbackRate", this.duration);
 			//Util.PlaySound("Play_nemmerc_secondary_lunge", base.gameObject);
 
 		}
@@ -70,7 +75,14 @@ namespace EntityStates.Chirr
 				Vector3 awayForce = -1f * direction * selfAwayForce;
 				awayForce += Vector3.up * selfUpForce;
 				if(base.characterMotor && !base.isGrounded)
-					base.characterMotor.velocity += awayForce;
+                {
+					base.characterMotor.velocity += awayForce;// the skilldef has cancel sprint=false, this apparently is stopping sprint anyways
+					if(EntityStateMachine.FindByCustomName(base.gameObject, "Wings")?.state.GetType() != typeof(Idle)) // jank to keep sprinting while hovering
+                    {
+						base.characterBody.isSprinting = true;
+                    }
+				}
+					
 
 				FireProjectileInfo fireProjectileInfo = default(FireProjectileInfo);
 				fireProjectileInfo.projectilePrefab = projectilePrefab;

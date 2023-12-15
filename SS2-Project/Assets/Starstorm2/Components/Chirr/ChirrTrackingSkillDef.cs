@@ -12,11 +12,15 @@ namespace Moonstorm.Starstorm2.ScriptableObjects
 
 	public class ChirrTrackingSkillDef : SkillDef
 	{
+		public bool isScepter;
 		public override BaseSkillInstanceData OnAssigned([NotNull] GenericSkill skillSlot)
 		{
+			ChirrFriendTracker tracker = skillSlot.GetComponent<ChirrFriendTracker>();
+			if (tracker)
+				tracker.friendOwnership.isScepter = this.isScepter;
 			return new ChirrTrackingSkillDef.InstanceData
 			{
-				tracker = skillSlot.GetComponent<ChirrFriendTracker>()
+				tracker = tracker
 			};
 		}
 		public static bool HasTarget([NotNull] GenericSkill skillSlot)

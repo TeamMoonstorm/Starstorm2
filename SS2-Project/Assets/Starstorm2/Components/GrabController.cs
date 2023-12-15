@@ -67,6 +67,7 @@ namespace Moonstorm.Starstorm2.Components
 
         public void UpdateVictimPosition()
         {
+            if (!this.grabTransform) return;
             Vector3 position = this.grabTransform.position;
             if (this.victimInfo.characterMotor)
             {
@@ -130,7 +131,7 @@ namespace Moonstorm.Starstorm2.Components
         {
             this.SetVictim(null);
         }
-        public void AttemptGrab(GameObject bodyObject)
+        public void AttemptGrab(GameObject bodyObject) //use attemptgrab(null) to release
         {
             if (NetworkServer.active)
             {

@@ -9,8 +9,8 @@ namespace EntityStates.Chirr.Wings
         private Transform hoverEffect;
 
         public float boostVelocity;
-        public static float boostAcceleration = 130f;
-        public static float baseDuration = .7f;
+        public static float boostAcceleration = 90f;
+        public static float baseDuration = 1f;
 
         private float duration;
 

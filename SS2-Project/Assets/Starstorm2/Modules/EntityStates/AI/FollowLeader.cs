@@ -39,6 +39,8 @@ namespace EntityStates.AI.Walker
 			if (!this.leader && this.ai.master.minionOwnership.ownerMaster)
 				this.leader = this.ai.master.minionOwnership.ownerMaster.GetBodyObject();
 			this.fallbackNodeStartAge = float.NegativeInfinity;
+
+			this.ai.currentEnemy.Reset();
 		}
 
 		// jank. hopefully only true when the skilldriver is a "combat" skill
@@ -89,12 +91,9 @@ namespace EntityStates.AI.Walker
 			Vector3 bodyPosition = base.bodyTransform.position;
 			BroadNavigationSystem.Agent broadNavigationAgent = base.ai.broadNavigationAgent;
 			BroadNavigationSystem.AgentOutput output = broadNavigationAgent.output;
-			GameObject target = this.leader ? this.leader : (skillDriverEvaluation.target != null ? skillDriverEvaluation.target.gameObject : null);
-			if (target)
+			//GameObject target = this.leader ? this.leader : (skillDriverEvaluation.target != null ? skillDriverEvaluation.target.gameObject : null);
+			if (this.leader)
 			{
-
-
-
 				Vector3 goalPosition = this.leader.transform.position;
 
 				float distanceBetween = (this.leader.transform.position - bodyPosition).magnitude;
@@ -144,13 +143,13 @@ namespace EntityStates.AI.Walker
 			this.bodyInputs.pressSprint = false;
 			this.bodyInputs.pressActivateEquipment = false;
 			this.bodyInputs.desiredAimDirection = Vector3.zero;
-			BaseAI.Target aimTarget = base.ai.skillDriverEvaluation.aimTarget;
-			if (aimTarget != null)
-			{
-				base.AimAt(ref this.bodyInputs, aimTarget);
-			}
-			else
-				this.bodyInputs.desiredAimDirection = this.bodyInputs.moveVector;
+			//BaseAI.Target aimTarget = base.ai.skillDriverEvaluation.aimTarget;
+			//if (aimTarget != null)
+			//{
+			//	base.AimAt(ref this.bodyInputs, aimTarget);
+			//}
+			//else
+			this.bodyInputs.desiredAimDirection = this.bodyInputs.moveVector;
 			base.ModifyInputsForJumpIfNeccessary(ref this.bodyInputs);
 			return this.bodyInputs;
 		}

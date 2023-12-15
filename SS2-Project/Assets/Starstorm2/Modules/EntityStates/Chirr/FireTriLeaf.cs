@@ -23,8 +23,10 @@ namespace EntityStates.Chirr
         public static float procCoefficient;
         public static float force;
 
+        public static float pitchCoefficient = 0.5f;
+        public static float minSpreadCoefficient = 0.5f;
         public static float minSpread = 0f;
-        public static float maxSpread = 1f;
+        public static float maxSpread = 5.5f;
 
         private float duration;
         private int shotsFired;
@@ -33,8 +35,10 @@ namespace EntityStates.Chirr
 
         private bool isCrit;
 
-        public static float autoAimRadius = 2.5f;
-        public static float autoAimDistance = 50f;
+        [NonSerialized]
+        private static bool additivetest = true;
+        [NonSerialized]
+        private static bool fullbodytest = false;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -44,7 +48,9 @@ namespace EntityStates.Chirr
 
             this.isCrit = base.RollCrit();
             //Util.PlaySound();
-            //base.PlayAnimation();
+            string layerName = fullbodytest ? "FullBody, " : "Gesture, ";
+            layerName += additivetest ? "Additive" : "Override";
+            base.PlayAnimation(layerName, "FirePrimary", "Primary.playbackRate", this.duration);
         }
 
         public override void FixedUpdate()
@@ -82,8 +88,10 @@ namespace EntityStates.Chirr
 
             if (base.isAuthority)
             {
+                float minSpreadLerped = Mathf.Lerp(FireTriLeaf.minSpread, FireTriLeaf.maxSpread * minSpreadCoefficient, (float)shotsFired / (float)numShots);
+                float maxSpreadLerped = Mathf.Lerp(FireTriLeaf.minSpread, FireTriLeaf.maxSpread, (float)shotsFired / (float)numShots);
                 Ray aimRay = base.GetAimRay();
-                aimRay.direction = Util.ApplySpread(aimRay.direction, minSpread, maxSpread, 1f, 1f);
+                aimRay.direction = Util.ApplySpread(aimRay.direction, minSpreadLerped, maxSpreadLerped, 1f, pitchCoefficient);
                 ProjectileManager.instance.FireProjectile(projectilePrefab, aimRay.origin, 
                     Util.QuaternionSafeLookRotation(aimRay.direction), base.gameObject, 
                     this.damageStat * damageCoefficient, force, this.isCrit);

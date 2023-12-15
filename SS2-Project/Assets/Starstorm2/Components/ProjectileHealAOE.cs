@@ -19,7 +19,7 @@ namespace Moonstorm.Starstorm2.Components
         private TeamFilter teamFilter;
         private ProjectileDamage projectileDamage;
 
-
+		private bool hasFired;
         private void Awake()
         {
             this.projectileController = base.GetComponent<ProjectileController>();
@@ -29,6 +29,7 @@ namespace Moonstorm.Starstorm2.Components
 
         private void Fire()
         {
+			this.hasFired = true;
             if (!NetworkServer.active) return;
 
 			float healValue = this.projectileDamage.damage * this.healDamageCoefficient;
@@ -67,8 +68,8 @@ namespace Moonstorm.Starstorm2.Components
 
         public void OnProjectileImpact(ProjectileImpactInfo impactInfo)
         {
-			this.Fire();
-			Destroy(base.gameObject);
+			if(!this.hasFired)
+				this.Fire();
         }
     }
 }

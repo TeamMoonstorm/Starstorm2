@@ -15,7 +15,7 @@ namespace Moonstorm.Starstorm2.Buffs
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffChirrConfuse", SS2Bundle.Chirr);
 
         public static float slowAmount = 0.5f;
-        public static float attackSpeedSlowAmount = 0.3f;
+        public static float attackSpeedSlowAmount = 0.0f;
 
        
         public override void Initialize()

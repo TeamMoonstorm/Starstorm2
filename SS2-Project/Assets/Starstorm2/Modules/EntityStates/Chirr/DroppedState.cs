@@ -27,6 +27,7 @@ namespace EntityStates.Chirr
 		private bool bodyHadGravity = true;
 		private bool bodyWasKinematic = true;
 		private bool bodyCouldTakeImpactDamage = true;
+		private CharacterGravityParameters gravParams;
 		private Rigidbody tempRigidbody;
 		private SphereCollider tempSphereCollider;
 		public override void OnEnter()
@@ -38,10 +39,19 @@ namespace EntityStates.Chirr
 
 			if (modelAnimator)
 			{
-				int layerIndex = modelAnimator.GetLayerIndex("Body");
-				modelAnimator.enabled = false;
-				modelAnimator.CrossFadeInFixedTime((UnityEngine.Random.Range(0, 2) == 0) ? "Hurt1" : "Hurt2", 0.1f);
-				modelAnimator.Update(0f);
+				if(!friendlyDrop)
+                {
+					int layerIndex = modelAnimator.GetLayerIndex("Body");
+					modelAnimator.enabled = false;
+					modelAnimator.CrossFadeInFixedTime((UnityEngine.Random.Range(0, 2) == 0) ? "Hurt1" : "Hurt2", 0.1f);
+					modelAnimator.Update(0f);
+				}
+				else
+                {
+					AimAnimator aimAnimator = base.GetAimAnimator();
+					if (aimAnimator) aimAnimator.enabled = true; // exiting genericcharactermain disables it
+				}					
+				
 			}
 
 			// figure out if we should disable gravity/kinematic on exit
@@ -61,6 +71,14 @@ namespace EntityStates.Chirr
                 base.characterMotor.onMovementHit += DoSplashDamage;
 				base.characterMotor.disableAirControlUntilCollision = true;
 				base.characterMotor.velocity = initialVelocity;
+				//blind pests have low gravity
+				this.gravParams = base.characterMotor.gravityParameters;
+				base.characterMotor.gravityParameters = new CharacterGravityParameters 
+				{
+					environmentalAntiGravityGranterCount = 0,
+					antiGravityNeutralizerCount = 0,
+					channeledAntiGravityGranterCount = 0,
+				}; // ??????????????????????????????????????????????????????????
             }
 			else
             {
@@ -80,6 +98,7 @@ namespace EntityStates.Chirr
                 {
 					this.bodyCouldTakeImpactDamage = base.rigidbodyMotor.canTakeImpactDamage;
 					base.rigidbodyMotor.canTakeImpactDamage = false;
+					base.rigidbodyMotor.enabled = false;
                 }
 			}
 
@@ -95,6 +114,7 @@ namespace EntityStates.Chirr
 			if(base.characterMotor)
             {
 				base.characterMotor.onMovementHit -= DoSplashDamage;
+				base.characterMotor.gravityParameters = this.gravParams;
             }
 
 			if (this.detonateOnImpact) Destroy(this.detonateOnImpact);
@@ -104,10 +124,13 @@ namespace EntityStates.Chirr
 			if (base.rigidbodyMotor)
 			{
 				base.rigidbodyMotor.canTakeImpactDamage = this.bodyCouldTakeImpactDamage;
+				base.rigidbodyMotor.enabled = true;
 			}
-
-			base.rigidbody.useGravity = bodyHadGravity;
-			base.rigidbody.isKinematic = bodyWasKinematic;
+			if(base.rigidbody)
+            {
+				base.rigidbody.useGravity = bodyHadGravity;
+				base.rigidbody.isKinematic = bodyWasKinematic;
+			}		
 
 			if (NetworkServer.active) base.characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage; // fuck u loader
 
@@ -119,9 +142,17 @@ namespace EntityStates.Chirr
 			base.OnExit();
 		}
 
+
 		public override void FixedUpdate()
 		{
 			base.FixedUpdate();
+
+			// let teammates do inputs while falling 
+			if(friendlyDrop && base.isLocalPlayer)
+            {
+				this.PerformInputs();
+            }
+
 			if (base.characterMotor)
 			{
 				base.characterMotor.velocity += Vector3.up * extraGravity * Time.fixedDeltaTime;
@@ -130,6 +161,7 @@ namespace EntityStates.Chirr
             {
 				Rigidbody rigidbody = base.rigidbody ? base.rigidbody : this.tempRigidbody;
 				rigidbody.velocity += Vector3.up * extraGravity * Time.fixedDeltaTime;
+				//else Moonstorm.Starstorm2.SS2Log.Error("fucker gone");
 			}
 
 			if (detonateNextFrame && (!base.characterMotor || (base.characterMotor.Motor.GroundingStatus.IsStableOnGround && !base.characterMotor.Motor.LastGroundingStatus.IsStableOnGround)))
@@ -182,6 +214,32 @@ namespace EntityStates.Chirr
 			}
 		}
 
+		protected void PerformInputs()
+		{
+			if (base.isAuthority && base.skillLocator)
+			{
+				this.PerformInput(base.skillLocator.primary, ref base.inputBank.skill1);
+				this.PerformInput(base.skillLocator.secondary, ref base.inputBank.skill2);
+				this.PerformInput(base.skillLocator.utility, ref base.inputBank.skill3);
+				this.PerformInput(base.skillLocator.special, ref base.inputBank.skill4);				
+			}
+		}
+		private void PerformInput(GenericSkill skillSlot, ref InputBankTest.ButtonState buttonState)
+		{
+			if (!buttonState.down || !skillSlot)
+			{
+				return;
+			}
+			if (skillSlot.mustKeyPress && buttonState.hasPressBeenClaimed)
+			{
+				return;
+			}
+			if (skillSlot.ExecuteIfReady())
+			{
+				buttonState.hasPressBeenClaimed = true;
+			}
+		}
+
 		public override InterruptPriority GetMinimumInterruptPriority()
 		{
 			return friendlyDrop ? InterruptPriority.Skill : InterruptPriority.Vehicle; //////////////////////////////////
@@ -193,7 +251,7 @@ namespace EntityStates.Chirr
 			public DroppedState droppedState;
             private void OnCollisionEnter(Collision collision)
             {
-                if(collision.gameObject.layer == LayerIndex.world.intVal)
+                if(collision.gameObject.layer == LayerIndex.world.intVal || collision.gameObject.layer == LayerIndex.entityPrecise.intVal)
                 {
 					this.droppedState.detonateNextFrame = true;
 					Destroy(this);

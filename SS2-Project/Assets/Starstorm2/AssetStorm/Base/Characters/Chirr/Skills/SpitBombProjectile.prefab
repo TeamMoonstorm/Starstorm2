@@ -17,7 +17,11 @@ GameObject:
   - component: {fileID: 2849282778715303265}
   - component: {fileID: 4811216657060050309}
   - component: {fileID: 6317222341959716059}
+  - component: {fileID: 5156620725636308918}
   - component: {fileID: 6630580104123990304}
+  - component: {fileID: 540126478886663400}
+  - component: {fileID: 8847561560491379496}
+  - component: {fileID: -7174387985627282413}
   m_Layer: 14
   m_Name: SpitBombProjectile
   m_TagString: Untagged
@@ -170,7 +174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifetime: 5
   lifetimeExpiredEffect: {fileID: 0}
-  desiredForwardSpeed: 80
+  desiredForwardSpeed: 70
   updateAfterFiring: 0
   enableVelocityOverLifetime: 0
   velocityOverLifetime:
@@ -236,6 +240,22 @@ MonoBehaviour:
   lifetimeAfterImpact: 0
   lifetimeRandomOffset: 0
   transformSpace: 0
+--- !u!114 &5156620725636308918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2861417616241238631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 492eaafcce1865c4d8ef397afefd8348, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 12
+  percentHeal: 0.2
+  healDamageCoefficient: 0
+  orbTravelDuration: 0.1
 --- !u!114 &6630580104123990304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,3 +268,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ee3c4baf1d15c646bb7eebc5ccfee5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &540126478886663400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2861417616241238631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1184802484, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 8963369156231746736}
+  antiGravityCoefficient: 0.3
+--- !u!114 &8847561560491379496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2861417616241238631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -270136354, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  positionTransmitInterval: 0.033333335
+  interpolationFactor: 1
+  allowClientsideCollision: 0
+--- !u!114 &-7174387985627282413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2861417616241238631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -132178706, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  localTorque: {x: 5000, y: 0, z: 0}
+  randomize: 0

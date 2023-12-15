@@ -50,7 +50,7 @@ namespace Moonstorm.Starstorm2.Items
                     Vector3 offset = UnityEngine.Random.insideUnitCircle * leashTeleportOffset;
                     Vector3 safePosition = TeleportHelper.FindSafeTeleportDestination(ownerPosition + offset, base.body, RoR2Application.rng) ?? ownerPosition + Vector3.up * 10;
                     TeleportHelper.TeleportBody(base.body, safePosition);
-                    body.SetBodyStateToPreferredInitialState();
+                    body.SetBodyStateToPreferredInitialState(); // doesnt work :(((((((((((((((((((((
                 }
             }
 
@@ -70,17 +70,21 @@ namespace Moonstorm.Starstorm2.Items
 
             private GameObject ownerBodyObject;
             private EntityStateMachine stateMachine;
+            private BaseAI ai;
+            bool wasFullVision;
             private void OnEnable()
             {
                 if (master.aiComponents.Length > 0)
                 {
-                    BaseAI ai = master.aiComponents[0];
+                    this.ai = master.aiComponents[0];
                     ai.aimVectorMaxSpeed *= aimSpeedCoefficient;
                     this.stateMachine = ai.stateMachine;
                     this.stateMachine.nextStateModifier += ModifyNextState;                   
                     ai.scanState = new EntityStates.SerializableEntityStateType(typeof(FollowLeader));
+                    wasFullVision = ai.fullVision;
+                    ai.fullVision = true;
                     ai.currentEnemy.Reset();
-                    ai.customTarget.Reset();
+                    ai.customTarget.Reset();                    
                     ai.buddy.Reset();
                     ai.ForceAcquireNearestEnemyIfNoCurrentEnemy();
                 }
@@ -92,13 +96,10 @@ namespace Moonstorm.Starstorm2.Items
                 CharacterMaster ownerMaster = master.minionOwnership.ownerMaster;
                 this.ownerBodyObject = ownerMaster ? ownerMaster.GetBodyObject() : null;
                 GameObject bodyObject = master.GetBodyObject();
-                BaseAI ai = null;
-                if (master.aiComponents.Length > 0)
-                {
-                    ai = master.aiComponents[0];
-                }
 
                 if (!ai || !bodyObject) return;
+            
+                this.ResetTargetIfDead();
 
                 // if target is too far away, start following owner again
                 Vector3 targetPosition = bodyObject.transform.position;
@@ -117,15 +118,31 @@ namespace Moonstorm.Starstorm2.Items
                     nextState = new FollowLeader { leader = this.ownerBodyObject };
                 }
             }
+            private void ResetTargetIfDead()
+            {
+                BaseAI.Target target = ai.currentEnemy;
+                if (!target.gameObject || (target.healthComponent && !target.healthComponent.alive))
+                {
+                    ai.currentEnemy.Reset();
+                    HurtBox hurtBox = ai.FindEnemyHurtBox(float.PositiveInfinity, true, true);
+                    if (hurtBox && hurtBox.healthComponent)
+                    {
+                        ai.currentEnemy.gameObject = hurtBox.healthComponent.gameObject;
+                        ai.currentEnemy.bestHurtBox = hurtBox;
+                    }
+                }
+            }
+
 
             private void OnDisable()
             {
-                if (master.aiComponents.Length > 0)
+                if (master.aiComponents.Length > 0 && master.aiComponents[0].enabled)
                 {
                     BaseAI ai = master.aiComponents[0];
                     ai.aimVectorMaxSpeed /= aimSpeedCoefficient;
                     ai.stateMachine.nextStateModifier -= ModifyNextState;
                     ai.scanState = new EntityStates.SerializableEntityStateType(typeof(Wander)); // this should be fine. all ai uses wander.
+                    ai.fullVision = wasFullVision;
                     ai.currentEnemy.Reset();
                     ai.customTarget.Reset();
                     ai.buddy.Reset();

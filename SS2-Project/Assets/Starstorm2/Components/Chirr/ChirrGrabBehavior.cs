@@ -24,9 +24,10 @@ namespace Moonstorm.Starstorm2.Components
 
         private void RemoveBuff(VehicleSeat.PassengerInfo info)
         {
-            if (info.body && info.body.teamComponent.teamIndex == this.teamComponent.teamIndex)
-            {
+            if(info.body.HasBuff(SS2Content.Buffs.BuffChirrGrabFriend))
                 info.body.RemoveBuff(SS2Content.Buffs.BuffChirrGrabFriend);
+            if (info.body && info.body.teamComponent.teamIndex == this.teamComponent.teamIndex)
+            {                
                 info.body.AddTimedBuff(SS2Content.Buffs.BuffChirrGrabFriend, buffLingerDuration);
             }
         }

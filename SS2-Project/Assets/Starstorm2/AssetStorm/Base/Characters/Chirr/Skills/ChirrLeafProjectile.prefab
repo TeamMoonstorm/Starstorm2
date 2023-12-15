@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 2481145285323348969}
   - component: {fileID: 4294439361429175789}
   - component: {fileID: 3895154961832856518}
+  - component: {fileID: 9078946754261869801}
+  - component: {fileID: 6287304446847728675}
   m_Layer: 14
   m_Name: ChirrLeafProjectile
   m_TagString: Untagged
@@ -175,7 +177,7 @@ MonoBehaviour:
   lifetime: 5
   lifetimeExpiredEffect: {fileID: 0}
   desiredForwardSpeed: 150
-  updateAfterFiring: 0
+  updateAfterFiring: 1
   enableVelocityOverLifetime: 0
   velocityOverLifetime:
     serializedVersion: 2
@@ -184,8 +186,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   oscillate: 1
-  oscillateMagnitude: 1
-  oscillateSpeed: 10
+  oscillateMagnitude: 3
+  oscillateSpeed: 2
 --- !u!114 &256134867537490815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,6 +269,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ee3c4baf1d15c646bb7eebc5ccfee5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &9078946754261869801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2861417616241238631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1395413934, guid: da77c7bbf69f66ab2145560542327715, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 1
+  _slowRotationSpeed: 720
+  _fastRotationSpeed: 20
+  _rotateAroundAxis: 2
+  _relativeTo: 1
+  _reverse: 0
+--- !u!114 &6287304446847728675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2861417616241238631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -455717551, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  setRandomXRotation: 0
+  setRandomYRotation: 0
+  setRandomZRotation: 1
 --- !u!1 &6131799636922904007
 GameObject:
   m_ObjectHideFlags: 0

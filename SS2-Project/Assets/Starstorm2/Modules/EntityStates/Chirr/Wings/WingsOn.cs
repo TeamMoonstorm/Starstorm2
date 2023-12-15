@@ -7,8 +7,8 @@ namespace EntityStates.Chirr.Wings
     public class WingsOn : BaseState
     {
         private Transform hoverEffect;
-        public static float hoverVelocity = -1f;
-        public static float hoverAcceleration = 60f;
+        public static float hoverVelocity = -3f;
+        public static float hoverAcceleration = 50f;
 
         public override void OnEnter()
         {

@@ -15,9 +15,16 @@ namespace Moonstorm.Starstorm2.Components
 {
 	public class ChirrFriendController : MonoBehaviour
 	{
+		// this class is half supports-multiple-friends, half not. i need to be less indecisive.
+
+		// FOR STUFF THAT DIRECTLY INTERACTS WITH FRIEND'S AI AND BODY: SEE Items.ChirrFriendHelper
 		private CharacterMaster master;
 		public static float friendAimSpeedCoefficient = 3f;
 		public Friend currentFriend;
+
+		public static float healthDecayTime = 80f;
+
+		public bool isScepter;
 		public bool hasFriend
         {
 			get => this.currentFriend.master != null; /////////////////////// ?
@@ -42,13 +49,37 @@ namespace Moonstorm.Starstorm2.Components
 			this.master = base.GetComponent<CharacterMaster>();
 			this.currentFriend = default(Friend);
             Inventory.onServerItemGiven += ShareNewItem;
+            TeamComponent.onLeaveTeamGlobal += CheckFriendLeftTeam;
 		}
-      
+        private void OnDestroy()
+        {
+			TeamComponent.onLeaveTeamGlobal -= CheckFriendLeftTeam;
+        }
+
+		// teamcomponent sets team to none on destroy XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+        private void CheckFriendLeftTeam(TeamComponent teamComponent, TeamIndex teamIndex) // teamIndex is the team our friend left (Player)
+        {
+			if (!NetworkServer.active || !this.hasFriend || !teamComponent.enabled) return;
+
+			CharacterBody body = currentFriend.master.GetBody();
+			if(body && body == teamComponent.body && body.healthComponent.alive && teamIndex == this.master.teamIndex)
+            {
+				this.RemoveFriend(currentFriend.master, false);
+            }
+        }
+
+		public bool ItemFilter(ItemIndex itemIndex)
+        {
+			bool defaultFilter = Inventory.defaultItemCopyFilterDelegate(itemIndex);
+			ItemDef itemDef = ItemCatalog.GetItemDef(itemIndex);
+			return defaultFilter && itemDef.DoesNotContainTag(ItemTag.HoldoutZoneRelated) && itemDef.DoesNotContainTag(ItemTag.OnStageBeginEffect)
+				&& itemDef.DoesNotContainTag(ItemTag.InteractableRelated);
+        }
         private void ShareNewItem(Inventory inventory, ItemIndex itemIndex, int count)
         {
             if(inventory == this.master.inventory && this.currentFriend.master)
             {
-				if(Inventory.defaultItemCopyFilterDelegate(itemIndex)) // IMPLEMENT OUR OWN BLACKLIST LATER IF NEEDED
+				if(ItemFilter(itemIndex))
                 {
 					this.currentFriend.master.inventory.GiveItem(itemIndex, count);
 				}			
@@ -101,9 +132,12 @@ namespace Moonstorm.Starstorm2.Components
 			this.currentFriend = new Friend(master);
 
 			CharacterBody body = master.GetBody();
+			TeamIndex oldTeam = body ? body.teamComponent.teamIndex : TeamIndex.Monster;
 			TeamIndex newTeam = this.master.teamIndex;
 			master.teamIndex = newTeam;
-			DontDestroyOnLoad(master);
+
+			if(isScepter)
+				DontDestroyOnLoad(master); // BORING BORING BORING. CLAY TEMPLAR = AUTOWIN AND -1 ABILITY WHOLEW GAME. scepter ok tho :)
 
 			if (NetworkServer.active)
 			{
@@ -112,14 +146,18 @@ namespace Moonstorm.Starstorm2.Components
 					body.teamComponent.teamIndex = newTeam;
 					Util.CleanseBody(body, true, false, false, true, true, false); // lol
 					body.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 3f);
-					body.healthComponent.HealFraction(1f, default(ProcChainMask));					
+					//body.healthComponent.HealFraction(1f, default(ProcChainMask)); // BORING. HEAL IT YOURSELF WITH SECONDARY
 				}
 					
 				master.minionOwnership.SetOwner(this.master);			
 				master.onBodyDeath.AddListener(OnFriendDeath);
-				master.inventory.CopyItemsFrom(this.master.inventory);
+				master.inventory.CopyItemsFrom(this.master.inventory, this.ItemFilter);
 				master.inventory.GiveItem(SS2Content.Items.ChirrFriendHelper, 1);
-				
+				if(!isScepter)
+					master.inventory.GiveItem(RoR2Content.Items.HealthDecay, (int)healthDecayTime); // item stack = how long it takes to go from 100% health to 0
+
+				if(oldTeam == TeamIndex.Void && master.inventory.GetEquipmentIndex() == DLC1Content.Equipment.EliteVoidEquipment.equipmentIndex) // UNDO VOIDTOUCHED
+					master.inventory.SetEquipmentIndex(EquipmentIndex.None);
 			}			
 		}
 		
@@ -127,7 +165,17 @@ namespace Moonstorm.Starstorm2.Components
 		{
 			if (!NetworkServer.active)
 			{
-				SS2Log.Warning("ChirrFriendTracker.RemoveFriend called on client.");
+				SS2Log.Warning("ChirrFriendTracker.RemoveFriend(CharacterMaster master) called on client.");
+				return;
+			}
+			RemoveFriend(master, true);
+		}
+
+		public void RemoveFriend([NotNull] CharacterMaster master, bool useOldTeam) // useOldTeam should be false when friend's team change was forced (void infestor)
+        {
+			if (!NetworkServer.active)
+			{
+				SS2Log.Warning("ChirrFriendTracker.RemoveFriend(CharacterMaster master, bool wasStolen) called on client.");
 				return;
 			}
 			if (this.currentFriend.master != null && this.currentFriend.master != master)
@@ -138,18 +186,23 @@ namespace Moonstorm.Starstorm2.Components
 			//undo everything
 			CharacterBody body = master.GetBody();
 
-			if(body.teamComponent.indicator) // teammate indicator doesnt go away when changing team
+			if (body.teamComponent.indicator) // teammate indicator doesnt go away when changing team
 				Destroy(body.teamComponent.indicator);
 
-			TeamIndex newTeam = this.currentFriend.teamIndex;		
-			master.teamIndex = newTeam;
-			SceneManager.MoveGameObjectToScene(master.gameObject, Stage.instance.gameObject.scene); // i think this is how it works?
+			TeamIndex newTeam = this.currentFriend.teamIndex;
+			if(useOldTeam)
+            {
+				master.teamIndex = newTeam;
+				body.teamComponent.teamIndex = newTeam;
+			}
+			
+			if(Stage.instance)
+				SceneManager.MoveGameObjectToScene(master.gameObject, Stage.instance.gameObject.scene); // i think this is how it works?
 
 			if (NetworkServer.active)
-			{				
+			{
 				if (body)
-				{
-					body.teamComponent.teamIndex = newTeam;
+				{					
 					SetStateOnHurt setStateOnHurt = body.GetComponent<SetStateOnHurt>(); // stun is good
 					if (setStateOnHurt) setStateOnHurt.SetStun(1f);
 				}
@@ -159,19 +212,22 @@ namespace Moonstorm.Starstorm2.Components
 
 				master.inventory.RemoveItem(SS2Content.Items.ChirrFriendHelper, 1); // dont think its necessary. just being overly safe
 
-				Inventory inventory = master.inventory;
-				inventory.itemAcquisitionOrder.Clear();
-				int[] array = inventory.itemStacks;
-				int num = 0;
-				HG.ArrayUtils.SetAll<int>(array, num);
-				master.inventory.AddItemsFrom(this.currentFriend.itemStacks, new Func<ItemIndex, bool>(target => true));
-
+				if(this.currentFriend.itemStacks != null && this.currentFriend.itemStacks.Length > 0) // ........
+                {
+					Inventory inventory = master.inventory;
+					inventory.itemAcquisitionOrder.Clear();
+					int[] array = inventory.itemStacks;
+					int num = 0;
+					HG.ArrayUtils.SetAll<int>(array, num);
+					master.inventory.AddItemsFrom(this.currentFriend.itemStacks, new Func<ItemIndex, bool>(target => true)); // NRE HERE???? how
+				}
 				
+
+
 			}
 
 			this.currentFriend = default(Friend);
 		}
-
 
 		// HEALTHBAR STUFF
 		#region Healthbar Stuff
