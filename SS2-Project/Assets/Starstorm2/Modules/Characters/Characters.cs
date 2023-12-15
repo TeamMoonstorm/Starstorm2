@@ -46,10 +46,6 @@ namespace Moonstorm.Starstorm2.Modules
 
         protected override IEnumerable<CharacterBase> GetCharacterBases()
         {
-            //base.GetCharacterBases()
-            //    .ToList()
-            //    .ForEach(character => AddCharacter(character));
-            //return null;
 
             base.GetCharacterBases()
             .Where(character =>
@@ -60,6 +56,11 @@ namespace Moonstorm.Starstorm2.Modules
                     if(ind >= 0){
                         name = name.Substring(0, ind - 1);
                     }
+
+                    if (!EnableSurvivors){
+                        return false;
+                    }
+
                     return SS2Config.MakeConfigurableBool(true, (b) =>
                     {
                         b.Section = "Survivors";
@@ -79,6 +80,11 @@ namespace Moonstorm.Starstorm2.Modules
                     if(ind >= 0){
                         name = name.Substring(0, ind - 1);
                     }
+
+                    if (!EnableSurvivors){
+                        return false;
+                    }
+
                     return SS2Config.MakeConfigurableBool(true, (b) =>
                     {
                         

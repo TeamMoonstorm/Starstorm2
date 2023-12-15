@@ -40,6 +40,11 @@ namespace Moonstorm.Starstorm2.Modules
             base.GetInteractableBases()
                 .Where(interactable =>
                 {
+                    if (!EnableInteractables)
+                    {
+                        return false;
+                    }
+
                     return SS2Config.MakeConfigurableBool(true, (b) =>
                     {
                         b.Section = "Interactables";

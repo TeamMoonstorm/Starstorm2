@@ -51,13 +51,19 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Elite events are currently disabled.
 
 ## Changelog
-
 **Warning: content spoilers below!**
 ### 0.5.7
 * General
     * Added French translation. Thank you StyleMyk!
-    * Survivors and monsters are better organized in the config.
+    * Survivors and monsters are better organized in the config. 
+    * Fixed sweeping disables for survivors, monsters, and interactables.
     * Fixed the footstep visuals for all survivors and footstep sound effects for Executioner and Nemesis Commando.
+* Nemesis Commando
+    * Fixed issue with timing on primary swing. 
+* Interactables
+    * Refabricator can no longer spawn in Simulacrum.
+* Drones
+    * Restored Duplicator Drone's cooldown visuals.
 
 ### 0.5.6
 * General
