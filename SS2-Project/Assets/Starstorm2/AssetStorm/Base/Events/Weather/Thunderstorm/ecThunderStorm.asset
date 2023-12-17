@@ -16,7 +16,7 @@ MonoBehaviour:
   eventState:
     _typeName: EntityStates.Events.ThunderstormState, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  requiredStateMachine: 
+  requiredStateMachine: Weather
   startMessageToken: SS2_EVENT_THUNDERSTORM_START
   endMessageToken: SS2_EVENT_THUNDERSTORM_END
   messageColor: {r: 0.756141, g: 0.8289838, b: 0.9056604, a: 1}
@@ -27,7 +27,7 @@ MonoBehaviour:
   category: CommonEvents
   selectionWeight: 70
   cost: 1850
-  repeatedSelectionCostCoefficient: 20
+  repeatedSelectionCostCoefficient: 3
   minimumStageCompletions: 3
   requiredUnlock:
     _asset: {fileID: 0}

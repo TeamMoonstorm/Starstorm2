@@ -23,18 +23,6 @@ namespace Moonstorm.Starstorm2.Equipments
         public sealed class Behavior : CharacterBody.ItemBehavior
         {
             private Vector3 originalScale;
-            public void Start()
-            {
-                //body.transform.localScale *= 0.65f;
-                originalScale = transform.localScale;
-                transform.localScale = new Vector3(1.35f * transform.localScale.x, 1.35f * transform.localScale.y, 1.35f * transform.localScale.z);
-            }
-
-            public void OnDestroy()
-            {
-                //body.transform.localScale *= 1.35f;
-                transform.localScale = originalScale;
-            }
         }
     }
 }

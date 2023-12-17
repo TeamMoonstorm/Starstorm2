@@ -113,6 +113,8 @@ namespace Moonstorm.Starstorm2
 
             public static EquipmentDef EliteKineticEquipment;
 
+            public static EquipmentDef AffixEmpyrean;
+
             public static EquipmentDef equipDivineRight;
 
             public static EquipmentDef BackThruster;
@@ -243,6 +245,8 @@ namespace Moonstorm.Starstorm2
             public static BuffDef bdNemCapManaReduction;
 
             public static BuffDef bdNemCapManaRegen;
+
+            public static BuffDef bdEmpyrean;
         }
 
         public static class Elites
