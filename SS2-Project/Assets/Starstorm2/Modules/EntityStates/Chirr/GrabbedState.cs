@@ -15,7 +15,7 @@ namespace EntityStates
 			base.OnEnter();
 			Animator modelAnimator = base.GetModelAnimator();
 
-			SS2Log.Warning("GRABBED");
+			//SS2Log.Warning("GRABBED");
 			if (modelAnimator)
 			{
 				int layerIndex = modelAnimator.GetLayerIndex("Body");

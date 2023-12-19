@@ -11,15 +11,22 @@ namespace Moonstorm.Starstorm2.Survivors
     public sealed class Chirr : SurvivorBase
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("ChirrBody", SS2Bundle.Chirr);
-        public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemmandoMonsterMaster", SS2Bundle.Indev);
+        public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("ChirrMonsterMaster", SS2Bundle.Chirr);
         public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("Chirr", SS2Bundle.Chirr);
         public override void Initialize()
         {
             base.Initialize();
+            if (Starstorm.ScepterInstalled)
+            {
+                ScepterCompat();
+            }
         }
 
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-
+        public void ScepterCompat()
+        {
+            AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(SS2Assets.LoadAsset<SkillDef>("BefriendScepter", SS2Bundle.Chirr), "ChirrBody", SkillSlot.Special, 0);
+        }
         public override void ModifyPrefab()
         {
             var cb = BodyPrefab.GetComponent<CharacterBody>();

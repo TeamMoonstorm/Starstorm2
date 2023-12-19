@@ -35,6 +35,7 @@ namespace EntityStates.Chirr
 			base.OnEnter();
 			Animator modelAnimator = base.GetModelAnimator();
 
+			//Moonstorm.Starstorm2.SS2Log.Info("DroppedState.OnEnter: " + base.gameObject.name);
 			if (base.characterBody && NetworkServer.active) base.characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
 
 			if (modelAnimator)
@@ -111,7 +112,10 @@ namespace EntityStates.Chirr
 
         public override void OnExit()
 		{
-			if(base.characterMotor)
+
+			//Moonstorm.Starstorm2.SS2Log.Info("DroppedState.OnExit: " + base.gameObject.name);
+
+			if (base.characterMotor)
             {
 				base.characterMotor.onMovementHit -= DoSplashDamage;
 				base.characterMotor.gravityParameters = this.gravParams;
@@ -172,9 +176,11 @@ namespace EntityStates.Chirr
 					base.rigidbody.velocity = Vector3.zero;
 				else if (this.tempRigidbody)
 					this.tempRigidbody.velocity = Vector3.zero;
-				
-				Util.PlaySound("Hit2", base.gameObject);
-				if (NetworkServer.active)
+
+				//Moonstorm.Starstorm2.SS2Log.Info("DroppedState.FixedUpdate: " + base.gameObject.name + " hit ground");
+
+				Util.PlaySound("ChirrThrowHitGround", base.gameObject);
+				if (base.isAuthority) // authority because server doesnt see clients hitting the ground
 				{
 					EffectManager.SpawnEffect(hitGroundEffect, new EffectData
 					{
@@ -245,8 +251,19 @@ namespace EntityStates.Chirr
 			return friendlyDrop ? InterruptPriority.Skill : InterruptPriority.Vehicle; //////////////////////////////////
 		}
 
+        public override void OnSerialize(NetworkWriter writer)
+        {
+            base.OnSerialize(writer);
+			writer.Write(this.initialVelocity);
+        }
+        public override void OnDeserialize(NetworkReader reader)
+        {
+            base.OnDeserialize(reader);
+			this.initialVelocity = reader.ReadVector3();
+        }
 
-		public class DetonateOnImpact : MonoBehaviour
+
+        public class DetonateOnImpact : MonoBehaviour
         {
 			public DroppedState droppedState;
             private void OnCollisionEnter(Collision collision)

@@ -39,7 +39,7 @@ namespace Moonstorm.Starstorm2.Components
 			teamMask.AddTeam(this.teamFilter.teamIndex);
 			sphereSearch.radius = this.radius;
 			sphereSearch.origin = base.transform.position;
-			sphereSearch.queryTriggerInteraction = QueryTriggerInteraction.Ignore;
+			sphereSearch.queryTriggerInteraction = QueryTriggerInteraction.Collide;
 			sphereSearch.mask = LayerIndex.entityPrecise.mask;
 			sphereSearch.RefreshCandidates();
 			sphereSearch.FilterCandidatesByDistinctHurtBoxEntities().FilterCandidatesByHurtBoxTeam(teamMask);
@@ -62,7 +62,7 @@ namespace Moonstorm.Starstorm2.Components
 				healOrb.overrideDuration = this.orbTravelDuration;
 				OrbManager.instance.AddOrb(healOrb);
 			}
-			EffectManager.SimpleEffect(EntityStates.AffixEarthHealer.Heal.effectPrefab, base.transform.position, Quaternion.identity, true);
+			//EffectManager.SimpleEffect(EntityStates.AffixEarthHealer.Heal.effectPrefab, base.transform.position, Quaternion.identity, true);
 			
 		}
 

@@ -41,10 +41,27 @@ namespace EntityStates.AI.Walker
 			this.fallbackNodeStartAge = float.NegativeInfinity;
 
 			this.ai.currentEnemy.Reset();
+
+            GlobalEventManager.onServerDamageDealt += CopyLeaderTarget;
+		}
+        public override void OnExit()
+        {
+            base.OnExit();
+			GlobalEventManager.onServerDamageDealt -= CopyLeaderTarget;
 		}
 
-		// jank. hopefully only true when the skilldriver is a "combat" skill
-		private bool IsCombatDriver(AISkillDriver driver)
+        private void CopyLeaderTarget(DamageReport damageReport)
+        {
+            if(damageReport.attacker == this.leader)
+            {
+				this.ai.currentEnemy.gameObject = damageReport.victim.gameObject;
+				this.ai.currentEnemy.bestHurtBox = damageReport.victimBody.mainHurtBox;
+				//this.outer.SetNextState(new Combat());
+            }
+        }
+
+        // jank. hopefully only true when the skilldriver is a "combat" skill
+        private bool IsCombatDriver(AISkillDriver driver)
         {
 			if (!driver) return false;
 			//if (driver.maxDistance == Mathf.Infinity) return false; // ?

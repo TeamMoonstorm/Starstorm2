@@ -7,10 +7,8 @@ using RoR2.Projectile;
 using System.Linq;
 using Moonstorm.Starstorm2.Components;
 using EntityStates.Huntress;
-using UnityEngine.Jobs;
-using Unity.Jobs;
 using Moonstorm.Starstorm2;
-
+using UnityEngine.Networking;
 namespace EntityStates.Chirr
 {
     public class AimDrop : BaseSkillState
@@ -29,6 +27,7 @@ namespace EntityStates.Chirr
 		private GameObject areaIndicatorInstance;
 
 		private GrabController grabController;
+		private ChirrGrabBehavior chirrGrabBehavior;
 
 		private Vector3 desiredTrajectory;
 
@@ -36,7 +35,9 @@ namespace EntityStates.Chirr
         {
             base.OnEnter();
 
+			base.StartAimMode();
 			this.grabController = base.GetComponent<GrabController>();
+			this.chirrGrabBehavior = base.GetComponent<ChirrGrabBehavior>();
 			if (ArrowRain.areaIndicatorPrefab)
 			{
 				this.areaIndicatorInstance = UnityEngine.Object.Instantiate<GameObject>(ArrowRain.areaIndicatorPrefab);
@@ -48,7 +49,7 @@ namespace EntityStates.Chirr
         {
             base.FixedUpdate();
 			
-			if(!base.IsKeyDownAuthority())
+			if(base.isAuthority && !base.IsKeyDownAuthority())
             {
 				this.outer.SetNextStateToMain();
             }
@@ -101,39 +102,36 @@ namespace EntityStates.Chirr
                 awayForce += Vector3.up * selfUpForce;
                 if (base.characterMotor && !base.isGrounded)
                 {
-                    base.characterMotor.velocity += awayForce;// the skilldef has cancel sprint=false, this apparently is stopping sprint anyways
-                    if (EntityStateMachine.FindByCustomName(base.gameObject, "Wings")?.state.GetType() != typeof(Idle)) // jank to keep sprinting while hovering
+					// the skilldef has cancel sprint=false, this apparently is stopping sprint anyways
+					float upVelocity = Mathf.Max(base.characterMotor.velocity.y, awayForce.y);
+					base.characterMotor.velocity = new Vector3(characterMotor.velocity.x + awayForce.x, upVelocity, characterMotor.velocity.z + awayForce.z);
+					if (EntityStateMachine.FindByCustomName(base.gameObject, "Wings")?.state.GetType() != typeof(Idle)) // jank to keep sprinting while hovering
                     {
                         base.characterBody.isSprinting = true;
                     }
                 }
             }
 
-            if (!this.outer.destroying && this.grabController)
+            if (!this.outer.destroying && this.grabController && this.grabController.IsGrabbing())
 			{
-				//if (Util.HasEffectiveAuthority(this.grabController.victimBodyObject))
+                //if (Util.HasEffectiveAuthority(this.grabController.victimBodyObject))
 
-				
-				if (this.grabController.victimInfo.bodyStateMachine)
+                Util.PlaySound("ChirrGrabThrow", base.gameObject);
+				base.PlayAnimation("FullBody, Override", "GrabThrow");
+				base.StartAimMode();
+				bool isFriend = this.grabController.victimInfo.body.teamComponent.teamIndex == this.teamComponent.teamIndex;
+
+
+				if (NetworkServer.active && this.chirrGrabBehavior)
                 {
-					bool isFriend = this.grabController.victimInfo.body.teamComponent.teamIndex == base.GetTeam();
-					EntityStateMachine bodyMachine = this.grabController.victimInfo.bodyStateMachine;
-					this.grabController.AttemptGrab(null);
-					bodyMachine.SetInterruptState(new DroppedState
-					{
-						initialVelocity = this.desiredTrajectory,
-						inflictor = base.gameObject,
-						friendlyDrop = isFriend,
-						extraGravity = extraGravity
-					},
-					InterruptPriority.Vehicle);
-				}
-
+					this.chirrGrabBehavior.ThrowVictim(this.desiredTrajectory, extraGravity, isFriend);
+                }
 				
-
-
-
 			}
+			else
+            {
+				SS2Log.Warning("Chirr.AimDrop: didn't see victim! This is fine if you are a client. IsGrabbing = " + this.grabController.IsGrabbing());
+            }
 			if (this.areaIndicatorInstance)
 			{
 				EntityState.Destroy(this.areaIndicatorInstance.gameObject);

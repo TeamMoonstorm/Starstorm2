@@ -136,7 +136,7 @@ MonoBehaviour:
   ghostTransformAnchor: {fileID: 0}
   startSound: 
   cannotBeDeleted: 0
-  flightSoundLoop: {fileID: 0}
+  flightSoundLoop: {fileID: 11400000, guid: e387190987e2fd4489c0ca18f7825a8d, type: 2}
   canImpactOnTrigger: 0
   allowPrediction: 1
   owner: {fileID: 0}
@@ -206,7 +206,8 @@ MonoBehaviour:
   bonusBlastForce: {x: 0, y: 0, z: 0}
   canRejectForce: 1
   projectileHealthComponent: {fileID: 0}
-  explosionEffect: {fileID: 0}
+  explosionEffect: {fileID: 1824556462511018, guid: 3de1fd8aa3b0fb24f96948dfc7dc1e8f,
+    type: 3}
   explosionSoundString: 
   fireChildren: 1
   childrenProjectilePrefab: {fileID: 2861417616241238631, guid: ef7fb7d3b6ceb4149b4ca40c52ebf064,
@@ -252,8 +253,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 492eaafcce1865c4d8ef397afefd8348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 12
-  percentHeal: 0.2
+  radius: 7
+  percentHeal: 0.15
   healDamageCoefficient: 0
   orbTravelDuration: 0.1
 --- !u!114 &6630580104123990304
@@ -310,4 +311,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localTorque: {x: 5000, y: 0, z: 0}
-  randomize: 0
+  randomize: 1

@@ -140,6 +140,8 @@ namespace Moonstorm.Starstorm2
 
             public static BuffDef BuffChirrConvert;
 
+            public static BuffDef BuffChirrFriend;
+
             public static BuffDef BuffChirrGrabFriend;
 
             public static BuffDef BuffChirrRegen;

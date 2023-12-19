@@ -10,6 +10,7 @@ namespace Moonstorm.Starstorm2.Buffs
     //[DisabledContent]
     public sealed class ChirrConvert : BuffBase, IBodyStatArgModifier
     {
+        //just the dot/slow portion of Befriend. check ChirrConvertOrb for the actual converting
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffChirrConvert", SS2Bundle.Chirr);
         public static DotController.DotIndex dotIndex;
 

@@ -4,11 +4,15 @@ using RoR2.Items;
 using RoR2.CharacterAI;
 using EntityStates.AI.Walker;
 using UnityEngine;
+using UnityEngine.Networking;
+
 namespace Moonstorm.Starstorm2.Items
 {
     public sealed class ChirrFriendHelper : ItemBase
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ChirrFriendHelper", SS2Bundle.Chirr);
+
+        public static GameObject jitterEffectPrefab = SS2Assets.LoadAsset<GameObject>("FriendJitterEffect", SS2Bundle.Chirr);
 
         public static float attackSpeedToCooldownConversion = 1f;
         public static float aimSpeedCoefficient = 3f;
@@ -17,13 +21,7 @@ namespace Moonstorm.Starstorm2.Items
         public static float leashDistance = 160f;
         public static float leashTeleportOffset = 10f;
 
-
-        //jitterbone stuff
-        public static float perlinNoiseFrequency;
-        public static float perlinNoiseStrength;
-        public static float perlinNoiseMinimumCutoff;
-        public static float perlinNoiseMaximumCutoff = 1f;
-        public static float headBonusStrength;
+        public static float timeUntilMaxCurse = 100f;
 
         // Converts attackspeed to CDR
         // teleports back to chirr if too far away
@@ -31,33 +29,92 @@ namespace Moonstorm.Starstorm2.Items
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.ChirrFriendHelper;
-            private float cooldownReduction;
+            private float leashTimer = 2f;
+            private float curseTimer;
+            private float desiredHealthFraction = 1f;
 
+            private GameObject jitterBonesEffect;
+            private void Start()
+            {
+                if(NetworkServer.active)
+                    base.body.AddBuff(SS2Content.Buffs.BuffChirrFriend);
+
+                CharacterModel model = body.modelLocator.modelTransform.GetComponent<CharacterModel>();
+                SkinnedMeshRenderer renderer = model.mainSkinnedMeshRenderer;
+                this.jitterBonesEffect = UnityEngine.Object.Instantiate<GameObject>(jitterEffectPrefab, model.transform);
+                if (renderer)
+                {
+                    JitterBones[] components = this.jitterBonesEffect.GetComponents<JitterBones>();
+                    for (int i = 0; i < components.Length; i++)
+                    {
+                        components[i].skinnedMeshRenderer = renderer;
+                    }
+                    return;
+                }
+            }
+            private void OnDestroy()
+            {
+                if (this.jitterBonesEffect) Destroy(this.jitterBonesEffect);
+                if (NetworkServer.active && base.body.enabled) base.body.RemoveBuff(SS2Content.Buffs.BuffChirrFriend);              
+            }
             private void FixedUpdate()
             {
-                this.cooldownReduction = Mathf.Max((body.attackSpeed - 1) * attackSpeedToCooldownConversion, 0);
+                //#imwither
 
+                // doesn t fucking work
+                /// im so fucking stupid
+                //if(NetworkServer.active)
+                //{
+                //    float percentDecayPerSecond = 100f / timeUntilMaxCurse;
+                //    desiredHealthFraction = Mathf.Max(desiredHealthFraction - percentDecayPerSecond/100f * Time.fixedDeltaTime, .01f);
+                //    this.curseTimer -= Time.fixedDeltaTime;
+                //    if (this.curseTimer <= 0)
+                //    {
+                //        this.curseTimer += 1 / percentDecayPerSecond; // increment decay 1% every time
+                //        float currentCurse = base.body.cursePenalty;
+                //        float desiredCurse = 1 / desiredHealthFraction;
+                //        int curseToAdd = Mathf.FloorToInt(desiredCurse - currentCurse);
+
+                //        for (int i = 0; i < curseToAdd; i++)
+                //        {
+                //            this.body.AddBuff(RoR2Content.Buffs.PermanentCurse);
+                //        }
+                //    }
+                //}                
+
+                // get owner
                 CharacterMaster master = base.body.master;
                 CharacterMaster ownerMaster = master ? master.minionOwnership.ownerMaster : null;
                 GameObject ownerBodyObject = ownerMaster ? ownerMaster.GetBodyObject() : null;
-
                 if (!ownerBodyObject) return;
+
                 // if we are too far away from chirr, "respawn" next to her
                 Vector3 ownerPosition = ownerBodyObject.transform.position;
                 float distanceBetween = (ownerPosition - base.transform.position).magnitude;
                 if(distanceBetween >= leashDistance)
                 {
-                    Vector3 offset = UnityEngine.Random.insideUnitCircle * leashTeleportOffset;
-                    Vector3 safePosition = TeleportHelper.FindSafeTeleportDestination(ownerPosition + offset, base.body, RoR2Application.rng) ?? ownerPosition + Vector3.up * 10;
-                    TeleportHelper.TeleportBody(base.body, safePosition);
-                    body.SetBodyStateToPreferredInitialState(); // doesnt work :(((((((((((((((((((((
+                    leashTimer -= Time.fixedDeltaTime;
+                    if(leashTimer <= 0)
+                    {
+                        leashTimer += 2f;
+                        Vector3 offset = UnityEngine.Random.insideUnitCircle * leashTeleportOffset;
+                        Vector3 safePosition = TeleportHelper.FindSafeTeleportDestination(ownerPosition + offset, base.body, RoR2Application.rng) ?? ownerPosition + Vector3.up * 10;
+                        TeleportHelper.TeleportBody(base.body, safePosition);
+                        EntityStateMachine body = EntityStateMachine.FindByCustomName(base.gameObject, "Body");
+                        if(body)
+                        {
+                            body.SetNextState(EntityStateCatalog.InstantiateState(body.initialStateType));
+                        }
+                    }
+                    
                 }
             }
 
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
             {
-                // 1 - 1/(1+cdr)               
-                args.cooldownMultAdd *= Util.ConvertAmplificationPercentageIntoReductionPercentage(this.cooldownReduction * 100f) / 100f;               
+                // 1 - 1/(1+cdr)     
+                float cooldownReduction = Mathf.Max((body.attackSpeed - 1) * attackSpeedToCooldownConversion, 0);
+                args.cooldownMultAdd *= Util.ConvertAmplificationPercentageIntoReductionPercentage(cooldownReduction * 100f) / 100f;               
             }                                       
         }
 
@@ -72,6 +129,7 @@ namespace Moonstorm.Starstorm2.Items
             private EntityStateMachine stateMachine;
             private BaseAI ai;
             bool wasFullVision;
+
             private void OnEnable()
             {
                 if (master.aiComponents.Length > 0)

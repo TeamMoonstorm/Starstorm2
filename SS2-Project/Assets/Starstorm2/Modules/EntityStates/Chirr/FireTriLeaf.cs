@@ -47,7 +47,7 @@ namespace EntityStates.Chirr
             this.fireInterval = duration * fireTime / numShots;
 
             this.isCrit = base.RollCrit();
-            //Util.PlaySound();
+            Util.PlaySound("ChirrFirePrimary", base.gameObject);
             string layerName = fullbodytest ? "FullBody, " : "Gesture, ";
             layerName += additivetest ? "Additive" : "Override";
             base.PlayAnimation(layerName, "FirePrimary", "Primary.playbackRate", this.duration);
@@ -80,7 +80,7 @@ namespace EntityStates.Chirr
         private void Fire()
         {
             this.shotsFired++;
-            //Util.PlaySound()
+            Util.PlaySound("ChirrFirePrimarySingle", base.gameObject);
             //Animation??
             //EffectManager.SimpleMuzzleFlash(muzzleEffectPrefab, base.gameObject, this.muzzleName, true);
             AddRecoil(-1f * recoilAmplitude, -1.5f * recoilAmplitude, -0.25f * recoilAmplitude, 0.25f * recoilAmplitude);

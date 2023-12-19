@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using RoR2;
 namespace EntityStates.Chirr.Wings
 {
     public class BoostUp : BaseState
@@ -18,7 +18,7 @@ namespace EntityStates.Chirr.Wings
         {
             base.OnEnter();
             this.duration = baseDuration;// / base.moveSpeedStat;
-            PlayCrossfade("Wings, Override", "Glide", "Primary.playbackRate", 1, 0.05f);
+            Util.PlaySound("ChirrGrabFlyUp", base.gameObject);
             if(base.characterMotor)
             {
                 base.characterMotor.Motor.ForceUnground();
@@ -46,7 +46,6 @@ namespace EntityStates.Chirr.Wings
         public override void OnExit()
         {
             base.OnExit();
-            PlayCrossfade("Wings, Override", "Idle", "Primary.playbackRate", 1, 0.05f);
             //find & disable hovereffect
         }
     }

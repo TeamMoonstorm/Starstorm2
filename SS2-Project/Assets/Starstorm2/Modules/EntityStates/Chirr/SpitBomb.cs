@@ -41,8 +41,6 @@ namespace EntityStates.Chirr
 			string layerName = fullbodytest ? "FullBody, " : "Gesture, ";
 			layerName += additivetest ? "Additive" : "Override";
 			base.PlayAnimation(layerName, "FireSecondary", "Secondary.playbackRate", this.duration);
-			//Util.PlaySound("Play_nemmerc_secondary_lunge", base.gameObject);
-
 		}
 
 		public override void FixedUpdate()
@@ -63,7 +61,7 @@ namespace EntityStates.Chirr
 
 		private void Fire()
 		{
-			Util.PlaySound("Play_nemmerc_knife_throw", base.gameObject);
+			Util.PlaySound("ChirrFireSpitBomb", base.gameObject);
 			EffectManager.SimpleMuzzleFlash(muzzleEffectPrefab, base.gameObject, this.muzzleName, true);
 			AddRecoil(-1f * recoilAmplitude, -1.5f * recoilAmplitude, -0.25f * recoilAmplitude, 0.25f * recoilAmplitude);
 			base.characterBody.AddSpreadBloom(bloom);
@@ -76,7 +74,9 @@ namespace EntityStates.Chirr
 				awayForce += Vector3.up * selfUpForce;
 				if(base.characterMotor && !base.isGrounded)
                 {
-					base.characterMotor.velocity += awayForce;// the skilldef has cancel sprint=false, this apparently is stopping sprint anyways
+					// the skilldef has cancel sprint=false, this apparently is stopping sprint anyways
+					float upVelocity = Mathf.Max(base.characterMotor.velocity.y, awayForce.y);
+					base.characterMotor.velocity = new Vector3(characterMotor.velocity.x + awayForce.x, upVelocity, characterMotor.velocity.z + awayForce.z);
 					if(EntityStateMachine.FindByCustomName(base.gameObject, "Wings")?.state.GetType() != typeof(Idle)) // jank to keep sprinting while hovering
                     {
 						base.characterBody.isSprinting = true;

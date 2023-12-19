@@ -32,6 +32,19 @@ namespace Moonstorm.Starstorm2.Components
 		[NonSerialized]
 		public BullseyeSearch search = new BullseyeSearch();
 
+		private SkillLocator skillLocator;
+		public bool isScepter
+        {
+			get => _isScepter;
+            set
+            {
+				if (_isScepter == value) return;
+				this._isScepter = value;
+				this.UpdateScepter();
+			}
+        }
+		private bool _isScepter;
+
 		private CharacterMaster master;
 		public ChirrFriendController friendOwnership;
 
@@ -39,6 +52,7 @@ namespace Moonstorm.Starstorm2.Components
 
 		public void Awake()
 		{
+			this.skillLocator = base.GetComponent<SkillLocator>();
 			this.indicator = new Indicator(base.gameObject, SS2Assets.LoadAsset<GameObject>("ChirrBefriendIndicator", SS2Bundle.Chirr));
 		}
 		public void Start()
@@ -53,12 +67,24 @@ namespace Moonstorm.Starstorm2.Components
                 {
 					this.friendOwnership = this.master.gameObject.AddComponent<ChirrFriendController>();
                 }
+				this.friendOwnership.isScepter = this.isScepter;
 			}
 				
 			this.inputBank = base.GetComponent<InputBankTest>();
 			this.teamComponent = base.GetComponent<TeamComponent>();
-
 		}
+		private void UpdateScepter()
+        {
+			string asset = this.isScepter ? "ChirrBefriendScepterIndicator" : "ChirrBefriendIndicator";
+			this.indicator.visualizerPrefab = SS2Assets.LoadAsset<GameObject>(asset, SS2Bundle.Chirr);
+			if(this.friendOwnership)
+				this.friendOwnership.isScepter = this.isScepter;
+        }
+
+		private bool ShouldShowTracker()
+        {
+			return this.skillLocator && this.skillLocator.special.CanExecute();
+        }
 
 		public bool ShouldSearchForFriend()
         {
@@ -96,18 +122,13 @@ namespace Moonstorm.Starstorm2.Components
                 {
 					Ray aimRay = new Ray(this.inputBank.aimOrigin, this.inputBank.aimDirection);
 					this.SearchForTarget(aimRay);
-					this.indicator.targetTransform = (this.trackingTarget ? this.trackingTarget.transform : null);
+					this.indicator.targetTransform = (this.trackingTarget && this.ShouldShowTracker() ? this.trackingTarget.transform : null);
 				}
 				else
-                {
-					this.indicator.targetTransform = null;
+                {				
 					this.trackingTarget = null;
                 }
-
-					
-			}
-			
-			
+			}					
 		}
 
 		public virtual void SearchForTarget(Ray aimRay)

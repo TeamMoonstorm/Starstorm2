@@ -17,14 +17,26 @@ namespace Moonstorm.Starstorm2.Components
 	{
 		// this class is half supports-multiple-friends, half not. i need to be less indecisive.
 
+		// this class manages adding and removing friends
 		// FOR STUFF THAT DIRECTLY INTERACTS WITH FRIEND'S AI AND BODY: SEE Items.ChirrFriendHelper
 		private CharacterMaster master;
 		public static float friendAimSpeedCoefficient = 3f;
 		public Friend currentFriend;
 
-		public static float healthDecayTime = 80f;
+		public static float healthDecayTime = 60f;
 
-		public bool isScepter;
+		public bool isScepter
+		{
+			get => _isScepter;
+			set
+			{
+				if (_isScepter == value) return;
+				this._isScepter = value;
+				this.UpdateScepter();
+			}
+		}
+		private bool _isScepter;
+
 		public bool hasFriend
         {
 			get => this.currentFriend.master != null; /////////////////////// ?
@@ -56,6 +68,14 @@ namespace Moonstorm.Starstorm2.Components
 			TeamComponent.onLeaveTeamGlobal -= CheckFriendLeftTeam;
         }
 
+		private void UpdateScepter()
+        {
+			if (!this.hasFriend) return;
+
+			CharacterMaster master = this.currentFriend.master;
+			this.RemoveFriend(master); 
+			this.AddFriend(master); // FFFFFFFFFFFFFFFFFUCK im so lazy
+        }
 		// teamcomponent sets team to none on destroy XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
         private void CheckFriendLeftTeam(TeamComponent teamComponent, TeamIndex teamIndex) // teamIndex is the team our friend left (Player)
         {
@@ -73,7 +93,7 @@ namespace Moonstorm.Starstorm2.Components
 			bool defaultFilter = Inventory.defaultItemCopyFilterDelegate(itemIndex);
 			ItemDef itemDef = ItemCatalog.GetItemDef(itemIndex);
 			return defaultFilter && itemDef.DoesNotContainTag(ItemTag.HoldoutZoneRelated) && itemDef.DoesNotContainTag(ItemTag.OnStageBeginEffect)
-				&& itemDef.DoesNotContainTag(ItemTag.InteractableRelated);
+				&& itemDef.DoesNotContainTag(ItemTag.InteractableRelated) && itemDef != AncientScepter.AncientScepterItem.instance.ItemDef;
         }
         private void ShareNewItem(Inventory inventory, ItemIndex itemIndex, int count)
         {
@@ -148,7 +168,22 @@ namespace Moonstorm.Starstorm2.Components
 					body.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 3f);
 					//body.healthComponent.HealFraction(1f, default(ProcChainMask)); // BORING. HEAL IT YOURSELF WITH SECONDARY
 				}
-					
+
+				// removes friend from combat squad so simulacrum and shit dont break
+				List<CombatSquad> combatSquads = InstanceTracker.GetInstancesList<CombatSquad>();
+				foreach(CombatSquad c in combatSquads)
+                {
+					if (c && c.ContainsMember(master))
+					{
+						c.RemoveMember(master);
+
+						if(c.memberCount == 0 && !c.defeatedServer)
+                        {
+							c.TriggerDefeat();
+                        }
+					}
+                }
+
 				master.minionOwnership.SetOwner(this.master);			
 				master.onBodyDeath.AddListener(OnFriendDeath);
 				master.inventory.CopyItemsFrom(this.master.inventory, this.ItemFilter);

@@ -11,7 +11,7 @@ namespace EntityStates.Chirr
     public class GrabDash : BaseSkillState
     {
         public static float baseDuration = 0.75f;
-        public static float dashSpeed = 9f;
+        public static float dashSpeed = 7.5f;
         public static float minGrabRadius = 4f;
         public static float maxGrabRadius = 8f;
         public static float grabSearchFrequency = 20f;
@@ -28,14 +28,15 @@ namespace EntityStates.Chirr
         public override void OnEnter()
         {
             base.OnEnter();
-            this.speedCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
+            this.speedCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0.2f);
             this.duration = baseDuration; // ?
 
             this.currentAimVector = base.inputBank.aimDirection;
+
+            base.characterDirection.forward = this.currentAimVector;
             this.grabController = base.GetComponent<GrabController>();
-            //Util.PlaySound();
-            //base.PlayAnimation();
-            //GRAB TRANSFORM CHILDLOACTOR
+            Util.PlaySound("ChirrDashStart", base.gameObject);
+            base.PlayAnimation("FullBody, Override", "GrabDash", "Utility.playbackRate", this.duration);
         }
 
         public override void FixedUpdate()
@@ -45,6 +46,8 @@ namespace EntityStates.Chirr
 
             Vector3 aimInput = base.inputBank.aimDirection;
             this.currentAimVector = Vector3.RotateTowards(this.currentAimVector, aimInput, Mathf.Deg2Rad * maxTurnAnglePerSecond * Time.deltaTime, 0);
+
+            base.characterDirection.forward = this.currentAimVector;
 
             float dashSpeed = this.speedCurve.Evaluate(this.stopwatch / duration) * GrabDash.dashSpeed;
             base.characterMotor.rootMotion += this.currentAimVector * dashSpeed * this.moveSpeedStat * Time.fixedDeltaTime;
@@ -64,6 +67,7 @@ namespace EntityStates.Chirr
 
             if(base.fixedAge >= this.duration)
             {
+                base.characterMotor.velocity = this.currentAimVector * dashSpeed * this.moveSpeedStat;
                 this.outer.SetNextStateToMain();
                 return;
             }
@@ -77,7 +81,6 @@ namespace EntityStates.Chirr
 
         public void AttemptGrab(float grabRadius)
 		{
-            // could be better as a bullseyesearch? doesnt really matter tho
             SphereSearch sphereSearch = new SphereSearch();
             sphereSearch.radius = grabRadius;
             sphereSearch.origin = base.characterBody.corePosition;

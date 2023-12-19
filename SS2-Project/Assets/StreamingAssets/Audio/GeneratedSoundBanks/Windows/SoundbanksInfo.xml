@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="12" SoundbankVersion="135">
 	<RootPaths>
-		<ProjectRoot>D:\ror2modstuff\Starstorm2UnityProject\Starstorm2Again\Starstorm2\SS2-Project\WwiseProject\</ProjectRoot>
-		<SourceFilesRoot>D:\ror2modstuff\Starstorm2UnityProject\Starstorm2Again\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\</SourceFilesRoot>
-		<SoundBanksRoot>D:\ror2modstuff\Starstorm2UnityProject\Starstorm2Again\Starstorm2\SS2-Project\Assets\StreamingAssets\Audio\GeneratedSoundBanks\Windows\</SoundBanksRoot>
+		<ProjectRoot>C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\</ProjectRoot>
+		<SourceFilesRoot>C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\</SourceFilesRoot>
+		<SoundBanksRoot>C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\Assets\StreamingAssets\Audio\GeneratedSoundBanks\Windows\</SoundBanksRoot>
 		<ExternalSourcesInputFile></ExternalSourcesInputFile>
-		<ExternalSourcesOutputRoot>D:\ror2modstuff\Starstorm2UnityProject\Starstorm2Again\Starstorm2\SS2-Project\WwiseProject\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
+		<ExternalSourcesOutputRoot>C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
 	</RootPaths>
 	<DialogueEvents/>
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="866530374" Language="SFX" Hash="1280364941">
+		<SoundBank Id="866530374" Language="SFX" Hash="2274648521">
 			<ObjectPath>\SoundBanks\Default Work Unit\Starstorm2</ObjectPath>
 			<ShortName>Starstorm2</ShortName>
 			<Path>Starstorm2.bnk</Path>
@@ -21,6 +21,118 @@
 						<File Id="878249463" Language="SFX">
 							<ShortName>Augury\augury main.wav</ShortName>
 							<Path>SFX\Augury\augury main_B2D14CFC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="874728115" Name="ChirrDashStart" ObjectPath="\Events\Default Work Unit\Chirr\ChirrDashStart" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="0.654184" DurationMax="0.734296">
+					<IncludedMemoryFiles>
+						<File Id="805234572" Language="SFX">
+							<ShortName>dash1.wav</ShortName>
+							<Path>SFX\dash1_B2D14CFC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1172202385" Name="ChirrFirePrimary" ObjectPath="\Events\Default Work Unit\Chirr\ChirrFirePrimary" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="0.755538" DurationMax="1.085479">
+					<IncludedMemoryFiles>
+						<File Id="475245607" Language="SFX">
+							<ShortName>primarydick1.wav</ShortName>
+							<Path>SFX\primarydick1_12CE09CB.wem</Path>
+						</File>
+						<File Id="648555705" Language="SFX">
+							<ShortName>primarydick2.wav</ShortName>
+							<Path>SFX\primarydick2_12CE09CB.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="959550553" Name="ChirrFirePrimarySingle" ObjectPath="\Events\Default Work Unit\Chirr\ChirrFirePrimarySingle" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="0.301733" DurationMax="0.402055">
+					<IncludedMemoryFiles>
+						<File Id="219323898" Language="SFX">
+							<ShortName>72244847.wav</ShortName>
+							<Path>SFX\72244847_B2D14CFC.wem</Path>
+						</File>
+						<File Id="608395035" Language="SFX">
+							<ShortName>185609577.wav</ShortName>
+							<Path>SFX\185609577_B2D14CFC.wem</Path>
+						</File>
+						<File Id="810978756" Language="SFX">
+							<ShortName>332984518.wav</ShortName>
+							<Path>SFX\332984518_B2D14CFC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="295786462" Name="ChirrFireSpecial" ObjectPath="\Events\Default Work Unit\Chirr\ChirrFireSpecial" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="0.991208" DurationMax="0.991208">
+					<IncludedMemoryFiles>
+						<File Id="376895788" Language="SFX">
+							<ShortName>795706005.wav</ShortName>
+							<Path>SFX\795706005_B2D14CFC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="709034819" Name="ChirrFireSpitBomb" ObjectPath="\Events\Default Work Unit\Chirr\ChirrFireSpitBomb" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="0.902953" DurationMax="1.025308">
+					<IncludedMemoryFiles>
+						<File Id="763108130" Language="SFX">
+							<ShortName>secondary2.wav</ShortName>
+							<Path>SFX\secondary2_B2D14CFC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2709397138" Name="ChirrFriendConvert" ObjectPath="\Events\Default Work Unit\Chirr\ChirrFriendConvert" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="1.400458" DurationMax="1.400458">
+					<IncludedMemoryFiles>
+						<File Id="1051140981" Language="SFX">
+							<ShortName>558484513.wav</ShortName>
+							<Path>SFX\558484513_B2D14CFC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="649273493" Name="ChirrGrabFlyUp" ObjectPath="\Events\Default Work Unit\Chirr\ChirrGrabFlyUp" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="1.874308" DurationMax="1.874308">
+					<IncludedMemoryFiles>
+						<File Id="965386340" Language="SFX">
+							<ShortName>utiltiygrabflyup.wav</ShortName>
+							<Path>SFX\utiltiygrabflyup_B2D14CFC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1440739445" Name="ChirrGrabStart" ObjectPath="\Events\Default Work Unit\Chirr\ChirrGrabStart" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="0.703875" DurationMax="0.703875">
+					<IncludedMemoryFiles>
+						<File Id="765878089" Language="SFX">
+							<ShortName>642772478.wav</ShortName>
+							<Path>SFX\642772478_B2D14CFC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3463916741" Name="ChirrGrabThrow" ObjectPath="\Events\Default Work Unit\Chirr\ChirrGrabThrow" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="0.544598" DurationMax="0.597329">
+					<IncludedMemoryFiles>
+						<File Id="878826306" Language="SFX">
+							<ShortName>515771219.wav</ShortName>
+							<Path>SFX\515771219_B2D14CFC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2661831180" Name="ChirrLeafHit" ObjectPath="\Events\Default Work Unit\Chirr\ChirrLeafHit" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="0.294508" DurationMax="0.419768">
+					<IncludedMemoryFiles>
+						<File Id="190741910" Language="SFX">
+							<ShortName>283971483.wav</ShortName>
+							<Path>SFX\283971483_B2D14CFC.wem</Path>
+						</File>
+						<File Id="241025732" Language="SFX">
+							<ShortName>263171907.wav</ShortName>
+							<Path>SFX\263171907_B2D14CFC.wem</Path>
+						</File>
+						<File Id="917171479" Language="SFX">
+							<ShortName>10841184.wav</ShortName>
+							<Path>SFX\10841184_B2D14CFC.wem</Path>
+						</File>
+						<File Id="934019888" Language="SFX">
+							<ShortName>453799481.wav</ShortName>
+							<Path>SFX\453799481_B2D14CFC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="670255117" Name="ChirrSpitBombImpact" ObjectPath="\Events\Default Work Unit\Chirr\ChirrSpitBombImpact" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="5.387042" DurationMax="5.387042">
+					<IncludedMemoryFiles>
+						<File Id="768523229" Language="SFX">
+							<ShortName>secondaryhit.wav</ShortName>
+							<Path>SFX\secondaryhit_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -93,6 +205,14 @@
 						<File Id="1004833416" Language="SFX">
 							<ShortName>chirr_step_05.wav</ShortName>
 							<Path>SFX\chirr_step_05_324331BC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="4180439307" Name="ChirrThrowHitGround" ObjectPath="\Events\Default Work Unit\Chirr\ChirrThrowHitGround" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="2.735781" DurationMax="2.735781">
+					<IncludedMemoryFiles>
+						<File Id="191569448" Language="SFX">
+							<ShortName>utilityyhitground2.wav</ShortName>
+							<Path>SFX\utilityyhitground2_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -594,6 +714,30 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
+				<Event Id="2871870429" Name="Play_ChirrCSS" ObjectPath="\Events\Default Work Unit\Chirr\Play_ChirrCSS" DurationType="Infinite">
+					<IncludedMemoryFiles>
+						<File Id="116836686" Language="SFX">
+							<ShortName>chirr_sprint_start_01.wav</ShortName>
+							<Path>SFX\chirr_sprint_start_01_324331BC.wem</Path>
+						</File>
+						<File Id="200815457" Language="SFX">
+							<ShortName>chirr_sprint_loop_01.wav</ShortName>
+							<Path>SFX\chirr_sprint_loop_01_2EB51506.wem</Path>
+						</File>
+						<File Id="542275635" Language="SFX">
+							<ShortName>primarydick2.wav</ShortName>
+							<Path>SFX\primarydick2_B2D14CFC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2747610824" Name="Play_ChirrSpitBombLoop" ObjectPath="\Events\Default Work Unit\Chirr\Play_ChirrSpitBombLoop" MaxAttenuation="200.000000" DurationType="Infinite">
+					<IncludedMemoryFiles>
+						<File Id="355414062" Language="SFX">
+							<ShortName>819431739.wav</ShortName>
+							<Path>SFX\819431739_6AD26A56.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
 				<Event Id="3212416563" Name="Play_nemmerc_clone_spawn" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_clone_spawn" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="2.416470" DurationMax="2.873683">
 					<IncludedMemoryFiles>
 						<File Id="934322958" Language="SFX">
@@ -782,6 +926,8 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
+				<Event Id="3156814475" Name="Stop_ChirrCSS" ObjectPath="\Events\Default Work Unit\Chirr\Stop_ChirrCSS" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
+				<Event Id="1032313774" Name="Stop_ChirrSpitBombLoop" ObjectPath="\Events\Default Work Unit\Chirr\Stop_ChirrSpitBombLoop" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="4234730185" Name="Stop_Soft_Rain" ObjectPath="\Events\Default Work Unit\Environment\Ambient\Stop_Soft_Rain" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="3750145159" Name="StrangeCan" ObjectPath="\Events\Default Work Unit\Items\StrangeCan" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="0.963347" DurationMax="1.362379">
 					<IncludedMemoryFiles>
@@ -921,12 +1067,12 @@
 				<GameParameter Id="3673881719" Name="Volume_SFX" ObjectPath="\Game Parameters\Default Work Unit\Volume_SFX"/>
 			</GameParameters>
 		</SoundBank>
-		<SoundBank Id="1355168291" Language="SFX" Hash="4211522111">
+		<SoundBank Id="1355168291" Language="SFX" Hash="924491624">
 			<ObjectPath>SS2Init</ObjectPath>
 			<ShortName>SS2Init</ShortName>
 			<Path>SS2Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="2545819644" Language="SFX" Hash="1746896393">
+		<SoundBank Id="2545819644" Language="SFX" Hash="4134813887">
 			<ObjectPath>\SoundBanks\Default Work Unit\SS2Music</ObjectPath>
 			<ShortName>SS2Music</ShortName>
 			<Path>SS2Music.bnk</Path>

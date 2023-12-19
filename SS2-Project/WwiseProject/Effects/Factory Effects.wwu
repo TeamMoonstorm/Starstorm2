@@ -1451,12 +1451,12 @@
 														<PointList>
 															<Point>
 																<XPos>0</XPos>
-																<YPos>-0</YPos>
+																<YPos>0</YPos>
 																<Flags>5</Flags>
 															</Point>
 															<Point>
 																<XPos>20</XPos>
-																<YPos>-0</YPos>
+																<YPos>0</YPos>
 																<Flags>0</Flags>
 															</Point>
 															<Point>
@@ -1961,11 +1961,13 @@
 						</Effect>
 						<Effect Name="Boomerang" ID="{65397B72-19EC-43DB-B2D2-EB84437B6BDC}" PluginName="Wwise Tremolo" CompanyID="0" PluginID="131" PluginType="3">
 							<PropertyList>
-								<Property Name="ModFrequency" Type="Real32" Value="3"/>
+								<Property Name="ModDepth" Type="Real32" Value="63.7"/>
+								<Property Name="ModFrequency" Type="Real32" Value="12.44"/>
 								<Property Name="ModPWM" Type="Real32" Value="0"/>
 								<Property Name="ModPhaseOffset" Type="Real32" Value="-180"/>
-								<Property Name="ModPhaseSpread" Type="Real32" Value="58"/>
-								<Property Name="ModWaveform" Type="int32" Value="1"/>
+								<Property Name="ModPhaseSpread" Type="Real32" Value="63"/>
+								<Property Name="ModSmoothing" Type="Real32" Value="41"/>
+								<Property Name="ModWaveform" Type="int32" Value="3"/>
 							</PropertyList>
 						</Effect>
 						<Effect Name="Halfway_There" ID="{DD67F3B9-38CD-46FD-931A-19625D534C90}" PluginName="Wwise Tremolo" CompanyID="0" PluginID="131" PluginType="3">

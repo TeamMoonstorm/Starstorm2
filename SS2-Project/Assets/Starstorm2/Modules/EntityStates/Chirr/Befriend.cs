@@ -28,7 +28,7 @@ namespace EntityStates.Chirr
         private bool hasFired;
         private float duration;
         private ChirrFriendTracker tracker;
-
+        private HurtBox target;
         [NonSerialized]
         private static bool additivetest = false;
         [NonSerialized]
@@ -38,8 +38,14 @@ namespace EntityStates.Chirr
             base.OnEnter();
             this.duration = baseDuration / this.attackSpeedStat;
             this.tracker = base.GetComponent<ChirrFriendTracker>();
+
+            if(tracker && base.isAuthority)
+            {
+                this.target = this.tracker.GetTrackingTarget();
+            }
+            
             base.StartAimMode();
-            //Util.PlaySound();
+            Util.PlaySound("ChirrFireSpecial", base.gameObject);
             string layerName = fullbodytest ? "FullBody, " : "Gesture, ";
             layerName += additivetest ? "Additive" : "Override";
             base.PlayAnimation(layerName, "FireSpecial", "Special.playbackRate", this.duration);
@@ -69,14 +75,14 @@ namespace EntityStates.Chirr
             //EffectManager.SimpleMuzzleFlash(muzzleEffectPrefab, base.gameObject, this.muzzleName, true);
             AddRecoil(-1f * recoilAmplitude, -1.5f * recoilAmplitude, -0.25f * recoilAmplitude, 0.25f * recoilAmplitude);
             base.characterBody.AddSpreadBloom(bloom);
-
+            Transform muzzleTransform = base.FindModelChild("Mouth");
             if(NetworkServer.active)
             {
                 OrbManager.instance.AddOrb(new ChirrFriendOrb { 
                     attacker = base.gameObject,
-                    target = this.tracker.GetTrackingTarget(),
+                    target = this.target,
                     tracker = this.tracker, 
-                    origin = base.characterBody.corePosition, // muzzle
+                    origin = muzzleTransform ? muzzleTransform.position : base.characterBody.corePosition,
                     damageType = DamageType.Stun1s, 
                     procCoefficient = 0 
                 });
@@ -87,6 +93,16 @@ namespace EntityStates.Chirr
         public override InterruptPriority GetMinimumInterruptPriority()
         {
             return InterruptPriority.Skill;
+        }
+
+        public override void OnSerialize(NetworkWriter writer)
+        {
+            writer.Write(HurtBoxReference.FromHurtBox(this.target));
+        }
+
+        public override void OnDeserialize(NetworkReader reader)
+        {
+            this.target = reader.ReadHurtBoxReference().ResolveHurtBox();
         }
     }
 }

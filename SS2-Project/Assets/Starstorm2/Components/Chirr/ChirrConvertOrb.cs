@@ -27,7 +27,8 @@ namespace Moonstorm.Starstorm2.Components
 
             if(this.tracker && this.tracker.friendOwnership)
             {
-                ConvertBehavior convertBehavior = this.target.healthComponent.gameObject.AddComponent<ConvertBehavior>();
+                ConvertBehavior convertBehavior = this.target.healthComponent.gameObject.GetComponent<ConvertBehavior>();
+                if(!convertBehavior) convertBehavior = this.target.healthComponent.gameObject.AddComponent<ConvertBehavior>();
                 convertBehavior.lifetime = this.buffDuration;
                 convertBehavior.convertHealthFraction = this.convertHealthFraction;
                 convertBehavior.chirrFriendTracker = this.tracker;
@@ -56,8 +57,10 @@ namespace Moonstorm.Starstorm2.Components
             }
             public void OnTakeDamageServer(DamageReport damageReport)
             {
-                if(damageReport.victimBody && damageReport.victimBody.healthComponent.health < damageReport.victimBody.healthComponent.fullHealth * convertHealthFraction)
+                // MIND CONTROLLING PLAYER WOULD BE FUNNY.... but alas...
+                if(damageReport.victimBody && !damageReport.victimBody.isPlayerControlled && damageReport.victimBody.healthComponent.combinedHealthFraction < convertHealthFraction)
                 {
+                    
                     if (chirrFriendTracker && chirrFriendTracker.friendOwnership)
                     {
                         chirrFriendTracker.friendOwnership.AddFriend(damageReport.victimMaster);
