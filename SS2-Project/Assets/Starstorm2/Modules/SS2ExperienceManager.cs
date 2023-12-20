@@ -68,11 +68,11 @@ namespace Moonstorm.Starstorm2
         [SystemInitializer]
         public static void Init()
         {
-            NetworkingAPI.RegisterMessageType<TransmitExperienceOffset>();
+            //NetworkingAPI.RegisterMessageType<TransmitExperienceOffset>();
             // this get team level hook should be in the extra hooks, but it only works here for some reason...
-            On.RoR2.TeamManager.GetTeamLevel += TeamManager_GetTeamLevel;
-            IL.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
-            On.RoR2.CharacterMaster.OnDestroy += CharacterMaster_OnDestroy;
+            //On.RoR2.TeamManager.GetTeamLevel += TeamManager_GetTeamLevel;
+            //IL.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
+            //On.RoR2.CharacterMaster.OnDestroy += CharacterMaster_OnDestroy;
             if (enableNewExperienceVisuals)
             {
                 HUD hud = LegacyResourcesAPI.Load<GameObject>("Prefabs/HUDSimple").GetComponent<HUD>();

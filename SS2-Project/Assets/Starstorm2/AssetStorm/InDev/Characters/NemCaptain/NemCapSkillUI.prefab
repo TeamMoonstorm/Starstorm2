@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 916961143056803652}
   - component: {fileID: 1402640635035337427}
   - component: {fileID: 5819792758580771995}
+  - component: {fileID: 1302585756906317523}
   m_Layer: 5
   m_Name: SkillIcon
   m_TagString: Untagged
@@ -75,6 +76,26 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1302585756906317523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2814374135845203573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1873157448, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  titleToken: 
+  titleColor: {r: 1, g: 1, b: 1, a: 1}
+  bodyToken: 
+  bodyColor: {r: 0.6901961, g: 0.6901961, b: 0.6901961, a: 1}
+  overrideTitleText: 
+  overrideBodyText: 
+  disableTitleRichText: 0
+  disableBodyRichText: 0
 --- !u!1 &3976287298108836530
 GameObject:
   m_ObjectHideFlags: 0
@@ -142,6 +163,7 @@ GameObject:
   - component: {fileID: 6213461275070801606}
   - component: {fileID: 7288439103260387929}
   - component: {fileID: 5425323778203214920}
+  - component: {fileID: 3959152839869143000}
   m_Layer: 5
   m_Name: SkillIcon
   m_TagString: Untagged
@@ -206,6 +228,26 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3959152839869143000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4057282562928854945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1873157448, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  titleToken: 
+  titleColor: {r: 1, g: 1, b: 1, a: 1}
+  bodyToken: 
+  bodyColor: {r: 0.6901961, g: 0.6901961, b: 0.6901961, a: 1}
+  overrideTitleText: 
+  overrideBodyText: 
+  disableTitleRichText: 0
+  disableBodyRichText: 0
 --- !u!1 &6651960127772461236
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,6 +262,8 @@ GameObject:
   - component: {fileID: 6756375922310849390}
   - component: {fileID: 6702977798800320448}
   - component: {fileID: 9054731816460397376}
+  - component: {fileID: 3513784095839897925}
+  - component: {fileID: 528957451156680610}
   m_Layer: 5
   m_Name: NemCaptainSkillIcon (3)
   m_TagString: Untagged
@@ -322,8 +366,57 @@ MonoBehaviour:
   targetSkill: {fileID: 0}
   ncc: {fileID: 0}
   iconImage: {fileID: 5425323778203214920}
-  tooltipProvider: {fileID: 0}
+  tooltipProvider: {fileID: 3959152839869143000}
   pcmc: {fileID: 0}
+--- !u!114 &3513784095839897925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6651960127772461236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1873157448, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  titleToken: 
+  titleColor: {r: 1, g: 1, b: 1, a: 1}
+  bodyToken: 
+  bodyColor: {r: 0.6901961, g: 0.6901961, b: 0.6901961, a: 1}
+  overrideTitleText: 
+  overrideBodyText: 
+  disableTitleRichText: 0
+  disableBodyRichText: 0
+--- !u!114 &528957451156680610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6651960127772461236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: d3e719b59ab71ba3f6b398058c866280, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &7370187468996003074
 GameObject:
   m_ObjectHideFlags: 0
@@ -335,6 +428,7 @@ GameObject:
   - component: {fileID: 7218905991022856072}
   - component: {fileID: 4826191092614635698}
   - component: {fileID: 9005224569948576490}
+  - component: {fileID: 1953999914870545700}
   m_Layer: 5
   m_Name: SkillIcon
   m_TagString: Untagged
@@ -399,6 +493,26 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1953999914870545700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7370187468996003074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1873157448, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  titleToken: 
+  titleColor: {r: 1, g: 1, b: 1, a: 1}
+  bodyToken: 
+  bodyColor: {r: 0.6901961, g: 0.6901961, b: 0.6901961, a: 1}
+  overrideTitleText: 
+  overrideBodyText: 
+  disableTitleRichText: 0
+  disableBodyRichText: 0
 --- !u!1 &7486468059284939139
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,6 +527,8 @@ GameObject:
   - component: {fileID: 7383296911586560601}
   - component: {fileID: 7399422699302194935}
   - component: {fileID: 5052225048891392631}
+  - component: {fileID: 1824973750634485397}
+  - component: {fileID: 3296673319428605467}
   m_Layer: 5
   m_Name: NemCaptainSkillIcon (2)
   m_TagString: Untagged
@@ -515,8 +631,57 @@ MonoBehaviour:
   targetSkill: {fileID: 0}
   ncc: {fileID: 0}
   iconImage: {fileID: 5819792758580771995}
-  tooltipProvider: {fileID: 0}
+  tooltipProvider: {fileID: 1302585756906317523}
   pcmc: {fileID: 0}
+--- !u!114 &1824973750634485397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7486468059284939139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1873157448, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  titleToken: 
+  titleColor: {r: 1, g: 1, b: 1, a: 1}
+  bodyToken: 
+  bodyColor: {r: 0.6901961, g: 0.6901961, b: 0.6901961, a: 1}
+  overrideTitleText: 
+  overrideBodyText: 
+  disableTitleRichText: 0
+  disableBodyRichText: 0
+--- !u!114 &3296673319428605467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7486468059284939139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: d3e719b59ab71ba3f6b398058c866280, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &7577764654141857092
 GameObject:
   m_ObjectHideFlags: 0
@@ -528,6 +693,7 @@ GameObject:
   - component: {fileID: 7652463006216122349}
   - component: {fileID: 7654338335349130387}
   - component: {fileID: 7546559913218994624}
+  - component: {fileID: 7881181157859129626}
   m_Layer: 5
   m_Name: SkillIcon
   m_TagString: Untagged
@@ -592,6 +758,26 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7881181157859129626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7577764654141857092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1873157448, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  titleToken: 
+  titleColor: {r: 1, g: 1, b: 1, a: 1}
+  bodyToken: 
+  bodyColor: {r: 0.6901961, g: 0.6901961, b: 0.6901961, a: 1}
+  overrideTitleText: 
+  overrideBodyText: 
+  disableTitleRichText: 0
+  disableBodyRichText: 0
 --- !u!1 &7577790984835033521
 GameObject:
   m_ObjectHideFlags: 0
@@ -602,10 +788,11 @@ GameObject:
   m_Component:
   - component: {fileID: 7652539949324844352}
   - component: {fileID: 7654271487549153160}
-  - component: {fileID: 7545984211915853180}
   - component: {fileID: 7546417400449090155}
   - component: {fileID: 7529165859124528837}
   - component: {fileID: 5247225877997275717}
+  - component: {fileID: 2299275874825438583}
+  - component: {fileID: 7773438989226626177}
   m_Layer: 5
   m_Name: NemCaptainSkillIcon
   m_TagString: Untagged
@@ -642,21 +829,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7577790984835033521}
   m_CullTransparentMesh: 0
---- !u!114 &7545984211915853180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7577790984835033521}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -598719375, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  images:
-  - {fileID: 7546246063474145257}
-  fillScalar: 1
 --- !u!114 &7546417400449090155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -708,8 +880,57 @@ MonoBehaviour:
   targetSkill: {fileID: 0}
   ncc: {fileID: 0}
   iconImage: {fileID: 7546559913218994624}
-  tooltipProvider: {fileID: 0}
+  tooltipProvider: {fileID: 7881181157859129626}
   pcmc: {fileID: 0}
+--- !u!114 &2299275874825438583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7577790984835033521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1873157448, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  titleToken: 
+  titleColor: {r: 1, g: 1, b: 1, a: 1}
+  bodyToken: 
+  bodyColor: {r: 0.6901961, g: 0.6901961, b: 0.6901961, a: 1}
+  overrideTitleText: 
+  overrideBodyText: 
+  disableTitleRichText: 0
+  disableBodyRichText: 0
+--- !u!114 &7773438989226626177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7577790984835033521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: d3e719b59ab71ba3f6b398058c866280, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &7578198920466307303
 GameObject:
   m_ObjectHideFlags: 0
@@ -946,6 +1167,8 @@ GameObject:
   - component: {fileID: 8198854493043628917}
   - component: {fileID: 8146611956237639643}
   - component: {fileID: 5882695341972689755}
+  - component: {fileID: 5453635579654193624}
+  - component: {fileID: 3429413407742138973}
   m_Layer: 5
   m_Name: NemCaptainSkillIcon (1)
   m_TagString: Untagged
@@ -1048,8 +1271,57 @@ MonoBehaviour:
   targetSkill: {fileID: 0}
   ncc: {fileID: 0}
   iconImage: {fileID: 9005224569948576490}
-  tooltipProvider: {fileID: 0}
+  tooltipProvider: {fileID: 1953999914870545700}
   pcmc: {fileID: 0}
+--- !u!114 &5453635579654193624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8096298796744224943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1873157448, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  titleToken: 
+  titleColor: {r: 1, g: 1, b: 1, a: 1}
+  bodyToken: 
+  bodyColor: {r: 0.6901961, g: 0.6901961, b: 0.6901961, a: 1}
+  overrideTitleText: 
+  overrideBodyText: 
+  disableTitleRichText: 0
+  disableBodyRichText: 0
+--- !u!114 &3429413407742138973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8096298796744224943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: d3e719b59ab71ba3f6b398058c866280, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &9000114601814974285
 GameObject:
   m_ObjectHideFlags: 0

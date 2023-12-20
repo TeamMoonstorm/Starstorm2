@@ -38,19 +38,16 @@ namespace EntityStates.NemMerc
         private Vector3 lastKnownTargetPosition;
         private Vector3 targetSafe;
         private GameObject bossEffect;
+
+        [NonSerialized]
+        public static bool FUCKERTESTINGXDDDDDDDDDDDDDDDDDDDDD = true;
         public override void OnEnter()
         {
             base.OnEnter();
 
-            //vfx
-            // overlay material
-            //need to fix teleport near walls
-            // still fucking teleports to 0,0 sometimes. when target disappears on the smae frame. (?)
-            // ^^^ MOSTLY happens to the clone version which is separate
+            // still fucking teleports to 0,0 sometimes
+            this.duration = ShadowStep.baseDuration; //movespeedstat ??
 
-            base.StartAimMode();
-            base.PlayAnimation("FullBody, Override", "ShadowStep", "Utility.playbackRate", baseDuration);
-            Util.PlaySound("Play_nemmerc_utility_enter", base.gameObject);
             NemMercTracker tracker = base.GetComponent<NemMercTracker>();
             this.target = tracker.GetTrackingTarget();
             if (!this.target)
@@ -60,7 +57,11 @@ namespace EntityStates.NemMerc
                 return;
             }
 
-            this.duration = ShadowStep.baseDuration; //movespeedstat ??
+            base.StartAimMode();
+            base.PlayAnimation("FullBody, Override", "ShadowStep", "Utility.playbackRate", baseDuration);
+            Util.PlaySound("Play_nemmerc_utility_enter", base.gameObject);
+
+            
 
             this.teleportStartPosition = base.transform.position;
             this.UpdateTarget();
@@ -97,7 +98,6 @@ namespace EntityStates.NemMerc
             {
                 this.characterModel.invisibilityCount++;
             }
-
             if(ShadowStep.blinkPrefab)
             {
                 EffectManager.SimpleEffect(blinkPrefab, base.characterBody.corePosition, Util.QuaternionSafeLookRotation(teleportTarget - teleportStartPosition), false);

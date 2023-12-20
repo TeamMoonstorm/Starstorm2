@@ -124,7 +124,7 @@ namespace EntityStates.NemMerc
             {
                 return;
             }
-            if (component.canBeHitStunned)
+            if (component.canBeHitStunned && !body.isBoss && !body.isChampion)
             {
                 component.SetPain();
             }

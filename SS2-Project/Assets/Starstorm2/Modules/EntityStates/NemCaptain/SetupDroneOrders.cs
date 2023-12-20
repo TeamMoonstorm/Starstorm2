@@ -98,6 +98,9 @@ namespace EntityStates.NemCaptain.Weapon
             originalSpecialSkill = skillLocator.special;
             Debug.Log("originalSpecialSkill : " + skillLocator.special.name);
 
+            ncc.cachedPrimary = skillLocator.primary.skillDef;
+            Debug.Log("cachedPrimaryDef : " + skillLocator.primary.skillDef.skillNameToken);
+
             Debug.Log("stored original skills");
 
             //set to orders

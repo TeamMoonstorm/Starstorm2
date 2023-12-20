@@ -14972,8 +14972,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5283327209515369573}
   m_LocalRotation: {x: -0.010594743, y: -0.002134053, z: -0.5320182, w: 0.846664}
-  m_LocalPosition: {x: 0.000000027939677, y: 0.210004, z: -0.000000014901161}
-  m_LocalScale: {x: 1, y: 0.9999999, z: 0.9999999}
+  m_LocalPosition: {x: 0, y: 0.210004, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 9205781468309111451}
   m_Father: {fileID: 4839311577092929897}
@@ -15020,7 +15020,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.28280294, y: 0.19969511, z: -0.045783546}
+  m_ConnectedAnchor: {x: 0.28280294, y: 0.19969527, z: -0.045783307}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 1, z: 0}
   m_TwistLimitSpring:
@@ -21311,7 +21311,8 @@ MonoBehaviour:
   sprintFootstepOverrideString: 
   sprintFootliftOverrideString: 
   enableFootstepDust: 1
-  footstepDustPrefab: {fileID: 0}
+  footstepDustPrefab: {fileID: 1581438006475099, guid: e97bdc6bbe332ef4cb3c2bfa60097ea9,
+    type: 3}
 --- !u!114 &8014032008033003312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22346,7 +22347,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.00000008940697, y: 0.34040606, z: -0.00000020302835}
+  m_ConnectedAnchor: {x: -0.000000074505806, y: 0.34040606, z: -0.00000021769665}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 1, z: 0}
   m_TwistLimitSpring:

@@ -8,6 +8,8 @@ using RoR2;
 using UnityEngine.Networking;
 using Moonstorm.Starstorm2.Components;
 using RoR2.Navigation;
+using Moonstorm.Starstorm2;
+
 namespace EntityStates.NemMerc
 {
     public class SpawnClone : BaseSkillState
@@ -29,6 +31,27 @@ namespace EntityStates.NemMerc
         private uint secondary;
         private uint utility;
         private uint special;
+
+        private static List<ItemDef> illegalItems = new List<ItemDef>
+            {
+                RoR2Content.Items.ExtraLife,
+                DLC1Content.Items.ExtraLifeVoid,
+                RoR2Content.Items.RoboBallBuddy,
+                RoR2Content.Items.BeetleGland,
+                RoR2Content.Items.FocusConvergence,
+                RoR2Content.Items.TPHealingNova,
+                RoR2Content.Items.Squid,
+                RoR2Content.Items.TitanGoldDuringTP,
+                DLC1Content.Items.DroneWeapons,
+                DLC1Content.Items.FreeChest,
+                DLC1Content.Items.VoidMegaCrabItem,
+                //DLC1Content.Items.MinorConstructOnKill,
+                RoR2Content.Items.TreasureCache,
+                DLC1Content.Items.TreasureCacheVoid,
+                SS2Content.Items.RelicOfTermination,
+                SS2Content.Items.NkotasHeritage,
+                SS2Content.Items.Remuneration,
+            };
 
         public override void OnEnter()
         {
@@ -85,10 +108,21 @@ namespace EntityStates.NemMerc
 
         }
 
-        public static bool ItemFilter(ItemIndex itemIndex) // NEEDS CONFIG 
+        public static bool ItemFilter(ItemIndex itemIndex)
         {
-            ItemDef itemDef = ItemCatalog.GetItemDef(itemIndex);
-            return itemIndex != RoR2Content.Items.ExtraLife.itemIndex && itemIndex != DLC1Content.Items.ExtraLifeVoid.itemIndex;
+            var def = ItemCatalog.GetItemDef(itemIndex);
+            if(def.name == "ITEM_ANCIENT_SCEPTER" || def.nameToken == "ITEM_ANCIENT_SCEPTER_NAME")
+            {
+                return false;
+            }
+            foreach(var item in illegalItems)
+            {
+                if(item.itemIndex == itemIndex)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         private void SpawnHologramSingle(Vector3 position)
@@ -110,38 +144,47 @@ namespace EntityStates.NemMerc
                 masterPrefab = hologramPrefab,
                 position = position,
                 rotation = base.characterBody.transform.rotation,
-                inventoryToCopy = copyInventory ? base.characterBody.inventory : null,
-                inventoryItemCopyFilter = ItemFilter,
+                inventoryToCopy = null,//copyInventory ? base.characterBody.inventory : null,
+                //inventoryItemCopyFilter = ItemFilter,
                 summonerBodyObject = base.gameObject,
                 loadout = loadout,
                 preSpawnSetupCallback = (master) =>
                 {
                     master.gameObject.AddComponent<MasterSuicideOnTimer>().lifeTimer = cloneLifetime;
+
+                    // HAVE TO DO THIS MANUALLY. MasterSummon.inventoryItemCopyFilter does NOTHING! HEEHAHAHAEHEAH! GOOD ONE HOPO!!!!!!!!!!
+                    master.inventory.itemAcquisitionOrder.Clear();
+                    int[] array = master.inventory.itemStacks;
+                    int num = 0;
+                    HG.ArrayUtils.SetAll<int>(array, num);
+                    master.inventory.AddItemsFrom(base.characterBody.inventory, ItemFilter);
+                    master.inventory.CopyEquipmentFrom(base.characterBody.inventory);
                     master.onBodyStart += (body) =>
                     {
                         body.GetComponent<NemMercCloneTracker>().ownerTracker = this.tracker;
 
-                        //COPY BAND COOLDOWNS
-                        // SHOULD PROBABLY JUST DISABLE BANDS LMAO
-                        float ringcd = base.characterBody.GetBuffCount(RoR2Content.Buffs.ElementalRingsCooldown);
-                        int num12 = 1; //  c v
-                        while ((float)num12 <= ringcd)
-                        {
-                            body.AddTimedBuff(RoR2Content.Buffs.ElementalRingsCooldown, (float)num12);
-                            num12++;
-                        }
+                        ////COPY BAND COOLDOWNS
+                        //// SHOULD PROBABLY JUST DISABLE BANDS LMAO
+                        //float ringcd = base.characterBody.GetBuffCount(RoR2Content.Buffs.ElementalRingsCooldown);
+                        //int num12 = 1; //  c v
+                        //while ((float)num12 <= ringcd)
+                        //{
+                        //    body.AddTimedBuff(RoR2Content.Buffs.ElementalRingsCooldown, (float)num12);
+                        //    num12++;
+                        //}
 
 
-                        //COPY SKILL STOCK/COOLDOWNS
-                        // (DOESNT FUCKING WORK ?????????????????????????????????????????????????????))))))))))))))))))))))))
-                        body.skillLocator.primary.stock = base.skillLocator.primary.stock;
-                        body.skillLocator.primary.rechargeStopwatch = base.skillLocator.primary.rechargeStopwatch;
-                        body.skillLocator.secondary.stock = base.skillLocator.secondary.stock;
-                        body.skillLocator.secondary.rechargeStopwatch = base.skillLocator.secondary.rechargeStopwatch;
-                        body.skillLocator.utility.stock = base.skillLocator.utility.stock;
-                        body.skillLocator.utility.rechargeStopwatch = base.skillLocator.utility.rechargeStopwatch;
-                        body.skillLocator.special.stock = base.skillLocator.special.stock;
-                        body.skillLocator.special.rechargeStopwatch = base.skillLocator.special.rechargeStopwatch;
+
+                        var bitch = body.gameObject.AddComponent<StupidFuckingCooldownSetter>();
+                        bitch.primaryStock = base.skillLocator.primary.stock;
+                        bitch.primaryStopwatch = base.skillLocator.primary.rechargeStopwatch;
+                        bitch.secondaryStock = base.skillLocator.secondary.stock;
+                        bitch.secondaryStopwatch = base.skillLocator.secondary.rechargeStopwatch;
+                        bitch.utilityStock = base.skillLocator.utility.stock;
+                        bitch.utilityStopwatch = base.skillLocator.utility.rechargeStopwatch;
+                        bitch.specialStock = base.skillLocator.special.stock;
+                        bitch.specialStopwatch = base.skillLocator.special.rechargeStopwatch;
+
                     };
                 }
             }.Perform().GetComponent<CloneInputBank>();

@@ -10157,6 +10157,70 @@ Transform:
   m_Father: {fileID: 6794473200184041306}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7037027956138476874
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6054949543096507635}
+  - component: {fileID: 7908481276532944807}
+  - component: {fileID: 3286948979440282204}
+  m_Layer: 9
+  m_Name: FakeHurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6054949543096507635
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7037027956138476874}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.395, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6794473200184041306}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &7908481276532944807
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7037027956138476874}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  m_Radius: 0
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3286948979440282204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7037027956138476874}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 0}
+  isBullseye: 0
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 0}
+  indexInGroup: -1
 --- !u!1 &7153032686480643351
 GameObject:
   m_ObjectHideFlags: 0
@@ -10642,6 +10706,7 @@ GameObject:
   - component: {fileID: 2663081126635337328}
   - component: {fileID: 3044361196456215992}
   - component: {fileID: 5054268278585076384}
+  - component: {fileID: 6366544814400240271}
   m_Layer: 0
   m_Name: mdlNemMerc
   m_TagString: Untagged
@@ -10673,6 +10738,7 @@ Transform:
   - {fileID: 7476924312627572028}
   - {fileID: 1619276954017484973}
   - {fileID: 503140278227454352}
+  - {fileID: 6054949543096507635}
   m_Father: {fileID: 8479251217882293423}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10879,6 +10945,21 @@ MonoBehaviour:
   groupName: Assaulter
   hitBoxes:
   - {fileID: 6098206462778143735}
+--- !u!114 &6366544814400240271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8531258824506576496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1792105662, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hurtBoxes: []
+  mainHurtBox: {fileID: 3286948979440282204}
+  bullseyeCount: 0
 --- !u!1 &8535576400499908242
 GameObject:
   m_ObjectHideFlags: 0
@@ -10942,7 +11023,6 @@ GameObject:
   - component: {fileID: 1987894939847438232}
   - component: {fileID: 1352110224924925434}
   - component: {fileID: 6751794766151536208}
-  - component: {fileID: 4019818212682589523}
   - component: {fileID: 1183595582397418234}
   - component: {fileID: 4299665358131375367}
   - component: {fileID: 2570752541022304645}
@@ -11478,18 +11558,6 @@ MonoBehaviour:
     targetStateMachine: {fileID: 965425350492287927}
     state:
       _typeName: EntityStates.EmotePoint
---- !u!114 &4019818212682589523
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8600173778514573585}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1144835783, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &1183595582397418234
 Rigidbody:
   m_ObjectHideFlags: 0
