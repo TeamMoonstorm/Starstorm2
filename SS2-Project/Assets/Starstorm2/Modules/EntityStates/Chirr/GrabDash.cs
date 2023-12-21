@@ -93,25 +93,35 @@ namespace EntityStates.Chirr
 			{
 				if (hurtBox)
 				{
-					if (hurtBox.healthComponent && hurtBox.healthComponent.body && hurtBox.healthComponent.gameObject != base.gameObject)
+                    HealthComponent healthComponent = hurtBox.healthComponent;
+					if (healthComponent && healthComponent.gameObject != base.gameObject)
 					{
-						if (!hurtBox.healthComponent.body.isChampion || (hurtBox.healthComponent.gameObject.name.Contains("Brother") && hurtBox.healthComponent.gameObject.name.Contains("Body")))
+						if (!healthComponent.body.isChampion || (healthComponent.gameObject.name.Contains("Brother") && healthComponent.gameObject.name.Contains("Body")) || healthComponent.body.GetComponent<NemesisResistances>())
 						{
                             //Vector3 between = hurtBox.healthComponent.transform.position - base.transform.position;
                             //Vector3 v = between / 4f;
                             //v.y = Math.Max(v.y, between.y);
                             //base.characterMotor.AddDisplacement(v);
                             // ^^^ SNAP TO VICTIM
-
-                            this.OnGrabBodyAuthority(hurtBox.healthComponent.body);
-                            
-
-							
+                            if(BodyIsGrabbable(healthComponent.gameObject)) 
+                                this.OnGrabBodyAuthority(hurtBox.healthComponent.body);							
 						}
 					}
 				}
 			}
 		}
+
+        // cant grab something that is grabbing us
+        // cant grab something that is being grabbed
+        private bool BodyIsGrabbable(GameObject candidate)
+        {
+            if(GrabController.victimsToGrabControllers.TryGetValue(base.gameObject, out GrabController grabController))
+            {
+                if (grabController && (grabController.gameObject != candidate || grabController.victimBodyObject != null))
+                    return false;
+            }
+            return true;
+        }
 
         public void OnGrabBodyAuthority(CharacterBody body)
         {

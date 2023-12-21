@@ -67,6 +67,7 @@ namespace EntityStates.Chirr
 				}
 			}
 
+			
 			if(base.characterMotor)
             {
                 base.characterMotor.onMovementHit += DoSplashDamage;
@@ -102,7 +103,6 @@ namespace EntityStates.Chirr
 					base.rigidbodyMotor.enabled = false;
                 }
 			}
-
 		}
 
         private void DoSplashDamage(ref CharacterMotor.MovementHitInfo movementHitInfo)
@@ -112,9 +112,6 @@ namespace EntityStates.Chirr
 
         public override void OnExit()
 		{
-
-			//Moonstorm.Starstorm2.SS2Log.Info("DroppedState.OnExit: " + base.gameObject.name);
-
 			if (base.characterMotor)
             {
 				base.characterMotor.onMovementHit -= DoSplashDamage;
@@ -152,7 +149,8 @@ namespace EntityStates.Chirr
 			base.FixedUpdate();
 
 			// let teammates do inputs while falling 
-			if(friendlyDrop && base.isLocalPlayer)
+			Moonstorm.Starstorm2.SS2Log.Warning("DROPPEDSTATE FIXEDUPDATE || NSA == " + NetworkServer.active + " || INIT == " + this.initialVelocity + " || CM == " + this.characterMotor.velocity);
+			if (friendlyDrop && base.isLocalPlayer)
             {
 				this.PerformInputs();
             }
@@ -165,7 +163,6 @@ namespace EntityStates.Chirr
             {
 				Rigidbody rigidbody = base.rigidbody ? base.rigidbody : this.tempRigidbody;
 				rigidbody.velocity += Vector3.up * extraGravity * Time.fixedDeltaTime;
-				//else Moonstorm.Starstorm2.SS2Log.Error("fucker gone");
 			}
 
 			if (detonateNextFrame && (!base.characterMotor || (base.characterMotor.Motor.GroundingStatus.IsStableOnGround && !base.characterMotor.Motor.LastGroundingStatus.IsStableOnGround)))
@@ -176,8 +173,6 @@ namespace EntityStates.Chirr
 					base.rigidbody.velocity = Vector3.zero;
 				else if (this.tempRigidbody)
 					this.tempRigidbody.velocity = Vector3.zero;
-
-				//Moonstorm.Starstorm2.SS2Log.Info("DroppedState.FixedUpdate: " + base.gameObject.name + " hit ground");
 
 				Util.PlaySound("ChirrThrowHitGround", base.gameObject);
 				if (base.isAuthority) // authority because server doesnt see clients hitting the ground
@@ -251,15 +246,17 @@ namespace EntityStates.Chirr
 			return friendlyDrop ? InterruptPriority.Skill : InterruptPriority.Vehicle; //////////////////////////////////
 		}
 
-        public override void OnSerialize(NetworkWriter writer)
+        public override void OnSerialize(NetworkWriter writer) // njot necessary. chirrgrabbehavior handles this
         {
             base.OnSerialize(writer);
 			writer.Write(this.initialVelocity);
+			writer.Write(this.friendlyDrop);
         }
         public override void OnDeserialize(NetworkReader reader)
         {
             base.OnDeserialize(reader);
 			this.initialVelocity = reader.ReadVector3();
+			this.friendlyDrop = reader.ReadBoolean();
         }
 
 

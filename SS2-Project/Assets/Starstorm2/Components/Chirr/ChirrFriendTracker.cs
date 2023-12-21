@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 using UnityEngine;
 using RoR2;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 namespace Moonstorm.Starstorm2.Components
 {
-	// just a bullseyesearch to find someone to use Befriend on. ChirrFriendOwnership handles friend behavior
+	// just a bullseyesearch to find someone to use Befriend on. ChirrFriendController handles friend behavior
 	[RequireComponent(typeof(InputBankTest))]
 	[RequireComponent(typeof(CharacterBody))]
 	[RequireComponent(typeof(TeamComponent))]
@@ -155,6 +156,6 @@ namespace Moonstorm.Starstorm2.Components
             }
 			this.trackingTarget = null;
 		}
-		
+
 	}
 }

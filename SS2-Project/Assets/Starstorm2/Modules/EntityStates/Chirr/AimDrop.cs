@@ -21,8 +21,8 @@ namespace EntityStates.Chirr
 		public static float maxRayDistance = 50f;
 		public static float extraGravity = -15f;
 
-		public static float selfAwayForce = 6f;
-		public static float selfUpForce = 6f;
+		public static float selfAwayForce = 10f;
+		public static float selfUpForce = 10f;
 
 		private GameObject areaIndicatorInstance;
 
@@ -114,8 +114,6 @@ namespace EntityStates.Chirr
 
             if (!this.outer.destroying && this.grabController && this.grabController.IsGrabbing())
 			{
-                //if (Util.HasEffectiveAuthority(this.grabController.victimBodyObject))
-
                 Util.PlaySound("ChirrGrabThrow", base.gameObject);
 				base.PlayAnimation("FullBody, Override", "GrabThrow");
 				base.StartAimMode();
@@ -126,6 +124,8 @@ namespace EntityStates.Chirr
                 {
 					this.chirrGrabBehavior.ThrowVictim(this.desiredTrajectory, extraGravity, isFriend);
                 }
+				//if (base.isAuthority)
+				//	this.grabController.AttemptGrab(null);
 				
 			}
 			else

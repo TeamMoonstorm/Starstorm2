@@ -20,6 +20,31 @@ namespace Moonstorm.Starstorm2.Survivors
             {
                 ScepterCompat();
             }
+
+            Stage.onStageStartGlobal += FixGoolakeRaycasts;
+        }
+
+        //Disables CookForFasterSimulation on the terrain in goolake, since it fucks up world raycasts
+        // only when chirr is in the stage cuz idk how badly it affects performance
+        private void FixGoolakeRaycasts(Stage stage)
+        {
+            BodyIndex chirr = BodyPrefab.GetComponent<CharacterBody>().bodyIndex;
+            if(stage.sceneDef == SceneCatalog.GetSceneDefFromSceneName("goolake"))
+            {
+                foreach(PlayerCharacterMasterController pcmc in PlayerCharacterMasterController.instances)
+                {
+                    if(pcmc.master.bodyPrefab.GetComponent<CharacterBody>().bodyIndex == chirr)
+                    {
+                        GameObject terrain = GameObject.Find("HOLDER: GameplaySpace/Terrain");
+                        if(terrain)
+                        {
+                            SS2Log.Warning("Player Chirr found. Disabling terrain mesh optimization on goolake to avoid gameplay bugs.");
+                            terrain.GetComponent<MeshCollider>().cookingOptions &= ~MeshColliderCookingOptions.CookForFasterSimulation;
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]

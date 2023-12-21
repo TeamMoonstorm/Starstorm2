@@ -11,6 +11,8 @@ using EntityStates.AI.Walker;
 using UnityEngine.SceneManagement;
 using JetBrains.Annotations;
 using RoR2.UI;
+using System.Runtime.CompilerServices;
+
 namespace Moonstorm.Starstorm2.Components
 {
 	public class ChirrFriendController : MonoBehaviour
@@ -93,8 +95,17 @@ namespace Moonstorm.Starstorm2.Components
 			bool defaultFilter = Inventory.defaultItemCopyFilterDelegate(itemIndex);
 			ItemDef itemDef = ItemCatalog.GetItemDef(itemIndex);
 			return defaultFilter && itemDef.DoesNotContainTag(ItemTag.HoldoutZoneRelated) && itemDef.DoesNotContainTag(ItemTag.OnStageBeginEffect)
-				&& itemDef.DoesNotContainTag(ItemTag.InteractableRelated) && itemDef != AncientScepter.AncientScepterItem.instance.ItemDef;
+				&& itemDef.DoesNotContainTag(ItemTag.InteractableRelated) && !ItemIsScepter(itemDef);
         }
+
+		// make a util class
+		[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
+		private bool ItemIsScepter(ItemDef def)
+        {
+			//return Starstorm.ScepterInstalled && itemIndex != AncientScepter.AncientScepterItem.instance.ItemDef.itemIndex; // idk how to do this
+			return (def.name == "ITEM_ANCIENT_SCEPTER" || def.nameToken == "ITEM_ANCIENT_SCEPTER_NAME");
+
+		}
         private void ShareNewItem(Inventory inventory, ItemIndex itemIndex, int count)
         {
             if(inventory == this.master.inventory && this.currentFriend.master)
@@ -133,7 +144,7 @@ namespace Moonstorm.Starstorm2.Components
 		{
 			if (!NetworkServer.active)
 			{
-				SS2Log.Warning("ChirrFriendTracker.RemoveFriend called on client.");
+				SS2Log.Warning("ChirrFriendTracker.AddFriend called on client.");
 				return;
 			}
 
@@ -156,44 +167,43 @@ namespace Moonstorm.Starstorm2.Components
 			TeamIndex newTeam = this.master.teamIndex;
 			master.teamIndex = newTeam;
 
-			if(isScepter)
-				DontDestroyOnLoad(master); // BORING BORING BORING. CLAY TEMPLAR = AUTOWIN AND -1 ABILITY WHOLEW GAME. scepter ok tho :)
+			//indicator and dontdestroyonload
+			FriendManager.instance.RpcSetupFriend(master.gameObject, false, this.isScepter);
 
-			if (NetworkServer.active)
-			{
-				if (body)
-                {
-					body.teamComponent.teamIndex = newTeam;
-					Util.CleanseBody(body, true, false, false, true, true, false); // lol
-					body.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 3f);
-					//body.healthComponent.HealFraction(1f, default(ProcChainMask)); // BORING. HEAL IT YOURSELF WITH SECONDARY
+			if (body)
+            {
+				body.teamComponent.teamIndex = newTeam;
+				Util.CleanseBody(body, true, false, false, true, true, false); // lol
+				body.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 3f);
+				//body.healthComponent.HealFraction(1f, default(ProcChainMask)); // BORING. HEAL IT YOURSELF WITH SECONDARY
+			}
+
+			// removes friend from combat squad so simulacrum and shit dont break
+			List<CombatSquad> combatSquads = InstanceTracker.GetInstancesList<CombatSquad>();
+			foreach(CombatSquad c in combatSquads)
+            {
+				if (c && c.ContainsMember(master))
+				{
+					c.RemoveMember(master);
+
+					if(c.memberCount == 0 && !c.defeatedServer)
+                    {
+						c.TriggerDefeat();
+                    }
 				}
+            }
 
-				// removes friend from combat squad so simulacrum and shit dont break
-				List<CombatSquad> combatSquads = InstanceTracker.GetInstancesList<CombatSquad>();
-				foreach(CombatSquad c in combatSquads)
-                {
-					if (c && c.ContainsMember(master))
-					{
-						c.RemoveMember(master);
+			master.minionOwnership.SetOwner(this.master);			
+			master.onBodyDeath.AddListener(OnFriendDeath);
+			master.inventory.CopyItemsFrom(this.master.inventory, this.ItemFilter);
+			master.inventory.GiveItem(SS2Content.Items.ChirrFriendHelper, 1);
 
-						if(c.memberCount == 0 && !c.defeatedServer)
-                        {
-							c.TriggerDefeat();
-                        }
-					}
-                }
+			if(!isScepter)
+				master.inventory.GiveItem(RoR2Content.Items.HealthDecay, (int)healthDecayTime); // item stack = how long it takes to go from 100% health to 0
 
-				master.minionOwnership.SetOwner(this.master);			
-				master.onBodyDeath.AddListener(OnFriendDeath);
-				master.inventory.CopyItemsFrom(this.master.inventory, this.ItemFilter);
-				master.inventory.GiveItem(SS2Content.Items.ChirrFriendHelper, 1);
-				if(!isScepter)
-					master.inventory.GiveItem(RoR2Content.Items.HealthDecay, (int)healthDecayTime); // item stack = how long it takes to go from 100% health to 0
-
-				if(oldTeam == TeamIndex.Void && master.inventory.GetEquipmentIndex() == DLC1Content.Equipment.EliteVoidEquipment.equipmentIndex) // UNDO VOIDTOUCHED
-					master.inventory.SetEquipmentIndex(EquipmentIndex.None);
-			}			
+			if(oldTeam == TeamIndex.Void && master.inventory.GetEquipmentIndex() == DLC1Content.Equipment.EliteVoidEquipment.equipmentIndex) // UNDO VOIDTOUCHED
+				master.inventory.SetEquipmentIndex(EquipmentIndex.None);
+						
 		}
 		
 		public void RemoveFriend([NotNull] CharacterMaster master)
@@ -219,48 +229,40 @@ namespace Moonstorm.Starstorm2.Components
 				return;
 			}
 			//undo everything
+
 			CharacterBody body = master.GetBody();
 
-			if (body.teamComponent.indicator) // teammate indicator doesnt go away when changing team
-				Destroy(body.teamComponent.indicator);
+			// indicator and dontdestroyonload
+			FriendManager.instance.RpcSetupFriend(master.gameObject, true, this.isScepter);
 
 			TeamIndex newTeam = this.currentFriend.teamIndex;
 			if(useOldTeam)
             {
 				master.teamIndex = newTeam;
 				body.teamComponent.teamIndex = newTeam;
+			}			
+
+			if (body)
+			{					
+				SetStateOnHurt setStateOnHurt = body.GetComponent<SetStateOnHurt>(); // stun is good
+				if (setStateOnHurt) setStateOnHurt.SetStun(1f);
 			}
-			
-			if(Stage.instance)
-				SceneManager.MoveGameObjectToScene(master.gameObject, Stage.instance.gameObject.scene); // i think this is how it works?
 
-			if (NetworkServer.active)
-			{
-				if (body)
-				{					
-					SetStateOnHurt setStateOnHurt = body.GetComponent<SetStateOnHurt>(); // stun is good
-					if (setStateOnHurt) setStateOnHurt.SetStun(1f);
-				}
+			master.minionOwnership.SetOwner(this.master); // this apparently unsets the owner if you call it again
+			master.onBodyDeath.RemoveListener(OnFriendDeath);
 
-				master.minionOwnership.SetOwner(this.master); // this apparently unsets the owner if you call it again
-				master.onBodyDeath.RemoveListener(OnFriendDeath);
+			master.inventory.RemoveItem(SS2Content.Items.ChirrFriendHelper, 1); // dont think its necessary. just being overly safe
 
-				master.inventory.RemoveItem(SS2Content.Items.ChirrFriendHelper, 1); // dont think its necessary. just being overly safe
-
-				if(this.currentFriend.itemStacks != null && this.currentFriend.itemStacks.Length > 0) // ........
-                {
-					Inventory inventory = master.inventory;
-					inventory.itemAcquisitionOrder.Clear();
-					int[] array = inventory.itemStacks;
-					int num = 0;
-					HG.ArrayUtils.SetAll<int>(array, num);
-					master.inventory.AddItemsFrom(this.currentFriend.itemStacks, new Func<ItemIndex, bool>(target => true)); // NRE HERE???? how
-				}
+			if(this.currentFriend.itemStacks != null && this.currentFriend.itemStacks.Length > 0) // ........
+            {
+				Inventory inventory = master.inventory;
+				inventory.itemAcquisitionOrder.Clear();
+				int[] array = inventory.itemStacks;
+				int num = 0;
+				HG.ArrayUtils.SetAll<int>(array, num);
+				master.inventory.AddItemsFrom(this.currentFriend.itemStacks, new Func<ItemIndex, bool>(target => true)); // NRE HERE???? how
+			}
 				
-
-
-			}
-
 			this.currentFriend = default(Friend);
 		}
 

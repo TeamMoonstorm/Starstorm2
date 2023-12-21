@@ -3,12 +3,13 @@ using EntityStates;
 using UnityEngine;
 using RoR2;
 using UnityEngine.Networking;
-using Moonstorm.Starstorm2;
+using Moonstorm.Starstorm2.Components;
 namespace EntityStates
 {
 	public class GrabbedState : BaseState
 	{
 		public float duration = Mathf.Infinity;
+		public GrabController inflictor;
 
 		public override void OnEnter()
 		{
@@ -39,7 +40,15 @@ namespace EntityStates
 			base.FixedUpdate();
 
 			if(base.isAuthority && base.fixedAge >= this.duration)
-				this.outer.SetNextStateToMain();		
+            {
+				this.outer.SetNextStateToMain();
+				if(this.inflictor)
+                {
+					this.inflictor.AttemptGrab(null);
+					Moonstorm.Starstorm2.SS2Log.Warning("GrabbedState: " + this.characterBody.GetDisplayName() + " duration expired!");
+                }
+			}
+				
 		}
 
 

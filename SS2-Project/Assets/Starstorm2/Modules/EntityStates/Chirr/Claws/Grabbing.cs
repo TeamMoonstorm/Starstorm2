@@ -43,7 +43,10 @@ namespace EntityStates.Chirr.Claws
                 this.dropVisualizer.gameObject.SetActive(true);
                 this.dropVisualizer.transform.localScale = AimDrop.maxRayDistance * Vector3.one;
             }
-
+            if(base.characterMotor)
+            {
+                base.characterMotor.Motor.ForceUnground();
+            }
 
         }
 
@@ -51,9 +54,10 @@ namespace EntityStates.Chirr.Claws
         {
             base.FixedUpdate();
             // if victim is gone or dead
+            if (!base.isAuthority) return; // should be fine? grabber has "authority" over the victim's positoin
+
             if (this.grabController && !this.grabController.IsGrabbing())
             {
-                Moonstorm.Starstorm2.SS2Log.Warning("Grabbing: Setting state to main. IsGrabbing == " + this.grabController.IsGrabbing());
                 this.outer.SetNextStateToMain();
                 return;
             }
@@ -64,6 +68,12 @@ namespace EntityStates.Chirr.Claws
                 return;
             }
             if (base.fixedAge < graceTimer) return;
+            if(base.isGrounded)
+            {
+                this.grabController.AttemptGrab(null);
+                this.outer.SetNextStateToMain();
+                return;
+            }
             Vector3 victimFootPosition = GetBetterFootPosition(); // if victim is too close to ground
             // use velocity for direction to avoid clipping into walls
             if(base.characterMotor.velocity.y < 0 && Physics.Raycast(victimFootPosition, base.characterMotor.velocity.normalized, releaseVictimDistance, LayerIndex.world.mask, QueryTriggerInteraction.Ignore))
@@ -73,7 +83,6 @@ namespace EntityStates.Chirr.Claws
                 if (weapon && weapon.state is AimDrop) weapon.SetNextStateToMain();
                 else
                 {
-                    //Moonstorm.Starstorm2.SS2Log.Warning("Grabbing: Setting state to main. Victim hit ground");
                     this.grabController.AttemptGrab(null);
                 }
                 this.outer.SetNextStateToMain();
@@ -92,7 +101,7 @@ namespace EntityStates.Chirr.Claws
             }
             if(this.victimCollider) // lowest point on collider (assuming its centered)
             {
-                position.y = this.victimCollider.bounds.min.y;// -= this.victimCollider.bounds.min.y * 0.5f;
+                position.y = this.victimCollider.bounds.min.y;
                 return position;
             }
             return position;
@@ -102,7 +111,7 @@ namespace EntityStates.Chirr.Claws
             base.OnExit();
             if (this.animator)
             {
-                this.animator.SetBool("inGrab", false); // plays GrabLoop -> GrabRelease when false
+                this.animator.SetBool("inGrab", false); // transitions from GrabLoop -> GrabRelease when false
             }
             if (base.isAuthority && this.grabController && this.grabController.IsGrabbing())
             {
@@ -113,18 +122,6 @@ namespace EntityStates.Chirr.Claws
                 this.dropVisualizer.gameObject.SetActive(false);
             }
             base.skillLocator.utility.UnsetSkillOverride(base.gameObject, overrideDef, GenericSkill.SkillOverridePriority.Contextual);
-        }
-
-        public override void OnSerialize(NetworkWriter writer) // why am i serializing this again?
-        {
-            base.OnSerialize(writer);
-            writer.Write(this.victimCollider.gameObject);
-        }
-
-        public override void OnDeserialize(NetworkReader reader)
-        {
-            base.OnDeserialize(reader);
-            this.victimCollider = reader.ReadGameObject().GetComponent<Collider>();
         }
     }
 }

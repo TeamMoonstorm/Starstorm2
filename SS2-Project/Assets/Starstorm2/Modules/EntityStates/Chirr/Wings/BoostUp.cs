@@ -31,6 +31,9 @@ namespace EntityStates.Chirr.Wings
             base.FixedUpdate();
             if (isAuthority)
             {
+                if(base.isGrounded)
+                    base.characterMotor.Motor.ForceUnground(); // :(
+                
                 float fallVelocity = characterMotor.velocity.y;
                 float acceleration = Mathf.Lerp(boostAcceleration, 0f, base.fixedAge / this.duration);
                 fallVelocity += acceleration * Time.fixedDeltaTime;

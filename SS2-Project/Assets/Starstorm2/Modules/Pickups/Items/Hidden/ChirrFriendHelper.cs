@@ -49,7 +49,6 @@ namespace Moonstorm.Starstorm2.Items
                     {
                         components[i].skinnedMeshRenderer = renderer;
                     }
-                    return;
                 }
             }
             private void OnDestroy()
@@ -103,7 +102,7 @@ namespace Moonstorm.Starstorm2.Items
                         EntityStateMachine body = EntityStateMachine.FindByCustomName(base.gameObject, "Body");
                         if(body)
                         {
-                            body.SetNextState(EntityStateCatalog.InstantiateState(body.initialStateType));
+                            body.SetNextState(EntityStateCatalog.InstantiateState(body.initialStateType)); // doesnt work every time? idk why
                         }
                     }
                     
@@ -190,8 +189,6 @@ namespace Moonstorm.Starstorm2.Items
                     }
                 }
             }
-
-
             private void OnDisable()
             {
                 if (master.aiComponents.Length > 0 && master.aiComponents[0].enabled)
@@ -204,9 +201,12 @@ namespace Moonstorm.Starstorm2.Items
                     ai.currentEnemy.Reset();
                     ai.customTarget.Reset();
                     ai.buddy.Reset();
+                    ai.enemyAttention = 0f;
                     ai.ForceAcquireNearestEnemyIfNoCurrentEnemy();
                 }
             }
         }
-    }                                              
+
+        
+    }
 }
