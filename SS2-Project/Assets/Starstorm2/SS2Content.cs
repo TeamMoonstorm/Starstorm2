@@ -13,6 +13,8 @@ namespace Moonstorm.Starstorm2
         public static class Artifacts
         {
             public static ArtifactDef Cognation;
+
+            public static ArtifactDef Havoc;
         }
         public static class Items
         {
@@ -105,6 +107,8 @@ namespace Moonstorm.Starstorm2
             public static ItemDef NemesisBossHelper;
 
             public static ItemDef TerminationHelper;
+
+            public static ItemDef HavocHelper;
         }
 
         public static class Equipments
@@ -253,6 +257,7 @@ namespace Moonstorm.Starstorm2
         {
             //public static EliteDef edPurple;
             public static EliteDef edKinetic;
+            public static EliteDef edEmpyrean;
         }
         public static class Scenes
         {

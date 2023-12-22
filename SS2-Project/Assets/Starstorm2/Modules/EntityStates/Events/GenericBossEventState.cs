@@ -36,7 +36,7 @@ namespace EntityStates.Events
 
         public CharacterBody bossBody;
 
-        public static event Action<CharacterBody> onNemesisDefeatedGlobal;
+        public static event Action<CharacterBody> onBossDefeatedGlobal;
 
         public override void OnEnter()
         {
@@ -126,14 +126,6 @@ namespace EntityStates.Events
                 CharacterMaster master = spawnResult.spawnedInstance.GetComponent<CharacterMaster>();
                 bossBody = master.GetBody();
 
-                bossBody.inventory.RemoveItem(RoR2Content.Items.BoostHp, bossBody.inventory.GetItemCount(RoR2Content.Items.BoostHp));
-                bossBody.inventory.RemoveItem(RoR2Content.Items.BoostDamage, bossBody.inventory.GetItemCount(RoR2Content.Items.BoostDamage));
-
-                bossBody.inventory.GiveItem(RoR2Content.Items.BoostHp, 25);
-                bossBody.inventory.GiveItem(RoR2Content.Items.BoostDamage, 6);
-
-                bossBody.inventory.SetEquipmentIndex(SS2Content.Equipments.AffixEmpyrean.equipmentIndex);
-
                 combatSquad.AddMember(master);
                 master.onBodyDeath.AddListener(OnBodyDeath);
             };
@@ -148,7 +140,7 @@ namespace EntityStates.Events
 
         public virtual void OnBodyDeath()
         {
-            onNemesisDefeatedGlobal?.Invoke(bossBody);
+            onBossDefeatedGlobal?.Invoke(bossBody);
             outer.SetNextState(new IdleRestOfStage());
         }
 

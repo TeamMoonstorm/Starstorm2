@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: escEmpyreanEvent
+  m_Name: escEmpyreanEventHavoc
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Events.EmpyreanBoss, Starstorm2, Version=1.0.0.0,
+    assemblyQualifiedName: EntityStates.Events.EmpyreanBossHavoc, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
@@ -24,7 +24,7 @@ MonoBehaviour:
     - fieldName: eventCard
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 11400000, guid: 03123ba5311f3354cb002ae9801387a6, type: 2}
+        objectValue: {fileID: 11400000, guid: c41016af3c048c04b823003a80326009, type: 2}
     - fieldName: minDuration
       fieldValue:
         stringValue: 0
@@ -41,7 +41,3 @@ MonoBehaviour:
       fieldValue:
         stringValue: 
         objectValue: {fileID: 11400000, guid: de4ccfe743f2bff45aa9034a7a58b99b, type: 2}
-    - fieldName: refSpawnCard
-      fieldValue:
-        stringValue: 
-        objectValue: {fileID: 0}

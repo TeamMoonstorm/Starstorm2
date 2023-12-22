@@ -10,24 +10,29 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: escEmpyreanEvent
+  m_Name: EntityStates.Events.ThunderstormStateHavoc
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Events.EmpyreanBoss, Starstorm2, Version=1.0.0.0,
+    assemblyQualifiedName: EntityStates.Events.HavocStormState, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
-    - fieldName: spawnDistanceString
-      fieldValue:
-        stringValue: Standard
-        objectValue: {fileID: 0}
     - fieldName: eventCard
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 11400000, guid: 03123ba5311f3354cb002ae9801387a6, type: 2}
+        objectValue: {fileID: 11400000, guid: a93e2b9d0146c8b4fa2e9b436c0f1630, type: 2}
+    - fieldName: effectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 5557705817396211732, guid: b260621917d16e44fa11ff8421c67e1c,
+          type: 3}
+    - fieldName: stormBuffDef
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 11400000, guid: 8ab5bb1c91125de45bc6e22406cc89e7, type: 2}
     - fieldName: minDuration
       fieldValue:
-        stringValue: 0
+        stringValue: Infinity
         objectValue: {fileID: 0}
     - fieldName: maxDuration
       fieldValue:
@@ -35,13 +40,14 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: warningDur
       fieldValue:
-        stringValue: 5
+        stringValue: 1
         objectValue: {fileID: 0}
-    - fieldName: characterSpawnCard
+    - fieldName: encounterPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 11400000, guid: de4ccfe743f2bff45aa9034a7a58b99b, type: 2}
-    - fieldName: refSpawnCard
+        objectValue: {fileID: 2457165947659870621, guid: 7e320695067b3a54bbe912016154d43e,
+          type: 3}
+    - fieldName: monsterCreditMultiplier
       fieldValue:
-        stringValue: 
+        stringValue: 20
         objectValue: {fileID: 0}

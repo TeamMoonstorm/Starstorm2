@@ -10,38 +10,43 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: escEmpyreanEvent
+  m_Name: escBossEncounter
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Events.EmpyreanBoss, Starstorm2, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    assemblyQualifiedName: EntityStates.Events.GenericBossEventState, Starstorm2,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
+    - fieldName: encounterPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1391198296782427, guid: 6ca75d494be5ff24bb3d50d895fc1dd4,
+          type: 3}
+    - fieldName: fadeDuration
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: characterSpawnCard
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
     - fieldName: spawnDistanceString
       fieldValue:
-        stringValue: Standard
+        stringValue: 
         objectValue: {fileID: 0}
     - fieldName: eventCard
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 11400000, guid: 03123ba5311f3354cb002ae9801387a6, type: 2}
+        objectValue: {fileID: 0}
     - fieldName: minDuration
       fieldValue:
         stringValue: 0
         objectValue: {fileID: 0}
     - fieldName: maxDuration
       fieldValue:
-        stringValue: Infinity
+        stringValue: 0
         objectValue: {fileID: 0}
     - fieldName: warningDur
       fieldValue:
-        stringValue: 5
-        objectValue: {fileID: 0}
-    - fieldName: characterSpawnCard
-      fieldValue:
-        stringValue: 
-        objectValue: {fileID: 11400000, guid: de4ccfe743f2bff45aa9034a7a58b99b, type: 2}
-    - fieldName: refSpawnCard
-      fieldValue:
-        stringValue: 
+        stringValue: 0
         objectValue: {fileID: 0}

@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 714a7ca2776afba4fb8b263d3c207dbd, type: 3}
-  m_Name: ecThunderStorm
+  m_Name: ecHavocStorm
   m_EditorClassIdentifier: 
   eventFlags: 0
   eventState:
-    _typeName: EntityStates.Events.ThunderstormState, Starstorm2, Version=1.0.0.0,
+    _typeName: EntityStates.Events.HavocStormState, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   requiredStateMachine: Weather
   startMessageToken: SS2_EVENT_THUNDERSTORM_START
-  endMessageToken: SS2_EVENT_THUNDERSTORM_END
+  endMessageToken: 
   messageColor: {r: 0.756141, g: 0.8289838, b: 0.9056604, a: 1}
   startSound: {fileID: 0}
   availableStages: 201737214
@@ -26,9 +26,9 @@ MonoBehaviour:
   - FBLScene
   category: CommonEvents
   selectionWeight: 30
-  cost: 1850
-  repeatedSelectionCostCoefficient: 3
-  minimumStageCompletions: 3
+  cost: 20
+  repeatedSelectionCostCoefficient: 9999999
+  minimumStageCompletions: -1
   requiredUnlock:
     _asset: {fileID: 0}
     _address: 
@@ -51,7 +51,8 @@ MonoBehaviour:
     address: 
     useDirectReference: 1
     asset: {fileID: 0}
-  requiredArtifactDef: {fileID: 0}
+  requiredArtifactDef: {fileID: 11400000, guid: 8aa9f3b13b33b394cb766c4d108be9d3,
+    type: 2}
   fallbackVFX: {fileID: 5557705817396211732, guid: b260621917d16e44fa11ff8421c67e1c,
     type: 3}
   eventVFX:
