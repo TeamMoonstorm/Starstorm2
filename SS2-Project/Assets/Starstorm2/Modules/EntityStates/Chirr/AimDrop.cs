@@ -122,10 +122,10 @@ namespace EntityStates.Chirr
 
 				if (NetworkServer.active && this.chirrGrabBehavior)
                 {
-					this.chirrGrabBehavior.ThrowVictim(this.desiredTrajectory, extraGravity, isFriend);
+					GameObject victim = this.grabController.victimBodyObject;
+					this.grabController.AttemptGrab(null);
+					this.chirrGrabBehavior.ThrowVictim(victim, this.desiredTrajectory, extraGravity, isFriend);
                 }
-				//if (base.isAuthority)
-				//	this.grabController.AttemptGrab(null);
 				
 			}
 			else

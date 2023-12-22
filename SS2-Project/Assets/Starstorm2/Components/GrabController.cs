@@ -9,10 +9,10 @@ using System.Collections.Generic;
 using RoR2.Networking;
 namespace Moonstorm.Starstorm2.Components
 {
-    // this shit is terrible. dont use this until i (or someone smarter than me) rewrite it
-
     //bastardized vehicleseat
-    // use for anything, not just chirr (not yet tho)
+    // use for anything, not just chirr
+
+    // !!!!!! pretty jank networking atm when grabbing happens between players. check DroppedState.ReleaseLatencyFixTEMP
 
     // desperately needs a better solution for colliders
 
@@ -26,7 +26,7 @@ namespace Moonstorm.Starstorm2.Components
         public static float disableCollisionsOnExitTime = 0.2f; // we could probs just change layers temporarily, to something that only collides with world. 
                                                                 // ^^ definitely should do actually. i dunno how but i just completely forgot about physics layers while making a good chunk of this
 
-        public static bool shouldLog = true;
+        public static bool shouldLog;
         public delegate void ModifyGrabStateDelegate(EntityStateMachine entityStateMachine, ref EntityState grabState);
 
         public static Dictionary<GameObject, GrabController> victimsToGrabControllers = new Dictionary<GameObject, GrabController>();
@@ -77,8 +77,8 @@ namespace Moonstorm.Starstorm2.Components
             if (this.victimInfo.characterMotor)
             {
                 this.victimInfo.characterMotor.velocity = Vector3.zero;
-                this.victimInfo.characterMotor.Motor.BaseVelocity = Vector3.zero;
-                this.victimInfo.characterMotor.Motor.SetPosition(position, true);      
+                this.victimInfo.characterMotor.Motor.BaseVelocity = Vector3.zero;                   
+                this.victimInfo.characterMotor.Motor.SetPosition(position, false);              
             }
             else if(this.victimInfo.body && this.victimInfo.body.rigidbody)
             {
@@ -135,7 +135,7 @@ namespace Moonstorm.Starstorm2.Components
                     }
                 }
                 // or if victim is in grab state and shouldnt be (when an enemy converts to an ally mid grab, for example) (thats the only example actually)
-                else if (!ShouldForcePassengerState() && !this.victimInfo.bodyStateMachine.IsInMainState() && this.victimInfo.bodyStateMachine.CanInterruptState(InterruptPriority.Vehicle))
+                else if (!ShouldForcePassengerState() && this.victimInfo.bodyStateMachine.state.GetType() == this.grabState.stateType)
                 {
                     // return it to main state
 
@@ -361,11 +361,12 @@ namespace Moonstorm.Starstorm2.Components
                 if (this.victimInfo.bodyStateMachine && this.victimInfo.bodyStateMachine.state.GetType() == this.grabState.stateType)
                 {
                     if (shouldLog) SS2Log.Info("GrabController.EndGrab: Setting state to main");
-                    this.victimInfo.bodyStateMachine.SetNextStateToMain();                                        
+                    this.victimInfo.bodyStateMachine.SetNextStateToMain();                                      
                 }
-                Vector3 newPosition = this.grabTransform.position; ////////////// do properly later (release transform?)
-                TeleportHelper.TeleportGameObject(this.victimInfo.transform.gameObject, newPosition);
+                //Vector3 newPosition = this.grabTransform.position; ////////////// do properly later (release transform?)
+                //TeleportHelper.TeleportGameObject(this.victimInfo.transform.gameObject, newPosition); 
             }
+
 
             GrabController.victimsToGrabControllers.Remove(victimBodyObject);
             if (this.onVictimReleased != null)

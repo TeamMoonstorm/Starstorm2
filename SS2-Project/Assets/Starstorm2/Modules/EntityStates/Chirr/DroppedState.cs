@@ -3,7 +3,7 @@ using EntityStates;
 using UnityEngine;
 using RoR2;
 using UnityEngine.Networking;
-
+using Moonstorm.Starstorm2.Components;
 namespace EntityStates.Chirr
 {
 	// probably worth to turn this into a general-use "body launch" state, and set the parameters when instantiating the state.
@@ -34,8 +34,6 @@ namespace EntityStates.Chirr
 		{
 			base.OnEnter();
 			Animator modelAnimator = base.GetModelAnimator();
-
-			//Moonstorm.Starstorm2.SS2Log.Info("DroppedState.OnEnter: " + base.gameObject.name);
 			if (base.characterBody && NetworkServer.active) base.characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
 
 			if (modelAnimator)
@@ -93,7 +91,7 @@ namespace EntityStates.Chirr
                 }
 				rigidbody.velocity = initialVelocity;
 				rigidbody.useGravity = true;
-				//rigidbody.isKinematic = true; // we should force shit downwards instead of lettign gravity do it
+				//rigidbody.isKinematic = true; // maybe we should force shit downwards instead of lettign gravity do it
 				this.detonateOnImpact = base.gameObject.AddComponent<DetonateOnImpact>();
 				this.detonateOnImpact.droppedState = this;
 				if(base.rigidbodyMotor)
@@ -103,7 +101,29 @@ namespace EntityStates.Chirr
 					base.rigidbodyMotor.enabled = false;
                 }
 			}
+
+			if(base.isAuthority)
+            {
+				GrabController gc = this.inflictor.GetComponent<GrabController>();
+				gc.onVictimReleased += ReleaseLatencyFixTEMP;
+			}
+			
 		}
+
+		// the syncvarhook for GrabController.victimBodyObject, which ends the grab, can take longer than the rpc call in ChirrGrabBehavior, which sets the victim to DroppedState.
+		// which means that DroppedState.OnEnter might happen before GrabController.EndGrab
+		// and velocity is forced to 0 while grabbed
+		// so this is a jank "fix" to re-set our velocity after entering this state AND after the grab ends.
+		// ^^ im so bad at networking T_T 
+		// ^^^ would using another RPC call instead of syncvarhook for victimBodyObject make the timing correct?
+		private void ReleaseLatencyFixTEMP(VehicleSeat.PassengerInfo _) 
+        {
+			Moonstorm.Starstorm2.SS2Log.Warning("ReleaseLatencyFixTEMP: Setting velocity to " + this.initialVelocity);
+			if (base.characterMotor)
+				base.characterMotor.velocity = initialVelocity;
+			else if (base.rigidbody)
+				base.rigidbody.velocity = initialVelocity;
+        }
 
         private void DoSplashDamage(ref CharacterMotor.MovementHitInfo movementHitInfo)
         {
@@ -112,6 +132,12 @@ namespace EntityStates.Chirr
 
         public override void OnExit()
 		{
+			if (base.isAuthority)
+			{
+				GrabController gc = this.inflictor.GetComponent<GrabController>();
+				gc.onVictimReleased -= ReleaseLatencyFixTEMP;
+			}
+
 			if (base.characterMotor)
             {
 				base.characterMotor.onMovementHit -= DoSplashDamage;
@@ -149,7 +175,6 @@ namespace EntityStates.Chirr
 			base.FixedUpdate();
 
 			// let teammates do inputs while falling 
-			Moonstorm.Starstorm2.SS2Log.Warning("DROPPEDSTATE FIXEDUPDATE || NSA == " + NetworkServer.active + " || INIT == " + this.initialVelocity + " || CM == " + this.characterMotor.velocity);
 			if (friendlyDrop && base.isLocalPlayer)
             {
 				this.PerformInputs();

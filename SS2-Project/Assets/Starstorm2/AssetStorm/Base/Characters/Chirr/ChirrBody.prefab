@@ -352,22 +352,22 @@ MonoBehaviour:
     transform: {fileID: 7208811553196781299}
   - name: DropAngleCone
     transform: {fileID: 4200886938371563233}
-  - name: 
-    transform: {fileID: 0}
-  - name: 
-    transform: {fileID: 0}
-  - name: 
-    transform: {fileID: 0}
-  - name: 
-    transform: {fileID: 0}
-  - name: 
-    transform: {fileID: 0}
-  - name: 
-    transform: {fileID: 0}
-  - name: 
-    transform: {fileID: 0}
-  - name: 
-    transform: {fileID: 0}
+  - name: UpperLegL
+    transform: {fileID: 5194000826380874675}
+  - name: LowerLegL
+    transform: {fileID: 5035746923417610709}
+  - name: UpperLegR
+    transform: {fileID: 8042066358367905323}
+  - name: LowerLegR
+    transform: {fileID: 2679370794309612334}
+  - name: WingL
+    transform: {fileID: 4259101859261287160}
+  - name: WingR
+    transform: {fileID: 1077242126078769647}
+  - name: UpperLegB
+    transform: {fileID: 4516307256455019387}
+  - name: LowerLegB
+    transform: {fileID: 132900280162015150}
   - name: 
     transform: {fileID: 0}
 --- !u!114 &6675574369802322784
@@ -2041,6 +2041,7 @@ GameObject:
   - component: {fileID: 1753195248133745781}
   - component: {fileID: 4219017455933194736}
   - component: {fileID: 4199051198225955419}
+  - component: {fileID: -6028734647956855511}
   m_Layer: 0
   m_Name: ChirrBody
   m_TagString: Player
@@ -2736,6 +2737,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buffLingerDuration: 5
+--- !u!114 &-6028734647956855511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5486166245231735535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -144590133, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+  requireEntitlementIfPlayerControlled: 1
 --- !u!1 &5486319845197337342
 GameObject:
   m_ObjectHideFlags: 0

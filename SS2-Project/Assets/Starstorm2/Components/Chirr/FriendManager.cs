@@ -15,10 +15,9 @@ namespace Moonstorm.Starstorm2.Components
 		private static void Init()
 		{
 			Run.onRunStartGlobal += (run) =>
-			{
-				if (!NetworkServer.active) return;
+			{				
+				//if (!NetworkServer.active) return; // ???
 				instance = UnityEngine.Object.Instantiate<GameObject>(SS2Assets.LoadAsset<GameObject>("FriendManager", SS2Bundle.Chirr), run.transform).GetComponent<FriendManager>();
-				
 				NetworkServer.Spawn(instance.gameObject);
 			};
 		}
@@ -43,7 +42,7 @@ namespace Moonstorm.Starstorm2.Components
 				if (body && body.teamComponent.indicator) // teammate indicator doesnt go away when changing team
 					Destroy(body.teamComponent.indicator);
 				if (Stage.instance)
-					SceneManager.MoveGameObjectToScene(master.gameObject, Stage.instance.gameObject.scene); // i think this is how it works?
+					SceneManager.MoveGameObjectToScene(master.gameObject, Stage.instance.gameObject.scene); // i think this is how it works? // this is how it works :3
 			}
 
 		}

@@ -8397,7 +8397,7 @@
 										</Property>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
-												<Value>-1.5</Value>
+												<Value>-2.2</Value>
 											</ValueList>
 										</Property>
 									</PropertyList>
@@ -8496,6 +8496,11 @@
 												</ModifierInfo>
 											</ModifierList>
 										</Property>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>-2</Value>
+											</ValueList>
+										</Property>
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Attenuation">
@@ -8544,34 +8549,6 @@
 											</ChildrenList>
 											<ActiveSourceList>
 												<ActiveSource Name="515771219" ID="{17E5E29D-16F2-4FDA-A872-7B0543AA1B68}" Platform="Linked"/>
-											</ActiveSourceList>
-										</Sound>
-										<Sound Name="woosh3" ID="{974A6384-D2F5-462A-88B4-50ADCB5D7318}" ShortID="15286003">
-											<ReferenceList>
-												<Reference Name="Conversion">
-													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
-												</Reference>
-												<Reference Name="OutputBus">
-													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
-												</Reference>
-											</ReferenceList>
-											<ChildrenList>
-												<AudioFileSource Name="371949821" ID="{9B2D65AD-2302-444F-B67D-E1BF3D78BEA7}">
-													<PropertyList>
-														<Property Name="LoopBegin" Type="Real64" Value="-0.001"/>
-														<Property Name="LoopEnd" Type="Real64" Value="-0.001"/>
-														<Property Name="TrimBegin" Type="Real64" Value="-0.001"/>
-														<Property Name="TrimEnd" Type="Real64" Value="-0.001"/>
-													</PropertyList>
-													<Language>SFX</Language>
-													<AudioFile>371949821.wav</AudioFile>
-													<MediaIDList>
-														<MediaID ID="1065798224"/>
-													</MediaIDList>
-												</AudioFileSource>
-											</ChildrenList>
-											<ActiveSourceList>
-												<ActiveSource Name="371949821" ID="{9B2D65AD-2302-444F-B67D-E1BF3D78BEA7}" Platform="Linked"/>
 											</ActiveSourceList>
 										</Sound>
 									</ChildrenList>
@@ -8652,7 +8629,7 @@
 										<Property Name="OverridePositioning" Type="bool" Value="True"/>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
-												<Value>2</Value>
+												<Value>1</Value>
 											</ValueList>
 										</Property>
 									</PropertyList>
@@ -8737,7 +8714,7 @@
 									<PropertyList>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
-												<Value>-3</Value>
+												<Value>-5</Value>
 											</ValueList>
 										</Property>
 									</PropertyList>
@@ -8862,6 +8839,40 @@
 										</Sound>
 									</ChildrenList>
 								</BlendContainer>
+								<Sound Name="woosh3" ID="{974A6384-D2F5-462A-88B4-50ADCB5D7318}" ShortID="15286003">
+									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Attenuation">
+											<ObjectRef Name="BodyAttenuation" ID="{A986EB11-7B06-4BE3-9630-2DEB2646D5C4}" WorkUnitID="{01E36904-BE25-433F-9547-3A046044CA56}"/>
+										</Reference>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="371949821" ID="{9B2D65AD-2302-444F-B67D-E1BF3D78BEA7}">
+											<PropertyList>
+												<Property Name="LoopBegin" Type="Real64" Value="-0.001"/>
+												<Property Name="LoopEnd" Type="Real64" Value="-0.001"/>
+												<Property Name="TrimBegin" Type="Real64" Value="-0.001"/>
+												<Property Name="TrimEnd" Type="Real64" Value="-0.001"/>
+											</PropertyList>
+											<Language>SFX</Language>
+											<AudioFile>371949821.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="1065798224"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="371949821" ID="{9B2D65AD-2302-444F-B67D-E1BF3D78BEA7}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
 							</ChildrenList>
 						</Folder>
 						<Folder Name="Wayfarer" ID="{CBBA50DB-27F6-4068-9B39-6F203F8CFEBD}" ShortID="936817936">

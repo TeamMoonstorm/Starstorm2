@@ -31,7 +31,7 @@ namespace Moonstorm.Starstorm2.Components
             get => Util.HasEffectiveAuthority(base.gameObject);
         }
 
-        public static bool shouldLog = true;
+        public static bool shouldLog;
         private GrabController grabController;
         private TeamComponent teamComponent;
         private CharacterBody body;
@@ -42,8 +42,8 @@ namespace Moonstorm.Starstorm2.Components
             this.grabController = base.GetComponent<GrabController>();
             this.teamComponent = base.GetComponent<TeamComponent>();
             this.body = base.GetComponent<CharacterBody>();
-            this.grabController.onVictimGrabbed += OnGrab;
-            this.grabController.onVictimReleased += OnRelease;
+            this.grabController.onVictimGrabbed += AddBuff;
+            this.grabController.onVictimReleased += RemoveBuff;
             this.grabController.grabStateModifier += ModifyGrabState;
         }
 
@@ -60,7 +60,7 @@ namespace Moonstorm.Starstorm2.Components
         {
             return bodyToGrabDuration.TryGetValue(bodyIndex, out float duration) ? duration : Mathf.Infinity;
         }
-        private void OnRelease(VehicleSeat.PassengerInfo info)
+        private void RemoveBuff(VehicleSeat.PassengerInfo info)
         {
             if (!NetworkServer.active) return;
 
@@ -73,7 +73,7 @@ namespace Moonstorm.Starstorm2.Components
             }
         }
 
-        private void OnGrab(VehicleSeat.PassengerInfo info)
+        private void AddBuff(VehicleSeat.PassengerInfo info)
         {        
             if (info.body && info.body.teamComponent.teamIndex == this.teamComponent.teamIndex)
             {
@@ -88,42 +88,36 @@ namespace Moonstorm.Starstorm2.Components
 
         // setstateonhurt code kinda
         // server tells clients to throw the victim, client with authority over the victim sets it to DroppedState
-        // definitely just need to do this in GrabController.EndGrab. this is a fucking nightmare timing wise
+        // definitely just need to do this somehow in GrabController.EndGrab. this is a fucking nightmare timing wise
         [Server]
-        public void ThrowVictim(Vector3 velocity, float extraGravity, bool friendly)
+        public void ThrowVictim(GameObject victim, Vector3 velocity, float extraGravity, bool friendly)
         {
-            if (this.grabController.IsGrabbing() && this.grabController.victimInfo.hasEffectiveAuthority)
+            if (Util.HasEffectiveAuthority(victim)) // dont do RPC if we already have authority
             {
                 if (shouldLog) SS2Log.Info("ChirrGrabBehavior.ThrowVictim: victimInfo.hasEffectiveAuthority == true");
-                this.ThrowVictimInternal(velocity, extraGravity, friendly);
-                this.grabController.AttemptGrab(null);
+                this.ThrowVictimInternal(victim, velocity, extraGravity, friendly);              
                 return;
             }
             if (shouldLog) SS2Log.Info("ChirrGrabBehavior.ThrowVictim: victimInfo.hasEffectiveAuthority == false");
-            this.RpcThrowVictim(velocity, extraGravity, friendly);
+            this.RpcThrowVictim(victim, velocity, extraGravity, friendly); // if no authority, find the client who has it
         }
 
         [ClientRpc] // runs on all clients. only client with authority over the victim calls ThrowVictimInternal
-        private void RpcThrowVictim(Vector3 velocity, float extraGravity, bool friendly)
+        private void RpcThrowVictim(GameObject victim, Vector3 velocity, float extraGravity, bool friendly)
         {
             if (shouldLog) SS2Log.Info("ChirrGrabBehavior.RpcThrowVictim " + velocity);
-            if (this.grabController.victimInfo.hasEffectiveAuthority)
+            if (Util.HasEffectiveAuthority(victim))
             {
                 if (shouldLog) SS2Log.Info("ChirrGrabBehavior.RpcThrowVictim: victimInfo.hasEffectiveAuthority == true");
-                this.ThrowVictimInternal(velocity, extraGravity, friendly);
-            }
-            if (this.hasEffectiveAuthority)
-            {
-                if (shouldLog) SS2Log.Info("ChirrGrabBehavior.RpcThrowVictim: this.hasEffectiveAuthority == true");
-                this.grabController.AttemptGrab(null);
+                this.ThrowVictimInternal(victim, velocity, extraGravity, friendly);
             }
         }
 
-        private void ThrowVictimInternal(Vector3 velocity, float extraGravity, bool friendly)
+        private void ThrowVictimInternal(GameObject victim, Vector3 velocity, float extraGravity, bool friendly)
         {
             if (shouldLog) SS2Log.Info("ChirrGrabBehavior.ThrowVictimInternal " + velocity);
-            GameObject bodyObject = this.grabController.victimBodyObject;
-            EntityStateMachine bodyMachine = this.grabController.victimInfo.bodyStateMachine;
+            GameObject bodyObject = victim;
+            EntityStateMachine bodyMachine = EntityStateMachine.FindByCustomName(bodyObject, "Body");
             
             if (bodyMachine)
             {
