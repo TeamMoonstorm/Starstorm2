@@ -1,6 +1,8 @@
 ﻿using RoR2;
 using System;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using static RoR2.ExplicitPickupDropTable;
 
 namespace Moonstorm.Starstorm2.Monsters
 {
@@ -22,6 +24,60 @@ namespace Moonstorm.Starstorm2.Monsters
         {
             base.Initialize();
             MonsterDirectorCards.Add(chainedCard);
+            
+
+            //RoR2.SceneDirector.onPrePopulateSceneServer += die;
+
+            var comp = BodyPrefab.GetComponent<LampDropOverride>();
+            if (!comp)
+            {
+                var lampItem = SS2Assets.LoadAsset<ItemDef>("ShackledLamp", SS2Bundle.Items);
+                if (lampItem.tier != ItemTier.Boss) // item is disabled
+                {
+                    //var drw = BodyPrefab.GetComponent<DeathRewards>();
+                    //SS2Log.Info(drw);
+                    //var fuck = (ExplicitPickupDropTable)drw.bossDropTable;
+                    //
+                    //PickupDefEntry pde;
+                    //pde.pickupDef = RoR2Content.Items.Pearl;
+                    //pde.pickupWeight = 1;
+                    //
+                    //SS2Log.Info("setting fuck | " + fuck.pickupEntries[0]);
+                    //try
+                    //{
+                    //    SS2Log.Info("fuck: " + fuck.pickupEntries[0].pickupDef.name);
+                    //}catch(Exception e)
+                    //{
+                    //    SS2Log.Info("exceptionl ol " + e);
+                    //}
+                    //fuck.pickupEntries[0] = pde;
+                    ////SerializablePickupIndex fuck2;
+                    ////fuck2.pickupName = RoR2Content.Items.Pearl.name;
+                    ////drw.bossPickup = fuck2;
+                    //SS2Log.Info("done");
+                    ////SS2Log.Info("Disabling lamp drop");
+                    ////BodyPrefab.AddComponent<LampDropOverride>();
+                    //
+                    //
+                    ////ExplicitPickupDropTable dt = ScriptableObject.CreateInstance<ExplicitPickupDropTable>();
+                    ////dt.pickupEntries = new ExplicitPickupDropTable.PickupDefEntry[]
+                    ////{
+                    ////    new ExplicitPickupDropTable.PickupDefEntry {pickupDef = RoR2Content.Items.Pearl, pickupWeight = 1f},
+                    ////};
+                    ////drw.bossDropTable = dt;
+                    ///
+
+                    DeathRewards deathRewards = BodyPrefab.GetComponent<DeathRewards>();
+                    ExplicitPickupDropTable dt = ScriptableObject.CreateInstance<ExplicitPickupDropTable>();
+                    dt.pickupEntries = new ExplicitPickupDropTable.PickupDefEntry[]
+                    {
+                        new ExplicitPickupDropTable.PickupDefEntry {pickupDef = RoR2Content.Items.Pearl, pickupWeight = 1f},
+                    };
+                    deathRewards.bossDropTable = dt;
+
+
+                }
+            }
 
             DateTime currentDate = DateTime.Now;
 
@@ -43,6 +99,57 @@ namespace Moonstorm.Starstorm2.Monsters
                 Debug.Log("You stand alone in the dark. - " + moonPhase);
             }
         }
+
+        private void die(SceneDirector obj)
+        {
+            //SS2Log.Info("guh");
+            var comp = BodyPrefab.GetComponent<LampDropOverride>();
+            if (!comp)
+            {
+                var lampItem = SS2Assets.LoadAsset<ItemDef>("ShackledLamp", SS2Bundle.Items);
+                if (lampItem.tier != ItemTier.Boss) // item is disabled
+                {
+                    var drw = BodyPrefab.GetComponent<DeathRewards>();
+                    SS2Log.Info(drw);
+                    var fuck = (ExplicitPickupDropTable)drw.bossDropTable;
+
+                    //BasicPickupDropTable
+
+                    PickupDefEntry pde;
+                    pde.pickupDef = RoR2Content.Items.Pearl;
+                    pde.pickupWeight = 1;
+
+                    //SS2Log.Info("setting fuck | " + fuck.pickupEntries[0]);
+                    //try
+                    //{
+                    //    SS2Log.Info("fuck: " + fuck.pickupEntries[0].pickupDef.name);
+                    //}
+                    //catch (Exception e)
+                    //{
+                    //    SS2Log.Info("exceptionl ol " + e);
+                    //}
+
+                    fuck.pickupEntries[0] = pde;
+                    SerializablePickupIndex fuck2;
+                    fuck2.pickupName = RoR2Content.Items.Pearl.name;
+                    drw.bossPickup = fuck2;
+                    //SS2Log.Info("done");
+                    //SS2Log.Info("Disabling lamp drop");
+                    //BodyPrefab.AddComponent<LampDropOverride>();
+
+
+                    //ExplicitPickupDropTable dt = ScriptableObject.CreateInstance<ExplicitPickupDropTable>();
+                    //dt.pickupEntries = new ExplicitPickupDropTable.PickupDefEntry[]
+                    //{
+                    //    new ExplicitPickupDropTable.PickupDefEntry {pickupDef = RoR2Content.Items.Pearl, pickupWeight = 1f},
+                    //};
+                    //drw.bossDropTable = dt;
+
+                }
+            }
+
+        }
+
         public override void Hook()
         {
             On.RoR2.CharacterBody.AddBuff_BuffDef += CharacterBody_AddBuff_BuffDef;
@@ -69,4 +176,10 @@ namespace Moonstorm.Starstorm2.Monsters
     {
         public string phase;
     }
+
+    public class LampDropOverride : MonoBehaviour
+    {
+        //why is there not a list of yellow items before a run starts
+    }
+
 }

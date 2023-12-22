@@ -4,8 +4,6 @@ using UnityEngine;
 using Moonstorm;
 using RoR2;
 using System;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Networking;
 using Moonstorm.Starstorm2.Components;
 using UnityEngine.AddressableAssets;
@@ -58,7 +56,11 @@ namespace EntityStates.Executioner2
 
             exeController = GetComponent<ExecutionerController>();
             if (exeController != null)
+            {
                 exeController.meshExeAxe.SetActive(true);
+                exeController.hasOOB = false;
+            }
+
 
             //skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
 

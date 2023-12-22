@@ -39,7 +39,7 @@ With Art/Modelling/Animation contributions by...
 
 Additional thanks to... 
 * Writing - Blimblam, Lyrical Endymion, rekkadraws, swuff★, T_Dimensional, Zenithrium
-* Translations - Anreol, BannyDee (Spanish), MysticSword (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight (Chinese), Kauzok (Portuguese)
+* Translations - Anreol, BannyDee (Spanish), MysticSword (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight (Chinese), Kauzok (Portuguese), StyleMyk (French)
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze, NAIRB zepol
 * Special thanks - Altzeus, DestroyedClone, Dee', don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, VioletChaolan, valerie ♥ 
 
@@ -51,11 +51,54 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Elite events are currently disabled.
 
 ## Changelog
-
 **Warning: content spoilers below!**
+### 0.5.7
+* General
+    * Added French translation. Thank you StyleMyk!
+    * Survivors and monsters are better organized in the config. 
+    * Fixed sweeping disables for survivors, monsters, and interactables.
+    * Fixed the footstep visuals for all survivors and footstep sound effects for Executioner and Nemesis Commando.
+* Nemesis Commando
+    * Fixed issue with timing on primary swing. 
+* Interactables
+    * Refabricator can no longer spawn in Simulacrum.
+* Drones
+    * Restored Duplicator Drone's cooldown visuals.
+
+### 0.5.6
+* General
+    * Finally finished implementing Portuguse translation.
+    * Survivors and monsters can now be disabled.
+    * Unfinished equipments are now entirely disabled.
+    * Typhoon has been reverted to +25% spawn rate and -20% enemy rewards.
+* Items
+    * Hopefully fixed a Relic of Termination nullref with Refightilization.
+* Nemeis Mercenary
+    * Fixed an bug with Proliferate and sources of damage without an attacker.
+* Monsters
+    * All monsters are now properly added to the ExpansionDef. 
+    * Rushroom's trail VFX now stops when it dies.
+* Interactables
+    * Interactables are now properly added to the ExpansionDef.
+
+### 0.5.5
+* General
+    * Partially implemented Portuguse translation. 
+    * Captain GM now has dithering.
+* Items
+    * Needles's item display now has dithering.
+    * Haunted Lamp no longer drops when disabled.
+    * Haunted Lamp actually fires if the follower doesn't exist.
+* Executioner   
+    * Fixed Execution softlocking the player when failing to land when falling out of bounds.
+* Nemesis Mercenary
+    * Improved blacklist for Proliferate's clone.
+* Drones
+    * Shock and Duplicator drones now drop purchasable interactables when destroyed.
+
 ### 0.5.4
 * General
-    * Adjusted Clandestine item displays.
+    * Updated Portuguese translation. 
 * Items
     * Needles has new VFX.
     * Haunted Lamp is now corrupted by Newly Hatched Zoea.
@@ -157,18 +200,3 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Survivor ragdolls no longer disappear when they die off screen.
     * Pressurized canister has been disabled while we work on a multiplayer bug.
     * ...and so much more!
- 
-### 0.4.6
-* General
-    * Fixed a bug with how Nemesis Commando checks to reload after Single Tap's stock count changes.
-* Items
-    * All items and equipment have better positioning in the logbook. 
-    * Relic of Termination now grants double time for bosses and drops the boss's relevant boss item, assuming it has one. The mark now properly works on bosses as well.
-    * Adjusted Relic of Termination's drop rates.
-    * Adjusted how Relic of Termination scales marked enemy health - it has a lower multiplier, but also grants an additional flat amount of health.
-    * Relic of Termination's marker now immediately disappears upon killing the marked enemy.
-    * Detritive Trematode can no longer be applied to the Artifact Reliquary. 
-    * Adjusted how Relic of Force adjusts skill cooldowns to fix some mod incompatabilities.
-    * X4 and Termination's icons have been cleaned up.
-    * Coffee Bag and Needles now have item displays.
-    * Disabled Baby's Toys. The item does work, but it has a lot of issues which would take a decent amount of time to address, so it's being disabled for now.

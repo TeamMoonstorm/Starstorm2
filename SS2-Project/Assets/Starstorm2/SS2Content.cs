@@ -15,6 +15,8 @@ namespace Moonstorm.Starstorm2
             public static ArtifactDef Cognation;
 
             public static ArtifactDef Havoc;
+            
+            public static ArtifactDef Deviation;
         }
         public static class Items
         {
@@ -381,6 +383,7 @@ namespace Moonstorm.Starstorm2
                     SS2Log.Info($"Swapping material shaders");
                     SS2Assets.Instance.SwapMaterialShaders();
                     SS2Assets.Instance.FinalizeCopiedMaterials();
+                    SS2Log.Info($"Finished swapping material shaders");
                 }
             };
 

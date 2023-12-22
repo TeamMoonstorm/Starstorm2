@@ -32,7 +32,7 @@ namespace Moonstorm.Starstorm2
 
         private static void OverrideOnHitAll(On.RoR2.GlobalEventManager.orig_OnHitAll orig, GlobalEventManager self, DamageInfo damageInfo, UnityEngine.GameObject hitObject)
         {
-            if(attackerToOverride.Count > 0 && attackerToOverride.TryGetValue(damageInfo.attacker, out GameObject newAttacker))
+            if(attackerToOverride.Count > 0 && damageInfo.attacker && attackerToOverride.TryGetValue(damageInfo.attacker, out GameObject newAttacker))
             {
                 if(newAttacker)
                     damageInfo.attacker = newAttacker;
@@ -46,7 +46,7 @@ namespace Moonstorm.Starstorm2
 
         private static void OverrideOnHitEnemy(On.RoR2.GlobalEventManager.orig_OnHitEnemy orig, GlobalEventManager self, DamageInfo damageInfo, UnityEngine.GameObject victim)
         {
-            if (attackerToOverride.Count > 0 && attackerToOverride.TryGetValue(damageInfo.attacker, out GameObject newAttacker))
+            if (attackerToOverride.Count > 0 && damageInfo.attacker && attackerToOverride.TryGetValue(damageInfo.attacker, out GameObject newAttacker))
             {
                 if (newAttacker)
                     damageInfo.attacker = newAttacker;
@@ -60,7 +60,7 @@ namespace Moonstorm.Starstorm2
 
         private static void OverrideTakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
         {
-            if (attackerToOverride.Count > 0 && attackerToOverride.TryGetValue(damageInfo.attacker, out GameObject newAttacker))
+            if (attackerToOverride.Count > 0 && damageInfo.attacker && attackerToOverride.TryGetValue(damageInfo.attacker, out GameObject newAttacker))
             {
                 if (newAttacker)
                     damageInfo.attacker = newAttacker;

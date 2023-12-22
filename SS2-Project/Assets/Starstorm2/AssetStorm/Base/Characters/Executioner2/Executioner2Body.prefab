@@ -2097,6 +2097,7 @@ GameObject:
   - component: {fileID: 8864759983577232097}
   - component: {fileID: 3252411659752321193}
   - component: {fileID: 6115492646013715056}
+  - component: {fileID: 4830809301309568354}
   - component: {fileID: 6818911504445631536}
   m_Layer: 0
   m_Name: mdlExecutioner2
@@ -2465,7 +2466,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3077815623334618848}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7196d6464f5113d409b3ae0adc2a4995, type: 3}
   m_Name: 
@@ -2476,6 +2477,25 @@ MonoBehaviour:
   footstepDustPrefab: {fileID: 1581438006475099, guid: e97bdc6bbe332ef4cb3c2bfa60097ea9,
     type: 3}
   footstepEffect: {fileID: 0}
+--- !u!114 &4830809301309568354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3077815623334618848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1480773730, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseFootstepString: Play_captain_step
+  baseFootliftString: 
+  sprintFootstepOverrideString: Play_captain_step_sprint
+  sprintFootliftOverrideString: 
+  enableFootstepDust: 1
+  footstepDustPrefab: {fileID: 1581438006475099, guid: e97bdc6bbe332ef4cb3c2bfa60097ea9,
+    type: 3}
 --- !u!114 &6818911504445631536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14048,6 +14068,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meshExeAxe: {fileID: 0}
+  hasOOB: 0
+  isExec: 0
 --- !u!114 &6533427204412895867
 MonoBehaviour:
   m_ObjectHideFlags: 0
