@@ -2,8 +2,9 @@
 using RoR2.Items;
 using RoR2.Projectile;
 using RoR2.Skills;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using System.Linq;
 
@@ -35,6 +36,30 @@ namespace Moonstorm.Starstorm2.Items
         }
 
 
+        override public void Initialize()
+        {
+            On.RoR2.Items.ContagiousItemManager.Init += AddZoeaPair;
+
+        }
+
+        private void AddZoeaPair(On.RoR2.Items.ContagiousItemManager.orig_Init orig)
+        {   
+            List<ItemDef.Pair> newVoidPairs = new List<ItemDef.Pair>();
+
+            ItemDef.Pair lampPair = new ItemDef.Pair()
+            {
+                itemDef1 = ItemDef, //nonvoid
+                itemDef2 = RoR2.DLC1Content.Items.VoidMegaCrabItem //void
+            };
+            newVoidPairs.Add(lampPair);
+
+            var voidPairs = ItemCatalog.itemRelationships[DLC1Content.ItemRelationshipTypes.ContagiousItem];
+            ItemCatalog.itemRelationships[DLC1Content.ItemRelationshipTypes.ContagiousItem] = voidPairs.Union(newVoidPairs).ToArray();
+
+            //ItemCatalog.itemRelationships[DLC1Content.ItemRelationshipTypes.ContagiousItem].AddIfNotInCollection(lampPair);
+            orig();
+        }
+
         public sealed class LampBehavior : BaseItemBodyBehavior
         {
             [ItemDefAssociation]
@@ -44,16 +69,19 @@ namespace Moonstorm.Starstorm2.Items
             private float attackCounter;
 
             private List<GameObject> lampDisplay;
-            private Transform displayPos = null;
+            private Transform displayPos;
+            private ItemFollower follower;
 
             private void Start()
             {
+                displayPos = null;
                 body.onSkillActivatedAuthority += ChainEffect;
                 lampDisplay = body.modelLocator.modelTransform.GetComponent<CharacterModel>().GetItemDisplayObjects(SS2Content.Items.ShackledLamp.itemIndex);
                 if (lampDisplay != null)
                 {
-                    SS2Log.Info(lampDisplay[0].name + " | ");
-                    displayPos = lampDisplay[0].transform.Find("mdlLamp").transform;
+                    follower = lampDisplay[0].GetComponent<ItemFollower>();
+                    displayPos = follower.followerInstance.transform.Find("mdlLamp").transform;
+                    //displayPos = lampDisplay[0].transform.Find("mdlLamp").transform;
                 }
             }
 
@@ -62,8 +90,10 @@ namespace Moonstorm.Starstorm2.Items
                 if (!body.skillLocator.primary.Equals(skill))
                     return;
 
-                //fuck it 
-                if (skill.skillDef.skillIndex == SkillCatalog.FindSkillIndexByName("ExecutionerFireIonGun"))
+                //if (skill.skillDef.skillIndex == SkillCatalog.FindSkillIndexByName("ExecutionerFireIonGun"))
+                //    return;
+                //sorry nebby
+                if (skill.skillNameToken == "SS2_EXECUTIONER2_IONBURST_NAME")
                     return;
 
                 IncrementFire();
@@ -78,8 +108,17 @@ namespace Moonstorm.Starstorm2.Items
                     Util.PlayAttackSpeedSound("LampBullet", gameObject, body.attackSpeed);
                     float damage = body.damage * (2f + stack);
                     Vector3 muzzlePos = body.inputBank.aimOrigin;
+                    SS2Log.Info("dsplay pos: " + displayPos + " | " + follower);
                     if (displayPos != null)
+                    {
                         muzzlePos = displayPos.position;
+                    }
+                    else if(lampDisplay != null)
+                    {
+                        follower = lampDisplay[0].GetComponent<ItemFollower>();
+                        displayPos = follower.followerInstance.transform.Find("mdlLamp").transform;
+                        muzzlePos = displayPos.position;
+                    }
                     ProjectileManager.instance.FireProjectile(
                         projectilePrefab,
                         muzzlePos,

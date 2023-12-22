@@ -59,7 +59,8 @@ namespace Moonstorm.Starstorm2.Items
         [TokenModifier(token, StatTypes.Default, 1)]
         public static int critsPerStack = 1;
 
-        public static GameObject needleVFX = SS2Assets.LoadAsset<GameObject>("NeedlesStrikeVFX", SS2Bundle.Items);
+        public static GameObject needleStrikeVFX = SS2Assets.LoadAsset<GameObject>("NeedlesStrikeVFX", SS2Bundle.Items);
+        public static GameObject needleVFX = SS2Assets.LoadAsset<GameObject>("NeedleVFX", SS2Bundle.Items);
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnIncomingDamageOtherServerReciever //, IOnDamageDealtServerReceiver
         {
@@ -143,13 +144,12 @@ namespace Moonstorm.Starstorm2.Items
                         }
                     }
                 }
-                
-
             }
 
             public void doNeedleProc(HealthComponent self)
             {
                 var tracker = self.body.gameObject.GetComponent<NeedleTracker>();
+                int buffCount = 0;
                 if (tracker)
                 {
                     tracker.procs--;
@@ -160,7 +160,7 @@ namespace Moonstorm.Starstorm2.Items
                     {
                         Destroy(tracker);
                     }
-                    int buffCount = self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup);
+                    buffCount = self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup);
                     for (int i = 0; i < buffCount; i++)
                     {
                         self.body.RemoveBuff(SS2Content.Buffs.BuffNeedleBuildup);
@@ -171,8 +171,18 @@ namespace Moonstorm.Starstorm2.Items
                 {
                     origin = self.body.corePosition
                 };
-                //EffectManager.SpawnEffect(needleVFX, effectData, transmit: true);
-                EffectManager.SpawnEffect(HealthComponent.AssetReferences.executeEffectPrefab, effectData, transmit: true);
+                EffectManager.SpawnEffect(needleStrikeVFX, effectData, transmit: true);
+                for(float i = 1; i < buffCount; i *= 2.5f)
+                {
+                    //SS2Log.Info("more needles: " + i);
+                    EffectData effectData2 = new EffectData
+                    {
+                        origin = self.body.corePosition
+                    };
+                    EffectManager.SpawnEffect(needleVFX, effectData2, transmit: true);
+                }
+                
+                //EffectManager.SpawnEffect(HealthComponent.AssetReferences.executeEffectPrefab, effectData, transmit: true);
             }
         }
 
