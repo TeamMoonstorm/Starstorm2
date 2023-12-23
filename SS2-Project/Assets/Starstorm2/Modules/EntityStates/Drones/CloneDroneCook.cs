@@ -23,6 +23,10 @@ namespace EntityStates.CloneDrone
         private ChildLocator childLocator;
         private ItemTier pickupTier;
         private float duration = 4;
+        private CharacterModel charModel;
+
+        private Material lightOn = SS2Assets.LoadAsset<Material>("matCloneDroneLight", SS2Bundle.Interactables);
+        private Material lightOff = SS2Assets.LoadAsset<Material>("matCloneDroneNoLight", SS2Bundle.Interactables);
 
         private GameObject targetIndicatorVfxInstance;
         private GameObject sparksObj;
@@ -39,6 +43,8 @@ namespace EntityStates.CloneDrone
         {
             base.OnEnter();
             childLocator = GetModelChildLocator();
+            charModel = childLocator.gameObject.GetComponent<CharacterModel>(); //lol
+
             targetIndicatorVfxPrefab = SS2Assets.LoadAsset<GameObject>("DuplicatingCircleVFX", SS2Bundle.Interactables);
 
             this.gpc = this.target.GetComponent<GenericPickupController>(); 
@@ -105,22 +111,93 @@ namespace EntityStates.CloneDrone
             duration = baseDuration;
 
             //tier 2 items have a 50% longer cooldown / duration
-            if (pickupTier == ItemTier.Tier2 || pickupTier == ItemTier.VoidTier2)
-            {
-                duration *= 1.5f;
-                cooldown *= 1.5f;
-            }
+            //if (pickupTier == ItemTier.Tier2 || pickupTier == ItemTier.VoidTier2)
+            //{
+            //    duration *= 1.5f;
+            //    cooldown *= 1.5f;
+            //}
+            //
+            ////tier 3 and boss items have a 100% longer cooldown / duration
+            //if (pickupTier == ItemTier.Tier3 || pickupTier == ItemTier.VoidTier3 || pickupTier == ItemTier.Boss || pickupTier == ItemTier.VoidBoss)
+            //{
+            //    duration *= 2f;
+            //    cooldown *= 2f;
+            //}
 
-            //tier 3 and boss items have a 100% longer cooldown / duration
-            if (pickupTier == ItemTier.Tier3 || pickupTier == ItemTier.VoidTier3 || pickupTier == ItemTier.Boss || pickupTier == ItemTier.VoidBoss)
+            switch (pickupTier)
             {
-                duration *= 2f;
-                cooldown *= 2f;
+                case ItemTier.Tier1:
+                    if (charModel)
+                        charModel.baseRendererInfos[2].defaultMaterial = SS2Assets.LoadAsset<Material>("matCloneDroneLightT1", SS2Bundle.Interactables);
+                    break;
+
+                case ItemTier.Tier2:
+                    duration *= 1.5f;
+                    cooldown *= 1.5f;
+                    if (charModel)
+                        charModel.baseRendererInfos[2].defaultMaterial = SS2Assets.LoadAsset<Material>("matCloneDroneLightT2", SS2Bundle.Interactables);
+                    break;
+
+                case ItemTier.Tier3:
+                    duration *= 2f;
+                    cooldown *= 2f;
+                    if (charModel)
+                        charModel.baseRendererInfos[2].defaultMaterial = SS2Assets.LoadAsset<Material>("matCloneDroneLightT3", SS2Bundle.Interactables); 
+                    break;
+
+                case ItemTier.Boss:
+                    duration *= 2f;
+                    cooldown *= 2f;
+                    if (charModel)
+                        charModel.baseRendererInfos[2].defaultMaterial = SS2Assets.LoadAsset<Material>("matCloneDroneLightT4", SS2Bundle.Interactables);
+                    break;
+
+                case ItemTier.VoidTier1:
+                    if (charModel)
+                        charModel.baseRendererInfos[2].defaultMaterial = SS2Assets.LoadAsset<Material>("matCloneDroneLightVoid", SS2Bundle.Interactables);
+                    break;
+
+                case ItemTier.VoidTier2:
+                    duration *= 1.5f;
+                    cooldown *= 1.5f;
+                    if (charModel)
+                        charModel.baseRendererInfos[2].defaultMaterial = SS2Assets.LoadAsset<Material>("matCloneDroneLightVoid", SS2Bundle.Interactables);
+                    break;
+
+                case ItemTier.VoidTier3:
+                    duration *= 2f;
+                    cooldown *= 2f;
+                    if (charModel)
+                        charModel.baseRendererInfos[2].defaultMaterial = SS2Assets.LoadAsset<Material>("matCloneDroneLightVoid", SS2Bundle.Interactables);
+                    break;
+
+                case ItemTier.VoidBoss:
+                    duration *= 2f;
+                    cooldown *= 2f;
+                    if (charModel)
+                        charModel.baseRendererInfos[2].defaultMaterial = SS2Assets.LoadAsset<Material>("matCloneDroneLightVoid", SS2Bundle.Interactables);
+                    break;
+
+                case ItemTier.Lunar:
+                    if (charModel)
+                        charModel.baseRendererInfos[2].defaultMaterial = SS2Assets.LoadAsset<Material>("matCloneDroneLightLunar", SS2Bundle.Interactables);
+                    break;
+
+                default: //lol its an equipment 
+                    if (charModel){
+                        if (gpc.pickupIndex.pickupDef.isLunar){ //lunar
+                            charModel.baseRendererInfos[2].defaultMaterial = SS2Assets.LoadAsset<Material>("matCloneDroneLightLunar", SS2Bundle.Interactables);
+                        }else{ //normal
+                            charModel.baseRendererInfos[2].defaultMaterial = SS2Assets.LoadAsset<Material>("matCloneDroneLightEquip", SS2Bundle.Interactables);
+                        }
+                    }
+                    break;
             }
 
             //add the cooldown amount to the primary cooldown
             skillLocator.primary.stock = 0;
             skillLocator.primary.rechargeStopwatch -= cooldown;
+            //charModel.baseRendererInfos[2].defaultMaterial = SS2Assets.LoadAsset<Material>("matCloneDroneLight", SS2Bundle.Interactables);
         }
 
         public override void FixedUpdate()
@@ -142,6 +219,16 @@ namespace EntityStates.CloneDrone
                 if(NetworkServer.active)
                     CreateClone();
             }
+            //if (charModel)
+            //{
+            //    if((int)Mathf.Round(fixedAge) != (int)Mathf.Floor(fixedAge)){
+            //        charModel.baseRendererInfos[2].defaultMaterial = lightOn;
+            //    }
+            //    else
+            //    {
+            //        charModel.baseRendererInfos[2].defaultMaterial = lightOff;
+            //    }
+            //}
         }
 
         public void CreateClone()
@@ -179,9 +266,14 @@ namespace EntityStates.CloneDrone
             if (startObj != null)
                 Destroy(startObj);
 
-            glowMesh = childLocator.FindChild("GlowMesh").gameObject;
-            glowMeshRenderer = glowMesh.GetComponent<MeshRenderer>();
-            glowMeshRenderer.material = SS2Assets.LoadAsset<Material>("matCloneDroneLightInvalid", SS2Bundle.Interactables);
+            //glowMesh = childLocator.FindChild("GlowMesh").gameObject;
+            //glowMeshRenderer = glowMesh.GetComponent<MeshRenderer>();
+            //glowMeshRenderer.material = SS2Assets.LoadAsset<Material>("matCloneDroneLightInvalid", SS2Bundle.Interactables);
+            if (charModel)
+            {
+                charModel.baseRendererInfos[2].defaultMaterial = SS2Assets.LoadAsset<Material>("matCloneDroneNoLight", SS2Bundle.Interactables); ;
+            }
+                    
 
         }
 

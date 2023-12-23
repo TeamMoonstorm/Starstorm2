@@ -16,7 +16,7 @@ MonoBehaviour:
   eventState:
     _typeName: EntityStates.Events.ThunderstormState, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  requiredStateMachine: 
+  requiredStateMachine: Weather
   startMessageToken: SS2_EVENT_THUNDERSTORM_START
   endMessageToken: SS2_EVENT_THUNDERSTORM_END
   messageColor: {r: 0.756141, g: 0.8289838, b: 0.9056604, a: 1}
@@ -25,9 +25,9 @@ MonoBehaviour:
   customStageNames:
   - FBLScene
   category: CommonEvents
-  selectionWeight: 70
+  selectionWeight: 30
   cost: 1850
-  repeatedSelectionCostCoefficient: 20
+  repeatedSelectionCostCoefficient: 3
   minimumStageCompletions: 3
   requiredUnlock:
     _asset: {fileID: 0}
@@ -51,6 +51,7 @@ MonoBehaviour:
     address: 
     useDirectReference: 1
     asset: {fileID: 0}
+  requiredArtifactDef: {fileID: 0}
   fallbackVFX: {fileID: 5557705817396211732, guid: b260621917d16e44fa11ff8421c67e1c,
     type: 3}
   eventVFX:

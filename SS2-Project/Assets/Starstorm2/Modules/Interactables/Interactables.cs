@@ -35,13 +35,20 @@ namespace Moonstorm.Starstorm2.Modules
 
         protected override IEnumerable<InteractableBase> GetInteractableBases()
         {
+            //string niceName = MSUtil.NicifyString(item.GetType().Name);
+
             base.GetInteractableBases()
                 .Where(interactable =>
                 {
+                    if (!EnableInteractables)
+                    {
+                        return false;
+                    }
+
                     return SS2Config.MakeConfigurableBool(true, (b) =>
                     {
                         b.Section = "Interactables";
-                        b.Key = interactable.Interactable.ToString();
+                        b.Key = MSUtil.NicifyString(interactable.Interactable.name);
                         b.Description = "Enable/Disable this Interactable";
                         b.ConfigFile = SS2Config.ConfigMain;
                         b.CheckBoxConfig = new CheckBoxConfig

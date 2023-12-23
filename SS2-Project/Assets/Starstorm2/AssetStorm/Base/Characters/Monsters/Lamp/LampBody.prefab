@@ -159,6 +159,7 @@ GameObject:
   - component: {fileID: 962474072067677813}
   - component: {fileID: 8457613671406238986}
   - component: {fileID: 239533959399909896}
+  - component: {fileID: 3965149535275964384}
   m_Layer: 0
   m_Name: LampBody
   m_TagString: Untagged
@@ -737,6 +738,20 @@ MonoBehaviour:
   aliveLoopStop: FollowerIdleStop
   sprintLoopStart: 
   sprintLoopStop: 
+--- !u!114 &3965149535275964384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2041233120209123290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -144590133, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+  requireEntitlementIfPlayerControlled: 1
 --- !u!1 &2166990787302704272
 GameObject:
   m_ObjectHideFlags: 0

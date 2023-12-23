@@ -14,6 +14,8 @@ namespace Moonstorm.Starstorm2
         {
             public static ArtifactDef Cognation;
 
+            public static ArtifactDef Havoc;
+            
             public static ArtifactDef Deviation;
         }
         public static class Items
@@ -109,6 +111,8 @@ namespace Moonstorm.Starstorm2
             public static ItemDef NemesisBossHelper;
 
             public static ItemDef TerminationHelper;
+
+            public static ItemDef HavocHelper;
         }
 
         public static class Equipments
@@ -116,6 +120,8 @@ namespace Moonstorm.Starstorm2
             public static EquipmentDef ElitePurpleEquipment;
 
             public static EquipmentDef EliteKineticEquipment;
+
+            public static EquipmentDef AffixEmpyrean;
 
             public static EquipmentDef equipDivineRight;
 
@@ -249,12 +255,15 @@ namespace Moonstorm.Starstorm2
             public static BuffDef bdNemCapManaReduction;
 
             public static BuffDef bdNemCapManaRegen;
+
+            public static BuffDef bdEmpyrean;
         }
 
         public static class Elites
         {
             //public static EliteDef edPurple;
             public static EliteDef edKinetic;
+            public static EliteDef edEmpyrean;
         }
         public static class Scenes
         {

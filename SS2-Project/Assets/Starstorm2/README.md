@@ -39,7 +39,7 @@ With Art/Modelling/Animation contributions by...
 
 Additional thanks to... 
 * Writing - Blimblam, Lyrical Endymion, rekkadraws, swuff★, T_Dimensional, Zenithrium
-* Translations - Anreol, BannyDee (Spanish), MysticSword (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight (Chinese), Kauzok (Portuguese)
+* Translations - Anreol, BannyDee (Spanish), MysticSword (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight (Chinese), Kauzok (Portuguese), StyleMyk (French)
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze, NAIRB zepol
 * Special thanks - Altzeus, DestroyedClone, Dee', don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, VioletChaolan, valerie ♥ 
 
@@ -51,17 +51,39 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Elite events are currently disabled.
 
 ## Changelog
-
 **Warning: content spoilers below!**
+### 0.5.7
+* General
+    * Added French translation. Thank you StyleMyk!
+    * Survivors and monsters are better organized in the config. 
+    * Fixed sweeping disables for survivors, monsters, and interactables.
+    * Fixed the footstep visuals for all survivors and footstep sound effects for Executioner and Nemesis Commando.
+* Nemesis Commando
+    * Fixed issue with timing on primary swing. 
+* Interactables
+    * Refabricator can no longer spawn in Simulacrum.
+* Drones
+    * Restored Duplicator Drone's cooldown visuals.
+
 ### 0.5.6
 * General
     * Finally finished implementing Portuguse translation.
+    * Survivors and monsters can now be disabled.
+    * Unfinished equipments are now entirely disabled.
+    * Typhoon has been reverted to +25% spawn rate and -20% enemy rewards.
+* Items
+    * Hopefully fixed a Relic of Termination nullref with Refightilization.
 * Nemeis Mercenary
-    * Fixed an bug with Proliferate and REX's Seed Barrage.
+    * Fixed an bug with Proliferate and sources of damage without an attacker.
+* Monsters
+    * All monsters are now properly added to the ExpansionDef. 
+    * Rushroom's trail VFX now stops when it dies.
+* Interactables
+    * Interactables are now properly added to the ExpansionDef.
 
 ### 0.5.5
 * General
-    * Properly implemented Portuguse translation. 
+    * Partially implemented Portuguse translation. 
     * Captain GM now has dithering.
 * Items
     * Needles's item display now has dithering.
