@@ -264,7 +264,7 @@ namespace Moonstorm.Starstorm2
         {
             //public static SurvivorDef SurvivorBorg;
 
-            //public static SurvivorDef SurvivorChirr;
+            public static SurvivorDef SurvivorChirr;
 
             public static SurvivorDef SurvivorExecutioner;
 
