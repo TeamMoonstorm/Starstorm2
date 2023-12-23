@@ -54,7 +54,7 @@ namespace Moonstorm.Starstorm2.Buffs
                 );
             if (ILFound)
             {
-                c.Index += 5;
+                
                 c.Emit(OpCodes.Ldarg_0);
                 c.EmitDelegate<Func<float, CharacterBody, float>>((defaultPercentage, body) =>
                 {
@@ -69,6 +69,8 @@ namespace Moonstorm.Starstorm2.Buffs
             {
                 Debug.Log("Failed to find IL match for Empyrean hook 1!");
             }
+
+            Debug.Log(il + " :: IL DEBUGLOG");
 
             /*bool ILFound2 = c.TryGotoNext(MoveType.After,
                 x => x.MatchLdarg(0),
