@@ -27,7 +27,7 @@ namespace Moonstorm.Starstorm2.Buffs
             On.RoR2.Util.GetBestBodyName += MakeEmpyreanName;
             RoR2Application.onLoad += CreateBlacklist;
             IL.RoR2.CharacterBody.RecalculateStats += RecalculateStatsEmpyreanIL;
-            On.RoR2.CharacterBody.RecalculateStats += RecalculateStatsEmpyrean;
+            //On.RoR2.CharacterBody.RecalculateStats += RecalculateStatsEmpyrean;
         }
 
         private void RecalculateStatsEmpyrean(On.RoR2.CharacterBody.orig_RecalculateStats orig, CharacterBody self)
@@ -60,6 +60,7 @@ namespace Moonstorm.Starstorm2.Buffs
                 {
                     if (body.HasBuff(SS2Content.Buffs.bdEmpyrean))
                     {
+                        Debug.Log("is empyrean :: DEFAULT PERCENTAGE - " + defaultPercentage );
                         return 0.1f;
                     }
                     return defaultPercentage;
@@ -72,8 +73,8 @@ namespace Moonstorm.Starstorm2.Buffs
 
             Debug.Log(il + " :: IL DEBUGLOG");
 
-            /*bool ILFound2 = c.TryGotoNext(MoveType.After,
-                x => x.MatchLdarg(0),
+            bool ILFound2 = c.TryGotoNext(MoveType.After,
+                x => x.MatchSub(),
                 x => x.MatchCallOrCallvirt<CharacterBody>("set_maxHealth"),
                 x => x.MatchLdloc(out _),
                 x => x.MatchLdarg(0),
@@ -94,7 +95,7 @@ namespace Moonstorm.Starstorm2.Buffs
             else
             {
                 Debug.Log("Failed to find IL match for Empyrean hook 2!");
-            }*/
+            }
         }
 
         private static string MakeEmpyreanName(On.RoR2.Util.orig_GetBestBodyName orig, GameObject bodyObject)
