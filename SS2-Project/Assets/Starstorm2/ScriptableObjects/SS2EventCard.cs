@@ -93,6 +93,7 @@ namespace Moonstorm.Starstorm2
         private bool HopefullyTemporaryCheck()
         {
             if (!Moonstorm.Components.EventDirector.Instance) return true; // the fuck?  nebby whyyy
+            if (!this.requiredStateMachine.Equals("Nemesis")) return true; // oops forgot this
             EntityStateMachine m = EntityStateMachine.FindByCustomName(Moonstorm.Components.EventDirector.Instance.gameObject, "Nemesis");
             return m && m.IsInMainState();
         }

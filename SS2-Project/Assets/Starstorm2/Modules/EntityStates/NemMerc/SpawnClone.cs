@@ -115,7 +115,11 @@ namespace EntityStates.NemMerc
             {
                 return false;
             }
-            foreach(var item in illegalItems)
+            if(ItemCatalog.GetItemDef(itemIndex).ContainsTag(ItemTag.CannotCopy)) // engi turret filter
+            {
+                return false;
+            }
+            foreach (var item in illegalItems)
             {
                 if(item.itemIndex == itemIndex)
                 {
