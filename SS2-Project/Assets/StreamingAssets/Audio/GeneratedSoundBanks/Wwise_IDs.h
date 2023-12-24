@@ -14,10 +14,22 @@ namespace AK
     namespace EVENTS
     {
         static const AkUniqueID AUGURY = 202915568U;
+        static const AkUniqueID CHIRRDASHSTART = 874728115U;
+        static const AkUniqueID CHIRRFIREPRIMARY = 1172202385U;
+        static const AkUniqueID CHIRRFIREPRIMARYSINGLE = 959550553U;
+        static const AkUniqueID CHIRRFIRESPECIAL = 295786462U;
+        static const AkUniqueID CHIRRFIRESPITBOMB = 709034819U;
+        static const AkUniqueID CHIRRFRIENDCONVERT = 2709397138U;
+        static const AkUniqueID CHIRRGRABFLYUP = 649273493U;
+        static const AkUniqueID CHIRRGRABSTART = 1440739445U;
+        static const AkUniqueID CHIRRGRABTHROW = 3463916741U;
+        static const AkUniqueID CHIRRLEAFHIT = 2661831180U;
+        static const AkUniqueID CHIRRSPITBOMBIMPACT = 670255117U;
         static const AkUniqueID CHIRRSPRINTLOOP = 2730174275U;
         static const AkUniqueID CHIRRSPRINTSTART = 3002414883U;
         static const AkUniqueID CHIRRSPRINTSTOP = 1060087585U;
         static const AkUniqueID CHIRRSTEP = 3251339703U;
+        static const AkUniqueID CHIRRTHROWHITGROUND = 4180439307U;
         static const AkUniqueID CYBORGPRIMARY = 3105092465U;
         static const AkUniqueID CYBORGSECONDARY = 4193594557U;
         static const AkUniqueID CYBORGSPECIALPLACE = 1373732423U;
@@ -77,6 +89,8 @@ namespace AK
         static const AkUniqueID NEMMANDOSWINGSABER = 113243767U;
         static const AkUniqueID NEMMANDOSWINGSABERDECISIVE = 1052053089U;
         static const AkUniqueID NUCLEATORCHARGEPRIMARY = 420124658U;
+        static const AkUniqueID PLAY_CHIRRCSS = 2871870429U;
+        static const AkUniqueID PLAY_CHIRRSPITBOMBLOOP = 2747610824U;
         static const AkUniqueID PLAY_NEMMERC_CLONE_SPAWN = 3212416563U;
         static const AkUniqueID PLAY_NEMMERC_DASH = 280596056U;
         static const AkUniqueID PLAY_NEMMERC_DASH_START = 1211800949U;
@@ -100,6 +114,8 @@ namespace AK
         static const AkUniqueID SPAWNMGR = 2187217924U;
         static const AkUniqueID SS_WINDAMBIENCE = 892248604U;
         static const AkUniqueID STIRRINGSOUL = 3982623506U;
+        static const AkUniqueID STOP_CHIRRCSS = 3156814475U;
+        static const AkUniqueID STOP_CHIRRSPITBOMBLOOP = 1032313774U;
         static const AkUniqueID STOP_SOFT_RAIN = 4234730185U;
         static const AkUniqueID STRANGECAN = 3750145159U;
         static const AkUniqueID SWIFTSKATEBOARD = 961366952U;

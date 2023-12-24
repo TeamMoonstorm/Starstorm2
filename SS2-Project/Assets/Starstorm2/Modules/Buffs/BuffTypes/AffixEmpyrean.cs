@@ -15,9 +15,11 @@ namespace Moonstorm.Starstorm2.Buffs
 {
     public sealed class AffixEmpyrean : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdEmpyrean", SS2Bundle.Indev);
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdEmpyrean", SS2Bundle.Equipments);
 
         public static List<EliteDef> blacklistedEliteDefs = new List<EliteDef>();
+
+        public override Material OverlayMaterial => SS2Assets.LoadAsset<Material>("matRainbowOverlay", SS2Bundle.Equipments);
         public static void AddEliteToBlacklist(EliteDef eliteDef) => blacklistedEliteDefs.Add(eliteDef);
 
 
@@ -27,17 +29,6 @@ namespace Moonstorm.Starstorm2.Buffs
             On.RoR2.Util.GetBestBodyName += MakeEmpyreanName;
             RoR2Application.onLoad += CreateBlacklist;
             IL.RoR2.CharacterBody.RecalculateStats += RecalculateStatsEmpyreanIL;
-            //On.RoR2.CharacterBody.RecalculateStats += RecalculateStatsEmpyrean;
-        }
-
-        private void RecalculateStatsEmpyrean(On.RoR2.CharacterBody.orig_RecalculateStats orig, CharacterBody self)
-        {
-            orig(self);
-            if (NetworkServer.active && self.HasBuff(RoR2Content.Buffs.AffixBlue) && self.HasBuff(SS2Content.Buffs.bdEmpyrean))
-            {
-                self.maxShield -= self.maxShield * 0.9f;
-                self.maxHealth += self.maxShield * 4f;
-            }    
         }
 
         private void RecalculateStatsEmpyreanIL(ILContext il)
@@ -60,7 +51,6 @@ namespace Moonstorm.Starstorm2.Buffs
                 {
                     if (body.HasBuff(SS2Content.Buffs.bdEmpyrean))
                     {
-                        Debug.Log("is empyrean :: DEFAULT PERCENTAGE - " + defaultPercentage );
                         return 0.1f;
                     }
                     return defaultPercentage;
@@ -132,12 +122,17 @@ namespace Moonstorm.Starstorm2.Buffs
             AddEliteToBlacklist(DLC1Content.Elites.Void);
         }
 
-        public sealed class Behavior : BaseBuffBodyBehavior, IOnIncomingDamageServerReceiver
+        public sealed class Behavior : BaseBuffBodyBehavior, IOnKilledServerReceiver
         {
             [BuffDefAssociation]
             private static BuffDef GetBuffDef() => SS2Content.Buffs.bdEmpyrean;
             private string ogSubtitle;
             private CharacterModel model;
+            private GameObject rainbowEffect;
+            private SetStateOnHurt setStateOnHurt;
+            private bool wasStun;
+            private bool wasHitStun;
+            private bool wasFrozen;
             private string empyreanToken = "SS2_ELITE_EMPYREAN_SUBTITLE";
 
             private void Start()
@@ -149,36 +144,37 @@ namespace Moonstorm.Starstorm2.Buffs
                         body.AddBuff(ed.eliteEquipmentDef.passiveBuffDef);
                 }
 
+                this.setStateOnHurt = base.GetComponent<SetStateOnHurt>();
+                if(setStateOnHurt)
+                {
+                    wasStun = setStateOnHurt.canBeStunned;
+                    setStateOnHurt.canBeStunned = false;
+                    wasHitStun = setStateOnHurt.canBeHitStunned;
+                    setStateOnHurt.canBeHitStunned = false;
+                    wasFrozen = setStateOnHurt.canBeFrozen;
+                    setStateOnHurt.canBeFrozen = false;
+                }
                 ogSubtitle = body.subtitleNameToken;
                 body.subtitleNameToken = empyreanToken;
 
                 model = body.modelLocator.modelTransform.GetComponent<CharacterModel>();
                 if (model != null)
                 {
-                    /*if (model.currentOverlays.Contains<Material>(Addressables.LoadAssetAsync<Material>("RoR2/Base/EliteHaunted/matEliteHauntedOverlay.mat").WaitForCompletion()))
-                        model.currentOverlays.RemoveIfInCollection(Addressables.LoadAssetAsync<Material>("RoR2/Base/EliteHaunted/matEliteHauntedOverlay.mat").WaitForCompletion());
-
-                    model.currentOverlays.AddIfNotInCollection<Material>(SS2Assets.LoadAsset<Material>("matRainbow", SS2Bundle.Indev));*/
-                    if (model.currentOverlays[1] != SS2Assets.LoadAsset<Material>("matRainbow", SS2Bundle.Indev))
-                        model.currentOverlays[1] = SS2Assets.LoadAsset<Material>("matRainbow", SS2Bundle.Indev);
-                    //model.UpdateOverlays();
-
-                    /* CharacterModel.RendererInfo[] rendererInfos = model.baseRendererInfos;
-                     if (rendererInfos != null)
-                     {
-                         for (int i = 0; i < rendererInfos.Length; i++)
-                         {
-                             if (rendererInfos[i].renderer && !rendererInfos[i].ignoreOverlays)
-                             {
-                                 rendererInfos[i].renderer.sharedMaterials[1] = SS2Assets.LoadAsset<Material>("matRainbow", SS2Bundle.Indev);
-                             }
-                         }
-                     }*/
+                    this.rainbowEffect = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("RainbowAffixEffect", SS2Bundle.Equipments), model.transform);
+                    //if (model.currentOverlays.Contains<Material>(Addressables.LoadAssetAsync<Material>("RoR2/Base/EliteHaunted/matEliteHauntedOverlay.mat").WaitForCompletion()))
+                    //    model.currentOverlays.RemoveIfInCollection(Addressables.LoadAssetAsync<Material>("RoR2/Base/EliteHaunted/matEliteHauntedOverlay.mat").WaitForCompletion());
                 }
             }
 
             private void OnDestroy()
             {
+                if (rainbowEffect) Destroy(this.rainbowEffect);
+                if(setStateOnHurt)
+                {
+                    setStateOnHurt.canBeStunned = wasStun;
+                    setStateOnHurt.canBeHitStunned = wasHitStun;
+                    setStateOnHurt.canBeFrozen = wasFrozen;
+                }
                 foreach (EliteDef ed in EliteCatalog.eliteDefs)
                 {
                     if (body.HasBuff(ed.eliteEquipmentDef.passiveBuffDef))
@@ -188,9 +184,40 @@ namespace Moonstorm.Starstorm2.Buffs
                 body.subtitleNameToken = ogSubtitle;
             }
 
-            public void OnIncomingDamageServer(DamageInfo damageInfo)
+            // item rewards are temporary
+            public void OnKilledServer(DamageReport damageReport)
             {
-                //body.outOfCombatStopwatch
+                int numItems = this.body.isChampion ? 4 : 2;
+                float spreadAngle = 360f / numItems;
+                float startingAngle = -(spreadAngle / 2) * (numItems - 1);
+                for(int i = 0; i < numItems; i++)
+                {
+                    float angle = startingAngle + i * spreadAngle;
+                    Vector3 direction = Quaternion.Euler(0, angle, 0) * damageReport.victimBody.coreTransform.forward;
+                    Vector3 velocity = Vector3.up * 20f + direction * 10f;
+
+                    PickupIndex pickupIndex = RoR2.Artifacts.SacrificeArtifactManager.dropTable.GenerateDrop(RoR2.Artifacts.SacrificeArtifactManager.treasureRng);
+                    if (pickupIndex != PickupIndex.none)
+                    {
+                        PickupDropletController.CreatePickupDroplet(pickupIndex, damageReport.victimBody.corePosition, velocity);
+                    }
+                }
+
+                if(Util.CheckRoll(20f))
+                {
+                    EliteDef[] eliteDefs = EliteCatalog.eliteDefs.Where(x => !blacklistedEliteDefs.Contains(x) && x.eliteEquipmentDef).ToArray();
+                    int eliteIndex = Mathf.FloorToInt(UnityEngine.Random.Range(0, eliteDefs.Length));
+
+                    EquipmentIndex equipmentIndex = eliteDefs[eliteIndex].eliteEquipmentDef.equipmentIndex;
+                    PickupIndex pickupIndex = PickupCatalog.FindPickupIndex(equipmentIndex);
+
+                    if(pickupIndex != PickupIndex.none)
+                    {
+                        PickupDropletController.CreatePickupDroplet(pickupIndex, damageReport.victimBody.corePosition, Vector3.up * 20f);
+                    }
+                    
+
+                }
             }
         }
     }

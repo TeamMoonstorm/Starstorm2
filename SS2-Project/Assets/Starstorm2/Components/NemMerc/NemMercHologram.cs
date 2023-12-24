@@ -141,7 +141,7 @@ namespace Moonstorm.Starstorm2.Components
                 }
             }
 
-            if (this.ownerAI && this.target)
+            if (this.ownerAI && this.target) // this is so nemmerc boss can use holograms
             {
                 this.ownerAI.customTarget.gameObject = base.gameObject;              
             }

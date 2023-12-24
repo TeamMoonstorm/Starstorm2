@@ -45,7 +45,6 @@ namespace EntityStates.NemMerc
         {
             base.OnEnter();
 
-            // still fucking teleports to 0,0 sometimes
             this.duration = ShadowStep.baseDuration; //movespeedstat ??
 
             NemMercTracker tracker = base.GetComponent<NemMercTracker>();
@@ -113,7 +112,7 @@ namespace EntityStates.NemMerc
             }
         }
 
-        private void UpdateTarget() // shitcode. im getting desparate. it keeps teleporting to 0,0 and i dont know why
+        private void UpdateTarget()
         {
             if (this.target)
             {
@@ -331,6 +330,8 @@ namespace EntityStates.NemMerc
                     }
                 }
             }
+
+            //this is so fucking ugly
             public void GetCameraState(CameraRigController cameraRigController, ref CameraState cameraState)
             {
                 float t = this.movementCurve.Evaluate(Mathf.Clamp01(overrideStopwatch / overrideDuration));
