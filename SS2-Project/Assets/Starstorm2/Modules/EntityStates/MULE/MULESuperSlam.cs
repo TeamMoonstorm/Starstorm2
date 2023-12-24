@@ -74,8 +74,7 @@ namespace EntityStates.MULE
                 attackerFiltering = AttackerFiltering.NeverHitSelf,
                 damageType = DamageType.Generic,
                 impactEffect = EntityStates.Bison.Headbutt.hitEffectPrefab.GetComponent<EffectIndex>()
-                
-        };
+            };
 
             blast.Fire();
 

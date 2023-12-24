@@ -12,6 +12,7 @@ using UnityEngine.SceneManagement;
 using JetBrains.Annotations;
 using RoR2.UI;
 using System.Runtime.CompilerServices;
+using RoR2.Skills;
 
 namespace Moonstorm.Starstorm2.Components
 {
@@ -19,11 +20,20 @@ namespace Moonstorm.Starstorm2.Components
 	{
 		// this class is half supports-multiple-friends, half not. i need to be less indecisive.
 
+		//★ alt special that has multiple friends + they explode automatically at a certain point? less precise nuking, more chaotic
+		//assuming exploding stays.
+
 		// this class manages adding and removing friends
 		// FOR STUFF THAT DIRECTLY INTERACTS WITH FRIEND'S AI AND BODY: SEE Items.ChirrFriendHelper
 		private CharacterMaster master;
 		public static float friendAimSpeedCoefficient = 3f;
 		public Friend currentFriend;
+
+		//★ i'm making a mess sorry
+		//these are used to set skill overrides when adding / losing friend. seemed like best place for it.
+		SkillLocator skillLocator;
+		public static SkillDef befriendSkillDef = SS2Assets.LoadAsset<SkillDef>("Befriend", SS2Bundle.Chirr);
+		public static SkillDef explodeSkillDef = SS2Assets.LoadAsset<SkillDef>("ExplodeFriend", SS2Bundle.Chirr);
 
 		public static float healthDecayTime = 60f;
 
@@ -62,7 +72,8 @@ namespace Moonstorm.Starstorm2.Components
 		{
 			this.master = base.GetComponent<CharacterMaster>();
 			this.currentFriend = default(Friend);
-            Inventory.onServerItemGiven += ShareNewItem;
+			skillLocator = master.bodyInstanceObject.GetComponent<SkillLocator>();
+			Inventory.onServerItemGiven += ShareNewItem;
             TeamComponent.onLeaveTeamGlobal += CheckFriendLeftTeam;
 		}
         private void OnDestroy()
@@ -198,8 +209,17 @@ namespace Moonstorm.Starstorm2.Components
 			master.inventory.CopyItemsFrom(this.master.inventory, this.ItemFilter);
 			master.inventory.GiveItem(SS2Content.Items.ChirrFriendHelper, 1);
 
-			if(!isScepter)
-				master.inventory.GiveItem(RoR2Content.Items.HealthDecay, (int)healthDecayTime); // item stack = how long it takes to go from 100% health to 0
+			//★ removed in favor of wither on hit for explode behavior
+			/*if(!isScepter)
+				master.inventory.GiveItem(RoR2Content.Items.HealthDecay, (int)healthDecayTime); // item stack = how long it takes to go from 100% health to 0*/
+
+			if (skillLocator != null)
+			{
+				if (skillLocator.special.skillDef == befriendSkillDef)
+				{
+					skillLocator.special.SetSkillOverride(this, explodeSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+				}
+			}
 
 			if(oldTeam == TeamIndex.Void && master.inventory.GetEquipmentIndex() == DLC1Content.Equipment.EliteVoidEquipment.equipmentIndex) // UNDO VOIDTOUCHED
 				master.inventory.SetEquipmentIndex(EquipmentIndex.None);
@@ -264,6 +284,15 @@ namespace Moonstorm.Starstorm2.Components
 			}
 				
 			this.currentFriend = default(Friend);
+
+			if (skillLocator != null)
+			{
+				//★ this feels overly safe but i guess it's future proofed if there's ever an alt special that still uses friends?
+				if (skillLocator.special.skillDef == explodeSkillDef)
+				{
+					skillLocator.special.UnsetSkillOverride(this, explodeSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+				}
+			}
 		}
 
 		// HEALTHBAR STUFF
