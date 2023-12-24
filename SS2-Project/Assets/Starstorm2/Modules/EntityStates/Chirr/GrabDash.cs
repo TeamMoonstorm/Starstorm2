@@ -112,7 +112,7 @@ namespace EntityStates.Chirr
 		}
 
         // cant grab something that is grabbing us
-        // cant grab something that is being grabbed
+        // cant grab something that is being grabbed (nvm)
         private bool BodyIsGrabbable(GameObject candidate)
         {
             if(GrabController.victimsToGrabControllers.TryGetValue(base.gameObject, out GrabController grabController))

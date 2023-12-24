@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d2dc8cbdb9720c418fcff8f84588cab, type: 3}
-  m_Name: ss2.survivor.nemmerc
+  m_Name: ss2.survivor.chirr
   m_EditorClassIdentifier: 
   nameToken: ???
   displayModelPath: Prefabs/NullModel
   displayModelPrefab: {fileID: 0}
-  hidden: 1
-  achievementIcon: {fileID: 21300000, guid: dacc9cdca8bb7864b887e2e945b02212, type: 3}
+  hidden: 0
+  achievementIcon: {fileID: 21300000, guid: c12f2db59c7bbbd45b6ef350e7a3f3b7, type: 3}
   achievementCondition:
-    assemblyQualifiedName: Moonstorm.Starstorm2.Unlocks.NemMercenary.NemMercenaryUnlockable+NemMercenaryAchievement,
+    assemblyQualifiedName: Moonstorm.Starstorm2.Unlocks.Chirr.ChirrUnlockable+ChirrAchievement,
       Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   serverTracked: 1
   baseServerAchievement:
-    assemblyQualifiedName: Moonstorm.Starstorm2.Unlocks.NemMercenary.NemMercenaryUnlockable+NemMercenaryAchievement+NemMercenaryUnlockableServerAchievement,
+    assemblyQualifiedName: Moonstorm.Starstorm2.Unlocks.Chirr.ChirrUnlockable+ChirrAchievement+ChirrServerAchievement,
       Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  achievementNameToken: SS2_ACHIEVEMENT_NEMMERC_NAME
-  achievementDescToken: SS2_ACHIEVEMENT_NEMMERC_DESC
+  achievementNameToken: SS2_ACHIEVEMENT_CHIRR_NAME
+  achievementDescToken: SS2_ACHIEVEMENT_CHIRR_DESC
   achievedIcon: {fileID: 21300000, guid: a240ebd314e818e41967e55b1dd5a548, type: 3}
   unachievedIcon: {fileID: 21300000, guid: a240ebd314e818e41967e55b1dd5a548, type: 3}
   prerequisiteAchievement:

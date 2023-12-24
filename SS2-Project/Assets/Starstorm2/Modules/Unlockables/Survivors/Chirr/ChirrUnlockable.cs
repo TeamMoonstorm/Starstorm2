@@ -27,20 +27,16 @@ namespace Moonstorm.Starstorm2.Unlocks.Chirr
 
                 private void CheckEmpyrean(DamageReport damageReport)
                 {
-                    throw new System.NotImplementedException();
+                    if (damageReport.attackerTeamIndex == TeamIndex.Player && damageReport.victimIsElite && damageReport.victimBody.HasBuff(SS2Content.Buffs.bdEmpyrean))
+                    {
+                        this.Grant();
+                    }
                 }
 
                 public override void OnUninstall()
                 {
                     base.OnUninstall();
-                }
-
-                private void OnNemMercenaryDefeated(CharacterBody obj)
-                {
-                    if (obj.bodyIndex == nemMercBodyIndex)
-                    {
-                        Grant();
-                    }
+                    GlobalEventManager.onCharacterDeathGlobal -= CheckEmpyrean;
                 }
             }
         }

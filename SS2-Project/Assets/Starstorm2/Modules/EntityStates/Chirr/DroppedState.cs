@@ -14,6 +14,7 @@ namespace EntityStates.Chirr
 		public static float blastRadius = 10f;
 		public static float procCoefficient = 1f;
 		public static float damageCoefficient = 15f;
+		public static float absoluteMaxTime = 8f;
 		public GameObject inflictor;
 		public Vector3 initialVelocity;
 		public static GameObject hitGroundEffect = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Beetle/BeetleGuardGroundSlam.prefab").WaitForCompletion();
@@ -190,7 +191,8 @@ namespace EntityStates.Chirr
 				rigidbody.velocity += Vector3.up * extraGravity * Time.fixedDeltaTime;
 			}
 
-			if (detonateNextFrame && (!base.characterMotor || (base.characterMotor.Motor.GroundingStatus.IsStableOnGround && !base.characterMotor.Motor.LastGroundingStatus.IsStableOnGround)))
+			// should find out why stuff can get stuck floating despite gravity not being disabled...
+			if (base.fixedAge > absoluteMaxTime || detonateNextFrame && (!base.characterMotor || (base.characterMotor.Motor.GroundingStatus.IsStableOnGround && !base.characterMotor.Motor.LastGroundingStatus.IsStableOnGround)))
             {
 				if (base.characterMotor)
 					base.characterMotor.velocity = Vector3.zero;
