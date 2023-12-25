@@ -87,6 +87,7 @@ namespace EntityStates.Chirr
 				if(!rigidbody)
                 {
 					rigidbody = base.gameObject.AddComponent<Rigidbody>();
+					rigidbody.mass = 100f; 
 					this.tempRigidbody = rigidbody;
 					this.tempSphereCollider = base.gameObject.AddComponent<SphereCollider>();
                 }
@@ -192,7 +193,7 @@ namespace EntityStates.Chirr
 			}
 
 			// should find out why stuff can get stuck floating despite gravity not being disabled...
-			if (base.fixedAge > absoluteMaxTime || detonateNextFrame && (!base.characterMotor || (base.characterMotor.Motor.GroundingStatus.IsStableOnGround && !base.characterMotor.Motor.LastGroundingStatus.IsStableOnGround)))
+			if (base.fixedAge > absoluteMaxTime || (detonateNextFrame && (!base.characterMotor || (base.characterMotor.Motor.GroundingStatus.IsStableOnGround && !base.characterMotor.Motor.LastGroundingStatus.IsStableOnGround) )))
             {
 				if (base.characterMotor)
 					base.characterMotor.velocity = Vector3.zero;
@@ -237,7 +238,8 @@ namespace EntityStates.Chirr
 
 					};
 				}
-
+				if (this.tempRigidbody) Destroy(this.tempRigidbody);
+				if (this.tempSphereCollider) Destroy(this.tempSphereCollider);
 				this.outer.SetNextStateToMain();
 			}
 		}

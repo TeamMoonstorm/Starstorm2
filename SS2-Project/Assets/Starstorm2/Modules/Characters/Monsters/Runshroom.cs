@@ -1,4 +1,5 @@
-﻿using RoR2;
+﻿using JetBrains.Annotations;
+using RoR2;
 using UnityEngine;
 
 namespace Moonstorm.Starstorm2.Monsters
@@ -16,4 +17,6 @@ namespace Moonstorm.Starstorm2.Monsters
             MonsterDirectorCards.Add(defaultCard);
         }
     }
+
+    
 }

@@ -16,6 +16,7 @@ namespace EntityStates.Chirr.Claws
         public static SkillDef overrideDef;
         private GrabController grabController;
 
+        private GrabController victimGrabController;
         private Collider victimCollider;
         public static float releaseVictimDistance = 3f;
         public static float graceTimer = 1.5f;
@@ -30,7 +31,11 @@ namespace EntityStates.Chirr.Claws
             Util.PlaySound("ChirrGrabStart", base.gameObject);
             this.grabController = base.GetComponent<GrabController>();
             if(base.isAuthority) // im fucking dogshit at netowrking man......... OnEnter happens before other clients even see the grab, so they dont see grabcontorller victim yet.
+            {
                 this.victimCollider = this.grabController.victimColliders[0]; // this is always the body collider
+                this.victimGrabController = this.grabController.victimBodyObject.GetComponent<GrabController>();
+            }
+                
             base.skillLocator.utility.SetSkillOverride(base.gameObject, overrideDef, GenericSkill.SkillOverridePriority.Contextual);
             this.animator = base.GetModelAnimator();
             if (this.animator)
@@ -56,6 +61,7 @@ namespace EntityStates.Chirr.Claws
             // if victim is gone or dead
             if (!base.isAuthority) return; // should be fine? grabber has "authority" over the victim's positoin
 
+            
             if (this.grabController && !this.grabController.IsGrabbing())
             {
                 this.outer.SetNextStateToMain();
@@ -66,6 +72,14 @@ namespace EntityStates.Chirr.Claws
                 this.grabController.AttemptGrab(null);
                 this.outer.SetNextStateToMain();
                 return;
+            }
+            //i cant stop players from being able to grab eachother because theres latency between your grab and you seeing the other player's
+            // ^(not without moving grabs out of player authority, which probably isnt a bad idea)
+            // so we have to do this
+            if (this.victimGrabController && this.victimGrabController.IsGrabbing() && this.victimGrabController.victimBodyObject == base.gameObject)
+            {
+                this.grabController.AttemptGrab(null);
+                this.outer.SetNextStateToMain();
             }
             if (base.fixedAge < graceTimer) return;
             if(base.isGrounded)
