@@ -12,7 +12,7 @@ namespace Moonstorm.Starstorm2.Components
        
         public string GetContextString([NotNull] Interactor activator)
         {
-            return "SS2_INTERACTABLE_SANTAHAT_CONTEXT";
+            return Language.GetString("SS2_INTERACTABLE_SANTAHAT_CONTEXT");
         }
 
         public Interactability GetInteractability([NotNull] Interactor activator)
