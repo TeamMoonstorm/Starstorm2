@@ -35,7 +35,6 @@ namespace Moonstorm.Starstorm2
         public static bool RiskyModInstalled = false;
         public static bool GOTCEInstalled = false;
         public static bool StageAesthInstalled = false;
-
         public void Awake()
         {
             instance = this;

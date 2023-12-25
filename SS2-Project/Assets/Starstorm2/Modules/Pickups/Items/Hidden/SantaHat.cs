@@ -16,17 +16,17 @@ namespace Moonstorm.Starstorm2.Items
         public override void Initialize()
         {
             DateTime today = DateTime.Today;
-            if (today.Month == 12 && today.Day > 20)
+            if (today.Month == 12)
             {
                 SS2Log.Info("Merry Chirristmas to about " + percentHatChance + "% of you!");
                 CharacterMaster.onCharacterMasterDiscovered += GiveHat;
-                On.RoR2.CharacterModel.Awake += CharacterModel_Awake;
+                On.RoR2.CharacterModel.Start += CharacterModel_Start;
             }
         }
         
         // always enable outside of runs
         // what could possibly go wrong?
-        private static void CharacterModel_Awake(On.RoR2.CharacterModel.orig_Awake orig, CharacterModel self)
+        private static void CharacterModel_Start(On.RoR2.CharacterModel.orig_Start orig, CharacterModel self)
         {
             orig(self);
             if (!Run.instance)

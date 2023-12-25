@@ -4,7 +4,7 @@ using RoR2.Skills;
 using System.Runtime.CompilerServices;
 using UnityEngine.AddressableAssets;
 using R2API;
-
+using System;
 namespace Moonstorm.Starstorm2.Survivors
 {
     //[DisabledContent]
@@ -13,6 +13,9 @@ namespace Moonstorm.Starstorm2.Survivors
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("ChirrBody", SS2Bundle.Chirr);
         public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("ChirrMonsterMaster", SS2Bundle.Chirr);
         public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("Chirr", SS2Bundle.Chirr);
+
+        public static Vector3 chirristmasPos = new Vector3(-6.8455f, -7.0516f, 57.0163f);
+        public static Vector3 chirristmasRot = new Vector3(0, 178.3926f, 0);
         public override void Initialize()
         {
             base.Initialize();
@@ -21,7 +24,21 @@ namespace Moonstorm.Starstorm2.Survivors
                 ScepterCompat();
             }
 
+            DateTime today = DateTime.Today;
+            if (today.Month == 12)
+            {
+                On.RoR2.UI.MainMenu.BaseMainMenuScreen.OnEnter += HiChirrHiiiiii;
+            }
+
             Stage.onStageStartGlobal += FixGoolakeRaycasts;
+        }
+
+        private void HiChirrHiiiiii(On.RoR2.UI.MainMenu.BaseMainMenuScreen.orig_OnEnter orig, RoR2.UI.MainMenu.BaseMainMenuScreen self, RoR2.UI.MainMenu.MainMenuController mainMenuController)
+        {
+            orig(self, mainMenuController);
+
+            GameObject chirb = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("ChirrDisplay", SS2Bundle.Chirr), chirristmasPos, Quaternion.Euler(chirristmasRot));
+            chirb.transform.localScale = Vector3.one * 2.4f;
         }
 
         //Disables CookForFasterSimulation on the terrain in goolake, since it fucks up world raycasts

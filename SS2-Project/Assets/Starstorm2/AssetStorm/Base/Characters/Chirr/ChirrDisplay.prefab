@@ -332,7 +332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 0}
-  itemDisplayRuleSet: {fileID: 0}
+  itemDisplayRuleSet: {fileID: 11400000, guid: fc29cb1dbc2f8b14f851476540cdb45e, type: 2}
   autoPopulateLightInfos: 1
   baseRendererInfos:
   - renderer: {fileID: 48966969702536784}
@@ -353,7 +353,9 @@ MonoBehaviour:
   m_Script: {fileID: -226763392, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transformPairs: []
+  transformPairs:
+  - name: Head
+    transform: {fileID: 3504239746240558680}
 --- !u!95 &4082299531334943150
 Animator:
   serializedVersion: 3
