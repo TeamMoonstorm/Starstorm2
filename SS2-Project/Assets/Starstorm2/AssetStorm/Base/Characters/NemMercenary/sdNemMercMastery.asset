@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: sdNemMercMastery
   m_EditorClassIdentifier: 
   baseSkins: []
-  icon: {fileID: 21300000, guid: 0c1e0b0817d88de4397951d01139ce78, type: 3}
+  icon: {fileID: 21300000, guid: 7bfebe52e0e077c4ab103af87aec25a2, type: 3}
   nameToken: SS2_SKIN_NEMESIS_MERCENARY_MASTERY
   unlockableName: 
   unlockableDef: {fileID: 11400000, guid: 2e1542c2d2b026f45ba2f6ffce9ef567, type: 2}
@@ -22,29 +22,41 @@ MonoBehaviour:
   rendererInfos:
   - renderer: {fileID: 2466952346865569324, guid: c4e23172c0baee94788d12ea5fef7776,
       type: 3}
-    defaultMaterial: {fileID: 2100000, guid: 4f6d6b84769f03d4888ed5ee1f6919f5, type: 2}
+    defaultMaterial: {fileID: 2100000, guid: d14970c5b9ba8a04a846e71db7605600, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
   - renderer: {fileID: 6074474949049614108, guid: c4e23172c0baee94788d12ea5fef7776,
       type: 3}
-    defaultMaterial: {fileID: 2100000, guid: c6111af01ebb4fc4d97ab122998173fc, type: 2}
+    defaultMaterial: {fileID: 2100000, guid: 9d6e212a6d4dd1a4097adcd2c827853e, type: 2}
     defaultShadowCastingMode: 1
-    ignoreOverlays: 1
+    ignoreOverlays: 0
     hideOnDeath: 0
   - renderer: {fileID: 299338572752285507, guid: c4e23172c0baee94788d12ea5fef7776,
       type: 3}
-    defaultMaterial: {fileID: 2100000, guid: c6111af01ebb4fc4d97ab122998173fc, type: 2}
+    defaultMaterial: {fileID: 2100000, guid: 9d6e212a6d4dd1a4097adcd2c827853e, type: 2}
     defaultShadowCastingMode: 1
-    ignoreOverlays: 1
+    ignoreOverlays: 0
     hideOnDeath: 0
   - renderer: {fileID: 586923045182830388, guid: c4e23172c0baee94788d12ea5fef7776,
       type: 3}
-    defaultMaterial: {fileID: 2100000, guid: bfc900b5be241f843bdcd164329aaf7a, type: 2}
+    defaultMaterial: {fileID: 2100000, guid: 9d6e212a6d4dd1a4097adcd2c827853e, type: 2}
     defaultShadowCastingMode: 1
-    ignoreOverlays: 1
+    ignoreOverlays: 0
     hideOnDeath: 0
   gameObjectActivations: []
-  meshReplacements: []
+  meshReplacements:
+  - renderer: {fileID: 2466952346865569324, guid: c4e23172c0baee94788d12ea5fef7776,
+      type: 3}
+    mesh: {fileID: 1169524244749767583, guid: 1f1c787090f2932468b4b7ff804e9489, type: 3}
+  - renderer: {fileID: 6074474949049614108, guid: c4e23172c0baee94788d12ea5fef7776,
+      type: 3}
+    mesh: {fileID: 5601745471758294369, guid: 1f1c787090f2932468b4b7ff804e9489, type: 3}
+  - renderer: {fileID: 299338572752285507, guid: c4e23172c0baee94788d12ea5fef7776,
+      type: 3}
+    mesh: {fileID: -2956779991109863131, guid: 1f1c787090f2932468b4b7ff804e9489, type: 3}
+  - renderer: {fileID: 586923045182830388, guid: c4e23172c0baee94788d12ea5fef7776,
+      type: 3}
+    mesh: {fileID: 4300000, guid: 53b92cc57122c714dac0f956888e96f5, type: 2}
   projectileGhostReplacements: []
   minionSkinReplacements: []

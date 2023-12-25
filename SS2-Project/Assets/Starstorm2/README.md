@@ -52,6 +52,16 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 
 ## Changelog
 **Warning: content spoilers below!**
+### 0.6.0
+* New Content
+    * Survivor: Chirr.
+    * Event: Empyrean Invasion.
+    * Elite: Empyrean.
+    * Artifact: Artifact of Havoc.
+* General
+    * Added ScrollableLobbyUI as a dependency.
+
+
 ### 0.5.7
 * General
     * Added French translation. Thank you StyleMyk!
@@ -95,108 +105,3 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Improved blacklist for Proliferate's clone.
 * Drones
     * Shock and Duplicator drones now drop purchasable interactables when destroyed.
-
-### 0.5.4
-* General
-    * Updated Portuguese translation. 
-* Items
-    * Needles has new VFX.
-    * Haunted Lamp is now corrupted by Newly Hatched Zoea.
-    * Haunted Lamp now fires its projectile from the follower itself, if it exists.
-    * Relic of Termination's drop table is now properly instantiated.
-* Executioner
-    * Slightly nerfed Crowd Dispersion: (Cooldown: 5 -> 6, Debuff Duration: 4 -> 3, Reduced movement speed)
-    * Removed the range limit on Execution.
-    * Actually fixed interaction with Haunted Lamp and Ion Burst.
-* Nemesis Commando
-    * Reduced the strength of some normals. 
-* Drones
-    * Fixed a Duplicator Drone nullref.
-* Interactables
-    * Refabricator no longer has collision.
-    * Refabricator should spawn slightly more often.
-    * Refabricator's drop table is now properly instantiated.
-    * Broken Shock Drone's price is now better positioned. 
-
-### 0.5.3
-* General
-    * All survivors now have proper dithering
-* Items
-    * Remuneration is now less memorable
-* Executioner
-    * Fixed unintended interaction with Haunted Lamp and Ion Burst.
-* Nemesis Mercenary
-    * Splatter's reload now scales somewhat better with attack speed.
-    * Devitalize's slide now scales lower with movement speed.
-    * Proliferate can no longer activate equipments or carry items that grant extra lives.
-    * Damage from Proliferate's clone is now attributed to the player.
-    * Item displays now correctly replace limbs.
-    * Added post processing effects to Exploit and Proliferate.
-    * Adjusted various tokens and tooltips.
-    * Fixed Dispatch teleporting to 0,0,0.
-    * Fixed Nemesis Mercenary's collision breaking when using certain dashes together.
-* Events
-    * Vestiges are now immune to void fog.
-* Monsters
-    * Added a trail to Rushrum to help visibility.
-    * Wayfarer now crouches under low ceilings.
-
-### 0.5.2
-* General
-    * Disabled some WIP content that slipped through. ;)
-    * Ensured all survivors are properly added to the ExpansionDef.
-* Executioner
-    * Secondary no longer fires charges gained while already firing unless the button is held.
-    * Added some missing equipment displays.
-* Monsters
-    * Actually fixed Follower and Wayfarer sounds playing globally, and adjusted volume.
-    * Networked Follower and Wayfarer attacks.
-    * Slightly refined Follower and Wayfarer AIs and body stats. Expect more heavy tuning soon.
-    * Adjusted Wayfarer's projectile attack to be much more performance friendly.
-    * Updated the icon used for the buff provided by Followers and Wayfarer.
-    * Followers now only spawn as a summon from the Wayfarer, rather than showing up in post-loop enemy pools.
-* Interactables
-    * Networked Refabricator visual effects.
-
-### 0.5.1
-* General
-    * Fixed an incompability with other mods resulting in a crash, notably when loading into FrozenWall with Gunslinger enabled.
-* Nemesis Commando
-    * Fixed materials displaying incorrectly on logbook screen.
-* Monsters
-    * Fixed Follower and Wayfarer sounds playing globally.
-* Interactables
-    * Restored missing material on the Broken Shock Drone interactable.
-
-### 0.5.0
-* New Content
-    * Monsters: Rushrum, Follower
-    * Bosses: Wayfarer, ???
-    * Unlockable Skin: Heel (Mercenary)
-    * Grandmastery Skins: Clandestine (Huntress), Electrocutioner (Executioner)
-    * Interactables: Refabricator, Shock Drone, Duplicator Drone
-* Executioner
-    * Slightly buffed the damage of Primary and Special.
-    * Secondary's charge rate now scales with the attack speed stat.
-    * Optimized the performance of the Fear debuff.
-    * Fixed various misplaced item displays.
-* Nemesis Commando
-    * Various visual polishes.
-    * Secondary's reload speed now scales with the attack speed stat.
-    * Rebalanced boss fight and improved boss AI.
-    * Restored boss immunity to being knocked out of bounds and to fall damage.
-    * Fixed various misplaced item displays.
-* Items & Equipment
-    * Fixed X4 Stimulant cooldown scaling with first stack.
-    * Adjusted Nkota's Heritage pickup model to address various issues.
-    * Slightly tweaked visuals of Stirring Soul.
-* Events
-    * Temporarily disabled elite events.
-    * Rebalanced event costs to hopefully make them rarer during loops.
-    * Reworked the Nemesis invasion event so only one boss may spawn per stage.
-* Other
-    * Updated translations for Nemesis Commando and Executioner.
-    * Added PT-BR translations.
-    * Survivor ragdolls no longer disappear when they die off screen.
-    * Pressurized canister has been disabled while we work on a multiplayer bug.
-    * ...and so much more!

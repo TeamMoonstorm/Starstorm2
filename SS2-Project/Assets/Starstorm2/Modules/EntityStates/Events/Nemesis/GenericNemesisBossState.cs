@@ -164,7 +164,7 @@ namespace EntityStates.Events
                 };
 
                 new NemesisSpawnCard.SyncBaseStats(nemesisBossBody).Send(R2API.Networking.NetworkDestination.Clients);
-                combatSquad.AddMember(master);
+                combatSquad.AddMember(master); 
                 master.onBodyDeath.AddListener(OnBodyDeath);
             };
             DirectorCore.instance.TrySpawnObject(directorSpawnRequest);

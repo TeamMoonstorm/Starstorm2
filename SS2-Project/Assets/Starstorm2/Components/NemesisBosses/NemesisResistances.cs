@@ -11,8 +11,7 @@ namespace Moonstorm.Starstorm2.Components
 
         private void Awake()
         {
-            this.body = base.GetComponent<CharacterBody>();
-            this.body.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
+            this.body = base.GetComponent<CharacterBody>();      
         }
         private void OnEnable()
         {
@@ -30,6 +29,12 @@ namespace Moonstorm.Starstorm2.Components
                 self.characterBodyToStacks.Remove(this.body);
         }
 
+        private void FixedUpdate()
+        {
+            // doing this in fixedupdate cuz some states/effects remove fall damage immunity. 
+            this.body.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
+        }
+
         static NemesisResistances()
         {
             On.RoR2.HealthComponent.Suicide += ResistVoid;
@@ -41,15 +46,12 @@ namespace Moonstorm.Starstorm2.Components
             var body = self.body;
             if (body)
             {
-                Debug.Log("body found");
                 var master = body.master;
                 if (master)
                 {
-                    Debug.Log("master found");
                     if (damageType == DamageType.VoidDeath && body.GetComponent<NemesisResistances>() != null)
                     {
                         body.SetBodyStateToPreferredInitialState();
-                        Debug.Log("void death + nemresistances found");
                         //ChatMessage.SendColored("He laughs in the face of the void.", ColorCatalog.ColorIndex.VoidItem);
 
                         int rng = Run.instance.runRNG.RangeInt(1, 4);
