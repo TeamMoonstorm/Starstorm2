@@ -113,8 +113,6 @@ namespace Moonstorm.Starstorm2
             public static ItemDef NemesisBossHelper;
 
             public static ItemDef TerminationHelper;
-
-            public static ItemDef HavocHelper;
         }
 
         public static class Equipments

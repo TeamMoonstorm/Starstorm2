@@ -28,7 +28,7 @@ namespace EntityStates.Events
             if (!combatDirector)
                 return;
 
-            DirectorCard chosenMonsterCard = combatDirector.SelectMonsterCardForCombatShrine(20f * Run.instance.difficultyCoefficient);
+            DirectorCard chosenMonsterCard = combatDirector.SelectMonsterCardForCombatShrine(20f * Run.instance.loopClearCount);
             GameObject chosenMonsterPrefab = chosenMonsterCard.spawnCard.prefab;
             CharacterBody monsterBody = chosenMonsterPrefab.GetComponent<CharacterMaster>().bodyPrefab.GetComponent<CharacterBody>();
 
