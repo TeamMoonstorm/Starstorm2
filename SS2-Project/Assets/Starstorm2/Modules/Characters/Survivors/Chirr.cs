@@ -16,6 +16,8 @@ namespace Moonstorm.Starstorm2.Survivors
 
         public static Vector3 chirristmasPos = new Vector3(-6.8455f, -7.0516f, 57.0163f);
         public static Vector3 chirristmasRot = new Vector3(0, 178.3926f, 0);
+
+        private static GameObject chirristmas;
         public override void Initialize()
         {
             base.Initialize();
@@ -36,9 +38,9 @@ namespace Moonstorm.Starstorm2.Survivors
         private void HiChirrHiiiiii(On.RoR2.UI.MainMenu.BaseMainMenuScreen.orig_OnEnter orig, RoR2.UI.MainMenu.BaseMainMenuScreen self, RoR2.UI.MainMenu.MainMenuController mainMenuController)
         {
             orig(self, mainMenuController);
-
-            GameObject chirb = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("ChirrDisplay", SS2Bundle.Chirr), chirristmasPos, Quaternion.Euler(chirristmasRot));
-            chirb.transform.localScale = Vector3.one * 2.4f;
+            if (chirristmas) return;
+            chirristmas = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("ChirrDisplay", SS2Bundle.Chirr), chirristmasPos, Quaternion.Euler(chirristmasRot));
+            chirristmas.transform.localScale = Vector3.one * 2.4f;
         }
 
         //Disables CookForFasterSimulation on the terrain in goolake, since it fucks up world raycasts
