@@ -29,7 +29,8 @@ namespace Moonstorm.Starstorm2.Buffs
             }
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
             {
-                args.armorAdd += body.levelArmor * Run.instance.difficultyCoefficient;
+                //args.armorAdd += body.levelArmor * Run.instance.difficultyCoefficient; //what?
+                args.armorAdd += 20f;
                 //args.critAdd += 20f;
                 args.damageMultAdd += 0.2f;
                 args.attackSpeedMultAdd += 0.5f;
