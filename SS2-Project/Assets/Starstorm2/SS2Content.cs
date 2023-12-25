@@ -150,8 +150,6 @@ namespace Moonstorm.Starstorm2
 
             public static BuffDef BuffChirrRegen;
 
-            public static BuffDef BuffChirrWither;
-
             public static BuffDef BuffChocolate;
 
             public static BuffDef BuffExecutionerSuperCharged;
