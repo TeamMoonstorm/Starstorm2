@@ -9950,6 +9950,7 @@ GameObject:
   - component: {fileID: 2261307823653295328}
   - component: {fileID: 5607785784583755293}
   - component: {fileID: 6617645052745681058}
+  - component: {fileID: 5870048050987864427}
   m_Layer: 0
   m_Name: NemMercDisplay
   m_TagString: Untagged
@@ -10025,7 +10026,9 @@ MonoBehaviour:
   m_Script: {fileID: -226763392, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transformPairs: []
+  transformPairs:
+  - name: Head
+    transform: {fileID: 6045131746154133404}
 --- !u!95 &2261307823653295328
 Animator:
   serializedVersion: 3
@@ -10060,6 +10063,19 @@ MonoBehaviour:
   skins:
   - {fileID: 11400000, guid: fffad6d8356572f489714cca1c6e5aa2, type: 2}
   - {fileID: 11400000, guid: 52560a9dd4290734b89720584a41d092, type: 2}
+--- !u!114 &6617645052745681058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7280384992411391262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -46258121, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundCenter: {fileID: 0}
 --- !u!114 &5870048050987864427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10077,19 +10093,6 @@ MonoBehaviour:
   modelRotation: {x: 0, y: 0, z: 0, w: 1}
   minDistance: 0.75
   maxDistance: 2
---- !u!114 &6617645052745681058
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7280384992411391262}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -46258121, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundCenter: {fileID: 0}
 --- !u!1 &7284700644263626236
 GameObject:
   m_ObjectHideFlags: 0
