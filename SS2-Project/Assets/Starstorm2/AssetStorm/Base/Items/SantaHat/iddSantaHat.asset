@@ -1,0 +1,1294 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c9c430476270cb42ae82672a367a0e1, type: 3}
+  m_Name: iddSantaHat
+  m_EditorClassIdentifier: 
+  keyAsset: {fileID: 11400000, guid: 9a2001a3e39bc0041a01461784d3b327, type: 2}
+  displayPrefabs:
+  - {fileID: 8226894083144598858, guid: 6576c79eb3d5aea449ac4d05f6886228, type: 3}
+  displayPrefab: {fileID: 8226894083144598858, guid: 6576c79eb3d5aea449ac4d05f6886228,
+    type: 3}
+  namedDisplayDictionary:
+  - idrsName: idrsAcidLarva
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: BodyBase
+      localPos: {x: -0.56272, y: 5.69194, z: 0.16606}
+      localAngles: {x: 0, y: 0, z: 11.1812}
+      localScales: {x: 3, y: 3, z: 3}
+      limbMask: 0
+  - idrsName: idrsAncientWisp
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - idrsName: idrsArchWisp
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - idrsName: idrsAssassin2
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: -0.98383, y: -0.06858, z: -0.16127}
+      localAngles: {x: 282.4578, y: 340.2057, z: 104.1913}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - idrsName: idrsBackupDrone
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: HeadCenter
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - idrsName: idrsBandit
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0.08291, y: 0.4754, z: -0.11443}
+      localAngles: {x: 338.256, y: 0, z: 348.5372}
+      localScales: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+  - idrsName: idrsBandit2
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: -0.00001, y: 0.29192, z: -0.00836}
+      localAngles: {x: 345.0849, y: 0, z: 0}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - idrsName: idrsBeetle
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: -0.26438, y: 0.61469, z: 0.41197}
+      localAngles: {x: 325.3172, y: 163.2338, z: 0.4274}
+      localScales: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+  - idrsName: idrsBeetleGuard
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0.45722, y: 0.14939, z: 1.53072}
+      localAngles: {x: 279.4358, y: 3.11592, z: 191.62}
+      localScales: {x: 1.3, y: 1.3, z: 1.3}
+      limbMask: 0
+  - idrsName: idrsBeetleQueen
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0.43141, y: 3.86114, z: 1.01586}
+      localAngles: {x: 329.2326, y: 193.5472, z: 355.1926}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - idrsName: idrsBell
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: ShieldR
+      localPos: {x: -0.34264, y: -0.87189, z: 0.12021}
+      localAngles: {x: 353.1704, y: 2.61984, z: 157.6658}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - idrsName: idrsBison
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: -0.02986, y: 0.03856, z: 0.76505}
+      localAngles: {x: 283.5952, y: 19.05395, z: 154.8291}
+      localScales: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+  - idrsName: idrsBrother
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0.02415, y: 0.25967, z: 0.00048}
+      localAngles: {x: 347.3935, y: 0, z: 354.7377}
+      localScales: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+  - idrsName: idrsCaptain
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0.0523, y: 0.32304, z: -0.03922}
+      localAngles: {x: 346.2706, y: 2.23206, z: 350.6739}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - idrsName: idrsClayBoss
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: PotLidTop
+      localPos: {x: -0.82073, y: 0.45928, z: 1.12905}
+      localAngles: {x: 348.4473, y: 0.30506, z: 24.15367}
+      localScales: {x: 0.4, y: 0.4, z: 0.4}
+      limbMask: 0
+  - idrsName: idrsClayBruiser
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: -0.03915, y: 0.61867, z: -0.00872}
+      localAngles: {x: 348.7434, y: 358.3855, z: 8.21628}
+      localScales: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - idrsName: idrsClayGrenadier
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Torso
+      localPos: {x: 0.08655, y: 0.41647, z: 0.18029}
+      localAngles: {x: 344.3437, y: 352.6646, z: 351.3255}
+      localScales: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - idrsName: idrsClayman
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Shield
+      localPos: {x: 0, y: 0.00001, z: -0.10438}
+      localAngles: {x: 0, y: 177.2943, z: 0}
+      localScales: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+  - idrsName: idrsCommando
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0.04644, y: 0.43844, z: -0.10864}
+      localAngles: {x: 336.7175, y: 1.89406, z: 348.5821}
+      localScales: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+  - idrsName: idrsCroco
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: -0.95717, y: -0.25621, z: 2.0575}
+      localAngles: {x: 305.2648, y: 341.9192, z: 183.5091}
+      localScales: {x: 3, y: 3, z: 3}
+      limbMask: 0
+  - idrsName: idrsDrone1
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 1.25904, y: -1.56595, z: 0.16828}
+      localAngles: {x: 1.12258, y: 172.3573, z: 128.2047}
+      localScales: {x: 2, y: 2, z: 2}
+      limbMask: 0
+  - idrsName: idrsDrone2
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: HeadCenter
+      localPos: {x: 0.04835, y: 0.22766, z: 1.18389}
+      localAngles: {x: 78.31418, y: 0, z: 350.3549}
+      localScales: {x: 1.3, y: 1.3, z: 1.3}
+      limbMask: 0
+  - idrsName: idrsDroneCommander
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: HeadCenter
+      localPos: {x: 0.07732, y: 0.48174, z: -0.05159}
+      localAngles: {x: 351.2407, y: 355.2571, z: 348.8556}
+      localScales: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - idrsName: idrsEmergencyDrone
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: TopRing
+      localPos: {x: 0, y: 1.50105, z: -0.16555}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 1.5, y: 1.5, z: 1.5}
+      limbMask: 0
+  - idrsName: idrsEngi
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Chest
+      localPos: {x: 0.07037, y: 0.79545, z: 0.00002}
+      localAngles: {x: 352.4547, y: 1.45236, z: 349.0716}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - idrsName: idrsEngiTurret
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0, y: 1.26189, z: -0.99465}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - idrsName: idrsEngiWalkerTurret
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0, y: 1.86647, z: -1.24211}
+      localAngles: {x: 0.37759, y: 0, z: 0}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - idrsName: idrsEquipmentDrone
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: HeadCenter
+      localPos: {x: 0, y: -0.77169, z: 0.30954}
+      localAngles: {x: 89.64227, y: 180, z: 180}
+      localScales: {x: 0.7, y: 0.7, z: 0.7}
+      limbMask: 0
+  - idrsName: idrsExecutioner2
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: -0.03907, y: 0.30033, z: -0.09496}
+      localAngles: {x: 338.3028, y: 0, z: 17.26959}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - idrsName: idrsFlameDrone
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: MuzzleCenter
+      localPos: {x: 0, y: -0.39723, z: -0.55093}
+      localAngles: {x: 0, y: 0, z: 180}
+      localScales: {x: 0.8, y: 0.8, z: 0.8}
+      limbMask: 0
+  - idrsName: idrsFlyingVermin
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Body
+      localPos: {x: -0.34872, y: 1.39936, z: 0.05879}
+      localAngles: {x: 350.6492, y: 4.15581, z: 10.05075}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - idrsName: idrsFusionCellDestructibleBody
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - idrsName: idrsGeep
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: MainBody3
+      localPos: {x: -0.41303, y: 0.49287, z: 0.57157}
+      localAngles: {x: 0, y: 0, z: 21.79475}
+      localScales: {x: 0.4, y: 0.4, z: 0.4}
+      limbMask: 0
+  - idrsName: idrsGip
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: MainBody4
+      localPos: {x: -0.32021, y: 0.26907, z: 0.49761}
+      localAngles: {x: 352.202, y: 358.0321, z: 14.21086}
+      localScales: {x: 0.7, y: 0.7, z: 0.7}
+      limbMask: 0
+  - idrsName: idrsGolem
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0.64224, y: 1.19904, z: -0.07837}
+      localAngles: {x: 345.6555, y: 3.9662, z: 344.3656}
+      localScales: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+  - idrsName: idrsGrandparent
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0, y: -1.13763, z: -0.9867}
+      localAngles: {x: 342.73, y: 0, z: 0}
+      localScales: {x: 0.7, y: 0.7, z: 0.7}
+      limbMask: 0
+  - idrsName: idrsGravekeeper
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 1.09978, y: 2.71895, z: 0.43224}
+      localAngles: {x: 341.7596, y: 0, z: 339.129}
+      localScales: {x: 0.8, y: 0.8, z: 0.8}
+      limbMask: 0
+  - idrsName: idrsGreaterWisp
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: MaskBase
+      localPos: {x: -0.2665, y: 1.34972, z: 0.19062}
+      localAngles: {x: 350.7488, y: 357.7108, z: 13.96379}
+      localScales: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - idrsName: idrsGup
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: MainBody3
+      localPos: {x: -0.37846, y: 0.41218, z: 0.68607}
+      localAngles: {x: 0, y: 0, z: 22.80344}
+      localScales: {x: 0.24, y: 0.24, z: 0.24}
+      limbMask: 0
+  - idrsName: idrsHand
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 1.13239, y: 2.36928, z: -0.00012}
+      localAngles: {x: 353.0032, y: 355.9264, z: 352.9243}
+      localScales: {x: 2, y: 2, z: 2}
+      limbMask: 0
+  - idrsName: idrsHereticBody
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: -0.31374, y: -0.10285, z: -0.14326}
+      localAngles: {x: 287.8345, y: 265.9387, z: 176.1221}
+      localScales: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - idrsName: idrsHermitCrab
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Muzzle
+      localPos: {x: -0.14356, y: -1.14594, z: 0.2651}
+      localAngles: {x: 352.4932, y: 356.9399, z: 13.75628}
+      localScales: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - idrsName: idrsHuntress
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0.03135, y: 0.3553, z: -0.13881}
+      localAngles: {x: 326.0483, y: 0, z: 351.9513}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - idrsName: idrsImp
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Neck
+      localPos: {x: 0.09896, y: 0.24733, z: 0.14832}
+      localAngles: {x: 342.3454, y: 176.5378, z: 13.21071}
+      localScales: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - idrsName: idrsImpBoss
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Neck
+      localPos: {x: 0.3778, y: 0.1396, z: -0.56215}
+      localAngles: {x: 0, y: 171.1789, z: 12.66548}
+      localScales: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - idrsName: idrsJellyfish
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Hull2
+      localPos: {x: -0.29837, y: 0.82484, z: -1.05521}
+      localAngles: {x: 284.8011, y: 24.84138, z: 350.6503}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - idrsName: idrsLamp
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0.36512, y: 2.05656, z: -0.11039}
+      localAngles: {x: 346.714, y: 0.15998, z: 346.8176}
+      localScales: {x: 2, y: 2, z: 2}
+      limbMask: 0
+  - idrsName: idrsLampBoss
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0.55872, y: 2.62196, z: -0.27541}
+      localAngles: {x: 331.2087, y: 353.7269, z: 347.106}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - idrsName: idrsLemurian
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0.62757, y: 0.41964, z: -3.58469}
+      localAngles: {x: 280.4783, y: 175.1663, z: 173.5119}
+      localScales: {x: 4, y: 4, z: 4}
+      limbMask: 0
+  - idrsName: idrsLemurianBruiser
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0.54155, y: 1.47381, z: 1.16189}
+      localAngles: {x: 282.5729, y: 333.306, z: 214.2775}
+      localScales: {x: 1.4, y: 1.4, z: 1.4}
+      limbMask: 0
+  - idrsName: idrsLoader
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0.04455, y: 0.30759, z: 0}
+      localAngles: {x: 354.9258, y: 0.80061, z: 351.0217}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - idrsName: idrsLunarExploder
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: MuzzleCore
+      localPos: {x: 0, y: 1.23629, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - idrsName: idrsLunarGolem
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: -0.08405, y: 1.23933, z: 0.64308}
+      localAngles: {x: 351.6472, y: 0, z: 8.25732}
+      localScales: {x: 0.4, y: 0.4, z: 0.4}
+      limbMask: 0
+  - idrsName: idrsLunarWisp
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Mask
+      localPos: {x: 0.99257, y: -0.77723, z: 2.7131}
+      localAngles: {x: 81.95495, y: 276.6736, z: 265.3365}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - idrsName: idrsMage
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0.02218, y: 0.27873, z: -0.07049}
+      localAngles: {x: 353.406, y: 0.65855, z: 354.284}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - idrsName: idrsMagmaWorm
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: -0.0204, y: -0.2053, z: 0.19187}
+      localAngles: {x: 73.51504, y: -0.00001, z: 14.97443}
+      localScales: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - idrsName: idrsMajorConstruct
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Muzzle
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - idrsName: idrsMegaConstructBody
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Muzzle
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - idrsName: idrsMegaDrone
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Base
+      localPos: {x: 0, y: 0.60377, z: -1.84519}
+      localAngles: {x: 272.7065, y: 180, z: 180}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - idrsName: idrsMerc
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0.03409, y: 0.32576, z: -0.00001}
+      localAngles: {x: 351.3619, y: 0.60895, z: 355.9521}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - idrsName: idrsMiniMushroom
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: -0.71888, y: 0.07569, z: -0.23439}
+      localAngles: {x: 81.26279, y: 283.9063, z: 21.9217}
+      localScales: {x: 0.8, y: 0.8, z: 0.8}
+      limbMask: 0
+  - idrsName: idrsMinorConstruct
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: CapTop
+      localPos: {x: 0, y: 1.34362, z: -0.10986}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 1.15, y: 1.15, z: 1.15}
+      limbMask: 0
+  - idrsName: idrsMissileDrone
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Body
+      localPos: {x: -0.70839, y: 1.55737, z: -0.00453}
+      localAngles: {x: 0.65527, y: 359.7624, z: 21.08566}
+      localScales: {x: 1.3, y: 1.3, z: 1.3}
+      limbMask: 0
+  - idrsName: idrsNemCommando
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: -0.23459, y: 1.37055, z: -0.56949}
+      localAngles: {x: 328.9551, y: 359.9168, z: 16.27997}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - idrsName: idrsNemMercCloneBody
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: -0.04514, y: 0.31542, z: -0.06282}
+      localAngles: {x: 343.2797, y: 0, z: 17.29941}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - idrsName: idrsNemMercenary
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: -0.04514, y: 0.31542, z: -0.06282}
+      localAngles: {x: 343.2797, y: 0, z: 17.29941}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - idrsName: idrsNewt
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: StompMuzzle
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - idrsName: idrsNone
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: ChargeUpFX
+      localPos: {x: -0.01091, y: 0.07791, z: -0.01751}
+      localAngles: {x: 347.058, y: 358.513, z: 6.61127}
+      localScales: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - idrsName: idrsNullifier
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Muzzle
+      localPos: {x: -0.62588, y: 1.41688, z: -0.13095}
+      localAngles: {x: 316.0521, y: 176.2238, z: 349.2427}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - idrsName: idrsParent
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: -101.576, y: 145.1092, z: -20.32316}
+      localAngles: {x: 306.5913, y: 110.0505, z: 323.0309}
+      localScales: {x: 50, y: 50, z: 50}
+      limbMask: 0
+  - idrsName: idrsPotMobile
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: MuzzleRight
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - idrsName: idrsRailGunner
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0.02756, y: 0.26065, z: -0.10633}
+      localAngles: {x: 325.1851, y: 0, z: 348.6043}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - idrsName: idrsRobDriverBody
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0.01484, y: 0.3256, z: -0.0435}
+      localAngles: {x: 346.7689, y: 0.84767, z: 350.4629}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - idrsName: idrsRoboAssassin
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - idrsName: idrsRoboBallBoss
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Center
+      localPos: {x: 0, y: 1.15454, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.115, y: 0.115, z: 0.115}
+      limbMask: 0
+  - idrsName: idrsRoboBallMini
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Muzzle
+      localPos: {x: -0.32026, y: 1.26693, z: -1.18876}
+      localAngles: {x: 0, y: 0, z: 15.91912}
+      localScales: {x: 0.9, y: 0.9, z: 0.9}
+      limbMask: 0
+  - idrsName: idrsRunshroom
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0, y: 3.16651, z: 0}
+      localAngles: {x: 354.552, y: 0, z: 0}
+      localScales: {x: 2, y: 2, z: 2}
+      limbMask: 0
+  - idrsName: idrsScav
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Chest
+      localPos: {x: -1.32748, y: 6.99067, z: -1.34861}
+      localAngles: {x: 319.8054, y: 185.2762, z: 345.0685}
+      localScales: {x: 1.3, y: 1.3, z: 1.3}
+      limbMask: 0
+  - idrsName: idrsSecurityDrone
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: EliteDisplay
+      localPos: {x: 0.08291, y: 0.4754, z: -0.11443}
+      localAngles: {x: 338.256, y: 0, z: 348.5372}
+      localScales: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+  - idrsName: idrsShockDroneBody
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Muzzle
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - idrsName: idrsStrikeDrone
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: HeadCenter
+      localPos: {x: 0, y: 1.17339, z: 0.55411}
+      localAngles: {x: 350.982, y: 0, z: 0}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - idrsName: idrsTitan
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: -0.73039, y: 6.4355, z: 0.94796}
+      localAngles: {x: 349.5647, y: 358.6234, z: 7.55781}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - idrsName: idrsToolbot
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: -1.26565, y: 2.91417, z: 1.68885}
+      localAngles: {x: 301.3002, y: 184.2054, z: 346.933}
+      localScales: {x: 2, y: 2, z: 2}
+      limbMask: 0
+  - idrsName: idrsTraderBody
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - idrsName: idrsTreebot
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: FlowerBase
+      localPos: {x: 0.91874, y: 0.91368, z: -0.00198}
+      localAngles: {x: 0, y: 0, z: 340.9489}
+      localScales: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+  - idrsName: idrsTurret1
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: HeadCenter
+      localPos: {x: 0, y: -0.04544, z: -4.06312}
+      localAngles: {x: 274.4003, y: 180, z: 180}
+      localScales: {x: 5, y: 5, z: 5}
+      limbMask: 0
+  - idrsName: idrsUrchinTurret
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Muzzle
+      localPos: {x: -1.02262, y: -0.76151, z: -0.69184}
+      localAngles: {x: 4.27358, y: 5.78399, z: 128.1711}
+      localScales: {x: 1.5, y: 1.5, z: 1.5}
+      limbMask: 0
+  - idrsName: idrsVagrant
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Hull
+      localPos: {x: -0.13019, y: 1.75217, z: 0.10246}
+      localAngles: {x: 354.3227, y: 22.61813, z: 13.35713}
+      localScales: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - idrsName: idrsVermin
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0, y: -0.65582, z: -0.18172}
+      localAngles: {x: 344.5146, y: 180, z: 180}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - idrsName: idrsVoidBarnacle
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: -0.20572, y: -0.37212, z: -0.88311}
+      localAngles: {x: 346.6547, y: 269.0032, z: 98.92166}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - idrsName: idrsVoidJailer
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: -0.75554, y: -0.1975, z: -0.2106}
+      localAngles: {x: 1.71986, y: 332.6728, z: 105.0801}
+      localScales: {x: 0.4, y: 0.4, z: 0.4}
+      limbMask: 0
+  - idrsName: idrsVoidMegaCrab
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: BodyBase
+      localPos: {x: -0.26468, y: 4.72869, z: 5.86741}
+      localAngles: {x: 0, y: 0, z: 11.93328}
+      localScales: {x: 1.4, y: 1.4, z: 1.4}
+      limbMask: 0
+  - idrsName: idrsVoidSurvivor
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0.07153, y: 0.21546, z: -0.08232}
+      localAngles: {x: 324.7215, y: 0, z: 340.1211}
+      localScales: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - idrsName: idrsVulture
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: -0.00002, y: 0.30552, z: -2.16393}
+      localAngles: {x: 286.0857, y: 180, z: 180}
+      localScales: {x: 3, y: 3, z: 3}
+      limbMask: 0
+  - idrsName: idrsWisp
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: 0.1518, y: 0.04225, z: 1.03988}
+      localAngles: {x: 279.6808, y: 240.2746, z: 307.1348}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - idrsName: idrsChirr
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: Head
+      localPos: {x: -0.00677, y: -0.28949, z: 0.38338}
+      localAngles: {x: 300.8978, y: 13.81611, z: 168.3843}
+      localScales: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+  - idrsName: idrsMiniVoidRaidCrabBodyPhase3
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: EyeMuzzle
+      localPos: {x: 0.00003, y: 11.2103, z: -4.36174}
+      localAngles: {x: 352.7327, y: 0, z: 0}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - idrsName: idrsVoidRaidCrabBody
+    idrs:
+      address: 
+      useDirectReference: 1
+      asset: {fileID: 0}
+    displayRules:
+    - ruleType: 0
+      displayPrefabIndex: 0
+      childName: EyeMuzzle
+      localPos: {x: 0.00003, y: 11.2103, z: -4.36174}
+      localAngles: {x: 352.7327, y: 0, z: 0}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 0

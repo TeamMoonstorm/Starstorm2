@@ -78,6 +78,8 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef Augury;
 
+            public static ItemDef SantaHat;
+
             public static ItemDef ScavengersFortune;
 
             public static ItemDef ShackledLamp;
