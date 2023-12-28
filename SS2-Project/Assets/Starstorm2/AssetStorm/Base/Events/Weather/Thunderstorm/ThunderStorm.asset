@@ -21,7 +21,7 @@ MonoBehaviour:
   endMessageToken: SS2_EVENT_THUNDERSTORM_END
   messageColor: {r: 0.2509804, g: 0.40000004, b: 0.5568628, a: 1}
   startSound: {fileID: 11400000, guid: f593ecf0d5bd1d5499ee9cfbf6f225b2, type: 2}
-  availableStages: 155583247
+  availableStages: 0
   customStageNames:
   - FBLScene
   category: CommonEvents
@@ -45,7 +45,10 @@ MonoBehaviour:
     address: 
     useDirectReference: 1
     asset: {fileID: 0}
-  requiredExpansionDefs: []
+  requiredExpansionDefs:
+  - _asset: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+    _address: 
+    _useDirectReference: 0
   requiredExpansions:
   - address: 
     useDirectReference: 1

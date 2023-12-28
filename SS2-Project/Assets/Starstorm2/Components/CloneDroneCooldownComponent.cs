@@ -12,13 +12,15 @@ namespace Moonstorm.Starstorm2.Components
         [SerializeField]
         public static Material defaultMat = SS2Assets.LoadAsset<Material>("matCloneDroneLight", SS2Bundle.Interactables);
         [SerializeField]
-        public static Material disableMat = SS2Assets.LoadAsset<Material>("matCloneDroneLightInvalid", SS2Bundle.Interactables);
+        public static Material disableMat = SS2Assets.LoadAsset<Material>("matCloneDroneNoLight", SS2Bundle.Interactables);
 
         private ModelLocator modelLocator;
         private GameObject model;
         private ChildLocator childLocator;
         private GameObject glowMesh;
         private MeshRenderer glowMeshRenderer;
+
+        private CharacterModel charModel; 
 
         private SkillLocator skillLoc;
         private bool hasSkill = true;
@@ -35,9 +37,9 @@ namespace Moonstorm.Starstorm2.Components
         {
             modelLocator = GetComponent<ModelLocator>();
             model = modelLocator.modelTransform.gameObject;
-            childLocator = model.GetComponent<ChildLocator>();
-            glowMesh = childLocator.FindChild("GlowMesh").gameObject;
-            glowMeshRenderer = glowMesh.GetComponent<MeshRenderer>();
+
+            charModel = model.GetComponent<CharacterModel>();
+
             skillLoc = GetComponent<SkillLocator>();
 
             var droneBody = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Drones/Drone1Body.prefab").WaitForCompletion();
@@ -63,10 +65,8 @@ namespace Moonstorm.Starstorm2.Components
         {
             if (skillLoc.primary.stock < 1)
             {
-                if (hasSkill)
-                {
+                if (hasSkill){
                     hasSkill = false;
-                    glowMeshRenderer.material = disableMat;
                 }
 
                 if (skillLoc.primary.cooldownRemaining <= flickerDur && skillLoc.primary.cooldownRemaining > 0)
@@ -76,10 +76,17 @@ namespace Moonstorm.Starstorm2.Components
                     {
                         flickerStopwatch = 0f;
 
-                        if (glowMeshRenderer.material == disableMat)
-                            glowMeshRenderer.material = defaultMat;
-                        else
-                            glowMeshRenderer.material = disableMat;
+                        if (charModel)
+                        {
+                            if(charModel.baseRendererInfos[2].defaultMaterial == disableMat || charModel.baseRendererInfos[2].defaultMaterial == defaultMat){
+                                if (charModel.baseRendererInfos[2].defaultMaterial == disableMat){
+                                    charModel.baseRendererInfos[2].defaultMaterial = defaultMat;
+
+                                }else if (charModel.baseRendererInfos[2].defaultMaterial == defaultMat){
+                                    charModel.baseRendererInfos[2].defaultMaterial = disableMat;
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -88,7 +95,9 @@ namespace Moonstorm.Starstorm2.Components
                 if (!hasSkill)
                 {
                     hasSkill = true;
-                    glowMeshRenderer.material = defaultMat;
+                    if (charModel){
+                        charModel.baseRendererInfos[2].defaultMaterial = defaultMat;
+                    }
                 }
             }
 

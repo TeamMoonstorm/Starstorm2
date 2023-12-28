@@ -21,6 +21,7 @@ namespace Moonstorm.Starstorm2
 
         private static List<SS2EventCard> instances = new List<SS2EventCard>();
         public AddressableItemDef requiredItemAddressable;
+        public ArtifactDef requiredArtifactDef;
         public GameObject fallbackVFX;
         public EventVFX[] eventVFX = Array.Empty<EventVFX>();
         
@@ -79,11 +80,20 @@ namespace Moonstorm.Starstorm2
             return false;
         }
 
+        private bool checkRequiredArtifact()
+        {
+            if (!requiredArtifactDef)
+                return true;
+
+            return (RunArtifactManager.instance.IsArtifactEnabled(requiredArtifactDef));
+        }
+
         // this is needed to make nemesis events only spawn once per stage/not overlap.
         // can be removed once MSU is fixed to not allow events to overridde each other on custom state machines.
         private bool HopefullyTemporaryCheck()
         {
             if (!Moonstorm.Components.EventDirector.Instance) return true; // the fuck?  nebby whyyy
+            if (!this.requiredStateMachine.Equals("Nemesis")) return true; // oops forgot this
             EntityStateMachine m = EntityStateMachine.FindByCustomName(Moonstorm.Components.EventDirector.Instance.gameObject, "Nemesis");
             return m && m.IsInMainState();
         }
@@ -94,7 +104,7 @@ namespace Moonstorm.Starstorm2
             if(!flag)
                 return flag;
 
-            flag = checkRequiredItem() && HopefullyTemporaryCheck();
+            flag = checkRequiredItem() && HopefullyTemporaryCheck() && checkRequiredArtifact();
 
             return flag;
         }

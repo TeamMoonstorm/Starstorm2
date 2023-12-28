@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 140337805, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: dccsLampFamily
+  m_EditorClassIdentifier: 
+  categories:
+  - name: Champions
+    cards:
+    - spawnCard: {fileID: 11400000, guid: 168f622659bb6df4591247d0d1631b26, type: 2}
+      selectionWeight: 1
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockable: 
+      forbiddenUnlockable: 
+      requiredUnlockableDef: {fileID: 0}
+      forbiddenUnlockableDef: {fileID: 0}
+    selectionWeight: 1
+  - name: Basic Monsters
+    cards:
+    - spawnCard: {fileID: 11400000, guid: 0240d4b4354e10b4a928f023108ecc7c, type: 2}
+      selectionWeight: 1
+      spawnDistance: 1
+      preventOverhead: 1
+      minimumStageCompletions: 0
+      requiredUnlockable: 
+      forbiddenUnlockable: 
+      requiredUnlockableDef: {fileID: 0}
+      forbiddenUnlockableDef: {fileID: 0}
+    selectionWeight: 4
+  selectionChatString: SS2_FAMILY_LAMP
+  minimumStageCompletion: 1
+  maximumStageCompletion: 2147483647

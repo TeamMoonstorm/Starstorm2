@@ -78,10 +78,13 @@ namespace Moonstorm.Starstorm2.Components
                 CloneOwnership clonership = ownerBody.gameObject.AddComponent<CloneOwnership>();
                 clonership.clone = this;
                 clonership.maxRecasts = this.maxRecasts;
-                this.ownerInputBank = ownerBody.inputBank;
+                this.ownerInputBank = ownerBody.inputBank;        
                 
-                
+
+
             }
+
+
             if (ownerMaster.playerCharacterMasterController)
             {
                 this.ownerUser = ownerMaster.playerCharacterMasterController.networkUser;
@@ -98,11 +101,24 @@ namespace Moonstorm.Starstorm2.Components
 
                     NetworkIdentity bodyId = body.networkIdentity;
                     bodyId.AssignClientAuthority(this.ownerUser.connectionToClient);
-                }
-                
+                }              
+            }
+
+
+            if (this.body && this.ownerInputBank)
+            {
+                AttackerOverrideManager.AddOverride(this.body.gameObject, ownerInputBank.gameObject);
             }
         }
-        
+
+        private void OnDestroy()
+        {
+            if (this.body)
+            {
+                AttackerOverrideManager.RemoveOverride(this.body.gameObject);
+            }
+        }
+
         private void AttemptResolveBody()
         {
             SS2Log.Info("CloneInputBank: Attempting to resolve clone body");
@@ -158,10 +174,6 @@ namespace Moonstorm.Starstorm2.Components
                 SS2Log.Error("CloneInputBank: Missing InputBanks! inputBank: " + this.inputBank + " | ownerInputBank: " + this.ownerInputBank);
             }
             
-            
-
-            
-
             if(copyMovements)
             {
                 this.inputBank.moveVector = this.ownerInputBank.moveVector;
@@ -196,7 +208,6 @@ namespace Moonstorm.Starstorm2.Components
                 this.bodyStateMachine.SetNextState(new CloneDash { target = ownerInputBank.gameObject });
             }
         }
-
 
         public class CloneOwnership : MonoBehaviour
         {

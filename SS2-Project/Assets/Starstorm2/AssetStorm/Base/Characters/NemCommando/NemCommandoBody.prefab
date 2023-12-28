@@ -8627,6 +8627,7 @@ GameObject:
   - component: {fileID: 5439088048611070477}
   - component: {fileID: 5179981108523595503}
   - component: {fileID: 5061554231556540974}
+  - component: {fileID: 2519830362051547703}
   - component: {fileID: 153537405517609358}
   - component: {fileID: 730773486998813778}
   - component: {fileID: 1405590291017794180}
@@ -8874,7 +8875,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7426401133873199425}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7196d6464f5113d409b3ae0adc2a4995, type: 3}
   m_Name: 
@@ -8885,6 +8886,25 @@ MonoBehaviour:
   footstepDustPrefab: {fileID: 1581438006475099, guid: e97bdc6bbe332ef4cb3c2bfa60097ea9,
     type: 3}
   footstepEffect: {fileID: 0}
+--- !u!114 &2519830362051547703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7426401133873199425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1480773730, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseFootstepString: Play_player_footstep
+  baseFootliftString: 
+  sprintFootstepOverrideString: 
+  sprintFootliftOverrideString: 
+  enableFootstepDust: 1
+  footstepDustPrefab: {fileID: 1581438006475099, guid: e97bdc6bbe332ef4cb3c2bfa60097ea9,
+    type: 3}
 --- !u!114 &153537405517609358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15413,15 +15433,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58b1c28c3a9a66e4ca5e1ea6a811a2e0, type: 3}
---- !u!1 &4771206822994148529 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1717949692452490, guid: 58b1c28c3a9a66e4ca5e1ea6a811a2e0,
-    type: 3}
-  m_PrefabInstance: {fileID: 4769489184854729275}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4765122814427923518 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4992707118458373, guid: 58b1c28c3a9a66e4ca5e1ea6a811a2e0,
+    type: 3}
+  m_PrefabInstance: {fileID: 4769489184854729275}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4771206822994148529 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1717949692452490, guid: 58b1c28c3a9a66e4ca5e1ea6a811a2e0,
     type: 3}
   m_PrefabInstance: {fileID: 4769489184854729275}
   m_PrefabAsset: {fileID: 0}

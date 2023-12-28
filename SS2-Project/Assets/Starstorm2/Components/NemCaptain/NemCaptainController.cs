@@ -15,7 +15,7 @@ using EntityStates;
 
 namespace Moonstorm.Starstorm2.Components
 {
-    public class NemCaptainController : NetworkBehaviour, IOnTakeDamageServerReceiver, IOnDamageDealtServerReceiver
+    public class NemCaptainController : NetworkBehaviour, IOnTakeDamageServerReceiver, IOnDamageDealtServerReceiver, IOnKilledOtherServerReceiver
     {
         [Header("Cached Components")]
         public CharacterBody characterBody;
@@ -31,19 +31,34 @@ namespace Moonstorm.Starstorm2.Components
         private List<int> drawnSkillIndicies = new List<int>();
         private bool initialDeck = true;
 
+        [HideInInspector]
+        public SkillDef cachedPrimary;
+
         [Header("Stress Values")]
         public float minStress;
         public float maxStress;
         public float stressPerSecondInCombat;
         public float stressPerSecondOutOfCombat;
         public float stressPerSecondWhileOverstressed;
+        public float stressPerSecondWhileRegenBuff;
         public float stressGainedOnFullDamage;
         public float stressGainedOnOSP;
         public float stressGainedOnHeal;
         public float stressGainedOnCrit;
         public float stressGainedOnKill;
+        public float stressGainedOnMinibossKill;
+        public float stressGainedOnBossKill;
+        public float stressGainedWhenSurrounded;
         public float stressGainedOnItem;
         public float stressOnOutOfOrders;
+        public float surroundedThreshold;
+        [HideInInspector]
+        public static float enemyCheckInterval = 0.033333333f;
+        [HideInInspector]
+        private static float enemyCheckStopwatch = 0f;
+        private SphereSearch enemySearch;
+        private List<HurtBox> hits;
+        public float enemyRadius = 12f;
 
         [Header("Stress UI")]
         [SerializeField]
@@ -164,6 +179,11 @@ namespace Moonstorm.Starstorm2.Components
                 Debug.LogWarning("[Server] function 'Moonstorm.Starstorm2.Components.NemCaptainController::AddStress(System.Single)' called on client");
                 return;
             }
+
+            //halve mana used if has reduction buff
+            if (characterBody.HasBuff(SS2Content.Buffs.bdNemCapManaReduction) && amount > 0)
+                amount /= 2;
+
             Network_stress = Mathf.Clamp(stress + amount, minStress, maxStress);
         }
 
@@ -198,6 +218,12 @@ namespace Moonstorm.Starstorm2.Components
             if (droneAimRoot != null)
                 droneAimRootTransform = droneAimRoot.transform;
 
+            //setup enemy search for surrounded condition
+            hits = new List<HurtBox>();
+            enemySearch = new SphereSearch();
+            enemySearch.mask = LayerIndex.entityPrecise.mask;
+            enemySearch.radius = enemyRadius;
+
             //check for a characterbody .. just in case
             if (characterBody != null)
             {
@@ -223,26 +249,22 @@ namespace Moonstorm.Starstorm2.Components
             }
 
             //give each hand an order
-            //Debug.Log("random skill : " + GetRandomSkillDefFromDeck().skillNameToken);
+            hand1.SetSkillOverride(gameObject, GetRandomSkillDefFromDeck(), GenericSkill.SkillOverridePriority.Replacement);
             if (hand1.skillDef == nullSkill)
                 hand1.UnsetSkillOverride(gameObject, hand1.skillDef, GenericSkill.SkillOverridePriority.Replacement);
-
-            hand1.SetSkillOverride(gameObject, GetRandomSkillDefFromDeck(), GenericSkill.SkillOverridePriority.Replacement);
-            //hand1.SetBaseSkill(GetRandomSkillDefFromDeck());
-            //hand1.SetSkillInternal(GetRandomSkillDefFromDeck());
             Debug.Log("gave hand 1 skill : " + hand1.skillDef);
-            hand2.SetSkillOverride(gameObject, GetRandomSkillDefFromDeck(), GenericSkill.SkillOverridePriority.Replacement);
 
+            hand2.SetSkillOverride(gameObject, GetRandomSkillDefFromDeck(), GenericSkill.SkillOverridePriority.Replacement);
             if (hand2.skillDef == nullSkill)
                 hand2.UnsetSkillOverride(gameObject, hand2.skillDef, GenericSkill.SkillOverridePriority.Replacement);
             Debug.Log("gave hand 2 skill: " + hand2.skillDef);
-            hand3.SetSkillOverride(gameObject, GetRandomSkillDefFromDeck(), GenericSkill.SkillOverridePriority.Replacement);
 
+            hand3.SetSkillOverride(gameObject, GetRandomSkillDefFromDeck(), GenericSkill.SkillOverridePriority.Replacement);
             if (hand3.skillDef == nullSkill)
                 hand3.UnsetSkillOverride(gameObject, hand3.skillDef, GenericSkill.SkillOverridePriority.Replacement);
             Debug.Log("gave hand 3 skill: " + hand3.skillDef);
-            hand4.SetSkillOverride(gameObject, GetRandomSkillDefFromDeck(), GenericSkill.SkillOverridePriority.Replacement);
 
+            hand4.SetSkillOverride(gameObject, GetRandomSkillDefFromDeck(), GenericSkill.SkillOverridePriority.Replacement);
             if (hand4.skillDef == nullSkill)
                 hand4.UnsetSkillOverride(gameObject, hand4.skillDef, GenericSkill.SkillOverridePriority.Replacement);
             Debug.Log("gave hand 4 skill: " + hand4.skillDef);
@@ -413,11 +435,70 @@ namespace Moonstorm.Starstorm2.Components
         {
             float num;
 
-            if (!isOverstressed)
-                num = characterBody.outOfCombat ? stressPerSecondOutOfCombat : stressPerSecondInCombat;
-            else
+            num = characterBody.outOfCombat ? stressPerSecondOutOfCombat : stressPerSecondInCombat;
+
+            if (NetworkServer.active)
+            {
+                enemyCheckStopwatch += Time.fixedDeltaTime;
+                if (enemyCheckStopwatch >= enemyCheckInterval)
+                {
+                    enemyCheckStopwatch -= enemyCheckInterval;
+
+                    //set enemy count to 0
+                    float enemyCount = 0f;
+
+                    //spheresearch time
+                    hits.Clear();
+                    enemySearch.ClearCandidates();
+                    enemySearch.origin = characterBody.corePosition;
+                    enemySearch.RefreshCandidates();
+                    enemySearch.FilterCandidatesByDistinctHurtBoxEntities();
+                    enemySearch.FilterCandidatesByHurtBoxTeam(TeamMask.GetUnprotectedTeams(characterBody.teamComponent.teamIndex));
+                    enemySearch.GetHurtBoxes(hits);
+                    if (hits.Count > 5)
+                    {
+                        //check that everything we found is actually an enemy to some degree
+                        foreach (HurtBox h in hits)
+                        {
+                            HealthComponent hp = h.healthComponent;
+                            if (hp)
+                            {
+                                CharacterBody body = hp?.body;
+                                if (body && body != characterBody && !body.bodyFlags.HasFlag(CharacterBody.BodyFlags.Masterless))
+                                {
+                                    enemyCount++;
+
+                                    //large enemies and elites are scarier
+                                    if (body.hullClassification == HullClassification.Golem || body.hullClassification == HullClassification.BeetleQueen || body.isElite)
+                                    {
+                                        enemyCount++;
+                                        
+                                        //bosses are even scarier
+                                        if (body.isChampion || body.isBoss)
+                                        {
+                                            enemyCount++;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        //if over surrounded threshold, 
+                        if (enemyCount > surroundedThreshold)
+                        {
+                            num += stressGainedWhenSurrounded;
+                        }
+                    }
+                }
+            }
+
+            if (characterBody.HasBuff(SS2Content.Buffs.bdNemCapManaRegen))
+                num += stressPerSecondWhileRegenBuff;
+
+            if (isOverstressed)
                 num = stressPerSecondWhileOverstressed;
 
+            //add final stress per second amount; no stress if invincible
             if (NetworkServer.active && !characterBody.HasBuff(RoR2Content.Buffs.HiddenInvincibility))
                 AddStress(num * Time.fixedDeltaTime);
 
@@ -436,14 +517,14 @@ namespace Moonstorm.Starstorm2.Components
                     characterBody.SetBuffCount(SS2Content.Buffs.bdOverstress.buffIndex, 0);
                 }
 
-                if (hand1.skillDef == nullSkill && hand2.skillDef == nullSkill && hand3.skillDef == nullSkill && hand4.skillDef == nullSkill)
+                /*if (hand1.skillDef == nullSkill && hand2.skillDef == nullSkill && hand3.skillDef == nullSkill && hand4.skillDef == nullSkill)
                 {
                     InitializeCards();
                     if (!isOverstressed)
                     {
                         AddStress(stressOnOutOfOrders);
                     }
-                }
+                }*/
             }
         }
 
@@ -486,6 +567,23 @@ namespace Moonstorm.Starstorm2.Components
         {
             float num = damageReport.damageDealt / bodyHealthComponent.fullCombinedHealth;
             AddStress(num * stressGainedOnFullDamage);
+        }
+
+        public void OnKilledOtherServer(DamageReport damageReport)
+        {
+            if (damageReport.victimIsBoss || damageReport.victimIsChampion || damageReport.victimBody.hullClassification == HullClassification.BeetleQueen)
+            {
+                AddStress(stressGainedOnBossKill);
+                return;
+            }
+
+            if (damageReport.victimIsElite || damageReport.victimBody.hullClassification == HullClassification.Golem)
+            {
+                AddStress(stressGainedOnMinibossKill);
+                return;
+            }
+
+            AddStress(stressGainedOnKill);
         }
 
         private void OnInventoryChanged()

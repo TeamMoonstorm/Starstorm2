@@ -25,16 +25,16 @@ MonoBehaviour:
   slightlyRandomizeOrientation: 0
   skipSpawnWhenSacrificeArtifactEnabled: 0
   weightScalarWhenSacrificeArtifactEnabled: 1
-  maxSpawnsPerStage: -1
+  maxSpawnsPerStage: 1
   addressReferencedDirectorCard:
     spawnCard:
       _asset: {fileID: 0}
       _address: 
       _useDirectReference: 0
-    selectionWeight: 5
+    selectionWeight: 8
     spawnDistance: 0
     preventOverhead: 0
-    minimumStageCompletions: 0
+    minimumStageCompletions: 1
     requiredUnlockableDef:
       _asset: {fileID: 0}
       _address: 
@@ -56,9 +56,12 @@ MonoBehaviour:
   interactableCategory: 8
   customCategory: 
   customCategoryWeight: 1
-  stages: 238305712
+  stages: 201605552
   customStages: []
-  requiredExpansionDefs: []
+  requiredExpansionDefs:
+  - _asset: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+    _address: 
+    _useDirectReference: 0
   requiredExpansions:
   - address: 
     useDirectReference: 1

@@ -1,6 +1,8 @@
-﻿using RoR2;
+﻿using JetBrains.Annotations;
+using RoR2;
 using UnityEngine;
-
+using System;
+using Moonstorm.Starstorm2.Components;
 namespace Moonstorm.Starstorm2.Monsters
 {
     public sealed class Runshroom : MonsterBase
@@ -13,7 +15,27 @@ namespace Moonstorm.Starstorm2.Monsters
         public override void Initialize()
         {
             base.Initialize();
-            MonsterDirectorCards.Add(defaultCard);
+            MonsterDirectorCards.Add(defaultCard);          
+        }
+
+        public override void ModifyPrefab()
+        {
+            base.ModifyPrefab();
+
+            DateTime today = DateTime.Today;
+            if (today.Month == 12)
+            {
+                ChristmasTime();
+            }
+        }
+
+        private void ChristmasTime()
+        {
+            BodyPrefab.AddComponent<SantaHatPickup>();
+            BodyPrefab.AddComponent<EntityLocator>().entity = BodyPrefab;
+            BodyPrefab.AddComponent<Highlight>().targetRenderer = BodyPrefab.GetComponent<ModelLocator>().modelTransform.GetComponent<CharacterModel>().mainSkinnedMeshRenderer;
         }
     }
+
+    
 }

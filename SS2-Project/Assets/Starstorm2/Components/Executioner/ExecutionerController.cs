@@ -20,6 +20,10 @@ namespace Moonstorm.Starstorm2.Components
         private Transform transformExeAxe;
         public GameObject meshExeAxe;
         private bool axeVisible = false;
+
+        public bool hasOOB = false;
+        public bool isExec = false;
+
         private void Awake()
         {
             secondary = GetComponent<SkillLocator>().secondary;

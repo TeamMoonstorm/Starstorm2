@@ -1,8 +1,10 @@
 ﻿using Moonstorm;
 using Moonstorm.Starstorm2;
 using RoR2;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace EntityStates.Executioner
 {
@@ -14,7 +16,9 @@ namespace EntityStates.Executioner
         [TokenModifier("SS2_EXECUTIONER_DASH_DESCRIPTION", StatTypes.Default, 0)]
         public static float debuffDuration = 4.0f;
         public static GameObject dashEffect;
+        public static float debuffCheckInterval = 0.0333333333f;
         public static float hopVelocity; // = 17f;
+        private float debuffCheckStopwatch;
 
         private float duration;
         private SphereSearch fearSearch;
@@ -30,29 +34,8 @@ namespace EntityStates.Executioner
             duration = baseDuration;
             Util.PlayAttackSpeedSound("ExecutionerUtility", gameObject, 1.0f);
             PlayAnimation("FullBody, Override", "Utility", "Utility.playbackRate", duration * 1.75f);
-
+            debuffCheckStopwatch = 0f;
             HopIfAirborne();
-
-            //create dash aoe
-            if (isAuthority)
-            {
-                Vector3 orig = characterBody.corePosition;
-                BlastAttack blast = new BlastAttack()
-                {
-                    baseDamage = 0,
-                    damageType = DamageType.Stun1s,
-                    radius = debuffRadius,
-                    falloffModel = BlastAttack.FalloffModel.None,
-                    baseForce = 600f,
-                    teamIndex = TeamComponent.GetObjectTeam(gameObject),
-                    attacker = gameObject,
-                    inflictor = gameObject,
-                    position = orig,
-                    attackerFiltering = AttackerFiltering.NeverHitSelf,
-                    procCoefficient = 0f
-                };
-                blast.Fire();
-            }
 
             //dash effect
             if (dashEffect)
@@ -88,12 +71,27 @@ namespace EntityStates.Executioner
             foreach (HurtBox h in hits)
             {
                 HealthComponent hp = h.healthComponent;
-                CharacterBody body = hp?.body;
-                if (body && body != characterBody && !body.bodyFlags.HasFlag(CharacterBody.BodyFlags.Masterless) && body.baseNameToken != "BROTHER_BODY_NAME" && body.baseNameToken != "ULTRAMITH_NAME")
+
+                //thanks moffein
+                if (hp)
                 {
-                    /*var fear = body.AddItemBehavior<Fear.Behavior>(1);
-                    fear.inflictor = characterBody;*/
-                    body.AddTimedBuff(SS2Content.Buffs.BuffFear, debuffDuration);
+                    SetStateOnHurt ssoh = hp.GetComponent<SetStateOnHurt>();
+                    if (ssoh)
+                    {
+                        Type state = ssoh.targetStateMachine.state.GetType();
+                        if (state != typeof(EntityStates.StunState) && state != typeof(EntityStates.ShockState) && state != typeof(EntityStates.FrozenState))
+                        {
+                            ssoh.SetStun(-1f);
+                        }
+                    }
+
+                    CharacterBody body = hp?.body;
+                    if (body && body != characterBody && !body.bodyFlags.HasFlag(CharacterBody.BodyFlags.Masterless) && body.baseNameToken != "BROTHER_BODY_NAME" && body.baseNameToken != "ULTRAMITH_NAME")
+                    {
+                        /*var fear = body.AddItemBehavior<Fear.Behavior>(1);
+                        fear.inflictor = characterBody;*/
+                        body.AddTimedBuff(SS2Content.Buffs.BuffFear, debuffDuration);
+                    }
                 }
             }
         }
@@ -112,7 +110,15 @@ namespace EntityStates.Executioner
             if (characterDirection && characterMotor)
                 characterMotor.rootMotion += characterDirection.forward * characterBody.moveSpeed * speedMultiplier * Time.fixedDeltaTime;
 
-            CreateFearAoe();
+            if (NetworkServer.active)
+            {
+                debuffCheckStopwatch += Time.fixedDeltaTime;
+                if (debuffCheckStopwatch >= debuffCheckInterval)
+                {
+                    debuffCheckStopwatch -= debuffCheckInterval;
+                    CreateFearAoe();
+                }
+            }
 
             if (fixedAge >= duration)
                 outer.SetNextStateToMain();

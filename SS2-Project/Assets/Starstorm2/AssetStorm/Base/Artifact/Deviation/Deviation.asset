@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1032072274, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: Deviation
+  m_EditorClassIdentifier: 
+  nameToken: SS2_ARTIFACT_DEVIATION_NAME
+  descriptionToken: SS2_ARTIFACT_DEVIATION_DESC
+  unlockableDef: {fileID: 11400000, guid: 3502049a5725b48418cba145103a50d4, type: 2}
+  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+  smallIconSelectedSprite: {fileID: 21300000, guid: 769d02a3853f9274e946df7f909afd37,
+    type: 3}
+  smallIconDeselectedSprite: {fileID: 21300000, guid: 38e322fc6f8472a4b8c1df6c3148a204,
+    type: 3}
+  pickupModelPrefab: {fileID: 8900270907183929895, guid: f414b6e4cd62182448da35f46c07f477,
+    type: 3}

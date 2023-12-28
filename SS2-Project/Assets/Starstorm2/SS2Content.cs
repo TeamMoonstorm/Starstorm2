@@ -13,6 +13,10 @@ namespace Moonstorm.Starstorm2
         public static class Artifacts
         {
             public static ArtifactDef Cognation;
+
+            public static ArtifactDef Havoc;
+            
+            public static ArtifactDef Deviation;
         }
         public static class Items
         {
@@ -21,6 +25,8 @@ namespace Moonstorm.Starstorm2
             public static ItemDef CoffeeBag;
 
             public static ItemDef Cognation;
+
+            public static ItemDef ChirrFriendHelper;
 
             public static ItemDef DetritiveTrematode;
 
@@ -72,6 +78,8 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef Augury;
 
+            public static ItemDef SantaHat;
+
             public static ItemDef ScavengersFortune;
 
             public static ItemDef ShackledLamp;
@@ -113,6 +121,8 @@ namespace Moonstorm.Starstorm2
 
             public static EquipmentDef EliteKineticEquipment;
 
+            public static EquipmentDef AffixEmpyrean;
+
             public static EquipmentDef equipDivineRight;
 
             public static EquipmentDef BackThruster;
@@ -130,15 +140,17 @@ namespace Moonstorm.Starstorm2
         {
             public static BuffDef BuffAffixVoid;
 
-            public static BuffDef BuffBackThruster;
+            public static BuffDef BuffBackThruster;          
 
-            public static BuffDef BuffChirrAlly;
+            public static BuffDef BuffChirrConfuse;
 
-            public static BuffDef BuffChirrFly;
+            public static BuffDef BuffChirrConvert;
 
-            public static BuffDef BuffChirrRoot;
+            public static BuffDef BuffChirrFriend;
 
-            public static BuffDef BuffChirrSlow;
+            public static BuffDef BuffChirrGrabFriend;
+
+            public static BuffDef BuffChirrRegen;
 
             public static BuffDef BuffChocolate;
 
@@ -239,12 +251,19 @@ namespace Moonstorm.Starstorm2
             public static BuffDef bdKnightCharged;
 
             public static BuffDef bdLampBuff;
+
+            public static BuffDef bdNemCapManaReduction;
+
+            public static BuffDef bdNemCapManaRegen;
+
+            public static BuffDef bdEmpyrean;
         }
 
         public static class Elites
         {
             //public static EliteDef edPurple;
             public static EliteDef edKinetic;
+            public static EliteDef edEmpyrean;
         }
         public static class Scenes
         {
@@ -254,7 +273,7 @@ namespace Moonstorm.Starstorm2
         {
             //public static SurvivorDef SurvivorBorg;
 
-            //public static SurvivorDef SurvivorChirr;
+            public static SurvivorDef SurvivorChirr;
 
             public static SurvivorDef SurvivorExecutioner;
 
@@ -368,6 +387,7 @@ namespace Moonstorm.Starstorm2
                     SS2Log.Info($"Swapping material shaders");
                     SS2Assets.Instance.SwapMaterialShaders();
                     SS2Assets.Instance.FinalizeCopiedMaterials();
+                    SS2Log.Info($"Finished swapping material shaders");
                 }
             };
 

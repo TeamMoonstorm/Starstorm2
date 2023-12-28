@@ -39,7 +39,7 @@ With Art/Modelling/Animation contributions by...
 
 Additional thanks to... 
 * Writing - Blimblam, Lyrical Endymion, rekkadraws, swuff★, T_Dimensional, Zenithrium
-* Translations - Anreol, BannyDee (Spanish), MysticSword (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight (Chinese), Kauzok (Portuguese)
+* Translations - Anreol, BannyDee (Spanish), MysticSword (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight (Chinese), Kauzok (Portuguese), StyleMyk (French)
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze, NAIRB zepol
 * Special thanks - Altzeus, DestroyedClone, Dee', don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, VioletChaolan, valerie ♥ 
 
@@ -51,79 +51,57 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Elite events are currently disabled.
 
 ## Changelog
-
 **Warning: content spoilers below!**
-### 0.5.2
-* General
-    * Disabled some WIP content that slipped through. ;)
-    * Ensured all survivors are properly added to the ExpansionDef.
-* Executioner
-    * Secondary no longer fires charges gained while already firing unless the button is held.
-    * Added some missing equipment displays.
-* Monsters
-    * Actually fixed Follower and Wayfarer sounds playing globally, and adjusted volume.
-    * Networked Follower and Wayfarer attacks.
-    * Slightly refined Follower and Wayfarer AIs and body stats. Expect more heavy tuning soon.
-    * Adjusted Wayfarer's projectile attack to be much more performance friendly.
-    * Updated the icon used for the buff provided by Followers and Wayfarer.
-    * Followers now only spawn as a summon from the Wayfarer, rather than showing up in post-loop enemy pools.
-* Interactables
-    * Networked Refabricator visual effects.
-
-### 0.5.1
-* General
-    * Fixed an incompability with other mods resulting in a crash, notably when loading into FrozenWall with Gunslinger enabled.
-* Nemesis Commando
-    * Fixed materials displaying incorrectly on logbook screen.
-* Monsters
-    * Fixed Follower and Wayfarer sounds playing globally.
-* Interactables
-    * Restored missing material on the Broken Shock Drone interactable.
-
-### 0.5.0
+### 0.6.0
 * New Content
-    * Monsters: Rushrum, Follower
-    * Bosses: Wayfarer, ???
-    * Unlockable Skin: Heel (Mercenary)
-    * Grandmastery Skins: Clandestine (Huntress), Electrocutioner (Executioner)
-    * Interactables: Refabricator, Shock Drone, Duplicator Drone
-* Executioner
-    * Slightly buffed the damage of Primary and Special.
-    * Secondary's charge rate now scales with the attack speed stat.
-    * Optimized the performance of the Fear debuff.
-    * Fixed various misplaced item displays.
-* Nemesis Commando
-    * Various visual polishes.
-    * Secondary's reload speed now scales with the attack speed stat.
-    * Rebalanced boss fight and improved boss AI.
-    * Restored boss immunity to being knocked out of bounds and to fall damage.
-    * Fixed various misplaced item displays.
-* Items & Equipment
-    * Fixed X4 Stimulant cooldown scaling with first stack.
-    * Adjusted Nkota's Heritage pickup model to address various issues.
-    * Slightly tweaked visuals of Stirring Soul.
-* Events
-    * Temporarily disabled elite events.
-    * Rebalanced event costs to hopefully make them rarer during loops.
-    * Reworked the Nemesis invasion event so only one boss may spawn per stage.
-* Other
-    * Updated translations for Nemesis Commando and Executioner.
-    * Added PT-BR translations.
-    * Survivor ragdolls no longer disappear when they die off screen.
-    * Pressurized canister has been disabled while we work on a multiplayer bug.
-    * ...and so much more!
- 
-### 0.4.6
+    * Survivor: Chirr.
+    * Event: Empyrean Invasion.
+    * Elite: Empyrean.
+    * Artifact: Artifact of Havoc.
 * General
-    * Fixed a bug with how Nemesis Commando checks to reload after Single Tap's stock count changes.
+    * Added ScrollableLobbyUI as a dependency.
+
+
+### 0.5.7
+* General
+    * Added French translation. Thank you StyleMyk!
+    * Survivors and monsters are better organized in the config. 
+    * Fixed sweeping disables for survivors, monsters, and interactables.
+    * Fixed the footstep visuals for all survivors and footstep sound effects for Executioner and Nemesis Commando.
+* Nemesis Commando
+    * Fixed issue with timing on primary swing. 
+* Interactables
+    * Refabricator can no longer spawn in Simulacrum.
+* Drones
+    * Restored Duplicator Drone's cooldown visuals.
+
+### 0.5.6
+* General
+    * Finally finished implementing Portuguse translation.
+    * Survivors and monsters can now be disabled.
+    * Unfinished equipments are now entirely disabled.
+    * Typhoon has been reverted to +25% spawn rate and -20% enemy rewards.
 * Items
-    * All items and equipment have better positioning in the logbook. 
-    * Relic of Termination now grants double time for bosses and drops the boss's relevant boss item, assuming it has one. The mark now properly works on bosses as well.
-    * Adjusted Relic of Termination's drop rates.
-    * Adjusted how Relic of Termination scales marked enemy health - it has a lower multiplier, but also grants an additional flat amount of health.
-    * Relic of Termination's marker now immediately disappears upon killing the marked enemy.
-    * Detritive Trematode can no longer be applied to the Artifact Reliquary. 
-    * Adjusted how Relic of Force adjusts skill cooldowns to fix some mod incompatabilities.
-    * X4 and Termination's icons have been cleaned up.
-    * Coffee Bag and Needles now have item displays.
-    * Disabled Baby's Toys. The item does work, but it has a lot of issues which would take a decent amount of time to address, so it's being disabled for now.
+    * Hopefully fixed a Relic of Termination nullref with Refightilization.
+* Nemeis Mercenary
+    * Fixed an bug with Proliferate and sources of damage without an attacker.
+* Monsters
+    * All monsters are now properly added to the ExpansionDef. 
+    * Rushroom's trail VFX now stops when it dies.
+* Interactables
+    * Interactables are now properly added to the ExpansionDef.
+
+### 0.5.5
+* General
+    * Partially implemented Portuguse translation. 
+    * Captain GM now has dithering.
+* Items
+    * Needles's item display now has dithering.
+    * Haunted Lamp no longer drops when disabled.
+    * Haunted Lamp actually fires if the follower doesn't exist.
+* Executioner   
+    * Fixed Execution softlocking the player when failing to land when falling out of bounds.
+* Nemesis Mercenary
+    * Improved blacklist for Proliferate's clone.
+* Drones
+    * Shock and Duplicator drones now drop purchasable interactables when destroyed.

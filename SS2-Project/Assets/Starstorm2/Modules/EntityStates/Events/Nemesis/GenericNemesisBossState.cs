@@ -159,13 +159,12 @@ namespace EntityStates.Events
                 nemesisBossBody = master.GetBody();
 
                 master.onBodyStart += (body) =>
-                {
-                    body.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
+                {                   
+                    body.gameObject.AddComponent<NemesisResistances>();
                 };
 
-                nemesisBossBody.gameObject.AddComponent<NemesisResistances>();
                 new NemesisSpawnCard.SyncBaseStats(nemesisBossBody).Send(R2API.Networking.NetworkDestination.Clients);
-                combatSquad.AddMember(master);
+                combatSquad.AddMember(master); 
                 master.onBodyDeath.AddListener(OnBodyDeath);
             };
             DirectorCore.instance.TrySpawnObject(directorSpawnRequest);
@@ -177,10 +176,11 @@ namespace EntityStates.Events
             UnityEngine.Object.Destroy(spawnCard);
         }
 
+        
+
         public virtual void OnBodyDeath()
         {
             onNemesisDefeatedGlobal?.Invoke(nemesisBossBody);
-
             // we dont want to go back to main state, since we only want one nemesis boss per stage
             //outer.SetNextStateToMain();
             outer.SetNextState(new IdleRestOfStage());

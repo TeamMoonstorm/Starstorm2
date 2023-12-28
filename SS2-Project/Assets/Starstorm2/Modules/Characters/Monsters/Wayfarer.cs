@@ -10,6 +10,8 @@ namespace Moonstorm.Starstorm2.Monsters
     //...
     //...
     //it's just like that, ok?
+
+    //ok
     [DisabledContent]
     public sealed class Wayfarer : MonsterBase
     {

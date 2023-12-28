@@ -21,6 +21,7 @@ namespace EntityStates.NemMerc
         public static float minTurnSpeed = 180f;
         public static float smoothTime = 0.1f;
         public static float airFrictionCoefficient = 0.4f;
+        public static float movespeedScalingCoefficient = 0.67f;
 
         private Vector3 targetMoveVectorVelocity;
         private Vector3 forwardDirection;
@@ -108,8 +109,10 @@ namespace EntityStates.NemMerc
                     base.characterDirection.moveVector = target;
                 }
 
+                float msMultiplier = base.characterBody.moveSpeed / base.characterBody.baseMoveSpeed;
+                msMultiplier *= movespeedScalingCoefficient;
                 if(inMainState && !this.isClone)
-                    base.characterMotor.rootMotion += base.characterBody.moveSpeed * forwardSpeed * this.forwardDirection * Time.fixedDeltaTime;
+                    base.characterMotor.rootMotion += base.characterBody.moveSpeed * msMultiplier * forwardSpeed * this.forwardDirection * Time.fixedDeltaTime;
 
                 
                 if (!base.IsKeyDownAuthority() && base.fixedAge >= minDuration && inMainState)

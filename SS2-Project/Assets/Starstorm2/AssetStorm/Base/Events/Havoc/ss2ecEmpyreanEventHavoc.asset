@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 714a7ca2776afba4fb8b263d3c207dbd, type: 3}
+  m_Name: ss2ecEmpyreanEventHavoc
+  m_EditorClassIdentifier: 
+  eventFlags: 8
+  eventState:
+    _typeName: EntityStates.Events.EmpyreanBossHavoc, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  requiredStateMachine: 
+  startMessageToken: SS2_EVENT_EMPYREANSPAWN_START
+  endMessageToken: 
+  messageColor: {r: 1, g: 1, b: 1, a: 1}
+  startSound: {fileID: 0}
+  availableStages: 201769982
+  customStageNames: []
+  category: 
+  selectionWeight: 70
+  cost: 400
+  repeatedSelectionCostCoefficient: 5
+  minimumStageCompletions: 2
+  requiredUnlock:
+    _asset: {fileID: 0}
+    _address: 
+    _useDirectReference: 0
+  requiredUnlockableDef:
+    address: 
+    useDirectReference: 1
+    asset: {fileID: 0}
+  forbiddenUnlock:
+    _asset: {fileID: 0}
+    _address: 
+    _useDirectReference: 0
+  forbiddenUnlockableDef:
+    address: 
+    useDirectReference: 1
+    asset: {fileID: 0}
+  requiredExpansionDefs: []
+  requiredExpansions: []
+  requiredItemAddressable:
+    address: 
+    useDirectReference: 1
+    asset: {fileID: 0}
+  requiredArtifactDef: {fileID: 11400000, guid: 8aa9f3b13b33b394cb766c4d108be9d3,
+    type: 2}
+  fallbackVFX: {fileID: 0}
+  eventVFX: []

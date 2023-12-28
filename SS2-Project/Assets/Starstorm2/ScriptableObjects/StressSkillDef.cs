@@ -13,6 +13,10 @@ namespace Assets.Starstorm2.ScriptableObjects
     {
         [Tooltip("The amount of stress added by this skill.")]
         public float stressValue = 0;
+        [Tooltip("If the skill can be casted while overstressed.")]
+        public bool canCastIfOverstressed = false;
+        [Tooltip("If the skill can be casted when there is insufficient stress.")]
+        public bool canCastIfWillOverstress = false;
         public override BaseSkillInstanceData OnAssigned([NotNull] GenericSkill skillSlot)
         {
             return new InstanceData
@@ -29,12 +33,14 @@ namespace Assets.Starstorm2.ScriptableObjects
 
         public override bool CanExecute([NotNull] GenericSkill skillSlot)
         {
-            return !IsOverstressed(skillSlot) && base.CanExecute(skillSlot);
+            NemCaptainController ncc = ((InstanceData)skillSlot.skillInstanceData).ncc;
+            return (!IsOverstressed(skillSlot) || canCastIfOverstressed) && (((100 - ncc.stress) > stressValue) || canCastIfWillOverstress) && base.CanExecute(skillSlot);
         }
 
         public override bool IsReady([NotNull] GenericSkill skillSlot)
         {
-            return base.IsReady(skillSlot) && !IsOverstressed(skillSlot);
+            NemCaptainController ncc = ((InstanceData)skillSlot.skillInstanceData).ncc;
+            return base.IsReady(skillSlot) && (!IsOverstressed(skillSlot) || canCastIfOverstressed) && (((100 - ncc.stress) > stressValue) || canCastIfWillOverstress);
         }
 
         public override void OnExecute([NotNull] GenericSkill skillSlot)

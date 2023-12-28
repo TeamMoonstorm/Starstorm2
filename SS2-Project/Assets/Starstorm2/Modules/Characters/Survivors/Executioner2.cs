@@ -1,5 +1,6 @@
 ﻿using Mono.Cecil.Cil;
 using MonoMod.Cil;
+using Moonstorm.Starstorm2.Components;
 using RoR2;
 using System;
 using System.Collections.Generic;
@@ -73,6 +74,34 @@ namespace Moonstorm.Starstorm2.Survivors
         public override void Hook()
         {
             SetupFearExecute();
+            On.RoR2.MapZone.TeleportBody += MarkOOB;
+            On.RoR2.TeleportHelper.TeleportBody += HelpOOB;
+        }
+
+        private void MarkOOB(On.RoR2.MapZone.orig_TeleportBody orig, MapZone self, CharacterBody characterBody)
+        {
+            //orig(self, characterBody);
+            var exc = characterBody.gameObject.GetComponent<ExecutionerController>();
+            if (exc)
+            {
+                exc.hasOOB = true;
+            }
+            orig(self, characterBody);
+        }
+
+        private void HelpOOB(On.RoR2.TeleportHelper.orig_TeleportBody orig, CharacterBody body, Vector3 targetFootPosition)
+        {
+            var exc = body.gameObject.GetComponent<ExecutionerController>();
+            if (exc)
+            {
+                //SS2Log.Info("isOOB? " + exc.hasOOB + " | " + exc.isExec);
+                if (exc.isExec)
+                {
+                    exc.hasOOB = true;
+                    targetFootPosition += new Vector3(0, 1, 0);
+                }
+            }
+            orig(body, targetFootPosition);
         }
 
         private HealthComponent.HealthBarValues FearExecuteHealthbar(On.RoR2.HealthComponent.orig_GetHealthBarValues orig, HealthComponent self)

@@ -43,6 +43,7 @@ namespace EntityStates.NemMerc
             // overlay material
 
             GameObject cameraTarget = null;
+            this.duration = HologramShadowStep.baseDuration;
 
             if (!this.target)
             {
@@ -81,7 +82,7 @@ namespace EntityStates.NemMerc
                 }
             }
 
-            this.duration = HologramShadowStep.baseDuration;
+            
 
             this.startPosition = base.transform.position;
             this.teleportTarget = this.target.transform.position;

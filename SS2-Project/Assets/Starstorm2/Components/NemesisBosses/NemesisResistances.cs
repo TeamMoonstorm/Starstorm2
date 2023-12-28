@@ -1,11 +1,40 @@
 ﻿using R2API.Utils;
 using RoR2;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Moonstorm.Starstorm2.Components
 {
     public class NemesisResistances : MonoBehaviour
     {
+        private CharacterBody body;
+
+        private void Awake()
+        {
+            this.body = base.GetComponent<CharacterBody>();      
+        }
+        private void OnEnable()
+        {
+            On.RoR2.FogDamageController.EvaluateTeam += RemoveSelf;
+        }
+        private void OnDisable()
+        {
+            On.RoR2.FogDamageController.EvaluateTeam -= RemoveSelf;
+        }
+        // kinda cringe but theres no other way to do it afaict
+        private void RemoveSelf(On.RoR2.FogDamageController.orig_EvaluateTeam orig, FogDamageController self, TeamIndex teamIndex)
+        {
+            orig(self, teamIndex);
+            if (this.body && self.characterBodyToStacks.ContainsKey(this.body))
+                self.characterBodyToStacks.Remove(this.body);
+        }
+
+        private void FixedUpdate()
+        {
+            // doing this in fixedupdate cuz some states/effects remove fall damage immunity. 
+            this.body.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
+        }
+
         static NemesisResistances()
         {
             On.RoR2.HealthComponent.Suicide += ResistVoid;
@@ -17,15 +46,12 @@ namespace Moonstorm.Starstorm2.Components
             var body = self.body;
             if (body)
             {
-                Debug.Log("body found");
                 var master = body.master;
                 if (master)
                 {
-                    Debug.Log("master found");
                     if (damageType == DamageType.VoidDeath && body.GetComponent<NemesisResistances>() != null)
                     {
                         body.SetBodyStateToPreferredInitialState();
-                        Debug.Log("void death + nemresistances found");
                         //ChatMessage.SendColored("He laughs in the face of the void.", ColorCatalog.ColorIndex.VoidItem);
 
                         int rng = Run.instance.runRNG.RangeInt(1, 4);

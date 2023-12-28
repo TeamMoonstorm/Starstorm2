@@ -25,7 +25,7 @@ namespace Moonstorm.Starstorm2
     {
         internal const string guid = "com.TeamMoonstorm.Starstorm2";
         internal const string modName = "Starstorm 2";
-        internal const string version = "0.5.2";
+        internal const string version = "0.6.0";
 
         public static Starstorm instance;
         public static PluginInfo pluginInfo;
@@ -35,7 +35,6 @@ namespace Moonstorm.Starstorm2
         public static bool RiskyModInstalled = false;
         public static bool GOTCEInstalled = false;
         public static bool StageAesthInstalled = false;
-
         public void Awake()
         {
             instance = this;

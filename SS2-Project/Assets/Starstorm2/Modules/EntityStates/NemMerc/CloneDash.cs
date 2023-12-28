@@ -57,6 +57,8 @@ namespace EntityStates.NemMerc
 			CloneInputBank.CloneOwnership clonership = base.GetComponent<CloneInputBank.CloneOwnership>();
 			if(clonership && clonership.clone)
             {
+				this.entryLayer = LayerIndex.defaultLayer.intVal; // playe rlayer
+
 				Vector3 between = clonership.clone.body.transform.position - base.transform.position;
 				float distance = between.magnitude;
 				Vector3 direction = between.normalized;
@@ -66,6 +68,7 @@ namespace EntityStates.NemMerc
 			}
 			else if (this.target)
 			{
+				this.entryLayer = LayerIndex.fakeActor.intVal; // clone layer
 				Vector3 between = target.transform.position - base.transform.position;
 				float distance = between.magnitude;
 				Vector3 direction = between.normalized;
@@ -143,7 +146,6 @@ namespace EntityStates.NemMerc
 
 				this.CreateDashEffect();
 				base.PlayCrossfade("FullBody, Override", "AssaulterLoop", 0.1f);
-				this.entryLayer = base.gameObject.layer;
 				base.gameObject.layer = LayerIndex.noCollision.intVal;
 				base.characterMotor.Motor.RebuildCollidableLayers();
 				if (this.modelTransform)

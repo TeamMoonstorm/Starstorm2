@@ -1606,6 +1606,17 @@ MonoBehaviour:
       asset: {fileID: 0}
       loadAssetFrom: 0
     rules:
+    - ruleType: 1
+      displayPrefabName: DisplayHoof
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: LowerLegR
+      localPos: {x: 0.02446, y: 0.32788, z: 0.04503}
+      localAngles: {x: 76.49223, y: 198.2808, z: 354.2111}
+      localScales: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 8
     - ruleType: 0
       displayPrefabName: DisplayHoof
       displayPrefab:
@@ -1616,7 +1627,7 @@ MonoBehaviour:
       localPos: {x: 0.02446, y: 0.32788, z: 0.04503}
       localAngles: {x: 76.49223, y: 198.2808, z: 354.2111}
       localScales: {x: 0.1, y: 0.1, z: 0.1}
-      limbMask: 0
+      limbMask: 8
   - keyAssetName: HuntersSigil
     keyAsset:
       address: 
@@ -1934,6 +1945,17 @@ MonoBehaviour:
       asset: {fileID: 0}
       loadAssetFrom: 0
     rules:
+    - ruleType: 1
+      displayPrefabName: DisplayLightningArmRight
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: ShoulderR
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScales: {x: 0.9, y: 0.9, z: 0.9}
+      limbMask: 2
     - ruleType: 0
       displayPrefabName: DisplayLightningArmRight
       displayPrefab:
@@ -1944,7 +1966,7 @@ MonoBehaviour:
       localPos: {x: 0, y: 0, z: 0}
       localAngles: {x: 0, y: 0, z: 0}
       localScales: {x: 0.9, y: 0.9, z: 0.9}
-      limbMask: 0
+      limbMask: 2
   - keyAssetName: LightningStrikeOnHit
     keyAsset:
       address: 
@@ -2042,6 +2064,17 @@ MonoBehaviour:
       asset: {fileID: 0}
       loadAssetFrom: 0
     rules:
+    - ruleType: 1
+      displayPrefabName: DisplaySunHead
+      displayPrefab:
+        address: 
+        useDirectReference: 1
+        asset: {fileID: 0}
+      childName: Head
+      localPos: {x: 0.00248, y: 0.10808, z: -0.00494}
+      localAngles: {x: 356.9942, y: 0.58206, z: 345.0201}
+      localScales: {x: 1, y: 1, z: 1}
+      limbMask: 1
     - ruleType: 0
       displayPrefabName: DisplaySunHead
       displayPrefab:
@@ -2052,7 +2085,7 @@ MonoBehaviour:
       localPos: {x: 0.00248, y: 0.10808, z: -0.00494}
       localAngles: {x: 356.9942, y: 0.58206, z: 345.0201}
       localScales: {x: 1, y: 1, z: 1}
-      limbMask: 0
+      limbMask: 1
     - ruleType: 0
       displayPrefabName: DisplaySunHeadNeck
       displayPrefab:
@@ -2060,8 +2093,8 @@ MonoBehaviour:
         useDirectReference: 1
         asset: {fileID: 0}
       childName: Head
-      localPos: {x: -0.00014, y: -0.13382, z: 0.01137}
-      localAngles: {x: 0, y: 0, z: 0}
+      localPos: {x: 0.06369, y: -0.10278, z: -0.03189}
+      localAngles: {x: 10.02443, y: 23.90541, z: 27.86194}
       localScales: {x: 1.6, y: 1.6, z: 1.6}
       limbMask: 0
   - keyAssetName: LunarTrinket

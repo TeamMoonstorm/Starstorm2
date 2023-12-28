@@ -42,6 +42,7 @@ namespace Moonstorm.Starstorm2.Unlocks.NemMercenary
                     Grant();
                 }
             }
+
         }
     }
 }
