@@ -39,9 +39,9 @@ namespace EntityStates.Knight
             Debug.Log("originalSpecialSkill : " + skillLocator.special.name);
 
             // Assign the buffed skill versions
-            originalPrimarySkill.SetSkillOverride(gameObject, buffedPrimarySkill, GenericSkill.SkillOverridePriority.Replacement);
-            originalUtilitySkill.SetSkillOverride(gameObject, buffedUtilitySkill, GenericSkill.SkillOverridePriority.Replacement);
-            originalSpecialSkill.SetSkillOverride(gameObject, buffedSpecialSkill, GenericSkill.SkillOverridePriority.Replacement);
+            originalPrimarySkill.SetSkillOverride(gameObject, buffedPrimarySkill, GenericSkill.SkillOverridePriority.Contextual);
+            originalUtilitySkill.SetSkillOverride(gameObject, buffedUtilitySkill, GenericSkill.SkillOverridePriority.Contextual);
+            originalSpecialSkill.SetSkillOverride(gameObject, buffedSpecialSkill, GenericSkill.SkillOverridePriority.Contextual);
             Debug.Log("setting buffed skills");
         }
 
@@ -57,9 +57,9 @@ namespace EntityStates.Knight
 
         public override void OnExit()
         {
-            originalPrimarySkill.UnsetSkillOverride(gameObject, buffedPrimarySkill, GenericSkill.SkillOverridePriority.Replacement);
-            originalUtilitySkill.UnsetSkillOverride(gameObject, buffedUtilitySkill, GenericSkill.SkillOverridePriority.Replacement);
-            originalSpecialSkill.UnsetSkillOverride(gameObject, buffedSpecialSkill, GenericSkill.SkillOverridePriority.Replacement);
+            originalPrimarySkill.UnsetSkillOverride(gameObject, buffedPrimarySkill, GenericSkill.SkillOverridePriority.Contextual);
+            originalUtilitySkill.UnsetSkillOverride(gameObject, buffedUtilitySkill, GenericSkill.SkillOverridePriority.Contextual);
+            originalSpecialSkill.UnsetSkillOverride(gameObject, buffedSpecialSkill, GenericSkill.SkillOverridePriority.Contextual);
             Debug.Log("reset skills to original");
 
             if (inputBank.skill2.down)
@@ -69,6 +69,7 @@ namespace EntityStates.Knight
 
             characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility);
 
+            outer.SetNextStateToMain();
             base.OnExit();
         }
         public override void AuthorityModifyOverlapAttack(OverlapAttack overlapAttack)

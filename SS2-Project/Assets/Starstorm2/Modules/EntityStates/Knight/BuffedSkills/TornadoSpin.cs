@@ -5,6 +5,7 @@ using Moonstorm.Starstorm2;
 using Moonstorm.Starstorm2.DamageTypes;
 using R2API;
 using RoR2;
+using RoR2.Projectile;
 using RoR2.Skills;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -18,16 +19,17 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
         public static float TokenModifier_dmgCoefficient => new SpinUtility().damageCoefficient;
         public static GameObject buffWard;
         public static float hopVelocity;
-        private bool hasBuffed;
-        private bool hasSpun;
-        private GameObject wardInstance;
-
-
         public static float airControl;
         public static float upwardVelocity;
         public static float forwardVelocity;
         public static float minimumY;
         public static float aimVelocity;
+        public static GameObject beamProjectile;
+
+        private bool hasBuffed;
+        private bool hasSpun;
+        private GameObject wardInstance;
+        private bool hasFiredBeam = true;
 
 
         public override void OnEnter()
@@ -80,7 +82,21 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
 
         public override void OnExit()
         {
+            ProjectileManager.instance.FireProjectile(
+                beamProjectile,
+                GetAimRay().origin,
+                Util.QuaternionSafeLookRotation(GetAimRay().direction),
+                gameObject,
+                damageStat * damageCoefficient,
+                0f,
+                RollCrit(),
+                DamageColorIndex.Default,
+                null,
+                80f);
+
             characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage;
+
+            outer.SetNextStateToMain();
             base.OnExit();
         }
 

@@ -19,7 +19,6 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
         public static GameObject beamProjectile;
         public static float TokenModifier_dmgCoefficient => new SwingSword().damageCoefficient;
         public int swingSide;
-        private bool hasFiredBeam = true;
 
         public override void OnEnter()
         {
@@ -51,29 +50,14 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
             swingSide = (int)reader.ReadByte();
         }
 
+        public override void AuthorityModifyOverlapAttack(OverlapAttack overlapAttack)
+        {
+            base.AuthorityModifyOverlapAttack(overlapAttack);
+            overlapAttack.damageType = DamageType.Stun1s;
+        }
+
         public override void FixedUpdate()
         {
-            if (animator.GetFloat(mecanimHitboxActiveParameter) > 0.5f && fixedAge >= duration * 0.1f)
-            {
-                if (meleeAttackStartTime == Run.FixedTimeStamp.positiveInfinity)
-                {
-                    if (characterBody.HasBuff(SS2Content.Buffs.bdKnightBuff) && isAuthority && !hasFiredBeam)
-                    {
-                        hasFiredBeam = true;
-                        ProjectileManager.instance.FireProjectile(
-                            beamProjectile,
-                            GetAimRay().origin,
-                            Util.QuaternionSafeLookRotation(GetAimRay().direction),
-                            gameObject,
-                            damageStat * damageCoefficient,
-                            0f,
-                            RollCrit(),
-                            DamageColorIndex.Default,
-                            null,
-                            80f);
-                    }
-                }
-            }
             base.FixedUpdate();
         }
 

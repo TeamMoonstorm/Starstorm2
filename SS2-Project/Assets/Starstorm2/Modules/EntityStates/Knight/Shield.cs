@@ -33,8 +33,8 @@ namespace EntityStates.Knight
             //characterBody.AddTimedBuff(parryBuff, 0.1f);
             characterBody.AddBuff(shieldBuff);
 
-            // This old method was adding a skill
-            //skillLocator.primary.SetSkillOverride(skillLocator.primary, skillDef, GenericSkill.SkillOverridePriority.Contextual);
+            // This sets the shield bash skill
+            skillLocator.primary.SetSkillOverride(skillLocator.primary, skillDef, GenericSkill.SkillOverridePriority.Contextual);
         }
 
         public override void FixedUpdate()
@@ -43,6 +43,8 @@ namespace EntityStates.Knight
 
             if (fixedAge >= 0.075f && !hasParried)
             {
+                // Remove the shield bash since the parry state will override skills too 
+                skillLocator.primary.UnsetSkillOverride(skillLocator.primary, skillDef, GenericSkill.SkillOverridePriority.Contextual);
                 hasParried = true;
                 characterBody.AddTimedBuff(parryBuff, parryBuffDuration);
             }
@@ -60,12 +62,19 @@ namespace EntityStates.Knight
 
         public override void OnExit()
         {
-            base.OnExit();
             animator.SetBool("shieldUp", false);
 
             characterBody.RemoveBuff(shieldBuff);
 
             characterBody.SetAimTimer(0.5f);
+
+            // If the player did not parry we need to unset the skill override
+            if (!hasParried)
+            {
+                skillLocator.primary.UnsetSkillOverride(skillLocator.primary, skillDef, GenericSkill.SkillOverridePriority.Contextual);
+            }
+
+            base.OnExit();
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

@@ -10,11 +10,17 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
 {
     public class BannerSlam : BaseState
     {
+        public static int duration;
+        public static int swingTimeCoefficient;
 
         public EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("GreaterWarbanner", SS2Bundle.Equipments);
         public GameObject WarbannerObject { get; set; } = SS2Assets.LoadAsset<GameObject>("GreaterWarbannerWard", SS2Bundle.Equipments);
+
+
         public override void OnEnter()
         {
+            PlayCrossfade("Body", "SwingSpecial", "Special.playbackRate", duration * swingTimeCoefficient, 0.15f);
+
             var GBToken = characterBody.gameObject.GetComponent<GreaterBannerToken>();
             if (!GBToken)
             {
@@ -62,6 +68,7 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
 
         public override void OnExit()
         {
+            outer.SetNextStateToMain();
             base.OnExit();
         }
 

@@ -5,7 +5,6 @@ using RoR2.Projectile;
 
 namespace Moonstorm.Starstorm2.Survivors
 {
-	[DisabledContent]
     public sealed class MULE : SurvivorBase
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("MULEBody", SS2Bundle.Indev);
