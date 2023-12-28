@@ -10,7 +10,6 @@ namespace EntityStates.Knight
 {
 public class BannerSpecial : BaseState
 {
-
     public EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("GreaterWarbanner", SS2Bundle.Equipments);
     public GameObject WarbannerObject { get; set; } = SS2Assets.LoadAsset<GameObject>("GreaterWarbannerWard", SS2Bundle.Equipments);
     public override void OnEnter()

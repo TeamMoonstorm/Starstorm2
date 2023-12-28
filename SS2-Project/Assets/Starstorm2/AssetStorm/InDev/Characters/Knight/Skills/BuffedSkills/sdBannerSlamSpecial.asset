@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1391837873, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: sdKnightBannerSpecial
+  m_Name: sdBannerSlamSpecial
   m_EditorClassIdentifier: 
-  skillName: Banner
-  skillNameToken: SS2_KNIGHT_BANNER_SPECIAL_NAME
-  skillDescriptionToken: SS2_KNIGHT_BANNER_SPECIAL_DESC
+  skillName: KnightBannerSlam
+  skillNameToken: SS2_KNIGHT_BANNER_BUFFED_SPECIAL_NAME
+  skillDescriptionToken: SS2_KNIGHT_BANNER_BUFFED_SPECIAL_DESC
   keywordTokens: []
-  icon: {fileID: 21300000, guid: 75c438da9fcde414ba15f9a87a10cfa8, type: 3}
+  icon: {fileID: 21300000, guid: f854d0a8d71b92045a966773cc397aa6, type: 3}
   activationStateMachineName: Weapon
   activationState:
-    _typeName: EntityStates.Knight.BannerSpecial, Starstorm2, Version=1.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  interruptPriority: 1
+    _typeName: Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills.BannerSlam,
+      Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  interruptPriority: 2
   baseRechargeInterval: 12
   baseMaxStock: 1
   rechargeStock: 1

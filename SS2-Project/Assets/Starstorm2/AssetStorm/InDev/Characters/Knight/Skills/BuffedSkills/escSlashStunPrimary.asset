@@ -10,24 +10,29 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: escKnightParry
+  m_Name: escSlashStunPrimary
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Knight.Parry, Starstorm2, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    assemblyQualifiedName: Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills.StunSlash,
+      Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
     - fieldName: swingTimeCoefficient
       fieldValue:
-        stringValue: 1
+        stringValue: 1.41
         objectValue: {fileID: 0}
+    - fieldName: beamProjectile
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1166276589453209, guid: b427d6842457eba47a8e3aeed1c0883a,
+          type: 3}
     - fieldName: baseDuration
       fieldValue:
-        stringValue: 3
+        stringValue: 0.5
         objectValue: {fileID: 0}
     - fieldName: damageCoefficient
       fieldValue:
-        stringValue: 9.5
+        stringValue: 2.4
         objectValue: {fileID: 0}
     - fieldName: hitBoxGroupName
       fieldValue:
@@ -65,7 +70,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: mecanimHitboxActiveParameter
       fieldValue:
-        stringValue: Parry
+        stringValue: SwingSword
         objectValue: {fileID: 0}
     - fieldName: shorthopVelocityFromHit
       fieldValue:
@@ -99,15 +104,3 @@ MonoBehaviour:
       fieldValue:
         stringValue: 0
         objectValue: {fileID: 0}
-    - fieldName: buffedPrimarySkill
-      fieldValue:
-        stringValue: 
-        objectValue: {fileID: 11400000, guid: d60866c11fc8657499529725f9996160, type: 2}
-    - fieldName: buffedUtilitySkill
-      fieldValue:
-        stringValue: 
-        objectValue: {fileID: 11400000, guid: 7b56915308c78fd439b452fe7ba7e586, type: 2}
-    - fieldName: buffedSpecialSkill
-      fieldValue:
-        stringValue: 
-        objectValue: {fileID: 11400000, guid: 6368af8e47d438d4b8ea719b84679de0, type: 2}

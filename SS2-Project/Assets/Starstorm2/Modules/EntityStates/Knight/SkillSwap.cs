@@ -4,20 +4,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillSwap : BaseState
+namespace EntityStates.Knight
 {
-    private GenericSkill originalPrimarySkill;
-    private GenericSkill originalSecondarySkill;
-    private GenericSkill originalUtilitySkill;
-    private GenericSkill originalSpecialSkill;
-
-    public override void OnEnter()
+    public class SkillSwap : BaseState
     {
-        base.OnEnter();
-    }
+        private GenericSkill originalPrimarySkill;
+        private GenericSkill originalUtilitySkill;
+        private GenericSkill originalSpecialSkill;
 
-    public override void OnExit()
-    {
-        base.OnExit();
+        public GenericSkill buffedPrimarySkill;
+        public GenericSkill buffedUtilitySkill;
+        public GenericSkill buffedSpecialSkill;
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+
+            // Grab and set the original skills
+            originalPrimarySkill = skillLocator.primary;
+            Debug.Log("originalPrimarySkill : " + skillLocator.primary.name);
+            originalUtilitySkill = skillLocator.utility;
+            Debug.Log("originalUtilitySkill : " + skillLocator.utility.name);
+            originalSpecialSkill = skillLocator.special;
+            Debug.Log("originalSpecialSkill : " + skillLocator.special.name);
+
+
+            // Assign the buffed skill versions
+            skillLocator.primary = buffedPrimarySkill;
+            skillLocator.utility = buffedUtilitySkill;
+            skillLocator.special = buffedSpecialSkill;
+            Debug.Log("setting buffed skills");
+        }
+
+        public override void OnExit()
+        {
+            skillLocator.primary = originalPrimarySkill;
+            skillLocator.utility = originalUtilitySkill;
+            skillLocator.special = originalSpecialSkill;
+            Debug.Log("reset skills to original");
+            base.OnExit();
+        }
     }
 }

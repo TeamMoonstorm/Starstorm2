@@ -11,7 +11,7 @@ namespace EntityStates.Knight
     {
         public static BuffDef shieldBuff;
         public static BuffDef parryBuff;
-        public static float parryDur;
+        public static float parryBuffDuration;
         public static float minDur;
         public static SkillDef skillDef;
         private bool hasParried = false;
@@ -33,7 +33,8 @@ namespace EntityStates.Knight
             //characterBody.AddTimedBuff(parryBuff, 0.1f);
             characterBody.AddBuff(shieldBuff);
 
-            skillLocator.primary.SetSkillOverride(skillLocator.primary, skillDef, GenericSkill.SkillOverridePriority.Contextual);
+            // This old method was adding a skill
+            //skillLocator.primary.SetSkillOverride(skillLocator.primary, skillDef, GenericSkill.SkillOverridePriority.Contextual);
         }
 
         public override void FixedUpdate()
@@ -43,7 +44,7 @@ namespace EntityStates.Knight
             if (fixedAge >= 0.075f && !hasParried)
             {
                 hasParried = true;
-                characterBody.AddTimedBuff(parryBuff, parryDur);
+                characterBody.AddTimedBuff(parryBuff, parryBuffDuration);
             }
 
             stopwatch += fixedAge;

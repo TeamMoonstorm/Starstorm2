@@ -10,28 +10,57 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: escKnightParry
+  m_Name: escTornadoSpin
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Knight.Parry, Starstorm2, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    assemblyQualifiedName: Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills.TornadoSpin,
+      Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
     - fieldName: swingTimeCoefficient
       fieldValue:
         stringValue: 1
         objectValue: {fileID: 0}
-    - fieldName: baseDuration
+    - fieldName: buffWard
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1703809909102045, guid: bf8e2245939c26e458c06fb893df9129,
+          type: 3}
+    - fieldName: hopVelocity
+      fieldValue:
+        stringValue: 25
+        objectValue: {fileID: 0}
+    - fieldName: airControl
+      fieldValue:
+        stringValue: 0.15
+        objectValue: {fileID: 0}
+    - fieldName: upwardVelocity
       fieldValue:
         stringValue: 3
         objectValue: {fileID: 0}
+    - fieldName: forwardVelocity
+      fieldValue:
+        stringValue: 6
+        objectValue: {fileID: 0}
+    - fieldName: minimumY
+      fieldValue:
+        stringValue: 0.05
+        objectValue: {fileID: 0}
+    - fieldName: aimVelocity
+      fieldValue:
+        stringValue: 4
+        objectValue: {fileID: 0}
+    - fieldName: baseDuration
+      fieldValue:
+        stringValue: 0.8
+        objectValue: {fileID: 0}
     - fieldName: damageCoefficient
       fieldValue:
-        stringValue: 9.5
+        stringValue: 8
         objectValue: {fileID: 0}
     - fieldName: hitBoxGroupName
       fieldValue:
-        stringValue: SwordHitbox
+        stringValue: BigHitbox
         objectValue: {fileID: 0}
     - fieldName: hitEffectPrefab
       fieldValue:
@@ -44,7 +73,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: pushAwayForce
       fieldValue:
-        stringValue: 40
+        stringValue: 400
         objectValue: {fileID: 0}
     - fieldName: forceVector
       fieldValue:
@@ -57,27 +86,27 @@ MonoBehaviour:
     - fieldName: swingEffectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 7249953071962714612, guid: d6238779a9bc2924dbd47cf6d73674f0,
+        objectValue: {fileID: 3741879095020577079, guid: 600738f2c2b299b448a969768f309261,
           type: 3}
     - fieldName: swingEffectMuzzleString
       fieldValue:
-        stringValue: SwingLeft
+        stringValue: SwingCenter
         objectValue: {fileID: 0}
     - fieldName: mecanimHitboxActiveParameter
       fieldValue:
-        stringValue: Parry
+        stringValue: SpecialSwing
         objectValue: {fileID: 0}
     - fieldName: shorthopVelocityFromHit
       fieldValue:
-        stringValue: 6.5
+        stringValue: 9
         objectValue: {fileID: 0}
     - fieldName: beginStateSoundString
       fieldValue:
-        stringValue: NemmandoSwing
+        stringValue: 
         objectValue: {fileID: 0}
     - fieldName: beginSwingSoundString
       fieldValue:
-        stringValue: 
+        stringValue: NemmandoSwing
         objectValue: {fileID: 0}
     - fieldName: impactSound
       fieldValue:
@@ -99,15 +128,3 @@ MonoBehaviour:
       fieldValue:
         stringValue: 0
         objectValue: {fileID: 0}
-    - fieldName: buffedPrimarySkill
-      fieldValue:
-        stringValue: 
-        objectValue: {fileID: 11400000, guid: d60866c11fc8657499529725f9996160, type: 2}
-    - fieldName: buffedUtilitySkill
-      fieldValue:
-        stringValue: 
-        objectValue: {fileID: 11400000, guid: 7b56915308c78fd439b452fe7ba7e586, type: 2}
-    - fieldName: buffedSpecialSkill
-      fieldValue:
-        stringValue: 
-        objectValue: {fileID: 11400000, guid: 6368af8e47d438d4b8ea719b84679de0, type: 2}

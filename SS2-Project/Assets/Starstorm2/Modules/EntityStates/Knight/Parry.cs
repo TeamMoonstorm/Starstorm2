@@ -1,11 +1,7 @@
 ﻿using Moonstorm;
-using Moonstorm.Starstorm2;
-using Moonstorm.Starstorm2.DamageTypes;
-using R2API;
 using RoR2;
 using RoR2.Skills;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace EntityStates.Knight
 {
@@ -15,20 +11,38 @@ namespace EntityStates.Knight
         public static float swingTimeCoefficient = 1f;
         [TokenModifier("SS2_KNIGHT_SHIELD_BASH_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
         public static float TokenModifier_dmgCoefficient => new ShieldPunch().damageCoefficient;
+
+        public static SkillDef buffedPrimarySkill;
+        public static SkillDef buffedUtilitySkill;
+        public static SkillDef buffedSpecialSkill;
+
         public int swingSide;
 
         private GenericSkill originalPrimarySkill;
-        private GenericSkill originalSecondarySkill;
         private GenericSkill originalUtilitySkill;
         private GenericSkill originalSpecialSkill;
+
 
         public override void OnEnter()
         {
             base.OnEnter();
 
             characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
-
             animator = GetModelAnimator();
+
+            // Grab and set the original skills
+            originalPrimarySkill = skillLocator.primary;
+            Debug.Log("originalPrimarySkill : " + skillLocator.primary.name);
+            originalUtilitySkill = skillLocator.utility;
+            Debug.Log("originalUtilitySkill : " + skillLocator.utility.name);
+            originalSpecialSkill = skillLocator.special;
+            Debug.Log("originalSpecialSkill : " + skillLocator.special.name);
+
+            // Assign the buffed skill versions
+            originalPrimarySkill.SetSkillOverride(gameObject, buffedPrimarySkill, GenericSkill.SkillOverridePriority.Replacement);
+            originalUtilitySkill.SetSkillOverride(gameObject, buffedUtilitySkill, GenericSkill.SkillOverridePriority.Replacement);
+            originalSpecialSkill.SetSkillOverride(gameObject, buffedSpecialSkill, GenericSkill.SkillOverridePriority.Replacement);
+            Debug.Log("setting buffed skills");
         }
 
         public override void PlayAnimation()
@@ -38,11 +52,16 @@ namespace EntityStates.Knight
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.PrioritySkill;
+            return InterruptPriority.Skill;
         }
 
         public override void OnExit()
         {
+            originalPrimarySkill.UnsetSkillOverride(gameObject, buffedPrimarySkill, GenericSkill.SkillOverridePriority.Replacement);
+            originalUtilitySkill.UnsetSkillOverride(gameObject, buffedUtilitySkill, GenericSkill.SkillOverridePriority.Replacement);
+            originalSpecialSkill.UnsetSkillOverride(gameObject, buffedSpecialSkill, GenericSkill.SkillOverridePriority.Replacement);
+            Debug.Log("reset skills to original");
+
             if (inputBank.skill2.down)
             {
                 outer.SetNextState(new Shield());
