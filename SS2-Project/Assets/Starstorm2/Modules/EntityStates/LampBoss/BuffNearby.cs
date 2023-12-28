@@ -15,6 +15,9 @@ namespace EntityStates.LampBoss
         public static GameObject blueBuffWard;
         private GameObject wardInstance;
 
+        public static GameObject chargingVFX;
+        public static GameObject chargingVFXBlue;
+
         public static GameObject explosionVFX;
         public static GameObject explosionBlueVFX;
         public static float baseDamageCoefficient = 2f;
@@ -27,6 +30,8 @@ namespace EntityStates.LampBoss
         public static string mecanimParameter;
         private float timer;
 
+        private bool isBlue;
+
         public override void OnEnter()
         {
             base.OnEnter();
@@ -36,6 +41,20 @@ namespace EntityStates.LampBoss
 
             hasBuffed = false;
 
+            isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
+
+            GameObject vfx = isBlue ? chargingVFXBlue : chargingVFX;
+
+            if (vfx)
+            {
+                EffectData effectData = new EffectData
+                {
+                    origin = characterBody.corePosition,
+                    rootObject = GetModelChildLocator().FindChild("Chest").gameObject
+                };
+                //EffectManager.SpawnEffect(vfx, effectData, true);
+            }
+
             PlayCrossfade("FullBody, Override", "SecondaryBuff", "Secondary.playbackRate", duration, 0.05f);
         }
 
@@ -43,17 +62,19 @@ namespace EntityStates.LampBoss
         {
             base.FixedUpdate();
 
-            if (animator.GetFloat(mecanimParameter) >= 0.5f && !hasBuffed && isAuthority)
+            if (animator.GetFloat(mecanimParameter) >= 0.5f && !hasBuffed)
             {
                 hasBuffed = true;
-
-                bool isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
+                
                 GameObject ward = isBlue ? blueBuffWard : buffWard;
                 GameObject vfx = isBlue ? explosionBlueVFX : explosionVFX;
 
-                wardInstance = Object.Instantiate(ward);
-                wardInstance.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
-                wardInstance.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(gameObject);
+                if (isAuthority)
+                {
+                    wardInstance = Object.Instantiate(ward);
+                    wardInstance.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
+                    wardInstance.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(gameObject);
+                }
 
                 bool crit = RollCrit();
                 BlastAttack blast = new BlastAttack()
@@ -63,16 +84,19 @@ namespace EntityStates.LampBoss
                     position = characterBody.corePosition,
                     attacker = gameObject,
                     teamIndex = teamComponent.teamIndex,
+                    baseForce = forceCoefficient,
                     crit = crit,
                     baseDamage = characterBody.damage * baseDamageCoefficient,
                     damageColorIndex = DamageColorIndex.Default,
                     falloffModel = BlastAttack.FalloffModel.None,
                     attackerFiltering = AttackerFiltering.NeverHitSelf,
                 };
+                blast.Fire();
 
                 if (vfx)
                     EffectManager.SimpleEffect(vfx, characterBody.corePosition, Quaternion.identity, true);
-                blast.Fire();
+
+                Util.PlayAttackSpeedSound("LampBullet", gameObject, characterBody.attackSpeed);
 
                 //Util.PlaySound();
             }

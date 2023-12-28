@@ -53,7 +53,7 @@ namespace EntityStates.LampBoss
             AddRecoil(-2f * recoil, -3f * recoil, -1f * recoil, 1f * recoil);
             characterBody.AddSpreadBloom(0.33f * recoil);
 
-            Vector3 angle = Quaternion.Euler(Random.Range(-18.5f, 18.5f), Random.Range(-13.8f, 18.5f), 0f) * aimRay.direction;
+            Vector3 angle = Quaternion.Euler(Random.Range(-18.5f, 18.5f), Random.Range(-2.5f, 22.5f), 0f) * aimRay.direction;
 
             //Util.PlayAttackSpeedSound("LampBullet", gameObject, characterBody.attackSpeed);
 
