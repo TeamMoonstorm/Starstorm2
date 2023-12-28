@@ -7,6 +7,8 @@
 
 * **Executioner**  - An aggressive, versatile survivor with an arsenal made for picking off targets and chaining kills. His powerful Ion Manipulators gain charges with every kill.
 
+* **Chirr**  - A whimsical creature of Petrichor, with a variety of abilities that give her a unique control of the battlefield. She supports her friends with potent buffs and heals.
+
 * **???** - Survivors of unknown origin, familiar yet unfamiliar. Under the right conditions, you may meet them on the Planet, but they certainly won't be on your side.
 
 ![New Items...](https://github.com/swuff-star/Starstorm2/blob/main/SS2-Project/Assets/Starstorm2/ReadmeAssets/ss2itemspromo.gif?raw=true)
@@ -35,7 +37,7 @@ With previous and one-off code contributions by...
 * Anreol, bread, Flan, Gaforb, GrooveSalad, HIFU, KevinFromHPCustomerService, MagicGonads, malfaisant, Moffein, Nebby, Noop, Phreel, prod, rob, swuff★, sebacame, Shared, TheTimesweeper, Vale-X, xpcybic, Xubas
 
 With Art/Modelling/Animation contributions by...
-* Alexstarwras, Anreol, Bolty, bread, bruh, Cexeub, dotflare, Draymarc, Domi, JestAnotherAnimator, Gem, goodguy, GrooveSalad, JaceDaDorito, LucidInceptor, Neik, KevinFromHPCustomerService, PapaZach, Plexus, prodzpod, QuietAnon, rekkadraws, redacted, rob, SkeletorChampion, SOM, Spenny, swuff★, xpcybic, Reithierion, UnknownGlaze, Zenithrium
+* Alexstarwras, Anreol, Bolty, bread, bruh, Cexeub, dotflare, Draymarc, Domi, JestAnotherAnimator, Gem, goodguy, GrooveSalad, JaceDaDorito, LucidInceptor, Neik, KevinFromHPCustomerService, PapaZach, Plexus, prodzpod, QuietAnon, rekkadraws, redacted, rob, SkeletorChampion, SOM, Spenny, swuff★, Slipskip, xpcybic, Reithierion, UnknownGlaze, Zenithrium
 
 Additional thanks to... 
 * Writing - Blimblam, Lyrical Endymion, rekkadraws, swuff★, T_Dimensional, Zenithrium
@@ -52,6 +54,14 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 
 ## Changelog
 **Warning: content spoilers below!**
+### 0.6.1
+* Chirr
+    * Reduced hurtbox size by about 33%.
+    * Friends now give you the money and experience you would have gotten by killing them.
+    * Updated position in Character Select
+* General
+    * Added missing information to the README
+
 ### 0.6.0
 * New Content
     * Survivor: Chirr.
@@ -60,6 +70,8 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Artifact: Artifact of Havoc.
 * General
     * Added ScrollableLobbyUI as a dependency.
+* Nemesis Mercenary
+    * New Mastery Skin: Rogue
 
 
 ### 0.5.7

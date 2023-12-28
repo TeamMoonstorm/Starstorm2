@@ -163,6 +163,7 @@ namespace Moonstorm.Starstorm2.Components
 			this.currentFriend = new Friend(master);
 
 			CharacterBody body = master.GetBody();
+			this.FriendRewards(body.GetComponent<DeathRewards>());
 			TeamIndex oldTeam = body ? body.teamComponent.teamIndex : TeamIndex.Monster;
 			TeamIndex newTeam = this.master.teamIndex;
 			master.teamIndex = newTeam;
@@ -266,6 +267,33 @@ namespace Moonstorm.Starstorm2.Components
 			this.currentFriend = default(Friend);
 		}
 
+
+		//copypasted from deathrewards
+		private void FriendRewards(DeathRewards deathRewards)
+        {
+			if (!NetworkServer.active || !deathRewards) return;
+
+			Vector3 corePosition = deathRewards.characterBody.corePosition;
+			uint num = deathRewards.goldReward;
+			if (Run.instance.selectedDifficulty >= DifficultyIndex.Eclipse6)
+			{
+				num = (uint)(num * 0.8f);
+			}
+			TeamManager.instance.GiveTeamMoney(this.master.teamIndex, num);
+			EffectManager.SpawnEffect(DeathRewards.coinEffectPrefab, new EffectData
+			{
+				origin = corePosition,
+				genericFloat = deathRewards.goldReward,
+				scale = deathRewards.characterBody.radius
+			}, true);
+			float num2 = 1f + (deathRewards.characterBody.level - 1f) * 0.3f;
+			CharacterBody body = this.master.GetBody();
+			if(body)
+				ExperienceManager.instance.AwardExperience(corePosition, body, (ulong)((uint)(deathRewards.expReward * num2)));
+
+			deathRewards.goldReward = 0;
+			deathRewards.expReward = 0;
+		}
 		// HEALTHBAR STUFF
 		#region Healthbar Stuff
 		// shows healthbars of stuff that your friend damaged
