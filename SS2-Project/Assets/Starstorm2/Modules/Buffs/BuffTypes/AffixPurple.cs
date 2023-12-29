@@ -9,6 +9,7 @@ namespace Moonstorm.Starstorm2.Buffs
 {
     public sealed class AffixPurple : BuffBase
     {
+        //TODO
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdElitePurple", SS2Bundle.Indev);
 
         public sealed class Behavior : BaseBuffBodyBehavior, IOnDamageDealtServerReceiver
