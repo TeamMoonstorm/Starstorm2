@@ -82,6 +82,8 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Artifact: Artifact of Havoc.
 * General
     * Added ScrollableLobbyUI as a dependency.
+* Nemesis Mercenary
+    * New Mastery Skin: Rogue
 
 
 ### 0.5.7
