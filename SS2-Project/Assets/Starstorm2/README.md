@@ -1,11 +1,13 @@
 
 ![Starstorm 2](https://github.com/swuff-star/Starstorm2/blob/main/SS2-Project/Assets/Starstorm2/ReadmeAssets/ss2logopurple.gif?raw=true)
 
-**Starstorm 2** is a work-in-progress adaptation of the Risk of Rain 1 mod "Starstorm". It currently features three new survivors, three new monsters, over 20 new items and equipment, and numerous new challenges to shake up your runs.
+**Starstorm 2** is a work-in-progress adaptation of the Risk of Rain 1 mod "Starstorm". It currently features four new survivors, three new monsters, over 20 new items and equipment, and numerous new challenges to shake up your runs.
 
 ![New Survivors...](https://github.com/swuff-star/Starstorm2/blob/main/SS2-Project/Assets/Starstorm2/ReadmeAssets/ss2survivorpromo.gif?raw=true)
 
 * **Executioner**  - An aggressive, versatile survivor with an arsenal made for picking off targets and chaining kills. His powerful Ion Manipulators gain charges with every kill.
+
+* **Chirr** - A whimsical creature of Petrichor V, with a variety of abilities that give her a unique control over the battlefield. She supports her friends with potent buffs and heals.
 
 * **???** - Survivors of unknown origin, familiar yet unfamiliar. Under the right conditions, you may meet them on the Planet, but they certainly won't be on your side.
 
@@ -24,7 +26,7 @@
 * **Typhoon** - The Planet grows restless, with fearsome events and monsters coming in greater numbers than ever before. Unlock new skins for survivors* by proving yourself in this new challenge exceeding even Monsoon!
 	 *currently includes Commando, Huntress, MUL-T, Acrid, Captain, Executioner, and Commando's Vestige.
 	 
-* **Artifact of Cognation** - A new, unlockable artifact to shape up your runs.
+* **New Artifacts** - Two new, unlockable artifacts to shape up your run.
 
 ![Credits](https://github.com/swuff-star/Starstorm2/blob/main/SS2-Project/Assets/Starstorm2/ReadmeAssets/ss2credits.gif?raw=true)
 
@@ -35,7 +37,7 @@ With previous and one-off code contributions by...
 * Anreol, bread, Flan, Gaforb, GrooveSalad, HIFU, KevinFromHPCustomerService, MagicGonads, malfaisant, Moffein, Nebby, Noop, Phreel, prod, rob, swuff★, sebacame, Shared, TheTimesweeper, Vale-X, xpcybic, Xubas
 
 With Art/Modelling/Animation contributions by...
-* Alexstarwras, Anreol, Bolty, bread, bruh, Cexeub, dotflare, Draymarc, Domi, JestAnotherAnimator, Gem, goodguy, GrooveSalad, JaceDaDorito, LucidInceptor, Neik, KevinFromHPCustomerService, PapaZach, Plexus, prodzpod, QuietAnon, rekkadraws, redacted, rob, SkeletorChampion, SOM, Spenny, swuff★, xpcybic, Reithierion, UnknownGlaze, Zenithrium
+* Alexstarwras, Anreol, Bolty, bread, bruh, Cexeub, dotflare, Draymarc, Domi, JestAnotherAnimator, Gem, goodguy, GrooveSalad, JaceDaDorito, LucidInceptor, Neik, KevinFromHPCustomerService, PapaZach, Plexus, prodzpod, QuietAnon, rekkadraws, redacted, rob, SkeletorChampion, SOM, Spenny, swuff★, Slipskip, xpcybic, Reithierion, UnknownGlaze, Zenithrium
 
 Additional thanks to... 
 * Writing - Blimblam, Lyrical Endymion, rekkadraws, swuff★, T_Dimensional, Zenithrium
@@ -49,9 +51,29 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 
 * Known Issues
     * Elite events are currently disabled.
+    * Artifact codes are not placed in world, and can instead be found on the wiki.
 
 ## Changelog
 **Warning: content spoilers below!**
+### 0.6.2
+* Follower
+    * Fixed a bug causing Followers to inherit Duplicator Drone sound and visual effects.
+    * Adjusted AI to prioritize fighting the player in close range.
+* Wayfarer
+    * Adjusted projectiles of primary attack to be more interesting to play against.
+    * Secondary now creates a small explosion around Wayfarer while creating the buff ward.
+    * Adjusted AI to better utilize adjusted skills.
+* Other
+    * Added proper strings for Artifact of Havoc unlockable name / description.
+
+### 0.6.1
+* Chirr
+    * Reduced hurtbox size by about 33%.
+    * Friends now give you the money and experience you would have gotten by killing them.
+    * Updated position in Character Select.
+* General
+    * Added missing information to the README.
+
 ### 0.6.0
 * New Content
     * Survivor: Chirr.
@@ -90,18 +112,3 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Rushroom's trail VFX now stops when it dies.
 * Interactables
     * Interactables are now properly added to the ExpansionDef.
-
-### 0.5.5
-* General
-    * Partially implemented Portuguse translation. 
-    * Captain GM now has dithering.
-* Items
-    * Needles's item display now has dithering.
-    * Haunted Lamp no longer drops when disabled.
-    * Haunted Lamp actually fires if the follower doesn't exist.
-* Executioner   
-    * Fixed Execution softlocking the player when failing to land when falling out of bounds.
-* Nemesis Mercenary
-    * Improved blacklist for Proliferate's clone.
-* Drones
-    * Shock and Duplicator drones now drop purchasable interactables when destroyed.

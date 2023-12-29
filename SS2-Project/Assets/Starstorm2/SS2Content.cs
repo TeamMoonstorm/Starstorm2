@@ -46,6 +46,8 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef VoidRock;
 
+            public static ItemDef VoidRockTracker;
+
             public static ItemDef BloodTester;
 
             public static ItemDef FieldAccelerator;
@@ -113,6 +115,8 @@ namespace Moonstorm.Starstorm2
             public static ItemDef NemesisBossHelper;
 
             public static ItemDef TerminationHelper;
+
+            public static ItemDef GildedAmulet;
         }
 
         public static class Equipments
@@ -307,10 +311,12 @@ namespace Moonstorm.Starstorm2
 
             Typhoon.Init();
             Events.Init();
-            
+
             //Bulwark.Init();
-            
+
             //Ethereal.Init();
+
+            Void.Init();
 
             LoadDispatchers = new Action[]
             {
