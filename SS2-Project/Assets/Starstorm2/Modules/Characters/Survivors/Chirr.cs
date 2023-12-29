@@ -27,7 +27,7 @@ namespace Moonstorm.Starstorm2.Survivors
             }
 
             DateTime today = DateTime.Today;
-            if (today.Month == 12)
+            if (today.Month == 12 && ((today.Day == 27) || (today.Day == 26) || (today.Day == 25) || (today.Day == 24) || (today.Day == 23)))
             {
                 On.RoR2.UI.MainMenu.BaseMainMenuScreen.OnEnter += HiChirrHiiiiii;
             }
