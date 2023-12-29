@@ -30,7 +30,7 @@ MonoBehaviour:
   selectionWeight: 80
   cost: 450
   repeatedSelectionCostCoefficient: 1
-  minimumStageCompletions: 4
+  minimumStageCompletions: -1
   requiredUnlock:
     _asset: {fileID: 0}
     _address: RoR2/Base/Merc/Characters.Mercenary.asset
@@ -52,7 +52,7 @@ MonoBehaviour:
   requiredItemAddressable:
     address: 
     useDirectReference: 1
-    asset: {fileID: 0}
+    asset: {fileID: 11400000, guid: 54ed29c3521c4b24a8c226b6bb6a2013, type: 2}
   requiredArtifactDef: {fileID: 0}
   fallbackVFX: {fileID: 0}
   eventVFX: []
