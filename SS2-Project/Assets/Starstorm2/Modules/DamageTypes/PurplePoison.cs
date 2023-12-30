@@ -1,4 +1,5 @@
 ﻿using Moonstorm;
+using Moonstorm.Starstorm2.Buffs;
 using R2API;
 using RoR2;
 using UnityEngine;
