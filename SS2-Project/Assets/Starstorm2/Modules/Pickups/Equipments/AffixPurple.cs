@@ -7,7 +7,7 @@ namespace Moonstorm.Starstorm2.Equipments
 {
     public class AffixPurple : EliteEquipmentBase
     {
-        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("ElitePurpleEquipment", SS2Bundle.Equipments);
+        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("ElitePurpleEquipment", SS2Bundle.Indev);
 
         public override List<MSEliteDef> EliteDefs { get; } = new List<MSEliteDef>
         {

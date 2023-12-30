@@ -2,12 +2,13 @@
 using R2API;
 using RoR2;
 
+
 namespace Moonstorm.Starstorm2.Buffs
 {
-    public sealed class PurplePoisonDebuff : BuffBase
+    public sealed class PurplePoisonBuildup : BuffBase
     {
-        // TODO
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdPurplePoison", SS2Bundle.Indev);
+        // TODO: Is main the right one here?
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdPoisonBuildup", SS2Bundle.Main);
         public static DotController.DotIndex index;
 
         public override void Initialize()
@@ -18,7 +19,7 @@ namespace Moonstorm.Starstorm2.Buffs
         public sealed class Behavior : BaseBuffBodyBehavior
         {
             [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => SS2Content.Buffs.bdPurplePoison;
+            private static BuffDef GetBuffDef() => SS2Content.Buffs.bdPoisonBuildup;
         }
     }
 }

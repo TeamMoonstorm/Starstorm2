@@ -3,6 +3,7 @@ using Moonstorm.Starstorm2.Buffs;
 using R2API;
 using RoR2;
 using UnityEngine;
+using UnityEngine.Networking;
 using static R2API.DamageAPI;
 
 namespace Moonstorm.Starstorm2.DamageTypes
@@ -30,20 +31,27 @@ namespace Moonstorm.Starstorm2.DamageTypes
 
         private void ApplyPoison(DamageReport report)
         {
-            var victimBody = report.victimBody;
-            var attackerBody = report.attackerBody;
-            var damageInfo = report.damageInfo;
-            if (DamageAPI.HasModdedDamageType(damageInfo, ModdedDamageType))
+            if (NetworkServer.active)
             {
-                var dotInfo = new InflictDotInfo()
+                var victimBody = report.victimBody;
+                var attackerBody = report.attackerBody;
+                var damageInfo = report.damageInfo;
+                var buildUpBuffCount = victimBody.GetBuffCount(SS2Content.Buffs.bdPoisonBuildup);
+
+                if (DamageAPI.HasModdedDamageType(damageInfo, ModdedDamageType))
                 {
-                    attackerObject = attackerBody.gameObject,
-                    victimObject = victimBody.gameObject,
-                    dotIndex = Buffs.Gouge.index,
-                    duration = 2,
-                    damageMultiplier = 1,
-                };
-                DotController.InflictDot(ref dotInfo);
+                    var dotInfo = new InflictDotInfo()
+                    {
+                        attackerObject = attackerBody.gameObject,
+                        victimObject = victimBody.gameObject,
+                        dotIndex = Buffs.PurplePoisonDebuff.index,
+                        duration = Duration + buildUpBuffCount,
+                        damageMultiplier = 2,
+                        maxStacksFromAttacker = 5,
+                    };
+
+                    DotController.InflictDot(ref dotInfo);
+                }
             }
         }
     }

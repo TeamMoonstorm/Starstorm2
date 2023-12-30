@@ -257,6 +257,8 @@ namespace Moonstorm.Starstorm2
             public static BuffDef bdNemCapManaRegen;
 
             public static BuffDef bdEmpyrean;
+
+            public static BuffDef bdPoisonBuildup;
         }
 
         public static class Elites
