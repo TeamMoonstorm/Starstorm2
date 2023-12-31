@@ -1,4 +1,5 @@
 ﻿using Moonstorm;
+using Moonstorm.Starstorm2.API;
 using Moonstorm.Starstorm2.Buffs;
 using R2API;
 using RoR2;
@@ -31,8 +32,9 @@ namespace Moonstorm.Starstorm2.DamageTypes
 
         private void ApplyPoison(DamageReport report)
         {
-            if (NetworkServer.active)
-            {
+            // if (NetworkServer.active)
+            //{
+                SS2DebugUtil.print("DEBUGGER ApplyPoison called!!");
                 var victimBody = report.victimBody;
                 var attackerBody = report.attackerBody;
                 var damageInfo = report.damageInfo;
@@ -52,7 +54,7 @@ namespace Moonstorm.Starstorm2.DamageTypes
 
                     DotController.InflictDot(ref dotInfo);
                 }
-            }
+           // }
         }
     }
 }

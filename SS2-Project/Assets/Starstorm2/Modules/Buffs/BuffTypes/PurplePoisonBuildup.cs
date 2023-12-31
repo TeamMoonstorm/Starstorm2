@@ -8,7 +8,7 @@ namespace Moonstorm.Starstorm2.Buffs
     public sealed class PurplePoisonBuildup : BuffBase
     {
         // TODO: Is main the right one here?
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdPoisonBuildup", SS2Bundle.Main);
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdPoisonBuildup", SS2Bundle.Indev);
         public static DotController.DotIndex index;
 
         public override void Initialize()

@@ -11,6 +11,7 @@ namespace EntityStates.Knight
     {
         public static BuffDef shieldBuff;
         public static BuffDef parryBuff;
+        public static GameObject parryEffectPrefab;
         public static float parryBuffDuration;
         public static float minDur;
         public static SkillDef skillDef;
@@ -47,6 +48,10 @@ namespace EntityStates.Knight
                 skillLocator.primary.UnsetSkillOverride(skillLocator.primary, skillDef, GenericSkill.SkillOverridePriority.Contextual);
                 hasParried = true;
                 characterBody.AddTimedBuff(parryBuff, parryBuffDuration);
+
+                EffectData effectData = new EffectData();
+                effectData.origin = this.characterBody.corePosition;
+                EffectManager.SpawnEffect(parryEffectPrefab, effectData, transmit: true);
             }
 
             stopwatch += fixedAge;

@@ -2,6 +2,7 @@
 using RoR2;
 using RoR2.Skills;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace EntityStates.Knight
 {
@@ -11,6 +12,9 @@ namespace EntityStates.Knight
         public static float swingTimeCoefficient = 1f;
         [TokenModifier("SS2_KNIGHT_SHIELD_BASH_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
         public static float TokenModifier_dmgCoefficient => new ShieldPunch().damageCoefficient;
+        
+        // TODO: Make static once you have a replacement
+        public GameObject impactEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/Bandit2SmokeBomb.prefab").WaitForCompletion();
 
         public static SkillDef buffedPrimarySkill;
         public static SkillDef buffedUtilitySkill;
@@ -43,6 +47,10 @@ namespace EntityStates.Knight
             originalUtilitySkill.SetSkillOverride(gameObject, buffedUtilitySkill, GenericSkill.SkillOverridePriority.Contextual);
             originalSpecialSkill.SetSkillOverride(gameObject, buffedSpecialSkill, GenericSkill.SkillOverridePriority.Contextual);
             Debug.Log("setting buffed skills");
+
+            EffectData effectData = new EffectData();
+            effectData.origin = this.characterBody.corePosition;
+            EffectManager.SpawnEffect(impactEffect, effectData, transmit: false);
         }
 
         public override void PlayAnimation()
