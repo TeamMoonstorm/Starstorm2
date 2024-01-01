@@ -46,7 +46,6 @@ GameObject:
   - component: {fileID: 8142481833274158006}
   - component: {fileID: 2251618351443202947}
   - component: {fileID: 6612899463013399034}
-  - component: {fileID: 7275770626274891369}
   - component: {fileID: 627465162431071110}
   - component: {fileID: 5093032342421688179}
   - component: {fileID: 5668635971825929985}
@@ -146,7 +145,7 @@ MonoBehaviour:
   rootMotionInMainState: 0
   mainRootSpeed: 0
   baseMaxHealth: 160
-  baseRegen: 2.8
+  baseRegen: 2.5
   baseMaxShield: 0
   baseMoveSpeed: 7
   baseAcceleration: 80
@@ -160,7 +159,7 @@ MonoBehaviour:
   sprintingSpeedMultiplier: 1.45
   autoCalculateLevelStats: 1
   levelMaxHealth: 48
-  levelRegen: 0.56
+  levelRegen: 0.5
   levelMaxShield: 0
   levelMoveSpeed: 0
   levelJumpPower: 0
@@ -294,7 +293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customName: Shield
-  initialStateType:
+    initialStateType:
     _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   mainStateType:
     _typeName: RoR2.RouletteChestController+Idle, RoR2, Version=0.0.0.0, Culture=neutral,
