@@ -65,7 +65,7 @@ namespace Moonstorm.Starstorm2
             {
                 var playerBody = player.master.GetBody();
 
-                if (!playerBody)
+                if (playerBody)
                 {
                    var invetoryCount = player.body.inventory.GetItemCount(requiredItemAddressable.Asset.itemIndex);
 

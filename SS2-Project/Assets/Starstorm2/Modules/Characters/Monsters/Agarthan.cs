@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Moonstorm.Starstorm2.Monsters
 {
-    [DisabledContent]
+    //[DisabledContent]
     public sealed class Agarthan : MonsterBase
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("AgarthanBody", SS2Bundle.Indev);

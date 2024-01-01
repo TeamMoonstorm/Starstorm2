@@ -18,6 +18,10 @@ namespace Moonstorm.Starstorm2.Equipments
             //is it possible to run an actual melee attack off of the prefab i wonder?
             //dreading this.
 
+            //^ ok shut the fuck up loser new idea:
+            //the sword itself is a companion you get. and the equipment makes it fly towards a target and slice it.
+            //maybe redo it like that later. i think this is good for now.
+
             CharacterModel model = slot.characterBody.modelLocator.modelTransform.GetComponent<CharacterModel>();
             List<GameObject> displayList;
             GameObject displayObject;
