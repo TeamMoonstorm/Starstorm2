@@ -28,8 +28,8 @@ namespace EntityStates.Knight
 
         public override void PlayAnimation()
         {
-            string animationStateName = (swingSide == 0) ? "SwingSword1" : "SwingSword2";
-            PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.05f);   
+           string animationStateName = (swingSide == 0) ? "SwingSword1" : "SwingSword2";
+           PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.05f);             
         }
 
         void SteppedSkillDef.IStepSetter.SetStep(int i)
@@ -51,27 +51,6 @@ namespace EntityStates.Knight
 
         public override void FixedUpdate()
         {
-            //if (animator.GetFloat(mecanimHitboxActiveParameter) > 0.5f && fixedAge >= duration * 0.1f)
-            //{
-            //    if (meleeAttackStartTime == Run.FixedTimeStamp.positiveInfinity)
-            //    {
-            //        if (characterBody.HasBuff(SS2Content.Buffs.bdKnightBuff) && isAuthority && !hasFiredBeam)
-            //        {
-            //            hasFiredBeam = true;
-            //            ProjectileManager.instance.FireProjectile(
-            //                beamProjectile,
-            //                GetAimRay().origin,
-            //                Util.QuaternionSafeLookRotation(GetAimRay().direction),
-            //                gameObject,
-            //                damageStat * damageCoefficient,
-            //                0f,
-            //                RollCrit(),
-            //                DamageColorIndex.Default,
-            //                null,
-            //                80f);
-            //        }
-            //    }
-            //}
             base.FixedUpdate();
         }
 
