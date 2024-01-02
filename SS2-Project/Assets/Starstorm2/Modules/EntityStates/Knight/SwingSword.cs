@@ -17,7 +17,6 @@ namespace EntityStates.Knight
         public static GameObject beamProjectile;
         public static float TokenModifier_dmgCoefficient => new SwingSword().damageCoefficient;
         public int swingSide;
-        private bool hasFiredBeam = true;
 
         public override void OnEnter()
         {
@@ -56,7 +55,7 @@ namespace EntityStates.Knight
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.Skill;
+            return InterruptPriority.PrioritySkill;
         }
     }
 }
