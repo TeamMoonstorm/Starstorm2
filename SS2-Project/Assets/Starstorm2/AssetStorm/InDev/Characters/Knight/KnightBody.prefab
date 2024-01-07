@@ -70,6 +70,7 @@ GameObject:
   - component: {fileID: 7653471131008266651}
   - component: {fileID: 4642639141316567287}
   - component: {fileID: 7275770626274891369}
+  - component: {fileID: -1019936081546606243}
   m_Layer: 0
   m_Name: KnightBody
   m_TagString: Player
@@ -730,6 +731,18 @@ MonoBehaviour:
   mainStateType:
     _typeName: RoR2.RouletteChestController+Idle, RoR2, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+--- !u!114 &-1019936081546606243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4655597582345404589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 119a3e8a2721a8f4ba55bf3d704460b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5980688063288723733
 GameObject:
   m_ObjectHideFlags: 0

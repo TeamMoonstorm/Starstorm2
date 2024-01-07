@@ -22,6 +22,8 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
 
         public override void OnEnter()
         {
+            Debug.Log("DEBUGGER The stun slash was entered!!");
+
             base.OnEnter();
 
             animator = GetModelAnimator();
