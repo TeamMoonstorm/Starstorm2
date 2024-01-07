@@ -15,9 +15,10 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight
 
         public override void OnEnter()
         {
+            Debug.Log("DEBUGGER The passive was entered!!");
+
             base.OnEnter();
             hasBuffed = false;
-            //duration = baseDuration / attackSpeedStat;
 
             if (!hasBuffed && isAuthority)
             {
@@ -31,10 +32,7 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-
-
-            //if (fixedAge >= duration)
-            //    outer.SetNextStateToMain();
+            Debug.Log("DEBUGGER The passive was updated!!");
         }
     }
 }

@@ -34,6 +34,7 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
 
         public override void OnEnter()
         {
+            Debug.Log("DEBUGGER The tornado spin was entered!!");
             base.OnEnter();
             hasBuffed = false;
             hasSpun = false;
@@ -82,6 +83,8 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
 
         public override void OnExit()
         {
+            Debug.Log("DEBUGGER The passive was exited!!");
+
             ProjectileManager.instance.FireProjectile(
                 beamProjectile,
                 GetAimRay().origin,

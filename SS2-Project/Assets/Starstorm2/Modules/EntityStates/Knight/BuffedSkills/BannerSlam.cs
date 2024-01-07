@@ -19,6 +19,8 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
 
         public override void OnEnter()
         {
+            Debug.Log("DEBUGGER The buffed banner slam was entered!!");
+
             PlayCrossfade("Body", "SwingSpecial", "Special.playbackRate", duration * swingTimeCoefficient, 0.15f);
 
             var GBToken = characterBody.gameObject.GetComponent<GreaterBannerToken>();
@@ -68,6 +70,7 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
 
         public override void OnExit()
         {
+            Debug.Log("DEBUGGER The buffed banner was exited!!");
             outer.SetNextStateToMain();
             base.OnExit();
         }
