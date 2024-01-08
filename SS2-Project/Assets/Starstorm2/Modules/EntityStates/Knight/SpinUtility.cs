@@ -56,15 +56,6 @@ namespace EntityStates.Knight
         {
             base.FixedUpdate();
 
-            if (animator.GetFloat("BuffActive") >= 0.5f && !hasBuffed)
-            {
-                hasBuffed = true;
-                wardInstance = Object.Instantiate(buffWard);
-                wardInstance.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
-                wardInstance.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(gameObject);
-                Util.PlaySound("CyborgUtility", gameObject);
-            }
-
             if (animator.GetFloat("SpecialSwing") >= 0.5f && !hasSpun)
             {
                 hasSpun = true;
