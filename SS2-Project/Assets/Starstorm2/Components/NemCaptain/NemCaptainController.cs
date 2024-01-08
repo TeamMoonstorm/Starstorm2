@@ -431,6 +431,13 @@ namespace Moonstorm.Starstorm2.Components
             fillUiList.Remove(instance.GetComponent<ImageFillController>());
         }
 
+        private void CheckRefresh(GenericSkill gs)
+        {
+            if (gs.stock > 0)
+                gs.SetSkillOverride(gameObject, GetRandomSkillDefFromDeck(), GenericSkill.SkillOverridePriority.Replacement);
+
+        }
+
         private void FixedUpdate()
         {
             float num;
@@ -491,6 +498,18 @@ namespace Moonstorm.Starstorm2.Components
                     }
                 }
             }
+
+            if (hand1.skillDef == nullSkill)
+                CheckRefresh(hand1);
+
+            if (hand2.skillDef == nullSkill)
+                CheckRefresh(hand2);
+
+            if (hand3.skillDef == nullSkill)
+                CheckRefresh(hand3);
+
+            if (hand4.skillDef == nullSkill)
+                CheckRefresh(hand4);
 
             if (characterBody.HasBuff(SS2Content.Buffs.bdNemCapManaRegen))
                 num += stressPerSecondWhileRegenBuff;

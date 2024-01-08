@@ -164,13 +164,77 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifetime: 8
-  lifetimeExpiredEffect: {fileID: 0}
+  lifetimeExpiredEffect: {fileID: 7774853780658318554, guid: b9c14aee315ef6646ae80dd5de5d1465,
+    type: 3}
   desiredForwardSpeed: 15
   updateAfterFiring: 1
-  enableVelocityOverLifetime: 0
+  enableVelocityOverLifetime: 1
   velocityOverLifetime:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.0037807184
+      value: 0.9976415
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.02
+      value: 1
+      inSlope: 0.19771615
+      outSlope: 0.19771615
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.075
+      value: 0
+      inSlope: -0.017504906
+      outSlope: -0.017504906
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.3
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.43477958
+      value: 0.9595045
+      inSlope: 1.2132875
+      outSlope: 1.2132875
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.29670966
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -269,7 +333,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lookRange: 40
-  lookCone: 120
+  lookCone: 180
   targetSearchInterval: 0.5
   onlySearchIfNoTarget: 1
   allowTargetLoss: 0
@@ -295,7 +359,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yAxisOnly: 0
-  rotationSpeed: 30
+  rotationSpeed: 38
 --- !u!114 &585382038847608727
 MonoBehaviour:
   m_ObjectHideFlags: 0
