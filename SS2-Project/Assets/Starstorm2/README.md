@@ -55,16 +55,30 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 
 ## Changelog
 **Warning: content spoilers below!**
+### 0.6.3
+* Monsters
+    * Disabled something.
+
 ### 0.6.2
+* New Content
+    * Interactable: Mysterious Cuff.
+    * Item: Condemned Bond.
 * Follower
     * Fixed a bug causing Followers to inherit Duplicator Drone sound and visual effects.
     * Adjusted AI to prioritize fighting the player in close range.
+    * Hopefully addressed buggs pertaining to performance issues & corpse cleanup.
 * Wayfarer
     * Adjusted projectiles of primary attack to be more interesting to play against.
     * Secondary now creates a small explosion around Wayfarer while creating the buff ward.
-    * Adjusted AI to better utilize adjusted skills.
+    * Adjusted AI to better utilize tweaked skills.
+    * Hopefully addressed buggs pertaining to performance issues & corpse cleanup.
+* Events
+    * All Nemesis Invasions now only occur if a player acquires the Condemned Bond during a run. Looping is no longer a requirement.
+    * Nemesis Mercenary Invasion now only occurs if Mercenary is unlocked.
+    * Refined selection of enemies for Empyrean Manifestation.
 * Other
     * Added proper strings for Artifact of Havoc unlockable name / description.
+    * A guaranteed Mysterious Cuff can be found in the Void Fields.
 
 ### 0.6.1
 * Chirr
