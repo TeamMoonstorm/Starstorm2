@@ -30,8 +30,11 @@ namespace Moonstorm.Starstorm2
             {
                 GameObject term = Instantiate(shrinePrefab, position, rotation);
                 NetworkServer.Spawn(term);
+
+                #if DEBUG
                 Debug.Log("TERM : " + term);
                 Debug.Log("placed shrine at: " + position + "pos & " + rotation + "rot");
+                #endif
             }
         }
     }

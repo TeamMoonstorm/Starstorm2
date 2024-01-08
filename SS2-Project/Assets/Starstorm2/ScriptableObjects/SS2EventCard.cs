@@ -20,7 +20,7 @@ namespace Moonstorm.Starstorm2
         }
 
         private static List<SS2EventCard> instances = new List<SS2EventCard>();
-        public AddressableItemDef requiredItemAddressable;
+        public ItemDef requiredItem;
         public ArtifactDef requiredArtifactDef;
         public GameObject fallbackVFX;
         public EventVFX[] eventVFX = Array.Empty<EventVFX>();
@@ -56,21 +56,25 @@ namespace Moonstorm.Starstorm2
         /// </summary>
         private bool checkRequiredItem() 
         {
-            if (!requiredItemAddressable)
+            if (!requiredItem)
             {
                 return true;
-            } 
+            }
+
 
             foreach (var player in PlayerCharacterMasterController.instances)
             {
                 var playerBody = player.master.GetBody();
+                Debug.Log("checking items");
 
-                if (playerBody)
+                if (!playerBody)
                 {
-                   var invetoryCount = player.body.inventory.GetItemCount(requiredItemAddressable.Asset.itemIndex);
+                   Debug.Log("found player");
+                   var invetoryCount = player.body.inventory.GetItemCount(requiredItem.itemIndex);
 
                    if (invetoryCount > 0)
                    {
+                        Debug.Log("found item");
                         return true;
                    }
                 }
