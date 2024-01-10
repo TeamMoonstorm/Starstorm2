@@ -15,6 +15,7 @@ namespace EntityStates.Knight
         public static float swingTimeCoefficient = 1.42f;
         [TokenModifier("SS2_KNIGHT_PRIMARY_SWORD_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
         public static GameObject beamProjectile;
+        public static SkillDef buffedSkillRef;
         public static float TokenModifier_dmgCoefficient => new SwingSword().damageCoefficient;
         public int swingSide;
 

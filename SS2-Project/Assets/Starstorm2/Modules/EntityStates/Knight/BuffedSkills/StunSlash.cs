@@ -17,6 +17,7 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
         public static float swingTimeCoefficient = 1.42f;
         [TokenModifier("SS2_KNIGHT_PRIMARY_SWORD_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
         public static GameObject beamProjectile;
+        public static SkillDef originalSkillRef;
         public static float TokenModifier_dmgCoefficient => new SwingSword().damageCoefficient;
         public int swingSide;
 

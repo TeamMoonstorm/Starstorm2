@@ -15,6 +15,7 @@ namespace EntityStates.Knight
         [TokenModifier("SS2_KNIGHT_SPECIAL_SPIN_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
         public static float TokenModifier_dmgCoefficient => new SpinUtility().damageCoefficient;
         public static GameObject buffWard;
+        public static SkillDef buffedSkillRef;
         public static float hopVelocity;
         private bool hasBuffed;
         private bool hasSpun;

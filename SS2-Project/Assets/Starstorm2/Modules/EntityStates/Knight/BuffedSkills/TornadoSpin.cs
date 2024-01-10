@@ -25,6 +25,7 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
         public static float minimumY;
         public static float aimVelocity;
         public static GameObject beamProjectile;
+        public static SkillDef originalSkillRef;
 
         private bool hasBuffed;
         private bool hasSpun;
