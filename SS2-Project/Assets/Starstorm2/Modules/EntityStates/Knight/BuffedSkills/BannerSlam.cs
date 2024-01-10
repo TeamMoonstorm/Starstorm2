@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 using RoR2;
 using RoR2.Audio;
 using Moonstorm.Starstorm2;
+using RoR2.Skills;
 
 namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
 {
@@ -12,6 +13,7 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
     {
         public static int duration;
         public static int swingTimeCoefficient;
+        public static SkillDef originalSkillRef;
 
         public EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("GreaterWarbanner", SS2Bundle.Equipments);
         public GameObject WarbannerObject { get; set; } = SS2Assets.LoadAsset<GameObject>("GreaterWarbannerWard", SS2Bundle.Equipments);
