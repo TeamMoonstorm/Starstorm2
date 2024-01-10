@@ -25,7 +25,8 @@ namespace EntityStates.ShockDrone
         public override void OnExit()
         {
             base.OnExit();
-            FireShock();
+            if (isAuthority)
+                FireShock();
         }
         public void FireShock()
         {

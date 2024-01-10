@@ -25,14 +25,17 @@ namespace Moonstorm.Starstorm2
 
         public void DropItem(Interactor interactor)
         {
-            //PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(SS2Content.Items.VoidRock.itemIndex), new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), Vector3.up * 5f + transform.forward * 2f);
+            PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(SS2Content.Items.VoidRock.itemIndex), new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), Vector3.up * 5f + transform.forward * 2f);
             CharacterBody body = interactor.GetComponent<CharacterBody>();
+            Items.VoidRock.invasionStage = true;
+            Items.VoidRock.setStage = true;
+            Items.VoidRock.initialStage = Run.instance.stageClearCount;
+            Items.VoidRock.inventory = body.inventory;
+            Util.PlaySound("Play_item_void_treasureCache_open", gameObject);
             if (body != null)
             {
-                CreateItemTakenOrb(gameObject.transform.position, body.gameObject, SS2Content.Items.VoidRock.itemIndex);
-                body.inventory.GiveItem(SS2Content.Items.VoidRock.itemIndex, 1);
-                body.inventory.GiveItem(SS2Content.Items.VoidRockTracker.itemIndex, 1);
-                CharacterMasterNotificationQueue.PushItemNotification(body.master, SS2Content.Items.VoidRock.itemIndex);
+                //CreateItemTakenOrb(gameObject.transform.position, body.gameObject, SS2Content.Items.VoidRock.itemIndex);
+                //body.inventory.GiveItem(SS2Content.Items.VoidRock.itemIndex, 1);                //CharacterMasterNotificationQueue.PushItemNotification(body.master, SS2Content.Items.VoidRock.itemIndex);
             }
         }
 
@@ -44,6 +47,7 @@ namespace Moonstorm.Starstorm2
                 Debug.Log("client client client @ Void Rock CreateItemTakenOrb");
                 return;
             }
+            
             GameObject effectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/ItemTakenOrbEffect.prefab").WaitForCompletion();
             EffectData effectData = new EffectData
             {

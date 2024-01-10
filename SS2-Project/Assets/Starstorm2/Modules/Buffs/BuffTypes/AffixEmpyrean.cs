@@ -58,10 +58,10 @@ namespace Moonstorm.Starstorm2.Buffs
             }
             else
             {
-                Debug.Log("Failed to find IL match for Empyrean hook 1!");
+                //Debug.Log("Failed to find IL match for Empyrean hook 1!");
             }
 
-            Debug.Log(il + " :: IL DEBUGLOG");
+            //Debug.Log(il + " :: IL DEBUGLOG");
 
             bool ILFound2 = c.TryGotoNext(MoveType.After,
                 x => x.MatchSub(),
@@ -84,7 +84,7 @@ namespace Moonstorm.Starstorm2.Buffs
             }
             else
             {
-                Debug.Log("Failed to find IL match for Empyrean hook 2!");
+                //Debug.Log("Failed to find IL match for Empyrean hook 2!");
             }
         }
 

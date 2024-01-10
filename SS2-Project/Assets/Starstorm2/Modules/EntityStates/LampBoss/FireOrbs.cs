@@ -82,7 +82,8 @@ namespace EntityStates.LampBoss
                 {
                     orbCount++;
                     timer = 0;
-                    FireProjectile();
+                    if (isAuthority)
+                        FireProjectile();
                     //Debug.Log("firing projectile");
                 }
             }

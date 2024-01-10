@@ -72,7 +72,8 @@ namespace EntityStates.Lamp
             if (animator.GetFloat("Fire") >= 0.5f && !hasFired)
             {
                 hasFired = true;
-                FireProjectile();
+                if (isAuthority)
+                    FireProjectile();
             }
 
             if (fixedAge >= duration && isAuthority)
