@@ -28,7 +28,7 @@ MonoBehaviour:
   - slumberingsatellite
   category: CommonEvents
   selectionWeight: 80
-  cost: 450
+  cost: 20
   repeatedSelectionCostCoefficient: 1
   minimumStageCompletions: -1
   requiredUnlock:
@@ -51,5 +51,6 @@ MonoBehaviour:
   requiredExpansions: []
   requiredItem: {fileID: 11400000, guid: 54ed29c3521c4b24a8c226b6bb6a2013, type: 2}
   requiredArtifactDef: {fileID: 0}
+  requiresVoid: 1
   fallbackVFX: {fileID: 0}
   eventVFX: []

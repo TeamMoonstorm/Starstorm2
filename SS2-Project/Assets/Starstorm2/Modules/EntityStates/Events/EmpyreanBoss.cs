@@ -26,6 +26,9 @@ namespace EntityStates.Events
             "AcidLarvaBody", //enemy kills itself
             "MinorConstructBody", //enemy afks across world
             "HermitCrabBody" //enemy afks across world
+
+            //"BeetleBody", //too weak
+            //"WispBody" //too weak
         };
 
         public override void SpawnBoss()
@@ -42,7 +45,8 @@ namespace EntityStates.Events
             
             while (true)
             {
-                chosenMonsterCard = combatDirector.SelectMonsterCardForCombatShrine(40f * Run.instance.loopClearCount * Run.instance.loopClearCount);
+                chosenMonsterCard = combatDirector.SelectMonsterCardForCombatShrine((20f * Run.instance.loopClearCount * Run.instance.loopClearCount) + 40f);
+                Debug.Log(chosenMonsterCard.spawnCard.prefab.GetComponent<CharacterMaster>().bodyPrefab.name + " : CHOSEN MONSTER ATTEMPT");
 
                 if (!blacklist.Contains(chosenMonsterCard.spawnCard.prefab.GetComponent<CharacterMaster>().bodyPrefab.name))
                 {

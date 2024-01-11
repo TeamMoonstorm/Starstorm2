@@ -45,13 +45,14 @@ MonoBehaviour:
     address: 
     useDirectReference: 1
     asset: {fileID: 0}
-  requiredExpansionDefs: []
+  requiredExpansionDefs:
+  - _asset: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+    _address: 
+    _useDirectReference: 0
   requiredExpansions: []
-  requiredItemAddressable:
-    address: 
-    useDirectReference: 1
-    asset: {fileID: 0}
+  requiredItem: {fileID: 0}
   requiredArtifactDef: {fileID: 0}
+  requiresVoid: 0
   fallbackVFX: {fileID: 5557705817396211732, guid: b260621917d16e44fa11ff8421c67e1c,
     type: 3}
   eventVFX:

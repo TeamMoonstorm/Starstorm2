@@ -17,6 +17,8 @@ namespace Moonstorm.Starstorm2
             public static ArtifactDef Havoc;
             
             public static ArtifactDef Deviation;
+
+            public static ArtifactDef Adversity;
         }
         public static class Items
         {
@@ -315,6 +317,7 @@ namespace Moonstorm.Starstorm2
             //Bulwark.Init();
 
             //Ethereal.Init();
+            Components.EtherealBehavior.Init();
 
             Void.Init();
 

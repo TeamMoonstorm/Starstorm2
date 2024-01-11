@@ -1,7 +1,7 @@
 
 ![Starstorm 2](https://github.com/swuff-star/Starstorm2/blob/main/SS2-Project/Assets/Starstorm2/ReadmeAssets/ss2logopurple.gif?raw=true)
 
-**Starstorm 2** is a work-in-progress adaptation of the Risk of Rain 1 mod "Starstorm". It currently features four new survivors, three new monsters, over 20 new items and equipment, and numerous new challenges to shake up your runs.
+**Starstorm 2** is a work-in-progress adaptation of the Risk of Rain 1 mod "Starstorm". It currently features four new survivors, three new monsters, over 20 new items and equipment, and numerous new challenges to shake up your runs. In-depth information can be found on our [Wiki](https://thunderstore.io/package/TeamMoonstorm/Starstorm2/wiki/).
 
 ![New Survivors...](https://github.com/swuff-star/Starstorm2/blob/main/SS2-Project/Assets/Starstorm2/ReadmeAssets/ss2survivorpromo.gif?raw=true)
 
@@ -55,9 +55,34 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 
 ## Changelog
 **Warning: content spoilers below!**
+### 0.6.6
+* Events
+    * Storms and Empyrean Manifestations now require the Starstorm expansion to be enabled.
+    * Really fixed Nemesis Invasions... 😅
+* Artifacts
+    * Artifact of Havoc now requires the Starstorm expansion to be enabled to be selected.
+* Rushrum
+    * Further increased visibility of glowing tip of head.
+* Other
+    * Fixed a networking issue with Follower, Wayfarer, and Shock Drone's attacks.
+    * Networked Mysterious Cuff interactable spawning.
+
+### 0.6.5
+* Interactables
+    * Drone Table no longer counts as a Shrine.
+    * Mysterious Cuff now drops a pickup rather than depositing the Condemned Bond directly in the player's inventory.
+* Monsters
+    * Disabled the white Christmas pom-pom at the end of the Rushrum's head.
+* Events
+    * Fixed events spawning infrequently, if at all.
+
+### 0.6.4
+* Interactables
+    * Fixed Mysterious Cuff spawning in unintended locations.
+
 ### 0.6.3
 * Monsters
-    * Disabled something.
+    * Disabled something! 😉
 
 ### 0.6.2
 * New Content

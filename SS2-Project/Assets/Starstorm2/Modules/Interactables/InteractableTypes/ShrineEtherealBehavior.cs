@@ -97,7 +97,7 @@ namespace Moonstorm.Starstorm2
                     else
                         return;
 
-                    Ethereal.teleIsEthereal = true;
+                    Components.EtherealBehavior.teleIsEthereal = true;
 
                     Debug.Log("Set ethereal to true");
                 }
