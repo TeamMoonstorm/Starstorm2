@@ -1,11 +1,11 @@
 {
   "strings": {
     "SS2_ITEM_RELICOFDUALITY_NAME": "对偶遗物",
-    "SS2_ITEM_RELICOFDUALITY_PICKUP": "All attacks burn enemies. <style=cDeath>All damage freezes you.</style>",
     "SS2_ITEM_RELICOFDUALITY_DESC": "Damaging enemies burns them for <style=cMono>FIGURE OUT THIS MATH LOL</style> <style=cStack>(+something% per stack)</style>. <style=cDeath>Being hit freezes you for some seconds idfk lol figure out when this item is implemented</style>",
-    "SS2_ITEM_RELICOFDUALITY_LORE": "Hmm? Oh, Youngling! You are back sooner than expected. Have you completed your search?\n\nOh, dear. Youngling, why are you shivering? Has something hurt you?\n\nYou found something that hurt you? Hmm. Peculiar. Do you have it with you, still?\n\n...I see. Let me look at it, then. Come now, and show me what you've found.\n\nHmm. A strange thing, this one. A blazing fire, yet cold to the touch. How unnatural, this is. There's a certain harmony to it, however. As the heat brings warmth and life, the cold tempers it, and keeps it in check. But in that same way, that bitter cold may bring despair and death without the heat to stave it off.\n\n...Oh, but there I go, rambling once more. You need to be taken care of, Youngling. Please, come with me.",
+    "SS2_ITEM_RELICOFDUALITY_PICKUP": "所有攻击都会灼烧敌人。 <style=cDeath>所有伤害都会冻结你。</style>",
+    "SS2_ITEM_RELICOFDUALITY_LORE": "嗯？哦，年轻人！你回来的比预期中要早。你完成了你的搜索吗？\n\n哦，亲爱的。你为什么在发抖？有什么伤到你了吗？\n\n你找到了伤害你的东西？嗯。奇怪。你还带着吗？\n\n...我明白了。让我看看。来吧，把你找到的东西给我看看。\n\n嗯。。这个很奇怪。一团炽热的火焰，却触感冰冷。这是太不自然了。但它又具有一定的和谐，就像热量带来温暖和生命一样，寒冷调和它，并将其制衡。但同样地，如果没有热量抵挡，那种刺骨的寒冷可能会带来绝望和死亡。\n\n...哦，我又啰嗦了。年轻人，你需要照顾。请跟我来吧。",
 
-    "SS2_ITEM_RELICOFEXTINCTION_NAME": "Relic of Extinction",
+    "SS2_ITEM_RELICOFEXTINCTION_NAME": "灭绝遗物",
     "SS2_ITEM_RELICOFEXTINCTION_PICKUP": "WIP PICKUP",
     "SS2_ITEM_RELICOFEXTINCTION_DESC": "WIP DESC",
     "SS2_ITEM_RELICOFEXTINCTION_LORE": "WIP LORE",
@@ -23,7 +23,12 @@
     "SS2_ITEM_RELICOFTERMINATION_NAME": "终止遗物",
     "SS2_ITEM_RELICOFTERMINATION_PICKUP": "每{0}秒标记一名敌人。如果及时击败被标记的敌人会掉落一件物品；否则，被标记敌人的<style=cDeath>生命，伤害，速度，攻击均会大幅提升。</style>",
     "SS2_ITEM_RELICOFTERMINATION_DESC": "每<style=cIsUtility>{0}</style> <style=cStack>(每层-{1}%)</style> <style=cIsUtility>秒</style><style=cIsDamage>标记</style>一名敌人。如果及时将其击败则<style=cIsDamage>掉落一件物品。</style>否则其<style=cDeath>生命值增加{3}%</style>、<style=cDeath>造成的伤害提高{2}%</style>、<style=cDeath>移动速度增加{4}%</style>、<style=cDeath>攻击速度增加{5}%</style>。<style=cStack>（掉落物的品质随物品堆叠层数增多而增高）。</style>",
-    "SS2_ITEM_RELICOFTERMINATION_LORE": "年轻人，看到你回来我太高兴了！你又找到什么了？\n\n你找到有意思的东西了？快给我看看！没什么好藏着掖着的，年轻人。\n\n这次这是?哦，它是空心的，很坚固。晃起来有响声，就像腰苹果一样。真是个奇怪的东西。\n\n哦？什么，有怪物在追你？天哪……没跟你到这儿来，对吧？\n\n……外面没人……当然，当然。这很隐蔽很安全，对吧年轻人？\n\n对，我要把这个东西拿走，放在不会招引怪物的地方……\n\n我懂我懂，害怕是很正常的……但是如果被某个倒霉的人捡到的话，也许就会发生惨剧了……你也不忍心这种事情发生吧？\n\n我们在这里很安全……年轻人，出去这么久你一定很饿了，跟我来。"
+    "SS2_ITEM_RELICOFTERMINATION_LORE": "年轻人，看到你回来我太高兴了！你又找到什么了？\n\n你找到有意思的东西了？快给我看看！没什么好藏着掖着的，年轻人。\n\n这次这是?哦，它是空心的，很坚固。晃起来有响声，就像腰苹果一样。真是个奇怪的东西。\n\n哦？什么，有怪物在追你？天哪……没跟你到这儿来，对吧？\n\n……外面没人……当然，当然。这很隐蔽很安全，对吧年轻人？\n\n对，我要把这个东西拿走，放在不会招引怪物的地方……\n\n我懂我懂，害怕是很正常的……但是如果被某个倒霉的人捡到的话，也许就会发生惨剧了……你也不忍心这种事情发生吧？\n\n我们在这里很安全……年轻人，出去这么久你一定很饿了，跟我来。",
+    "SS2_ITEM_RELICOFTERMINATION_PREFIX": "终端 {0}",
 
+    "SS2_ITEM_RELICOFECHELON_NAME": "梯队遗物",
+    "SS2_ITEM_RELICOFECHELON_DESC": "使用时获得{1}(+{1}每层)基础伤害，{2}(每层+{2})基础生命值，持续{3}秒。使用装备会永久增加{0}%冷却时间",
+    "SS2_ITEM_RELICOFECHELON_PICKUP": "在使用装备时获得强大的增益。 <style=cDeath>但会永久增加其冷却时间。</style>",
+    "SS2_ITEM_RELICOFECHELON_LORE": "不不不，年轻人，你来得太早了！我还没来得及准备。请…稍后再回来。"
   }
 }
