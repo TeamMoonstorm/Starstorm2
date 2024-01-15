@@ -10,34 +10,32 @@
     "SS2_KEYWORD_FEAR2": "<style=cKeywordName>恐惧</style><style=cSub>使被影响的敌人停止攻击并逃跑，受恐惧影响的敌人受到额外50%的伤害，移动速度减慢30%。</style>",
     "SS2_KEYWORD_EXECUTING2": "<style=cKeywordName>行刑</style><style=cSub>如果只击中了一个敌人则造成的伤害翻倍</style>",
     "SS2_KEYWORD_RECHARGING2": "<style=cKeywordName>充电</style><style=cSub>击杀敌人恢复此技能的充能次数，恢复量取决于所击杀的敌人的强度。处决提供的回复量翻倍</style>",
+    "SS2_KEYWORD_IONARMORBUFF": "<style=cKeywordName>离子装甲</style><style=cSub>提高60点护甲并减少20%技能冷却时间。</style>",
 
-    //"SS2_EXECUTIONER_PASSIVE_NAME": "浴血",
-    //"SS2_EXECUTIONER_PASSIVE_DESC": "击杀<style=cIsUtility>恐惧</style>的敌人将为所有技能缩减<style=cIsUtility>1秒</style>的冷却时间",
+    "SS2_SKIN_EXECUTIONER2_DEFAULT": "默认",
+    "SS2_SKIN_EXECUTIONER2_MASTERY": "战士",
+    "SS2_SKIN_EXECUTIONER2_ELECTRO": "触电",
+    "SS2_SKIN_EXECUTIONER2_CLASSIC": "怀旧",
 
     "SS2_EXECUTIONER_PISTOL_NAME": "制式手枪",
-    "SS2_EXECUTIONER_PISTOL_DESCRIPTION": "使用手枪射击，造成<style=cIsDamage>180% 的伤害</style>。",
-    "SS2_EXECUTIONER2_IONBURST_NAME": "[NOTRANSLATION]Ion Burst",
-    "SS2_EXECUTIONER2_IONBURST_DESC": "[NOTRANSLATION]<style=cIsDamage>Shocking</style>. Rapidly discharge <style=cIsUtility>Ion Manipulator stocks</style> as ion bullets for <style=cIsDamage>350% damage</style> per bullet.",
-    "SS2_EXECUTIONER2_IONCHARGE_NAME": "[NOTRANSLATION]Ion Manipulators",
-    "SS2_EXECUTIONER2_IONCHARGE_DESC": "[NOTRANSLATION]Hold to begin building up to <style=cIsUtility>10 stocks</style>, and replace your <style=cIsDamage>primary skill</style>. <style=cIsUtility>Killing enemies also adds stocks.</style>",
-    "SS2_EXECUTIONER2_DASH_NAME": "人群驱散",
-    "SS2_EXECUTIONER2_DASH_DESC": "向前推进并<style=cIsUtility>恐惧</style>周边所有敌人<style=cIsUtility>4秒</style>。",
-    "SS2_EXECUTIONER2_EXECUTION_NAME": "处决",
-    "SS2_EXECUTIONER2_EXECUTION_DESC": "<style=cIsUtility>重型。</style> <style=cIsDamage>行刑。</style>跳到空中，使用巨型离子斧向下猛击，造成<style=cIsDamage>1450% 伤害</style>。",
+    "SS2_EXECUTIONER_PISTOL_DESCRIPTION": "使用手枪射击，造成<style=cIsDamage>180%伤害</style>。",
 
-    "SS2_EXECUTIONER_TASER_NAME": "致死电压",
-    "SS2_EXECUTIONER_TASER_DESCRIPTION": "向前发射电弧，造成<style=cIsDamage>{0}% 的伤害</style>。",
-    "SS2_EXECUTIONER_SWINGAXE_NAME": "离子斧",
-    "SS2_EXECUTIONER_SWINGAXE_DESCRIPTION": "Swing your axe for <style=cIsDamage>% damage</style>. <style=cIsUtility>Each Secondary charge grants 4% maximum health in shield</style>.",
-    "SS2_EXECUTIONER_IONGUN_NAME": "离子迸发",
-    "SS2_EXECUTIONER_IONGUN_DESCRIPTION": "<style=cIsUtility>充电。</style> 连续射出电离弹，每枚造成 <style=cIsDamage>{0}% 伤害</style>。<style=cIsUtility>一次发射5枚电浆弹</style>。",
-    "SS2_EXECUTIONER_IONBLAST_NAME": "离子爆裂",
-    "SS2_EXECUTIONER_IONBLAST_DESCRIPTION": "发射一股电浆造成<style=cIsDamage>% 伤害</style>。可被<style=cIsUtility>充能</style>，使用时消耗多次充能。 <style=cIsUtility>对每个被击杀的敌人为你恢复充能次数</style>.",
-    "SS2_EXECUTIONER_AXESCEPTER_NAME": "集体处决",
-    "SS2_EXECUTIONER_AXESCEPTER_DESCRIPTION": "跳到空中，使用巨型离子斧向下猛击，造成<style=cIsDamage>3000%伤害</style>。",
-    "SS2_EXECUTIONER_ARMOR_NAME": "离子判官",
-    "SS2_EXECUTIONER_ARMOR_DESCRIPTION": "装备电离护甲，获得<style=cIsUtility>60护甲</style>且<style=cIsDamage>过载</style>你的<style=cIsUtility>次要技能</style><style=cIsDamage>4</style>秒。",
-    "SS2_EXECUTIONER_ARMORSCEPTER_NAME": "离子过载",
-    "SS2_EXECUTIONER_ARMORSCEPTER_DESCRIPTION": "装备电离护甲， 提供<style=cIsUtility>80护甲</style>且<style=cIsDamage>过载</style>你的<style=cIsUtility>次要技能</style><style=cIsDamage>4</style>秒。 击杀<style=cIsUtility>恐惧</style>的敌人额外提供4秒。"
+    "SS2_EXECUTIONER2_EXECUTION_NAME": "处决",
+    "SS2_EXECUTIONER2_EXECUTION_DESC": "<style=cIsUtility>处决</style>。跃起并用离子斧<style=cIsDamage>猛砸</style>，造成<style=cIsDamage>1450%伤害</style>。按住可以瞄准。",
+
+    "SS2_EXECUTIONER2_FIRINGSQUAD_NAME": "齐射",
+    "SS2_EXECUTIONER2_FIRINGSQUAD_DESC": "<style=cIsDamage>电击</style>。召唤一队离子枪手，迅速发射离子子弹，每颗子弹造成<style=cIsDamage>350%伤害</style>，<style=cIsHealth>-60%移动速度</style>。<style=cIsUtility>按住以延长持续时间。冷却时间随使用时长缩短。</style>",
+
+    "SS2_EXECUTIONER2_IONBURST_NAME": "离子爆裂",
+    "SS2_EXECUTIONER2_IONBURST_DESC": "<style=cIsDamage>电击</style>。快速释放<style=cIsUtility>离子操纵器充能</style>作为离子子弹，每颗子弹造成<style=cIsDamage>350%伤害</style>",
+
+    "SS2_EXECUTIONER2_IONCHARGE_NAME": "离子操纵器",
+    "SS2_EXECUTIONER2_IONCHARGE_DESC": "按住开始充能，最多<style=cIsUtility>10层</style>，并替换你的<style=cIsDamage>主要技能</style>。<style=cIsUtility>击败敌人也会增加充能。</style>",
+
+    "SS2_EXECUTIONER2_DASH_NAME": "人群疏散",
+    "SS2_EXECUTIONER2_DASH_DESC": "向前推进并<style=cIsUtility>恐惧</style>周边所有敌人。",
+
+    "SS2_EXECUTIONER2_IONJUGGERNAUT_NAME": "离子霸主",
+    "SS2_EXECUTIONER2_IONJUGGERNAUT_DESC": "挥动你的离子斧，造成<style=cIsDamage>1700%伤害</style>激活时开始缓慢消耗<style=cIsUtility>离子操纵器充能</style>并生成离子装甲"
   }
 }

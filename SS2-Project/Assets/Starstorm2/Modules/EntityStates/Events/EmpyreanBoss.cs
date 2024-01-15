@@ -1,6 +1,7 @@
 ﻿using Moonstorm.Starstorm2;
 using Moonstorm.Starstorm2.ScriptableObjects;
 using RoR2;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using static RoR2.DirectorCore;
@@ -18,6 +19,18 @@ namespace EntityStates.Events
 
             base.OnEnter();
         }
+
+        private static List<string> blacklist = new List<string>
+        {
+            "JellyfishBody", //enemy kills itself
+            "AcidLarvaBody", //enemy kills itself
+            "MinorConstructBody", //enemy afks across world
+            "HermitCrabBody" //enemy afks across world
+
+            //"BeetleBody", //too weak
+            //"WispBody" //too weak
+        };
+
         public override void SpawnBoss()
         {
             GameObject director = GameObject.Find("Director"); //fuck you
@@ -28,7 +41,19 @@ namespace EntityStates.Events
             if (!combatDirector)
                 return;
 
-            DirectorCard chosenMonsterCard = combatDirector.SelectMonsterCardForCombatShrine(20f * Run.instance.loopClearCount);
+            DirectorCard chosenMonsterCard = null;
+            
+            while (true)
+            {
+                chosenMonsterCard = combatDirector.SelectMonsterCardForCombatShrine((20f * Run.instance.loopClearCount * Run.instance.loopClearCount) + 40f);
+                Debug.Log(chosenMonsterCard.spawnCard.prefab.GetComponent<CharacterMaster>().bodyPrefab.name + " : CHOSEN MONSTER ATTEMPT");
+
+                if (!blacklist.Contains(chosenMonsterCard.spawnCard.prefab.GetComponent<CharacterMaster>().bodyPrefab.name))
+                {
+                    break;
+                }
+            }    
+            
             GameObject chosenMonsterPrefab = chosenMonsterCard.spawnCard.prefab;
             CharacterBody monsterBody = chosenMonsterPrefab.GetComponent<CharacterMaster>().bodyPrefab.GetComponent<CharacterBody>();
 

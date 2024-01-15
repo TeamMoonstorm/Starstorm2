@@ -16,14 +16,10 @@ GameObject:
   - component: {fileID: 5292029149305121724}
   - component: {fileID: 862772613190836246}
   - component: {fileID: 7068392743086650423}
-  - component: {fileID: 1775399174021187677}
-  - component: {fileID: 4243435258436112120}
-  - component: {fileID: 279713883822597313}
-  - component: {fileID: 6589898239184094109}
-  - component: {fileID: 6944175088870529870}
-  - component: {fileID: 8905370036601891338}
-  - component: {fileID: 1896340144865384615}
-  - component: {fileID: 5623054372445436313}
+  - component: {fileID: 2848503795568593866}
+  - component: {fileID: -1209855665882546871}
+  - component: {fileID: -4859162844076370975}
+  - component: {fileID: 5440715747906794332}
   m_Layer: 0
   m_Name: LampMaster
   m_TagString: Untagged
@@ -184,7 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: -1578512655, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1775399174021187677
+--- !u!114 &2848503795568593866
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -196,17 +192,60 @@ MonoBehaviour:
   m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customName: FleeNearEnemies
-  skillSlot: 0
+  customName: HealNearAlly
+  skillSlot: 1
   requiredSkill: {fileID: 0}
-  requireSkillReady: 0
+  requireSkillReady: 1
   requireEquipmentReady: 0
   minUserHealthFraction: -Infinity
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
   minDistance: 0
-  maxDistance: 5
+  maxDistance: 15
+  selectionRequiresTargetLoS: 0
+  selectionRequiresOnGround: 0
+  selectionRequiresAimTarget: 0
+  maxTimesSelected: -1
+  moveTargetType: 1
+  activationRequiresTargetLoS: 0
+  activationRequiresAimTargetLoS: 0
+  activationRequiresAimConfirmation: 1
+  movementType: 1
+  moveInputScale: 0.3
+  aimType: 1
+  ignoreNodeGraph: 0
+  shouldSprint: 0
+  shouldFireEquipment: 0
+  shouldTapButton: 0
+  buttonPressType: 0
+  driverUpdateTimerOverride: 3
+  resetCurrentEnemyOnNextDriverSelection: 0
+  noRepeat: 0
+  nextHighPriorityOverride: {fileID: 0}
+--- !u!114 &-1209855665882546871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2890170479074595321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customName: StrafeNearbyEnemies
+  skillSlot: 0
+  requiredSkill: {fileID: 0}
+  requireSkillReady: 1
+  requireEquipmentReady: 0
+  minUserHealthFraction: -Infinity
+  maxUserHealthFraction: Infinity
+  minTargetHealthFraction: -Infinity
+  maxTargetHealthFraction: Infinity
+  minDistance: 0
+  maxDistance: 15
   selectionRequiresTargetLoS: 1
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
@@ -215,7 +254,7 @@ MonoBehaviour:
   activationRequiresTargetLoS: 1
   activationRequiresAimTargetLoS: 0
   activationRequiresAimConfirmation: 1
-  movementType: 3
+  movementType: 2
   moveInputScale: 1
   aimType: 2
   ignoreNodeGraph: 0
@@ -227,7 +266,7 @@ MonoBehaviour:
   resetCurrentEnemyOnNextDriverSelection: 0
   noRepeat: 0
   nextHighPriorityOverride: {fileID: 0}
---- !u!114 &4243435258436112120
+--- !u!114 &-4859162844076370975
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -239,28 +278,28 @@ MonoBehaviour:
   m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customName: HardLeashToLeader
-  skillSlot: -1
+  customName: ChaseFarEnemies
+  skillSlot: 0
   requiredSkill: {fileID: 0}
-  requireSkillReady: 0
+  requireSkillReady: 1
   requireEquipmentReady: 0
   minUserHealthFraction: -Infinity
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 30
-  maxDistance: Infinity
+  minDistance: 0
+  maxDistance: 45
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
   maxTimesSelected: -1
-  moveTargetType: 2
+  moveTargetType: 0
   activationRequiresTargetLoS: 1
   activationRequiresAimTargetLoS: 0
-  activationRequiresAimConfirmation: 0
+  activationRequiresAimConfirmation: 1
   movementType: 1
-  moveInputScale: 3
-  aimType: 4
+  moveInputScale: 1
+  aimType: 1
   ignoreNodeGraph: 0
   shouldSprint: 1
   shouldFireEquipment: 0
@@ -270,7 +309,7 @@ MonoBehaviour:
   resetCurrentEnemyOnNextDriverSelection: 0
   noRepeat: 0
   nextHighPriorityOverride: {fileID: 0}
---- !u!114 &279713883822597313
+--- !u!114 &5440715747906794332
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -282,50 +321,7 @@ MonoBehaviour:
   m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customName: SoftLeashToFriendly
-  skillSlot: 1
-  requiredSkill: {fileID: 0}
-  requireSkillReady: 1
-  requireEquipmentReady: 0
-  minUserHealthFraction: -Infinity
-  maxUserHealthFraction: Infinity
-  minTargetHealthFraction: -Infinity
-  maxTargetHealthFraction: Infinity
-  minDistance: 0
-  maxDistance: 16
-  selectionRequiresTargetLoS: 0
-  selectionRequiresOnGround: 0
-  selectionRequiresAimTarget: 0
-  maxTimesSelected: -1
-  moveTargetType: 1
-  activationRequiresTargetLoS: 1
-  activationRequiresAimTargetLoS: 0
-  activationRequiresAimConfirmation: 1
-  movementType: 1
-  moveInputScale: 1
-  aimType: 4
-  ignoreNodeGraph: 0
-  shouldSprint: 0
-  shouldFireEquipment: 0
-  shouldTapButton: 0
-  buttonPressType: 0
-  driverUpdateTimerOverride: -1
-  resetCurrentEnemyOnNextDriverSelection: 1
-  noRepeat: 0
-  nextHighPriorityOverride: {fileID: 0}
---- !u!114 &6589898239184094109
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2890170479074595321}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  customName: AttackFromDistance
+  customName: ChaseDownRandomEnemy
   skillSlot: 0
   requiredSkill: {fileID: 0}
   requireSkillReady: 0
@@ -334,193 +330,21 @@ MonoBehaviour:
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 5
-  maxDistance: 25
-  selectionRequiresTargetLoS: 1
+  minDistance: 0
+  maxDistance: Infinity
+  selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
   maxTimesSelected: -1
   moveTargetType: 0
-  activationRequiresTargetLoS: 1
-  activationRequiresAimTargetLoS: 0
-  activationRequiresAimConfirmation: 1
-  movementType: 2
-  moveInputScale: 1
-  aimType: 2
-  ignoreNodeGraph: 0
-  shouldSprint: 0
-  shouldFireEquipment: 0
-  shouldTapButton: 0
-  buttonPressType: 0
-  driverUpdateTimerOverride: 1
-  resetCurrentEnemyOnNextDriverSelection: 1
-  noRepeat: 1
-  nextHighPriorityOverride: {fileID: 0}
---- !u!114 &6944175088870529870
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2890170479074595321}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  customName: StrafeCheckFriendly
-  skillSlot: 1
-  requiredSkill: {fileID: 0}
-  requireSkillReady: 1
-  requireEquipmentReady: 0
-  minUserHealthFraction: -Infinity
-  maxUserHealthFraction: Infinity
-  minTargetHealthFraction: -Infinity
-  maxTargetHealthFraction: Infinity
-  minDistance: 0
-  maxDistance: 20
-  selectionRequiresTargetLoS: 0
-  selectionRequiresOnGround: 0
-  selectionRequiresAimTarget: 0
-  maxTimesSelected: -1
-  moveTargetType: 1
-  activationRequiresTargetLoS: 1
-  activationRequiresAimTargetLoS: 0
-  activationRequiresAimConfirmation: 1
-  movementType: 2
-  moveInputScale: 1
-  aimType: 4
-  ignoreNodeGraph: 0
-  shouldSprint: 0
-  shouldFireEquipment: 0
-  shouldTapButton: 0
-  buttonPressType: 0
-  driverUpdateTimerOverride: -1
-  resetCurrentEnemyOnNextDriverSelection: 0
-  noRepeat: 0
-  nextHighPriorityOverride: {fileID: 0}
---- !u!114 &8905370036601891338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2890170479074595321}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  customName: IdleNearFriendlyWhenNoEnemiesAndScan
-  skillSlot: 1
-  requiredSkill: {fileID: 0}
-  requireSkillReady: 0
-  requireEquipmentReady: 0
-  minUserHealthFraction: -Infinity
-  maxUserHealthFraction: Infinity
-  minTargetHealthFraction: -Infinity
-  maxTargetHealthFraction: Infinity
-  minDistance: 0
-  maxDistance: 20
-  selectionRequiresTargetLoS: 0
-  selectionRequiresOnGround: 0
-  selectionRequiresAimTarget: 0
-  maxTimesSelected: -1
-  moveTargetType: 1
   activationRequiresTargetLoS: 0
   activationRequiresAimTargetLoS: 0
-  activationRequiresAimConfirmation: 0
-  movementType: 2
-  moveInputScale: 1
-  aimType: 4
-  ignoreNodeGraph: 0
-  shouldSprint: 0
-  shouldFireEquipment: 0
-  shouldTapButton: 0
-  buttonPressType: 0
-  driverUpdateTimerOverride: -1
-  resetCurrentEnemyOnNextDriverSelection: 0
-  noRepeat: 0
-  nextHighPriorityOverride: {fileID: 0}
---- !u!114 &1896340144865384615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2890170479074595321}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  customName: ReturnToFriendlyWhenNoEnemies
-  skillSlot: -1
-  requiredSkill: {fileID: 0}
-  requireSkillReady: 0
-  requireEquipmentReady: 0
-  minUserHealthFraction: -Infinity
-  maxUserHealthFraction: Infinity
-  minTargetHealthFraction: -Infinity
-  maxTargetHealthFraction: Infinity
-  minDistance: 10
-  maxDistance: Infinity
-  selectionRequiresTargetLoS: 0
-  selectionRequiresOnGround: 0
-  selectionRequiresAimTarget: 0
-  maxTimesSelected: -1
-  moveTargetType: 1
-  activationRequiresTargetLoS: 0
-  activationRequiresAimTargetLoS: 0
-  activationRequiresAimConfirmation: 0
-  movementType: 2
+  activationRequiresAimConfirmation: 1
+  movementType: 1
   moveInputScale: 1
   aimType: 1
   ignoreNodeGraph: 0
-  shouldSprint: 0
-  shouldFireEquipment: 0
-  shouldTapButton: 0
-  buttonPressType: 0
-  driverUpdateTimerOverride: 0.05
-  resetCurrentEnemyOnNextDriverSelection: 1
-  noRepeat: 0
-  nextHighPriorityOverride: {fileID: 0}
---- !u!114 &5623054372445436313
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2890170479074595321}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  customName: ChaseNearestFriendlyAndScan
-  skillSlot: 1
-  requiredSkill: {fileID: 0}
-  requireSkillReady: 0
-  requireEquipmentReady: 0
-  minUserHealthFraction: -Infinity
-  maxUserHealthFraction: Infinity
-  minTargetHealthFraction: -Infinity
-  maxTargetHealthFraction: Infinity
-  minDistance: 8
-  maxDistance: Infinity
-  selectionRequiresTargetLoS: 0
-  selectionRequiresOnGround: 0
-  selectionRequiresAimTarget: 0
-  maxTimesSelected: -1
-  moveTargetType: 1
-  activationRequiresTargetLoS: 0
-  activationRequiresAimTargetLoS: 0
-  activationRequiresAimConfirmation: 1
-  movementType: 2
-  moveInputScale: 1
-  aimType: 4
-  ignoreNodeGraph: 0
-  shouldSprint: 0
+  shouldSprint: 1
   shouldFireEquipment: 0
   shouldTapButton: 0
   buttonPressType: 0

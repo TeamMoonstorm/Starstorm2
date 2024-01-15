@@ -81,7 +81,7 @@ namespace Moonstorm.Starstorm2.Monsters
 
             DateTime currentDate = DateTime.Now;
 
-            double daysSinceLastFullMoon = (currentDate - new DateTime(2023, 10, 28)).TotalDays;
+            double daysSinceLastFullMoon = (currentDate - new DateTime(2023, 12, 25)).TotalDays;
 
             //:mariosit:
             double moonPhase = daysSinceLastFullMoon % 29.53;
