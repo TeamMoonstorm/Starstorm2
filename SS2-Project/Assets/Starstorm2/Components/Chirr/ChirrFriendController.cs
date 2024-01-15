@@ -163,6 +163,7 @@ namespace Moonstorm.Starstorm2.Components
 			this.currentFriend = new Friend(master);
 
 			CharacterBody body = master.GetBody();
+			if(body)
 			this.FriendRewards(body.GetComponent<DeathRewards>());
 			TeamIndex oldTeam = body ? body.teamComponent.teamIndex : TeamIndex.Monster;
 			TeamIndex newTeam = this.master.teamIndex;
