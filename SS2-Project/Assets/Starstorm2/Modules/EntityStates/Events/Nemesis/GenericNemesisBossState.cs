@@ -172,6 +172,11 @@ namespace EntityStates.Events
             {
                 combatSquad.GetComponent<TeamFilter>().defaultTeam = TeamIndex.Monster;
                 NetworkServer.Spawn(combatSquad.gameObject);
+
+                foreach (CharacterMaster master in combatSquad.membersList)
+                {
+                    master.inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
+                }
             }
             UnityEngine.Object.Destroy(spawnCard);
         }

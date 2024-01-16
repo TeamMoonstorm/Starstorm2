@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5484435814842003299}
   - component: {fileID: 5184298139298636823}
+  - component: {fileID: 3653623390711934239}
   - component: {fileID: 225749757789019205}
   m_Layer: 0
   m_Name: StarstormRunBehavior
@@ -65,6 +66,19 @@ MonoBehaviour:
     i15: 0
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
+--- !u!114 &3653623390711934239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2852816700379749796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cfd6482e4627e444810af15dbb9fd6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  run: {fileID: 0}
 --- !u!114 &225749757789019205
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -114,6 +114,7 @@ namespace EntityStates.Events
                     master.inventory.GiveItem(RoR2Content.Items.BoostHp, 250);
                     master.inventory.GiveItem(RoR2Content.Items.BoostDamage, 80);
                     master.inventory.SetEquipmentIndex(SS2Content.Equipments.AffixEmpyrean.equipmentIndex);
+                    master.inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
                 }
 
             }
