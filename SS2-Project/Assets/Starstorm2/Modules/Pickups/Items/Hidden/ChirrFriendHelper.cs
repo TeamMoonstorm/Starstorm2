@@ -20,9 +20,6 @@ namespace Moonstorm.Starstorm2.Items
         public static float maxEnemyTargetDistance = 80f;
         public static float leashDistance = 160f;
         public static float leashTeleportOffset = 10f;
-
-        public static float timeUntilMaxCurse = 100f;
-
         // Converts attackspeed to CDR
         // teleports back to chirr if too far away
         public sealed class BodyBehavior : BaseItemBodyBehavior, IBodyStatArgModifier
@@ -30,9 +27,6 @@ namespace Moonstorm.Starstorm2.Items
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.ChirrFriendHelper;
             private float leashTimer = 2f;
-            private float curseTimer;
-            private float desiredHealthFraction = 1f;
-
             private GameObject jitterBonesEffect;
             private void Start()
             {
@@ -58,29 +52,6 @@ namespace Moonstorm.Starstorm2.Items
             }
             private void FixedUpdate()
             {
-                //#imwither
-
-                // doesn t fucking work
-                /// im so fucking stupid
-                //if(NetworkServer.active)
-                //{
-                //    float percentDecayPerSecond = 100f / timeUntilMaxCurse;
-                //    desiredHealthFraction = Mathf.Max(desiredHealthFraction - percentDecayPerSecond/100f * Time.fixedDeltaTime, .01f);
-                //    this.curseTimer -= Time.fixedDeltaTime;
-                //    if (this.curseTimer <= 0)
-                //    {
-                //        this.curseTimer += 1 / percentDecayPerSecond; // increment decay 1% every time
-                //        float currentCurse = base.body.cursePenalty;
-                //        float desiredCurse = 1 / desiredHealthFraction;
-                //        int curseToAdd = Mathf.FloorToInt(desiredCurse - currentCurse);
-
-                //        for (int i = 0; i < curseToAdd; i++)
-                //        {
-                //            this.body.AddBuff(RoR2Content.Buffs.PermanentCurse);
-                //        }
-                //    }
-                //}                
-
                 // get owner
                 CharacterMaster master = base.body.master;
                 CharacterMaster ownerMaster = master ? master.minionOwnership.ownerMaster : null;
@@ -111,9 +82,11 @@ namespace Moonstorm.Starstorm2.Items
 
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
             {
-                // 1 - 1/(1+cdr)     
+                // 1 - 1/(1+cdr)          
                 float cooldownReduction = Mathf.Max((body.attackSpeed - 1) * attackSpeedToCooldownConversion, 0);
-                args.cooldownMultAdd *= Util.ConvertAmplificationPercentageIntoReductionPercentage(cooldownReduction * 100f) / 100f;               
+                args.cooldownMultAdd -= Util.ConvertAmplificationPercentageIntoReductionPercentage(cooldownReduction * 100f) / 100f;
+                SS2Log.Info($"cooldownReduction == {cooldownReduction} /// attackSpeed == {body.attackSpeed} /// cooldownMultAdd == {args.cooldownMultAdd}");
+
             }                                       
         }
 
@@ -181,12 +154,7 @@ namespace Moonstorm.Starstorm2.Items
                 if (!target.gameObject || (target.healthComponent && !target.healthComponent.alive))
                 {
                     ai.currentEnemy.Reset();
-                    HurtBox hurtBox = ai.FindEnemyHurtBox(float.PositiveInfinity, true, true);
-                    if (hurtBox && hurtBox.healthComponent)
-                    {
-                        ai.currentEnemy.gameObject = hurtBox.healthComponent.gameObject;
-                        ai.currentEnemy.bestHurtBox = hurtBox;
-                    }
+                    ai.ForceAcquireNearestEnemyIfNoCurrentEnemy();
                 }
             }
             private void OnDisable()

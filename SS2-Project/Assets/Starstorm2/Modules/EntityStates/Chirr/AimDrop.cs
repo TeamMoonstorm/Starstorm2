@@ -81,7 +81,9 @@ namespace EntityStates.Chirr
 			}
 
 			//calculate trajectory with no upwards velocity
-			float flightDuration = Trajectory.CalculateFlightDuration(aimOrigin.y, hitPoint.y, 0f, Physics.gravity.y + extraGravity);
+			Vector3 victimFootPosition = aimOrigin;
+			if (this.grabController.IsGrabbing()) victimFootPosition = GetBetterFootPosition();
+			float flightDuration = Trajectory.CalculateFlightDuration(victimFootPosition.y, hitPoint.y, 0f, Physics.gravity.y + extraGravity);
 
 			Vector3 hBetween = hitPoint - aimOrigin;
 			hBetween.y = 0;
@@ -91,6 +93,21 @@ namespace EntityStates.Chirr
 			this.desiredTrajectory = hSpeed * hBetween.normalized;
 		}
 
+		public Vector3 GetBetterFootPosition()
+		{
+			Vector3 position = this.grabController.victimBodyObject.transform.position;
+			if (this.grabController.victimInfo.characterMotor)
+			{
+				position = this.grabController.victimInfo.body.footPosition;
+				return position;
+			}
+			if (this.grabController.victimColliders.Length > 0) // lowest point on collider (assuming its centered)
+			{
+				position.y = this.grabController.victimColliders[0].bounds.min.y;
+				return position;
+			}
+			return position;
+		}
 
 		public override void OnExit()
 		{

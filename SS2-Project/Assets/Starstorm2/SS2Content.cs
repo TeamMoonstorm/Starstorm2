@@ -54,6 +54,10 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef FieldAccelerator;
 
+            public static ItemDef FlowerTurret;
+
+            public static ItemDef HealthDecayWithRegen;
+
             public static ItemDef HottestSauce;
 
             public static ItemDef HuntersSigil;

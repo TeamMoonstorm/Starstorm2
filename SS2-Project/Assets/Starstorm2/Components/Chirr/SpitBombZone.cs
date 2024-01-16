@@ -28,8 +28,10 @@ namespace Moonstorm.Starstorm2.Components
         public Transform[] scaledTransforms;
 
         private float currentRadius;
+        private GameObject impactEffect;
         private void Awake()
         {
+            impactEffect = SS2Assets.LoadAsset<GameObject>("SpitBombDotImpact", SS2Bundle.Chirr);
             this.projectileController = base.GetComponent<ProjectileController>();
             this.teamFilter = base.GetComponent<TeamFilter>();
             this.projectileDamage = base.GetComponent<ProjectileDamage>();
@@ -87,10 +89,12 @@ namespace Moonstorm.Starstorm2.Components
                 blastAttack.procCoefficient = this.projectileController.procCoefficient * this.procCoefficientPerSecond / fireFrequency;
                 blastAttack.falloffModel = BlastAttack.FalloffModel.None;
                 blastAttack.damageColorIndex = this.projectileDamage.damageColorIndex;
-                blastAttack.damageType = this.projectileDamage.damageType;
+                blastAttack.damageType = DamageType.SlowOnHit;
                 blastAttack.attackerFiltering = AttackerFiltering.Default;
-                //blastAttack.impactEffect = 
-                blastAttack.AddModdedDamageType(DamageTypes.ConfuseOnHit.confuseDamageType);
+                blastAttack.impactEffect = EffectCatalog.FindEffectIndexFromPrefab(impactEffect);
+                
+                // not necessary anymore since its just a slow
+                //blastAttack.AddModdedDamageType(DamageTypes.ConfuseOnHit.confuseDamageType);
                 BlastAttack.Result result = blastAttack.Fire();
             }
             SphereSearch sphereSearch = new SphereSearch();
