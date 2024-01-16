@@ -70,7 +70,8 @@ namespace EntityStates.Chirr
 			RaycastHit raycastHit;
 			Vector3 hitPoint = aimDirection * maxRayDistance + aimOrigin;
 			
-			if(Physics.Raycast(aimOrigin, aimDirection, out raycastHit, maxRayDistance, LayerIndex.CommonMasks.bullet))
+			if(Physics.Raycast(aimOrigin, aimDirection, out raycastHit, maxRayDistance, LayerIndex.world.mask))
+			//if(Util.CharacterRaycast(base.gameObject, new Ray(aimOrigin,aimDirection), out raycastHit, maxRayDistance, LayerIndex.CommonMasks.bullet, QueryTriggerInteraction.UseGlobal))
             {
 				hitPoint = raycastHit.point;
 			}

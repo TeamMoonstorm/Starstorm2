@@ -58,12 +58,18 @@ namespace EntityStates.Chirr
 			GameObject prefab = BodyCatalog.GetBodyPrefab(this.characterBody.bodyIndex);
 			if (prefab)
 			{
+				
 				Rigidbody rigidbody = prefab.GetComponent<Rigidbody>();
 				if (rigidbody)
 				{
 					this.bodyHadGravity = rigidbody.useGravity;
 					this.bodyWasKinematic = rigidbody.isKinematic;
 				}
+				CharacterMotor motor = prefab.GetComponent<CharacterMotor>();
+				if(motor)
+                {
+					this.bodyHadGravity = motor.gravityParameters.CheckShouldUseGravity();
+                }
 			}
 
 			
@@ -71,7 +77,8 @@ namespace EntityStates.Chirr
             {
                 base.characterMotor.onMovementHit += DoSplashDamage;
 				base.characterMotor.disableAirControlUntilCollision = true;
-				base.characterMotor.velocity = initialVelocity;
+                base.characterMotor.velocity = initialVelocity;
+				base.characterMotor.useGravity = true;				
 				//blind pests have low gravity
 				this.gravParams = base.characterMotor.gravityParameters;
 				base.characterMotor.gravityParameters = new CharacterGravityParameters 
@@ -143,6 +150,7 @@ namespace EntityStates.Chirr
 			if (base.characterMotor)
             {
 				base.characterMotor.onMovementHit -= DoSplashDamage;
+				base.characterMotor.useGravity = bodyHadGravity;
 				base.characterMotor.gravityParameters = this.gravParams;
             }
 

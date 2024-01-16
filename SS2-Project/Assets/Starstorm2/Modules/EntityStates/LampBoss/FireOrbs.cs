@@ -30,9 +30,9 @@ namespace EntityStates.LampBoss
 
         public override void OnEnter()
         {
-            base.OnEnter();
-            characterBody.SetAimTimer(duration * 1.5f);
+            base.OnEnter();         
             duration = baseDuration / attackSpeedStat;
+            characterBody.SetAimTimer(5f);
             timeBetweenShots = baseTimeBetweenShots / attackSpeedStat;
             muzzle = GetModelChildLocator().FindChild(muzzleString);
             animator = GetModelAnimator();

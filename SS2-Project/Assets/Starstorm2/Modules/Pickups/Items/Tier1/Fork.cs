@@ -24,7 +24,7 @@ namespace Moonstorm.Starstorm2.Items
                 //works like Armor-Piercing Rounds but on all targets, defaults to 8%
                 //Level 1 commando M1: 12 > 12.96
                 //level 5 loader punch: 648 > 699.84
-                args.damageMultAdd += damageBonus * stack;
+                args.damageMultAdd += (damageBonus / 100f) * stack;
 
                 //Percentage of Base Damage behavior
                 //added a percentage of base damage before levels, defaults to 25%

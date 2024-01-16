@@ -45,7 +45,7 @@ namespace EntityStates.Events
             
             while (true)
             {
-                chosenMonsterCard = combatDirector.SelectMonsterCardForCombatShrine((30f * Run.instance.loopClearCount * Run.instance.loopClearCount) + 50f);
+                chosenMonsterCard = combatDirector.SelectMonsterCardForCombatShrine((30f * Mathf.Pow(Run.instance.stageClearCount / Run.stagesPerLoop, 2f) + 50f));
                 Debug.Log(chosenMonsterCard.spawnCard.prefab.GetComponent<CharacterMaster>().bodyPrefab.name + " : CHOSEN MONSTER ATTEMPT");
 
                 if (!blacklist.Contains(chosenMonsterCard.spawnCard.prefab.GetComponent<CharacterMaster>().bodyPrefab.name))
