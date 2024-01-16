@@ -175,7 +175,7 @@ namespace Moonstorm.Starstorm2.Components
 			if (body)
             {
 				body.teamComponent.teamIndex = newTeam;
-				body.healthComponent.Networkhealth = body.healthComponent.fullHealth * 0.5f;
+				body.healthComponent.Networkhealth = body.healthComponent.fullCombinedHealth * 0.5f;
 				Util.CleanseBody(body, true, false, false, true, true, false); // lol
 				body.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 3f);
 				HauntedAffixFix(body, newTeam);
@@ -200,6 +200,7 @@ namespace Moonstorm.Starstorm2.Components
 			master.minionOwnership.SetOwner(this.master);			
 			master.onBodyDeath.AddListener(OnFriendDeath);
 			master.inventory.AddItemsFrom(this.master.inventory, this.ItemFilter);
+			master.inventory.ResetItem(RoR2Content.Items.UseAmbientLevel);
 			master.inventory.GiveItem(SS2Content.Items.ChirrFriendHelper, 1);
 			master.inventory.GiveItem(SS2Content.Items.FlowerTurret, 1);
 

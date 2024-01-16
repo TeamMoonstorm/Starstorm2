@@ -8,7 +8,7 @@ namespace EntityStates.FlowerTurret
 	public class AimFlowerTurret : BaseFlowerTurretState
 	{
 		public static float minDuration = 0f;
-		public static float maxEnemyDistanceToStartFiring = 30f;
+		public static float maxEnemyDistanceToStartFiring = 25f;
 		public static float searchInterval = 0.25f;
 		private BullseyeSearch enemyFinder;
 		private float searchRefreshTimer;

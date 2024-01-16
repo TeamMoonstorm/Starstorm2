@@ -84,9 +84,7 @@ namespace Moonstorm.Starstorm2.Items
             {
                 // 1 - 1/(1+cdr)          
                 float cooldownReduction = Mathf.Max((body.attackSpeed - 1) * attackSpeedToCooldownConversion, 0);
-                args.cooldownMultAdd -= Util.ConvertAmplificationPercentageIntoReductionPercentage(cooldownReduction * 100f) / 100f;
-                SS2Log.Info($"cooldownReduction == {cooldownReduction} /// attackSpeed == {body.attackSpeed} /// cooldownMultAdd == {args.cooldownMultAdd}");
-
+                args.cooldownMultAdd -= Util.ConvertAmplificationPercentageIntoReductionPercentage(cooldownReduction * 100f) / 100f;               
             }                                       
         }
 

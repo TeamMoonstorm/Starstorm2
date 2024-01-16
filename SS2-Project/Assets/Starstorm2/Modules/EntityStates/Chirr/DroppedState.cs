@@ -193,8 +193,9 @@ namespace EntityStates.Chirr
 			}
 
 			// should find out why stuff can get stuck floating despite gravity not being disabled...
-			if (base.fixedAge > absoluteMaxTime || (detonateNextFrame && (!base.characterMotor || (base.characterMotor.Motor.GroundingStatus.IsStableOnGround && !base.characterMotor.Motor.LastGroundingStatus.IsStableOnGround) )))
-            {
+			//if (base.fixedAge > absoluteMaxTime || (detonateNextFrame && (!base.characterMotor || (base.characterMotor.Motor.GroundingStatus.IsStableOnGround && !base.characterMotor.Motor.LastGroundingStatus.IsStableOnGround) )))
+			if (base.fixedAge > absoluteMaxTime || detonateNextFrame)
+			{
 				if (base.characterMotor)
 					base.characterMotor.velocity = Vector3.zero;
 				else if (base.rigidbody)

@@ -10,12 +10,14 @@ namespace EntityStates.FlowerTurret
 {
 	public class FireFlowerTurret : BaseFlowerTurretState
 	{
-		public static float baseDuration = 0.75f;
+		public static float baseDuration = 1f;
 		public static float damageCoefficient = 1f;
 		public static float force = 100f;
 		public static float procCoefficient = 1f;
 		public static string muzzleName = "Muzzle";
 		public static GameObject muzzleFlashPrefab;
+
+		private static float eliteDamageCoefficient = 1 / 3f;
 		public HurtBox targetHurtBox;
 		private float duration;
 
@@ -32,7 +34,6 @@ namespace EntityStates.FlowerTurret
 			if (this.animator)
 			{
 				EntityState.PlayAnimationOnAnimator(this.animator, "Body", "FireGoo", "Primary.playbackRate", this.duration);
-
 			}
 		}
 
@@ -46,9 +47,10 @@ namespace EntityStates.FlowerTurret
 			{
 				if (this.targetHurtBox)
 				{
+					float bodyDamage = Mathf.Max(12f, this.body.damage); // WISPS HAVE 3 FUCKING DAMAGE? LOL
 					FlowerOrb flowerOrb = new FlowerOrb();
 					flowerOrb.forceScalar = force;
-					flowerOrb.damageValue = this.body.damage * damageCoefficient;
+					flowerOrb.damageValue = bodyDamage * damageCoefficient;
 					flowerOrb.isCrit = Util.CheckRoll(this.body.crit, this.body.master);
 					flowerOrb.teamIndex = this.body.teamComponent.teamIndex;
 					flowerOrb.attacker = this.body.gameObject;
@@ -56,7 +58,7 @@ namespace EntityStates.FlowerTurret
 					HurtBox hurtBox2 = this.targetHurtBox;
 					if (hurtBox2)
 					{
-						EffectManager.SimpleMuzzleFlash(muzzleFlashPrefab, this.networkedBodyAttachment.gameObject, "Muzzle", true);
+						EffectManager.SimpleMuzzleFlash(muzzleFlashPrefab, this.displayTransform.gameObject, "Muzzle", true);
 						flowerOrb.origin = muzzleTransform.position;
 						flowerOrb.target = hurtBox2;
 						OrbManager.instance.AddOrb(flowerOrb);

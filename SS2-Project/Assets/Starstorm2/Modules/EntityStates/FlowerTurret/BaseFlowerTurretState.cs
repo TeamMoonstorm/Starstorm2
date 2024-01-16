@@ -12,6 +12,7 @@ namespace EntityStates.FlowerTurret
 		protected CharacterBody body;
 		protected Animator animator;
 		protected Transform muzzleTransform;
+		protected Transform displayTransform;
 		protected bool linkedToDisplay;
 
 		public override void OnEnter()
@@ -38,6 +39,7 @@ namespace EntityStates.FlowerTurret
 						List<GameObject> itemDisplayObjects = characterModel.GetItemDisplayObjects(SS2Content.Items.FlowerTurret.itemIndex);
 						foreach (GameObject gameObject in itemDisplayObjects)
 						{
+							displayTransform = gameObject.transform;
 							this.animator = gameObject.GetComponentInChildren<Animator>();
 							ChildLocator childLocator = gameObject.GetComponentInChildren<ChildLocator>();
 							if (childLocator)
