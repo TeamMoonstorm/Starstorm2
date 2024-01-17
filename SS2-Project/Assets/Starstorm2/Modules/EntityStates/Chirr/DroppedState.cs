@@ -303,7 +303,7 @@ namespace EntityStates.Chirr
 			public DroppedState droppedState;
             private void OnCollisionEnter(Collision collision)
             {
-                if(collision.gameObject.layer == LayerIndex.world.intVal || collision.gameObject.layer == LayerIndex.entityPrecise.intVal)
+                if(collision.gameObject.layer == LayerIndex.world.intVal || collision.gameObject.layer == LayerIndex.entityPrecise.intVal || collision.gameObject.layer == LayerIndex.defaultLayer.intVal)
                 {
 					this.droppedState.detonateNextFrame = true;
 					Destroy(this);

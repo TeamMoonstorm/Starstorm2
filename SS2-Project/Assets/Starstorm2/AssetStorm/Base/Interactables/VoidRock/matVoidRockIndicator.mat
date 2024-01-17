@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: matPedestalOutline
-  m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
+  m_Name: matVoidRockIndicator
+  m_Shader: {fileID: 4800000, guid: b12ff619eec8e0a49b65f7bec2dfdc79, type: 2}
   m_ShaderKeywords: FRESNEL USE_CLOUDS USE_UV1 _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
@@ -32,14 +32,14 @@ Material:
         m_Scale: {x: 5, y: 5}
         m_Offset: {x: 0, y: 0}
     - _RemapTex:
-        m_Texture: {fileID: 2800000, guid: 98201b5c9536dcf4da716f81eae203b7, type: 3}
+        m_Texture: {fileID: 2800000, guid: b631753041346e14b969552a74b1e21a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _AlphaBias: 0.6
-    - _AlphaBoost: 1.7
+    - _AlphaBoost: 0.37
     - _AlphaThreshold: 0.254
-    - _Boost: 2.6
+    - _Boost: 0.8
     - _BumpScale: 1
     - _CalcTextureAlphaOn: 0
     - _CloudOffsetOn: 0
@@ -56,21 +56,22 @@ Material:
     - _Fade: 1
     - _FadeCloseDistance: 0.5
     - _FadeCloseOn: 0
+    - _FadeFromVertexColorsOn: 0
     - _FresnelOn: 1
     - _FresnelPower: 1.7
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _InternalSimpleBlendMode: 0
-    - _IntersectionStrength: 6.4
-    - _InvFade: 0
+    - _IntersectionStrength: 4.78
+    - _InvFade: 3
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _OffsetAmount: 0
     - _Parallax: 0.02
-    - _RimPower: 4.01
-    - _RimStrength: 0.63
+    - _RimPower: 3.25
+    - _RimStrength: 0.82
     - _SkyboxOnly: 0
     - _SmoothnessTextureChannel: 0
     - _SoftPower: 1

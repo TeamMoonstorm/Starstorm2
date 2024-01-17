@@ -9,9 +9,9 @@ namespace Moonstorm.Starstorm2.Items
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Fork", SS2Bundle.Items);
 
         //[RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Bonus base damage per fork. (1 = 1 base damage. Base damage for most characters is 12.)")]
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Bonus percent damage per fork.")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Bonus percent damage per fork. (1 = 1%)")]
         [TokenModifier("SS2_ITEM_FORK_DESC", StatTypes.Default, 0)]
-        public static float damageBonus = 8f;
+        public static float percentDamageBonus = 8f;
 
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier
         {
@@ -24,7 +24,7 @@ namespace Moonstorm.Starstorm2.Items
                 //works like Armor-Piercing Rounds but on all targets, defaults to 8%
                 //Level 1 commando M1: 12 > 12.96
                 //level 5 loader punch: 648 > 699.84
-                args.damageMultAdd += (damageBonus / 100f) * stack;
+                args.damageMultAdd += (percentDamageBonus / 100f) * stack;
 
                 //Percentage of Base Damage behavior
                 //added a percentage of base damage before levels, defaults to 25%

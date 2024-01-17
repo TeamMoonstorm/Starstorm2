@@ -53,7 +53,7 @@ namespace Moonstorm.Starstorm2.Items
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of bonus critical chance per applied per stack of the debuff. (1 = 1%")]
         [TokenModifier(token, StatTypes.Default, 0)]
-        public static float bonusCrit = 2;
+        public static float bonusCritthisfuckingsucks = 2;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of critical hits allowed per stack. (1 = 1 critical hit per stack before the buff is cleared)")]
         [TokenModifier(token, StatTypes.Default, 1)]
@@ -90,7 +90,7 @@ namespace Moonstorm.Starstorm2.Items
                         //P(A+B) = P(A) + P(B) - P(AB)
                         int buffCount = self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup);
                         //float intendedChance = attackerBody.crit + (self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) * attackerBody.inventory.GetItemCount(SS2Content.Items.Needles)); //assuming each buff is 1% per items
-                        float intendedChance = attackerBody.crit + (buffCount * bonusCrit);
+                        float intendedChance = attackerBody.crit + (buffCount * bonusCritthisfuckingsucks);
                         float secondChance = (attackerBody.crit - intendedChance) / (attackerBody.crit - 100) * 100;
                         bool secondCrit = Util.CheckRoll(secondChance);
                         //if (secondCrit)
@@ -108,7 +108,7 @@ namespace Moonstorm.Starstorm2.Items
                             //SS2Log.Info("second else");
                             //P(A+B) = P(A) + P(B) - P(AB)
                             //intendedChance = attackerBody.crit + (self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) * attackerBody.inventory.GetItemCount(SS2Content.Items.Needles)); //assuming each buff is 1% per items
-                            intendedChance = attackerBody.crit + (buffCount * bonusCrit);
+                            intendedChance = attackerBody.crit + (buffCount * bonusCritthisfuckingsucks);
 
                             secondChance = (attackerBody.crit - intendedChance) / (attackerBody.crit - 100) * 100;
                             secondCrit = Util.CheckRoll(secondChance);
@@ -133,7 +133,7 @@ namespace Moonstorm.Starstorm2.Items
 
                                 //SS2Log.Info("buffCount | bonusCrit " + buffCount + " | " + bonusCrit + " | " + attackerBody.crit);
 
-                                if((buffCount * bonusCrit) + attackerBody.crit >= 100)
+                                if((buffCount * bonusCritthisfuckingsucks) + attackerBody.crit >= 100)
                                 {
                                     //damageInfo.damage = damageInfo.damage * 1.1f; //eh this is weird
                                     doNeedleProc(self);
