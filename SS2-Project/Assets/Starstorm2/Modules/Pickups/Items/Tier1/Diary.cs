@@ -16,14 +16,6 @@ namespace Moonstorm.Starstorm2.Items
         private const string token = "SS2_ITEM_DIARY_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Diary", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Experience bonus from each diary. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
-        public static float experienceBonus = 1;
-        public override void Initialize()
-        {
-            base.Initialize();
-            NetworkingAPI.RegisterMessageType<Behavior.DiarySFXMessage>();
-        }
         public sealed class Behavior : BaseItemMasterBehavior
         {
             //plays the diary sfx only if players can see the experience bar being affected
@@ -47,61 +39,40 @@ namespace Moonstorm.Starstorm2.Items
             }
             [ItemDefAssociation(useOnClient = false, useOnServer = true)]
             private static ItemDef GetItemDef() => SS2Content.Items.Diary;
-            private void OnEnable()
+            private void Awake()
             {
-                Stage.onStageStartGlobal += AddLevel;
+                Stage.onServerStageBegin += PrepareAddLevel;
+            }
+            private void OnDestroy()
+            {
+                Stage.onServerStageBegin -= PrepareAddLevel;
+            }
+            private void PrepareAddLevel(Stage stage)
+            {
+                if (stage.sceneDef && stage.sceneDef.sceneType == SceneType.Stage)
+                    this.master.onBodyStart += AddLevel;
             }
 
-            private void AddLevel(Stage stage)
+            [Server]
+            private void AddLevel(CharacterBody body)
             {
-                
+                ItemIndex diary = SS2Content.Items.Diary.itemIndex;
+                ItemIndex consumed = SS2Content.Items.DiaryConsumed.itemIndex;
+                if (body.inventory.GetItemCount(diary) > 0)
+                {
+                    // this uses xp orbs. wouldnt mind setting the level manually if we use our own vfx
+                    ulong experience = TeamManager.instance.GetTeamNextLevelExperience(body.teamComponent.teamIndex);
+                    ExperienceManager.instance.AwardExperience(body.transform.position, body, experience);
+
+                    body.inventory.RemoveItem(diary);
+                    body.inventory.GiveItem(consumed);
+                    CharacterMasterNotificationQueue.SendTransformNotification(this.master, diary, consumed, CharacterMasterNotificationQueue.TransformationType.Default);
+                    PlayDiarySFXLocal(body.gameObject);   // vfx would be nice             
+                }
+
+                body.master.onBodyStart -= AddLevel;
             }
 
-            private void OnDisable()
-            {
-
-            }
-            private struct TimedExpOffset
-            {
-                public float awardTime;
-                public long offset;
-            }
-            public class DiarySFXMessage : INetMessage
-            {
-                private NetworkInstanceId BodyObjectID;
-
-                public DiarySFXMessage()
-                {
-                }
-
-                public DiarySFXMessage(NetworkInstanceId bodyObjectID)
-                {
-                    BodyObjectID = bodyObjectID;
-                }
-
-                public void Serialize(NetworkWriter writer)
-                {
-                    writer.Write(BodyObjectID);
-                }
-
-                public void Deserialize(NetworkReader reader)
-                {
-                    BodyObjectID = reader.ReadNetworkId();
-                }
-
-                public void OnReceived()
-                {
-                    if (NetworkServer.active)
-                    {
-                        return;
-                    }
-                    GameObject gameObject = Util.FindNetworkObject(BodyObjectID);
-                    if (gameObject)
-                    {
-                        PlayDiarySFXLocal(gameObject);
-                    }
-                }
-            }
         }
     }
 }

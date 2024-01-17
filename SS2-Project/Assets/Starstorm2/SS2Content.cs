@@ -38,6 +38,8 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef Diary;
 
+            public static ItemDef DiaryConsumed;
+
             public static ItemDef DormantFungus;
 
             public static ItemDef Fork;
