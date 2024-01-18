@@ -9,8 +9,6 @@ using UnityEngine.Networking;
 
 namespace Moonstorm.Starstorm2.Items
 {
-    [DisabledContent]
-
     public sealed class Diary : ItemBase
     {
         private const string token = "SS2_ITEM_DIARY_DESC";

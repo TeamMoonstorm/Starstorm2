@@ -6,193 +6,52 @@ using UnityEngine.Networking;
 
 namespace Moonstorm.Starstorm2.Items
 {
+    // needs sound
     public sealed class Needles : ItemBase
     {
         private const string token = "SS2_ITEM_NEEDLES_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Needles", SS2Bundle.Items);
 
-        //the graveyard
-
-        //
-        //SS2Config.IDItem, ConfigDesc = "Chance for Needles to Proc. (100 = 100%)")]
-        //[ConfigurableField(ConfigDesc = "Chance for Needles to Proc. (100 = 100%)")]
-        //[TokenModifier(token, StatTypes.Default, 0)]
-        //public static float procChance = 4f;
-        //
-        //[ConfigurableField(ConfigDesc = "Duration of the pricked debuff, in seconds.")]
-        //[TokenModifier(token, StatTypes.Default, 1)]
-        //public static float buildupDuration = 5f;
-        //
-        //[ConfigurableField(ConfigDesc = "Additional duration of the pricked debuff per stack, in seconds.")]
-        //[TokenModifier(token, StatTypes.Default, 2)]
-        //public static float buildupStack = 1f;
-        //
-        //[ConfigurableField(ConfigDesc = "Amount of buildup debuffs needed before the actual needles debuff gets applied")]
-        //[TokenModifier(token, StatTypes.Default, 3)]
-        //public static float neededBuildupAmount = 1f;
-        //
-        //[ConfigurableField(ConfigDesc = "Duration of the actual needles debuff, in seconds.")]
-        //[TokenModifier(token, StatTypes.Default, 4)]
-        //public static float needleBuffDuration = 2f;
-        //
-        //[ConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of the pricked debuff, in seconds.")]
-        //[TokenModifier(token, StatTypes.Default, 1)]
-        //public static float buildupDuration = 5f;
-        //
-        //[ConfigurableField(SS2Config.IDItem, ConfigDesc = "Additional duration of the pricked debuff per stack, in seconds.")]
-        //[TokenModifier(token, StatTypes.Default, 2)]
-        //public static float buildupStack = 1f;
-        //
-        //[ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of buildup debuffs needed before the actual needles debuff gets applied")]
-        //[TokenModifier(token, StatTypes.Default, 3)]
-        //public static float neededBuildupAmount = 1f;
-        //
-        //[ConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of the actual needles debuff, in seconds.")]
-        //[TokenModifier(token, StatTypes.Default, 4)]
-        //public static float needleBuffDuration = 2f;
-
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of bonus critical chance per applied per stack of the debuff. (1 = 1%")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance for the debuff to be applied on hit. (1 = 1%")]
         [TokenModifier(token, StatTypes.Default, 0)]
-        public static float bonusCritthisfuckingsucks = 2;
+        public static float procChance = 5;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of critical hits allowed per stack. (1 = 1 critical hit per stack before the buff is cleared)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of guaranteed critical hits per stack of this item. (1 = 1 critical hit per stack before the buff is cleared)")]
         [TokenModifier(token, StatTypes.Default, 1)]
-        public static int critsPerStack = 1;
+        public static int critsPerStack = 3;
 
-        public static GameObject needleStrikeVFX = SS2Assets.LoadAsset<GameObject>("NeedlesStrikeVFX", SS2Bundle.Items);
-        public static GameObject needleVFX = SS2Assets.LoadAsset<GameObject>("NeedleVFX", SS2Bundle.Items);
+        public static GameObject procEffect = SS2Assets.LoadAsset<GameObject>("NeedlesProcEffect", SS2Bundle.Items);
+        public static GameObject critEffect = SS2Assets.LoadAsset<GameObject>("NeedlesCritEffect", SS2Bundle.Items);
 
-        public sealed class Behavior : BaseItemBodyBehavior, IOnIncomingDamageOtherServerReciever //, IOnDamageDealtServerReceiver
+        // should just be an ilhook but im lazy
+        public sealed class Behavior : BaseItemBodyBehavior, IOnIncomingDamageOtherServerReciever 
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.Needles;
-
-            //public void OnDamageDealtServer(DamageReport report)
-            //{
-            //    SS2Log.Debug(report.damageInfo.crit);
-            //}
-
             public void OnIncomingDamageOther(HealthComponent self, DamageInfo damageInfo)
             {
-                //CharacterBody attackerBody = damageInfo.attacker.GetComponent<CharacterBody>();
-                if (damageInfo.attacker)
+                if (damageInfo.rejected) return;
+
+                if (!damageInfo.crit && self.body.HasBuff(SS2Content.Buffs.BuffNeedleBuildup))
                 {
-                    CharacterBody attackerBody = damageInfo.attacker.GetComponent<CharacterBody>();
+                    damageInfo.crit = true;
+                    self.body.RemoveBuff(SS2Content.Buffs.BuffNeedleBuildup);
 
-                    if (attackerBody && !damageInfo.rejected && NetworkServer.active && self.body.teamComponent.teamIndex != attackerBody.teamComponent.teamIndex) // && damageInfo.procCoefficient > 0f) //then dots can't apply stacks
-                    {
-                        //SS2Log.Info("original if");
-                        //doNeedleProc(self); 
-                        //}
-                        //else //what the fuck is this else for again?
-                        //{
-                        //SS2Log.Info("original else");
-                        //P(A+B) = P(A) + P(B) - P(AB)
-                        int buffCount = self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup);
-                        //float intendedChance = attackerBody.crit + (self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) * attackerBody.inventory.GetItemCount(SS2Content.Items.Needles)); //assuming each buff is 1% per items
-                        float intendedChance = attackerBody.crit + (buffCount * bonusCritthisfuckingsucks);
-                        float secondChance = (attackerBody.crit - intendedChance) / (attackerBody.crit - 100) * 100;
-                        bool secondCrit = Util.CheckRoll(secondChance);
-                        //if (secondCrit)
-                        //{
-                        //    damageInfo.crit = secondCrit;
-                        //}
-                        if (secondCrit && damageInfo.procCoefficient > 0f) //&& damageInfo.damageType != DamageType.DoT
-                        {
-                            //SS2Log.Info("second if");
-                            doNeedleProc(self);
-                            damageInfo.crit = secondCrit;
-                        }
-                        else
-                        {
-                            //SS2Log.Info("second else");
-                            //P(A+B) = P(A) + P(B) - P(AB)
-                            //intendedChance = attackerBody.crit + (self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup) * attackerBody.inventory.GetItemCount(SS2Content.Items.Needles)); //assuming each buff is 1% per items
-                            intendedChance = attackerBody.crit + (buffCount * bonusCritthisfuckingsucks);
-
-                            secondChance = (attackerBody.crit - intendedChance) / (attackerBody.crit - 100) * 100;
-                            secondCrit = Util.CheckRoll(secondChance);
-                            //damageInfo.crit = secondCrit;
-                            if (secondCrit && damageInfo.procCoefficient > 0f) //&& damageInfo.damageType != DamageType.DoT
-                            {
-                                //SS2Log.Info("third if");
-                                damageInfo.crit = secondCrit;
-                                doNeedleProc(self);
-                            }
-                            else if(attackerBody.crit < 100)
-                            {
-                                //SS2Log.Info("third else");
-                                var tracker = self.body.gameObject.GetComponent<NeedleTracker>();
-                                if (!tracker)
-                                {
-                                    tracker = self.body.gameObject.AddComponent<NeedleTracker>();
-                                    tracker.procs = attackerBody.GetItemCount(SS2Content.Items.Needles) * critsPerStack;
-                                    tracker.max = tracker.procs;
-                                }
-                                //self.body.AddBuff(SS2Content.Buffs.BuffNeedleBuildup);
-
-                                //SS2Log.Info("buffCount | bonusCrit " + buffCount + " | " + bonusCrit + " | " + attackerBody.crit);
-
-                                if((buffCount * bonusCritthisfuckingsucks) + attackerBody.crit >= 100)
-                                {
-                                    //damageInfo.damage = damageInfo.damage * 1.1f; //eh this is weird
-                                    doNeedleProc(self);
-                                }
-
-                                self.body.AddBuff(SS2Content.Buffs.BuffNeedleBuildup);
-                            }
-                        }
-                    }
-                }
-            }
-
-            public void doNeedleProc(HealthComponent self)
-            {
-                var tracker = self.body.gameObject.GetComponent<NeedleTracker>();
-                int buffCount = 0;
-                if (tracker)
-                {
-                    tracker.procs--;
-                }
-                if (!tracker || tracker.procs == 0)
-                {
-                    if (tracker)
-                    {
-                        Destroy(tracker);
-                    }
-                    buffCount = self.body.GetBuffCount(SS2Content.Buffs.BuffNeedleBuildup);
-                    for (int i = 0; i < buffCount; i++)
-                    {
-                        self.body.RemoveBuff(SS2Content.Buffs.BuffNeedleBuildup);
-                    }
+                    EffectManager.SimpleEffect(critEffect, damageInfo.position, Quaternion.identity, true);
                 }
 
-                EffectData effectData = new EffectData
+                if (Util.CheckRoll(procChance * damageInfo.procCoefficient, body.master))
                 {
-                    origin = self.body.corePosition
-                };
-                EffectManager.SpawnEffect(needleStrikeVFX, effectData, transmit: true);
-                for(float i = 1; i < buffCount; i *= 2.5f)
-                {
-                    //SS2Log.Info("more needles: " + i);
-                    EffectData effectData2 = new EffectData
-                    {
-                        origin = self.body.corePosition
-                    };
-                    EffectManager.SpawnEffect(needleVFX, effectData2, transmit: true);
+                    int needlesStacks = body.master.inventory.GetItemCount(SS2Content.Items.Needles);
+                    for(int i = 0; i < critsPerStack * needlesStacks; i++)
+                        self.body.AddBuff(SS2Content.Buffs.BuffNeedleBuildup);
+
+                    EffectManager.SimpleEffect(procEffect, damageInfo.position, Quaternion.identity, true);
                 }
+
                 
-                //EffectManager.SpawnEffect(HealthComponent.AssetReferences.executeEffectPrefab, effectData, transmit: true);
+                
             }
-        }
-
-        public class NeedleTracker : MonoBehaviour
-        {
-            //helps keep track of the target and player responsible
-            //public CharacterBody PlayerOwner;
-            public int procs;
-            public int max;
-
         }
     }
 }

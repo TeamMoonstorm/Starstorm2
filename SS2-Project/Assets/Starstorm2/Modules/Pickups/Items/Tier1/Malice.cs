@@ -21,14 +21,14 @@ namespace Moonstorm.Starstorm2.Items
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Total damage each Malice bounce deals. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
-        public static float damageCoeff = 0.35f;
+        public static float damageCoeff = 0.25f;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Number of bounces per stack.")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static int bounceStack = 1;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Proc coefficient of damage dealt by Malice.")]
-        public static float procCo = 0.2f;
+        public static float procCo = 0.1f;
 
         //damage types should not be used as a substitute for proper proc chain masks, but it works here
         public static DamageAPI.ModdedDamageType maliceDamageType;
@@ -45,10 +45,6 @@ namespace Moonstorm.Starstorm2.Items
             ignoredProcs.AddProc(ProcType.Backstab);
 
             maliceOrbEffectPrefab = SS2Assets.LoadAsset<GameObject>("MaliceOrbEffect", SS2Bundle.Items);
-            /*MaterialControllerComponents.HGCloudRemapController hGCloudRemapController = maliceOrbEffectPrefab.AddComponent<MaterialControllerComponents.HGCloudRemapController>();
-            LineRenderer lineRenderer = maliceOrbEffectPrefab.GetComponentInChildren<LineRenderer>();
-            hGCloudRemapController.renderer = lineRenderer;
-            hGCloudRemapController.material = lineRenderer.material;*/
         }
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
         {
@@ -59,8 +55,8 @@ namespace Moonstorm.Starstorm2.Items
             {
                 DamageInfo damageInfo = report.damageInfo;
 
-                //damage has proc co, body has team comp, and damage info does not contained any banned proc types
-                if (damageInfo.procCoefficient > 0 && body.teamComponent && (damageInfo.procChainMask.mask & ~ignoredProcs.mask) == 0U && !damageInfo.HasModdedDamageType(maliceDamageType))      
+                //damage has proc co and damage info does not contained any banned proc types
+                if (damageInfo.procCoefficient > 0 && (damageInfo.procChainMask.mask & ~ignoredProcs.mask) == 0U && !damageInfo.HasModdedDamageType(maliceDamageType))      
                 {
                     MaliceOrb malOrb = new MaliceOrb();
                     malOrb.bouncesRemaining = bounceStack * stack - 1;
@@ -70,7 +66,7 @@ namespace Moonstorm.Starstorm2.Items
                     malOrb.damageType = DamageType.Generic;
                     malOrb.isCrit = damageInfo.crit;
                     malOrb.damageColorIndex = DamageColorIndex.Void;
-                    malOrb.procCoefficient = procCo;
+                    malOrb.procCoefficient = procCo * damageInfo.procCoefficient;
                     malOrb.origin = report.victimBody.corePosition;
                     malOrb.teamIndex = body.teamComponent.teamIndex;
                     malOrb.attacker = base.gameObject;
