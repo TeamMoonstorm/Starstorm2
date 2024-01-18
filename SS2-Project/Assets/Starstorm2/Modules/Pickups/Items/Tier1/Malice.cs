@@ -67,7 +67,7 @@ namespace Moonstorm.Starstorm2.Items
                     malOrb.isCrit = damageInfo.crit;
                     malOrb.damageColorIndex = DamageColorIndex.Void;
                     malOrb.procCoefficient = procCo * damageInfo.procCoefficient;
-                    malOrb.origin = report.victimBody.corePosition;
+                    malOrb.origin = report.damageInfo.position;
                     malOrb.teamIndex = body.teamComponent.teamIndex;
                     malOrb.attacker = base.gameObject;
                     malOrb.procChainMask = damageInfo.procChainMask;

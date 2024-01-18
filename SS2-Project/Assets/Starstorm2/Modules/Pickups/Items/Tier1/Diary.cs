@@ -48,7 +48,7 @@ namespace Moonstorm.Starstorm2.Items
             private void PrepareAddLevel(Stage stage)
             {
                 if (stage.sceneDef && stage.sceneDef.sceneType == SceneType.Stage)
-                    this.master.onBodyStart += AddLevel;
+                    base.GetComponent<CharacterMaster>().onBodyStart += AddLevel;
             }
 
             [Server]
@@ -64,7 +64,7 @@ namespace Moonstorm.Starstorm2.Items
 
                     body.inventory.RemoveItem(diary);
                     body.inventory.GiveItem(consumed);
-                    CharacterMasterNotificationQueue.SendTransformNotification(this.master, diary, consumed, CharacterMasterNotificationQueue.TransformationType.Default);
+                    CharacterMasterNotificationQueue.SendTransformNotification(body.master, diary, consumed, CharacterMasterNotificationQueue.TransformationType.Default);
                     PlayDiarySFXLocal(body.gameObject);   // vfx would be nice             
                 }
 

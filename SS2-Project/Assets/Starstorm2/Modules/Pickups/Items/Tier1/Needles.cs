@@ -14,7 +14,7 @@ namespace Moonstorm.Starstorm2.Items
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance for the debuff to be applied on hit. (1 = 1%")]
         [TokenModifier(token, StatTypes.Default, 0)]
-        public static float procChance = 5;
+        public static float procChance = 4;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of guaranteed critical hits per stack of this item. (1 = 1 critical hit per stack before the buff is cleared)")]
         [TokenModifier(token, StatTypes.Default, 1)]
@@ -32,7 +32,9 @@ namespace Moonstorm.Starstorm2.Items
             {
                 if (damageInfo.rejected) return;
 
-                if (!damageInfo.crit && self.body.HasBuff(SS2Content.Buffs.BuffNeedleBuildup))
+                //needles can only proc once crits are depleted
+                bool hasBuff = self.body.HasBuff(SS2Content.Buffs.BuffNeedleBuildup);
+                if (!damageInfo.crit && hasBuff)
                 {
                     damageInfo.crit = true;
                     self.body.RemoveBuff(SS2Content.Buffs.BuffNeedleBuildup);
@@ -40,7 +42,7 @@ namespace Moonstorm.Starstorm2.Items
                     EffectManager.SimpleEffect(critEffect, damageInfo.position, Quaternion.identity, true);
                 }
 
-                if (Util.CheckRoll(procChance * damageInfo.procCoefficient, body.master))
+                if (!hasBuff && Util.CheckRoll(procChance * damageInfo.procCoefficient, body.master))
                 {
                     int needlesStacks = body.master.inventory.GetItemCount(SS2Content.Items.Needles);
                     for(int i = 0; i < critsPerStack * needlesStacks; i++)

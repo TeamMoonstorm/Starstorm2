@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5026394318390949444}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.857, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6051313861474177453}
@@ -67,9 +67,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentObjectTransform: {fileID: 0}
   startVelocity1: {x: -4, y: 3, z: -4}
-  startVelocity2: {x: 4, y: 1, z: 4}
+  startVelocity2: {x: 4, y: -3, z: 4}
   endVelocity1: {x: -4, y: 3, z: -4}
-  endVelocity2: {x: 4, y: 1, z: 4}
+  endVelocity2: {x: 4, y: -3, z: 4}
   movementCurve:
     serializedVersion: 2
     m_Curve:
@@ -223,25 +223,25 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 3.857, y: 0, z: 0}
-  - {x: 3.4284446, y: 0, z: 0}
-  - {x: 2.999889, y: 0, z: 0}
-  - {x: 2.5713334, y: 0, z: 0}
-  - {x: 2.142778, y: 0, z: 0}
-  - {x: 1.7142222, y: 0, z: 0}
-  - {x: 1.2856666, y: 0, z: 0}
-  - {x: 0.8571111, y: 0, z: 0}
-  - {x: 0.42855555, y: 0, z: 0}
+  - {x: -4.22, y: 0, z: 0}
+  - {x: -3.751111, y: 0, z: 0}
+  - {x: -3.282222, y: 0, z: 0}
+  - {x: -2.813333, y: 0, z: 0}
+  - {x: -2.3444443, y: 0, z: 0}
+  - {x: -1.8755554, y: 0, z: 0}
+  - {x: -1.4066665, y: 0, z: 0}
+  - {x: -0.9377777, y: 0, z: 0}
+  - {x: -0.46888885, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.5
+    widthMultiplier: 1
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0
+        value: 0.7
         inSlope: 0
         outSlope: 0
         tangentMode: 0

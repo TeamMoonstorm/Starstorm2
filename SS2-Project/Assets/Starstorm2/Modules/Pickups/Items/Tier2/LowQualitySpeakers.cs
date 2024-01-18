@@ -43,10 +43,13 @@ namespace Moonstorm.Starstorm2.Items
             // 100% chance at 0% health, baseProcChance at 100% health
             // uses health fraction after damage, not before
             float procChance = Mathf.Lerp(1f, baseProcChance, body.healthComponent.combinedHealthFraction);
+            SS2Log.Info($"LQS {procChance}");
             if(stack > 0 && Util.CheckRoll(procChance * 100f, body.master))
             {               
-                float radius = baseRadius + stack * radiusPerStack;
+                float radius = baseRadius + stack * (radiusPerStack - 1);
+                SS2Log.Info($"LQS RADIUS {radius}");
 
+                
                 BlastAttack blastAttack = new BlastAttack();
                 blastAttack.position = body.corePosition;
                 blastAttack.baseDamage = 0f;
@@ -63,6 +66,14 @@ namespace Moonstorm.Starstorm2.Items
                 blastAttack.damageColorIndex = DamageColorIndex.Default;
                 blastAttack.damageType = DamageType.Stun1s;
                 blastAttack.attackerFiltering = AttackerFiltering.NeverHitSelf;
+                blastAttack.Fire();
+
+                EffectManager.SpawnEffect(burstEffect, new EffectData
+                {
+                    origin = body.corePosition,
+                    scale = radius,
+                    rotation = Quaternion.identity
+                }, true);
 
             }
 

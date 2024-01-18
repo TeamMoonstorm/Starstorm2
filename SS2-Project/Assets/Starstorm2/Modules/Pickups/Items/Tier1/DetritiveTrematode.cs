@@ -22,10 +22,6 @@ namespace Moonstorm.Starstorm2.Items
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
         public static float trematodeDamage = 1f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Movement speed reduction received from the Trematode debuff. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 3, "100")]
-        public static float trematodeSlow = 0.2f;
-
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
         {
             [ItemDefAssociation]
@@ -55,7 +51,7 @@ namespace Moonstorm.Starstorm2.Items
                 //1 = 25%
                 //5 = 65%
                 // 9 = 105%
-                float requiredHealthPercentage = missingHealthPercentage + missingHealthPercentagePerStack * stack;
+                float requiredHealthPercentage = missingHealthPercentage + missingHealthPercentagePerStack * (stack - 1);
                 if (victim.combinedHealthFraction < requiredHealthPercentage && !hasDot && (victim.gameObject != attacker))
                 {
                     var dotInfo = new InflictDotInfo()
@@ -63,7 +59,7 @@ namespace Moonstorm.Starstorm2.Items
                         attackerObject = attacker,
                         victimObject = victim.gameObject,
                         dotIndex = Trematodes.index,
-                        duration = -1f,
+                        duration = Mathf.Infinity,
                         damageMultiplier = trematodeDamage * stack,
                     };
                     DotController.InflictDot(ref dotInfo);

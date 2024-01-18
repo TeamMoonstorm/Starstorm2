@@ -134,7 +134,7 @@ ParticleSystem:
       m_RotationOrder: 4
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
-  scalingMode: 1
+  scalingMode: 0
   randomSeed: 0
   InitialModule:
     serializedVersion: 3
@@ -2322,7 +2322,7 @@ MonoBehaviour:
   effectIndex: -1
   positionAtReferencedTransform: 1
   parentToReferencedTransform: 0
-  applyScale: 0
+  applyScale: 1
   soundName: 
   disregardZScale: 0
 --- !u!114 &4548210112729595063
@@ -2352,8 +2352,8 @@ MonoBehaviour:
   shakeOnStart: 1
   shakeOnEnable: 0
   wave:
-    amplitude: 30
-    frequency: 0.15
+    amplitude: 0.2
+    frequency: 6
     cycleOffset: 0
   duration: 1
   radius: 10
@@ -2493,7 +2493,7 @@ ParticleSystem:
       m_RotationOrder: 4
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
-  scalingMode: 1
+  scalingMode: 0
   randomSeed: 0
   InitialModule:
     serializedVersion: 3

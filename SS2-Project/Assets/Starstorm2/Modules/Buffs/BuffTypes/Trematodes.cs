@@ -14,15 +14,5 @@ namespace Moonstorm.Starstorm2.Buffs
         {
             index = DotAPI.RegisterDotDef(1, 0.5f, DamageColorIndex.Item, BuffDef);
         }
-
-        public sealed class Behavior : BaseBuffBodyBehavior, IBodyStatArgModifier
-        {
-            [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffTrematodes;
-            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
-            {
-                args.moveSpeedReductionMultAdd += DetritiveTrematode.trematodeSlow;
-            }
-        }
     }
 }
