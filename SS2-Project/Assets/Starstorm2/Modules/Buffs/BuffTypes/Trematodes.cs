@@ -12,7 +12,7 @@ namespace Moonstorm.Starstorm2.Buffs
 
         public override void Initialize()
         {
-            index = DotAPI.RegisterDotDef(1, 0.5f, DamageColorIndex.Item, BuffDef);
+            index = DotAPI.RegisterDotDef(1f, 1f, DamageColorIndex.Item, BuffDef);
         }
     }
 }

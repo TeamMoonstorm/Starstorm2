@@ -17,7 +17,11 @@ namespace Moonstorm.Starstorm2.Items
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius of Malice, in meters.")]
         [TokenModifier(token, StatTypes.Default, 0)]
-        public static float radiusBase = 13f;
+        public static float radiusBase = 12f;
+
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius of Malice per stack, in meters.")]
+        [TokenModifier(token, StatTypes.Default, 0)]
+        public static float radiusPerStack = 4f;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Total damage each Malice bounce deals. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
@@ -60,7 +64,7 @@ namespace Moonstorm.Starstorm2.Items
                 {
                     MaliceOrb malOrb = new MaliceOrb();
                     malOrb.bouncesRemaining = bounceStack * stack - 1;
-                    malOrb.baseRange = radiusBase;
+                    malOrb.baseRange = radiusBase + radiusPerStack * (stack - 1);
                     malOrb.damageCoefficientPerBounce = 1f;
                     malOrb.damageValue = damageInfo.damage * Malice.damageCoeff;
                     malOrb.damageType = DamageType.Generic;

@@ -26,62 +26,49 @@ namespace Moonstorm.Starstorm2.Items
 
         public static GameObject burstEffect = SS2Assets.LoadAsset<GameObject>("SpeakerBurstEffect", SS2Bundle.Items);
 
-        public override void Initialize()
+        public sealed class Behavior : BaseItemBodyBehavior, IOnIncomingDamageServerReceiver
         {
-            base.Initialize();
+            [ItemDefAssociation]
+            private static ItemDef GetItemDef() => SS2Content.Items.LowQualitySpeakers;
+            public void OnIncomingDamageServer(DamageInfo damageInfo)
+            {
+                int stack = body.inventory.GetItemCount(SS2Content.Items.LowQualitySpeakers);
+                if (stack <= 0) return;
 
-            GlobalEventManager.onServerDamageDealt += SpeakerProc;
-        }
-
-        private void SpeakerProc(DamageReport damageReport)
-        {          
-            if (!damageReport.victimMaster || !damageReport.victimBody) return;
-
-            CharacterBody body = damageReport.victimBody;
-            int stack = body.inventory.GetItemCount(SS2Content.Items.LowQualitySpeakers);
-
-            // 100% chance at 0% health, baseProcChance at 100% health
-            // uses health fraction after damage, not before
-            float procChance = Mathf.Lerp(1f, baseProcChance, body.healthComponent.combinedHealthFraction);
-            SS2Log.Info($"LQS {procChance}");
-            if(stack > 0 && Util.CheckRoll(procChance * 100f, body.master))
-            {               
-                float radius = baseRadius + stack * (radiusPerStack - 1);
-                SS2Log.Info($"LQS RADIUS {radius}");
-
-                
-                BlastAttack blastAttack = new BlastAttack();
-                blastAttack.position = body.corePosition;
-                blastAttack.baseDamage = 0f;
-                blastAttack.baseForce = 600f;
-                blastAttack.bonusForce = Vector3.zero;
-                blastAttack.radius = radius;
-                blastAttack.attacker = body.gameObject;
-                blastAttack.inflictor = body.gameObject;
-                blastAttack.teamIndex = body.teamComponent.teamIndex;
-                blastAttack.crit = false;
-                blastAttack.procChainMask = default(ProcChainMask);
-                blastAttack.procCoefficient = 0f;
-                blastAttack.falloffModel = BlastAttack.FalloffModel.Linear;
-                blastAttack.damageColorIndex = DamageColorIndex.Default;
-                blastAttack.damageType = DamageType.Stun1s;
-                blastAttack.attackerFiltering = AttackerFiltering.NeverHitSelf;
-                blastAttack.Fire();
-
-                EffectManager.SpawnEffect(burstEffect, new EffectData
+                // 100% chance at 0% health, baseProcChance at 100% health
+                // uses health fraction after damage, not before
+                float procChance = Mathf.Lerp(1f, baseProcChance, body.healthComponent.combinedHealthFraction);
+                if (Util.CheckRoll(procChance * 100f, body.master))
                 {
-                    origin = body.corePosition,
-                    scale = radius,
-                    rotation = Quaternion.identity
-                }, true);
+                    float radius = baseRadius + stack * (radiusPerStack - 1);
 
+                    BlastAttack blastAttack = new BlastAttack();
+                    blastAttack.position = body.corePosition;
+                    blastAttack.baseDamage = 0f;
+                    blastAttack.baseForce = 600f;
+                    blastAttack.bonusForce = Vector3.zero;
+                    blastAttack.radius = radius;
+                    blastAttack.attacker = body.gameObject;
+                    blastAttack.inflictor = body.gameObject;
+                    blastAttack.teamIndex = body.teamComponent.teamIndex;
+                    blastAttack.crit = false;
+                    blastAttack.procChainMask = default(ProcChainMask);
+                    blastAttack.procCoefficient = 1f;
+                    blastAttack.falloffModel = BlastAttack.FalloffModel.Linear;
+                    blastAttack.damageColorIndex = DamageColorIndex.Default;
+                    blastAttack.damageType = DamageType.Stun1s;
+                    blastAttack.attackerFiltering = AttackerFiltering.NeverHitSelf;
+                    blastAttack.Fire();
+
+                    EffectManager.SpawnEffect(burstEffect, new EffectData
+                    {
+                        origin = body.corePosition,
+                        scale = radius,
+                        rotation = Quaternion.identity
+                    }, true);
+
+                }
             }
-
-
-            
-
-
-
         }
     }
 }

@@ -12,11 +12,11 @@ namespace Moonstorm.Starstorm2.Items
 
         [RooConfigurableField(SS2Config.IDItem, ConfigName = "Trematode Threshold", ConfigDesc = "Amount of missing health needed for Trematode to proc. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
-        public static float missingHealthPercentage = 0.25f;
+        public static float missingHealthPercentage = 0.30f;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigName = "Trematode Threshold Per Stack", ConfigDesc = "Increase in missing health threshold, per stack. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
-        public static float missingHealthPercentagePerStack = 0.1f;
+        public static float missingHealthPercentagePerStack = 0.15f;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Damage dealt by the Trematode debuff, per second. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
@@ -33,25 +33,28 @@ namespace Moonstorm.Starstorm2.Items
             {
                 var victim = report.victim;
                 var attacker = report.attacker;
-                var dotController = DotController.FindDotController(victim.gameObject);
                 bool hasDot = false;
-                if (dotController)
-                    hasDot = dotController.HasDotActive(Trematodes.index);
+
+                //var dotController = DotController.FindDotController(victim.gameObject);               
+                //if (dotController)
+                //    hasDot = dotController.HasDotActive(Trematodes.index);
+                hasDot = victim.body.HasBuff(SS2Content.Buffs.BuffTrematodes);
+                // dots apparently dont get updated instantly???? so we can apply multiple of the same dot before HasDotActive returns true. hopo game
 
                 if (victim.body.bodyIndex == Fucker)
                     return;
 
-                //25% + 10% per stack hyperbolically
-                //1 = 25%
-                //5 = 50.7%
-                //10 = 70.9%
-                //float requiredHealthPercentage = 1 - (1 - missingHealthPercentage) * Mathf.Pow(1 - missingHealthPercentagePerStack, stack - 1);
+                //30% + 15% per stack hyperbolically
+                //1 = 30%
+                //5 = 63.5%
+                //10 = 83.8%
+                float requiredHealthPercentage = 1 - (1 - missingHealthPercentage) * Mathf.Pow(1 - missingHealthPercentagePerStack, stack - 1);
 
                 //25% + 10% per stack
-                //1 = 25%
+                //1 = 30%
                 //5 = 65%
                 // 9 = 105%
-                float requiredHealthPercentage = missingHealthPercentage + missingHealthPercentagePerStack * (stack - 1);
+                //float requiredHealthPercentage = missingHealthPercentage + missingHealthPercentagePerStack * (stack - 1);
                 if (victim.combinedHealthFraction < requiredHealthPercentage && !hasDot && (victim.gameObject != attacker))
                 {
                     var dotInfo = new InflictDotInfo()

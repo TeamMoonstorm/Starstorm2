@@ -184,6 +184,10 @@ namespace Moonstorm.Starstorm2
 
             public static BuffDef BuffInsecticide;
 
+            public static BuffDef BuffJetBootsCooldown;
+
+            public static BuffDef BuffJetBootsReady;
+
             public static BuffDef BuffCoffeeBag;
 
             public static BuffDef BuffNeedle;

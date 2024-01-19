@@ -47,7 +47,7 @@ namespace Moonstorm.Starstorm2.Items
             }
             private void PrepareAddLevel(Stage stage)
             {
-                if (stage.sceneDef && stage.sceneDef.sceneType == SceneType.Stage)
+                if (stage.sceneDef)
                     base.GetComponent<CharacterMaster>().onBodyStart += AddLevel;
             }
 
@@ -59,7 +59,7 @@ namespace Moonstorm.Starstorm2.Items
                 if (body.inventory.GetItemCount(diary) > 0)
                 {
                     // this uses xp orbs. wouldnt mind setting the level manually if we use our own vfx
-                    ulong experience = TeamManager.instance.GetTeamNextLevelExperience(body.teamComponent.teamIndex);
+                    ulong experience = TeamManager.instance.GetTeamNextLevelExperience(body.teamComponent.teamIndex) - TeamManager.instance.GetTeamCurrentLevelExperience(body.teamComponent.teamIndex);
                     ExperienceManager.instance.AwardExperience(body.transform.position, body, experience);
 
                     body.inventory.RemoveItem(diary);
