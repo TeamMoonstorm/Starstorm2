@@ -1,13 +1,13 @@
 
 ![Starstorm 2](https://github.com/swuff-star/Starstorm2/blob/main/SS2-Project/Assets/Starstorm2/ReadmeAssets/ss2logopurple.gif?raw=true)
 
-**Starstorm 2** is a work-in-progress adaptation of the Risk of Rain 1 mod "Starstorm". It currently features three new survivors, three new monsters, over 20 new items and equipment, and numerous new challenges to shake up your runs.
+**Starstorm 2** is a work-in-progress adaptation of the Risk of Rain 1 mod "Starstorm". It currently features four new survivors, three new monsters, over 20 new items and equipment, and numerous new challenges to shake up your runs. In-depth information can be found on our [Wiki](https://thunderstore.io/package/TeamMoonstorm/Starstorm2/wiki/).
 
 ![New Survivors...](https://github.com/swuff-star/Starstorm2/blob/main/SS2-Project/Assets/Starstorm2/ReadmeAssets/ss2survivorpromo.gif?raw=true)
 
 * **Executioner**  - An aggressive, versatile survivor with an arsenal made for picking off targets and chaining kills. His powerful Ion Manipulators gain charges with every kill.
 
-* **Chirr**  - A whimsical creature of Petrichor, with a variety of abilities that give her a unique control of the battlefield. She supports her friends with potent buffs and heals.
+* **Chirr** - A whimsical creature of Petrichor V, with a variety of abilities that give her a unique control over the battlefield. She supports her friends with potent buffs and heals.
 
 * **???** - Survivors of unknown origin, familiar yet unfamiliar. Under the right conditions, you may meet them on the Planet, but they certainly won't be on your side.
 
@@ -26,7 +26,7 @@
 * **Typhoon** - The Planet grows restless, with fearsome events and monsters coming in greater numbers than ever before. Unlock new skins for survivors* by proving yourself in this new challenge exceeding even Monsoon!
 	 *currently includes Commando, Huntress, MUL-T, Acrid, Captain, Executioner, and Commando's Vestige.
 	 
-* **Artifact of Cognation** - A new, unlockable artifact to shape up your runs.
+* **New Artifacts** - Two new, unlockable artifacts to shape up your run.
 
 ![Credits](https://github.com/swuff-star/Starstorm2/blob/main/SS2-Project/Assets/Starstorm2/ReadmeAssets/ss2credits.gif?raw=true)
 
@@ -51,16 +51,67 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 
 * Known Issues
     * Elite events are currently disabled.
+    * Artifact codes are not placed in world, and can instead be found on the wiki.
 
 ## Changelog
 **Warning: content spoilers below!**
+### 0.6.6
+* Events
+    * Storms and Empyrean Manifestations now require the Starstorm expansion to be enabled.
+    * Really fixed Nemesis Invasions... 😅
+* Artifacts
+    * Artifact of Havoc now requires the Starstorm expansion to be enabled to be selected.
+* Rushrum
+    * Further increased visibility of glowing tip of head.
+* Other
+    * Fixed a networking issue with Follower, Wayfarer, and Shock Drone's attacks.
+    * Networked Mysterious Cuff interactable spawning.
+
+### 0.6.5
+* Interactables
+    * Drone Table no longer counts as a Shrine.
+    * Mysterious Cuff now drops a pickup rather than depositing the Condemned Bond directly in the player's inventory.
+* Monsters
+    * Disabled the white Christmas pom-pom at the end of the Rushrum's head.
+* Events
+    * Fixed events spawning infrequently, if at all.
+
+### 0.6.4
+* Interactables
+    * Fixed Mysterious Cuff spawning in unintended locations.
+
+### 0.6.3
+* Monsters
+    * Disabled something! 😉
+
+### 0.6.2
+* New Content
+    * Interactable: Mysterious Cuff.
+    * Item: Condemned Bond.
+* Follower
+    * Fixed a bug causing Followers to inherit Duplicator Drone sound and visual effects.
+    * Adjusted AI to prioritize fighting the player in close range.
+    * Hopefully addressed buggs pertaining to performance issues & corpse cleanup.
+* Wayfarer
+    * Adjusted projectiles of primary attack to be more interesting to play against.
+    * Secondary now creates a small explosion around Wayfarer while creating the buff ward.
+    * Adjusted AI to better utilize tweaked skills.
+    * Hopefully addressed buggs pertaining to performance issues & corpse cleanup.
+* Events
+    * All Nemesis Invasions now only occur if a player acquires the Condemned Bond during a run. Looping is no longer a requirement.
+    * Nemesis Mercenary Invasion now only occurs if Mercenary is unlocked.
+    * Refined selection of enemies for Empyrean Manifestation.
+* Other
+    * Added proper strings for Artifact of Havoc unlockable name / description.
+    * A guaranteed Mysterious Cuff can be found in the Void Fields.
+
 ### 0.6.1
 * Chirr
     * Reduced hurtbox size by about 33%.
     * Friends now give you the money and experience you would have gotten by killing them.
-    * Updated position in Character Select
+    * Updated position in Character Select.
 * General
-    * Added missing information to the README
+    * Added missing information to the README.
 
 ### 0.6.0
 * New Content
@@ -102,18 +153,3 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Rushroom's trail VFX now stops when it dies.
 * Interactables
     * Interactables are now properly added to the ExpansionDef.
-
-### 0.5.5
-* General
-    * Partially implemented Portuguse translation. 
-    * Captain GM now has dithering.
-* Items
-    * Needles's item display now has dithering.
-    * Haunted Lamp no longer drops when disabled.
-    * Haunted Lamp actually fires if the follower doesn't exist.
-* Executioner   
-    * Fixed Execution softlocking the player when failing to land when falling out of bounds.
-* Nemesis Mercenary
-    * Improved blacklist for Proliferate's clone.
-* Drones
-    * Shock and Duplicator drones now drop purchasable interactables when destroyed.

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using RoR2;
+using Moonstorm.Starstorm2;
 
 namespace EntityStates.Trader.Bag
 {
@@ -97,11 +98,13 @@ namespace EntityStates.Trader.Bag
                         zanPickup = PickupCatalog.FindPickupIndex(RoR2Content.Items.ExtraLife.itemIndex);
                 }
 
-                
-
                 //filter out unobtainables
                 if (!Run.instance.IsItemAvailable(zanPickup.itemIndex))
                     zanPickup = PickupCatalog.FindPickupIndex(zanPickup.itemIndex + 1);
+
+                //special trade: condemned bond -> gilded amulet
+                if (playerItem.itemIndex == SS2Content.Items.VoidRock.itemIndex)
+                    zanPickup = PickupCatalog.FindPickupIndex(SS2Content.Items.GildedAmulet.itemIndex);
 
                 traderController.ReduceValue();
 

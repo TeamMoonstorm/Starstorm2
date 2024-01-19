@@ -20,8 +20,9 @@ namespace Moonstorm.Starstorm2
         }
 
         private static List<SS2EventCard> instances = new List<SS2EventCard>();
-        public AddressableItemDef requiredItemAddressable;
+        public ItemDef requiredItem;
         public ArtifactDef requiredArtifactDef;
+        public bool requiresVoid;
         public GameObject fallbackVFX;
         public EventVFX[] eventVFX = Array.Empty<EventVFX>();
         
@@ -56,28 +57,52 @@ namespace Moonstorm.Starstorm2
         /// </summary>
         private bool checkRequiredItem() 
         {
-            if (!requiredItemAddressable)
+            /*if (!requiredItem)
             {
                 return true;
-            } 
+            }
+
 
             foreach (var player in PlayerCharacterMasterController.instances)
             {
                 var playerBody = player.master.GetBody();
+                Debug.Log("checking items");
 
-                if (!playerBody)
+                if (playerBody == null)
+                    Debug.Log("PlayerBody is null");
+                if (player.body == null)
+                    Debug.Log("Player Body is null");
+                if (player.body.inventory == null)
+                    Debug.Log("Inventory is null");
+                if (requiredItem == null)
+                    Debug.Log("Required Item is null");
+
+                if (player.body.inventory != null && requiredItem != null)
                 {
-                   var invetoryCount = player.body.inventory.GetItemCount(requiredItemAddressable.Asset.itemIndex);
+                   Debug.Log("found player");
+                   var inventoryCount = player.body.inventory.GetItemCount(requiredItem.itemIndex);
 
-                   if (invetoryCount > 0)
+                   if (inventoryCount > 0)
                    {
+                        Debug.Log("found item");
                         return true;
                    }
-                }
-                    
-            }
+                }   
+            }*/
+
+            //this doesn't work i think because this is checked before player bodies are actually initialized....?
+            //to-do: rewrite or alternate use case.
            
-            return false;
+            return true;
+        }
+
+        private bool checkVoid()
+        {
+            if (!requiresVoid)
+                return true;
+
+            //Debug.Log(Items.VoidRock.invasionStage + " : invasion stage");
+            return Items.VoidRock.invasionStage;
         }
 
         private bool checkRequiredArtifact()
@@ -104,7 +129,7 @@ namespace Moonstorm.Starstorm2
             if(!flag)
                 return flag;
 
-            flag = checkRequiredItem() && HopefullyTemporaryCheck() && checkRequiredArtifact();
+            flag = checkRequiredItem() && HopefullyTemporaryCheck() && checkRequiredArtifact() && checkVoid();
 
             return flag;
         }

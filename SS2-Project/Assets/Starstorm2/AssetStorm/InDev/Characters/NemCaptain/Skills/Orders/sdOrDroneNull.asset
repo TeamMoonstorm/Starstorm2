@@ -22,13 +22,13 @@ MonoBehaviour:
     _typeName: EntityStates.NemCaptain.Weapon.Recycle, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   interruptPriority: 2
-  baseRechargeInterval: 0
+  baseRechargeInterval: 4
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 1
   stockToConsume: 1
   resetCooldownTimerOnUse: 0
-  fullRestockOnAssign: 1
+  fullRestockOnAssign: 0
   dontAllowPastMaxStocks: 0
   beginSkillCooldownOnSkillEnd: 1
   cancelSprintingOnActivation: 1

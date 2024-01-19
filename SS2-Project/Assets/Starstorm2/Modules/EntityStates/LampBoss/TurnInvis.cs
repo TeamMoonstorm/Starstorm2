@@ -55,7 +55,8 @@ namespace EntityStates.LampBoss
             {
                 summonCount++;
                 summonTimer -= summonInterval;
-                SummonFollower();
+                if (isAuthority)
+                    SummonFollower();
             }
 
             if (animator.GetFloat(mecanimParameter) >= 0.5f && !hasBuffed)

@@ -166,6 +166,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5661785575865499471}
+  - component: {fileID: 8799254532206249359}
   m_Layer: 0
   m_Name: DisplayDivineRightFollower
   m_TagString: Untagged
@@ -188,6 +189,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8799254532206249359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 509323160575701746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -226763392, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transformPairs:
+  - name: Model
+    transform: {fileID: 899913299115520663}
 --- !u!1 &632550581810609184
 GameObject:
   m_ObjectHideFlags: 0
@@ -715,7 +731,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3084231307071765651, guid: 5ff927db9d1dc184d9cf52061f33df08, type: 3}
+  - {fileID: 2100000, guid: 132393fdf1d082e4295fcdc1a91777f0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1001,7 +1017,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3084231307071765651, guid: 5ff927db9d1dc184d9cf52061f33df08, type: 3}
+  - {fileID: 2100000, guid: 132393fdf1d082e4295fcdc1a91777f0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

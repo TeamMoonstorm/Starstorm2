@@ -48,25 +48,26 @@ namespace EntityStates.LampBoss
 
         public virtual void FireProjectile()
         {
-                float damage = damageCoefficient * damageStat;
-                AddRecoil(-2f * recoil, -3f * recoil, -1f * recoil, 1f * recoil);
-                characterBody.AddSpreadBloom(0.33f * recoil);
+            aimRay = GetAimRay();
+            float damage = damageCoefficient * damageStat;
+            AddRecoil(-2f * recoil, -3f * recoil, -1f * recoil, 1f * recoil);
+            characterBody.AddSpreadBloom(0.33f * recoil);
 
-                Vector3 angle = Quaternion.Euler(Random.Range(-13.5f, 13.5f), Random.Range(-13.5f, 13.5f), 0f) * aimRay.direction;
+            Vector3 angle = Quaternion.Euler(Random.Range(-18.5f, 18.5f), Random.Range(-2.5f, 22.5f), 0f) * aimRay.direction;
 
-                //Util.PlayAttackSpeedSound("LampBullet", gameObject, characterBody.attackSpeed);
+            //Util.PlayAttackSpeedSound("LampBullet", gameObject, characterBody.attackSpeed);
 
-                ProjectileManager.instance.FireProjectile(
-                    projectile,
-                    muzzle.position,
-                    Util.QuaternionSafeLookRotation(angle), 
-                    gameObject, 
-                    damage, 
-                    20f, 
-                    RollCrit(), 
-                    DamageColorIndex.Default, 
-                    null, 
-                    projectileSpeed);
+            ProjectileManager.instance.FireProjectile(
+                projectile,
+                muzzle.position,
+                Util.QuaternionSafeLookRotation(angle), 
+                gameObject, 
+                damage, 
+                20f, 
+                RollCrit(), 
+                DamageColorIndex.Default, 
+                null, 
+                projectileSpeed);
         }
 
         public override void FixedUpdate()
@@ -81,7 +82,8 @@ namespace EntityStates.LampBoss
                 {
                     orbCount++;
                     timer = 0;
-                    FireProjectile();
+                    if (isAuthority)
+                        FireProjectile();
                     //Debug.Log("firing projectile");
                 }
             }

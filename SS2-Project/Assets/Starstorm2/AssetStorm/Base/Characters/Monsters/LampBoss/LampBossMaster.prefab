@@ -134,7 +134,7 @@ MonoBehaviour:
     _typeName: EntityStates.AI.Walker.Wander, Assembly-CSharp
   isHealer: 0
   enemyAttention: 0
-  aimVectorDampTime: 0.05
+  aimVectorDampTime: 0.2
   aimVectorMaxSpeed: 180
   selectedSkilldriverName: 
   debugEnemyHurtBox: {fileID: 0}
@@ -193,14 +193,14 @@ MonoBehaviour:
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
-  maxTimesSelected: 3
+  maxTimesSelected: 2
   moveTargetType: 0
   activationRequiresTargetLoS: 0
   activationRequiresAimTargetLoS: 0
   activationRequiresAimConfirmation: 0
   movementType: 3
   moveInputScale: 1
-  aimType: 1
+  aimType: 2
   ignoreNodeGraph: 0
   shouldSprint: 0
   shouldFireEquipment: 0
@@ -228,16 +228,16 @@ MonoBehaviour:
   requireSkillReady: 1
   requireEquipmentReady: 0
   minUserHealthFraction: -Infinity
-  maxUserHealthFraction: 0.95
+  maxUserHealthFraction: 0.99
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
   minDistance: 0
-  maxDistance: Infinity
+  maxDistance: 20
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
   maxTimesSelected: -1
-  moveTargetType: 1
+  moveTargetType: 0
   activationRequiresTargetLoS: 1
   activationRequiresAimTargetLoS: 0
   activationRequiresAimConfirmation: 0
@@ -275,7 +275,7 @@ MonoBehaviour:
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
   minDistance: 0
-  maxDistance: 8
+  maxDistance: 5
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
@@ -318,7 +318,7 @@ MonoBehaviour:
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
   minDistance: 5
-  maxDistance: 45
+  maxDistance: 15
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
@@ -327,7 +327,7 @@ MonoBehaviour:
   activationRequiresTargetLoS: 0
   activationRequiresAimTargetLoS: 0
   activationRequiresAimConfirmation: 1
-  movementType: 2
+  movementType: 0
   moveInputScale: 0.8
   aimType: 2
   ignoreNodeGraph: 0
@@ -360,7 +360,7 @@ MonoBehaviour:
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 40
+  minDistance: 15
   maxDistance: 90
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
