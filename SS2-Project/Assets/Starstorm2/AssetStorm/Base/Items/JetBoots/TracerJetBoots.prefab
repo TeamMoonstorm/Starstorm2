@@ -176,8 +176,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.3
-      minScalar: 0.4
+      scalar: 0.4
+      minScalar: 0.5
       maxCurve:
         serializedVersion: 2
         m_Curve: []
@@ -2557,7 +2557,7 @@ MonoBehaviour:
   startTransform: {fileID: 4819238699089081780}
   beamObject: {fileID: 0}
   beamDensity: 10
-  speed: 160
+  speed: 300
   headTransform: {fileID: 4819237964299102153}
   tailTransform: {fileID: 4827410543345259345}
   length: 50
@@ -2565,9 +2565,9 @@ MonoBehaviour:
   onTailReachedDestination:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4856504357721324521}
-        m_MethodName: DestroySelf
-        m_Mode: 1
+      - m_Target: {fileID: 4824552327681302233}
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2638,9 +2638,9 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 0.08235294}
-      key2: {r: 1, g: 0.802825, b: 0, a: 0}
+      key0: {r: 1, g: 1, b: 1, a: 0.58431375}
+      key1: {r: 1, g: 1, b: 1, a: 1}
+      key2: {r: 1, g: 0.802825, b: 0, a: 1}
       key3: {r: 0.21130466, g: 1, b: 0, a: 0}
       key4: {r: 0.0990566, g: 0.47342366, b: 1, a: 0}
       key5: {r: 0.4948659, g: 0, b: 1, a: 0}
@@ -2656,7 +2656,7 @@ LineRenderer:
       ctime7: 0
       atime0: 0
       atime1: 65535
-      atime2: 0
+      atime2: 65535
       atime3: 0
       atime4: 0
       atime5: 0
@@ -2737,7 +2737,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  timeMax: 0.5
+  timeMax: 0.3
   decal: {fileID: 0}
   pauseTime: 0
   destroyOnEnd: 1

@@ -48,16 +48,17 @@ namespace Moonstorm.Starstorm2.Items
                 c.EmitDelegate<Action<TeamComponent, DamageDealtMessage>>((t, d) =>
                 {
                     float damageFromForks = 0;
-                    if (t && t.body && t.body.inventory)
+                    // dots add a lot of clutter
+                    if (!d.damageType.HasFlag(DamageType.DoT) && t && t.body && t.body.inventory)
                     {
                         float bodyDamage = t.body.damage;
                         int stack = t.body.inventory.GetItemCount(SS2Content.Items.Fork);
 
+                        
                         if (stack > 0)
                         {
                             float damageWithoutForks = d.damage / (1 + percentDamageBonus * stack * .01f);
                             damageFromForks = d.damage - damageWithoutForks;
-                            SS2Log.Info($"AddForkDamageNumber: spawning number {damageFromForks} from {stack} forks");
                             DamageNumberManager.instance.SpawnDamageNumber(damageFromForks, d.position + Vector3.up * 0.6f, d.crit, t.teamIndex, DamageColorIndex.Item);
                         }
                     }
