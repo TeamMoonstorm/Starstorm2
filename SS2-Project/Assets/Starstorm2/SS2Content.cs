@@ -82,11 +82,15 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef GreenChocolate;
 
+            public static ItemDef GuardingAmulet;
+
             public static ItemDef NkotasHeritage;
 
             public static ItemDef PortableReactor;
 
             public static ItemDef SwiftSkateboard;
+
+            public static ItemDef LightningOnKill;
 
             public static ItemDef LowQualitySpeakers;
 
@@ -146,6 +150,8 @@ namespace Moonstorm.Starstorm2
             public static EquipmentDef CloakingHeadband;
 
             public static EquipmentDef GreaterWarbanner;
+
+            public static EquipmentDef Magnet;
 
             public static EquipmentDef MIDAS;
 

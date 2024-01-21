@@ -14,6 +14,9 @@ namespace Moonstorm.Starstorm2.Items
         private const string token = "SS2_ITEM_DIARY_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Diary", SS2Bundle.Items);
 
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Number of levels gained when Empty Diary is consumed.")]
+        [TokenModifier(token, StatTypes.Default, 0)]
+        public static int extraLevels = 3;
         public sealed class Behavior : BaseItemMasterBehavior
         {
             //plays the diary sfx only if players can see the experience bar being affected
@@ -59,7 +62,8 @@ namespace Moonstorm.Starstorm2.Items
                 if (body.inventory.GetItemCount(diary) > 0)
                 {
                     // this uses xp orbs. wouldnt mind setting the level manually if we use our own vfx
-                    ulong experience = TeamManager.instance.GetTeamNextLevelExperience(body.teamComponent.teamIndex) - TeamManager.instance.GetTeamCurrentLevelExperience(body.teamComponent.teamIndex);
+                    ulong requiredExperience = TeamManager.GetExperienceForLevel(TeamManager.instance.GetTeamLevel(body.teamComponent.teamIndex) + (uint)extraLevels);
+                    ulong experience = requiredExperience - TeamManager.instance.GetTeamCurrentLevelExperience(body.teamComponent.teamIndex);
                     ExperienceManager.instance.AwardExperience(body.transform.position, body, experience);
 
                     body.inventory.RemoveItem(diary);

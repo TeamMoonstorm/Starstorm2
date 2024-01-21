@@ -10,11 +10,12 @@ namespace Moonstorm.Starstorm2.Items
 {
     public sealed class Fork : ItemBase
     {
+        private const string token = "SS2_ITEM_FORK_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Fork", SS2Bundle.Items);
 
         //[RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Bonus base damage per fork. (1 = 1 base damage. Base damage for most characters is 12.)")]
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Bonus percent damage per fork. (1 = 1%)")]
-        [TokenModifier("SS2_ITEM_FORK_DESC", StatTypes.Default, 0)]
+        [TokenModifier(token, StatTypes.Default, 0)]
         public static float percentDamageBonus = 8f;
         public override void Initialize()
         {
