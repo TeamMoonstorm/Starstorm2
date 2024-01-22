@@ -54,7 +54,6 @@ namespace Moonstorm.Starstorm2.Items
                     base.GetComponent<CharacterMaster>().onBodyStart += AddLevel;
             }
 
-            [Server]
             private void AddLevel(CharacterBody body)
             {
                 ItemIndex diary = SS2Content.Items.Diary.itemIndex;

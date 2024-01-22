@@ -11,7 +11,7 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="866530374" Language="SFX" Hash="2864465446">
+		<SoundBank Id="866530374" Language="SFX" Hash="4056416068">
 			<ObjectPath>\SoundBanks\Default Work Unit\Starstorm2</ObjectPath>
 			<ShortName>Starstorm2</ShortName>
 			<Path>Starstorm2.bnk</Path>
@@ -859,6 +859,14 @@
 						<File Id="655304851" Language="SFX">
 							<ShortName>RainAmbience2.wav</ShortName>
 							<Path>SFX\RainAmbience2_2EB51506.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3105193662" Name="ProcLightningOnKill" ObjectPath="\Events\Default Work Unit\Items\ProcLightningOnKill" DurationType="OneShot" DurationMin="1.262571" DurationMax="1.590739">
+					<IncludedMemoryFiles>
+						<File Id="878795221" Language="SFX">
+							<ShortName>ProcLightningOnKill.wav</ShortName>
+							<Path>SFX\ProcLightningOnKill_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
