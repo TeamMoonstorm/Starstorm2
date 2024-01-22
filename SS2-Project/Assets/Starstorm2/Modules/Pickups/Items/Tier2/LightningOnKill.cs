@@ -14,25 +14,29 @@ namespace Moonstorm.Starstorm2.Items
 
         public static GameObject orbEffect = SS2Assets.LoadAsset<GameObject>("JellyOrbEffect", SS2Bundle.Items);
 
+        public static NetworkSoundEventDef soundEffect = SS2Assets.LoadAsset<NetworkSoundEventDef>("ProcLightningOnKill", SS2Bundle.Items);
+
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Total damage of Man O' War's lightning. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float damageCoeff = 3f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius of Man O' War's lightning, in meters.")]
-        [TokenModifier(token, StatTypes.Default, 1)]
-        public static float radiusBase = 20f;
-
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius of Man O' War's lightning per stack, in meters.")]
-        [TokenModifier(token, StatTypes.Default, 2)]
-        public static float radiusPerStack = 4f;      
+           
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Number of bounces.")]
-        [TokenModifier(token, StatTypes.Default, 3)]
+        [TokenModifier(token, StatTypes.Default, 1)]
         public static int bounceBase = 3;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Number of bounces per stack.")]
-        [TokenModifier(token, StatTypes.Default, 4)]
+        [TokenModifier(token, StatTypes.Default, 2)]
         public static int bounceStack = 2;
+
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius of Man O' War's lightning, in meters.")]
+        [TokenModifier(token, StatTypes.Default, 3)]
+        public static float radiusBase = 20f;
+
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius of Man O' War's lightning per stack, in meters.")]
+        [TokenModifier(token, StatTypes.Default, 4)]
+        public static float radiusPerStack = 4f;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Proc coefficient of damage dealt by Malice.")]
         public static float procCo = 0.5f;
@@ -49,13 +53,13 @@ namespace Moonstorm.Starstorm2.Items
             int stack = body && body.inventory ? body.inventory.GetItemCount(ItemDef) : 0;
             if (stack <= 0) return;
 
-            Util.PlaySound("ProcLightningOnKill", damageReport.victim.gameObject);
+            
 
             if (!NetworkServer.active) return;
                       
             CustomLightningOrb orb = new CustomLightningOrb();
             orb.orbEffectPrefab = orbEffect;
-            orb.bouncesRemaining = bounceStack * stack - 1;
+            orb.bouncesRemaining = bounceBase + bounceStack * (stack - 1);
             orb.baseRange = radiusBase + radiusPerStack * (stack - 1);
             orb.damageCoefficientPerBounce = 1f;
             orb.damageValue = body.damage * damageCoeff;
@@ -71,6 +75,7 @@ namespace Moonstorm.Starstorm2.Items
             HurtBox hurtbox = orb.PickNextTarget(damageReport.victimBody.corePosition, damageReport.victim);
             if (hurtbox)
             {
+                EffectManager.SimpleSoundEffect(soundEffect.index, damageReport.victim.transform.position, true);
                 orb.target = hurtbox;
                 OrbManager.instance.AddOrb(orb);
             }

@@ -778,6 +778,20 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="ProcLightningOnKill" ID="{DD03724F-1C35-4E5B-B60E-7FA57B45762F}">
+							<ChildrenList>
+								<Action Name="" ID="{0CB48969-9498-4670-982C-066BB8D3AD54}" ShortID="964221554">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="ProcLightningOnKill" ID="{441EF015-666E-4AB7-9A34-8988DFEF8553}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Event Name="VoidAmbient" ID="{096E8867-684C-49FD-9847-D8B99D9E53EC}">

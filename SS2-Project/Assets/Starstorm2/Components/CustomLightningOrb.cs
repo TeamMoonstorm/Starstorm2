@@ -12,9 +12,11 @@ namespace Moonstorm.Starstorm2.Components
     public class CustomLightningOrb : Orb
     {
         public GameObject orbEffectPrefab;
+        public static float duration = 0.033f;
+
         public override void Begin()
         {
-            base.duration = 0.033f;
+            base.duration = duration;
 
             EffectData effectData = new EffectData
             {
@@ -22,7 +24,6 @@ namespace Moonstorm.Starstorm2.Components
                 genericFloat = base.duration
             };
             effectData.SetHurtBoxReference(this.target);
-
             EffectManager.SpawnEffect(orbEffectPrefab, effectData, true);
         }
 
@@ -83,6 +84,7 @@ namespace Moonstorm.Starstorm2.Components
         }
         public HurtBox PickNextTarget(Vector3 position, HealthComponent currentVictim)
         {
+            this.bouncedObjects.Add(currentVictim);
             if (this.search == null)
             {
                 this.search = new BullseyeSearch();
@@ -103,7 +105,7 @@ namespace Moonstorm.Starstorm2.Components
             HurtBox hurtBox = (from v in this.search.GetResults()
                                where !this.bouncedObjects.Contains(v.healthComponent)
                                select v).FirstOrDefault<HurtBox>();
-            if (hurtBox)
+            if (hurtBox && hurtBox.healthComponent.alive)
             {
                 this.bouncedObjects.Add(hurtBox.healthComponent);
             }
