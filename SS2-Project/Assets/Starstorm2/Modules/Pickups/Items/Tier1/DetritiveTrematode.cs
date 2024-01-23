@@ -20,8 +20,9 @@ namespace Moonstorm.Starstorm2.Items
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Damage dealt by the Trematode debuff, per second. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
-        public static float trematodeDamage = 1f;
+        public static float trematodeDamage = 2f;
 
+        public static GameObject biteEffect = SS2Assets.LoadAsset<GameObject>("TrematodeBiteEffect", SS2Bundle.Items);
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
         {
             [ItemDefAssociation]
@@ -31,6 +32,8 @@ namespace Moonstorm.Starstorm2.Items
             private static BodyIndex Fucker => fucker == BodyIndex.None ? BodyCatalog.FindBodyIndexCaseInsensitive("ArtifactShellBody") : fucker;
             public void OnDamageDealtServer(DamageReport report)
             {
+                if (!report.victim.alive) return;
+
                 var victim = report.victim;
                 var attacker = report.attacker;
                 bool hasDot = false;
@@ -55,8 +58,23 @@ namespace Moonstorm.Starstorm2.Items
                 //5 = 65%
                 // 9 = 105%
                 //float requiredHealthPercentage = missingHealthPercentage + missingHealthPercentagePerStack * (stack - 1);
-                if (victim.combinedHealthFraction < requiredHealthPercentage && !hasDot && (victim.gameObject != attacker))
+                if (victim.combinedHealthFraction < requiredHealthPercentage && !hasDot && report.damageInfo.dotIndex != Trematodes.index && (victim.gameObject != attacker))
                 {
+                    
+                    // do the first tick instantly
+                    DamageInfo damageInfo = new DamageInfo();
+                    damageInfo.attacker = base.gameObject;
+                    damageInfo.crit = false;
+                    damageInfo.damage = trematodeDamage * base.body.damage;
+                    damageInfo.force = Vector3.zero;
+                    damageInfo.inflictor = base.gameObject;
+                    damageInfo.position = victim.body.corePosition;
+                    damageInfo.procCoefficient = 0f;
+                    damageInfo.damageColorIndex = DamageColorIndex.Item;
+                    damageInfo.damageType = DamageType.DoT;
+                    damageInfo.dotIndex = Trematodes.index;
+                    victim.TakeDamage(damageInfo);
+
                     var dotInfo = new InflictDotInfo()
                     {
                         attackerObject = attacker,
@@ -66,6 +84,8 @@ namespace Moonstorm.Starstorm2.Items
                         damageMultiplier = trematodeDamage * stack,
                     };
                     DotController.InflictDot(ref dotInfo);
+
+                    EffectManager.SimpleEffect(biteEffect, report.damageInfo.position, Quaternion.identity, true);
                 }
             }
         }

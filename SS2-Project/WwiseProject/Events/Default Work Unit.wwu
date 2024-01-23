@@ -792,6 +792,20 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="ProcTrematodes" ID="{C591FE7D-C001-41B2-ACE8-715D3C3D50DF}">
+							<ChildrenList>
+								<Action Name="" ID="{035E5852-ECE7-48C9-964B-AE7CEEC9917D}" ShortID="415085460">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Trematode" ID="{2B0FC3A7-5C08-4746-8CE0-88490606B930}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Event Name="VoidAmbient" ID="{096E8867-684C-49FD-9847-D8B99D9E53EC}">
