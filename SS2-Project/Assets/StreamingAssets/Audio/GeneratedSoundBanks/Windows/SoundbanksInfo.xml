@@ -11,7 +11,7 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="866530374" Language="SFX" Hash="2274648521">
+		<SoundBank Id="866530374" Language="SFX" Hash="3408914452">
 			<ObjectPath>\SoundBanks\Default Work Unit\Starstorm2</ObjectPath>
 			<ShortName>Starstorm2</ShortName>
 			<Path>Starstorm2.bnk</Path>
@@ -73,14 +73,6 @@
 						<File Id="763108130" Language="SFX">
 							<ShortName>secondary2.wav</ShortName>
 							<Path>SFX\secondary2_B2D14CFC.wem</Path>
-						</File>
-					</IncludedMemoryFiles>
-				</Event>
-				<Event Id="2709397138" Name="ChirrFriendConvert" ObjectPath="\Events\Default Work Unit\Chirr\ChirrFriendConvert" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="1.400458" DurationMax="1.400458">
-					<IncludedMemoryFiles>
-						<File Id="1051140981" Language="SFX">
-							<ShortName>558484513.wav</ShortName>
-							<Path>SFX\558484513_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -208,11 +200,11 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="4180439307" Name="ChirrThrowHitGround" ObjectPath="\Events\Default Work Unit\Chirr\ChirrThrowHitGround" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="2.735781" DurationMax="2.735781">
+				<Event Id="4180439307" Name="ChirrThrowHitGround" ObjectPath="\Events\Default Work Unit\Chirr\ChirrThrowHitGround" DurationType="OneShot" DurationMin="2.735781" DurationMax="2.735781">
 					<IncludedMemoryFiles>
-						<File Id="191569448" Language="SFX">
-							<ShortName>utilityyhitground2.wav</ShortName>
-							<Path>SFX\utilityyhitground2_B2D14CFC.wem</Path>
+						<File Id="88535758" Language="SFX">
+							<ShortName>utilityhitground.wav</ShortName>
+							<Path>SFX\utilityhitground_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>

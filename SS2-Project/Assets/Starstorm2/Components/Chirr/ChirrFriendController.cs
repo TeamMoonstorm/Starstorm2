@@ -163,6 +163,7 @@ namespace Moonstorm.Starstorm2.Components
 			this.currentFriend = new Friend(master);
 
 			CharacterBody body = master.GetBody();
+			if(body)
 			this.FriendRewards(body.GetComponent<DeathRewards>());
 			TeamIndex oldTeam = body ? body.teamComponent.teamIndex : TeamIndex.Monster;
 			TeamIndex newTeam = this.master.teamIndex;
@@ -174,8 +175,10 @@ namespace Moonstorm.Starstorm2.Components
 			if (body)
             {
 				body.teamComponent.teamIndex = newTeam;
+				body.healthComponent.Networkhealth = body.healthComponent.fullCombinedHealth * 0.5f;
 				Util.CleanseBody(body, true, false, false, true, true, false); // lol
 				body.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 3f);
+				HauntedAffixFix(body, newTeam);
 				//body.healthComponent.HealFraction(1f, default(ProcChainMask)); // BORING. HEAL IT YOURSELF WITH SECONDARY
 			}
 
@@ -196,11 +199,13 @@ namespace Moonstorm.Starstorm2.Components
 
 			master.minionOwnership.SetOwner(this.master);			
 			master.onBodyDeath.AddListener(OnFriendDeath);
-			master.inventory.CopyItemsFrom(this.master.inventory, this.ItemFilter);
+			master.inventory.AddItemsFrom(this.master.inventory, this.ItemFilter);
+			master.inventory.ResetItem(RoR2Content.Items.UseAmbientLevel);
 			master.inventory.GiveItem(SS2Content.Items.ChirrFriendHelper, 1);
+			master.inventory.GiveItem(SS2Content.Items.FlowerTurret, 1);
 
 			if(!isScepter)
-				master.inventory.GiveItem(RoR2Content.Items.HealthDecay, (int)healthDecayTime); // item stack = how long it takes to go from 100% health to 0
+				master.inventory.GiveItem(SS2Content.Items.HealthDecayWithRegen, (int)healthDecayTime); // item stack = how long it takes to go from 100% health to 0
 
 			if(oldTeam == TeamIndex.Void && master.inventory.GetEquipmentIndex() == DLC1Content.Equipment.EliteVoidEquipment.equipmentIndex) // UNDO VOIDTOUCHED
 				master.inventory.SetEquipmentIndex(EquipmentIndex.None);
@@ -240,11 +245,13 @@ namespace Moonstorm.Starstorm2.Components
 			if(useOldTeam)
             {
 				master.teamIndex = newTeam;
-				body.teamComponent.teamIndex = newTeam;
+				if(body)
+					body.teamComponent.teamIndex = newTeam;
 			}			
 
 			if (body)
-			{					
+			{
+				HauntedAffixFix(body, newTeam);
 				SetStateOnHurt setStateOnHurt = body.GetComponent<SetStateOnHurt>(); // stun is good
 				if (setStateOnHurt) setStateOnHurt.SetStun(1f);
 			}
@@ -294,6 +301,17 @@ namespace Moonstorm.Starstorm2.Components
 			deathRewards.goldReward = 0;
 			deathRewards.expReward = 0;
 		}
+
+		// changes haunted affix ward when changing teams
+		private void HauntedAffixFix(CharacterBody body, TeamIndex newTeam)
+        {
+			CharacterBody.AffixHauntedBehavior component = body.GetComponent<CharacterBody.AffixHauntedBehavior>();
+			if(component && component.affixHauntedWard)
+            {
+				component.affixHauntedWard.GetComponent<TeamFilter>().teamIndex = newTeam;
+            }
+        }
+
 		// HEALTHBAR STUFF
 		#region Healthbar Stuff
 		// shows healthbars of stuff that your friend damaged

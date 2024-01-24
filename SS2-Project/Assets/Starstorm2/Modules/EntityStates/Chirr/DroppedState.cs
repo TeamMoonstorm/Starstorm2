@@ -58,12 +58,18 @@ namespace EntityStates.Chirr
 			GameObject prefab = BodyCatalog.GetBodyPrefab(this.characterBody.bodyIndex);
 			if (prefab)
 			{
+				
 				Rigidbody rigidbody = prefab.GetComponent<Rigidbody>();
 				if (rigidbody)
 				{
 					this.bodyHadGravity = rigidbody.useGravity;
 					this.bodyWasKinematic = rigidbody.isKinematic;
 				}
+				CharacterMotor motor = prefab.GetComponent<CharacterMotor>();
+				if(motor)
+                {
+					this.bodyHadGravity = motor.gravityParameters.CheckShouldUseGravity();
+                }
 			}
 
 			
@@ -71,7 +77,8 @@ namespace EntityStates.Chirr
             {
                 base.characterMotor.onMovementHit += DoSplashDamage;
 				base.characterMotor.disableAirControlUntilCollision = true;
-				base.characterMotor.velocity = initialVelocity;
+                base.characterMotor.velocity = initialVelocity;
+				base.characterMotor.useGravity = true;				
 				//blind pests have low gravity
 				this.gravParams = base.characterMotor.gravityParameters;
 				base.characterMotor.gravityParameters = new CharacterGravityParameters 
@@ -143,6 +150,7 @@ namespace EntityStates.Chirr
 			if (base.characterMotor)
             {
 				base.characterMotor.onMovementHit -= DoSplashDamage;
+				base.characterMotor.useGravity = bodyHadGravity;
 				base.characterMotor.gravityParameters = this.gravParams;
             }
 
@@ -193,8 +201,9 @@ namespace EntityStates.Chirr
 			}
 
 			// should find out why stuff can get stuck floating despite gravity not being disabled...
-			if (base.fixedAge > absoluteMaxTime || (detonateNextFrame && (!base.characterMotor || (base.characterMotor.Motor.GroundingStatus.IsStableOnGround && !base.characterMotor.Motor.LastGroundingStatus.IsStableOnGround) )))
-            {
+			//if (base.fixedAge > absoluteMaxTime || (detonateNextFrame && (!base.characterMotor || (base.characterMotor.Motor.GroundingStatus.IsStableOnGround && !base.characterMotor.Motor.LastGroundingStatus.IsStableOnGround) )))
+			if (base.fixedAge > absoluteMaxTime || detonateNextFrame)
+			{
 				if (base.characterMotor)
 					base.characterMotor.velocity = Vector3.zero;
 				else if (base.rigidbody)
@@ -294,7 +303,7 @@ namespace EntityStates.Chirr
 			public DroppedState droppedState;
             private void OnCollisionEnter(Collision collision)
             {
-                if(collision.gameObject.layer == LayerIndex.world.intVal || collision.gameObject.layer == LayerIndex.entityPrecise.intVal)
+                if(collision.gameObject.layer == LayerIndex.world.intVal || collision.gameObject.layer == LayerIndex.entityPrecise.intVal || collision.gameObject.layer == LayerIndex.defaultLayer.intVal)
                 {
 					this.droppedState.detonateNextFrame = true;
 					Destroy(this);

@@ -24,6 +24,10 @@ namespace Moonstorm.Starstorm2
         {
             public static ItemDef ArmedBackpack;
 
+            public static ItemDef BoostCooldowns;
+
+            public static ItemDef BoostMovespeed;
+
             public static ItemDef CoffeeBag;
 
             public static ItemDef Cognation;
@@ -53,6 +57,10 @@ namespace Moonstorm.Starstorm2
             public static ItemDef BloodTester;
 
             public static ItemDef FieldAccelerator;
+
+            public static ItemDef FlowerTurret;
+
+            public static ItemDef HealthDecayWithRegen;
 
             public static ItemDef HottestSauce;
 

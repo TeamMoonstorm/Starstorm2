@@ -19,7 +19,6 @@ namespace AK
         static const AkUniqueID CHIRRFIREPRIMARYSINGLE = 959550553U;
         static const AkUniqueID CHIRRFIRESPECIAL = 295786462U;
         static const AkUniqueID CHIRRFIRESPITBOMB = 709034819U;
-        static const AkUniqueID CHIRRFRIENDCONVERT = 2709397138U;
         static const AkUniqueID CHIRRGRABFLYUP = 649273493U;
         static const AkUniqueID CHIRRGRABSTART = 1440739445U;
         static const AkUniqueID CHIRRGRABTHROW = 3463916741U;

@@ -6,7 +6,7 @@ using UnityEngine;
 using Moonstorm.Starstorm2;
 namespace EntityStates.AI.Walker
 {
-	// 
+	// half jank solution to make any AI follow a "leader" without changing their aiskilldrivers
 	public class FollowLeader : BaseAIState
 	{
 		public GameObject leader;
@@ -65,7 +65,10 @@ namespace EntityStates.AI.Walker
         {
 			if (!driver) return false;
 			//if (driver.maxDistance == Mathf.Infinity) return false; // ?
-			return driver.skillSlot != SkillSlot.None;
+			bool isCombat = driver.skillSlot != SkillSlot.None;
+			isCombat |= driver.maxDistance != Mathf.Infinity;
+			//Chat.AddMessage("FollowLeader.IsCombatDriver == " + isCombat);
+			return isCombat;
 		}
 
 		public override void FixedUpdate()
@@ -119,7 +122,7 @@ namespace EntityStates.AI.Walker
 					goalPosition += this.targetTrailPosition;
 				}
 
-				bool targetReached = (goalPosition - bodyPosition).magnitude < targetReachedDistance;
+				bool targetReached = (goalPosition - base.body.footPosition).magnitude < targetReachedDistance;
 
 				bool bodyIsFlier = this.body.isFlying || !this.body.characterMotor;
 				if (bodyIsFlier)

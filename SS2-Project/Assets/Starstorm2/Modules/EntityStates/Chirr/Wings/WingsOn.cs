@@ -15,6 +15,8 @@ namespace EntityStates.Chirr.Wings
         private float graceTimer = .6f; // lets us stay in the state for a moment if we move upwards
 
         private Animator animator;
+
+        private bool isToggle;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -26,7 +28,7 @@ namespace EntityStates.Chirr.Wings
             }
             Util.PlaySound("ChirrSprintStart", base.gameObject); // loop should be in start event but idc
             this.soundId = Util.PlaySound("ChirrSprintLoop", base.gameObject);
-            
+            isToggle = Moonstorm.Starstorm2.Survivors.Chirr.toggleHover;
             base.characterBody.bodyFlags |= RoR2.CharacterBody.BodyFlags.SprintAnyDirection;
             //find & enable hover effect
         }
@@ -44,9 +46,14 @@ namespace EntityStates.Chirr.Wings
                 if (characterMotor.velocity.y >= 0f) this.graceTimer -= Time.fixedDeltaTime;
                 else this.graceTimer = .6f;
 
-                bool isDescending = inputBank.jump.down && this.graceTimer > 0f && !characterMotor.isGrounded;
-                
-                if (!isDescending)
+                //if toggling is true, jump doesnt need to be down in order to stay in hover
+                bool jumpInput = inputBank.jump.down || this.isToggle;
+                bool isDescending = jumpInput && this.graceTimer > 0f && !characterMotor.isGrounded;
+
+                //if toggling is true, end hovering when jump is pressed again
+                bool justToggled = this.isToggle && inputBank.jump.justPressed;
+
+                if (!isDescending || justToggled)
                 {
                     this.outer.SetNextStateToMain();                   
                 }
