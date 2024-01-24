@@ -59,7 +59,7 @@ namespace Moonstorm.Starstorm2.Items
                       
             CustomLightningOrb orb = new CustomLightningOrb();
             orb.orbEffectPrefab = orbEffect;
-            orb.bouncesRemaining = bounceBase + bounceStack * (stack - 1);
+            orb.bouncesRemaining = bounceBase + bounceStack * (stack - 1) - 1;
             orb.baseRange = radiusBase + radiusPerStack * (stack - 1);
             orb.damageCoefficientPerBounce = 1f;
             orb.damageValue = body.damage * damageCoeff;

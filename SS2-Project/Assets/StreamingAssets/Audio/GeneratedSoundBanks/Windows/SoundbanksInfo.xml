@@ -11,7 +11,7 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="866530374" Language="SFX" Hash="268673922">
+		<SoundBank Id="866530374" Language="SFX" Hash="3132515829">
 			<ObjectPath>\SoundBanks\Default Work Unit\Starstorm2</ObjectPath>
 			<ShortName>Starstorm2</ShortName>
 			<Path>Starstorm2.bnk</Path>
@@ -703,6 +703,26 @@
 						<File Id="438122999" Language="SFX">
 							<ShortName>nucleator_m1_charge_01.wav</ShortName>
 							<Path>SFX\nucleator_m1_charge_01_324331BC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="4059362439" Name="PickupCoffeeBean" ObjectPath="\Events\Default Work Unit\Items\PickupCoffeeBean" DurationType="OneShot" DurationMin="0.156833" DurationMax="0.918625">
+					<IncludedMemoryFiles>
+						<File Id="69768090" Language="SFX">
+							<ShortName>item_pickup_coffeebean_03.wav</ShortName>
+							<Path>SFX\item_pickup_coffeebean_03_B2D14CFC.wem</Path>
+						</File>
+						<File Id="404549038" Language="SFX">
+							<ShortName>item_pickup_coffeebean_04.wav</ShortName>
+							<Path>SFX\item_pickup_coffeebean_04_B2D14CFC.wem</Path>
+						</File>
+						<File Id="422329283" Language="SFX">
+							<ShortName>item_pickup_coffeebean_01.wav</ShortName>
+							<Path>SFX\item_pickup_coffeebean_01_B2D14CFC.wem</Path>
+						</File>
+						<File Id="850073584" Language="SFX">
+							<ShortName>item_pickup_coffeebean_02.wav</ShortName>
+							<Path>SFX\item_pickup_coffeebean_02_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>

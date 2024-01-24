@@ -65,7 +65,7 @@ namespace Moonstorm.Starstorm2.Components
             foreach (GravitatePickup pickup in PickupMagnet.trackedPickups)
             {
                 pickup.gravitateTarget = null;
-                pickupsToPull.Add(new Pickup { rigidbody = pickup.rigidbody, target = base.transform.position, layer = pickup.gameObject.layer });
+                pickupsToPull.Add(new Pickup { rigidbody = pickup.rigidbody, target = base.transform.position, layer = pickup.rigidbody.gameObject.layer });
             }
         }
 

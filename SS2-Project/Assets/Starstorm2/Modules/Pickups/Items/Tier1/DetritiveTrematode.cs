@@ -20,7 +20,7 @@ namespace Moonstorm.Starstorm2.Items
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Damage dealt by the Trematode debuff, per second. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
-        public static float trematodeDamage = 2f;
+        public static float trematodeDamage = 1f;
 
         public static GameObject biteEffect = SS2Assets.LoadAsset<GameObject>("TrematodeBiteEffect", SS2Bundle.Items);
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver

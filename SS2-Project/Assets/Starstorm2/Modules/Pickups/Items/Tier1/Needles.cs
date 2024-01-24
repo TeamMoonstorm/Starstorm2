@@ -12,7 +12,7 @@ namespace Moonstorm.Starstorm2.Items
         private const string token = "SS2_ITEM_NEEDLES_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Needles", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance for the debuff to be applied on hit. (1 = 1%")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance for the debuff to be applied on hit. (1 = 1%)")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float procChance = 4;
 

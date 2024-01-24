@@ -88,6 +88,7 @@ namespace AK
         static const AkUniqueID NEMMANDOSWINGSABER = 113243767U;
         static const AkUniqueID NEMMANDOSWINGSABERDECISIVE = 1052053089U;
         static const AkUniqueID NUCLEATORCHARGEPRIMARY = 420124658U;
+        static const AkUniqueID PICKUPCOFFEEBEAN = 4059362439U;
         static const AkUniqueID PLAY_CHIRRCSS = 2871870429U;
         static const AkUniqueID PLAY_CHIRRSPITBOMBLOOP = 2747610824U;
         static const AkUniqueID PLAY_NEMMERC_CLONE_SPAWN = 3212416563U;
