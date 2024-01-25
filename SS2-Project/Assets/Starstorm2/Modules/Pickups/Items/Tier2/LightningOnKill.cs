@@ -18,9 +18,7 @@ namespace Moonstorm.Starstorm2.Items
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Total damage of Man O' War's lightning. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
-        public static float damageCoeff = 2.4f;
-
-           
+        public static float damageCoeff = 2.4f;         
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Number of bounces.")]
         [TokenModifier(token, StatTypes.Default, 1)]
@@ -38,8 +36,8 @@ namespace Moonstorm.Starstorm2.Items
         [TokenModifier(token, StatTypes.Default, 4)]
         public static float radiusPerStack = 4f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Proc coefficient of damage dealt by Malice.")]
-        public static float procCo = 0.5f;
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Proc coefficient of damage dealt by Man o' War.")]
+        public static float procCo = 1f;
 
 
         public override void Initialize()
@@ -56,11 +54,17 @@ namespace Moonstorm.Starstorm2.Items
             
 
             if (!NetworkServer.active) return;
-                      
+
+            int bouncesRemaining = bounceBase + bounceStack * (stack - 1) - 1;
+
+            
+
             CustomLightningOrb orb = new CustomLightningOrb();
             orb.orbEffectPrefab = orbEffect;
-            orb.bouncesRemaining = bounceBase + bounceStack * (stack - 1) - 1;
-            orb.baseRange = radiusBase + radiusPerStack * (stack - 1);
+            
+            orb.duration = 0.033f;
+            orb.bouncesRemaining = bouncesRemaining;
+            orb.range = radiusBase + radiusPerStack * (stack - 1);
             orb.damageCoefficientPerBounce = 1f;
             orb.damageValue = body.damage * damageCoeff;
             orb.damageType = DamageType.Generic;
@@ -75,6 +79,12 @@ namespace Moonstorm.Starstorm2.Items
             HurtBox hurtbox = orb.PickNextTarget(damageReport.victimBody.corePosition, damageReport.victim);
             if (hurtbox)
             {
+                if (body.inventory.GetItemCount(SS2Content.Items.ErraticGadget) > 0) // should probably just put this in CustomLightningOrb ?
+                {
+                    orb.canBounceOnSameTarget = true;
+                    orb.canProcGadget = true;
+                }
+
                 EffectManager.SimpleSoundEffect(soundEffect.index, damageReport.victim.transform.position, true);
                 orb.target = hurtbox;
                 OrbManager.instance.AddOrb(orb);

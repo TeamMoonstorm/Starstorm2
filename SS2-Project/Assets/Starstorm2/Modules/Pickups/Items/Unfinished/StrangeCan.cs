@@ -21,14 +21,14 @@ namespace Moonstorm.Starstorm2.Items
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Damage per second, per stack of Intoxicate. (1 = 1%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
-        public static float damageCoefficient = .1f;
+        public static float damageCoefficient = .25f;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Health restored when killing intoxicated enemies, per stack of Intoxicate.")]
         [TokenModifier(token, StatTypes.Default, 3)]
         public static float healAmount = 10;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Health restored when killing intoxicated enemies, per stack of Intoxicate, per stack of this item.")]
-        [TokenModifier(token, StatTypes.Default, 3)]
+        [TokenModifier(token, StatTypes.Default, 4)]
         public static float healAmountPerStack = 5;
 
         public static int maxStacks = 10;
@@ -36,10 +36,6 @@ namespace Moonstorm.Starstorm2.Items
         public static float buffDuration = 10f;
 
         public static GameObject procEffect = SS2Assets.LoadAsset<GameObject>("StrangeCanEffect", SS2Bundle.Items);
-        public struct DotInfo // am i fuckingstup id?
-        {
-            public int refStack;
-        }
 
         public override void Initialize()
         {
@@ -58,23 +54,23 @@ namespace Moonstorm.Starstorm2.Items
 
             //for each stack of Intoxicated, store the inflictor and the number of stacks they inflicted
             DotController dotController = DotController.FindDotController(report.victim.gameObject);
-            Dictionary<GameObject, DotInfo> inflictors = new Dictionary<GameObject, DotInfo>();
+            Dictionary<GameObject, int> inflictors = new Dictionary<GameObject, int>();
             for(int i = 0; i < dotController.dotStackList.Count; i++)
             {
                 DotController.DotStack dot = dotController.dotStackList[i];
                 if(dot.dotIndex == Buffs.Intoxicated.index)
                 {
                     GameObject inflictor = dot.attackerObject;
-                    DotInfo stack = default(DotInfo);
-                    if(inflictor && !inflictors.TryGetValue(inflictor, out stack))
+
+                    if(inflictor && !inflictors.TryGetValue(inflictor, out int _)) //theres no way a dictionary is correct here
                     {
-                        inflictors.Add(inflictor, stack = new DotInfo { refStack = 0 });
+                        inflictors.Add(inflictor, 0);
                     }
-                    stack.refStack++;
+                    inflictors[inflictor]++;
                 }
             }
             //heal each inflictor based on the number of stacks they inflicted
-            foreach(KeyValuePair<GameObject, DotInfo> inflictor in inflictors)
+            foreach(KeyValuePair<GameObject, int> inflictor in inflictors)
             {
                 CharacterBody body = inflictor.Key.GetComponent<CharacterBody>();
                 if(body)
@@ -84,7 +80,7 @@ namespace Moonstorm.Starstorm2.Items
                     HealOrb healOrb = new HealOrb();
                     healOrb.origin = report.victimBody.corePosition;
                     healOrb.target = body.mainHurtBox;
-                    healOrb.healValue = healPerDotStack * inflictor.Value.refStack;
+                    healOrb.healValue = healPerDotStack * inflictor.Value;
                     healOrb.overrideDuration = 1f;
                     OrbManager.instance.AddOrb(healOrb);
                 }
@@ -99,8 +95,8 @@ namespace Moonstorm.Starstorm2.Items
             if (!body || (body && !body.inventory)) return;
 
             int stack = body.inventory.GetItemCount(ItemDef);
+            if (stack <= 0) return;
 
-            report.victimBody.AddTimedBuff(Buffs.Intoxicated.buff, 5);
             float procChance = StrangeCan.procChance + procChancePerStack * (stack - 1);
             if (Util.CheckRoll(procChance * report.damageInfo.procCoefficient, body.master))
             {

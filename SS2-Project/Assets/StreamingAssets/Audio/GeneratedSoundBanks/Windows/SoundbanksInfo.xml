@@ -11,7 +11,7 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="866530374" Language="SFX" Hash="3132515829">
+		<SoundBank Id="866530374" Language="SFX" Hash="2951556855">
 			<ObjectPath>\SoundBanks\Default Work Unit\Starstorm2</ObjectPath>
 			<ShortName>Starstorm2</ShortName>
 			<Path>Starstorm2.bnk</Path>
@@ -706,7 +706,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="4059362439" Name="PickupCoffeeBean" ObjectPath="\Events\Default Work Unit\Items\PickupCoffeeBean" DurationType="OneShot" DurationMin="0.156833" DurationMax="0.918625">
+				<Event Id="4059362439" Name="PickupCoffeeBean" ObjectPath="\Events\Default Work Unit\Items\PickupCoffeeBean" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="0.156833" DurationMax="0.918625">
 					<IncludedMemoryFiles>
 						<File Id="69768090" Language="SFX">
 							<ShortName>item_pickup_coffeebean_03.wav</ShortName>
@@ -879,6 +879,34 @@
 						<File Id="655304851" Language="SFX">
 							<ShortName>RainAmbience2.wav</ShortName>
 							<Path>SFX\RainAmbience2_2EB51506.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3050313720" Name="ProcErraticGadgetChain" ObjectPath="\Events\Default Work Unit\Items\ProcErraticGadgetChain" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="0.610840" DurationMax="0.895960">
+					<IncludedMemoryFiles>
+						<File Id="86974721" Language="SFX">
+							<ShortName>item_proc_erraticgadget_chain_01.wav</ShortName>
+							<Path>SFX\item_proc_erraticgadget_chain_01_B2D14CFC.wem</Path>
+						</File>
+						<File Id="735195156" Language="SFX">
+							<ShortName>item_proc_erraticgadget_chain_02.wav</ShortName>
+							<Path>SFX\item_proc_erraticgadget_chain_02_B2D14CFC.wem</Path>
+						</File>
+						<File Id="765481400" Language="SFX">
+							<ShortName>item_proc_erraticgadget_chain_03.wav</ShortName>
+							<Path>SFX\item_proc_erraticgadget_chain_03_B2D14CFC.wem</Path>
+						</File>
+						<File Id="971891891" Language="SFX">
+							<ShortName>item_proc_erraticgadget_chain_04.wav</ShortName>
+							<Path>SFX\item_proc_erraticgadget_chain_04_B2D14CFC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3125516253" Name="ProcErraticGadgetLightning" ObjectPath="\Events\Default Work Unit\Items\ProcErraticGadgetLightning" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="0.630167" DurationMax="0.630167">
+					<IncludedMemoryFiles>
+						<File Id="55113206" Language="SFX">
+							<ShortName>item_proc_erraticgadget_02.wav</ShortName>
+							<Path>SFX\item_proc_erraticgadget_02_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>

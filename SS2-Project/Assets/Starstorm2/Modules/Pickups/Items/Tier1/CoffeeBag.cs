@@ -13,15 +13,15 @@ namespace Moonstorm.Starstorm2.Items
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance on hit to drop a coffee bean. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
-        public static float procChance = .08f;
+        public static float procChance = .1f;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Attack speed bonus granted per stack while the buff is active. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
-        public static float atkSpeedBonus = .08f;
+        public static float atkSpeedBonus = .1f;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Movement speed bonus granted per stack while the buff is active. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
-        public static float moveSpeedBonus = .08f;
+        public static float moveSpeedBonus = .1f;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of the buff gained upon picking up a coffee bean, per stack.")]
         [TokenModifier(token, StatTypes.Default, 3)]
@@ -31,6 +31,17 @@ namespace Moonstorm.Starstorm2.Items
         override public void Initialize()
         {
             GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
+            RecalculateStatsAPI.GetStatCoefficients += CalculateStatsCoffeeBag;
+        }
+
+        private void CalculateStatsCoffeeBag(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
+        {
+            int buffStack = sender.GetBuffCount(SS2Content.Buffs.BuffCoffeeBag);
+            if (buffStack > 0)
+            {
+                args.attackSpeedMultAdd += atkSpeedBonus * buffStack;
+                args.moveSpeedMultAdd += moveSpeedBonus * buffStack;
+            }
         }
 
         private void OnServerDamageDealt(DamageReport report)

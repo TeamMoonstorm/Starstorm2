@@ -820,6 +820,34 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="ProcErraticGadgetLightning" ID="{D79B485A-ED02-4018-9E18-BFA1D0E1FB5A}">
+							<ChildrenList>
+								<Action Name="" ID="{541066E3-FD4C-4524-8E52-BDDE2FA8A920}" ShortID="1019593863">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="item_proc_erraticgadget_02" ID="{E01F2FBB-CEE3-44D6-82CE-4BA73D8E03A5}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ProcErraticGadgetChain" ID="{8A07E4FA-6BC2-4CEA-AE60-1E2DF6F94916}">
+							<ChildrenList>
+								<Action Name="" ID="{7C9D28BC-0AE6-47F7-BEFF-1D36DB04C86C}" ShortID="114420912">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="EraticGadgetChain" ID="{6790F3BE-C825-4197-ADF5-682E733E2E81}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Event Name="VoidAmbient" ID="{096E8867-684C-49FD-9847-D8B99D9E53EC}">

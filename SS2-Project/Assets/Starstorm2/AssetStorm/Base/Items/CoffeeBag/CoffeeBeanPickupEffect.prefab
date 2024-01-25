@@ -2536,6 +2536,7 @@ GameObject:
   - component: {fileID: 6470311848228807507}
   - component: {fileID: 2696862735885523086}
   - component: {fileID: 2659586353476626183}
+  - component: {fileID: 3497075443369985547}
   m_Layer: 0
   m_Name: CoffeeBeanPickupEffect
   m_TagString: Untagged
@@ -2593,6 +2594,20 @@ MonoBehaviour:
   vfxIntensity: 0
   optionalLights: []
   secondaryParticleSystem: []
+--- !u!114 &3497075443369985547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4033601953410969474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1788389205, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.33
+  resetAgeOnDisable: 0
 --- !u!1 &4945154191740871227
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,7 +3,6 @@ using RoR2;
 
 namespace Moonstorm.Starstorm2.Buffs
 {
-    [DisabledContent]
     public sealed class Intoxicated : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffIntoxicated", SS2Bundle.Items);

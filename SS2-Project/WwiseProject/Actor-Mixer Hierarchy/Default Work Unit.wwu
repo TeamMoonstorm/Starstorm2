@@ -2910,7 +2910,7 @@
 										</Property>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
-												<Value>-5</Value>
+												<Value>-6.3</Value>
 											</ValueList>
 										</Property>
 									</PropertyList>
@@ -3441,7 +3441,7 @@
 										</Property>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
-												<Value>-9.5</Value>
+												<Value>-10.3</Value>
 											</ValueList>
 										</Property>
 									</PropertyList>
@@ -3489,6 +3489,8 @@
 								</RandomSequenceContainer>
 								<RandomSequenceContainer Name="PickupCoffeeBean" ID="{94A33D62-635F-48F3-96D7-1849218721FE}" ShortID="196598988">
 									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="2"/>
+										<Property Name="OverridePositioning" Type="bool" Value="True"/>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
 												<Value>6</Value>
@@ -3496,6 +3498,9 @@
 										</Property>
 									</PropertyList>
 									<ReferenceList>
+										<Reference Name="Attenuation">
+											<ObjectRef Name="BodyAttenuation" ID="{A986EB11-7B06-4BE3-9630-2DEB2646D5C4}" WorkUnitID="{01E36904-BE25-433F-9547-3A046044CA56}"/>
+										</Reference>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
 										</Reference>
@@ -3618,6 +3623,234 @@
 										</Sound>
 									</ChildrenList>
 								</RandomSequenceContainer>
+								<Folder Name="ErraticGadget" ID="{9E501E70-7C61-436F-8317-1C67FC7037FC}" ShortID="134916590">
+									<ChildrenList>
+										<Sound Name="item_proc_erraticgadget_01" ID="{2A2D07C6-9C5E-437F-9CE7-6690A4E70874}" ShortID="483121119">
+											<PropertyList>
+												<Property Name="3DSpatialization" Type="int16" Value="2"/>
+												<Property Name="OverridePositioning" Type="bool" Value="True"/>
+												<Property Name="Volume" Type="Real64">
+													<ValueList>
+														<Value>-4</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Attenuation">
+													<ObjectRef Name="BodyAttenuation" ID="{A986EB11-7B06-4BE3-9630-2DEB2646D5C4}" WorkUnitID="{01E36904-BE25-433F-9547-3A046044CA56}"/>
+												</Reference>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="item_proc_erraticgadget_01" ID="{CEE35466-3453-4A9F-A122-BB3F10BF8020}">
+													<PropertyList>
+														<Property Name="LoopBegin" Type="Real64" Value="-0.001"/>
+														<Property Name="LoopEnd" Type="Real64" Value="-0.001"/>
+														<Property Name="TrimBegin" Type="Real64" Value="-0.001"/>
+														<Property Name="TrimEnd" Type="Real64" Value="-0.001"/>
+													</PropertyList>
+													<Language>SFX</Language>
+													<AudioFile>item_proc_erraticgadget_01.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="402098406"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="item_proc_erraticgadget_01" ID="{CEE35466-3453-4A9F-A122-BB3F10BF8020}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<RandomSequenceContainer Name="EraticGadgetChain" ID="{6790F3BE-C825-4197-ADF5-682E733E2E81}" ShortID="280682011">
+											<PropertyList>
+												<Property Name="3DSpatialization" Type="int16" Value="2"/>
+												<Property Name="OverridePositioning" Type="bool" Value="True"/>
+												<Property Name="Pitch" Type="int32">
+													<ModifierList>
+														<ModifierInfo>
+															<Modifier Name="" ID="{29C4D7F6-A1D2-4F92-8326-77C8B597DA90}">
+																<PropertyList>
+																	<Property Name="Enabled" Type="bool" Value="True"/>
+																	<Property Name="Max" Type="Real64" Value="80"/>
+																	<Property Name="Min" Type="Real64" Value="-80"/>
+																</PropertyList>
+															</Modifier>
+														</ModifierInfo>
+													</ModifierList>
+												</Property>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Attenuation">
+													<ObjectRef Name="BodyAttenuation" ID="{A986EB11-7B06-4BE3-9630-2DEB2646D5C4}" WorkUnitID="{01E36904-BE25-433F-9547-3A046044CA56}"/>
+												</Reference>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<Sound Name="item_proc_erraticgadget_chain_01" ID="{4F35D593-D111-4C9F-AAF5-CAA40091BB17}" ShortID="405906497">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="item_proc_erraticgadget_chain_01" ID="{70409C29-0393-490D-BE96-C1F35DFF8B17}">
+															<PropertyList>
+																<Property Name="LoopBegin" Type="Real64" Value="-0.001"/>
+																<Property Name="LoopEnd" Type="Real64" Value="-0.001"/>
+																<Property Name="TrimBegin" Type="Real64" Value="-0.001"/>
+																<Property Name="TrimEnd" Type="Real64" Value="-0.001"/>
+															</PropertyList>
+															<Language>SFX</Language>
+															<AudioFile>item_proc_erraticgadget_chain_01.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="86974721"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="item_proc_erraticgadget_chain_01" ID="{70409C29-0393-490D-BE96-C1F35DFF8B17}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="item_proc_erraticgadget_chain_02" ID="{8C5AABD8-3B62-4AFF-8A61-46B1BD8FBF2F}" ShortID="357826759">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="item_proc_erraticgadget_chain_02" ID="{09543DDF-4E04-4D39-AB9D-B2B281952DAB}">
+															<PropertyList>
+																<Property Name="LoopBegin" Type="Real64" Value="-0.001"/>
+																<Property Name="LoopEnd" Type="Real64" Value="-0.001"/>
+																<Property Name="TrimBegin" Type="Real64" Value="-0.001"/>
+																<Property Name="TrimEnd" Type="Real64" Value="-0.001"/>
+															</PropertyList>
+															<Language>SFX</Language>
+															<AudioFile>item_proc_erraticgadget_chain_02.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="735195156"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="item_proc_erraticgadget_chain_02" ID="{09543DDF-4E04-4D39-AB9D-B2B281952DAB}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="item_proc_erraticgadget_chain_03" ID="{01E6F369-1A54-46E0-8B71-D7CB78336E67}" ShortID="318298856">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="item_proc_erraticgadget_chain_03" ID="{E5C030AE-0B5E-4A84-8BB2-BE069B15B867}">
+															<PropertyList>
+																<Property Name="LoopBegin" Type="Real64" Value="-0.001"/>
+																<Property Name="LoopEnd" Type="Real64" Value="-0.001"/>
+																<Property Name="TrimBegin" Type="Real64" Value="-0.001"/>
+																<Property Name="TrimEnd" Type="Real64" Value="-0.001"/>
+															</PropertyList>
+															<Language>SFX</Language>
+															<AudioFile>item_proc_erraticgadget_chain_03.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="765481400"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="item_proc_erraticgadget_chain_03" ID="{E5C030AE-0B5E-4A84-8BB2-BE069B15B867}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="item_proc_erraticgadget_chain_04" ID="{B9DEED8E-0CF7-4E30-9882-AC54866F59FB}" ShortID="308670144">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="item_proc_erraticgadget_chain_04" ID="{941ECC76-6881-48D2-A9D2-75AC7B817607}">
+															<PropertyList>
+																<Property Name="LoopBegin" Type="Real64" Value="-0.001"/>
+																<Property Name="LoopEnd" Type="Real64" Value="-0.001"/>
+																<Property Name="TrimBegin" Type="Real64" Value="-0.001"/>
+																<Property Name="TrimEnd" Type="Real64" Value="-0.001"/>
+															</PropertyList>
+															<Language>SFX</Language>
+															<AudioFile>item_proc_erraticgadget_chain_04.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="971891891"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="item_proc_erraticgadget_chain_04" ID="{941ECC76-6881-48D2-A9D2-75AC7B817607}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+											</ChildrenList>
+										</RandomSequenceContainer>
+										<Sound Name="item_proc_erraticgadget_02" ID="{E01F2FBB-CEE3-44D6-82CE-4BA73D8E03A5}" ShortID="367795453">
+											<PropertyList>
+												<Property Name="3DSpatialization" Type="int16" Value="2"/>
+												<Property Name="OverridePositioning" Type="bool" Value="True"/>
+												<Property Name="Volume" Type="Real64">
+													<ValueList>
+														<Value>-3</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Attenuation">
+													<ObjectRef Name="BodyAttenuation" ID="{A986EB11-7B06-4BE3-9630-2DEB2646D5C4}" WorkUnitID="{01E36904-BE25-433F-9547-3A046044CA56}"/>
+												</Reference>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="item_proc_erraticgadget_02" ID="{84A11609-FBA3-4EE1-9E6B-85DDF7B839E0}">
+													<PropertyList>
+														<Property Name="LoopBegin" Type="Real64" Value="-0.001"/>
+														<Property Name="LoopEnd" Type="Real64" Value="-0.001"/>
+														<Property Name="TrimBegin" Type="Real64" Value="-0.001"/>
+														<Property Name="TrimEnd" Type="Real64" Value="-0.001"/>
+													</PropertyList>
+													<Language>SFX</Language>
+													<AudioFile>item_proc_erraticgadget_02.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="55113206"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="item_proc_erraticgadget_02" ID="{84A11609-FBA3-4EE1-9E6B-85DDF7B839E0}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</Folder>
 							</ChildrenList>
 						</Folder>
 						<Folder Name="Meme Stuff" ID="{E7D33D18-07A7-4747-964D-67A00E93723B}" ShortID="351276811">

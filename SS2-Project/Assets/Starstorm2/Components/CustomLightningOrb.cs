@@ -7,13 +7,15 @@ using RoR2;
 using UnityEngine;
 using RoR2.Orbs;
 using R2API;
+using static Moonstorm.Starstorm2.Items.ErraticGadget;
 namespace Moonstorm.Starstorm2.Components
 {
+    // copy of ror2.orbs.lgihtningorb
     public class CustomLightningOrb : Orb
     {
         public GameObject orbEffectPrefab;
-        public static float duration = 0.033f;
-
+        public float duration = 0.033f;
+        public bool canProcGadget;
         public override void Begin()
         {
             base.duration = duration;
@@ -54,11 +56,17 @@ namespace Moonstorm.Starstorm2.Components
                     if (this.bouncedObjects != null)
                     {
                         this.bouncedObjects.Add(this.target.healthComponent);
+                        if (this.canBounceOnSameTarget)
+                        {
+                            this.bouncedObjects.Clear();
+                        }
                     }
                     HurtBox hurtBox = this.PickNextTarget(this.target.transform.position, healthComponent);
                     if (hurtBox)
                     {
                         CustomLightningOrb lightningOrb = new CustomLightningOrb();
+                        lightningOrb.canProcGadget = this.canProcGadget;
+                        lightningOrb.canBounceOnSameTarget = this.canBounceOnSameTarget;
                         lightningOrb.search = this.search;
                         lightningOrb.origin = this.target.transform.position;
                         lightningOrb.target = hurtBox;
@@ -73,25 +81,50 @@ namespace Moonstorm.Starstorm2.Components
                         lightningOrb.procCoefficient = this.procCoefficient;
                         lightningOrb.damageColorIndex = this.damageColorIndex;
                         lightningOrb.damageCoefficientPerBounce = this.damageCoefficientPerBounce;
-                        lightningOrb.baseRange = this.baseRange;
+                        lightningOrb.range = this.range;
                         lightningOrb.damageType = this.damageType;
                         lightningOrb.orbEffectPrefab = this.orbEffectPrefab;
                         OrbManager.instance.AddOrb(lightningOrb);
                     }
+                }
+                else if (canProcGadget)
+                {
+                    HurtBox hurtBox = this.PickNextTarget(this.target.transform.position, this.target.healthComponent);
+                    GadgetLightningOrb lightningOrb = new GadgetLightningOrb();
+                    lightningOrb.search = this.search;
+                    lightningOrb.origin = this.target.transform.position;
+                    lightningOrb.target = hurtBox;
+                    lightningOrb.attacker = this.attacker;
+                    lightningOrb.inflictor = this.inflictor;
+                    lightningOrb.teamIndex = this.teamIndex;
+                    lightningOrb.damageValue = this.damageValue * this.damageCoefficientPerBounce;
+                    lightningOrb.bouncesRemaining = this.bouncedObjects.Count; // doubles bounces
+                    lightningOrb.isCrit = this.isCrit;
+                    lightningOrb.bouncedObjects = new List<HealthComponent>();// { this.target.healthComponent };
+                    lightningOrb.procChainMask = this.procChainMask;
+                    lightningOrb.procCoefficient = this.procCoefficient;
+                    lightningOrb.damageColorIndex = this.damageColorIndex;
+                    lightningOrb.damageCoefficientPerBounce = this.damageCoefficientPerBounce;
+                    lightningOrb.range = this.range;
+                    lightningOrb.damageType = this.damageType;
+                    lightningOrb.canBounceOnSameTarget = this.canBounceOnSameTarget;
+                    OrbManager.instance.AddOrb(lightningOrb);
+
+                    EffectManager.SimpleEffect(procEffectPrefab, this.target.transform.position, Quaternion.identity, true);
                 }
 
             }
         }
         public HurtBox PickNextTarget(Vector3 position, HealthComponent currentVictim)
         {
-            this.bouncedObjects.Add(currentVictim);
             if (this.search == null)
             {
                 this.search = new BullseyeSearch();
             }
-            float range = baseRange;
+            float range = this.range;
             if (currentVictim && currentVictim.body)
             {
+                this.bouncedObjects.Add(currentVictim);
                 range += currentVictim.body.radius;
             }
             this.search.searchOrigin = position;
@@ -111,6 +144,7 @@ namespace Moonstorm.Starstorm2.Components
             }
             return hurtBox;
         }
+        public bool canBounceOnSameTarget;
 
         public float damageValue;
 
@@ -132,7 +166,7 @@ namespace Moonstorm.Starstorm2.Components
 
         public DamageColorIndex damageColorIndex;
 
-        public float baseRange = 20f;
+        public float range = 20f;
 
         public float damageCoefficientPerBounce = 1f;
 
