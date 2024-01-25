@@ -848,6 +848,62 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="CrypticSourceStage1" ID="{EAC763AB-957C-462B-BF04-B0AB20D1E5C6}">
+							<ChildrenList>
+								<Action Name="" ID="{42CD074C-A656-4E71-89B7-620472021D1F}" ShortID="288905526">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="CrypticSourceStage1" ID="{D4F27B9C-B5AD-4495-82A3-6D4143CE6C18}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="CrypticSourceStage3" ID="{7DABEC0A-5C89-4BED-962E-F2575D753A63}">
+							<ChildrenList>
+								<Action Name="" ID="{BA3B704F-92DB-489E-8524-40333F710531}" ShortID="381071675">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="CrypticSourceStage3" ID="{0678DE48-64FE-4EF8-AD99-B2A17320869C}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="CrypticSourceStage2" ID="{6137278D-0851-462A-9597-81C2B5F0BFC8}">
+							<ChildrenList>
+								<Action Name="" ID="{4D8DC24B-3C8E-46EA-A894-A0FA49993886}" ShortID="787744285">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="CrypticSourceStage2" ID="{664C9C3E-9EA5-4244-8FCD-9AA2274D8E50}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="CrypticSourceFire" ID="{1143A5B4-9D68-417D-8E67-792D51C154AF}">
+							<ChildrenList>
+								<Action Name="" ID="{7E06B27C-9E52-4CFD-93F1-24E921FB68A1}" ShortID="798561094">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="item_crypticsource_burst_01" ID="{98A70E5E-07B1-4EA4-8E08-B5C6C279D99D}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Event Name="VoidAmbient" ID="{096E8867-684C-49FD-9847-D8B99D9E53EC}">

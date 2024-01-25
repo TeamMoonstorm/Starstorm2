@@ -11,7 +11,7 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="866530374" Language="SFX" Hash="2951556855">
+		<SoundBank Id="866530374" Language="SFX" Hash="3547229994">
 			<ObjectPath>\SoundBanks\Default Work Unit\Starstorm2</ObjectPath>
 			<ShortName>Starstorm2</ShortName>
 			<Path>Starstorm2.bnk</Path>
@@ -205,6 +205,50 @@
 						<File Id="88535758" Language="SFX">
 							<ShortName>utilityhitground.wav</ShortName>
 							<Path>SFX\utilityhitground_B2D14CFC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3284465828" Name="CrypticSourceFire" ObjectPath="\Events\Default Work Unit\Items\CrypticSourceFire" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="0.644687" DurationMax="0.644687">
+					<IncludedMemoryFiles>
+						<File Id="101209782" Language="SFX">
+							<ShortName>item_crypticsource_burst_01.wav</ShortName>
+							<Path>SFX\item_crypticsource_burst_01_B2D14CFC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2289766871" Name="CrypticSourceStage1" ObjectPath="\Events\Default Work Unit\Items\CrypticSourceStage1" MaxAttenuation="200.000000" DurationType="Infinite">
+					<IncludedMemoryFiles>
+						<File Id="241685491" Language="SFX">
+							<ShortName>item_crypticsource_idle.wav</ShortName>
+							<Path>SFX\item_crypticsource_idle_6AD26A56.wem</Path>
+						</File>
+						<File Id="437301329" Language="SFX">
+							<ShortName>item_crypticsource_start_03.wav</ShortName>
+							<Path>SFX\item_crypticsource_start_03_B2D14CFC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2289766868" Name="CrypticSourceStage2" ObjectPath="\Events\Default Work Unit\Items\CrypticSourceStage2" MaxAttenuation="200.000000" DurationType="Infinite">
+					<IncludedMemoryFiles>
+						<File Id="241685491" Language="SFX">
+							<ShortName>item_crypticsource_idle.wav</ShortName>
+							<Path>SFX\item_crypticsource_idle_6AD26A56.wem</Path>
+						</File>
+						<File Id="437301329" Language="SFX">
+							<ShortName>item_crypticsource_start_03.wav</ShortName>
+							<Path>SFX\item_crypticsource_start_03_B2D14CFC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2289766869" Name="CrypticSourceStage3" ObjectPath="\Events\Default Work Unit\Items\CrypticSourceStage3" MaxAttenuation="200.000000" DurationType="Infinite">
+					<IncludedMemoryFiles>
+						<File Id="241685491" Language="SFX">
+							<ShortName>item_crypticsource_idle.wav</ShortName>
+							<Path>SFX\item_crypticsource_idle_6AD26A56.wem</Path>
+						</File>
+						<File Id="437301329" Language="SFX">
+							<ShortName>item_crypticsource_start_03.wav</ShortName>
+							<Path>SFX\item_crypticsource_start_03_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>

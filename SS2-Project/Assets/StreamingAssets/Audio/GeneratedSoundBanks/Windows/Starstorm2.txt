@@ -63,6 +63,9 @@ Event	ID	Name			Wwise Object Path	Notes
 	2187217924	SpawnMGR			\Default Work Unit\Nemmando\SpawnMGR	
 	2250290942	WayfarerIdleStart			\Default Work Unit\Wayfarer\WayfarerIdleStart	
 	2276677644	NemmandoJCEClick			\Default Work Unit\Nemmando\NemmandoJCEClick	
+	2289766868	CrypticSourceStage2			\Default Work Unit\Items\CrypticSourceStage2	
+	2289766869	CrypticSourceStage3			\Default Work Unit\Items\CrypticSourceStage3	
+	2289766871	CrypticSourceStage1			\Default Work Unit\Items\CrypticSourceStage1	
 	2308605527	ExecutionerSpecialImpact			\Default Work Unit\Executioner\ExecutionerSpecialImpact	
 	2333188815	WastelanderPrimary			\Default Work Unit\Executioner\WastelanderPrimary	
 	2393435613	WayfarerVO			\Default Work Unit\Wayfarer\WayfarerVO	
@@ -103,6 +106,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	3212416563	Play_nemmerc_clone_spawn			\Default Work Unit\Nemesis Mercenary\Play_nemmerc_clone_spawn	
 	3251339703	ChirrStep			\Default Work Unit\Chirr\ChirrStep	
 	3276263843	RemunerationSpawn2			\Default Work Unit\Items\RemunerationSpawn2	
+	3284465828	CrypticSourceFire			\Default Work Unit\Items\CrypticSourceFire	
 	3331522399	NemmandoSubmissionReady			\Default Work Unit\Nemmando\NemmandoSubmissionReady	
 	3396808549	ExecutionerSupercharge			\Default Work Unit\Executioner\ExecutionerSupercharge	
 	3463916741	ChirrGrabThrow			\Default Work Unit\Chirr\ChirrGrabThrow	
@@ -150,6 +154,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	86974721	item_proc_erraticgadget_chain_01	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_proc_erraticgadget_chain_01_B2D14CFC.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\ErraticGadget\EraticGadgetChain\item_proc_erraticgadget_chain_01		20333
 	88535758	utilityhitground	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\utilityhitground_B2D14CFC.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Chirr\utilityhitground		88016
 	89003483	item_proc_intoxicateHit_03	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_proc_intoxicateHit_03_324331BC.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\StrangeCan\item_proc_intoxicateHit_03		38112
+	101209782	item_crypticsource_burst_01	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_crypticsource_burst_01_B2D14CFC.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\CrypticSource\item_crypticsource_burst_01		19004
 	116580580	WayfarerDeath	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\blow2_B2D14CFC.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Wayfarer\WayfarerDeath		81783
 	116836686	chirr_sprint_start_01	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\chirr_sprint_start_01_324331BC.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Chirr\CSS\chirr_sprint_start_01		24890
 	120647268	WastelanderShoot2	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\WastelanderShoot2_324331BC.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Executioner\WastelanderShoot\WastelanderShoot2		19578
@@ -176,6 +181,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	235333974	chirr_step_07	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\chirr_step_07_324331BC.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Chirr\Step\chirr_step_07		5117
 	239656552	item_proc_diaryLevel_01	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_proc_diaryLevel_01_324331BC.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\item_proc_diaryLevel_01		35950
 	241025732	263171907	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\263171907_B2D14CFC.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Chirr\LeafHit\263171907		10309
+	241685491	item_crypticsource_idle	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_crypticsource_idle_6AD26A56.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\CrypticSource\CrypticSourceStage1\item_crypticsource_idle		329578
 	246039484	nemmandosaberswing1	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\nemmandosaberswing1_324331BC.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Nemesis Commando\NemmandoSwingSaber\nemmandosaberswing1		41506
 	253404114	WastelanderShootCrit2	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\WastelanderShootCrit2_324331BC.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Executioner\WastelanderShootCrit\WastelanderShootCrit2		19314
 	253409635	ExecutionerSpecialImpact	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\ExecutionerSpecialImpact_324331BC.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Executioner\ExecutionerSpecialImpact		115317
@@ -202,6 +208,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	422329283	item_pickup_coffeebean_01	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_pickup_coffeebean_01_B2D14CFC.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\PickupCoffeeBean\item_pickup_coffeebean_01		10257
 	423172737	ExecutionerUtility	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\ExecutionerUtility_324331BC.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Executioner\ExecutionerUtility		71766
 	428394710	NemmandoShoot2	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\NemmandoShoot2_324331BC.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Nemesis Commando\NemmandoShoot\NemmandoShoot2		34736
+	437301329	item_crypticsource_start_03	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_crypticsource_start_03_B2D14CFC.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\CrypticSource\CrypticSourceStage1\item_crypticsource_start_03		72443
 	438122999	nucleator_m1_charge_01	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\nucleator_m1_charge_01_324331BC.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Nucleator\nucleator_m1_charge_01		63710
 	453785391	chirr_sprint_end_01	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\chirr_sprint_end_01_324331BC.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Chirr\chirr_sprint_end_01		29552
 	465172932	NemmandoSwingSaberDecisive	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\NemmandoSwingSaberBig_324331BC.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Nemesis Commando\NemmandoSwingSaberDecisive		56104

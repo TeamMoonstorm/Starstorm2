@@ -29,6 +29,10 @@ namespace AK
         static const AkUniqueID CHIRRSPRINTSTOP = 1060087585U;
         static const AkUniqueID CHIRRSTEP = 3251339703U;
         static const AkUniqueID CHIRRTHROWHITGROUND = 4180439307U;
+        static const AkUniqueID CRYPTICSOURCEFIRE = 3284465828U;
+        static const AkUniqueID CRYPTICSOURCESTAGE1 = 2289766871U;
+        static const AkUniqueID CRYPTICSOURCESTAGE2 = 2289766868U;
+        static const AkUniqueID CRYPTICSOURCESTAGE3 = 2289766869U;
         static const AkUniqueID CYBORGPRIMARY = 3105092465U;
         static const AkUniqueID CYBORGSECONDARY = 4193594557U;
         static const AkUniqueID CYBORGSPECIALPLACE = 1373732423U;

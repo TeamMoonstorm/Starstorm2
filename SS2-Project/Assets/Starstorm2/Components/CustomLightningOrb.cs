@@ -51,11 +51,13 @@ namespace Moonstorm.Starstorm2.Components
                     GlobalEventManager.instance.OnHitEnemy(damageInfo, healthComponent.gameObject);
                     GlobalEventManager.instance.OnHitAll(damageInfo, healthComponent.gameObject);
                 }
+
+                this.bouncedObjects.Add(this.target.healthComponent);
+
                 if (this.bouncesRemaining > 0)
                 {
                     if (this.bouncedObjects != null)
-                    {
-                        this.bouncedObjects.Add(this.target.healthComponent);
+                    {                      
                         if (this.canBounceOnSameTarget)
                         {
                             this.bouncedObjects.Clear();
@@ -85,10 +87,19 @@ namespace Moonstorm.Starstorm2.Components
                         lightningOrb.damageType = this.damageType;
                         lightningOrb.orbEffectPrefab = this.orbEffectPrefab;
                         OrbManager.instance.AddOrb(lightningOrb);
+                        return;
                     }
+                    
                 }
-                else if (canProcGadget)
+                // only when no new target
+                if (canProcGadget)
                 {
+                    List<HealthComponent> uniqueObjects = new List<HealthComponent>();
+                    for (int i = 0; i < this.bouncedObjects.Count; i++)
+                    {
+                        uniqueObjects.AddIfNotInCollection(this.bouncedObjects[i]);
+                    }
+                    int bounces = uniqueObjects.Count;
                     HurtBox hurtBox = this.PickNextTarget(this.target.transform.position, this.target.healthComponent);
                     GadgetLightningOrb lightningOrb = new GadgetLightningOrb();
                     lightningOrb.search = this.search;
@@ -98,7 +109,7 @@ namespace Moonstorm.Starstorm2.Components
                     lightningOrb.inflictor = this.inflictor;
                     lightningOrb.teamIndex = this.teamIndex;
                     lightningOrb.damageValue = this.damageValue * this.damageCoefficientPerBounce;
-                    lightningOrb.bouncesRemaining = this.bouncedObjects.Count; // doubles bounces
+                    lightningOrb.bouncesRemaining = bounces; // doubles bounces
                     lightningOrb.isCrit = this.isCrit;
                     lightningOrb.bouncedObjects = new List<HealthComponent>();// { this.target.healthComponent };
                     lightningOrb.procChainMask = this.procChainMask;

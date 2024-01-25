@@ -34,6 +34,8 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef ChirrFriendHelper;
 
+            public static ItemDef CrypticSource;
+
             public static ItemDef DetritiveTrematode;
 
             public static ItemDef Diary;

@@ -57,9 +57,6 @@ namespace Moonstorm.Starstorm2.Items
         private void LightningOrb_OnArrival(On.RoR2.Orbs.LightningOrb.orig_OnArrival orig, LightningOrb self)
         {
             // jank ass way to check if a lightning orb "ended" by not finding a new target
-            SS2Log.Info("OnArrival:::::::::::::");
-            SS2Log.Info("OnArrival: self.bouncedObjects.Count (BEFORE) == " + self.bouncedObjects.Count);
-            SS2Log.Info("OnArrival: self.bouncedObjects (BEFORE) == " + self.bouncedObjects.ToString());
             bool orbFoundNewTarget = false;
             if(self.bouncesRemaining > 0)
             {
@@ -67,18 +64,9 @@ namespace Moonstorm.Starstorm2.Items
                 orbFoundNewTarget = self.PickNextTarget(self.target.transform.position); // check if theres an available target, same way LightningOrb does
                 if (orbFoundNewTarget)
                     self.bouncedObjects.RemoveAt(self.bouncedObjects.Count - 1); // remove what PickNextTarget added to the end of the list, because we dont want it there
-                else SS2Log.Info("OnArrival: orbFoundNewTarget == false");
                 self.bouncedObjects.RemoveAt(self.bouncedObjects.Count - 1); // remove self.target.healthComponent from the list 
-                SS2Log.Info("OnArrival: self.bouncedObjects.Count == " + self.bouncedObjects.Count);
-                SS2Log.Info("OnArrival: self.bouncedObjects == " + self.bouncedObjects.ToString());
             }
             orig(self);
-            SS2Log.Info("OnArrival: self.bouncedObjects.Count (again) == " + self.bouncedObjects.Count);
-            SS2Log.Info("OnArrival: self.bouncedObjects (again) == " + self.bouncedObjects.ToString());
-            ///relevant orig(self) lines:
-            //this.bouncedObjects.Add(this.target.healthComponent);
-            //HurtBox hurtBox = this.PickNextTarget(this.target.transform.position);
-            //... new LightningOrb()... lightningOrb.bouncesRemaining = this.bouncesRemaining - 1;
 
             bool isLastBounce = self.bouncedObjects != null && (self.bouncesRemaining == 0 || !orbFoundNewTarget);
             SS2Log.Info("OnArrival: isLastBounce == " + isLastBounce);
@@ -118,34 +106,43 @@ namespace Moonstorm.Starstorm2.Items
                 if(canProcGadget)
                 {
                     // ukulele and tesla add the initial target to bouncedObjects without damaging them. 
-                    //we want to subtract 1 from bouncedObjects.Count if wasFirstBounceEnemy==true, in order to get the amount of targets the lightning actually hit
-                    // we also want to divide bouncedObjects.Count by 2 because vanilla code accidentally adds objects it hits twice ( THANKS HOPO U FUCKER )
-                    int newBounces = self.bouncedObjects.Count;
-                    if (wasFirstBounceFake) newBounces -= 2;
-                    newBounces /= 2;
-                    SS2Log.Info("OnArrival: newBounces == " + newBounces);
-                    GadgetLightningOrb lightningOrb = new GadgetLightningOrb();
-                    lightningOrb.search = self.search;
-                    lightningOrb.origin = self.target.transform.position;
-                    lightningOrb.target = self.target;
-                    lightningOrb.attacker = self.attacker;
-                    lightningOrb.inflictor = self.inflictor;
-                    lightningOrb.teamIndex = self.teamIndex;
-                    lightningOrb.damageValue = self.damageValue * self.damageCoefficientPerBounce * repeatDamageMultiplier;
-                    lightningOrb.bouncesRemaining = newBounces;
-                    lightningOrb.isCrit = self.isCrit;
-                    lightningOrb.bouncedObjects = new List<HealthComponent>();
-                    lightningOrb.procChainMask = self.procChainMask;
-                    lightningOrb.procCoefficient = self.procCoefficient;
-                    lightningOrb.damageColorIndex = self.damageColorIndex;
-                    lightningOrb.damageCoefficientPerBounce = self.damageCoefficientPerBounce;
-                    lightningOrb.range = self.range;
-                    lightningOrb.damageType = self.damageType;
-                    lightningOrb.canBounceOnSameTarget = self.canBounceOnSameTarget;
-                    lightningOrb.duration = self.duration;
-                    OrbManager.instance.AddOrb(lightningOrb);
+                    //we want to subtract 1 if wasFirstBounceEnemy==true, in order to get the amount of targets the lightning actually hit
+                    // we want to subtract another 1 because ummm. i forgot :3
+                    List<HealthComponent> uniqueObjects = new List<HealthComponent>();
+                    for(int i = 0; i < self.bouncedObjects.Count; i++)
+                    {
+                        uniqueObjects.AddIfNotInCollection(self.bouncedObjects[i]);
+                    }
+                    int bounces = uniqueObjects.Count;
+                    if (wasFirstBounceFake) bounces--;
 
-                    EffectManager.SimpleEffect(procEffectPrefab, self.target.transform.position, Quaternion.identity, true);
+                    
+                    GadgetLightningOrb gadgetOrb = new GadgetLightningOrb();
+                    gadgetOrb.search = self.search;
+                    gadgetOrb.origin = self.target.transform.position;
+                    gadgetOrb.attacker = self.attacker;
+                    gadgetOrb.inflictor = self.inflictor;
+                    gadgetOrb.teamIndex = self.teamIndex;
+                    gadgetOrb.damageValue = self.damageValue * self.damageCoefficientPerBounce * repeatDamageMultiplier;
+                    gadgetOrb.bouncesRemaining = bounces;
+                    gadgetOrb.isCrit = self.isCrit;
+                    gadgetOrb.bouncedObjects = new List<HealthComponent> { self.target.healthComponent };
+                    gadgetOrb.procChainMask = self.procChainMask;
+                    gadgetOrb.procCoefficient = self.procCoefficient;
+                    gadgetOrb.damageColorIndex = DamageColorIndex.Item;
+                    gadgetOrb.damageCoefficientPerBounce = self.damageCoefficientPerBounce;
+                    gadgetOrb.range = self.range;
+                    gadgetOrb.damageType = self.damageType;
+                    gadgetOrb.canBounceOnSameTarget = self.canBounceOnSameTarget;
+                    gadgetOrb.duration = self.duration;
+
+                    HurtBox nextTarget = gadgetOrb.PickNextTarget(self.target.transform.position);
+                    if(nextTarget)
+                    {
+                        gadgetOrb.target = nextTarget;
+                        OrbManager.instance.AddOrb(gadgetOrb);
+                        EffectManager.SimpleEffect(procEffectPrefab, self.target.transform.position, Quaternion.identity, true);
+                    }                  
                 }
             }
         }
@@ -167,7 +164,7 @@ namespace Moonstorm.Starstorm2.Items
                 {
                     attacker = self.attacker,
                     damageColorIndex = self.damageColorIndex,
-                    damageValue = self.damageValue,
+                    damageValue = self.damageValue * repeatDamageMultiplier,
                     isCrit = self.isCrit,
                     procChainMask = self.procChainMask,
                     procCoefficient = self.procCoefficient,
@@ -192,7 +189,7 @@ namespace Moonstorm.Starstorm2.Items
                 {
                     attacker = self.attacker,
                     damageColorIndex = self.damageColorIndex,
-                    damageValue = self.damageValue,
+                    damageValue = self.damageValue * repeatDamageMultiplier,
                     isCrit = self.isCrit,
                     procChainMask = self.procChainMask,
                     procCoefficient = self.procCoefficient,
