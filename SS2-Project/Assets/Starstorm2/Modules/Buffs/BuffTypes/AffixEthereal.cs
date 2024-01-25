@@ -1,18 +1,89 @@
-﻿using System.Collections;
+﻿using HG;
+using Moonstorm.Components;
+using R2API;
+using RoR2;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Networking;
+using Mono.Cecil.Cil;
+using MonoMod.Cil;
+using System;
+using UnityEngine.AddressableAssets;
+using RoR2.Navigation;
+using RoR2.Projectile;
 
-public class AffixEthereal : MonoBehaviour
+namespace Moonstorm.Starstorm2.Buffs
 {
-    // Start is called before the first frame update
-    void Start()
+    public sealed class AffixEthereal : BuffBase
     {
-        
-    }
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdEthereal", SS2Bundle.Equipments);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public sealed class Behavior : BaseBuffBodyBehavior
+        {
+            [BuffDefAssociation]
+            public static BuffDef GetBuffDef() => SS2Content.Buffs.bdEthereal;
+            public static GameObject projectilePrefab = SS2Assets.LoadAsset<GameObject>("EtherealCircle", SS2Bundle.Equipments);
+            private static System.Random random = new System.Random();
+            public static float baseTimerDur = 15f;
+
+            private float timerDur;
+            private float timer;
+
+            private void Start()
+            {
+                timerDur = baseTimerDur / body.attackSpeed;
+                timer = timerDur * 0.75f;
+            }
+
+            private void FixedUpdate()
+            {
+                if (!NetworkServer.active)
+                    return;
+
+                timer += Time.fixedDeltaTime;
+                if (timer >= timerDur)
+                {
+                    timer = 0;
+                    
+                    //you never know.
+                    if (projectilePrefab != null)
+                        PlaceCircle();
+                }
+            }
+
+            private void PlaceCircle()
+            {
+                Debug.Log("Firing projectile: " + projectilePrefab);
+
+                //could be done better for players but idk how much it'd matter lol
+                var masters = Run.instance.userMasters.Values.ToList();
+                if (masters.Count > 0)
+                {
+                    CharacterMaster randomMaster = masters[random.Next(masters.Count)];
+                    if (randomMaster != null)
+                    {
+                        CharacterBody body = randomMaster.GetBody();
+                        if (body != null)
+                        {
+                            if (body.healthComponent.alive)
+                            {
+                                {
+                                    NodeGraph groundNodes = SceneInfo.instance.groundNodes;
+                                    List<NodeGraph.NodeIndex> nodeList = groundNodes.FindNodesInRange(body.transform.position, 0f, 20f, HullMask.Human);
+                                    NodeGraph.NodeIndex randomNode = nodeList[random.Next(nodeList.Count)];
+                                    if (randomNode != null)
+                                    {
+                                        Vector3 position;
+                                        groundNodes.GetNodePosition(randomNode, out position);
+                                        ProjectileManager.instance.FireProjectile(projectilePrefab, position, new Quaternion(0, 0, 0, 0), body.gameObject, 1f, 0f, body.RollCrit(), DamageColorIndex.Default, null, 0);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

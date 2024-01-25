@@ -127,6 +127,8 @@ namespace Moonstorm.Starstorm2
 
             public static EquipmentDef EliteKineticEquipment;
 
+            public static EquipmentDef AffixEthereal;
+
             public static EquipmentDef AffixEmpyrean;
 
             public static EquipmentDef equipDivineRight;
@@ -263,6 +265,8 @@ namespace Moonstorm.Starstorm2
             public static BuffDef bdNemCapManaRegen;
 
             public static BuffDef bdEmpyrean;
+
+            public static BuffDef bdEthereal;
         }
 
         public static class Elites
@@ -270,6 +274,7 @@ namespace Moonstorm.Starstorm2
             //public static EliteDef edPurple;
             public static EliteDef edKinetic;
             public static EliteDef edEmpyrean;
+            public static EliteDef edEthereal;
         }
         public static class Scenes
         {
