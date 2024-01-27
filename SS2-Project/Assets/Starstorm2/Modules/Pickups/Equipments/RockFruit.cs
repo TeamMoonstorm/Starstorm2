@@ -1,0 +1,106 @@
+﻿using RoR2;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Moonstorm.Starstorm2.Equipments
+{
+    public sealed class RockFruit : EquipmentBase
+    {
+        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("RockFruit", SS2Bundle.Equipments);
+
+        //literally lifted 4 year old moonfall code
+        private ItemIndex GetRandomItem(List<ItemIndex> items)
+        {
+            bool isEmpty = items.Count <= 0;
+            if (!isEmpty)
+            {
+                int itemID = UnityEngine.Random.Range(0, items.Count);
+                return items[itemID];
+            }
+            else
+            {
+                Debug.Log("Failed to find item!");
+                return RoR2Content.Items.Syringe.itemIndex;
+            }
+        }
+
+        public List<PickupIndex> GetDropListFromItemTier(ItemTier itemTier)
+        {
+            switch (itemTier)
+            {
+                case ItemTier.Tier1:
+                    return Run.instance.availableTier1DropList;
+                case ItemTier.Tier2:
+                    return Run.instance.availableTier2DropList;
+                case ItemTier.Tier3:
+                    return Run.instance.availableTier3DropList;
+                case ItemTier.Lunar:
+                    return Run.instance.availableLunarItemDropList;
+                case ItemTier.Boss:
+                    return Run.instance.availableBossDropList;
+                case ItemTier.VoidTier1:
+                    return Run.instance.availableVoidTier1DropList;
+                case ItemTier.VoidTier2:
+                    return Run.instance.availableVoidTier2DropList;
+                case ItemTier.VoidTier3:
+                    return Run.instance.availableVoidTier3DropList;
+
+                default:
+                    Debug.Log("Failed to find droplist for " + itemTier);
+                    return null;
+            }
+        }
+
+        public override bool FireAction(EquipmentSlot slot)
+        {
+            var allItems = new List<ItemIndex>();
+            for (var item = RoR2Content.Items.Syringe.itemIndex; item < (ItemIndex)ItemCatalog.itemCount; item++)
+            {
+                var def = ItemCatalog.GetItemDef(item);
+                if (def.tier != ItemTier.NoTier)
+                {
+                    if (slot.inventory.GetItemCount(item) > 0)
+                    {
+                        allItems.Add(item);
+                    }
+                }
+            }
+
+            var randomItem = GetRandomItem(allItems);
+            slot.inventory.RemoveItem(randomItem);
+
+            var itemIndex = ItemCatalog.GetItemDef(randomItem).tier;
+
+            List<ItemIndex> list = new List<ItemIndex>();
+
+            var dropList = GetDropListFromItemTier(itemIndex);
+
+            if (dropList != null)
+            {
+                foreach (var item in dropList)
+                {
+                    var pickupDef = PickupCatalog.GetPickupDef(item);
+                    if (pickupDef != null)
+                    {
+                        list.Add(pickupDef.itemIndex);
+                    }
+                }
+            }
+
+            bool isEmpty = list.Count <= 0;
+
+            if (!isEmpty)
+            {
+                var newRandomItem = GetRandomItem(list);
+
+                if (slot.inventory && newRandomItem != ItemIndex.None && !isEmpty)
+                {
+                    slot.inventory.GiveItem(newRandomItem);
+                }
+            }
+
+            return true;
+        }
+    }
+
+}

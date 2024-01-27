@@ -12,6 +12,14 @@ using UnityEngine.AddressableAssets;
 namespace Moonstorm.Starstorm2
 {
     //LASCIATE OGNI SPERANZA, VOI CH'ENTRATE
+
+    //ZOMBIE CODE
+
+    //ZOMBIE CODE
+
+    //ZOMBIE CODE
+
+    //WILL DELETE WHEN IM SURE I DONT NEED IT
     public class Ethereal : NetworkBehaviour
     {
         public static Ethereal instance { get; private set; }

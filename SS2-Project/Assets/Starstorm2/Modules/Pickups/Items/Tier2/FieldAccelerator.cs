@@ -1,6 +1,8 @@
-﻿using R2API;
+﻿using Moonstorm.Starstorm2.Orbs;
+using R2API;
 using RoR2;
 using RoR2.Items;
+using RoR2.Orbs;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
@@ -21,7 +23,7 @@ namespace Moonstorm.Starstorm2.Items
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Extra % teleporter charge radius. (0.01 = 1%")]
         [TokenModifier("SS2_ITEM_FIELDACCELERATOR_DESC", StatTypes.MultiplyByN, 1, "100")]
-        public static float radiusPerStack = 15f;
+        public static float radiusPerStack = 0.75f;
 
         public static GameObject objectPrefab;
 
@@ -30,14 +32,17 @@ namespace Moonstorm.Starstorm2.Items
             base.Initialize();
             objectPrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("ObjectFieldAccelerator", SS2Bundle.Items), "ObjectDisplayFieldAccelerator", true);
             objectPrefab.RegisterNetworkPrefab();
-            //Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/Teleporter1.prefab").WaitForCompletion().AddComponent<FieldAcceleratorTeleporterBehavior>();
-            //Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/LunarTeleporter Variant.prefab").WaitForCompletion().AddComponent<FieldAcceleratorTeleporterBehavior>();
+            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/Teleporter1.prefab").WaitForCompletion().AddComponent<FieldAcceleratorTeleporterBehavior>();
+            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/LunarTeleporter Variant.prefab").WaitForCompletion().AddComponent<FieldAcceleratorTeleporterBehavior>();
         }
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.FieldAccelerator;
+
+            private HurtBox displayHurtbox;
+            private GameObject displayInstance;
             public void OnKilledOtherServer(DamageReport damageReport)
             {
                 var teleInstance = TeleporterInteraction.instance;
@@ -48,19 +53,67 @@ namespace Moonstorm.Starstorm2.Items
                     bool flag2 = teleInstance.monstersCleared;
                     bool flag3 = teleInstance.holdoutZoneController.IsBodyInChargingRadius(damageReport.victimBody);
                     if (flag && flag1 && flag2 && flag3)
-                        teleInstance.holdoutZoneController.charge += chargePerKill;
-                    //Holy fuck since when has .InverseHyperbolicScaling existed???
-                    //Since not too long ago, i stolñe it from komrade, lmao
-                    //gone.
+                    {
+                        if (displayHurtbox != null)
+                        {
+                            FieldAcceleratorOrb orb = new FieldAcceleratorOrb();
+                            orb.origin = damageReport.victimBody.transform.position;
+                            orb.target = displayHurtbox;
+                            OrbManager.instance.AddOrb(orb);
+                        }
+                        else
+                        {
+                            teleInstance.holdoutZoneController.charge += chargePerKill;
+                            //Util.PlaySound("AcceleratorAddCharge", teleInstance.gameObject);
+                        }
+                    }
+                }
+            }
+
+            private void TeleporterInteraction_onTeleporterBeginChargingGlobal(TeleporterInteraction tele)
+            {
+                if (displayHurtbox == null)
+                {
+                    var teleInstance = TeleporterInteraction.instance;
+                    FieldAcceleratorTeleporterBehavior fatb = teleInstance.GetComponent<FieldAcceleratorTeleporterBehavior>();
+                    displayInstance = fatb.displayInstance;
+                    if (displayInstance != null)
+                        displayHurtbox = displayInstance.GetComponent<HurtBoxGroup>().mainHurtBox;
+                    Debug.Log("displayHurtbox : " + displayHurtbox);
                 }
             }
 
             private void Start()
             {
+                TeleporterInteraction.onTeleporterBeginChargingGlobal += TeleporterInteraction_onTeleporterBeginChargingGlobal;
                 var teleInstance = TeleporterInteraction.instance;
+
                 if (teleInstance)
                 {
-                    teleInstance.gameObject.AddComponent<FieldAcceleratorTeleporterBehavior>();
+                    if (teleInstance.GetComponent<FieldAcceleratorTeleporterBehavior>() == null)
+                        teleInstance.gameObject.AddComponent<FieldAcceleratorTeleporterBehavior>();
+
+                    FieldAcceleratorTeleporterBehavior fatb = teleInstance.GetComponent<FieldAcceleratorTeleporterBehavior>();
+
+                    fatb.RecalcRadius();
+
+                    displayInstance = fatb.displayInstance;
+                    if (displayInstance != null)
+                        displayHurtbox = displayInstance.GetComponent<HurtBoxGroup>().mainHurtBox;
+                }
+            }
+
+            private void OnDestroy()
+            {
+                TeleporterInteraction.onTeleporterBeginChargingGlobal -= TeleporterInteraction_onTeleporterBeginChargingGlobal;
+
+                var teleInstance = TeleporterInteraction.instance;
+
+                if (teleInstance)
+                {
+                    FieldAcceleratorTeleporterBehavior fatb = teleInstance.GetComponent<FieldAcceleratorTeleporterBehavior>();
+                    if (fatb != null)
+                        fatb.RecalcRadius();
                 }
             }
         }
@@ -70,16 +123,32 @@ namespace Moonstorm.Starstorm2.Items
             private HoldoutZoneController hzc;
             private Transform pos;
             public static GameObject displayPrefab;
+            private ChildLocator displayChildLocator;
             public static float acceleratorCount;
             private bool teleCharging;
             private bool monstersCleared;
             public GameObject displayInstance;
             private float timer;
 
+            private TeleporterInteraction ti;
+            private ParticleSystem telePassiveParticles;
+            private ParticleSystem teleCenterParticles;
+            private ParticleSystem lightningParticles;
+            private Light lightningLightRef;
+            private Renderer rangeIndicator;
+            private ParticleSystem betweenProngsCore;
+            private Light coreLightRef;
+            private ParticleSystem debris;
+            private ParticleSystem chargingRing;
+            private Light loopLight;
+            private ParticleSystem core;
+            private ParticleSystem beam;
+
             private void Awake()
             {
                 hzc = GetComponent<HoldoutZoneController>();
                 TeleporterInteraction.onTeleporterBeginChargingGlobal += TeleporterInteraction_onTeleporterBeginChargingGlobal;
+                TeleporterInteraction.onTeleporterChargedGlobal += TeleporterInteraction_onTeleporterChargedGlobal;
                 RecalcRadius();
                 teleCharging = false;
                 monstersCleared = false;
@@ -87,18 +156,32 @@ namespace Moonstorm.Starstorm2.Items
 
             private void TeleporterInteraction_onTeleporterBeginChargingGlobal(TeleporterInteraction tele)
             {
-                RecalcRadius();
+                //RecalcRadius();
                 teleCharging = true;
+            }
+
+            private void TeleporterInteraction_onTeleporterChargedGlobal(TeleporterInteraction tele)
+            {
+                if (acceleratorCount > 0)
+                {
+                    displayChildLocator.FindChild("Passive").gameObject.SetActive(false);
+                    displayChildLocator.FindChild("Burst").gameObject.GetComponent<ParticleSystem>().Emit(40);
+                    displayChildLocator.FindChild("Ring").gameObject.GetComponent<ParticleSystem>().Emit(1);
+                    //Util.PlaySound("AcceleratorBoot", displayInstance.gameObject);
+                }
             }
 
             private void FixedUpdate()
             {
                 timer += Time.fixedDeltaTime;
-                if (timer > 0.5)
+                if (timer > 0.5 && acceleratorCount > 0)
                 {
                     timer = 0;
+
                     if (hzc == null)
+                    {
                         hzc = GetComponent<HoldoutZoneController>();
+                    }
 
                     if (teleCharging == true && monstersCleared == false)
                     {
@@ -115,73 +198,79 @@ namespace Moonstorm.Starstorm2.Items
 
             private void UpgradeTeleporterRadius()
             {
-                //visual stuff...
-                //make teleporter radius / beam orange? there's so many fcuking vfx.
+                //Debug.Log("RIP sleep in OU 2024");
 
-                //like fucking LOOK AT THIS:
+                acceleratorCount = 0;
 
-                /*//set a bunch of variables we'll be using for teleporter modifications:
-                var newTeleMat = SS2Assets.LoadAsset<Material>("matEtherealFresnelOverlay", SS2Bundle.Indev);
-                var teleBase = GameObject.Find("TeleporterBaseMesh").gameObject;
-                var teleProngs = teleBase.transform.Find("TeleporterProngMesh").gameObject;
-                var teleBeacon = teleBase.transform.Find("SurfaceHeight/TeleporterBeacon").gameObject;
-                var teleBuiltInEffects = teleBase.transform.Find("BuiltInEffects").gameObject;
-                var radiusScaler = teleBuiltInEffects.transform.Find("ChargingEffect/RadiusScaler").gameObject;
-
-                //update the fresnel material from red to green
-                if (currStage != "skymeadow")
+                foreach (CharacterMaster cm in Run.instance.userMasters.Values)
                 {
-                    teleBase.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
-                    teleProngs.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
-                    teleBeacon.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
+                    if (cm.inventory)
+                        acceleratorCount += cm.inventory.GetItemCount(SS2Content.Items.FieldAccelerator);
                 }
 
-                //resize & reposition the teleporter
-                teleBase.transform.localScale *= 1f;
-                teleBase.transform.position = new Vector3(teleBase.transform.position.x, teleBase.transform.position.y, teleBase.transform.position.z);
-                //teleProngs.transform.localScale *= 2f;
-                //teleBeacon.transform.localScale *= 0.5f;
-                //radiusScaler.transform.localScale *= 0.67f;
+                if (acceleratorCount == 0)
+                    return;
+
+                //set a bunch of variables we'll be using for teleporter modifications:
+
+                //get EVERYTHING
+                telePassiveParticles = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/PassiveParticle, Sphere").GetComponent<ParticleSystem>();
+                teleCenterParticles = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/PassiveParticle, Center").GetComponent<ParticleSystem>();
+                lightningParticles = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargedEffect/LightningAlongProngs").GetComponent<ParticleSystem>();
+                lightningLightRef = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargedEffect/LightningAlongProngs/ReferencePointLight").GetComponent<Light>();
+                betweenProngsCore = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/IdleToChargingEffect/BetweenProngs/Core").GetComponent<ParticleSystem>();
+                coreLightRef = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/IdleToChargingEffect/BetweenProngs/Point light").GetComponent<Light>();
+                debris = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/IdleToChargingEffect/3DDebris").GetComponent<ParticleSystem>();
+                chargingRing = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/Ring").GetComponent<ParticleSystem>();
+                loopLight = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/BetweenProngs/Loop/Point light").GetComponent<Light>();
+                core = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/BetweenProngs/Loop/Core").GetComponent<ParticleSystem>();
+                beam = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/BetweenProngs/Loop/Beam").GetComponent<ParticleSystem>();
+                rangeIndicator = hzc.radiusIndicator;
 
                 //resize & recolor large teleporter particles
                 var tppMain = telePassiveParticles.main;
-                telePassiveParticles.transform.localScale *= 1.5f;
-                tppMain.startColor = new Color(0f, .89f, .39f);
+                tppMain.startColor = new Color(0.8f, .42f, 0f);
 
                 //resize & recolor particles above teleporter well
-                var tcpMain = teleCenterParticles.main;
-                tcpMain.startColor = new Color(.0f, .89f, .39f);
+                /*var tcpMain = teleCenterParticles.main;
+                tcpMain.startColor = new Color(0.8f, .42f, 0f);*/
 
                 //re-material the range indicator
-                rangeIndicator.material = SS2Assets.LoadAsset<Material>("matEthTeleporterRangeIndicator", SS2Bundle.Indev);
+                rangeIndicator.material = SS2Assets.LoadAsset<Material>("matAcceleratorTeleporterRangeIndicator", SS2Bundle.Items);
 
                 //lightning effects
-                var lightningPSR = lightningParticles.GetComponent<ParticleSystemRenderer>();
-                lightningPSR.material = SS2Assets.LoadAsset<Material>("matEthTPLightning", SS2Bundle.Indev);
-                lightningLightRef.color = new Color(.0f, .89f, .39f);
+                /*var lightningPSR = lightningParticles.GetComponent<ParticleSystemRenderer>();
+                lightningPSR.material = SS2Assets.LoadAsset<Material>("matAcceleratorTPLightning", SS2Bundle.Items);
+                lightningLightRef.color = new Color(0.8f, .42f, 0f);*/
 
                 //idletocharging
                 var corePSR = betweenProngsCore.GetComponent<ParticleSystemRenderer>();
-                corePSR.material = SS2Assets.LoadAsset<Material>("matEthTPFire", SS2Bundle.Indev);
-                coreLightRef.color = new Color(.0f, .89f, .39f);
+                corePSR.material = SS2Assets.LoadAsset<Material>("matAcceleratorTPFire", SS2Bundle.Items);
+                coreLightRef.color = new Color(0.8f, .42f, 0f);
 
                 //3DDebris
                 var debrisPSR = debris.GetComponent<ParticleSystemRenderer>();
-                debrisPSR.trailMaterial = SS2Assets.LoadAsset<Material>("matEthExplosion", SS2Bundle.Indev);
+                debrisPSR.trailMaterial = SS2Assets.LoadAsset<Material>("matAcceleratorExplosion", SS2Bundle.Items);
 
                 //charging effects
                 var ringPSR = chargingRing.GetComponent<ParticleSystemRenderer>();
-                ringPSR.material = SS2Assets.LoadAsset<Material>("matEthTPShockwave", SS2Bundle.Indev);
+                ringPSR.material = SS2Assets.LoadAsset<Material>("matAcceleratorTPShockwave", SS2Bundle.Items);
 
                 //center beam
-                loopLight.color = new Color(.0f, .89f, .39f);
+                loopLight.color = new Color(0.8f, .42f, 0f);
                 var beamCorePSR = core.GetComponent<ParticleSystemRenderer>();
-                beamCorePSR.material = SS2Assets.LoadAsset<Material>("matEthTPFire", SS2Bundle.Indev);
+                beamCorePSR.material = SS2Assets.LoadAsset<Material>("matAcceleratorTPFire", SS2Bundle.Items);
+                //core.transform.position += new Vector3(core.transform.position.x, core.transform.position.y + 1.5f, core.transform.position.z);
                 var beamPSR = beam.GetComponent<ParticleSystemRenderer>();
-                beamPSR.material = SS2Assets.LoadAsset<Material>("matEthTPLaser", SS2Bundle.Indev);*/
+                beamPSR.material = SS2Assets.LoadAsset<Material>("matAcceleratorTPLaser", SS2Bundle.Items);
+                //beam.transform.position += new Vector3(beam.transform.position.x, beam.transform.position.y + 1.5f, beam.transform.position.z);
+
+                displayChildLocator.FindChild("Passive").gameObject.SetActive(true);
+                displayChildLocator.FindChild("Burst").gameObject.GetComponent<ParticleSystem>().Emit(40);
+                displayChildLocator.FindChild("Ring").gameObject.GetComponent<ParticleSystem>().Emit(1);
             }
 
-            private void RecalcRadius()
+            public void RecalcRadius()
             {
                 acceleratorCount = 0;
 
@@ -196,15 +285,22 @@ namespace Moonstorm.Starstorm2.Items
 
                 if (acceleratorCount > 0 && displayInstance == null)
                 {
-                    displayInstance = Instantiate(objectPrefab, TeleporterInteraction.instance.transform.position, new Quaternion(0, 0, 0, 0));
+                    Vector3 position = new Vector3(TeleporterInteraction.instance.transform.position.x, TeleporterInteraction.instance.transform.position.y + 1.5f, TeleporterInteraction.instance.transform.position.z);
+                    displayInstance = Instantiate(objectPrefab, position, new Quaternion(0, 0, 0, 0));
+                    displayChildLocator = displayInstance.GetComponent<ChildLocator>();
                     NetworkServer.Spawn(displayInstance);
                 }
 
-                if (!monstersCleared)
-                    return;
+                if (acceleratorCount == 0 && displayInstance != null)
+                {
+                    NetworkServer.Destroy(displayInstance);
+                }
 
-                hzc.baseRadius *= 1 + (radiusPerStack * acceleratorCount);
-                hzc.currentRadius *= 1 + (radiusPerStack * acceleratorCount);
+                if (hzc != null && acceleratorCount > 0 && monstersCleared)
+                {
+                    hzc.baseRadius *= 1 + (radiusPerStack * acceleratorCount);
+                    //Util.PlaySound("AcceleratorBoot", displayInstance.gameObject);
+                }
             }
         }
     }
