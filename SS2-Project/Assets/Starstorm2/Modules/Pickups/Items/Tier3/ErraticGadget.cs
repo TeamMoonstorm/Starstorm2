@@ -107,7 +107,8 @@ namespace Moonstorm.Starstorm2.Items
                 {
                     // ukulele and tesla add the initial target to bouncedObjects without damaging them. 
                     //we want to subtract 1 if wasFirstBounceEnemy==true, in order to get the amount of targets the lightning actually hit
-                    // we want to subtract another 1 because ummm. i forgot :3
+                    //we also have to count unique objects in bouncedObjects because vanilla code adds each target more than once
+                    // tldr lightningorb is shit and now its my problem
                     List<HealthComponent> uniqueObjects = new List<HealthComponent>();
                     for(int i = 0; i < self.bouncedObjects.Count; i++)
                     {
@@ -276,7 +277,6 @@ namespace Moonstorm.Starstorm2.Items
             public override void Begin()
             {
                 base.duration = duration;
-                SS2Log.Info($"BouncesRemaining = {this.bouncesRemaining}");
                 EffectData effectData = new EffectData
                 {
                     origin = this.origin,

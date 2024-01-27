@@ -13,15 +13,15 @@ namespace Moonstorm.Starstorm2.Items
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance on hit to drop a coffee bean. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
-        public static float procChance = .1f;
+        public static float procChance = .08f;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Attack speed bonus granted per stack while the buff is active. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
-        public static float atkSpeedBonus = .1f;
+        public static float atkSpeedBonus = .08f;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Movement speed bonus granted per stack while the buff is active. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
-        public static float moveSpeedBonus = .1f;
+        public static float moveSpeedBonus = .08f;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of the buff gained upon picking up a coffee bean, per stack.")]
         [TokenModifier(token, StatTypes.Default, 3)]

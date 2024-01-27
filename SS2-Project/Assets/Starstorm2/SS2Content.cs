@@ -135,6 +135,8 @@ namespace Moonstorm.Starstorm2
             public static ItemDef TerminationHelper;
 
             public static ItemDef GildedAmulet;
+
+            public static ItemDef UniversalDock;
         }
 
         public static class Equipments

@@ -16,11 +16,11 @@ namespace Moonstorm.Starstorm2.Items
        
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius of the energy burst, in meters.")]
         [TokenModifier(token, StatTypes.Default, 0)]
-        public static float baseRadius = 13f;
+        public static float baseRadius = 15f;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius of the energy burst per stack, in meters.")]
         [TokenModifier(token, StatTypes.Default, 1)]
-        public static float stackRadius = 4f;
+        public static float stackRadius = 5f;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Base damage of the energy burst, per stack. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
@@ -29,7 +29,7 @@ namespace Moonstorm.Starstorm2.Items
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Proc coefficient of the energy burst.")]
         public static float procCoefficient = 1f;
 
-        public static float minimumSprintDistance = 10f;
+        public static float minimumSprintDistance = 12.5f;
         public sealed class Behavior : BaseItemBodyBehavior
         {
             [ItemDefAssociation]
@@ -41,30 +41,32 @@ namespace Moonstorm.Starstorm2.Items
             private GameObject readyEffect;
             private uint soundId;
 
+            private EntityStateMachine bodyStateMachine;
+            private Vector3 previousPosition; // cant just calculate from velocity because some states use rootmotion
+
+            private void Start()
+            {
+                this.bodyStateMachine = EntityStateMachine.FindByCustomName(base.gameObject, "Body");
+            }
             private void FixedUpdate()
             {
                 bool isSprinting = base.body.isSprinting;
+                Vector3 currentPosition = base.transform.position;
                 if(wasSprinting && !isSprinting)
                 {
                     // do burst                   
                     if(this.attackReady)
-                    {                       
+                    {
+                        this.attackReady = false;
                         if (this.readyEffect) Destroy(this.readyEffect);
                         AkSoundEngine.StopPlayingID(soundId);
-
-                        this.Fire();
-
-                        this.attackReady = false;
+                        this.Fire();                        
                     }
                     this.distanceTravelledThisSprint = 0;
                 }
                 if(isSprinting)
                 {
-                    if(body.characterMotor)
-                        this.distanceTravelledThisSprint += body.characterMotor.velocity.magnitude * Time.fixedDeltaTime;
-                    else if(body.rigidbody)
-                        this.distanceTravelledThisSprint += body.rigidbody.velocity.magnitude * Time.fixedDeltaTime;
-
+                    this.distanceTravelledThisSprint += Vector3.Distance(previousPosition, currentPosition);
                     // start effects
                     if (!this.attackReady && distanceTravelledThisSprint >= minimumSprintDistance)
                     {
@@ -72,8 +74,9 @@ namespace Moonstorm.Starstorm2.Items
                         this.soundId = Util.PlaySound("CrypticSourceStage1", base.gameObject);
                         this.attackReady = true;
                     }
-                }    
+                }
 
+                previousPosition = currentPosition;
                 wasSprinting = isSprinting;
             }
 
@@ -102,13 +105,14 @@ namespace Moonstorm.Starstorm2.Items
                     procChainMask = default(ProcChainMask),
                     baseForce = 0f,
                     damageColorIndex = DamageColorIndex.Item,
-                    falloffModel = BlastAttack.FalloffModel.Linear,
+                    falloffModel = BlastAttack.FalloffModel.None,
                     losType = BlastAttack.LoSType.None,
                 }.Fire();
             }
 
             private void OnDestroy()
             {
+                if (this.attackReady) AkSoundEngine.StopPlayingID(soundId);
                 if (this.readyEffect) Destroy(this.readyEffect);
             }
         }
