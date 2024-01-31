@@ -136,7 +136,7 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef GildedAmulet;
 
-            public static ItemDef UniversalDock;
+            public static ItemDef UniversalCharger;
         }
 
         public static class Equipments
@@ -166,7 +166,9 @@ namespace Moonstorm.Starstorm2
         {
             public static BuffDef BuffAffixVoid;
 
-            public static BuffDef BuffBackThruster;          
+            public static BuffDef BuffBackThruster;
+
+            public static BuffDef BuffUniversalCharger;
 
             public static BuffDef BuffChirrConfuse;
 

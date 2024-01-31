@@ -81,7 +81,6 @@ namespace Moonstorm.Starstorm2.Items
             {
                 if (body.inventory.GetItemCount(SS2Content.Items.ErraticGadget) > 0) // should probably just put this in CustomLightningOrb ?
                 {
-                    orb.canBounceOnSameTarget = true;
                     orb.canProcGadget = true;
                 }
 

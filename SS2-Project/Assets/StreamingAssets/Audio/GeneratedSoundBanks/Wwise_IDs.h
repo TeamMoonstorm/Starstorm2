@@ -127,6 +127,7 @@ namespace AK
         static const AkUniqueID STOP_SOFT_RAIN = 4234730185U;
         static const AkUniqueID STRANGECAN = 3750145159U;
         static const AkUniqueID SWIFTSKATEBOARD = 961366952U;
+        static const AkUniqueID UNIVERSALCHARGER = 1435965638U;
         static const AkUniqueID VOIDAMBIENT = 2533932213U;
         static const AkUniqueID WASTELANDERPRIMARY = 2333188815U;
         static const AkUniqueID WASTELANDERPRIMARYCRIT = 1319272055U;

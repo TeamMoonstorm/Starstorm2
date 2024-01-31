@@ -11,7 +11,7 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="866530374" Language="SFX" Hash="3547229994">
+		<SoundBank Id="866530374" Language="SFX" Hash="1042560661">
 			<ObjectPath>\SoundBanks\Default Work Unit\Starstorm2</ObjectPath>
 			<ShortName>Starstorm2</ShortName>
 			<Path>Starstorm2.bnk</Path>
@@ -1054,6 +1054,14 @@
 						<File Id="555558067" Language="SFX">
 							<ShortName>item_proc_swiftSkateboard_01.wav</ShortName>
 							<Path>SFX\item_proc_swiftSkateboard_01_324331BC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1435965638" Name="UniversalCharger" ObjectPath="\Events\Default Work Unit\Items\UniversalCharger" DurationType="OneShot" DurationMin="1.044736" DurationMax="1.172677">
+					<IncludedMemoryFiles>
+						<File Id="83880130" Language="SFX">
+							<ShortName>item_crypticsource_start.wav</ShortName>
+							<Path>SFX\item_crypticsource_start_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>

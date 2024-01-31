@@ -904,6 +904,20 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="UniversalCharger" ID="{7CBDCD99-1DEA-413D-9200-E36365990FF0}">
+							<ChildrenList>
+								<Action Name="" ID="{13D7317A-3436-4AB1-BEC3-9CF61A9CDCE3}" ShortID="406345941">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="item_proc_universalcharger" ID="{3606D7F3-9541-4B70-B08E-1A7EFE1ADF12}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Event Name="VoidAmbient" ID="{096E8867-684C-49FD-9847-D8B99D9E53EC}">

@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: matUIPaintStreakFlash
+  m_Name: matUIPaintStreakRefresh
   m_Shader: {fileID: 4800000, guid: c1dcd1ea051f96345ae50dbc0687e586, type: 2}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -24,15 +24,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OverlayTex:
-        m_Texture: {fileID: 2800000, guid: d5c7e4cacbe5f25458e5cda86e49045b, type: 3}
+        m_Texture: {fileID: 2800000, guid: bd6556606d6942d4ca1d181ae0f7a20c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RemapRamp:
-        m_Texture: {fileID: 2800000, guid: 0e148ecc8335b4b4798d6207679fff7a, type: 3}
+        m_Texture: {fileID: 2800000, guid: a93a3f427a1d483438b24f40f24e8d99, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _AlphaBoost: 2.5
+    - _AlphaBoost: 3.5
     - _BumpScale: 1
     - _ColorMask: 15
     - _Cutoff: 0.5
@@ -43,15 +43,15 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _LightenFactor: 0.555
+    - _LightenFactor: 0.5647
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _OverbrightenScale: 2
     - _Parallax: 0.02
-    - _PatternPanningSpeed: 14.5
-    - _PatternPixelSize: 75
-    - _PatternStrength: 0.946
+    - _PatternPanningSpeed: 20
+    - _PatternPixelSize: 244
+    - _PatternStrength: 0.795
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -61,10 +61,10 @@ Material:
     - _StencilReadMask: 255
     - _StencilWriteMask: 255
     - _TestScalar: 32
-    - _TrueAlpha: 0.973
+    - _TrueAlpha: 1
     - _UVSec: 0
     - _UseUIAlphaClip: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.8288474, g: 0.8396226, b: 0.5742702, a: 1}
+    - _Color: {r: 0.9622642, g: 0.93971956, b: 0.5492168, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
