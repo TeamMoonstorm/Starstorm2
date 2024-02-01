@@ -32,6 +32,8 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef Cognation;
 
+            public static ItemDef CompositeInjector;
+
             public static ItemDef ChirrFriendHelper;
 
             public static ItemDef CrypticSource;
@@ -137,6 +139,8 @@ namespace Moonstorm.Starstorm2
             public static ItemDef GildedAmulet;
 
             public static ItemDef UniversalCharger;
+
+            public static ItemDef UraniumHorseshoe;
         }
 
         public static class Equipments

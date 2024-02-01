@@ -25,10 +25,10 @@ namespace Moonstorm.Starstorm2.Items
 
         public override void Initialize()
         {
-            On.RoR2.UI.HUD.Awake += AddPanels;
+            On.RoR2.UI.HUD.Awake += AddIcons;
         }
 
-        private void AddPanels(On.RoR2.UI.HUD.orig_Awake orig, RoR2.UI.HUD self)
+        private void AddIcons(On.RoR2.UI.HUD.orig_Awake orig, RoR2.UI.HUD self)
         {
             orig(self);
 

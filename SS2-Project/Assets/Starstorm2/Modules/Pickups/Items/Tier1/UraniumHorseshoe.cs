@@ -2,6 +2,7 @@
 
 namespace Moonstorm.Starstorm2.Items
 {
+    [DisabledContent]
     public sealed class UraniumHorseshoe : ItemBase
     {
 
