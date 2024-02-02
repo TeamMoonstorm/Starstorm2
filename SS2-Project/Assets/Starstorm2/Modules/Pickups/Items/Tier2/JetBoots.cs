@@ -159,7 +159,7 @@ namespace Moonstorm.Starstorm2.Items
                 procChainMask = default(ProcChainMask),
                 baseForce = 600f,
                 damageColorIndex = DamageColorIndex.Item,
-                falloffModel = BlastAttack.FalloffModel.Linear,
+                falloffModel = BlastAttack.FalloffModel.None,
                 losType = BlastAttack.LoSType.NearestHit,
             }.Fire();
         }

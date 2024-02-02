@@ -21,7 +21,7 @@ namespace Moonstorm.Starstorm2.Items
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Damage per second, per stack of Intoxicate. (1 = 1%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
-        public static float damageCoefficient = .25f;
+        public static float damageCoefficient = .5f;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Health restored when killing intoxicated enemies, per stack of Intoxicate.")]
         [TokenModifier(token, StatTypes.Default, 3)]

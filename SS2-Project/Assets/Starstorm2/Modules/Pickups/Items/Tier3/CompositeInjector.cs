@@ -26,22 +26,20 @@ namespace Moonstorm.Starstorm2.Items
 		public static GameObject useEffect = SS2Assets.LoadAsset<GameObject>("CompositeInjectorEffect", SS2Bundle.Items);
 		public override void Initialize()
         {
-			// 8 hooks lol
+			// 10 hooks lol
 			var hook = new Hook(typeof(EquipmentIcon).GetMethod(nameof(EquipmentIcon.GenerateDisplayData), (System.Reflection.BindingFlags)(-1)), typeof(CompositeInjector).GetMethod(nameof(EquipmentIcon_GenerateDisplayData), (System.Reflection.BindingFlags)(-1)));
             On.RoR2.UI.HUD.Awake += AddIcons;
             On.RoR2.EquipmentDef.AttemptGrant += EquipmentDef_AttemptGrant;
-            IL.RoR2.CharacterBody.OnEquipmentLost += CharacterBody_OnEquipmentLost;
-            CharacterBody.onBodyStartGlobal += CharacterBody_onBodyStartGlobal;
             EquipmentSlot.onServerEquipmentActivated += ActivateAllEquipment;
+            IL.RoR2.CharacterBody.OnInventoryChanged += CharacterBody_OnInventoryChanged;
+            IL.RoR2.Inventory.UpdateEquipment += Inventory_UpdateEquipment;
             On.RoR2.CharacterModel.Awake += CharacterModel_Awake;
             IL.RoR2.CharacterModel.UpdateOverlays += CharacterModel_UpdateOverlays;
             On.RoR2.EquipmentSlot.Update += EquipmentSlot_Update;
         }
 
-		
-
-        #region Gameplay Mechanics
-        private void ActivateAllEquipment(EquipmentSlot self, EquipmentIndex equipmentIndex)
+		#region Gameplay Mechanics
+		private void ActivateAllEquipment(EquipmentSlot self, EquipmentIndex equipmentIndex)
 		{
 			Inventory inventory = self.characterBody.inventory;		
 			if (inventory && inventory.GetItemCount(SS2Content.Items.CompositeInjector) <= 0) return;
@@ -62,25 +60,46 @@ namespace Moonstorm.Starstorm2.Items
 				}
 			}
 
-
-			EquipmentState current = inventory.currentEquipmentState;
-			float cooldownElapsed = 0f;
-			if(!current.chargeFinishTime.hasPassed)
-			 cooldownElapsed = initialCooldown - current.chargeFinishTime.timeUntil; 
-			// if the highest cooldown equipment activated has a 100 second cooldown
-			// and we are currently 20 seconds into the current equipment cooldown
-			// set new cooldown to 80 seconds from now
-			// PRETTY sure that is very wrong
-			inventory.SetEquipment(new EquipmentState(current.equipmentIndex, Run.FixedTimeStamp.now + highestCooldown - cooldownElapsed, current.charges), inventory.activeEquipmentSlot);
-
 			EffectData effectData = new EffectData();
 			effectData.origin = self.characterBody.corePosition;
 			effectData.SetNetworkedObjectReference(self.gameObject);
 			EffectManager.SpawnEffect(useEffect, effectData, true);
-
 		}
 
-		// new equipment to first slot, move old equipment to third slot, move evreything else upwards, pop out last equipment
+		// set all equipment cooldowns to the highest cooldown equipment, if inventory has composite injector
+		private void Inventory_UpdateEquipment(ILContext il)
+		{
+			ILCursor c = new ILCursor(il);
+			bool b = c.TryGotoNext(MoveType.After,
+				x => x.MatchLdloc(3),
+				x => x.MatchLdfld<EquipmentState>(nameof(EquipmentState.equipmentDef)),
+				x => x.MatchLdfld<EquipmentDef>(nameof(EquipmentDef.cooldown))); // float num2 = equipmentState.equipmentDef.cooldown(here) * CalculateEquipmentCooldownScale();
+			if (b)
+			{
+				c.Emit(OpCodes.Ldarg_0); //inventory
+				c.EmitDelegate<Func<float, Inventory, float>>((cd, inv) =>
+				{
+					if (inv.GetItemCount(SS2Content.Items.CompositeInjector) <= 0) return cd;
+
+					float highestCooldown = cd;
+					for (int i = 0; i < inv.GetEquipmentSlotCount(); i++)
+					{
+						float cooldown = inv.GetEquipment((uint)i).equipmentDef?.cooldown ?? 0;
+						if (cooldown > highestCooldown)
+						{
+							highestCooldown = cooldown;
+						}
+					}
+					return highestCooldown;
+				});
+			}
+			else
+			{
+				SS2Log.Warning("CompositeInjector.CharacterBody_OnEquipmentLost: ILHook failed.");
+			}
+		}
+
+		// when picking up new equipment, move it to first slot, move old equipment to third slot (2 is toolbot), move evreything else upwards, pop out last equipment
 		private void EquipmentDef_AttemptGrant(On.RoR2.EquipmentDef.orig_AttemptGrant orig, ref PickupDef.GrantContext context)
 		{
 			Inventory inventory = context.body.inventory;
@@ -128,73 +147,60 @@ namespace Moonstorm.Starstorm2.Items
             }
 		}
 
-		// vanilla only adds passivebuffdef of the active equipmentslot
-		// if body has composite injector, only remove passivebuffdef if the equipment isnt in any slot.
-		private void CharacterBody_OnEquipmentLost(ILContext il)
-        {
+		//vanilla only adds passivebuffdef from active equipment slot
+		//if body has composite injector, we want them from all equipment slots
+		// hook runs after OnEquipmentLost and OnEquipmentGained, and before adding itembehaviors from elite buffs
+		private void CharacterBody_OnInventoryChanged(ILContext il)
+		{
 			ILCursor c = new ILCursor(il);
-			bool b = c.TryGotoNext(MoveType.After,
-				x => x.MatchLdarg(1),
-				x => x.MatchLdfld<EquipmentDef>(nameof(EquipmentDef.passiveBuffDef)),
-				x => x.MatchBrfalse(out var label)); // if(NetworkServer.active && passiveBuffDef != null)
+			bool b = c.TryGotoNext(MoveType.Before,
+				x => x.MatchLdarg(0),
+				x => x.MatchLdcI4(1),
+				x => x.MatchStfld<CharacterBody>(nameof(CharacterBody.statsDirty))); // statsDirty = true;
 			if (b)
 			{
-				c.Index--;
-				c.Emit(OpCodes.Ldarg_0); // body
-				c.EmitDelegate<Func<BuffDef, CharacterBody, bool>>((bd, body) =>
+				c.Emit(OpCodes.Ldarg_0); //body
+				c.EmitDelegate<Action<CharacterBody>>((body) =>
 				{
-					// return TRUE if we want to remove the buff
-					// return FALSE if we want to skip removing the buff
-					if (bd == null || body.inventory.GetItemCount(SS2Content.Items.CompositeInjector) <= 0) return true;
-					
-					for(int i = 0; i < body.inventory.GetEquipmentSlotCount(); i++)
-                    {
-						if (body.inventory.GetEquipment((uint)i).equipmentDef?.passiveBuffDef == bd)
+					if (body.inventory.GetItemCount(SS2Content.Items.CompositeInjector) <= 0) return;
+
+					for (int i = 0; i < body.inventory.GetEquipmentSlotCount(); i++)
+					{
+						BuffDef buffDef = body.inventory.GetEquipment((uint)i).equipmentDef?.passiveBuffDef;
+						if (buffDef && !body.HasBuff(buffDef))
 						{
-							return false;
+							body.AddBuff(buffDef);
 						}
-                    }
-					return true;
+					}
 				});
 			}
 			else
 			{
 				SS2Log.Warning("CompositeInjector.CharacterBody_OnEquipmentLost: ILHook failed.");
 			}
-		}
-		// add passivebuffdefs from all equipment when body spawns, since vanilla only adds from active equipment
-		private void CharacterBody_onBodyStartGlobal(CharacterBody body)
-		{
-			if (!NetworkServer.active) return;
-			if (body.inventory?.GetItemCount(SS2Content.Items.CompositeInjector) > 0)
-			{
-				for (int i = 0; i < body.inventory.GetEquipmentSlotCount(); i++)
-				{
-					BuffDef buff = body.inventory.GetEquipment((uint)i).equipmentDef?.passiveBuffDef;
-					if (buff && !body.HasBuff(buff))
-					{
-						body.AddBuff(buff);
-					}
-				}
-			}
+
 		}
 
-		// update targets for each equipment
+		// display indicator of the first equipment that uses one
+		// would be cool to get all the indicators but it would be very annoying to do
 		private void EquipmentSlot_Update(On.RoR2.EquipmentSlot.orig_Update orig, EquipmentSlot self)
 		{
 			orig(self);
-			//if (self.inventory?.GetItemCount(SS2Content.Items.CompositeInjector) > 0)
-			//{
-			//	for (int i = 0; i < self.inventory.GetEquipmentSlotCount(); i++)
-			//	{
-			//		EquipmentState state = self.inventory.GetEquipment((uint)i);
-			//		if (state.equipmentIndex != self.equipmentIndex)
-			//		{
-			//			self.UpdateTargets(state.equipmentIndex, self.stock > 0);
-			//		}
-			//	}
-			//}
-		}
+            if (self.inventory?.GetItemCount(SS2Content.Items.CompositeInjector) > 0)
+            {
+				self.targetIndicator.active = false;
+                for (int i = 0; i < self.inventory.GetEquipmentSlotCount(); i++)
+                {
+					EquipmentState state = self.inventory.GetEquipment((uint)i);
+					if (state.equipmentIndex != self.equipmentIndex)
+					{
+						self.UpdateTargets(state.equipmentIndex, self.stock > 0);
+					}
+
+					if (self.targetIndicator.active) break; // use the indicator of the first equipment that uses one			
+                }
+            }
+        }
 		#endregion
 
 		#region Item Displays
@@ -584,10 +590,15 @@ namespace Moonstorm.Starstorm2.Items
 					EquipmentState equipmentState;
 					if (this.displayAlternateEquipment)
 					{
+
 						//equipmentState = this.targetInventory.alternateEquipmentState; // VANILLA CODE /////////////////////////////////////////////////////////
 						//result.hideEntireDisplay = (this.targetInventory.GetEquipmentSlotCount() <= 1);
-						equipmentState = this.targetInventory.GetEquipment(this.targetSlotIndex); // NEW /////////////////////////////////////////////////////////
-						result.hideEntireDisplay = (this.targetInventory.GetEquipmentSlotCount() - 1 < this.targetSlotIndex);
+
+						// NEW /////////////////////////////////////////////////////////
+						// DISPLAY NUMBER OF INJECTOR SLOTS EQUAL TO NUMBER OF COMPOSITE INJECTORS INVENTORY HAS
+						equipmentState = this.targetInventory.GetEquipment(this.targetSlotIndex); 
+						int stack = this.targetInventory.GetItemCount(SS2Content.Items.CompositeInjector); 
+						result.hideEntireDisplay = (stack + 1 < this.targetSlotIndex); // first injector icon is slotindex 2
 					}
 					else
 					{

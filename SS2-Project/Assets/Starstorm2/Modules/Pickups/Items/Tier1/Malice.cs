@@ -29,7 +29,7 @@ namespace Moonstorm.Starstorm2.Items
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius of Malice per stack, in meters.")]
         [TokenModifier(token, StatTypes.Default, 3)]
-        public static float radiusPerStack = 4f;
+        public static float radiusPerStack = 2.4f;
 
         
 
