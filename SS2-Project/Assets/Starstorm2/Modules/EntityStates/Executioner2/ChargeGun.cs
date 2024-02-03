@@ -205,11 +205,11 @@ namespace EntityStates.Executioner2
             {
                 timer = 0f;
 
-                //skillLocator.secondary.stock += 1;
-                ExecutionerIonOrb ionOrb = new ExecutionerIonOrb();
+                skillLocator.secondary.stock += 1;
+                /*ExecutionerIonOrb ionOrb = new ExecutionerIonOrb();
                 ionOrb.origin = transform.position;
                 ionOrb.target = Util.FindBodyMainHurtBox(characterBody);
-                OrbManager.instance.AddOrb(ionOrb);
+                OrbManager.instance.AddOrb(ionOrb);*/
                 //Debug.Log("adding stock");
 
                 if (characterBody.skillLocator.secondary.stock < characterBody.skillLocator.secondary.maxStock)

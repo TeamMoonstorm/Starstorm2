@@ -11,15 +11,13 @@ namespace Moonstorm.Starstorm2.Buffs
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffSigil", SS2Bundle.Items);
         public override Material OverlayMaterial { get; } = SS2Assets.LoadAsset<Material>("matSigilBuffOverlay", SS2Bundle.Items);
 
-        public sealed class Behavior : BaseBuffBodyBehavior, IBodyStatArgModifier
+        public sealed class Behavior : BaseBuffBodyBehavior
         {
             [BuffDefAssociation]
             private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffSigil;
-            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            public void OnDestroy()
             {
-                //the stacking amounts are added by the item - these base values are here in case the buff is granted by something other than sigil
-                args.armorAdd += HuntersSigil.baseArmor;
-                args.damageMultAdd += HuntersSigil.baseDamage;
+                body.SetBuffCount(SS2Content.Buffs.BuffSigilHidden.buffIndex, 0);
             }
         }
     }

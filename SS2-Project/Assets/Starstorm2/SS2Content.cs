@@ -119,6 +119,8 @@ namespace Moonstorm.Starstorm2
             public static ItemDef TerminationHelper;
 
             public static ItemDef GildedAmulet;
+
+            public static ItemDef ChucklingFungus;
         }
 
         public static class Equipments
@@ -191,6 +193,8 @@ namespace Moonstorm.Starstorm2
             public static BuffDef BuffScavengersFortune;
 
             public static BuffDef BuffSigil;
+
+            public static BuffDef BuffSigilHidden;
 
             public static BuffDef BuffKickflip;
 
