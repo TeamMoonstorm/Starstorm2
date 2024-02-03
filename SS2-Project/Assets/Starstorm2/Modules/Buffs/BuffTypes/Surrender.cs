@@ -24,17 +24,21 @@ namespace Moonstorm.Starstorm2.Buffs
             {
                 if(body.skillLocator)
                 {
-                    if (body.skillLocator.primary && !(body.skillLocator.primary.skillDef is CaptainOrbitalSkillDef))
-                        body.skillLocator.primary.SetSkillOverride(this, disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
+                    GenericSkill primary = body.skillLocator.primary;
+                    if (primary && !(primary.skillDef is CaptainOrbitalSkillDef) && !primary.skillDef.isCombatSkill)
+                        primary.SetSkillOverride(this, disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
 
-                    if (body.skillLocator.secondary && !(body.skillLocator.secondary.skillDef is CaptainOrbitalSkillDef))
-                        body.skillLocator.secondary.SetSkillOverride(this, disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
+                    GenericSkill secondary = body.skillLocator.secondary;
+                    if (secondary && !(secondary.skillDef is CaptainOrbitalSkillDef) && !secondary.skillDef.isCombatSkill)
+                        secondary.SetSkillOverride(this, disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
 
-                    if (body.skillLocator.utility && !(body.skillLocator.utility.skillDef is CaptainOrbitalSkillDef))
-                        body.skillLocator.utility.SetSkillOverride(this, disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
+                    GenericSkill utility = body.skillLocator.utility;
+                    if (utility && !(utility.skillDef is CaptainOrbitalSkillDef) && !utility.skillDef.isCombatSkill)
+                        utility.SetSkillOverride(this, disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
 
-                    if (body.skillLocator.special && !(body.skillLocator.special.skillDef is CaptainOrbitalSkillDef))
-                        body.skillLocator.special.SetSkillOverride(this, disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
+                    GenericSkill special = body.skillLocator.special;
+                    if (special && !(special.skillDef is CaptainOrbitalSkillDef) && !special.skillDef.isCombatSkill)
+                        special.SetSkillOverride(this, disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
                 }
             }
             private void OnDisable()

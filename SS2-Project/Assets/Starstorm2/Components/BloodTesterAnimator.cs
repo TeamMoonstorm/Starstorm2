@@ -37,16 +37,16 @@ namespace Moonstorm.Starstorm2.Components
 			switch (currentStage)
             {
 				case 0:
-					emission.rateOverTime = 0;
+					emission.rateOverTimeMultiplier = 0;
 					break;
                 case 1:
-					emission.rateOverTime = 1;
+					emission.rateOverTimeMultiplier = 1;
 					break;
 				case 2:
-					emission.rateOverTime = 5;
+					emission.rateOverTimeMultiplier = 5;
 					break;
 				case 3:
-					emission.rateOverTime = 12;
+					emission.rateOverTimeMultiplier = 12;
 					break;
 
             }

@@ -20,11 +20,11 @@ namespace Moonstorm.Starstorm2.Items
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius of the energy burst per stack, in meters.")]
         [TokenModifier(token, StatTypes.Default, 1)]
-        public static float stackRadius = 5f;
+        public static float stackRadius = 3f;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Base damage of the energy burst, per stack. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
-        public static float damageCoefficient = 3f;
+        public static float damageCoefficient = 2.5f;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Proc coefficient of the energy burst.")]
         public static float procCoefficient = 1f;

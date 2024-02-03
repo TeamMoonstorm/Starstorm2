@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: matWhiteFlag
   m_Shader: {fileID: 4800000, guid: 9b2024ee08a5bfc418ff897991e84323, type: 2}
-  m_ShaderKeywords: DITHER USE_CLOUDS
+  m_ShaderKeywords: CUTOUT DITHER USE_CLOUDS
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -113,7 +113,7 @@ Material:
     - _EliteBrightnessMin: 0
     - _EliteIndex: 0
     - _EmPower: 1
-    - _EnableCutout: 0
+    - _EnableCutout: 1
     - _ExternalAlpha: 1
     - _FEON: 0
     - _Fade: 1

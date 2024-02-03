@@ -12,7 +12,7 @@ namespace Moonstorm.Starstorm2.Items
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of health regeneration granted per 25 gold, per stack. (1 = 1 hp/s)")]
         [TokenModifier(token, StatTypes.Default, 0)]
-        public static float healthRegen = 1f;
+        public static float healthRegen = 0.4f;
 
         public override void Initialize()
         {
@@ -23,7 +23,7 @@ namespace Moonstorm.Starstorm2.Items
         {
             int stack = sender.inventory?.GetItemCount(SS2Content.Items.BloodTester) ?? 0;
             if (stack > 0)
-                args.baseRegenAdd += (healthRegen * stack) / Run.instance.GetDifficultyScaledCost((int)sender.master.money);
+                args.baseRegenAdd += (healthRegen * stack) * sender.master.money / Run.instance.GetDifficultyScaledCost(25);
         }
     }
 }
