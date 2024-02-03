@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: matHealingCross
+  m_Name: matHealingRing
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
   m_ShaderKeywords: DITHER _EMISSION
   m_LightmapFlags: 1
@@ -28,7 +28,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 950371fbf5e466441b0334e77d86a58d, type: 3}
+        m_Texture: {fileID: 2800000, guid: 51b38ed906c36264c99cdf027b389786, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RemapTex:
@@ -36,7 +36,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _AlphaBias: 0
+    - _AlphaBias: 0.333
     - _AlphaBoost: 1
     - _AlphaThreshold: 0.107
     - _Boost: 1.5

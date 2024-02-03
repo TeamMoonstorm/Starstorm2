@@ -6,6 +6,7 @@ namespace Moonstorm.Starstorm2.Components
 	public class BloodTesterAnimator : MonoBehaviour
 	{
 		public ParticleSystem healEffectSystem;
+		public ParticleSystem stageUpEffectSystem;
 		private int currentStage;
 		private CharacterModel characterModel;
 
@@ -28,7 +29,9 @@ namespace Moonstorm.Starstorm2.Components
 		}
 		private void SetStage(int i)
         {
+			// SOUND WOULD BE EPIC!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			if (currentStage == i) return;
+			//if (i > currentStage) stageUpEffectSystem.Play();
 			currentStage = i;
 			ParticleSystem.EmissionModule emission = healEffectSystem.emission;
 			switch (currentStage)

@@ -164,6 +164,8 @@ namespace Moonstorm.Starstorm2
             public static EquipmentDef MIDAS;
 
             public static EquipmentDef PressurizedCanister;
+
+            public static EquipmentDef WhiteFlag;
         }
 
         public static class Buffs
