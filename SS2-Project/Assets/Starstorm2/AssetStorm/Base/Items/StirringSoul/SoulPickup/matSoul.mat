@@ -7,49 +7,49 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: matInsecticideFlash
+  m_Name: matSoul
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
-  m_ShaderKeywords: DITHER USE_CLOUDS VERTEXCOLOR _EMISSION
+  m_ShaderKeywords: CLOUDOFFSET DITHER USE_CLOUDS VERTEXCOLOR _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2999
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
     - _Cloud1Tex:
-        m_Texture: {fileID: 2800000, guid: 7d141824ada450747b17a50e01bef09a, type: 3}
-        m_Scale: {x: 1, y: 3}
+        m_Texture: {fileID: 2800000, guid: 1ffad98496d54764faa0561833d5b064, type: 3}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Cloud2Tex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 8030de7ddc7c5ac4d919caa5f5586897, type: 3}
+        m_Texture: {fileID: 2800000, guid: 755949ba725114649bb7817f21244d0d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RemapTex:
-        m_Texture: {fileID: 2800000, guid: 8a09cd47f435e4a45ace3e9cd14cb66e, type: 3}
+        m_Texture: {fileID: 2800000, guid: cd71ebfef392b514eb3e4b3d6af7825c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _AlphaBias: 0
-    - _AlphaBoost: 1.2
+    - _AlphaBoost: 1.6
     - _AlphaThreshold: 0.03
     - _Boost: 1
     - _BumpScale: 1
     - _CalcTextureAlphaOn: 0
-    - _CloudOffsetOn: 0
+    - _CloudOffsetOn: 1
     - _CloudsOn: 1
     - _Cull: 0
     - _Cutoff: 0.855
     - _DepthOffset: 0
     - _DetailNormalMapScale: 1
     - _DisableRemapOn: 0
-    - _DistortionStrength: -0.17
+    - _DistortionStrength: 0.15
     - _DstBlend: 10
     - _ExternalAlpha: 1
     - _Fade: 1
@@ -83,6 +83,6 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _CutoffScroll: {r: -90, g: 0, b: 80, a: 0}
+    - _CutoffScroll: {r: 5, g: 5, b: 1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _TintColor: {r: 1, g: 1, b: 1, a: 1}

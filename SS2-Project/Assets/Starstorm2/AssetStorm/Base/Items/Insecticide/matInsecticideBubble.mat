@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: matPoisonBubble 1
+  m_Name: matInsecticideBubble
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
-  m_ShaderKeywords: DITHER USE_CLOUDS VERTEXCOLOR _EMISSION
+  m_ShaderKeywords: CLOUDOFFSET DITHER USE_CLOUDS VERTEXCOLOR _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -20,11 +20,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Cloud1Tex:
-        m_Texture: {fileID: 2800000, guid: 7d141824ada450747b17a50e01bef09a, type: 3}
-        m_Scale: {x: 0.32, y: 1}
+        m_Texture: {fileID: 2800000, guid: 1faf5fc63af584d4d9667c3ac6f41faf, type: 3}
+        m_Scale: {x: 0.3, y: 0.3}
         m_Offset: {x: 0, y: 0}
     - _Cloud2Tex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 9686350d3b8c1b1479cea5e67e3f152c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -32,17 +32,17 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RemapTex:
-        m_Texture: {fileID: 2800000, guid: afebd1ac8e939084b802387a9e9ebeae, type: 3}
+        m_Texture: {fileID: 2800000, guid: 8e2664c956d00a346aa0b75a8e043e1a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _AlphaBias: 0
-    - _AlphaBoost: 0.84
+    - _AlphaBias: 0.119
+    - _AlphaBoost: 1.1
     - _AlphaThreshold: 0.03
     - _Boost: 1
     - _BumpScale: 1
     - _CalcTextureAlphaOn: 0
-    - _CloudOffsetOn: 0
+    - _CloudOffsetOn: 1
     - _CloudsOn: 1
     - _Cull: 0
     - _Cutoff: 0.855
