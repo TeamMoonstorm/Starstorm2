@@ -64,7 +64,7 @@ namespace Moonstorm.Starstorm2.Items
             {
                 // lazy, giga jank. but server needs to see it for skill icon overlay to work
                 // ^ shouod just be some network message but idc
-                if (genericSkill.baseRechargeInterval > 0 && body.HasBuff(SS2Content.Buffs.BuffUniversalCharger))
+                if (genericSkill.baseRechargeInterval > 0 && genericSkill.characterBody.skillLocator.primary != genericSkill && body.HasBuff(SS2Content.Buffs.BuffUniversalCharger))
                 {
                     body.RemoveBuff(SS2Content.Buffs.BuffUniversalCharger);
                 }
@@ -97,10 +97,10 @@ namespace Moonstorm.Starstorm2.Items
                     body.AddBuff(SS2Content.Buffs.BuffUniversalCharger);
                 }              
             }
-            //dont want to consume it on skills with no cooldown
+            //dont want to consume it on skills with no cooldown. or on primaries because loader primary has a cooldown XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
             private bool CanSkillRefresh(GenericSkill skill)
             {
-                return skill && skill.baseRechargeInterval > 0 && this.cooldownTimer <= 0;
+                return skill && skill.baseRechargeInterval > 0 && skill.characterBody.skillLocator.primary != skill && this.cooldownTimer <= 0;
             }
 
 

@@ -25,19 +25,19 @@ namespace Moonstorm.Starstorm2.Buffs
                 if(body.skillLocator)
                 {
                     GenericSkill primary = body.skillLocator.primary;
-                    if (primary && !(primary.skillDef is CaptainOrbitalSkillDef) && !primary.skillDef.isCombatSkill)
+                    if (primary && !(primary.skillDef is CaptainOrbitalSkillDef))// && !primary.skillDef.isCombatSkill)
                         primary.SetSkillOverride(this, disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
 
                     GenericSkill secondary = body.skillLocator.secondary;
-                    if (secondary && !(secondary.skillDef is CaptainOrbitalSkillDef) && !secondary.skillDef.isCombatSkill)
+                    if (secondary && !(secondary.skillDef is CaptainOrbitalSkillDef))// && !secondary.skillDef.isCombatSkill)
                         secondary.SetSkillOverride(this, disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
 
                     GenericSkill utility = body.skillLocator.utility;
-                    if (utility && !(utility.skillDef is CaptainOrbitalSkillDef) && !utility.skillDef.isCombatSkill)
+                    if (utility && !(utility.skillDef is CaptainOrbitalSkillDef))// && !utility.skillDef.isCombatSkill)
                         utility.SetSkillOverride(this, disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
 
                     GenericSkill special = body.skillLocator.special;
-                    if (special && !(special.skillDef is CaptainOrbitalSkillDef) && !special.skillDef.isCombatSkill)
+                    if (special && !(special.skillDef is CaptainOrbitalSkillDef))// && !special.skillDef.isCombatSkill)
                         special.SetSkillOverride(this, disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
                 }
             }
