@@ -52,11 +52,11 @@ namespace Moonstorm.Starstorm2.Components
             if (shouldDestroySoon == true)
             {
                 timer2 += Time.fixedDeltaTime;
-                if (buffWard.radius >= 0.25f)
+                if (buffWard.radius >= 0f)
                 {
-                    buffWard.radius -= 0.25f;
+                    buffWard.radius -= buffWard.radius / 2f;
                 }
-                if (timer2 > 0.2f)
+                if (timer2 > 1f)
                 {
                     NetworkServer.Destroy(this.gameObject);
                 }

@@ -75,14 +75,16 @@ namespace Moonstorm.Starstorm2.Equipments
 
             var dropList = GetDropListFromItemTier(itemIndex);
 
+            PickupDef itemToGive = null;
+
             if (dropList != null)
             {
                 foreach (var item in dropList)
                 {
-                    var pickupDef = PickupCatalog.GetPickupDef(item);
-                    if (pickupDef != null)
+                    itemToGive = PickupCatalog.GetPickupDef(item);
+                    if (itemToGive != null)
                     {
-                        list.Add(pickupDef.itemIndex);
+                        list.Add(itemToGive.itemIndex);
                     }
                 }
             }
@@ -98,6 +100,8 @@ namespace Moonstorm.Starstorm2.Equipments
                     slot.inventory.GiveItem(newRandomItem);
                 }
             }
+
+            CharacterMasterNotificationQueue.SendTransformNotification(slot.characterBody.master, randomItem, itemToGive.itemIndex, CharacterMasterNotificationQueue.TransformationType.Default);
 
             return true;
         }
