@@ -7,7 +7,6 @@ using R2API;
 using System;
 namespace Moonstorm.Starstorm2.Survivors
 {
-    //[DisabledContent]
     public sealed class Chirr : SurvivorBase
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("ChirrBody", SS2Bundle.Chirr);
@@ -18,6 +17,9 @@ namespace Moonstorm.Starstorm2.Survivors
         public static Vector3 chirristmasRot = new Vector3(0, 178.3926f, 0);
 
         private static GameObject chirristmas;
+
+        [RooConfigurableField(SS2Config.IDSurvivor, ConfigDesc = "Can Weightless Frame be activated by toggling.")]
+        public static bool toggleHover = false;
         public override void Initialize()
         {
             base.Initialize();

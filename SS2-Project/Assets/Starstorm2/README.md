@@ -55,6 +55,35 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 
 ## Changelog
 **Warning: content spoilers below!**
+### 0.6.7
+* Items
+    * Fork adjusted (+2 flat damage => +8% damage)
+    * Molten Coin now properly scales with proc coefficient.
+    * Reduced volume of Molten Coin procs.
+* Enemies
+    * Wayfarer animations adjusted to face the player more often.
+    * Wayfarer no longer fails to disappear after dying.
+* Events
+    * Empyrean event selects tougher enemies more often.
+    * Empyrean events and storms can now occur simultaneously
+    * Empyrean boss now gains adaptive armor and teleports when falling out of bounds.
+    * Added 50% movespeed, 50% cooldown reduction, and 4x health to Empyreans.
+    * Increased hurtbox size of nemesis invaders.
+* Chirr
+    * Friends now gain a flower turret that automatically fires at enemies for 100% damage per second.
+    * Corrected Soothing Venom's tooltip (450% damage -> 750% damage).
+    * Soothing Venom no longer uses a custom debuff for its slow effect.
+    * Abduct's indicator is more accurate and no longer undershoots with taller enemies.
+    * Enemies thrown by abduct can now collide with other enemies.
+    * Enemies no longer lose their own items when befriended.
+    * Enemies are now forced to half health when befriended.
+    * Fixed friend's Celestine aura not updating its team.
+    * Fixed friend's health regen being capped at 0, which was drastically reducing Soothing Venom's heal.
+    * Fixed friend's cooldown reduction not properly scaling with attackspeed.
+    * Fixed missing logbook entry.
+* Other
+    * Increased visibility of Mysterious Cuffs
+
 ### 0.6.6
 * Events
     * Storms and Empyrean Manifestations now require the Starstorm expansion to be enabled.

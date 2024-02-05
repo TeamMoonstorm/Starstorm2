@@ -5,69 +5,30 @@ using UnityEngine.Networking;
 
 namespace Moonstorm.Starstorm2.Equipments
 {
-    [DisabledContent]
     public sealed class WhiteFlag : EquipmentBase
     {
-        private const string token = "SS2_EQUIP_GREATERWARBANNER_DESC";
-        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("WhiteFlag", SS2Bundle.Indev);
-        public GameObject WarbannerObject { get; } = SS2Assets.LoadAsset<GameObject>("WhiteFlagWard", SS2Bundle.Indev);
+        private const string token = "SS2_EQUIP_WHITEFLAG_DESC";
+        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("WhiteFlag", SS2Bundle.Items);
+        public GameObject FlagObject { get; } = SS2Assets.LoadAsset<GameObject>("WhiteFlagWard", SS2Bundle.Items);
 
-        /*[ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of Extra Regeneration. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.Percentage, 0)]
-        public static float extraRegeneration = 0.5f;
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius of the White Flag's effect, in meters.")]
+        [TokenModifier(token, StatTypes.Default, 0)]
+        public static float flagRadius = 25f;
 
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of Extra Crit Chance. (100 = 100%)")]
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of White Flag when used, in seconds.")]
         [TokenModifier(token, StatTypes.Default, 1)]
-        public static float extraCrit = 20f;
-
-        [ConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of Cooldown Reduction. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.Percentage, 2)]
-        public static float cooldownReduction = 0.5f;*/
-
-        public override void AddBehavior(ref CharacterBody body, int stack)
-        {
-            body.AddItemBehavior<GreaterWarbannerBehavior>(stack);
-        }
+        public static float flagDuration = 8f;
 
         public override bool FireAction(EquipmentSlot slot)
         {
-            if (!slot.characterBody.characterMotor.isGrounded)
-                return false;
             //To do: make better placement system
-            Vector3 position = slot.inputBank.aimOrigin + slot.inputBank.aimDirection;
-            GameObject gameObject = Object.Instantiate(WarbannerObject, position, Quaternion.identity);
+            GameObject gameObject = Object.Instantiate(FlagObject, slot.characterBody.corePosition, Quaternion.identity);
+            BuffWard buffWard = gameObject.GetComponent<BuffWard>();
+            buffWard.expireDuration = flagDuration;
+            buffWard.radius = flagRadius;
+            gameObject.GetComponent<TeamFilter>().teamIndex = slot.teamComponent.teamIndex;
 
-            //gameObject.GetComponent<TeamFilter>().teamIndex = slot.teamComponent.teamIndex;
-            var behavior = slot.gameObject.GetComponent<GreaterWarbannerBehavior>();
-            //if (behavior.warBannerInstance)
-            //NetworkServer.Destroy(behavior.warBannerInstance);
-            behavior.warBannerInstance = gameObject;
-            NetworkServer.Spawn(behavior.warBannerInstance);
-
-            if (behavior.soundCooldown >= 5f)
-            {
-                var sound = NetworkSoundEventCatalog.FindNetworkSoundEventIndex("GreaterWarbanner");
-                EffectManager.SimpleSoundEffect(sound, behavior.warBannerInstance.transform.position, true);
-                behavior.soundCooldown = 0f;
-            }
             return true;
-        }
-
-        public sealed class GreaterWarbannerBehavior : CharacterBody.ItemBehavior
-        {
-            public GameObject warBannerInstance;
-            public float soundCooldown = 5f;
-
-            private void FixedUpdate()
-            {
-                soundCooldown += Time.fixedDeltaTime;
-            }
-
-            private void OnDisable()
-            {
-                //if (warBannerInstance)
-                //Destroy(warBannerInstance);
-            }
         }
     }
 
