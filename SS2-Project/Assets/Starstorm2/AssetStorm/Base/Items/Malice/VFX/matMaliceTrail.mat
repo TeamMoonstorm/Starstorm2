@@ -29,7 +29,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _Cloud2Tex:
         m_Texture: {fileID: 2800000, guid: cc23f07135f7dac41b75c9698649cc76, type: 2}
-        m_Scale: {x: 0, y: 1}
+        m_Scale: {x: 0, y: 0.05}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
         m_Texture: {fileID: 0}
@@ -48,7 +48,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 4012b41252f8ec0498395f04b65d0289, type: 3}
+        m_Texture: {fileID: 2800000, guid: ed30efad3c2f4dd43b2b0b7cecf94bc8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -64,14 +64,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RemapTex:
-        m_Texture: {fileID: 2800000, guid: b22d0935ef1fd374c8948674c287791d, type: 2}
+        m_Texture: {fileID: 2800000, guid: c8ea90c857192154798e5e29fba633f4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _AlphaBias: 0.05
-    - _AlphaBoost: 0.8
+    - _AlphaBias: 0.019
+    - _AlphaBoost: 1.75
     - _BlendOp: 0
-    - _Boost: 12
+    - _Boost: 1
     - _BumpScale: 1
     - _CalcTextureAlphaOn: 0
     - _CameraFadingEnabled: 0
@@ -130,4 +130,4 @@ Material:
     - _CutoffScroll: {r: 5, g: 0, b: 30, a: 5}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
-    - _TintColor: {r: 0.011764706, g: 0, b: 0.011764706, a: 1}
+    - _TintColor: {r: 0.14150941, g: 0, b: 0.14150941, a: 1}

@@ -32,11 +32,17 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef Cognation;
 
+            public static ItemDef CompositeInjector;
+
             public static ItemDef ChirrFriendHelper;
+
+            public static ItemDef CrypticSource;
 
             public static ItemDef DetritiveTrematode;
 
             public static ItemDef Diary;
+
+            public static ItemDef DiaryConsumed;
 
             public static ItemDef DormantFungus;
 
@@ -80,11 +86,15 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef GreenChocolate;
 
+            public static ItemDef GuardingAmulet;
+
             public static ItemDef NkotasHeritage;
 
             public static ItemDef PortableReactor;
 
             public static ItemDef SwiftSkateboard;
+
+            public static ItemDef LightningOnKill;
 
             public static ItemDef LowQualitySpeakers;
 
@@ -127,6 +137,10 @@ namespace Moonstorm.Starstorm2
             public static ItemDef TerminationHelper;
 
             public static ItemDef GildedAmulet;
+
+            public static ItemDef UniversalCharger;
+
+            public static ItemDef UraniumHorseshoe;
         }
 
         public static class Equipments
@@ -145,16 +159,22 @@ namespace Moonstorm.Starstorm2
 
             public static EquipmentDef GreaterWarbanner;
 
+            public static EquipmentDef Magnet;
+
             public static EquipmentDef MIDAS;
 
             public static EquipmentDef PressurizedCanister;
+
+            public static EquipmentDef WhiteFlag;
         }
 
         public static class Buffs
         {
             public static BuffDef BuffAffixVoid;
 
-            public static BuffDef BuffBackThruster;          
+            public static BuffDef BuffBackThruster;
+
+            public static BuffDef BuffUniversalCharger;
 
             public static BuffDef BuffChirrConfuse;
 
@@ -181,6 +201,10 @@ namespace Moonstorm.Starstorm2
             public static BuffDef BuffIntoxicated;
 
             public static BuffDef BuffInsecticide;
+
+            public static BuffDef BuffJetBootsCooldown;
+
+            public static BuffDef BuffJetBootsReady;
 
             public static BuffDef BuffCoffeeBag;
 

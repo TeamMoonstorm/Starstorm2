@@ -778,6 +778,146 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="ProcLightningOnKill" ID="{DD03724F-1C35-4E5B-B60E-7FA57B45762F}">
+							<ChildrenList>
+								<Action Name="" ID="{0CB48969-9498-4670-982C-066BB8D3AD54}" ShortID="964221554">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="ProcLightningOnKill" ID="{441EF015-666E-4AB7-9A34-8988DFEF8553}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ProcTrematodes" ID="{C591FE7D-C001-41B2-ACE8-715D3C3D50DF}">
+							<ChildrenList>
+								<Action Name="" ID="{035E5852-ECE7-48C9-964B-AE7CEEC9917D}" ShortID="415085460">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Trematode" ID="{2B0FC3A7-5C08-4746-8CE0-88490606B930}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="PickupCoffeeBean" ID="{8A084A4D-04E9-448B-BD48-121E8839A43C}">
+							<ChildrenList>
+								<Action Name="" ID="{2F7ACA0F-4796-46E9-BF52-1E1190C99291}" ShortID="23127926">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="PickupCoffeeBean" ID="{94A33D62-635F-48F3-96D7-1849218721FE}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ProcErraticGadgetLightning" ID="{D79B485A-ED02-4018-9E18-BFA1D0E1FB5A}">
+							<ChildrenList>
+								<Action Name="" ID="{541066E3-FD4C-4524-8E52-BDDE2FA8A920}" ShortID="1019593863">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="item_proc_erraticgadget_02" ID="{E01F2FBB-CEE3-44D6-82CE-4BA73D8E03A5}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ProcErraticGadgetChain" ID="{8A07E4FA-6BC2-4CEA-AE60-1E2DF6F94916}">
+							<ChildrenList>
+								<Action Name="" ID="{7C9D28BC-0AE6-47F7-BEFF-1D36DB04C86C}" ShortID="114420912">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="EraticGadgetChain" ID="{6790F3BE-C825-4197-ADF5-682E733E2E81}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="CrypticSourceStage1" ID="{EAC763AB-957C-462B-BF04-B0AB20D1E5C6}">
+							<ChildrenList>
+								<Action Name="" ID="{42CD074C-A656-4E71-89B7-620472021D1F}" ShortID="288905526">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="CrypticSourceStage1" ID="{D4F27B9C-B5AD-4495-82A3-6D4143CE6C18}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="CrypticSourceStage3" ID="{7DABEC0A-5C89-4BED-962E-F2575D753A63}">
+							<ChildrenList>
+								<Action Name="" ID="{BA3B704F-92DB-489E-8524-40333F710531}" ShortID="381071675">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="CrypticSourceStage3" ID="{0678DE48-64FE-4EF8-AD99-B2A17320869C}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="CrypticSourceStage2" ID="{6137278D-0851-462A-9597-81C2B5F0BFC8}">
+							<ChildrenList>
+								<Action Name="" ID="{4D8DC24B-3C8E-46EA-A894-A0FA49993886}" ShortID="787744285">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="CrypticSourceStage2" ID="{664C9C3E-9EA5-4244-8FCD-9AA2274D8E50}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="CrypticSourceFire" ID="{1143A5B4-9D68-417D-8E67-792D51C154AF}">
+							<ChildrenList>
+								<Action Name="" ID="{7E06B27C-9E52-4CFD-93F1-24E921FB68A1}" ShortID="798561094">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="item_crypticsource_burst_01" ID="{98A70E5E-07B1-4EA4-8E08-B5C6C279D99D}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="UniversalCharger" ID="{7CBDCD99-1DEA-413D-9200-E36365990FF0}">
+							<ChildrenList>
+								<Action Name="" ID="{13D7317A-3436-4AB1-BEC3-9CF61A9CDCE3}" ShortID="406345941">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="item_proc_universalcharger" ID="{3606D7F3-9541-4B70-B08E-1A7EFE1ADF12}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Event Name="VoidAmbient" ID="{096E8867-684C-49FD-9847-D8B99D9E53EC}">
