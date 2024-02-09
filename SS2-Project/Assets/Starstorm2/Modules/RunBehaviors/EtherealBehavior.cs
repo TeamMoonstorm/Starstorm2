@@ -20,7 +20,7 @@ namespace Moonstorm.Starstorm2.Components
         public static GameObject shrinePrefab;
         public static GameObject portalPrefab;
 
-        public static int etherealsCompleted = 0;
+        public float etherealsCompleted = 0;
         public static bool teleIsEthereal = false;
 
         public bool teleUpgraded;
@@ -33,10 +33,10 @@ namespace Moonstorm.Starstorm2.Components
             Components.TraderController.Initialize();
 
             //Initialize new difficulties
-            //Deluge.Init();
-            //Tempest.Init();
-            //Cyclone.Init();
-            //SuperTyphoon.Init();
+            Deluge.Init();
+            Tempest.Init();
+            Cyclone.Init();
+            SuperTyphoon.Init();
 
             //Save default level cap
             defaultLevelCap = Run.ambientLevelCap;
@@ -211,7 +211,7 @@ namespace Moonstorm.Starstorm2.Components
             orig(self);
         }
 
-        private static void TeleporterInteraction_onTeleporterBeginChargingGlobal(TeleporterInteraction tele)
+        private void TeleporterInteraction_onTeleporterBeginChargingGlobal(TeleporterInteraction tele)
         {
             if (teleIsEthereal)
             {
@@ -233,7 +233,7 @@ namespace Moonstorm.Starstorm2.Components
             }
         }
 
-        public static void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)
+        public void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)
         {
             orig(self);
 

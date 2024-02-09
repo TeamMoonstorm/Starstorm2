@@ -162,7 +162,23 @@ namespace Moonstorm.Starstorm2.Items
 
             private void TeleporterInteraction_onTeleporterChargedGlobal(TeleporterInteraction tele)
             {
-                if (acceleratorCount > 0)
+                acceleratorCount = 0;
+
+                foreach (CharacterMaster cm in Run.instance.userMasters.Values)
+                {
+                    if (cm.inventory)
+                        acceleratorCount += cm.inventory.GetItemCount(SS2Content.Items.FieldAccelerator);
+                }
+
+                if (acceleratorCount == 0)
+                    return;
+
+                if (displayChildLocator == null)
+                {
+                    displayChildLocator = displayInstance.GetComponent<ChildLocator>();
+                }
+
+                if (displayChildLocator != null)
                 {
                     displayChildLocator.FindChild("Passive").gameObject.SetActive(false);
                     displayChildLocator.FindChild("Burst").gameObject.GetComponent<ParticleSystem>().Emit(40);

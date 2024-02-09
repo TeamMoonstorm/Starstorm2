@@ -46,6 +46,8 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef DormantFungus;
 
+            public static ItemDef EtherealItemAffix;
+
             public static ItemDef Fork;
 
             public static ItemDef Malice;

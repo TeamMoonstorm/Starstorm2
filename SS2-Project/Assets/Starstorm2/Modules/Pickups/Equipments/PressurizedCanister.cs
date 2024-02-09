@@ -5,7 +5,7 @@ using static AkMIDIEvent;
 
 namespace Moonstorm.Starstorm2.Equipments
 {
-    [DisabledContent]
+    //[DisabledContent]
     public sealed class PressurizedCanister : EquipmentBase
     {
         public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("PressurizedCanister", SS2Bundle.Equipments);

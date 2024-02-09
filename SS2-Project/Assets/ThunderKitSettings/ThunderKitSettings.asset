@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9057f7f601990a4883b2cb295c4f43e, type: 3}
   m_Name: ThunderKitSettings
   m_EditorClassIdentifier: 
-  FirstLoad: 1
+  FirstLoad: 0
   ShowOnStartup: 1
   GameExecutable: 
   GamePath: 
@@ -27,6 +27,19 @@ MonoBehaviour:
   MarkdownOpenMode: 1
   SelectedPipeline: {fileID: 0}
   SelectedManifest: {fileID: 0}
-  QuickAccessPipelines: []
-  QuickAccessManifests: []
+  QuickAccessPipelines:
+  - {fileID: 11400000, guid: bd306531ce3c24540a1a9deeb10f2734, type: 2}
+  - {fileID: 11400000, guid: f0f645669dad6b94a92a3b55e343ab28, type: 2}
+  - {fileID: 11400000, guid: 1671e40e49d68d346a9508c3832f262a, type: 2}
+  - {fileID: 11400000, guid: 33528692ad1d19c4cb72c9f4687597c9, type: 2}
+  - {fileID: 11400000, guid: 6daa08e2318d25b45bcb588bdd37fa1d, type: 2}
+  - {fileID: 11400000, guid: 513c95b27e3ae164384144c011b6602a, type: 2}
+  - {fileID: 11400000, guid: 389d1440e7d8139478cfc20f2ccd3c29, type: 2}
+  - {fileID: 11400000, guid: 07ebf539b5a548f4cb6711a4120d9748, type: 2}
+  - {fileID: 11400000, guid: 8c33e4a1b580cf442b81f2ac857da1a6, type: 2}
+  - {fileID: 11400000, guid: 14540b63d01431e4ba48805aea0efbce, type: 2}
+  - {fileID: 11400000, guid: 650c694bf36518d4bafcf4badf40c81d, type: 2}
+  - {fileID: 11400000, guid: 47f6b8c702866f147881605d9aa112f7, type: 2}
+  QuickAccessManifests:
+  - {fileID: 11400000, guid: 5ceb1d8ed3af40d4d806e9756b403649, type: 2}
   ImportConfiguration: {fileID: 0}
