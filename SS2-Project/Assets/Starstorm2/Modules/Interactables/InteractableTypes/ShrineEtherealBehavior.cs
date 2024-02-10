@@ -68,6 +68,12 @@ namespace Moonstorm.Starstorm2
                     baseToken = "SS2_SHRINE_ETHEREAL_WARN_MESSAGE",
                 });
 
+                if (childLocator != null)
+                {
+                    childLocator.FindChild("Loop").gameObject.SetActive(true);
+                    childLocator.FindChild("Symbol").gameObject.SetActive(false);
+                }
+
                 waitingForRefresh = true;
             }
 
@@ -115,6 +121,7 @@ namespace Moonstorm.Starstorm2
 
                 if (childLocator != null)
                 {
+                    childLocator.FindChild("Loop").gameObject.SetActive(false);
                     childLocator.FindChild("Particles").gameObject.SetActive(false);
                     childLocator.FindChild("Burst").gameObject.SetActive(true);
                 }

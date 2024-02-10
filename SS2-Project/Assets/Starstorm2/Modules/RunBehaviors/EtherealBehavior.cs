@@ -61,19 +61,32 @@ namespace Moonstorm.Starstorm2.Components
         {
             instance = this;
 
-            TeleporterInteraction.onTeleporterBeginChargingGlobal += TeleporterInteraction_onTeleporterBeginChargingGlobal;
+            //TeleporterInteraction.onTeleporterBeginChargingGlobal += TeleporterInteraction_onTeleporterBeginChargingGlobal;
             TeleporterInteraction.onTeleporterChargedGlobal += TeleporterInteraction_onTeleporterChargedGlobal;
             On.RoR2.TeleporterInteraction.Start += TeleporterInteraction_Start;
             On.RoR2.SceneDirector.Start += SceneDirector_Start;
+            On.RoR2.TeleporterInteraction.OnBossDirectorSpawnedMonsterServer += TeleporterInteraction_OnBossDirectorSpawnedMonsterServer;
         }
 
 
         private void OnDestroy()
         {
-            TeleporterInteraction.onTeleporterBeginChargingGlobal -= TeleporterInteraction_onTeleporterBeginChargingGlobal;
+            //TeleporterInteraction.onTeleporterBeginChargingGlobal -= TeleporterInteraction_onTeleporterBeginChargingGlobal;
             TeleporterInteraction.onTeleporterChargedGlobal -= TeleporterInteraction_onTeleporterChargedGlobal;
             On.RoR2.TeleporterInteraction.Start -= TeleporterInteraction_Start;
             On.RoR2.SceneDirector.Start -= SceneDirector_Start;
+            On.RoR2.TeleporterInteraction.OnBossDirectorSpawnedMonsterServer -= TeleporterInteraction_OnBossDirectorSpawnedMonsterServer;
+        }
+
+        private void TeleporterInteraction_OnBossDirectorSpawnedMonsterServer(On.RoR2.TeleporterInteraction.orig_OnBossDirectorSpawnedMonsterServer orig, TeleporterInteraction self, GameObject master)
+        {
+            orig(self, master);
+            if (teleIsEthereal)
+            {
+                CharacterMaster bodyMaster = master.GetComponent<CharacterMaster>();
+                bodyMaster.inventory.GiveItem(SS2Content.Items.EtherealItemAffix);
+                bodyMaster.inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(25 + (20 * etherealsCompleted)));
+            }
         }
 
         private static void TeleporterInteraction_onTeleporterChargedGlobal(TeleporterInteraction obj)
@@ -221,15 +234,16 @@ namespace Moonstorm.Starstorm2.Components
 
                     if (tele.bossDirector)
                     {
-                        tele.bossDirector.monsterCredit += (float)(int)(100f * Mathf.Pow(Run.instance.compensatedDifficultyCoefficient, 0.5f));
+                        //tele.bossDirector.monsterCredit += (float)(int)(100f * Mathf.Pow(Run.instance.compensatedDifficultyCoefficient, 0.5f));
                         Debug.Log("added to monstercred");
                     }
                     if (tele.bonusDirector)
                     {
-                        tele.bonusDirector.monsterCredit += (float)(int)(50f * Mathf.Pow(Run.instance.compensatedDifficultyCoefficient, 0.5f));
+                        //tele.bonusDirector.monsterCredit += (float)(int)(50f * Mathf.Pow(Run.instance.compensatedDifficultyCoefficient, 0.5f));
                         Debug.Log("added to bonus monstercred");
                     }
                 }
+                
             }
         }
 

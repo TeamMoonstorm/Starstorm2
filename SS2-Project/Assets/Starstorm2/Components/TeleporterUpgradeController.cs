@@ -116,10 +116,10 @@ namespace Moonstorm.Starstorm2
             }
 
             //resize & reposition the teleporter
-            teleBase.transform.localScale *= 1f;
+            teleBase.transform.localScale *= 2f;
             teleBase.transform.position = new Vector3(teleBase.transform.position.x, teleBase.transform.position.y, teleBase.transform.position.z);
             //teleProngs.transform.localScale *= 2f;
-            //teleBeacon.transform.localScale *= 0.5f;
+            teleBeacon.transform.localScale *= 0.5f;
             //radiusScaler.transform.localScale *= 0.67f;
 
             //resize & recolor large teleporter particles
@@ -167,6 +167,8 @@ namespace Moonstorm.Starstorm2
             //maybe particle system prefabs in unity & code to adjust scale / pos of the objects?
             //hell either way.
 
+
+            // -- i think its just the effects for when its finished charging at this point though? other than like hud stuff n other weird shit. yippee
         }
     }
 }

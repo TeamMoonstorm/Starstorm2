@@ -65,30 +65,30 @@ namespace Moonstorm.Starstorm2.Components
 
         public void MakeEthereal(CharacterBody body)
         {
-            Debug.Log("starting");
+            //Debug.Log("starting");
 
             var inventory = body.inventory;
 
             //CombatDirector.instancesList[0].monsterCredit -= 50;
             //IDK LOL
 
-            Debug.Log("giving items");
+            //Debug.Log("giving items");
 
-            inventory.GiveItem(RoR2Content.Items.BoostHp, 80);
+            inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(40 + (40 * ethInstance.etherealsCompleted)));
             inventory.GiveItem(SS2Content.Items.BoostCooldowns, 30);
-            inventory.GiveItem(RoR2Content.Items.BoostDamage, 20);
+            inventory.GiveItem(RoR2Content.Items.BoostDamage, (int)(10 + (10 * ethInstance.etherealsCompleted)));
             inventory.GiveItem(SS2Content.Items.EtherealItemAffix);
 
-            Debug.Log("modifying deaht rewards");
+            //Debug.Log("modifying deaht rewards");
 
             DeathRewards rewards = body.GetComponent<DeathRewards>();
             if (rewards)
             {
-                rewards.expReward *= 4;
-                rewards.goldReward *= 4;
+                rewards.expReward *= (uint)(2 + (2 * ethInstance.etherealsCompleted));
+                rewards.goldReward *= (uint)(2 + (2 * ethInstance.etherealsCompleted));
             }
 
-            Debug.Log("done!");
+            //Debug.Log("done!");
         }
 
         public void CombatDirector_Awake(On.RoR2.CombatDirector.orig_Awake orig, CombatDirector self)
