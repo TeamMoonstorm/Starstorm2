@@ -11,6 +11,13 @@ namespace Moonstorm.Starstorm2
     {
         #region Misc
 
+        public static T EnsureComponent<T>(this Component component) where T : Component
+        {
+            Component c = component.GetComponent(typeof(T));
+            if (c) return (T)c;
+            return (T)c.gameObject.AddComponent(typeof(T));
+        }
+
         public static void DropShipCall(Transform origin, int tierWeight, uint teamLevel = 1, int amount = 1, ItemTier forcetier = 0, string theWorstCodeOfTheYear = null)
         {
             List<PickupIndex> dropList;

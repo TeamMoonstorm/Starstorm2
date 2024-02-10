@@ -72,7 +72,7 @@ namespace EntityStates.LampBoss
 
         public override void OnExit()
         {
-            
+            DestroyModel();
             base.OnExit();
         }
     }

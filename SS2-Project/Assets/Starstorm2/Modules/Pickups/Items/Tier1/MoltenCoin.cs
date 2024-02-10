@@ -1,5 +1,6 @@
 ﻿using RoR2;
 using RoR2.Items;
+using UnityEngine;
 
 namespace Moonstorm.Starstorm2.Items
 {
@@ -7,6 +8,8 @@ namespace Moonstorm.Starstorm2.Items
     public sealed class MoltenCoin : ItemBase
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("MoltenCoin", SS2Bundle.Items);
+
+        public static GameObject impactEffect { get; } = SS2Assets.LoadAsset<GameObject>("MoltenCoinEffect", SS2Bundle.Items);
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance for Molten Coin to Proc. (100 = 100%)")]
         [TokenModifier("SS2_ITEM_MOLTENCOIN_DESC", StatTypes.Default, 0)]
@@ -26,26 +29,25 @@ namespace Moonstorm.Starstorm2.Items
             private static ItemDef GetItemDef() => SS2Content.Items.MoltenCoin;
             public void OnDamageDealtServer(DamageReport report)
             {
-                if (Util.CheckRoll(procChance, body.master))
+                if (Util.CheckRoll(procChance * report.damageInfo.procCoefficient, body.master))
                 {
-                    if (report.damageInfo.procCoefficient > 0)
+                    var dotInfo = new InflictDotInfo()
                     {
-                        var dotInfo = new InflictDotInfo()
-                        {
-                            attackerObject = body.gameObject,
-                            victimObject = report.victim.gameObject,
-                            dotIndex = DotController.DotIndex.Burn,
-                            duration = report.damageInfo.procCoefficient * 4f,
-                            damageMultiplier = stack * damageCoeff
-                        };
-                        StrengthenBurnUtils.CheckDotForUpgrade(report.attackerBody.inventory, ref dotInfo);
-                        DotController.InflictDot(ref dotInfo);
+                        attackerObject = body.gameObject,
+                        victimObject = report.victim.gameObject,
+                        dotIndex = DotController.DotIndex.Burn,
+                        duration = report.damageInfo.procCoefficient * 4f,
+                        damageMultiplier = stack * damageCoeff
+                    };
+                    StrengthenBurnUtils.CheckDotForUpgrade(report.attackerBody.inventory, ref dotInfo);
+                    DotController.InflictDot(ref dotInfo);
 
-                        body.master.GiveMoney((uint)(stack * (Run.instance.stageClearCount + (coinGain * 1f))));
+                    body.master.GiveMoney((uint)(stack * (Run.instance.stageClearCount + (coinGain * 1f))));
                         
-                        MSUtil.PlayNetworkedSFX("MoltenCoin", report.victim.gameObject.transform.position);
-                        EffectManager.SimpleImpactEffect(HealthComponent.AssetReferences.gainCoinsImpactEffectPrefab, report.victimBody.transform.position, UnityEngine.Vector3.up, true);
-                    }
+                    //MSUtil.PlayNetworkedSFX("MoltenCoin", report.victim.gameObject.transform.position);
+                    //moved the sound to an effect so it takes advantage of vfx priority
+                    EffectManager.SimpleEffect(MoltenCoin.impactEffect, report.victimBody.transform.position, Quaternion.identity, true);
+                    EffectManager.SimpleImpactEffect(HealthComponent.AssetReferences.gainCoinsImpactEffectPrefab, report.victimBody.transform.position, UnityEngine.Vector3.up, true);                  
                 }
             }
         }

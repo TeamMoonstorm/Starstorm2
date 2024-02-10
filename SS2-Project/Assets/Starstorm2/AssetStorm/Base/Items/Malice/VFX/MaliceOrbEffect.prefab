@@ -67,9 +67,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentObjectTransform: {fileID: 0}
   startVelocity1: {x: -4, y: 3, z: -4}
-  startVelocity2: {x: 4, y: 1, z: 4}
+  startVelocity2: {x: 4, y: -3, z: 4}
   endVelocity1: {x: -4, y: 3, z: -4}
-  endVelocity2: {x: 4, y: 1, z: 4}
+  endVelocity2: {x: 4, y: -3, z: 4}
   movementCurve:
     serializedVersion: 2
     m_Curve:
@@ -235,19 +235,28 @@ LineRenderer:
   - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.5
+    widthMultiplier: 1
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.7
         inSlope: 0
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -283,7 +292,7 @@ LineRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
-    textureMode: 1
+    textureMode: 0
     shadowBias: 0
     generateLightingData: 0
   m_UseWorldSpace: 1
@@ -324,36 +333,18 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      value: 1
+      inSlope: -0
+      outSlope: -0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.5107479
-      value: 1.008279
-      inSlope: -0.0041305088
-      outSlope: -0.0041305088
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.6493309
-      value: 0.3096738
-      inSlope: -2.9512036
-      outSlope: -2.9512036
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.3044773
-      outWeight: 0.33333334
-    - serializedVersion: 3
       time: 1
-      value: -0.003993988
-      inSlope: 0
-      outSlope: 0
+      value: 0
+      inSlope: -2
+      outSlope: -2
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -361,7 +352,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  timeMax: 0.7
+  timeMax: 0.25
   decal: {fileID: 0}
   pauseTime: 0
   destroyOnEnd: 1

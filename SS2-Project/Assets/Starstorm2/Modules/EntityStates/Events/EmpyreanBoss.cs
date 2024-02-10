@@ -25,10 +25,10 @@ namespace EntityStates.Events
             "JellyfishBody", //enemy kills itself
             "AcidLarvaBody", //enemy kills itself
             "MinorConstructBody", //enemy afks across world
-            "HermitCrabBody" //enemy afks across world
+            "HermitCrabBody", //enemy afks across world
 
             //"BeetleBody", //too weak
-            //"WispBody" //too weak
+            "WispBody" //too weak, prone to physics one-shot
         };
 
         public override void SpawnBoss()
@@ -45,7 +45,7 @@ namespace EntityStates.Events
             
             while (true)
             {
-                chosenMonsterCard = combatDirector.SelectMonsterCardForCombatShrine((20f * Run.instance.loopClearCount * Run.instance.loopClearCount) + 40f);
+                chosenMonsterCard = combatDirector.SelectMonsterCardForCombatShrine((30f * Mathf.Pow(Run.instance.stageClearCount / Run.stagesPerLoop, 2f) + 50f));
                 Debug.Log(chosenMonsterCard.spawnCard.prefab.GetComponent<CharacterMaster>().bodyPrefab.name + " : CHOSEN MONSTER ATTEMPT");
 
                 if (!blacklist.Contains(chosenMonsterCard.spawnCard.prefab.GetComponent<CharacterMaster>().bodyPrefab.name))
@@ -111,10 +111,13 @@ namespace EntityStates.Events
 
                 foreach (CharacterMaster master in combatSquad.membersList)
                 {
-                    master.inventory.GiveItem(RoR2Content.Items.BoostHp, 250);
+                    master.inventory.GiveItem(RoR2Content.Items.BoostHp, 600);
+                    master.inventory.GiveItem(SS2Content.Items.BoostMovespeed, 50);
+                    master.inventory.GiveItem(SS2Content.Items.BoostCooldowns, 100);
                     master.inventory.GiveItem(RoR2Content.Items.BoostDamage, 80);
-                    master.inventory.SetEquipmentIndex(SS2Content.Equipments.AffixEmpyrean.equipmentIndex);
+                    master.inventory.GiveItem(RoR2Content.Items.TeleportWhenOob);
                     master.inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
+                    master.inventory.SetEquipmentIndex(SS2Content.Equipments.AffixEmpyrean.equipmentIndex);
                 }
 
             }

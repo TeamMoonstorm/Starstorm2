@@ -32,8 +32,10 @@ namespace Moonstorm.Starstorm2.Components
             ethInstance = GetComponent<EtherealBehavior>();
             if (ethInstance == null)
                 SS2Log.Debug("Failed to find Ethereal run behavior!");
+
             //On.RoR2.SceneDirector.Start += SceneDirector_Start;
             //On.RoR2.CombatDirector.Awake += CombatDirector_Awake;
+            CharacterBody.onBodyStartGlobal += EliteSpawn;
         }
 
 
@@ -41,6 +43,7 @@ namespace Moonstorm.Starstorm2.Components
         {
             //On.RoR2.SceneDirector.Start -= SceneDirector_Start;
             //On.RoR2.CombatDirector.Awake -= CombatDirector_Awake;
+            CharacterBody.onBodyStartGlobal -= EliteSpawn;
         }
 
         public void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)
@@ -48,9 +51,49 @@ namespace Moonstorm.Starstorm2.Components
             orig(self);
         }
 
+        public void EliteSpawn(CharacterBody body)
+        {
+            if (body.teamComponent?.teamIndex != TeamIndex.Player && !body.isChampion)
+            {
+                if (Util.CheckRoll(5f * ethInstance.etherealsCompleted))
+                {
+                    Debug.Log("spawning ethereal!");
+                    MakeEthereal(body);
+                }
+            }
+        }
+
+        public void MakeEthereal(CharacterBody body)
+        {
+            Debug.Log("starting");
+
+            var inventory = body.inventory;
+
+            //CombatDirector.instancesList[0].monsterCredit -= 50;
+            //IDK LOL
+
+            Debug.Log("giving items");
+
+            inventory.GiveItem(RoR2Content.Items.BoostHp, 80);
+            inventory.GiveItem(SS2Content.Items.BoostCooldowns, 30);
+            inventory.GiveItem(RoR2Content.Items.BoostDamage, 20);
+            inventory.GiveItem(SS2Content.Items.EtherealItemAffix);
+
+            Debug.Log("modifying deaht rewards");
+
+            DeathRewards rewards = body.GetComponent<DeathRewards>();
+            if (rewards)
+            {
+                rewards.expReward *= 4;
+                rewards.goldReward *= 4;
+            }
+
+            Debug.Log("done!");
+        }
+
         public void CombatDirector_Awake(On.RoR2.CombatDirector.orig_Awake orig, CombatDirector self)
         {
-            orig(self);
+            /*orig(self);
             Debug.Log("I'M WAKING UP");
             Debug.Log("TO ASH AND DUST");
             Debug.Log("CHECK THIS SHIT OUT:");
@@ -64,7 +107,7 @@ namespace Moonstorm.Starstorm2.Components
             if (ethInstance != null)
             {
 
-            }
+            }*/
         }
     }
 }

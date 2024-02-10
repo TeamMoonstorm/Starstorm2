@@ -14450,10 +14450,10 @@ MonoBehaviour:
   yawRangeMax: 90
   pitchGiveupRange: 30
   yawGiveupRange: 10
-  giveupDuration: 3
-  raisedApproachSpeed: 720
-  loweredApproachSpeed: 360
-  smoothTime: 0.1
+  giveupDuration: Infinity
+  raisedApproachSpeed: 360
+  loweredApproachSpeed: 180
+  smoothTime: 1
   fullYaw: 0
   aimType: 0
   enableAimWeight: 0
@@ -18579,15 +18579,15 @@ MonoBehaviour:
   baseMaxHealth: 2100
   baseRegen: 0
   baseMaxShield: 0
-  baseMoveSpeed: 5
-  baseAcceleration: 30
-  baseJumpPower: 15
+  baseMoveSpeed: 6
+  baseAcceleration: 16
+  baseJumpPower: 0
   baseDamage: 8
   baseAttackSpeed: 1
   baseCrit: 0
   baseArmor: 20
   baseVisionDistance: Infinity
-  baseJumpCount: 1
+  baseJumpCount: 0
   sprintingSpeedMultiplier: 1.2
   autoCalculateLevelStats: 1
   levelMaxHealth: 630
@@ -18910,7 +18910,7 @@ MonoBehaviour:
   rootMotionAccumulator: {fileID: 0}
   modelAnimator: {fileID: 0}
   driveFromRootRotation: 0
-  turnSpeed: 90
+  turnSpeed: 45
   turnSoundName: 
 --- !u!114 &6342970677023390433
 MonoBehaviour:

@@ -9,21 +9,14 @@ using UnityEngine.Networking;
 
 namespace Moonstorm.Starstorm2.Items
 {
-    [DisabledContent]
-
     public sealed class Diary : ItemBase
     {
         private const string token = "SS2_ITEM_DIARY_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Diary", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Experience bonus from each diary. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
-        public static float experienceBonus = 1;
-        public override void Initialize()
-        {
-            base.Initialize();
-            NetworkingAPI.RegisterMessageType<Behavior.DiarySFXMessage>();
-        }
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Number of levels gained when Empty Diary is consumed.")]
+        [TokenModifier(token, StatTypes.Default, 0)]
+        public static int extraLevels = 3;
         public sealed class Behavior : BaseItemMasterBehavior
         {
             //plays the diary sfx only if players can see the experience bar being affected
@@ -47,182 +40,40 @@ namespace Moonstorm.Starstorm2.Items
             }
             [ItemDefAssociation(useOnClient = false, useOnServer = true)]
             private static ItemDef GetItemDef() => SS2Content.Items.Diary;
-            private bool expectBossKill = false;
-            private float localTime;
-            private List<TimedExpOffset> pendingOffsets = new List<TimedExpOffset>();
-            private float nextAward;
-            private void AddPendingOffset(float awardTime, long awardAmount)
+            private void Awake()
             {
-                this.pendingOffsets.Add(new TimedExpOffset
-                {
-                    awardTime = awardTime,
-                    offset = awardAmount
-                });
-                if (this.nextAward > awardTime)
-                {
-                    this.nextAward = awardTime;
-                }
+                Stage.onServerStageBegin += PrepareAddLevel;
             }
-            private void FixedUpdate()
+            private void OnDestroy()
             {
-                this.localTime += Time.fixedDeltaTime;
-                if (this.pendingOffsets.Count > 0 && this.nextAward <= this.localTime)
-                {
-                    this.nextAward = float.PositiveInfinity;
-                    for (int i = this.pendingOffsets.Count - 1; i >= 0; i--)
-                    {
-                        TimedExpOffset timedExpOffset = pendingOffsets[i];
-                        if (timedExpOffset.awardTime <= this.localTime)
-                        {
-                            master.SS2OffsetExperience(timedExpOffset.offset, true);
-                            this.pendingOffsets.RemoveAt(i);
-                            if (master.hasBody)
-                            {
-                                GameObject bodyObject = master.GetBodyObject();
-                                PlayDiarySFXLocal(bodyObject);
-                                NetworkIdentity networkIdentity = bodyObject.GetComponent<NetworkIdentity>();
-                                if (networkIdentity)
-                                {
-                                    //we need to give clients an opportunity to play the diary sfx
-                                    new DiarySFXMessage(networkIdentity.netId).Send(NetworkDestination.Clients);
-                                }
-
-                            }
-                        }
-                        else if (timedExpOffset.awardTime < this.nextAward)
-                        {
-                            this.nextAward = timedExpOffset.awardTime;
-                        }
-                    }
-                }
+                Stage.onServerStageBegin -= PrepareAddLevel;
             }
-            private void OnEnable()
+            private void PrepareAddLevel(Stage stage)
             {
-                On.RoR2.ExperienceManager.AwardExperience += ExperienceManager_AwardExperience;
-                On.RoR2.DeathRewards.OnKilledServer += DeathRewards_OnKilledServer;
+                if (stage.sceneDef)
+                    base.GetComponent<CharacterMaster>().onBodyStart += AddLevel;
             }
 
-            private void ExperienceManager_AwardExperience(On.RoR2.ExperienceManager.orig_AwardExperience orig, ExperienceManager self, Vector3 origin, CharacterBody body, ulong amount)
+            private void AddLevel(CharacterBody body)
             {
-                orig(self, origin, body, amount);
-                if (expectBossKill)
+                ItemIndex diary = SS2Content.Items.Diary.itemIndex;
+                ItemIndex consumed = SS2Content.Items.DiaryConsumed.itemIndex;
+                if (body.inventory.GetItemCount(diary) > 0)
                 {
-                    List<ulong> list = self.CalculateDenominations(amount);
-                    uint num = 0U;
-                    for (int i = 0; i < list.Count; i++)
-                    {
-                        this.AddPendingOffset(this.localTime + 0.5f + 1.5f * ExperienceManager.orbTimeOffsetSequence[(int)num], (long)Mathf.CeilToInt(list[i] * experienceBonus * stack));
-                        num += 1U;
-                        if ((ulong)num >= (ulong)((long)ExperienceManager.orbTimeOffsetSequence.Length))
-                        {
-                            num = 0U;
-                        }
-                    }
-                    
+                    // this uses xp orbs. wouldnt mind setting the level manually if we use our own vfx
+                    ulong requiredExperience = TeamManager.GetExperienceForLevel(TeamManager.instance.GetTeamLevel(body.teamComponent.teamIndex) + (uint)extraLevels);
+                    ulong experience = requiredExperience - TeamManager.instance.GetTeamCurrentLevelExperience(body.teamComponent.teamIndex);
+                    ExperienceManager.instance.AwardExperience(body.transform.position, body, experience);
+
+                    body.inventory.RemoveItem(diary);
+                    body.inventory.GiveItem(consumed);
+                    CharacterMasterNotificationQueue.SendTransformNotification(body.master, diary, consumed, CharacterMasterNotificationQueue.TransformationType.Default);
+                    PlayDiarySFXLocal(body.gameObject);   // vfx would be nice             
                 }
+
+                body.master.onBodyStart -= AddLevel;
             }
 
-            private void DeathRewards_OnKilledServer(On.RoR2.DeathRewards.orig_OnKilledServer orig, DeathRewards self, DamageReport damageReport)
-            {
-                expectBossKill = self.characterBody && self.characterBody.isBoss && damageReport.attackerTeamIndex == master.teamIndex;
-                orig(self, damageReport);
-                expectBossKill = false;
-            }
-
-            private void OnDisable()
-            {
-                On.RoR2.ExperienceManager.AwardExperience -= ExperienceManager_AwardExperience;
-                On.RoR2.DeathRewards.OnKilledServer -= DeathRewards_OnKilledServer;
-            }
-            private struct TimedExpOffset
-            {
-                public float awardTime;
-                public long offset;
-            }
-            public class DiarySFXMessage : INetMessage
-            {
-                private NetworkInstanceId BodyObjectID;
-
-                public DiarySFXMessage()
-                {
-                }
-
-                public DiarySFXMessage(NetworkInstanceId bodyObjectID)
-                {
-                    BodyObjectID = bodyObjectID;
-                }
-
-                public void Serialize(NetworkWriter writer)
-                {
-                    writer.Write(BodyObjectID);
-                }
-
-                public void Deserialize(NetworkReader reader)
-                {
-                    BodyObjectID = reader.ReadNetworkId();
-                }
-
-                public void OnReceived()
-                {
-                    if (NetworkServer.active)
-                    {
-                        return;
-                    }
-                    GameObject gameObject = Util.FindNetworkObject(BodyObjectID);
-                    if (gameObject)
-                    {
-                        PlayDiarySFXLocal(gameObject);
-                    }
-                }
-            }
         }
     }
 }
-/*public sealed class Behavior : BaseItemBodyBehavior, IStatItemBehavior
-{
-    [ItemDefAssociation]
-    private static ItemDef GetItemDef() => SS2Content.Items.Diary;
-    private float stopwatch;
-
-    public void FixedUpdate()
-    {
-        if (!NetworkServer.active)
-            return;
-        if (Run.instance && !Run.instance.isRunStopwatchPaused)
-        {
-            if (body.master.playerCharacterMasterController)
-            {
-                stopwatch += Time.fixedDeltaTime;
-                if (stopwatch >= 2f)
-                {
-                    if (body.teamComponent)
-                    {
-                        uint exp = (uint)(stack * Math.Pow(2, 1 + (TeamManager.instance.GetTeamLevel(body.teamComponent.teamIndex) / 3.75d)));
-                        TeamManager.instance.GiveTeamExperience(TeamIndex.Player, exp);
-                    }
-
-                    stopwatch = 0f;
-                }
-            }
-        }
-    }
-
-    public void RecalculateStatsStart()
-    {
-        if (NetworkServer.active)
-        {
-            float level = TeamManager.instance.GetTeamLevel(body.teamComponent.teamIndex);
-            if (level > body.level && body.hasEffectiveAuthority)
-            {
-                //N - Kevin works in misterious ways i guess, idk man
-                if (Util.CheckRoll(50)) //G - What the fuck is this doing in recalculatestats
-                { //★ this is fucking stupid yeah
-                    MSUtil.PlayNetworkedSFX("DiaryLevelUp", body.corePosition);
-                }
-            }
-        }
-    }
-
-    public void RecalculateStatsEnd()
-    { }
-}*/
