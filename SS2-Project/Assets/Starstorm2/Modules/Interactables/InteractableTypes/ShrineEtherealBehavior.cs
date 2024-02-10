@@ -14,6 +14,8 @@ namespace Moonstorm.Starstorm2
         private bool waitingForRefresh;
 
         [SerializeField]
+        public ChildLocator childLocator;
+        [SerializeField]
         public PurchaseInteraction purchaseInteraction;
 
         public void Start()
@@ -21,6 +23,8 @@ namespace Moonstorm.Starstorm2
             Debug.Log("starting ethereal shrine behavior");
             purchaseInteraction = GetComponent<PurchaseInteraction>();
             purchaseInteraction.onPurchase.AddListener(ActivateEtherealTerminal);
+
+            childLocator = GetComponent<ChildLocator>();
 
             purchaseCount = 0;
 
@@ -108,6 +112,12 @@ namespace Moonstorm.Starstorm2
                     subjectAsCharacterBody = body,
                     baseToken = "SS2_SHRINE_ETHEREAL_USE_MESSAGE",
                 });
+
+                if (childLocator != null)
+                {
+                    childLocator.FindChild("Particles").gameObject.SetActive(false);
+                    childLocator.FindChild("Burst").gameObject.SetActive(true);
+                }
                 
                 purchaseCount++;
                 refreshTimer = 2;

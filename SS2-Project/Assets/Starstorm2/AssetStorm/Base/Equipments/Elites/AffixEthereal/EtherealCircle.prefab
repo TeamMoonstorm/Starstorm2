@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6696301388741613585}
   - component: {fileID: 399120710362139771}
   - component: {fileID: 5707382029726916304}
+  - component: {fileID: 7369356408917238163}
   m_Layer: 0
   m_Name: EtherealCircle
   m_TagString: Untagged
@@ -173,7 +174,22 @@ MonoBehaviour:
   destroyOnWorld: 0
   impactOnWorld: 1
   timerAfterImpact: 0
-  lifetime: 5
+  lifetime: 2
   lifetimeAfterImpact: 0
   lifetimeRandomOffset: 0
   transformSpace: 0
+--- !u!114 &7369356408917238163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5446245120856132002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -2119659324, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistance: 12
+  offsetDistance: 6
+  changePositionOnly: 1
