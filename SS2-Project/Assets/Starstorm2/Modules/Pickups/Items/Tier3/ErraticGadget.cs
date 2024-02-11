@@ -58,7 +58,7 @@ namespace Moonstorm.Starstorm2.Items
         {
             // jank ass way to check if a lightning orb "ended" by not finding a new target
             bool orbFoundNewTarget = false;
-            if(self.bouncesRemaining > 0)
+            if(self.bouncedObjects != null && self.bouncesRemaining > 0)
             {
                 self.bouncedObjects.Add(self.target.healthComponent); // add self.target.healthComponent so PickNextTarget doesnt pick the same target it already had
                 orbFoundNewTarget = self.PickNextTarget(self.target.transform.position); // check if theres an available target, same way LightningOrb does
@@ -69,7 +69,7 @@ namespace Moonstorm.Starstorm2.Items
             orig(self);
 
             bool isLastBounce = self.bouncedObjects != null && (self.bouncesRemaining == 0 || !orbFoundNewTarget);
-            SS2Log.Info("OnArrival: isLastBounce == " + isLastBounce);
+
             if (isLastBounce && self.attacker?.GetComponent<CharacterBody>()?.inventory?.GetItemCount(SS2Content.Items.ErraticGadget) > 0)
             {
                 bool canProcGadget = false;

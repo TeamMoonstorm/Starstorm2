@@ -15,13 +15,9 @@ namespace Moonstorm.Starstorm2.Items
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Damage reduction per stack. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
-        public static float damageReduction = 0.4f;
+        public static float damageReduction = 0.3f;
 
         public static GameObject shieldEffect = SS2Assets.LoadAsset<GameObject>("AmuletShieldEffect", SS2Bundle.Items);
-        public override void Initialize()
-        {
-
-        }
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnIncomingDamageServerReceiver
         {

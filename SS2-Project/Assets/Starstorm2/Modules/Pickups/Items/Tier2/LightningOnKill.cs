@@ -18,7 +18,7 @@ namespace Moonstorm.Starstorm2.Items
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Total damage of Man O' War's lightning. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
-        public static float damageCoeff = 2.4f;         
+        public static float damageCoeff = 2f;         
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Number of bounces.")]
         [TokenModifier(token, StatTypes.Default, 1)]
