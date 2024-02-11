@@ -85,7 +85,7 @@ namespace Moonstorm.Starstorm2.Components
             {
                 CharacterMaster bodyMaster = master.GetComponent<CharacterMaster>();
                 bodyMaster.inventory.GiveItem(SS2Content.Items.EtherealItemAffix);
-                bodyMaster.inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(25 + (20 * etherealsCompleted)));
+                bodyMaster.inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(20 + (15 * etherealsCompleted)));
             }
         }
 

@@ -21,6 +21,43 @@ namespace Moonstorm.Starstorm2.Buffs
 
         public override Material OverlayMaterial => SS2Assets.LoadAsset<Material>("matEtherealOverlay", SS2Bundle.Equipments);
 
+        public override void Initialize()
+        {
+            base.Initialize();
+            IL.RoR2.HealthComponent.TakeDamage += EtherealDeathIL;
+        }
+
+        private void EtherealDeathIL(ILContext il)
+        {
+            ILCursor c = new ILCursor(il);
+
+            bool ILFound = c.TryGotoNext(MoveType.Before,
+                x => x.MatchLdloc(11),
+                x => x.MatchCallOrCallvirt<GlobalEventManager>(nameof(GlobalEventManager.ServerDamageDealt)),
+                x => x.MatchLdarg(0),
+                x => x.MatchCallOrCallvirt<HealthComponent>("get_alive")
+            );
+
+            c.Index += 3;
+
+            if (ILFound)
+            {
+                c.Emit(OpCodes.Ldarg_0);
+                c.EmitDelegate<Action<HealthComponent>>((hc) =>
+                {
+                    if (hc.health <= 0 && hc.body.HasBuff(SS2Content.Buffs.bdEthereal))
+                    {
+                        hc.health = 1;
+                        if (!hc.body.HasBuff(SS2Content.Buffs.bdHakai))
+                        {
+                            hc.body.AddBuff(SS2Content.Buffs.bdHakai);
+                        }
+                        //Debug.Log("LIVE");
+                    }
+                });
+            }
+        }
+
         public sealed class Behavior : BaseBuffBodyBehavior
         {
             [BuffDefAssociation]
@@ -37,7 +74,7 @@ namespace Moonstorm.Starstorm2.Buffs
 
             public void Start()
             {
-                timerDur = baseTimerDur / body.attackSpeed;
+                timerDur = baseTimerDur; // / body.attackSpeed;   >
                 timer = timerDur * 0.75f;
 
                 model = body.modelLocator.modelTransform.GetComponent<CharacterModel>();
@@ -56,13 +93,13 @@ namespace Moonstorm.Starstorm2.Buffs
                 if (timer >= timerDur)
                 {
                     timer = 0;
+                    if (body.isChampion)
+                        timer = timerDur / 2f;
 
                     //you never know.
                     if (projectilePrefab != null)
                     {
                         PlaceCircle();
-                        if (body.isChampion)
-                            PlaceCircle();
                     }
                 }
             }
