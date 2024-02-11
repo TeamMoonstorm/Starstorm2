@@ -8,8 +8,8 @@ namespace Moonstorm.Starstorm2.Equipments
     public sealed class WhiteFlag : EquipmentBase
     {
         private const string token = "SS2_EQUIP_WHITEFLAG_DESC";
-        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("WhiteFlag", SS2Bundle.Items);
-        public GameObject FlagObject { get; } = SS2Assets.LoadAsset<GameObject>("WhiteFlagWard", SS2Bundle.Items);
+        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("WhiteFlag", SS2Bundle.Equipments);
+        public GameObject FlagObject { get; } = SS2Assets.LoadAsset<GameObject>("WhiteFlagWard", SS2Bundle.Equipments);
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius of the White Flag's effect, in meters.")]
         [TokenModifier(token, StatTypes.Default, 0)]

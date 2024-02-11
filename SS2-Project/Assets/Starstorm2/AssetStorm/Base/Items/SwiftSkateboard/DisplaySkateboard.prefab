@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7776257986597181584}
   - component: {fileID: 5152528175221398497}
   m_Layer: 0
-  m_Name: displayArmedBackpack 1
+  m_Name: DisplaySkateboard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,9 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rendererInfos:
-  - renderer: {fileID: 0}
-    defaultMaterial: {fileID: 2100000, guid: 596870abc1c07c14d95a81647a300ce8, type: 2}
-    defaultShadowCastingMode: 0
+  - renderer: {fileID: 9213218217971109926}
+    defaultMaterial: {fileID: 2100000, guid: bddf5bcdcdef6984f833d35c078d9b53, type: 2}
+    defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
   hideOnDeathObjects: []
@@ -76,13 +76,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6808473020752744536}
-  m_LocalRotation: {x: -0.41451946, y: -0.5833949, z: 0.5967052, w: 0.3629972}
-  m_LocalPosition: {x: -0.00075727125, y: 0.015846621, z: 0.014967104}
-  m_LocalScale: {x: 0.6999999, y: 0.7, z: 0.7}
+  m_LocalRotation: {x: -0.50000006, y: -0.5, z: 0.50000006, w: 0.5}
+  m_LocalPosition: {x: -0.0000000147118335, y: 0.028900275, z: 0.015767163}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7776257986597181584}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 23.284, y: -91.519005, z: 93.481}
+  m_LocalEulerAnglesHint: {x: 0, y: -90.00001, z: 90.00001}
 --- !u!33 &2101882782299704962
 MeshFilter:
   m_ObjectHideFlags: 0
