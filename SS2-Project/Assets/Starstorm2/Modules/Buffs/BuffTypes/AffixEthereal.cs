@@ -51,6 +51,7 @@ namespace Moonstorm.Starstorm2.Buffs
                         if (!hc.body.HasBuff(SS2Content.Buffs.bdHakai))
                         {
                             hc.body.AddBuff(SS2Content.Buffs.bdHakai);
+                            hc.body.AddBuff(RoR2Content.Buffs.Intangible);
                         }
                         //Debug.Log("LIVE");
                     }
@@ -121,21 +122,19 @@ namespace Moonstorm.Starstorm2.Buffs
                     CharacterMaster randomMaster = masters[random.Next(masters.Count)];
                     if (randomMaster != null)
                     {
-                        CharacterBody body = randomMaster.GetBody();
-                        if (body != null)
+                        CharacterBody masterBody = randomMaster.GetBody();
+                        if (masterBody != null)
                         {
-                            if (body.healthComponent.alive)
+                            if (masterBody.healthComponent.alive)
                             {
+                                NodeGraph groundNodes = SceneInfo.instance.groundNodes;
+                                List<NodeGraph.NodeIndex> nodeList = groundNodes.FindNodesInRange(masterBody.transform.position, 0f, 32f, HullMask.Human);
+                                NodeGraph.NodeIndex randomNode = nodeList[random.Next(nodeList.Count)];
+                                if (randomNode != null)
                                 {
-                                    NodeGraph groundNodes = SceneInfo.instance.groundNodes;
-                                    List<NodeGraph.NodeIndex> nodeList = groundNodes.FindNodesInRange(body.transform.position, 0f, 32f, HullMask.Human);
-                                    NodeGraph.NodeIndex randomNode = nodeList[random.Next(nodeList.Count)];
-                                    if (randomNode != null)
-                                    {
-                                        Vector3 position;
-                                        groundNodes.GetNodePosition(randomNode, out position);
-                                        ProjectileManager.instance.FireProjectile(projectilePrefab, position, new Quaternion(0, 0, 0, 0), body.gameObject, 1f, 0f, body.RollCrit(), DamageColorIndex.Default, null, 0);
-                                    }
+                                    Vector3 position;
+                                    groundNodes.GetNodePosition(randomNode, out position);
+                                    ProjectileManager.instance.FireProjectile(projectilePrefab, position, new Quaternion(0, 0, 0, 0), body.gameObject, 1f, 0f, body.RollCrit(), DamageColorIndex.Default, null, 0);
                                 }
                             }
                         }

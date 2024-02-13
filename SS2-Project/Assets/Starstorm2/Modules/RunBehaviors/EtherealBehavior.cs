@@ -10,12 +10,13 @@ using UnityEngine.SceneManagement;
 
 namespace Moonstorm.Starstorm2.Components
 {
+    //if this code looks stupid in any form of the word, please let me know -★
     public class EtherealBehavior : MonoBehaviour
     {
         public static EtherealBehavior instance { get; private set; }
+        private static float storedScalingValue;
+        private static int storedLevelCap;
         public Run run;
-
-        private static int defaultLevelCap;
 
         public static GameObject shrinePrefab;
         public static GameObject portalPrefab;
@@ -30,7 +31,7 @@ namespace Moonstorm.Starstorm2.Components
         internal static void Init()
         {
             //Initialize trader trading
-            Components.TraderController.Initialize();
+            TraderController.Initialize();
 
             //Initialize new difficulties
             Deluge.Init();
@@ -39,7 +40,7 @@ namespace Moonstorm.Starstorm2.Components
             SuperTyphoon.Init();
 
             //Save default level cap
-            defaultLevelCap = Run.ambientLevelCap;
+            storedLevelCap = Run.ambientLevelCap;
 
             //Initialize related prefabs
             shrinePrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("ShrineEthereal", SS2Bundle.Indev), "EtherealSapling", true);
@@ -61,7 +62,13 @@ namespace Moonstorm.Starstorm2.Components
         {
             instance = this;
 
+            etherealsCompleted = 0;
+            storedScalingValue = DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).scalingValue;
+            teleIsEthereal = false;
+            Run.ambientLevelCap = storedLevelCap;
+
             //TeleporterInteraction.onTeleporterBeginChargingGlobal += TeleporterInteraction_onTeleporterBeginChargingGlobal;
+            Run.onRunDestroyGlobal += Run_onRunDestroyGlobal;
             TeleporterInteraction.onTeleporterChargedGlobal += TeleporterInteraction_onTeleporterChargedGlobal;
             On.RoR2.TeleporterInteraction.Start += TeleporterInteraction_Start;
             On.RoR2.SceneDirector.Start += SceneDirector_Start;
@@ -72,10 +79,18 @@ namespace Moonstorm.Starstorm2.Components
         private void OnDestroy()
         {
             //TeleporterInteraction.onTeleporterBeginChargingGlobal -= TeleporterInteraction_onTeleporterBeginChargingGlobal;
+            Run.onRunDestroyGlobal -= Run_onRunDestroyGlobal;
             TeleporterInteraction.onTeleporterChargedGlobal -= TeleporterInteraction_onTeleporterChargedGlobal;
             On.RoR2.TeleporterInteraction.Start -= TeleporterInteraction_Start;
             On.RoR2.SceneDirector.Start -= SceneDirector_Start;
             On.RoR2.TeleporterInteraction.OnBossDirectorSpawnedMonsterServer -= TeleporterInteraction_OnBossDirectorSpawnedMonsterServer;
+        }
+
+        private void Run_onRunDestroyGlobal(Run run)
+        {
+            DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).scalingValue = storedScalingValue;
+            Debug.Log(DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).scalingValue + " - scaling value");
+            Debug.Log("completed ethereals: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
         }
 
         private void TeleporterInteraction_OnBossDirectorSpawnedMonsterServer(On.RoR2.TeleporterInteraction.orig_OnBossDirectorSpawnedMonsterServer orig, TeleporterInteraction self, GameObject master)
