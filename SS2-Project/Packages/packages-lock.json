@@ -198,26 +198,8 @@
       "source": "embedded",
       "dependencies": {}
     },
-    "riskofthunder-r2api_rulebook": {
-      "version": "file:R2API_Rulebook",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "riskofthunder-r2api_sceneasset": {
-      "version": "file:R2API_SceneAsset",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
     "riskofthunder-r2api_skins": {
       "version": "file:R2API_Skins",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "riskofthunder-r2api_sound": {
-      "version": "file:R2API_Sound",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
@@ -228,20 +210,8 @@
       "source": "embedded",
       "dependencies": {}
     },
-    "riskofthunder-r2api_stringserializerextensions": {
-      "version": "file:R2API_StringSerializerExtensions",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
     "riskofthunder-r2api_tempvisualeffect": {
       "version": "file:R2API_TempVisualEffect",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "riskofthunder-r2api_unlockable": {
-      "version": "file:R2API_Unlockable",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
@@ -253,10 +223,11 @@
       "dependencies": {}
     },
     "riskofthunder-ror2editorkit": {
-      "version": "file:RoR2EditorKit",
+      "version": "https://github.com/risk-of-thunder/RoR2EditorKit.git#4.1.0",
       "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
+      "source": "git",
+      "dependencies": {},
+      "hash": "bf6bb94284f4071226a9464146a6c5f77b68251e"
     },
     "riskofthunder-ror2importextensions": {
       "version": "https://github.com/risk-of-thunder/RoR2ImportExtensions.git#1.3.7",
