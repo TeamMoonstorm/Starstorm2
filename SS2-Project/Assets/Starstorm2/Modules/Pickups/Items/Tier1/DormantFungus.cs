@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 namespace Moonstorm.Starstorm2.Items
 {
-    [DisabledContent]
+    //[DisabledContent]
     public sealed class DormantFungus : ItemBase
     {
         private const string token = "SS2_ITEM_DORMANTFUNGUS_DESC";
@@ -14,11 +14,11 @@ namespace Moonstorm.Starstorm2.Items
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Base amount of healing. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
-        public static float baseHealPercentage = 0.01f;
+        public static float baseHealPercentage = 0.015f;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of healing per stack. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
-        public static float stackHealPercentage = 0.01f;
+        public static float stackHealPercentage = 0.015f;
         public override void Initialize()
         {
             base.Initialize();

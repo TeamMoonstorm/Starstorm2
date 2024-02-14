@@ -27,7 +27,7 @@ namespace EntityStates.Lamp
         {
             base.OnEnter();
             animator = GetModelAnimator();
-            PlayCrossfade("Body", "Death", 0.01f);
+            PlayCrossfade("Body", "Death", "deathPlaybackRate", duration, 0.05f);
             muzzle = GetModelChildLocator().FindChild(muzzleString);
             //Util.PlaySound("FollowerVO", gameObject);
             hasPlayedEffect = false;
@@ -38,30 +38,44 @@ namespace EntityStates.Lamp
             isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
         }
 
+        public void DestroyLamp()
+        {
+            hasPlayedEffect = true;
+            var effect = isBlue ? deathVFXblue : deathVFX;
+            EffectManager.SimpleEffect(effect, muzzle.position, muzzle.rotation, true);
+            Util.PlaySound("LampImpact", gameObject);
+
+            //YOU SHOULD KILL YOURSELF NOW
+            //NetworkServer.Destroy(gameObject);
+
+            if (cachedModelTransform)
+            {
+                Destroy(cachedModelTransform.gameObject);
+                cachedModelTransform = null;
+            }
+
+            DestroyBodyAsapServer();
+            DestroyModel();
+            Destroy(gameObject);
+        }
+
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+
+            if (fixedAge >= duration && isAuthority)
+            {
+                if (!hasPlayedEffect)
+                {
+                    DestroyLamp();
+                }
+            }
+
             if (animator)
             {
                 if (animator.GetFloat(mecanimPerameter) > 0.5f && !hasPlayedEffect)
                 {
-                    hasPlayedEffect = true;
-                    var effect = isBlue ? deathVFXblue : deathVFX;
-                    EffectManager.SimpleEffect(effect, muzzle.position, muzzle.rotation, true);
-                    Util.PlaySound("LampImpact", gameObject);
-
-                    //YOU SHOULD KILL YOURSELF NOW
-                    //NetworkServer.Destroy(gameObject);
-
-                    if (cachedModelTransform)
-                    {
-                        Destroy(cachedModelTransform.gameObject);
-                        cachedModelTransform = null;
-                    }
-
-                    DestroyBodyAsapServer();
-                    DestroyModel();
-                    Destroy(gameObject);
+                    DestroyLamp();
                 }
             }
         }

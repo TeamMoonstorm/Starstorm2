@@ -83,7 +83,7 @@ namespace EntityStates.Executioner
                         damageColorIndex = DamageColorIndex.Default,
                         minSpread = 0f,
                         maxSpread = characterBody.spreadBloomAngle,
-                        falloffModel = BulletAttack.FalloffModel.None,
+                        falloffModel = BulletAttack.FalloffModel.DefaultBullet,
                         force = force,
                         isCrit = isCrit,
                         owner = gameObject,

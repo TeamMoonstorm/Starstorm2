@@ -159,5 +159,71 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8126620737831467704, guid: 264f69ebd75b3e748b14e8172920f9bd,
+        type: 3}
+      propertyPath: lifetimeExpiredEffect
+      value: 
+      objectReference: {fileID: 2973804742395575377, guid: ca20df93eec07644db07ad4b1f99d511,
+        type: 3}
+    - target: {fileID: 8126620737831467704, guid: 264f69ebd75b3e748b14e8172920f9bd,
+        type: 3}
+      propertyPath: velocityOverLifetime.m_Curve.Array.data[1].time
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 8126620737831467704, guid: 264f69ebd75b3e748b14e8172920f9bd,
+        type: 3}
+      propertyPath: velocityOverLifetime.m_Curve.Array.data[2].time
+      value: 0.075
+      objectReference: {fileID: 0}
+    - target: {fileID: 8126620737831467704, guid: 264f69ebd75b3e748b14e8172920f9bd,
+        type: 3}
+      propertyPath: velocityOverLifetime.m_Curve.Array.data[3].time
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8126620737831467704, guid: 264f69ebd75b3e748b14e8172920f9bd,
+        type: 3}
+      propertyPath: velocityOverLifetime.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8126620737831467704, guid: 264f69ebd75b3e748b14e8172920f9bd,
+        type: 3}
+      propertyPath: velocityOverLifetime.m_Curve.Array.data[2].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8126620737831467704, guid: 264f69ebd75b3e748b14e8172920f9bd,
+        type: 3}
+      propertyPath: velocityOverLifetime.m_Curve.Array.data[3].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8126620737831467704, guid: 264f69ebd75b3e748b14e8172920f9bd,
+        type: 3}
+      propertyPath: velocityOverLifetime.m_Curve.Array.data[2].inSlope
+      value: -0.017504906
+      objectReference: {fileID: 0}
+    - target: {fileID: 8126620737831467704, guid: 264f69ebd75b3e748b14e8172920f9bd,
+        type: 3}
+      propertyPath: velocityOverLifetime.m_Curve.Array.data[3].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8126620737831467704, guid: 264f69ebd75b3e748b14e8172920f9bd,
+        type: 3}
+      propertyPath: velocityOverLifetime.m_Curve.Array.data[4].inSlope
+      value: 1.2132875
+      objectReference: {fileID: 0}
+    - target: {fileID: 8126620737831467704, guid: 264f69ebd75b3e748b14e8172920f9bd,
+        type: 3}
+      propertyPath: velocityOverLifetime.m_Curve.Array.data[2].outSlope
+      value: -0.017504906
+      objectReference: {fileID: 0}
+    - target: {fileID: 8126620737831467704, guid: 264f69ebd75b3e748b14e8172920f9bd,
+        type: 3}
+      propertyPath: velocityOverLifetime.m_Curve.Array.data[3].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8126620737831467704, guid: 264f69ebd75b3e748b14e8172920f9bd,
+        type: 3}
+      propertyPath: velocityOverLifetime.m_Curve.Array.data[4].outSlope
+      value: 1.2132875
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 264f69ebd75b3e748b14e8172920f9bd, type: 3}

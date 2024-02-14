@@ -19,14 +19,14 @@ namespace Moonstorm.Starstorm2.Artifacts
         {
             On.RoR2.SceneDirector.Start -= SceneDirector_Start;
             shouldUpgradeTP = false;
-            Ethereal.adversityEnabled = false;
+            //Ethereal.adversityEnabled = false;
         }
 
         public override void OnArtifactEnabled()
         {
             On.RoR2.SceneDirector.Start += SceneDirector_Start;
             shouldUpgradeTP = false;
-            Ethereal.adversityEnabled = true;
+            //Ethereal.adversityEnabled = true;
         }
 
         public static void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)

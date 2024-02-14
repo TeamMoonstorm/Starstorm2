@@ -1651,7 +1651,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1289420838866686317}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -9, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 809931554303037816}
@@ -14450,10 +14450,10 @@ MonoBehaviour:
   yawRangeMax: 90
   pitchGiveupRange: 30
   yawGiveupRange: 10
-  giveupDuration: 3
-  raisedApproachSpeed: 720
-  loweredApproachSpeed: 360
-  smoothTime: 0.1
+  giveupDuration: Infinity
+  raisedApproachSpeed: 360
+  loweredApproachSpeed: 180
+  smoothTime: 1
   fullYaw: 0
   aimType: 0
   enableAimWeight: 0
@@ -18576,21 +18576,21 @@ MonoBehaviour:
   bodyFlags: 0
   rootMotionInMainState: 0
   mainRootSpeed: 0
-  baseMaxHealth: 2800
+  baseMaxHealth: 2100
   baseRegen: 0
   baseMaxShield: 0
-  baseMoveSpeed: 5
-  baseAcceleration: 30
-  baseJumpPower: 15
+  baseMoveSpeed: 6
+  baseAcceleration: 16
+  baseJumpPower: 0
   baseDamage: 8
   baseAttackSpeed: 1
   baseCrit: 0
   baseArmor: 20
   baseVisionDistance: Infinity
-  baseJumpCount: 1
+  baseJumpCount: 0
   sprintingSpeedMultiplier: 1.2
   autoCalculateLevelStats: 1
-  levelMaxHealth: 840
+  levelMaxHealth: 630
   levelRegen: 0
   levelMaxShield: 0
   levelMoveSpeed: 0
@@ -18910,7 +18910,7 @@ MonoBehaviour:
   rootMotionAccumulator: {fileID: 0}
   modelAnimator: {fileID: 0}
   driveFromRootRotation: 0
-  turnSpeed: 90
+  turnSpeed: 45
   turnSoundName: 
 --- !u!114 &6342970677023390433
 MonoBehaviour:

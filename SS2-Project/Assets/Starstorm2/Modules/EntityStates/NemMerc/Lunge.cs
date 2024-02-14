@@ -162,6 +162,7 @@ namespace EntityStates.NemMerc
             base.OnExit();
 
             base.characterMotor.airControl = this.previousAirControl;
+            base.characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage;
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

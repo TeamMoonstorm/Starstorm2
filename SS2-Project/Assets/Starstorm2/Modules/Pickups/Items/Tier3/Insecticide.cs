@@ -5,7 +5,6 @@ using static AkMIDIEvent;
 
 namespace Moonstorm.Starstorm2.Items
 {
-    //[DisabledContent]
     public sealed class Insecticide : ItemBase
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Insecticide", SS2Bundle.Items);
@@ -22,6 +21,7 @@ namespace Moonstorm.Starstorm2.Items
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of poison.")]
         public static float duration = 3;
 
+        public static GameObject hitEffect = SS2Assets.LoadAsset<GameObject>("InsecticideEffect", SS2Bundle.Items);
         public override void Initialize()
         {
             DotController.onDotInflictedServerGlobal += RefreshInsects;
@@ -62,6 +62,9 @@ namespace Moonstorm.Starstorm2.Items
                         damageMultiplier = stack * (damageCoeff / 1.8f)
                     };
                     DotController.InflictDot(ref dotInfo);
+
+                    // GOOPY SOUNDS HERE WOULD BE FANTASTIC!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    EffectManager.SimpleEffect(hitEffect, report.damageInfo.position, Quaternion.identity, true);
                 }
             }
         }

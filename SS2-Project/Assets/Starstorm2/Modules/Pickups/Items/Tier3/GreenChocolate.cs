@@ -1,7 +1,7 @@
 ﻿using RoR2;
 using RoR2.Items;
 using System;
-
+using UnityEngine;
 namespace Moonstorm.Starstorm2.Items
 {
     public sealed class GreenChocolate : ItemBase
@@ -32,6 +32,8 @@ namespace Moonstorm.Starstorm2.Items
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Crit chance increase from the buff. (1 = 1% crit chance)")]
         [TokenModifier(token, StatTypes.Default, 5)]
         public static float buffCrit = 20f;
+
+        public static GameObject effectPrefab = SS2Assets.LoadAsset<GameObject>("ChocolateEffect", SS2Bundle.Items);
         public sealed class Behavior : BaseItemBodyBehavior, IOnIncomingDamageServerReceiver
         {
             [ItemDefAssociation]
@@ -51,6 +53,16 @@ namespace Moonstorm.Starstorm2.Items
                 {
                     damageInfo.damage = damageInfo.damage * (1 - damageReduction) + (body.healthComponent.fullCombinedHealth * (damageThreshold * damageReduction));
                     body.AddTimedBuff(SS2Content.Buffs.BuffChocolate, baseDuration + (stackDuration * (stack - 1)));
+
+
+                    // NO SOUND :(((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((
+                    EffectData effectData = new EffectData
+                    {
+                        origin = this.body.corePosition,
+                        scale = this.body.radius,
+                    };
+                    effectData.SetNetworkedObjectReference(this.body.gameObject);
+                    EffectManager.SpawnEffect(effectPrefab, effectData, true);
                 }
             }
             private void OnDestroy()

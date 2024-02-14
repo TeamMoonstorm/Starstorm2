@@ -7,14 +7,35 @@
 		"SS2_MULE_OUTRO_FAILURE": "..于是它死了。",
 		"SS2_MULE_LORE": "",
 
-		"SS2_MULE_PASSIVE_DRONE_NAME": "FAIL-SAFE ASSISTANCE",
-		"SS2_MULE_PASSIVE_DRONE_DESC": "Taking damage to below <style=cIsHealth>25% health</style> releases a <style=cIsUtility>personal repair drone</style>, <style=cIsHealing>healing</style> you for <style=cIsHealing>35%</style> of <style=cIsHealing>maximum health</style> and temporarily increasing <style=cIsUtility>armor</style>.",
-		"SS2_MULE_PRIMARY_PUNCH_NAME": "INTERFERENCE REMOVAL",
-		"SS2_MULE_PRIMARY_PUNCH_DESC": "PUNCH THE SHIT OUT OF LIZARDS FOR 280% DAMAGE",
-		"SS2_MULE_SECONDARY_SLAM_NAME": "",
-		"SS2_MULE_SECONDARY_SLAM_DESC": "",
-		"SS2_MULE_UTILITY_SPIN_NAME": "TORQUE CALIBRATION",
-		"SS2_MULE_UTILITY_SPIN_DESC": "",
-		"SS2_MULE_SPECIAL_NET_NAME": "IMMOBILIZE",
-		"SS2_MULE_SPECIAL_NET_DESC": "",
+		"SS2_MULE_KEYWORD_OVERCLOCKING": "<style=cKeywordName>超频</style></style=cSub>按住延长技能持续时间，但也会延长技能冷却时间。</sub>",
+		"SS2_MULE_KEYWORD_OVERCLOCKING2": "<style=cKeywordName>超频</style></style=cSub>按住以进一步充能技能，但也会延长技能冷却时间。</sub>",
+
+		"SS2_MULE_PASSIVE_DRONE_NAME": "故障保险",
+		"SS2_MULE_PASSIVE_DRONE_DESC": "当受到伤害使生命值降至<style=cIsHealth>25%</style>以下时，释放一个<style=cIsUtility>个人修复无人机</style>，为你<style=cIsHealing>恢复</style><style=cIsHealing>35%</style><style=cIsHealing>最大生命值</style>并临时提高<style=cIsUtility>护甲</style>.",
+
+		"SS2_MULE_PUNCH_NAME": "清除干扰",
+		"SS2_MULE_PUNCH_DESC": "对敌人造成<style=cIsDamage>330%伤害</style>.",
+		"SS2_MULE_KEYWORD_PUNCH_CALIBRATED": "<style=cKeywordName>校准</style></style=cSub><style=cSub>在你面前猛击地面，造成更高的伤害并释放出冲击波。（%s 待定）</style>",
+
+		"SS2_MULE_UPHEAVAL_NAME": "颠覆",
+		"SS2_MULE_UPHEAVAL_DESC": "<style=cIsDamage>眩晕</style>猛击你前方的地面，升起一个<style=cIsUtility>巨石</style>造成<style=cIsDamage>450%伤害</style>，<style=cIsDamage>攻击巨石可以使其滚动。</style>",
+		"SS2_MULE_KEYWORD_UPHEAVAL_CALIBRATED": "<style=cKeywordName>校准</style></style=cSub>你猛击你前方的地面，同时升起多达3个巨石。",
+
+		"SS2_MULE_OLDPUNCH_NAME": "离心粉碎机",
+		"SS2_MULE_OLDPUNCH_DESC": "<style=cIsUtility>超频</style>。<style=cIsUtility>眩晕</style>。蓄力并向前猛击，造成<style=cIsDamage>280%伤害</style>。<style=cIsDamage>伤害根据蓄力等级倍增，最高为4倍</style>.",
+
+		"SS2_MULE_JUMP_NAME": "重新定位",
+		"SS2_MULE_JUMP_DESC": "<style=cIsUtility>按住进行充能</style>，进行强力的向上跳跃",
+
+		"SS2_MULE_SPIN_NAME": "扭矩校准",
+		"SS2_MULE_SPIN_DESC": "<style=cIsUtility>超频</style>。快速旋转，逐渐增加<style=cIsUtility>移动速度</style>和<style=cIsUtility>护甲</style>，同时每次旋转造成<style=cIsDamage>100%伤害</style>",
+
+		"SS2_MULE_NET_NAME": "Immobilize",
+		"SS2_MULE_NET_DESC": "发射一张<style=cIsUtility>网</style>，使距离命中地点<style=cIsUtility>12m</style>内的敌人无法移动，并在<style=cIsUtility>5</style>秒内无法攻击。<style=cIsUtility>飞行中的敌人将被击倒在地</style>.",
+
+		"SS2_MULE_CHARGE_NAME": "扭矩校准",
+		"SS2_MULE_CHARGE_DESC": "<style=cIsUtility>校准中</style>。<style=cIsUtility>按住进行充能</style>，释放后进行 <style=cIsUtility>前冲</style>并旋转，造成<style=cIsDamage>(中高伤害 待定)%伤害</style>.",
+
+		"SS2_MULE_KEYWORD_CALIBRATING": "<style=cKeywordName>校准中</style><style=cSub>可以通过主要攻击、次要攻击或跳跃来取消，执行更强大的\"校准\"变体动作。</style>"
 	}
+}

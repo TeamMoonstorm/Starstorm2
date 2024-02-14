@@ -17,22 +17,36 @@ namespace Moonstorm.Starstorm2
             public static ArtifactDef Havoc;
             
             public static ArtifactDef Deviation;
+
+            public static ArtifactDef Adversity;
         }
         public static class Items
         {
             public static ItemDef ArmedBackpack;
 
+            public static ItemDef BoostCooldowns;
+
+            public static ItemDef BoostMovespeed;
+
             public static ItemDef CoffeeBag;
 
             public static ItemDef Cognation;
 
+            public static ItemDef CompositeInjector;
+
             public static ItemDef ChirrFriendHelper;
+
+            public static ItemDef CrypticSource;
 
             public static ItemDef DetritiveTrematode;
 
             public static ItemDef Diary;
 
+            public static ItemDef DiaryConsumed;
+
             public static ItemDef DormantFungus;
+
+            public static ItemDef EtherealItemAffix;
 
             public static ItemDef Fork;
 
@@ -46,9 +60,15 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef VoidRock;
 
+            public static ItemDef VoidRockTracker;
+
             public static ItemDef BloodTester;
 
             public static ItemDef FieldAccelerator;
+
+            public static ItemDef FlowerTurret;
+
+            public static ItemDef HealthDecayWithRegen;
 
             public static ItemDef HottestSauce;
 
@@ -68,11 +88,15 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef GreenChocolate;
 
+            public static ItemDef GuardingAmulet;
+
             public static ItemDef NkotasHeritage;
 
             public static ItemDef PortableReactor;
 
             public static ItemDef SwiftSkateboard;
+
+            public static ItemDef LightningOnKill;
 
             public static ItemDef LowQualitySpeakers;
 
@@ -113,6 +137,17 @@ namespace Moonstorm.Starstorm2
             public static ItemDef NemesisBossHelper;
 
             public static ItemDef TerminationHelper;
+
+            public static ItemDef GildedAmulet;
+
+            public static ItemDef ChucklingFungus;
+            
+            public static ItemDef UniversalCharger;
+
+            public static ItemDef UraniumHorseshoe;
+
+            public static ItemDef RainbowRoot;
+
         }
 
         public static class Equipments
@@ -120,6 +155,8 @@ namespace Moonstorm.Starstorm2
             public static EquipmentDef ElitePurpleEquipment;
 
             public static EquipmentDef EliteKineticEquipment;
+
+            public static EquipmentDef AffixEthereal;
 
             public static EquipmentDef AffixEmpyrean;
 
@@ -131,16 +168,24 @@ namespace Moonstorm.Starstorm2
 
             public static EquipmentDef GreaterWarbanner;
 
+            public static EquipmentDef Magnet;
+
             public static EquipmentDef MIDAS;
 
             public static EquipmentDef PressurizedCanister;
+
+            public static EquipmentDef RockFruit;
+            
+            public static EquipmentDef WhiteFlag;
         }
 
         public static class Buffs
         {
             public static BuffDef BuffAffixVoid;
 
-            public static BuffDef BuffBackThruster;          
+            public static BuffDef BuffBackThruster;
+
+            public static BuffDef BuffUniversalCharger;
 
             public static BuffDef BuffChirrConfuse;
 
@@ -162,11 +207,17 @@ namespace Moonstorm.Starstorm2
 
             public static BuffDef BuffGouge;
 
+            public static BuffDef bdHakai;
+
             public static BuffDef BuffGreaterBanner;
 
             public static BuffDef BuffIntoxicated;
 
             public static BuffDef BuffInsecticide;
+
+            public static BuffDef BuffJetBootsCooldown;
+
+            public static BuffDef BuffJetBootsReady;
 
             public static BuffDef BuffCoffeeBag;
 
@@ -181,6 +232,8 @@ namespace Moonstorm.Starstorm2
             public static BuffDef BuffScavengersFortune;
 
             public static BuffDef BuffSigil;
+
+            public static BuffDef BuffSigilHidden;
 
             public static BuffDef BuffKickflip;
 
@@ -263,6 +316,9 @@ namespace Moonstorm.Starstorm2
             public static BuffDef bdEmpyrean;
 
             public static BuffDef bdPoisonBuildup;
+
+            public static BuffDef bdEthereal;
+
         }
 
         public static class Elites
@@ -270,6 +326,7 @@ namespace Moonstorm.Starstorm2
             public static EliteDef edPurple;
             public static EliteDef edKinetic;
             public static EliteDef edEmpyrean;
+            public static EliteDef edEthereal;
         }
         public static class Scenes
         {
@@ -313,10 +370,13 @@ namespace Moonstorm.Starstorm2
 
             Typhoon.Init();
             Events.Init();
-            
+
             //Bulwark.Init();
-            
+
             //Ethereal.Init();
+            Components.EtherealBehavior.Init();
+
+            Void.Init();
 
             LoadDispatchers = new Action[]
             {

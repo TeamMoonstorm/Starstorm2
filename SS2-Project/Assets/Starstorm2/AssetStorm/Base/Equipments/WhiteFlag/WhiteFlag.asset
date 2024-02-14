@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1512808244, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: WhiteFlag
+  m_EditorClassIdentifier: 
+  pickupModelPrefab: {fileID: 5493388495282764137, guid: 975bf373634ca4f48b26e0a6187bed9b,
+    type: 3}
+  cooldown: 45
+  nameToken: SS2_EQUIP_WHITEFLAG_NAME
+  pickupToken: SS2_EQUIP_WHITEFLAG_PICKUP
+  descriptionToken: SS2_EQUIP_WHITEFLAG_DESC
+  loreToken: SS2_EQUIP_WHITEFLAG_LORE
+  pickupIconSprite: {fileID: 21300000, guid: 2cd0e377735bfad4a892e89461a5d6df, type: 3}
+  unlockableDef: {fileID: 0}
+  colorIndex: 5
+  canDrop: 1
+  dropOnDeathChance: 0
+  canBeRandomlyTriggered: 1
+  enigmaCompatible: 1
+  isLunar: 0
+  isBoss: 0
+  passiveBuffDef: {fileID: 0}
+  appearsInSinglePlayer: 1
+  appearsInMultiPlayer: 1
+  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+  mageElement: 0

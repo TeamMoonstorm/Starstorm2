@@ -161,6 +161,7 @@ namespace EntityStates.Events
                 master.onBodyStart += (body) =>
                 {                   
                     body.gameObject.AddComponent<NemesisResistances>();
+                    AddHurtboxForBody(body);
                 };
 
                 new NemesisSpawnCard.SyncBaseStats(nemesisBossBody).Send(R2API.Networking.NetworkDestination.Clients);
@@ -172,12 +173,30 @@ namespace EntityStates.Events
             {
                 combatSquad.GetComponent<TeamFilter>().defaultTeam = TeamIndex.Monster;
                 NetworkServer.Spawn(combatSquad.gameObject);
+
+                foreach (CharacterMaster master in combatSquad.membersList)
+                {
+                    master.inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
+                    master.inventory.GiveItem(RoR2Content.Items.UseAmbientLevel);
+                }
             }
             UnityEngine.Object.Destroy(spawnCard);
         }
 
         
-
+        public void AddHurtboxForBody(CharacterBody body)
+        {
+            if(body.mainHurtBox)
+            {
+                CapsuleCollider capsuleCollider = body.mainHurtBox.GetComponent<CapsuleCollider>();
+                if(capsuleCollider)
+                {
+                    capsuleCollider.height = 4f;
+                    capsuleCollider.radius = 4f;
+                }
+                
+            }
+        }
         public virtual void OnBodyDeath()
         {
             onNemesisDefeatedGlobal?.Invoke(nemesisBossBody);
