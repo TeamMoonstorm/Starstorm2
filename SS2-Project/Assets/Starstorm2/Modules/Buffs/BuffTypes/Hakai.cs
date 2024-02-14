@@ -42,7 +42,7 @@ namespace Moonstorm.Starstorm2.Buffs
                 else
                     timerDur = baseTimerDur;
 
-                projTimerDur = baseTimerDur / 3f; // / body.attackSpeed;   >
+                projTimerDur = baseTimerDur / 3f;
                 projTimer = timerDur * 0.95f;
 
                 timer = 0;
@@ -57,26 +57,26 @@ namespace Moonstorm.Starstorm2.Buffs
                     temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 0.1f, 1f, 1f);
                     temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matHakaiOverlay", SS2Bundle.Equipments);
                     temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
+                }
 
-                    GameObject charModel = modelTransform.gameObject;
-                    if (charModel != null)
+                GameObject charModel = body.modelLocator.modelTransform.gameObject;
+                if (charModel != null)
+                {
+                    CharacterModel cm = charModel.GetComponent<CharacterModel>();
+                    if (cm != null)
                     {
-                        CharacterModel cm = charModel.GetComponent<CharacterModel>();
-                        if (cm != null)
+                        CharacterModel.RendererInfo[] rendererInfos = cm.baseRendererInfos;
+                        if (rendererInfos != null)
                         {
-                            CharacterModel.RendererInfo[] rendererInfos = cm.baseRendererInfos;
-                            if (rendererInfos != null)
+                            for (int i = 0; i < rendererInfos.Length; i++)
                             {
-                                for (int i = 0; i < rendererInfos.Length; i++)
+                                if (rendererInfos[i].renderer != null)
                                 {
-                                    if (rendererInfos[i].renderer != null)
+                                    if (!rendererInfos[i].ignoreOverlays)
                                     {
-                                        if (!rendererInfos[i].ignoreOverlays)
-                                        {
-                                            GameObject effect = AddParticles(rendererInfos[i].renderer, body.coreTransform, timerDur);
-                                            if (effect != null)
-                                                effectInstances.Add(effect);
-                                        }
+                                        GameObject effect = AddParticles(rendererInfos[i].renderer, body.coreTransform, timerDur);
+                                        if (effect != null)
+                                            effectInstances.Add(effect);
                                     }
                                 }
                             }
@@ -89,7 +89,13 @@ namespace Moonstorm.Starstorm2.Buffs
             {
                 if (modelRenderer is MeshRenderer || modelRenderer is SkinnedMeshRenderer)
                 {
-                    GameObject effectPrefab = Instantiate(SS2Assets.LoadAsset<GameObject>("HakaiLightning", SS2Bundle.Equipments), targetParentTransform);
+                    GameObject effectPrefab = null;
+
+                    if (body.hullClassification == HullClassification.BeetleQueen)
+                        effectPrefab = Instantiate(SS2Assets.LoadAsset<GameObject>("HakaiLightningBig", SS2Bundle.Equipments), targetParentTransform);
+                    else
+                        effectPrefab = Instantiate(SS2Assets.LoadAsset<GameObject>("HakaiLightning", SS2Bundle.Equipments), targetParentTransform); 
+
                     ParticleSystem ps = effectPrefab.GetComponent<ParticleSystem>();
                     ParticleSystem.ShapeModule shape = ps.shape;
                     if (modelRenderer != null)
@@ -108,12 +114,12 @@ namespace Moonstorm.Starstorm2.Buffs
                     ParticleSystem.MainModule main = ps.main;
                     main.duration = duration;
                     ps.gameObject.SetActive(true);
-                    BoneParticleController bpc = effectPrefab.GetComponent<BoneParticleController>();
+                    /*BoneParticleController bpc = effectPrefab.GetComponent<BoneParticleController>();
                     if (bpc != null && modelRenderer is SkinnedMeshRenderer)
                     {
                         bpc.skinnedMeshRenderer = (SkinnedMeshRenderer)modelRenderer;
                     }
-                    return effectPrefab;
+                    return effectPrefab;*/
                 }
                 return null;
             }
@@ -126,8 +132,16 @@ namespace Moonstorm.Starstorm2.Buffs
                 timer += Time.fixedDeltaTime;
                 if (timer >= timerDur && !expired)
                 {
-                    Debug.Log("KILL");
+                    //Debug.Log("KILL");
+                    Util.PlaySound("Play_UI_teleporter_event_complete", this.gameObject);
+                    var charModel = body.modelLocator.modelTransform.gameObject;
+                    var mdl = charModel.GetComponent<CharacterModel>();
+                    if (mdl != null)
+                    {
+                        mdl.invisibilityCount++;
+                    }
                     body.healthComponent.Suicide();
+                    EffectManager.SimpleEffect(SS2Assets.LoadAsset<GameObject>("InitialBurst, Effect", SS2Bundle.Equipments), body.corePosition, new Quaternion(0f, 0f, 0f, 0f), true);
                     expired = true;
                 }
 

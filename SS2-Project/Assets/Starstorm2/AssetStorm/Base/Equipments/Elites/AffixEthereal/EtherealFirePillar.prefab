@@ -131,7 +131,7 @@ MonoBehaviour:
   ghostPrefab: {fileID: 1978271999074252, guid: c7aca22e4e3844349b4f3e6c23ac130b,
     type: 3}
   ghostTransformAnchor: {fileID: 0}
-  startSound: 
+  startSound: Play_moonBrother_blueWall_explode
   cannotBeDeleted: 0
   flightSoundLoop: {fileID: 0}
   canImpactOnTrigger: 0
@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Script: {fileID: -848926067, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageCoefficient: 4
+  damageCoefficient: 20
   attackerFiltering: 0
   impactEffect: {fileID: 0}
   forceVector: {x: 0, y: -200, z: 0}
@@ -212,8 +212,8 @@ MonoBehaviour:
   onEnd:
     m_PersistentCalls:
       m_Calls: []
-  soundLoopString: 
-  soundLoopStopString: 
+  soundLoopString: Play_moonBrother_firePillar_loop
+  soundLoopStopString: Stop_moonBrother_firePillar_loop
 --- !u!114 &8744764635411030314
 MonoBehaviour:
   m_ObjectHideFlags: 0

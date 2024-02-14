@@ -42,15 +42,23 @@ namespace EntityStates.Events
                 return;
 
             DirectorCard chosenMonsterCard = null;
-            
+
+            int failCount = 0;
+
             while (true)
             {
                 chosenMonsterCard = combatDirector.SelectMonsterCardForCombatShrine((30f * Mathf.Pow(Run.instance.stageClearCount / Run.stagesPerLoop, 2f) + 50f));
-                Debug.Log(chosenMonsterCard.spawnCard.prefab.GetComponent<CharacterMaster>().bodyPrefab.name + " : CHOSEN MONSTER ATTEMPT");
+                //Debug.Log(chosenMonsterCard.spawnCard.prefab.GetComponent<CharacterMaster>().bodyPrefab.name + " : CHOSEN MONSTER ATTEMPT");
 
                 if (!blacklist.Contains(chosenMonsterCard.spawnCard.prefab.GetComponent<CharacterMaster>().bodyPrefab.name))
                 {
                     break;
+                }
+                else
+                {
+                    failCount++;
+                    if (failCount >= 3)
+                        break;
                 }
             }    
             
@@ -60,7 +68,7 @@ namespace EntityStates.Events
             if (!this.characterSpawnCard)
                 return;
 
-            Debug.Log(chosenMonsterCard.spawnCard.prefab.name);
+            //Debug.Log(chosenMonsterCard.spawnCard.prefab.name);
 
             var spawnCard = UnityEngine.Object.Instantiate(chosenMonsterCard.spawnCard);
 

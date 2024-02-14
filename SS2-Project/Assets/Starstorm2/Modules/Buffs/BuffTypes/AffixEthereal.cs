@@ -78,6 +78,8 @@ namespace Moonstorm.Starstorm2.Buffs
                 timerDur = baseTimerDur; // / body.attackSpeed;   >
                 timer = timerDur * 0.75f;
 
+                Util.PlaySound("Play_ui_teleporter_activate", this.gameObject);
+
                 model = body.modelLocator.modelTransform.GetComponent<CharacterModel>();
                 if (model != null)
                 {
@@ -111,32 +113,23 @@ namespace Moonstorm.Starstorm2.Buffs
                     Destroy(this.etherealEffect);
             }
 
+
             private void PlaceCircle()
             {
                 Debug.Log("Firing projectile: " + projectilePrefab);
 
-                //could be done better for players but idk how much it'd matter lol
-                var masters = Run.instance.userMasters.Values.ToList();
-                if (masters.Count > 0)
+                if (body != null)
                 {
-                    CharacterMaster randomMaster = masters[random.Next(masters.Count)];
-                    if (randomMaster != null)
+                    if (body.healthComponent.alive)
                     {
-                        CharacterBody masterBody = randomMaster.GetBody();
-                        if (masterBody != null)
+                        NodeGraph groundNodes = SceneInfo.instance.groundNodes;
+                        List<NodeGraph.NodeIndex> nodeList = groundNodes.FindNodesInRange(body.transform.position, 0f, 32f, HullMask.Human);
+                        NodeGraph.NodeIndex randomNode = nodeList[random.Next(nodeList.Count)];
+                        if (randomNode != null)
                         {
-                            if (masterBody.healthComponent.alive)
-                            {
-                                NodeGraph groundNodes = SceneInfo.instance.groundNodes;
-                                List<NodeGraph.NodeIndex> nodeList = groundNodes.FindNodesInRange(masterBody.transform.position, 0f, 32f, HullMask.Human);
-                                NodeGraph.NodeIndex randomNode = nodeList[random.Next(nodeList.Count)];
-                                if (randomNode != null)
-                                {
-                                    Vector3 position;
-                                    groundNodes.GetNodePosition(randomNode, out position);
-                                    ProjectileManager.instance.FireProjectile(projectilePrefab, position, new Quaternion(0, 0, 0, 0), body.gameObject, 1f, 0f, body.RollCrit(), DamageColorIndex.Default, null, 0);
-                                }
-                            }
+                            Vector3 position;
+                            groundNodes.GetNodePosition(randomNode, out position);
+                            ProjectileManager.instance.FireProjectile(projectilePrefab, position, new Quaternion(0, 0, 0, 0), body.gameObject, 1f, 0f, body.RollCrit(), DamageColorIndex.Default, null, 0);
                         }
                     }
                 }

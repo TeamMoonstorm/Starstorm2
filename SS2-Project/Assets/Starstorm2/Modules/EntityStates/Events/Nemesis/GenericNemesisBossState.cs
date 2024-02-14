@@ -177,6 +177,7 @@ namespace EntityStates.Events
                 foreach (CharacterMaster master in combatSquad.membersList)
                 {
                     master.inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
+                    master.inventory.GiveItem(RoR2Content.Items.UseAmbientLevel);
                 }
             }
             UnityEngine.Object.Destroy(spawnCard);
