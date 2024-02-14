@@ -35,6 +35,9 @@ namespace Moonstorm.Starstorm2.Modules
             On.EntityStates.Toolbot.ToolbotDualWield.OnEnter += ToolbotDualWield_OnEnter;
             //On.EntityStates.Toolbot.ToolbotDash.OnEnter += ToolbotDash_OnEnter;
             //On.EntityStates.Toolbot.ToolbotDash.OnExit += ToolbotDash_OnExit;
+
+            //merc specific
+            On.RoR2.SkinDef.Apply += ModifiyLighting;
         }
 
         public static void GPBS_FireProjectile(On.EntityStates.GenericProjectileBaseState.orig_FireProjectile orig, EntityStates.GenericProjectileBaseState self)
@@ -239,6 +242,38 @@ namespace Moonstorm.Starstorm2.Modules
             {
                 EntityStates.Toolbot.BaseNailgunState.tracerEffectPrefab = oldTracer;
                 EntityStates.Toolbot.BaseNailgunState.fireSoundString = oldSound;
+            }
+        }
+
+        private static void ModifiyLighting(On.RoR2.SkinDef.orig_Apply orig, SkinDef self, GameObject modelObject)
+        {
+            orig(self, modelObject);
+            if (modelObject.name.StartsWith("mdlMerc"))
+            {
+                SS2Log.Info("self.name: " + self.name);
+                if (self.name.Equals("SkinMercenaryVestige"))
+                {
+                    if (modelObject)
+                    {
+                        CharacterModel tempmodel = modelObject.GetComponent<CharacterModel>();
+                        tempmodel.baseLightInfos[0].defaultColor = new Color(1, 0.302f, 0, 1);
+                        tempmodel.baseLightInfos[1].defaultColor = new Color(0.682f, 0.220f, 0.059f, 1);
+
+
+                        ChildLocator childLocator = modelObject.GetComponent<ChildLocator>();
+                        if (childLocator)
+                        {
+                            Transform PreDashEffect = childLocator.FindChild("PreDashEffect");
+                            //PreDashEffect.GetChild(0).GetComponent<ParticleSystem>().startColor = new Color(1f, 0.5613f, 0.6875f, 1); //0.5613 0.6875 1 1 
+                            PreDashEffect.GetChild(1).GetComponent<Light>().color = new Color(1f, 0.2f, 0.2f, 1); //0.2028 0.6199 1 1
+                            PreDashEffect.GetChild(2).GetComponent<ParticleSystem>().startColor = new Color(1f, 0.5613f, 0.6875f, 1);  //0.5613 0.6875 1 1
+                            //PreDashEffect.GetChild(2).GetComponent<ParticleSystemRenderer>().material = RedMercSkin.matMercIgnitionRed; //matMercIgnition (Instance)
+                            PreDashEffect.GetChild(3).GetComponent<ParticleSystem>().startColor = new Color(1f, 0.5613f, 0.6875f, 1);  //0.5613 0.6875 1 1 
+                            //PreDashEffect.GetChild(3).GetComponent<ParticleSystemRenderer>().material = RedMercSkin.matMercIgnitionRed; //matMercIgnition (Instance)
+                        }
+
+                    }
+                }
             }
         }
     }

@@ -34,8 +34,16 @@ MonoBehaviour:
     ignoreOverlays: 0
     hideOnDeath: 0
     rendererIndex: 0
+  - defaultMaterial: {fileID: 2100000, guid: f1c2c37b8e1dc9f4d8cbe1bf72b31896, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+    rendererIndex: 1
   _gameObjectActivations: []
   _meshReplacements: []
-  _projectileGhostReplacements: []
+  _projectileGhostReplacements:
+  - projectilePrefabAddress: RoR2/Base/Merc/MercSwordSlash.prefab
+    projectileGhostReplacement: {fileID: 1469149343592546, guid: 5e0d7a7a7ce96f24985fd1aab0e6703a,
+      type: 3}
   _minionSkinReplacements: []
   rendererAmounts: 0

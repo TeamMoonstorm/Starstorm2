@@ -145,6 +145,9 @@ namespace Moonstorm.Starstorm2
             public static ItemDef UniversalCharger;
 
             public static ItemDef UraniumHorseshoe;
+
+            public static ItemDef RainbowRoot;
+
         }
 
         public static class Equipments
