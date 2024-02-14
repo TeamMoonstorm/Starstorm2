@@ -46,6 +46,8 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef DormantFungus;
 
+            public static ItemDef EtherealItemAffix;
+
             public static ItemDef Fork;
 
             public static ItemDef Malice;
@@ -138,6 +140,8 @@ namespace Moonstorm.Starstorm2
 
             public static ItemDef GildedAmulet;
 
+            public static ItemDef ChucklingFungus;
+            
             public static ItemDef UniversalCharger;
 
             public static ItemDef UraniumHorseshoe;
@@ -151,6 +155,8 @@ namespace Moonstorm.Starstorm2
             public static EquipmentDef ElitePurpleEquipment;
 
             public static EquipmentDef EliteKineticEquipment;
+
+            public static EquipmentDef AffixEthereal;
 
             public static EquipmentDef AffixEmpyrean;
 
@@ -168,6 +174,8 @@ namespace Moonstorm.Starstorm2
 
             public static EquipmentDef PressurizedCanister;
 
+            public static EquipmentDef RockFruit;
+            
             public static EquipmentDef WhiteFlag;
         }
 
@@ -199,6 +207,8 @@ namespace Moonstorm.Starstorm2
 
             public static BuffDef BuffGouge;
 
+            public static BuffDef bdHakai;
+
             public static BuffDef BuffGreaterBanner;
 
             public static BuffDef BuffIntoxicated;
@@ -222,6 +232,8 @@ namespace Moonstorm.Starstorm2
             public static BuffDef BuffScavengersFortune;
 
             public static BuffDef BuffSigil;
+
+            public static BuffDef BuffSigilHidden;
 
             public static BuffDef BuffKickflip;
 
@@ -298,6 +310,8 @@ namespace Moonstorm.Starstorm2
             public static BuffDef bdNemCapManaRegen;
 
             public static BuffDef bdEmpyrean;
+
+            public static BuffDef bdEthereal;
         }
 
         public static class Elites
@@ -305,6 +319,7 @@ namespace Moonstorm.Starstorm2
             //public static EliteDef edPurple;
             public static EliteDef edKinetic;
             public static EliteDef edEmpyrean;
+            public static EliteDef edEthereal;
         }
         public static class Scenes
         {

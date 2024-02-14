@@ -64,8 +64,8 @@ namespace EntityStates.LampBoss
                 hasBuffed = true;
                 FindModelChild("GlowParticles").gameObject.SetActive(false);
                 SetPosition(blinkDestination);
-                characterBody.AddTimedBuffAuthority(RoR2Content.Buffs.Cloak.buffIndex, 8f);
-                characterBody.AddTimedBuffAuthority(RoR2Content.Buffs.CloakSpeed.buffIndex, 8f);
+                characterBody.AddTimedBuffAuthority(RoR2Content.Buffs.Cloak.buffIndex, 6f);
+                characterBody.AddTimedBuffAuthority(RoR2Content.Buffs.CloakSpeed.buffIndex, 6f);
             }
 
             if (fixedAge >= duration)

@@ -23,7 +23,7 @@ namespace Moonstorm.Starstorm2.Buffs
                     args.primaryCooldownMultAdd += 0.5f;
                     args.secondaryCooldownMultAdd += 0.25f;
                     args.damageMultAdd += 0.2f;
-                    args.moveSpeedMultAdd += 1f;
+                    args.moveSpeedMultAdd += 1.5f;
                 }
             }
 

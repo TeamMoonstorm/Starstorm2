@@ -10,17 +10,18 @@ using UnityEngine.SceneManagement;
 
 namespace Moonstorm.Starstorm2.Components
 {
+    //if this code looks stupid in any form of the word, please let me know -★
     public class EtherealBehavior : MonoBehaviour
     {
         public static EtherealBehavior instance { get; private set; }
+        private static float storedScalingValue;
+        private static int storedLevelCap;
         public Run run;
-
-        private static int defaultLevelCap;
 
         public static GameObject shrinePrefab;
         public static GameObject portalPrefab;
 
-        public static int etherealsCompleted = 0;
+        public float etherealsCompleted = 0;
         public static bool teleIsEthereal = false;
 
         public bool teleUpgraded;
@@ -30,16 +31,16 @@ namespace Moonstorm.Starstorm2.Components
         internal static void Init()
         {
             //Initialize trader trading
-            Components.TraderController.Initialize();
+            TraderController.Initialize();
 
             //Initialize new difficulties
-            //Deluge.Init();
-            //Tempest.Init();
-            //Cyclone.Init();
-            //SuperTyphoon.Init();
+            Deluge.Init();
+            Tempest.Init();
+            Cyclone.Init();
+            SuperTyphoon.Init();
 
             //Save default level cap
-            defaultLevelCap = Run.ambientLevelCap;
+            storedLevelCap = Run.ambientLevelCap;
 
             //Initialize related prefabs
             shrinePrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("ShrineEthereal", SS2Bundle.Indev), "EtherealSapling", true);
@@ -61,19 +62,46 @@ namespace Moonstorm.Starstorm2.Components
         {
             instance = this;
 
-            TeleporterInteraction.onTeleporterBeginChargingGlobal += TeleporterInteraction_onTeleporterBeginChargingGlobal;
+            etherealsCompleted = 0;
+            storedScalingValue = DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).scalingValue;
+            teleIsEthereal = false;
+            Run.ambientLevelCap = storedLevelCap;
+
+            //TeleporterInteraction.onTeleporterBeginChargingGlobal += TeleporterInteraction_onTeleporterBeginChargingGlobal;
+            Run.onRunDestroyGlobal += Run_onRunDestroyGlobal;
             TeleporterInteraction.onTeleporterChargedGlobal += TeleporterInteraction_onTeleporterChargedGlobal;
             On.RoR2.TeleporterInteraction.Start += TeleporterInteraction_Start;
             On.RoR2.SceneDirector.Start += SceneDirector_Start;
+            On.RoR2.TeleporterInteraction.OnBossDirectorSpawnedMonsterServer += TeleporterInteraction_OnBossDirectorSpawnedMonsterServer;
         }
 
 
         private void OnDestroy()
         {
-            TeleporterInteraction.onTeleporterBeginChargingGlobal -= TeleporterInteraction_onTeleporterBeginChargingGlobal;
+            //TeleporterInteraction.onTeleporterBeginChargingGlobal -= TeleporterInteraction_onTeleporterBeginChargingGlobal;
+            Run.onRunDestroyGlobal -= Run_onRunDestroyGlobal;
             TeleporterInteraction.onTeleporterChargedGlobal -= TeleporterInteraction_onTeleporterChargedGlobal;
             On.RoR2.TeleporterInteraction.Start -= TeleporterInteraction_Start;
             On.RoR2.SceneDirector.Start -= SceneDirector_Start;
+            On.RoR2.TeleporterInteraction.OnBossDirectorSpawnedMonsterServer -= TeleporterInteraction_OnBossDirectorSpawnedMonsterServer;
+        }
+
+        private void Run_onRunDestroyGlobal(Run run)
+        {
+            DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).scalingValue = storedScalingValue;
+            Debug.Log(DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).scalingValue + " - scaling value");
+            Debug.Log("completed ethereals: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
+        }
+
+        private void TeleporterInteraction_OnBossDirectorSpawnedMonsterServer(On.RoR2.TeleporterInteraction.orig_OnBossDirectorSpawnedMonsterServer orig, TeleporterInteraction self, GameObject master)
+        {
+            orig(self, master);
+            if (teleIsEthereal)
+            {
+                CharacterMaster bodyMaster = master.GetComponent<CharacterMaster>();
+                bodyMaster.inventory.GiveItem(SS2Content.Items.EtherealItemAffix);
+                bodyMaster.inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(20 + (15 * etherealsCompleted)));
+            }
         }
 
         private static void TeleporterInteraction_onTeleporterChargedGlobal(TeleporterInteraction obj)
@@ -211,7 +239,7 @@ namespace Moonstorm.Starstorm2.Components
             orig(self);
         }
 
-        private static void TeleporterInteraction_onTeleporterBeginChargingGlobal(TeleporterInteraction tele)
+        private void TeleporterInteraction_onTeleporterBeginChargingGlobal(TeleporterInteraction tele)
         {
             if (teleIsEthereal)
             {
@@ -221,19 +249,20 @@ namespace Moonstorm.Starstorm2.Components
 
                     if (tele.bossDirector)
                     {
-                        tele.bossDirector.monsterCredit += (float)(int)(100f * Mathf.Pow(Run.instance.compensatedDifficultyCoefficient, 0.5f));
+                        //tele.bossDirector.monsterCredit += (float)(int)(100f * Mathf.Pow(Run.instance.compensatedDifficultyCoefficient, 0.5f));
                         Debug.Log("added to monstercred");
                     }
                     if (tele.bonusDirector)
                     {
-                        tele.bonusDirector.monsterCredit += (float)(int)(50f * Mathf.Pow(Run.instance.compensatedDifficultyCoefficient, 0.5f));
+                        //tele.bonusDirector.monsterCredit += (float)(int)(50f * Mathf.Pow(Run.instance.compensatedDifficultyCoefficient, 0.5f));
                         Debug.Log("added to bonus monstercred");
                     }
                 }
+                
             }
         }
 
-        public static void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)
+        public void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)
         {
             orig(self);
 

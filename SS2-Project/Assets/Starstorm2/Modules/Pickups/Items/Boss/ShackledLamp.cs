@@ -117,7 +117,7 @@ namespace Moonstorm.Starstorm2.Items
                         Util.QuaternionSafeLookRotation(body.inputBank.aimDirection),
                         body.gameObject,
                         damage,
-                        60f,
+                        80f,
                         Util.CheckRoll(body.crit, body.master));
                 }
             }

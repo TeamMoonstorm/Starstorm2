@@ -155,6 +155,10 @@ namespace Moonstorm.Starstorm2.Buffs
                     setStateOnHurt.canBeFrozen = false;
                 }
                 ogSubtitle = body.subtitleNameToken;
+
+                if (body.equipmentSlot.equipmentIndex != SS2Content.Equipments.AffixEmpyrean.equipmentIndex)
+                    return;
+
                 body.subtitleNameToken = empyreanToken;
 
                 model = body.modelLocator.modelTransform.GetComponent<CharacterModel>();

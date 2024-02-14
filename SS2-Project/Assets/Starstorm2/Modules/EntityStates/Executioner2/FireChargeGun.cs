@@ -87,7 +87,7 @@ namespace EntityStates.Executioner2
                 PlayAnimation("Gesture, Override", "FireIonGun", "Secondary.playbackRate", duration);
                 EffectManager.SimpleMuzzleFlash(muzzlePrefab, gameObject, muzzleString, false);
             }
-            
+
             Shoot();
 
             skillLocator.secondary.DeductStock(1);
