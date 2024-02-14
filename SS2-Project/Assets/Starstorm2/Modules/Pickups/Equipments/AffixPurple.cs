@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace Moonstorm.Starstorm2.Equipments
 {
+    [DisabledContent]
     public class AffixPurple : EliteEquipmentBase
     {
         public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("ElitePurpleEquipment", SS2Bundle.Indev);

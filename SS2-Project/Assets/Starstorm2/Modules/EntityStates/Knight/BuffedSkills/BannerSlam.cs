@@ -35,6 +35,7 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
 
         public override void FixedUpdate()
         {
+            outer.SetNextStateToMain();
             base.FixedUpdate();
         }
 

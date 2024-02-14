@@ -42,8 +42,6 @@ namespace EntityStates.Knight
 
             //var buffedPrimary = originalPrimarySkill.GetFieldValue<SkillDef>("buffedSkillRef");
 
-            //Debug.Log("buffedPrimary : " + buffedPrimary.name);
-
             // Assign the buffed skill versions
             originalPrimarySkill.SetSkillOverride(gameObject, buffedPrimarySkill, GenericSkill.SkillOverridePriority.Contextual);
             originalUtilitySkill.SetSkillOverride(gameObject, buffedUtilitySkill, GenericSkill.SkillOverridePriority.Contextual);

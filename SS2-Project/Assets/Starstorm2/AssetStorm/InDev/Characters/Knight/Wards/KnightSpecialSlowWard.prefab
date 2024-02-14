@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 45095380090049122}
   - component: {fileID: 45363553957554030}
   - component: {fileID: -5916167094033996133}
+  - component: {fileID: 964883112345583143}
   m_Layer: 13
   m_Name: KnightSpecialSlowWard
   m_TagString: Untagged
@@ -116,11 +117,11 @@ MonoBehaviour:
   interval: 0.2
   rangeIndicator: {fileID: 9126938458432916119}
   buffDef: {fileID: 11400000, guid: aa5bf856ac78fa447a03ddc5e59a5c4a, type: 2}
-  buffDuration: 4
+  buffDuration: 6
   floorWard: 0
   expires: 1
-  invertTeamFilter: 0
-  expireDuration: 8
+  invertTeamFilter: 1
+  expireDuration: 10
   animateRadius: 0
   radiusCoefficientCurve:
     serializedVersion: 2
@@ -188,6 +189,20 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 26
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &964883112345583143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703809909102045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1490543093, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teamFilter: {fileID: 0}
+  slowDownCoefficient: 0
 --- !u!1 &7725082603004523960
 GameObject:
   m_ObjectHideFlags: 0
