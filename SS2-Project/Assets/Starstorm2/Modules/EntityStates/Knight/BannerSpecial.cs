@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using RoR2;
 using RoR2.Skills;
+using UnityEngine.Networking;
 
 namespace EntityStates.Knight
 {
@@ -23,9 +24,10 @@ public class BannerSpecial : BaseState
 
             powerBuffWardInstance.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
             slowBuffWardInstance.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
+
+            NetworkServer.Spawn(powerBuffWardInstance);
+            NetworkServer.Spawn(slowBuffWardInstance);
         }
-        // TODO: Commenting just in case we need it
-        //NetworkServer.Spawn(bannerObject);
     }
 
     public override void FixedUpdate()
@@ -35,6 +37,7 @@ public class BannerSpecial : BaseState
 
     public override void OnExit()
     {
+        outer.SetNextStateToMain();
         base.OnExit();
     }
 
