@@ -9,7 +9,7 @@ namespace Moonstorm.Starstorm2.Modules
     {
         public static Elites Instance { get; private set; }
         public override R2APISerializableContentPack SerializableContentPack { get; } = SS2Content.Instance.SerializableContentPack;
-        public override AssetBundle AssetBundle { get; } = SS2Assets.Instance.MainAssetBundle;
+        public override AssetBundle AssetBundle { get; } = SS2Assets.Instance.GetAssetBundle(SS2Bundle.Indev);
 
         public override void Initialize()
         {

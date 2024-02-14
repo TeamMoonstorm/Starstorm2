@@ -299,6 +299,10 @@ namespace Moonstorm.Starstorm2
 
             public static BuffDef bdKnightBuff;
 
+            public static BuffDef bdKnightSpecialPowerBuff;
+
+            public static BuffDef bdKnightSpecialSlowBuff;
+
             public static BuffDef bdFortified;
 
             public static BuffDef bdKnightCharged;
@@ -311,12 +315,15 @@ namespace Moonstorm.Starstorm2
 
             public static BuffDef bdEmpyrean;
 
+            public static BuffDef bdPoisonBuildup;
+
             public static BuffDef bdEthereal;
+
         }
 
         public static class Elites
         {
-            //public static EliteDef edPurple;
+            public static EliteDef edPurple;
             public static EliteDef edKinetic;
             public static EliteDef edEmpyrean;
             public static EliteDef edEthereal;
