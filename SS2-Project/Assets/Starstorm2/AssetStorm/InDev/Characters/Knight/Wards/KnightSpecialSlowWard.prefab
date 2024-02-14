@@ -14,8 +14,9 @@ GameObject:
   - component: {fileID: 9108100263028107689}
   - component: {fileID: 45095380090049122}
   - component: {fileID: 45363553957554030}
+  - component: {fileID: -5916167094033996133}
   m_Layer: 13
-  m_Name: KnightBuffWard
+  m_Name: KnightSpecialSlowWard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -114,12 +115,12 @@ MonoBehaviour:
   radius: 26
   interval: 0.2
   rangeIndicator: {fileID: 9126938458432916119}
-  buffDef: {fileID: 11400000, guid: 16b99243672e391498e5cc290fb21d6a, type: 2}
+  buffDef: {fileID: 11400000, guid: aa5bf856ac78fa447a03ddc5e59a5c4a, type: 2}
   buffDuration: 4
   floorWard: 0
   expires: 1
   invertTeamFilter: 0
-  expireDuration: 4
+  expireDuration: 8
   animateRadius: 0
   radiusCoefficientCurve:
     serializedVersion: 2
@@ -174,6 +175,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shouldParentToAttachedBody: 1
   forceHostAuthority: 0
+--- !u!135 &-5916167094033996133
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703809909102045}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 26
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7725082603004523960
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,7 +246,7 @@ MeshRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bb74f135376c68d42ac36a918f073390, type: 2}
+  - {fileID: 2100000, guid: 4a112af9ae6c8524c8c151f6100d98b4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

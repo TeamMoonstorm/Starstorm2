@@ -24,10 +24,15 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
         public override void OnEnter()
         {
             Debug.Log("DEBUGGER The stun slash was entered!!");
-
             base.OnEnter();
-
             animator = GetModelAnimator();
+        }
+
+        public override void OnExit()
+        {
+            GenericSkill originalPrimarySkill = skillLocator.primary;
+            originalPrimarySkill.UnsetSkillOverride(gameObject, SwingSword.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+            base.OnExit();
         }
 
         public override void PlayAnimation()

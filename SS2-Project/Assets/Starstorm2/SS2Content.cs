@@ -246,6 +246,10 @@ namespace Moonstorm.Starstorm2
 
             public static BuffDef bdKnightBuff;
 
+            public static BuffDef bdKnightSpecialPowerBuff;
+
+            public static BuffDef bdKnightSpecialSlowBuff;
+
             public static BuffDef bdFortified;
 
             public static BuffDef bdKnightCharged;

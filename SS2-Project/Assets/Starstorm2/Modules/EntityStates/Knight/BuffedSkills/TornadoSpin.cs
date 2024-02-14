@@ -100,6 +100,9 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
 
             characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage;
 
+            GenericSkill originalUtilitySkill = skillLocator.utility;
+            originalUtilitySkill.UnsetSkillOverride(gameObject, SpinUtility.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+
             outer.SetNextStateToMain();
             base.OnExit();
         }

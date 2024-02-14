@@ -1,4 +1,5 @@
 ﻿using Moonstorm;
+using R2API.Utils;
 using RoR2;
 using RoR2.Skills;
 using UnityEngine;
@@ -36,11 +37,12 @@ namespace EntityStates.Knight
 
             // Grab and set the original skills
             originalPrimarySkill = skillLocator.primary;
-            Debug.Log("originalPrimarySkill : " + skillLocator.primary.name);
             originalUtilitySkill = skillLocator.utility;
-            Debug.Log("originalUtilitySkill : " + skillLocator.utility.name);
             originalSpecialSkill = skillLocator.special;
-            Debug.Log("originalSpecialSkill : " + skillLocator.special.name);
+
+            //var buffedPrimary = originalPrimarySkill.GetFieldValue<SkillDef>("buffedSkillRef");
+
+            //Debug.Log("buffedPrimary : " + buffedPrimary.name);
 
             // Assign the buffed skill versions
             originalPrimarySkill.SetSkillOverride(gameObject, buffedPrimarySkill, GenericSkill.SkillOverridePriority.Contextual);
@@ -65,11 +67,6 @@ namespace EntityStates.Knight
 
         public override void OnExit()
         {
-            originalPrimarySkill.UnsetSkillOverride(gameObject, buffedPrimarySkill, GenericSkill.SkillOverridePriority.Contextual);
-            originalUtilitySkill.UnsetSkillOverride(gameObject, buffedUtilitySkill, GenericSkill.SkillOverridePriority.Contextual);
-            originalSpecialSkill.UnsetSkillOverride(gameObject, buffedSpecialSkill, GenericSkill.SkillOverridePriority.Contextual);
-            Debug.Log("reset skills to original");
-
             if (inputBank.skill2.down)
             {
                 outer.SetNextState(new Shield());

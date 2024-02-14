@@ -15,9 +15,6 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight
 
         public override void OnEnter()
         {
-            Debug.Log("DEBUGGER The passive was entered!!");
-            Debug.Log("DEBUGGER duration: " + duration);
-            Debug.Log("DEBUGGER baseDuration: " + baseDuration);
             base.OnEnter();
             hasBuffed = false;
         }
@@ -31,7 +28,6 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight
         {
             if (!hasBuffed && isAuthority)
             {
-                Debug.Log("DEBUGGER wtf is the ward??" + buffWard.ToString());
                 hasBuffed = true;
                 wardInstance = UnityEngine.Object.Instantiate(buffWard);
                 wardInstance.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
