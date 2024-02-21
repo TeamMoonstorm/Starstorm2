@@ -205,7 +205,8 @@ namespace EntityStates.Executioner2
             {
                 timer = 0f;
 
-                skillLocator.secondary.stock += 1;
+                skillLocator.secondary.AddOneStock();
+
                 /*ExecutionerIonOrb ionOrb = new ExecutionerIonOrb();
                 ionOrb.origin = transform.position;
                 ionOrb.target = Util.FindBodyMainHurtBox(characterBody);

@@ -44,7 +44,8 @@ namespace Moonstorm.Starstorm2.ScriptableObjects
 			{
 				skillSlot.characterBody.isSprinting = false;
 			}
-			skillSlot.stock -= this.stockToConsume;
+
+			skillSlot.DeductStock(this.stockToConsume);
 			if (this.resetCooldownTimerOnUse)
 			{
 				skillSlot.rechargeStopwatch = 0f;
@@ -55,9 +56,9 @@ namespace Moonstorm.Starstorm2.ScriptableObjects
 			}
 
 			if (TargetIsHologram(skillSlot))
-            {
-				skillSlot.stock += base.stockToConsume;
-            }
+			{
+				skillSlot.AddOneStock();
+			}
         }
 
         public override EntityState InstantiateNextState([NotNull] GenericSkill skillSlot)
