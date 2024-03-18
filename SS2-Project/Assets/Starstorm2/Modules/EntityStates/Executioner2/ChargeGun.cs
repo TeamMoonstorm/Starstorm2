@@ -1,5 +1,7 @@
 ﻿using Moonstorm.Starstorm2;
+using Moonstorm.Starstorm2.Orbs;
 using RoR2;
+using RoR2.Orbs;
 using RoR2.Skills;
 using System;
 using UnityEngine;
@@ -203,7 +205,12 @@ namespace EntityStates.Executioner2
             {
                 timer = 0f;
 
-                skillLocator.secondary.stock += 1;
+                skillLocator.secondary.AddOneStock();
+
+                /*ExecutionerIonOrb ionOrb = new ExecutionerIonOrb();
+                ionOrb.origin = transform.position;
+                ionOrb.target = Util.FindBodyMainHurtBox(characterBody);
+                OrbManager.instance.AddOrb(ionOrb);*/
                 //Debug.Log("adding stock");
 
                 if (characterBody.skillLocator.secondary.stock < characterBody.skillLocator.secondary.maxStock)

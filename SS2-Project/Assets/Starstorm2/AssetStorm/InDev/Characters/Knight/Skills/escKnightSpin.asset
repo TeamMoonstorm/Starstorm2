@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: escKnightSpin
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Knight.SwingSpecial, Starstorm2, Version=1.0.0.0,
+    assemblyQualifiedName: EntityStates.Knight.SpinUtility, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
@@ -108,3 +108,27 @@ MonoBehaviour:
       fieldValue:
         stringValue: 25
         objectValue: {fileID: 0}
+    - fieldName: airControl
+      fieldValue:
+        stringValue: 0.15
+        objectValue: {fileID: 0}
+    - fieldName: upwardVelocity
+      fieldValue:
+        stringValue: 3
+        objectValue: {fileID: 0}
+    - fieldName: forwardVelocity
+      fieldValue:
+        stringValue: 6
+        objectValue: {fileID: 0}
+    - fieldName: minimumY
+      fieldValue:
+        stringValue: 0.05
+        objectValue: {fileID: 0}
+    - fieldName: aimVelocity
+      fieldValue:
+        stringValue: 4
+        objectValue: {fileID: 0}
+    - fieldName: buffedSkillRef
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 11400000, guid: 7b56915308c78fd439b452fe7ba7e586, type: 2}

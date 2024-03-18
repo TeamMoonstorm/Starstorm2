@@ -778,6 +778,146 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="ProcLightningOnKill" ID="{DD03724F-1C35-4E5B-B60E-7FA57B45762F}">
+							<ChildrenList>
+								<Action Name="" ID="{0CB48969-9498-4670-982C-066BB8D3AD54}" ShortID="964221554">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="ProcLightningOnKill" ID="{441EF015-666E-4AB7-9A34-8988DFEF8553}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ProcTrematodes" ID="{C591FE7D-C001-41B2-ACE8-715D3C3D50DF}">
+							<ChildrenList>
+								<Action Name="" ID="{035E5852-ECE7-48C9-964B-AE7CEEC9917D}" ShortID="415085460">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Trematode" ID="{2B0FC3A7-5C08-4746-8CE0-88490606B930}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="PickupCoffeeBean" ID="{8A084A4D-04E9-448B-BD48-121E8839A43C}">
+							<ChildrenList>
+								<Action Name="" ID="{2F7ACA0F-4796-46E9-BF52-1E1190C99291}" ShortID="23127926">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="PickupCoffeeBean" ID="{94A33D62-635F-48F3-96D7-1849218721FE}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ProcErraticGadgetLightning" ID="{D79B485A-ED02-4018-9E18-BFA1D0E1FB5A}">
+							<ChildrenList>
+								<Action Name="" ID="{541066E3-FD4C-4524-8E52-BDDE2FA8A920}" ShortID="1019593863">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="item_proc_erraticgadget_02" ID="{E01F2FBB-CEE3-44D6-82CE-4BA73D8E03A5}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ProcErraticGadgetChain" ID="{8A07E4FA-6BC2-4CEA-AE60-1E2DF6F94916}">
+							<ChildrenList>
+								<Action Name="" ID="{7C9D28BC-0AE6-47F7-BEFF-1D36DB04C86C}" ShortID="114420912">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="EraticGadgetChain" ID="{6790F3BE-C825-4197-ADF5-682E733E2E81}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="CrypticSourceStage1" ID="{EAC763AB-957C-462B-BF04-B0AB20D1E5C6}">
+							<ChildrenList>
+								<Action Name="" ID="{42CD074C-A656-4E71-89B7-620472021D1F}" ShortID="288905526">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="CrypticSourceStage1" ID="{D4F27B9C-B5AD-4495-82A3-6D4143CE6C18}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="CrypticSourceStage3" ID="{7DABEC0A-5C89-4BED-962E-F2575D753A63}">
+							<ChildrenList>
+								<Action Name="" ID="{BA3B704F-92DB-489E-8524-40333F710531}" ShortID="381071675">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="CrypticSourceStage3" ID="{0678DE48-64FE-4EF8-AD99-B2A17320869C}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="CrypticSourceStage2" ID="{6137278D-0851-462A-9597-81C2B5F0BFC8}">
+							<ChildrenList>
+								<Action Name="" ID="{4D8DC24B-3C8E-46EA-A894-A0FA49993886}" ShortID="787744285">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="CrypticSourceStage2" ID="{664C9C3E-9EA5-4244-8FCD-9AA2274D8E50}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="CrypticSourceFire" ID="{1143A5B4-9D68-417D-8E67-792D51C154AF}">
+							<ChildrenList>
+								<Action Name="" ID="{7E06B27C-9E52-4CFD-93F1-24E921FB68A1}" ShortID="798561094">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="item_crypticsource_burst_01" ID="{98A70E5E-07B1-4EA4-8E08-B5C6C279D99D}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="UniversalCharger" ID="{7CBDCD99-1DEA-413D-9200-E36365990FF0}">
+							<ChildrenList>
+								<Action Name="" ID="{13D7317A-3436-4AB1-BEC3-9CF61A9CDCE3}" ShortID="406345941">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="item_proc_universalcharger" ID="{3606D7F3-9541-4B70-B08E-1A7EFE1ADF12}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Event Name="VoidAmbient" ID="{096E8867-684C-49FD-9847-D8B99D9E53EC}">
@@ -931,6 +1071,216 @@
 									<ReferenceList>
 										<Reference Name="Target">
 											<ObjectRef Name="chirr_sprint_end_01" ID="{C12D2E82-C3A0-4A0A-B494-A71F52062548}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ChirrDashStart" ID="{7EB01D0C-8693-4590-916F-5A7CC85F7A6B}">
+							<ChildrenList>
+								<Action Name="" ID="{9F110983-DE69-4336-98BB-A8919A18AC77}" ShortID="549365348">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="DashStart" ID="{22556D75-0DF5-4127-80F6-059D91243E18}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_ChirrCSS" ID="{221E6C84-CFE9-494E-8EE0-9501AC9E3329}">
+							<ChildrenList>
+								<Action Name="" ID="{932163E6-19A0-415B-8D5F-2D4BD47958A3}" ShortID="542052050">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="CSS" ID="{718AA5FB-DD1B-4356-A2CC-DFB17C6293B0}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ChirrFirePrimarySingle" ID="{4F4486DC-DDC1-46E3-AEA1-5A50E94079AA}">
+							<ChildrenList>
+								<Action Name="" ID="{95670178-406D-4F0A-8FEB-F5724436CD0E}" ShortID="661154579">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="FireLeaves" ID="{9BB3349B-B9F8-4B87-8A67-3834641F23A9}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ChirrGrabStart" ID="{35EE78A1-78E1-4C9F-BD96-6EEBF0CD3FC1}">
+							<ChildrenList>
+								<Action Name="" ID="{8519200D-2F3A-488A-B57D-0FAB95C40A25}" ShortID="642412931">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="GrabStart" ID="{8E36FDFA-047D-47FA-B194-ADE7B8925024}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ChirrFireSpecial" ID="{F06CCA42-FED2-497C-B259-128FA296009A}">
+							<ChildrenList>
+								<Action Name="" ID="{7DB1FCFD-7966-4D33-A353-A5C3B1FA77B4}" ShortID="31273657">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="FireSpecial" ID="{C1B2EDAC-72C0-4FCE-8B04-13EE310FCF70}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_ChirrSpitBombLoop" ID="{BC05444B-88F5-4077-A0E5-CF3571D4C976}">
+							<ChildrenList>
+								<Action Name="" ID="{0824D153-0A8B-4D60-B0FA-7CD91234A9FA}" ShortID="1045182999">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="SpitBombLoop" ID="{8FED3472-3C9A-4259-B229-27E55F7BF2B3}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ChirrFirePrimary" ID="{A4356AFC-48D4-4D66-9623-6A057CECF77A}">
+							<ChildrenList>
+								<Action Name="" ID="{FD12D718-ECE1-4958-8DBA-AB42F7A848F3}" ShortID="211933822">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="EnterLeaves" ID="{EFD05FCE-EC30-4203-A323-0C96D08AF285}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Stop_ChirrCSS" ID="{C41C7B1B-A2B1-4722-AB73-14ADA7380BA7}">
+							<ChildrenList>
+								<Action Name="" ID="{0ECC6025-EC96-42DB-B9CF-F20006B3B576}" ShortID="931098406">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="2"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="CSS" ID="{718AA5FB-DD1B-4356-A2CC-DFB17C6293B0}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ChirrFireSpitBomb" ID="{9C9F4603-B115-4B03-A47A-215CC4ECB768}">
+							<ChildrenList>
+								<Action Name="" ID="{CD8A8FB7-33A4-4E4E-8ED6-80E383F69AD1}" ShortID="983620185">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="FireSpitBomb" ID="{CFB2083E-C8A0-43B2-AD0F-24210BD0D39E}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ChirrGrabFlyUp" ID="{CE5CE2FD-BAE9-4C1B-B903-D87778CCCE02}">
+							<ChildrenList>
+								<Action Name="" ID="{9B9C1509-0485-4D16-ADD2-96AF37FD4C52}" ShortID="854050273">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="utiltiygrabflyup" ID="{8439DF9F-B7EB-47F8-9C45-3BF4D72E74E9}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ChirrGrabThrow" ID="{4AAD1F3E-0AB2-4140-B440-4E0D0356F089}">
+							<ChildrenList>
+								<Action Name="" ID="{F6859146-C51D-462B-A56E-60EC1C355E0C}" ShortID="158592333">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="GrabThrow" ID="{D36AB842-097D-40C3-80E4-554D95FC717E}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ChirrThrowHitGround" ID="{50DFCA59-5AFE-47A1-BC21-C974C91F8D26}">
+							<ChildrenList>
+								<Action Name="" ID="{285AFF63-8580-4337-99BD-C97DA3C94A58}" ShortID="412250117">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="utilityhitground" ID="{356FA4EB-9143-4822-94AB-D9AED3EBA9D8}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ChirrSpitBombImpact" ID="{96F4F939-1FF6-4F9E-8333-BA2064CF028F}">
+							<ChildrenList>
+								<Action Name="" ID="{654FAEBA-568F-4179-AC16-8343481CE173}" ShortID="982681900">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="SpitBombImpact" ID="{205C75E7-9429-44D6-9C88-3A3DB01A188F}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Stop_ChirrSpitBombLoop" ID="{46CF7270-9802-488F-9A2B-2672EF3E11DA}">
+							<ChildrenList>
+								<Action Name="" ID="{4B25B0EE-2B4F-4F4E-BC9D-2D26E4D00D45}" ShortID="320167093">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="2"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="SpitBombLoop" ID="{8FED3472-3C9A-4259-B229-27E55F7BF2B3}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ChirrLeafHit" ID="{CEFFB9CC-961F-446A-9401-328FDD1B73D6}">
+							<ChildrenList>
+								<Action Name="" ID="{2CDDCF0E-D685-4C81-B549-D86D72DB52B5}" ShortID="591399432">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="LeafHit" ID="{BD7FBB91-FF88-4A8A-AD59-D5142394DD65}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>

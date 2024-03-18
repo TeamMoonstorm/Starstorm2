@@ -36,8 +36,9 @@ namespace Moonstorm.Starstorm2.Components
 
         internal static void Initialize()
         {
-            menuPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Scrapper/ScrapperPickerPanel.prefab").WaitForCompletion();
-            ModifyMenu(menuPrefab);
+            menuPrefab = Instantiate(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Scrapper/ScrapperPickerPanel.prefab").WaitForCompletion());
+            if (menuPrefab != null)
+                ModifyMenu(menuPrefab);
         }
 
         // private static GameObject menu = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Scrapper/ScrapperPickerPanel.prefab").WaitForCompletion();
@@ -45,6 +46,10 @@ namespace Moonstorm.Starstorm2.Components
         {
             modelLocator = GetComponent<ModelLocator>();
             childLocator = modelLocator.modelTransform.GetComponent<ChildLocator>();
+
+            menuPrefab = Instantiate(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Scrapper/ScrapperPickerPanel.prefab").WaitForCompletion());
+            if (menuPrefab != null)
+                ModifyMenu(menuPrefab);
 
             //Assign a favorite item.
             favoriteItem = FindFavorite();

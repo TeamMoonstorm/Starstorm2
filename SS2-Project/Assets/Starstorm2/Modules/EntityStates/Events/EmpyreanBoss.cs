@@ -1,6 +1,7 @@
 ﻿using Moonstorm.Starstorm2;
 using Moonstorm.Starstorm2.ScriptableObjects;
 using RoR2;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using static RoR2.DirectorCore;
@@ -18,6 +19,18 @@ namespace EntityStates.Events
 
             base.OnEnter();
         }
+
+        private static List<string> blacklist = new List<string>
+        {
+            "JellyfishBody", //enemy kills itself
+            "AcidLarvaBody", //enemy kills itself
+            "MinorConstructBody", //enemy afks across world
+            "HermitCrabBody", //enemy afks across world
+
+            //"BeetleBody", //too weak
+            "WispBody" //too weak, prone to physics one-shot
+        };
+
         public override void SpawnBoss()
         {
             GameObject director = GameObject.Find("Director"); //fuck you
@@ -28,14 +41,34 @@ namespace EntityStates.Events
             if (!combatDirector)
                 return;
 
-            DirectorCard chosenMonsterCard = combatDirector.SelectMonsterCardForCombatShrine(20f * Run.instance.loopClearCount);
+            DirectorCard chosenMonsterCard = null;
+
+            int failCount = 0;
+
+            while (true)
+            {
+                chosenMonsterCard = combatDirector.SelectMonsterCardForCombatShrine((30f * Mathf.Pow(Run.instance.stageClearCount / Run.stagesPerLoop, 2f) + 50f));
+                //Debug.Log(chosenMonsterCard.spawnCard.prefab.GetComponent<CharacterMaster>().bodyPrefab.name + " : CHOSEN MONSTER ATTEMPT");
+
+                if (!blacklist.Contains(chosenMonsterCard.spawnCard.prefab.GetComponent<CharacterMaster>().bodyPrefab.name))
+                {
+                    break;
+                }
+                else
+                {
+                    failCount++;
+                    if (failCount >= 3)
+                        break;
+                }
+            }    
+            
             GameObject chosenMonsterPrefab = chosenMonsterCard.spawnCard.prefab;
             CharacterBody monsterBody = chosenMonsterPrefab.GetComponent<CharacterMaster>().bodyPrefab.GetComponent<CharacterBody>();
 
             if (!this.characterSpawnCard)
                 return;
 
-            Debug.Log(chosenMonsterCard.spawnCard.prefab.name);
+            //Debug.Log(chosenMonsterCard.spawnCard.prefab.name);
 
             var spawnCard = UnityEngine.Object.Instantiate(chosenMonsterCard.spawnCard);
 
@@ -86,8 +119,12 @@ namespace EntityStates.Events
 
                 foreach (CharacterMaster master in combatSquad.membersList)
                 {
-                    master.inventory.GiveItem(RoR2Content.Items.BoostHp, 250);
+                    master.inventory.GiveItem(RoR2Content.Items.BoostHp, 600);
+                    master.inventory.GiveItem(SS2Content.Items.BoostMovespeed, 50);
+                    master.inventory.GiveItem(SS2Content.Items.BoostCooldowns, 100);
                     master.inventory.GiveItem(RoR2Content.Items.BoostDamage, 80);
+                    master.inventory.GiveItem(RoR2Content.Items.TeleportWhenOob);
+                    master.inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
                     master.inventory.SetEquipmentIndex(SS2Content.Equipments.AffixEmpyrean.equipmentIndex);
                 }
 

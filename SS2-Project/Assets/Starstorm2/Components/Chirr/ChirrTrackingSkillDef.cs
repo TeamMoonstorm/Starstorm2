@@ -15,7 +15,7 @@ namespace Moonstorm.Starstorm2.ScriptableObjects
 		public bool isScepter;
 		public override BaseSkillInstanceData OnAssigned([NotNull] GenericSkill skillSlot)
 		{
-			ChirrFriendTracker tracker = skillSlot.GetComponent<ChirrFriendTracker>();
+			ChirrFriendTracker tracker = skillSlot.EnsureComponent<ChirrFriendTracker>(); // should make it work on any body
 			if (tracker) tracker.isScepter = this.isScepter;
 			return new ChirrTrackingSkillDef.InstanceData
 			{

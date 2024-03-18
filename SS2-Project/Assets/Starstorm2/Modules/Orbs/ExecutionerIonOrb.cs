@@ -18,6 +18,8 @@ namespace Moonstorm.Starstorm2.Orbs
         public override void Begin()
         {
             duration = distanceToTarget / speed;
+            if (duration > 4f)
+                duration = 4f;
             EffectData effectData = new EffectData
             {
                 origin = origin,

@@ -30,64 +30,70 @@ namespace Moonstorm.Starstorm2.Items
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of Swift Skateboard's movement speed buff.")]
         [TokenModifier(token, StatTypes.Default, 4)]
-        public static float buffDuration = 3f;
-
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Cooldown between applications of Swift Skateboard's movement speed buff.")]
-        [TokenModifier(token, StatTypes.Default, 5)]
-        public static float buffCooldown = 0.75f;
+        public static float buffDuration = 6f;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Whether Swift Skateboard should allow all-directional sprinting.")]
         public static bool omniSprint = true;
 
+        public static GameObject effectPrefab = SS2Assets.LoadAsset<GameObject>("SkateboardActivate", SS2Bundle.Items);
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.SwiftSkateboard;
-            public CharacterMaster CharMaster { get => gameObject.GetComponent<CharacterMaster>(); }
-            private float cooldownTimer;
+
+            private bool hadOmniSprint;
 
             public void Start()
             {
+                body.onSkillActivatedServer += Kickflip;
+
                 if (omniSprint)
                 {
-                    var cb = GetComponent<CharacterBody>();
-                    if (!cb.bodyFlags.HasFlag(CharacterBody.BodyFlags.SprintAnyDirection))
+                    //check if body prefab had sprintanydirection
+                    GameObject bodyPrefab = BodyCatalog.GetBodyPrefab(this.body.bodyIndex);
+                    if(bodyPrefab)
                     {
-                        cb.bodyFlags |= CharacterBody.BodyFlags.SprintAnyDirection;
+                        CharacterBody body = bodyPrefab.GetComponent<CharacterBody>();
+                        hadOmniSprint = body.bodyFlags.HasFlag(CharacterBody.BodyFlags.SprintAnyDirection);
                     }
-                    else
-                    {
-                        //this means the character, without the effects of this item, had omnisprint
-                        cb.gameObject.AddComponent<SkateboardToken>();
-                    }
+                    this.body.bodyFlags |= CharacterBody.BodyFlags.SprintAnyDirection;
                 }
-                body.onSkillActivatedAuthority += Kickflip;
+                
             }
 
             private void Kickflip(GenericSkill skill)
             {
+                // no buff on primary use. increased duration to compensate
+                if (this.body.skillLocator.primary == skill) return;
+
                 if (!body.HasBuff(SS2Content.Buffs.BuffKickflip))
                 {
                     Util.PlaySound("SwiftSkateboard", body.gameObject);
                 }
-                if (stack > 0 && cooldownTimer == 0f)
+                if (stack > 0)
                 {
                     int buffCount = body.GetBuffCount(SS2Content.Buffs.BuffKickflip);
                     int maxBuffStack = maxStacks + (maxStacksPerStack * (stack - 1));
                     //body.AddTimedBuff(SS2Content.Buffs.BuffKickflip, buffDuration, maxStacks + ((stack - 1) * maxStacksPerStack));
                     if (buffCount < maxBuffStack)
                     {
-                        body.AddTimedBuffAuthority(SS2Content.Buffs.BuffKickflip.buffIndex, buffDuration); //i swear if this works im killing hopoo
+                        body.AddTimedBuff(SS2Content.Buffs.BuffKickflip.buffIndex, buffDuration); 
                     }
                     else if (buffCount == maxBuffStack)
                     {
                         body.RemoveOldestTimedBuff(SS2Content.Buffs.BuffKickflip.buffIndex);
-                        body.AddTimedBuffAuthority(SS2Content.Buffs.BuffKickflip.buffIndex, buffDuration);
+                        body.AddTimedBuff(SS2Content.Buffs.BuffKickflip.buffIndex, buffDuration);
                     }
 
-
-                    cooldownTimer += buffCooldown;
                     RefreshBuff();
+
+
+                    // NO SOUND :((((((((((((((((((((((((((((((
+                    EffectData effectData = new EffectData();
+                    effectData.origin = base.body.corePosition;
+                    CharacterDirection characterDirection = base.body.characterDirection;
+                    effectData.rotation = characterDirection && characterDirection.moveVector != Vector3.zero ? Util.QuaternionSafeLookRotation(characterDirection.moveVector) : base.body.transform.rotation;
+                    EffectManager.SpawnEffect(effectPrefab, effectData, true);
                 }
             }
 
@@ -102,30 +108,14 @@ namespace Moonstorm.Starstorm2.Items
                 }
             }
 
-            private void FixedUpdate()
-            {
-                if (cooldownTimer > 0f)
-                {
-                    cooldownTimer = Mathf.Clamp(cooldownTimer - Time.fixedDeltaTime, 0f, buffCooldown);
-                }
-            }
-
             private void OnDestroy()
             {
-                if (omniSprint)
-                {
-                    var cb = GetComponent<CharacterBody>();
-                    if (cb.bodyFlags.HasFlag(CharacterBody.BodyFlags.SprintAnyDirection) && !cb.gameObject.GetComponent<SkateboardToken>())
-                    {
-                        cb.bodyFlags &= ~CharacterBody.BodyFlags.SprintAnyDirection;
-                    }
-                    else
-                    {
-                        Destroy(cb.gameObject.GetComponent<SkateboardToken>());
-                    }
+                body.onSkillActivatedServer -= Kickflip;
 
+                if (omniSprint && !this.hadOmniSprint)
+                {
+                    this.body.bodyFlags &= ~CharacterBody.BodyFlags.SprintAnyDirection;
                 }
-                body.onSkillActivatedAuthority -= Kickflip;
             }
 
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
@@ -136,10 +126,6 @@ namespace Moonstorm.Starstorm2.Items
                     args.moveSpeedMultAdd += (moveSpeedBonus + ((stack - 1) * moveSpeedBonusPerStack)) * body.GetBuffCount(SS2Content.Buffs.BuffKickflip);
                 }
             }
-        }
-        public class SkateboardToken : MonoBehaviour
-        {
-            //public bool hadOmnisprint = true;
         }
     }
 }

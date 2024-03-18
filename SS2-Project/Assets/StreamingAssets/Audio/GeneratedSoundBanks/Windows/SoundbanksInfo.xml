@@ -11,7 +11,7 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="866530374" Language="SFX" Hash="2274648521">
+		<SoundBank Id="866530374" Language="SFX" Hash="1042560661">
 			<ObjectPath>\SoundBanks\Default Work Unit\Starstorm2</ObjectPath>
 			<ShortName>Starstorm2</ShortName>
 			<Path>Starstorm2.bnk</Path>
@@ -73,14 +73,6 @@
 						<File Id="763108130" Language="SFX">
 							<ShortName>secondary2.wav</ShortName>
 							<Path>SFX\secondary2_B2D14CFC.wem</Path>
-						</File>
-					</IncludedMemoryFiles>
-				</Event>
-				<Event Id="2709397138" Name="ChirrFriendConvert" ObjectPath="\Events\Default Work Unit\Chirr\ChirrFriendConvert" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="1.400458" DurationMax="1.400458">
-					<IncludedMemoryFiles>
-						<File Id="1051140981" Language="SFX">
-							<ShortName>558484513.wav</ShortName>
-							<Path>SFX\558484513_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -210,9 +202,53 @@
 				</Event>
 				<Event Id="4180439307" Name="ChirrThrowHitGround" ObjectPath="\Events\Default Work Unit\Chirr\ChirrThrowHitGround" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="2.735781" DurationMax="2.735781">
 					<IncludedMemoryFiles>
-						<File Id="191569448" Language="SFX">
-							<ShortName>utilityyhitground2.wav</ShortName>
-							<Path>SFX\utilityyhitground2_B2D14CFC.wem</Path>
+						<File Id="88535758" Language="SFX">
+							<ShortName>utilityhitground.wav</ShortName>
+							<Path>SFX\utilityhitground_B2D14CFC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3284465828" Name="CrypticSourceFire" ObjectPath="\Events\Default Work Unit\Items\CrypticSourceFire" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="0.644687" DurationMax="0.644687">
+					<IncludedMemoryFiles>
+						<File Id="101209782" Language="SFX">
+							<ShortName>item_crypticsource_burst_01.wav</ShortName>
+							<Path>SFX\item_crypticsource_burst_01_B2D14CFC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2289766871" Name="CrypticSourceStage1" ObjectPath="\Events\Default Work Unit\Items\CrypticSourceStage1" MaxAttenuation="200.000000" DurationType="Infinite">
+					<IncludedMemoryFiles>
+						<File Id="241685491" Language="SFX">
+							<ShortName>item_crypticsource_idle.wav</ShortName>
+							<Path>SFX\item_crypticsource_idle_6AD26A56.wem</Path>
+						</File>
+						<File Id="437301329" Language="SFX">
+							<ShortName>item_crypticsource_start_03.wav</ShortName>
+							<Path>SFX\item_crypticsource_start_03_B2D14CFC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2289766868" Name="CrypticSourceStage2" ObjectPath="\Events\Default Work Unit\Items\CrypticSourceStage2" MaxAttenuation="200.000000" DurationType="Infinite">
+					<IncludedMemoryFiles>
+						<File Id="241685491" Language="SFX">
+							<ShortName>item_crypticsource_idle.wav</ShortName>
+							<Path>SFX\item_crypticsource_idle_6AD26A56.wem</Path>
+						</File>
+						<File Id="437301329" Language="SFX">
+							<ShortName>item_crypticsource_start_03.wav</ShortName>
+							<Path>SFX\item_crypticsource_start_03_B2D14CFC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2289766869" Name="CrypticSourceStage3" ObjectPath="\Events\Default Work Unit\Items\CrypticSourceStage3" MaxAttenuation="200.000000" DurationType="Infinite">
+					<IncludedMemoryFiles>
+						<File Id="241685491" Language="SFX">
+							<ShortName>item_crypticsource_idle.wav</ShortName>
+							<Path>SFX\item_crypticsource_idle_6AD26A56.wem</Path>
+						</File>
+						<File Id="437301329" Language="SFX">
+							<ShortName>item_crypticsource_start_03.wav</ShortName>
+							<Path>SFX\item_crypticsource_start_03_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -714,6 +750,26 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
+				<Event Id="4059362439" Name="PickupCoffeeBean" ObjectPath="\Events\Default Work Unit\Items\PickupCoffeeBean" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="0.156833" DurationMax="0.918625">
+					<IncludedMemoryFiles>
+						<File Id="69768090" Language="SFX">
+							<ShortName>item_pickup_coffeebean_03.wav</ShortName>
+							<Path>SFX\item_pickup_coffeebean_03_B2D14CFC.wem</Path>
+						</File>
+						<File Id="404549038" Language="SFX">
+							<ShortName>item_pickup_coffeebean_04.wav</ShortName>
+							<Path>SFX\item_pickup_coffeebean_04_B2D14CFC.wem</Path>
+						</File>
+						<File Id="422329283" Language="SFX">
+							<ShortName>item_pickup_coffeebean_01.wav</ShortName>
+							<Path>SFX\item_pickup_coffeebean_01_B2D14CFC.wem</Path>
+						</File>
+						<File Id="850073584" Language="SFX">
+							<ShortName>item_pickup_coffeebean_02.wav</ShortName>
+							<Path>SFX\item_pickup_coffeebean_02_B2D14CFC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
 				<Event Id="2871870429" Name="Play_ChirrCSS" ObjectPath="\Events\Default Work Unit\Chirr\Play_ChirrCSS" DurationType="Infinite">
 					<IncludedMemoryFiles>
 						<File Id="116836686" Language="SFX">
@@ -870,6 +926,50 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
+				<Event Id="3050313720" Name="ProcErraticGadgetChain" ObjectPath="\Events\Default Work Unit\Items\ProcErraticGadgetChain" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="0.610840" DurationMax="0.895960">
+					<IncludedMemoryFiles>
+						<File Id="86974721" Language="SFX">
+							<ShortName>item_proc_erraticgadget_chain_01.wav</ShortName>
+							<Path>SFX\item_proc_erraticgadget_chain_01_B2D14CFC.wem</Path>
+						</File>
+						<File Id="735195156" Language="SFX">
+							<ShortName>item_proc_erraticgadget_chain_02.wav</ShortName>
+							<Path>SFX\item_proc_erraticgadget_chain_02_B2D14CFC.wem</Path>
+						</File>
+						<File Id="765481400" Language="SFX">
+							<ShortName>item_proc_erraticgadget_chain_03.wav</ShortName>
+							<Path>SFX\item_proc_erraticgadget_chain_03_B2D14CFC.wem</Path>
+						</File>
+						<File Id="971891891" Language="SFX">
+							<ShortName>item_proc_erraticgadget_chain_04.wav</ShortName>
+							<Path>SFX\item_proc_erraticgadget_chain_04_B2D14CFC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3125516253" Name="ProcErraticGadgetLightning" ObjectPath="\Events\Default Work Unit\Items\ProcErraticGadgetLightning" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="0.630167" DurationMax="0.630167">
+					<IncludedMemoryFiles>
+						<File Id="55113206" Language="SFX">
+							<ShortName>item_proc_erraticgadget_02.wav</ShortName>
+							<Path>SFX\item_proc_erraticgadget_02_B2D14CFC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3105193662" Name="ProcLightningOnKill" ObjectPath="\Events\Default Work Unit\Items\ProcLightningOnKill" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="1.262571" DurationMax="1.590739">
+					<IncludedMemoryFiles>
+						<File Id="878795221" Language="SFX">
+							<ShortName>ProcLightningOnKill.wav</ShortName>
+							<Path>SFX\ProcLightningOnKill_B2D14CFC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1520542387" Name="ProcTrematodes" ObjectPath="\Events\Default Work Unit\Items\ProcTrematodes" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="0.543436" DurationMax="0.609986">
+					<IncludedMemoryFiles>
+						<File Id="514808870" Language="SFX">
+							<ShortName>ProcTrematodes.wav</ShortName>
+							<Path>SFX\ProcTrematodes_B2D14CFC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
 				<Event Id="2808251015" Name="RefabricatorAction" ObjectPath="\Events\Default Work Unit\Interactables\RefabricatorAction" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="3.086893" DurationMax="3.086893">
 					<IncludedMemoryFiles>
 						<File Id="379909187" Language="SFX">
@@ -954,6 +1054,14 @@
 						<File Id="555558067" Language="SFX">
 							<ShortName>item_proc_swiftSkateboard_01.wav</ShortName>
 							<Path>SFX\item_proc_swiftSkateboard_01_324331BC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1435965638" Name="UniversalCharger" ObjectPath="\Events\Default Work Unit\Items\UniversalCharger" DurationType="OneShot" DurationMin="1.044736" DurationMax="1.172677">
+					<IncludedMemoryFiles>
+						<File Id="83880130" Language="SFX">
+							<ShortName>item_crypticsource_start.wav</ShortName>
+							<Path>SFX\item_crypticsource_start_B2D14CFC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>

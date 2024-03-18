@@ -19,7 +19,6 @@ namespace AK
         static const AkUniqueID CHIRRFIREPRIMARYSINGLE = 959550553U;
         static const AkUniqueID CHIRRFIRESPECIAL = 295786462U;
         static const AkUniqueID CHIRRFIRESPITBOMB = 709034819U;
-        static const AkUniqueID CHIRRFRIENDCONVERT = 2709397138U;
         static const AkUniqueID CHIRRGRABFLYUP = 649273493U;
         static const AkUniqueID CHIRRGRABSTART = 1440739445U;
         static const AkUniqueID CHIRRGRABTHROW = 3463916741U;
@@ -30,6 +29,10 @@ namespace AK
         static const AkUniqueID CHIRRSPRINTSTOP = 1060087585U;
         static const AkUniqueID CHIRRSTEP = 3251339703U;
         static const AkUniqueID CHIRRTHROWHITGROUND = 4180439307U;
+        static const AkUniqueID CRYPTICSOURCEFIRE = 3284465828U;
+        static const AkUniqueID CRYPTICSOURCESTAGE1 = 2289766871U;
+        static const AkUniqueID CRYPTICSOURCESTAGE2 = 2289766868U;
+        static const AkUniqueID CRYPTICSOURCESTAGE3 = 2289766869U;
         static const AkUniqueID CYBORGPRIMARY = 3105092465U;
         static const AkUniqueID CYBORGSECONDARY = 4193594557U;
         static const AkUniqueID CYBORGSPECIALPLACE = 1373732423U;
@@ -89,6 +92,7 @@ namespace AK
         static const AkUniqueID NEMMANDOSWINGSABER = 113243767U;
         static const AkUniqueID NEMMANDOSWINGSABERDECISIVE = 1052053089U;
         static const AkUniqueID NUCLEATORCHARGEPRIMARY = 420124658U;
+        static const AkUniqueID PICKUPCOFFEEBEAN = 4059362439U;
         static const AkUniqueID PLAY_CHIRRCSS = 2871870429U;
         static const AkUniqueID PLAY_CHIRRSPITBOMBLOOP = 2747610824U;
         static const AkUniqueID PLAY_NEMMERC_CLONE_SPAWN = 3212416563U;
@@ -107,6 +111,10 @@ namespace AK
         static const AkUniqueID PLAY_NEMMERC_UTILITY_EXIT = 3128507003U;
         static const AkUniqueID PLAY_SOFT_RAIN = 263522455U;
         static const AkUniqueID PLAY_SS2_MUSIC_SYSTEM = 3480457898U;
+        static const AkUniqueID PROCERRATICGADGETCHAIN = 3050313720U;
+        static const AkUniqueID PROCERRATICGADGETLIGHTNING = 3125516253U;
+        static const AkUniqueID PROCLIGHTNINGONKILL = 3105193662U;
+        static const AkUniqueID PROCTREMATODES = 1520542387U;
         static const AkUniqueID REFABRICATORACTION = 2808251015U;
         static const AkUniqueID REMUNERATIONSPAWN = 159540939U;
         static const AkUniqueID REMUNERATIONSPAWN2 = 3276263843U;
@@ -119,6 +127,7 @@ namespace AK
         static const AkUniqueID STOP_SOFT_RAIN = 4234730185U;
         static const AkUniqueID STRANGECAN = 3750145159U;
         static const AkUniqueID SWIFTSKATEBOARD = 961366952U;
+        static const AkUniqueID UNIVERSALCHARGER = 1435965638U;
         static const AkUniqueID VOIDAMBIENT = 2533932213U;
         static const AkUniqueID WASTELANDERPRIMARY = 2333188815U;
         static const AkUniqueID WASTELANDERPRIMARYCRIT = 1319272055U;
