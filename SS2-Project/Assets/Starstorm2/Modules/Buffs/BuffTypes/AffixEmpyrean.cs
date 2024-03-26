@@ -19,6 +19,11 @@ namespace Moonstorm.Starstorm2.Buffs
 
         public static List<EliteDef> blacklistedEliteDefs = new List<EliteDef>();
 
+        public static List<String> blacklistedEliteDefStrings = new List<String>();
+
+        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Disabled Elite types, separated by commas.")]
+        public static string eliteDefDisabledStrings = "AffixBlighted,AffixBlightedEquipment,EliteLunarEquipment,EliteVoidEquipment,AffixVoid,AffixEthereal";
+
         public override Material OverlayMaterial => SS2Assets.LoadAsset<Material>("matRainbowOverlay", SS2Bundle.Equipments);
         public static void AddEliteToBlacklist(EliteDef eliteDef) => blacklistedEliteDefs.Add(eliteDef);
 
@@ -118,8 +123,32 @@ namespace Moonstorm.Starstorm2.Buffs
 
         private static void CreateBlacklist()
         {
-            AddEliteToBlacklist(RoR2Content.Elites.Lunar);
-            AddEliteToBlacklist(DLC1Content.Elites.Void);
+            string[] splitString = eliteDefDisabledStrings.Split(',');
+
+            blacklistedEliteDefStrings = new List<string>(splitString);
+
+            foreach (string name in blacklistedEliteDefStrings)
+            {
+                EliteDef ed = GetEliteDefFromString(name);
+                if (ed != null)
+                {
+                    blacklistedEliteDefs.Add(ed);
+                }
+            }
+        }
+
+        public static EliteDef GetEliteDefFromString(String defString)
+        {
+            foreach (EliteDef ed in EliteCatalog.eliteDefs)
+            {
+                if (ed.eliteEquipmentDef.name == defString)
+                {
+                    return ed;
+                }
+            }
+
+            SS2Log.Warning("Failed to find elite from string: " + defString);
+            return null;
         }
 
         public sealed class Behavior : BaseBuffBodyBehavior, IOnKilledServerReceiver
@@ -140,7 +169,7 @@ namespace Moonstorm.Starstorm2.Buffs
                 foreach (EliteDef ed in EliteCatalog.eliteDefs)
                 {
                     //shitty hardcoded case for blighted; add actual cross compat later!
-                    if (ed.IsAvailable() && !blacklistedEliteDefs.Contains(ed) && !body.HasBuff(ed.eliteEquipmentDef.passiveBuffDef) && ed.modifierToken != "LIT_MODIFIER_BLIGHTED")
+                    if (ed.IsAvailable() && !blacklistedEliteDefs.Contains(ed) && !body.HasBuff(ed.eliteEquipmentDef.passiveBuffDef))
                         body.AddBuff(ed.eliteEquipmentDef.passiveBuffDef);
                 }
 
