@@ -7,7 +7,8 @@ using UnityEngine;
 using RoR2;
 using JetBrains.Annotations;
 using UnityEngine.Networking;
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
     public class RemunerationChoiceBehavior : NetworkBehaviour
     {

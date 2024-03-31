@@ -5,7 +5,8 @@ using System.Runtime.CompilerServices;
 using UnityEngine.AddressableAssets;
 using System.Collections;
 
-namespace Moonstorm.Starstorm2.Survivors
+using Moonstorm;
+namespace SS2.Survivors
 {
     [DisabledContent]
     public sealed class Nemmando : SurvivorBase

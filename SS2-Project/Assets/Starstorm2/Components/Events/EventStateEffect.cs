@@ -2,7 +2,8 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
     public class EventStateEffect : MonoBehaviour
     {

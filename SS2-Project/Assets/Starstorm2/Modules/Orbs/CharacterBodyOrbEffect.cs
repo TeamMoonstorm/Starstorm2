@@ -7,7 +7,8 @@ using UnityEngine;
 using RoR2;
 using UnityEngine.UI;
 
-namespace Moonstorm.Starstorm2.Orbs
+using Moonstorm;
+namespace SS2.Orbs
 {
 	[RequireComponent(typeof(EffectComponent))]
 	public class CharacterBodyOrbEffect : MonoBehaviour

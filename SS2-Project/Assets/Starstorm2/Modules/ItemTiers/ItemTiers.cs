@@ -6,7 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Moonstorm.Starstorm2.Modules
+using Moonstorm;
+namespace SS2.Modules
 {
     public sealed class ItemTiers : ItemTierModuleBase
     {

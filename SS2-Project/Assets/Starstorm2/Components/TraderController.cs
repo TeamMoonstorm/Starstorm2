@@ -9,7 +9,8 @@ using RoR2;
 using EntityStates.Trader.Bag;
 using RoR2.UI;
 
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
     public class TraderController : NetworkBehaviour
     {

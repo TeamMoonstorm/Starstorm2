@@ -10,7 +10,8 @@ using UnityEngine.ResourceManagement;
 using RoR2.Projectile;
 using UnityEngine.Networking;
 
-namespace Moonstorm.Starstorm2.Modules
+using Moonstorm;
+namespace SS2.Modules
 {
     public static class SkinSpecificOverrides
     {

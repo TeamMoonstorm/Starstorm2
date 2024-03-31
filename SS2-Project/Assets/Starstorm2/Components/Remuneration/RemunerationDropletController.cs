@@ -5,7 +5,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 using RoR2;
 
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
 	public class RemunerationDropletController : NetworkBehaviour
 	{

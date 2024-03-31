@@ -3,7 +3,8 @@ using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace Moonstorm.Starstorm2.Buffs
+using Moonstorm;
+namespace SS2.Buffs
 {
     public sealed class ExecutionerSuperCharged : BuffBase
     {

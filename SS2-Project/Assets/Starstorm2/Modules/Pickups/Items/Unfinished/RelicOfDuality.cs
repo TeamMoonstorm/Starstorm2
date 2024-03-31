@@ -2,7 +2,8 @@
 using RoR2.Items;
 using System;
 
-namespace Moonstorm.Starstorm2.Items
+using Moonstorm;
+namespace SS2.Items
 {
     [DisabledContent]
     public sealed class RelicOfDuality : ItemBase

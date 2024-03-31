@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 using static Moonstorm.Components.BaseBuffBodyBehavior;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Buffs
+using Moonstorm;
+namespace SS2.Buffs
 {
     public sealed class KnightSpecialPowerBuff : BuffBase
     {

@@ -1,8 +1,8 @@
 ﻿using EntityStates;
 using EntityStates.Knight;
 using Moonstorm;
-using Moonstorm.Starstorm2;
-using Moonstorm.Starstorm2.DamageTypes;
+using SS2;
+using SS2.DamageTypes;
 using R2API;
 using RoR2;
 using RoR2.Projectile;

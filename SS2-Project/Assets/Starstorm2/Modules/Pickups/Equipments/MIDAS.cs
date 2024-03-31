@@ -2,7 +2,8 @@
 using UnityEngine;
 using static AkMIDIEvent;
 
-namespace Moonstorm.Starstorm2.Equipments
+using Moonstorm;
+namespace SS2.Equipments
 {
     //[DisabledContent]
     public sealed class MIDAS : EquipmentBase

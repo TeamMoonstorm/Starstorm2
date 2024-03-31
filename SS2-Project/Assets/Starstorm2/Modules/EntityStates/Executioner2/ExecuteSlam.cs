@@ -5,8 +5,8 @@ using Moonstorm;
 using RoR2;
 using System;
 using UnityEngine.Networking;
-using Moonstorm.Starstorm2.Components;
-using Moonstorm.Starstorm2;
+using SS2.Components;
+using SS2;
 
 namespace EntityStates.Executioner2
 {

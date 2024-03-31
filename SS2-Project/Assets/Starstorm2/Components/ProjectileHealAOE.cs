@@ -5,7 +5,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 using R2API;
 using RoR2.Orbs;
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
     [RequireComponent(typeof(ProjectileController))]
     public class ProjectileHealAOE : MonoBehaviour, IProjectileImpactBehavior

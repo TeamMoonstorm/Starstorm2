@@ -1,7 +1,8 @@
 ﻿using RoR2;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
     [RequireComponent(typeof(ParticleSystem))]
     public class EventParticleSystemScaler : MonoBehaviour

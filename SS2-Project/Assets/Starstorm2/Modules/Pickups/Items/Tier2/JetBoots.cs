@@ -7,7 +7,8 @@ using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using System;
 using EntityStates;
-namespace Moonstorm.Starstorm2.Items
+using Moonstorm;
+namespace SS2.Items
 {
     public sealed class JetBoots : ItemBase
     {

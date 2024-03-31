@@ -5,7 +5,8 @@ using UnityEngine.Networking;
 using RoR2;
 using UnityEngine.AddressableAssets;
 
-namespace Moonstorm.Starstorm2
+using Moonstorm;
+namespace SS2
 {
     public class VoidRock : NetworkBehaviour
     {

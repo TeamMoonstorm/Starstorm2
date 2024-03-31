@@ -6,7 +6,8 @@ using System.Linq;
 using System.Reflection;
 using UObject = UnityEngine.Object;
 
-namespace Moonstorm.Starstorm2.Modules
+using Moonstorm;
+namespace SS2.Modules
 {
     public sealed class Unlockables : UnlockablesModuleBase
     {

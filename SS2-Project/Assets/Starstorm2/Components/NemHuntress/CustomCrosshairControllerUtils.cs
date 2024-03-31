@@ -7,7 +7,8 @@ using UnityEngine.UI;
 using RoR2.UI;
 
 
-namespace Moonstorm.Starstorm2.UI
+using Moonstorm;
+namespace SS2.UI
 {
     [RequireComponent(typeof(HudElement))]
     [RequireComponent(typeof(RectTransform))]

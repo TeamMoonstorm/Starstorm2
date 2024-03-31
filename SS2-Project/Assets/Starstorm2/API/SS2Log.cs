@@ -1,7 +1,8 @@
 ﻿using BepInEx.Logging;
 using System.Runtime.CompilerServices;
 
-namespace Moonstorm.Starstorm2
+using Moonstorm;
+namespace SS2
 {
     public class SS2Log
     {

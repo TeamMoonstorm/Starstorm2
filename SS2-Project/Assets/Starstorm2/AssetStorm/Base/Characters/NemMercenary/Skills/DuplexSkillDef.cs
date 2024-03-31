@@ -6,7 +6,8 @@ using JetBrains.Annotations;
 using RoR2;
 using EntityStates;
 
-namespace Moonstorm.Starstorm2.ScriptableObjects
+using Moonstorm;
+namespace SS2.ScriptableObjects
 {
 	[CreateAssetMenu(menuName = "Starstorm2/SkillDef/DuplexSkillDef")]
 

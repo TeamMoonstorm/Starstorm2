@@ -1,6 +1,6 @@
 ﻿using EntityStates;
 using EntityStates.DroneTable;
-using Moonstorm.Starstorm2.Components;
+using SS2.Components;
 using R2API;
 using RoR2;
 using RoR2.Items;
@@ -13,7 +13,8 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace Moonstorm.Starstorm2.Interactables
+using Moonstorm;
+namespace SS2.Interactables
 {
     //[DisabledContent]
 

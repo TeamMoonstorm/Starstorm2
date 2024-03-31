@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using RoR2;
-using Moonstorm.Starstorm2;
+using SS2;
 using UnityEngine;
 using UnityEngine.Networking;
 using RoR2.Skills;

@@ -5,7 +5,7 @@ using RoR2;
 using RoR2.UI;
 using UnityEngine;
 using UnityEngine.Networking;
-using Moonstorm.Starstorm2.Components;
+using SS2.Components;
 
 namespace EntityStates.NemCaptain.Weapon
 {

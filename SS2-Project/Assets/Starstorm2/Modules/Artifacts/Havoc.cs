@@ -7,7 +7,8 @@ using Moonstorm;
 using Moonstorm.Components;
 using R2API.ScriptableObjects;
 
-namespace Moonstorm.Starstorm2.Artifacts
+using Moonstorm;
+namespace SS2.Artifacts
 {
     //[DisabledContent]
     public class Havoc : ArtifactBase

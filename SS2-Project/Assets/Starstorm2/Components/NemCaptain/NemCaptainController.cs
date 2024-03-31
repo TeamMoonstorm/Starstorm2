@@ -13,7 +13,8 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using EntityStates;
 
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
     public class NemCaptainController : NetworkBehaviour, IOnTakeDamageServerReceiver, IOnDamageDealtServerReceiver, IOnKilledOtherServerReceiver
     {

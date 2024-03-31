@@ -2,10 +2,11 @@
 using RoR2.Items;
 using UnityEngine;
 using UnityEngine.Networking;
-using Moonstorm.Starstorm2.Components;
+using SS2.Components;
 using System.Collections.Generic;
 using RoR2.Orbs;
-namespace Moonstorm.Starstorm2.Items
+using Moonstorm;
+namespace SS2.Items
 {
     public sealed class LightningOnKill : ItemBase
     {

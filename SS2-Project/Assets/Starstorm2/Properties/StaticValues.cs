@@ -1,6 +1,7 @@
 ﻿/*using BepInEx.Configuration;
 
-namespace Moonstorm.Starstorm2
+using Moonstorm;
+namespace SS2
 {
     public static class StaticValues
     {

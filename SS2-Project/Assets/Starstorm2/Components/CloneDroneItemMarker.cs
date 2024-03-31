@@ -4,7 +4,8 @@ using UnityEngine;
 using RoR2;
 using UnityEngine.Networking;
 
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
     public class CloneDroneItemMarker : MonoBehaviour
     {

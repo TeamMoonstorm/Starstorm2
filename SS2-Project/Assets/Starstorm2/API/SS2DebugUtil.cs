@@ -1,7 +1,8 @@
 ﻿using RoR2;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.API
+using Moonstorm;
+namespace SS2.API
 {
     //If youre wondering why this class is emptier now, its because most of these have been moved into MSUDebug.cs.
     //You can enable MSUDebug's debug features in its config file

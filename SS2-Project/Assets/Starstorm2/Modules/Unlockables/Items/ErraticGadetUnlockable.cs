@@ -2,7 +2,8 @@
 using RoR2.Achievements;
 using System.Collections.Generic;
 
-namespace Moonstorm.Starstorm2.Unlocks.Pickups
+using Moonstorm;
+namespace SS2.Unlocks.Pickups
 {
     [DisabledContent]
     public sealed class ErraticGadgetUnlockable : UnlockableBase

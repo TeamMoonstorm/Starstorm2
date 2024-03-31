@@ -5,7 +5,8 @@ using RoR2.Projectile;
 using RoR2;
 using RoR2.Skills;
 using System;
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
     public class TeleporterProjectile : MonoBehaviour
     {

@@ -12,7 +12,8 @@ using System.Linq;
 using System.Collections;
 using RoR2.ContentManagement;
 
-namespace Moonstorm.Starstorm2.Scenes
+using Moonstorm;
+namespace SS2.Scenes
 {
     //[DisabledContent]
     public sealed class VoidShop : SceneBase

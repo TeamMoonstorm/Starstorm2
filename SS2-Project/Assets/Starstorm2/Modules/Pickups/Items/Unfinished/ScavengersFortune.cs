@@ -1,7 +1,8 @@
 ﻿using RoR2;
 using RoR2.Items;
 
-namespace Moonstorm.Starstorm2.Items
+using Moonstorm;
+namespace SS2.Items
 {
     [DisabledContent]
     public sealed class ScavengersFortune : ItemBase

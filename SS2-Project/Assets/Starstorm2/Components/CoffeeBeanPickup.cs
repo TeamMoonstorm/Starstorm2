@@ -2,8 +2,9 @@
 using UnityEngine;
 using UnityEngine.Networking;
 using RoR2;
-using Moonstorm.Starstorm2.Items;
-namespace Moonstorm.Starstorm2.Components
+using SS2.Items;
+using Moonstorm;
+namespace SS2.Components
 {
 	public class CoffeeBeanPickup : MonoBehaviour
 	{

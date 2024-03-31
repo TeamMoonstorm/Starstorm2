@@ -3,7 +3,8 @@ using RoR2.Items;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Items
+using Moonstorm;
+namespace SS2.Items
 {
     public sealed class DroidHead : ItemBase
     {

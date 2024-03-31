@@ -1,7 +1,8 @@
 ﻿using RoR2;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Unlocks.Chirr
+using Moonstorm;
+namespace SS2.Unlocks.Chirr
 {
     public sealed class ChirrMasteryUnlockable : UnlockableBase
     {

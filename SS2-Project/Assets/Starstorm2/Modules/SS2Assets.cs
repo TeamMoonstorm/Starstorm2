@@ -1,5 +1,5 @@
 ﻿using Moonstorm.Loaders;
-using Moonstorm.Starstorm2.PostProcess;
+using SS2.PostProcess;
 using RoR2;
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,8 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.Rendering.PostProcessing;
 using Path = System.IO.Path;
 
-namespace Moonstorm.Starstorm2
+using Moonstorm;
+namespace SS2
 {
     public enum SS2Bundle
     {

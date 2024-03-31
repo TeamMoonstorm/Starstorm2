@@ -6,7 +6,8 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
     public sealed class DropPodController : NetworkBehaviour, IInteractable, IDisplayNameProvider
     {

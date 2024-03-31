@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using RiskOfOptions.OptionConfigs;
 
-namespace Moonstorm.Starstorm2.Modules
+using Moonstorm;
+namespace SS2.Modules
 {
     public sealed class Interactables : InteractableModuleBase
     {

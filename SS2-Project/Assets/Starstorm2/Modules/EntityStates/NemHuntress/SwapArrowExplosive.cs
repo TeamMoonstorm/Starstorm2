@@ -2,7 +2,7 @@
 using RoR2.Skills;
 using RoR2.Projectile;
 using UnityEngine;
-using Moonstorm.Starstorm2.Components;
+using SS2.Components;
 
 namespace EntityStates.NemHuntress
 {

@@ -2,8 +2,9 @@
 using RoR2;
 using UnityEngine;
 using System;
-using Moonstorm.Starstorm2.Components;
-namespace Moonstorm.Starstorm2.Monsters
+using SS2.Components;
+using Moonstorm;
+namespace SS2.Monsters
 {
     public sealed class Runshroom : MonsterBase
     {

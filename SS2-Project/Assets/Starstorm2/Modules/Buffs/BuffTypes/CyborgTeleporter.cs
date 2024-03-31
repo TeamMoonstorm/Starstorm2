@@ -1,12 +1,13 @@
 ﻿using Moonstorm.Components;
-using Moonstorm.Starstorm2.Equipments;
+using SS2.Equipments;
 using R2API;
 using RoR2;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Moonstorm.Starstorm2.Buffs
+using Moonstorm;
+namespace SS2.Buffs
 {
     public sealed class CyborgTeleporter : BuffBase
     {

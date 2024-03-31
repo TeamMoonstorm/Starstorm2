@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Equipments
+using Moonstorm;
+namespace SS2.Equipments
 {
     public sealed class RockFruit : EquipmentBase
     {

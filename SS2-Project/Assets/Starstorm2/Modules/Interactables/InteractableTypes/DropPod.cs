@@ -1,5 +1,5 @@
 ﻿using EntityStates;
-using Moonstorm.Starstorm2.Components;
+using SS2.Components;
 using R2API;
 using RoR2;
 using System.Collections.Generic;
@@ -7,7 +7,8 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Moonstorm.Starstorm2.Interactables
+using Moonstorm;
+namespace SS2.Interactables
 {
     [DisabledContent]
     public sealed class DropPod : InteractableBase

@@ -8,7 +8,8 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UObject = UnityEngine.Object;
 
-namespace Moonstorm.Starstorm2.Artifacts
+using Moonstorm;
+namespace SS2.Artifacts
 {
     public sealed class Cognation : ArtifactBase
     {

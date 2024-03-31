@@ -3,7 +3,7 @@ using RoR2;
 using RoR2.CharacterAI;
 using RoR2.Navigation;
 using UnityEngine;
-using Moonstorm.Starstorm2;
+using SS2;
 namespace EntityStates.AI.Walker
 {
 	// half jank solution to make any AI follow a "leader" without changing their aiskilldrivers

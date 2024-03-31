@@ -3,7 +3,8 @@ using RoR2.Items;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Moonstorm.Starstorm2.Items
+using Moonstorm;
+namespace SS2.Items
 {
     public sealed class BloodTester : ItemBase
     {

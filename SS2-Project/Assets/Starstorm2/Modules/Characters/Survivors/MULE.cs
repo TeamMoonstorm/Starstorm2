@@ -3,7 +3,8 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using RoR2.Projectile;
 
-namespace Moonstorm.Starstorm2.Survivors
+using Moonstorm;
+namespace SS2.Survivors
 {
     [DisabledContent]
     public sealed class MULE : SurvivorBase

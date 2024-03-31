@@ -5,7 +5,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
-namespace Moonstorm.Starstorm2
+using Moonstorm;
+namespace SS2
 {
     public class TeleporterUpgradeController : NetworkBehaviour
     {

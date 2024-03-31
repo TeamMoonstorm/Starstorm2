@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using RoR2;
 using UnityEngine.Networking;
-using Moonstorm.Starstorm2;
+using SS2;
 namespace EntityStates.NemMerc
 {
     public class Lunge : BaseSkillState

@@ -20,7 +20,7 @@ namespace EntityStates.Chirr
         {
             bool isHovering = !wingsStateMachine.IsInMainState();
             // if we are hovering, we want the next "jump" input to end the hover instead of jumping
-            bool shouldSkipJump = isHovering && Moonstorm.Starstorm2.Survivors.Chirr.toggleHover;
+            bool shouldSkipJump = isHovering && SS2.Survivors.Chirr.toggleHover;
             if (!shouldSkipJump)
                 base.ProcessJump();
 

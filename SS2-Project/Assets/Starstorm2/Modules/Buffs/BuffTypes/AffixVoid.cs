@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Moonstorm.Starstorm2.Buffs
+using Moonstorm;
+namespace SS2.Buffs
 {
     [DisabledContent]
     public sealed class AffixVoid : BuffBase

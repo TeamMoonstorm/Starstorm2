@@ -3,7 +3,8 @@ using RoR2.Achievements;
 using UnityEngine;
 using System;
 
-namespace Moonstorm.Starstorm2.Unlocks.NemMercenary
+using Moonstorm;
+namespace SS2.Unlocks.NemMercenary
 {
     public sealed class NemMercenarySlideUnlock : UnlockableBase
     {

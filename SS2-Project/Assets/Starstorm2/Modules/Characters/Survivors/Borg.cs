@@ -1,7 +1,8 @@
 ﻿using RoR2;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Survivors
+using Moonstorm;
+namespace SS2.Survivors
 {
     [DisabledContent]
     public sealed class Borg : SurvivorBase
@@ -26,7 +27,8 @@ namespace Moonstorm.Starstorm2.Survivors
     }
 }
 
-/*namespace Moonstorm.Starstorm2.Survivors
+/*using Moonstorm;
+namespace SS2.Survivors
 {
     internal class Borg : SurvivorBase
     {

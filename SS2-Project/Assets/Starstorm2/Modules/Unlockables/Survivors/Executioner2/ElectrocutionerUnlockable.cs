@@ -2,7 +2,8 @@
 using RoR2.Achievements;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Unlocks.Executioner2
+using Moonstorm;
+namespace SS2.Unlocks.Executioner2
 {
     [DisabledContent]
     public sealed class ElectrocutionerUnlockable : UnlockableBase

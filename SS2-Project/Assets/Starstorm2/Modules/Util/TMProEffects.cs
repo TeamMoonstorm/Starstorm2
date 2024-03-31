@@ -2,7 +2,8 @@
 using TMPro;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2
+using Moonstorm;
+namespace SS2
 {
     //ty for permission to use this Mystic :)
     public static class TMProEffects

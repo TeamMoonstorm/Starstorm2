@@ -20,7 +20,7 @@ namespace EntityStates.Trader.Bag
         {
             base.OnEnter();
             if (isAuthority)
-                characterBody.SetBuffCount(Moonstorm.Starstorm2.SS2Content.Buffs.bdHiddenSlow20.buffIndex, 10);
+                characterBody.SetBuffCount(SS2.SS2Content.Buffs.bdHiddenSlow20.buffIndex, 10);
             PlayCrossfade("Body", "Scavenge", "Scavenge.playbackRate", duration + Trading.duration + TradeToIdle.duration, 0.05f);
         }
 

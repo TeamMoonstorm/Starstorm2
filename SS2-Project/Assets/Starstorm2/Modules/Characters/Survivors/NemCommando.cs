@@ -8,7 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 
-namespace Moonstorm.Starstorm2.Survivors
+using Moonstorm;
+namespace SS2.Survivors
 {
     //[DisabledContent]
     public sealed class NemCommando : SurvivorBase

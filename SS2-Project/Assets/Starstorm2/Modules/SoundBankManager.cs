@@ -2,7 +2,8 @@
 using UnityEngine;
 using Path = System.IO.Path;
 
-namespace Moonstorm.Starstorm2
+using Moonstorm;
+namespace SS2
 {
     public static class SoundBankManager
     {

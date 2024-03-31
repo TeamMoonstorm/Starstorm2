@@ -2,7 +2,8 @@
 using RoR2.Projectile;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
     [RequireComponent(typeof(ProjectileController))]
     public class ProjectileInflictStackingBuff : MonoBehaviour, IOnDamageInflictedServerReceiver

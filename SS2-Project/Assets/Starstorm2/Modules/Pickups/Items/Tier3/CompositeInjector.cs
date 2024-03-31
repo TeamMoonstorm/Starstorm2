@@ -11,7 +11,8 @@ using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using System.Collections.Generic;
 using UnityEngine.Networking;
-namespace Moonstorm.Starstorm2.Items
+using Moonstorm;
+namespace SS2.Items
 {
 	// welcome to hell
     public sealed class CompositeInjector : ItemBase

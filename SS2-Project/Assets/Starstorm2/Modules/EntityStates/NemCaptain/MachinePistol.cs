@@ -1,5 +1,5 @@
 ﻿using Moonstorm;
-using Moonstorm.Starstorm2.Components;
+using SS2.Components;
 using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;

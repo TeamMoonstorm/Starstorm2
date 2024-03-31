@@ -5,7 +5,8 @@ using System.Runtime.CompilerServices;
 using RoR2.Projectile;
 using System;
 
-namespace Moonstorm.Starstorm2.Survivors
+using Moonstorm;
+namespace SS2.Survivors
 {
     [DisabledContent]
     public sealed class NemesisHuntress : SurvivorBase

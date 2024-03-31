@@ -3,7 +3,8 @@ using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
 
-namespace Moonstorm.Starstorm2.PostProcess
+using Moonstorm;
+namespace SS2.PostProcess
 {
     [PostProcess(typeof(SS2SobelRainRenderer), PostProcessEvent.BeforeTransparent, "SS2/SobelRain", true)]
     [Serializable]

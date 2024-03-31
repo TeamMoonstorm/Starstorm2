@@ -1,4 +1,4 @@
-﻿using Moonstorm.Starstorm2.Components;
+﻿using SS2.Components;
 
 namespace EntityStates.DropPod
 {

@@ -5,7 +5,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-namespace Moonstorm.Starstorm2.Artifacts
+using Moonstorm;
+namespace SS2.Artifacts
 {
     [DisabledContent]
     public class Adversity : ArtifactBase

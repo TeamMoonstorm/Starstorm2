@@ -3,7 +3,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
     [RequireComponent(typeof(ObjectScaleCurve))]
     public class AuguryEffectController : MonoBehaviour

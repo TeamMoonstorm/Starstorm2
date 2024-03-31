@@ -6,7 +6,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 
-namespace Moonstorm.Starstorm2
+using Moonstorm;
+namespace SS2
 {
     public static class SuperTyphoon
     {

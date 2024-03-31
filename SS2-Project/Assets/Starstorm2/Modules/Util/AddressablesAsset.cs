@@ -4,7 +4,8 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
     [ExecuteAlways]
     public class AddressablesAsset : MonoBehaviour

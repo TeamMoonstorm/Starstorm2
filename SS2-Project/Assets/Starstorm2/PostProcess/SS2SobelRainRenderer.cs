@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
-namespace Moonstorm.Starstorm2.PostProcess
+using Moonstorm;
+namespace SS2.PostProcess
 {
     public sealed class SS2SobelRainRenderer : PostProcessEffectRenderer<SS2SobelRain>
     {

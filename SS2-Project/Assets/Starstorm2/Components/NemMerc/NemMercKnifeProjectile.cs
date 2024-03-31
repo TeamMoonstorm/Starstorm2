@@ -8,7 +8,8 @@ using RoR2;
 using RoR2.Projectile;
 using UnityEngine.Networking;
 
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
     [RequireComponent(typeof(ProjectileStickOnImpact))]
     class NemMercKnifeProjectile : NetworkBehaviour

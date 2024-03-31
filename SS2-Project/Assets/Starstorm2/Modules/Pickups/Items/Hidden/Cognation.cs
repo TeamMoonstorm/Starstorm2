@@ -2,7 +2,8 @@
 using RoR2.Items;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Items
+using Moonstorm;
+namespace SS2.Items
 {
     public sealed class Cognation : ItemBase
     {

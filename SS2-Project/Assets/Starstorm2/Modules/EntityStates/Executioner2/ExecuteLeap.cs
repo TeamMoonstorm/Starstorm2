@@ -5,7 +5,7 @@ using Moonstorm;
 using RoR2;
 using System;
 using UnityEngine.Networking;
-using Moonstorm.Starstorm2.Components;
+using SS2.Components;
 using UnityEngine.AddressableAssets;
 
 namespace EntityStates.Executioner2

@@ -5,7 +5,7 @@ using RoR2;
 using EntityStates;
 using UnityEngine;
 using R2API;
-using Moonstorm.Starstorm2.DamageTypes;
+using SS2.DamageTypes;
 
 namespace EntityStates.NemMerc
 {

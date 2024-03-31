@@ -5,7 +5,8 @@ using RoR2.Projectile;
 using System.Linq;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Items
+using Moonstorm;
+namespace SS2.Items
 {
     //[DisabledContent]
     public sealed class ArmedBackpack : ItemBase

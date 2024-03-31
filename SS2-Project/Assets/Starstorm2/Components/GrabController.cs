@@ -7,7 +7,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections.Generic;
 using RoR2.Networking;
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
     //bastardized vehicleseat
     // use for anything, not just chirr

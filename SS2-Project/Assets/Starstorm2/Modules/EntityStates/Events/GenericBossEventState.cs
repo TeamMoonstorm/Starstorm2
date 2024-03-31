@@ -1,6 +1,6 @@
-﻿using Moonstorm.Starstorm2;
-using Moonstorm.Starstorm2.Components;
-using Moonstorm.Starstorm2.ScriptableObjects;
+﻿using SS2;
+using SS2.Components;
+using SS2.ScriptableObjects;
 using R2API.Networking.Interfaces;
 using RoR2;
 using RoR2.UI;

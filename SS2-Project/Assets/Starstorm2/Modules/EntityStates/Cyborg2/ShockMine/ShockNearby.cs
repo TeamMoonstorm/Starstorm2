@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RoR2;
-using Moonstorm.Starstorm2.Components;
+using SS2.Components;
 using UnityEngine;
 using RoR2.Projectile;
 using UnityEngine.Networking;
-using Moonstorm.Starstorm2;
+using SS2;
 namespace EntityStates.Cyborg2.ShockMine
 {
     public class ShockNearby : BaseShockMineState

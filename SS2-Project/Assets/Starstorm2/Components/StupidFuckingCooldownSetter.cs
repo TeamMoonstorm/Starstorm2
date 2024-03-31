@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using RoR2;
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
 
     // doing this after CharacterBody.Start is too early because GenericSkill sets the stock to max in its Start

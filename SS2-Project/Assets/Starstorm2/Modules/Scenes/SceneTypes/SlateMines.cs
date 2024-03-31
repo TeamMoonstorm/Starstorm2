@@ -1,6 +1,7 @@
 ﻿using RoR2;
 
-namespace Moonstorm.Starstorm2.Scenes
+using Moonstorm;
+namespace SS2.Scenes
 {
     [DisabledContent]
     public sealed class SlateMines : SceneBase

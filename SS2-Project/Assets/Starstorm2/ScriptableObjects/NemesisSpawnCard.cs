@@ -1,6 +1,6 @@
 ﻿using Assets.Starstorm2.ScriptableObjects;
 using EntityStates;
-using Moonstorm.Starstorm2.Components;
+using SS2.Components;
 using R2API.Networking.Interfaces;
 using RoR2;
 using RoR2.Skills;
@@ -9,7 +9,8 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Moonstorm.Starstorm2.ScriptableObjects
+using Moonstorm;
+namespace SS2.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "NemesisSpawnCard", menuName = "Starstorm2/NemesisSpawnCard")]
     public class NemesisSpawnCard : CharacterSpawnCard

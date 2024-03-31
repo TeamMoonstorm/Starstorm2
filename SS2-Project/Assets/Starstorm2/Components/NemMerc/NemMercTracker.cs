@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using UnityEngine;
 using RoR2;
 
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
 	[RequireComponent(typeof(InputBankTest))]
 	[RequireComponent(typeof(CharacterBody))]

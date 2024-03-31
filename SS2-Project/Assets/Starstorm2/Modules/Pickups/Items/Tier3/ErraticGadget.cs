@@ -5,7 +5,8 @@ using UnityEngine;
 using RoR2.Orbs;
 using System.Collections.Generic;
 using System.Linq;
-namespace Moonstorm.Starstorm2.Items
+using Moonstorm;
+namespace SS2.Items
 {
 
     /// <summary>

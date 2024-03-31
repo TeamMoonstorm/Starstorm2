@@ -6,7 +6,8 @@ using UnityEngine.Networking;
 using R2API;
 using System;
 
-namespace Moonstorm.Starstorm2.Equipments
+using Moonstorm;
+namespace SS2.Equipments
 {
     //TODO: make warbanner
     public sealed class GreaterWarbanner : EquipmentBase

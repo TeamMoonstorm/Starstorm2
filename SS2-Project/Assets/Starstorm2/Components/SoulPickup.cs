@@ -1,9 +1,10 @@
-﻿using Moonstorm.Starstorm2.Items;
+﻿using SS2.Items;
 using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
 
     //To do : revise this

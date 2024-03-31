@@ -3,9 +3,9 @@ using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
 using EntityStates.Merc;
-using Moonstorm.Starstorm2.Components;
+using SS2.Components;
 using R2API;
-using Moonstorm.Starstorm2;
+using SS2;
 
 namespace EntityStates.NemMerc
 {
@@ -42,7 +42,7 @@ namespace EntityStates.NemMerc
 
 			this.overlapAttack = base.InitMeleeOverlap(TargetDash.damageCoefficient, TargetDash.hitEffectPrefab, this.modelTransform, "Assaulter");
 			this.overlapAttack.damageType = DamageType.Stun1s;
-			this.overlapAttack.AddModdedDamageType(Moonstorm.Starstorm2.DamageTypes.RedirectHologram.damageType);
+			this.overlapAttack.AddModdedDamageType(SS2.DamageTypes.RedirectHologram.damageType);
 
 			Vector3 dashTarget = base.GetAimRay().GetPoint(TargetDash.baseDashDistance);
 

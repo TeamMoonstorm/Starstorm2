@@ -9,7 +9,8 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Moonstorm.Starstorm2.Buffs
+using Moonstorm;
+namespace SS2.Buffs
 {
     public sealed class Hakai : BuffBase
     {

@@ -3,7 +3,7 @@ using EntityStates;
 using UnityEngine;
 using RoR2;
 using UnityEngine.Networking;
-using Moonstorm.Starstorm2.Components;
+using SS2.Components;
 namespace EntityStates.Chirr
 {
 	// probably worth to turn this into a general-use "body launch" state, and set the parameters when instantiating the state.
@@ -127,7 +127,7 @@ namespace EntityStates.Chirr
 		// ^^^ would using another RPC call instead of syncvarhook for victimBodyObject make the timing correct?
 		private void ReleaseLatencyFixTEMP(VehicleSeat.PassengerInfo _) 
         {
-			Moonstorm.Starstorm2.SS2Log.Warning("ReleaseLatencyFixTEMP: Setting velocity to " + this.initialVelocity);
+			SS2.SS2Log.Warning("ReleaseLatencyFixTEMP: Setting velocity to " + this.initialVelocity);
 			if (base.characterMotor)
 				base.characterMotor.velocity = initialVelocity;
 			else if (base.rigidbody)

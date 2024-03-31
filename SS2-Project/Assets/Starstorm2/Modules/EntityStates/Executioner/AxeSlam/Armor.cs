@@ -1,4 +1,4 @@
-﻿using Moonstorm.Starstorm2;
+﻿using SS2;
 
 namespace EntityStates.Executioner
 {

@@ -1,7 +1,8 @@
 ﻿using RoR2;
 using RoR2.Achievements;
 
-namespace Moonstorm.Starstorm2.Unlocks.Pickups
+using Moonstorm;
+namespace SS2.Unlocks.Pickups
 {
     public sealed class StrangeCanUnlockable : UnlockableBase
     {

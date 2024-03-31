@@ -1,7 +1,8 @@
 ﻿using RoR2;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Unlocks.NemMercenary
+using Moonstorm;
+namespace SS2.Unlocks.NemMercenary
 {
     public sealed class NemMercenaryMasteryUnlockable : UnlockableBase
     {

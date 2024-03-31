@@ -1,7 +1,8 @@
 ﻿/*using RoR2;
 using RoR2.Achievements;
 
-namespace Moonstorm.Starstorm2.Unlocks
+using Moonstorm;
+namespace SS2.Unlocks
 {
     public sealed class EmptyUnlockable : UnlockableBase
     {

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using RoR2;
-using Moonstorm.Starstorm2.Equipments;
-namespace Moonstorm.Starstorm2.Components
+using SS2.Equipments;
+using Moonstorm;
+namespace SS2.Components
 {
     public class PickupMagnet : MonoBehaviour
     {

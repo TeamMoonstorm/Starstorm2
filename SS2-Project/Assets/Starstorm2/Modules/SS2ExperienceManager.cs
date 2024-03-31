@@ -17,7 +17,8 @@ using R2API.Networking.Interfaces;
 using R2API.Networking;
 using UnityEngine.UI;
 
-namespace Moonstorm.Starstorm2
+using Moonstorm;
+namespace SS2
 {
     //Note from groove - I promise the voices had no say in the creation of this class, it seemed like the best way to handle it
     //Reconciling getting adjusted exp to recalc stats may not seem like the best idea, as there is a slight disconnect between master and body, but it allows other mods to also offset experience

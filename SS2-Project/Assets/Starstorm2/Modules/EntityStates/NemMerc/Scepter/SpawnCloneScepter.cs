@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using RoR2;
 using UnityEngine.Networking;
-using Moonstorm.Starstorm2.Components;
+using SS2.Components;
 using RoR2.Navigation;
 namespace EntityStates.NemMerc
 {

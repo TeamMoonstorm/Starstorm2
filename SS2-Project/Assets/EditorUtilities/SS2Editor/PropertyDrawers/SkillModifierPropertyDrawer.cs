@@ -1,4 +1,4 @@
-﻿using RoR2EditorKit.PropertyDrawers;
+﻿/*using RoR2EditorKit.PropertyDrawers;
 using Moonstorm.Starstorm2.ScriptableObjects;
 using UnityEditor;
 using UnityEngine;
@@ -25,4 +25,4 @@ namespace Moonstorm.Starstorm2.Editor
             EditorGUI.EndProperty();
         }
     }
-}
+}*/

@@ -2,7 +2,8 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace Moonstorm.Starstorm2.Monsters
+using Moonstorm;
+namespace SS2.Monsters
 {
     public sealed class Lamp : MonsterBase
     {

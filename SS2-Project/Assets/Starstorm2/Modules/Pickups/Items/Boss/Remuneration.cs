@@ -1,4 +1,4 @@
-﻿using Moonstorm.Starstorm2.Components;
+﻿using SS2.Components;
 using RoR2;
 using RoR2.Items;
 using UnityEngine;
@@ -9,7 +9,8 @@ using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using System;
 
-namespace Moonstorm.Starstorm2.Items
+using Moonstorm;
+namespace SS2.Items
 {
     // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION 
     // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION 

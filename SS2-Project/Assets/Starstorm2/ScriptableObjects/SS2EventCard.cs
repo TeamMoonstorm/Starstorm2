@@ -5,7 +5,8 @@ using System.Collections.ObjectModel;
 using RoR2;
 using R2API;
 
-namespace Moonstorm.Starstorm2
+using Moonstorm;
+namespace SS2
 {
     [CreateAssetMenu(fileName = "SS2EventCard", menuName = "Starstorm2/SS2EventCard")]
     public class SS2EventCard : EventCard

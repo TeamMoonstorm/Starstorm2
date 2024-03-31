@@ -9,7 +9,8 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.AddressableAssets;
 
-namespace Moonstorm.Starstorm2
+using Moonstorm;
+namespace SS2
 {
     //LASCIATE OGNI SPERANZA, VOI CH'ENTRATE
 

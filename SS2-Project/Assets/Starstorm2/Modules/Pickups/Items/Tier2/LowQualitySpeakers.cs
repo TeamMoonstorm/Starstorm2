@@ -4,7 +4,8 @@ using RoR2.Items;
 using System;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Items
+using Moonstorm;
+namespace SS2.Items
 {
 
     public sealed class LowQualitySpeakers : ItemBase

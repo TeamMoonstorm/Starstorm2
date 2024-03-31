@@ -3,7 +3,8 @@ using UnityEngine;
 using Moonstorm;
 using System.Collections.Generic;
 
-namespace Moonstorm.Starstorm2.Equipments
+using Moonstorm;
+namespace SS2.Equipments
 {
     [DisabledContent]
     public class AffixPurple : EliteEquipmentBase

@@ -1,12 +1,13 @@
 using BepInEx;
-using Moonstorm.Starstorm2.API;
+using SS2.API;
 using R2API;
 using R2API.Utils;
 using R2API.Networking;
 using System;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2
+using Moonstorm;
+namespace SS2
 {
     #region R2API
     [BepInDependency("com.bepis.r2api.dot")]

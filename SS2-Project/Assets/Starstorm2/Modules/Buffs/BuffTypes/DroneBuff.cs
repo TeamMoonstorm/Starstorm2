@@ -1,10 +1,11 @@
 ﻿using Moonstorm.Components;
-using Moonstorm.Starstorm2.Items;
+using SS2.Items;
 using R2API;
 using RoR2;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Buffs
+using Moonstorm;
+namespace SS2.Buffs
 {
     public sealed class DroneBuff : BuffBase
     {

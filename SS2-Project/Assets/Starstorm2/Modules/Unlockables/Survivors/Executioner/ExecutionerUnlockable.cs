@@ -1,7 +1,8 @@
 ﻿using RoR2;
 using RoR2.Achievements;
 
-namespace Moonstorm.Starstorm2.Unlocks.Executioner
+using Moonstorm;
+namespace SS2.Unlocks.Executioner
 {
     public sealed class ExecutionerUnlockable : UnlockableBase
     {

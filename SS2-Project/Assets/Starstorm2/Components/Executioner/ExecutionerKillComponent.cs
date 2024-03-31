@@ -1,10 +1,11 @@
-﻿using Moonstorm.Starstorm2.Orbs;
-using Moonstorm.Starstorm2.Survivors;
+﻿using SS2.Orbs;
+using SS2.Survivors;
 using RoR2;
 using RoR2.Orbs;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
     public class ExecutionerKillComponent : MonoBehaviour, IOnKilledServerReceiver
     {

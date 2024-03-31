@@ -4,7 +4,7 @@ using UnityEngine;
 using Moonstorm;
 using RoR2;
 using UnityEngine.AddressableAssets;
-using Moonstorm.Starstorm2;
+using SS2;
 
 namespace EntityStates.NemCommando
 {

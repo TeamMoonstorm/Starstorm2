@@ -5,8 +5,9 @@ using RoR2.Skills;
 using JetBrains.Annotations;
 using RoR2;
 using EntityStates;
-using Moonstorm.Starstorm2.Components;
-namespace Moonstorm.Starstorm2.ScriptableObjects
+using SS2.Components;
+using Moonstorm;
+namespace SS2.ScriptableObjects
 {
 	[CreateAssetMenu(menuName = "Starstorm2/SkillDef/ChirrTrackingSkillDef")]
 

@@ -1,5 +1,5 @@
 ﻿using EntityStates;
-using Moonstorm.Starstorm2.Components;
+using SS2.Components;
 using R2API;
 using RoR2;
 using System.Linq;
@@ -8,7 +8,8 @@ using UnityEngine.Networking;
 using UnityEngine.AddressableAssets;
 using System.Collections.Generic;
 
-namespace Moonstorm.Starstorm2.Interactables
+using Moonstorm;
+namespace SS2.Interactables
 {
     //[DisabledContent]
     public sealed class ShockDroneDamaged : InteractableBase

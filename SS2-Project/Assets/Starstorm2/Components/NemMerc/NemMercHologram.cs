@@ -10,7 +10,8 @@ using EntityStates.NemMerc;
 using UnityEngine.Networking;
 using RoR2.CharacterAI;
 
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
     public class NemMercHologram : NetworkBehaviour
     {

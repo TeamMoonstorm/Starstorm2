@@ -1,5 +1,5 @@
-﻿using Moonstorm.Starstorm2;
-using Moonstorm.Starstorm2.Orbs;
+﻿using SS2;
+using SS2.Orbs;
 using RoR2;
 using RoR2.Orbs;
 using RoR2.Skills;

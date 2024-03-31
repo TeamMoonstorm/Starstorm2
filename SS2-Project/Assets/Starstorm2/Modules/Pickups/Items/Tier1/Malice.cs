@@ -8,7 +8,8 @@ using UnityEngine;
 using R2API;
 using Moonstorm.Components;
 
-namespace Moonstorm.Starstorm2.Items
+using Moonstorm;
+namespace SS2.Items
 {
     public sealed class Malice : ItemBase
     {

@@ -7,8 +7,9 @@ using RoR2;
 using UnityEngine;
 using RoR2.Orbs;
 using R2API;
-using static Moonstorm.Starstorm2.Items.ErraticGadget;
-namespace Moonstorm.Starstorm2.Components
+using static SS2.Items.ErraticGadget;
+using Moonstorm;
+namespace SS2.Components
 {
     // copy of ror2.orbs.lgihtningorb
     public class CustomLightningOrb : Orb

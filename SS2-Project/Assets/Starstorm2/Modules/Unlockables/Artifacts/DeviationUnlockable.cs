@@ -1,7 +1,8 @@
 ﻿using RoR2;
 using RoR2.Achievements.Artifacts;
 
-namespace Moonstorm.Starstorm2.Unlocks.Artifacts
+using Moonstorm;
+namespace SS2.Unlocks.Artifacts
 {
 
     [DisabledContent]
@@ -12,7 +13,7 @@ namespace Moonstorm.Starstorm2.Unlocks.Artifacts
 
         public override void Initialize()
         {
-            AddRequiredType<Starstorm2.Artifacts.Deviation>();
+            AddRequiredType<SS2.Artifacts.Deviation>();
         }
 
         public sealed class DeviationAchievement : BaseObtainArtifactAchievement

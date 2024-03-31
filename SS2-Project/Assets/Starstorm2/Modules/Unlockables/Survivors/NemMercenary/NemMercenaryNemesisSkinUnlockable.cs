@@ -2,7 +2,8 @@
 using RoR2.Achievements;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Unlocks.NemMercenary
+using Moonstorm;
+namespace SS2.Unlocks.NemMercenary
 {
     public sealed class NemMercenaryNemesisSkinUnlockable : UnlockableBase
     {

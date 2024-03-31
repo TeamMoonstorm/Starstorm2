@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-namespace Moonstorm.Starstorm2
+using Moonstorm;
+namespace SS2
 {
     ///<summary>This is a modified version of RoR2's component so that it can take multiple particle systems</summary>
     public class DetachParticlesOnDestroyAndEndEmission : MonoBehaviour

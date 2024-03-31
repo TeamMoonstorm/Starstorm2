@@ -2,7 +2,8 @@
 using UnityEngine;
 using RoR2.CharacterAI;
 using System.Text;
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
     public class MonsterAIDebug : MonoBehaviour // should expand on this and make some UI. its pretty useful
     {

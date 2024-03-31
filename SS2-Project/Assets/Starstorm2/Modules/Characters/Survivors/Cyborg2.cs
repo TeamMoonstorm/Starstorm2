@@ -4,7 +4,8 @@ using RoR2.Skills;
 using System.Runtime.CompilerServices;
 using UnityEngine.AddressableAssets;
 using R2API;
-namespace Moonstorm.Starstorm2.Survivors
+using Moonstorm;
+namespace SS2.Survivors
 {
     public sealed class Cyborg2 : SurvivorBase
     {

@@ -11,7 +11,8 @@ using System;
 using UnityEngine;
 
 
-namespace Moonstorm.Starstorm2.Buffs
+using Moonstorm;
+namespace SS2.Buffs
 {
     public sealed class Fear : BuffBase
     {

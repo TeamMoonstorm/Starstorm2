@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Monsters
+using Moonstorm;
+namespace SS2.Monsters
 {
     [DisabledContent]
     public sealed class Agarthan : MonsterBase

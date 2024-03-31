@@ -13,7 +13,8 @@ using UnityEngine.AddressableAssets;
 using RoR2.Navigation;
 using RoR2.Projectile;
 
-namespace Moonstorm.Starstorm2.Buffs
+using Moonstorm;
+namespace SS2.Buffs
 {
     public sealed class AffixEthereal : BuffBase
     {

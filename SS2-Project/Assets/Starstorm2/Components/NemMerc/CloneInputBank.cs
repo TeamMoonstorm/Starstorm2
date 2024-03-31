@@ -9,7 +9,8 @@ using RoR2.Skills;
 using EntityStates.NemMerc;
 using UnityEngine.Networking;
 
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
     [RequireComponent(typeof(CharacterMaster))]
     class CloneInputBank : NetworkBehaviour

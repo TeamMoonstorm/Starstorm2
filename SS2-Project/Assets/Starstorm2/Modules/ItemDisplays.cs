@@ -1,7 +1,8 @@
 ﻿/*using RoR2.ContentManagement;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Modules
+using Moonstorm;
+namespace SS2.Modules
 {
     public class ItemDisplays : ItemDisplayModuleBase
     {

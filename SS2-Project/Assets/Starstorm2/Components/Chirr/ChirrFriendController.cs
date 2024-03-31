@@ -13,7 +13,8 @@ using JetBrains.Annotations;
 using RoR2.UI;
 using System.Runtime.CompilerServices;
 
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
 	public class ChirrFriendController : MonoBehaviour
 	{

@@ -3,7 +3,8 @@ using Moonstorm.Components;
 using R2API;
 using RoR2;
 
-namespace Moonstorm.Starstorm2.Buffs
+using Moonstorm;
+namespace SS2.Buffs
 {
     //[DisabledContent]
     public sealed class ChirrRegen : BuffBase

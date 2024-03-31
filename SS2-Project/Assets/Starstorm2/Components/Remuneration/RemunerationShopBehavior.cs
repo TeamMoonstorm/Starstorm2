@@ -9,7 +9,8 @@ using JetBrains.Annotations;
 using UnityEngine.Networking;
 using UnityEngine.AddressableAssets;
 using R2API;
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
     public class RemunerationShopBehavior : NetworkBehaviour
     {

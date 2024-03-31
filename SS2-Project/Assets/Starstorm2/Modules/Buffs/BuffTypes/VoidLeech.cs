@@ -3,7 +3,8 @@ using R2API;
 using RoR2;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Buffs
+using Moonstorm;
+namespace SS2.Buffs
 {
     [DisabledContent]
     public sealed class VoidLeech : BuffBase

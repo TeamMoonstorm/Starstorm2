@@ -11,7 +11,8 @@ using System.Collections.Generic;
 using Moonstorm.Components;
 using static RoR2.Items.BaseItemBodyBehavior;
 
-namespace Moonstorm.Starstorm2.Items
+using Moonstorm;
+namespace SS2.Items
 {
     [DisabledContent] //sorry groove
 

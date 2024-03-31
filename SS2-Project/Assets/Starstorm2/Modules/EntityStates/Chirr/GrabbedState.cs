@@ -3,7 +3,7 @@ using EntityStates;
 using UnityEngine;
 using RoR2;
 using UnityEngine.Networking;
-using Moonstorm.Starstorm2.Components;
+using SS2.Components;
 namespace EntityStates
 {
 	public class GrabbedState : BaseState
@@ -45,7 +45,7 @@ namespace EntityStates
 				if(this.inflictor)
                 {
 					this.inflictor.AttemptGrab(null);
-					Moonstorm.Starstorm2.SS2Log.Warning("GrabbedState: " + this.characterBody.GetDisplayName() + " duration expired!");
+					SS2.SS2Log.Warning("GrabbedState: " + this.characterBody.GetDisplayName() + " duration expired!");
                 }
 			}
 				

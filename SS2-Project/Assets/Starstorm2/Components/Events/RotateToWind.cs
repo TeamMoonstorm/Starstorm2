@@ -2,7 +2,8 @@
 using UnityEngine;
 using Moonstorm.Components;
 
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
     public class RotateToWind : MonoBehaviour
     {

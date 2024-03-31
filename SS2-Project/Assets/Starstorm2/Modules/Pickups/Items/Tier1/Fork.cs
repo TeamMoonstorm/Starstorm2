@@ -5,8 +5,9 @@ using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using UnityEngine;
 using System;
-using Moonstorm.Starstorm2.Components;
-namespace Moonstorm.Starstorm2.Items
+using SS2.Components;
+using Moonstorm;
+namespace SS2.Items
 {
     public sealed class Fork : ItemBase
     {

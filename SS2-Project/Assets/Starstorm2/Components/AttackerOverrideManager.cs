@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using RoR2;
 using UnityEngine;
-namespace Moonstorm.Starstorm2
+using Moonstorm;
+namespace SS2
 {
     // overwrites damageInfo.attacker with a specified gameobject
     // not really tested. could be some unforeseen abuse cases

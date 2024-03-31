@@ -1,7 +1,8 @@
 ﻿using RoR2;
 using RoR2.Achievements.Artifacts;
 
-namespace Moonstorm.Starstorm2.Unlocks.Artifacts
+using Moonstorm;
+namespace SS2.Unlocks.Artifacts
 {
     public sealed class HavocUnlockable : UnlockableBase
     {
@@ -9,7 +10,7 @@ namespace Moonstorm.Starstorm2.Unlocks.Artifacts
 
         public override void Initialize()
         {
-            AddRequiredType<Starstorm2.Artifacts.Havoc>();
+            AddRequiredType<SS2.Artifacts.Havoc>();
         }
 
         public sealed class HavocAchievement : BaseObtainArtifactAchievement

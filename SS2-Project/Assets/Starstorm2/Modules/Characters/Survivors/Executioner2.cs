@@ -1,6 +1,6 @@
 ﻿using Mono.Cecil.Cil;
 using MonoMod.Cil;
-using Moonstorm.Starstorm2.Components;
+using SS2.Components;
 using RoR2;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,8 @@ using System.Collections.ObjectModel;
 using UnityEngine;
 
 
-namespace Moonstorm.Starstorm2.Survivors
+using Moonstorm;
+namespace SS2.Survivors
 {
     public sealed class Executioner2 : SurvivorBase
     {

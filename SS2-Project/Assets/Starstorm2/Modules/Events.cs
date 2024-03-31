@@ -1,5 +1,5 @@
 ﻿using Moonstorm.Config;
-using Moonstorm.Starstorm2.ScriptableObjects;
+using SS2.ScriptableObjects;
 using System;
 using TMPro;
 using UnityEngine;
@@ -9,7 +9,8 @@ using Object = UnityEngine.Object;
 using BepInEx.Configuration;
 using static System.Collections.Specialized.BitVector32;
 
-namespace Moonstorm.Starstorm2
+using Moonstorm;
+namespace SS2
 {
     public static class Events
     {

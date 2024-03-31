@@ -7,7 +7,8 @@ using JetBrains.Annotations;
 using RoR2.Projectile;
 using System.Text;
 using R2API;
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
 	[RequireComponent(typeof(EffectComponent))]
 	public class SetMaterialColorFromEffectData : MonoBehaviour

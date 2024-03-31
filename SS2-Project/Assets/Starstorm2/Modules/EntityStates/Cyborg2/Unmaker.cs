@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RoR2;
 using UnityEngine;
-using Moonstorm.Starstorm2;
+using SS2;
 using RoR2.Skills;
 namespace EntityStates.Cyborg2
 {

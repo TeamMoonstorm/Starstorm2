@@ -1,6 +1,7 @@
 ﻿using RoR2;
 
-namespace Moonstorm.Starstorm2.Items
+using Moonstorm;
+namespace SS2.Items
 {
     public sealed class DiaryConsumed : ItemBase
     {

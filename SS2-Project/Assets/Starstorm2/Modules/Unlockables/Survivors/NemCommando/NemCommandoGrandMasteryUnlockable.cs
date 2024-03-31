@@ -1,7 +1,8 @@
 ﻿using RoR2;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Unlocks.NemCommando
+using Moonstorm;
+namespace SS2.Unlocks.NemCommando
 {
     public sealed class NemCommandoGrandMasteryUnlockable : UnlockableBase
     {

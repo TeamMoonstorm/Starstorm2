@@ -3,7 +3,8 @@ using RoR2;
 using RoR2.Items;
 using UnityEngine;
 using System;
-namespace Moonstorm.Starstorm2.Items
+using Moonstorm;
+namespace SS2.Items
 {
     //ror2 HealthDecay caps regen at 0. was bad for chirr
     public sealed class HealthDecayWithRegen : ItemBase

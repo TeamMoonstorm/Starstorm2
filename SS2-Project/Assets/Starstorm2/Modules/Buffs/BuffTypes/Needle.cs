@@ -2,7 +2,8 @@
 using RoR2;
 using System;
 
-namespace Moonstorm.Starstorm2.Buffs
+using Moonstorm;
+namespace SS2.Buffs
 {
     public sealed class Needle : BuffBase
     {

@@ -3,9 +3,9 @@ using RoR2;
 using RoR2.Orbs;
 using UnityEngine;
 using System.Collections.Generic;
-using Moonstorm.Starstorm2;
+using SS2;
 using UnityEngine.Networking;
-using Moonstorm.Starstorm2.Components;
+using SS2.Components;
 namespace EntityStates.FlowerTurret
 {
 	public class FireFlowerTurret : BaseFlowerTurretState

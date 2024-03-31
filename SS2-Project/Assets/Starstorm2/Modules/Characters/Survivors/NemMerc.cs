@@ -5,7 +5,8 @@ using System.Runtime.CompilerServices;
 using UnityEngine.AddressableAssets;
 using R2API;
 using RoR2.Projectile;
-namespace Moonstorm.Starstorm2.Survivors
+using Moonstorm;
+namespace SS2.Survivors
 {
     //[DisabledContent]
     public sealed class NemMerc : SurvivorBase

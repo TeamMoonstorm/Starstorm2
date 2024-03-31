@@ -8,7 +8,8 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
     //if this code looks stupid in any form of the word, please let me know -★
     public class EtherealBehavior : MonoBehaviour

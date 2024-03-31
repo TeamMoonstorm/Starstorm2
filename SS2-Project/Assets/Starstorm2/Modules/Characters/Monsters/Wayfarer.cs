@@ -1,7 +1,8 @@
 ﻿using RoR2;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Monsters
+using Moonstorm;
+namespace SS2.Monsters
 {
     //HEY!!!! YOU!!!!!!!!!!!!!
     //this is the old wayfarer. DON'T ENABLE THIS. it probably does not and will not ever work.

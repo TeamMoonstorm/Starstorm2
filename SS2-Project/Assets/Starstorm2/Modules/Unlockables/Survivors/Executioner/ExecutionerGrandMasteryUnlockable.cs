@@ -1,7 +1,8 @@
 ﻿using RoR2;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Unlocks.Executioner
+using Moonstorm;
+namespace SS2.Unlocks.Executioner
 {
     public sealed class ExecutionerGrandMasteryUnlockable : UnlockableBase
     {

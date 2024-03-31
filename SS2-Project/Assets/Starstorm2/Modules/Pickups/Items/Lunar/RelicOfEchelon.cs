@@ -7,7 +7,8 @@ using System.Collections.Generic;
 using RoR2.UI;
 using System.Collections;
 
-namespace Moonstorm.Starstorm2.Items
+using Moonstorm;
+namespace SS2.Items
 {
     [DisabledContent]
     public sealed class RelicOfEchelon : ItemBase

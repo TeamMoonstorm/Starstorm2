@@ -1,11 +1,12 @@
-﻿using Moonstorm.Starstorm2.Components;
+﻿using SS2.Components;
 using R2API;
 using RoR2;
 using RoR2.Items;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Moonstorm.Starstorm2.Items
+using Moonstorm;
+namespace SS2.Items
 {
     public sealed class HuntersSigil : ItemBase
     {

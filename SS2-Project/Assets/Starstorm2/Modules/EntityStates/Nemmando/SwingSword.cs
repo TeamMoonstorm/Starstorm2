@@ -1,5 +1,5 @@
 ﻿using Moonstorm;
-using Moonstorm.Starstorm2.DamageTypes;
+using SS2.DamageTypes;
 using R2API;
 using RoR2;
 using RoR2.Skills;

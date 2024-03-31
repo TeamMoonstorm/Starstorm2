@@ -2,7 +2,8 @@
 //using RoR2.Achievements;
 //using UnityEngine.SceneManagement;
 //using UnityEngine;
-//namespace Moonstorm.Starstorm2.Unlocks.Chirr
+//using Moonstorm;
+//namespace SS2.Unlocks.Chirr
 //{
 
 //    public sealed class ChirrBeastmasterUnlockable : UnlockableBase

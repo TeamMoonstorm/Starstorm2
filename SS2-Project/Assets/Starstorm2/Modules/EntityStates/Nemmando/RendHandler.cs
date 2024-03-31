@@ -21,7 +21,7 @@ namespace EntityStates.Nemmando
                         {
                             CharacterBody momgarfielissmokingthatza = hitInfo.hitHurtBox.healthComponent.body;
 
-                            if (momgarfielissmokingthatza && momgarfielissmokingthatza.HasBuff(Moonstorm.Starstorm2.SS2Content.Buffs.BuffGouge))
+                            if (momgarfielissmokingthatza && momgarfielissmokingthatza.HasBuff(SS2.SS2Content.Buffs.BuffGouge))
                             {
                                 
                                 damageInfo.damage *= RendBaseDamageMultiplier;

@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using static RoR2.ExplicitPickupDropTable;
 
-namespace Moonstorm.Starstorm2.Monsters
+using Moonstorm;
+namespace SS2.Monsters
 {
     //[DisabledContent]
     public sealed class LampBoss : MonsterBase

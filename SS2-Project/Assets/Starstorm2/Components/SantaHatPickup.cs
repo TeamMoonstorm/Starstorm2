@@ -5,7 +5,8 @@ using JetBrains.Annotations;
 using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {   
     public class SantaHatPickup : MonoBehaviour, IInteractable
     {

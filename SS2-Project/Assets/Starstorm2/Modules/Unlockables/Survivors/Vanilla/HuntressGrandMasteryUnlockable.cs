@@ -1,7 +1,8 @@
 ﻿using RoR2;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Unlocks.VanillaSurvivors
+using Moonstorm;
+namespace SS2.Unlocks.VanillaSurvivors
 {
     public sealed class HuntressGrandMasteryUnlockable : UnlockableBase
     {

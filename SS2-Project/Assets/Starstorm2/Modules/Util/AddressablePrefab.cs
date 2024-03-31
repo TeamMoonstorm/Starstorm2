@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
     public class AddressablePrefab : MonoBehaviour
     {

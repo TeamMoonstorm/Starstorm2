@@ -1,5 +1,5 @@
 ﻿using Moonstorm.Components;
-using Moonstorm.Starstorm2.Items;
+using SS2.Items;
 using R2API;
 using RoR2;
 using System;
@@ -7,7 +7,8 @@ using UnityEngine;
 using RoR2.CharacterAI;
 using System.Linq;
 
-namespace Moonstorm.Starstorm2.Buffs
+using Moonstorm;
+namespace SS2.Buffs
 {
     //[DisabledContent]
     public sealed class ChirrConfuse : BuffBase

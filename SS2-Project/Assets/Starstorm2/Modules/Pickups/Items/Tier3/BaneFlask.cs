@@ -3,7 +3,8 @@ using RoR2.Items;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Items
+using Moonstorm;
+namespace SS2.Items
 {
     [DisabledContent]
     public sealed class BaneFlask : ItemBase

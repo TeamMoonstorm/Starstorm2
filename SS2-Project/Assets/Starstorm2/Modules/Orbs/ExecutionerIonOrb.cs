@@ -1,9 +1,10 @@
-﻿using Moonstorm.Starstorm2.Components;
+﻿using SS2.Components;
 using RoR2;
 using RoR2.Orbs;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Orbs
+using Moonstorm;
+namespace SS2.Orbs
 {
     public class ExecutionerIonOrb : Orb
     {

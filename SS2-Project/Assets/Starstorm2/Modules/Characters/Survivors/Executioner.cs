@@ -4,7 +4,8 @@ using System.Collections.ObjectModel;
 using UnityEngine;
 
 
-namespace Moonstorm.Starstorm2.Survivors
+using Moonstorm;
+namespace SS2.Survivors
 {
     [DisabledContent]
     public sealed class Executioner : SurvivorBase

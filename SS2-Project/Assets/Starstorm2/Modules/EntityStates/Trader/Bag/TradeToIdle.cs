@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using RoR2;
-using Moonstorm.Starstorm2;
+using SS2;
 
 namespace EntityStates.Trader.Bag
 {
@@ -124,7 +124,7 @@ namespace EntityStates.Trader.Bag
             //sfx, vfx, etc.
             Util.PlaySound(exitSoundString, gameObject);
             if (isAuthority)
-                characterBody.SetBuffCount(Moonstorm.Starstorm2.SS2Content.Buffs.bdHiddenSlow20.buffIndex, 0);
+                characterBody.SetBuffCount(SS2.SS2Content.Buffs.bdHiddenSlow20.buffIndex, 0);
             base.OnExit();
         }
 

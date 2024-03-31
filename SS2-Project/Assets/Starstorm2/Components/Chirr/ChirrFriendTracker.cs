@@ -7,7 +7,8 @@ using UnityEngine;
 using RoR2;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
 	// just a bullseyesearch to find someone to use Befriend on. ChirrFriendController handles friend behavior
 	[RequireComponent(typeof(InputBankTest))]

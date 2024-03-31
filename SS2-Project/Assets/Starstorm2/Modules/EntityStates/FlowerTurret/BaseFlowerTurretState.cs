@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using RoR2;
 using UnityEngine;
-using Moonstorm.Starstorm2;
+using SS2;
 
 namespace EntityStates.FlowerTurret
 {

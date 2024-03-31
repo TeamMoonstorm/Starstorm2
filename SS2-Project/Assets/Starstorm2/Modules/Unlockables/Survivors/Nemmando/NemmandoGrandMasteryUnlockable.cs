@@ -1,7 +1,8 @@
 ﻿using RoR2;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Unlocks.Nemmando
+using Moonstorm;
+namespace SS2.Unlocks.Nemmando
 {
     public sealed class NemmandoGrandMasteryUnlockable : UnlockableBase
     {

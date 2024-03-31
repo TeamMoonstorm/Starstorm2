@@ -7,7 +7,8 @@ using UnityEngine.Networking;
 using RoR2.ExpansionManagement;
 using R2API;
 
-namespace Moonstorm.Starstorm2
+using Moonstorm;
+namespace SS2
 {
     public class Void : NetworkBehaviour
     {

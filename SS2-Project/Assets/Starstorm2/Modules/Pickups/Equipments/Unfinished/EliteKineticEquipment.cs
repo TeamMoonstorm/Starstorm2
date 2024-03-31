@@ -1,7 +1,8 @@
 ﻿using RoR2;
 using System.Collections.Generic;
 
-namespace Moonstorm.Starstorm2.Equipments
+using Moonstorm;
+namespace SS2.Equipments
 {
     [DisabledContent]
 

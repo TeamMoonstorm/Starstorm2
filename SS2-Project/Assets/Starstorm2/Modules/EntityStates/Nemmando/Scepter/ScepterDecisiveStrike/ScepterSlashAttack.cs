@@ -1,7 +1,7 @@
 ﻿using Moonstorm;
-using Moonstorm.Starstorm2;
-using Moonstorm.Starstorm2.Components;
-using Moonstorm.Starstorm2.DamageTypes;
+using SS2;
+using SS2.Components;
+using SS2.DamageTypes;
 using R2API;
 using RoR2;
 using RoR2.Orbs;
@@ -171,7 +171,7 @@ namespace EntityStates.Nemmando
                             };
                             EffectManager.SpawnEffect(stunEffectPrefab, attackEffect, true);
 
-                            Moonstorm.Starstorm2.Orbs.NemmandoDashOrb dashOrb = new Moonstorm.Starstorm2.Orbs.NemmandoDashOrb();
+                            SS2.Orbs.NemmandoDashOrb dashOrb = new SS2.Orbs.NemmandoDashOrb();
                             dashOrb.origin = transform.position;
                             dashOrb.target = i;
                             OrbManager.instance.AddOrb(dashOrb);

@@ -2,7 +2,8 @@
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Moonstorm.Starstorm2.Components
+using Moonstorm;
+namespace SS2.Components
 {
     [RequireComponent(typeof(SkillLocator))]
     //[RequireComponent(typeof(CharacterModel))]

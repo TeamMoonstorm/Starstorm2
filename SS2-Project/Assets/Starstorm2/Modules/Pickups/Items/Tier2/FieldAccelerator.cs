@@ -1,4 +1,4 @@
-﻿using Moonstorm.Starstorm2.Orbs;
+﻿using SS2.Orbs;
 using R2API;
 using RoR2;
 using RoR2.Items;
@@ -8,7 +8,8 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
-namespace Moonstorm.Starstorm2.Items
+using Moonstorm;
+namespace SS2.Items
 {
     public sealed class FieldAccelerator : ItemBase
     {

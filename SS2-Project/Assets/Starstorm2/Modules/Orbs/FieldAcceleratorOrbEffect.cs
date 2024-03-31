@@ -3,9 +3,10 @@ using RoR2.Orbs;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Moonstorm.Starstorm2.Items.FieldAccelerator;
+using static SS2.Items.FieldAccelerator;
 
-namespace Moonstorm.Starstorm2.Orbs
+using Moonstorm;
+namespace SS2.Orbs
 {
     public class FieldAcceleratorOrbEffect : OrbEffect
     {

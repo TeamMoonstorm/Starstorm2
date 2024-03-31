@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using RoR2;
 using HG;
-using Moonstorm.Starstorm2;
-using Moonstorm.Starstorm2.Components;
+using SS2;
+using SS2.Components;
 using UnityEngine.Networking;
 
 namespace EntityStates.CloneDrone

@@ -6,7 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Unlocks.VanillaSurvivors
+using Moonstorm;
+namespace SS2.Unlocks.VanillaSurvivors
 {
     public class CrocoGrandMasteryUnlockable : UnlockableBase
     {

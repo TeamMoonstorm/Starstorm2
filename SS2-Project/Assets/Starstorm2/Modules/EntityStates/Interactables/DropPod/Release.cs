@@ -1,4 +1,4 @@
-﻿using Moonstorm.Starstorm2.Components;
+﻿using SS2.Components;
 using UnityEngine;
 using UnityEngine.Networking;
 

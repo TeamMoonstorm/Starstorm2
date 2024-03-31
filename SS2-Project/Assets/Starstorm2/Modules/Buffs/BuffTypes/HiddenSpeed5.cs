@@ -3,7 +3,8 @@ using R2API;
 using RoR2;
 using System;
 
-namespace Moonstorm.Starstorm2.Buffs
+using Moonstorm;
+namespace SS2.Buffs
 {
     //>named hiddenspeed"5"
     //>actually a 40% buff (much bigger than 5!)
