@@ -53,7 +53,6 @@ namespace Moonstorm.Starstorm2
             new SS2Config().Init();
             new SS2Content().Init();
             new SS2Language().Init();
-            ConfigurableFieldManager.AddMod(this);
 
             //we do a little testing
             //On.RoR2.Networking.NetworkManagerSystemSteam.OnClientConnect += (s, u, t) => { };

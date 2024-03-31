@@ -47,15 +47,18 @@ namespace Moonstorm.Starstorm2.Interactables
 
         //public static Material GreenHoloMaterial = SS2Assets.LoadAsset<Material>("matHoloGreen");
 
-        public override MSInteractableDirectorCard InteractableDirectorCard { get; } = SS2Assets.LoadAsset<MSInteractableDirectorCard>("midcDroneTable", SS2Bundle.Interactables);
+        public override List<MSInteractableDirectorCard> InteractableDirectorCards => new List<MSInteractableDirectorCard>
+        {
+            SS2Assets.LoadAsset<MSInteractableDirectorCard>("midcDroneTable", SS2Bundle.Interactables),
+        };
 
         public override void Initialize()
         {
-            CostTypeCatalog.modHelper.getAdditionalEntries += addDroneCostType;
+            CostTypeCatalog.modHelper.getAdditionalEntries += AddDroneCostType;
 
-            On.EntityStates.Drone.DeathState.OnEnter += overrideDroneCorpse;
+            On.EntityStates.Drone.DeathState.OnEnter += OverrideDroneCorpse;
 
-            interactable = InteractableDirectorCard.prefab;
+            interactable = InteractableDirectorCards[0].prefab;
 
             var interactionToken = interactable.AddComponent<RefabricatorInteractionToken>();
             interactionToken.PurchaseInteraction = interactable.GetComponent<PurchaseInteraction>();
@@ -66,7 +69,7 @@ namespace Moonstorm.Starstorm2.Interactables
             SetupDroneValueList();  
         }
 
-        private void overrideDroneCorpse(On.EntityStates.Drone.DeathState.orig_OnEnter orig, EntityStates.Drone.DeathState self)
+        private void OverrideDroneCorpse(On.EntityStates.Drone.DeathState.orig_OnEnter orig, EntityStates.Drone.DeathState self)
         {
             orig(self);
             var hardToken = self.characterBody.GetComponent<RefabricatorHardDeathToken>();
@@ -77,7 +80,7 @@ namespace Moonstorm.Starstorm2.Interactables
             }
         }
 
-        private void overrideItemIcon(On.RoR2.Orbs.ItemTakenOrbEffect.orig_Start orig, RoR2.Orbs.ItemTakenOrbEffect self)
+        private void OverrideItemIcon(On.RoR2.Orbs.ItemTakenOrbEffect.orig_Start orig, RoR2.Orbs.ItemTakenOrbEffect self)
         {
             var efc = self.GetComponent<EffectComponent>();
             bool boolean = efc.effectData.genericBool;
@@ -167,7 +170,7 @@ namespace Moonstorm.Starstorm2.Interactables
 
         }
 
-        private void addDroneCostType(List<CostTypeDef> obj)
+        private void AddDroneCostType(List<CostTypeDef> obj)
         {
             droneCostDef = new CostTypeDef();
             droneCostDef.costStringFormatToken = "SS2_COST_DRONE_FORMAT";

@@ -16,7 +16,10 @@ namespace Moonstorm.Starstorm2.Interactables
 
         private static GameObject interactable;
 
-        public override MSInteractableDirectorCard InteractableDirectorCard { get; } = SS2Assets.LoadAsset<MSInteractableDirectorCard>("msidcDropPod", SS2Bundle.Indev);
+        public override List<MSInteractableDirectorCard> InteractableDirectorCards => new List<MSInteractableDirectorCard>()
+        {
+            SS2Assets.LoadAsset<MSInteractableDirectorCard>("msidcDropPod", SS2Bundle.Indev)
+        };
 
         public override void Initialize()
         {
@@ -33,8 +36,8 @@ namespace Moonstorm.Starstorm2.Interactables
             AddNewComponents();
 
             HG.ArrayUtils.ArrayAppend(ref SS2Content.Instance.SerializableContentPack.networkedObjectPrefabs, Interactable);
-            InteractableDirectorCard.prefab = Interactable;
-            InteractableDirectorCard.maxSpawnsPerStage = 2;
+            InteractableDirectorCards[0].prefab = Interactable;
+            InteractableDirectorCards[0].maxSpawnsPerStage = 2;
 
             DirectorAPI.MonsterActions += HandleAvailableMonsters2;
 

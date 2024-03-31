@@ -24,11 +24,11 @@ namespace Moonstorm.Starstorm2.Items
         public static float stackArmor = 10;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Base amount of extra damage added. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.Percentage, 2)]
+        [TokenModifier(token, StatTypes.MultiplyByN, 2, operationData = 100)]
         public static float baseDamage = .2f;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of extra damage added per stack. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.Percentage, 3)]
+        [TokenModifier(token, StatTypes.MultiplyByN, 3, operationData = 100)]
         public static float stackDamage = .10f;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius the effect is applied in.")]

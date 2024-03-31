@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using Moonstorm.AddressableAssets;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using RoR2;
@@ -55,7 +54,7 @@ namespace Moonstorm.Starstorm2
         /// Checks if a player in the game has the required item to activate the event.
         /// If no item is specified return true. 
         /// </summary>
-        private bool checkRequiredItem() 
+        private bool CheckRequiredItem() 
         {
             /*if (!requiredItem)
             {
@@ -96,7 +95,7 @@ namespace Moonstorm.Starstorm2
             return true;
         }
 
-        private bool checkVoid()
+        private bool CheckVoid()
         {
             if (!requiresVoid)
                 return true;
@@ -105,7 +104,7 @@ namespace Moonstorm.Starstorm2
             return Items.VoidRock.invasionStage;
         }
 
-        private bool checkRequiredArtifact()
+        private bool CheckRequiredArtifact()
         {
             if (!requiredArtifactDef)
                 return true;
@@ -129,7 +128,7 @@ namespace Moonstorm.Starstorm2
             if(!flag)
                 return flag;
 
-            flag = checkRequiredItem() && HopefullyTemporaryCheck() && checkRequiredArtifact() && checkVoid();
+            flag = CheckRequiredItem() && HopefullyTemporaryCheck() && CheckRequiredArtifact() && CheckVoid();
 
             return flag;
         }

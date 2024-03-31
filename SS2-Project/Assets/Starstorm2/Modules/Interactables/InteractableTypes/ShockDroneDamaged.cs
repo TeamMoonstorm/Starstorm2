@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.AddressableAssets;
+using System.Collections.Generic;
 
 namespace Moonstorm.Starstorm2.Interactables
 {
@@ -19,16 +20,19 @@ namespace Moonstorm.Starstorm2.Interactables
         private GameObject bodyPrefab;
         private AkEvent[] droneAkEvents;
 
-        public override MSInteractableDirectorCard InteractableDirectorCard { get; } = SS2Assets.LoadAsset<MSInteractableDirectorCard>("msidcShockDrone", SS2Bundle.Interactables);
+        public override List<MSInteractableDirectorCard> InteractableDirectorCards => new List<MSInteractableDirectorCard>
+        {
+            SS2Assets.LoadAsset<MSInteractableDirectorCard>("msidcShockDrone", SS2Bundle.Interactables)
+        };
 
         public override void Initialize()
         {
             base.Initialize();
 
-            On.EntityStates.Drone.DeathState.OnImpactServer += spawnShockCorpse;
+            On.EntityStates.Drone.DeathState.OnImpactServer += SpawnShockCorpse;
 
             //add sound events, the bad way
-            interactable = InteractableDirectorCard.prefab;
+            interactable = InteractableDirectorCards[0].prefab;
             smb = interactable.GetComponent<SummonMasterBehavior>();
             cm = smb.masterPrefab.GetComponent<CharacterMaster>();
             bodyPrefab = cm.bodyPrefab;
@@ -52,7 +56,7 @@ namespace Moonstorm.Starstorm2.Interactables
             }
         }
 
-        private void spawnShockCorpse(On.EntityStates.Drone.DeathState.orig_OnImpactServer orig, EntityStates.Drone.DeathState self, Vector3 contactPoint)
+        private void SpawnShockCorpse(On.EntityStates.Drone.DeathState.orig_OnImpactServer orig, EntityStates.Drone.DeathState self, Vector3 contactPoint)
         {
             if(self.characterBody.bodyIndex == BodyCatalog.FindBodyIndexCaseInsensitive("ShockDroneBody"))
             {
@@ -61,7 +65,7 @@ namespace Moonstorm.Starstorm2.Interactables
                     placementMode = DirectorPlacementRule.PlacementMode.Direct,
                     position = contactPoint
                 };
-                GameObject gameObject = DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(InteractableDirectorCard, placementRule, new Xoroshiro128Plus(0UL)));
+                GameObject gameObject = DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(InteractableDirectorCards[0], placementRule, new Xoroshiro128Plus(0UL)));
                 if (gameObject)
                 {
                     PurchaseInteraction component = gameObject.GetComponent<PurchaseInteraction>();

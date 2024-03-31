@@ -40,7 +40,7 @@ namespace Moonstorm.Starstorm2
                 copy.name = assetName;
                 copy.eventState = default;
                 copy.messageColor = Color.white;
-                copy.requiredExpansions.Clear();
+                copy.requiredExpansionDefs.Clear();
                 return copy;
             }
 

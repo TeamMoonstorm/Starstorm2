@@ -1,5 +1,5 @@
-﻿using Moonstorm.AddressableAssets;
-using Moonstorm.Starstorm2;
+﻿using Moonstorm.Starstorm2;
+using R2API.AddressReferencedAssets;
 using RoR2;
 using System;
 using System.Collections.Generic;
@@ -31,7 +31,7 @@ namespace Moonstorm.Starstorm2.ScriptableObjects
         [SystemInitializer]
         private static void Initialize()
         {
-            AddressableAsset.OnAddressableAssetsLoaded += InitializeNemesisInventories;
+            AddressReferencedAsset.OnAddressReferencedAssetsLoaded += InitializeNemesisInventories;
 
             void InitializeNemesisInventories()
             {
@@ -98,14 +98,14 @@ namespace Moonstorm.Starstorm2.ScriptableObjects
         [Serializable]
         public struct NemesisAddressableItemReference
         {
-            public AddressableItemDef itemDef;
+            public AddressReferencedItemDef itemDef;
             public float weight;
             public int maxStacks;
             public int minStacks;
 
             public NemesisAddressableItemReference(ItemDef itemDef, int maxStacks, int minStacks, float weight)
             {
-                this.itemDef = new AddressableItemDef(itemDef);
+                this.itemDef = new AddressReferencedItemDef(itemDef);
                 this.maxStacks = maxStacks;
                 this.minStacks = minStacks;
                 this.weight = weight;
@@ -113,7 +113,7 @@ namespace Moonstorm.Starstorm2.ScriptableObjects
 
             public NemesisAddressableItemReference(string itemDefName, int maxStacks, int minStacks, float weight)
             {
-                this.itemDef = new AddressableItemDef(itemDefName);
+                this.itemDef = new AddressReferencedItemDef(itemDefName);
                 this.maxStacks = maxStacks;
                 this.minStacks = minStacks;
                 this.weight = weight;
