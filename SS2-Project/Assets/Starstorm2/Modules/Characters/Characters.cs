@@ -50,7 +50,7 @@ namespace SS2.Modules
             base.GetCharacterBases()
             .Where(character =>
                 {
-                if (character is SurvivorBase survivor){
+                if (character is SS2Survivor survivor){
                     string name = MSUtil.NicifyString(character.BodyPrefab.name);
                     int ind = name.LastIndexOf("Body");
                     if(ind >= 0){
@@ -74,7 +74,7 @@ namespace SS2.Modules
                         };
                     }).DoConfigure();
                 }
-                else if (character is MonsterBase monster){
+                else if (character is SS2Monster monster){
                     string name = MSUtil.NicifyString(character.BodyPrefab.name);
                     int ind = name.LastIndexOf("Body");
                     if(ind >= 0){

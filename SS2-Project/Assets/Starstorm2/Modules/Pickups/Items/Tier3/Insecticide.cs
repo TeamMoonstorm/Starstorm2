@@ -3,7 +3,7 @@ using RoR2.Items;
 using UnityEngine;
 namespace SS2.Items
 {
-    public sealed class Insecticide : ItemBase
+    public sealed class Insecticide : SS2Item
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Insecticide", SS2Bundle.Items);
         public static DotController.DotIndex DotIndex;

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 namespace SS2.Items
 {
-    public sealed class CoffeeBag : ItemBase
+    public sealed class CoffeeBag : SS2Item
     {
         public const string token = "SS2_ITEM_COFFEEBAG_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("CoffeeBag", SS2Bundle.Items);

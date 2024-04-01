@@ -18,7 +18,7 @@ namespace SS2.Modules
             GetInitializedEliteEquipmentBases();
         }
 
-        protected override IEnumerable<EliteEquipmentBase> GetInitializedEliteEquipmentBases()
+        protected override IEnumerable<SS2EliteEquipment> GetInitializedEliteEquipmentBases()
         {
             base.GetInitializedEliteEquipmentBases()
                 .ToList()

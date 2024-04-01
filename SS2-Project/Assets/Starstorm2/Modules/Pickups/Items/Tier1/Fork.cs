@@ -6,7 +6,7 @@ using UnityEngine;
 using System;
 namespace SS2.Items
 {
-    public sealed class Fork : ItemBase
+    public sealed class Fork : SS2Item
     {
         private const string token = "SS2_ITEM_FORK_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Fork", SS2Bundle.Items);

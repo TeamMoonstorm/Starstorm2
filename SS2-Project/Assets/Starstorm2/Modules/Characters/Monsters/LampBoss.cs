@@ -5,7 +5,7 @@ using static RoR2.ExplicitPickupDropTable;
 namespace SS2.Monsters
 {
     //[DisabledContent]
-    public sealed class LampBoss : MonsterBase
+    public sealed class LampBoss : SS2Monster
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("LampBossBody", SS2Bundle.Monsters);
         public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("LampBossMaster", SS2Bundle.Monsters);

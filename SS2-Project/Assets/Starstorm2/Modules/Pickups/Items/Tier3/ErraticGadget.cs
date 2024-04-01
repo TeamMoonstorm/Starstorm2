@@ -17,7 +17,7 @@ namespace SS2.Items
     /// 
     /// 
     /// </summary>
-    public sealed class ErraticGadget : ItemBase
+    public sealed class ErraticGadget : SS2Item
     {
         private const string token = "SS2_ITEM_ERRATICGADGET_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ErraticGadget", SS2Bundle.Items);

@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 namespace SS2.Artifacts
 {
     [DisabledContent]
-    public class Adversity : ArtifactBase
+    public class Adversity : SS2Artifact
     {
         public override ArtifactDef ArtifactDef { get; } = SS2Assets.LoadAsset<ArtifactDef>("Adversity", SS2Bundle.Artifacts);
 

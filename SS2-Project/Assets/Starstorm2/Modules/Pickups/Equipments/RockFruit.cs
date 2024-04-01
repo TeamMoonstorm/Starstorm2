@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace SS2.Equipments
 {
-    public sealed class RockFruit : EquipmentBase
+    public sealed class RockFruit : SS2Equipment
     {
         public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("RockFruit", SS2Bundle.Equipments);
 

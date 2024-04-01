@@ -4,7 +4,7 @@ using UnityEngine;
 namespace SS2.Items
 {
     //[DisabledContent]
-    public sealed class ArmedBackpack : ItemBase
+    public sealed class ArmedBackpack : SS2Item
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ArmedBackpack", SS2Bundle.Items);
 

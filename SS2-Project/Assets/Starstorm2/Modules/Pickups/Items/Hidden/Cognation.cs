@@ -3,7 +3,7 @@ using RoR2.Items;
 using UnityEngine;
 namespace SS2.Items
 {
-    public sealed class Cognation : ItemBase
+    public sealed class Cognation : SS2Item
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Cognation", SS2Bundle.Items);
         

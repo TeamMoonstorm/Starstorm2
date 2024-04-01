@@ -7,7 +7,7 @@ using System.Collections;
 namespace SS2.Survivors
 {
     [DisabledContent]
-    public sealed class Nemmando : SurvivorBase
+    public sealed class Nemmando : SS2Survivor
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemmandoBody", SS2Bundle.Nemmando);
         public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemmandoMonsterMaster", SS2Bundle.Nemmando);

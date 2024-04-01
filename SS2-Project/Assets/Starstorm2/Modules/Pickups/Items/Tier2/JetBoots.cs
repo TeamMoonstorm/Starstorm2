@@ -8,7 +8,7 @@ using System;
 using EntityStates;
 namespace SS2.Items
 {
-    public sealed class JetBoots : ItemBase
+    public sealed class JetBoots : SS2Item
     {
         private const string token = "SS2_ITEM_JETBOOTS_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("JetBoots", SS2Bundle.Items);

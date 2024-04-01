@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 namespace SS2.Items
 {
     //[DisabledContent]
-    public sealed class DormantFungus : ItemBase
+    public sealed class DormantFungus : SS2Item
     {
         private const string token = "SS2_ITEM_DORMANTFUNGUS_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("DormantFungus", SS2Bundle.Items);

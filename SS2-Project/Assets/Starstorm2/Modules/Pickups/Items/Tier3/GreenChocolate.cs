@@ -4,7 +4,7 @@ using System;
 using UnityEngine;
 namespace SS2.Items
 {
-    public sealed class GreenChocolate : ItemBase
+    public sealed class GreenChocolate : SS2Item
     {
         private const string token = "SS2_ITEM_GREENCHOCOLATE_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("GreenChocolate", SS2Bundle.Items);

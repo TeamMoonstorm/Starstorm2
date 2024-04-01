@@ -33,7 +33,7 @@ namespace SS2.Modules
             GetInteractableBases();
         }
 
-        protected override IEnumerable<InteractableBase> GetInteractableBases()
+        protected override IEnumerable<SS2Interactable> GetInteractableBases()
         {
             //string niceName = MSUtil.NicifyString(item.GetType().Name);
 

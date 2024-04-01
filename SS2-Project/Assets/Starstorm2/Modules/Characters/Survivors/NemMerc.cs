@@ -7,7 +7,7 @@ using R2API;
 namespace SS2.Survivors
 {
     //[DisabledContent]
-    public sealed class NemMerc : SurvivorBase
+    public sealed class NemMerc : SS2Survivor
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemMercBody", SS2Bundle.NemMercenary);
         public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemMercMonsterMaster", SS2Bundle.NemMercenary);

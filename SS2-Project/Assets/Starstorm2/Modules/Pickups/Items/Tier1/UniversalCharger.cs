@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 namespace SS2.Items
 {
-    public sealed class UniversalCharger : ItemBase
+    public sealed class UniversalCharger : SS2Item
     {
         private const string token = "SS2_ITEM_UNIVERSALCHARGER_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("UniversalCharger", SS2Bundle.Items);

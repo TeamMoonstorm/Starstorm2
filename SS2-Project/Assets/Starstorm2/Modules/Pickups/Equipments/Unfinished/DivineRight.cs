@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace SS2.Equipments
 {
-    public sealed class DivineRight : EquipmentBase
+    public sealed class DivineRight : SS2Equipment
     {
         public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("equipDivineRight", SS2Bundle.Indev);
 

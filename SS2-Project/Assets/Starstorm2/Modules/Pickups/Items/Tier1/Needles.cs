@@ -6,7 +6,7 @@ using MSU;
 namespace SS2.Items
 {
     // needs sound
-    public sealed class Needles : ItemBase
+    public sealed class Needles : SS2Item
     {
         private const string token = "SS2_ITEM_NEEDLES_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Needles", SS2Bundle.Items);

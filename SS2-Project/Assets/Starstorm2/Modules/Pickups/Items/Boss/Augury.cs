@@ -6,7 +6,7 @@ using UnityEngine;
 namespace SS2.Items
 {
     [DisabledContent]
-    public sealed class Augury : ItemBase
+    public sealed class Augury : SS2Item
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Augury", SS2Bundle.Indev);
 

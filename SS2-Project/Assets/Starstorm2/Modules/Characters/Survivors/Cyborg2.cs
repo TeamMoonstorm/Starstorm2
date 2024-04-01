@@ -5,7 +5,7 @@ using UnityEngine.AddressableAssets;
 using R2API;
 namespace SS2.Survivors
 {
-    public sealed class Cyborg2 : SurvivorBase
+    public sealed class Cyborg2 : SS2Survivor
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("Cyborg2Body", SS2Bundle.Indev);
         public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemmandoMonsterMaster", SS2Bundle.NemCommando);

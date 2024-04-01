@@ -11,7 +11,7 @@ using MSU;
 namespace SS2.Items
 {
     [DisabledContent]
-    public sealed class RelicOfEchelon : ItemBase
+    public sealed class RelicOfEchelon : SS2Item
     {
         private const string token = "SS2_ITEM_RELICOFECHELON_DESC";
 

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 namespace SS2.Monsters
 {
-    public sealed class Lamp : MonsterBase
+    public sealed class Lamp : SS2Monster
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("LampBody", SS2Bundle.Monsters);
         public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("LampMaster", SS2Bundle.Monsters);

@@ -3,7 +3,7 @@ using RoR2.Items;
 using UnityEngine;
 namespace SS2.Items
 {
-    public sealed class VoidRock : ItemBase
+    public sealed class VoidRock : SS2Item
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("VoidRock", SS2Bundle.Interactables);
 

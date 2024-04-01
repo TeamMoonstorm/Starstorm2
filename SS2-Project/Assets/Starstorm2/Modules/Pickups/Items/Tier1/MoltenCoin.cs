@@ -4,7 +4,7 @@ using UnityEngine;
 namespace SS2.Items
 {
 
-    public sealed class MoltenCoin : ItemBase
+    public sealed class MoltenCoin : SS2Item
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("MoltenCoin", SS2Bundle.Items);
 

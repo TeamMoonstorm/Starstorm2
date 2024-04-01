@@ -9,7 +9,7 @@ using UnityEngine.Networking;
 namespace SS2.Interactables
 {
     [DisabledContent]
-    public sealed class DropPod : InteractableBase
+    public sealed class DropPod : SS2Interactable
     {
         public override GameObject Interactable { get => interactable; }
 

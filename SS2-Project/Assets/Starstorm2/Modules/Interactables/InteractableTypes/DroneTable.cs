@@ -10,7 +10,7 @@ namespace SS2.Interactables
 {
     //[DisabledContent]
 
-    public sealed class DroneTable : InteractableBase
+    public sealed class DroneTable : SS2Interactable
     {
         public override GameObject Interactable { get; } = SS2Assets.LoadAsset<GameObject>("DroneTablePrefab", SS2Bundle.Interactables);
 

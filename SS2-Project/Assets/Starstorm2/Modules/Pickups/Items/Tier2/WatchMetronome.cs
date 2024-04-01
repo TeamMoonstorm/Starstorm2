@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 namespace SS2.Items
 {
-    public sealed class WatchMetronome : ItemBase
+    public sealed class WatchMetronome : SS2Item
     {
         private const string token = "SS2_ITEM_WATCHMETRONOME_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("WatchMetronome", SS2Bundle.Items);

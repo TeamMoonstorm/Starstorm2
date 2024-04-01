@@ -3,7 +3,7 @@ using RoR2;
 namespace SS2.Items
 {
     //ror2 HealthDecay caps regen at 0. was bad for chirr
-    public sealed class HealthDecayWithRegen : ItemBase
+    public sealed class HealthDecayWithRegen : SS2Item
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("HealthDecayWithRegen", SS2Bundle.Items);
 

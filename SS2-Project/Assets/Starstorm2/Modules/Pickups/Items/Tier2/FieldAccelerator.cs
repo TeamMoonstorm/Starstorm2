@@ -8,7 +8,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 namespace SS2.Items
 {
-    public sealed class FieldAccelerator : ItemBase
+    public sealed class FieldAccelerator : SS2Item
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("FieldAccelerator", SS2Bundle.Items);
 

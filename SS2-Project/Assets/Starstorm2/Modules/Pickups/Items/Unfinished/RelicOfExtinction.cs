@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 namespace SS2.Items
 {
     [DisabledContent]
-    public sealed class RelicOfExtinction : ItemBase
+    public sealed class RelicOfExtinction : SS2Item
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfExtinction", SS2Bundle.Indev);
 

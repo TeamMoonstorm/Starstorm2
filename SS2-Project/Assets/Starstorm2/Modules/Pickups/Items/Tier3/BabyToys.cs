@@ -9,7 +9,7 @@ namespace SS2.Items
 {
     [DisabledContent] //sorry groove
 
-    public sealed class BabyToys : ItemBase
+    public sealed class BabyToys : SS2Item
     {
         private const string pickupToken = "SS2_ITEM_BABYTOYS_PICKUP";
 

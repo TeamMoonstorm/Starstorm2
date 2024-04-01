@@ -4,7 +4,7 @@ namespace SS2.Equipments
 {
     [DisabledContent]
 
-    public sealed class EliteKineticEquipment : EliteEquipmentBase
+    public sealed class EliteKineticEquipment : SS2EliteEquipment
     {
         public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("EliteKineticEquipment", SS2Bundle.Indev);
 

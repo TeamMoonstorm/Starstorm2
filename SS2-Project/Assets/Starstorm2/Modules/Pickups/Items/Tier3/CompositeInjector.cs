@@ -12,7 +12,7 @@ using System.Collections.Generic;
 namespace SS2.Items
 {
     // welcome to hell
-    public sealed class CompositeInjector : ItemBase
+    public sealed class CompositeInjector : SS2Item
     {
         private const string token = "SS2_ITEM_COMPOSITEINJECTOR_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("CompositeInjector", SS2Bundle.Items);

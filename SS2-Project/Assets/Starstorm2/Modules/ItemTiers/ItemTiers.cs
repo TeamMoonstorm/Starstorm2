@@ -16,7 +16,7 @@ namespace SS2.Modules
             GetItemTierBases();
         }
 
-        protected override IEnumerable<ItemTierBase> GetItemTierBases()
+        protected override IEnumerable<SS2ItemTier> GetItemTierBases()
         {
             base.GetItemTierBases()
                 .ToList()

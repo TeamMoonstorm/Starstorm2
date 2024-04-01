@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 namespace SS2.Equipments
 {
-    public sealed class AffixVoid : EliteEquipmentBase
+    public sealed class AffixVoid : SS2EliteEquipment
     {
         public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("AffixVoid", SS2Bundle.Indev);
 

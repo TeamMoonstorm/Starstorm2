@@ -2,7 +2,7 @@
 namespace SS2.Items
 {
     [DisabledContent]
-    public sealed class UraniumHorseshoe : ItemBase
+    public sealed class UraniumHorseshoe : SS2Item
     {
 
         private const string token = "SS2_ITEM_URANIUMHORSESHOE_DESC";

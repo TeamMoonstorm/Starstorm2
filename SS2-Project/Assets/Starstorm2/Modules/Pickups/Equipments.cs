@@ -32,7 +32,7 @@ namespace SS2.Modules
             GetEliteEquipmentBases();
         }
 
-        protected override IEnumerable<EquipmentBase> GetEquipmentBases()
+        protected override IEnumerable<SS2Equipment> GetEquipmentBases()
         {
             base.GetEquipmentBases()
                 .ToList()
@@ -66,7 +66,7 @@ namespace SS2.Modules
             return null;
         }
 
-        protected override IEnumerable<EliteEquipmentBase> GetEliteEquipmentBases()
+        protected override IEnumerable<SS2EliteEquipment> GetEliteEquipmentBases()
         {
             base.GetEliteEquipmentBases()
                 .ToList()
@@ -74,7 +74,7 @@ namespace SS2.Modules
             return null;
         }
 
-        private void CheckEnabledStatus(EquipmentBase eqp)
+        private void CheckEnabledStatus(SS2Equipment eqp)
         {
             string niceName = MSUtil.NicifyString(eqp.GetType().Name);
             if (!(eqp.EquipmentDef.dropOnDeathChance > 0 || eqp.EquipmentDef.passiveBuffDef || niceName.ToLower().Contains("affix")))

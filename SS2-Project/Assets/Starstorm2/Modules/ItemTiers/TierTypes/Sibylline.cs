@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 namespace SS2.ItemTiers
 {
-    public class Sibylline : ItemTierBase
+    public class Sibylline : SS2ItemTier
     {
         public override ItemTierDef ItemTierDef => SS2Assets.LoadAsset<ItemTierDef>("Sibylline", SS2Bundle.Items);
 

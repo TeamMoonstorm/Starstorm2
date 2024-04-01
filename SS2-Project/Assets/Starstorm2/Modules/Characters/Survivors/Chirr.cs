@@ -6,7 +6,7 @@ using UnityEngine.AddressableAssets;
 using System;
 namespace SS2.Survivors
 {
-    public sealed class Chirr : SurvivorBase
+    public sealed class Chirr : SS2Survivor
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("ChirrBody", SS2Bundle.Chirr);
         public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("ChirrMonsterMaster", SS2Bundle.Chirr);

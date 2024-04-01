@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 namespace SS2.Survivors
 {
-    public sealed class Knight : SurvivorBase
+    public sealed class Knight : SS2Survivor
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("KnightBody", SS2Bundle.Indev);
         public override GameObject MasterPrefab { get; } = null;

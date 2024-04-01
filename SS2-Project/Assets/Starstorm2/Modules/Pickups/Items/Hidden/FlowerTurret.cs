@@ -3,7 +3,7 @@ using RoR2.Items;
 using UnityEngine;
 namespace SS2.Items
 {
-    public sealed class FlowerTurret : ItemBase
+    public sealed class FlowerTurret : SS2Item
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("FlowerTurret", SS2Bundle.Items);
 

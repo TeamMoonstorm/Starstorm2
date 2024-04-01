@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace SS2.Interactables
 {
     //[DisabledContent]
-    public sealed class ShockDroneDamaged : InteractableBase
+    public sealed class ShockDroneDamaged : SS2Interactable
     {
         public override GameObject Interactable { get; } = SS2Assets.LoadAsset<GameObject>("ShockDroneBroken", SS2Bundle.Interactables);
         private GameObject interactable;

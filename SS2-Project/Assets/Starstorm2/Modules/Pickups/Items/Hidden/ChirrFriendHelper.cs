@@ -9,7 +9,7 @@ using UnityEngine.Networking;
 using MSU;
 namespace SS2.Items
 {
-    public sealed class ChirrFriendHelper : ItemBase
+    public sealed class ChirrFriendHelper : SS2Item
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ChirrFriendHelper", SS2Bundle.Chirr);
 

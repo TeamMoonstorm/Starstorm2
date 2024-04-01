@@ -4,7 +4,7 @@ using UnityEngine;
 namespace SS2.Items
 {
 
-    public sealed class CrypticSource : ItemBase
+    public sealed class CrypticSource : SS2Item
     {
         private const string token = "SS2_ITEM_CRYPTICSOURCE_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("CrypticSource", SS2Bundle.Items);

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace SS2.Survivors
 {
     [DisabledContent]
-    public sealed class NemExe : SurvivorBase
+    public sealed class NemExe : SS2Survivor
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemExeBody", SS2Bundle.Nemmando);
         public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("ExecutionerMonsterMaster", SS2Bundle.Nemmando);

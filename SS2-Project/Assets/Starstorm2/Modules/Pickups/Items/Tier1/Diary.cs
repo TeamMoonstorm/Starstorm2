@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace SS2.Items
 {
-    public sealed class Diary : ItemBase
+    public sealed class Diary : SS2Item
     {
         private const string token = "SS2_ITEM_DIARY_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Diary", SS2Bundle.Items);

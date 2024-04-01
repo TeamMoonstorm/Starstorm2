@@ -5,7 +5,7 @@ using UnityEngine;
 namespace SS2.Survivors
 {
     [DisabledContent]
-    public sealed class Executioner : SurvivorBase
+    public sealed class Executioner : SS2Survivor
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("ExecutionerBody", SS2Bundle.Executioner);
         public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("ExecutionerMonsterMasterNew", SS2Bundle.Executioner);

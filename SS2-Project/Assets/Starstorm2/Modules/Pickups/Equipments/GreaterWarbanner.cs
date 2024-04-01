@@ -7,7 +7,7 @@ using R2API;
 namespace SS2.Equipments
 {
     //TODO: make warbanner
-    public sealed class GreaterWarbanner : EquipmentBase
+    public sealed class GreaterWarbanner : SS2Equipment
     {
         private const string token = "SS2_EQUIP_GREATERWARBANNER_DESC";
         public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("GreaterWarbanner", SS2Bundle.Equipments);

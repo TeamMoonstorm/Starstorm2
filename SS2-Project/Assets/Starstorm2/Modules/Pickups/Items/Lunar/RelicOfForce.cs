@@ -7,7 +7,7 @@ using UnityEngine;
 using MSU;
 namespace SS2.Items
 {
-    public sealed class RelicOfForce : ItemBase
+    public sealed class RelicOfForce : SS2Item
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfForce", SS2Bundle.Items);
 

@@ -4,7 +4,7 @@ using UnityEngine.Networking;
 namespace SS2.Equipments
 {
     //[DisabledContent]
-    public sealed class PressurizedCanister : EquipmentBase
+    public sealed class PressurizedCanister : SS2Equipment
     {
         public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("PressurizedCanister", SS2Bundle.Equipments);
 

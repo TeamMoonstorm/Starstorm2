@@ -7,7 +7,7 @@ using UnityEngine;
 namespace SS2.Items
 {
     //[DisabledContent]
-    public sealed class ShackledLamp : ItemBase
+    public sealed class ShackledLamp : SS2Item
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ShackledLamp", SS2Bundle.Items);
         public ItemDef.Pair lampPair;

@@ -1,7 +1,7 @@
 ﻿using RoR2;
 namespace SS2.Equipments
 {
-    public sealed class CloakingHeadband : EquipmentBase
+    public sealed class CloakingHeadband : SS2Equipment
     {
         public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("CloakingHeadband", SS2Bundle.Equipments);
 

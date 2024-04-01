@@ -7,7 +7,7 @@ using MSU;
 namespace SS2.Items
 {
 
-    public sealed class SwiftSkateboard : ItemBase
+    public sealed class SwiftSkateboard : SS2Item
     {
         public const string token = "SS2_ITEM_SKATEBOARD_DESC";
 

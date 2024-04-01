@@ -4,7 +4,7 @@ using UnityEngine;
 namespace SS2.Items
 {
 
-    public sealed class LowQualitySpeakers : ItemBase
+    public sealed class LowQualitySpeakers : SS2Item
     {
         private const string token = "SS2_ITEM_LOWQUALITYSPEAKERS_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("LowQualitySpeakers", SS2Bundle.Items);

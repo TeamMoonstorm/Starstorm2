@@ -4,7 +4,7 @@ using MSU;
 namespace SS2.Items
 {
    [DisabledContent]
-    public sealed class WonderHerbs : ItemBase
+    public sealed class WonderHerbs : SS2Item
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("WonderHerbs", SS2Bundle.Items);
 

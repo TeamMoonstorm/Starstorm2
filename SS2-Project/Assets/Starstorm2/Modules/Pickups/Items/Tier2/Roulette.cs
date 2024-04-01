@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 namespace SS2.Items
 {
     [DisabledContent]
-    public sealed class Roulette : ItemBase
+    public sealed class Roulette : SS2Item
     {
         private const string token = "SS2_ITEM_JETBOOTS_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Roulette", SS2Bundle.Items);

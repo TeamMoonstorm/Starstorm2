@@ -4,7 +4,7 @@ using System;
 using SS2.Components;
 namespace SS2.Monsters
 {
-    public sealed class Runshroom : MonsterBase
+    public sealed class Runshroom : SS2Monster
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("RunshroomBody", SS2Bundle.Monsters);
         public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("RunshroomMaster", SS2Bundle.Monsters);

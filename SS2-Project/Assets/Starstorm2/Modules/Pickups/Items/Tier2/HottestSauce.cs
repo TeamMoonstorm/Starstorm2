@@ -8,7 +8,7 @@ namespace SS2.Items
 {
     [DisabledContent]
 
-    public sealed class HottestSauce : ItemBase
+    public sealed class HottestSauce : SS2Item
     {
         private const string token = "SS2_ITEM_HOTTESTSAUCE_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("HottestSauce", SS2Bundle.Items);

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 namespace SS2.Items
 {
-    public sealed class StrangeCan : ItemBase
+    public sealed class StrangeCan : SS2Item
     {
         private const string token = "SS2_ITEM_STRANGECAN_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("StrangeCan", SS2Bundle.Items);

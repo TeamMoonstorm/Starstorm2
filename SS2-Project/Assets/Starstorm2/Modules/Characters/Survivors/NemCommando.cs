@@ -6,7 +6,7 @@ using RoR2.UI;
 namespace SS2.Survivors
 {
     //[DisabledContent]
-    public sealed class NemCommando : SurvivorBase
+    public sealed class NemCommando : SS2Survivor
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemCommandoBody", SS2Bundle.NemCommando);
         public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemCommandoMonsterMaster", SS2Bundle.NemCommando);

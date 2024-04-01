@@ -2,7 +2,7 @@
 using RoR2.Items;
 namespace SS2.Items
 {
-    public sealed class BloodTester : ItemBase
+    public sealed class BloodTester : SS2Item
     {
         private const string token = "SS2_ITEM_BLOODTESTER_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("BloodTester", SS2Bundle.Items);

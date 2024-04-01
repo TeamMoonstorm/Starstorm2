@@ -4,7 +4,7 @@ using System;
 namespace SS2.Items
 {
     [DisabledContent]
-    public sealed class RelicOfDuality : ItemBase
+    public sealed class RelicOfDuality : SS2Item
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfDuality", SS2Bundle.Indev);
 

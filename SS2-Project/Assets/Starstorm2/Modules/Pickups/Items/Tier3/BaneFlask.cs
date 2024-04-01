@@ -5,7 +5,7 @@ using UnityEngine;
 namespace SS2.Items
 {
     [DisabledContent]
-    public sealed class BaneFlask : ItemBase
+    public sealed class BaneFlask : SS2Item
     {
 
         private const string token = "SS2_ITEM_BANEFLASK_DESC";

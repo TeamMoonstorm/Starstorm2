@@ -8,7 +8,7 @@ namespace SS2.Artifacts
 {
     [DisabledContent]
 
-    public sealed class Deviation : ArtifactBase
+    public sealed class Deviation : SS2Artifact
     {
         public override ArtifactDef ArtifactDef { get; } = SS2Assets.LoadAsset<ArtifactDef>("Deviation", SS2Bundle.Artifacts);
         public override ArtifactCode ArtifactCode { get; } = SS2Assets.LoadAsset<ArtifactCode>("DeviationCode", SS2Bundle.Artifacts);

@@ -22,7 +22,7 @@ namespace SS2.Modules
             ArtifactCodeAPI.AddCompound(compound);
         }
 
-        protected override IEnumerable<ArtifactBase> GetArtifactBases()
+        protected override IEnumerable<SS2Artifact> GetArtifactBases()
         {
             base.GetArtifactBases()
                 .ToList()

@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 using UnityEngine;
 namespace SS2.Survivors
 {
-    public sealed class Executioner2 : SurvivorBase
+    public sealed class Executioner2 : SS2Survivor
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("Executioner2Body", SS2Bundle.Executioner2);
         public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("Executioner2Master", SS2Bundle.Executioner2);

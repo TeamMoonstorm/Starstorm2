@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 using UObject = UnityEngine.Object;
 namespace SS2.Artifacts
 {
-    public sealed class Cognation : ArtifactBase
+    public sealed class Cognation : SS2Artifact
     {
         public override ArtifactDef ArtifactDef { get; } = SS2Assets.LoadAsset<ArtifactDef>("Cognation", SS2Bundle.Artifacts);
         public override ArtifactCode ArtifactCode { get; } = SS2Assets.LoadAsset<ArtifactCode>("CognationCode", SS2Bundle.Artifacts);

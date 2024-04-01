@@ -3,7 +3,7 @@ using UnityEngine;
 namespace SS2.Equipments
 {
     //[DisabledContent]
-    public sealed class MIDAS : EquipmentBase
+    public sealed class MIDAS : SS2Equipment
     {
         public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("MIDAS", SS2Bundle.Equipments);
         public float goldEarned;

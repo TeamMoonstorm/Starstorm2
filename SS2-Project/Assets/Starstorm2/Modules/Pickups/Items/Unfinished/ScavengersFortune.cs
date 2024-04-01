@@ -3,7 +3,7 @@ using RoR2.Items;
 namespace SS2.Items
 {
     [DisabledContent]
-    public sealed class ScavengersFortune : ItemBase
+    public sealed class ScavengersFortune : SS2Item
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ScavengersFortune", SS2Bundle.Indev);
 

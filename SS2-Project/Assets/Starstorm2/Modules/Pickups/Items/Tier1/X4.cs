@@ -10,7 +10,7 @@ namespace SS2.Items
     //[DisabledContent]
     //this is a fuckin warzone wtf - not anymore!!! z
 
-    public sealed class X4 : ItemBase
+    public sealed class X4 : SS2Item
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("X4", SS2Bundle.Items);
 

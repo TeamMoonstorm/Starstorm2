@@ -3,7 +3,7 @@ using RoR2.Items;
 using UnityEngine;
 namespace SS2.Items
 {
-    public sealed class DroidHead : ItemBase
+    public sealed class DroidHead : SS2Item
     {
         private const string token = "SS2_ITEM_DROIDHEAD_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("DroidHead", SS2Bundle.Items);

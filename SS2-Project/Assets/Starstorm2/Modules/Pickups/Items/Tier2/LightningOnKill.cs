@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using RoR2.Orbs;
 namespace SS2.Items
 {
-    public sealed class LightningOnKill : ItemBase
+    public sealed class LightningOnKill : SS2Item
     {
         private const string token = "SS2_ITEM_LIGHTNINGONKILL_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("LightningOnKill", SS2Bundle.Items);

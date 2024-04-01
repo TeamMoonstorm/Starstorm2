@@ -2,7 +2,7 @@
 using UnityEngine;
 namespace SS2.Equipments
 {
-    public sealed class WhiteFlag : EquipmentBase
+    public sealed class WhiteFlag : SS2Equipment
     {
         private const string token = "SS2_EQUIP_WHITEFLAG_DESC";
         public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("WhiteFlag", SS2Bundle.Equipments);

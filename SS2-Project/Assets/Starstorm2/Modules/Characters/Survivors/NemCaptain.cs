@@ -5,7 +5,7 @@ using UnityEngine.AddressableAssets;
 namespace SS2.Survivors
 {
     [DisabledContent]
-    public sealed class NemCaptain : SurvivorBase
+    public sealed class NemCaptain : SS2Survivor
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemCaptainBody", SS2Bundle.Indev);
         public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemmandoMonsterMaster", SS2Bundle.Indev);

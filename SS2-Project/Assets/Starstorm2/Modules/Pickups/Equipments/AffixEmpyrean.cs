@@ -3,7 +3,7 @@ using System.Collections.Generic;
 namespace SS2.Equipments
 {
     //[DisabledContent]
-    public sealed class AffixEmpyrean : EliteEquipmentBase
+    public sealed class AffixEmpyrean : SS2EliteEquipment
     {
         public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("AffixEmpyrean", SS2Bundle.Equipments);
 

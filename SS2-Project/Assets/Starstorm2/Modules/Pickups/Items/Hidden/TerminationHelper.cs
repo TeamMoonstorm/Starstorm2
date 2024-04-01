@@ -8,7 +8,7 @@ using static SS2.Items.RelicOfTermination;
 using MSU;
 namespace SS2.Items
 {
-    public sealed class TerminationHelper : ItemBase
+    public sealed class TerminationHelper : SS2Item
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("TerminationHelper", SS2Bundle.Items);
 

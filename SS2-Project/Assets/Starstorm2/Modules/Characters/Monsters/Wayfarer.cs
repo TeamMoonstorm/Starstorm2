@@ -12,7 +12,7 @@ namespace SS2.Monsters
 
     //ok
     [DisabledContent]
-    public sealed class Wayfarer : MonsterBase
+    public sealed class Wayfarer : SS2Monster
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("WayfarerBody", SS2Bundle.Indev
             );

@@ -6,7 +6,7 @@ namespace SS2.Items
     //skills recharge x% faster
     // 100 stacks = 50% cdr
     // 200 stacks = 67% cdr
-    public sealed class BoostCooldowns : ItemBase
+    public sealed class BoostCooldowns : SS2Item
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("BoostCooldowns", SS2Bundle.Items);
 

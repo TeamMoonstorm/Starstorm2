@@ -7,7 +7,7 @@ using MSU;
 namespace SS2.Items
 {
 
-    public sealed class RainbowRoot : ItemBase
+    public sealed class RainbowRoot : SS2Item
     {
         private const string token = "SS2_ITEM_RAINBOWROOT_DESC";
 

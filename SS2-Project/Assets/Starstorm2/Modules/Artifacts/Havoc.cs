@@ -3,7 +3,7 @@ using R2API.ScriptableObjects;
 namespace SS2.Artifacts
 {
     //[DisabledContent]
-    public class Havoc : ArtifactBase
+    public class Havoc : SS2Artifact
     {
         public override ArtifactDef ArtifactDef { get; } = SS2Assets.LoadAsset<ArtifactDef>("Havoc", SS2Bundle.Artifacts);
 

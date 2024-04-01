@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 using System.Linq;
 namespace SS2.Items
 {
-    public sealed class ChucklingFungus : ItemBase
+    public sealed class ChucklingFungus : SS2Item
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ChucklingFungus", SS2Bundle.Items);
 

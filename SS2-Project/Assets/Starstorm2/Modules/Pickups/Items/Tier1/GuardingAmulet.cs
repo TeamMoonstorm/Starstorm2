@@ -3,7 +3,7 @@ using RoR2.Items;
 using UnityEngine;
 namespace SS2.Items
 {
-    public sealed class GuardingAmulet : ItemBase
+    public sealed class GuardingAmulet : SS2Item
     {
         public const string token = "SS2_ITEM_GUARDINGAMULET_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("GuardingAmulet", SS2Bundle.Items);

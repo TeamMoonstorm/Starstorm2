@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 namespace SS2.Items
 {
-    public sealed class HuntersSigil : ItemBase
+    public sealed class HuntersSigil : SS2Item
     {
         private const string token = "SS2_ITEM_HUNTERSSIGIL_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("HuntersSigil", SS2Bundle.Items);

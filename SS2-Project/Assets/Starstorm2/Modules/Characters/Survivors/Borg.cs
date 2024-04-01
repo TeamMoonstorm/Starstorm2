@@ -1,11 +1,13 @@
-﻿using RoR2;
+﻿#if DEBUG
+using MSU;
+using RoR2;
+using System.Collections;
 using UnityEngine;
 namespace SS2.Survivors
 {
-    [DisabledContent]
-    public sealed class Borg : SurvivorBase
+    public sealed class Borg : SS2Survivor
     {
-        public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("SurvivorBorg", SS2Bundle.Indev);
+        /*public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("SurvivorBorg", SS2Bundle.Indev);
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("BorgBody", SS2Bundle.Indev);
         public override GameObject MasterPrefab { get; } = null;
 
@@ -17,14 +19,34 @@ namespace SS2.Survivors
             var footstepHandler = BodyPrefab.GetComponent<ModelLocator>().modelTransform.GetComponent<FootstepHandler>();
             footstepHandler.footstepDustPrefab = Resources.Load<GameObject>("Prefabs/GenericFootstepDust");
         }*/
+        public override SurvivorDef SurvivorDef => _borgDef;
+        private SurvivorDef _borgDef;
 
-        public override void Hook()
+        public override NullableRef<GameObject> MasterPrefab => null;
+
+        public override CharacterBody Component => _prefabComponent;
+        private CharacterBody _prefabComponent;
+
+        public override GameObject Asset => _prefab;
+        private GameObject _prefab;
+
+        public override void Initialize()
         {
+        }
 
+        public override bool IsAvailable()
+        {
+            return false;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
         }
     }
 }
+#endif
 
+//I fucking hate zombie code but whatever - N
 /*using MSU;
 namespace SS2.Survivors
 {

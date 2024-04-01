@@ -2,7 +2,7 @@
 namespace SS2.Items
 {
     //[DisabledContent]
-    public sealed class PortableReactor : ItemBase
+    public sealed class PortableReactor : SS2Item
     {
 
         private const string token = "SS2_ITEM_PORTABLEREACTOR_DESC";

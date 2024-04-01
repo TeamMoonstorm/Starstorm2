@@ -8,7 +8,7 @@ using UnityEngine.Networking;
 using MSU;
 namespace SS2.Items
 {
-    public sealed class RelicOfTermination : ItemBase
+    public sealed class RelicOfTermination : SS2Item
     {
         private const string token = "SS2_ITEM_RELICOFTERMINATION_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfTermination", SS2Bundle.Items);

@@ -7,7 +7,7 @@ using UnityEngine;
 using R2API;
 namespace SS2.Items
 {
-    public sealed class Malice : ItemBase
+    public sealed class Malice : SS2Item
     {
         private const string token = "SS2_ITEM_MALICE_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Malice", SS2Bundle.Items);

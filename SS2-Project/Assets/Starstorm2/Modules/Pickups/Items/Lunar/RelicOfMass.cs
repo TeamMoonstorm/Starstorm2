@@ -5,7 +5,7 @@ using RoR2.Items;
 using MSU;
 namespace SS2.Items
 {
-    public sealed class RelicOfMass : ItemBase
+    public sealed class RelicOfMass : SS2Item
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfMass", SS2Bundle.Items);
 

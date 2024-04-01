@@ -1,7 +1,7 @@
 ﻿using RoR2;
 namespace SS2.Equipments
 {
-    public sealed class BackThruster : EquipmentBase
+    public sealed class BackThruster : SS2Equipment
     {
         private const string token = "SS2_EQUIP_BACKTHRUSTER_DESC";
         public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("BackThruster", SS2Bundle.Equipments);

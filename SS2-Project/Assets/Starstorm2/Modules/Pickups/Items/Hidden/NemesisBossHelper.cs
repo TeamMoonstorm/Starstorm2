@@ -5,7 +5,7 @@ using RoR2.Items;
 using MSU;
 namespace SS2.Items
 {
-    public sealed class NemesisBossHelper : ItemBase
+    public sealed class NemesisBossHelper : SS2Item
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("NemBossHelper", SS2Bundle.Items);
 

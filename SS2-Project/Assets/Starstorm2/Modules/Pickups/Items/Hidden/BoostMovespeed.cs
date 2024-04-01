@@ -4,7 +4,7 @@ namespace SS2.Items
 {
 
     //boosts movespeed by 1% per stack
-    public sealed class BoostMovespeed : ItemBase
+    public sealed class BoostMovespeed : SS2Item
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("BoostMovespeed", SS2Bundle.Items);
 

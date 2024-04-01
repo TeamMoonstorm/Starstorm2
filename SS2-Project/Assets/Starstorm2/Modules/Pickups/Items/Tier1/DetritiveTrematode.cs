@@ -4,7 +4,7 @@ using RoR2.Items;
 using UnityEngine;
 namespace SS2.Items
 {
-    public sealed class DetritiveTrematode : ItemBase
+    public sealed class DetritiveTrematode : SS2Item
     {
         private const string token = "SS2_ITEM_DETRITIVETREMATODE_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("DetritiveTrematode", SS2Bundle.Items);

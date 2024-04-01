@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 namespace SS2.Items
 {
-    public sealed class NkotasHeritage : ItemBase
+    public sealed class NkotasHeritage : SS2Item
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("NkotasHeritage", SS2Bundle.Items);
 

@@ -27,7 +27,7 @@ namespace SS2.Modules
             };
         }).DoConfigure();
 
-        private static IEnumerable<ItemBase> items;
+        private static IEnumerable<SS2Item> items;
         public override void Initialize()
         {
             Instance = this;
@@ -43,15 +43,15 @@ namespace SS2.Modules
             items.ToList().ForEach(i => { if (i.ItemDef.deprecatedTier == ItemTier.NoTier) i.ItemDef.tier = ItemTier.NoTier; });
         }
 
-        protected override IEnumerable<ItemBase> GetItemBases()
+        protected override IEnumerable<SS2Item> GetItemBases()
         {
-            List<ItemBase> list = base.GetItemBases().ToList();
+            List<SS2Item> list = base.GetItemBases().ToList();
             list.ForEach(item => AddItem(item));
             list.ForEach(CheckEnabledStatus);
             return list;
         }
 
-        public void CheckEnabledStatus(ItemBase item)
+        public void CheckEnabledStatus(SS2Item item)
         {
             if (item.ItemDef.deprecatedTier != ItemTier.NoTier || item.ItemDef.tier == ItemTier.AssignedAtRuntime) //fix for sybl
             {

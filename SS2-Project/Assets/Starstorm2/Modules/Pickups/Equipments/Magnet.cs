@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 namespace SS2.Equipments
 {
-    public sealed class Magnet : EquipmentBase
+    public sealed class Magnet : SS2Equipment
     {
         private const string token = "SS2_EQUIP_MAGNET_DESC";
         public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("Magnet", SS2Bundle.Equipments);

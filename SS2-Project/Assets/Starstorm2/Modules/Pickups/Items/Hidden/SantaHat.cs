@@ -3,7 +3,7 @@ using UnityEngine;
 using System;
 namespace SS2.Items
 {
-    public sealed class SantaHat : ItemBase
+    public sealed class SantaHat : SS2Item
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("SantaHat", SS2Bundle.Items);
 
