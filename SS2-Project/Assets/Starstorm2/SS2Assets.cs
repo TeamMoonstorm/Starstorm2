@@ -63,6 +63,20 @@ namespace SS2
         private static Dictionary<SS2Bundle, AssetBundle> _assetBundles = new Dictionary<SS2Bundle, AssetBundle>();
         private static AssetBundle[] _streamedSceneBundles = Array.Empty<AssetBundle>();
 
+        public static event Action OnSS2AssetsInitialized
+        {
+            add
+            {
+                _onSS2AssetsInitialized -= value;
+                _onSS2AssetsInitialized += value;
+            }
+            remove
+            {
+                _onSS2AssetsInitialized -= value;
+            }
+        }
+        private static Action _onSS2AssetsInitialized;
+
         public static AssetBundle GetAssetBundle(SS2Bundle bundle)
         {
             return _assetBundles[bundle];
@@ -131,6 +145,8 @@ namespace SS2
 
             helper.Start();
             while (!helper.IsDone()) yield return null;
+
+            _onSS2AssetsInitialized?.Invoke();
             yield break;
         }
 

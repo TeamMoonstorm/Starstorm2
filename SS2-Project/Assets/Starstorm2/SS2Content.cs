@@ -17,7 +17,10 @@ namespace SS2
         public static ReadOnlyContentPack ReadOnlyContentPack => new ReadOnlyContentPack(SS2ContentPack);
         internal static ContentPack SS2ContentPack { get; private set; } = new ContentPack();
 
+        internal static ParallelCoroutineHelper _parallelPreLoadDispatchers = new ParallelCoroutineHelper();
         private static Func<IEnumerator>[] _loadDispatchers;
+        internal static ParallelCoroutineHelper _parallelPostLoadDispatchers = new ParallelCoroutineHelper();
+        
         private static Func<IEnumerator>[] _fieldAssignDispatchers;
         public IEnumerator LoadStaticContentAsync(LoadStaticContentAsyncArgs args)
         {
@@ -32,23 +35,19 @@ namespace SS2
                 yield break;
             }
 
-            var expansionRequest = SS2Assets.LoadAssetAsync<ExpansionDef>("SS2ExpansionDef", SS2Bundle.Main);
-            expansionRequest.StartLoad();
-
-            while (!expansionRequest.IsComplete)
-                yield return null;
-
-            SS2ContentPack.expansionDefs.AddSingle(expansionRequest.Asset);
-
-            SS2Config.RegisterToModSettingsManager();
+            _parallelPreLoadDispatchers.Start();
+            while (!_parallelPreLoadDispatchers.IsDone()) yield return null;
 
             for (int i = 0; i < _loadDispatchers.Length; i++)
             {
-                args.ReportProgress(Util.Remap(i + 1, 0f, _loadDispatchers.Length, 0f, 0.05f));
+                args.ReportProgress(Util.Remap(i + 1, 0f, _loadDispatchers.Length, 0.1f, 0.2f));
                 enumerator = _loadDispatchers[i]();
 
                 while (enumerator.MoveNext()) yield return null;
             }
+
+            _parallelPostLoadDispatchers.Start();
+            while (!_parallelPostLoadDispatchers.IsDone()) yield return null;
 
             for (int i = 0; i < _fieldAssignDispatchers.Length; i++)
             {
@@ -94,9 +93,25 @@ namespace SS2
             while(!gameObjectRequest.IsComplete) yield return null;
             SS2ContentPack.effectDefs.Add(gameObjectRequest.Assets.Where(go => go.GetComponent<EffectComponent>()).Select(go => new EffectDef(go)).ToArray());
         }
+
+        private IEnumerator AddSS2ExpansionDef()
+        {
+            var expansionRequest = SS2Assets.LoadAssetAsync<ExpansionDef>("SS2ExpansionDef", SS2Bundle.Main);
+            expansionRequest.StartLoad();
+
+            while (!expansionRequest.IsComplete)
+                yield return null;
+
+            SS2ContentPack.expansionDefs.AddSingle(expansionRequest.Asset);
+        }
+
         internal SS2Content()
         {
             ContentManager.collectContentPackProviders += AddSelf;
+            SS2Assets.OnSS2AssetsInitialized += () =>
+            {
+                _parallelPreLoadDispatchers.Add(AddSS2ExpansionDef);
+            };
         }
 
         static SS2Content()

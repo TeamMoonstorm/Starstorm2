@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 namespace SS2.Survivors
 {
     [DisabledContent]
-    public sealed class NemesisHuntress : SurvivorBase
+    public sealed class NemesisHuntress : SS2Survivor
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemHuntress2Body", SS2Bundle.Indev);
         public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemmandoMonsterMaster", SS2Bundle.Nemmando);
