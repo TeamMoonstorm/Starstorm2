@@ -1,7 +1,8 @@
-﻿namespace EntityStates.Events
+﻿/*namespace EntityStates.Events
 {
     public class SandstormState : GenericStormState
     {
     }
 
 }
+*/

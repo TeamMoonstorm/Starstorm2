@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 namespace EntityStates.Events
 {
-    public abstract class GenericEliteEvent : EventState
+    /*public abstract class GenericEliteEvent : EventState
     {
         [SerializeField]
         public GameObject effectPrefab;
@@ -133,7 +133,7 @@ namespace EntityStates.Events
                     }
                 }
             }
-        }*/
-    }
+        }
+    }*/
 
 }

@@ -1,4 +1,4 @@
-﻿using SS2;
+﻿/*using SS2;
 using SS2.Components;
 using SS2.ScriptableObjects;
 using R2API.Networking.Interfaces;
@@ -73,7 +73,7 @@ namespace EntityStates.Events
             {
                 effectInstance = UnityEngine.Object.Instantiate(effectPrefab);
                 eventStateEffect = effectInstance.GetComponent<EventStateEffect>();
-            }*/
+            }
         }
 
         public override void FixedUpdate()
@@ -88,7 +88,7 @@ namespace EntityStates.Events
             if (musicOverridePrefab)
                 musicTrack.track = mainTrack;
             /*if (eventStateEffect)
-                eventStateEffect.OnEffectStart();*/
+                eventStateEffect.OnEffectStart();
             if(NetworkServer.active)
                 SpawnNemesisBoss();
         }
@@ -210,7 +210,7 @@ namespace EntityStates.Events
 
 
             /*if (eventStateEffect)
-                eventStateEffect.OnEndingStart(fadeDuration);*/
+                eventStateEffect.OnEndingStart(fadeDuration);
 
             // need to do outro here instead of destroying
             if (musicTrack)
@@ -231,3 +231,4 @@ namespace EntityStates.Events
     }
 
 }
+*/

@@ -3,6 +3,8 @@ using RoR2.Skills;
 using JetBrains.Annotations;
 using RoR2;
 using SS2.Components;
+using MSU;
+
 namespace SS2.ScriptableObjects
 {
     [CreateAssetMenu(menuName = "Starstorm2/SkillDef/ChirrTrackingSkillDef")]

@@ -1,10 +1,32 @@
-﻿using R2API;
+﻿using MSU;
+using R2API;
 using R2API.ScriptableObjects;
 using RoR2;
+using RoR2.ContentManagement;
 using System.Collections.Generic;
 using System.Linq;
 namespace SS2.Modules
 {
+    public sealed class Artifacts : IContentPieceProvider<ArtifactDef>
+    {
+        public ContentPack ContentPack => throw new System.NotImplementedException();
+
+        public IContentPiece<ArtifactDef>[] GetContents()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        IContentPiece[] IContentPieceProvider.GetContents()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        internal Artifacts(ContentPack contentPack)
+        {
+
+        }
+    }
+    /*
     public sealed class Artifacts : ArtifactModuleBase
     {
         public static Artifacts Instance { get; private set; }
@@ -29,5 +51,5 @@ namespace SS2.Modules
                 .ForEach(artifact => AddArtifact(artifact));
             return null;
         }
-    }
+    }*/
 }

@@ -10,19 +10,9 @@ namespace SS2
     public static class SS2Util
     {
         #region Misc
-
-        public static T EnsureComponent<T>(this Component component) where T : Component
-        {
-            Component c = component.GetComponent(typeof(T));
-            if (c) return (T)c;
-            return (T)c.gameObject.AddComponent(typeof(T));
-        }
-
         public static void DropShipCall(Transform origin, int tierWeight, uint teamLevel = 1, int amount = 1, ItemTier forcetier = 0, string theWorstCodeOfTheYear = null)
         {
             List<PickupIndex> dropList;
-            //float rarityscale = tierWeight * (float)(Math.Sqrt(teamLevel * 12) - 4); //I have absolutely no fucking idea what this is
-            //float rarityscale = tierWeight * ((float)MSUtil.InverseHyperbolicScaling(5, .25f, 10, (int)teamLevel) - 5); // this is still gross but i think will be fine
             int templevel = (int)teamLevel;
             float rarityMult = tierWeight * (MSUtil.InverseHyperbolicScaling(1, .1f, 6, templevel) / ((templevel + 14f)/ templevel)); //trust me this almost makes sense - at level 10, non white items are 1.3x more likely, and at 20, they're 2.5x more likely. additionally, reds are impossible at low enough levels
             //SS2Log.Debug(rarityMult);
@@ -38,8 +28,6 @@ namespace SS2
             else if (Util.CheckRoll(1 * rarityMult))
             {
                 dropList = Run.instance.availableTier3DropList;
-
-                //Util.CheckRoll(.01f * raritymult)
             }
             else if (Util.CheckRoll(20 * rarityMult))
             {
@@ -49,12 +37,6 @@ namespace SS2
             {
                 dropList = Run.instance.availableTier1DropList;
             }
-            //else if (Util.CheckRoll(0.5f * rarityscale - 1))
-            //    dropList = Run.instance.availableTier3DropList;
-            //else if (Util.CheckRoll(4 * rarityscale))
-            //    dropList = Run.instance.availableTier2DropList;
-            //else
-            //    dropList = Run.instance.availableTier1DropList;
 
 
             int item = Run.instance.treasureRng.RangeInt(0, dropList.Count);
@@ -67,11 +49,6 @@ namespace SS2
                 Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
                 for (int i = 0; i < amount; i++)
                 {
-                    //if (theWorstCodeOfTheYear != null)
-                    //    CreateVFXDroplet(dropList[item], origin.position, vector, theWorstCodeOfTheYear);
-                    //    
-                    //else
-                    //    PickupDropletController.CreatePickupDroplet(dropList[item], origin.position, vector);
                     PickupDropletController.CreatePickupDroplet(dropList[item], origin.position, vector);
                     vector = rotation * vector;
                 }
@@ -93,7 +70,6 @@ namespace SS2
             if (theWorstCodeOfTheYear != null)
             {
                 PickupDropletController.CreatePickupDroplet(dropList[item], origin.position, new Vector3(0, 15, 0));
-                //CreateVFXDroplet(dropList[item], origin.position, new Vector3(0, 15, 0), theWorstCodeOfTheYear);
                 return;
             }
             PickupDropletController.CreatePickupDroplet(dropList[item], origin.position, new Vector3(0, 15, 0));
@@ -163,26 +139,13 @@ namespace SS2
 
         public static void CreateVFXDroplet(PickupIndex pickupIndex, Vector3 position, Vector3 velocity, string vfxPrefab)
         {
-            //GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(PickupDropletController.pickupDropletPrefab, position, Quaternion.identity);
-            //gameObject.GetComponent<PickupDropletController>().NetworkpickupIndex = pickupIndex;
-            //Rigidbody component = gameObject.GetComponent<Rigidbody>();
-            //component.velocity = velocity;
-            //component.AddTorque(UnityEngine.Random.Range(150f, 120f) * UnityEngine.Random.onUnitSphere);
-            //NetworkServer.Spawn(gameObject);
-
             var pickup = new GenericPickupController.CreatePickupInfo();
 
             pickup.prefabOverride = PickupCatalog.GetPickupDef(pickupIndex).dropletDisplayPrefab;
-            //pickup.prefabOverride.AddComponent<NetworkIdentity>();
-
-            //pickup.prefabOverride.AddComponent<ParticleSystem>();
-            //var particleSys = pickup.prefabOverride.GetComponent<ParticleSystem>();
-            //particleSys.
 
             pickup.pickupIndex = pickupIndex;
             PickupDropletController.CreatePickupDroplet(pickup, position, velocity);
 
-            //PickupDropletController.CreatePickupDroplet(pickupIndex, position, velocity);
             EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>(vfxPrefab, SS2Bundle.All), new EffectData
             {
                 rootObject = pickup.prefabOverride,
@@ -206,7 +169,6 @@ namespace SS2
                         timer = buffs[i].timer;
                         pos = i;
                     }
-                    //charBody.timedBuffs[i].timer = duration;
                 }
             }
 

@@ -1,5 +1,6 @@
 ﻿using EntityStates;
 using EntityStates.Knight;
+using MSU;
 using RoR2;
 using RoR2.Projectile;
 using RoR2.Skills;
@@ -10,7 +11,7 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
     class TornadoSpin : BasicMeleeAttack
     {
         public static float swingTimeCoefficient = 1f;
-        [TokenModifier("SS2_KNIGHT_SPECIAL_SPIN_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_KNIGHT_SPECIAL_SPIN_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float TokenModifier_dmgCoefficient => new SpinUtility().damageCoefficient;
         public static GameObject buffWard;
         public static float hopVelocity;

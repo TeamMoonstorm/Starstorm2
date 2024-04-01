@@ -1,4 +1,4 @@
-﻿namespace EntityStates.Events
+﻿/*namespace EntityStates.Events
 {
     public class StageEvent : EventState
     {
@@ -10,3 +10,4 @@
         }
     }
 }
+*/

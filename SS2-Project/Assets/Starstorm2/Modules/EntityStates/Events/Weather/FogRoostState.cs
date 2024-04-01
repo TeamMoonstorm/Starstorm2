@@ -1,6 +1,7 @@
-﻿namespace EntityStates.Events
+﻿/*namespace EntityStates.Events
 {
     public class FogRoostState : GenericWeatherState
     {
     }
 }
+*/
