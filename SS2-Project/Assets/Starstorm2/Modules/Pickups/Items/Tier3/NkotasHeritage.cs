@@ -1,12 +1,9 @@
 ﻿using HG;
 using RoR2;
 using RoR2.Orbs;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-
-using Moonstorm;
 namespace SS2.Items
 {
     public sealed class NkotasHeritage : ItemBase
@@ -15,7 +12,7 @@ namespace SS2.Items
 
         public const string token = "SS2_ITEM_NKOTASHERITAGE_DESC";
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Number of items given upon level up per stack.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Number of items given upon level up per stack.")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static int itemsPerStack = 1;
 

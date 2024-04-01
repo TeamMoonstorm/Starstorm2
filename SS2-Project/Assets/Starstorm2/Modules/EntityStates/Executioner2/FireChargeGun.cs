@@ -1,12 +1,9 @@
-﻿using Moonstorm;
-using SS2;
-using RoR2;
+﻿using RoR2;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.Networking;
 using static SS2.Items.ShackledLamp;
 
 namespace EntityStates.Executioner2

@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-
-using Moonstorm;
 namespace SS2.Components
 {
     [RequireComponent(typeof(ObjectScaleCurve))]

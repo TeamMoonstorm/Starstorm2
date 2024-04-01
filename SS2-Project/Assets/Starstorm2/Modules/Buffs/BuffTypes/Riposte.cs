@@ -1,8 +1,5 @@
-﻿using Moonstorm.Components;
-using RoR2;
+﻿using RoR2;
 using UnityEngine;
-
-using Moonstorm;
 namespace SS2.Buffs
 {
     //[DisabledContent]

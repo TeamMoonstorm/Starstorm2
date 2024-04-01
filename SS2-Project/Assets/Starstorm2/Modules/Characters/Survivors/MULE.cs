@@ -1,9 +1,6 @@
 ﻿using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using RoR2.Projectile;
-
-using Moonstorm;
 namespace SS2.Survivors
 {
     [DisabledContent]

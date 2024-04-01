@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using RoR2;
 using R2API;
-
-using Moonstorm;
 namespace SS2
 {
     [CreateAssetMenu(fileName = "SS2EventCard", menuName = "Starstorm2/SS2EventCard")]

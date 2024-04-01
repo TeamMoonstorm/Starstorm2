@@ -1,12 +1,8 @@
-﻿using System;
-using EntityStates;
-using UnityEngine;
-using RoR2;
-using UnityEngine.Networking;
+﻿using UnityEngine;
 using SS2.Components;
 namespace EntityStates
 {
-	public class GrabbedState : BaseState
+    public class GrabbedState : BaseState
 	{
 		public float duration = Mathf.Infinity;
 		public GrabController inflictor;

@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using RoR2;
 using RoR2.Items;
 using UnityEngine.Networking;
 using System.Linq;
-
-using Moonstorm;
 namespace SS2.Items
 {
     public sealed class ChucklingFungus : ItemBase

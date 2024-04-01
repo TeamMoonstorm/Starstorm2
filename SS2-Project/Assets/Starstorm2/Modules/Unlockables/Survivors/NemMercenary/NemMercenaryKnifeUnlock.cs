@@ -1,8 +1,6 @@
 ﻿using RoR2;
 using RoR2.Achievements;
 using UnityEngine;
-
-using Moonstorm;
 namespace SS2.Unlocks.NemMercenary
 {
     public sealed class NemMercenaryKnifeUnlock : UnlockableBase

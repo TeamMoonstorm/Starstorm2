@@ -1,7 +1,4 @@
-﻿using EntityStates;
-using RoR2;
-using System.Collections;
-using System.Collections.Generic;
+﻿using RoR2;
 using UnityEngine;
 
 namespace EntityStates.Knight

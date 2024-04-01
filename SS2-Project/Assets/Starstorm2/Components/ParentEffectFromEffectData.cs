@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using RoR2;
-using Moonstorm;
 namespace SS2.Components
 {
     [RequireComponent(typeof(EffectComponent))]

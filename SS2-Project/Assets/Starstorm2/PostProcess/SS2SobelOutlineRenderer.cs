@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
-
-using Moonstorm;
 namespace SS2.PostProcess
 {
     public sealed class SS2SobelOutlineRenderer : PostProcessEffectRenderer<SS2SobelOutline>

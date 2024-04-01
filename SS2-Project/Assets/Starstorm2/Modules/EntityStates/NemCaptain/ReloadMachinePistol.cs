@@ -1,9 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Moonstorm;
+﻿using UnityEngine;
 using RoR2;
-using UnityEngine.AddressableAssets;
 using SS2.Components;
 
 namespace EntityStates.NemCaptain

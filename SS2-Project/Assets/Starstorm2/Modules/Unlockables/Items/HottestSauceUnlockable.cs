@@ -1,8 +1,6 @@
 ﻿using RoR2;
 using RoR2.Achievements;
 using System.Collections.Generic;
-
-using Moonstorm;
 namespace SS2.Unlocks.Pickups
 {
     [DisabledContent]

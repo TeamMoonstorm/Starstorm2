@@ -1,5 +1,4 @@
-﻿using Assets.Starstorm2.ScriptableObjects;
-using EntityStates;
+﻿using EntityStates;
 using SS2.Components;
 using R2API.Networking.Interfaces;
 using RoR2;
@@ -8,8 +7,6 @@ using System;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.Networking;
-
-using Moonstorm;
 namespace SS2.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "NemesisSpawnCard", menuName = "Starstorm2/NemesisSpawnCard")]

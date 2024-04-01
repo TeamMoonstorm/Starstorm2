@@ -1,8 +1,6 @@
 ﻿using R2API;
 using RoR2;
 using UnityEngine.Networking;
-
-using Moonstorm;
 namespace SS2.Buffs
 {
     public sealed class Gouge : BuffBase

@@ -1,9 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using RoR2;
-using System;
-using UnityEngine.Networking;
 
 namespace EntityStates.Lamp
 {

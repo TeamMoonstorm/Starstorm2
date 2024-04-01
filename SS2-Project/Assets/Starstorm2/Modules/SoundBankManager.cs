@@ -1,8 +1,6 @@
 ﻿using RoR2;
 using UnityEngine;
 using Path = System.IO.Path;
-
-using Moonstorm;
 namespace SS2
 {
     public static class SoundBankManager

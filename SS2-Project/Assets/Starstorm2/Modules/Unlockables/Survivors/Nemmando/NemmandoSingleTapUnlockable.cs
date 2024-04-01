@@ -2,8 +2,6 @@
 using RoR2;
 using RoR2.Achievements;
 using UnityEngine;
-
-using Moonstorm;
 namespace SS2.Unlocks.Nemmando
 {
     public sealed class NemmandoSingleTapUnlockable : UnlockableBase

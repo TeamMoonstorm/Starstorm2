@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UObject = UnityEngine.Object;
-
-using Moonstorm;
 namespace SS2.Modules
 {
     public sealed class Unlockables : UnlockablesModuleBase
@@ -26,7 +24,7 @@ namespace SS2.Modules
         protected override IEnumerable<UnlockableBase> GetUnlockableBases()
         {
             var allUnlocks = base.GetUnlockableBases();
-            if (SS2Config.UnlockAll)
+            if (SS2Config.unlockAll)
             {
                 RemoveAllNonSkinUnlocks();
                 allUnlocks = allUnlocks.Where(unlock => unlock.UnlockableDef.cachedName.Contains("skin"));
@@ -45,7 +43,7 @@ namespace SS2.Modules
             //This should load all the assets we have that:
             //Are not skin defs
             //Have a field that has an unlockableDef field.
-            var allAssets = SS2Assets.LoadAllAssetsOfType<UnityEngine.Object>(SS2Bundle.All)
+            var allAssets = SS2Assets.LoadAllAssets<UnityEngine.Object>(SS2Bundle.All)
                 .Where(asset => !(asset is SkinDef))
                 .Where(asset => asset.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                 .Where(fInfo =>

@@ -1,17 +1,10 @@
-﻿using HG;
-using Moonstorm.Components;
-using R2API;
-using RoR2;
+﻿using RoR2;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Networking;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using System;
-using UnityEngine.AddressableAssets;
-
-using Moonstorm;
 namespace SS2.Buffs
 {
     public sealed class AffixEmpyrean : BuffBase

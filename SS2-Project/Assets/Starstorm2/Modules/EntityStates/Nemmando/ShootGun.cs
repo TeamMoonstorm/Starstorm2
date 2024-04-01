@@ -1,5 +1,4 @@
-﻿using Moonstorm;
-using RoR2;
+﻿using RoR2;
 using UnityEngine;
 
 //Dont fix what isnt broken or something

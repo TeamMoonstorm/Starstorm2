@@ -2,18 +2,18 @@
 using RoR2;
 using RoR2.Items;
 
-using Moonstorm;
+using MSU;
 namespace SS2.Items
 {
     public sealed class RelicOfMass : ItemBase
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfMass", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of health increase. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Amount of health increase. (1 = 100%)")]
         [TokenModifier("SS2_ITEM_RELICOFMASS_DESC", StatTypes.MultiplyByN, 0, "100")]
         public static float healthIncrease = 1f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of which acceleration is divided by.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Amount of which acceleration is divided by.")]
         [TokenModifier("SS2_ITEM_RELICOFMASS_DESC", StatTypes.Default, 1)]
         public static float acclMult = 8f;
 

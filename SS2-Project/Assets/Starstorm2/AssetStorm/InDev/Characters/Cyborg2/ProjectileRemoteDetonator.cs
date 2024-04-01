@@ -1,11 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using RoR2.Projectile;
 using RoR2;
 using RoR2.Skills;
-using System;
-using Moonstorm;
 namespace SS2.Components
 {
     public class ProjectileRemoteDetonator : MonoBehaviour

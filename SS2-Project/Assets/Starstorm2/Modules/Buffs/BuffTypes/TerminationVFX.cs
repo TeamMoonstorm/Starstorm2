@@ -1,10 +1,5 @@
-﻿using Moonstorm.Components;
-using R2API;
-using RoR2;
-using System;
+﻿using RoR2;
 using UnityEngine;
-
-using Moonstorm;
 namespace SS2.Buffs
 {
     public sealed class BuffTerminationVFX : BuffBase

@@ -3,9 +3,7 @@ using UnityEngine;
 using RoR2.Skills;
 using System.Runtime.CompilerServices;
 using UnityEngine.AddressableAssets;
-using R2API;
 using System;
-using Moonstorm;
 namespace SS2.Survivors
 {
     public sealed class Chirr : SurvivorBase
@@ -19,12 +17,12 @@ namespace SS2.Survivors
 
         private static GameObject chirristmas;
 
-        [RooConfigurableField(SS2Config.IDSurvivor, ConfigDesc = "Can Weightless Frame be activated by toggling.")]
+        [RooConfigurableField(SS2Config.ID_SURVIVOR, ConfigDesc = "Can Weightless Frame be activated by toggling.")]
         public static bool toggleHover = false;
         public override void Initialize()
         {
             base.Initialize();
-            if (Starstorm.ScepterInstalled)
+            if (SS2Main.ScepterInstalled)
             {
                 ScepterCompat();
             }

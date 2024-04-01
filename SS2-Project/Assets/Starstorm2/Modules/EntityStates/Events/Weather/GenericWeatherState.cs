@@ -1,10 +1,6 @@
-﻿using SS2;
-using SS2.Buffs;
-using SS2.Components;
+﻿using SS2.Components;
 using RoR2;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace EntityStates.Events
 {

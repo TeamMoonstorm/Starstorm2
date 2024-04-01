@@ -1,9 +1,5 @@
 ﻿using SS2;
-using SS2.Components;
-using SS2.ScriptableObjects;
-using R2API.Networking.Interfaces;
 using RoR2;
-using RoR2.UI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

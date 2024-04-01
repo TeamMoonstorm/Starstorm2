@@ -1,8 +1,7 @@
-﻿using Moonstorm.Components;
-using R2API;
+﻿using R2API;
 using RoR2;
 
-using Moonstorm;
+using MSU;
 namespace SS2.Buffs
 {
     [DisabledContent]

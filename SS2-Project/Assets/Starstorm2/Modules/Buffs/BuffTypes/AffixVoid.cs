@@ -1,11 +1,8 @@
 ﻿using HG;
-using Moonstorm.Components;
 using RoR2;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-
-using Moonstorm;
 namespace SS2.Buffs
 {
     [DisabledContent]

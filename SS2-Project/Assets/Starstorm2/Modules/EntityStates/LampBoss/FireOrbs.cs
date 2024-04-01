@@ -1,7 +1,5 @@
 ﻿using RoR2;
 using RoR2.Projectile;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace EntityStates.LampBoss

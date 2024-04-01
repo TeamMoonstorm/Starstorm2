@@ -1,7 +1,5 @@
 ﻿using R2API;
 using RoR2;
-
-using Moonstorm;
 namespace SS2.Buffs
 {
     public sealed class Intoxicated : BuffBase

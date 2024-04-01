@@ -1,26 +1,24 @@
 ﻿using RoR2;
 using RoR2.Items;
 using UnityEngine;
-
-using Moonstorm;
 namespace SS2.Items
 {
-    
+
     public sealed class MoltenCoin : ItemBase
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("MoltenCoin", SS2Bundle.Items);
 
         public static GameObject impactEffect { get; } = SS2Assets.LoadAsset<GameObject>("MoltenCoinEffect", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance for Molten Coin to Proc. (100 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Chance for Molten Coin to Proc. (100 = 100%)")]
         [TokenModifier("SS2_ITEM_MOLTENCOIN_DESC", StatTypes.Default, 0)]
         public static float procChance = 6f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Base Damage per stack. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Base Damage per stack. (1 = 100%)")]
         [TokenModifier("SS2_ITEM_MOLTENCOIN_DESC", StatTypes.MultiplyByN, 1, "100")]
         public static float damageCoeff = 1f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Coin gain on proc. Scales with time. (1 = 1$)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Coin gain on proc. Scales with time. (1 = 1$)")]
         [TokenModifier("SS2_ITEM_MOLTENCOIN_DESC", StatTypes.Default, 2)]
         public static int coinGain = 1;
 

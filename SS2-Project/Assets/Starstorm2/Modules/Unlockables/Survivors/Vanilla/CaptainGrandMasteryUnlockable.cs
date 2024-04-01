@@ -1,7 +1,5 @@
 ﻿using RoR2;
 using UnityEngine;
-
-using Moonstorm;
 namespace SS2.Unlocks.VanillaSurvivors
 {
     public sealed class CaptainGrandMasteryUnlockable : UnlockableBase

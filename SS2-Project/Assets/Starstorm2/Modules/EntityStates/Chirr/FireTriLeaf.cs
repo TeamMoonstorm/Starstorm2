@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 using RoR2;
 using RoR2.Projectile;
 namespace EntityStates.Chirr
 {
-    
+
     public class FireTriLeaf : BaseSkillState
     {
         public static GameObject projectilePrefab;

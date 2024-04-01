@@ -1,11 +1,8 @@
-﻿using Assets.Starstorm2.Modules.EntityStates.Knight;
-using RoR2;
-using System.Collections;
-using System.Collections.Generic;
+﻿using RoR2;
 using UnityEngine;
 
-namespace Characters.Knight 
-{ 
+namespace Characters.Knight
+{
     public class SpawnPassive : MonoBehaviour
     {
         // Start is called before the first frame update

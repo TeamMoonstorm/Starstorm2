@@ -1,17 +1,10 @@
-﻿using R2API;
-using RoR2;
-using RoR2.Items;
+﻿using RoR2;
 using MonoMod.Cil;
 using Mono.Cecil.Cil;
 using RoR2.UI;
-using System.Text;
 using System;
 using UnityEngine;
 using System.Collections.Generic;
-using Moonstorm.Components;
-using static RoR2.Items.BaseItemBodyBehavior;
-
-using Moonstorm;
 namespace SS2.Items
 {
     [DisabledContent] //sorry groove
@@ -23,7 +16,7 @@ namespace SS2.Items
         private const string descToken = "SS2_ITEM_BABYTOYS_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("BabyToys", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Levels removed per stack.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Levels removed per stack.")]
         [TokenModifier(pickupToken, StatTypes.Default, 0)]
         [TokenModifier(descToken, StatTypes.Default, 0)]
         public static int levelReductionPerStack = 3;

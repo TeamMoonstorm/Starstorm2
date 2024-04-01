@@ -1,14 +1,4 @@
-﻿using Moonstorm;
-using SS2;
-using SS2.DamageTypes;
-using R2API;
-using RoR2;
-using RoR2.Projectile;
-using RoR2.Skills;
-using UnityEngine;
-using UnityEngine.Networking;
-
-namespace EntityStates.Agarthan
+﻿namespace EntityStates.Agarthan
 {
     class Bite : BasicMeleeAttack
     {

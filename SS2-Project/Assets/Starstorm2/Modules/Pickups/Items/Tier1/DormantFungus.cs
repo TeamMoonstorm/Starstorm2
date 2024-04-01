@@ -3,8 +3,6 @@ using RoR2;
 using RoR2.Items;
 using UnityEngine;
 using UnityEngine.Networking;
-
-using Moonstorm;
 namespace SS2.Items
 {
     //[DisabledContent]
@@ -13,11 +11,11 @@ namespace SS2.Items
         private const string token = "SS2_ITEM_DORMANTFUNGUS_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("DormantFungus", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Base amount of healing. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Base amount of healing. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float baseHealPercentage = 0.015f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of healing per stack. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Amount of healing per stack. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
         public static float stackHealPercentage = 0.015f;
         public override void Initialize()

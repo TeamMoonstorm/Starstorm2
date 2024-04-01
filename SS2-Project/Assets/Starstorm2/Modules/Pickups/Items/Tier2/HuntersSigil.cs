@@ -1,11 +1,8 @@
 ﻿using SS2.Components;
-using R2API;
 using RoR2;
 using RoR2.Items;
 using UnityEngine;
 using UnityEngine.Networking;
-
-using Moonstorm;
 namespace SS2.Items
 {
     public sealed class HuntersSigil : ItemBase
@@ -16,23 +13,23 @@ namespace SS2.Items
 
         public static GameObject SigilObject { get; set; } = SS2Assets.LoadAsset<GameObject>("SigilWard", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Base amount of extra armor added.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Base amount of extra armor added.")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float baseArmor = 20;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of extra armor added per stack.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Amount of extra armor added per stack.")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static float stackArmor = 10;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Base amount of extra damage added. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Base amount of extra damage added. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 2, operationData = 100)]
         public static float baseDamage = .2f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of extra damage added per stack. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Amount of extra damage added per stack. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 3, operationData = 100)]
         public static float stackDamage = .10f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius the effect is applied in.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Radius the effect is applied in.")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float radius = 8f;
 

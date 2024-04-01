@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
-using Moonstorm;
 namespace SS2.Modules
 {
     public class Elites : EliteModuleBase

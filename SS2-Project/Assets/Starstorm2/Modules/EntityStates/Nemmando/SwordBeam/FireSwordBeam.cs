@@ -1,5 +1,4 @@
-﻿using Moonstorm;
-using RoR2;
+﻿using RoR2;
 using RoR2.Projectile;
 using UnityEngine;
 

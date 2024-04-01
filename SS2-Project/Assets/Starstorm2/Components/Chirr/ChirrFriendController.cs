@@ -1,22 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using RoR2;
 using UnityEngine.Networking;
-using RoR2.CharacterAI;
-using EntityStates.AI.Walker;
-using UnityEngine.SceneManagement;
 using JetBrains.Annotations;
 using RoR2.UI;
 using System.Runtime.CompilerServices;
-
-using Moonstorm;
 namespace SS2.Components
 {
-	public class ChirrFriendController : MonoBehaviour
+    public class ChirrFriendController : MonoBehaviour
 	{
 		// this class is half supports-multiple-friends, half not. i need to be less indecisive.
 

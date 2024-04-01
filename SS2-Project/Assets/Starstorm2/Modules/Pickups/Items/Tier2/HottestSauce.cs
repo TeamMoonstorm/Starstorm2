@@ -3,7 +3,7 @@ using RoR2.Items;
 using System.Collections.Generic;
 using UnityEngine;
 
-using Moonstorm;
+using MSU;
 namespace SS2.Items
 {
     [DisabledContent]
@@ -13,11 +13,11 @@ namespace SS2.Items
         private const string token = "SS2_ITEM_HOTTESTSAUCE_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("HottestSauce", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius in which the hottest sauce deals damage, in meters.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Radius in which the hottest sauce deals damage, in meters.")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float radius = 30f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of the burn effect, in seconds.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Duration of the burn effect, in seconds.")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static float DOTDuration = 6f;
 

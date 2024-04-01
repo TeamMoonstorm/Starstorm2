@@ -1,13 +1,5 @@
 ﻿using RoR2;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using Moonstorm;
-using Moonstorm.Components;
 using R2API.ScriptableObjects;
-
-using Moonstorm;
 namespace SS2.Artifacts
 {
     //[DisabledContent]

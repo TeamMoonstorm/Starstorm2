@@ -1,14 +1,5 @@
-﻿using R2API;
-using R2API.Utils;
-using RoR2;
-using System.Collections;
-using System.Collections.Generic;
+﻿using RoR2;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
-
-using Moonstorm;
 namespace SS2.Components
 {
     public class StarstormBehavior : MonoBehaviour

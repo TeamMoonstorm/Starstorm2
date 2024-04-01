@@ -1,15 +1,13 @@
-﻿using Moonstorm.Config;
-using SS2.ScriptableObjects;
+﻿using SS2.ScriptableObjects;
 using System;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using RiskOfOptions.OptionConfigs;
 using Object = UnityEngine.Object;
-using BepInEx.Configuration;
-using static System.Collections.Specialized.BitVector32;
 
-using Moonstorm;
+using MSU;
+using System.Collections;
+
 namespace SS2
 {
     public static class Events
@@ -62,9 +60,9 @@ namespace SS2
             }
         }
 
-        public static void Init()
+        public static IEnumerator Init()
         {
-            if (EnableEvents) foreach (var evt in SS2Assets.LoadAllAssetsOfType<EventCard>(SS2Bundle.Events))
+            if (EnableEvents) foreach (var evt in SS2Assets.LoadAllAssets<EventCard>(SS2Bundle.Events))
             {
                 string name = evt.name;
                 var cfg = SS2Config.MakeConfigurableBool(true, b =>
@@ -84,7 +82,7 @@ namespace SS2
                     EventCatalog.AddCard(evt);
             }
 
-            if (EnableEvents) foreach (var edcs in SS2Assets.LoadAllAssetsOfType<EventDirectorCategorySelection>(SS2Bundle.Events))
+            if (EnableEvents) foreach (var edcs in SS2Assets.LoadAllAssets<EventDirectorCategorySelection>(SS2Bundle.Events))
             {
                 EventCatalog.AddCategory(edcs);
                 Debug.Log("added category: " + edcs.name);
@@ -111,6 +109,8 @@ namespace SS2
             }).DoConfigure();
 
             Moonstorm.Components.EventDirector.AddNewEntityStateMachine("Nemesis");
+
+            yield return null;
         }
 
         private static void StormOnMenu(Scene scene, LoadSceneMode mode)

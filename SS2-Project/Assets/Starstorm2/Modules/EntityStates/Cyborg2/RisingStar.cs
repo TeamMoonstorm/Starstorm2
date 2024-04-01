@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EntityStates;
 using RoR2;
 using UnityEngine;
 namespace EntityStates.Cyborg2

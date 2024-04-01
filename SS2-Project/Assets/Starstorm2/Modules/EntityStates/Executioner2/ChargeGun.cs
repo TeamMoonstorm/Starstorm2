@@ -1,12 +1,8 @@
 ﻿using SS2;
-using SS2.Orbs;
 using RoR2;
-using RoR2.Orbs;
 using RoR2.Skills;
-using System;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.Networking;
 
 namespace EntityStates.Executioner2
 {

@@ -1,12 +1,9 @@
 ﻿using R2API;
 using RoR2;
-using RoR2.Items;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using UnityEngine;
 using System;
-using SS2.Components;
-using Moonstorm;
 namespace SS2.Items
 {
     public sealed class Fork : ItemBase
@@ -15,7 +12,7 @@ namespace SS2.Items
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Fork", SS2Bundle.Items);
 
         //[RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Bonus base damage per fork. (1 = 1 base damage. Base damage for most characters is 12.)")]
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Bonus percent damage per fork. (1 = 1%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Bonus percent damage per fork. (1 = 1%)")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float percentDamageBonus = 8f;
         public override void Initialize()

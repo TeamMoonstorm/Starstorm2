@@ -1,11 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using RoR2;
-using SS2;
-using UnityEngine.Networking;
 using HG;
-using SS2.Components;
 
 namespace EntityStates.Lamp
 {

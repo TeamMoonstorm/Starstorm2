@@ -1,6 +1,4 @@
-﻿using SS2;
-using SS2.Components;
-using RoR2;
+﻿using RoR2;
 using UnityEngine.Networking;
 using static SS2.Interactables.DroneTable;
 

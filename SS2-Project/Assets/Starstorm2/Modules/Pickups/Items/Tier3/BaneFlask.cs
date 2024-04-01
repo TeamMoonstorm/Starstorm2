@@ -2,8 +2,6 @@
 using RoR2.Items;
 using System.Collections.Generic;
 using UnityEngine;
-
-using Moonstorm;
 namespace SS2.Items
 {
     [DisabledContent]
@@ -15,15 +13,15 @@ namespace SS2.Items
         public static DotController.DotIndex DotIndex;
         //public static float duration = 2;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Debuff Damage per Second. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Debuff Damage per Second. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float debuffDamage = .3f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of applied Bane debuff. (1 = 1 second)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Duration of applied Bane debuff. (1 = 1 second)")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static float debuffDuration = 5;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Range of on-death AOE. For reference, Gasoline's base range is 12m. (1 = 1m)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Range of on-death AOE. For reference, Gasoline's base range is 12m. (1 = 1m)")]
         [TokenModifier(token, StatTypes.Default, 2)]
         public static float aoeRange = 15;
 

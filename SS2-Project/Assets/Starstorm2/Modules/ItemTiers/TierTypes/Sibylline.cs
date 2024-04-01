@@ -1,14 +1,6 @@
-﻿using Moonstorm.Experimental;
-using RoR2;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-
-using Moonstorm;
 namespace SS2.ItemTiers
 {
     public class Sibylline : ItemTierBase

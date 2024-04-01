@@ -1,12 +1,9 @@
-﻿using BepInEx.Configuration;
-using Moonstorm.Config;
-using R2API.ScriptableObjects;
+﻿using R2API.ScriptableObjects;
 using System.Collections.Generic;
 using System.Linq;
 using RiskOfOptions.OptionConfigs;
-using static System.Collections.Specialized.BitVector32;
 
-using Moonstorm;
+using MSU;
 namespace SS2.Modules
 {
     public sealed class Equipments : EquipmentModuleBase

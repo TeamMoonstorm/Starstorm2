@@ -1,19 +1,11 @@
 ﻿using EntityStates;
 using EntityStates.DroneTable;
-using SS2.Components;
-using R2API;
 using RoR2;
 using RoR2.Items;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
-using UnityEngine.ResourceManagement.AsyncOperations;
-
-using Moonstorm;
 namespace SS2.Interactables
 {
     //[DisabledContent]

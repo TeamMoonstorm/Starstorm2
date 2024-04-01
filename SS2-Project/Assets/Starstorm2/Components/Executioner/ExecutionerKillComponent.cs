@@ -3,8 +3,6 @@ using SS2.Survivors;
 using RoR2;
 using RoR2.Orbs;
 using UnityEngine;
-
-using Moonstorm;
 namespace SS2.Components
 {
     public class ExecutionerKillComponent : MonoBehaviour, IOnKilledServerReceiver

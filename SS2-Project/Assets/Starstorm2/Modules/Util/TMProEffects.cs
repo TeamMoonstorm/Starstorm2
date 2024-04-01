@@ -1,12 +1,10 @@
 ﻿using System.Linq;
 using TMPro;
 using UnityEngine;
-
-using Moonstorm;
 namespace SS2
 {
     //ty for permission to use this Mystic :)
-    public static class TMProEffects
+    internal static class TMProEffects
     {
         public static void Init()
         {

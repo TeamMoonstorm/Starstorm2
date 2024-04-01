@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using RoR2;
-
-using Moonstorm;
 namespace SS2.Components
 {
-	[RequireComponent(typeof(InputBankTest))]
+    [RequireComponent(typeof(InputBankTest))]
 	[RequireComponent(typeof(CharacterBody))]
 	[RequireComponent(typeof(TeamComponent))]
 	public class NemMercTracker : MonoBehaviour

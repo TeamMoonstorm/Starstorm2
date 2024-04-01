@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using RoR2;
-
-using Moonstorm;
 namespace SS2.Components
 {
-	public class NemMercCloneTracker : NemMercTracker // this should absolutely just be in NemMercTracker but i wanted to see how inhereting monobehaviors worked
+    public class NemMercCloneTracker : NemMercTracker // this should absolutely just be in NemMercTracker but i wanted to see how inhereting monobehaviors worked
 	{
 		public override GameObject GetTrackingTarget()
 		{

@@ -1,15 +1,8 @@
-﻿using Moonstorm.Components;
-using R2API;
+﻿using R2API;
 using RoR2;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Moonstorm.Components.BaseBuffBodyBehavior;
 using UnityEngine;
 
-using Moonstorm;
+using MSU;
 namespace SS2.Buffs
 {
     public sealed class KnightSpecialPowerBuff : BuffBase

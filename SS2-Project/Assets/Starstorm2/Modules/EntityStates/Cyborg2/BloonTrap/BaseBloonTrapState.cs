@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RoR2;
-using RoR2.Projectile;
-using SS2.Components;
+﻿using RoR2.Projectile;
 namespace EntityStates.Cyborg2.BloonTrap
 {
     public class BaseBloonTrapState : BaseState

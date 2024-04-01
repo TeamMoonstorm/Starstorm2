@@ -2,11 +2,10 @@
 using R2API;
 using RoR2;
 using RoR2.Items;
-using System;
 using UnityEngine;
 using static SS2.Items.RelicOfTermination;
 
-using Moonstorm;
+using MSU;
 namespace SS2.Items
 {
     public sealed class TerminationHelper : ItemBase

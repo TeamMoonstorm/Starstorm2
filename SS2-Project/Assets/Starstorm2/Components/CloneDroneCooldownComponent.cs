@@ -1,11 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using RoR2;
-using UnityEngine.Networking;
 using UnityEngine.AddressableAssets;
-
-using Moonstorm;
 namespace SS2.Components
 {
     public class CloneDroneCooldownComponent : MonoBehaviour

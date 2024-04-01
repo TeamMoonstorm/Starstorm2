@@ -1,14 +1,10 @@
 ﻿using RoR2;
 using RoR2.Items;
 using RoR2.Orbs;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using R2API;
-using Moonstorm.Components;
-
-using Moonstorm;
 namespace SS2.Items
 {
     public sealed class Malice : ItemBase
@@ -16,25 +12,25 @@ namespace SS2.Items
         private const string token = "SS2_ITEM_MALICE_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Malice", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Total damage each Malice bounce deals. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Total damage each Malice bounce deals. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float damageCoeff = 0.25f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Number of bounces per stack.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Number of bounces per stack.")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static int bounceStack = 1;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius of Malice, in meters.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Radius of Malice, in meters.")]
         [TokenModifier(token, StatTypes.Default, 2)]
         public static float radiusBase = 12f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius of Malice per stack, in meters.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Radius of Malice per stack, in meters.")]
         [TokenModifier(token, StatTypes.Default, 3)]
         public static float radiusPerStack = 2.4f;
 
         
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Proc coefficient of damage dealt by Malice.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Proc coefficient of damage dealt by Malice.")]
         public static float procCo = 0.1f;
 
         //damage types should not be used as a substitute for proper proc chain masks, but it works here

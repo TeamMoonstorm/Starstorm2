@@ -1,10 +1,7 @@
 ﻿using RoR2;
 using UnityEngine;
-using RoR2.Skills;
 using System.Runtime.CompilerServices;
 using UnityEngine.AddressableAssets;
-
-using Moonstorm;
 namespace SS2.Survivors
 {
     [DisabledContent]
@@ -17,7 +14,7 @@ namespace SS2.Survivors
         public override void Initialize()
         {
             base.Initialize();
-            if (Starstorm.ScepterInstalled)
+            if (SS2Main.ScepterInstalled)
             {
                 //ScepterCompat();
             }

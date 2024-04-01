@@ -1,7 +1,5 @@
 ﻿using RoR2;
 using RoR2.Achievements;
-
-using Moonstorm;
 namespace SS2.Unlocks.Nemmando
 {
     public sealed class NemmandoBossAttackUnlockable : UnlockableBase

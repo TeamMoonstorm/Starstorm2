@@ -1,17 +1,8 @@
-﻿using EntityStates;
-using EntityStates.AI.Walker;
-using Mono.Cecil.Cil;
-using MonoMod.Cil;
-using Moonstorm.Components;
-using R2API;
-using R2API.Utils;
+﻿using R2API;
 using RoR2;
-using RoR2.CharacterAI;
-using System;
-using UnityEngine;
 
 
-using Moonstorm;
+using MSU;
 namespace SS2.Buffs
 {
     public sealed class Fear : BuffBase

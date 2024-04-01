@@ -6,7 +6,7 @@ using EntityStates.AI.Walker;
 using UnityEngine;
 using UnityEngine.Networking;
 
-using Moonstorm;
+using MSU;
 namespace SS2.Items
 {
     public sealed class ChirrFriendHelper : ItemBase

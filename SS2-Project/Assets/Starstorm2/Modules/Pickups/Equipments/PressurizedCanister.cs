@@ -1,9 +1,6 @@
 ﻿using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
-using static AkMIDIEvent;
-
-using Moonstorm;
 namespace SS2.Equipments
 {
     //[DisabledContent]

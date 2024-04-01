@@ -1,10 +1,8 @@
 ﻿using RoR2;
 using UnityEngine;
-using RoR2.Skills;
 using System.Runtime.CompilerServices;
 using UnityEngine.AddressableAssets;
 using R2API;
-using Moonstorm;
 namespace SS2.Survivors
 {
     public sealed class Cyborg2 : SurvivorBase
@@ -36,7 +34,7 @@ namespace SS2.Survivors
             GameObject g3 = SS2Assets.LoadAsset<GameObject>("ShockMine", SS2Bundle.Indev);
             g3.GetComponent<RoR2.Projectile.ProjectileDeployToOwner>().deployableSlot = shockMine;
 
-            if (Starstorm.ScepterInstalled)
+            if (SS2Main.ScepterInstalled)
             {
                 //ScepterCompat();
             }

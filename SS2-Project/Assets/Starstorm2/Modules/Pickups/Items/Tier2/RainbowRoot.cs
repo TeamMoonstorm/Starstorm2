@@ -2,9 +2,8 @@
 using RoR2;
 using RoR2.Items;
 using UnityEngine;
-using UnityEngine.Networking;
 
-using Moonstorm;
+using MSU;
 namespace SS2.Items
 {
 
@@ -12,15 +11,15 @@ namespace SS2.Items
     {
         private const string token = "SS2_ITEM_RAINBOWROOT_DESC";
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Base portion of damage prevented to be gained as barrier. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Base portion of damage prevented to be gained as barrier. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 100)]
         public static float baseAmount = .25f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Portion of damage prevented to be gained as barrier per stack. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Portion of damage prevented to be gained as barrier per stack. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 100)]
         public static float scalingAmount = .15f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of armor gained upon pickup. Does not scale with stack count. (1 = 1 armor)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Amount of armor gained upon pickup. Does not scale with stack count. (1 = 1 armor)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 100)]
         public static float baseArmor = 20;
 

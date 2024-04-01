@@ -1,11 +1,6 @@
-﻿using R2API;
-using RoR2;
+﻿using RoR2;
 using RoR2.Items;
-using RoR2.Projectile;
-using System.Linq;
 using UnityEngine;
-
-using Moonstorm;
 namespace SS2.Items
 {
     //[DisabledContent]
@@ -13,15 +8,15 @@ namespace SS2.Items
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ArmedBackpack", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Damage dealt by the missle per stack. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Damage dealt by the missle per stack. (1 = 100%)")]
         [TokenModifier("SS2_ITEM_ARMEDBACKPACK_DESC", StatTypes.MultiplyByN, 0, "100")]
         public static float backpackDamageCoeff = 4f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Proc multiplier per percentage of health lost. (1 = 100% of health fraction lost)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Proc multiplier per percentage of health lost. (1 = 100% of health fraction lost)")]
         [TokenModifier("SS2_ITEM_ARMEDBACKPACK_DESC", StatTypes.Default, 1)]
         public static float procMult = 2.5f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Minimum chance for fired missile. (1 = 1% chance)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Minimum chance for fired missile. (1 = 1% chance)")]
         [TokenModifier("SS2_ITEM_ARMEDBACKPACK_DESC", StatTypes.MultiplyByN, 2, "100")]
         public static float procMinimum = 0;
 

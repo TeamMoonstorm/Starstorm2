@@ -1,12 +1,9 @@
-﻿using SS2;
-using R2API.AddressReferencedAssets;
+﻿using R2API.AddressReferencedAssets;
 using RoR2;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-
-using Moonstorm;
 namespace SS2.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "NemesisInventory", menuName = "Starstorm2/NemesisInventory")]

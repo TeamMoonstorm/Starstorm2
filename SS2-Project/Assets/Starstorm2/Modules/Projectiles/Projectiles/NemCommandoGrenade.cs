@@ -1,9 +1,6 @@
 ﻿using RoR2.Projectile;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using static R2API.DamageAPI;
-
-using Moonstorm;
 namespace SS2.Projectiles
 {
     public sealed class NemCommandoGrenade : ProjectileBase

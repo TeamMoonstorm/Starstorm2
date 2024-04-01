@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-
-using Moonstorm;
 namespace SS2.Components
 {
     public class LerpParticleSystemEmission : MonoBehaviour

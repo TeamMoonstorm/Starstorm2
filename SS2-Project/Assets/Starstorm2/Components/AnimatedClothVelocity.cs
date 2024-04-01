@@ -1,7 +1,4 @@
 ﻿using UnityEngine;
-using Moonstorm.Components;
-
-using Moonstorm;
 namespace SS2.Components
 {
     [RequireComponent(typeof(Cloth))]

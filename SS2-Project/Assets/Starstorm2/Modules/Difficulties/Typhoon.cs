@@ -1,10 +1,7 @@
 ﻿using R2API;
-using R2API.Utils;
 using RoR2;
-using UnityEngine;
+using System.Collections;
 using UnityEngine.Networking;
-
-using Moonstorm;
 namespace SS2
 {
     public static class Typhoon
@@ -14,10 +11,10 @@ namespace SS2
 
         private static int defMonsterCap;
 
-        [RooConfigurableField(SS2Config.IDMain, ConfigSection = "Typhoon", ConfigName = "Increase Team Limit", ConfigDesc = "Multiplies the Monster, Lunar, and Void Team maximum size by 2 when enabled. May affect performance.")]
+        [RooConfigurableField(SS2Config.ID_MAIN, ConfigSection = "Typhoon", ConfigName = "Increase Team Limit", ConfigDesc = "Multiplies the Monster, Lunar, and Void Team maximum size by 2 when enabled. May affect performance.")]
         internal static bool IncreaseSpawnCap = true;
 
-        internal static void Init()
+        internal static IEnumerator Init()
         {
             TyphoonDef = SS2Assets.LoadAsset<R2API.ScriptableObjects.SerializableDifficultyDef>("Typhoon", SS2Bundle.Base);
             DifficultyAPI.AddDifficulty(TyphoonDef);

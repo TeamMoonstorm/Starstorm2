@@ -1,10 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
+﻿using UnityEngine;
 using RoR2;
-using RoR2.Projectile;
-using System.Linq;
 using SS2.Components;
 using EntityStates.Huntress;
 using SS2;

@@ -1,9 +1,6 @@
 ﻿using RoR2;
 using RoR2.Items;
 using UnityEngine;
-using static AkMIDIEvent;
-
-using Moonstorm;
 namespace SS2.Items
 {
     public sealed class Insecticide : ItemBase
@@ -11,15 +8,15 @@ namespace SS2.Items
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Insecticide", SS2Bundle.Items);
         public static DotController.DotIndex DotIndex;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Chance. (1 = 100%)")]
         [TokenModifier("SS2_ITEM_INSECTICIDE_DESC", StatTypes.MultiplyByN, 0, "100")]
         public static float chance = 1f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Total damage. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Total damage. (1 = 100%)")]
         [TokenModifier("SS2_ITEM_INSECTICIDE_DESC", StatTypes.MultiplyByN, 1, "100")]
         public static float damageCoeff = 1.8f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of poison.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Duration of poison.")]
         public static float duration = 3;
 
         public static GameObject hitEffect = SS2Assets.LoadAsset<GameObject>("InsecticideEffect", SS2Bundle.Items);

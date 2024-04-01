@@ -2,8 +2,6 @@
 using RoR2;
 using RoR2.Items;
 using UnityEngine;
-
-using Moonstorm;
 namespace SS2.Items
 {
     public sealed class DetritiveTrematode : ItemBase
@@ -11,15 +9,15 @@ namespace SS2.Items
         private const string token = "SS2_ITEM_DETRITIVETREMATODE_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("DetritiveTrematode", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigName = "Trematode Threshold", ConfigDesc = "Amount of missing health needed for Trematode to proc. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigName = "Trematode Threshold", ConfigDesc = "Amount of missing health needed for Trematode to proc. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float missingHealthPercentage = 0.30f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigName = "Trematode Threshold Per Stack", ConfigDesc = "Increase in missing health threshold, per stack. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigName = "Trematode Threshold Per Stack", ConfigDesc = "Increase in missing health threshold, per stack. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
         public static float missingHealthPercentagePerStack = 0.15f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Damage dealt by the Trematode debuff, per second. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Damage dealt by the Trematode debuff, per second. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
         public static float trematodeDamage = 1f;
 

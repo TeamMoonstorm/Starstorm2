@@ -1,9 +1,4 @@
-﻿using Moonstorm.Components;
-using R2API;
-using RoR2;
-using System;
-
-using Moonstorm;
+﻿using RoR2;
 namespace SS2.Buffs
 {
     public sealed class CoffeeBag : BuffBase

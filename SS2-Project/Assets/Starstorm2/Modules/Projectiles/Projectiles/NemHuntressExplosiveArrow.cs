@@ -1,9 +1,5 @@
-﻿using RoR2;
-using RoR2.Projectile;
-using UnityEngine;
+﻿using UnityEngine;
 using static R2API.DamageAPI;
-
-using Moonstorm;
 namespace SS2.Projectiles
 {
     public sealed class NemHuntressExplosiveArrow : ProjectileBase

@@ -1,10 +1,8 @@
 ﻿using RoR2;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace EntityStates.Lamp
-{ 
+{
     public class LampSpawn : GenericCharacterSpawnState
     {
         public static GameObject spawnVFX;

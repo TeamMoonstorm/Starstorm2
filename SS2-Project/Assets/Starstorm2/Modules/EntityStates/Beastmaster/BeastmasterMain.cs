@@ -1,12 +1,4 @@
-﻿using Moonstorm;
-using SS2.Components;
-using RoR2;
-using RoR2.CharacterAI;
-using RoR2.Skills;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-using UnityEngine.Networking;
+﻿using UnityEngine;
 
 namespace EntityStates.Beastmaster
 {

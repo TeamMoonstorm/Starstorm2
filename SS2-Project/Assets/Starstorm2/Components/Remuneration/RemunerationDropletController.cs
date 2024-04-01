@@ -1,14 +1,9 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using Unity;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Networking;
 using RoR2;
-
-using Moonstorm;
 namespace SS2.Components
 {
-	public class RemunerationDropletController : NetworkBehaviour
+    public class RemunerationDropletController : NetworkBehaviour
 	{
 		public static GameObject shopOptionPrefab;
 		public static GameObject dropletPrefab;

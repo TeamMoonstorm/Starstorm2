@@ -1,7 +1,5 @@
 ﻿using SS2.Components;
 using RoR2;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 

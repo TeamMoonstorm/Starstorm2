@@ -1,5 +1,4 @@
-﻿using Moonstorm;
-namespace SS2.Components
+﻿namespace SS2.Components
 {
     /*public class BorgController : MonoBehaviour
     {

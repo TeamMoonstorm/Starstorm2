@@ -1,22 +1,199 @@
-﻿using Moonstorm.Loaders;
-using R2API.ScriptableObjects;
-using RoR2;
+﻿using RoR2.ExpansionManagement;
 using RoR2.ContentManagement;
 using System;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
+using MSU;
+using RoR2;
+using UnityEditor;
+using System.Collections.Generic;
 
-using Moonstorm;
 namespace SS2
 {
-    public class SS2Content : ContentLoader<SS2Content>
+    public class SS2Content : IContentPackProvider
     {
+        public string identifier => SS2Main.GUID;
+        public static ReadOnlyContentPack ReadOnlyContentPack => new ReadOnlyContentPack(SS2ContentPack);
+        internal static ContentPack SS2ContentPack { get; private set; } = new ContentPack();
+
+        private static Func<IEnumerator>[] _loadDispatchers;
+        private static Func<IEnumerator>[] _fieldAssignDispatchers;
+        public IEnumerator LoadStaticContentAsync(LoadStaticContentAsyncArgs args)
+        {
+            var enumerator = SS2Assets.Initialize();
+            while (enumerator.MoveNext())
+                yield return null;
+
+            //Loadbearing Spike
+            if (!SS2Assets.LoadAsset<Texture2D>("spike", SS2Bundle.Main))
+            {
+                SS2Log.Fatal("Spike not found :c");
+                yield break;
+            }
+
+            var expansionRequest = SS2Assets.LoadAssetAsync<ExpansionDef>("SS2ExpansionDef", SS2Bundle.Main);
+            expansionRequest.StartLoad();
+
+            while (!expansionRequest.IsComplete)
+                yield return null;
+
+            SS2ContentPack.expansionDefs.AddSingle(expansionRequest.Asset);
+
+            SS2Config.RegisterToModSettingsManager();
+
+            for (int i = 0; i < _loadDispatchers.Length; i++)
+            {
+                args.ReportProgress(Util.Remap(i + 1, 0f, _loadDispatchers.Length, 0f, 0.05f));
+                enumerator = _loadDispatchers[i]();
+
+                while (enumerator.MoveNext()) yield return null;
+            }
+
+            for (int i = 0; i < _fieldAssignDispatchers.Length; i++)
+            {
+                args.ReportProgress(Util.Remap(i + 1, 0f, _fieldAssignDispatchers.Length, 0.95f, 0.99f));
+                enumerator = _fieldAssignDispatchers[i]();
+
+                while (enumerator.MoveNext()) yield return null;
+            }
+        }
+
+        public IEnumerator GenerateContentPackAsync(GetContentPackAsyncArgs args)
+        {
+            ContentPack.Copy(SS2ContentPack, args.output);
+            args.ReportProgress(1f);
+            yield return null;
+        }
+
+        public IEnumerator FinalizeAsync(FinalizeAsyncArgs args)
+        {
+            args.ReportProgress(1f);
+            yield break;
+        }
+
+        private void AddSelf(ContentManager.AddContentPackProviderDelegate addContentPackProvider)
+        {
+            addContentPackProvider(this);
+        }
+
+        private static IEnumerator LoadFromAssetBundles()
+        {
+            SS2Log.Info($"Populating EntityStateTypes array...");
+            SS2ContentPack.entityStateTypes.Add(typeof(SS2Content).Assembly.GetTypes().Where(type => typeof(EntityStates.EntityState).IsAssignableFrom(type)).ToArray());
+
+            SS2Log.Info("Populating EntityStateConfiguration array...");
+            SS2AssetRequest<EntityStateConfiguration> escRequest = new SS2AssetRequest<EntityStateConfiguration>(SS2Bundle.All);
+            escRequest.StartLoad();
+            while (!escRequest.IsComplete) yield return null;
+            SS2ContentPack.entityStateConfigurations.Add(escRequest.Assets.ToArray());
+
+            SS2Log.Info($"Populating EffectDefs array...");
+            SS2AssetRequest<GameObject> gameObjectRequest = new SS2AssetRequest<GameObject>(SS2Bundle.All);
+            gameObjectRequest.StartLoad();
+            while(!gameObjectRequest.IsComplete) yield return null;
+            SS2ContentPack.effectDefs.Add(gameObjectRequest.Assets.Where(go => go.GetComponent<EffectComponent>()).Select(go => new EffectDef(go)).ToArray());
+        }
+        internal SS2Content()
+        {
+            ContentManager.collectContentPackProviders += AddSelf;
+        }
+
+        static SS2Content()
+        {
+            SS2Main main = SS2Main.Instance;
+            _loadDispatchers = new Func<IEnumerator>[]
+            {
+                Typhoon.Init,
+                Events.Init,
+                //Bulwark.Init,
+                //Ethereal.Init,
+                Components.EtherealBehavior.Init,
+                Void.Init,
+                () =>
+                {
+                    //new Modules.Scenes().Initialize();
+                    return null;
+                },
+                () =>
+                {
+                    ItemTierModule.AddProvider(main, ContentUtil.AnalyzeForContentPieces<ItemTierDef>(main, SS2ContentPack));
+                    return ItemTierModule.InitializeTiers(main);
+                },
+                () =>
+                {
+                    ItemModule.AddProvider(main, ContentUtil.AnalyzeForContentPieces<ItemDef>(main, SS2ContentPack));
+                    return ItemModule.InitializeItems(main);
+                },
+                () =>
+                {
+                    EquipmentModule.AddProvider(main, ContentUtil.AnalyzeForContentPieces<EquipmentDef>(main, SS2ContentPack));
+                    return EquipmentModule.InitialzeEquipments(main);
+                },
+                () =>
+                {
+                    CharacterModule.AddProvider(main, ContentUtil.AnalyzeForGameObjectContentPieces<CharacterBody>(main, SS2ContentPack));
+                    return CharacterModule.InitializeCharacters(main);
+                },
+                () =>
+                {
+                    ArtifactModule.AddProvider(main, ContentUtil.AnalyzeForContentPieces<ArtifactDef>(main, SS2ContentPack));
+                    return ArtifactModule.InitializeArtifacts(main);
+                },
+                () =>
+                {
+                    InteractableModule.AddProvider(main, ContentUtil.AnalyzeForGameObjectContentPieces<IInteractable>(main, SS2ContentPack));
+                    return InteractableModule.InitializeInteractables(main);
+                },
+                LoadFromAssetBundles,
+            };
+
+            _fieldAssignDispatchers = new Func<IEnumerator>[]
+            {
+                () =>
+                {
+                    ContentUtil.PopulateTypeFields(typeof(Artifacts), SS2ContentPack.artifactDefs);
+                    return null;
+                },
+                () =>
+                {
+                    ContentUtil.PopulateTypeFields(typeof(Items), SS2ContentPack.itemDefs);
+                    return null;
+                },
+                () =>
+                {
+                    ContentUtil.PopulateTypeFields(typeof(Equipments), SS2ContentPack.equipmentDefs);
+                    return null;
+                },
+                () =>
+                {
+                    ContentUtil.PopulateTypeFields(typeof(Buffs), SS2ContentPack.buffDefs);
+                    return null;
+                },
+                () =>
+                {
+                    ContentUtil.PopulateTypeFields(typeof(Scenes), SS2ContentPack.sceneDefs);
+                    return null;
+                },
+                () =>
+                {
+                    ContentUtil.PopulateTypeFields(typeof(Survivors), SS2ContentPack.survivorDefs);
+                    return null;
+                },
+                () =>
+                {
+                    ContentUtil.PopulateTypeFields(typeof(ItemTierDefs), SS2ContentPack.itemTierDefs);
+                    return null;
+                }
+            };
+        }
+
         public static class Artifacts
         {
             public static ArtifactDef Cognation;
 
             public static ArtifactDef Havoc;
-            
+
             public static ArtifactDef Deviation;
 
             public static ArtifactDef Adversity;
@@ -142,7 +319,7 @@ namespace SS2
             public static ItemDef GildedAmulet;
 
             public static ItemDef ChucklingFungus;
-            
+
             public static ItemDef UniversalCharger;
 
             public static ItemDef UraniumHorseshoe;
@@ -176,7 +353,7 @@ namespace SS2
             public static EquipmentDef PressurizedCanister;
 
             public static EquipmentDef RockFruit;
-            
+
             public static EquipmentDef WhiteFlag;
         }
 
@@ -269,7 +446,7 @@ namespace SS2
             public static BuffDef bdCanJump;
 
             public static BuffDef bdExeMuteCharge;
-			
+
             public static BuffDef BuffTerminationCooldown;
 
             public static BuffDef BuffTerminationReady;
@@ -325,8 +502,11 @@ namespace SS2
         public static class Elites
         {
             public static EliteDef edPurple;
+
             public static EliteDef edKinetic;
+
             public static EliteDef edEmpyrean;
+
             public static EliteDef edEthereal;
         }
         public static class Scenes
@@ -335,13 +515,9 @@ namespace SS2
         }
         public static class Survivors
         {
-            //public static SurvivorDef SurvivorBorg;
-
             public static SurvivorDef SurvivorChirr;
 
             public static SurvivorDef SurvivorExecutioner;
-
-            //public static SurvivorDef SurvivorNemExe;
 
             public static SurvivorDef SurvivorNemmando;
 
@@ -350,149 +526,11 @@ namespace SS2
             public static SurvivorDef survivorNemCaptain;
 
             public static SurvivorDef survivorNemMerc;
-
-            //public static SurvivorDef SurvivorPyro;
         }
 
         public static class ItemTierDefs
         {
             public static ItemTierDef Sibylline;
-        }
-        public override string identifier => Starstorm.guid;
-
-        public override R2APISerializableContentPack SerializableContentPack { get; protected set; } = SS2Assets.LoadAsset<R2APISerializableContentPack>("ContentPack", SS2Bundle.Main);
-        public override Action[] LoadDispatchers { get; protected set; }
-
-        public override Action[] PopulateFieldsDispatchers { get; protected set; }
-
-        public override void Init()
-        {
-            base.Init();
-
-            Typhoon.Init();
-            Events.Init();
-
-            //Bulwark.Init();
-
-            //Ethereal.Init();
-            Components.EtherealBehavior.Init();
-
-            Void.Init();
-
-            LoadDispatchers = new Action[]
-            {
-                delegate
-                {
-                    new Modules.Scenes().Initialize();
-                },
-                delegate
-                {
-                    new Modules.ItemTiers().Initialize();
-                },
-                delegate
-                {
-                    new Modules.Items().Initialize();
-                },
-                delegate
-                {
-                    new Modules.Equipments().Initialize();
-                },
-                delegate
-                {
-                    new Modules.Buffs().Initialize();
-                },
-                delegate
-                {
-                    new Modules.DamageTypes().Initialize();
-                },
-                delegate
-                {
-                    new Modules.Projectiles().Initialize();
-                },
-                delegate
-                {
-                    new Modules.Elites().Initialize();
-                },
-                delegate
-                {
-                    new Modules.Characters().Initialize();
-                },
-                delegate
-                {
-                    new Modules.Artifacts().Initialize();
-                },
-                delegate
-                {
-                    new Modules.Interactables().Initialize();
-                },
-                delegate
-                {
-                    new Modules.Unlockables().Initialize();
-                },
-                delegate
-                {
-                    SS2Log.Info($"Populating entity state array");
-                    GetType().Assembly.GetTypes()
-                                      .Where(type => typeof(EntityStates.EntityState).IsAssignableFrom(type))
-                                      .ToList()
-                                      .ForEach(state => HG.ArrayUtils.ArrayAppend(ref SerializableContentPack.entityStateTypes, new EntityStates.SerializableEntityStateType(state)));
-                },
-                delegate
-                {
-                    SS2Log.Info($"Populating EntityStateConfigurations");
-                    SerializableContentPack.entityStateConfigurations = SS2Assets.LoadAllAssetsOfType<EntityStateConfiguration>(SS2Bundle.All);
-                },
-                delegate
-                {
-                    SS2Log.Info($"Populating effect prefabs");
-                    SerializableContentPack.effectPrefabs = SerializableContentPack.effectPrefabs.Concat(SS2Assets.LoadAllAssetsOfType<GameObject>(SS2Bundle.All)
-                    .Where(go => go.GetComponent<EffectComponent>()))
-                    .ToArray();
-                },
-                delegate
-                {
-                    SS2Log.Info($"Swapping material shaders");
-                    SS2Assets.Instance.SwapMaterialShaders();
-                    SS2Assets.Instance.FinalizeCopiedMaterials();
-                    SS2Log.Info($"Finished swapping material shaders");
-                }
-            };
-
-            PopulateFieldsDispatchers = new Action[]
-            {
-                delegate
-                {
-                    PopulateTypeFields(typeof(Artifacts), ContentPack.artifactDefs);
-                },
-                delegate
-                {
-                    PopulateTypeFields(typeof(Items), ContentPack.itemDefs);
-                },
-                delegate
-                {
-                    PopulateTypeFields(typeof(Equipments), ContentPack.equipmentDefs);
-                },
-                delegate
-                {
-                    PopulateTypeFields(typeof(Buffs), ContentPack.buffDefs);
-                },
-                delegate
-                {
-                    PopulateTypeFields(typeof(Elites), ContentPack.eliteDefs);
-                },
-                delegate
-                {
-                    PopulateTypeFields(typeof(Scenes), ContentPack.sceneDefs);
-                },
-                delegate
-                {
-                    PopulateTypeFields(typeof(Survivors), ContentPack.survivorDefs);
-                },
-                delegate
-                {
-                    PopulateTypeFields(typeof(ItemTierDefs), ContentPack.itemTierDefs);
-                }
-            };
         }
     }
 }

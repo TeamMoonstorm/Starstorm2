@@ -1,13 +1,11 @@
 ﻿using JetBrains.Annotations;
 using RoR2;
 using RoR2.Skills;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Starstorm2.ScriptableObjects
 {
-	[CreateAssetMenu(menuName = "Starstorm2/SkillDef/SS2ReloadSkillDef")]
+    [CreateAssetMenu(menuName = "Starstorm2/SkillDef/SS2ReloadSkillDef")]
 	public class SS2ReloadSkillDef : ReloadSkillDef
 	{
 		public override void OnFixedUpdate([NotNull] GenericSkill skillSlot)

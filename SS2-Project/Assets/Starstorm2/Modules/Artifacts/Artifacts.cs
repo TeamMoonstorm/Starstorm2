@@ -3,9 +3,6 @@ using R2API.ScriptableObjects;
 using RoR2;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
-
-using Moonstorm;
 namespace SS2.Modules
 {
     public sealed class Artifacts : ArtifactModuleBase

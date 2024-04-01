@@ -1,7 +1,4 @@
-﻿using RoR2;
-using UnityEngine;
-
-namespace EntityStates.Executioner2
+﻿namespace EntityStates.Executioner2
 {
     public class AimIonGunOld : BaseSkillState
     {

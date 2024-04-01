@@ -1,12 +1,6 @@
-﻿using Moonstorm.Experimental;
-using R2API.ScriptableObjects;
-using System;
+﻿using R2API.ScriptableObjects;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Moonstorm;
 namespace SS2.Modules
 {
     public sealed class ItemTiers : ItemTierModuleBase

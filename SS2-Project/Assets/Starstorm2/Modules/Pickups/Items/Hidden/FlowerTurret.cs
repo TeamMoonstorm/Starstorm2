@@ -1,9 +1,6 @@
-﻿using R2API;
-using RoR2;
+﻿using RoR2;
 using RoR2.Items;
 using UnityEngine;
-using System;
-using Moonstorm;
 namespace SS2.Items
 {
     public sealed class FlowerTurret : ItemBase

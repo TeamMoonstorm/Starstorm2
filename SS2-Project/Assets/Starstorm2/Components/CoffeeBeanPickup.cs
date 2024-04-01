@@ -1,12 +1,10 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Networking;
 using RoR2;
 using SS2.Items;
-using Moonstorm;
 namespace SS2.Components
 {
-	public class CoffeeBeanPickup : MonoBehaviour
+    public class CoffeeBeanPickup : MonoBehaviour
 	{
 		private void OnTriggerStay(Collider other)
 		{

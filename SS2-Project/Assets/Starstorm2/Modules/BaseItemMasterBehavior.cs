@@ -1,20 +1,15 @@
-﻿using Moonstorm;
-using RoR2;
+﻿using RoR2;
 using System;
 using UnityEngine;
 using UnityEngine.Networking;
-using R2API;
 using RoR2.Items;
 using System.Collections.Generic;
 using HG;
-using HG.Reflection;
 using JetBrains.Annotations;
 using System.Reflection;
-
-using Moonstorm;
 namespace SS2
 {
-	public abstract class BaseItemMasterBehavior : MonoBehaviour
+    public abstract class BaseItemMasterBehavior : MonoBehaviour
 	{
 		public CharacterMaster master { get; private set; }
 

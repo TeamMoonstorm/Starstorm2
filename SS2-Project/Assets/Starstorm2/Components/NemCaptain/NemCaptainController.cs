@@ -2,18 +2,12 @@
 using RoR2.HudOverlay;
 using RoR2.Skills;
 using RoR2.UI;
-using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
-using TMPro;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-using EntityStates;
-
-using Moonstorm;
 namespace SS2.Components
 {
     public class NemCaptainController : NetworkBehaviour, IOnTakeDamageServerReceiver, IOnDamageDealtServerReceiver, IOnKilledOtherServerReceiver

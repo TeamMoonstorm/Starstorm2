@@ -7,7 +7,6 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections.Generic;
 using RoR2.Networking;
-using Moonstorm;
 namespace SS2.Components
 {
     //bastardized vehicleseat

@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 using RoR2;
 using UnityEngine.UI;
-
-using Moonstorm;
 namespace SS2.Components
 {
-	[RequireComponent(typeof(EffectComponent))]
+    [RequireComponent(typeof(EffectComponent))]
 	public class SuckedOffOrbEffect : MonoBehaviour
 	{
 		private void Start()

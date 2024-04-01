@@ -1,7 +1,5 @@
 ﻿using RoR2;
 using System.Collections.Generic;
-
-using Moonstorm;
 namespace SS2.Equipments
 {
     [DisabledContent]

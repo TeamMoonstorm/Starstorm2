@@ -1,13 +1,9 @@
 ﻿using EntityStates;
 using RoR2;
-using System;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using EntityStates.Chirr;
 using System.Collections.Generic;
-using Moonstorm;
 namespace SS2.Components
 {
     [RequireComponent(typeof(GrabController))]

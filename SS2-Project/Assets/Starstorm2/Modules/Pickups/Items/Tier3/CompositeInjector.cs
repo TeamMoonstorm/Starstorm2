@@ -6,15 +6,12 @@ using System;
 using System.Text;
 using TMPro;
 using MonoMod.RuntimeDetour;
-using R2API;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using System.Collections.Generic;
-using UnityEngine.Networking;
-using Moonstorm;
 namespace SS2.Items
 {
-	// welcome to hell
+    // welcome to hell
     public sealed class CompositeInjector : ItemBase
     {
         private const string token = "SS2_ITEM_COMPOSITEINJECTOR_DESC";

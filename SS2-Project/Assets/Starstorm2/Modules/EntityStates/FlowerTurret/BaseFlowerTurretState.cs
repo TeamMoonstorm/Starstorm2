@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using RoR2;
 using UnityEngine;
 using SS2;
 
 namespace EntityStates.FlowerTurret
 {
-	public abstract class BaseFlowerTurretState : EntityState
+    public abstract class BaseFlowerTurretState : EntityState
 	{
 		protected NetworkedBodyAttachment networkedBodyAttachment;
 		protected CharacterBody body;

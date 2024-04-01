@@ -5,7 +5,7 @@ using UnityEngine;
 using RoR2.Orbs;
 using System.Collections.Generic;
 using System.Linq;
-using Moonstorm;
+using MSU;
 namespace SS2.Items
 {
 
@@ -22,19 +22,19 @@ namespace SS2.Items
         private const string token = "SS2_ITEM_ERRATICGADGET_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ErraticGadget", SS2Bundle.Items);
       
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance on hit to fire lightning. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Chance on hit to fire lightning. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float procChance = 0.1f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Damage coefficient of Erratic Gadget's lightning proc. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Damage coefficient of Erratic Gadget's lightning proc. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
         public static float damageCoefficient = 3f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Number of targets for Erratic Gadget's lightning proc, per stack.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Number of targets for Erratic Gadget's lightning proc, per stack.")]
         [TokenModifier(token, StatTypes.Default, 2)]
         public static int bounceTargets = 1;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Damage multiplier for Erratic Gadget's doubled lightning.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Damage multiplier for Erratic Gadget's doubled lightning.")]
         public static int repeatDamageMultiplier = 1;
 
         public static GameObject orbEffectPrefab = SS2Assets.LoadAsset<GameObject>("GadgetOrbEffect", SS2Bundle.Items);

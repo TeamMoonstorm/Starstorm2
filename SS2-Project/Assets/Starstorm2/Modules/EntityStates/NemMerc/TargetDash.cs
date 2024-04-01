@@ -2,15 +2,13 @@
 using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
-using EntityStates.Merc;
-using SS2.Components;
 using R2API;
 using SS2;
 
 namespace EntityStates.NemMerc
 {
-	//copy pasted merc assaulter
-	public class TargetDash : BaseSkillState
+    //copy pasted merc assaulter
+    public class TargetDash : BaseSkillState
 	{
 		public bool hasHit;
 		public bool dashVectorLocked;

@@ -1,13 +1,11 @@
-﻿using System;
-using EntityStates;
-using UnityEngine;
+﻿using UnityEngine;
 using RoR2;
 using UnityEngine.Networking;
 using SS2.Components;
 namespace EntityStates.Chirr
 {
-	// probably worth to turn this into a general-use "body launch" state, and set the parameters when instantiating the state.
-	public class DroppedState : BaseState
+    // probably worth to turn this into a general-use "body launch" state, and set the parameters when instantiating the state.
+    public class DroppedState : BaseState
 	{
 		public static float bounceForce = 2000f;
 		public static float force = 800f;

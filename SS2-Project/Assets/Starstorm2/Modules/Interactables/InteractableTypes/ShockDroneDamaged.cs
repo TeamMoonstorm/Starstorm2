@@ -1,14 +1,7 @@
-﻿using EntityStates;
-using SS2.Components;
-using R2API;
-using RoR2;
-using System.Linq;
+﻿using RoR2;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.AddressableAssets;
 using System.Collections.Generic;
-
-using Moonstorm;
 namespace SS2.Interactables
 {
     //[DisabledContent]

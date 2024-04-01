@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using RoR2.UI;
 using System.Collections;
 
-using Moonstorm;
+using MSU;
 namespace SS2.Items
 {
     [DisabledContent]
@@ -17,19 +17,19 @@ namespace SS2.Items
 
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfEchelon", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Equipment cooldown increase per use, per stack.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Equipment cooldown increase per use, per stack.")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float cooldownIncrease = .15f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Base amount of additional base damage added.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Base amount of additional base damage added.")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static float damageBonus = 150;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Base amount of additional base health added.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Base amount of additional base health added.")]
         [TokenModifier(token, StatTypes.Default, 2)]
         public static float healthBonus = 5000;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of the Echelon buff. Does not scale with stacks. (1 = 1 second)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Duration of the Echelon buff. Does not scale with stacks. (1 = 1 second)")]
         [TokenModifier(token, StatTypes.Default, 3)]
         public static float buffDuration = 8;
 

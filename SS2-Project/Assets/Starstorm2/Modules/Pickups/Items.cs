@@ -1,21 +1,18 @@
 ﻿using BepInEx;
-using BepInEx.Configuration;
-using Moonstorm.Config;
 using R2API.ScriptableObjects;
 using RoR2;
 using System.Collections.Generic;
 using System.Linq;
 using RiskOfOptions.OptionConfigs;
-using static System.Collections.Specialized.BitVector32;
 
-using Moonstorm;
+using MSU;
 namespace SS2.Modules
 {
     public sealed class Items : ItemModuleBase
     {
         public static Items Instance { get; private set; }
 
-        public BaseUnityPlugin MainClass => Starstorm.instance;
+        public BaseUnityPlugin MainClass => SS2Main.instance;
         public override R2APISerializableContentPack SerializableContentPack => SS2Content.Instance.SerializableContentPack;
 
         public static ConfigurableBool EnableItems = SS2Config.MakeConfigurableBool(true, b =>

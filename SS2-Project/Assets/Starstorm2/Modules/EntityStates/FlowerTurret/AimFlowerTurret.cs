@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
 namespace EntityStates.FlowerTurret
 {
-	public class AimFlowerTurret : BaseFlowerTurretState
+    public class AimFlowerTurret : BaseFlowerTurretState
 	{
 		public static float minDuration = 0f;
 		public static float maxEnemyDistanceToStartFiring = 25f;

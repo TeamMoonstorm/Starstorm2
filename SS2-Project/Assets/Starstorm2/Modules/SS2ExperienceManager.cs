@@ -1,23 +1,15 @@
-﻿using Moonstorm;
-using RoR2;
+﻿using RoR2;
 using System;
 using UnityEngine;
 using UnityEngine.Networking;
 using R2API;
-using RoR2.Items;
 using System.Collections.Generic;
-using HG;
-using HG.Reflection;
-using JetBrains.Annotations;
-using System.Reflection;
 using MonoMod.Cil;
 using Mono.Cecil.Cil;
 using RoR2.UI;
 using R2API.Networking.Interfaces;
 using R2API.Networking;
 using UnityEngine.UI;
-
-using Moonstorm;
 namespace SS2
 {
     //Note from groove - I promise the voices had no say in the creation of this class, it seemed like the best way to handle it
@@ -25,7 +17,7 @@ namespace SS2
     public static class SS2ExperienceManager
 	{
         //exp visuals mostly added to make the exp items feel cooler
-        [RooConfigurableField(SS2Config.IDMisc, ConfigSection = "Visuals", ConfigName = "Improved Experience Visuals", ConfigDesc = "Enable the new experience visuals?")]
+        [RooConfigurableField(SS2Config.ID_MISC, ConfigSection = "Visuals", ConfigName = "Improved Experience Visuals", ConfigDesc = "Enable the new experience visuals?")]
         public static bool enableNewExperienceVisuals = true;
 
         public static Dictionary<CharacterMaster, ulong> masterToFoundExperience = new Dictionary<CharacterMaster, ulong>();

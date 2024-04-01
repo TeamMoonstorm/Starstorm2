@@ -1,10 +1,7 @@
-﻿using Moonstorm.Components;
-using RoR2;
+﻿using RoR2;
 using UnityEngine.Networking;
 using UnityEngine;
 using RoR2.Projectile;
-
-using Moonstorm;
 namespace SS2.Buffs
 {
     public sealed class AffixPurple : BuffBase

@@ -1,10 +1,8 @@
 ﻿using RoR2;
 using RoR2.Items;
-using System;
 using UnityEngine;
-using UnityEngine.Networking;
 
-using Moonstorm;
+using MSU;
 namespace SS2.Items
 {
     // needs sound
@@ -13,11 +11,11 @@ namespace SS2.Items
         private const string token = "SS2_ITEM_NEEDLES_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Needles", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance for the debuff to be applied on hit. (1 = 1%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Chance for the debuff to be applied on hit. (1 = 1%)")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float procChance = 4;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of guaranteed critical hits per stack of this item. (1 = 1 critical hit per stack before the buff is cleared)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Amount of guaranteed critical hits per stack of this item. (1 = 1 critical hit per stack before the buff is cleared)")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static int critsPerStack = 3;
 

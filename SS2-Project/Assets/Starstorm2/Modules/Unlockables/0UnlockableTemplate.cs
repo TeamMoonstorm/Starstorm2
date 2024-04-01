@@ -1,7 +1,7 @@
 ﻿/*using RoR2;
 using RoR2.Achievements;
 
-using Moonstorm;
+using MSU;
 namespace SS2.Unlocks
 {
     public sealed class EmptyUnlockable : UnlockableBase

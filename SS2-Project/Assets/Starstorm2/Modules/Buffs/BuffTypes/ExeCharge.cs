@@ -1,10 +1,7 @@
-﻿using Moonstorm.Components;
-using RoR2;
+﻿using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
-
-using Moonstorm;
 namespace SS2.Buffs
 {
     public sealed class ExeCharge : BuffBase

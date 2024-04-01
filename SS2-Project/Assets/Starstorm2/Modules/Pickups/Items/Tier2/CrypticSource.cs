@@ -1,9 +1,6 @@
 ﻿using RoR2;
 using RoR2.Items;
 using UnityEngine;
-using System.Collections.Generic;
-
-using Moonstorm;
 namespace SS2.Items
 {
 
@@ -15,19 +12,19 @@ namespace SS2.Items
         public static GameObject readyEffectPrefab { get; } = SS2Assets.LoadAsset<GameObject>("CrypticSourceReady", SS2Bundle.Items);
         public static GameObject explosionEffectPrefab { get; } = SS2Assets.LoadAsset<GameObject>("CrypticSourceExplosion", SS2Bundle.Items);
        
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius of the energy burst, in meters.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Radius of the energy burst, in meters.")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float baseRadius = 15f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius of the energy burst per stack, in meters.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Radius of the energy burst per stack, in meters.")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static float stackRadius = 3f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Base damage of the energy burst, per stack. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Base damage of the energy burst, per stack. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
         public static float damageCoefficient = 2.5f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Proc coefficient of the energy burst.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Proc coefficient of the energy burst.")]
         public static float procCoefficient = 1f;
 
         public static float minimumSprintDistance = 12.5f;

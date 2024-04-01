@@ -1,7 +1,5 @@
 ﻿using RoR2;
 using UnityEngine;
-
-using Moonstorm;
 namespace SS2.Survivors
 {
     [DisabledContent]
@@ -27,7 +25,7 @@ namespace SS2.Survivors
     }
 }
 
-/*using Moonstorm;
+/*using MSU;
 namespace SS2.Survivors
 {
     internal class Borg : SurvivorBase

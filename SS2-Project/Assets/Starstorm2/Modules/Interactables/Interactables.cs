@@ -1,10 +1,9 @@
-﻿using Moonstorm.Config;
-using R2API.ScriptableObjects;
+﻿using R2API.ScriptableObjects;
 using System.Collections.Generic;
 using System.Linq;
 using RiskOfOptions.OptionConfigs;
 
-using Moonstorm;
+using MSU;
 namespace SS2.Modules
 {
     public sealed class Interactables : InteractableModuleBase

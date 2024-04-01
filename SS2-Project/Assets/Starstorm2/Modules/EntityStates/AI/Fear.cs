@@ -1,12 +1,10 @@
-﻿using System;
-using RoR2;
-using RoR2.CharacterAI;
+﻿using RoR2.CharacterAI;
 using RoR2.Navigation;
 using UnityEngine;
 using SS2;
 namespace EntityStates.AI.Walker
 {
-	public class Fear : BaseAIState
+    public class Fear : BaseAIState
 	{
 		public GameObject fearTarget;
 

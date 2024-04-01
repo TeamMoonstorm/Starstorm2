@@ -1,31 +1,28 @@
-﻿using Mono.Cecil.Cil;
-using MonoMod.Cil;
-using R2API;
+﻿using R2API;
 using RoR2;
 using RoR2.Items;
-using System;
 using System.Collections;
 using UnityEngine;
 
-using Moonstorm;
+using MSU;
 namespace SS2.Items
 {
     public sealed class RelicOfForce : ItemBase
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfForce", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Attack speed reduction and cooldown increase per stack. (1 = 100% slower attack speed and longer cooldowns)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Attack speed reduction and cooldown increase per stack. (1 = 100% slower attack speed and longer cooldowns)")]
         [TokenModifier("SS2_ITEM_RELICOFFORCE_DESC", StatTypes.MultiplyByN, 0, "100")]
         public static float forcePenalty = .4f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Delay between additional hits. (1 = 1 second)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Delay between additional hits. (1 = 1 second)")]
         public static float hitDelay = .2f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Increased damage per additional hits. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Increased damage per additional hits. (1 = 100%)")]
         [TokenModifier("SS2_ITEM_RELICOFFORCE_DESC", StatTypes.MultiplyByN, 1, "100")]
         public static float hitIncrease = .05f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Increased damage cap for additional hits. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Increased damage cap for additional hits. (1 = 100%)")]
         [TokenModifier("SS2_ITEM_RELICOFFORCE_DESC", StatTypes.MultiplyByN, 2, "100")]
         public static float hitMax = 1f;
 
@@ -33,7 +30,7 @@ namespace SS2.Items
 
         override public void Initialize()
         {
-            if (!Starstorm.GOTCEInstalled)
+            if (!SS2Main.GOTCEInstalled)
             {
                 On.RoR2.GenericSkill.CalculateFinalRechargeInterval += ForceSkillFinalRecharge; //since this hook is exactly one from gotce, let's not run it twice
             }

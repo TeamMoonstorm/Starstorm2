@@ -1,8 +1,5 @@
 ﻿using RoR2;
 using UnityEngine;
-using Moonstorm.Components;
-
-using Moonstorm;
 namespace SS2.Components
 {
     public class RotateToWind : MonoBehaviour

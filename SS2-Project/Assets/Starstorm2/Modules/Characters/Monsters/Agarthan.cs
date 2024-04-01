@@ -1,8 +1,5 @@
-﻿using RoR2;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-
-using Moonstorm;
 namespace SS2.Monsters
 {
     [DisabledContent]

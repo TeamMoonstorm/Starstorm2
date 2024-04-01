@@ -1,14 +1,11 @@
-﻿using System;
-using RoR2;
+﻿using RoR2;
 using RoR2.Orbs;
 using UnityEngine;
-using System.Collections.Generic;
-using SS2;
 using UnityEngine.Networking;
 using SS2.Components;
 namespace EntityStates.FlowerTurret
 {
-	public class FireFlowerTurret : BaseFlowerTurretState
+    public class FireFlowerTurret : BaseFlowerTurretState
 	{
 		public static float baseDuration = 1f;
 		public static float damageCoefficient = 1f;

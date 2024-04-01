@@ -2,8 +2,6 @@
 using RoR2.Achievements;
 using UnityEngine;
 using System;
-
-using Moonstorm;
 namespace SS2.Unlocks.NemMercenary
 {
     public sealed class NemMercenarySlideUnlock : UnlockableBase

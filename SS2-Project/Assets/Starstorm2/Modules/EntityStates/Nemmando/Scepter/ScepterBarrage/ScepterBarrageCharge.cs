@@ -1,5 +1,4 @@
 ﻿using RoR2;
-using SS2;
 using UnityEngine;
 using System.Collections.Generic;
 

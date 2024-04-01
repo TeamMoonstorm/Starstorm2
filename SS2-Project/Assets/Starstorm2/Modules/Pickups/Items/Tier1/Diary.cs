@@ -1,13 +1,6 @@
-﻿using R2API.Networking.Interfaces;
-using R2API.Networking;
-using RoR2;
-using RoR2.Items;
-using System;
+﻿using RoR2;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
-
-using Moonstorm;
 namespace SS2.Items
 {
     public sealed class Diary : ItemBase
@@ -15,7 +8,7 @@ namespace SS2.Items
         private const string token = "SS2_ITEM_DIARY_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Diary", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Number of levels gained when Empty Diary is consumed.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Number of levels gained when Empty Diary is consumed.")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static int extraLevels = 3;
         public sealed class Behavior : BaseItemMasterBehavior

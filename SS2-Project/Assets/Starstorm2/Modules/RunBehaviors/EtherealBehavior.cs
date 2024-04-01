@@ -2,13 +2,10 @@
 using R2API.Utils;
 using RoR2;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
-
-using Moonstorm;
 namespace SS2.Components
 {
     //if this code looks stupid in any form of the word, please let me know -★
@@ -29,7 +26,7 @@ namespace SS2.Components
 
         public bool adversityEnabled;
 
-        internal static void Init()
+        internal static IEnumerator Init()
         {
             //Initialize trader trading
             TraderController.Initialize();
@@ -46,12 +43,14 @@ namespace SS2.Components
             //Initialize related prefabs
             shrinePrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("ShrineEthereal", SS2Bundle.Indev), "EtherealSapling", true);
             shrinePrefab.RegisterNetworkPrefab();
-            portalPrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("PortalStranger1", SS2Bundle.Stages), "StrangerPortal", true);
+            portalPrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("PortalStranger1", SS2Bundle.SharedStages), "StrangerPortal", true);
             portalPrefab.RegisterNetworkPrefab();
 
             //Add teleporter upgrading component to teleporters
             Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/Teleporter1.prefab").WaitForCompletion().AddComponent<TeleporterUpgradeController>();
             Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/LunarTeleporter Variant.prefab").WaitForCompletion().AddComponent<TeleporterUpgradeController>();
+
+            yield return null;
         }    
 
         private void Awake()

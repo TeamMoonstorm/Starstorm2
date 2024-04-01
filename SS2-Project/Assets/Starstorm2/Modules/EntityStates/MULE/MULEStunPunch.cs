@@ -1,14 +1,7 @@
-﻿using Moonstorm;
-using RoR2;
+﻿using RoR2;
 using RoR2.Skills;
 using UnityEngine;
 using UnityEngine.Networking;
-using System;
-using UnityEngine;
-using UnityEngine.Animations;
-using System.Runtime.CompilerServices;
-using EntityStates;
-using RoR2;
 
 namespace EntityStates.MULE
 {

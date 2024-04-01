@@ -1,9 +1,6 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
-
-
-using Moonstorm;
 namespace SS2.PostProcess
 {
     [PostProcess(typeof(SS2SobelOutlineRenderer), PostProcessEvent.BeforeTransparent, "SS2/SobelOutline", true)]

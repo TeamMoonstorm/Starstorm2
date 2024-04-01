@@ -1,9 +1,4 @@
 ﻿using RoR2;
-using RoR2.Items;
-using UnityEngine;
-using UnityEngine.Networking;
-
-using Moonstorm;
 namespace SS2.Items
 {
     [DisabledContent]

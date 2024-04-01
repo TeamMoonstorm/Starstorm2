@@ -1,7 +1,4 @@
-﻿using RoR2;
-using RoR2.Skills;
-using RoR2.Projectile;
-using UnityEngine;
+﻿using UnityEngine;
 using SS2.Components;
 
 namespace EntityStates.NemHuntress2

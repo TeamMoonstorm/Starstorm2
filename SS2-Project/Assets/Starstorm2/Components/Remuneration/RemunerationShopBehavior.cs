@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using RoR2;
-using JetBrains.Annotations;
 using UnityEngine.Networking;
 using UnityEngine.AddressableAssets;
 using R2API;
-using Moonstorm;
 namespace SS2.Components
 {
     public class RemunerationShopBehavior : NetworkBehaviour

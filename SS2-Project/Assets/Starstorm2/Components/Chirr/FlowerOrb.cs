@@ -1,11 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using RoR2;
 using RoR2.Orbs;
-using Moonstorm;
 namespace SS2.Components
 {
-	public class FlowerOrb : GenericDamageOrb
+    public class FlowerOrb : GenericDamageOrb
 	{
 		public override void Begin()
 		{

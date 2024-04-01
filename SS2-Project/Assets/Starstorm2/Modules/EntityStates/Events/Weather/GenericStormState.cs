@@ -1,5 +1,4 @@
 ﻿using SS2;
-using SS2.Buffs;
 using SS2.Components;
 using R2API;
 using RoR2;

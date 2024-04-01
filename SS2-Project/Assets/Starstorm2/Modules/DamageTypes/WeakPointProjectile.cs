@@ -3,8 +3,6 @@ using RoR2;
 using RoR2.Projectile;
 using UnityEngine;
 using static R2API.DamageAPI;
-
-using Moonstorm;
 namespace SS2.DamageTypes
 {
     public sealed class WeakPointProjectile : DamageTypeBase

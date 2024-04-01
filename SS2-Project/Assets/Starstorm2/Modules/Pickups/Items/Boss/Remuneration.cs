@@ -1,15 +1,5 @@
-﻿using SS2.Components;
-using RoR2;
-using RoR2.Items;
+﻿using RoR2;
 using UnityEngine;
-using UnityEngine.Networking;
-using R2API;
-using UnityEngine.AddressableAssets;
-using Mono.Cecil.Cil;
-using MonoMod.Cil;
-using System;
-
-using Moonstorm;
 namespace SS2.Items
 {
     // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION 

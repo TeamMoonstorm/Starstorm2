@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RoR2;
 using UnityEngine;
 using RoR2.Orbs;
-using R2API;
 using static SS2.Items.ErraticGadget;
-using Moonstorm;
+using MSU;
 namespace SS2.Components
 {
     // copy of ror2.orbs.lgihtningorb

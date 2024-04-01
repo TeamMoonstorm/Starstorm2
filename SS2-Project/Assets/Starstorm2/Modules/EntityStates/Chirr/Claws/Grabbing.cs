@@ -1,13 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
+﻿using UnityEngine;
 using RoR2;
-using RoR2.Projectile;
-using System.Linq;
 using RoR2.Skills;
 using SS2.Components;
-using UnityEngine.Networking;
 
 namespace EntityStates.Chirr.Claws
 {

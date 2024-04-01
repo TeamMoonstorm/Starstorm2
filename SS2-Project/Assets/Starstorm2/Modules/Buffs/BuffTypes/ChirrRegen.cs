@@ -1,9 +1,5 @@
-﻿using EntityStates.Beastmaster;
-using Moonstorm.Components;
-using R2API;
+﻿using R2API;
 using RoR2;
-
-using Moonstorm;
 namespace SS2.Buffs
 {
     //[DisabledContent]

@@ -2,7 +2,7 @@
 using RoR2.Achievements;
 using UnityEngine;
 
-using Moonstorm;
+using MSU;
 namespace SS2.Unlocks.Nemmando
 {
     public sealed class NemmandoUnlockable : UnlockableBase

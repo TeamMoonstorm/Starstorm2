@@ -1,9 +1,4 @@
-﻿using RoR2.Projectile;
-using UnityEngine;
-using UnityEngine.AddressableAssets;
-using static R2API.DamageAPI;
-
-using Moonstorm;
+﻿using UnityEngine;
 namespace SS2.Projectiles
 {
     public sealed class NemMercenaryKnife : ProjectileBase

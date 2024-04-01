@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using RoR2;
+﻿using RoR2;
 
 namespace EntityStates.Trader.Bag
 {

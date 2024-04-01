@@ -3,9 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 
-using Moonstorm;
+using MSU;
 namespace SS2
 {
     public static class SS2Util

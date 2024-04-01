@@ -1,11 +1,5 @@
-﻿using Moonstorm.Components;
-using R2API;
+﻿using R2API;
 using RoR2;
-using RoR2.CharacterAI;
-using System.Linq;
-using UnityEngine;
-
-using Moonstorm;
 namespace SS2.Buffs
 {
     //[DisabledContent]

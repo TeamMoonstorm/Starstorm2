@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 using RoR2;
-using RoR2.Projectile;
 using UnityEngine.Networking;
 using RoR2.Orbs;
 using SS2.Components;

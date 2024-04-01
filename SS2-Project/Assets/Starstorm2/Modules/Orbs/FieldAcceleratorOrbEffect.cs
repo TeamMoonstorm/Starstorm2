@@ -1,11 +1,6 @@
 ﻿using RoR2;
 using RoR2.Orbs;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using static SS2.Items.FieldAccelerator;
-
-using Moonstorm;
 namespace SS2.Orbs
 {
     public class FieldAcceleratorOrbEffect : OrbEffect

@@ -1,13 +1,9 @@
 ﻿using RoR2;
 using RoR2.Items;
 using RoR2.Projectile;
-using RoR2.Skills;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
-using Moonstorm;
 namespace SS2.Items
 {
     //[DisabledContent]

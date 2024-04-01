@@ -1,8 +1,4 @@
-﻿using RoR2;
-using UnityEngine;
-using UnityEngine.AddressableAssets;
-
-using Moonstorm;
+﻿using UnityEngine;
 namespace SS2.Monsters
 {
     public sealed class Lamp : MonsterBase

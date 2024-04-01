@@ -2,16 +2,14 @@
 using EntityStates.AI.Walker;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
-using Moonstorm.Components;
 using R2API;
 using R2API.Utils;
 using RoR2;
-using RoR2.CharacterAI;
 using System;
 using UnityEngine;
 using UnityEngine.Networking;
 
-using Moonstorm;
+using MSU;
 namespace SS2.Buffs
 {
     public sealed class MULENet : BuffBase

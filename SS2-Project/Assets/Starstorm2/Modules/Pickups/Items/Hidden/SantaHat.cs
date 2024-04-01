@@ -1,9 +1,6 @@
-﻿using R2API;
-using RoR2;
-using RoR2.Items;
+﻿using RoR2;
 using UnityEngine;
 using System;
-using Moonstorm;
 namespace SS2.Items
 {
     public sealed class SantaHat : ItemBase

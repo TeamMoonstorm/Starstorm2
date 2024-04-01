@@ -1,8 +1,6 @@
 ﻿using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
-
-using Moonstorm;
 namespace SS2.Equipments
 {
     public sealed class Magnet : EquipmentBase
@@ -12,11 +10,11 @@ namespace SS2.Equipments
 
         public static GameObject magnetPrefab = SS2Assets.LoadAsset<GameObject>("PickupMagnetController", SS2Bundle.Equipments);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Range at which Simple Magnet can pull pickups, in meters.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Range at which Simple Magnet can pull pickups, in meters.")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float magnetRadius = 150f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Percent chance for Simple Magnet to unearth treasure.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Percent chance for Simple Magnet to unearth treasure.")]
         [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
         public static float treasureChance = .1f;
 

@@ -1,8 +1,6 @@
 ﻿using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
-
-using Moonstorm;
 namespace SS2.Components
 {
     [RequireComponent(typeof(GenericOwnership))]

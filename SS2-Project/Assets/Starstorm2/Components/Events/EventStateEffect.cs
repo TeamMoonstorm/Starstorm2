@@ -1,8 +1,6 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Events;
-
-using Moonstorm;
 namespace SS2.Components
 {
     public class EventStateEffect : MonoBehaviour

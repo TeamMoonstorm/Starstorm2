@@ -1,10 +1,7 @@
 ﻿using R2API;
 using RoR2;
-using RoR2.Items;
-using System;
 using UnityEngine;
 using UnityEngine.Networking;
-using Moonstorm;
 namespace SS2.Items
 {
     public sealed class CoffeeBag : ItemBase
@@ -12,19 +9,19 @@ namespace SS2.Items
         public const string token = "SS2_ITEM_COFFEEBAG_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("CoffeeBag", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance on hit to drop a coffee bean. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Chance on hit to drop a coffee bean. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float procChance = .08f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Attack speed bonus granted per stack while the buff is active. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Attack speed bonus granted per stack while the buff is active. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
         public static float atkSpeedBonus = .08f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Movement speed bonus granted per stack while the buff is active. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Movement speed bonus granted per stack while the buff is active. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
         public static float moveSpeedBonus = .08f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of the buff gained upon picking up a coffee bean, per stack.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Duration of the buff gained upon picking up a coffee bean, per stack.")]
         [TokenModifier(token, StatTypes.Default, 3)]
         public static float buffDuration = 5;
 

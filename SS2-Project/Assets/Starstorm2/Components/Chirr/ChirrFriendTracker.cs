@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using RoR2;
-using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
-using Moonstorm;
 namespace SS2.Components
 {
-	// just a bullseyesearch to find someone to use Befriend on. ChirrFriendController handles friend behavior
-	[RequireComponent(typeof(InputBankTest))]
+    // just a bullseyesearch to find someone to use Befriend on. ChirrFriendController handles friend behavior
+    [RequireComponent(typeof(InputBankTest))]
 	[RequireComponent(typeof(CharacterBody))]
 	[RequireComponent(typeof(TeamComponent))]
 	public class ChirrFriendTracker : MonoBehaviour

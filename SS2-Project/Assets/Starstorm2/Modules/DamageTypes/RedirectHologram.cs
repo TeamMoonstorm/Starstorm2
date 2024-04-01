@@ -1,9 +1,4 @@
-﻿using R2API;
-using RoR2;
-using UnityEngine;
-using static R2API.DamageAPI;
-
-using Moonstorm;
+﻿using static R2API.DamageAPI;
 namespace SS2.DamageTypes
 {
     public sealed class RedirectHologram : DamageTypeBase

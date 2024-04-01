@@ -1,9 +1,6 @@
 ﻿using R2API;
 using RoR2;
-using UnityEngine;
 using static R2API.DamageAPI;
-
-using Moonstorm;
 namespace SS2.DamageTypes
 {
     public sealed class NetOnHit : DamageTypeBase

@@ -1,8 +1,6 @@
 ﻿using RoR2;
 using System.Collections.Generic;
 using UnityEngine;
-
-using Moonstorm;
 namespace SS2.Equipments
 {
     public sealed class DivineRight : EquipmentBase

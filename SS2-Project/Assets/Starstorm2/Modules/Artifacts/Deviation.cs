@@ -1,15 +1,9 @@
 ﻿using EntityStates;
 using R2API.ScriptableObjects;
 using RoR2;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UObject = UnityEngine.Object;
-
-using Moonstorm;
 namespace SS2.Artifacts
 {
     [DisabledContent]

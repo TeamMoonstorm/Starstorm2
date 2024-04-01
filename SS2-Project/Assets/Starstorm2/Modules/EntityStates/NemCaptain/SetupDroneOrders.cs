@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System;
-using RoR2;
+﻿using RoR2;
 using RoR2.UI;
 using UnityEngine;
 using UnityEngine.Networking;

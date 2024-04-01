@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RoR2;
-using SS2.Components;
+﻿using RoR2;
 using UnityEngine;
 using RoR2.Projectile;
 using UnityEngine.Networking;

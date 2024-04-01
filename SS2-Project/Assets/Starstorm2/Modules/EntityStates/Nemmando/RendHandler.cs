@@ -1,6 +1,5 @@
 ﻿using RoR2;
 using UnityEngine;
-using Moonstorm;
 
 namespace EntityStates.Nemmando
 {

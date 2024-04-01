@@ -2,8 +2,6 @@
 using RoR2.Items;
 using UnityEngine;
 using UnityEngine.Networking;
-
-using Moonstorm;
 namespace SS2.Items
 {
     public sealed class WatchMetronome : ItemBase
@@ -11,11 +9,11 @@ namespace SS2.Items
         private const string token = "SS2_ITEM_WATCHMETRONOME_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("WatchMetronome", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of max charges per stack.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Amount of max charges per stack.")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static int chargeAmount = 5;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Maximum movement speed bonus that can be achieved via metronome per stack. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Maximum movement speed bonus that can be achieved via metronome per stack. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
         public static float maxMovementSpeed = 2;
 

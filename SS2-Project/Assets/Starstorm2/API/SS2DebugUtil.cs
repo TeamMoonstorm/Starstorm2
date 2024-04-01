@@ -1,7 +1,5 @@
 ﻿using RoR2;
 using UnityEngine;
-
-using Moonstorm;
 namespace SS2.API
 {
     //If youre wondering why this class is emptier now, its because most of these have been moved into MSUDebug.cs.

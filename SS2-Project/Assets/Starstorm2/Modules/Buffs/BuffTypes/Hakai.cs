@@ -1,15 +1,9 @@
-﻿using Moonstorm.Components;
-using R2API;
-using RoR2;
+﻿using RoR2;
 using RoR2.Navigation;
 using RoR2.Projectile;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
-
-using Moonstorm;
 namespace SS2.Buffs
 {
     public sealed class Hakai : BuffBase

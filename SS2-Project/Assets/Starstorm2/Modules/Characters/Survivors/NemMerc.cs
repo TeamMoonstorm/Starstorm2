@@ -4,8 +4,6 @@ using RoR2.Skills;
 using System.Runtime.CompilerServices;
 using UnityEngine.AddressableAssets;
 using R2API;
-using RoR2.Projectile;
-using Moonstorm;
 namespace SS2.Survivors
 {
     //[DisabledContent]
@@ -32,7 +30,7 @@ namespace SS2.Survivors
             });
             hologram = DeployableAPI.RegisterDeployableSlot((self, deployableCountMultiplier) => { return maxHolograms; });
             
-            if (Starstorm.ScepterInstalled)
+            if (SS2Main.ScepterInstalled)
             {
                 ScepterCompat();
             }

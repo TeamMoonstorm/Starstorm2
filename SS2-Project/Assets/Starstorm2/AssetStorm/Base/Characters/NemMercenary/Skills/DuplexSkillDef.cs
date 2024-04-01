@@ -1,15 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using RoR2.Skills;
 using JetBrains.Annotations;
 using RoR2;
 using EntityStates;
-
-using Moonstorm;
 namespace SS2.ScriptableObjects
 {
-	[CreateAssetMenu(menuName = "Starstorm2/SkillDef/DuplexSkillDef")]
+    [CreateAssetMenu(menuName = "Starstorm2/SkillDef/DuplexSkillDef")]
 
 	//Activate on press, then again on release
 

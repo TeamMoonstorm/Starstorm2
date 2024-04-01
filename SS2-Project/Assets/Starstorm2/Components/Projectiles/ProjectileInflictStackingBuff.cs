@@ -1,8 +1,6 @@
 ﻿using RoR2;
 using RoR2.Projectile;
 using UnityEngine;
-
-using Moonstorm;
 namespace SS2.Components
 {
     [RequireComponent(typeof(ProjectileController))]

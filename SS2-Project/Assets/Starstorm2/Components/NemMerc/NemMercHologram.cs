@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using RoR2;
 using EntityStates;
 using EntityStates.NemMerc;
 using UnityEngine.Networking;
 using RoR2.CharacterAI;
-
-using Moonstorm;
 namespace SS2.Components
 {
     public class NemMercHologram : NetworkBehaviour

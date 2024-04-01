@@ -1,12 +1,8 @@
 ﻿using RoR2;
 using RoR2.UI;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-
-using Moonstorm;
 namespace SS2.Components
 {
     //Not good. None of it.

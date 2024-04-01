@@ -1,9 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
-
-namespace EntityStates.NemCaptainDrone
+﻿namespace EntityStates.NemCaptainDrone
 {
     public class EntryState : BaseNemCaptainDroneState
     {

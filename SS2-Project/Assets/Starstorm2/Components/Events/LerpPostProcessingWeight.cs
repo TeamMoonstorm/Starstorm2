@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
-
-using Moonstorm;
 namespace SS2.Components
 {
     //This is different from the Post Process Duration component because it grabs it from the current pp's weight

@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using HG;
-using UnityEngine;
+﻿using UnityEngine;
 using RoR2;
-using JetBrains.Annotations;
-using RoR2.Projectile;
-using System.Text;
-using R2API;
-using Moonstorm;
 namespace SS2.Components
 {
-	[RequireComponent(typeof(EffectComponent))]
+    [RequireComponent(typeof(EffectComponent))]
 	public class SetMaterialColorFromEffectData : MonoBehaviour
 	{
 		public ParticleSystem[] particleSystems;

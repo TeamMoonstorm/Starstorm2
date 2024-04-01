@@ -1,10 +1,6 @@
-﻿using Moonstorm.Components;
-using SS2.Equipments;
-using RoR2;
+﻿using RoR2;
 using RoR2.Skills;
 using UnityEngine;
-
-using Moonstorm;
 namespace SS2.Buffs
 {
     public sealed class Surrender : BuffBase

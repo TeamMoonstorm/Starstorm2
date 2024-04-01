@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using RoR2;
 using SS2;
 using RoR2.Projectile;
-using UnityEngine.AddressableAssets;
 
 namespace EntityStates.MULE
 {

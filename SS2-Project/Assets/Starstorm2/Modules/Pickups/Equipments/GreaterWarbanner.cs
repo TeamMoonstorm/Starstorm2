@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using R2API;
-using System;
-
-using Moonstorm;
 namespace SS2.Equipments
 {
     //TODO: make warbanner
@@ -16,19 +13,19 @@ namespace SS2.Equipments
         public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("GreaterWarbanner", SS2Bundle.Equipments);
         public GameObject WarbannerObject { get; set; } = SS2Assets.LoadAsset<GameObject>("GreaterWarbannerWard", SS2Bundle.Equipments);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of Extra Regeneration. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Amount of Extra Regeneration. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float extraRegeneration = 0.5f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of Extra Crit Chance. (100 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Amount of Extra Crit Chance. (100 = 100%)")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static float extraCrit = 20f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of Cooldown Reduction. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Amount of Cooldown Reduction. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
         public static float cooldownReduction = 0.5f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Max active warbanners for each character.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Max active warbanners for each character.")]
         [TokenModifier(token, StatTypes.Default, 3)]
         public static int maxGreaterBanners = 5;
 

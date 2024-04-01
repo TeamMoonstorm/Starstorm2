@@ -1,10 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using SS2.Components;
 using RoR2.Skills;
-using RoR2.Projectile;
-using RoR2;
 
 namespace EntityStates.NemCaptain.Weapon
 {

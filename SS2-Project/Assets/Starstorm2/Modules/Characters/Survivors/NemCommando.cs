@@ -2,13 +2,7 @@
 using UnityEngine;
 using RoR2.Skills;
 using System.Runtime.CompilerServices;
-using UnityEngine.AddressableAssets;
 using RoR2.UI;
-using System;
-using System.Collections.Generic;
-using System.Collections;
-
-using Moonstorm;
 namespace SS2.Survivors
 {
     //[DisabledContent]
@@ -24,7 +18,7 @@ namespace SS2.Survivors
         public override void Initialize()
         {
             base.Initialize();
-            if (Starstorm.ScepterInstalled)
+            if (SS2Main.ScepterInstalled)
             {
                 ScepterCompat();
                 //CreateNemesisPod();

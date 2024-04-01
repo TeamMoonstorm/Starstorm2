@@ -1,15 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using R2API;
 using RoR2;
-using System.Text;
 using R2API.Utils;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.AddressableAssets;
-
-using Moonstorm;
 namespace SS2
 {
     //LASCIATE OGNI SPERANZA, VOI CH'ENTRATE
@@ -58,7 +53,7 @@ namespace SS2
             Debug.Log("Initializing Ethereal Sapling prefab...");
             shrinePrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("ShrineEthereal", SS2Bundle.Indev), "EtherealSapling", true);
             shrinePrefab.RegisterNetworkPrefab();
-            portalPrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("PortalStranger1", SS2Bundle.Stages), "StrangerPortal", true);
+            portalPrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("PortalStranger1", SS2Bundle.SharedStages), "StrangerPortal", true);
             portalPrefab.RegisterNetworkPrefab();
 
             //Add teleporter upgrading component to teleporters

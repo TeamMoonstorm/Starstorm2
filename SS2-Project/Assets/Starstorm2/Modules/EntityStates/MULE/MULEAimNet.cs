@@ -1,11 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using RoR2;
-using System;
 using RoR2.Projectile;
-using SS2;
-using R2API;
 using SS2.DamageTypes;
 using static R2API.DamageAPI;
 

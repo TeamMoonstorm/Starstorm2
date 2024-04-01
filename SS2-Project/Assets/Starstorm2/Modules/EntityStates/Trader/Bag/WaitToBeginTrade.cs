@@ -1,9 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System;
-using UnityEngine;
-
-namespace EntityStates.Trader.Bag
+﻿namespace EntityStates.Trader.Bag
 {
     public class WaitToBeginTrade : BagBaseState
     {

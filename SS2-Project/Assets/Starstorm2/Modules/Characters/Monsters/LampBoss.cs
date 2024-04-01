@@ -1,10 +1,7 @@
 ﻿using RoR2;
 using System;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using static RoR2.ExplicitPickupDropTable;
-
-using Moonstorm;
 namespace SS2.Monsters
 {
     //[DisabledContent]

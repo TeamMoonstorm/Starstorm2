@@ -1,11 +1,9 @@
 ﻿using RoR2;
-using RoR2.Items;
 using UnityEngine;
 using UnityEngine.Networking;
 using SS2.Components;
 using System.Collections.Generic;
 using RoR2.Orbs;
-using Moonstorm;
 namespace SS2.Items
 {
     public sealed class LightningOnKill : ItemBase
@@ -17,27 +15,27 @@ namespace SS2.Items
 
         public static NetworkSoundEventDef soundEffect = SS2Assets.LoadAsset<NetworkSoundEventDef>("nsedProcLightningOnKill", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Total damage of Man O' War's lightning. (1 = 100%)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Total damage of Man O' War's lightning. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float damageCoeff = 2f;         
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Number of bounces.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Number of bounces.")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static int bounceBase = 3;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Number of bounces per stack.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Number of bounces per stack.")]
         [TokenModifier(token, StatTypes.Default, 2)]
         public static int bounceStack = 2;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius of Man O' War's lightning, in meters.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Radius of Man O' War's lightning, in meters.")]
         [TokenModifier(token, StatTypes.Default, 3)]
         public static float radiusBase = 20f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius of Man O' War's lightning per stack, in meters.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Radius of Man O' War's lightning per stack, in meters.")]
         [TokenModifier(token, StatTypes.Default, 4)]
         public static float radiusPerStack = 4f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Proc coefficient of damage dealt by Man o' War.")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Proc coefficient of damage dealt by Man o' War.")]
         public static float procCo = 1f;
 
 

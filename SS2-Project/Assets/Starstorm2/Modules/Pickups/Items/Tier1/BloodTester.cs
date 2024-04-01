@@ -1,9 +1,5 @@
 ﻿using RoR2;
 using RoR2.Items;
-using UnityEngine;
-using UnityEngine.Networking;
-
-using Moonstorm;
 namespace SS2.Items
 {
     public sealed class BloodTester : ItemBase
@@ -11,7 +7,7 @@ namespace SS2.Items
         private const string token = "SS2_ITEM_BLOODTESTER_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("BloodTester", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of health regeneration granted per 25 gold, per stack. (1 = 1 hp/s)")]
+        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Amount of health regeneration granted per 25 gold, per stack. (1 = 1 hp/s)")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float healthRegen = 0.4f;
 
