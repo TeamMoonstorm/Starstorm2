@@ -8,6 +8,9 @@ using System.Collections.ObjectModel;
 using UnityEngine;
 using MSU;
 using System.Collections;
+using UnityEngine.Networking;
+using UnityEngine.AddressableAssets;
+using R2API;
 
 namespace SS2.Survivors
 {
@@ -19,6 +22,65 @@ namespace SS2.Survivors
         private GameObject _monsterMaster;
         public override GameObject CharacterPrefab => _prefab;
         private GameObject _prefab;
+
+        private BuffDef _exeChargeBuffDef;
+        private BuffDef _exeArmor;
+
+        public static GameObject plumeEffect = SS2Assets.LoadAsset<GameObject>("exePlume", SS2Bundle.Executioner2);
+        public static GameObject plumeEffectLarge = SS2Assets.LoadAsset<GameObject>("exePlumeBig", SS2Bundle.Executioner2);
+
+        public sealed class ExeArmorBehavior : BuffBehaviour, IBodyStatArgModifier
+        {
+            [BuffDefAssociation]
+            private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffExecutionerArmor;
+            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            {
+                //the stacking amounts are added by the item - these base values are here in case the buff is granted by something other than sigil
+                args.armorAdd += 60;
+            }
+        }
+
+        public sealed class ExeChargeBehavior : BuffBehaviour
+        {
+            [BuffDefAssociation]
+            private static BuffDef GetBuffDef() => SS2Content.Buffs.bdExeCharge;
+            private float timer;
+
+            public void FixedUpdate()
+            {
+                if (NetworkServer.active)
+                {
+                    //INDICES PEOPLE, INDICES :SOB: -N
+                    if (CharacterBody.baseNameToken != "SS2_EXECUTIONER2_NAME" || CharacterBody.HasBuff(SS2Content.Buffs.bdExeMuteCharge))
+                        return;
+                    else
+                        timer += Time.fixedDeltaTime;
+
+                    if (timer >= 1.2f && CharacterBody.skillLocator.secondary.stock < CharacterBody.skillLocator.secondary.maxStock)
+                    {
+                        timer = 0f;
+
+                        CharacterBody.skillLocator.secondary.AddOneStock();
+
+                        if (CharacterBody.skillLocator.secondary.stock < CharacterBody.skillLocator.secondary.maxStock)
+                        {
+                            Util.PlaySound("ExecutionerGainCharge", gameObject);
+                            EffectManager.SimpleMuzzleFlash(plumeEffect, gameObject, "ExhaustL", true);
+                            EffectManager.SimpleMuzzleFlash(plumeEffect, gameObject, "ExhaustR", true);
+                        }
+                        if (CharacterBody.skillLocator.secondary.stock >= CharacterBody.skillLocator.secondary.maxStock)
+                        {
+                            Util.PlaySound("ExecutionerMaxCharge", gameObject);
+                            EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustL", true);
+                            EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustR", true);
+                            EffectManager.SimpleEffect(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/LightningFlash.prefab").WaitForCompletion(), CharacterBody.corePosition, Quaternion.identity, true);
+                        }
+
+                        CharacterBody.SetAimTimer(timer);
+                    }
+                }
+            }
+        }
 
         public static ReadOnlyCollection<BodyIndex> BodiesThatGiveSuperCharge { get; private set; }
         private static HashSet<string> bodiesThatGiveSuperCharge = new HashSet<string>
@@ -69,6 +131,8 @@ namespace SS2.Survivors
             helper.AddAssetToLoad<GameObject>("Executioner2Body", SS2Bundle.Executioner2);
             helper.AddAssetToLoad<GameObject>("Executioner2Master", SS2Bundle.Executioner2);
             helper.AddAssetToLoad<SurvivorDef>("SurvivorExecutioner2", SS2Bundle.Executioner2);
+            helper.AddAssetToLoad<BuffDef>("bdExeCharge", SS2Bundle.Executioner2);
+            helper.AddAssetToLoad<BuffDef>("BuffExecutionerArmor", SS2Bundle.Executioner2);
 
             helper.Start();
             while (!helper.IsDone())
@@ -77,6 +141,8 @@ namespace SS2.Survivors
             _survivorDef = helper.GetLoadedAsset<SurvivorDef>("SurvivorExecutioner2");
             _monsterMaster = helper.GetLoadedAsset<GameObject>("Executioner2Master");
             _prefab = helper.GetLoadedAsset<GameObject>("Executioner2Body");
+            _exeChargeBuffDef = helper.GetLoadedAsset<BuffDef>("bdExeCharge");
+            _exeArmor = helper.GetLoadedAsset<BuffDef>("BuffExecutionerArmor");
         }
 
         public void ModifyPrefab()
