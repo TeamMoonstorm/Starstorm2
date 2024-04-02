@@ -1,25 +1,38 @@
-﻿using RoR2;
+﻿using MSU;
+using MSU.Config;
+using R2API;
+using RoR2;
+using RoR2.ContentManagement;
+using System.Collections;
+using UnityEngine;
+
 namespace SS2.Equipments
 {
-    public sealed class BackThruster : SS2Equipment
+    public sealed class BackThruster : SS2Equipment, IContentPackModifier
     {
-        private const string token = "SS2_EQUIP_BACKTHRUSTER_DESC";
-        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("BackThruster", SS2Bundle.Equipments);
+        public override NullableRef<GameObject> ItemDisplayPrefab => null;
+        public override EquipmentDef EquipmentDef => _equipmentDef;
+        private EquipmentDef _equipmentDef;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "How long the Thruster buff lasts, in seconds.")]
-        [TokenModifier(token, StatTypes.Default, 0)]
+        private const string token = "SS2_EQUIP_BACKTHRUSTER_DESC";
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "How long the Thruster buff lasts, in seconds.")]
+        [FormatToken(token)]
         public static float thrustDuration = 8f;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Maximum speed bonus from Thruster (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Maximum speed bonus from Thruster (1 = 100%)")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float speedCap = 2f;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "How long it takes to reach maximum speed, in seconds")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "How long it takes to reach maximum speed, in seconds")]
         public static float accel = 1.5f;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Maximum turning angle before losing built up speed")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Maximum turning angle before losing built up speed")]
         public static float maxAngle = 15f;
-        public override bool FireAction(EquipmentSlot slot)
+
+        private BuffDef _buffDef;
+
+        public override bool Execute(EquipmentSlot slot)
         {
             var characterMotor = slot.characterBody.characterMotor;
             if (characterMotor)
@@ -28,6 +41,88 @@ namespace SS2.Equipments
                 return true;
             }
             return false;
+        }
+
+        public override void Initialize()
+        {
+        }
+
+        public override bool IsAvailable()
+        {
+            return true;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            var helper = new ParallelAssetLoadCoroutineHelper();
+
+            helper.AddAssetToLoad<EquipmentDef>("BackThruster", SS2Bundle.Equipments);
+            helper.AddAssetToLoad<BuffDef>("BuffBackThruster", SS2Bundle.Equipments);
+
+            helper.Start();
+            while (!helper.IsDone()) yield return null;
+
+            _equipmentDef = helper.GetLoadedAsset<EquipmentDef>("BackThruster");
+            _buffDef = helper.GetLoadedAsset<BuffDef>("BuffBackThruster");
+        }
+
+        public override void OnEquipmentLost(CharacterBody body)
+        {
+        }
+
+        public override void OnEquipmentObtained(CharacterBody body)
+        {
+        }
+
+        public void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.buffDefs.AddSingle(_buffDef);
+        }
+
+        public sealed class BackThrusterBuffBehaviour : BuffBehaviour
+        {
+            [BuffDefAssociation]
+            private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffBackThruster;
+
+            private float stopwatch;
+            private float thrust;
+            private float watchInterval = 0.15f;
+            private float moveAngle;
+            private float lastAngle;
+            private float accelCoeff = Equipments.BackThruster.speedCap / (Equipments.BackThruster.accel + 0.00001f);   //Fuck people who put 0 in configs
+            private float cutoff =  maxAngle * Mathf.Deg2Rad;
+            private void FixedUpdate()
+            {
+                stopwatch += Time.fixedDeltaTime;
+                if (stopwatch > watchInterval)
+                {
+                    stopwatch -= watchInterval;
+                    moveAngle = Mathf.Atan2(CharacterBody.characterMotor.velocity.x, CharacterBody.characterMotor.velocity.z) + Mathf.PI;
+                    if (CharacterBody.notMovingStopwatch < 0.1f && CheckAngle())
+                        thrust = Mathf.Min(thrust + (accelCoeff * watchInterval), Equipments.BackThruster.speedCap);
+                    else
+                        thrust = Mathf.Max(thrust - (accelCoeff * watchInterval * 3), 0f);
+                    CharacterBody.RecalculateStats();
+                    lastAngle = moveAngle;
+                }
+            }
+            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            {
+                args.moveSpeedMultAdd += thrust;
+            }
+            public void OnDestroy()
+            {
+                thrust = 0f;
+                lastAngle = 0f;
+                CharacterBody.RecalculateStats();
+            }
+            private bool CheckAngle()
+            {
+                float delta = Mathf.Abs(moveAngle - lastAngle);
+                if (delta <= cutoff || delta > (2 * Mathf.PI - cutoff))
+                    return true;
+                return false;
+            }
         }
     }
 }

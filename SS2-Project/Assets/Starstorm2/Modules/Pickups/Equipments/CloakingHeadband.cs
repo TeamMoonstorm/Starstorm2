@@ -5,7 +5,7 @@ namespace SS2.Equipments
     {
         public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("CloakingHeadband", SS2Bundle.Equipments);
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "How long the Cloak buff lasts, in seconds.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "How long the Cloak buff lasts, in seconds.")]
         [TokenModifier("SS2_EQUIP_CLOAKINGHEADBAND_DESC", StatTypes.Default, 0)]
         public static float cloakDuration = 8f;
         public override bool FireAction(EquipmentSlot slot)

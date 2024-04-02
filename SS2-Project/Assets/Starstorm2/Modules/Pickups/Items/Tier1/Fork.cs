@@ -11,8 +11,8 @@ namespace SS2.Items
         private const string token = "SS2_ITEM_FORK_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Fork", SS2Bundle.Items);
 
-        //[RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Bonus base damage per fork. (1 = 1 base damage. Base damage for most characters is 12.)")]
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Bonus percent damage per fork. (1 = 1%)")]
+        //[RiskOfOptionsConfigureField(SS2Config.IDItem, ConfigDescOverride = "Bonus base damage per fork. (1 = 1 base damage. Base damage for most characters is 12.)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Bonus percent damage per fork. (1 = 1%)")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float percentDamageBonus = 8f;
         public override void Initialize()

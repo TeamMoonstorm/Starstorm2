@@ -4,6 +4,8 @@ using UnityEngine;
 using RoR2.Projectile;
 namespace SS2.Buffs
 {
+    //TODO: move this to the equipment class.
+    /*
     public sealed class AffixPurple : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdElitePurple", SS2Bundle.Indev);
@@ -92,5 +94,5 @@ namespace SS2.Buffs
                 }
             }
         }
-    }
+    }*/
 }

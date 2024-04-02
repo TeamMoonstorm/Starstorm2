@@ -3,9 +3,10 @@ using RoR2;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+//TODO: move this to the equipment class.
+/*
 namespace SS2.Buffs
 {
-    [DisabledContent]
     public sealed class AffixVoid : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffAffixVoid", SS2Bundle.Indev);
@@ -94,7 +95,7 @@ namespace SS2.Buffs
                         {
                             hc.body.AddTimedBuff(BuffCatalog.GetBuffDef(BuffCatalog.FindBuffIndex("BuffFear")), (4 + buffStacks) * hitInfo.hitSeverity);
                             return;
-                        }*/
+                        }
                         hc.body.AddTimedBuff(SS2Content.Buffs.BuffVoidLeech, (4 + buffStacks) * hitInfo.hitSeverity);
                         return;
                     }
@@ -102,4 +103,4 @@ namespace SS2.Buffs
             }
         }
     }
-}
+}*/

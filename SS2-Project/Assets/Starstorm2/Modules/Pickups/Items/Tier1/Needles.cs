@@ -11,11 +11,11 @@ namespace SS2.Items
         private const string token = "SS2_ITEM_NEEDLES_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Needles", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Chance for the debuff to be applied on hit. (1 = 1%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance for the debuff to be applied on hit. (1 = 1%)")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float procChance = 4;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Amount of guaranteed critical hits per stack of this item. (1 = 1 critical hit per stack before the buff is cleared)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of guaranteed critical hits per stack of this item. (1 = 1 critical hit per stack before the buff is cleared)")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static int critsPerStack = 3;
 

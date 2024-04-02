@@ -10,15 +10,15 @@ namespace SS2.Items
 
         public static GameObject impactEffect { get; } = SS2Assets.LoadAsset<GameObject>("MoltenCoinEffect", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Chance for Molten Coin to Proc. (100 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance for Molten Coin to Proc. (100 = 100%)")]
         [TokenModifier("SS2_ITEM_MOLTENCOIN_DESC", StatTypes.Default, 0)]
         public static float procChance = 6f;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Base Damage per stack. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base Damage per stack. (1 = 100%)")]
         [TokenModifier("SS2_ITEM_MOLTENCOIN_DESC", StatTypes.MultiplyByN, 1, "100")]
         public static float damageCoeff = 1f;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Coin gain on proc. Scales with time. (1 = 1$)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Coin gain on proc. Scales with time. (1 = 1$)")]
         [TokenModifier("SS2_ITEM_MOLTENCOIN_DESC", StatTypes.Default, 2)]
         public static int coinGain = 1;
 

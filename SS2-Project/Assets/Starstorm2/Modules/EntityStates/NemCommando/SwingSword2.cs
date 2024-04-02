@@ -1,10 +1,10 @@
 ﻿using SS2;
-using SS2.DamageTypes;
 using R2API;
 using RoR2;
 using RoR2.Skills;
 using UnityEngine;
 using UnityEngine.Networking;
+using MSU;
 
 namespace EntityStates.NemCommando
 {
@@ -13,7 +13,7 @@ namespace EntityStates.NemCommando
     class SwingSword2 : BasicMeleeAttack, SteppedSkillDef.IStepSetter, ISkillState
     {
         public static float swingTimeCoefficient = 1.71f;
-        [TokenModifier("SS2_NEMMANDO_PRIMARY_BLADE_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_NEMMANDO_PRIMARY_BLADE_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float TokenModifier_dmgCoefficient => new SwingSword2().damageCoefficient;
         public int swingSide;
         private bool inCombo = false;
@@ -108,7 +108,7 @@ namespace EntityStates.NemCommando
         public override void AuthorityModifyOverlapAttack(OverlapAttack overlapAttack)
         {
             base.AuthorityModifyOverlapAttack(overlapAttack);
-            DamageAPI.AddModdedDamageType(overlapAttack, Gouge.gougeDamageType);
+            DamageAPI.AddModdedDamageType(overlapAttack, SS2.Survivors.NemCommando.GougeDamageType);
         }
     }
 }

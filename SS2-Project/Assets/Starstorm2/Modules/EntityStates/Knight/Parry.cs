@@ -1,4 +1,5 @@
-﻿using RoR2;
+﻿using MSU;
+using RoR2;
 using RoR2.Skills;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -9,7 +10,7 @@ namespace EntityStates.Knight
     public class Parry : BasicMeleeAttack
     {
         public static float swingTimeCoefficient = 1f;
-        [TokenModifier("SS2_KNIGHT_SHIELD_BASH_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_KNIGHT_SHIELD_BASH_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float TokenModifier_dmgCoefficient => new ShieldPunch().damageCoefficient;
         
         // TODO: Make static once you have a replacement

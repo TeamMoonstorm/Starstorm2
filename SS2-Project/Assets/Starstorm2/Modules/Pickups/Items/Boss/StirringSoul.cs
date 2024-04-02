@@ -9,11 +9,11 @@ namespace SS2.Items
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("StirringSoul", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Chance to gain soul initially. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance to gain soul initially. (1 = 100%)")]
         [TokenModifier("SS2_ITEM_STIRRINGSOUL_DESC", StatTypes.MultiplyByN, 0, "100")]
         public static float initChance = 0.005f;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Soul gain chance cap. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Soul gain chance cap. (1 = 100%)")]
         public static float maxChance = 0.1f;
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver

@@ -3,6 +3,10 @@ using R2API;
 using RoR2;
 
 using MSU;
+
+
+//Item had content, to the nether realm with you. -N
+/*
 namespace SS2.Buffs
 {
     public sealed class BuffEchelon : BuffBase
@@ -24,3 +28,4 @@ namespace SS2.Buffs
         }
     }
 }
+*/

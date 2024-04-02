@@ -7,25 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 namespace SS2.Modules
 {
-    public sealed class Artifacts : IContentPieceProvider<ArtifactDef>
-    {
-        public ContentPack ContentPack => throw new System.NotImplementedException();
-
-        public IContentPiece<ArtifactDef>[] GetContents()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        IContentPiece[] IContentPieceProvider.GetContents()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        internal Artifacts(ContentPack contentPack)
-        {
-
-        }
-    }
     /*
     public sealed class Artifacts : ArtifactModuleBase
     {

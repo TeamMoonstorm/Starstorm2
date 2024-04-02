@@ -11,18 +11,18 @@ namespace SS2.Items
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfForce", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Attack speed reduction and cooldown increase per stack. (1 = 100% slower attack speed and longer cooldowns)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Attack speed reduction and cooldown increase per stack. (1 = 100% slower attack speed and longer cooldowns)")]
         [TokenModifier("SS2_ITEM_RELICOFFORCE_DESC", StatTypes.MultiplyByN, 0, "100")]
         public static float forcePenalty = .4f;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Delay between additional hits. (1 = 1 second)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Delay between additional hits. (1 = 1 second)")]
         public static float hitDelay = .2f;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Increased damage per additional hits. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Increased damage per additional hits. (1 = 100%)")]
         [TokenModifier("SS2_ITEM_RELICOFFORCE_DESC", StatTypes.MultiplyByN, 1, "100")]
         public static float hitIncrease = .05f;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Increased damage cap for additional hits. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Increased damage cap for additional hits. (1 = 100%)")]
         [TokenModifier("SS2_ITEM_RELICOFFORCE_DESC", StatTypes.MultiplyByN, 2, "100")]
         public static float hitMax = 1f;
 

@@ -12,11 +12,11 @@ namespace SS2.Items
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Remuneration", SS2Bundle.Items);
 
-        //[RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance to gain soul initially. (1 = 100%)")]
+        //[RiskOfOptionsConfigureField(SS2Config.IDItem, ConfigDescOverride = "Chance to gain soul initially. (1 = 100%)")]
         //[TokenModifier("SS2_ITEM_REMUNERATION_DESC", StatTypes.MultiplyByN, 0, "100")]
         //public static float initChance = 0.005f;
 
-        //[RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Soul gain chance cap. (1 = 100%)")]
+        //[RiskOfOptionsConfigureField(SS2Config.IDItem, ConfigDescOverride = "Soul gain chance cap. (1 = 100%)")]
         //public static float maxChance = 0.1f;
 
 

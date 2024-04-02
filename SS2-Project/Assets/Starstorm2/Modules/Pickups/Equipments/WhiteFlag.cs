@@ -8,11 +8,11 @@ namespace SS2.Equipments
         public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("WhiteFlag", SS2Bundle.Equipments);
         public GameObject FlagObject { get; } = SS2Assets.LoadAsset<GameObject>("WhiteFlagWard", SS2Bundle.Equipments);
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Radius of the White Flag's effect, in meters.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Radius of the White Flag's effect, in meters.")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float flagRadius = 25f;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Duration of White Flag when used, in seconds.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Duration of White Flag when used, in seconds.")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static float flagDuration = 8f;
 

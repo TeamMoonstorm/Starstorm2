@@ -5,7 +5,8 @@ using UnityEngine;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using System;
-namespace SS2.Buffs
+//TODO: move this to the equipment class.
+/*namespace SS2.Buffs
 {
     public sealed class AffixEmpyrean : BuffBase
     {
@@ -220,3 +221,4 @@ namespace SS2.Buffs
         }
     }
 }
+*/

@@ -8,7 +8,7 @@ namespace SS2.Items
         private const string token = "SS2_ITEM_DIARY_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Diary", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Number of levels gained when Empty Diary is consumed.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Number of levels gained when Empty Diary is consumed.")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static int extraLevels = 3;
         public sealed class Behavior : BaseItemMasterBehavior

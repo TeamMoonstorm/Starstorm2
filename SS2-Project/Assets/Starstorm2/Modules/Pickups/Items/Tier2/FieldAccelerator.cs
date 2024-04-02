@@ -12,14 +12,14 @@ namespace SS2.Items
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("FieldAccelerator", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Amount of charge to add to the teleporter on kill. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of charge to add to the teleporter on kill. (1 = 100%)")]
         [TokenModifier("SS2_ITEM_FIELDACCELERATOR_DESC", StatTypes.MultiplyByN, 0, "100")]
         public static float chargePerKill = 0.01f;
 
-        /*[RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Maximum Amount of Charge per kill. (1 = 100%)")]
+        /*[RiskOfOptionsConfigureField(SS2Config.IDItem, ConfigDescOverride = "Maximum Amount of Charge per kill. (1 = 100%)")]
         public static float maxChargePerKill = 0.05f;*/
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Extra % teleporter charge radius. (0.01 = 1%")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Extra % teleporter charge radius. (0.01 = 1%")]
         [TokenModifier("SS2_ITEM_FIELDACCELERATOR_DESC", StatTypes.MultiplyByN, 1, "100")]
         public static float radiusPerStack = 0.75f;
 

@@ -2,36 +2,50 @@
 using UnityEngine;
 using System.Runtime.CompilerServices;
 using UnityEngine.AddressableAssets;
+using MSU;
+using System.Collections;
+
+#if DEBUG
 namespace SS2.Survivors
 {
-    [DisabledContent]
     public sealed class NemBandit : SS2Survivor
     {
-        public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemBanditBody", SS2Bundle.Indev);
-        public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemmandoMonsterMaster", SS2Bundle.Indev);
-        public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("survivorNemBandit", SS2Bundle.Indev);
+        public override SurvivorDef SurvivorDef => _survivorDef;
+        private SurvivorDef _survivorDef;
+        public override NullableRef<GameObject> MasterPrefab => _monsterMaster;
+        private GameObject _monsterMaster;
+        public override GameObject CharacterPrefab => _prefab;
+        private GameObject _prefab;
 
         public override void Initialize()
         {
-            base.Initialize();
-            if (SS2Main.ScepterInstalled)
-            {
-                //ScepterCompat();
-            }
+            ModifyPrefab();
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-        public void ScepterCompat()
+        private void ModifyPrefab()
         {
-            //AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(SS2Assets.LoadAsset<SkillDef>("NemmandoScepterSubmission"), "NemmandoBody", SkillSlot.Special, 0);
-            //AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(SS2Assets.LoadAsset<SkillDef>("NemmandoScepterBossAttack"), "NemmandoBody", SkillSlot.Special, 1);
-        }
-
-        public override void ModifyPrefab()
-        {
-            var cb = BodyPrefab.GetComponent<CharacterBody>();
+            var cb = _prefab.GetComponent<CharacterBody>();
             cb._defaultCrosshairPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/StandardCrosshair.prefab").WaitForCompletion();
-            //cb.GetComponent<ModelLocator>().modelTransform.GetComponent<FootstepHandler>().footstepDustPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/GenericFootstepDust.prefab").WaitForCompletion();
+        }
+
+        public override bool IsAvailable()
+        {
+            return false;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            ParallelAssetLoadCoroutineHelper helper = new ParallelAssetLoadCoroutineHelper();
+            helper.AddAssetToLoad<GameObject>("NemBanditBody", SS2Bundle.Indev);
+            helper.AddAssetToLoad<SurvivorDef>("survivorNemBandit", SS2Bundle.Indev);
+
+            helper.Start();
+            while (!helper.IsDone())
+                yield return null;
+
+            _survivorDef = helper.GetLoadedAsset<SurvivorDef>("survivorNemBandit");
+            _prefab = helper.GetLoadedAsset<GameObject>("NemBanditBody");
         }
     }
 }
+#endif

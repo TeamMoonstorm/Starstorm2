@@ -12,16 +12,16 @@ namespace SS2.Items
 
         public const string token = "SS2_ITEM_NKOTASHERITAGE_DESC";
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Number of items given upon level up per stack.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Number of items given upon level up per stack.")]
         [TokenModifier(token, StatTypes.Default, 0)]
         public static int itemsPerStack = 1;
 
         //
-        //SS2Config.IDItem, ConfigDesc = "Level where white items are removed from the reward pool.")]
+        //SS2Config.IDItem, ConfigDescOverride = "Level where white items are removed from the reward pool.")]
         //[TokenModifier(token, StatTypes.Default, 1)]
         //public static int whiteRemovalLevel = 11;
 
-        //[ConfigurableField(SS2Config.IDItem, ConfigDesc = "Level where green items are removed from the reward pool.")]
+        //[ConfigurableField(SS2Config.IDItem, ConfigDescOverride = "Level where green items are removed from the reward pool.")]
         //[TokenModifier(token, StatTypes.Default, 2)]
         //public static int greenRemovalLevel = 22;
 

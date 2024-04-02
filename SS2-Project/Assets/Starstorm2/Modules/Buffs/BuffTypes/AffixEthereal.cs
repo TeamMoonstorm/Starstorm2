@@ -9,6 +9,9 @@ using RoR2.Navigation;
 using RoR2.Projectile;
 namespace SS2.Buffs
 {
+    //TODO: move this to the equipment class.
+
+    /*
     public sealed class AffixEthereal : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdEthereal", SS2Bundle.Equipments);
@@ -129,5 +132,5 @@ namespace SS2.Buffs
                 }
             }
         }
-    }
+    }*/
 }

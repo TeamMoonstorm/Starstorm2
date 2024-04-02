@@ -21,6 +21,7 @@ namespace SS2.Buffs
             {
                 if (NetworkServer.active)
                 {
+                    //INDICES PEOPLE, INDICES :SOB: -N
                     if (body.baseNameToken != "SS2_EXECUTIONER2_NAME" || body.HasBuff(SS2Content.Buffs.bdExeMuteCharge))
                         return;
                     else

@@ -6,6 +6,8 @@ using R2API;
 using UnityEngine.AddressableAssets;
 namespace SS2.Scenes
 {
+     //TODO: figure out how we'll amange scenes, as MSU doesnt have a scene module anymore. I'm not deleting this because it has relevant code for zanzan and stuff.
+    /*
     //[DisabledContent]
     public sealed class VoidShop : SceneBase
     {
@@ -51,5 +53,5 @@ namespace SS2.Scenes
                // Debug.Log("placed portal at: " + position + "pos & " + rotation + "rot");
             }
         }
-    }
+    }*/
 }

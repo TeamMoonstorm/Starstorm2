@@ -8,7 +8,10 @@ using RiskOfOptions.OptionConfigs;
 using MSU;
 namespace SS2.Modules
 {
-    public sealed class Items : ItemModuleBase
+
+    //TODO: port this to its own IContentPieceProvider, i cant really do what prod did since that requires getting access to the item's tier, and at this point in time that isnt feasable, might be a good idea to move these into a check in the SS2Item class? -N
+
+    /*public sealed class Items : ItemModuleBase
     {
         public static Items Instance { get; private set; }
 
@@ -77,5 +80,5 @@ namespace SS2.Modules
             }
         }
 
-    }
+    }*/
 }

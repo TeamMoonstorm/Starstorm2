@@ -6,8 +6,8 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 namespace SS2.Buffs
 {
-    [DisabledContent]
-    public sealed class AffixKinetic : BuffBase
+    //TODO: move this to the equipment class.
+    /*public sealed class AffixKinetic : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdEliteKinetic", SS2Bundle.Indev);
 
@@ -258,12 +258,12 @@ namespace SS2.Buffs
                         {
                             hc.body.AddTimedBuff(BuffCatalog.GetBuffDef(BuffCatalog.FindBuffIndex("BuffFear")), (4 + buffStacks) * hitInfo.hitSeverity);
                             return;
-                        }*/
+                        }
                         hc.body.AddTimedBuff(SS2Content.Buffs.BuffVoidLeech, (4 + buffStacks) * hitInfo.hitSeverity);
                         return;
                     }
                 }
             }
         }
-    }
+    }*/
 }

@@ -13,36 +13,36 @@ namespace SS2.Items
         private const string token = "SS2_ITEM_RELICOFTERMINATION_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfTermination", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Time, in seconds, to kill the marked enemy before going on cooldown.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Time, in seconds, to kill the marked enemy before going on cooldown.")]
         [TokenModifier(token, StatTypes.Default, 0)]
         [TokenModifier("SS2_ITEM_RELICOFTERMINATION_PICKUP", StatTypes.Default, 0)]
         public static float maxTime = 30f;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Percent reduction in time to kill per stack. (1 = 100% reduction, .1 = 10% reduction)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Percent reduction in time to kill per stack. (1 = 100% reduction, .1 = 10% reduction)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
         public static float timeReduction = .1f;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Damage multiplier which is added to the marked enemy. (1 = 100% more damage).")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Damage multiplier which is added to the marked enemy. (1 = 100% more damage).")]
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
         public static float damageMult = 1.5f;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Health multiplier which is added to the marked enemy. (1 = 100% more health).")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Health multiplier which is added to the marked enemy. (1 = 100% more health).")]
         [TokenModifier(token, StatTypes.MultiplyByN, 3, "100")]
         public static float hpMult = 2.5f;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Flat additional health which is added to the marked enemy. (1 = 100% more health).")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Flat additional health which is added to the marked enemy. (1 = 100% more health).")]
         [TokenModifier(token, StatTypes.MultiplyByN, 7, "100")]
         public static float hpAdd = 225;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Speed multiplier which is added to the marked enemy. (1 = 100% more speed).")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Speed multiplier which is added to the marked enemy. (1 = 100% more speed).")]
         [TokenModifier(token, StatTypes.MultiplyByN, 4, "100")]
         public static float speedMult = .5f;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Attack speed multiplier which is added to the marked enemy. (1 = 100% more attack speed).")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Attack speed multiplier which is added to the marked enemy. (1 = 100% more attack speed).")]
         [TokenModifier(token, StatTypes.MultiplyByN, 5, "100")]
         public static float atkSpeedMult = 1f;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Scale multiplier applied to marked enemies. (1 = 100% of normal scale (no change)).")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Scale multiplier applied to marked enemies. (1 = 100% of normal scale (no change)).")]
         [TokenModifier(token, StatTypes.MultiplyByN, 6, "100")]
         public static float scaleMod = 1.5f;
 

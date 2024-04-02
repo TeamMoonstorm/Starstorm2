@@ -8,11 +8,11 @@ namespace SS2.Equipments
         public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("MIDAS", SS2Bundle.Equipments);
         public float goldEarned;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Health percentage sacrificed (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Health percentage sacrificed (1 = 100%)")]
         [TokenModifier("SS2_EQUIP_MIDAS_DESC", StatTypes.MultiplyByN, 0, "100")]
         public static float healthPercentage = 0.5f;
 
-        [RooConfigurableField(SS2Config.ID_ITEM)]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM)]
         public static float goldMultiplier = 1f;
 
         //★ There's probably a way to do this involving an item behavior. Let me know about it.

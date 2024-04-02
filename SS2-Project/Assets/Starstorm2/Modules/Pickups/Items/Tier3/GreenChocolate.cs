@@ -1,39 +1,79 @@
-﻿using RoR2;
+﻿using MSU;
+using MSU.Config;
+using RoR2;
 using RoR2.Items;
 using System;
+using System.Collections;
 using UnityEngine;
 namespace SS2.Items
 {
     public sealed class GreenChocolate : SS2Item
     {
         private const string token = "SS2_ITEM_GREENCHOCOLATE_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("GreenChocolate", SS2Bundle.Items);
+        public override NullableRef<GameObject> ItemDisplayPrefab => null;
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
+        private static GameObject _effect;
+        private BuffDef _buffDef;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Percentage of max hp that must be lost for Green Chocolate's effect to proc. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Percentage of max hp that must be lost for Green Chocolate's effect to proc. (1 = 100%)")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float damageThreshold = 0.2f;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Percent damage reduction that the damage in excess of the above threshold (base value 20%) is reduced by. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Percent damage reduction that the damage in excess of the above threshold (base value 20%) is reduced by. (1 = 100%)")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float damageReduction = 0.5f;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Base duration of the buff provided by Green Chocolate. (1 = 1 second)")]
-        [TokenModifier(token, StatTypes.Default, 2)]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base duration of the buff provided by Green Chocolate. (1 = 1 second)")]
+        [FormatToken(token, 2)]
         public static float baseDuration = 12f;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Duration of the buff gained per stack. (1 = 1 second)")]
-        [TokenModifier(token, StatTypes.Default, 3)]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Duration of the buff gained per stack. (1 = 1 second)")]
+        [FormatToken(token, 3)]
         public static float stackDuration = 6f;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Percent damage increase from the buff. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 4, "100")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Percent damage increase from the buff. (1 = 100%)")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 4)]
         public static float buffDamage = 0.5f;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Crit chance increase from the buff. (1 = 1% crit chance)")]
-        [TokenModifier(token, StatTypes.Default, 5)]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Crit chance increase from the buff. (1 = 1% crit chance)")]
+        [FormatToken(token, 5)]
         public static float buffCrit = 20f;
 
-        public static GameObject effectPrefab = SS2Assets.LoadAsset<GameObject>("ChocolateEffect", SS2Bundle.Items);
+        public override void Initialize()
+        {
+            R2API.RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
+        }
+
+        private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, R2API.RecalculateStatsAPI.StatHookEventArgs args)
+        {
+            int buffStacks = sender.GetBuffCount(_buffDef);
+            args.critAdd += buffCrit * buffStacks;
+            args.damageMultAdd += buffDamage * buffStacks;
+        }
+
+        public override bool IsAvailable()
+        {
+            return true;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            ParallelAssetLoadCoroutineHelper helper = new ParallelAssetLoadCoroutineHelper();
+
+            helper.AddAssetToLoad<ItemDef>("GreenChocolate", SS2Bundle.Items);
+            helper.AddAssetToLoad<GameObject>("ChocolateEffect", SS2Bundle.Items);
+            helper.AddAssetToLoad<BuffDef>("BuffChocolate", SS2Bundle.Items);
+
+            helper.Start();
+            while (!helper.IsDone()) yield return null;
+
+            _itemDef = helper.GetLoadedAsset<ItemDef>("GreenChocolate");
+            _effect = helper.GetLoadedAsset<GameObject>("ChocolateEffect");
+            _buffDef = helper.GetLoadedAsset<BuffDef>("BuffChocolate");
+        }
+
         public sealed class Behavior : BaseItemBodyBehavior, IOnIncomingDamageServerReceiver
         {
             [ItemDefAssociation]
@@ -62,7 +102,7 @@ namespace SS2.Items
                         scale = this.body.radius,
                     };
                     effectData.SetNetworkedObjectReference(this.body.gameObject);
-                    EffectManager.SpawnEffect(effectPrefab, effectData, true);
+                    EffectManager.SpawnEffect(_effect, effectData, true);
                 }
             }
             private void OnDestroy()

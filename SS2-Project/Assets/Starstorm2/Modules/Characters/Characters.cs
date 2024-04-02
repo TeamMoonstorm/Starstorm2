@@ -2,17 +2,21 @@
 using RiskOfOptions.OptionConfigs;
 using System.Collections.Generic;
 using System.Linq;
-
 using MSU;
+using UnityEngine;
+using RoR2.ContentManagement;
+using MSU.Config;
+using RoR2;
+using BepInEx;
+
 namespace SS2.Modules
 {
-    public sealed class Characters : CharacterModuleBase
+    public sealed class Characters : IContentPieceProvider<GameObject>
     {
-        public static Characters Instance { get; set; }
+        public ContentPack ContentPack => _contentPack;
+        private ContentPack _contentPack;
 
-        public override R2APISerializableContentPack SerializableContentPack => SS2Content.Instance.SerializableContentPack;
-
-        public static ConfigurableBool EnableMonsters = SS2Config.MakeConfigurableBool(true, (b) =>
+        public static ConfiguredBool EnableMonsters = SS2Config.ConfigFactory.MakeConfiguredBool(true, (b) =>
         {
             b.Section = "Enable Monsters";
             b.Key = "Enable Monsters";
@@ -24,7 +28,7 @@ namespace SS2.Modules
             };
         }).DoConfigure();
 
-        public static ConfigurableBool EnableSurvivors = SS2Config.MakeConfigurableBool(true, (b) =>
+        public static ConfiguredBool EnableSurvivors = SS2Config.ConfigFactory.MakeConfiguredBool(true, (b) =>
         {
             b.Section = "Enable Survivors";
             b.Key = "Enable Survivors";
@@ -36,100 +40,88 @@ namespace SS2.Modules
             };
         }).DoConfigure();
 
-        public override void Initialize()
+        private IEnumerable<IContentPiece<GameObject>> _unfilteredCharacters;
+
+        public IContentPiece<GameObject>[] GetContents()
         {
-            Instance = this;
-            base.Initialize();
-            SS2Log.Info($"Initializing Bodies.");
-            GetCharacterBases();
+            return _unfilteredCharacters.Where(PassesFilter).ToArray();
         }
 
-        protected override IEnumerable<CharacterBase> GetCharacterBases()
+        IContentPiece[] IContentPieceProvider.GetContents()
         {
+            return _unfilteredCharacters.Where(PassesFilter).ToArray();
+        }
 
-            base.GetCharacterBases()
-            .Where(character =>
+        private bool PassesFilter(IContentPiece<GameObject> piece)
+        {
+            if(!(piece is ICharacterContentPiece character))
+            {
+                return false;
+            }
+
+            if (!character.IsAvailable())
+                return false;
+
+            if (character is SS2Survivor starstormSurvivor)
+            {
+                if (!EnableSurvivors)
+                    return false;
+
+                string name = MSUtil.NicifyString(starstormSurvivor.CharacterPrefab.name);
+                int ind = name.LastIndexOf("Body");
+                if (ind >= 0)
                 {
-                if (character is SS2Survivor survivor){
-                    string name = MSUtil.NicifyString(character.BodyPrefab.name);
-                    int ind = name.LastIndexOf("Body");
-                    if(ind >= 0){
-                        name = name.Substring(0, ind - 1);
-                    }
-
-                    if (!EnableSurvivors){
-                        return false;
-                    }
-
-                    return SS2Config.MakeConfigurableBool(true, (b) =>
-                    {
-                        b.Section = "Survivors";
-                        b.Key = name;
-                        b.Description = "Enable/Disable this Survivor";
-                        b.ConfigFile = SS2Config.ConfigMain;
-                        b.CheckBoxConfig = new CheckBoxConfig
-                        {
-                            checkIfDisabled = () => !EnableSurvivors,
-                            restartRequired = true
-                        };
-                    }).DoConfigure();
+                    name = name.Substring(0, ind - 1);
                 }
-                else if (character is SS2Monster monster){
-                    string name = MSUtil.NicifyString(character.BodyPrefab.name);
-                    int ind = name.LastIndexOf("Body");
-                    if(ind >= 0){
-                        name = name.Substring(0, ind - 1);
-                    }
 
-                    if (!EnableMonsters){
-                        return false;
-                    }
-
-                    return SS2Config.MakeConfigurableBool(true, (b) =>
+                return SS2Config.ConfigFactory.MakeConfiguredBool(true, (b) =>
+                {
+                    b.Section = "Survivors";
+                    b.Key = name;
+                    b.Description = "Enable/Disable this Survivor";
+                    b.ConfigFile = SS2Config.ConfigMain;
+                    b.CheckBoxConfig = new CheckBoxConfig
                     {
-                        
-                        b.Section = "Monsters";
-                        b.Key = name;
-                        b.Description = "Enable/Disable this Monster";
-                        b.ConfigFile = SS2Config.ConfigMain;
-                        b.CheckBoxConfig = new CheckBoxConfig
-                        {
-                            checkIfDisabled = () => !EnableMonsters,
-                            restartRequired = true
-                        };
-                    }).DoConfigure();
-                    }
-                    else
+                        checkIfDisabled = () => !EnableSurvivors,
+                        restartRequired = true
+                    };
+                }).DoConfigure();
+            }
+
+            if(character is SS2Monster starstormMonster)
+            {
+                if (!EnableMonsters)
+                    return false;
+
+                string name = MSUtil.NicifyString(starstormMonster.CharacterPrefab.name);
+                int ind = name.LastIndexOf("Body");
+                if (ind >= 0)
+                {
+                    name = name.Substring(0, ind - 1);
+                }
+
+                return SS2Config.ConfigFactory.MakeConfiguredBool(true, (b) =>
+                {
+
+                    b.Section = "Monsters";
+                    b.Key = name;
+                    b.Description = "Enable/Disable this Monster";
+                    b.ConfigFile = SS2Config.ConfigMain;
+                    b.CheckBoxConfig = new CheckBoxConfig
                     {
-                        SS2Log.Error("Character " + character + " was not a survivor or monster.");
-                        return false;
-                    }
-                })
-                .ToList()
-                .ForEach(character => AddCharacter(character));
-            return null;
+                        checkIfDisabled = () => !EnableMonsters,
+                        restartRequired = true
+                    };
+                }).DoConfigure();
+            }
 
+            return false;
+        }
 
-            //base.GetCharacterBases()
-            //    .Where(character =>
-            //    {
-            //        return SS2Config.MakeConfigurableBool(true, (b) =>
-            //        {
-            //            b.Section = "Bodies";
-            //            b.Key = MSUtil.NicifyString(character.BodyPrefab.name);
-            //            b.Description = "Enable/Disable this Body";
-            //            b.ConfigFile = SS2Config.ConfigMain;
-            //            b.CheckBoxConfig = new CheckBoxConfig
-            //            {
-            //                checkIfDisabled = () => !EnableMonsters,
-            //                restartRequired = true
-            //            };
-            //        }).DoConfigure();
-            //    })
-            //    .ToList()
-            //    .ForEach(character => AddCharacter(character));
-            //return null;
-
+        internal Characters(ContentPack contentPack, BaseUnityPlugin plugin)
+        {
+            _contentPack = contentPack;
+            _unfilteredCharacters = ContentUtil.AnalyzeForGameObjectContentPieces<CharacterBody>(plugin);
         }
     }
 }

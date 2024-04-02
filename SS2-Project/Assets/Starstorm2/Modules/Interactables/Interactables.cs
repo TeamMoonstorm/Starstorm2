@@ -4,15 +4,20 @@ using System.Linq;
 using RiskOfOptions.OptionConfigs;
 
 using MSU;
+using RoR2.ContentManagement;
+using MSU.Config;
+using UnityEngine;
+using BepInEx;
+using RoR2;
+
 namespace SS2.Modules
 {
-    public sealed class Interactables : InteractableModuleBase
+    public sealed class Interactables : IContentPieceProvider<GameObject>
     {
-        public static Interactables Instance { get; private set; }
+        public ContentPack ContentPack => _contentPack;
+        private ContentPack _contentPack;
 
-        public override R2APISerializableContentPack SerializableContentPack { get; } = SS2Content.Instance.SerializableContentPack;
-
-        public static ConfigurableBool EnableInteractables = SS2Config.MakeConfigurableBool(true, (b) =>
+        public static ConfiguredBool EnableInteractables = SS2Config.ConfigFactory.MakeConfiguredBool(true, (b) =>
         {
             b.Section = "Enable All Interactables";
             b.Key = "Enable All Interactables";
@@ -24,43 +29,49 @@ namespace SS2.Modules
             };
         }).DoConfigure();
 
-        public override void Initialize()
+        private IEnumerable<IContentPiece<GameObject>> _unfilteredInteractables;
+
+        public IContentPiece<GameObject>[] GetContents()
         {
-            Instance = this;
-            base.Initialize();
-            if (!EnableInteractables) return;
-            SS2Log.Info($"Initializing Interactables.");
-            GetInteractableBases();
+            return _unfilteredInteractables.Where(PassesFilter).ToArray();
         }
 
-        protected override IEnumerable<SS2Interactable> GetInteractableBases()
+        IContentPiece[] IContentPieceProvider.GetContents()
         {
-            //string niceName = MSUtil.NicifyString(item.GetType().Name);
+            return _unfilteredInteractables.Where(PassesFilter).ToArray();
+        }
 
-            base.GetInteractableBases()
-                .Where(interactable =>
+        private bool PassesFilter(IContentPiece<GameObject> piece)
+        {
+            if (!EnableInteractables)
+                return false;
+
+            if(!(piece is SS2Interactable interactable))
+            {
+                return false;
+            }
+
+            if (!piece.IsAvailable())
+                return false;
+
+            return SS2Config.ConfigFactory.MakeConfiguredBool(true, (b) =>
+            {
+                b.Section = "Interactables";
+                b.Key = MSUtil.NicifyString(interactable.InteractablePrefab.name);
+                b.Description = "Enable/Disable this Interactable";
+                b.ConfigFile = SS2Config.ConfigMain;
+                b.CheckBoxConfig = new CheckBoxConfig
                 {
-                    if (!EnableInteractables)
-                    {
-                        return false;
-                    }
+                    checkIfDisabled = () => !EnableInteractables,
+                    restartRequired = true
+                };
+            }).DoConfigure();
+        }
 
-                    return SS2Config.MakeConfigurableBool(true, (b) =>
-                    {
-                        b.Section = "Interactables";
-                        b.Key = MSUtil.NicifyString(interactable.Interactable.name);
-                        b.Description = "Enable/Disable this Interactable";
-                        b.ConfigFile = SS2Config.ConfigMain;
-                        b.CheckBoxConfig = new CheckBoxConfig
-                        {
-                            checkIfDisabled = () => !EnableInteractables,
-                            restartRequired = true
-                        };
-                    }).DoConfigure();
-                })
-                .ToList()
-                .ForEach(interactable => AddInteractable(interactable));
-            return null;
+        internal Interactables(ContentPack contentPack, BaseUnityPlugin plugin)
+        {
+            _contentPack = contentPack;
+            _unfilteredInteractables = ContentUtil.AnalyzeForGameObjectContentPieces<IInteractable>(plugin);
         }
     }
 }

@@ -6,70 +6,87 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
+using MSU;
+using System.Collections;
+
 namespace SS2.Survivors
 {
     public sealed class Executioner2 : SS2Survivor
     {
-        public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("Executioner2Body", SS2Bundle.Executioner2);
-        public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("Executioner2Master", SS2Bundle.Executioner2);
-        public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("SurvivorExecutioner2", SS2Bundle.Executioner2);
+        public override SurvivorDef SurvivorDef => _survivorDef;
+        private SurvivorDef _survivorDef;
+        public override NullableRef<GameObject> MasterPrefab => _monsterMaster;
+        private GameObject _monsterMaster;
+        public override GameObject CharacterPrefab => _prefab;
+        private GameObject _prefab;
 
         public static ReadOnlyCollection<BodyIndex> BodiesThatGiveSuperCharge { get; private set; }
-        private static List<BodyIndex> bodiesThatGiveSuperCharge = new List<BodyIndex>();
-
-        [SystemInitializer(typeof(BodyCatalog))]
-        private static void InitializeSuperchargeList()
+        private static HashSet<string> bodiesThatGiveSuperCharge = new HashSet<string>
         {
-            List<string> defaultBodyNames = new List<string>
-            {
                 "BrotherHurtBody",
                 "ScavLunar1Body",
                 "ScavLunar2Body",
                 "ScavLunar3Body",
                 "ScavLunar4Body",
                 "ShopkeeperBody"
-            };
+        };
 
-            foreach(string bodyName in defaultBodyNames)
-            {
-                BodyIndex index = BodyCatalog.FindBodyIndexCaseInsensitive(bodyName);
-                if(index != BodyIndex.None)
-                {
-                    //AddBodyToSuperchargeList(index); //this counts as a fix.
-                }
-            }
+        public static void AddBodyToSuperChargeCollection(string body)
+        {
+            bodiesThatGiveSuperCharge.Add(body);
+            UpdateSuperChargeList();
         }
 
-        public static void AddBodyToSuperchargeList(BodyIndex bodyIndex)
+        public override void Initialize()
         {
-            if (bodyIndex == BodyIndex.None)
-            {
-                //SS2Log.Debug($"Tried to add a body to the supercharge list, but it's index is none");
-                return;
-            }
-
-            if (bodiesThatGiveSuperCharge.Contains(bodyIndex))
-            {
-                GameObject prefab = BodyCatalog.GetBodyPrefab(bodyIndex);
-                //SS2Log.Debug($"Body prefab {prefab} is already in the list of bodies that give supercharge.");
-                return;
-            }
-            bodiesThatGiveSuperCharge.Add(bodyIndex);
-            BodiesThatGiveSuperCharge = new ReadOnlyCollection<BodyIndex>(bodiesThatGiveSuperCharge);
+            BodyCatalog.availability.CallWhenAvailable(UpdateSuperChargeList);
+            Hook();
+            ModifyPrefab();
         }
 
-        public override void ModifyPrefab()
+        private static void UpdateSuperChargeList()
         {
-            base.ModifyPrefab();
+            List<BodyIndex> indices = new List<BodyIndex>();
+            foreach(var bodyName in bodiesThatGiveSuperCharge)
+            {
+                BodyIndex index = BodyCatalog.FindBodyIndex(bodyName);
+                if (index == BodyIndex.None)
+                    continue;
 
-            var cb = BodyPrefab.GetComponent<CharacterBody>();
+                indices.Add(index);
+            }
+            BodiesThatGiveSuperCharge = new ReadOnlyCollection<BodyIndex>(indices);
+        }
+
+        public override bool IsAvailable()
+        {
+            return true;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            ParallelAssetLoadCoroutineHelper helper = new ParallelAssetLoadCoroutineHelper();
+            helper.AddAssetToLoad<GameObject>("Executioner2Body", SS2Bundle.Executioner2);
+            helper.AddAssetToLoad<GameObject>("Executioner2Master", SS2Bundle.Executioner2);
+            helper.AddAssetToLoad<SurvivorDef>("SurvivorExecutioner2", SS2Bundle.Executioner2);
+
+            helper.Start();
+            while (!helper.IsDone())
+                yield return null;
+
+            _survivorDef = helper.GetLoadedAsset<SurvivorDef>("SurvivorExecutioner2");
+            _monsterMaster = helper.GetLoadedAsset<GameObject>("Executioner2Master");
+            _prefab = helper.GetLoadedAsset<GameObject>("Executioner2Body");
+        }
+
+        public void ModifyPrefab()
+        {
+            var cb = _prefab.GetComponent<CharacterBody>();
             cb.preferredPodPrefab = Resources.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod");
             cb._defaultCrosshairPrefab = Resources.Load<GameObject>("Prefabs/Crosshair/StandardCrosshair");
-            /*var footstepHandler = BodyPrefab.GetComponent<ModelLocator>().modelTransform.GetComponent<FootstepHandler>();
-            footstepHandler.footstepDustPrefab = Resources.Load<GameObject>("Prefabs/GenericFootstepDust");*/
         }
 
-        public override void Hook()
+        public void Hook()
         {
             SetupFearExecute();
             On.RoR2.MapZone.TeleportBody += MarkOOB;
@@ -78,7 +95,6 @@ namespace SS2.Survivors
 
         private void MarkOOB(On.RoR2.MapZone.orig_TeleportBody orig, MapZone self, CharacterBody characterBody)
         {
-            //orig(self, characterBody);
             var exc = characterBody.gameObject.GetComponent<ExecutionerController>();
             if (exc)
             {
@@ -92,7 +108,6 @@ namespace SS2.Survivors
             var exc = body.gameObject.GetComponent<ExecutionerController>();
             if (exc)
             {
-                //SS2Log.Info("isOOB? " + exc.hasOOB + " | " + exc.isExec);
                 if (exc.isExec)
                 {
                     exc.hasOOB = true;
@@ -107,7 +122,7 @@ namespace SS2.Survivors
             var hbv = orig(self);
             if (!self.body.bodyFlags.HasFlag(CharacterBody.BodyFlags.ImmuneToExecutes) && self.body.HasBuff(SS2Content.Buffs.BuffFear))
             {
-                hbv.cullFraction += 0.15f;//(self.body && self.body.isChampion) ? 0.15f : 0.3f; //might stack too crazy if it's 30% like Freeze
+                hbv.cullFraction += 0.15f;//might stack too crazy if it's 30% like Freeze
             }
             return hbv;
         }
@@ -148,7 +163,7 @@ namespace SS2.Survivors
 
                 if (error)
                 {
-                    Debug.LogError("Starstorm 2: Fear Execute IL Hook failed.");
+                    SS2Log.Fatal("Starstorm 2: Fear Execute IL Hook failed.");
                 }
 
             };
@@ -168,11 +183,10 @@ namespace SS2.Survivors
                 }
                 else
                 {
-                    Debug.LogError("Starstorm 2: Fear VFX IL Hook failed.");
+                    SS2Log.Fatal("Starstorm 2: Fear VFX IL Hook failed.");
                 }
             };
         }
-
         internal static int GetIonCountFromBody(CharacterBody body)
         {
             if (body == null) return 1;
@@ -184,7 +198,7 @@ namespace SS2.Survivors
             if (body.isChampion)
                 return 10;
 
-            switch(body.hullClassification)
+            switch (body.hullClassification)
             {
                 case HullClassification.Human:
                     return 1;
@@ -196,6 +210,5 @@ namespace SS2.Survivors
                     return 1;
             }
         }
-
     }
 }

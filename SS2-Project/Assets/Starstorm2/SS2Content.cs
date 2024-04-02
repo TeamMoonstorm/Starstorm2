@@ -132,32 +132,32 @@ namespace SS2
                 },
                 () =>
                 {
-                    ItemTierModule.AddProvider(main, ContentUtil.AnalyzeForContentPieces<ItemTierDef>(main, SS2ContentPack));
+                    ItemTierModule.AddProvider(main, ContentUtil.CreateContentPieceProvider<ItemTierDef>(main, SS2ContentPack));
                     return ItemTierModule.InitializeTiers(main);
                 },
                 () =>
                 {
-                    ItemModule.AddProvider(main, ContentUtil.AnalyzeForContentPieces<ItemDef>(main, SS2ContentPack));
+                    ItemModule.AddProvider(main, ContentUtil.CreateContentPieceProvider<ItemDef>(main, SS2ContentPack));
                     return ItemModule.InitializeItems(main);
                 },
                 () =>
                 {
-                    EquipmentModule.AddProvider(main, ContentUtil.AnalyzeForContentPieces<EquipmentDef>(main, SS2ContentPack));
+                    EquipmentModule.AddProvider(main, ContentUtil.CreateContentPieceProvider<EquipmentDef>(main, SS2ContentPack));
                     return EquipmentModule.InitialzeEquipments(main);
                 },
                 () =>
                 {
-                    CharacterModule.AddProvider(main, ContentUtil.AnalyzeForGameObjectContentPieces<CharacterBody>(main, SS2ContentPack));
+                    CharacterModule.AddProvider(main, new Modules.Characters(SS2ContentPack, main));
                     return CharacterModule.InitializeCharacters(main);
                 },
                 () =>
                 {
-                    ArtifactModule.AddProvider(main, ContentUtil.AnalyzeForContentPieces<ArtifactDef>(main, SS2ContentPack));
+                    ArtifactModule.AddProvider(main, ContentUtil.CreateContentPieceProvider<ArtifactDef>(main, SS2ContentPack));
                     return ArtifactModule.InitializeArtifacts(main);
                 },
                 () =>
                 {
-                    InteractableModule.AddProvider(main, ContentUtil.AnalyzeForGameObjectContentPieces<IInteractable>(main, SS2ContentPack));
+                    InteractableModule.AddProvider(main, new Modules.Interactables(SS2ContentPack, main));
                     return InteractableModule.InitializeInteractables(main);
                 },
                 LoadFromAssetBundles,

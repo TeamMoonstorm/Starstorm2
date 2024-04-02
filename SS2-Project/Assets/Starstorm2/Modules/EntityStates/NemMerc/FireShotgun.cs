@@ -1,7 +1,6 @@
 ﻿using RoR2;
 using UnityEngine;
 using R2API;
-using SS2.DamageTypes;
 
 namespace EntityStates.NemMerc
 {
@@ -38,7 +37,7 @@ namespace EntityStates.NemMerc
         {
             base.ModifyBullet(bulletAttack);
             bulletAttack.falloffModel = BulletAttack.FalloffModel.DefaultBullet;
-            bulletAttack.AddModdedDamageType(RedirectHologram.damageType);
+            bulletAttack.AddModdedDamageType(SS2.Survivors.NemMerc.damageType);
         }
         public override InterruptPriority GetMinimumInterruptPriority()
         {

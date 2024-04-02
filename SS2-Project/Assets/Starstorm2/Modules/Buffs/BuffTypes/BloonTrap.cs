@@ -5,6 +5,9 @@ using UnityEngine;
 using MSU;
 namespace SS2.Buffs
 {
+    //What even is this...? -N
+    //For future reference, that interface only works on monobehaviours attached to a body, i should make it more clear next time. -N
+    /*
     //[DisabledContent]
     public sealed class BloonTrap : BuffBase, IBodyStatArgModifier
     {
@@ -32,5 +35,5 @@ namespace SS2.Buffs
             }
             return result;
         }
-    }
+    }*/
 }

@@ -6,7 +6,9 @@ using RiskOfOptions.OptionConfigs;
 using MSU;
 namespace SS2.Modules
 {
-    public sealed class Equipments : EquipmentModuleBase
+    //TODO: port this to its own IContentPieceProvider, i cant really do what prod did since that requires getting access to the cooldowns, and at this point in time that isnt feasable, might be a good idea to move these into a check in the SS2Equipment class? -N
+
+    /*public sealed class Equipments : EquipmentModuleBase
     {
         public static Equipments Instance { get; private set; }
         public override R2APISerializableContentPack SerializableContentPack => SS2Content.Instance.SerializableContentPack;
@@ -119,5 +121,5 @@ namespace SS2.Modules
             //}
         }
 
-    }
+    }*/
 }

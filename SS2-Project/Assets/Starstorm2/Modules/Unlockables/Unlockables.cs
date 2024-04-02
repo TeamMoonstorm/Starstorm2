@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UObject = UnityEngine.Object;
+//TODO: refactor this into its own unique class because MSU no longer has an unlockables module. -N
+/*
 namespace SS2.Modules
 {
     public sealed class Unlockables : UnlockablesModuleBase
@@ -71,4 +73,4 @@ namespace SS2.Modules
             }
         }
     }
-}
+}*/

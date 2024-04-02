@@ -11,10 +11,11 @@ using System.Collections.Generic;
 using Assets.Starstorm2;
 using static R2API.DamageAPI;
 using R2API;
+using RoR2.ContentManagement;
 
 namespace SS2.Survivors
 {
-    public sealed class Chirr : SS2Survivor
+    public sealed class Chirr : SS2Survivor, IContentPackModifier
     {
         public override SurvivorDef SurvivorDef => _survivorDef;
         private SurvivorDef _survivorDef;
@@ -32,8 +33,23 @@ namespace SS2.Survivors
         public static bool toggleHover = false;
         
         public static float confuseDuration = 4f;
-
         public static ModdedDamageType confuseDamageType;
+        public static float _confuseSlowAmount = 0.5f;
+        public static float _confuseAttackSpeedSlowAmount = 0.0f;
+        private BuffDef _confuseBuffDef;
+
+        private BuffDef _convertBuffDef;
+        private float _convertDotDamageCoefficient;
+        public static DotController.DotIndex ConvertDotIndex { get; private set; }
+
+        private BuffDef _buffChirrFriend;
+        private Material _matFriendOverlay;
+
+        private static float _grabFriendAttackBoost = 1f;
+        private BuffDef _buffGrabFriend;
+
+        private static float _percentHealthRegen = 0.05f;
+        private BuffDef _buffChirrRegen;
 
         public override void Initialize()
         {
@@ -51,7 +67,11 @@ namespace SS2.Survivors
             Stage.onStageStartGlobal += FixGoolakeRaycasts;
 
             ModifyPrefab();
+            R2API.RecalculateStatsAPI.GetStatCoefficients += ModifyStats;
+
             RegisterConfuseOnHit();
+            RegisterConvert();
+            BuffOverlays.AddBuffOverlay(_buffChirrFriend, _matFriendOverlay);
         }
 
         private void HiChirrHiiiiii(On.RoR2.UI.MainMenu.BaseMainMenuScreen.orig_OnEnter orig, RoR2.UI.MainMenu.BaseMainMenuScreen self, RoR2.UI.MainMenu.MainMenuController mainMenuController)
@@ -91,6 +111,22 @@ namespace SS2.Survivors
             AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(SS2Assets.LoadAsset<SkillDef>("BefriendScepter", SS2Bundle.Chirr), "ChirrBody", SkillSlot.Special, 0);
         }
 
+        private void ModifyStats(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
+        {
+            int confuseCount = sender.GetBuffCount(_confuseBuffDef);
+            int grabFriendCount = sender.GetBuffCount(_buffGrabFriend);
+            bool hasRegenBuff = sender.HasBuff(_buffChirrRegen);
+
+            args.moveSpeedMultAdd -= _confuseSlowAmount * confuseCount;
+            args.attackSpeedMultAdd -= _confuseAttackSpeedSlowAmount * confuseCount;
+            args.baseAttackSpeedAdd += _grabFriendAttackBoost;
+
+            if(hasRegenBuff)
+            {
+                args.baseRegenAdd += sender.maxHealth * _percentHealthRegen;
+            }
+        }
+
         public override bool IsAvailable()
         {
             return true;
@@ -103,6 +139,12 @@ namespace SS2.Survivors
             helper.AddAssetToLoad<GameObject>("ChirrBody", SS2Bundle.Chirr);
             helper.AddAssetToLoad<GameObject>("ChirrMonsterMaster", SS2Bundle.Chirr);
             helper.AddAssetToLoad<SurvivorDef>("Chirr", SS2Bundle.Chirr);
+            helper.AddAssetToLoad<BuffDef>("BuffChirrConfuse", SS2Bundle.Chirr);
+            helper.AddAssetToLoad<BuffDef>("BuffChirrConvert", SS2Bundle.Chirr);
+            helper.AddAssetToLoad<BuffDef>("BuffChirrFriend", SS2Bundle.Chirr);
+            helper.AddAssetToLoad<Material>("matFriendOverlay", SS2Bundle.Chirr);
+            helper.AddAssetToLoad<BuffDef>("BuffChirrGrabFriend", SS2Bundle.Chirr);
+            helper.AddAssetToLoad<BuffDef>("BuffChirrRegen", SS2Bundle.Chirr);
 
             helper.Start();
             while (!helper.IsDone()) yield return null;
@@ -110,6 +152,12 @@ namespace SS2.Survivors
             _prefab = helper.GetLoadedAsset<GameObject>("ChirrBody");
             _monsterMaster = helper.GetLoadedAsset<GameObject>("ChirrMonsterMaster");
             _survivorDef = helper.GetLoadedAsset<SurvivorDef>("Chirr");
+            _confuseBuffDef = helper.GetLoadedAsset<BuffDef>("BuffChirrConfuse");
+            _convertBuffDef = helper.GetLoadedAsset<BuffDef>("BuffChirrConvert");
+            _buffChirrFriend = helper.GetLoadedAsset<BuffDef>("_buffChirrFriend");
+            _matFriendOverlay = helper.GetLoadedAsset<Material>("matFriendOverlay");
+            _buffGrabFriend = helper.GetLoadedAsset<BuffDef>("BuffChirrGrabFriend");
+            _buffChirrRegen = helper.GetLoadedAsset<BuffDef>("BuffChirrRegen");
         }
 
         private IEnumerator LoadAndAssign<T>(string assetName, SS2Bundle bundle, Dictionary<string, UnityEngine.Object> dictionary) where T : UnityEngine.Object
@@ -140,6 +188,10 @@ namespace SS2.Survivors
             GlobalEventManager.onServerDamageDealt += ApplyConfuse;
         }
 
+        private void RegisterConvert()
+        {
+            ConvertDotIndex = DotAPI.RegisterDotDef(0.33f, _convertDotDamageCoefficient, DamageColorIndex.Poison, _convertBuffDef);
+        }
         private void ApplyConfuse(DamageReport obj)
         {
             var victimBody = obj.victimBody;
@@ -148,6 +200,18 @@ namespace SS2.Survivors
             {
                 victimBody.AddTimedBuffAuthority(SS2Content.Buffs.BuffChirrConfuse.buffIndex, confuseDuration);
             }
+        }
+
+        public void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.buffDefs.AddSingle(_confuseBuffDef);
+            contentPack.buffDefs.Add(new BuffDef[]
+            {
+                _confuseBuffDef,
+                _convertBuffDef,
+                _buffChirrFriend,
+                _buffGrabFriend,
+            });
         }
     }
 }

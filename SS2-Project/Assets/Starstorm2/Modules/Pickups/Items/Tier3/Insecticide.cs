@@ -8,15 +8,15 @@ namespace SS2.Items
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Insecticide", SS2Bundle.Items);
         public static DotController.DotIndex DotIndex;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Chance. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance. (1 = 100%)")]
         [TokenModifier("SS2_ITEM_INSECTICIDE_DESC", StatTypes.MultiplyByN, 0, "100")]
         public static float chance = 1f;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Total damage. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Total damage. (1 = 100%)")]
         [TokenModifier("SS2_ITEM_INSECTICIDE_DESC", StatTypes.MultiplyByN, 1, "100")]
         public static float damageCoeff = 1.8f;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Duration of poison.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Duration of poison.")]
         public static float duration = 3;
 
         public static GameObject hitEffect = SS2Assets.LoadAsset<GameObject>("InsecticideEffect", SS2Bundle.Items);

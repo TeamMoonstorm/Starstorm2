@@ -13,19 +13,19 @@ namespace SS2.Items
         private const string token = "SS2_ITEM_JETBOOTS_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("JetBoots", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Base damage of Prototype Jet Boots' explosion. Burn damage deals an additional 50% of this value. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base damage of Prototype Jet Boots' explosion. Burn damage deals an additional 50% of this value. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float baseDamage = 5f;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Base radius of Prototype Jet Boot's explosion, in meters.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base radius of Prototype Jet Boot's explosion, in meters.")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static float baseRadius = 7.5f;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Stacking radius of Prototype Jet Boots' explosion, in meters.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Stacking radius of Prototype Jet Boots' explosion, in meters.")]
         [TokenModifier(token, StatTypes.Default, 2)]
         public static float stackRadius = 5f;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Cooldown of Prototype Jet Boots' bonus jump, in seconds.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Cooldown of Prototype Jet Boots' bonus jump, in seconds.")]
         [TokenModifier(token, StatTypes.Default, 3)]
         public static float jumpCooldown = 5f;
 

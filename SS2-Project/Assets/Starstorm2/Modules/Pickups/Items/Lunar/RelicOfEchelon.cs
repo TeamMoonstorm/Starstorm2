@@ -8,28 +8,32 @@ using RoR2.UI;
 using System.Collections;
 
 using MSU;
+using MSU.Config;
+
+//Had disabled content, to the nether realm with you. -N
+/*
+#if DEBUG
 namespace SS2.Items
 {
-    [DisabledContent]
     public sealed class RelicOfEchelon : SS2Item
     {
         private const string token = "SS2_ITEM_RELICOFECHELON_DESC";
 
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfEchelon", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Equipment cooldown increase per use, per stack.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Equipment cooldown increase per use, per stack.")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float cooldownIncrease = .15f;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Base amount of additional base damage added.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base amount of additional base damage added.")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static float damageBonus = 150;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Base amount of additional base health added.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base amount of additional base health added.")]
         [TokenModifier(token, StatTypes.Default, 2)]
         public static float healthBonus = 5000;
 
-        [RooConfigurableField(SS2Config.ID_ITEM, ConfigDesc = "Duration of the Echelon buff. Does not scale with stacks. (1 = 1 second)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Duration of the Echelon buff. Does not scale with stacks. (1 = 1 second)")]
         [TokenModifier(token, StatTypes.Default, 3)]
         public static float buffDuration = 8;
 
@@ -236,3 +240,4 @@ namespace SS2.Items
 
     }
 }
+#endif*/

@@ -2,6 +2,9 @@
 using UnityEngine;
 namespace SS2.Buffs
 {
+    //I am so confused by this, specially that buffdef load, not gonna bother for now. -N
+
+    /*
     public sealed class CanJump : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdCanJump", SS2Bundle.Equipments);
@@ -37,5 +40,5 @@ namespace SS2.Buffs
                 body.baseJumpCount--;
             }
         }
-    }
+    }*/
 }
