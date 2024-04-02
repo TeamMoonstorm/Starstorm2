@@ -133,6 +133,8 @@ namespace SS2.Survivors
             helper.AddAssetToLoad<SurvivorDef>("SurvivorExecutioner2", SS2Bundle.Executioner2);
             helper.AddAssetToLoad<BuffDef>("bdExeCharge", SS2Bundle.Executioner2);
             helper.AddAssetToLoad<BuffDef>("BuffExecutionerArmor", SS2Bundle.Executioner2);
+            helper.AddAssetToLoad<GameObject>("exePlume", SS2Bundle.Executioner2);
+            helper.AddAssetToLoad<GameObject>("exePlumeBig", SS2Bundle.Executioner2);
 
             helper.Start();
             while (!helper.IsDone())
@@ -143,6 +145,8 @@ namespace SS2.Survivors
             _prefab = helper.GetLoadedAsset<GameObject>("Executioner2Body");
             _exeChargeBuffDef = helper.GetLoadedAsset<BuffDef>("bdExeCharge");
             _exeArmor = helper.GetLoadedAsset<BuffDef>("BuffExecutionerArmor");
+            plumeEffect = helper.GetLoadedAsset<GameObject>("exePlume");
+            plumeEffectLarge = helper.GetLoadedAsset<GameObject>("exePlumeBig");
         }
 
         public void ModifyPrefab()
