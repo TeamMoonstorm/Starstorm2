@@ -4,6 +4,7 @@ namespace SS2.Components
 {
 
     // doing this after CharacterBody.Start is too early because GenericSkill sets the stock to max in its Start
+    //Please, i know youre mad, but dont use weird names like this where we dont even know what its for. -N
     public class StupidFuckingCooldownSetter : MonoBehaviour
     {
         public int primaryStock;

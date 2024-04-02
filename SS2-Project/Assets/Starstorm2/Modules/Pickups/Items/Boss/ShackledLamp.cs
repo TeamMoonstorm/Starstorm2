@@ -1,56 +1,74 @@
-﻿using RoR2;
+﻿using MSU;
+using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Items;
 using RoR2.Projectile;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 namespace SS2.Items
 {
-    //[DisabledContent]
-    public sealed class ShackledLamp : SS2Item
+    public sealed class ShackledLamp : SS2Item, IContentPackModifier
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ShackledLamp", SS2Bundle.Items);
+        public override NullableRef<GameObject> ItemDisplayPrefab => null;
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
         public ItemDef.Pair lampPair;
 
+        private static GameObject projectilePrefab;
+
         public override void Initialize()
-        {
-            base.Initialize();
-
-            //lampPair.itemDef1 = SS2Content.Items.ShackledLamp;
-            //lampPair.itemDef2 = DLC1Content.Items.VoidMegaCrabItem;
-
-            //ItemCatalog.itemRelationships[DLC1Content.ItemRelationshipTypes.ContagiousItem].AddIfNotInCollection(lampPair); //why isnt it possible...
-
-            /*List<ItemDef.Pair> lampPairs = new List<ItemDef.Pair>();
-            lampPairs.Add(lampPair);
-            var voidPairs = ItemCatalog.itemRelationships[DLC1Content.ItemRelationshipTypes.ContagiousItem];
-            ItemCatalog.itemRelationships[DLC1Content.ItemRelationshipTypes.ContagiousItem] = voidPairs.Union(lampPairs).ToArray();*/
-
-            //something comes up null when doing this
-            //it should probably be its own base or some shit for future additions anyway
-            //will investigate more soon:tm:
+        {    //something comes up null when doing this
+             //it should probably be its own base or some shit for future additions anyway
+             //will investigate more soon:tm:
 
             //so i just did it basically exactly how i did it in vv and it worked 
             //SS2Log.Info("my tier is " + ItemDef.tier);
+
+            //What did lilith meant by this...? Ah, remind me to add a utility for this.
             On.RoR2.Items.ContagiousItemManager.Init += AddZoeaPair;
         }
 
         private void AddZoeaPair(On.RoR2.Items.ContagiousItemManager.orig_Init orig)
-        {   
+        {
             List<ItemDef.Pair> newVoidPairs = new List<ItemDef.Pair>();
 
             ItemDef.Pair lampPair = new ItemDef.Pair()
             {
-                itemDef1 = ItemDef, //nonvoid
+                itemDef1 = _itemDef, //nonvoid
                 itemDef2 = RoR2.DLC1Content.Items.VoidMegaCrabItem //void
             };
             newVoidPairs.Add(lampPair);
 
             var voidPairs = ItemCatalog.itemRelationships[DLC1Content.ItemRelationshipTypes.ContagiousItem];
             ItemCatalog.itemRelationships[DLC1Content.ItemRelationshipTypes.ContagiousItem] = voidPairs.Union(newVoidPairs).ToArray();
-
-            //ItemCatalog.itemRelationships[DLC1Content.ItemRelationshipTypes.ContagiousItem].AddIfNotInCollection(lampPair);
             orig();
+        }
+
+        public override bool IsAvailable()
+        {
+            return true;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            var helper = new ParallelAssetLoadCoroutineHelper();
+
+            helper.AddAssetToLoad<ItemDef>("ShackledLamp", SS2Bundle.Items);
+            helper.AddAssetToLoad<GameObject>("LampBulletPlayer", SS2Bundle.Items);
+
+            helper.Start();
+            while (!helper.IsDone())
+                yield return null;
+
+            _itemDef = helper.GetLoadedAsset<ItemDef>("ShackledLamp");
+            projectilePrefab = helper.GetLoadedAsset<GameObject>("LampBulletPlayer");
+        }
+
+        public void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.projectilePrefabs.AddSingle(projectilePrefab);
         }
 
         public sealed class LampBehavior : BaseItemBodyBehavior
@@ -58,7 +76,7 @@ namespace SS2.Items
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.ShackledLamp;
 
-            private static GameObject projectilePrefab = SS2Assets.LoadAsset<GameObject>("LampBulletPlayer", SS2Bundle.Items);
+            
             private float attackCounter;
 
             private List<GameObject> lampDisplay;
@@ -81,6 +99,7 @@ namespace SS2.Items
                 //if (skill.skillDef.skillIndex == SkillCatalog.FindSkillIndexByName("ExecutionerFireIonGun"))
                 //    return;
                 //sorry nebby
+                //:sob: -N
                 if (skill.skillNameToken == "SS2_EXECUTIONER2_IONBURST_NAME")
                     return;
 
@@ -101,7 +120,7 @@ namespace SS2.Items
                     {
                         muzzlePos = displayPos.position;
                     }
-                    else if(lampDisplay.Count != 0)
+                    else if (lampDisplay.Count != 0)
                     {
                         follower = lampDisplay[0].GetComponent<ItemFollower>();
                         displayPos = follower.followerInstance.transform.Find("mdlLamp").transform;

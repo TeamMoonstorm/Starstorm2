@@ -1,16 +1,45 @@
 ﻿using EntityStates.Pickups.Augury;
+using MSU;
 using RoR2;
 using RoR2.Items;
 using System;
+using System.Collections;
 using UnityEngine;
+#if DEBUG
 namespace SS2.Items
 {
-    [DisabledContent]
     public sealed class Augury : SS2Item
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Augury", SS2Bundle.Indev);
+        public override NullableRef<GameObject> ItemDisplayPrefab => null;
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
+        private static GameObject _attachment;
 
-        public sealed class Behavior : BaseItemBodyBehavior, IOnTakeDamageServerReceiver
+        public override void Initialize()
+        {
+        }
+
+        public override bool IsAvailable()
+        {
+            return false;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            ParallelAssetLoadCoroutineHelper helper = new ParallelAssetLoadCoroutineHelper();
+
+            helper.AddAssetToLoad<GameObject>("AuguryBodyAttachment", SS2Bundle.Indev);
+            helper.AddAssetToLoad<ItemDef>("Augury", SS2Bundle.Items);
+
+            helper.Start();
+            while (!helper.IsDone())
+                yield return null;
+
+            _itemDef = helper.GetLoadedAsset<ItemDef>("Augury");
+            _attachment = helper.GetLoadedAsset<GameObject>("AuguryBodyAttachment");
+        }
+
+        public sealed class AuguryBehavior : BaseItemBodyBehavior, IOnTakeDamageServerReceiver
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.Augury;
@@ -18,7 +47,7 @@ namespace SS2.Items
             private EntityStateMachine esm;
             private void Start()
             {
-                attachment = Instantiate(SS2Assets.LoadAsset<GameObject>($"{nameof(Augury)}BodyAttachment", SS2Bundle.Indev)).GetComponent<NetworkedBodyAttachment>();
+                attachment = Instantiate(_attachment).GetComponent<NetworkedBodyAttachment>();
                 attachment.AttachToGameObjectAndSpawn(body.gameObject);
                 esm = attachment.gameObject.GetComponent<EntityStateMachine>();
 
@@ -58,3 +87,4 @@ namespace SS2.Items
         }
     }
 }
+#endif
