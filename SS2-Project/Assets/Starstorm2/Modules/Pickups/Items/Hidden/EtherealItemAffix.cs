@@ -3,7 +3,8 @@ using RoR2.Items;
 using UnityEngine.Networking;
 namespace SS2.Items
 {
-    public sealed class EtherealItemAffix : SS2Item
+    //TODO: move to ethereal equipment class.
+   /* public sealed class EtherealItemAffix : SS2Item
     {
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("EtherealItemAffix", SS2Bundle.Equipments);
 
@@ -32,5 +33,5 @@ namespace SS2.Items
                 }
             }
         }
-    }
+    }*/
 }
