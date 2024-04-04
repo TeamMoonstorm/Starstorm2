@@ -276,7 +276,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 1000
+    maxNumParticles: 10
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -397,7 +397,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 30
+      scalar: 15
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -2724,10 +2724,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vfxPriority: 2
-  vfxIntensity: 0
+  vfxIntensity: 1
   optionalLights:
   - {fileID: 108260316525423782}
-  secondaryParticleSystem: []
+  secondaryParticleSystem:
+  - {fileID: 3782768690713648213}
 --- !u!114 &114392768280997071
 MonoBehaviour:
   m_ObjectHideFlags: 0
