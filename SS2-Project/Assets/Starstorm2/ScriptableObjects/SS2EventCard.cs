@@ -120,7 +120,7 @@ namespace SS2
             EntityStateMachine m = EntityStateMachine.FindByCustomName(Moonstorm.Components.EventDirector.Instance.gameObject, "Nemesis");
             return m && m.IsInMainState();
         }
-        public override bool IsAvailable()
+        public override bool IsAvailable(ContentPack contentPack)
         {
             var flag = base.IsAvailable();
 

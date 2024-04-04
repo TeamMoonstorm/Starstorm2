@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 using MSU;
 using System.Collections;
 using MSU.Config;
+using RoR2.ContentManagement;
 
 namespace SS2.Items
 {
@@ -28,7 +29,7 @@ namespace SS2.Items
         {
         }
 
-        public override bool IsAvailable()
+        public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
         }

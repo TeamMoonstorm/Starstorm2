@@ -80,7 +80,7 @@ namespace SS2.Survivors
             _knifeProjectile.AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>().Add(damageType);
         }
 
-        public override bool IsAvailable()
+        public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
         }

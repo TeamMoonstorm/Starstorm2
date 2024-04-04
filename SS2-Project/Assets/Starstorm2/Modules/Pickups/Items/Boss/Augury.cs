@@ -1,6 +1,7 @@
 ﻿using EntityStates.Pickups.Augury;
 using MSU;
 using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Items;
 using System;
 using System.Collections;
@@ -19,9 +20,9 @@ namespace SS2.Items
         {
         }
 
-        public override bool IsAvailable()
+        public override bool IsAvailable(ContentPack contentPack)
         {
-            return false;
+            return false; //MSUtil.IsModInstalled("Enforcer GUID goes here... also check if nemforcer is enabled or something."); 
         }
 
         public override IEnumerator LoadContentAsync()

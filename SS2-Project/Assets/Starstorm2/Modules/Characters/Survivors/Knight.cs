@@ -3,6 +3,7 @@ using RoR2;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using RoR2.ContentManagement;
 #if DEBUG
 namespace SS2.Survivors
 {
@@ -34,7 +35,7 @@ namespace SS2.Survivors
                 body.SetBuffCount(SS2Content.Buffs.bdFortified.buffIndex, 3);
         }
 
-        public override bool IsAvailable()
+        public override bool IsAvailable(ContentPack contentPack)
         {
             return false;
         }

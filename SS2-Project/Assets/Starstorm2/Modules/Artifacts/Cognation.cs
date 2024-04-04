@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UObject = UnityEngine.Object;
+using RoR2.ContentManagement;
 namespace SS2.Artifacts
 {
     public sealed class Cognation : SS2Artifact
@@ -55,7 +56,7 @@ namespace SS2.Artifacts
             BlacklistedMasterIndices = new ReadOnlyCollection<MasterCatalog.MasterIndex>(newBlacklist);
         }
 
-        public override bool IsAvailable()
+        public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
         }

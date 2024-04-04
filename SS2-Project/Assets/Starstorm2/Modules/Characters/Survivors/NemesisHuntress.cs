@@ -6,6 +6,7 @@ using System.Collections;
 using static R2API.DamageAPI;
 using R2API;
 using RoR2.Projectile;
+using RoR2.ContentManagement;
 
 namespace SS2.Survivors
 {
@@ -34,7 +35,7 @@ namespace SS2.Survivors
             On.RoR2.Projectile.ProjectileSingleTargetImpact.OnProjectileImpact += PSTI_OPI;
         }
 
-        public override bool IsAvailable()
+        public override bool IsAvailable(ContentPack contentPack)
         {
             return false;
         }

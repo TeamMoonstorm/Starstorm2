@@ -47,7 +47,7 @@ namespace SS2.Equipments
         {
         }
 
-        public override bool IsAvailable()
+        public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
         }

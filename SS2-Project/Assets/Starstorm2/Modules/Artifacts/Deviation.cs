@@ -6,6 +6,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UObject = UnityEngine.Object;
+using RoR2.ContentManagement;
 #if DEBUG
 namespace SS2.Artifacts
 {
@@ -19,7 +20,7 @@ namespace SS2.Artifacts
         {
         }
 
-        public override bool IsAvailable()
+        public override bool IsAvailable(ContentPack contentPack)
         {
             return false;
         }

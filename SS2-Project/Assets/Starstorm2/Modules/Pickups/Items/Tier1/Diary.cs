@@ -25,7 +25,7 @@ namespace SS2.Items
         {
         }
 
-        public override bool IsAvailable()
+        public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
         }

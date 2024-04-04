@@ -1,5 +1,6 @@
 ﻿using MSU;
 using RoR2;
+using RoR2.ContentManagement;
 using System.Collections;
 using UnityEngine;
 namespace SS2.Items
@@ -28,9 +29,9 @@ namespace SS2.Items
             On.RoR2.PickupDisplay.RebuildModel += EnableVoidParticles;
         }
 
-        public override bool IsAvailable()
+        public override bool IsAvailable(ContentPack contentPack)
         {
-            return true;
+            return contentPack.survivorDefs.Find("survivorNemMerc");
         }
 
         public override IEnumerator LoadContentAsync()

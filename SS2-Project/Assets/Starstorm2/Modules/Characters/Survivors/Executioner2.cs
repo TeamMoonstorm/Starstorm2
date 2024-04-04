@@ -11,6 +11,7 @@ using System.Collections;
 using UnityEngine.Networking;
 using UnityEngine.AddressableAssets;
 using R2API;
+using RoR2.ContentManagement;
 
 namespace SS2.Survivors
 {
@@ -120,7 +121,7 @@ namespace SS2.Survivors
             BodiesThatGiveSuperCharge = new ReadOnlyCollection<BodyIndex>(indices);
         }
 
-        public override bool IsAvailable()
+        public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
         }

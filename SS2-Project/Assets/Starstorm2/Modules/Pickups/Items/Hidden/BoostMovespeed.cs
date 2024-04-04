@@ -3,6 +3,7 @@ using R2API;
 using RoR2;
 using System.Collections;
 using UnityEngine;
+using RoR2.ContentManagement;
 
 namespace SS2.Items
 {
@@ -24,7 +25,7 @@ namespace SS2.Items
             args.moveSpeedMultAdd += sender.GetItemCount(_itemDef) / 100f;
         }
 
-        public override bool IsAvailable()
+        public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
         }

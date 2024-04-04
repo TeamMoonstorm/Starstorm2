@@ -39,7 +39,7 @@ namespace SS2.Items
             RecalculateStatsAPI.GetStatCoefficients += CalculateStatsCoffeeBag;
         }
 
-        public override bool IsAvailable()
+        public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
         }

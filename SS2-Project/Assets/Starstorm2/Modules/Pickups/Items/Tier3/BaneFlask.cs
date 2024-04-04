@@ -42,7 +42,7 @@ namespace SS2.Items
             BaneDotIndex = DotAPI.RegisterDotDef(1f, .15f, DamageColorIndex.Poison, _baneBuffDef);
         }
 
-        public override bool IsAvailable()
+        public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
         }

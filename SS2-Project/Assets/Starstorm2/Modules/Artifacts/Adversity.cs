@@ -3,6 +3,7 @@ using R2API.ScriptableObjects;
 using RoR2;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using RoR2.ContentManagement;
 
 #if DEBUG
 namespace SS2.Artifacts
@@ -19,7 +20,7 @@ namespace SS2.Artifacts
         {
         }
 
-        public override bool IsAvailable()
+        public override bool IsAvailable(ContentPack contentPack)
         {
             return false;
         }

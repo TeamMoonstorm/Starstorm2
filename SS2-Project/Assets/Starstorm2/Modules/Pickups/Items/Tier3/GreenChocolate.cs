@@ -53,7 +53,7 @@ namespace SS2.Items
             args.damageMultAdd += buffDamage * buffStacks;
         }
 
-        public override bool IsAvailable()
+        public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
         }

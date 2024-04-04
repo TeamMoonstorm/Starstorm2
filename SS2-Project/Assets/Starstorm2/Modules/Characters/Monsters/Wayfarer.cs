@@ -11,6 +11,7 @@ namespace SS2.Monsters
     //it's just like that, ok?
 
     //ok
+
     [DisabledContent]
     public sealed class Wayfarer : SS2Monster
     {

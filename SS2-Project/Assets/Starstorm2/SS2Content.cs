@@ -132,6 +132,11 @@ namespace SS2
                 },
                 () =>
                 {
+                    CharacterModule.AddProvider(main, new Modules.Characters(SS2ContentPack, main));
+                    return CharacterModule.InitializeCharacters(main);
+                },
+                () =>
+                {
                     ItemTierModule.AddProvider(main, ContentUtil.CreateContentPieceProvider<ItemTierDef>(main, SS2ContentPack));
                     return ItemTierModule.InitializeTiers(main);
                 },
@@ -144,11 +149,6 @@ namespace SS2
                 {
                     EquipmentModule.AddProvider(main, ContentUtil.CreateContentPieceProvider<EquipmentDef>(main, SS2ContentPack));
                     return EquipmentModule.InitialzeEquipments(main);
-                },
-                () =>
-                {
-                    CharacterModule.AddProvider(main, new Modules.Characters(SS2ContentPack, main));
-                    return CharacterModule.InitializeCharacters(main);
                 },
                 () =>
                 {

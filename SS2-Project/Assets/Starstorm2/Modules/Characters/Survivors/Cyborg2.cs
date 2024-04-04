@@ -69,7 +69,7 @@ namespace SS2.Survivors
             orig(self, dt);
         }
 
-        public override bool IsAvailable()
+        public override bool IsAvailable(ContentPack contentPack)
         {
             return false;
         }

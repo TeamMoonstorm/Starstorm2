@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using RoR2.ContentManagement;
 
 namespace SS2
 {
@@ -22,7 +23,7 @@ namespace SS2
         public abstract ItemTierDef ItemTierDef { get; }
 
         public abstract void Initialize();
-        public abstract bool IsAvailable();
+        public abstract bool IsAvailable(ContentPack contentPack);
         public abstract IEnumerator LoadContentAsync();
     }
 }

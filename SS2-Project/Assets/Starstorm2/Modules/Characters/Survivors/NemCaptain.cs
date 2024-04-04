@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine.AddressableAssets;
 using MSU;
 using System.Collections;
+using RoR2.ContentManagement;
 #if DEBUG
 namespace SS2.Survivors
 {
@@ -40,7 +41,7 @@ namespace SS2.Survivors
             //cb.GetComponent<ModelLocator>().modelTransform.GetComponent<FootstepHandler>().footstepDustPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/GenericFootstepDust.prefab").WaitForCompletion();
         }
 
-        public override bool IsAvailable()
+        public override bool IsAvailable(ContentPack contentPack)
         {
             return false;
         }

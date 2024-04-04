@@ -6,9 +6,53 @@ using System.Linq;
 using RiskOfOptions.OptionConfigs;
 
 using MSU;
+using RoR2.ContentManagement;
+using MSU.Config;
+
 namespace SS2.Modules
 {
+    public sealed class Items : IContentPieceProvider<ItemDef>
+    {
+        public ContentPack ContentPack => _contentPack;
+        private ContentPack _contentPack;
 
+        public static ConfiguredBool EnableItems = SS2Config.ConfigFactory.MakeConfiguredBool(true, b =>
+        {
+            b.Section = "Enable All Items";
+            b.Key = "Enable All Items";
+            b.Description = "Enables Starstorm 2's items. Set to false to disable all items";
+            b.ConfigFile = SS2Config.ConfigItem;
+            b.CheckBoxConfig = new CheckBoxConfig
+            {
+                restartRequired = true,
+            };
+        }).DoConfigure();
+
+        private IEnumerable<IContentPiece<ItemDef>> _unfilteredCharacters;
+
+        public IContentPiece<ItemDef>[] GetContents()
+        {
+            return _unfilteredCharacters.Where(PassesFilter).ToArray();
+        }
+
+        IContentPiece[] IContentPieceProvider.GetContents()
+        {
+            return _unfilteredCharacters.Where(PassesFilter).ToArray();
+        }
+
+        private bool PassesFilter(IContentPiece<ItemDef> _contentPiece)
+        {
+            if(!(_contentPiece is IItemContentPiece item))
+            {
+                return false;
+            }
+
+            if (!item.IsAvailable())
+                return false;
+
+            return true;
+        }
+    }
     //TODO: port this to its own IContentPieceProvider, i cant really do what prod did since that requires getting access to the item's tier, and at this point in time that isnt feasable, might be a good idea to move these into a check in the SS2Item class? -N
 
     /*public sealed class Items : ItemModuleBase

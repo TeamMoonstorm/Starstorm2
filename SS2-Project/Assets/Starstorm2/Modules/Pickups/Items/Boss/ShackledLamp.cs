@@ -46,7 +46,7 @@ namespace SS2.Items
             orig();
         }
 
-        public override bool IsAvailable()
+        public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
         }

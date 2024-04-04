@@ -8,6 +8,7 @@ using System.Collections;
 using R2API;
 using System.Reflection;
 using UnityEngine.Networking;
+using RoR2.ContentManagement;
 
 namespace SS2.Survivors
 {
@@ -93,7 +94,7 @@ namespace SS2.Survivors
             }
         }
 
-        public override bool IsAvailable()
+        public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
         }

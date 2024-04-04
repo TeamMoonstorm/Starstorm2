@@ -8,6 +8,7 @@ namespace SS2.Buffs
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdHiddenSlow20", SS2Bundle.Indev);
 
+        MSU.BuffBehaviour
         public sealed class Behavior : BaseBuffBodyBehavior, IBodyStatArgModifier
         {
             [BuffDefAssociation]
