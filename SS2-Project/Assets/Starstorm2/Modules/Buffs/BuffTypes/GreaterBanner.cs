@@ -5,7 +5,7 @@ using RoR2;
 using MSU;
 namespace SS2.Buffs
 {
-    public sealed class GreaterBanner : BuffBase
+    /*public sealed class GreaterBanner : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffGreaterBanner", SS2Bundle.Equipments);
 
@@ -76,7 +76,7 @@ namespace SS2.Buffs
                         locator.special.cooldownScale *= GreaterWarbanner.cooldownReduction;
                     }
                 }
-            }*/
+            }
         }
 
     }
@@ -209,5 +209,5 @@ namespace SS2.Buffs
     //    //    }
     //    //}
     //
-    //}
+    }*/
 }

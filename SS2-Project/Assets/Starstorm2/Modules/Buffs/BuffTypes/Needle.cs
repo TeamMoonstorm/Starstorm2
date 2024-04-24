@@ -2,7 +2,7 @@
 using System;
 namespace SS2.Buffs
 {
-    public sealed class Needle : BuffBase
+    /*public sealed class Needle : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffNeedle", SS2Bundle.Items);
 
@@ -31,5 +31,5 @@ namespace SS2.Buffs
                 }
             }
         }
-    }
+    }*/
 }

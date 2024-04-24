@@ -5,7 +5,7 @@ using UnityEngine;
 using MSU;
 namespace SS2.Buffs
 {
-    public sealed class LampBuff : BuffBase
+    /*public sealed class LampBuff : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdLampBuff", SS2Bundle.Monsters);
 
@@ -31,5 +31,5 @@ namespace SS2.Buffs
                 body.RecalculateStats();
             }
         }
-    }
+    }*/
 }

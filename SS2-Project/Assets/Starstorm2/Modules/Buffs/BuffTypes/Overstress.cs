@@ -4,7 +4,7 @@ using RoR2;
 using MSU;
 namespace SS2.Buffs
 {
-    public sealed class Overstress : BuffBase
+    /*public sealed class Overstress : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdOverstress", SS2Bundle.Indev);
 
@@ -24,5 +24,5 @@ namespace SS2.Buffs
                 body.RecalculateStats();
             }
         }
-    }
+    }*/
 }

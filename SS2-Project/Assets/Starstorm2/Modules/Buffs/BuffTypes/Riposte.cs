@@ -3,7 +3,7 @@ using UnityEngine;
 namespace SS2.Buffs
 {
     //[DisabledContent]
-    public sealed class Riposte : BuffBase
+    /*public sealed class Riposte : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffRiposte", SS2Bundle.NemMercenary);
         
@@ -28,5 +28,5 @@ namespace SS2.Buffs
                 //sound (would have to be part of vfx)
             }
         }
-    }
+    }*/
 }

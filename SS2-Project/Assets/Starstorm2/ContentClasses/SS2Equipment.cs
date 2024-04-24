@@ -13,7 +13,7 @@ namespace SS2
 {
     public abstract class SS2Equipment : IEquipmentContentPiece
     {
-        public abstract NullableRef<GameObject> ItemDisplayPrefab { get; }
+        public abstract NullableRef<List<GameObject>> ItemDisplayPrefabs { get; }
         EquipmentDef IContentPiece<EquipmentDef>.Asset => EquipmentDef;
         public abstract EquipmentDef EquipmentDef { get; }
 

@@ -139,7 +139,7 @@ namespace SS2
             var loadRoutine = LoadAssetBundles();
             while (loadRoutine.MoveNext()) yield return null;
 
-            ParallelCoroutineHelper helper = new ParallelCoroutineHelper();
+            ParallelMultiStartCoroutine helper = new ParallelMultiStartCoroutine();
             helper.Add(SwapShaders);
             helper.Add(SwapAddressableShaders);
 
@@ -152,7 +152,7 @@ namespace SS2
 
         private static IEnumerator LoadAssetBundles()
         {
-            ParallelCoroutineHelper helper = new ParallelCoroutineHelper();
+            ParallelMultiStartCoroutine helper = new ParallelMultiStartCoroutine();
 
             List<(string path, SS2Bundle bundleEnum, AssetBundle loadedBundle)> pathsAndBundles = new List<(string path, SS2Bundle bundleEnum, AssetBundle loadedBundle)>();
 

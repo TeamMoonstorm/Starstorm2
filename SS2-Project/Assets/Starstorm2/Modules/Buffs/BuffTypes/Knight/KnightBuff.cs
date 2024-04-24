@@ -4,7 +4,7 @@ using RoR2;
 using MSU;
 namespace SS2.Buffs
 {
-    public sealed class KnightBuff : BuffBase
+    /*public sealed class KnightBuff : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdKnightBuff", SS2Bundle.Indev);
 
@@ -18,5 +18,5 @@ namespace SS2.Buffs
                 args.damageMultAdd += 0.4f;
             }
         }
-    }
+    }*/
 }

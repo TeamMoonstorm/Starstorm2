@@ -6,7 +6,7 @@ using MSU;
 namespace SS2.Buffs
 {
     //[DisabledContent]
-    public sealed class ReactorBuff : BuffBase
+    /*public sealed class ReactorBuff : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffReactor", SS2Bundle.Items);
         public override Material OverlayMaterial => SS2Assets.LoadAsset<Material>("matReactorBuffOverlay", SS2Bundle.Items);
@@ -72,5 +72,5 @@ namespace SS2.Buffs
 
 
         }
-    }
+    }*/
 }

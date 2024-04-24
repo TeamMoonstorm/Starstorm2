@@ -5,8 +5,7 @@ using UnityEngine;
 using MSU;
 namespace SS2.Buffs
 {
-    [DisabledContent]
-    public sealed class VoidLeech : BuffBase
+    /*public sealed class VoidLeech : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffVoidLeech", SS2Bundle.Items);
 
@@ -29,5 +28,5 @@ namespace SS2.Buffs
             }*/
 
         }
-    }
+    }*/
 }

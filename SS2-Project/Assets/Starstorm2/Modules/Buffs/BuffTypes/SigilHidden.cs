@@ -5,7 +5,7 @@ using RoR2;
 using MSU;
 namespace SS2.Buffs
 {
-    public sealed class SigilHidden : BuffBase
+    /*public sealed class SigilHidden : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffSigilHidden", SS2Bundle.Items);
 
@@ -19,5 +19,5 @@ namespace SS2.Buffs
                 args.damageMultAdd += HuntersSigil.baseDamage * buffStacks;
             }
         }
-    }
+    }*/
 }

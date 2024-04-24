@@ -4,7 +4,7 @@ using RoR2;
 using MSU;
 namespace SS2.Buffs
 {
-    public sealed class KnightShield : BuffBase
+    /*public sealed class KnightShield : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdShield", SS2Bundle.Indev);
         public sealed class Behavior : BaseBuffBodyBehavior, IBodyStatArgModifier
@@ -18,5 +18,5 @@ namespace SS2.Buffs
                 args.moveSpeedReductionMultAdd += 0.6f;
             }
         }
-    }
+    }*/
 }

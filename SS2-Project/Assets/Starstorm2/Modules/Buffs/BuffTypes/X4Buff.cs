@@ -4,7 +4,7 @@ using RoR2;
 using MSU;
 namespace SS2.Buffs
 {
-    public sealed class X4Buff : BuffBase
+    /*public sealed class X4Buff : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffX4", SS2Bundle.Items);
 
@@ -28,5 +28,5 @@ namespace SS2.Buffs
                 }
             }
         }
-    }
+    }*/
 }

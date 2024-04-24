@@ -4,8 +4,7 @@ using RoR2;
 using MSU;
 namespace SS2.Buffs
 {
-    [DisabledContent]
-    public sealed class Wealth : BuffBase
+    /*public sealed class Wealth : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffScavenger", SS2Bundle.Indev);
 
@@ -19,5 +18,5 @@ namespace SS2.Buffs
                 args.damageMultAdd += 0.5f;
             }
         }
-    }
+    }*/
 }

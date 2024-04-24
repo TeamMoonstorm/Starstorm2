@@ -5,7 +5,7 @@ using System;
 using MSU;
 namespace SS2.Buffs
 {
-    public sealed class WatchMetronome : BuffBase
+    /*public sealed class WatchMetronome : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffWatchMetronome", SS2Bundle.Items);
 
@@ -22,5 +22,5 @@ namespace SS2.Buffs
                 }
             }
         }
-    }
+    }*/
 }

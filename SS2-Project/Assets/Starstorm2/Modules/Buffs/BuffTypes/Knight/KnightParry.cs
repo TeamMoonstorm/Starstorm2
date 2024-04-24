@@ -3,7 +3,7 @@ using RoR2;
 using System;
 namespace SS2.Buffs
 {
-    public sealed class KnightParry : BuffBase
+    /*public sealed class KnightParry : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdParry", SS2Bundle.Indev);
         public sealed class Behavior : BaseBuffBodyBehavior, IOnIncomingDamageServerReceiver
@@ -46,5 +46,5 @@ namespace SS2.Buffs
                 }
             }
         }
-    }
+    }*/
 }

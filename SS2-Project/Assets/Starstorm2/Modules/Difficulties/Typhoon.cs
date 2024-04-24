@@ -11,7 +11,7 @@ namespace SS2
 
         private static int defMonsterCap;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_MAIN, ConfigSection = "Typhoon", ConfigName = "Increase Team Limit", ConfigDescOverride = "Multiplies the Monster, Lunar, and Void Team maximum size by 2 when enabled. May affect performance.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_MAIN, ConfigSectionOverride = "Typhoon", ConfigNameOverride = "Increase Team Limit", ConfigDescOverride = "Multiplies the Monster, Lunar, and Void Team maximum size by 2 when enabled. May affect performance.")]
         internal static bool IncreaseSpawnCap = true;
 
         internal static IEnumerator Init()

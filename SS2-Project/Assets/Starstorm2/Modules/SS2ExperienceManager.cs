@@ -10,6 +10,8 @@ using RoR2.UI;
 using R2API.Networking.Interfaces;
 using R2API.Networking;
 using UnityEngine.UI;
+using MSU.Config;
+
 namespace SS2
 {
     //Note from groove - I promise the voices had no say in the creation of this class, it seemed like the best way to handle it
@@ -17,7 +19,7 @@ namespace SS2
     public static class SS2ExperienceManager
 	{
         //exp visuals mostly added to make the exp items feel cooler
-        [RiskOfOptionsConfigureField(SS2Config.ID_MISC, ConfigSection = "Visuals", ConfigName = "Improved Experience Visuals", ConfigDescOverride = "Enable the new experience visuals?")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_MISC, ConfigSectionOverride = "Visuals", ConfigNameOverride = "Improved Experience Visuals", ConfigDescOverride = "Enable the new experience visuals?")]
         public static bool enableNewExperienceVisuals = true;
 
         public static Dictionary<CharacterMaster, ulong> masterToFoundExperience = new Dictionary<CharacterMaster, ulong>();

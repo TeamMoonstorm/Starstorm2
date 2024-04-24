@@ -5,7 +5,7 @@ using RoR2;
 using MSU;
 namespace SS2.Buffs
 {
-    public sealed class Fear : BuffBase
+    /*public sealed class Fear : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffFear", SS2Bundle.Executioner);
 
@@ -69,5 +69,5 @@ namespace SS2.Buffs
                 args.moveSpeedReductionMultAdd += 0.5f;
             }
         }
-    }
+    }*/
 }

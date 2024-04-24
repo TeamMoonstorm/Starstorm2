@@ -17,9 +17,9 @@ namespace SS2
         public static ReadOnlyContentPack ReadOnlyContentPack => new ReadOnlyContentPack(SS2ContentPack);
         internal static ContentPack SS2ContentPack { get; private set; } = new ContentPack();
 
-        internal static ParallelCoroutineHelper _parallelPreLoadDispatchers = new ParallelCoroutineHelper();
+        internal static ParallelMultiStartCoroutine _parallelPreLoadDispatchers = new ParallelMultiStartCoroutine();
         private static Func<IEnumerator>[] _loadDispatchers;
-        internal static ParallelCoroutineHelper _parallelPostLoadDispatchers = new ParallelCoroutineHelper();
+        internal static ParallelMultiStartCoroutine _parallelPostLoadDispatchers = new ParallelMultiStartCoroutine();
         
         private static Func<IEnumerator>[] _fieldAssignDispatchers;
         public IEnumerator LoadStaticContentAsync(LoadStaticContentAsyncArgs args)

@@ -2,7 +2,7 @@
 using RoR2;
 namespace SS2.Buffs
 {
-    public sealed class Insecticide : BuffBase
+    /*public sealed class Insecticide : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffInsecticide", SS2Bundle.Items);
         public static DotController.DotIndex index;
@@ -11,5 +11,5 @@ namespace SS2.Buffs
         {
             index = DotAPI.RegisterDotDef(0.25f, 0.15f, DamageColorIndex.DeathMark, BuffDef);
         }
-    }
+    }*/
 }

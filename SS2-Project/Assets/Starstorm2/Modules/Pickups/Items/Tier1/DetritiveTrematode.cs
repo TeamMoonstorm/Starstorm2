@@ -9,11 +9,11 @@ namespace SS2.Items
         private const string token = "SS2_ITEM_DETRITIVETREMATODE_DESC";
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("DetritiveTrematode", SS2Bundle.Items);
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigName = "Trematode Threshold", ConfigDescOverride = "Amount of missing health needed for Trematode to proc. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigNameOverride = "Trematode Threshold", ConfigDescOverride = "Amount of missing health needed for Trematode to proc. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
         public static float missingHealthPercentage = 0.30f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigName = "Trematode Threshold Per Stack", ConfigDescOverride = "Increase in missing health threshold, per stack. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigNameOverride = "Trematode Threshold Per Stack", ConfigDescOverride = "Increase in missing health threshold, per stack. (1 = 100%)")]
         [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
         public static float missingHealthPercentagePerStack = 0.15f;
 

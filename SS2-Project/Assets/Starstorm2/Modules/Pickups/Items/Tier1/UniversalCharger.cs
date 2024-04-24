@@ -13,7 +13,7 @@ namespace SS2.Items
         [TokenModifier(token, StatTypes.Default, 0)]
         public static float baseCooldown = 15f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigName = "How much faster Universal Charger recharges, per stack. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigNameOverride = "How much faster Universal Charger recharges, per stack. (1 = 100%)")]
         [TokenModifier(token, StatTypes.Default, 1)]
         public static float cooldownReductionPerStack = 20f; // percent
 

@@ -5,7 +5,7 @@ using UnityEngine;
 using MSU;
 namespace SS2.Buffs
 {
-    public sealed class KnightSpecialPowerBuff : BuffBase
+    /*public sealed class KnightSpecialPowerBuff : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdKnightSpecialPowerBuff", SS2Bundle.Indev);
 
@@ -20,5 +20,5 @@ namespace SS2.Buffs
                 args.baseMoveSpeedAdd += 0.4f;
             }
         }
-    }
+    }*/
 }

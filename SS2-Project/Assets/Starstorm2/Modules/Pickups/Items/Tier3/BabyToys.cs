@@ -324,11 +324,11 @@ namespace SS2.Items
         }
     }
 }
-/*[ConfigurableField(ConfigName = "Stat Multiplier", ConfigDescOverride = "Multiplier applied to the stats per stack.")]
+/*[ConfigurableField(ConfigNameOverride = "Stat Multiplier", ConfigDescOverride = "Multiplier applied to the stats per stack.")]
 [TokenModifier(token, StatTypes.Default, 0)]
 [TokenModifier(token, StatTypes.DivideBy2, 1)]
 public static float StatMultiplier = 3;
-[ConfigurableField(ConfigName = "XP Multiplier", ConfigDescOverride = "Multiplier applied to XP Gain per stack.")]
+[ConfigurableField(ConfigNameOverride = "XP Multiplier", ConfigDescOverride = "Multiplier applied to XP Gain per stack.")]
 [TokenModifier(token, StatTypes.Default, 2)]
 [TokenModifier(token, StatTypes.DivideBy2, 3)]
 public static float XPMultiplier = 2;

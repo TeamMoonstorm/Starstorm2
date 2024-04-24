@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 namespace SS2.Buffs
 {
-    public sealed class Hakai : BuffBase
+    /*public sealed class Hakai : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdHakai", SS2Bundle.Equipments);
 
@@ -114,7 +114,7 @@ namespace SS2.Buffs
                     {
                         bpc.skinnedMeshRenderer = (SkinnedMeshRenderer)modelRenderer;
                     }
-                    return effectPrefab;*/
+                    return effectPrefab;
                 }
                 return null;
             }
@@ -174,5 +174,5 @@ namespace SS2.Buffs
                 }
             }
         }
-    }
+    }*/
 }

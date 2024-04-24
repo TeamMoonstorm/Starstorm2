@@ -2,7 +2,7 @@
 using RoR2;
 namespace SS2.Buffs
 {
-    public sealed class PurplePoisonBuildup : BuffBase
+    /*public sealed class PurplePoisonBuildup : BuffBase
     {
         // TODO: Is main the right one here?
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdPoisonBuildup", SS2Bundle.Indev);
@@ -18,5 +18,5 @@ namespace SS2.Buffs
             [BuffDefAssociation]
             private static BuffDef GetBuffDef() => SS2Content.Buffs.bdPoisonBuildup;
         }
-    }
+    }*/
 }

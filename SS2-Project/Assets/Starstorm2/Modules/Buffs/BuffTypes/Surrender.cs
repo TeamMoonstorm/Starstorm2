@@ -3,7 +3,7 @@ using RoR2.Skills;
 using UnityEngine;
 namespace SS2.Buffs
 {
-    public sealed class Surrender : BuffBase
+    /*public sealed class Surrender : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffSurrender", SS2Bundle.Items);
 
@@ -57,5 +57,5 @@ namespace SS2.Buffs
             }
         }
 
-    }
+    }*/
 }

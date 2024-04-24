@@ -4,7 +4,7 @@ using RoR2;
 using MSU;
 namespace SS2.Buffs
 {
-    public sealed class HiddenSlow20 : BuffBase
+    /*public sealed class HiddenSlow20 : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdHiddenSlow20", SS2Bundle.Indev);
 
@@ -22,5 +22,5 @@ namespace SS2.Buffs
                 }
             }
         }
-    }
+    }*/
 }

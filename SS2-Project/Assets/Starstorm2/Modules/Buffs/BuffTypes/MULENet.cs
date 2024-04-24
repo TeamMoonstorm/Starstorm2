@@ -12,7 +12,7 @@ using UnityEngine.Networking;
 using MSU;
 namespace SS2.Buffs
 {
-    public sealed class MULENet : BuffBase
+    /*public sealed class MULENet : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdMULENet", SS2Bundle.Indev);
         public override void Initialize()
@@ -123,5 +123,5 @@ namespace SS2.Buffs
                 }
             }
         }
-    }
+    }*/
 }

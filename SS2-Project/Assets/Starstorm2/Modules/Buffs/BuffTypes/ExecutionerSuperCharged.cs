@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 namespace SS2.Buffs
 {
-    public sealed class ExecutionerSuperCharged : BuffBase
+    /*public sealed class ExecutionerSuperCharged : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffExecutionerSuperCharged", SS2Bundle.Executioner);
 
@@ -47,5 +47,5 @@ namespace SS2.Buffs
                 }
             }
         }
-    }
+    }*/
 }

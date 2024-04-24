@@ -4,7 +4,7 @@ using RoR2;
 using MSU;
 namespace SS2.Buffs
 {
-    public sealed class KnightSpecialSlowBuff : BuffBase
+    /*public sealed class KnightSpecialSlowBuff : BuffBase
     {
         public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdKnightSpecialSlowBuff", SS2Bundle.Indev);
 
@@ -18,5 +18,5 @@ namespace SS2.Buffs
                 args.moveSpeedReductionMultAdd += 2;
             }
         }
-    }
+    }*/
 }

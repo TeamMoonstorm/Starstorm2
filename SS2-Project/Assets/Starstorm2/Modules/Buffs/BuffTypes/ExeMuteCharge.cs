@@ -1,4 +1,4 @@
-﻿using RoR2;
+﻿/*using RoR2;
 namespace SS2.Buffs
 {
     public sealed class ExeMuteCharge : BuffBase
@@ -7,3 +7,4 @@ namespace SS2.Buffs
 
     }
 }
+*/
