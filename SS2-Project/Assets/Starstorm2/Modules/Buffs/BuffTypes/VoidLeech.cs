@@ -25,7 +25,7 @@ namespace SS2.Buffs
             public void RecalculateStatsEnd()
             {
                 body.jumpPower *= Mathf.Pow(0.9f, buffStacks);
-            }*/
+            }
 
         }
     }*/

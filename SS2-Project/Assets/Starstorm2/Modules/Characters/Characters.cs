@@ -59,7 +59,7 @@ namespace SS2.Modules
                 return false;
             }
 
-            if (!character.IsAvailable())
+            if (!character.IsAvailable(ContentPack))
                 return false;
 
             if (character is SS2Survivor starstormSurvivor)

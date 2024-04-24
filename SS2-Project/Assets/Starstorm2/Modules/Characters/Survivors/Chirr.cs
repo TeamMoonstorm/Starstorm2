@@ -58,8 +58,7 @@ namespace SS2.Survivors
                 ScepterCompat();
             }
 
-            DateTime today = DateTime.Today;
-            if (today.Month == 12 && ((today.Day == 27) || (today.Day == 26) || (today.Day == 25) || (today.Day == 24) || (today.Day == 23)))
+            if (SS2Main.ChristmasTime)
             {
                 On.RoR2.UI.MainMenu.BaseMainMenuScreen.OnEnter += HiChirrHiiiiii;
             }
@@ -134,40 +133,19 @@ namespace SS2.Survivors
 
         public override IEnumerator LoadContentAsync()
         {
-            ParallelAssetLoadCoroutineHelper helper = new ParallelAssetLoadCoroutineHelper();
+            //N: Thank fuck the "ParallelAsseTLoadCoroutineHelper" isnt real anymore
 
-            helper.AddAssetToLoad<GameObject>("ChirrBody", SS2Bundle.Chirr);
-            helper.AddAssetToLoad<GameObject>("ChirrMonsterMaster", SS2Bundle.Chirr);
-            helper.AddAssetToLoad<SurvivorDef>("Chirr", SS2Bundle.Chirr);
-            helper.AddAssetToLoad<BuffDef>("BuffChirrConfuse", SS2Bundle.Chirr);
-            helper.AddAssetToLoad<BuffDef>("BuffChirrConvert", SS2Bundle.Chirr);
-            helper.AddAssetToLoad<BuffDef>("BuffChirrFriend", SS2Bundle.Chirr);
-            helper.AddAssetToLoad<Material>("matFriendOverlay", SS2Bundle.Chirr);
-            helper.AddAssetToLoad<BuffDef>("BuffChirrGrabFriend", SS2Bundle.Chirr);
-            helper.AddAssetToLoad<BuffDef>("BuffChirrRegen", SS2Bundle.Chirr);
-
-            helper.Start();
-            while (!helper.IsDone()) yield return null;
-
-            _prefab = helper.GetLoadedAsset<GameObject>("ChirrBody");
-            _monsterMaster = helper.GetLoadedAsset<GameObject>("ChirrMonsterMaster");
-            _survivorDef = helper.GetLoadedAsset<SurvivorDef>("Chirr");
-            _confuseBuffDef = helper.GetLoadedAsset<BuffDef>("BuffChirrConfuse");
-            _convertBuffDef = helper.GetLoadedAsset<BuffDef>("BuffChirrConvert");
-            _buffChirrFriend = helper.GetLoadedAsset<BuffDef>("_buffChirrFriend");
-            _matFriendOverlay = helper.GetLoadedAsset<Material>("matFriendOverlay");
-            _buffGrabFriend = helper.GetLoadedAsset<BuffDef>("BuffChirrGrabFriend");
-            _buffChirrRegen = helper.GetLoadedAsset<BuffDef>("BuffChirrRegen");
-        }
-
-        private IEnumerator LoadAndAssign<T>(string assetName, SS2Bundle bundle, Dictionary<string, UnityEngine.Object> dictionary) where T : UnityEngine.Object
-        {
-            var request = SS2Assets.LoadAssetAsync<T>(assetName, bundle);
-            request.StartLoad();
-            while (!request.IsComplete)
-                yield return null;
-
-            dictionary.Add(assetName, request.Asset);
+            /*
+             * GameObject - "ChirrBody" - Chirr
+             * GameObject - "ChirrMonsterMaster" - Chirr
+             * SurvivorDef - "Chirr" - Chirr
+             * BuffDef - "BuffChirrConfuse" - Chirr
+             * BuffDef - "BuffChirrConvert" - Chirr
+             * Material - "matFriendOverlay" - Chirr
+             * BuffDef - "BuffChirrGrabFriend" - Chirr
+             * BuffDef - "BuffChirrRegen" - Chirr
+             */
+            yield break;
         }
 
         private void ModifyPrefab()
@@ -204,7 +182,6 @@ namespace SS2.Survivors
 
         public void ModifyContentPack(ContentPack contentPack)
         {
-            contentPack.buffDefs.AddSingle(_confuseBuffDef);
             contentPack.buffDefs.Add(new BuffDef[]
             {
                 _confuseBuffDef,

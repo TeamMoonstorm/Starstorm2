@@ -48,18 +48,12 @@ namespace SS2.Survivors
 
         public override IEnumerator LoadContentAsync()
         {
-            ParallelAssetLoadCoroutineHelper helper = new ParallelAssetLoadCoroutineHelper();
-            helper.AddAssetToLoad<GameObject>("NemCaptainBody", SS2Bundle.Indev);
-            helper.AddAssetToLoad<SurvivorDef>("survivorNemCaptain", SS2Bundle.Indev);
-            helper.AddAssetToLoad<BuffDef>("bdNemCapDroneBuff", SS2Bundle.Indev);
-
-            helper.Start();
-            while (!helper.IsDone())
-                yield return null;
-
-            _survivorDef = helper.GetLoadedAsset<SurvivorDef>("survivorNemCaptain");
-            _prefab = helper.GetLoadedAsset<GameObject>("NemCaptainBody");
-            _droneBuff = helper.GetLoadedAsset<BuffDef>("bdNemCapDroneBuff");
+            /*
+             * GameObject - "NemCaptainBody" - Indev
+             * SurvivorDef - "survivorNemCaptain" - Indev
+             * BuffDef - "bdNemCapDroneBuff" - Indev
+             */
+            yield break;
         }
     }
 }

@@ -48,24 +48,19 @@ namespace SS2.Survivors
         {
             var victimBody = report.victimBody;
             var damageInfo = report.damageInfo;
-            if (DamageAPI.HasModdedDamageType(damageInfo, ModdedDamageType))
+            if (DamageAPI.HasModdedDamageType(damageInfo, NetDamageType))
             {
-                victimBody.AddTimedBuffAuthority(SS2Content.Buffs.bdMULENet.buffIndex, duration);
+                victimBody.AddTimedBuffAuthority(SS2Content.Buffs.bdMULENet.buffIndex, 5); //N: There was a duration variable that i think i nuked, oops
             }
         }
 
         public override IEnumerator LoadContentAsync()
         {
-            ParallelAssetLoadCoroutineHelper helper = new ParallelAssetLoadCoroutineHelper();
-            helper.AddAssetToLoad<GameObject>("MULEBody", SS2Bundle.Indev);
-            helper.AddAssetToLoad<SurvivorDef>("survivorMULE", SS2Bundle.Indev);
-
-            helper.Start();
-            while (!helper.IsDone())
-                yield return null;
-
-            _survivorDef = helper.GetLoadedAsset<SurvivorDef>("survivorMULE");
-            _prefab = helper.GetLoadedAsset<GameObject>("MULEBody");
+            /*
+             * GameObject - "MULEBody" - Indev
+             * SurvivorDef - "survivorMULE" - Indev
+             */
+            yield break;
         }
     }
 }

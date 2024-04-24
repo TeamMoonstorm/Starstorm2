@@ -36,16 +36,11 @@ namespace SS2.Survivors
 
         public override IEnumerator LoadContentAsync()
         {
-            ParallelAssetLoadCoroutineHelper helper = new ParallelAssetLoadCoroutineHelper();
-            helper.AddAssetToLoad<GameObject>("NemBanditBody", SS2Bundle.Indev);
-            helper.AddAssetToLoad<SurvivorDef>("survivorNemBandit", SS2Bundle.Indev);
-
-            helper.Start();
-            while (!helper.IsDone())
-                yield return null;
-
-            _survivorDef = helper.GetLoadedAsset<SurvivorDef>("survivorNemBandit");
-            _prefab = helper.GetLoadedAsset<GameObject>("NemBanditBody");
+            /*
+             * GameObject - "NemBanditBody" - Indev
+             * SurvivorDef - "survivorNemBandit" - Indev
+             */
+            yield break;
         }
     }
 }

@@ -2,6 +2,9 @@
 using RoR2;
 namespace SS2
 {
+
+    //TODO: Create proper difficulty module home-made
+    /*
     public static class Tempest
     {
         public static R2API.ScriptableObjects.SerializableDifficultyDef TempestDef { get; private set; }
@@ -29,5 +32,5 @@ namespace SS2
             TeamCatalog.GetTeamDef(TeamIndex.Void).softCharacterLimit = defMonsterCap;
             TeamCatalog.GetTeamDef(TeamIndex.Lunar).softCharacterLimit = defMonsterCap;
         }
-    }
+    }*/
 }

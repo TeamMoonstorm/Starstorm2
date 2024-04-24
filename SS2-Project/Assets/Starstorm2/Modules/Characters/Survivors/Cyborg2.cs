@@ -76,27 +76,16 @@ namespace SS2.Survivors
 
         public override IEnumerator LoadContentAsync()
         {
-            ParallelAssetLoadCoroutineHelper helper = new ParallelAssetLoadCoroutineHelper();
-
-            helper.AddAssetToLoad<GameObject>("CyborgBuffTeleporter", SS2Bundle.Indev);
-            helper.AddAssetToLoad<GameObject>("BloonTrap", SS2Bundle.Indev);
-            helper.AddAssetToLoad<GameObject>("ShockMine", SS2Bundle.Indev);
-            helper.AddAssetToLoad<GameObject>("Cyborg2Body", SS2Bundle.Indev);
-            helper.AddAssetToLoad<SurvivorDef>("survivorCyborg2", SS2Bundle.Indev);
-            helper.AddAssetToLoad<BuffDef>("BuffCyborgPrimary", SS2Bundle.Indev);
-            helper.AddAssetToLoad<BuffDef>("BuffCyborgTeleporter", SS2Bundle.Indev);
-
-            helper.Start();
-            while (!helper.IsDone())
-                yield return null;
-
-            teleporterPrefab = helper.GetLoadedAsset<GameObject>("CyborgBuffTeleporter");
-            bloonTrapPrefab = helper.GetLoadedAsset<GameObject>("BloonTrap");
-            shockMinePrefab = helper.GetLoadedAsset<GameObject>("ShockMine");
-            _prefab = helper.GetLoadedAsset<GameObject>("Cyborg2Body");
-            _survivorDef = helper.GetLoadedAsset<SurvivorDef>("survivorCyborg2");
-            _buffCyborgPrimary = helper.GetLoadedAsset<BuffDef>("BuffCyborgPrimary");
-            _buffCyborgTeleporter = helper.GetLoadedAsset<BuffDef>("BuffCyborgTeleporter");
+            /*
+             * GameObject - "CyborgBuffTeleporter" - Indev
+             * GameObject - "BloonTrap" - Indev
+             * GameObject - "ShockMine" - Indev
+             * GameObject - "Cyborg2Body" - Indev
+             * SurvivorDef - "survivorCyborg2" - Indev
+             * BuffDef - "BuffCyborgPrimary" - Indev
+             * BuffDef - "BuffCyborgTeleporter" - Indev
+             */
+            yield break;
         }
 
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]

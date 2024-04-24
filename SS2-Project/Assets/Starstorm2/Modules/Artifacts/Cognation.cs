@@ -63,7 +63,7 @@ namespace SS2.Artifacts
 
         public override IEnumerator LoadContentAsync()
         {
-            ParallelAssetLoadCoroutineHelper helper = new ParallelAssetLoadCoroutineHelper();
+            /*ParallelAssetLoadCoroutineHelper helper = new ParallelAssetLoadCoroutineHelper();
             helper.AddAssetToLoad<ArtifactDef>("Cognation", SS2Bundle.Artifacts);
             helper.AddAssetToLoad<ArtifactCode>("CognationCode", SS2Bundle.Artifacts);
 
@@ -72,7 +72,8 @@ namespace SS2.Artifacts
                 yield return null;
 
             _artifactCode = helper.GetLoadedAsset<ArtifactCode>("CognationCode");
-            _artifactDef = helper.GetLoadedAsset<ArtifactDef>("Cognation");
+            _artifactDef = helper.GetLoadedAsset<ArtifactDef>("Cognation");*/
+            yield break;
         }
 
         public override void OnArtifactDisabled()

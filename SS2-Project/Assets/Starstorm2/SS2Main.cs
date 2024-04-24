@@ -5,6 +5,7 @@ using R2API.Utils;
 using R2API.Networking;
 using UnityEngine;
 using MSU;
+using System;
 
 namespace SS2
 {
@@ -32,6 +33,7 @@ namespace SS2
         public static bool RiskyModInstalled { get; private set; }
         public static bool GOTCEInstalled { get; private set; }
         public static bool StageAestheticInstalled { get; private set; }
+        internal static bool ChristmasTime { get; private set; }
         public void Awake()
         {
             Instance = this;
@@ -43,6 +45,11 @@ namespace SS2
             new SS2Content();
             LanguageFileLoader.AddLanguageFilesFromMod(this, "SS2Lang");
             TMProEffects.Init();
+
+            //N: Not gonna lie, i love the idea of seasonal effects, but having the same date time check is silly, so there's that internal static bool now.
+            DateTime today = DateTime.Today;
+            if (today.Month == 12 && ((today.Day == 27) || (today.Day == 26) || (today.Day == 25) || (today.Day == 24) || (today.Day == 23)))
+                ChristmasTime = true;
 
             //N: i have no idea if SystemInitializer would be too late for this, so it stays here for now.
             //R2API.Networking.NetworkingAPI.RegisterMessageType<ScriptableObjects.NemesisSpawnCard.SyncBaseStats>();

@@ -87,22 +87,14 @@ namespace SS2.Survivors
 
         public override IEnumerator LoadContentAsync()
         {
-            ParallelAssetLoadCoroutineHelper helper = new ParallelAssetLoadCoroutineHelper();
-            helper.AddAssetToLoad<GameObject>("NemMercBody", SS2Bundle.NemMercenary);
-            helper.AddAssetToLoad<GameObject>("NemMercMonsterMaster", SS2Bundle.NemMercenary);
-            helper.AddAssetToLoad<SurvivorDef>("survivorNemMerc", SS2Bundle.NemMercenary);
-            helper.AddAssetToLoad<GameObject>("KnifeProjectile", SS2Bundle.NemMercenary);
-            helper.AddAssetToLoad<GameObject>("NemMercHologram", SS2Bundle.NemMercenary);
-
-            helper.Start();
-            while (!helper.IsDone())
-                yield return null;
-
-            _survivorDef = helper.GetLoadedAsset<SurvivorDef>("survivorNemMerc");
-            _monsterMaster = helper.GetLoadedAsset<GameObject>("NemMercMonsterMaster");
-            _prefab = helper.GetLoadedAsset<GameObject>("NemMercBody");
-            _knifeProjectile = helper.GetLoadedAsset<GameObject>("KnifeProjectile");
-            _hologramPrefab = helper.GetLoadedAsset<GameObject>("NemMercHologram");
+            /*
+             * GameObject - "NemMercBody" - NemMercenary
+             * GameObject - "NemMercMonsterMaster" - NemMercenary
+             * SurvivorDef - "survivorNemMerc" - NemMercenary
+             * GameObject - "KnifeProjectile" - NemMercenary
+             * GameObject - "NemMercHologram" - NemMercenary
+             */
+            yield break;
         }
 
         public void ModifyContentPack(ContentPack contentPack)

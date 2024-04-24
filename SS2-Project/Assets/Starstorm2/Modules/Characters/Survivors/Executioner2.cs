@@ -128,26 +128,15 @@ namespace SS2.Survivors
 
         public override IEnumerator LoadContentAsync()
         {
-            ParallelAssetLoadCoroutineHelper helper = new ParallelAssetLoadCoroutineHelper();
-            helper.AddAssetToLoad<GameObject>("Executioner2Body", SS2Bundle.Executioner2);
-            helper.AddAssetToLoad<GameObject>("Executioner2Master", SS2Bundle.Executioner2);
-            helper.AddAssetToLoad<SurvivorDef>("SurvivorExecutioner2", SS2Bundle.Executioner2);
-            helper.AddAssetToLoad<BuffDef>("bdExeCharge", SS2Bundle.Executioner2);
-            helper.AddAssetToLoad<BuffDef>("BuffExecutionerArmor", SS2Bundle.Executioner2);
-            helper.AddAssetToLoad<GameObject>("exePlume", SS2Bundle.Executioner2);
-            helper.AddAssetToLoad<GameObject>("exePlumeBig", SS2Bundle.Executioner2);
-
-            helper.Start();
-            while (!helper.IsDone())
-                yield return null;
-
-            _survivorDef = helper.GetLoadedAsset<SurvivorDef>("SurvivorExecutioner2");
-            _monsterMaster = helper.GetLoadedAsset<GameObject>("Executioner2Master");
-            _prefab = helper.GetLoadedAsset<GameObject>("Executioner2Body");
-            _exeChargeBuffDef = helper.GetLoadedAsset<BuffDef>("bdExeCharge");
-            _exeArmor = helper.GetLoadedAsset<BuffDef>("BuffExecutionerArmor");
-            plumeEffect = helper.GetLoadedAsset<GameObject>("exePlume");
-            plumeEffectLarge = helper.GetLoadedAsset<GameObject>("exePlumeBig");
+            /*
+             * GameObject - "Executioner2Body" - Executioner2
+             * GameObject - "Executioner2Master" - Executioner2
+             * SurvivorDef - "SurvivorExecutioner2" - Executioner2
+             * BuffDef - "bdExeCharge" - Executioner2
+             * BuffDef - "BuffExecutionerArmor" - Executioenr2
+             * GameObject - "exePlume" - Executioner2
+             * GameObject - "exePlumeBif" - Executioner2
+             */
         }
 
         public void ModifyPrefab()

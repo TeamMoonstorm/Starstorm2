@@ -4,6 +4,9 @@ using System.Collections;
 using UnityEngine.Networking;
 namespace SS2
 {
+
+    //TODO: Create proper difficulty module home-made
+    /*
     public static class Typhoon
     {
         public static R2API.ScriptableObjects.SerializableDifficultyDef TyphoonDef { get; private set; }
@@ -65,4 +68,5 @@ namespace SS2
                 On.RoR2.CombatDirector.Awake -= CombatDirector_Awake;
         }
     }
+    */
 }

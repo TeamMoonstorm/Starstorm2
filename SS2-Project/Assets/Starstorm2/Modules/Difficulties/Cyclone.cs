@@ -2,7 +2,8 @@
 using RoR2;
 namespace SS2
 {
-    public static class Cyclone
+    //TODO: Create proper difficulty module home-made
+    /*public static class Cyclone
     {
         public static R2API.ScriptableObjects.SerializableDifficultyDef CycloneDef { get; private set; }
         public static DifficultyIndex CycloneIndex { get => CycloneDef.DifficultyIndex; }
@@ -29,5 +30,5 @@ namespace SS2
             TeamCatalog.GetTeamDef(TeamIndex.Void).softCharacterLimit = defMonsterCap;
             TeamCatalog.GetTeamDef(TeamIndex.Lunar).softCharacterLimit = defMonsterCap;
         }
-    }
+    }*/
 }

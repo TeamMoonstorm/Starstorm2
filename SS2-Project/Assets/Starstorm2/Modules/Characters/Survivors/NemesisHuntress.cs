@@ -42,18 +42,12 @@ namespace SS2.Survivors
 
         public override IEnumerator LoadContentAsync()
         {
-            ParallelAssetLoadCoroutineHelper helper = new ParallelAssetLoadCoroutineHelper();
-            helper.AddAssetToLoad<GameObject>("NemHuntress2Body", SS2Bundle.Indev);
-            helper.AddAssetToLoad<SurvivorDef>("survivorNemHuntress2", SS2Bundle.Indev);
-            helper.AddAssetToLoad<GameObject>("CritsparkMini", SS2Bundle.Indev);
-
-            helper.Start();
-            while (!helper.IsDone())
-                yield return null;
-
-            _characterPrefab = helper.GetLoadedAsset<GameObject>("NemHuntress2Body");
-            _survivorDef = helper.GetLoadedAsset<SurvivorDef>("survivorNemHuntress2");
-            miniCritPrefab = helper.GetLoadedAsset<GameObject>("CritsparkMini");
+            /*
+             * GameObject - "NemHuntress2Body" - Indev
+             * SurvivorDef - "survivorNemHuntress2" - Indev
+             * GameObject - "CritsparkMini" - Indev
+             */
+            yield break;
         }
 
         private void CrosshairManager_UpdateCrosshair(On.RoR2.UI.CrosshairManager.orig_UpdateCrosshair orig, RoR2.UI.CrosshairManager self, CharacterBody characterBody, Vector3 crosshairWorldPosition, Camera uiCamera)

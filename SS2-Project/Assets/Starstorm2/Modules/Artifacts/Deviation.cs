@@ -27,7 +27,7 @@ namespace SS2.Artifacts
 
         public override IEnumerator LoadContentAsync()
         {
-            ParallelAssetLoadCoroutineHelper helper = new ParallelAssetLoadCoroutineHelper();
+            /*ParallelAssetLoadCoroutineHelper helper = new ParallelAssetLoadCoroutineHelper();
             
             helper.AddAssetToLoad<ArtifactDef>("Deviation", SS2Bundle.Artifacts);
             helper.AddAssetToLoad<ArtifactCode>("DeviationCode", SS2Bundle.Artifacts);
@@ -37,7 +37,8 @@ namespace SS2.Artifacts
                 yield return null;
 
             _artifactCode = helper.GetLoadedAsset<ArtifactCode>("DeviationCode");
-            _artifactDef = helper.GetLoadedAsset<ArtifactDef>("Deviation");
+            _artifactDef = helper.GetLoadedAsset<ArtifactDef>("Deviation");*/
+            yield break;
         }
 
         private void DeviationOverride(On.RoR2.TeleporterInteraction.IdleState.orig_OnInteractionBegin orig, BaseState self, Interactor activator)

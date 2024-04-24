@@ -67,6 +67,7 @@ namespace SS2.Survivors
             }
         }
 
+        //N: I should make this an utility idk
         private void CharacterSelectBarController_Awake(On.RoR2.CharacterSelectBarController.orig_Awake orig, CharacterSelectBarController self)
         {
             //hide nemcommando from css proper
@@ -101,20 +102,13 @@ namespace SS2.Survivors
 
         public override IEnumerator LoadContentAsync()
         {
-            ParallelAssetLoadCoroutineHelper helper = new ParallelAssetLoadCoroutineHelper();
-            helper.AddAssetToLoad<GameObject>("NemCommandoBody", SS2Bundle.NemCommando);
-            helper.AddAssetToLoad<GameObject>("NemCommandoMonsterMaster", SS2Bundle.NemCommando);
-            helper.AddAssetToLoad<SurvivorDef>("survivorNemCommando", SS2Bundle.NemCommando);
-            helper.AddAssetToLoad<BuffDef>("BuffGouge", SS2Bundle.NemCommando);
-
-            helper.Start();
-            while (!helper.IsDone())
-                yield return null;
-
-            _survivorDef = helper.GetLoadedAsset<SurvivorDef>("survivorNemCommando");
-            _monsterMaster = helper.GetLoadedAsset<GameObject>("NemCommandoMonsterMaster");
-            _prefab = helper.GetLoadedAsset<GameObject>("NemCommandoBody");
-            _gougeBuffDef = helper.GetLoadedAsset<BuffDef>("BuffGouge");
+            /*
+             * GameObject - "NemCommandoBody" - NemCommando
+             * GameObject - "NemCommandoMonsterMaster" - NemCommando
+             * SurvivorDef - "survivorNemCommando" - NemCommando
+             * BuffDef - "BuffGouge" - NemCommando
+             */
+            yield break;
         }
     }
 

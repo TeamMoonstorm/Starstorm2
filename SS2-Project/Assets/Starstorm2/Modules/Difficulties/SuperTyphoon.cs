@@ -1,9 +1,12 @@
-﻿using R2API;
+﻿using MSU.Config;
+using R2API;
 using RoR2;
 using UnityEngine.Networking;
 namespace SS2
 {
-    public static class SuperTyphoon
+    
+    //TODO: Create proper difficulty module home-made
+    /*public static class SuperTyphoon
     {
         public static R2API.ScriptableObjects.SerializableDifficultyDef SuperTyphoonDef { get; private set; }
         public static DifficultyIndex SuperTyphoonIndex { get => SuperTyphoonDef.DifficultyIndex; }
@@ -52,7 +55,7 @@ namespace SS2
                 }
             }
             orig(self);
-        }*/
+        }*
 
         private static void Run_onRunStartGlobal(Run run)
         {
@@ -78,4 +81,4 @@ namespace SS2
             TeamCatalog.GetTeamDef(TeamIndex.Lunar).softCharacterLimit = defMonsterCap;
         }
     }
-}
+}*/

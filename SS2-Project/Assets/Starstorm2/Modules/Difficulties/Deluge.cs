@@ -2,7 +2,9 @@
 using RoR2;
 namespace SS2
 {
-    public static class Deluge
+    
+    //TODO: Create proper difficulty module home-made
+    /*public static class Deluge
     {
         public static R2API.ScriptableObjects.SerializableDifficultyDef DelugeDef { get; private set; }
         public static DifficultyIndex DelugeIndex { get => DelugeDef.DifficultyIndex; }
@@ -29,5 +31,5 @@ namespace SS2
             TeamCatalog.GetTeamDef(TeamIndex.Void).softCharacterLimit = defMonsterCap;
             TeamCatalog.GetTeamDef(TeamIndex.Lunar).softCharacterLimit = defMonsterCap;
         }
-    }
+    }*/
 }
