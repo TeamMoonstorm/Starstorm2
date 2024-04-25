@@ -8,8 +8,11 @@ using UnityEngine;
 using UnityEngine.Networking;
 namespace SS2.Interactables
 {
-    [DisabledContent]
-    public sealed class DropPod : SS2Interactable
+#if DEBUG
+    //This fucking thing sucks ass and unironically is awful, i hate and will forever hate having to clone prefabs.
+    //Not to mention, using the default survivor pod doesnt really make sense since these are supposed to be leftover pods from contact light, so again, this shit should just be re-written and homemade instead of cloned.
+    // - Nebby -
+    /*public sealed class DropPod : SS2Interactable
     {
         public override GameObject Interactable { get => interactable; }
 
@@ -72,7 +75,7 @@ namespace SS2.Interactables
             Object.Destroy(donut.gameObject);
 
             /*var mdl = Interactable.transform.Find("Base/mdlEscapePod");
-            Object.Destroy(mdl.GetComponent<Animator>());*/
+            Object.Destroy(mdl.GetComponent<Animator>());
         }
 
         private void EnableObjects()
@@ -121,5 +124,6 @@ namespace SS2.Interactables
             var podMesh = Interactable.transform.Find("Base/mdlEscapePod/EscapePodArmature/Base").gameObject;
             podMesh.AddComponent<EntityLocator>().entity = Interactable;
         }
-    }
+    }*/
+#endif
 }

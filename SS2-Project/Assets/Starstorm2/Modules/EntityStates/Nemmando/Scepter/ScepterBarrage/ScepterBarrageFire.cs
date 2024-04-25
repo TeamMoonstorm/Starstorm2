@@ -7,19 +7,19 @@ namespace EntityStates.Nemmando
     {
         public float charge;
 
-        [TokenModifier("SS2_NEMMANDO_SPECIAL_SCEPSUBMISSION_DESCRIPTION", StatTypes.MultiplyByN, 2, "100")]
+        [FormatToken("SS2_NEMMANDO_SPECIAL_SCEPSUBMISSION_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 2, "100")]
         public static float laserDamageCoefficient;
         public static float laserBlastRadius;// = 8f;
         public static float laserBlastForce;// = 2000f;
 
-        [TokenModifier("SS2_NEMMANDO_SPECIAL_SCEPSUBMISSION_DESCRIPTION", StatTypes.MultiplyByN, 1, "100")]
+        [FormatToken("SS2_NEMMANDO_SPECIAL_SCEPSUBMISSION_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 1, "100")]
         public static float damageCoefficient = 0.6f;
         public static float procCoefficient = 0.5f;
         public static uint bulletCountPerShot = 4;
         public static float range = 128f;
         public static float maxSpread = 40f;
         public static int minBulletCount = 2;
-        [TokenModifier("SS2_NEMMANDO_SPECIAL_SCEPSUBMISSION_DESCRIPTION", StatTypes.Default, 0)]
+        [FormatToken("SS2_NEMMANDO_SPECIAL_SCEPSUBMISSION_DESCRIPTION",   0)]
         public static int maxBulletCount = 6;
 
         public static float baseDuration = 0.8f;

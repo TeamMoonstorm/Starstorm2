@@ -13,7 +13,7 @@ namespace SS2.Modules
         public static Equipments Instance { get; private set; }
         public override R2APISerializableContentPack SerializableContentPack => SS2Content.Instance.SerializableContentPack;
 
-        public static ConfigurableBool EnableEquipments = SS2Config.MakeConfigurableBool(true, (b) =>
+        public static ConfiguredBool EnableEquipments = SS2Config.MakeConfigurableBool(true, (b) =>
         {
             b.Section = "Enable All Equipments";
             b.Key = "Enable All Equipments";

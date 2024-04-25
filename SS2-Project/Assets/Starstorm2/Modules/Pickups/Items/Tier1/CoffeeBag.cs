@@ -11,7 +11,7 @@ namespace SS2.Items
     public sealed class CoffeeBag : SS2Item, IContentPackModifier
     {
         public const string token = "SS2_ITEM_COFFEEBAG_DESC";
-        public override NullableRef<GameObject> ItemDisplayPrefab => null;
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
         public override ItemDef ItemDef => _itemDef;
         private ItemDef _itemDef;
         private BuffDef _buffDef;

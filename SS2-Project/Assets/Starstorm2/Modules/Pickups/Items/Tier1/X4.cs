@@ -16,19 +16,19 @@ namespace SS2.Items
 
         public static float secCooldown = 0.25f;
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Cooldown reduction per X-4 Stimulant. (1 = 100%)")]
-        [TokenModifier("SS2_ITEM_X4_DESC", StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_ITEM_X4_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
         public static float cdReduction = .1f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Regen boost when using secondary skill. (1 = 1hp/s)")]
-        [TokenModifier("SS2_ITEM_X4_DESC", StatTypes.Default, 1)]
+        [FormatToken("SS2_ITEM_X4_DESC",   1)]
         public static float baseRegenBoost = 2f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Regen boost per stack when using secondary skill. (1 = 1hp/s)")]
-        [TokenModifier("SS2_ITEM_X4_DESC", StatTypes.Default, 2)]
+        [FormatToken("SS2_ITEM_X4_DESC",   2)]
         public static float stackRegenBoost = 1f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Regen duration when using secondary skill. (1 = 1s)")]
-        [TokenModifier("SS2_ITEM_X4_DESC", StatTypes.Default, 3)]
+        [FormatToken("SS2_ITEM_X4_DESC",   3)]
         public static float regenDuration = 3f;
         public static float extraRegeneration = 0.2f;
 

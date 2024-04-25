@@ -5,14 +5,14 @@ namespace EntityStates.Nemmando
 {
     public class BarrageFire : RendHandler
     {
-        [TokenModifier("SS2_NEMMANDO_SPECIAL_SUBMISSION_DESCRIPTION", StatTypes.MultiplyByN, 1, "100")]
+        [FormatToken("SS2_NEMMANDO_SPECIAL_SUBMISSION_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 1, "100")]
         public static float damageCoefficient;
         public static float procCoefficient;
         public static uint bulletCountPerShot;
         public static float range;
         public static float maxSpread;
         public static int minBulletCount;
-        [TokenModifier("SS2_NEMMANDO_SPECIAL_SUBMISSION_DESCRIPTION", StatTypes.Default, 0)]
+        [FormatToken("SS2_NEMMANDO_SPECIAL_SUBMISSION_DESCRIPTION",   0)]
         public static int maxBulletCount;
         public static float baseDuration;
         public static float minTimeBetweenShots;

@@ -1,19 +1,41 @@
-﻿using RoR2;
+﻿using MSU;
+using R2API.ScriptableObjects;
+using RoR2;
+using RoR2.ContentManagement;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 namespace SS2.ItemTiers
 {
     public class Sibylline : SS2ItemTier
     {
-        public override ItemTierDef ItemTierDef => SS2Assets.LoadAsset<ItemTierDef>("Sibylline", SS2Bundle.Items);
+        public override NullableRef<SerializableColorCatalogEntry> ColorIndex => null;
 
-        public override GameObject PickupDisplayVFX => SS2Assets.LoadAsset<GameObject>("SibyllinePickupDisplayVFX", SS2Bundle.Items);
+        public override NullableRef<SerializableColorCatalogEntry> DarkColorIndex => null;
+
+        public override GameObject PickupDisplayVFX => _pickupDisplayVFX;
+        private GameObject _pickupDisplayVFX;
+
+        public override ItemTierDef ItemTierDef => _itemTierDef;
+        private ItemTierDef _itemTierDef;
 
         public override void Initialize()
         {
-            base.Initialize();
-            //ItemTierDef.highlightPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/HighlightTier1Item.prefab").WaitForCompletion();
-            ItemTierDef.dropletDisplayPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/Common/VoidOrb.prefab").WaitForCompletion();
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * ItemTierDef - "Sibylline" - Items
+             * GameOBject - "SibyllinePickupDisplayVFX" - Items
+             * Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/Common/VoidOrb.prefab").WaitForCompletion(); (Droplet Display Prefab for ItemTierDef)
+             */
+            yield break;
         }
     }
 }

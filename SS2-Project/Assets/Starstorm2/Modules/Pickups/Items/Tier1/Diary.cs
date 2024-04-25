@@ -11,7 +11,7 @@ namespace SS2.Items
     {
         private const string token = "SS2_ITEM_DIARY_DESC";
 
-        public override NullableRef<GameObject> ItemDisplayPrefab => null;
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
 
         public override ItemDef ItemDef => _itemDef;
         private ItemDef _itemDef;

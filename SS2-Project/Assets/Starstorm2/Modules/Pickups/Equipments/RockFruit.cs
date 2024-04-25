@@ -1,56 +1,18 @@
-﻿using RoR2;
+﻿using MSU;
+using RoR2;
+using RoR2.ContentManagement;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 namespace SS2.Equipments
 {
     public sealed class RockFruit : SS2Equipment
     {
-        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("RockFruit", SS2Bundle.Equipments);
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+        public override EquipmentDef EquipmentDef => _equipmentDef;
+        private EquipmentDef _equipmentDef;
 
-        //literally lifted 4 year old moonfall code
-        private ItemIndex GetRandomItem(List<ItemIndex> items)
-        {
-            bool isEmpty = items.Count <= 0;
-            if (!isEmpty)
-            {
-                int itemID = UnityEngine.Random.Range(0, items.Count);
-                return items[itemID];
-            }
-            else
-            {
-                Debug.Log("Failed to find item!");
-                return RoR2Content.Items.Syringe.itemIndex;
-            }
-        }
-
-        public List<PickupIndex> GetDropListFromItemTier(ItemTier itemTier)
-        {
-            switch (itemTier)
-            {
-                case ItemTier.Tier1:
-                    return Run.instance.availableTier1DropList;
-                case ItemTier.Tier2:
-                    return Run.instance.availableTier2DropList;
-                case ItemTier.Tier3:
-                    return Run.instance.availableTier3DropList;
-                case ItemTier.Lunar:
-                    return Run.instance.availableLunarItemDropList;
-                case ItemTier.Boss:
-                    return Run.instance.availableBossDropList;
-                case ItemTier.VoidTier1:
-                    return Run.instance.availableVoidTier1DropList;
-                case ItemTier.VoidTier2:
-                    return Run.instance.availableVoidTier2DropList;
-                case ItemTier.VoidTier3:
-                    return Run.instance.availableVoidTier3DropList;
-
-                default:
-                    Debug.Log("Failed to find droplist for " + itemTier);
-                    return null;
-            }
-        }
-
-        public override bool FireAction(EquipmentSlot slot)
+        public override bool Execute(EquipmentSlot slot)
         {
             var allItems = new List<ItemIndex>();
             for (var item = RoR2Content.Items.Syringe.itemIndex; item < (ItemIndex)ItemCatalog.itemCount; item++)
@@ -104,6 +66,73 @@ namespace SS2.Equipments
 
             return true;
         }
-    }
 
+        public override void Initialize()
+        {
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * EquipmentDef - "RockFruit" - Equipments
+             */
+            yield break;
+        }
+
+        public override void OnEquipmentLost(CharacterBody body)
+        {
+        }
+
+        public override void OnEquipmentObtained(CharacterBody body)
+        {
+        }
+
+        //literally lifted 4 year old moonfall code
+        private ItemIndex GetRandomItem(List<ItemIndex> items)
+        {
+            bool isEmpty = items.Count <= 0;
+            if (!isEmpty)
+            {
+                int itemID = UnityEngine.Random.Range(0, items.Count);
+                return items[itemID];
+            }
+            else
+            {
+                Debug.Log("Failed to find item!");
+                return RoR2Content.Items.Syringe.itemIndex;
+            }
+        }
+
+        public List<PickupIndex> GetDropListFromItemTier(ItemTier itemTier)
+        {
+            switch (itemTier)
+            {
+                case ItemTier.Tier1:
+                    return Run.instance.availableTier1DropList;
+                case ItemTier.Tier2:
+                    return Run.instance.availableTier2DropList;
+                case ItemTier.Tier3:
+                    return Run.instance.availableTier3DropList;
+                case ItemTier.Lunar:
+                    return Run.instance.availableLunarItemDropList;
+                case ItemTier.Boss:
+                    return Run.instance.availableBossDropList;
+                case ItemTier.VoidTier1:
+                    return Run.instance.availableVoidTier1DropList;
+                case ItemTier.VoidTier2:
+                    return Run.instance.availableVoidTier2DropList;
+                case ItemTier.VoidTier3:
+                    return Run.instance.availableVoidTier3DropList;
+
+                default:
+                    Debug.Log("Failed to find droplist for " + itemTier);
+                    return null;
+            }
+        }
+    }
 }

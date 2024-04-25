@@ -13,7 +13,7 @@ namespace SS2.Items
 
         //[RiskOfOptionsConfigureField(SS2Config.IDItem, ConfigDescOverride = "Bonus base damage per fork. (1 = 1 base damage. Base damage for most characters is 12.)")]
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Bonus percent damage per fork. (1 = 1%)")]
-        [TokenModifier(token, StatTypes.Default, 0)]
+        [FormatToken(token,   0)]
         public static float percentDamageBonus = 8f;
         public override void Initialize()
         {

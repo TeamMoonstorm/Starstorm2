@@ -27,10 +27,11 @@ namespace SS2.Survivors
         private BuffDef _exeChargeBuffDef;
         private BuffDef _exeArmor;
 
-        public static GameObject plumeEffect = SS2Assets.LoadAsset<GameObject>("exePlume", SS2Bundle.Executioner2);
-        public static GameObject plumeEffectLarge = SS2Assets.LoadAsset<GameObject>("exePlumeBig", SS2Bundle.Executioner2);
+        public static GameObject plumeEffect;
+        public static GameObject plumeEffectLarge;
 
-        public sealed class ExeArmorBehavior : BuffBehaviour, IBodyStatArgModifier
+
+        public sealed class ExeArmorBehavior : BaseBuffBehaviour, IBodyStatArgModifier
         {
             [BuffDefAssociation]
             private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffExecutionerArmor;
@@ -41,7 +42,7 @@ namespace SS2.Survivors
             }
         }
 
-        public sealed class ExeChargeBehavior : BuffBehaviour
+        public sealed class ExeChargeBehavior : BaseBuffBehaviour
         {
             [BuffDefAssociation]
             private static BuffDef GetBuffDef() => SS2Content.Buffs.bdExeCharge;
@@ -135,8 +136,12 @@ namespace SS2.Survivors
              * BuffDef - "bdExeCharge" - Executioner2
              * BuffDef - "BuffExecutionerArmor" - Executioenr2
              * GameObject - "exePlume" - Executioner2
-             * GameObject - "exePlumeBif" - Executioner2
+             * GameObject - "exePlumeBig" - Executioner2
+             * GameObject - "ExecutionerIonOrbEffect" - Executioner2
+             * GameObject - "ExecutionerIonOrbEffectMastery" - Executioner2
+             * GameObject - "ExecutionerIonSuperOrbEffect" - Executioner2
              */
+            yield break;
         }
 
         public void ModifyPrefab()

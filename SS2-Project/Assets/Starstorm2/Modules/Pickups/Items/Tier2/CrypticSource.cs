@@ -13,15 +13,15 @@ namespace SS2.Items
         public static GameObject explosionEffectPrefab { get; } = SS2Assets.LoadAsset<GameObject>("CrypticSourceExplosion", SS2Bundle.Items);
        
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Radius of the energy burst, in meters.")]
-        [TokenModifier(token, StatTypes.Default, 0)]
+        [FormatToken(token,   0)]
         public static float baseRadius = 15f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Radius of the energy burst per stack, in meters.")]
-        [TokenModifier(token, StatTypes.Default, 1)]
+        [FormatToken(token,   1)]
         public static float stackRadius = 3f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base damage of the energy burst, per stack. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 2, "100")]
         public static float damageCoefficient = 2.5f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Proc coefficient of the energy burst.")]

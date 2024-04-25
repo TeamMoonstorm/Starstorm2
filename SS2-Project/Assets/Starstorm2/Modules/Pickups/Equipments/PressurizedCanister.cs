@@ -4,6 +4,7 @@ using UnityEngine.Networking;
 using MSU;
 using System.Collections;
 using RoR2.ContentManagement;
+using System.Collections.Generic;
 
 namespace SS2.Equipments
 {
@@ -13,7 +14,7 @@ namespace SS2.Equipments
         private EquipmentDef _equipmentDef;
         public BuffDef _canJumpBuffDef;
 
-        public override NullableRef<GameObject> ItemDisplayPrefab => throw new System.NotImplementedException();
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => throw new System.NotImplementedException();
 
         public override bool Execute(EquipmentSlot slot)
         {
@@ -21,10 +22,7 @@ namespace SS2.Equipments
             if (characterMotor)
             {
                 slot.characterBody.AddItemBehavior<Behavior>(1);
-                Debug.Log($"Adding behavior");
-                //if (slot.hasAuthority)
-                {
-                } //this is so fucking true
+
                 return true;
             }
             return false;
@@ -41,16 +39,11 @@ namespace SS2.Equipments
 
         public override IEnumerator LoadContentAsync()
         {
-            ParallelAssetLoadCoroutineHelper helper = new ParallelAssetLoadCoroutineHelper();
-
-            helper.AddAssetToLoad<EquipmentDef>("PressurizedCanister", SS2Bundle.Equipments);
-            helper.AddAssetToLoad<BuffDef>("bdCanJump", SS2Bundle.Equipments);
-
-            helper.Start();
-            while (!helper.IsDone()) yield return null;
-
-            _equipmentDef = helper.GetLoadedAsset<EquipmentDef>("PressurizedCanister");
-            _canJumpBuffDef = helper.GetLoadedAsset<BuffDef>("BuffDef");
+            /*
+             * EquipmentDef - "PressurizedCanister" - Equipments
+             * BuffDef - "bdCanJump" - Equipments
+             */
+            yield return null;
         }
 
         public override void OnEquipmentLost(CharacterBody body)
@@ -66,12 +59,13 @@ namespace SS2.Equipments
             contentPack.buffDefs.AddSingle(_canJumpBuffDef);
         }
 
-        public sealed class PressurizedCanisterBehavior : BuffBehaviour
+        public sealed class PressurizedCanisterBehavior : BaseBuffBehaviour
 
         {
             [BuffDefAssociation]
             private static BuffDef GetBuffDef() => SS2Content.Buffs.bdCanJump;
-            public void Start()
+
+            protected override void OnFirstStackGained()
             {
                 CharacterBody.baseJumpCount++;
                 CharacterBody.characterMotor.onHitGroundAuthority += RemoveBuff;
@@ -91,7 +85,7 @@ namespace SS2.Equipments
                 CharacterBody.RemoveBuff(SS2Content.Buffs.bdCanJump.buffIndex);
             }
 
-            public void OnDestroy()
+            protected override void OnAllStacksLost()
             {
                 CharacterBody.characterMotor.onHitGroundAuthority -= RemoveBuff;
                 CharacterBody.baseJumpCount--;

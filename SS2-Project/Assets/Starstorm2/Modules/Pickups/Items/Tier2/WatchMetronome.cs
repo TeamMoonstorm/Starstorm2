@@ -10,11 +10,11 @@ namespace SS2.Items
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("WatchMetronome", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of max charges per stack.")]
-        [TokenModifier(token, StatTypes.Default, 0)]
+        [FormatToken(token,   0)]
         public static int chargeAmount = 5;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Maximum movement speed bonus that can be achieved via metronome per stack. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 1, "100")]
         public static float maxMovementSpeed = 2;
 
         public sealed class Behavior : BaseItemBodyBehavior

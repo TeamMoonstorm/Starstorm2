@@ -1,5 +1,7 @@
-﻿using RoR2;
+﻿using MSU;
+using RoR2;
 using RoR2.Orbs;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 namespace SS2.Orbs
@@ -7,11 +9,26 @@ namespace SS2.Orbs
     public class ExecutionerIonSuperOrb : Orb
     {
         public float buffDuration = -1f;
-        private NetworkSoundEventDef sound = SS2Assets.LoadAsset<NetworkSoundEventDef>("SoundEventExecutionerGainCharge", SS2Bundle.Executioner);
-        private GameObject orbEffect = SS2Assets.LoadAsset<GameObject>("ExecutionerIonSuperOrbEffect", SS2Bundle.Executioner);
+        private static NetworkSoundEventDef sound;
+        private static GameObject orbEffect;
         private HurtBox hurtBox;
         private const float speed = 50f;
 
+        [AsyncAssetLoad]
+        private static IEnumerator LoadAssetsAsync()
+        {
+            ParallelMultiStartAssetLoadCoroutine helper = new ParallelMultiStartAssetLoadCoroutine();
+
+            helper.AddAssetToLoad<GameObject>("ExecutioenrIonSuperOrbEffect", SS2Bundle.Executioner2);
+            helper.AddAssetToLoad<NetworkSoundEventDef>("SoundEventExecutionerGainCharge", SS2Bundle.Executioner2);
+
+            helper.Start();
+            while (!helper.IsDone)
+                yield return null;
+
+            orbEffect = helper.GetLoadedAsset<GameObject>("ExecutioenrIonSuperOrbEffect");
+            sound = helper.GetLoadedAsset<NetworkSoundEventDef>("SoundEventExecutionerGainCharge");
+        }
         public override void Begin()
         {
             duration = distanceToTarget / speed;

@@ -9,15 +9,15 @@ namespace SS2.Items
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("DroidHead", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Damage dealt by Security Drones, at base and per stack. Percentage (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
         public static float baseDamage = 1f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base life time of the Security Drone, in seconds.")]
-        [TokenModifier(token, StatTypes.Default, 1)]
+        [FormatToken(token,   1)]
         public static float baseLifeTime = 20f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Life time of the Security Drone per stack, in seconds.")]
-        [TokenModifier(token, StatTypes.Default, 2)]
+        [FormatToken(token,   2)]
         public static float stackLifeTime = 10f;
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver

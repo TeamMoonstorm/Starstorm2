@@ -51,7 +51,7 @@ namespace SS2.Modules
                 return false;
             }
 
-            if (!piece.IsAvailable())
+            if (!piece.IsAvailable(ContentPack))
                 return false;
 
             return SS2Config.ConfigFactory.MakeConfiguredBool(true, (b) =>

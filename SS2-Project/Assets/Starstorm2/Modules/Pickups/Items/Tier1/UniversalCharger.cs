@@ -10,11 +10,11 @@ namespace SS2.Items
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("UniversalCharger", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Time it takes for Universal Charger to recharge, in seconds.")]
-        [TokenModifier(token, StatTypes.Default, 0)]
+        [FormatToken(token,   0)]
         public static float baseCooldown = 15f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigNameOverride = "How much faster Universal Charger recharges, per stack. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.Default, 1)]
+        [FormatToken(token,   1)]
         public static float cooldownReductionPerStack = 20f; // percent
 
         public static GameObject overlayPanel = SS2Assets.LoadAsset<GameObject>("RefreshPanel", SS2Bundle.Items);

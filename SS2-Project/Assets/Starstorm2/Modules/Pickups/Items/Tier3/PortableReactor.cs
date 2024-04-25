@@ -9,10 +9,10 @@ namespace SS2.Items
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("PortableReactor", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Duration of invulnerability from Portable Reactor. (1 = 1 second)")]
-        [TokenModifier(token, StatTypes.Default, 0)]
+        [FormatToken(token,   0)]
         public static float invulnTime = 80f;
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Stacking duration of invulnerability. (1 = 1 second)")]
-        [TokenModifier(token, StatTypes.Default, 1)]
+        [FormatToken(token,   1)]
         public static float stackingInvuln = 40f;
 
         //★ ty nebby

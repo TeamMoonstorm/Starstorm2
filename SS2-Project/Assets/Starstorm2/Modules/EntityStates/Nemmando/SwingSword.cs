@@ -11,7 +11,7 @@ namespace EntityStates.Nemmando
     {
         //swings for 133% of the attack's duration, used for scaling animation time so he doesn't sheath sword
         public static float swingTimeCoefficient = 1.33f;
-        [TokenModifier("SS2_NEMMANDO_PRIMARY_BLADE_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_NEMMANDO_PRIMARY_BLADE_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
         public static float TokenModifier_dmgCoefficient => new SwingSword().damageCoefficient;
         public int swingSide;
 

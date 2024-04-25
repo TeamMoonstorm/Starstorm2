@@ -107,7 +107,7 @@ namespace SS2.Survivors
             contentPack.buffDefs.AddSingle(_buffCyborgPrimary);
         }
 
-        public sealed class CyborgTeleBuffBehavior : BuffBehaviour
+        public sealed class CyborgTeleBuffBehavior : BaseBuffBehaviour
         {
             [BuffDefAssociation()]
             private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffCyborgTeleporter;

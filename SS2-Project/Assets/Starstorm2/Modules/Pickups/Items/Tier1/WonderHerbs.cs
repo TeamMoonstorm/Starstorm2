@@ -9,7 +9,7 @@ namespace SS2.Items
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("WonderHerbs", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Bonus healing per herbs. (1 = 100%)")]
-        [TokenModifier("SS2_ITEM_FORK_DESC", StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_ITEM_FORK_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
         public static float healBonus = 0.8f;
         public override void Initialize()
         {

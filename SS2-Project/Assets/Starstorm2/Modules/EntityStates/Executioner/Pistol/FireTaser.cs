@@ -9,7 +9,7 @@ namespace EntityStates.Executioner
 {
     public class FireTaser : BaseSkillState
     {
-        [TokenModifier("SS2_EXECUTIONER_TASER_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_EXECUTIONER_TASER_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
         public static float damageCoefficient;
         public static float procCoefficient = 0.75f;
         public static float baseDuration = 0.4f;

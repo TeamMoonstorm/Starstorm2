@@ -16,7 +16,7 @@ namespace SS2.Items
 
     public sealed class Remuneration : SS2Item
     {
-        public override NullableRef<GameObject> ItemDisplayPrefab => null;
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
         public override ItemDef ItemDef => _itemDef;
         private ItemDef _itemDef;
         public static GameObject remunerationControllerPrefab;

@@ -10,7 +10,7 @@ namespace EntityStates.Executioner
 {
     public class FireIonGun : BaseSkillState
     {
-        [TokenModifier("SS2_EXECUTIONER_IONGUN_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_EXECUTIONER_IONGUN_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
         public static float damageCoefficient = 3.8f;
         public static float procCoefficient = 1.0f;
         public static float baseDuration = 0.075f;

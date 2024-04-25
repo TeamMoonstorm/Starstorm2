@@ -2,7 +2,7 @@
 {
     class MULESpinStart : BaseSkillState
     {
-        [TokenModifier("SS2_MULE_PRIMARY_SPIN_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_MULE_PRIMARY_SPIN_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
         public static float swingTimeCoefficient = 1f;
         public static float duration = 0.2f;
 

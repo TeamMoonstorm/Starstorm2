@@ -2,33 +2,35 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using System.Collections.Generic;
+using MSU;
+using RoR2.ContentManagement;
+using System.Collections;
+using SS2.Modules;
+using System.Linq;
+
 namespace SS2.Interactables
 {
-    //[DisabledContent]
     public sealed class CloneDroneDamaged : SS2Interactable
     {
-        public override GameObject Interactable { get; } = SS2Assets.LoadAsset<GameObject>("CloneDroneBroken", SS2Bundle.Interactables);
-        private GameObject interactable;
+        public override InteractableCardProvider CardProvider => _cardProvider;
+        private InteractableCardProvider _cardProvider;
+
+        public override GameObject InteractablePrefab => _interactablePrefab;
+        private GameObject _interactablePrefab;
+
+        private GameObject _interactable;
         private SummonMasterBehavior smb;
         private CharacterMaster cm;
         private GameObject bodyPrefab;
         private AkEvent[] droneAkEvents;
 
-        public override List<MSInteractableDirectorCard> InteractableDirectorCards =>
-            new List<MSInteractableDirectorCard>
-            {
-                SS2Assets.LoadAsset<MSInteractableDirectorCard>("msidcCloneDrone", SS2Bundle.Interactables),
-            };
-
         public override void Initialize()
         {
-            base.Initialize();
-
+            //This should stop hooking and really just be a global hook that checks for our drones tbh.
             On.EntityStates.Drone.DeathState.OnImpactServer += SpawnCloneCorpse;
 
             //add sound events, the bad way
-            interactable = InteractableDirectorCards[0].prefab;
-            smb = interactable.GetComponent<SummonMasterBehavior>();
+            smb = _interactable.GetComponent<SummonMasterBehavior>();
             cm = smb.masterPrefab.GetComponent<CharacterMaster>();
             bodyPrefab = cm.bodyPrefab;
 
@@ -51,8 +53,24 @@ namespace SS2.Interactables
             }
         }
 
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * GameObject - "CloneDroneBroken" - Interactables
+             * InteractableCardProvider - "???" - Interactables
+             */
+            yield break;
+        }
+
+        
         private void SpawnCloneCorpse(On.EntityStates.Drone.DeathState.orig_OnImpactServer orig, EntityStates.Drone.DeathState self, Vector3 contactPoint)
         {
+            orig(self, contactPoint);
             if (self.characterBody.bodyIndex == BodyCatalog.FindBodyIndexCaseInsensitive("CloneDroneBody"))
             {
                 DirectorPlacementRule placementRule = new DirectorPlacementRule
@@ -60,7 +78,7 @@ namespace SS2.Interactables
                     placementMode = DirectorPlacementRule.PlacementMode.Direct,
                     position = contactPoint
                 };
-                GameObject gameObject = DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(InteractableDirectorCards[0], placementRule, new Xoroshiro128Plus(0UL)));
+                GameObject gameObject = DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(CardProvider.BuildSpawnCardSet().FirstOrDefault(), placementRule, new Xoroshiro128Plus(0UL)));
                 if (gameObject)
                 {
                     PurchaseInteraction component = gameObject.GetComponent<PurchaseInteraction>();
@@ -74,7 +92,6 @@ namespace SS2.Interactables
             {
                 orig(self, contactPoint);
             }
-
         }
     }
 }

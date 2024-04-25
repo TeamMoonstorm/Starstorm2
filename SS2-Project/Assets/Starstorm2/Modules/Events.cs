@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using RiskOfOptions.OptionConfigs;
 using Object = UnityEngine.Object;
-
+using MSU.Config;
 using MSU;
 using System.Collections;
 
@@ -12,7 +12,7 @@ namespace SS2
 {
     public static class Events
     {
-        public static ConfigurableBool EnableEvents = SS2Config.MakeConfigurableBool(true, b =>
+        public static ConfiguredBool EnableEvents = SS2Config.ConfigFactory.MakeConfiguredBool(true, b =>
         {
             b.Section = "Events";
             b.Key = "Enable Events";
@@ -27,7 +27,7 @@ namespace SS2
         /// <summary>
         /// Class for aiding Nemesis invasion creation for 3rd Parties.
         /// </summary>
-        public static class NemesisHelpers
+        /*public static class NemesisHelpers
         {
             public static NemesisInventory NemmandoInventory { get => SS2Assets.LoadAsset<NemesisInventory>("NemmandoInventory", SS2Bundle.Events); }
             public static EventCard NemmandoEventCard { get => SS2Assets.LoadAsset<EventCard>("NemmandoBoss", SS2Bundle.Events); }
@@ -58,11 +58,11 @@ namespace SS2
 
                 return copy;
             }
-        }
+        }*/
 
         public static IEnumerator Init()
         {
-            if (EnableEvents) foreach (var evt in SS2Assets.LoadAllAssets<EventCard>(SS2Bundle.Events))
+            /*if (EnableEvents) foreach (var evt in SS2Assets.LoadAllAssets<EventCard>(SS2Bundle.Events))
             {
                 string name = evt.name;
                 var cfg = SS2Config.MakeConfigurableBool(true, b =>
@@ -86,9 +86,9 @@ namespace SS2
             {
                 EventCatalog.AddCategory(edcs);
                 Debug.Log("added category: " + edcs.name);
-            }
+            }*/
 
-            SS2Config.MakeConfigurableBool(true, b =>
+            SS2Config.ConfigFactory.MakeConfiguredBool(true, b =>
             {
                 b.Section = "Visuals";
                 b.Key = "Custom Main Menu";
@@ -108,7 +108,7 @@ namespace SS2
                 };
             }).DoConfigure();
 
-            Moonstorm.Components.EventDirector.AddNewEntityStateMachine("Nemesis");
+            //Moonstorm.Components.EventDirector.AddNewEntityStateMachine("Nemesis");
 
             yield return null;
         }

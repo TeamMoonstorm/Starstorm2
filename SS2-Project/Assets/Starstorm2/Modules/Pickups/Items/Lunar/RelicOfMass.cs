@@ -10,11 +10,11 @@ namespace SS2.Items
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfMass", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of health increase. (1 = 100%)")]
-        [TokenModifier("SS2_ITEM_RELICOFMASS_DESC", StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_ITEM_RELICOFMASS_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
         public static float healthIncrease = 1f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of which acceleration is divided by.")]
-        [TokenModifier("SS2_ITEM_RELICOFMASS_DESC", StatTypes.Default, 1)]
+        [FormatToken("SS2_ITEM_RELICOFMASS_DESC",   1)]
         public static float acclMult = 8f;
 
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier, IStatItemBehavior

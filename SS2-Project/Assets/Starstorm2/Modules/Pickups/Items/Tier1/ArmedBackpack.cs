@@ -9,15 +9,15 @@ namespace SS2.Items
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ArmedBackpack", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Damage dealt by the missle per stack. (1 = 100%)")]
-        [TokenModifier("SS2_ITEM_ARMEDBACKPACK_DESC", StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_ITEM_ARMEDBACKPACK_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
         public static float backpackDamageCoeff = 4f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Proc multiplier per percentage of health lost. (1 = 100% of health fraction lost)")]
-        [TokenModifier("SS2_ITEM_ARMEDBACKPACK_DESC", StatTypes.Default, 1)]
+        [FormatToken("SS2_ITEM_ARMEDBACKPACK_DESC",   1)]
         public static float procMult = 2.5f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Minimum chance for fired missile. (1 = 1% chance)")]
-        [TokenModifier("SS2_ITEM_ARMEDBACKPACK_DESC", StatTypes.MultiplyByN, 2, "100")]
+        [FormatToken("SS2_ITEM_ARMEDBACKPACK_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 2, "100")]
         public static float procMinimum = 0;
 
         public static ProcChainMask ignoredProcs;

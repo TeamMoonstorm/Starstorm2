@@ -10,7 +10,7 @@ namespace EntityStates.Nemmando
 
         public static float maxEmission;
         public static float minEmission;
-        [TokenModifier("SS2_NEMMANDO_SECONDARY_CONCUSSION_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_NEMMANDO_SECONDARY_CONCUSSION_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
         public static float maxDamageCoefficient;
         public static float minDamageCoeffficient;
         public static float procCoefficient;

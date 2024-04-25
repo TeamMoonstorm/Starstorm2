@@ -9,7 +9,7 @@ namespace SS2.Items
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("GuardingAmulet", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Damage reduction per stack. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
         public static float damageReduction = 0.3f;
 
         public static GameObject shieldEffect = SS2Assets.LoadAsset<GameObject>("AmuletShieldEffect", SS2Bundle.Items);

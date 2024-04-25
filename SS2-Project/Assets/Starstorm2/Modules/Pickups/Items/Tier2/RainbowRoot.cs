@@ -12,15 +12,15 @@ namespace SS2.Items
         private const string token = "SS2_ITEM_RAINBOWROOT_DESC";
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base portion of damage prevented to be gained as barrier. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 100)]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float baseAmount = .25f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Portion of damage prevented to be gained as barrier per stack. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 100)]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float scalingAmount = .15f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of armor gained upon pickup. Does not scale with stack count. (1 = 1 armor)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 100)]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float baseArmor = 20;
 
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RainbowRoot", SS2Bundle.Items);

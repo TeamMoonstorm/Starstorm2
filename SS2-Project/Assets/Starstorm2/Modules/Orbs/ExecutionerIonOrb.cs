@@ -2,6 +2,9 @@
 using RoR2;
 using RoR2.Orbs;
 using UnityEngine;
+using System.Collections;
+using MSU;
+
 namespace SS2.Orbs
 {
     public class ExecutionerIonOrb : Orb
@@ -9,10 +12,27 @@ namespace SS2.Orbs
         public ExecutionerController execController;
 
         //private NetworkSoundEventDef sound = SS2Assets.LoadAsset<NetworkSoundEventDef>("SoundEventExecutionerGainCharge", SS2Bundle.Executioner);
-        private GameObject orbEffect = SS2Assets.LoadAsset<GameObject>("ExecutionerIonOrbEffect", SS2Bundle.Executioner);
-        private GameObject orbEffectMastery = SS2Assets.LoadAsset<GameObject>("ExecutionerIonOrbEffectMastery", SS2Bundle.Executioner);// referenced just for u <3 -b
         private const float speed = 50f;
         private string skinNameToken;
+
+        private static GameObject _orbEffect;
+        private static GameObject _masteryOrbEffect;
+
+        [AsyncAssetLoad]
+        private static IEnumerator LoadAssets()
+        {
+            var helper = new ParallelMultiStartAssetLoadCoroutine();
+            helper.AddAssetToLoad<GameObject>("ExecutionerIonOrbEffect", SS2Bundle.Executioner2);
+            helper.AddAssetToLoad<GameObject>("ExecutionerIonOrbEffectMastery", SS2Bundle.Executioner2);
+
+            helper.Start();
+            while (!helper.IsDone)
+                yield return null;
+
+            _orbEffect = helper.GetLoadedAsset<GameObject>("ExecutionerIonOrbEffect");
+            _masteryOrbEffect = helper.GetLoadedAsset<GameObject>("ExecutionerIonOrbEffectMastery");
+            yield break;
+        }
 
         public override void Begin()
         {
@@ -26,7 +46,7 @@ namespace SS2.Orbs
             };
             effectData.SetHurtBoxReference(target);
 
-            EffectManager.SpawnEffect(orbEffect, effectData, true);
+            EffectManager.SpawnEffect(_orbEffect, effectData, true);
 
             HurtBox hurtBox = target.GetComponent<HurtBox>();
             if (hurtBox)

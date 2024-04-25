@@ -14,31 +14,31 @@ namespace SS2.Items
         public static GameObject SigilObject { get; set; } = SS2Assets.LoadAsset<GameObject>("SigilWard", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base amount of extra armor added.")]
-        [TokenModifier(token, StatTypes.Default, 0)]
+        [FormatToken(token,   0)]
         public static float baseArmor = 20;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of extra armor added per stack.")]
-        [TokenModifier(token, StatTypes.Default, 1)]
+        [FormatToken(token,   1)]
         public static float stackArmor = 10;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base amount of extra damage added. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 2, operationData = 100)]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 2, operationData = 100)]
         public static float baseDamage = .2f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of extra damage added per stack. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 3, operationData = 100)]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 3, operationData = 100)]
         public static float stackDamage = .10f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Radius the effect is applied in.")]
-        [TokenModifier(token, StatTypes.Default, 0)]
+        [FormatToken(token,   0)]
         public static float radius = 8f;
 
         /*[RiskOfOptionsConfigureField(SS2Config.IDItem, ConfigDescOverride = "Base time the buff lingers for after moving, in seconds.")]
-        [TokenModifier(token, StatTypes.Default, 4)]
+        [FormatToken(token,   4)]
         public static float baseLinger = 2f;
 
         [RiskOfOptionsConfigureField(SS2Config.IDItem, ConfigDescOverride = "Amount of extra lingering time added per stack, in seconds.")]
-        [TokenModifier(token, StatTypes.Default, 5)]
+        [FormatToken(token,   5)]
         public static float stackLinger = 1f;*/
 
         public override void Initialize()

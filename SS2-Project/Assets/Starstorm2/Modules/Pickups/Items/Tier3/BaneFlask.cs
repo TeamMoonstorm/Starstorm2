@@ -13,7 +13,7 @@ namespace SS2.Items
     public sealed class BaneFlask : SS2Item, IContentPackModifier
     {
         private const string token = "SS2_ITEM_BANEFLASK_DESC";
-        public override NullableRef<GameObject> ItemDisplayPrefab => null;
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
         public override ItemDef ItemDef => _itemDef;
         private ItemDef _itemDef;
         private BuffDef _baneBuffDef;

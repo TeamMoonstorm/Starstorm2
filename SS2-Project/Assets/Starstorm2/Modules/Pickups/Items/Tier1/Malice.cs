@@ -13,19 +13,19 @@ namespace SS2.Items
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Malice", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Total damage each Malice bounce deals. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
         public static float damageCoeff = 0.25f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Number of bounces per stack.")]
-        [TokenModifier(token, StatTypes.Default, 1)]
+        [FormatToken(token,   1)]
         public static int bounceStack = 1;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Radius of Malice, in meters.")]
-        [TokenModifier(token, StatTypes.Default, 2)]
+        [FormatToken(token,   2)]
         public static float radiusBase = 12f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Radius of Malice per stack, in meters.")]
-        [TokenModifier(token, StatTypes.Default, 3)]
+        [FormatToken(token,   3)]
         public static float radiusPerStack = 2.4f;
 
         

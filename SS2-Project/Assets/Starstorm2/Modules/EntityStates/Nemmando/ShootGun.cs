@@ -6,7 +6,7 @@ namespace EntityStates.Nemmando
 {
     public class ShootGun : RendHandler
     {
-        [TokenModifier("SS2_NEMMANDO_SECONDARY_SHOOT_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_NEMMANDO_SECONDARY_SHOOT_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
         public static float damageCoefficient;
         public static float procCoefficient;
         public static float baseDuration;

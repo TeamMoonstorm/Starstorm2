@@ -4,13 +4,14 @@ using R2API;
 using RoR2;
 using RoR2.ContentManagement;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace SS2.Equipments
 {
     public sealed class BackThruster : SS2Equipment, IContentPackModifier
     {
-        public override NullableRef<GameObject> ItemDisplayPrefab => null;
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
         public override EquipmentDef EquipmentDef => _equipmentDef;
         private EquipmentDef _equipmentDef;
 
@@ -54,16 +55,11 @@ namespace SS2.Equipments
 
         public override IEnumerator LoadContentAsync()
         {
-            var helper = new ParallelAssetLoadCoroutineHelper();
-
-            helper.AddAssetToLoad<EquipmentDef>("BackThruster", SS2Bundle.Equipments);
-            helper.AddAssetToLoad<BuffDef>("BuffBackThruster", SS2Bundle.Equipments);
-
-            helper.Start();
-            while (!helper.IsDone()) yield return null;
-
-            _equipmentDef = helper.GetLoadedAsset<EquipmentDef>("BackThruster");
-            _buffDef = helper.GetLoadedAsset<BuffDef>("BuffBackThruster");
+            /*
+             * EquipmentDef - "BackThruster" - Equipments
+             * BuffDef - "BuffBackThruster" - Equipments
+             */
+            yield return null;
         }
 
         public override void OnEquipmentLost(CharacterBody body)
@@ -79,7 +75,7 @@ namespace SS2.Equipments
             contentPack.buffDefs.AddSingle(_buffDef);
         }
 
-        public sealed class BackThrusterBuffBehaviour : BuffBehaviour
+        public sealed class BackThrusterBuffBehaviour : BaseBuffBehaviour
         {
             [BuffDefAssociation]
             private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffBackThruster;

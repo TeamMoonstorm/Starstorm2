@@ -47,7 +47,7 @@ namespace SS2.Modules
                 return false;
             }
 
-            if (!item.IsAvailable())
+            if (!item.IsAvailable(ContentPack))
                 return false;
 
             return true;
@@ -62,7 +62,7 @@ namespace SS2.Modules
         public BaseUnityPlugin MainClass => SS2Main.instance;
         public override R2APISerializableContentPack SerializableContentPack => SS2Content.Instance.SerializableContentPack;
 
-        public static ConfigurableBool EnableItems = SS2Config.MakeConfigurableBool(true, b =>
+        public static ConfiguredBool EnableItems = SS2Config.MakeConfigurableBool(true, b =>
         {
             b.Section = "Enable All Items";
             b.Key = "Enable All Items";

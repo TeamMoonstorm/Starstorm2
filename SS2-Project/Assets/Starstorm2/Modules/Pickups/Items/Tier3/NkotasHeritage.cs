@@ -13,16 +13,16 @@ namespace SS2.Items
         public const string token = "SS2_ITEM_NKOTASHERITAGE_DESC";
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Number of items given upon level up per stack.")]
-        [TokenModifier(token, StatTypes.Default, 0)]
+        [FormatToken(token,   0)]
         public static int itemsPerStack = 1;
 
         //
         //SS2Config.IDItem, ConfigDescOverride = "Level where white items are removed from the reward pool.")]
-        //[TokenModifier(token, StatTypes.Default, 1)]
+        //[FormatToken(token,   1)]
         //public static int whiteRemovalLevel = 11;
 
         //[ConfigurableField(SS2Config.IDItem, ConfigDescOverride = "Level where green items are removed from the reward pool.")]
-        //[TokenModifier(token, StatTypes.Default, 2)]
+        //[FormatToken(token,   2)]
         //public static int greenRemovalLevel = 22;
 
         //Either store this in a static var or do a dictionary checkup if you want to save all the assetbundle lookups in this code

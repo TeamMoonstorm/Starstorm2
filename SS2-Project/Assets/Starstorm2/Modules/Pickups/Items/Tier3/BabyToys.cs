@@ -17,8 +17,8 @@ namespace SS2.Items
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("BabyToys", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Levels removed per stack.")]
-        [TokenModifier(pickupToken, StatTypes.Default, 0)]
-        [TokenModifier(descToken, StatTypes.Default, 0)]
+        [FormatToken(pickupToken,   0)]
+        [FormatToken(descToken,   0)]
         public static int levelReductionPerStack = 3;
 
         public override void Initialize()
@@ -325,12 +325,12 @@ namespace SS2.Items
     }
 }
 /*[ConfigurableField(ConfigNameOverride = "Stat Multiplier", ConfigDescOverride = "Multiplier applied to the stats per stack.")]
-[TokenModifier(token, StatTypes.Default, 0)]
-[TokenModifier(token, StatTypes.DivideBy2, 1)]
+[FormatToken(token,   0)]
+[FormatToken(token, FormatTokenAttribute.OperationTypeEnum.DivideBy2, 1)]
 public static float StatMultiplier = 3;
 [ConfigurableField(ConfigNameOverride = "XP Multiplier", ConfigDescOverride = "Multiplier applied to XP Gain per stack.")]
-[TokenModifier(token, StatTypes.Default, 2)]
-[TokenModifier(token, StatTypes.DivideBy2, 3)]
+[FormatToken(token,   2)]
+[FormatToken(token, FormatTokenAttribute.OperationTypeEnum.DivideBy2, 3)]
 public static float XPMultiplier = 2;
 public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier, IOnKilledOtherServerReceiver
 {

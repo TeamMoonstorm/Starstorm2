@@ -5,7 +5,7 @@ namespace EntityStates.Seraph
 {
     public class SeraphPrimary : BaseSkillState
     {
-        [TokenModifier("SS2_EXECUTIONER_PISTOL_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_EXECUTIONER_PISTOL_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
         public static float damageCoefficient;
         public static float procCoefficient;
         public static float baseDuration;

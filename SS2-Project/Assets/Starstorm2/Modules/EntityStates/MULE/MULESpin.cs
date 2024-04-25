@@ -6,7 +6,7 @@ namespace EntityStates.MULE
 {
     class MULESpin : BasicMeleeAttack
     {
-        [TokenModifier("SS2_MULE_PRIMARY_SPIN_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_MULE_PRIMARY_SPIN_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
         public static float dmgCoefficient;
         public static float minSpinCount;
         public static float maxSpinCount;

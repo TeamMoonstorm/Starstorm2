@@ -11,10 +11,10 @@ namespace EntityStates.Nemmando
         public float charge;
 
         public static float baseDuration;
-        [TokenModifier("SS2_NEMMANDO_SPECIAL_BOSS_DESCRIPTION", StatTypes.Default, 0)]
+        [FormatToken("SS2_NEMMANDO_SPECIAL_BOSS_DESCRIPTION",   0)]
         public static int maxHits;
         public static int minHits;
-        [TokenModifier("SS2_NEMMANDO_SPECIAL_BOSS_DESCRIPTION", StatTypes.MultiplyByN, 1, "100")]
+        [FormatToken("SS2_NEMMANDO_SPECIAL_BOSS_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 1, "100")]
         public static float maxDamageCoefficient;
         public static float minDamageCoefficient;
         public static float maxRadius;

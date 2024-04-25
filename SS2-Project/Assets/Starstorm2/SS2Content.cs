@@ -92,6 +92,12 @@ namespace SS2
             gameObjectRequest.StartLoad();
             while(!gameObjectRequest.IsComplete) yield return null;
             SS2ContentPack.effectDefs.Add(gameObjectRequest.Assets.Where(go => go.GetComponent<EffectComponent>()).Select(go => new EffectDef(go)).ToArray());
+
+            SS2Log.Info($"Calling AsyncAssetLoad Attribute Methods...");
+            ParallelMultiStartCoroutine asyncAssetLoadCoroutines = AsyncAssetLoadAttribute.CreateCoroutineForMod(SS2Main.Instance);
+            asyncAssetLoadCoroutines.Start();
+            while (!asyncAssetLoadCoroutines.IsDone)
+                yield return null;
         }
 
         private IEnumerator AddSS2ExpansionDef()

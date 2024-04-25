@@ -1,4 +1,5 @@
-﻿using RoR2.Skills;
+﻿using MSU;
+using RoR2.Skills;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -7,7 +8,7 @@ namespace EntityStates.Knight
     class SwingSword : BasicMeleeAttack, SteppedSkillDef.IStepSetter
     {
         public static float swingTimeCoefficient = 1.42f;
-        [TokenModifier("SS2_KNIGHT_PRIMARY_SWORD_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_KNIGHT_PRIMARY_SWORD_DESCRIPTION",  FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static GameObject beamProjectile;
         public static SkillDef buffedSkillRef;
         public static float TokenModifier_dmgCoefficient => new SwingSword().damageCoefficient;

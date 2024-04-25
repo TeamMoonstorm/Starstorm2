@@ -4,35 +4,109 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using R2API;
+using MSU;
+using RoR2.ContentManagement;
+using System.Collections;
+using MSU.Config;
+
 namespace SS2.Equipments
 {
-    //TODO: make warbanner
     public sealed class GreaterWarbanner : SS2Equipment
     {
         private const string token = "SS2_EQUIP_GREATERWARBANNER_DESC";
-        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("GreaterWarbanner", SS2Bundle.Equipments);
-        public GameObject WarbannerObject { get; set; } = SS2Assets.LoadAsset<GameObject>("GreaterWarbannerWard", SS2Bundle.Equipments);
+
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+        public override EquipmentDef EquipmentDef => _equipmentDef;
+        private EquipmentDef _equipmentDef;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of Extra Regeneration. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float extraRegeneration = 0.5f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of Extra Crit Chance. (100 = 100%)")]
-        [TokenModifier(token, StatTypes.Default, 1)]
+        [FormatToken(token, 1)]
         public static float extraCrit = 20f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of Cooldown Reduction. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
         public static float cooldownReduction = 0.5f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Max active warbanners for each character.")]
-        [TokenModifier(token, StatTypes.Default, 3)]
+        [FormatToken(token, 3)]
         public static int maxGreaterBanners = 5;
 
-        override public void Initialize()
+        private GameObject _warbannerObject;
+        public override bool Execute(EquipmentSlot slot)
         {
-            CreateVisualEffects();
+            var GBToken = slot.characterBody.gameObject.GetComponent<GreaterBannerToken>();
+            if (!GBToken)
+            {
+                slot.characterBody.gameObject.AddComponent<GreaterBannerToken>();
+                GBToken = slot.characterBody.gameObject.GetComponent<GreaterBannerToken>();
+            }
+            //To do: make better placement system
+            Vector3 position = slot.inputBank.aimOrigin - (slot.inputBank.aimDirection);
+            GameObject bannerObject = UnityEngine.Object.Instantiate(_warbannerObject, position, Quaternion.identity);
+
+            bannerObject.GetComponent<TeamFilter>().teamIndex = slot.teamComponent.teamIndex;
+            NetworkServer.Spawn(bannerObject);
+
+            if (GBToken.soundCooldown >= 5f)
+            {
+                var sound = NetworkSoundEventCatalog.FindNetworkSoundEventIndex("GreaterWarbanner");
+                EffectManager.SimpleSoundEffect(sound, bannerObject.transform.position, true);
+                GBToken.soundCooldown = 0f;
+            }
+
+            GBToken.ownedBanners.Add(bannerObject);
+
+            if (GBToken.ownedBanners.Count > maxGreaterBanners)
+            {
+                var oldBanner = GBToken.ownedBanners[0];
+                GBToken.ownedBanners.RemoveAt(0);
+                EffectData effectData = new EffectData
+                {
+                    origin = oldBanner.transform.position
+                };
+                effectData.SetNetworkedObjectReference(oldBanner);
+                EffectManager.SpawnEffect(HealthComponent.AssetReferences.executeEffectPrefab, effectData, transmit: true);
+
+                UnityEngine.Object.Destroy(oldBanner);
+                NetworkServer.Destroy(oldBanner);
+            }
+
+            return true;
+        }
+
+        public override void Initialize()
+        {
+            RegisterTempVisualEffects();
             On.RoR2.GenericSkill.RunRecharge += FasterTickrateBannerHook;
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * EquipmentDef - "GreaterWarbanner" - Equipments
+             * GameObject - "GreaterWarbannerWard" - Equipments
+             * GameObject - "GreaterBannerBuffEffect" - Equipments
+             */
+            yield break;
+        }
+
+        public override void OnEquipmentLost(CharacterBody body)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void OnEquipmentObtained(CharacterBody body)
+        {
+            throw new System.NotImplementedException();
         }
 
         private void FasterTickrateBannerHook(On.RoR2.GenericSkill.orig_RunRecharge orig, GenericSkill self, float dt)
@@ -50,84 +124,11 @@ namespace SS2.Equipments
             orig(self, dt);
         }
 
-        //public override void AddBehavior(ref CharacterBody body, int stack)
-        //{
-        //    body.AddItemBehavior<GreaterWarbannerBehavior>(stack);
-        //}
-
-        public override bool FireAction(EquipmentSlot slot)
+        private void RegisterTempVisualEffects()
         {
-            var GBToken = slot.characterBody.gameObject.GetComponent<GreaterBannerToken>();
-            if (!GBToken)
-            {
-                slot.characterBody.gameObject.AddComponent<GreaterBannerToken>();
-                GBToken = slot.characterBody.gameObject.GetComponent<GreaterBannerToken>();
-            }
-            //To do: make better placement system
-            //SS2Log.Info("aimorigin: " + slot.inputBank.aimOrigin + " | direction: " + slot.inputBank.aimDirection);
+            /*var effectInstance = SS2Assets.LoadAsset<GameObject>("GreaterBannerBuffEffect", SS2Bundle.Equipments); 
 
-            Vector3 position = slot.inputBank.aimOrigin - (slot.inputBank.aimDirection);
-            GameObject bannerObject = UnityEngine.Object.Instantiate(WarbannerObject, position, Quaternion.identity);
-
-            bannerObject.GetComponent<TeamFilter>().teamIndex = slot.teamComponent.teamIndex;
-            NetworkServer.Spawn(bannerObject);
-            //var behavior = slot.gameObject.GetComponent<GreaterWarbannerBehavior>();
-            //if (behavior.warBannerInstance)
-            //NetworkServer.Destroy(behavior.warBannerInstance);
-            //behavior.warBannerInstance = gameObject;
-
-            //NetworkServer.Spawn(behavior.warBannerInstance); //?
-
-            if (GBToken.soundCooldown >= 5f)
-            {
-                var sound = NetworkSoundEventCatalog.FindNetworkSoundEventIndex("GreaterWarbanner");
-                EffectManager.SimpleSoundEffect(sound, bannerObject.transform.position, true);
-                GBToken.soundCooldown = 0f;
-            }
-
-            GBToken.ownedBanners.Add(bannerObject);
-
-            if (GBToken.ownedBanners.Count > maxGreaterBanners)
-            {
-                //SS2Log.Debug("Removing oldest Warbanner");
-                var oldBanner = GBToken.ownedBanners[0];
-                GBToken.ownedBanners.RemoveAt(0);
-                EffectData effectData = new EffectData
-                {
-                    origin = oldBanner.transform.position
-                };
-                effectData.SetNetworkedObjectReference(oldBanner);
-                EffectManager.SpawnEffect(HealthComponent.AssetReferences.executeEffectPrefab, effectData, transmit: true);
-
-                UnityEngine.Object.Destroy(oldBanner);
-                NetworkServer.Destroy(oldBanner);
-            }
-
-            //if (GBToken.soundCooldown >= 5f)
-            //{
-            //    var sound = NetworkSoundEventCatalog.FindNetworkSoundEventIndex("GreaterWarbanner");
-            //    EffectManager.SimpleSoundEffect(sound, bannerObject.transform.position, true);
-            //    GBToken.soundCooldown = 0f;
-            //}
-
-            return true;
-        }
-
-        public sealed class GreaterWarbannerBehavior : CharacterBody.ItemBehavior
-        {
-            public GameObject warBannerInstance;
-            public float soundCooldown = 5f;
-
-            private void FixedUpdate()
-            {
-                soundCooldown += Time.fixedDeltaTime;
-            }
-
-            private void OnDisable()
-            {
-                //if (warBannerInstance)
-                //Destroy(warBannerInstance);
-            }
+            TempVisualEffectAPI.AddTemporaryVisualEffect(effectInstance.InstantiateClone("GreaterBannerBuffEffect", false), (CharacterBody body) => { return body.HasBuff(SS2Content.Buffs.BuffGreaterBanner); }, true, "MainHurtbox");*/
         }
 
         public class GreaterBannerToken : MonoBehaviour
@@ -140,27 +141,7 @@ namespace SS2.Equipments
             private void FixedUpdate()
             {
                 soundCooldown += Time.fixedDeltaTime;
-            }   
-        }
-
-        private void CreateVisualEffects()
-        {
-            var effectInstance = SS2Assets.LoadAsset<GameObject>("GreaterBannerBuffEffect", SS2Bundle.Equipments); //SS2Assets.LoadAsset<GameObject>("testMask", SS2Bundle.Equipments);  //AssetBundle.LoadAsset<GameObject>("SheenEffect");
-            //var tempEffectComponent = SheenEffectInstance.AddComponent<TemporaryVisualEffect>();
-            //tempEffectComponent.visualTransform = SheenEffectInstance.GetComponent<Transform>();
-        
-            //var destroyOnTimerComponent = SheenEffectInstance.AddComponent<DestroyOnTimer>();
-            //destroyOnTimerComponent.duration = 0.1f;
-            //MonoBehaviour[] exitComponents = new MonoBehaviour[1];
-            //exitComponents[0] = destroyOnTimerComponent;
-        
-            //tempEffectComponent.exitComponents = exitComponents;
-        
-            TempVisualEffectAPI.AddTemporaryVisualEffect(effectInstance.InstantiateClone("GreaterBannerBuffEffect", false), (CharacterBody body) => { return body.HasBuff(SS2Content.Buffs.BuffGreaterBanner); }, true, "MainHurtbox");
-            //TempVisualEffectAPI.AddTemporaryVisualEffect(SheenEffectInstance.InstantiateClone("SheenEffectR", false), (CharacterBody body) => { return body.HasBuff(SS2Content.Buffs.BuffGreaterBanner); }, true, "HandR");
-            
+            }
         }
     }
-    
-
 }

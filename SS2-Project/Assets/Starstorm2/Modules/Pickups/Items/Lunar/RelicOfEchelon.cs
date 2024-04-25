@@ -22,19 +22,19 @@ namespace SS2.Items
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfEchelon", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Equipment cooldown increase per use, per stack.")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
         public static float cooldownIncrease = .15f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base amount of additional base damage added.")]
-        [TokenModifier(token, StatTypes.Default, 1)]
+        [FormatToken(token,   1)]
         public static float damageBonus = 150;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base amount of additional base health added.")]
-        [TokenModifier(token, StatTypes.Default, 2)]
+        [FormatToken(token,   2)]
         public static float healthBonus = 5000;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Duration of the Echelon buff. Does not scale with stacks. (1 = 1 second)")]
-        [TokenModifier(token, StatTypes.Default, 3)]
+        [FormatToken(token,   3)]
         public static float buffDuration = 8;
 
         public static Color echelonColor;

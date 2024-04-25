@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using MSU;
 
 namespace EntityStates.Executioner
 {
@@ -12,7 +13,7 @@ namespace EntityStates.Executioner
         public static float baseDuration = 0.9f;
         public static float speedMultiplier = 3.0f;
         public static float debuffRadius = 20f;
-        [TokenModifier("SS2_EXECUTIONER_DASH_DESCRIPTION", StatTypes.Default, 0)]
+        [FormatToken("SS2_EXECUTIONER_DASH_DESCRIPTION",   0)]
         public static float debuffDuration = 4.0f;
         public static GameObject dashEffect;
         public static float debuffCheckInterval = 0.0333333333f;

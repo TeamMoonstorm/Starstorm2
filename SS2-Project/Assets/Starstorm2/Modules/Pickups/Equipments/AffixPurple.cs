@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 namespace SS2.Equipments
 {
-    [DisabledContent]
-    public class AffixPurple : SS2EliteEquipment
+#if DEBUG
+    /*public class AffixPurple : SS2EliteEquipment
     {
         public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("ElitePurpleEquipment", SS2Bundle.Indev);
 
@@ -17,5 +17,6 @@ namespace SS2.Equipments
         {
             return false;
         }
-    }
+    }*/
+#endif
 }

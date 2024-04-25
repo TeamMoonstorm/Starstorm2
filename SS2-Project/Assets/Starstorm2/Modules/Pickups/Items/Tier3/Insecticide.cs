@@ -9,11 +9,11 @@ namespace SS2.Items
         public static DotController.DotIndex DotIndex;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance. (1 = 100%)")]
-        [TokenModifier("SS2_ITEM_INSECTICIDE_DESC", StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_ITEM_INSECTICIDE_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
         public static float chance = 1f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Total damage. (1 = 100%)")]
-        [TokenModifier("SS2_ITEM_INSECTICIDE_DESC", StatTypes.MultiplyByN, 1, "100")]
+        [FormatToken("SS2_ITEM_INSECTICIDE_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 1, "100")]
         public static float damageCoeff = 1.8f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Duration of poison.")]
