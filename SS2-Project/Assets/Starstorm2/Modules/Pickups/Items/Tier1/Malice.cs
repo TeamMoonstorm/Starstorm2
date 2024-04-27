@@ -5,36 +5,44 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using R2API;
+using MSU;
+using RoR2.ContentManagement;
+using System.Collections;
+using MSU.Config;
+
 namespace SS2.Items
 {
     public sealed class Malice : SS2Item
     {
         private const string token = "SS2_ITEM_MALICE_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Malice", SS2Bundle.Items);
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Total damage each Malice bounce deals. (1 = 100%)")]
-        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float damageCoeff = 0.25f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Number of bounces per stack.")]
-        [FormatToken(token,   1)]
+        [FormatToken(token, 1)]
         public static int bounceStack = 1;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Radius of Malice, in meters.")]
-        [FormatToken(token,   2)]
+        [FormatToken(token, 2)]
         public static float radiusBase = 12f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Radius of Malice per stack, in meters.")]
-        [FormatToken(token,   3)]
+        [FormatToken(token, 3)]
         public static float radiusPerStack = 2.4f;
 
-        
+
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Proc coefficient of damage dealt by Malice.")]
         public static float procCo = 0.1f;
 
         //damage types should not be used as a substitute for proper proc chain masks, but it works here
-        public static DamageAPI.ModdedDamageType maliceDamageType;
+        public static DamageAPI.ModdedDamageType MaliceDamageType { get; private set; }
 
         //a proc chain mask of proc types that shouldn't invalidate malice
         public static ProcChainMask ignoredProcs;
@@ -43,15 +51,27 @@ namespace SS2.Items
 
         public override void Initialize()
         {
-            base.Initialize();
-            maliceDamageType = DamageAPI.ReserveDamageType();
+            MaliceDamageType = DamageAPI.ReserveDamageType();
             ignoredProcs.AddProc(ProcType.Backstab);
-
-            maliceOrbEffectPrefab = SS2Assets.LoadAsset<GameObject>("MaliceOrbEffect", SS2Bundle.Items);
         }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * ItemDef - "Malice" - Items
+             * GameObject - "MaliceOrbEffect" - Items
+             */
+            yield break;
+        }
+
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
         {
-            
+
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.Malice;
             public void OnDamageDealtServer(DamageReport report)
@@ -59,7 +79,7 @@ namespace SS2.Items
                 DamageInfo damageInfo = report.damageInfo;
 
                 //damage has proc co and damage info does not contained any banned proc types
-                if (damageInfo.procCoefficient > 0 && (damageInfo.procChainMask.mask & ~ignoredProcs.mask) == 0U && !damageInfo.HasModdedDamageType(maliceDamageType))      
+                if (damageInfo.procCoefficient > 0 && (damageInfo.procChainMask.mask & ~ignoredProcs.mask) == 0U && !damageInfo.HasModdedDamageType(MaliceDamageType))
                 {
                     MaliceOrb malOrb = new MaliceOrb();
                     malOrb.bouncesRemaining = bounceStack * stack - 1;
@@ -121,7 +141,7 @@ namespace SS2.Items
                             damageInfo.position = this.target.transform.position;
                             damageInfo.damageColorIndex = this.damageColorIndex;
                             damageInfo.damageType = this.damageType;
-                            damageInfo.AddModdedDamageType(maliceDamageType);
+                            damageInfo.AddModdedDamageType(MaliceDamageType);
                             healthComponent.TakeDamage(damageInfo);
                             GlobalEventManager.instance.OnHitEnemy(damageInfo, healthComponent.gameObject);
                             GlobalEventManager.instance.OnHitAll(damageInfo, healthComponent.gameObject);
@@ -165,7 +185,7 @@ namespace SS2.Items
                         this.search = new BullseyeSearch();
                     }
                     float range = baseRange;
-                    if(currentVictim && currentVictim.body)
+                    if (currentVictim && currentVictim.body)
                     {
                         range += currentVictim.body.radius;
                     }

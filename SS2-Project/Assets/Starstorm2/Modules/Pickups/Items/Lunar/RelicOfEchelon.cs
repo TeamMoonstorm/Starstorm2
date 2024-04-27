@@ -22,7 +22,7 @@ namespace SS2.Items
         public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfEchelon", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Equipment cooldown increase per use, per stack.")]
-        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float cooldownIncrease = .15f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base amount of additional base damage added.")]

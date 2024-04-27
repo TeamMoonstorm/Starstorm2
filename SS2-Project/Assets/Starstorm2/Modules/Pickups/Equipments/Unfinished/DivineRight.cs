@@ -1,13 +1,18 @@
-﻿using RoR2;
+﻿using MSU;
+using RoR2;
+using RoR2.ContentManagement;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 namespace SS2.Equipments
 {
     public sealed class DivineRight : SS2Equipment
     {
-        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("equipDivineRight", SS2Bundle.Indev);
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+        public override EquipmentDef EquipmentDef => _equipmentDef;
+        private EquipmentDef _equipmentDef;
 
-        public override bool FireAction(EquipmentSlot slot)
+        public override bool Execute(EquipmentSlot slot)
         {
             //TO-DO:
             //prefab: should probably be a component that parents to body like microbots rather than an item display.
@@ -47,6 +52,30 @@ namespace SS2.Equipments
 
             return true;
         }
-    }
 
+        public override void Initialize()
+        {
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * EquipmentDef - "equipDivineRight" - Indev
+             */
+            yield break;
+        }
+
+        public override void OnEquipmentLost(CharacterBody body)
+        {
+        }
+
+        public override void OnEquipmentObtained(CharacterBody body)
+        {
+        }
+    }
 }

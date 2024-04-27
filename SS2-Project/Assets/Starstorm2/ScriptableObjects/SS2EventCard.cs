@@ -7,7 +7,7 @@ using R2API;
 namespace SS2
 {
     [CreateAssetMenu(fileName = "SS2EventCard", menuName = "Starstorm2/SS2EventCard")]
-    public class SS2EventCard : EventCard
+    public class SS2EventCard : ScriptableObject
     {
         [Serializable]
         public class EventVFX
@@ -24,7 +24,7 @@ namespace SS2
         public GameObject fallbackVFX;
         public EventVFX[] eventVFX = Array.Empty<EventVFX>();
         
-        public ReadOnlyDictionary<R2API.DirectorAPI.Stage, GameObject> vanillaStageToFXPrefab;
+        /*public ReadOnlyDictionary<R2API.DirectorAPI.Stage, GameObject> vanillaStageToFXPrefab;
         public ReadOnlyDictionary<string, GameObject> customStageToFXPrefab;
 
         private void Awake()
@@ -86,7 +86,7 @@ namespace SS2
                         return true;
                    }
                 }   
-            }*/
+            }
 
             //this doesn't work i think because this is checked before player bodies are actually initialized....?
             //to-do: rewrite or alternate use case.
@@ -152,6 +152,6 @@ namespace SS2
             vanillaStageToFXPrefab = new ReadOnlyDictionary<R2API.DirectorAPI.Stage, GameObject>(vanillaStageDict);
             customStageToFXPrefab = new ReadOnlyDictionary<string, GameObject>(customStageDict);
             eventVFX = Array.Empty<EventVFX>();
-        }
+        }*/
     }
 }

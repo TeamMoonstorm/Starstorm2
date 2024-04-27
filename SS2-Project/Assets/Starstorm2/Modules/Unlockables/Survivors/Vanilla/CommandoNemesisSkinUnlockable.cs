@@ -3,7 +3,7 @@ using RoR2.Achievements;
 using UnityEngine;
 namespace SS2.Unlocks.VanillaSurvivors
 {
-    public sealed class CommandoNemesisSkinUnlockable : UnlockableBase
+    /*public sealed class CommandoNemesisSkinUnlockable : UnlockableBase
     {
         public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skin.commando.nemesisskin", SS2Bundle.Vanilla);
 
@@ -69,5 +69,5 @@ namespace SS2.Unlocks.VanillaSurvivors
                 }
             }
         }
-    }
+    }*/
 }

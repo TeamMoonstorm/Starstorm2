@@ -99,7 +99,7 @@ namespace SS2.Components
         {
             if (!damageReport.victim || !damageReport.attacker) return;
 
-            if(damageReport.attacker == this.owner && (R2API.DamageAPI.HasModdedDamageType(damageReport.damageInfo, DamageTypes.NemMerc.damageType)))
+            if(damageReport.attacker == this.owner && (R2API.DamageAPI.HasModdedDamageType(damageReport.damageInfo, SS2.Survivors.NemMerc.damageType)))
             {
                 Vector3 between = damageReport.damageInfo.position - base.transform.position;
                 if(between.magnitude <= this.targetSearchRadius)

@@ -5,30 +5,37 @@ using System.Collections;
 using UnityEngine;
 
 using MSU;
+using System.Collections.Generic;
+using RoR2.ContentManagement;
+using MSU.Config;
+
 namespace SS2.Items
 {
     public sealed class RelicOfForce : SS2Item
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfForce", SS2Bundle.Items);
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Attack speed reduction and cooldown increase per stack. (1 = 100% slower attack speed and longer cooldowns)")]
-        [FormatToken("SS2_ITEM_RELICOFFORCE_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_ITEM_RELICOFFORCE_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float forcePenalty = .4f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Delay between additional hits. (1 = 1 second)")]
         public static float hitDelay = .2f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Increased damage per additional hits. (1 = 100%)")]
-        [FormatToken("SS2_ITEM_RELICOFFORCE_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 1, "100")]
+        [FormatToken("SS2_ITEM_RELICOFFORCE_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float hitIncrease = .05f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Increased damage cap for additional hits. (1 = 100%)")]
-        [FormatToken("SS2_ITEM_RELICOFFORCE_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 2, "100")]
+        [FormatToken("SS2_ITEM_RELICOFFORCE_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
         public static float hitMax = 1f;
 
         public static DamageAPI.ModdedDamageType relicForceDamageType;
 
-        override public void Initialize()
+        public override void Initialize()
         {
             if (!SS2Main.GOTCEInstalled)
             {
@@ -40,6 +47,19 @@ namespace SS2.Items
             }
 
             relicForceDamageType = DamageAPI.ReserveDamageType();
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * ItemDef - "RelicOfForce" - Items
+             */
+            yield break;
         }
 
         private float ForceSkillFinalRecharge(On.RoR2.GenericSkill.orig_CalculateFinalRechargeInterval orig, GenericSkill self)
@@ -69,7 +89,7 @@ namespace SS2.Items
 
             public void OnDamageDealtServer(DamageReport damageReport)
             {
-                if (!damageReport.damageInfo.HasModdedDamageType(relicForceDamageType) && !damageReport.damageInfo.HasModdedDamageType(Malice.maliceDamageType) && damageReport.damageInfo.procCoefficient > 0 && damageReport.attacker && damageReport.victimBody)
+                if (!damageReport.damageInfo.HasModdedDamageType(relicForceDamageType) && !damageReport.damageInfo.HasModdedDamageType(Malice.MaliceDamageType) && damageReport.damageInfo.procCoefficient > 0 && damageReport.attacker && damageReport.victimBody)
                 {
                     int count = damageReport.attackerBody.inventory.GetItemCount(SS2Content.Items.RelicOfForce); //im pretty sure using stack here made the mod break and im just not having it rn, this works
                     if (count > 0)
@@ -101,22 +121,18 @@ namespace SS2.Items
 
         public class ForceHitToken : MonoBehaviour
         {
-            //public int count = 0;
-            //public DamageReport damageReport;
             public int hitCount = 0;
 
             private void Start()
             {
-                //StartCoroutine(RelicForceDelayedHits(damageReport, count));
             }
 
             public void CallMoreHits(DamageReport damageReport, int count)
             {
-                if(hitCount * hitIncrease < hitMax)
+                if (hitCount * hitIncrease < hitMax)
                 {
                     hitCount++;
                 }
-                //hitCount++;
                 StartCoroutine(RelicForceDelayedHits(damageReport, count));
             }
 
@@ -128,7 +144,7 @@ namespace SS2.Items
                 var initalHit = damageReport.damageInfo;
 
                 float hitMult = hitCount * hitIncrease;
-                
+
                 for (int i = 0; i < count; i++)
                 {
                     DamageInfo damageInfo = new DamageInfo();
@@ -160,7 +176,7 @@ namespace SS2.Items
                         EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("RelicOfForceHitEffect", SS2Bundle
                             .Items), effectData, transmit: true);
                     }
-                    
+
                 }
             }
 

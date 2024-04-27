@@ -5,46 +5,48 @@ using RoR2.UI;
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using MSU;
+using RoR2.ContentManagement;
+using System.Collections;
+using MSU.Config;
+
 namespace SS2.Items
 {
-    [DisabledContent] //sorry groove
-
+#if DEBUG
     public sealed class BabyToys : SS2Item
     {
         private const string pickupToken = "SS2_ITEM_BABYTOYS_PICKUP";
-
         private const string descToken = "SS2_ITEM_BABYTOYS_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("BabyToys", SS2Bundle.Items);
+
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Levels removed per stack.")]
-        [FormatToken(pickupToken,   0)]
-        [FormatToken(descToken,   0)]
+        [FormatToken(pickupToken, 0)]
+        [FormatToken(descToken, 0)]
         public static int levelReductionPerStack = 3;
 
         public override void Initialize()
         {
-            base.Initialize();
+            throw new NotImplementedException();
         }
 
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            throw new NotImplementedException();
+        }
 
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * ItemDef - "BabyToys" - Items
+             */
+            yield break;
+        }
 
-        //public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier
-        //{
-        //    [ItemDefAssociation]
-        //    private static ItemDef GetItemDef() => SS2Content.Items.BabyToys;
-        //    public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
-        //    {
-        //        BabyToyToken token = body.GetComponent<BabyToyToken>();
-        //        if (token)
-        //        {
-        //
-        //        }
-        //        args.levelFlatAdd += (stack * levelReductionPerStack - (int)token.remainingLevelReduction);
-        //        //throw new NotImplementedException();
-        //    }
-        //}
-
-        public sealed class MasterBehavior : BaseItemMasterBehavior
+        public sealed class MasterBehavior : BaseItemMasterBehaviour
         {
             [ItemDefAssociation(useOnClient = true, useOnServer = true)]
             private static ItemDef GetItemDef() => SS2Content.Items.BabyToys;
@@ -84,10 +86,10 @@ namespace SS2.Items
             public void OnStackChanged(int change)
             {
                 int levelChange = change * levelReductionPerStack;
-                BabyToyToken token = master.GetBody().GetComponent<BabyToyToken>();
+                BabyToyToken token = Master.GetBody().GetComponent<BabyToyToken>();
                 if (!token)
                 {
-                    token = master.GetBody().gameObject.AddComponent<BabyToyToken>();
+                    token = Master.GetBody().gameObject.AddComponent<BabyToyToken>();
                 }
                 if (levelChange > 0)
                 {
@@ -105,7 +107,7 @@ namespace SS2.Items
 
             private void TryIncreaseLevel()
             {
-                ulong currentExperience = master.SS2GetAdjustedExperience();
+                ulong currentExperience = Master.SS2GetAdjustedExperience();
                 uint currentLevel = TeamManager.FindLevelForExperience(currentExperience);
                 uint newLevel = currentLevel + remainingLevelReduction;
 
@@ -133,19 +135,19 @@ namespace SS2.Items
                 long newExperience = (long)Math.Ceiling(newCurrentLevelExperience + (double)(newNextLevelExperience - newCurrentLevelExperience) * currentLevelProgress);
                 long experienceChange = newExperience - (long)currentExperience;
 
-                bool hasBody = master.hasBody;
+                bool hasBody = Master.hasBody;
                 //SS2Log.Debug("about to adjust exp");
 
                 if (hasBody)
                 {
-                    var token = master.bodyInstanceObject.AddComponent<BabyToyToken>();
+                    var token = Master.bodyInstanceObject.AddComponent<BabyToyToken>();
                 }
-                master.SS2OffsetExperience(experienceChange);
+                Master.SS2OffsetExperience(experienceChange);
 
                 if (hasBody)
                 {
-                    master.GetBody().RecalculateStats();
-                    var token = master.bodyInstanceObject.GetComponent<BabyToyToken>();
+                    Master.GetBody().RecalculateStats();
+                    var token = Master.bodyInstanceObject.GetComponent<BabyToyToken>();
                     Destroy(token);
                 }
                 RefreshLevelText();
@@ -153,7 +155,7 @@ namespace SS2.Items
 
             public void TryReduceLevel()
             {
-                ulong currentExperience = master.SS2GetAdjustedExperience();
+                ulong currentExperience = Master.SS2GetAdjustedExperience();
                 uint currentLevel = TeamManager.FindLevelForExperience(currentExperience);
                 uint newLevel = currentLevel - remainingLevelReduction;
                 if (newLevel > currentLevel || newLevel < 1U)
@@ -166,7 +168,7 @@ namespace SS2.Items
                     return;
                 }
                 remainingLevelReduction -= levelsReduced;
-                BabyToyToken token = master.GetBody().GetComponent<BabyToyToken>();
+                BabyToyToken token = Master.GetBody().GetComponent<BabyToyToken>();
                 if (token)
                 {
                     token.remainingLevelReduction = remainingLevelReduction;
@@ -184,11 +186,11 @@ namespace SS2.Items
                 long newExperience = (long)Math.Ceiling(newCurrentLevelExperience + (double)(newNextLevelExperience - newCurrentLevelExperience) * currentLevelProgress);
                 long experienceChange = newExperience - (long)currentExperience;
 
-                master.SS2OffsetExperience(experienceChange);
+                Master.SS2OffsetExperience(experienceChange);
 
-                if (master.hasBody)
+                if (Master.hasBody)
                 {
-                    master.GetBody().RecalculateStats();
+                    Master.GetBody().RecalculateStats();
                 }
                 RefreshLevelText();
             }
@@ -196,24 +198,26 @@ namespace SS2.Items
             {
                 foreach (HUD hud in HUD.readOnlyInstanceList)
                 {
-                    if (hud.targetMaster == master && hud.levelText)
+                    if (hud.targetMaster == Master && hud.levelText)
                     {
                         hud.levelText.displayData = uint.MaxValue;
                         hud.levelText.Update();
                     }
                 }
             }
+
+            //N: I want to travel back in time and literally slap myself to death for suggesting using IL/ON hooks on monobehaviour methods, lmao.
             private void OnEnable()
             {
                 GlobalEventManager.onCharacterLevelUp += GlobalEventManager_onCharacterLevelUp;
-                master.inventory.onInventoryChanged += Inventory_onInventoryChanged;
+                Master.inventory.onInventoryChanged += Inventory_onInventoryChanged;
                 IL.RoR2.UI.LevelText.SetDisplayData += LevelText_SetDisplayData;
                 IL.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
             }
 
             private void GlobalEventManager_onCharacterLevelUp(CharacterBody body)
             {
-                if (remainingLevelReduction > 0U && body.master == master)
+                if (remainingLevelReduction > 0U && body.master == Master)
                 {
                     TryReduceLevel();
                 }
@@ -240,7 +244,7 @@ namespace SS2.Items
                     c.Emit(OpCodes.Ldarg_0);
                     c.EmitDelegate<Action<LevelText>>((levelText) =>
                     {
-                        bool shouldBeAffected = levelText.source && levelText.source.master == master && bonusLevelCount > 0;
+                        bool shouldBeAffected = levelText.source && levelText.source.master == Master && bonusLevelCount > 0;
                         bool hasBeenAdjusted = adjustedLevelText.Contains(levelText);
                         if (shouldBeAffected)
                         {
@@ -260,7 +264,7 @@ namespace SS2.Items
                             {
                                 RectTransform rectTransform = (RectTransform)levelText.targetText.transform;
                                 //Transform transf = new Transform(0)
-                                rectTransform.transform.position += (Vector3.right * 1); 
+                                rectTransform.transform.position += (Vector3.right * 1);
                                 rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x - levelTextScaleAdjustment, rectTransform.sizeDelta.y);
                                 adjustedLevelText.Remove(levelText);
                             }
@@ -273,9 +277,9 @@ namespace SS2.Items
             private void CharacterBody_RecalculateStats(ILContext il)
             {
                 ILCursor c = new ILCursor(il);
-            
+
                 int localLevelMultiplierLocIndex = -1;
-            
+
                 bool ILFound = c.TryGotoNext(MoveType.After,
                     x => x.MatchLdarg(0),
                     x => x.MatchCall<CharacterBody>("get_level"),
@@ -285,7 +289,7 @@ namespace SS2.Items
                     ) && c.TryGotoNext(MoveType.After,
                     x => x.MatchStloc(out localLevelMultiplierLocIndex)
                     );
-            
+
                 if (ILFound)
                 {
                     c.MoveAfterLabels();
@@ -293,7 +297,7 @@ namespace SS2.Items
                     c.Emit(OpCodes.Ldloc, localLevelMultiplierLocIndex);
                     c.EmitDelegate<Func<CharacterBody, float, float>>((body, localLevelMultiplier) =>
                     {
-                        if (body.master == master)
+                        if (body.master == Master)
                         {
                             return localLevelMultiplier + bonusLevelCount;
                         }
@@ -302,14 +306,14 @@ namespace SS2.Items
                     c.Emit(OpCodes.Stloc, localLevelMultiplierLocIndex);
                 }
                 else { SS2Log.Error(this + ": Bonus Level Stats IL hook failed!"); }
-            
+
             }
 
             private void OnDisable()
             {
                 IL.RoR2.CharacterBody.RecalculateStats -= CharacterBody_RecalculateStats;
                 IL.RoR2.UI.LevelText.SetDisplayData -= LevelText_SetDisplayData;
-                master.inventory.onInventoryChanged -= Inventory_onInventoryChanged;
+                Master.inventory.onInventoryChanged -= Inventory_onInventoryChanged;
                 GlobalEventManager.onCharacterLevelUp -= GlobalEventManager_onCharacterLevelUp;
             }
 
@@ -323,43 +327,5 @@ namespace SS2.Items
             public uint remainingLevelReduction;
         }
     }
+#endif
 }
-/*[ConfigurableField(ConfigNameOverride = "Stat Multiplier", ConfigDescOverride = "Multiplier applied to the stats per stack.")]
-[FormatToken(token,   0)]
-[FormatToken(token, FormatTokenAttribute.OperationTypeEnum.DivideBy2, 1)]
-public static float StatMultiplier = 3;
-[ConfigurableField(ConfigNameOverride = "XP Multiplier", ConfigDescOverride = "Multiplier applied to XP Gain per stack.")]
-[FormatToken(token,   2)]
-[FormatToken(token, FormatTokenAttribute.OperationTypeEnum.DivideBy2, 3)]
-public static float XPMultiplier = 2;
-public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier, IOnKilledOtherServerReceiver
-{
-    [ItemDefAssociation]
-    private static ItemDef GetItemDef() => SS2Content.Items.BabyToys;
-    public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
-    {
-        args.armorAdd += GetStatAugmentation(body.levelArmor);
-        args.baseAttackSpeedAdd += GetStatAugmentation(body.levelAttackSpeed);
-        args.baseDamageAdd += GetStatAugmentation(body.levelDamage);
-        args.baseHealthAdd += GetStatAugmentation(body.levelMaxHealth);
-        args.baseMoveSpeedAdd += GetStatAugmentation(body.levelMoveSpeed);
-        args.baseRegenAdd += GetStatAugmentation(body.levelRegen);
-        args.baseShieldAdd += GetStatAugmentation(body.levelMaxShield);
-        args.critAdd += GetStatAugmentation(body.levelCrit);
-    }
-    private float GetStatAugmentation(float stat)
-    {
-        return stat * (StatMultiplier + ((StatMultiplier / 2) * (stack - 1)));
-    }
-    public void OnKilledOtherServer(DamageReport damageReport)
-    {
-        if (damageReport.victimBody)
-        {
-            var deathRewards = damageReport.victimBody.GetComponent<DeathRewards>();
-            if (deathRewards)
-            {
-                body.master.GiveExperience((ulong)(deathRewards.expReward * (XPMultiplier + ((XPMultiplier / 2) * (stack - 1)))));
-            }
-        }
-    }
-}*/

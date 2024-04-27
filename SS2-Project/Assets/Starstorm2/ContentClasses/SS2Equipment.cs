@@ -11,6 +11,9 @@ using RoR2.ContentManagement;
 
 namespace SS2
 {
+    /// <summary>
+    /// <inheritdoc cref="IEquipmentContentPiece"/>
+    /// </summary>
     public abstract class SS2Equipment : IEquipmentContentPiece
     {
         public abstract NullableRef<List<GameObject>> ItemDisplayPrefabs { get; }

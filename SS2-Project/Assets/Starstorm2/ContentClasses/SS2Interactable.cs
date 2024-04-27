@@ -11,6 +11,9 @@ using RoR2.ContentManagement;
 
 namespace SS2
 {
+    /// <summary>
+    /// <inheritdoc cref="IInteractableContentPiece"/>
+    /// </summary>
     public abstract class SS2Interactable : IInteractableContentPiece
     {
         public abstract InteractableCardProvider CardProvider { get; }

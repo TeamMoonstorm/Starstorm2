@@ -3,7 +3,7 @@ using RoR2.Achievements;
 using UnityEngine;
 namespace SS2.Unlocks.NemCommando
 {
-    public sealed class NemCommandoDecisiveUnlock : UnlockableBase
+    /*public sealed class NemCommandoDecisiveUnlock : UnlockableBase
     {
         public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skill.nemcommando.bossattack", SS2Bundle.NemCommando);
 
@@ -60,5 +60,5 @@ namespace SS2.Unlocks.NemCommando
                 }
             }
         }
-    }
+    }*/
 }

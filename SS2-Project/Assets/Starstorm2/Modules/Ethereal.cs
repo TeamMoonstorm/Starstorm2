@@ -41,10 +41,10 @@ namespace SS2
             Components.TraderController.Initialize();
 
             //Initialize new difficulties
-            Deluge.Init();
+            /*Deluge.Init();
             Tempest.Init();
             Cyclone.Init();
-            SuperTyphoon.Init();
+            SuperTyphoon.Init();*/
 
             //Save level cap for later use
             storedLevelCap = Run.ambientLevelCap;
@@ -282,7 +282,7 @@ namespace SS2
 
                             switch (ruleChoiceDef.difficultyIndex)
                             {
-                                //drizzle
+                                /*//drizzle
                                 case DifficultyIndex.Easy:
                                     {
                                         run.selectedDifficulty = Deluge.DelugeIndex;
@@ -305,18 +305,18 @@ namespace SS2
                                         Debug.Log("monsoon detected; trying to override");
                                         run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(Cyclone.CycloneDef.nameToken)));
                                     }
-                                    break;
+                                    break;*/
                             }
 
                             //typhoon is a modded difficulty and its index is not constant
-                            if (ruleChoiceDef.difficultyIndex == Typhoon.TyphoonIndex)
+                            /*if (ruleChoiceDef.difficultyIndex == Typhoon.TyphoonIndex)
                             {
                                 run.selectedDifficulty = SuperTyphoon.SuperTyphoonIndex;
                                 Debug.Log("typhoon detected; trying to override");
                                 run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(SuperTyphoon.SuperTyphoonDef.nameToken)));
                                 //for some reason appears as deluge in run history???
                                 //appears correctly mid-run & at run end so will ignore for now...
-                            }
+                            }*/
                         }
 
                         diffIndex = run.ruleBook.FindDifficulty();

@@ -1,5 +1,10 @@
-﻿using RoR2;
+﻿using MSU;
+using MSU.Config;
+using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Items;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 namespace SS2.Items
@@ -7,15 +12,36 @@ namespace SS2.Items
     public sealed class WatchMetronome : SS2Item
     {
         private const string token = "SS2_ITEM_WATCHMETRONOME_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("WatchMetronome", SS2Bundle.Items);
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of max charges per stack.")]
-        [FormatToken(token,   0)]
+        [FormatToken(token, 0)]
         public static int chargeAmount = 5;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Maximum movement speed bonus that can be achieved via metronome per stack. (1 = 100%)")]
-        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 1, "100")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float maxMovementSpeed = 2;
+
+        public override void Initialize()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * ItemDef - "WatchMetronome" - Items
+             */
+            yield break;
+        }
 
         public sealed class Behavior : BaseItemBodyBehavior
         {
@@ -38,7 +64,7 @@ namespace SS2.Items
                 if (!body.isSprinting)
                 {
                     metronomeCharge *= buildCoefficient;
-                    
+
                 }
                 else
                 {

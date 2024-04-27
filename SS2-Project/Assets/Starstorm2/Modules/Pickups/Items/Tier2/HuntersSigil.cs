@@ -3,48 +3,62 @@ using RoR2;
 using RoR2.Items;
 using UnityEngine;
 using UnityEngine.Networking;
+using MSU;
+using System.Collections.Generic;
+using RoR2.ContentManagement;
+using System.Collections;
+using MSU.Config;
+
 namespace SS2.Items
 {
     public sealed class HuntersSigil : SS2Item
     {
         private const string token = "SS2_ITEM_HUNTERSSIGIL_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("HuntersSigil", SS2Bundle.Items);
-        public static GameObject effect;
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
 
-        public static GameObject SigilObject { get; set; } = SS2Assets.LoadAsset<GameObject>("SigilWard", SS2Bundle.Items);
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
+
+        private static GameObject _effect;
+        private static GameObject _sigilWard;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base amount of extra armor added.")]
-        [FormatToken(token,   0)]
+        [FormatToken(token, 0)]
         public static float baseArmor = 20;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of extra armor added per stack.")]
-        [FormatToken(token,   1)]
+        [FormatToken(token, 1)]
         public static float stackArmor = 10;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base amount of extra damage added. (1 = 100%)")]
-        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 2, operationData = 100)]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 2, 100)]
         public static float baseDamage = .2f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of extra damage added per stack. (1 = 100%)")]
-        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 3, operationData = 100)]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 3, 100)]
         public static float stackDamage = .10f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Radius the effect is applied in.")]
-        [FormatToken(token,   0)]
+        [FormatToken(token, 0)]
         public static float radius = 8f;
-
-        /*[RiskOfOptionsConfigureField(SS2Config.IDItem, ConfigDescOverride = "Base time the buff lingers for after moving, in seconds.")]
-        [FormatToken(token,   4)]
-        public static float baseLinger = 2f;
-
-        [RiskOfOptionsConfigureField(SS2Config.IDItem, ConfigDescOverride = "Amount of extra lingering time added per stack, in seconds.")]
-        [FormatToken(token,   5)]
-        public static float stackLinger = 1f;*/
 
         public override void Initialize()
         {
-            base.Initialize();
-            effect = SS2Assets.LoadAsset<GameObject>("SigilEffect", SS2Bundle.Items);
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * ItemDef - "HuntersSigil" - Items
+             * GameObject - "SigilWard" - Items
+             * GameObject - "SigilEffect" - Items
+             */
+            yield break;
         }
 
         public sealed class Behavior : BaseItemBodyBehavior//, IBodyStatArgModifier
@@ -61,14 +75,14 @@ namespace SS2.Items
                 {
                     if (!sigilActive)
                     {
-                        EffectManager.SimpleEffect(effect, body.aimOrigin + new Vector3(0, 0f), Quaternion.identity, true);
+                        EffectManager.SimpleEffect(_effect, body.aimOrigin + new Vector3(0, 0f), Quaternion.identity, true);
                         Vector3 position = body.corePosition;
                         //float radius = 13f;
 
                         if (sigilInstance != null)
                             NetworkServer.Destroy(sigilInstance);
 
-                        sigilInstance = Object.Instantiate(SigilObject, position, Quaternion.identity);
+                        sigilInstance = Object.Instantiate(_sigilWard, position, Quaternion.identity);
                         sigilInstance.GetComponent<TeamFilter>().teamIndex = body.teamComponent.teamIndex;
                         sigilInstance.GetComponent<BuffWard>().radius = radius;
                         WardUtils wu = sigilInstance.GetComponent<WardUtils>();
@@ -81,20 +95,12 @@ namespace SS2.Items
 
                         sigilActive = true;
                     }
-                    //body.AddTimedBuff(SS2Content.Buffs.BuffSigil, baseLinger + stackLinger * (stack - 1f));
+
                 }
                 else
                     sigilActive = false;
             }
-            /*public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
-            {
-                if (body.HasBuff(SS2Content.Buffs.BuffSigil))
-                {
-                    //the base amounts are added by the buff itself in case the buff is gained from another source such as Aetherium's Accursed Potion
-                    args.armorAdd += stackArmor * (stack - 1);
-                    args.damageMultAdd += (stackDamage * (stack - 1));
-                }
-            }*/
+
             public void OnDestroy()
             {
                 if (sigilInstance != null)

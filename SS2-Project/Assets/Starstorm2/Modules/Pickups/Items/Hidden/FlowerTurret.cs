@@ -1,18 +1,37 @@
-﻿using RoR2;
+﻿using MSU;
+using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Items;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 namespace SS2.Items
 {
     public sealed class FlowerTurret : SS2Item
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("FlowerTurret", SS2Bundle.Items);
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
 
-        public override GameObject ItemDisplayPrefab => SS2Assets.LoadAsset<GameObject>("DisplayFlowerTurret", SS2Bundle.Items);
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
 
         public override void Initialize()
         {
-
         }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return contentPack.survivorDefs.Find("Chirr");
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * GameObject - "DisplayFlowerTurret" - Chirr
+             * ItemDef - "FlowerTurret" - Chirr
+             */
+            yield break;
+        }
+
         public sealed class BodyBehavior : BaseItemBodyBehavior
         {
             [ItemDefAssociation]

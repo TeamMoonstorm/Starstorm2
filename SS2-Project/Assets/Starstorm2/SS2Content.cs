@@ -125,7 +125,7 @@ namespace SS2
             SS2Main main = SS2Main.Instance;
             _loadDispatchers = new Func<IEnumerator>[]
             {
-                Typhoon.Init,
+                DifficultyModule.Init,
                 Events.Init,
                 //Bulwark.Init,
                 //Ethereal.Init,

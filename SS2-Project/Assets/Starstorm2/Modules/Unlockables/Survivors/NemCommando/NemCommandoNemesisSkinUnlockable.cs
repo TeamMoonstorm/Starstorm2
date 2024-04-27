@@ -3,7 +3,7 @@ using RoR2.Achievements;
 using UnityEngine;
 namespace SS2.Unlocks.NemCommando
 {
-    public sealed class NemCommandoNemesisSkinUnlockable : UnlockableBase
+    /*public sealed class NemCommandoNemesisSkinUnlockable : UnlockableBase
     {
         public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skin.nemcommando.nemesisskin", SS2Bundle.NemCommando);
 
@@ -57,5 +57,5 @@ namespace SS2.Unlocks.NemCommando
 
             }
         }
-    }
+    }*/
 }

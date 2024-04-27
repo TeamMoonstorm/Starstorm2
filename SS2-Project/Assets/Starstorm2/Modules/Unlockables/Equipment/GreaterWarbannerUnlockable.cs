@@ -2,7 +2,7 @@
 using RoR2.Achievements;
 namespace SS2.Unlocks.Pickups
 {
-    public sealed class GreaterWarbannerUnlockable : UnlockableBase
+    /*public sealed class GreaterWarbannerUnlockable : UnlockableBase
     {
         public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.equip.greaterwarbanner", SS2Bundle.Equipments);
 
@@ -60,5 +60,5 @@ namespace SS2.Unlocks.Pickups
                 SetMasterController(localUser.cachedMasterController);
             }
         }
-    }
+    }*/
 }

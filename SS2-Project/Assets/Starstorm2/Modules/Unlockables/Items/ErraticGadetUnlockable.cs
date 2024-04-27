@@ -3,8 +3,7 @@ using RoR2.Achievements;
 using System.Collections.Generic;
 namespace SS2.Unlocks.Pickups
 {
-    [DisabledContent]
-    public sealed class ErraticGadgetUnlockable : UnlockableBase
+    /*public sealed class ErraticGadgetUnlockable : UnlockableBase
     {
         public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.item.erraticgadget", SS2Bundle.Indev);
 
@@ -81,5 +80,5 @@ namespace SS2.Unlocks.Pickups
                 SetMasterController(localUser.cachedMasterController);
             }
         }
-    }
+    }*/
 }

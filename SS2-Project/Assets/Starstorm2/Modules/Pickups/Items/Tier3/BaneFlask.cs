@@ -49,23 +49,14 @@ namespace SS2.Items
 
         public override IEnumerator LoadContentAsync()
         {
-            ParallelAssetLoadCoroutineHelper helper = new ParallelAssetLoadCoroutineHelper();
-
-            helper.AddAssetToLoad<ItemDef>("BaneFlask", SS2Bundle.Items);
-            helper.AddAssetToLoad<BuffDef>("BuffBane", SS2Bundle.Items);
-            helper.AddAssetToLoad<GameObject>("BaneGrayVFX", SS2Bundle.Items);
-            helper.AddAssetToLoad<GameObject>("BaneHitsparkVFX", SS2Bundle.Items);
-            helper.AddAssetToLoad<GameObject>("BaneGrayGoop", SS2Bundle.Items);
-
-            helper.Start();
-            while (!helper.IsDone())
-                yield return null;
-
-            _itemDef = helper.GetLoadedAsset<ItemDef>("BaneFlask");
-            _baneBuffDef = helper.GetLoadedAsset<BuffDef>("BuffBane");
-            explosionGross = helper.GetLoadedAsset<GameObject>("BaneGrayVFX");
-            particleBase = helper.GetLoadedAsset<GameObject>("BaneHitsparkVFX");
-            floorGloop = helper.GetLoadedAsset<GameObject>("BaneGrayGoop");
+            /*
+             * ItemDef - "BaneFlask" - Items
+             * BuffDef - "BuffBane" - Items
+             * GameObject - "BaneGrayVFX" - Items
+             * GameObject - "BaneHitsparkVFX" - Items
+             * GameObject - "BaneGrayGoop" - Items
+             */
+            yield break;
         }
 
         public void ModifyContentPack(ContentPack contentPack)

@@ -12,6 +12,9 @@ using RoR2.ContentManagement;
 
 namespace SS2
 {
+    /// <summary>
+    /// <inheritdoc cref="IMonsterContentPiece"/>
+    /// </summary>
     public abstract class SS2Monster : IMonsterContentPiece
     {
         public abstract NullableRef<MonsterCardProvider> CardProvider { get; }

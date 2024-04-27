@@ -243,7 +243,7 @@ namespace SS2
 
         private static IEnumerator SwapShaders()
         {
-            return ShaderUtil.SwapAssetBundleShadersAsync(_assetBundles.Values.ToArray());
+            return ShaderUtil.SwapStubbedShadersAsync(_assetBundles.Values.ToArray());
         }
 
         private static IEnumerator SwapAddressableShaders()

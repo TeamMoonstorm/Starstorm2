@@ -5,6 +5,7 @@ using RoR2.ContentManagement;
 using RoR2.Items;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 #if DEBUG
 namespace SS2.Items
@@ -27,17 +28,11 @@ namespace SS2.Items
 
         public override IEnumerator LoadContentAsync()
         {
-            ParallelAssetLoadCoroutineHelper helper = new ParallelAssetLoadCoroutineHelper();
-
-            helper.AddAssetToLoad<GameObject>("AuguryBodyAttachment", SS2Bundle.Indev);
-            helper.AddAssetToLoad<ItemDef>("Augury", SS2Bundle.Items);
-
-            helper.Start();
-            while (!helper.IsDone())
-                yield return null;
-
-            _itemDef = helper.GetLoadedAsset<ItemDef>("Augury");
-            _attachment = helper.GetLoadedAsset<GameObject>("AuguryBodyAttachment");
+            /*
+             * GameObject - "AuguryBodyAttachment" - Indev
+             * ItemDef - "Augury" - Items
+             */
+            yield break;
         }
 
         public sealed class AuguryBehavior : BaseItemBodyBehavior, IOnTakeDamageServerReceiver

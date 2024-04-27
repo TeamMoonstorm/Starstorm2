@@ -1,11 +1,18 @@
-﻿using RoR2;
+﻿using MSU;
+using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Items;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 namespace SS2.Items
 {
     public sealed class VoidRock : SS2Item
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("VoidRock", SS2Bundle.Interactables);
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
 
         public static int initialStage = 0;
         public static bool setStage = false;
@@ -14,16 +21,29 @@ namespace SS2.Items
 
         public override void Initialize()
         {
-            base.Initialize();
-
             Run.onRunStartGlobal += Run_onRunStartGlobal;
         }
+
 
         private static void Run_onRunStartGlobal(Run run)
         {
             initialStage = 0;
             setStage = false;
             invasionStage = false;
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * ItemDef - "VoidRock" - Interactables
+             * ItemDef - "VoidRockTracker" - Interactables
+             */
+            yield break;
         }
 
         public sealed class VoidRockBehavior : BaseItemBodyBehavior
@@ -46,7 +66,7 @@ namespace SS2.Items
                     invasionStage = false;
                     initialStage = 0;
                     return;
-                }    
+                }
 
                 if (setStage)
                 {
@@ -59,13 +79,6 @@ namespace SS2.Items
                         invasionStage = false;
                     }
                 }
-                /*else
-                {
-                    setStage = true;
-                    initialStage = Run.instance.stageClearCount;
-                    inventory = body.inventory;
-                    invasionStage = true;
-                }*/
             }
         }
     }

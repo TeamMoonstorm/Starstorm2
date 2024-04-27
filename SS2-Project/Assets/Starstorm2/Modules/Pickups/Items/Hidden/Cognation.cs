@@ -1,19 +1,24 @@
-﻿using RoR2;
+﻿using MSU;
+using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Items;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 namespace SS2.Items
 {
-    public sealed class Cognation : SS2Item
+    public sealed class CognationHelper : SS2Item
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Cognation", SS2Bundle.Items);
-        
-        override public void Initialize()
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
+
+        public override void Initialize()
         {
-            On.RoR2.Util.GetBestBodyName += AddCognateName3;
-            //SceneManager.sceneLoaded += AddCode; kill!!!!!!!
+            On.RoR2.Util.GetBestBodyName += AddCognateName;
         }
 
-        private string AddCognateName3(On.RoR2.Util.orig_GetBestBodyName orig, GameObject bodyObject) //i love stealing
+        private string AddCognateName(On.RoR2.Util.orig_GetBestBodyName orig, GameObject bodyObject) //i love stealing
         {
             var result = orig(bodyObject);
             CharacterBody characterBody = bodyObject?.GetComponent<CharacterBody>();
@@ -24,12 +29,26 @@ namespace SS2.Items
             return result;
         }
 
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * ItemDef - "CognationHelper" - Artifacts
+             * Material - "matCognation" - Artifacts
+             */
+            yield break;
+        }
+
         public sealed class Behavior : BaseItemBodyBehavior
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.Cognation;
 
-            private static Material ghostMaterial = SS2Assets.LoadAsset<Material>("matCognation", SS2Bundle.Artifacts);
+            private static Material ghostMaterial;
 
             private CharacterModel model;
 
@@ -78,12 +97,7 @@ namespace SS2.Items
                     var mat = model.baseRendererInfos[i].defaultMaterial;
                     if (mat.shader.name.StartsWith("Hopoo Games/Deferred"))
                     {
-                        //SS2Log.Info("swapping shader real " +mat.shader.name + " | " + ghostMaterial + " | ");
-                        if (!ghostMaterial)
-                        {
-                            SS2Log.Info("Shader was null?");
-                            ghostMaterial = SS2Assets.LoadAsset<Material>("matCognation", SS2Bundle.Artifacts);
-                        }
+                        //SS2Log.Info("swapping shader real " +mat.shader.name + " | " + ghostMaterial + "
                         mat = ghostMaterial;
                         model.baseRendererInfos[i].defaultMaterial = mat;
                     }

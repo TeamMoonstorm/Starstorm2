@@ -1,27 +1,43 @@
 ﻿using RoR2;
 using UnityEngine;
 using System;
+using MSU;
+using System.Collections.Generic;
+using RoR2.ContentManagement;
+using System.Collections;
+
 namespace SS2.Items
 {
     public sealed class SantaHat : SS2Item
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("SantaHat", SS2Bundle.Items);
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
 
-        public override GameObject ItemDisplayPrefab => SS2Assets.LoadAsset<GameObject>("DisplaySantaHat", SS2Bundle.Items);
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
 
         public static float percentHatChance = 10f;
 
         public override void Initialize()
         {
-            DateTime today = DateTime.Today;
-            if (today.Month == 12)
-            {
-                SS2Log.Info("Merry Chirristmas to about " + percentHatChance + "% of you!");
-                CharacterMaster.onCharacterMasterDiscovered += GiveHat;
-                On.RoR2.CharacterModel.Start += CharacterModel_Start;
-            }
+            SS2Log.Info("Merry Chirristmas to about " + percentHatChance + "% of you!");
+            CharacterMaster.onCharacterMasterDiscovered += GiveHat;
+            On.RoR2.CharacterModel.Start += CharacterModel_Start;
         }
-        
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return SS2Main.ChristmasTime;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * ItemDef - "SantaHat" - Items
+             * GameObject - "DisplaySantaHat" - Items
+             */
+            yield break;
+        }
+
         // always enable outside of runs
         // what could possibly go wrong?
         private static void CharacterModel_Start(On.RoR2.CharacterModel.orig_Start orig, CharacterModel self)

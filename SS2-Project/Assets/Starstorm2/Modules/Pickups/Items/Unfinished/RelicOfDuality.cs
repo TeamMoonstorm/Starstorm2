@@ -1,12 +1,38 @@
-﻿using RoR2;
+﻿using MSU;
+using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Items;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
 namespace SS2.Items
 {
-    [DisabledContent]
+#if DEBUG
     public sealed class RelicOfDuality : SS2Item
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfDuality", SS2Bundle.Indev);
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
+
+        public override void Initialize()
+        {
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return false;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * ItemDef - "RelicOfDuality" - Indev
+             */
+            yield break;
+        }
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnIncomingDamageServerReceiver, IOnDamageDealtServerReceiver
         {
@@ -57,4 +83,5 @@ namespace SS2.Items
             }
         }
     }
+#endif
 }

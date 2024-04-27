@@ -6,32 +6,51 @@ using RoR2.Orbs;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
+using MSU;
+using System.Collections.Generic;
+using RoR2.ContentManagement;
+using System.Collections;
+using MSU.Config;
+
 namespace SS2.Items
 {
     public sealed class FieldAccelerator : SS2Item
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("FieldAccelerator", SS2Bundle.Items);
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of charge to add to the teleporter on kill. (1 = 100%)")]
-        [FormatToken("SS2_ITEM_FIELDACCELERATOR_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_ITEM_FIELDACCELERATOR_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float chargePerKill = 0.01f;
 
-        /*[RiskOfOptionsConfigureField(SS2Config.IDItem, ConfigDescOverride = "Maximum Amount of Charge per kill. (1 = 100%)")]
-        public static float maxChargePerKill = 0.05f;*/
-
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Extra % teleporter charge radius. (0.01 = 1%")]
-        [FormatToken("SS2_ITEM_FIELDACCELERATOR_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 1, "100")]
+        [FormatToken("SS2_ITEM_FIELDACCELERATOR_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float radiusPerStack = 0.75f;
 
-        public static GameObject objectPrefab;
+        private static GameObject _objectPrefab;
 
         public override void Initialize()
         {
-            base.Initialize();
-            objectPrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("ObjectFieldAccelerator", SS2Bundle.Items), "ObjectDisplayFieldAccelerator", true);
-            objectPrefab.RegisterNetworkPrefab();
-            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/Teleporter1.prefab").WaitForCompletion().AddComponent<FieldAcceleratorTeleporterBehavior>();
-            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/LunarTeleporter Variant.prefab").WaitForCompletion().AddComponent<FieldAcceleratorTeleporterBehavior>();
+            _objectPrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("ObjectFieldAccelerator", SS2Bundle.Items), "ObjectDisplayFieldAccelerator", true);
+            _objectPrefab.RegisterNetworkPrefab();
+
+            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/Teleporter1.prefab").Completed+= (r) => r.Result.AddComponent<FieldAcceleratorTeleporterBehavior>();
+            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/LunarTeleporter Variant.prefab").Completed += (r) => r.Result.AddComponent<FieldAcceleratorTeleporterBehavior>();
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * ItemDef - "FieldAccelerator" - Items
+             */
+            yield break;
         }
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver
@@ -300,7 +319,7 @@ namespace SS2.Items
                 if (acceleratorCount > 0 && displayInstance == null)
                 {
                     Vector3 position = new Vector3(TeleporterInteraction.instance.transform.position.x, TeleporterInteraction.instance.transform.position.y + 1.5f, TeleporterInteraction.instance.transform.position.z);
-                    displayInstance = Instantiate(objectPrefab, position, new Quaternion(0, 0, 0, 0));
+                    displayInstance = Instantiate(_objectPrefab, position, new Quaternion(0, 0, 0, 0));
                     displayChildLocator = displayInstance.GetComponent<ChildLocator>();
                     NetworkServer.Spawn(displayInstance);
                 }
@@ -313,7 +332,6 @@ namespace SS2.Items
                 if (hzc != null && acceleratorCount > 0 && monstersCleared)
                 {
                     hzc.baseRadius *= 1 + (radiusPerStack * acceleratorCount);
-                    //Util.PlaySound("AcceleratorBoot", displayInstance.gameObject);
                 }
             }
         }

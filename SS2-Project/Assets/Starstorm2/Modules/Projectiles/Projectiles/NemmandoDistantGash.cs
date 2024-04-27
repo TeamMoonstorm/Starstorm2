@@ -2,7 +2,7 @@
 using static R2API.DamageAPI;
 namespace SS2.Projectiles
 {
-    public sealed class NemmandoDistantGash : ProjectileBase
+    /*public sealed class NemmandoDistantGash : ProjectileBase
     {
         public override GameObject ProjectilePrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemCommandoSwordBeamProjectile", SS2Bundle.NemCommando);
 
@@ -17,5 +17,5 @@ namespace SS2.Projectiles
             //i'm also adding an additional line to this comment because dotflare was complaining.
             //shut up dot ily - N
         }
-    }
+    }*/
 }

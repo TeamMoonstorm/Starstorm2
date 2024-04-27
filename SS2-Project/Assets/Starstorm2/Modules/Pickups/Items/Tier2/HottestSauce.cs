@@ -4,22 +4,47 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using MSU;
+using RoR2.ContentManagement;
+using System.Collections;
+using HG;
+using MSU.Config;
+
 namespace SS2.Items
 {
-    [DisabledContent]
-
+#if DEBUG
     public sealed class HottestSauce : SS2Item
     {
         private const string token = "SS2_ITEM_HOTTESTSAUCE_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("HottestSauce", SS2Bundle.Items);
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Radius in which the hottest sauce deals damage, in meters.")]
-        [FormatToken(token,   0)]
+        [FormatToken(token, 0)]
         public static float radius = 30f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Duration of the burn effect, in seconds.")]
-        [FormatToken(token,   1)]
+        [FormatToken(token, 1)]
         public static float DOTDuration = 6f;
+
+        public override void Initialize()
+        {
+
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return false;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * ItemDef - "HottestSauce" - Items
+             */
+            yield break;
+        }
 
         public sealed class Behavior : BaseItemBodyBehavior
         {
@@ -37,7 +62,8 @@ namespace SS2.Items
                 if (slot.characterBody != body)
                     return;
 
-                MSUtil.PlayNetworkedSFX("HottestSauce", gameObject.transform.position);
+                //N: got removed from MSU 2.0, lol
+                //MSUtil.PlayNetworkedSFX("HottestSauce", gameObject.transform.position);
 
                 var hits = new List<HurtBox>();
                 SphereSearch sauceSearch = new SphereSearch();
@@ -74,13 +100,7 @@ namespace SS2.Items
                         DotController.InflictDot(ref dotInfo);
                     }
                 }
-                //EffectData effectData = new EffectData
-                //{
-                //    origin = slot.characterBody.transform.position
-                //};
-                //effectData.SetNetworkedObjectReference(slot.characterBody.gameObject);
-                //EffectManager.SpawnEffect(CharacterBody.AssetReferences., effectData, transmit: true);
-                
+
             }
             public void OnDestroy()
             {
@@ -88,6 +108,6 @@ namespace SS2.Items
             }
 
         }
-
     }
+#endif
 }

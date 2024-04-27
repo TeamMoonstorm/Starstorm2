@@ -1,6 +1,10 @@
 ﻿using HG;
+using MSU;
+using MSU.Config;
 using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Orbs;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -8,22 +12,16 @@ namespace SS2.Items
 {
     public sealed class NkotasHeritage : SS2Item
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("NkotasHeritage", SS2Bundle.Items);
-
         public const string token = "SS2_ITEM_NKOTASHERITAGE_DESC";
 
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
+
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Number of items given upon level up per stack.")]
-        [FormatToken(token,   0)]
+        [FormatToken(token, 0)]
         public static int itemsPerStack = 1;
-
-        //
-        //SS2Config.IDItem, ConfigDescOverride = "Level where white items are removed from the reward pool.")]
-        //[FormatToken(token,   1)]
-        //public static int whiteRemovalLevel = 11;
-
-        //[ConfigurableField(SS2Config.IDItem, ConfigDescOverride = "Level where green items are removed from the reward pool.")]
-        //[FormatToken(token,   2)]
-        //public static int greenRemovalLevel = 22;
 
         //Either store this in a static var or do a dictionary checkup if you want to save all the assetbundle lookups in this code
         //Im lazy and this works so.......................
@@ -36,7 +34,19 @@ namespace SS2.Items
             GlobalEventManager.onCharacterLevelUp += GlobalEventManager_onCharacterLevelUp;
             SceneExitController.onBeginExit += SceneExitController_onBeginExit;
             Stage.onStageStartGlobal += Stage_onServerStageBegin; //Cannot be onServerStageBegin because the players havent spawned by then!
-            //PickupDropletController.onDropletHitGroundServer += NkotaApplyParticleEffect;
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * ItemDef - "NkotasHeritage" - Items
+             */
+            yield break;
         }
 
         private void Stage_onServerStageBegin(Stage obj)

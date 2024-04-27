@@ -1,12 +1,13 @@
 ﻿using SS2;
 using RoR2;
 using UnityEngine;
+using MSU;
 
 namespace EntityStates.MULE
 {
     class MULESpin : BasicMeleeAttack
     {
-        [FormatToken("SS2_MULE_PRIMARY_SPIN_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_MULE_PRIMARY_SPIN_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float dmgCoefficient;
         public static float minSpinCount;
         public static float maxSpinCount;

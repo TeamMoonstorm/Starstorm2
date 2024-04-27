@@ -2,7 +2,7 @@
 using UnityEngine;
 namespace SS2.Unlocks.Chirr
 {
-    public sealed class ChirrMasteryUnlockable : UnlockableBase
+    /*public sealed class ChirrMasteryUnlockable : UnlockableBase
     {
         public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skin.chirr.mastery", SS2Bundle.Chirr);
 
@@ -12,5 +12,5 @@ namespace SS2.Unlocks.Chirr
 
             public override CharacterBody RequiredCharacterBody { get; set; } = SS2Assets.LoadAsset<GameObject>("ChirrBody", SS2Bundle.Chirr).GetComponent<CharacterBody>();
         }
-    }
+    }*/
 }

@@ -1,17 +1,18 @@
 ﻿
+using MSU;
 using R2API;
 using RoR2;
 using RoR2.Skills;
+using SS2.Survivors;
 using UnityEngine.Networking;
 
 namespace EntityStates.Nemmando
 {
-    //This might be stupid, and there might be a better way of using the token modifier here, but the damageCoefficient is a base field and i dont know if its possible to add attributes to inherited fields, so this exists now.
     class SwingSword : BasicMeleeAttack, SteppedSkillDef.IStepSetter
     {
         //swings for 133% of the attack's duration, used for scaling animation time so he doesn't sheath sword
         public static float swingTimeCoefficient = 1.33f;
-        [FormatToken("SS2_NEMMANDO_PRIMARY_BLADE_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_NEMMANDO_PRIMARY_BLADE_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float TokenModifier_dmgCoefficient => new SwingSword().damageCoefficient;
         public int swingSide;
 
@@ -52,7 +53,7 @@ namespace EntityStates.Nemmando
         public override void AuthorityModifyOverlapAttack(OverlapAttack overlapAttack)
         {
             base.AuthorityModifyOverlapAttack(overlapAttack);
-            DamageAPI.AddModdedDamageType(overlapAttack, Gouge.gougeDamageType);
+            DamageAPI.AddModdedDamageType(overlapAttack, SS2.Survivors.NemCommando.GougeDamageType);
         }
     }
 }

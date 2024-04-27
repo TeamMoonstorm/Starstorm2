@@ -3,22 +3,46 @@ using RoR2;
 using RoR2.Items;
 
 using MSU;
+using System.Collections.Generic;
+using UnityEngine;
+using RoR2.ContentManagement;
+using System.Collections;
+
 namespace SS2.Items
 {
     public sealed class NemesisBossHelper : SS2Item
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("NemBossHelper", SS2Bundle.Items);
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
 
-        public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
+
+        public override void Initialize()
         {
-            [ItemDefAssociation]
-            private static ItemDef GetItemDef() => SS2Content.Items.NemBossHelper;
-            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
+        }
+
+        private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
+        {
+            if(sender.HasItem(ItemDef))
             {
                 args.healthMultAdd += 12;
                 args.damageMultAdd += 0.75f;
-                body.regen = 0;                     
-            }                                       
-        }                                           
-    }  
+                args.regenMultAdd = 0;
+            }
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * ItemDef - "NemBossHelper" - Items
+             */
+            yield break;
+        }
+    }
 }

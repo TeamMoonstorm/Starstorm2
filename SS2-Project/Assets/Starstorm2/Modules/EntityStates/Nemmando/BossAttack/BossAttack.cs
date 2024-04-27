@@ -3,6 +3,7 @@
 using R2API;
 using RoR2;
 using UnityEngine;
+using MSU;
 
 namespace EntityStates.Nemmando
 {
@@ -14,7 +15,7 @@ namespace EntityStates.Nemmando
         [FormatToken("SS2_NEMMANDO_SPECIAL_BOSS_DESCRIPTION",   0)]
         public static int maxHits;
         public static int minHits;
-        [FormatToken("SS2_NEMMANDO_SPECIAL_BOSS_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 1, "100")]
+        [FormatToken("SS2_NEMMANDO_SPECIAL_BOSS_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float maxDamageCoefficient;
         public static float minDamageCoefficient;
         public static float maxRadius;
@@ -33,7 +34,6 @@ namespace EntityStates.Nemmando
         private EffectData attackEffect;
         public Material swordMat;
         public Material matInstance;
-        //private NemmandoController nemmandoController;
         private float minimumEmission;
         private string skinNameToken;
 
@@ -55,7 +55,6 @@ namespace EntityStates.Nemmando
             damageCoefficient = maxDamageCoefficient;
             radius = maxRadius;
             emission = Util.Remap(charge, 0f, 1f, minEmission, maxEmission);
-            //nemmandoController = GetComponent<NemmandoController>();
             characterBody.hideCrosshair = false;
 
             characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
@@ -81,7 +80,6 @@ namespace EntityStates.Nemmando
                 effectPrefab = SS2Assets.LoadAsset<GameObject>("DecisiveStrikeSlash", SS2Bundle.NemCommando);
             }
 
-            //minimumEmission = effectComponent.defaultSwordEmission;
 
             blastAttack = new BlastAttack()
             {
@@ -102,7 +100,7 @@ namespace EntityStates.Nemmando
                 radius = radius,
                 teamIndex = GetTeam()
             };
-            DamageAPI.AddModdedDamageType(blastAttack, Gouge.gougeDamageType);
+            DamageAPI.AddModdedDamageType(blastAttack, SS2.Survivors.NemCommando.GougeDamageType);
 
             characterMotor.rootMotion = Vector3.zero;
             characterMotor.velocity = Vector3.zero;
@@ -126,10 +124,7 @@ namespace EntityStates.Nemmando
             else
             {
                 PlayAnimation("FullBody, Override", "DecisiveStrike", "DecisiveStrike.playbackRate", duration);
-                //Util.PlaySound(effectComponent.swingSound, gameObject);
             }
-            
-            //swordMat = GetModelTransform().GetComponent<CharacterModel>().baseRendererInfos[1].defaultMaterial;
         }
 
         private void FireAttack()
@@ -148,7 +143,6 @@ namespace EntityStates.Nemmando
                 data.origin = characterBody.corePosition;
                 EffectManager.SpawnEffect(effectPrefab, data, true);
 
-                //Util.PlayAttackSpeedSound(effectComponent.swingSound, gameObject, 2f);
             }
         }
 
@@ -159,8 +153,6 @@ namespace EntityStates.Nemmando
             emission -= 2f * Time.fixedDeltaTime;
             if (emission < 0f) emission = 0f;
 
-            //if (swordMat)
-            //    swordMat.SetFloat("_EmPower", Util.Remap(fixedAge, 0, duration, emission, minimumEmission));
 
             characterMotor.rootMotion = Vector3.zero;
             characterMotor.velocity = Vector3.zero;
@@ -188,12 +180,10 @@ namespace EntityStates.Nemmando
             if (cameraTargetParams)
             {
                 cameraTargetParams.RemoveParamsOverride(camOverrideHandle, duration/1.5f);
-                //cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Standard);
             }
             ref CharacterModel.RendererInfo renderInfo = ref GetModelTransform().GetComponent<CharacterModel>().baseRendererInfos[1];
             if (matInstance)
             {
-                //Object.Destroy(matInstance);
                 renderInfo.defaultMaterial = swordMat;
                 swordMat.SetFloat("_EmPower", 1f);
                 renderInfo.defaultMaterial.SetFloat("_EmPower", 1f);
@@ -201,9 +191,6 @@ namespace EntityStates.Nemmando
             }
             
             renderInfo.defaultMaterial.SetFloat("_EmPower", 1f);
-            //swordMat.SetFloat("_EmPower", minimumEmission);
-            //if (nemmandoController)
-            //  nemmandoController.UncoverScreen();
         }
     }
 }

@@ -1,36 +1,48 @@
 ﻿using R2API;
+using R2API.ScriptableObjects;
 using RoR2;
+using RoR2.ContentManagement;
+using System.Collections;
+
 namespace SS2
 {
 
     //TODO: Create proper difficulty module home-made
-    /*
-    public static class Tempest
+    public class Tempest : SS2Difficulty
     {
-        public static R2API.ScriptableObjects.SerializableDifficultyDef TempestDef { get; private set; }
-        public static DifficultyIndex TempestIndex { get => TempestDef.DifficultyIndex; }
+        public override SerializableDifficultyDef DifficultyDef => _difficultyDef;
+        private SerializableDifficultyDef _difficultyDef;
 
-        private static int defMonsterCap;
-        private static RuleChoiceDef rcd;
+        private int defMonsterCap;
+        private RuleChoiceDef rcd;
 
-        internal static void Init()
+        public override void Initialize()
         {
-            TempestDef = SS2Assets.LoadAsset<R2API.ScriptableObjects.SerializableDifficultyDef>("Tempest", SS2Bundle.Base);
-            DifficultyAPI.AddDifficulty(TempestDef);
-            Run.onRunDestroyGlobal += Run_onRunDestroyGlobal;
-            Run.onRunStartGlobal += Run_onRunStartGlobal;
         }
 
-        private static void Run_onRunStartGlobal(Run run)
+        public override bool IsAvailable(ContentPack contentPack)
         {
-            defMonsterCap = TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit;
+            return true;
         }
 
-        private static void Run_onRunDestroyGlobal(Run run)
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * SerializableDifficultyDef - "Tempest" - Base
+             */
+            yield break;
+        }
+
+        public override void OnRunEnd(Run run)
         {
             TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit = defMonsterCap;
             TeamCatalog.GetTeamDef(TeamIndex.Void).softCharacterLimit = defMonsterCap;
             TeamCatalog.GetTeamDef(TeamIndex.Lunar).softCharacterLimit = defMonsterCap;
         }
-    }*/
+
+        public override void OnRunStart(Run run)
+        {
+            defMonsterCap = TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit;
+        }
+    }
 }

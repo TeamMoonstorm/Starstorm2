@@ -2,7 +2,7 @@
 using RoR2.Achievements.Artifacts;
 namespace SS2.Unlocks.Artifacts
 {
-    public sealed class HavocUnlockable : UnlockableBase
+    /*public sealed class HavocUnlockable : UnlockableBase
     {
         public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.artifact.havoc", SS2Bundle.Artifacts);
 
@@ -15,5 +15,5 @@ namespace SS2.Unlocks.Artifacts
         {
             public override ArtifactDef artifactDef => SS2Content.Artifacts.Havoc;
         }
-    }
+    }*/
 }

@@ -8,6 +8,9 @@ using UnityEngine;
 
 namespace SS2
 {
+    /// <summary>
+    /// <inheritdoc cref="IArtifactContentPiece"/>
+    /// </summary>
     public abstract class SS2Artifact : IArtifactContentPiece
     {
         public abstract NullableRef<ArtifactCode> ArtifactCode { get; }

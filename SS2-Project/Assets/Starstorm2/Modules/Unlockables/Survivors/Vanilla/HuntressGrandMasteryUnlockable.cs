@@ -2,7 +2,7 @@
 using UnityEngine;
 namespace SS2.Unlocks.VanillaSurvivors
 {
-    public sealed class HuntressGrandMasteryUnlockable : UnlockableBase
+    /*public sealed class HuntressGrandMasteryUnlockable : UnlockableBase
     {
         public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skin.huntress.grandmastery", SS2Bundle.Vanilla);
 
@@ -12,5 +12,5 @@ namespace SS2.Unlocks.VanillaSurvivors
 
             public override CharacterBody RequiredCharacterBody { get; set; } = Resources.Load<GameObject>("prefabs/characterbodies/huntressbody").GetComponent<CharacterBody>();
         }
-    }
+    }*/
 }

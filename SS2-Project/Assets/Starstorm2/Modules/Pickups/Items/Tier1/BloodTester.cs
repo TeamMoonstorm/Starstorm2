@@ -1,14 +1,25 @@
-﻿using RoR2;
+﻿using MSU;
+using MSU.Config;
+using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Items;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
 namespace SS2.Items
 {
     public sealed class BloodTester : SS2Item
     {
         private const string token = "SS2_ITEM_BLOODTESTER_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("BloodTester", SS2Bundle.Items);
+
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of health regeneration granted per 25 gold, per stack. (1 = 1 hp/s)")]
-        [FormatToken(token,   0)]
+        [FormatToken(token, 0)]
         public static float healthRegen = 0.4f;
 
         public override void Initialize()
@@ -21,6 +32,19 @@ namespace SS2.Items
             int stack = sender.inventory?.GetItemCount(SS2Content.Items.BloodTester) ?? 0;
             if (stack > 0)
                 args.baseRegenAdd += (healthRegen * stack) * sender.master.money / Run.instance.GetDifficultyScaledCost(25);
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * ItemDef - "BloodTester"
+             */
+            yield break;
         }
 
         // need to force recalculatestats to make regen update with money

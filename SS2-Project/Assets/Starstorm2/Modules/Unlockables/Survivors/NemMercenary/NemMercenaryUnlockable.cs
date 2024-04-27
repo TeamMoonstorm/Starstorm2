@@ -3,7 +3,7 @@ using RoR2.Achievements;
 using UnityEngine;
 namespace SS2.Unlocks.NemMercenary
 {
-    public sealed class NemMercenaryUnlockable : UnlockableBase
+    /*public sealed class NemMercenaryUnlockable : UnlockableBase
     {
         public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.survivor.nemmerc", SS2Bundle.NemMercenary);
 
@@ -55,5 +55,5 @@ namespace SS2.Unlocks.NemMercenary
                 }
             }
         }
-    }
+    }*/
 }

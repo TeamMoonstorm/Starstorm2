@@ -9,7 +9,7 @@ namespace SS2
         {
             get
             {
-                return Path.Combine(SS2Assets.Instance.AssemblyDir, "soundbanks");
+                return Path.Combine(Path.GetDirectoryName(SS2Main.Instance.Info.Location), "soundbanks");
             }
         }
 

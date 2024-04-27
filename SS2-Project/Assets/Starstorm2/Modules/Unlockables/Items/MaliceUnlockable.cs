@@ -2,7 +2,7 @@
 using RoR2.Achievements;
 namespace SS2.Unlocks.Pickups
 {
-    public sealed class MaliceUnlockable : UnlockableBase
+    /*public sealed class MaliceUnlockable : UnlockableBase
     {
         public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.item.malice", SS2Bundle.Items);
 
@@ -39,5 +39,5 @@ namespace SS2.Unlocks.Pickups
                 }
             }
         }
-    }
+    }*/
 }

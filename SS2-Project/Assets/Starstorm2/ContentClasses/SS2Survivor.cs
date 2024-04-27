@@ -11,6 +11,9 @@ using RoR2.ContentManagement;
 
 namespace SS2
 {
+    /// <summary>
+    /// <inheritdoc cref="ISurvivorContentPiece"/>
+    /// </summary>
     public abstract class SS2Survivor : ISurvivorContentPiece
     {
         public abstract SurvivorDef SurvivorDef { get; }

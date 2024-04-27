@@ -1,4 +1,5 @@
-﻿using RoR2;
+﻿using MSU;
+using RoR2;
 using RoR2.Orbs;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace EntityStates.Executioner
 {
     public class FireTaser : BaseSkillState
     {
-        [FormatToken("SS2_EXECUTIONER_TASER_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_EXECUTIONER_TASER_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float damageCoefficient;
         public static float procCoefficient = 0.75f;
         public static float baseDuration = 0.4f;

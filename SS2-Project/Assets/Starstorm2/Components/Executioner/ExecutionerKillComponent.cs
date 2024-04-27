@@ -23,7 +23,7 @@ namespace SS2.Components
             int orbCount = 1;
             CharacterBody body = GetComponent<CharacterBody>();
             if (body)
-                orbCount = Executioner.GetIonCountFromBody(body);
+                orbCount = SS2.Survivors.Executioner2.GetIonCountFromBody(body);
             /*if (report.attackerBody.skillLocator.secondary.stock == 0 || report.damageInfo.damageType.HasFlag(DamageType.Shock5s))
                 orbCount *= 0;*/
             if (report.victimBody.teamComponent.teamIndex == TeamIndex.Lunar)

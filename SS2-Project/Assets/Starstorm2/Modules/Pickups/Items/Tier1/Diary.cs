@@ -32,17 +32,11 @@ namespace SS2.Items
 
         public override IEnumerator LoadContentAsync()
         {
-            ParallelAssetLoadCoroutineHelper helper = new ParallelAssetLoadCoroutineHelper();
-
-            helper.AddAssetToLoad<ItemDef>("Diary", SS2Bundle.Items);
-            helper.AddAssetToLoad<ItemDef>("DiaryConsumed", SS2Bundle.Items);
-
-            helper.Start();
-            while (!helper.IsDone())
-                yield return null;
-
-            _itemDef = helper.GetLoadedAsset<ItemDef>("Diary");
-            _consumedItemDef = helper.GetLoadedAsset<ItemDef>("DiaryConsumed");
+            /*
+             * ItemDef - "Diary" - Items
+             * ItemDef - "DiaryConsumed" - Items
+             */
+            yield break;
         }
 
         public void ModifyContentPack(ContentPack contentPack)
@@ -51,7 +45,7 @@ namespace SS2.Items
         }
 
         //I have a hunch this could be done without a body behaviour, cant bother with it rn tho. -N
-        public sealed class Behavior : BaseItemMasterBehavior
+        public sealed class Behavior : BaseItemMasterBehaviour
         {
             //plays the diary sfx only if players can see the experience bar being affected
             public static void PlayDiarySFXLocal(GameObject holderBodyobject)

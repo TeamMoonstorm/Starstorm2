@@ -91,10 +91,10 @@ namespace SS2.Components
                 // only when no new target
                 if (canProcGadget)
                 {
-                    List<HealthComponent> uniqueObjects = new List<HealthComponent>();
+                    HashSet<HealthComponent> uniqueObjects = new HashSet<HealthComponent>();
                     for (int i = 0; i < this.bouncedObjects.Count; i++)
                     {
-                        uniqueObjects.AddIfNotInCollection(this.bouncedObjects[i]);
+                        uniqueObjects.Add(this.bouncedObjects[i]);
                     }
                     int bounces = uniqueObjects.Count;
                     HurtBox hurtBox = this.PickNextTarget(this.target.transform.position, this.target.healthComponent);
@@ -118,7 +118,7 @@ namespace SS2.Components
                     lightningOrb.canBounceOnSameTarget = this.canBounceOnSameTarget;
                     OrbManager.instance.AddOrb(lightningOrb);
 
-                    EffectManager.SimpleEffect(procEffectPrefab, this.target.transform.position, Quaternion.identity, true);
+                    //EffectManager.SimpleEffect(procEffectPrefab, this.target.transform.position, Quaternion.identity, true);
                 }
 
             }

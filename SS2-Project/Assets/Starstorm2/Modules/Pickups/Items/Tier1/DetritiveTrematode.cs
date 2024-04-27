@@ -2,26 +2,56 @@
 using RoR2;
 using RoR2.Items;
 using UnityEngine;
+using MSU;
+using System.Collections.Generic;
+using RoR2.ContentManagement;
+using System.Collections;
+using MSU.Config;
+
 namespace SS2.Items
 {
     public sealed class DetritiveTrematode : SS2Item
     {
         private const string token = "SS2_ITEM_DETRITIVETREMATODE_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("DetritiveTrematode", SS2Bundle.Items);
+
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigNameOverride = "Trematode Threshold", ConfigDescOverride = "Amount of missing health needed for Trematode to proc. (1 = 100%)")]
-        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float missingHealthPercentage = 0.30f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigNameOverride = "Trematode Threshold Per Stack", ConfigDescOverride = "Increase in missing health threshold, per stack. (1 = 100%)")]
-        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 1, "100")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float missingHealthPercentagePerStack = 0.15f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Damage dealt by the Trematode debuff, per second. (1 = 100%)")]
-        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 2, "100")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
         public static float trematodeDamage = 1f;
 
-        public static GameObject biteEffect = SS2Assets.LoadAsset<GameObject>("TrematodeBiteEffect", SS2Bundle.Items);
+        private static DotController.DotIndex _trematodeDotIndex;
+        private static GameObject _biteEffect;
+        public override void Initialize()
+        {
+
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * ItemDef - "DetritiveTrematode" - Items
+             * GameObject - "TrematodeBiteEffect" - Items
+             */
+            yield break;
+        }
+
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
         {
             [ItemDefAssociation]
@@ -37,9 +67,6 @@ namespace SS2.Items
                 var attacker = report.attacker;
                 bool hasDot = false;
 
-                //var dotController = DotController.FindDotController(victim.gameObject);               
-                //if (dotController)
-                //    hasDot = dotController.HasDotActive(Trematodes.index);
                 hasDot = victim.body.HasBuff(SS2Content.Buffs.BuffTrematodes);
                 // dots apparently dont get updated instantly???? so we can apply multiple of the same dot before HasDotActive returns true. hopo game
 
@@ -56,10 +83,9 @@ namespace SS2.Items
                 //1 = 30%
                 //5 = 65%
                 // 9 = 105%
-                //float requiredHealthPercentage = missingHealthPercentage + missingHealthPercentagePerStack * (stack - 1);
-                if (victim.combinedHealthFraction < requiredHealthPercentage && !hasDot && report.damageInfo.dotIndex != Trematodes.index && (victim.gameObject != attacker))
+                if (victim.combinedHealthFraction < requiredHealthPercentage && !hasDot && report.damageInfo.dotIndex != _trematodeDotIndex && (victim.gameObject != attacker))
                 {
-                    
+
                     // do the first tick instantly
                     DamageInfo damageInfo = new DamageInfo();
                     damageInfo.attacker = base.gameObject;
@@ -71,20 +97,20 @@ namespace SS2.Items
                     damageInfo.procCoefficient = 0f;
                     damageInfo.damageColorIndex = DamageColorIndex.Item;
                     damageInfo.damageType = DamageType.DoT;
-                    damageInfo.dotIndex = Trematodes.index;
+                    damageInfo.dotIndex = _trematodeDotIndex;
                     victim.TakeDamage(damageInfo);
 
                     var dotInfo = new InflictDotInfo()
                     {
                         attackerObject = attacker,
                         victimObject = victim.gameObject,
-                        dotIndex = Trematodes.index,
+                        dotIndex = _trematodeDotIndex,
                         duration = Mathf.Infinity,
                         damageMultiplier = trematodeDamage * stack,
                     };
                     DotController.InflictDot(ref dotInfo);
 
-                    EffectManager.SimpleEffect(biteEffect, report.damageInfo.position, Quaternion.identity, true);
+                    EffectManager.SimpleEffect(_biteEffect, report.damageInfo.position, Quaternion.identity, true);
                 }
             }
         }

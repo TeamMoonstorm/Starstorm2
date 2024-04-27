@@ -3,7 +3,7 @@ using RoR2.Achievements;
 namespace SS2.Unlocks.Chirr
 {
 
-    public sealed class ChirrUnlockable : UnlockableBase
+    /*public sealed class ChirrUnlockable : UnlockableBase
     {
         public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.survivor.chirr", SS2Bundle.Chirr);
 
@@ -39,5 +39,5 @@ namespace SS2.Unlocks.Chirr
             }
         }
         
-    }
+    }*/
 }

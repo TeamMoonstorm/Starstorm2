@@ -2,7 +2,7 @@
 using UnityEngine;
 namespace SS2.Unlocks.VanillaSurvivors
 {
-    public class CrocoGrandMasteryUnlockable : UnlockableBase
+    /*public class CrocoGrandMasteryUnlockable : UnlockableBase
     {
         public override MSUnlockableDef UnlockableDef => SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skin.croco.grandmastery", SS2Bundle.Vanilla);
 
@@ -12,5 +12,5 @@ namespace SS2.Unlocks.VanillaSurvivors
 
             public override CharacterBody RequiredCharacterBody { get; set; } = Resources.Load<GameObject>("prefabs/characterbodies/crocobody").GetComponent<CharacterBody>();
         }
-    }
+    }*/
 }

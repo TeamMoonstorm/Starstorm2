@@ -4,6 +4,7 @@ using R2API;
 using RoR2;
 using RoR2.ContentManagement;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 namespace SS2.Items
@@ -46,18 +47,13 @@ namespace SS2.Items
 
         public override IEnumerator LoadContentAsync()
         {
-            ParallelAssetLoadCoroutineHelper helper = new ParallelAssetLoadCoroutineHelper();
+            /*
+             * BuffDef - "BuffCoffeeBag" - Items
+             * ItemDef - "CoffeeBag" - Items
+             * GameObject - "CoffeeBeanPickup" - Items
+             */
 
-            helper.AddAssetToLoad<BuffDef>("BuffCoffeeBag", SS2Bundle.Items);
-            helper.AddAssetToLoad<ItemDef>("CoffeeBag", SS2Bundle.Items);
-            helper.AddAssetToLoad<GameObject>("CoffeeBeanPickup", SS2Bundle.Items);
-
-            helper.Start();
-            while (!helper.IsDone()) yield return null;
-
-            _buffDef = helper.GetLoadedAsset<BuffDef>("BuffCoffeeBag");
-            _itemDef = helper.GetLoadedAsset<ItemDef>("CoffeeBag");
-            _coffeeBean = helper.GetLoadedAsset<GameObject>("CoffeeBeanPickup");
+            yield break;
         }
 
         private void CalculateStatsCoffeeBag(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)

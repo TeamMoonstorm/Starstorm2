@@ -2,6 +2,7 @@
 using RoR2;
 using RoR2.Projectile;
 using UnityEngine;
+using MSU;
 
 namespace EntityStates.NemCommando
 {
@@ -11,7 +12,7 @@ namespace EntityStates.NemCommando
 
         public static float maxEmission;
         public static float minEmission;
-        [FormatToken("SS2_NEMMANDO_SECONDARY_CONCUSSION_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_NEMMANDO_SECONDARY_CONCUSSION_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float damageCoefficient;
         public static float procCoefficient;
         public static float maxRecoil;

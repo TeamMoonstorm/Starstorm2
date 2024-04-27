@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 namespace SS2.Unlocks.NemMercenary
 {
-    public sealed class NemMercenarySlideUnlock : UnlockableBase
+    /*public sealed class NemMercenarySlideUnlock : UnlockableBase
     {
         public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skill.nemmerc.slide", SS2Bundle.NemMercenary);
 
@@ -140,5 +140,5 @@ namespace SS2.Unlocks.NemMercenary
 
           
         }
-    }
+    }*/
 }

@@ -1,4 +1,5 @@
-﻿using RoR2;
+﻿using MSU;
+using RoR2;
 using UnityEngine;
 
 namespace EntityStates.Nemmando
@@ -7,12 +8,12 @@ namespace EntityStates.Nemmando
     {
         public float charge;
 
-        [FormatToken("SS2_NEMMANDO_SPECIAL_SCEPSUBMISSION_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 2, "100")]
+        [FormatToken("SS2_NEMMANDO_SPECIAL_SCEPSUBMISSION_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
         public static float laserDamageCoefficient;
         public static float laserBlastRadius;// = 8f;
         public static float laserBlastForce;// = 2000f;
 
-        [FormatToken("SS2_NEMMANDO_SPECIAL_SCEPSUBMISSION_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 1, "100")]
+        [FormatToken("SS2_NEMMANDO_SPECIAL_SCEPSUBMISSION_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float damageCoefficient = 0.6f;
         public static float procCoefficient = 0.5f;
         public static uint bulletCountPerShot = 4;

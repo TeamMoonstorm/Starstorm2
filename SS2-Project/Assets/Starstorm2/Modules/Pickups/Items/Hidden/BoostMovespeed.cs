@@ -4,6 +4,7 @@ using RoR2;
 using System.Collections;
 using UnityEngine;
 using RoR2.ContentManagement;
+using System.Collections.Generic;
 
 namespace SS2.Items
 {

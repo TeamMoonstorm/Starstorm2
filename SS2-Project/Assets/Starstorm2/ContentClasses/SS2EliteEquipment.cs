@@ -11,6 +11,9 @@ using RoR2.ContentManagement;
 
 namespace SS2
 {
+    /// <summary>
+    /// <inheritdoc cref="IEliteContentPiece"/>
+    /// </summary>
     public abstract class SS2EliteEquipment : IEliteContentPiece
     {
         public abstract List<EliteDef> EliteDefs { get; }

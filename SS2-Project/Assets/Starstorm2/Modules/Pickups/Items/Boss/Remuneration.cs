@@ -2,6 +2,7 @@
 using RoR2;
 using RoR2.ContentManagement;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 namespace SS2.Items
 {
@@ -36,17 +37,11 @@ namespace SS2.Items
 
         public override IEnumerator LoadContentAsync()
         {
-            ParallelAssetLoadCoroutineHelper helper = new ParallelAssetLoadCoroutineHelper();
-
-            helper.AddAssetToLoad<GameObject>("RemunerationController", SS2Bundle.Items);
-            helper.AddAssetToLoad<ItemDef>("Remuneration", SS2Bundle.Items);
-
-            helper.Start();
-            while (!helper.IsDone())
-                yield return null;
-
-            _itemDef = helper.GetLoadedAsset<ItemDef>("Remuneration");
-            remunerationControllerPrefab = helper.GetLoadedAsset<GameObject>("RemunerationController");
+            /*
+             * GameObject - "RemunerationController" - Items
+             * ItemDef - "Remuneration" - Items
+             */
+            yield break;
         }
 
         // this works for all sibylline items but i dont know where to put general hooks like that
@@ -67,7 +62,7 @@ namespace SS2.Items
             }
         }
 
-        public sealed class RemunerationBehavior : BaseItemMasterBehavior
+        public sealed class RemunerationBehavior : BaseItemMasterBehaviour
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.Remuneration;

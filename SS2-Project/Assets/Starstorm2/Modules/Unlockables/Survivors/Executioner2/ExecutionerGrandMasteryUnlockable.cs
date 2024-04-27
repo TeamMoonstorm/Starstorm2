@@ -2,7 +2,7 @@
 using UnityEngine;
 namespace SS2.Unlocks.Executioner2
 {
-    public sealed class Executioner2GrandMasteryUnlockable : UnlockableBase
+    /*public sealed class Executioner2GrandMasteryUnlockable : UnlockableBase
     {
         public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skin.executioner2.grandmastery", SS2Bundle.Executioner2);
 
@@ -12,5 +12,5 @@ namespace SS2.Unlocks.Executioner2
 
             public override CharacterBody RequiredCharacterBody { get; set; } = SS2Assets.LoadAsset<GameObject>("Executioner2Body", SS2Bundle.Executioner2).GetComponent<CharacterBody>();
         }
-    }
+    }*/
 }

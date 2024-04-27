@@ -2,7 +2,7 @@
 using RoR2.Achievements;
 namespace SS2.Unlocks.Pickups
 {
-    public sealed class StrangeCanUnlockable : UnlockableBase
+    /*public sealed class StrangeCanUnlockable : UnlockableBase
     {
         public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.item.strangecan", SS2Bundle.Indev);
 
@@ -44,5 +44,5 @@ namespace SS2.Unlocks.Pickups
                 }
             }
         }
-    }
+    }*/
 }

@@ -2,7 +2,7 @@
 using static R2API.DamageAPI;
 namespace SS2.Projectiles
 {
-    public sealed class NemmandoDistantGashBlue : ProjectileBase
+    /*public sealed class NemmandoDistantGashBlue : ProjectileBase
     {
         public override GameObject ProjectilePrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemCommandoSwordBeamProjectileBlue", SS2Bundle.NemCommando);
 
@@ -11,5 +11,5 @@ namespace SS2.Projectiles
             var damageAPIComponent = ProjectilePrefab.AddComponent<ModdedDamageTypeHolderComponent>();
             damageAPIComponent.Add(DamageTypes.Gouge.gougeDamageType);
         }
-    }
+    }*/
 }

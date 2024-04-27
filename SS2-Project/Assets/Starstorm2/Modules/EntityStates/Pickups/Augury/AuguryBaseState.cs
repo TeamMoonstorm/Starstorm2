@@ -5,7 +5,7 @@ namespace EntityStates.Pickups.Augury
     public abstract class AuguryBaseState : BaseBodyAttachmentState
     {
         protected AuguryEffectController auguryEffect;
-        protected SS2.Items.Augury.Behavior auguryBehavior;
+        protected SS2.Items.Augury.AuguryBehavior auguryBehavior;
 
         public override void OnEnter()
         {
@@ -14,7 +14,7 @@ namespace EntityStates.Pickups.Augury
             if (!cLoc)
                 return;
             auguryEffect = cLoc.FindChild("Center")?.GetComponent<AuguryEffectController>();
-            auguryBehavior = attachedBody.GetComponent<SS2.Items.Augury.Behavior>();
+            auguryBehavior = attachedBody.GetComponent<SS2.Items.Augury.AuguryBehavior>();
         }
     }
 }

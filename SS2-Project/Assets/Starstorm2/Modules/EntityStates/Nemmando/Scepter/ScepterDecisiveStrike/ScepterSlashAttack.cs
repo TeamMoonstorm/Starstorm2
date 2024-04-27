@@ -6,16 +6,17 @@ using RoR2.Orbs;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using MSU;
+
 namespace EntityStates.Nemmando
 {
     public class ScepterSlashAttack : BaseSkillState
     {
         public static float baseDuration;
-        //[FormatToken("SS2_NEMMANDO_SPECIAL_BOSS_DESCRIPTION",   0)]
         [FormatToken("SS2_NEMMANDO_SPECIAL_SCEPBOSS_DESCRIPTION",   0)]
         public static int maxHits;
         public static int minHits;
-        [FormatToken("SS2_NEMMANDO_SPECIAL_SCEPBOSS_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 1, "100")]
+        [FormatToken("SS2_NEMMANDO_SPECIAL_SCEPBOSS_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float maxDamageCoefficient;
         public static float minDamageCoefficient;
         public static float maxRadius;
@@ -28,11 +29,6 @@ namespace EntityStates.Nemmando
         public static GameObject stunEffectPrefab; //NemmandoImpactSlashEffect
 
         public float charge;
-        //public static float baseDuration = 2.5f;
-        //public static int baseHitCount = 12;
-        //public static float damageCoefficient = 3.8f;
-        //public static float radius = 64f;
-        //public static float swordEmission = 350f;
 
         private float hitStopwatch;
         private int hitCount;
@@ -58,7 +54,7 @@ namespace EntityStates.Nemmando
             base.OnEnter();
             characterBody.isSprinting = false;
             hitsFired = 0;
-            hitCount = Mathf.RoundToInt(Util.Remap(charge, 0f, 1f, minHits, maxHits)); //(int)(baseHitCount * attackSpeedStat);
+            hitCount = Mathf.RoundToInt(Util.Remap(charge, 0f, 1f, minHits, maxHits)); 
 
             SS2Log.Debug("hit count inital: " + hitCount + "| " + characterBody.attackSpeed);
             int hitCountModified = (int)(hitCount * characterBody.attackSpeed);
@@ -121,7 +117,6 @@ namespace EntityStates.Nemmando
                         };
                         EffectManager.SpawnEffect(slashEffectPrefab, effect, true);
 
-                        //Util.PlaySound(effectComponent.impactSoundDef.eventName, i.gameObject);
                         Util.PlaySound(EntityStates.Merc.GroundLight.hitSoundString, gameObject);
 
                         DamageInfo damageInfo = new DamageInfo();
@@ -130,8 +125,7 @@ namespace EntityStates.Nemmando
                         damageInfo.procCoefficient = 1f;
                         damageInfo.position = hurtbox.transform.position; 
                         damageInfo.crit = isCrit;
-                        //damageInfo.damageType = (DamageType)Gouge.gougeDamageType;
-                        DamageAPI.AddModdedDamageType(damageInfo, Gouge.gougeDamageType);
+                        DamageAPI.AddModdedDamageType(damageInfo, SS2.Survivors.NemCommando.GougeDamageType);
 
                         hurtbox.healthComponent.TakeDamage(damageInfo);
                         GlobalEventManager.instance.OnHitEnemy(damageInfo, hurtbox.healthComponent.gameObject);

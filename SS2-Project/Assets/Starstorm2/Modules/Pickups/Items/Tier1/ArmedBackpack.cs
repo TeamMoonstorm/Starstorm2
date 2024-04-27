@@ -1,27 +1,51 @@
-﻿using RoR2;
+﻿using MSU;
+using MSU.Config;
+using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Items;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 namespace SS2.Items
 {
-    //[DisabledContent]
     public sealed class ArmedBackpack : SS2Item
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ArmedBackpack", SS2Bundle.Items);
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Damage dealt by the missle per stack. (1 = 100%)")]
-        [FormatToken("SS2_ITEM_ARMEDBACKPACK_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_ITEM_ARMEDBACKPACK_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float backpackDamageCoeff = 4f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Proc multiplier per percentage of health lost. (1 = 100% of health fraction lost)")]
-        [FormatToken("SS2_ITEM_ARMEDBACKPACK_DESC",   1)]
+        [FormatToken("SS2_ITEM_ARMEDBACKPACK_DESC", 1)]
         public static float procMult = 2.5f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Minimum chance for fired missile. (1 = 1% chance)")]
-        [FormatToken("SS2_ITEM_ARMEDBACKPACK_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 2, "100")]
+        [FormatToken("SS2_ITEM_ARMEDBACKPACK_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
         public static float procMinimum = 0;
 
         public static ProcChainMask ignoredProcs;
-        public GameObject missilePrefab;
+
+
+        public override void Initialize()
+        {
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * ItemDef - "ArmedBackpack" - Items
+             */
+            yield break;
+        }
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnTakeDamageServerReceiver
         {
@@ -36,7 +60,6 @@ namespace SS2.Items
                     var playerBody = damageReport.victimBody;
                     var rollChance = percentHPLoss > procMinimum ? percentHPLoss : procMinimum;
 
-                    //SS2Log.Debug("chance was: " + rollChance);
                     if (Util.CheckRoll(rollChance, playerBody.master))
                     {
                         float damageCoefficient = backpackDamageCoeff * stack;
@@ -49,7 +72,6 @@ namespace SS2.Items
                         {
                             attacker = null; //this prevents it from firing into blood shrines and i guess yourself/teammates if that lunar active is involved
                         }
-                        //var missleObject = GlobalEventManager.CommonAssets.missilePrefab;
                         MissileUtils.FireMissile(
                             playerBody.corePosition,
                             playerBody,

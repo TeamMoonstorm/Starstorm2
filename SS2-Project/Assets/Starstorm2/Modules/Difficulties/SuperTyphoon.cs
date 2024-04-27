@@ -1,31 +1,28 @@
 ﻿using MSU.Config;
 using R2API;
+using R2API.ScriptableObjects;
 using RoR2;
+using RoR2.ContentManagement;
+using System.Collections;
 using UnityEngine.Networking;
 namespace SS2
 {
-    
-    //TODO: Create proper difficulty module home-made
-    /*public static class SuperTyphoon
-    {
-        public static R2API.ScriptableObjects.SerializableDifficultyDef SuperTyphoonDef { get; private set; }
-        public static DifficultyIndex SuperTyphoonIndex { get => SuperTyphoonDef.DifficultyIndex; }
 
-        private static int defMonsterCap;
+    //TODO: Create proper difficulty module home-made
+    public class SuperTyphoon : SS2Difficulty
+    {
+        public override SerializableDifficultyDef DifficultyDef => _difficultyDef;
+        private SerializableDifficultyDef _difficultyDef;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_MAIN, ConfigSectionOverride = "Super Typhoon", ConfigNameOverride = "Increase Team Limit", ConfigDescOverride = "Multiplies the Monster, Lunar, and Void Team maximum size by 3 when enabled. May affect performance.")]
         internal static bool IncreaseSpawnCapST = true;
 
-        private static RuleChoiceDef rcd;
+        private int defMonsterCap;
 
-        internal static void Init()
+
+        public override void Initialize()
         {
-            SuperTyphoonDef = SS2Assets.LoadAsset<R2API.ScriptableObjects.SerializableDifficultyDef>("SuperTyphoon", SS2Bundle.Base);
-            //SuperTyphoonDef.hideFromDifficultySelection = true; // THANK YOU NEBBY
-            DifficultyAPI.AddDifficulty(SuperTyphoonDef);
-            Run.onRunStartGlobal += Run_onRunStartGlobal;
-            Run.onRunDestroyGlobal += Run_onRunDestroyGlobal;
-
+            /*
             //On.RoR2.UI.MPEventSystemLocator.Awake += MPEventSystemLocator_Awake;
 
             //On.RoR2.UI.RuleBookViewer.Awake += 
@@ -35,10 +32,47 @@ namespace SS2
             superTyphoonRCD.globalName = superTyphoonRuleDef.globalName + "." + "SS2_DIFFICULTY_SUPERTYPHOON_NAME";
             superTyphoonRCD.extraData = null;
             superTyphoonRCD.excludeByDefault = true;
-            superTyphoonRCD.difficultyIndex = SuperTyphoonIndex;*/
+            superTyphoonRCD.difficultyIndex = SuperTyphoonIndex;
+            */
         }
 
-        //bad ending
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * SerializableDifficultyDef - "SuperTyphoon" - Base
+             */
+            yield break;
+        }
+
+        public override void OnRunEnd(Run run)
+        {
+            TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit = defMonsterCap;
+            TeamCatalog.GetTeamDef(TeamIndex.Void).softCharacterLimit = defMonsterCap;
+            TeamCatalog.GetTeamDef(TeamIndex.Lunar).softCharacterLimit = defMonsterCap;
+        }
+
+        public override void OnRunStart(Run run)
+        {
+            defMonsterCap = TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit;
+
+            foreach (CharacterMaster cm in run.userMasters.Values)
+                if (NetworkServer.active)
+                    cm.inventory.GiveItem(RoR2Content.Items.MonsoonPlayerHelper.itemIndex);
+
+            if (IncreaseSpawnCapST)
+            {
+                TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit *= 3;
+                TeamCatalog.GetTeamDef(TeamIndex.Void).softCharacterLimit *= 3;
+                TeamCatalog.GetTeamDef(TeamIndex.Lunar).softCharacterLimit *= 3;
+            }
+        }
+
+        //Bad Ending
         /*private static void MPEventSystemLocator_Awake(On.RoR2.UI.MPEventSystemLocator.orig_Awake orig, MPEventSystemLocator self)
         {
             Debug.Log("I EXIST!!! IM REAL!!!!");
@@ -55,30 +89,6 @@ namespace SS2
                 }
             }
             orig(self);
-        }*
-
-        private static void Run_onRunStartGlobal(Run run)
-        {
-            defMonsterCap = TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit;
-            if (run.selectedDifficulty == SuperTyphoonIndex)
-            {
-                foreach (CharacterMaster cm in run.userMasters.Values)
-                    if (NetworkServer.active)
-                        cm.inventory.GiveItem(RoR2Content.Items.MonsoonPlayerHelper.itemIndex);
-                if (IncreaseSpawnCapST)
-                {
-                    TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit *= 3;
-                    TeamCatalog.GetTeamDef(TeamIndex.Void).softCharacterLimit *= 3;
-                    TeamCatalog.GetTeamDef(TeamIndex.Lunar).softCharacterLimit *= 3;
-                }
-            }
-        }
-
-        private static void Run_onRunDestroyGlobal(Run run)
-        {
-            TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit = defMonsterCap;
-            TeamCatalog.GetTeamDef(TeamIndex.Void).softCharacterLimit = defMonsterCap;
-            TeamCatalog.GetTeamDef(TeamIndex.Lunar).softCharacterLimit = defMonsterCap;
-        }
+        }*/
     }
-}*/
+}

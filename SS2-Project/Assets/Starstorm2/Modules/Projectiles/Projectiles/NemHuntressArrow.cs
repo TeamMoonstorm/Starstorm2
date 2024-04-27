@@ -2,7 +2,7 @@
 using static R2API.DamageAPI;
 namespace SS2.Projectiles
 {
-    public sealed class NemHuntressArrow : ProjectileBase
+    /*public sealed class NemHuntressArrow : ProjectileBase
     {
         public override GameObject ProjectilePrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemHuntressArrowProjectile", SS2Bundle.Indev);
 
@@ -11,5 +11,5 @@ namespace SS2.Projectiles
             var damageAPIComponent = ProjectilePrefab.AddComponent<ModdedDamageTypeHolderComponent>();
             damageAPIComponent.Add(DamageTypes.WeakPointProjectile.weakPointProjectile);
         }
-    }
+    }*/
 }

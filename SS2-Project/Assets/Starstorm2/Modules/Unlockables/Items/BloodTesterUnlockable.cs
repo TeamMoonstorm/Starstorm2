@@ -2,7 +2,7 @@
 using RoR2.Achievements;
 namespace SS2.Unlocks.Pickups
 {
-    public sealed class BloodTesterUnlockable : UnlockableBase
+    /*public sealed class BloodTesterUnlockable : UnlockableBase
     {
         public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.item.bloodtester", SS2Bundle.Indev);
 
@@ -45,5 +45,5 @@ namespace SS2.Unlocks.Pickups
                 }
             }
         }
-    }
+    }*/
 }

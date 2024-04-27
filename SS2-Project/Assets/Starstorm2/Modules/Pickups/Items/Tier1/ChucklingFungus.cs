@@ -4,39 +4,52 @@ using RoR2;
 using RoR2.Items;
 using UnityEngine.Networking;
 using System.Linq;
+using MSU;
+using RoR2.ContentManagement;
+using System.Collections;
+
 namespace SS2.Items
 {
-    public sealed class ChucklingFungus : SS2Item
+    //N: This is so fucking epic
+    public sealed class ChucklingFungus : SS2VoidItem
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ChucklingFungus", SS2Bundle.Items);
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
 
-        public static GameObject ChungusWard { get; set; } = SS2Assets.LoadAsset<GameObject>("ChungusWard", SS2Bundle.Items);
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
+        private ItemDef _dungusItem;
+        private static GameObject _chungusWard;
 
         public static float baseHealFractionPerSecond = 0.055f;
 
         public static float healFractionPerSecondPerStack = 0.0275f;
 
-        public override void Initialize()
+        public override List<ItemDef> GetInfectableItems()
         {
-            base.Initialize();
-            On.RoR2.Items.ContagiousItemManager.Init += AddPair;
+            return new List<ItemDef>
+            {
+                _dungusItem
+            };
         }
 
-        private void AddPair(On.RoR2.Items.ContagiousItemManager.orig_Init orig)
+        public override void Initialize()
         {
-            List<ItemDef.Pair> newVoidPairs = new List<ItemDef.Pair>();
+        }
 
-            ItemDef.Pair chungusPair = new ItemDef.Pair()
-            {
-                itemDef1 = SS2Content.Items.DormantFungus,
-                itemDef2 = ItemDef
-            };
-            newVoidPairs.Add(chungusPair);
+        //Should return true only if dungus is available as well, unsure how to do that lol
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return false;
+        }
 
-            var voidPairs = ItemCatalog.itemRelationships[DLC1Content.ItemRelationshipTypes.ContagiousItem];
-            ItemCatalog.itemRelationships[DLC1Content.ItemRelationshipTypes.ContagiousItem] = voidPairs.Union(newVoidPairs).ToArray();
-
-            orig();
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * ItemDef - "ChucklingFungus" - Items
+             * ItemDef - "DormantFungus" - Items
+             * GameObject - "ChungusWard" - Items
+             */
+            yield break;
         }
 
         public sealed class Behavior : BaseItemBodyBehavior
@@ -62,7 +75,7 @@ namespace SS2.Items
 
                         float networkradius = body.radius + 1.5f + 1.5f * stack;
 
-                        wardInstance = Instantiate(ChungusWard, position, Quaternion.identity);
+                        wardInstance = Instantiate(_chungusWard, position, Quaternion.identity);
                         teamFilter = wardInstance.GetComponent<TeamFilter>();
                         healingWard = wardInstance.GetComponent<HealingWard>();
                         NetworkServer.Spawn(wardInstance);

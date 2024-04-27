@@ -1,35 +1,62 @@
-﻿using RoR2;
+﻿using MSU;
+using MSU.Config;
+using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Items;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 namespace SS2.Items
 {
     public sealed class DroidHead : SS2Item
     {
         private const string token = "SS2_ITEM_DROIDHEAD_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("DroidHead", SS2Bundle.Items);
+
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Damage dealt by Security Drones, at base and per stack. Percentage (1 = 100%)")]
-        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float baseDamage = 1f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base life time of the Security Drone, in seconds.")]
-        [FormatToken(token,   1)]
+        [FormatToken(token, 1)]
         public static float baseLifeTime = 20f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Life time of the Security Drone per stack, in seconds.")]
-        [FormatToken(token,   2)]
+        [FormatToken(token, 2)]
         public static float stackLifeTime = 10f;
 
+        private static GameObject _droidDroneMaster;
+
+        public override void Initialize()
+        {
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * ItemDef - "DroidHead" - Items
+             * GameObject - "DroidDroneMaster" - Items
+             */
+            yield break;
+        }
         public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.DroidHead;
 
-            GameObject masterPrefab = SS2Assets.LoadAsset<GameObject>("DroidDroneMaster", SS2Bundle.Items);
             public void OnKilledOtherServer(DamageReport damageReport)
             {
                 var victim = damageReport.victimBody;
-                if (victim.inventory) 
+                if (victim.inventory)
                 {
                     var victimEquipment = victim.inventory.GetEquipmentIndex();
                     if (victim.teamComponent.teamIndex != body.teamComponent.teamIndex)
@@ -38,7 +65,7 @@ namespace SS2.Items
                         {
                             var droneSummon = new MasterSummon();
                             droneSummon.position = victim.corePosition + (Vector3.up * 3);
-                            droneSummon.masterPrefab = masterPrefab;
+                            droneSummon.masterPrefab = _droidDroneMaster;
                             droneSummon.summonerBodyObject = body.gameObject;
                             var droneMaster = droneSummon.Perform();
                             if (droneMaster)
@@ -59,20 +86,5 @@ namespace SS2.Items
                 }
             }
         }
-      
-        //[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-        //public void RiskyModCompat(Inventory droidInventory)
-        //{
-        //    //droidInventory.GiveItem(RiskyMod.Allies.AlliesCore.AllyAllowVoidDeathItem);
-        //
-        //    //- RiskyMod.Allies.AlliesCore.AllyMarkerItem
-        //    //- RiskyMod.Allies.AlliesCore.AllyScalingItem
-        //    //- RiskyMod.Allies.AlliesCore.AllyAllowVoidDeathItem(easily - replaced ally, so they get to die to void reaver explosions)
-        //    //- RiskyMod.Allies.AlliesCore.AllyRegenItem, 40 stack
-        //
-        //    //AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(SS2Assets.LoadAsset<SkillDef>("NemmandoScepterSubmission"), "NemmandoBody", SkillSlot.Special, 0);
-        //    //AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(SS2Assets.LoadAsset<SkillDef>("NemmandoScepterBossAttack"), "NemmandoBody", SkillSlot.Special, 1);
-        //}
-
-    }
+    }   
 }

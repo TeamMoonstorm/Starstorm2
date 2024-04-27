@@ -1,9 +1,11 @@
 ﻿using MSU;
 using MSU.Config;
 using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Items;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 namespace SS2.Items
 {
@@ -60,18 +62,12 @@ namespace SS2.Items
 
         public override IEnumerator LoadContentAsync()
         {
-            ParallelAssetLoadCoroutineHelper helper = new ParallelAssetLoadCoroutineHelper();
-
-            helper.AddAssetToLoad<ItemDef>("GreenChocolate", SS2Bundle.Items);
-            helper.AddAssetToLoad<GameObject>("ChocolateEffect", SS2Bundle.Items);
-            helper.AddAssetToLoad<BuffDef>("BuffChocolate", SS2Bundle.Items);
-
-            helper.Start();
-            while (!helper.IsDone()) yield return null;
-
-            _itemDef = helper.GetLoadedAsset<ItemDef>("GreenChocolate");
-            _effect = helper.GetLoadedAsset<GameObject>("ChocolateEffect");
-            _buffDef = helper.GetLoadedAsset<BuffDef>("BuffChocolate");
+            /*
+             * ItemDef - "GreenChocolate" - Items
+             * GameObject - "ChocolateEffect" - Items
+             * BuffDef - "BuffChocolate" - Items
+             */
+            yield break;
         }
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnIncomingDamageServerReceiver

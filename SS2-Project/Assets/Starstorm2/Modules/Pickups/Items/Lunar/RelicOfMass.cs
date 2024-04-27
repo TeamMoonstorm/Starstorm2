@@ -3,20 +3,47 @@ using RoR2;
 using RoR2.Items;
 
 using MSU;
+using System.Collections.Generic;
+using UnityEngine;
+using RoR2.ContentManagement;
+using System.Collections;
+using MSU.Config;
+
 namespace SS2.Items
 {
     public sealed class RelicOfMass : SS2Item
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfMass", SS2Bundle.Items);
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of health increase. (1 = 100%)")]
-        [FormatToken("SS2_ITEM_RELICOFMASS_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_ITEM_RELICOFMASS_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float healthIncrease = 1f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of which acceleration is divided by.")]
-        [FormatToken("SS2_ITEM_RELICOFMASS_DESC",   1)]
+        [FormatToken("SS2_ITEM_RELICOFMASS_DESC", 1)]
         public static float acclMult = 8f;
 
+        public override void Initialize()
+        {
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * ItemDef - "RelicOfMass" - Items
+             */
+            yield break;
+        }
+
+        //N: Maybe this can be reduced to just a RecalcStatsAPI call? that'd be ideal.
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier, IStatItemBehavior
         {
             [ItemDefAssociation]

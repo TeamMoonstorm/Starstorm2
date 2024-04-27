@@ -1,30 +1,54 @@
-﻿using RoR2;
+﻿using MSU;
+using MSU.Config;
+using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Items;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 namespace SS2.Items
 {
     public sealed class Insecticide : SS2Item
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Insecticide", SS2Bundle.Items);
-        public static DotController.DotIndex DotIndex;
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance. (1 = 100%)")]
-        [FormatToken("SS2_ITEM_INSECTICIDE_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_ITEM_INSECTICIDE_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float chance = 1f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Total damage. (1 = 100%)")]
-        [FormatToken("SS2_ITEM_INSECTICIDE_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 1, "100")]
+        [FormatToken("SS2_ITEM_INSECTICIDE_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float damageCoeff = 1.8f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Duration of poison.")]
         public static float duration = 3;
 
-        public static GameObject hitEffect = SS2Assets.LoadAsset<GameObject>("InsecticideEffect", SS2Bundle.Items);
+        private static GameObject _hitEffect;
+
+        public static DotController.DotIndex DotIndex { get; private set; }
         public override void Initialize()
         {
             DotController.onDotInflictedServerGlobal += RefreshInsects;
         }
 
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * ItemDef - "Insecticide" - Items
+             * GameObject - "InsecticideEffect" - Items
+             */
+            yield break;
+        }
+
+        //Remove this as DotAPI can handle refreshment.
         private void RefreshInsects(DotController dotController, ref InflictDotInfo inflictDotInfo)
         {
             if (inflictDotInfo.dotIndex == DotIndex)
@@ -55,14 +79,14 @@ namespace SS2.Items
                     {
                         attackerObject = body.gameObject,
                         victimObject = report.victim.gameObject,
-                        dotIndex = Buffs.Insecticide.index,
+                        dotIndex = DotIndex,
                         duration = report.damageInfo.procCoefficient * duration,
                         damageMultiplier = stack * (damageCoeff / 1.8f)
                     };
                     DotController.InflictDot(ref dotInfo);
 
                     // GOOPY SOUNDS HERE WOULD BE FANTASTIC!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    EffectManager.SimpleEffect(hitEffect, report.damageInfo.position, Quaternion.identity, true);
+                    EffectManager.SimpleEffect(_hitEffect, report.damageInfo.position, Quaternion.identity, true);
                 }
             }
         }

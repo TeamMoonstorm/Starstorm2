@@ -6,42 +6,66 @@ using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using System;
 using EntityStates;
+using MSU;
+using RoR2.ContentManagement;
+using System.Collections;
+using MSU.Config;
+
 namespace SS2.Items
 {
     public sealed class JetBoots : SS2Item
     {
         private const string token = "SS2_ITEM_JETBOOTS_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("JetBoots", SS2Bundle.Items);
+
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base damage of Prototype Jet Boots' explosion. Burn damage deals an additional 50% of this value. (1 = 100%)")]
-        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float baseDamage = 5f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base radius of Prototype Jet Boot's explosion, in meters.")]
-        [FormatToken(token,   1)]
+        [FormatToken(token, 1)]
         public static float baseRadius = 7.5f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Stacking radius of Prototype Jet Boots' explosion, in meters.")]
-        [FormatToken(token,   2)]
+        [FormatToken(token, 2)]
         public static float stackRadius = 5f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Cooldown of Prototype Jet Boots' bonus jump, in seconds.")]
-        [FormatToken(token,   3)]
+        [FormatToken(token, 3)]
         public static float jumpCooldown = 5f;
 
-        //4 vfx for one item lol
-        public static GameObject explosionEffectPrefab = GlobalEventManager.CommonAssets.igniteOnKillExplosionEffectPrefab;// SS2Assets.LoadAsset<GameObject>("JetBootsExplosion", SS2Bundle.Items);
-        public static GameObject tracerPrefab = SS2Assets.LoadAsset<GameObject>("TracerJetBoots", SS2Bundle.Items);
-        public static GameObject muzzleFlashPrefab = SS2Assets.LoadAsset<GameObject>("MuzzleflashJetBoots", SS2Bundle.Items);
-        public static GameObject effectPrefab = SS2Assets.LoadAsset<GameObject>("JetBootsEffect", SS2Bundle.Items);
-
-        public BuffDef buffCooldown { get; } = SS2Assets.LoadAsset<BuffDef>("BuffJetBootsCooldown", SS2Bundle.Items);
+        private static GameObject _explosionEffectPrefab = GlobalEventManager.CommonAssets.igniteOnKillExplosionEffectPrefab;// ;
+        private static GameObject _tracerPrefab;
+        private static GameObject _muzzleFlashPrefab;
+        private static GameObject _effectPrefab;
+        private static BuffDef _buffCooldown;
+    
         public override void Initialize()
-        {
-            // this will interfere with other bonus jump items but they can be unified in a similar way to this
+        {            // this will interfere with other bonus jump items but they can be unified in a similar way to this
             IL.RoR2.CharacterBody.RecalculateStats += RecalculateStatsHook; // recalculatestatsapi doesnt have maxjumpcount
             IL.EntityStates.GenericCharacterMain.ProcessJump += ProcessJumpHook;
             On.RoR2.CharacterBody.OnBuffFinalStackLost += RechargeBoots;
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * ItemDef - "JetBoots" - Items
+             * GameObject - "TracerJetBoots" - Items
+             * GameObject - "MuzzleflashJetBoots" - Items
+             * GameObject - "JetBootsEffect" - Items
+             * BuffDef - "BuffJetBootsCooldown" - Items
+             */
+            yield break;
         }
 
         private void RechargeBoots(On.RoR2.CharacterBody.orig_OnBuffFinalStackLost orig, CharacterBody self, BuffDef buffDef)
@@ -67,7 +91,7 @@ namespace SS2.Items
             }
             else
             {
-                SS2Log.Warning("JetBoots.RecalculateStatsHook: ILHook failed.");
+                SS2Log.Fatal("JetBoots.RecalculateStatsHook: ILHook failed.");
             }
         }
 
@@ -104,7 +128,7 @@ namespace SS2.Items
             }
             else
             {
-                SS2Log.Warning("JetBoots.ProcessJumpHook: ILHook failed.");
+                SS2Log.Fatal("JetBoots.ProcessJumpHook: ILHook failed.");
             }
         }
         private void DoJump(CharacterBody body)
@@ -119,12 +143,12 @@ namespace SS2.Items
             int stack = body.inventory ? body.inventory.GetItemCount(ItemDef) : 1;
             float blastRadius = baseRadius + stackRadius * (stack - 1);
 
-            
-            EffectManager.SimpleEffect(effectPrefab, body.footPosition, Quaternion.identity, true);
+
+            EffectManager.SimpleEffect(_effectPrefab, body.footPosition, Quaternion.identity, true);
 
             JetBoots.Behavior behavior = body.GetComponent<JetBoots.Behavior>();
             List<Transform> muzzles = behavior ? behavior.GetMuzzleTransforms() : new List<Transform> { body.coreTransform };
-            foreach(Transform muzzle in muzzles)
+            foreach (Transform muzzle in muzzles)
             {
                 // overkill but i want it to look nice               
                 bool bootHit = Util.CharacterRaycast(body.gameObject, new Ray(muzzle.position, Vector3.down), out RaycastHit bootHitInfo, 50f, LayerIndex.CommonMasks.bullet, QueryTriggerInteraction.UseGlobal);
@@ -134,11 +158,11 @@ namespace SS2.Items
                     start = muzzle.position,
                 };
                 //effectData.SetChildLocatorTransformReference(muzzle.parent.gameObject, 0); // im retarded
-                EffectManager.SpawnEffect(tracerPrefab, effectData, true);               
-                EffectManager.SimpleEffect(muzzleFlashPrefab, muzzle.position, muzzle.rotation, true);
+                EffectManager.SpawnEffect(_tracerPrefab, effectData, true);
+                EffectManager.SimpleEffect(_muzzleFlashPrefab, muzzle.position, muzzle.rotation, true);
             }
 
-            EffectManager.SpawnEffect(explosionEffectPrefab, new EffectData
+            EffectManager.SpawnEffect(_explosionEffectPrefab, new EffectData
             {
                 origin = position,
                 scale = blastRadius,
@@ -189,7 +213,7 @@ namespace SS2.Items
             private void Start()
             {
                 this.body.AddBuff(SS2Content.Buffs.BuffJetBootsReady);
-                if(this.body.characterMotor)
+                if (this.body.characterMotor)
                 {
                     this.body.characterMotor.onHitGroundServer += (ref CharacterMotor.HitGroundInfo info) =>
                     {
@@ -207,41 +231,5 @@ namespace SS2.Items
                 }
             }
         }
-
-
-        
-
-        //private void ProcessJumpHook(ILContext il)
-        //{
-        //    ILCursor c = new ILCursor(il);
-        //    // if (base.characterMotor.jumpCount >= base.characterBody.baseJumpCount) is true
-        //    bool b = c.TryGotoNext(MoveType.Before,
-        //        x => x.MatchLdcI4(1),
-        //        x => x.MatchStloc(0),
-        //        x => x.MatchLdcR4(1.5f),
-        //        x => x.MatchStloc(3));
-        //    if (b)
-        //    {
-        //        c.Index += 1;
-        //        c.Remove();
-        //        c.Emit(OpCodes.Call, typeof(EntityState).GetMethod("get_characterBody"));
-        //        c.EmitDelegate<Func<CharacterBody, bool>>((body) =>
-        //        {
-        //            int buffCount = body.GetBuffCount(SS2Content.Buffs.BuffJetBootsReady);
-        //            if (buffCount > 0 && body.characterMotor && body.characterMotor.jumpCount >= body.baseJumpCount)
-        //            {
-        //                DoJump(body);
-        //                // OOPS i fucked up. tying maxjumpcount to the Ready buff makes it so two jumps are technically "used" here
-        //                body.characterMotor.jumpCount--; // jank fix to that^^
-        //                body.RemoveBuff(SS2Content.Buffs.BuffJetBootsReady);
-        //            }
-        //            return buffCount > 0f;
-        //        });
-        //    }
-        //    else
-        //    {
-        //        SS2Log.Warning("JetBoots.ProcessJumpHook: ILHook failed.");
-        //    }
-        //}
     }
 }

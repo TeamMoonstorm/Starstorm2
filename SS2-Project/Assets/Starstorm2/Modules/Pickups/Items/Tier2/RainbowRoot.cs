@@ -4,12 +4,20 @@ using RoR2.Items;
 using UnityEngine;
 
 using MSU;
+using System.Collections.Generic;
+using RoR2.ContentManagement;
+using System.Collections;
+using MSU.Config;
+
 namespace SS2.Items
 {
-
     public sealed class RainbowRoot : SS2Item
     {
         private const string token = "SS2_ITEM_RAINBOWROOT_DESC";
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base portion of damage prevented to be gained as barrier. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
@@ -23,60 +31,63 @@ namespace SS2.Items
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float baseArmor = 20;
 
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RainbowRoot", SS2Bundle.Items);
         public override void Initialize()
         {
-            On.RoR2.HealthComponent.TakeDamage += RootFunc;
+            throw new System.NotImplementedException();
         }
 
-        private void RootFunc(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
+        public override bool IsAvailable(ContentPack contentPack)
         {
-            orig(self, damageInfo);
-            if (self.body)
-            {
-                if (self.body.inventory)
-                {
-                    var stackCount = self.body.GetItemCount(SS2Content.Items.RainbowRoot);
-
-                    if (stackCount > 0)
-                    {
-                        float redu;
-                        float armor = self.body.armor;
-                        float plateRedu = 0;
-                        if (damageInfo.rejected && self.body.isPlayerControlled)
-                        {
-                            redu = damageInfo.damage;
-                        }
-                        else
-                        {
-                            redu = armor / (armor + 100f);
-                            redu *= damageInfo.damage;
-
-                            int plate = self.itemCounts.armorPlate;
-                            if (plate > 0)
-                            {
-                                float remainder = damageInfo.damage - redu;
-                                plateRedu = remainder - Mathf.Max(1f, remainder - 5f * (float)plate);
-                            }
-                        }
-
-                        float mult = MSUtil.InverseHyperbolicScaling(baseArmor, scalingAmount, 1, stackCount);
-                        //SS2Log.Info("mult: " + mult + " | reduction: " + redu + " | plateredu: " + plateRedu + " | player hp: " + self.health + " | incoming damage: " + damageInfo.damage);
-                        self.AddBarrierAuthority((redu + plateRedu) * mult);
-                    }
-                }
-            }
+            throw new System.NotImplementedException();
         }
 
-        public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * ItemDef - "RainbowRoot" - Items
+             */
+            yield break;
+        }
+
+
+        public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier, IOnTakeDamageServerReceiver
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.RainbowRoot;
 
-            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args){
+            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            {
                 args.armorAdd += baseArmor;
             }
 
+            //N: For whatever reason this was done in an On hook, which is funny. these interfaces literally exists to avoid doing that and instead use behaviours for it.
+            public void OnTakeDamageServer(DamageReport damageReport)
+            {
+                DamageInfo damageInfo = damageReport.damageInfo;
+                float redu;
+                float armor = body.armor;
+                float plateRedu = 0;
+                if (damageInfo.rejected && body.isPlayerControlled)
+                {
+                    redu = damageInfo.damage;
+                }
+                else
+                {
+                    redu = armor / (armor + 100f);
+                    redu *= damageInfo.damage;
+
+                    int plate = body.healthComponent.itemCounts.armorPlate;
+                    if (plate > 0)
+                    {
+                        float remainder = damageInfo.damage - redu;
+                        plateRedu = remainder - Mathf.Max(1f, remainder - 5f * (float)plate);
+                    }
+                }
+
+                float mult = MSUtil.InverseHyperbolicScaling(baseArmor, scalingAmount, 1, stack);
+                //SS2Log.Info("mult: " + mult + " | reduction: " + redu + " | plateredu: " + plateRedu + " | player hp: " + self.health + " | incoming damage: " + damageInfo.damage);
+                body.healthComponent.AddBarrierAuthority((redu + plateRedu) * mult);
+            }
         }
     }
 }

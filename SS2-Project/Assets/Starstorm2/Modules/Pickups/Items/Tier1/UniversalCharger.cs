@@ -1,5 +1,10 @@
-﻿using RoR2;
+﻿using MSU;
+using MSU.Config;
+using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Items;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 namespace SS2.Items
@@ -7,20 +12,22 @@ namespace SS2.Items
     public sealed class UniversalCharger : SS2Item
     {
         private const string token = "SS2_ITEM_UNIVERSALCHARGER_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("UniversalCharger", SS2Bundle.Items);
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Time it takes for Universal Charger to recharge, in seconds.")]
-        [FormatToken(token,   0)]
+        [FormatToken(token, 0)]
         public static float baseCooldown = 15f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigNameOverride = "How much faster Universal Charger recharges, per stack. (1 = 100%)")]
-        [FormatToken(token,   1)]
+        [FormatToken(token, 1)]
         public static float cooldownReductionPerStack = 20f; // percent
 
-        public static GameObject overlayPanel = SS2Assets.LoadAsset<GameObject>("RefreshPanel", SS2Bundle.Items);
+        public static GameObject overlayPanel;
 
-        public static GameObject procEffect = SS2Assets.LoadAsset<GameObject>("UniversalChargerEffect", SS2Bundle.Items);
-
+        public static GameObject procEffect;
         public override void Initialize()
         {
             On.RoR2.UI.HUD.Awake += AddIcons;
@@ -39,6 +46,21 @@ namespace SS2.Items
             if (skill3) GameObject.Instantiate(overlayPanel, skill3);
             Transform skill4 = scaler.Find("Skill4Root");
             if (skill4) GameObject.Instantiate(overlayPanel, skill4);
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true; ;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * ItemDef - "UniversalCharger" - Items
+             * GameObject - "RefreshPanel" - Items
+             * GameObject - "UniversalChargerEffect" - Items
+             */
+            yield break;
         }
 
         public sealed class Behavior : BaseItemBodyBehavior
@@ -69,8 +91,8 @@ namespace SS2.Items
             }
 
             private void TryRefresh(GenericSkill genericSkill)
-            {               
-                if(CanSkillRefresh(genericSkill))
+            {
+                if (CanSkillRefresh(genericSkill))
                 {
                     genericSkill.ApplyAmmoPack();
                     // probably sounds better when recharged than on skill use but idk. will need feedback
@@ -81,7 +103,7 @@ namespace SS2.Items
                     effectData.SetNetworkedObjectReference(this.body.gameObject);
                     EffectManager.SpawnEffect(procEffect, effectData, true);
                     float cooldownReduction = Util.ConvertAmplificationPercentageIntoReductionPercentage(cooldownReductionPerStack * (stack - 1)) / 100f;
-                    this.cooldownTimer = baseCooldown *  (1 - cooldownReduction);
+                    this.cooldownTimer = baseCooldown * (1 - cooldownReduction);
                 }
             }
 
@@ -93,7 +115,7 @@ namespace SS2.Items
                 if (!body.HasBuff(SS2Content.Buffs.BuffUniversalCharger) && this.cooldownTimer <= 0)
                 {
                     body.AddBuff(SS2Content.Buffs.BuffUniversalCharger);
-                }              
+                }
             }
             //dont want to consume it on skills with no cooldown. or on primaries because loader primary has a cooldown XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
             private bool CanSkillRefresh(GenericSkill skill)

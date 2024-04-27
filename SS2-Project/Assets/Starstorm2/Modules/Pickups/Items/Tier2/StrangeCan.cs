@@ -1,5 +1,10 @@
-﻿using RoR2;
+﻿using MSU;
+using MSU.Config;
+using RoR2;
+using RoR2.ContentManagement;
+using RoR2.Items;
 using RoR2.Orbs;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -8,42 +13,63 @@ namespace SS2.Items
     public sealed class StrangeCan : SS2Item
     {
         private const string token = "SS2_ITEM_STRANGECAN_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("StrangeCan", SS2Bundle.Items);
+
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance for Intoxicate to be applied on hit. (1 = 1%)")]
-        [FormatToken(token,   0)]
+        [FormatToken(token, 0)]
         public static float procChance = 10;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance for Intoxicate to be applied on hit, per stack of this item. (1 = 1%")]
-        [FormatToken(token,   1)]
+        [FormatToken(token, 1)]
         public static float procChancePerStack = 5;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Damage per second, per stack of Intoxicate. (1 = 1%)")]
-        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 2, "100")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
         public static float damageCoefficient = .5f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Health restored when killing intoxicated enemies, per stack of Intoxicate.")]
-        [FormatToken(token,   3)]
+        [FormatToken(token, 3)]
         public static float healAmount = 10;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Health restored when killing intoxicated enemies, per stack of Intoxicate, per stack of this item.")]
-        [FormatToken(token,   4)]
+        [FormatToken(token, 4)]
         public static float healAmountPerStack = 5;
 
         public static int maxStacks = 10;
 
         public static float buffDuration = 10f;
 
-        public static GameObject procEffect = SS2Assets.LoadAsset<GameObject>("StrangeCanEffect", SS2Bundle.Items);
+        private static GameObject _procEffect;
+
+        public static DotController.DotIndex IntoxicatedIndex { get; private set; }
 
         public override void Initialize()
         {
-            base.Initialize();
+            //N: This should be a behaviour, but i CBA to refactor. :sob:
             GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
             GlobalEventManager.onCharacterDeathGlobal += OnCharacterDeathGlobal;
         }
 
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * ItemDef - "StrangeCan" - Items
+             * GameObject - "StrangeCanEffect" - Items
+             */
+            yield break;
+        }
+
         //theres no way this is correct
+        //N: Yeah, cuz it aint no behaviour! >:C
         private void OnCharacterDeathGlobal(DamageReport report)
         {
             if (!NetworkServer.active) return;
@@ -54,14 +80,14 @@ namespace SS2.Items
             //for each stack of Intoxicated, store the inflictor and the number of stacks they inflicted
             DotController dotController = DotController.FindDotController(report.victim.gameObject);
             Dictionary<GameObject, int> inflictors = new Dictionary<GameObject, int>();
-            for(int i = 0; i < dotController.dotStackList.Count; i++)
+            for (int i = 0; i < dotController.dotStackList.Count; i++)
             {
                 DotController.DotStack dot = dotController.dotStackList[i];
-                if(dot.dotIndex == Buffs.Intoxicated.index)
+                if (dot.dotIndex == IntoxicatedIndex)
                 {
                     GameObject inflictor = dot.attackerObject;
 
-                    if(inflictor && !inflictors.TryGetValue(inflictor, out int _)) //theres no way a dictionary is correct here
+                    if (inflictor && !inflictors.TryGetValue(inflictor, out int _)) //theres no way a dictionary is correct here
                     {
                         inflictors.Add(inflictor, 0);
                     }
@@ -69,10 +95,10 @@ namespace SS2.Items
                 }
             }
             //heal each inflictor based on the number of stacks they inflicted
-            foreach(KeyValuePair<GameObject, int> inflictor in inflictors)
+            foreach (KeyValuePair<GameObject, int> inflictor in inflictors)
             {
                 CharacterBody body = inflictor.Key.GetComponent<CharacterBody>();
-                if(body)
+                if (body)
                 {
                     int itemStack = body.inventory ? body.inventory.GetItemCount(ItemDef) : 0;
                     float healPerDotStack = healAmount + healAmountPerStack * (itemStack - 1);
@@ -103,14 +129,14 @@ namespace SS2.Items
                 {
                     attackerObject = body.gameObject,
                     victimObject = report.victim.gameObject,
-                    dotIndex = Buffs.Intoxicated.index,
+                    dotIndex = IntoxicatedIndex,
                     duration = buffDuration,
                     maxStacksFromAttacker = (uint)maxStacks,
                     damageMultiplier = damageCoefficient,
                 };
                 DotController.InflictDot(ref dotInfo);
 
-                EffectManager.SimpleEffect(procEffect, report.damageInfo.position, Quaternion.identity, true);
+                EffectManager.SimpleEffect(_procEffect, report.damageInfo.position, Quaternion.identity, true);
             }
         }
     }

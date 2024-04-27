@@ -3,25 +3,48 @@ using RoR2;
 using RoR2.Items;
 using UnityEngine;
 using UnityEngine.Networking;
+using MSU;
+using System.Collections.Generic;
+using RoR2.ContentManagement;
+using System.Collections;
+using MSU.Config;
+
 namespace SS2.Items
 {
-    //[DisabledContent]
     public sealed class DormantFungus : SS2Item
     {
         private const string token = "SS2_ITEM_DORMANTFUNGUS_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("DormantFungus", SS2Bundle.Items);
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => throw new System.NotImplementedException();
+
+        public override ItemDef ItemDef => throw new System.NotImplementedException();
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base amount of healing. (1 = 100%)")]
-        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 0, "100")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float baseHealPercentage = 0.015f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of healing per stack. (1 = 100%)")]
-        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 1, "100")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float stackHealPercentage = 0.015f;
+
+        private static GameObject _dungusTrailEffect;
+        private static GameObject _dungusTrailEffectAlt;
         public override void Initialize()
         {
-            base.Initialize();
-            //On.RoR2.FootstepHandler.Footstep_string_GameObject += ModifiedFootstepHandlerFootstep;
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * ItemDef - "DormantFungus" - Items
+             * GameObject - "DungusTrailEffect" - Items
+             * GameObject - "DungusTrailEffectAlt" - Items;
+             */
+            yield break;
         }
 
         public sealed class Behavior : BaseItemBodyBehavior
@@ -41,7 +64,7 @@ namespace SS2.Items
                 if (body.modelLocator.modelTransform.GetComponent<FootstepHandler>())
                 {
                     footstepHandler = body.modelLocator.modelTransform.gameObject.AddComponent<ModifiedFootstepHandler>();
-                    footstepHandler.footstepEffect = SS2Assets.LoadAsset<GameObject>("DungusTrailEffect", SS2Bundle.Items);
+                    footstepHandler.footstepEffect = _dungusTrailEffect;
                     footstepHandler.enableFootstepDust = false;
                     hasFootsteps = true;
                 }
@@ -63,9 +86,9 @@ namespace SS2.Items
                         if (hasFootsteps)
                         {
                             if (Run.instance.runRNG.nextBool)
-                                footstepHandler.footstepEffect = SS2Assets.LoadAsset<GameObject>("DungusTrailEffect", SS2Bundle.Items);
+                                footstepHandler.footstepEffect = _dungusTrailEffect;
                             else
-                                footstepHandler.footstepEffect = SS2Assets.LoadAsset<GameObject>("DungusTrailEffectAlt", SS2Bundle.Items);
+                                footstepHandler.footstepEffect = _dungusTrailEffectAlt;
                         }
                     }
                 }

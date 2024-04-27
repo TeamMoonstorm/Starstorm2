@@ -2,7 +2,7 @@
 using UnityEngine;
 namespace SS2.Unlocks.NemMercenary
 {
-    public sealed class NemMercenaryGrandMasteryUnlockable : UnlockableBase
+    /*public sealed class NemMercenaryGrandMasteryUnlockable : UnlockableBase
     {
         public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skin.nemmerc.grandmastery", SS2Bundle.NemMercenary);
 
@@ -12,5 +12,5 @@ namespace SS2.Unlocks.NemMercenary
 
             public override CharacterBody RequiredCharacterBody { get; set; } = SS2Assets.LoadAsset<GameObject>("NemMercBody", SS2Bundle.NemMercenary).GetComponent<CharacterBody>();
         }
-    }
+    }*/
 }

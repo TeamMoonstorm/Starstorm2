@@ -19,7 +19,7 @@ namespace SS2.Components
 
         private void Start()
         {
-            if (!WindZoneController.instance)
+            /*if (!WindZoneController.instance)
             {
                 Destroy(this);
                 return;
@@ -27,17 +27,17 @@ namespace SS2.Components
             //Short-hand for setting to only x and y.
             transform.rotation = Util.QuaternionSafeLookRotation(WindZoneController.instance.windZone.transform.forward, Vector3.up);
             if (!trackAfterStart)
-                Destroy(this);
+                Destroy(this);*/
         }
 
         private void FixedUpdate()
         {
-            float angle = Vector2.SignedAngle(transform.eulerAngles, WindZoneController.instance.windZone.transform.eulerAngles);
+            /*float angle = Vector2.SignedAngle(transform.eulerAngles, WindZoneController.instance.windZone.transform.eulerAngles);
             if (Mathf.Approximately(0f, angle))
             {
                 var degreesMoved = Mathf.MoveTowards(0, angle, maxRotation);
                 transform.eulerAngles = Util.RotateVector2(transform.eulerAngles, degreesMoved);
-            }
+            }*/
         }
     }
 }

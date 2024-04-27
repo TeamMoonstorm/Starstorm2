@@ -6,13 +6,38 @@ using UnityEngine;
 using static SS2.Items.RelicOfTermination;
 
 using MSU;
+using System.Collections.Generic;
+using RoR2.ContentManagement;
+using System.Collections;
+
 namespace SS2.Items
 {
     public sealed class TerminationHelper : SS2Item
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("TerminationHelper", SS2Bundle.Items);
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => throw new System.NotImplementedException();
+
+        public override ItemDef ItemDef => throw new System.NotImplementedException();
+
 
         public static GameObject globalMarkEffectTwo;
+
+        public override void Initialize()
+        {
+        }
+
+        //This should only be available if termination itself is available as well.
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * ItemDef - "TerminationHelper" - Items;
+             */
+            yield break;
+        }
 
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier
         {
@@ -33,10 +58,8 @@ namespace SS2.Items
             public new void Awake()
             {
                 base.Awake();
-                //sizeCurve = AnimationCurve.Linear(0, .235f, 1, .066f);
                 globalMarkEffectTwo = SS2Assets.LoadAsset<GameObject>("TerminationPositionIndicator", SS2Bundle.Items);
 
-                //body.teamComponent.RequestDefaultIndicator(globalMarkEffectTwo);
 
                 float modifier = RelicOfTermination.scaleMod;
 
@@ -52,7 +75,6 @@ namespace SS2.Items
                             motor.SetCapsuleDimensions(motor.Capsule.radius * modifier, motor.CapsuleHeight * modifier, modifier);
                         }
                     }
-                    // obj.characterMotor.
                 }
 
                 var printController = body.modelLocator.modelTransform.GetComponent<PrintController>();
@@ -63,23 +85,15 @@ namespace SS2.Items
                     printController.maxPrintHeight = 100;
                 }
 
-                //body.teamComponent.indicator
                 if (!body.isBoss)
                 {
                     body.teamComponent.RequestDefaultIndicator(globalMarkEffectTwo);
                 }
-                
-                //var comps = body.gameObject.GetComponents<Component>();
-                //foreach(var comp in comps)
-                //{
-                //    /SS2Log.Info(comp.name + " | " + comp.GetType());
-                //}
 
                 token = body.gameObject.GetComponent<TerminationToken>();
 
                 if (token)
                 {
-                    //SS2Log.Info("limit: " + token.timeLimit + " from " + maxTime);
                     maxTime = token.timeLimit;
                 }
             }
@@ -96,13 +110,13 @@ namespace SS2.Items
                         markRing.transform.localScale = vec;
                         timer += Time.fixedDeltaTime;
                     }
-                    else if(activeRing)
+                    else if (activeRing)
                     {
                         markRing.SetActive(false);
                         activeRing = false;
                     }
                 }
-                else if(i < 25)
+                else if (i < 25)
                 {
                     pointerToken = body.transform.Find("TerminationPositionIndicator(Clone)");
                     if (pointerToken)
@@ -125,7 +139,7 @@ namespace SS2.Items
                         }
                     }
                     ++i;
-                    if(!(i < 25))
+                    if (!(i < 25))
                     {
                         SS2Log.Info("Giving up on finding termination ring for " + body.name); //this is so that it's less shit that im doing getcomponent in fixedupdate listen its ok
                         //conceded = true; // lol oopps

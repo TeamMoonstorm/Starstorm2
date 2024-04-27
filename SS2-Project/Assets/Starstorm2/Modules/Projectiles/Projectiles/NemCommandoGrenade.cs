@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 namespace SS2.Projectiles
 {
-    public sealed class NemCommandoGrenade : ProjectileBase
+    /*public sealed class NemCommandoGrenade : ProjectileBase
     {
         public override GameObject ProjectilePrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemCommandoGrenadeProjectile", SS2Bundle.NemCommando);
 
@@ -12,5 +12,5 @@ namespace SS2.Projectiles
             var pie = ProjectilePrefab.GetComponent<ProjectileImpactExplosion>();
             pie.impactEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/OmniExplosionVFXCommandoGrenade.prefab").WaitForCompletion();
         }
-    }
+    }*/
 }

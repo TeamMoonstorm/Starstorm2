@@ -12,6 +12,9 @@ using RoR2.ContentManagement;
 
 namespace SS2
 {
+    /// <summary>
+    /// <inheritdoc cref="IItemTierContentPiece"/>
+    /// </summary>
     public abstract class SS2ItemTier : IItemTierContentPiece
     {
         public abstract NullableRef<SerializableColorCatalogEntry> ColorIndex { get; }

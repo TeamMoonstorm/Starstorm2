@@ -1,26 +1,51 @@
-﻿using RoR2;
+﻿using MSU;
+using MSU.Config;
+using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Items;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 namespace SS2.Items
 {
-
     public sealed class MoltenCoin : SS2Item
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("MoltenCoin", SS2Bundle.Items);
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
 
-        public static GameObject impactEffect { get; } = SS2Assets.LoadAsset<GameObject>("MoltenCoinEffect", SS2Bundle.Items);
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
+
+        private static GameObject _impactEffect;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance for Molten Coin to Proc. (100 = 100%)")]
-        [FormatToken("SS2_ITEM_MOLTENCOIN_DESC",   0)]
+        [FormatToken("SS2_ITEM_MOLTENCOIN_DESC", 0)]
         public static float procChance = 6f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base Damage per stack. (1 = 100%)")]
-        [FormatToken("SS2_ITEM_MOLTENCOIN_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 1, "100")]
+        [FormatToken("SS2_ITEM_MOLTENCOIN_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float damageCoeff = 1f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Coin gain on proc. Scales with time. (1 = 1$)")]
-        [FormatToken("SS2_ITEM_MOLTENCOIN_DESC",   2)]
+        [FormatToken("SS2_ITEM_MOLTENCOIN_DESC", 2)]
         public static int coinGain = 1;
+
+        public override void Initialize()
+        {
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*
+             * ItemDef - "MoltenCoin" - Items
+             * GameObject - "MoltenCoinEffect" - Items
+             */
+            yield break;
+        }
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
         {
@@ -42,11 +67,9 @@ namespace SS2.Items
                     DotController.InflictDot(ref dotInfo);
 
                     body.master.GiveMoney((uint)(stack * (Run.instance.stageClearCount + (coinGain * 1f))));
-                        
-                    //MSUtil.PlayNetworkedSFX("MoltenCoin", report.victim.gameObject.transform.position);
-                    //moved the sound to an effect so it takes advantage of vfx priority
-                    EffectManager.SimpleEffect(MoltenCoin.impactEffect, report.victimBody.transform.position, Quaternion.identity, true);
-                    EffectManager.SimpleImpactEffect(HealthComponent.AssetReferences.gainCoinsImpactEffectPrefab, report.victimBody.transform.position, UnityEngine.Vector3.up, true);                  
+
+                    EffectManager.SimpleEffect(MoltenCoin._impactEffect, report.victimBody.transform.position, Quaternion.identity, true);
+                    EffectManager.SimpleImpactEffect(HealthComponent.AssetReferences.gainCoinsImpactEffectPrefab, report.victimBody.transform.position, UnityEngine.Vector3.up, true);
                 }
             }
         }

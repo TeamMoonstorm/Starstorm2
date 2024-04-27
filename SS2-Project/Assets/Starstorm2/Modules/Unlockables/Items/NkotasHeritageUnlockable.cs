@@ -2,7 +2,7 @@
 using RoR2.Achievements;
 namespace SS2.Unlocks.Pickups
 {
-    public sealed class NkotasHeritageUnlockable : UnlockableBase
+    /*public sealed class NkotasHeritageUnlockable : UnlockableBase
     {
         public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.item.nkotasheritage", SS2Bundle.Items);
 
@@ -72,5 +72,5 @@ namespace SS2.Unlocks.Pickups
                 SetMasterController(localUser.cachedMasterController);
             }
         }
-    }
+    }*/
 }

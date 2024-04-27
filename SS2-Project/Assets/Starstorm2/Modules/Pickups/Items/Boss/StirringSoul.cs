@@ -7,6 +7,7 @@ using MSU;
 using System.Collections;
 using MSU.Config;
 using RoR2.ContentManagement;
+using System.Collections.Generic;
 
 namespace SS2.Items
 {
@@ -36,17 +37,11 @@ namespace SS2.Items
 
         public override IEnumerator LoadContentAsync()
         {
-            var helper = new ParallelAssetLoadCoroutineHelper();
-
-            helper.AddAssetToLoad<ItemDef>("StirringSoul", SS2Bundle.Items);
-            helper.AddAssetToLoad<GameObject>("MonsterSoul", SS2Bundle.Items);
-
-            helper.Start();
-            while (!helper.IsDone())
-                yield return null;
-
-            _itemDef = helper.GetLoadedAsset<ItemDef>("StirringSoul");
-            _monsterSoulPickup = helper.GetLoadedAsset<GameObject>("MonsterSoul");
+            /*
+             * ItemDef - "StirringSoul" - Items
+             * GameObject - "MonsterSoul" - Items
+             */
+            yield break;
         }
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver

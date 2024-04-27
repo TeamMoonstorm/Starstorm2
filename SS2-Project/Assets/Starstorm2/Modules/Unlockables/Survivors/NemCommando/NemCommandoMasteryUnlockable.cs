@@ -2,7 +2,7 @@
 using UnityEngine;
 namespace SS2.Unlocks.NemCommando
 {
-    public sealed class NemCommandoMasteryUnlockable : UnlockableBase
+    /*public sealed class NemCommandoMasteryUnlockable : UnlockableBase
     {
         public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skin.nemcommando.mastery", SS2Bundle.NemCommando);
 
@@ -12,5 +12,5 @@ namespace SS2.Unlocks.NemCommando
 
             public override CharacterBody RequiredCharacterBody { get; set; } = SS2Assets.LoadAsset<GameObject>("NemCommandoBody", SS2Bundle.NemCommando).GetComponent<CharacterBody>();
         }
-    }
+    }*/
 }

@@ -19,31 +19,7 @@ namespace SS2.Items
         private static GameObject projectilePrefab;
 
         public override void Initialize()
-        {    //something comes up null when doing this
-             //it should probably be its own base or some shit for future additions anyway
-             //will investigate more soon:tm:
-
-            //so i just did it basically exactly how i did it in vv and it worked 
-            //SS2Log.Info("my tier is " + ItemDef.tier);
-
-            //What did lilith meant by this...? Ah, remind me to add a utility for this.
-            On.RoR2.Items.ContagiousItemManager.Init += AddZoeaPair;
-        }
-
-        private void AddZoeaPair(On.RoR2.Items.ContagiousItemManager.orig_Init orig)
         {
-            List<ItemDef.Pair> newVoidPairs = new List<ItemDef.Pair>();
-
-            ItemDef.Pair lampPair = new ItemDef.Pair()
-            {
-                itemDef1 = _itemDef, //nonvoid
-                itemDef2 = RoR2.DLC1Content.Items.VoidMegaCrabItem //void
-            };
-            newVoidPairs.Add(lampPair);
-
-            var voidPairs = ItemCatalog.itemRelationships[DLC1Content.ItemRelationshipTypes.ContagiousItem];
-            ItemCatalog.itemRelationships[DLC1Content.ItemRelationshipTypes.ContagiousItem] = voidPairs.Union(newVoidPairs).ToArray();
-            orig();
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -53,17 +29,11 @@ namespace SS2.Items
 
         public override IEnumerator LoadContentAsync()
         {
-            var helper = new ParallelAssetLoadCoroutineHelper();
-
-            helper.AddAssetToLoad<ItemDef>("ShackledLamp", SS2Bundle.Items);
-            helper.AddAssetToLoad<GameObject>("LampBulletPlayer", SS2Bundle.Items);
-
-            helper.Start();
-            while (!helper.IsDone())
-                yield return null;
-
-            _itemDef = helper.GetLoadedAsset<ItemDef>("ShackledLamp");
-            projectilePrefab = helper.GetLoadedAsset<GameObject>("LampBulletPlayer");
+            /*
+             * ItemDef - "ShackledLamp" - Items
+             * GameObject - "LampBulletPlayer" - Items
+             */
+            yield break;
         }
 
         public void ModifyContentPack(ContentPack contentPack)

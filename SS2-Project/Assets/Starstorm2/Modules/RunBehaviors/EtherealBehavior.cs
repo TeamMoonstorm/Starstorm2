@@ -32,10 +32,12 @@ namespace SS2.Components
             TraderController.Initialize();
 
             //Initialize new difficulties
-            Deluge.Init();
+
+            //N: These are done by a new module exclusive to ss2, refactor as needed
+            /*Deluge.Init();
             Tempest.Init();
             Cyclone.Init();
-            SuperTyphoon.Init();
+            SuperTyphoon.Init();*/
 
             //Save default level cap
             storedLevelCap = Run.ambientLevelCap;
@@ -51,7 +53,7 @@ namespace SS2.Components
             Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/LunarTeleporter Variant.prefab").WaitForCompletion().AddComponent<TeleporterUpgradeController>();
 
             yield return null;
-        }    
+        }
 
         private void Awake()
         {
@@ -258,7 +260,7 @@ namespace SS2.Components
                         Debug.Log("added to bonus monstercred");
                     }
                 }
-                
+
             }
         }
 
@@ -446,8 +448,9 @@ namespace SS2.Components
 
                                 switch (ruleChoiceDef.difficultyIndex)
                                 {
+                                    //N: Sorry swuff, difficulties are now a module, need to refactor this as well, easy to do tbh, just store the serializable difficulty def in a static field and access that.
                                     //drizzle
-                                    case DifficultyIndex.Easy:
+                                    /*case DifficultyIndex.Easy:
                                         {
                                             run.selectedDifficulty = Deluge.DelugeIndex;
                                             Debug.Log("drizzle detected; trying to override");
@@ -481,24 +484,26 @@ namespace SS2.Components
                                     //for some reason appears as deluge in run history???
                                     //appears correctly mid-run & at run end so will ignore for now...
                                 }
+                                    */
+                                }
+
+                                diffIndex = run.ruleBook.FindDifficulty();
+
+                                run.RecalculateDifficultyCoefficent();
+
+                                Debug.Log("hopefully updated diff: " + DifficultyCatalog.GetDifficultyDef(diffIndex).nameToken);
+
+                                Debug.Log(run.difficultyCoefficient + " - run difficulty coef");
                             }
 
-                            diffIndex = run.ruleBook.FindDifficulty();
-
-                            run.RecalculateDifficultyCoefficent();
-
-                            Debug.Log("hopefully updated diff: " + DifficultyCatalog.GetDifficultyDef(diffIndex).nameToken);
-
-                            Debug.Log(run.difficultyCoefficient + " - run difficulty coef");
+                            string diffToken = curDiff.nameToken;
+                            Debug.Log(DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).scalingValue + " - current scaling value");
+                            Debug.Log("ethereals completed: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
                         }
-
-                        string diffToken = curDiff.nameToken;
-                        Debug.Log(DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).scalingValue + " - current scaling value");
-                        Debug.Log("ethereals completed: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
-                    }
-                    else
-                    {
-                        teleIsEthereal = false;
+                        else
+                        {
+                            teleIsEthereal = false;
+                        }
                     }
                 }
             }
