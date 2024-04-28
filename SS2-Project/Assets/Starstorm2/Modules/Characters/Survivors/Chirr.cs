@@ -73,6 +73,7 @@ namespace SS2.Survivors
             BuffOverlays.AddBuffOverlay(_buffChirrFriend, _matFriendOverlay);
         }
 
+        // This is used for Chirr appearing on the menu during the holiday event
         private void HiChirrHiiiiii(On.RoR2.UI.MainMenu.BaseMainMenuScreen.orig_OnEnter orig, RoR2.UI.MainMenu.BaseMainMenuScreen self, RoR2.UI.MainMenu.MainMenuController mainMenuController)
         {
             orig(self, mainMenuController);

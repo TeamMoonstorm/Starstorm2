@@ -4,6 +4,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using RoR2.ContentManagement;
+using R2API;
+using static MSU.BaseBuffBehaviour;
 #if DEBUG
 namespace SS2.Survivors
 {
@@ -47,6 +49,44 @@ namespace SS2.Survivors
              * SurvivorDef - "survivorKnight" - Indev
              */
             yield break;
+        }
+
+        // TODO: Load the actual buff 
+        // The buff behavior for Knight's default passive
+        public class KnightPassiveBuff : BaseBuffBehaviour, IBodyStatArgModifier
+        {
+            [BuffDefAssociation]
+            private static BuffDef GetBuffDef() => SS2Content.Buffs.bdKnightBuff;
+            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            {
+                args.attackSpeedMultAdd += 0.4f;
+                args.damageMultAdd += 0.4f;
+            }
+        }
+
+        // TODO: Comment explaining the buff
+        // TODO: replace public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdKnightCharged", SS2Bundle.Indev);
+        public class KnightChargedUpBuff : BaseBuffBehaviour
+        {
+            [BuffDefAssociation]
+            private static BuffDef GetBuffDef() => SS2Content.Buffs.bdKnightCharged;
+
+            // TODO: idk if this works since in MSU 1.0 this was overriden property
+            public Material OverlayMaterial { get; } = SS2Assets.LoadAsset<Material>("matKnightSuperShield", SS2Bundle.Indev);
+        }
+
+        // TODO: Comment explaining the buff
+        // TODO: replace public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdShield", SS2Bundle.Indev);
+        public class KnightShieldBuff : BaseBuffBehaviour, IBodyStatArgModifier
+        {
+            [BuffDefAssociation]
+            private static BuffDef GetBuffDef() => SS2Content.Buffs.bdShield;
+
+            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            {
+                args.armorAdd += 100f;
+                args.moveSpeedReductionMultAdd += 0.6f;
+            }
         }
     }
 }
