@@ -28,6 +28,7 @@ namespace Moonstorm.Starstorm2.Equipments
             buffWard.radius = flagRadius;
             gameObject.GetComponent<TeamFilter>().teamIndex = slot.teamComponent.teamIndex;
 
+            NetworkServer.Spawn(gameObject);
             return true;
         }
     }

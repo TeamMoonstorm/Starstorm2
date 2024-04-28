@@ -24,16 +24,25 @@ namespace Moonstorm.Starstorm2.Items
         [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
         public static float baseProcChance = 0.1f;
 
+        public static float cooldown = 0.5f; 
         public static GameObject burstEffect = SS2Assets.LoadAsset<GameObject>("SpeakerBurstEffect", SS2Bundle.Items);
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnIncomingDamageServerReceiver
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.LowQualitySpeakers;
+
+            private float cooldownStopwatch;
+
+            private void FixedUpdate()
+            {
+                cooldownStopwatch -= Time.fixedDeltaTime;
+            }
             public void OnIncomingDamageServer(DamageInfo damageInfo)
             {
                 int stack = body.inventory.GetItemCount(SS2Content.Items.LowQualitySpeakers);
-                if (stack <= 0) return;
+                if (stack <= 0 || cooldownStopwatch > 0) return;
+                cooldownStopwatch = cooldown;
 
                 // 100% chance at 0% health, baseProcChance at 100% health
                 // uses health fraction after damage, not before

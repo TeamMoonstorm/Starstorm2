@@ -13,11 +13,11 @@ namespace Moonstorm.Starstorm2.Items
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Time it takes for Universal Charger to recharge, in seconds.")]
         [TokenModifier(token, StatTypes.Default, 0)]
-        public static float baseCooldown = 15f;
+        public static float baseCooldown = 18f;
 
         [RooConfigurableField(SS2Config.IDItem, ConfigName = "How much faster Universal Charger recharges, per stack. (1 = 100%)")]
         [TokenModifier(token, StatTypes.Default, 1)]
-        public static float cooldownReductionPerStack = 20f; // percent
+        public static float cooldownReductionPerStack = 10f; // percent
 
         public static GameObject overlayPanel = SS2Assets.LoadAsset<GameObject>("RefreshPanel", SS2Bundle.Items);
 

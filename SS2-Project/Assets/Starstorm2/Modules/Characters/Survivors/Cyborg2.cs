@@ -9,7 +9,7 @@ namespace Moonstorm.Starstorm2.Survivors
     public sealed class Cyborg2 : SurvivorBase
     {
         public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("Cyborg2Body", SS2Bundle.Indev);
-        public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemmandoMonsterMaster", SS2Bundle.NemCommando);
+        public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemCommandoMonsterMaster", SS2Bundle.NemCommando);
         public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("survivorCyborg2", SS2Bundle.Indev);
 
         //configgggggggg

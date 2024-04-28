@@ -12,7 +12,7 @@ namespace Moonstorm.Starstorm2.Items
 
         [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of health regeneration granted per 25 gold, per stack. (1 = 1 hp/s)")]
         [TokenModifier(token, StatTypes.Default, 0)]
-        public static float healthRegen = 0.4f;
+        public static float healthRegen = 0.6f;
 
         public override void Initialize()
         {
@@ -22,12 +22,12 @@ namespace Moonstorm.Starstorm2.Items
         private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, R2API.RecalculateStatsAPI.StatHookEventArgs args)
         {
             int stack = sender.inventory?.GetItemCount(SS2Content.Items.BloodTester) ?? 0;
-            if (stack > 0)
-                args.baseRegenAdd += (healthRegen * stack) * sender.master.money / Run.instance.GetDifficultyScaledCost(25);
+            if (stack > 0 && Stage.instance)
+                args.baseRegenAdd += (healthRegen * stack) * sender.master.money / Run.instance.GetDifficultyScaledCost(25, Stage.instance.entryDifficultyCoefficient);
         }
 
         // need to force recalculatestats to make regen update with money
-        // not ideal, but shouldnt be a performance hit. only really runs when killing an enemy or using an interactable
+        // not ideal, but isnt a performance hit. only really runs when killing an enemy or using an interactable
         public sealed class Behavior : BaseItemBodyBehavior
         {
             [ItemDefAssociation]
@@ -38,7 +38,7 @@ namespace Moonstorm.Starstorm2.Items
             {
                 if (!body.master) return;
                 if (moneyLastFrame != body.master.money)
-                    body.RecalculateStats();
+                    body.statsDirty = true;
                 moneyLastFrame = body.master.money;
             }
         }

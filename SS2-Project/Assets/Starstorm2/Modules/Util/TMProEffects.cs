@@ -1,16 +1,38 @@
 ﻿using System.Linq;
 using TMPro;
 using UnityEngine;
+using RoR2;
 
 namespace Moonstorm.Starstorm2
 {
     //ty for permission to use this Mystic :)
     public static class TMProEffects
     {
+        private static bool enabled = true;
         public static void Init()
         {
             On.RoR2.UI.ChatBox.Start += ChatBox_Start;
             On.RoR2.UI.HGTextMeshProUGUI.Awake += HGTextMeshProUGUI_Awake;
+        }
+
+        [ConCommand(commandName = "debug_toggle_texteffects", flags = ConVarFlags.Cheat, helpText = "Enables/disables TMPro effects. Requires HUD reset. Format: {shouldEnable}")]
+        public static void CCDebugToggleHooks(ConCommandArgs args)
+        {
+            bool shouldEnable = args.GetArgBool(0);
+            if(shouldEnable && !enabled)
+            {
+                enabled = true;
+                SS2Log.Debug("Enabled SS2TextEffects. Requires HUD restart.");
+                On.RoR2.UI.ChatBox.Start += ChatBox_Start;
+                On.RoR2.UI.HGTextMeshProUGUI.Awake += HGTextMeshProUGUI_Awake;
+            }
+            else if (!shouldEnable)
+            {
+                enabled = false;
+                SS2Log.Debug("Disabled SS2TextEffects. Requires HUD restart.");
+                On.RoR2.UI.ChatBox.Start -= ChatBox_Start;
+                On.RoR2.UI.HGTextMeshProUGUI.Awake -= HGTextMeshProUGUI_Awake;
+            }
         }
 
         private static void ChatBox_Start(On.RoR2.UI.ChatBox.orig_Start orig, RoR2.UI.ChatBox self)

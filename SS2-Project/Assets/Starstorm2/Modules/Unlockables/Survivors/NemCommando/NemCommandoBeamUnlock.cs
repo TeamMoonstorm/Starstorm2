@@ -10,55 +10,41 @@ namespace Moonstorm.Starstorm2.Unlocks.NemCommando
 
         public sealed class NemCommandoBeamAchievement : BaseAchievement
         {
-            public override void OnInstall()
+            public override BodyIndex LookUpRequiredBodyIndex()
             {
-                base.OnInstall();
-                SetServerTracked(true);
+                return BodyCatalog.FindBodyIndex("NemCommandoBody");
             }
 
-            public override void OnUninstall()
+            public override void OnBodyRequirementMet()
             {
-                base.OnUninstall();
+                base.SetServerTracked(true);
+                base.OnBodyRequirementMet();
+            }
+            public override void OnBodyRequirementBroken()
+            {
+                base.SetServerTracked(false);
+                base.OnBodyRequirementBroken();
             }
 
             private class NemCommandoBeamUnlockServerAchievement : BaseServerAchievement
             {
-                public BodyIndex nemCommandoBodyIndex
-                {
-                    get
-                    {
-                        var nemCommandoBodyPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoBody", SS2Bundle.NemCommando);
-                        if (nemCommandoBodyPrefab)
-                        {
-                            return nemCommandoBodyPrefab.GetComponent<CharacterBody>().bodyIndex;
-                        }
-                        return BodyIndex.None;
-                    }
-                }
-
                 public override void OnInstall()
                 {
                     base.OnInstall();
-                    RoR2Application.onUpdate += CheckBleedChance;
+                    RoR2Application.onFixedUpdate += FixedUpdate;
                 }
 
                 public override void OnUninstall()
                 {
-                    RoR2Application.onUpdate -= CheckBleedChance;
                     base.OnUninstall();
+                    RoR2Application.onFixedUpdate -= FixedUpdate;                    
                 }
 
-                private void CheckBleedChance()
+                private void FixedUpdate()
                 {
-                    if (networkUser != null && networkUser.GetCurrentBody() != null)
+                    if (base.GetCurrentBody().bleedChance >= 100f)
                     {
-                        if (networkUser.GetCurrentBody().bodyIndex == nemCommandoBodyIndex)
-                        {
-                            if (networkUser.GetCurrentBody().bleedChance >= 100f)
-                            {
-                                Grant();
-                            }
-                        }
+                        Grant();
                     }
                 }
             }

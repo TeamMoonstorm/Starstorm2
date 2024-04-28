@@ -2,7 +2,7 @@
 using RoR2;
 using RoR2.Items;
 using UnityEngine;
-
+using RoR2.Orbs;
 namespace Moonstorm.Starstorm2.Items
 {
     public sealed class DetritiveTrematode : ItemBase
@@ -23,6 +23,7 @@ namespace Moonstorm.Starstorm2.Items
         public static float trematodeDamage = 1f;
 
         public static GameObject biteEffect = SS2Assets.LoadAsset<GameObject>("TrematodeBiteEffect", SS2Bundle.Items);
+
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
         {
             [ItemDefAssociation]
@@ -32,20 +33,16 @@ namespace Moonstorm.Starstorm2.Items
             private static BodyIndex Fucker => fucker == BodyIndex.None ? BodyCatalog.FindBodyIndexCaseInsensitive("ArtifactShellBody") : fucker;
             public void OnDamageDealtServer(DamageReport report)
             {
-                if (!report.victim.alive) return;
-
                 var victim = report.victim;
                 var attacker = report.attacker;
-                bool hasDot = false;
+
+                if (!victim.alive || victim.body.bodyIndex == Fucker) return;
 
                 //var dotController = DotController.FindDotController(victim.gameObject);               
                 //if (dotController)
                 //    hasDot = dotController.HasDotActive(Trematodes.index);
-                hasDot = victim.body.HasBuff(SS2Content.Buffs.BuffTrematodes);
+                bool hasDot = victim.body.HasBuff(SS2Content.Buffs.BuffTrematodes);
                 // dots apparently dont get updated instantly???? so we can apply multiple of the same dot before HasDotActive returns true. hopo game
-
-                if (victim.body.bodyIndex == Fucker)
-                    return;
 
                 //30% + 15% per stack hyperbolically
                 //1 = 30%
@@ -58,22 +55,16 @@ namespace Moonstorm.Starstorm2.Items
                 //5 = 65%
                 // 9 = 105%
                 //float requiredHealthPercentage = missingHealthPercentage + missingHealthPercentagePerStack * (stack - 1);
-                if (victim.combinedHealthFraction < requiredHealthPercentage && !hasDot && report.damageInfo.dotIndex != Trematodes.index && (victim.gameObject != attacker))
+                if (victim.combinedHealthFraction < requiredHealthPercentage && !hasDot && (victim.gameObject != attacker))
                 {
-                    
-                    // do the first tick instantly
-                    DamageInfo damageInfo = new DamageInfo();
-                    damageInfo.attacker = base.gameObject;
-                    damageInfo.crit = false;
-                    damageInfo.damage = trematodeDamage * base.body.damage;
-                    damageInfo.force = Vector3.zero;
-                    damageInfo.inflictor = base.gameObject;
-                    damageInfo.position = victim.body.corePosition;
-                    damageInfo.procCoefficient = 0f;
-                    damageInfo.damageColorIndex = DamageColorIndex.Item;
-                    damageInfo.damageType = DamageType.DoT;
-                    damageInfo.dotIndex = Trematodes.index;
-                    victim.TakeDamage(damageInfo);
+
+                    // do the first "tick" instantly
+                    FuckinUhhhhhhhhhhOrb orb = new FuckinUhhhhhhhhhhOrb();
+                    orb.origin = victim.body.mainHurtBox.transform.position;
+                    orb.target = victim.body.mainHurtBox;
+                    orb.damageValue = trematodeDamage * base.body.damage * 0.5f; // 2 ticks per second means divide by 2
+                    orb.attacker = base.gameObject;
+                    OrbManager.instance.AddOrb(orb);
 
                     var dotInfo = new InflictDotInfo()
                     {
@@ -84,10 +75,51 @@ namespace Moonstorm.Starstorm2.Items
                         damageMultiplier = trematodeDamage * stack,
                     };
                     DotController.InflictDot(ref dotInfo);
+                    
+                    
 
                     EffectManager.SimpleEffect(biteEffect, report.damageInfo.position, Quaternion.identity, true);
                 }
             }
+        }
+
+        // dumb (but correct) way of adding an extra instance of damage from within HealthComponent.TakeDamage
+        // simply calling TakeDamage again can make enemies die twice
+        private class FuckinUhhhhhhhhhhOrb : Orb
+        {
+            public override void Begin()
+            {
+                base.duration = 0;
+            }
+            public override void OnArrival()
+            {
+                if (this.target)
+                {
+                    HealthComponent healthComponent = this.target.healthComponent;
+                    if (healthComponent)
+                    {
+                        DamageInfo damageInfo = new DamageInfo();
+                        damageInfo.damage = this.damageValue;
+                        damageInfo.attacker = this.attacker;
+                        damageInfo.inflictor = null;
+                        damageInfo.force = Vector3.zero;
+                        damageInfo.crit = false;
+                        damageInfo.procChainMask = default(ProcChainMask);
+                        damageInfo.procCoefficient = 0f;
+                        damageInfo.position = this.target.transform.position;
+                        damageInfo.damageColorIndex = DamageColorIndex.Item;
+                        damageInfo.damageType = DamageType.DoT;
+                        healthComponent.TakeDamage(damageInfo);
+
+                        //purposefully not doing this. keeping it here to remind u not to do this.
+                        //GlobalEventManager.instance.OnHitEnemy(damageInfo, healthComponent.gameObject);
+                        //GlobalEventManager.instance.OnHitAll(damageInfo, healthComponent.gameObject);
+                    }
+                }
+            }
+            public float damageValue;
+            public GameObject attacker;
+            public TeamIndex teamIndex;
         }
     }
 }

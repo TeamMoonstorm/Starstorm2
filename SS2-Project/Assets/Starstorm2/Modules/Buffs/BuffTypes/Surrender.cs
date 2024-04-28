@@ -8,11 +8,11 @@ namespace Moonstorm.Starstorm2.Buffs
 {
     public sealed class Surrender : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffSurrender", SS2Bundle.Items);
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffSurrender", SS2Bundle.Equipments);
 
-        public override Material OverlayMaterial => SS2Assets.LoadAsset<Material>("matSurrenderOverlay", SS2Bundle.Items);
+        public override Material OverlayMaterial => SS2Assets.LoadAsset<Material>("matSurrenderOverlay", SS2Bundle.Equipments);
 
-        public static SkillDef disabledSkill = SS2Assets.LoadAsset<SkillDef>("DisabledSkill", SS2Bundle.Items);
+        public static SkillDef disabledSkill = SS2Assets.LoadAsset<SkillDef>("DisabledSkill", SS2Bundle.Equipments);
         public sealed class Behavior : BaseBuffBodyBehavior
         {
             [BuffDefAssociation]

@@ -5,7 +5,7 @@ namespace Moonstorm.Starstorm2.Unlocks.Pickups
 {
     public sealed class BloodTesterUnlockable : UnlockableBase
     {
-        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.item.bloodtester", SS2Bundle.Indev);
+        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.item.bloodtester", SS2Bundle.Items);
 
         public override void Initialize()
         {

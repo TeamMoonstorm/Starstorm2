@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 namespace Moonstorm.Starstorm2.Items
 {
-
+    [DisabledContent]
     public sealed class RainbowRoot : ItemBase
     {
         private const string token = "SS2_ITEM_RAINBOWROOT_DESC";

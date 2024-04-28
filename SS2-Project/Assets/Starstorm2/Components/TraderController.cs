@@ -8,7 +8,7 @@ using UnityEngine.Networking;
 using RoR2;
 using EntityStates.Trader.Bag;
 using RoR2.UI;
-
+using R2API;
 namespace Moonstorm.Starstorm2.Components
 {
     public class TraderController : NetworkBehaviour
@@ -36,7 +36,7 @@ namespace Moonstorm.Starstorm2.Components
 
         internal static void Initialize()
         {
-            menuPrefab = Instantiate(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Scrapper/ScrapperPickerPanel.prefab").WaitForCompletion());
+            menuPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Scrapper/ScrapperPickerPanel.prefab").WaitForCompletion().InstantiateClone("sansans");
             if (menuPrefab != null)
                 ModifyMenu(menuPrefab);
         }
@@ -46,10 +46,6 @@ namespace Moonstorm.Starstorm2.Components
         {
             modelLocator = GetComponent<ModelLocator>();
             childLocator = modelLocator.modelTransform.GetComponent<ChildLocator>();
-
-            menuPrefab = Instantiate(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Scrapper/ScrapperPickerPanel.prefab").WaitForCompletion());
-            if (menuPrefab != null)
-                ModifyMenu(menuPrefab);
 
             //Assign a favorite item.
             favoriteItem = FindFavorite();

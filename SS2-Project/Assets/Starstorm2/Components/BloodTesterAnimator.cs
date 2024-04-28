@@ -18,12 +18,12 @@ namespace Moonstorm.Starstorm2.Components
 		private void FixedUpdate()
 		{
 			CharacterMaster master = this.characterModel?.body?.master;
-			if (master)
+			if (master && Stage.instance)
 			{
 				// :3
-				if (master.money > Run.instance.GetDifficultyScaledCost(75, Run.instance.difficultyCoefficient)) SetStage(3);
-				else if (master.money > Run.instance.GetDifficultyScaledCost(50, Run.instance.difficultyCoefficient)) SetStage(2);
-				else if (master.money > Run.instance.GetDifficultyScaledCost(25, Run.instance.difficultyCoefficient)) SetStage(1);
+				if (master.money > Run.instance.GetDifficultyScaledCost(75, Stage.instance.entryDifficultyCoefficient)) SetStage(3);
+				else if (master.money > Run.instance.GetDifficultyScaledCost(50, Stage.instance.entryDifficultyCoefficient)) SetStage(2);
+				else if (master.money > Run.instance.GetDifficultyScaledCost(25, Stage.instance.entryDifficultyCoefficient)) SetStage(1);
 				else SetStage(0);
 			}
 		}
