@@ -70,17 +70,18 @@ namespace SS2.Equipments
         {
         }
 
-        public class PurplePoisonBuildup : BaseBuffBehaviour
-        {
-            [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => SS2Content.Buffs.bdPoisonBuildup;
-        }
+        // TODO: Test if we actually need this
+        //public class PurplePoisonBuildup : BaseBuffBehaviour
+        //{
+        //    [BuffDefAssociation]
+        //    private static BuffDef GetBuffDef() => SS2Content.Buffs.bdPoisonBuildup;
+        //}
 
-        public class PurplePoisonDebuff : BaseBuffBehaviour
-        {
-            [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => SS2Content.Buffs.bdPurplePoison;
-        }
+        //public class PurplePoisonDebuff : BaseBuffBehaviour
+        //{
+        //    [BuffDefAssociation]
+        //    private static BuffDef GetBuffDef() => SS2Content.Buffs.bdPurplePoison;
+        //}
 
         public sealed class AffixPurpleBehavior : BaseBuffBehaviour, IOnDamageDealtServerReceiver
         {
@@ -99,7 +100,7 @@ namespace SS2.Equipments
 
             public void OnDamageDealtServer(DamageReport damageReport)
             {
-                if (NetworkServer.active)
+                if (HasAnyStacks && NetworkServer.active)
                 {
                     var victim = damageReport.victim;
                     var attacker = damageReport.attacker;
@@ -145,7 +146,7 @@ namespace SS2.Equipments
 
             private void FixedUpdate()
             {
-                if (NetworkServer.active)
+                if (HasAnyStacks && NetworkServer.active)
                 {
                     prevInterval += Time.fixedDeltaTime;
 
@@ -160,7 +161,7 @@ namespace SS2.Equipments
                         for (int i = 0; i < numProjectiles; i++)
                         {
                             Vector3 forward = Quaternion.AngleAxis(num2 * i, Vector3.up) * val2;
-                            ProjectileManager.instance.FireProjectile(LegacyResourcesAPI.Load<GameObject>("Prefabs/Projectiles/PoisonOrbProjectile"), this.body.corePosition, Util.QuaternionSafeLookRotation(forward), this.gameObject, damage * 1f, 0f, Util.CheckRoll(this.body.crit, this.body.master));
+                            ProjectileManager.instance.FireProjectile(LegacyResourcesAPI.Load<GameObject>("Prefabs/Projectiles/PoisonOrbProjectile"), this.CharacterBody.corePosition, Util.QuaternionSafeLookRotation(forward), this.gameObject, damage * 1f, 0f, Util.CheckRoll(this.CharacterBody.crit, this.CharacterBody.master));
                         }
                     }
                 }

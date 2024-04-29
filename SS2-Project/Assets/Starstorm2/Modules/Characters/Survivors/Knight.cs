@@ -105,6 +105,7 @@ namespace SS2.Survivors
         }
 
         // TODO: Comment explaining the buff
+        // TODO: Replace class with a single hook on RecalculateSTatsAPI.GetstatCoefficients. This way we replace the monobehaviour with just a method
         public class KnightShieldBuff : BaseBuffBehaviour, IBodyStatArgModifier
         {
             [BuffDefAssociation]
@@ -117,7 +118,7 @@ namespace SS2.Survivors
             }
         }
 
-
+        // TODO: Replace class with a single hook on RecalculateSTatsAPI.GetstatCoefficients. This way we replace the monobehaviour with just a method
         public class KnightSpecialEmpowerBuff : BaseBuffBehaviour, IBodyStatArgModifier
         {
             [BuffDefAssociation]
@@ -129,6 +130,7 @@ namespace SS2.Survivors
             }
         }
 
+        // TODO: Replace class with a single hook on RecalculateSTatsAPI.GetstatCoefficients. This way we replace the monobehaviour with just a method
         public class KnightSpecialSlowEnemiesBuff : BaseBuffBehaviour, IBodyStatArgModifier
         {
             [BuffDefAssociation]
@@ -148,7 +150,7 @@ namespace SS2.Survivors
             // Called when the body with this buff takes damage
             public void OnIncomingDamageServer(DamageInfo damageInfo)
             {
-                if (damageInfo.attacker != CharacterBody)
+                if (HasAnyStacks && damageInfo.attacker != CharacterBody)
                 {
                     // We want to ensure that Knight is the one taking damage
                     if (CharacterBody.baseNameToken != "SS2_KNIGHT_BODY_NAME")

@@ -149,6 +149,7 @@ namespace SS2.Equipments
             }
         }
 
+        // TODO: Replace class with a single hook on RecalculateSTatsAPI.GetstatCoefficients. This way we replace the monobehaviour with just a method
         public sealed class GreatBannerBuffBehavior : BaseBuffBehaviour, IBodyStatArgModifier
         {
             [BuffDefAssociation]

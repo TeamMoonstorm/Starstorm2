@@ -1,17 +1,71 @@
 ﻿using HG;
+using MSU;
 using RoR2;
+using RoR2.ContentManagement;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
-namespace SS2.Buffs
-{
-    //TODO: move this to the equipment class.
-    /*public sealed class AffixKinetic : BuffBase
-    {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdEliteKinetic", SS2Bundle.Indev);
 
-        public sealed class Behavior : BaseBuffBodyBehavior
+namespace SS2.Equipments
+{
+#if DEBUG
+
+    public sealed class AffixKinetic : SS2EliteEquipment
+    {
+        //public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("EliteKineticEquipment", SS2Bundle.Indev);
+
+        //public override List<MSEliteDef> EliteDefs => new List<MSEliteDef>
+        //{
+        //    SS2Assets.LoadAsset<MSEliteDef>("edKinetic", SS2Bundle.Indev),
+        //    SS2Assets.LoadAsset<MSEliteDef>("edKineticHonor", SS2Bundle.Indev)
+        //};
+
+        //public override bool FireAction(EquipmentSlot slot)
+        //{
+        //    return false;
+        //}
+        public override List<EliteDef> EliteDefs => _eliteDefs;
+        private List<EliteDef> _eliteDefs;
+
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+
+        public override EquipmentDef EquipmentDef => _equipmentDef;
+        private EquipmentDef _equipmentDef;
+
+        public BuffDef _buffKinetic; //{ get; } = SS2Assets.LoadAsset<BuffDef>("bdEliteKinetic", SS2Bundle.Indev);
+
+
+        public override bool Execute(EquipmentSlot slot)
+        {
+            return false;
+        }
+
+        public override void Initialize()
+        {
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return false;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            // TODO: MSU 2.0 Load content!
+            yield break;
+        }
+
+        public override void OnEquipmentLost(CharacterBody body)
+        {
+        }
+
+        public override void OnEquipmentObtained(CharacterBody body)
+        {
+        }
+
+        public sealed class KineticBuffBehaviour : BaseBuffBehaviour
         {
             [BuffDefAssociation]
             public static BuffDef GetBuffDef() => SS2Content.Buffs.bdEliteKinetic;
@@ -33,7 +87,8 @@ namespace SS2.Buffs
                 {
                     return;
                 }
-                if (!body.outOfCombat && timer > 4f)
+
+                if (HasAnyStacks && !CharacterBody.outOfCombat && timer > 4f)
                 {
                     PullEnemies();
                     timer = 0;
@@ -58,17 +113,20 @@ namespace SS2.Buffs
 
             private void OnEnable()
             {
+                // TODO from Buns: Remember to remove log after implementation is done Zen :)
                 SS2Log.Info("ahhh");
-                tempAuraPrefab = UnityEngine.Object.Instantiate<GameObject>(auraPrefab, body.corePosition, Quaternion.identity);
-                tempAuraPrefab.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(body.gameObject, null);
+                tempAuraPrefab = UnityEngine.Object.Instantiate<GameObject>(auraPrefab, CharacterBody.corePosition, Quaternion.identity);
+                tempAuraPrefab.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(CharacterBody.gameObject, null);
                 //hasMadeAura = true;
             }
 
             private void OnDisable()
             {
+                // TODO from Buns: Remember to remove log after implementation is done Zen :)
                 SS2Log.Info("oooohohohohohohh");
                 if (tempAuraPrefab)
                 {
+                    // TODO from Buns: Remember to remove log after implementation is done Zen :)
                     SS2Log.Info("yay");
                     Destroy(tempAuraPrefab);
                 }
@@ -77,14 +135,14 @@ namespace SS2.Buffs
             private void PullEnemies()
             {
                 float aoeRadius = 20;// + (aoeRangeStacking.Value * (float)(cryoCount - 1));
-                float bodyRadius = body.radius;
+                float bodyRadius = CharacterBody.radius;
                 float effectiveRadius = aoeRadius;// + (bodyRadius * .5f);
                 //float AOEDamageMult = debuffDamage;// + (stackingDamageAOE.Value * (float)(cryoCount - 1));
                 //float AOEDamage = damageReport.attackerBody.damage * AOEDamageMult;
                 //
                 //float duration = debuffDuration; // + (slowDurationStacking.Value * (cryoCount - 1));
 
-                var bodyTeam = body.teamComponent.teamIndex;
+                var bodyTeam = CharacterBody.teamComponent.teamIndex;
 
                 //float num = 8f + 4f * (float)cryoCount;
                 //float radius = victimBody.radius;
@@ -93,7 +151,7 @@ namespace SS2.Buffs
                 //float baseDamage = obj.attackerBody.damage * num3;
                 //float value = (float)(1 + cryoCount) * 0.75f * obj.attackerBody.damage;
 
-                Vector3 corePosition = body.corePosition;
+                Vector3 corePosition = CharacterBody.corePosition;
 
                 SphereSearch kineticAOESphereSearch = new SphereSearch();
                 List<HurtBox> kineticAOEHurtBoxBuffer = new List<HurtBox>();
@@ -127,7 +185,7 @@ namespace SS2.Buffs
                             //float num3 = body.moveSpeed / num;
                             //float horizontalBonus = (num2 + num3) / num3;
                             //Vector3 direction = new Vector3( )
-                            Vector3 v1 = body.transform.position;
+                            Vector3 v1 = CharacterBody.transform.position;
                             Vector3 v2 = victim.transform.position;
 
                             //GenericCharacterMain.ApplyJumpVelocity(body.characterMotor, body, horizontalBonus, shorthopVelocity, false);
@@ -203,21 +261,21 @@ namespace SS2.Buffs
                 //    rotation = Util.QuaternionSafeLookRotation(obj.damageInfo.force)
                 //}, true);
             }
-        
+
 
             private void GeneratePulse()
             {
-                GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(pulsePrefab, body.transform.position, body.transform.rotation);
+                GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(pulsePrefab, CharacterBody.transform.position, CharacterBody.transform.rotation);
                 PulseController component = gameObject.GetComponent<PulseController>();
                 sphereSearch = new RoR2.SphereSearch()
                 {
                     queryTriggerInteraction = UnityEngine.QueryTriggerInteraction.Collide,
                     mask = LayerIndex.entityPrecise.mask,
-                    origin = body.transform.position,
+                    origin = CharacterBody.transform.position,
                 };
 
-                component.finalRadius += buffStacks;
-                component.duration += (buffStacks * 0.1f); //Artificially increase duration because in higher radius its almost instant
+                component.finalRadius += BuffCount;
+                component.duration += (BuffCount * 0.1f); //Artificially increase duration because in higher radius its almost instant
                 component.performSearch += PerformSearch;
                 component.onPulseHit += OnPulseHit;
                 component.StartPulseServer();
@@ -233,7 +291,7 @@ namespace SS2.Buffs
                     return;
                 }
                 List<HurtBox> hurtBoxes = CollectionPool<HurtBox, List<HurtBox>>.RentCollection();
-                sphereSearch.RefreshCandidates().FilterCandidatesByDistinctHurtBoxEntities().FilterCandidatesByHurtBoxTeam(TeamMask.GetEnemyTeams(body.teamComponent.teamIndex)).GetHurtBoxes(hurtBoxes);
+                sphereSearch.RefreshCandidates().FilterCandidatesByDistinctHurtBoxEntities().FilterCandidatesByHurtBoxTeam(TeamMask.GetEnemyTeams(CharacterBody.teamComponent.teamIndex)).GetHurtBoxes(hurtBoxes);
                 for (int i = 0; i < hurtBoxes.Count; i++)
                 {
                     if (hurtBoxes[i].healthComponent)
@@ -252,18 +310,20 @@ namespace SS2.Buffs
                 if (hitInfo.hitObject)
                 {
                     HealthComponent hc = (HealthComponent)hitInfo.hitObject;
-                    if (TeamManager.IsTeamEnemy(hc.body.teamComponent.teamIndex, body.teamComponent.teamIndex))
+                    if (TeamManager.IsTeamEnemy(hc.body.teamComponent.teamIndex, CharacterBody.teamComponent.teamIndex))
                     {
-                        /*if (BuffCatalog.GetBuffDef(BuffCatalog.FindBuffIndex("BuffFear"))) //Lazy to check for SS2 installation, check if catalog has fear in
+                        // TODO: THis was commented out before, idk if it needs to be kept
+                        if (BuffCatalog.GetBuffDef(BuffCatalog.FindBuffIndex("BuffFear"))) //Lazy to check for SS2 installation, check if catalog has fear in
                         {
-                            hc.body.AddTimedBuff(BuffCatalog.GetBuffDef(BuffCatalog.FindBuffIndex("BuffFear")), (4 + buffStacks) * hitInfo.hitSeverity);
+                            hc.body.AddTimedBuff(BuffCatalog.GetBuffDef(BuffCatalog.FindBuffIndex("BuffFear")), (4 + BuffCount) * hitInfo.hitSeverity);
                             return;
                         }
-                        hc.body.AddTimedBuff(SS2Content.Buffs.BuffVoidLeech, (4 + buffStacks) * hitInfo.hitSeverity);
+                        hc.body.AddTimedBuff(SS2Content.Buffs.BuffVoidLeech, (4 + BuffCount) * hitInfo.hitSeverity);
                         return;
                     }
                 }
             }
         }
-    }*/
+    }
+#endif
 }
