@@ -1,20 +1,267 @@
-﻿using RoR2;
+﻿using MSU;
+using RoR2;
+using RoR2.ContentManagement;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using MonoMod.Cil;
+using Mono.Cecil.Cil;
+using System.Linq;
 namespace SS2.Equipments
 {
-    //[DisabledContent]
-    /*public sealed class AffixEmpyrean : SS2EliteEquipment
+    public sealed class AffixEmpyrean : SS2EliteEquipment
     {
-        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("AffixEmpyrean", SS2Bundle.Equipments);
+        public override EquipmentDef EquipmentDef => _equipmentDef;
+        private EquipmentDef _equipmentDef;
+        public override List<EliteDef> EliteDefs => _eliteDefs;
+        private List<EliteDef> _eliteDefs;
 
-        public override List<MSEliteDef> EliteDefs { get; } = new List<MSEliteDef>
+        private Material matOverlay;
+
+        private GameObject affixEffect;
+
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+
+        public static List<EliteDef> blacklistedEliteDefs = new List<EliteDef>();
+
+        public override void Initialize()
         {
-            SS2Assets.LoadAsset<MSEliteDef>("edEmpyrean", SS2Bundle.Equipments),
-        };
+            BuffOverlays.AddBuffOverlay(SS2Content.Buffs.bdEmpyrean, matOverlay);
 
-        public override bool FireAction(EquipmentSlot slot)
+            CreateBlacklist();
+
+            On.RoR2.Util.GetBestBodyName += MakeEmpyreanName;
+            RoR2Application.onLoad += CreateBlacklist;
+            IL.RoR2.CharacterBody.RecalculateStats += RecalculateStatsEmpyreanIL;
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            //N: Thank fuck the "ParallelAsseTLoadCoroutineHelper" isnt real anymore
+
+            /*
+             * EquipmentDef - "AffixEmpyrean" - AffixEmpyrean
+             * BuffDef - "bdEmpyrean" - AffixEmpyrean
+             * Material - "matRainbowOverlay" - AffixEmpyrean
+             * GameObject - "RainbowAffixEffect" - AffixEmpyrean
+             */
+            yield break;
+        }
+
+        #region Hooks
+        private void RecalculateStatsEmpyreanIL(ILContext il)
+        {
+            ILCursor c = new ILCursor(il);
+
+            bool ILFound = c.TryGotoNext(MoveType.After,
+                x => x.MatchLdsfld(typeof(RoR2Content.Buffs), nameof(RoR2Content.Buffs.AffixBlue)),
+                x => x.MatchCallOrCallvirt<CharacterBody>(nameof(CharacterBody.HasBuff)),
+                x => x.MatchBrfalse(out _),
+                x => x.MatchLdarg(0),
+                x => x.MatchCallOrCallvirt<CharacterBody>("get_maxHealth"),
+                x => x.MatchLdcR4(0.5f)
+                );
+            if (ILFound)
+            {
+
+                c.Emit(OpCodes.Ldarg_0);
+                c.EmitDelegate<Func<float, CharacterBody, float>>((defaultPercentage, body) =>
+                {
+                    if (body.HasBuff(SS2Content.Buffs.bdEmpyrean))
+                    {
+                        return 0.1f;
+                    }
+                    return defaultPercentage;
+                });
+            }
+            else
+            {
+                //Debug.Log("Failed to find IL match for Empyrean hook 1!");
+            }
+
+            //Debug.Log(il + " :: IL DEBUGLOG");
+
+            bool ILFound2 = c.TryGotoNext(MoveType.After,
+                x => x.MatchSub(),
+                x => x.MatchCallOrCallvirt<CharacterBody>("set_maxHealth"),
+                x => x.MatchLdloc(out _),
+                x => x.MatchLdarg(0),
+                x => x.MatchCallOrCallvirt<CharacterBody>("get_maxHealth")
+                );
+            if (ILFound2)
+            {
+                c.Emit(OpCodes.Ldarg_0);
+                c.EmitDelegate<Func<float, CharacterBody, float>>((defaultAmount, body) =>
+                {
+                    if (body.HasBuff(SS2Content.Buffs.bdEmpyrean))
+                    {
+                        return defaultAmount * 0.111f;
+                    }
+                    return defaultAmount;
+                });
+            }
+            else
+            {
+                //Debug.Log("Failed to find IL match for Empyrean hook 2!");
+            }
+        }
+
+        private static string MakeEmpyreanName(On.RoR2.Util.orig_GetBestBodyName orig, GameObject bodyObject)
+        {
+            var text = orig(bodyObject);
+            var empyreanIndex = SS2Content.Buffs.bdEmpyrean.buffIndex;
+            if (!bodyObject)
+                return text;
+
+            if (!bodyObject.TryGetComponent<CharacterBody>(out var body))
+                return text;
+
+            if (!body.HasBuff(empyreanIndex))
+            {
+                return text;
+            }
+
+            foreach (BuffIndex buffIndex in BuffCatalog.eliteBuffIndices)
+            {
+                if (buffIndex == empyreanIndex)
+                    continue;
+
+                var eliteToken = Language.GetString(BuffCatalog.GetBuffDef(buffIndex).eliteDef.modifierToken);
+                eliteToken = eliteToken.Replace("{0}", string.Empty);
+                text = text.Replace(eliteToken, string.Empty);
+            }
+
+            return text;
+        }
+        #endregion
+
+        private static void CreateBlacklist()
+        {
+            AddEliteToBlacklist(RoR2Content.Elites.Lunar);
+            AddEliteToBlacklist(DLC1Content.Elites.Void);
+        }
+
+        public override bool Execute(EquipmentSlot slot)
         {
             return false;
         }
-    }*/
+        
+        public override void OnEquipmentLost(CharacterBody body)
+        {
+        }
+
+        public override void OnEquipmentObtained(CharacterBody body)
+        {
+        }
+
+        public static void AddEliteToBlacklist(EliteDef eliteDef) => blacklistedEliteDefs.Add(eliteDef);
+    }
+
+    public sealed class AffixEmpyreanBehavior : BaseBuffBehaviour, IOnKilledServerReceiver
+    {
+        [BuffDefAssociation]
+        private static BuffDef GetBuffDef() => SS2Content.Buffs.bdEmpyrean;
+        private string ogSubtitle;
+        private CharacterModel model;
+        private GameObject rainbowEffect;
+        private SetStateOnHurt setStateOnHurt;
+        private bool wasStun;
+        private bool wasHitStun;
+        private bool wasFrozen;
+
+        private void Start()
+        {
+            this.setStateOnHurt = base.GetComponent<SetStateOnHurt>();           
+            ogSubtitle = CharacterBody.subtitleNameToken;
+            model = CharacterBody.modelLocator.modelTransform.GetComponent<CharacterModel>();           
+        }
+
+        protected override void OnFirstStackGained()
+        {
+            base.OnFirstStackGained();
+
+            foreach (EliteDef ed in EliteCatalog.eliteDefs)
+            {
+                //shitty hardcoded case for blighted; add actual cross compat later!
+                if (ed.IsAvailable() && !AffixEmpyrean.blacklistedEliteDefs.Contains(ed) && !CharacterBody.HasBuff(ed.eliteEquipmentDef.passiveBuffDef) && ed.modifierToken != "LIT_MODIFIER_BLIGHTED")
+                    CharacterBody.AddBuff(ed.eliteEquipmentDef.passiveBuffDef);
+            }
+            if (setStateOnHurt)
+            {
+                wasStun = setStateOnHurt.canBeStunned;
+                setStateOnHurt.canBeStunned = false;
+                wasHitStun = setStateOnHurt.canBeHitStunned;
+                setStateOnHurt.canBeHitStunned = false;
+                wasFrozen = setStateOnHurt.canBeFrozen;
+                setStateOnHurt.canBeFrozen = false;
+            }
+            if (model)
+            {
+                this.rainbowEffect = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("RainbowAffixEffect", SS2Bundle.Equipments), model.transform);
+            }
+            CharacterBody.subtitleNameToken = "SS2_ELITE_EMPYREAN_SUBTITLE";
+        }
+        protected override void OnAllStacksLost()
+        {
+            base.OnAllStacksLost();
+            if (rainbowEffect) Destroy(this.rainbowEffect);
+            if (setStateOnHurt)
+            {
+                setStateOnHurt.canBeStunned = wasStun;
+                setStateOnHurt.canBeHitStunned = wasHitStun;
+                setStateOnHurt.canBeFrozen = wasFrozen;
+            }
+            foreach (EliteDef ed in EliteCatalog.eliteDefs)
+            {
+                if (CharacterBody.HasBuff(ed.eliteEquipmentDef.passiveBuffDef))
+                    CharacterBody.RemoveBuff(ed.eliteEquipmentDef.passiveBuffDef);
+            }
+
+            CharacterBody.subtitleNameToken = ogSubtitle;
+        }
+
+        // item rewards are temporary
+        public void OnKilledServer(DamageReport damageReport)
+        {
+            int numItems = this.CharacterBody.isChampion ? 4 : 2;
+            float spreadAngle = 360f / numItems;
+            float startingAngle = -(spreadAngle / 2) * (numItems - 1);
+            for (int i = 0; i < numItems; i++)
+            {
+                float angle = startingAngle + i * spreadAngle;
+                Vector3 direction = Quaternion.Euler(0, angle, 0) * damageReport.victimBody.coreTransform.forward;
+                Vector3 velocity = Vector3.up * 20f + direction * 10f;
+
+                PickupIndex pickupIndex = RoR2.Artifacts.SacrificeArtifactManager.dropTable.GenerateDrop(RoR2.Artifacts.SacrificeArtifactManager.treasureRng);
+                if (pickupIndex != PickupIndex.none)
+                {
+                    PickupDropletController.CreatePickupDroplet(pickupIndex, damageReport.victimBody.corePosition, velocity);
+                }
+            }
+
+            if (Util.CheckRoll(20f))
+            {
+                // only pull an elite the empyrean has.
+                EliteDef[] eliteDefs = EliteCatalog.eliteDefs.Where(x => x.eliteEquipmentDef && CharacterBody.HasBuff(x.eliteEquipmentDef.passiveBuffDef)).ToArray();
+                int eliteIndex = Mathf.FloorToInt(UnityEngine.Random.Range(0, eliteDefs.Length));
+
+                EquipmentIndex equipmentIndex = eliteDefs[eliteIndex].eliteEquipmentDef.equipmentIndex;
+                PickupIndex pickupIndex = PickupCatalog.FindPickupIndex(equipmentIndex);
+
+                if (pickupIndex != PickupIndex.none)
+                {
+                    PickupDropletController.CreatePickupDroplet(pickupIndex, damageReport.victimBody.corePosition, Vector3.up * 20f);
+                }
+
+
+            }
+        }
+    }
+
 }
