@@ -82,10 +82,8 @@ namespace SS2.Equipments
             }
             else
             {
-                //Debug.Log("Failed to find IL match for Empyrean hook 1!");
+                SS2Log.Fatal("Failed to find IL match for Empyrean hook 1!");
             }
-
-            //Debug.Log(il + " :: IL DEBUGLOG");
 
             bool ILFound2 = c.TryGotoNext(MoveType.After,
                 x => x.MatchSub(),
@@ -108,7 +106,7 @@ namespace SS2.Equipments
             }
             else
             {
-                //Debug.Log("Failed to find IL match for Empyrean hook 2!");
+                SS2Log.Fatal("Failed to find IL match for Empyrean hook 2!");
             }
         }
 
@@ -229,6 +227,8 @@ namespace SS2.Equipments
         // item rewards are temporary
         public void OnKilledServer(DamageReport damageReport)
         {
+            if (!HasAnyStacks) return; // this feels weird but /shrug
+
             int numItems = this.CharacterBody.isChampion ? 4 : 2;
             float spreadAngle = 360f / numItems;
             float startingAngle = -(spreadAngle / 2) * (numItems - 1);
