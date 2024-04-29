@@ -28,6 +28,7 @@ namespace SS2.Items
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
         public static float baseProcChance = 0.1f;
 
+        public static float cooldown = 0.5f;
         private static GameObject _burstEffect;
 
         public override void Initialize()
@@ -52,10 +53,20 @@ namespace SS2.Items
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.LowQualitySpeakers;
+
+            private float cooldownStopwatch;
+
+            private void FixedUpdate()
+            {
+                cooldownStopwatch -= Time.fixedDeltaTime;
+            }
+
             public void OnIncomingDamageServer(DamageInfo damageInfo)
             {
                 int stack = body.inventory.GetItemCount(SS2Content.Items.LowQualitySpeakers);
-                if (stack <= 0) return;
+
+                if (stack <= 0 || cooldownStopwatch > 0) return;
+                cooldownStopwatch = cooldown;
 
                 // 100% chance at 0% health, baseProcChance at 100% health
                 // uses health fraction after damage, not before

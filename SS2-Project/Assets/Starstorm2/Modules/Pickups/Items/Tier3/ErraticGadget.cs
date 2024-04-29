@@ -45,7 +45,7 @@ namespace SS2.Items
         public static int repeatDamageMultiplier = 1;
 
         private static GameObject _orbEffectPrefab;
-        private static GameObject _procEffectPrefab;
+        public static GameObject _procEffectPrefab;
         private static GameObject _displayEffectPrefab;
 
         //N: True...

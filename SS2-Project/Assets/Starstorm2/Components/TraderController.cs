@@ -5,8 +5,12 @@ using UnityEngine.Networking;
 using RoR2;
 using EntityStates.Trader.Bag;
 using RoR2.UI;
+using R2API;
+
 namespace SS2.Components
 {
+
+    //TODO: nuke this and start over
     public class TraderController : NetworkBehaviour
     {
         public ItemIndex lastTradedItemIndex { get; private set; }
@@ -32,7 +36,7 @@ namespace SS2.Components
 
         internal static void Initialize()
         {
-            menuPrefab = Instantiate(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Scrapper/ScrapperPickerPanel.prefab").WaitForCompletion());
+            menuPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Scrapper/ScrapperPickerPanel.prefab").WaitForCompletion().InstantiateClone("sansans");
             if (menuPrefab != null)
                 ModifyMenu(menuPrefab);
         }

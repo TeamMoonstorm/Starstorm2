@@ -30,8 +30,8 @@ namespace SS2.Items
         private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, R2API.RecalculateStatsAPI.StatHookEventArgs args)
         {
             int stack = sender.inventory?.GetItemCount(SS2Content.Items.BloodTester) ?? 0;
-            if (stack > 0)
-                args.baseRegenAdd += (healthRegen * stack) * sender.master.money / Run.instance.GetDifficultyScaledCost(25);
+            if (stack > 0 && Stage.instance)
+                args.baseRegenAdd += (healthRegen * stack) * sender.master.money / Run.instance.GetDifficultyScaledCost(25, Stage.instance.entryDifficultyCoefficient);
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -48,7 +48,7 @@ namespace SS2.Items
         }
 
         // need to force recalculatestats to make regen update with money
-        // not ideal, but shouldnt be a performance hit. only really runs when killing an enemy or using an interactable
+        // not ideal, but isnt a performance hit. only really runs when killing an enemy or using an interactable
         public sealed class Behavior : BaseItemBodyBehavior
         {
             [ItemDefAssociation]
@@ -59,7 +59,7 @@ namespace SS2.Items
             {
                 if (!body.master) return;
                 if (moneyLastFrame != body.master.money)
-                    body.RecalculateStats();
+                    body.statsDirty = true;
                 moneyLastFrame = body.master.money;
             }
         }
