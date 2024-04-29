@@ -118,7 +118,7 @@ namespace SS2.Components
                     lightningOrb.canBounceOnSameTarget = this.canBounceOnSameTarget;
                     OrbManager.instance.AddOrb(lightningOrb);
 
-                    //EffectManager.SimpleEffect(procEffectPrefab, this.target.transform.position, Quaternion.identity, true);
+                    EffectManager.SimpleEffect(SS2.Items.ErraticGadget._procEffectPrefab, this.target.transform.position, Quaternion.identity, true);
                 }
 
             }
