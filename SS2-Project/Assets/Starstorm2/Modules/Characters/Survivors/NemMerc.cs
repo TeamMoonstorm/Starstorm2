@@ -100,6 +100,7 @@ namespace SS2.Survivors
         public void ModifyContentPack(ContentPack contentPack)
         {
             contentPack.networkedObjectPrefabs.AddSingle(_hologramPrefab);
+            contentPack.projectilePrefabs.AddSingle(_knifeProjectile);
         }
     }
 }

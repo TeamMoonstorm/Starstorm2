@@ -10,7 +10,7 @@ using RoR2.ContentManagement;
 
 namespace SS2.Survivors
 {
-    public sealed class NemesisHuntress : SS2Survivor
+    public sealed class NemesisHuntress : SS2Survivor, IContentPackModifier
     {
         public override SurvivorDef SurvivorDef => _survivorDef;
         private SurvivorDef _survivorDef;
@@ -23,6 +23,8 @@ namespace SS2.Survivors
         public static GameObject crosshairPrefab;
         public static ModdedDamageType weakPointProjectile;
         public static GameObject miniCritPrefab;
+        private GameObject arrowProjectile;
+        private GameObject explosiveArrowProjectile;
 
         GameObject footstepDust { get; set; } = Resources.Load<GameObject>("Prefabs/GenericFootstepDust");
 
@@ -33,6 +35,8 @@ namespace SS2.Survivors
 
             weakPointProjectile = DamageAPI.ReserveDamageType();
             On.RoR2.Projectile.ProjectileSingleTargetImpact.OnProjectileImpact += PSTI_OPI;
+
+            ModifyProjectiles();
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -46,6 +50,8 @@ namespace SS2.Survivors
              * GameObject - "NemHuntress2Body" - Indev
              * SurvivorDef - "survivorNemHuntress2" - Indev
              * GameObject - "CritsparkMini" - Indev
+             * GameObject - "NemHuntressArrowProjectile" - Indev
+             * GameObject - "NemHuntressArrowExplode" - Indev
              */
             yield break;
         }
@@ -91,6 +97,23 @@ namespace SS2.Survivors
             }
 
             orig(self, impactInfo);
+        }
+
+        private void ModifyProjectiles()
+        {
+            var damageAPIComponent = arrowProjectile.AddComponent<ModdedDamageTypeHolderComponent>();
+            damageAPIComponent.Add(weakPointProjectile);
+            damageAPIComponent = explosiveArrowProjectile.AddComponent<ModdedDamageTypeHolderComponent>();
+            damageAPIComponent.Add(weakPointProjectile);
+        }
+
+        public void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.projectilePrefabs.Add(new GameObject[]
+            {
+                arrowProjectile,
+                explosiveArrowProjectile,
+            });           
         }
     }
 }

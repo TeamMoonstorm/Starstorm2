@@ -12,7 +12,7 @@ using RoR2.ContentManagement;
 
 namespace SS2.Survivors
 {
-    public sealed class NemCommando : SS2Survivor
+    public sealed class NemCommando : SS2Survivor, IContentPackModifier
     {
         public override SurvivorDef SurvivorDef => _survivorDef;
         private SurvivorDef _survivorDef;
@@ -25,6 +25,10 @@ namespace SS2.Survivors
         public static DamageAPI.ModdedDamageType GougeDamageType { get; private set; }
         public static DotController.DotIndex GougeDotIndex { get; private set; }
         private BuffDef _gougeBuffDef;
+        private GameObject distantGashProjectile;
+        private GameObject distantGashProjectileBlue;
+        private GameObject distantGashProjectileYellow;
+        private GameObject grenadeProjectile;
 
         public override void Initialize()
         {
@@ -107,13 +111,39 @@ namespace SS2.Survivors
              * GameObject - "NemCommandoMonsterMaster" - NemCommando
              * SurvivorDef - "survivorNemCommando" - NemCommando
              * BuffDef - "BuffGouge" - NemCommando
+             * GameObject "NemCommandoSwordBeamProjectile" - NemCommando
+             * GameObject "NemCommandoSwordBeamProjectileBlue" - NemCommando
+             * GameObject "NemCommandoSwordBeamProjectileYellow" - NemCommando
+             * GameObject "NemCommandoGrenadeProjectile" - NemCommando
              */
             yield break;
+            
         }
-    }
 
-    public class NemmandoPistolToken : MonoBehaviour
-    {
-        public int secondaryStocks = 8;
+        public void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.buffDefs.AddSingle(new BuffDef[]
+            {
+                _gougeBuffDef
+            });
+            contentPack.projectilePrefabs.Add(new GameObject[]
+            {
+                distantGashProjectile,
+                distantGashProjectileBlue,
+                distantGashProjectileYellow,
+            });
+        }
+        private void ModifyProjectiles()
+        {
+            var damageAPIComponent = distantGashProjectile.AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>();
+            damageAPIComponent.Add(GougeDamageType);
+            damageAPIComponent = distantGashProjectileBlue.AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>();
+            damageAPIComponent.Add(GougeDamageType);
+            damageAPIComponent = distantGashProjectileYellow.AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>();
+            damageAPIComponent.Add(GougeDamageType);
+
+            var pie = grenadeProjectile.GetComponent<RoR2.Projectile.ProjectileImpactExplosion>();
+            pie.impactEffect = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/OmniExplosionVFXCommandoGrenade.prefab").WaitForCompletion();
+        }
     }
 }

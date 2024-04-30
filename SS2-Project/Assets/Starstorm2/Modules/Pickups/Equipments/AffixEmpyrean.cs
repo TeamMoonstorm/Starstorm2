@@ -17,18 +17,12 @@ namespace SS2.Equipments
         public override List<EliteDef> EliteDefs => _eliteDefs;
         private List<EliteDef> _eliteDefs;
 
-        private Material matOverlay;
-
-        private GameObject affixEffect;
-
         public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
 
         public static List<EliteDef> blacklistedEliteDefs = new List<EliteDef>();
 
         public override void Initialize()
         {
-            BuffOverlays.AddBuffOverlay(SS2Content.Buffs.bdEmpyrean, matOverlay);
-
             CreateBlacklist();
 
             On.RoR2.Util.GetBestBodyName += MakeEmpyreanName;
@@ -48,8 +42,6 @@ namespace SS2.Equipments
             /*
              * EquipmentDef - "AffixEmpyrean" - AffixEmpyrean
              * BuffDef - "bdEmpyrean" - AffixEmpyrean
-             * Material - "matRainbowOverlay" - AffixEmpyrean
-             * GameObject - "RainbowAffixEffect" - AffixEmpyrean
              */
             yield break;
         }
@@ -167,7 +159,6 @@ namespace SS2.Equipments
         private static BuffDef GetBuffDef() => SS2Content.Buffs.bdEmpyrean;
         private string ogSubtitle;
         private CharacterModel model;
-        private GameObject rainbowEffect;
         private SetStateOnHurt setStateOnHurt;
         private bool wasStun;
         private bool wasHitStun;
@@ -199,16 +190,11 @@ namespace SS2.Equipments
                 wasFrozen = setStateOnHurt.canBeFrozen;
                 setStateOnHurt.canBeFrozen = false;
             }
-            if (model)
-            {
-                this.rainbowEffect = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("RainbowAffixEffect", SS2Bundle.Equipments), model.transform);
-            }
             CharacterBody.subtitleNameToken = "SS2_ELITE_EMPYREAN_SUBTITLE";
         }
         protected override void OnAllStacksLost()
         {
             base.OnAllStacksLost();
-            if (rainbowEffect) Destroy(this.rainbowEffect);
             if (setStateOnHurt)
             {
                 setStateOnHurt.canBeStunned = wasStun;

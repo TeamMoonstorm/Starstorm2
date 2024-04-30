@@ -18,6 +18,9 @@ namespace SS2.Survivors
         public override GameObject CharacterPrefab => _prefab;
         private GameObject _prefab;
 
+        private GameObject shieldBeamProjectile;
+        private GameObject swordBeamProjectile;
+
         public override void Initialize()
         {
             CharacterBody.onBodyStartGlobal += KnightBodyStart;
@@ -47,6 +50,8 @@ namespace SS2.Survivors
             /*
              * GameObject - "KnightBody" - Indev
              * SurvivorDef - "survivorKnight" - Indev
+             * GameObject "KnightShieldBeamProjectile" - Indev
+             * GameObject "KnightSwordBeamProjectile" - Indev
              */
             yield break;
         }

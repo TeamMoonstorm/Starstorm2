@@ -12,7 +12,7 @@ using MSU.Config;
 namespace SS2.Items
 {
 #if DEBUG
-    public sealed class HottestSauce : SS2Item
+    public sealed class HottestSauce : SS2Item, IContentPackModifier
     {
         private const string token = "SS2_ITEM_HOTTESTSAUCE_DESC";
         public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
@@ -28,6 +28,8 @@ namespace SS2.Items
         [FormatToken(token, 1)]
         public static float DOTDuration = 6f;
 
+        private GameObject sauceProjectile;
+
         public override void Initialize()
         {
 
@@ -42,8 +44,14 @@ namespace SS2.Items
         {
             /*
              * ItemDef - "HottestSauce" - Items
+             * GameObject - "SauceProjectile" - Items
              */
             yield break;
+        }
+
+        public void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.projectilePrefabs.AddSingle(sauceProjectile);
         }
 
         public sealed class Behavior : BaseItemBodyBehavior
