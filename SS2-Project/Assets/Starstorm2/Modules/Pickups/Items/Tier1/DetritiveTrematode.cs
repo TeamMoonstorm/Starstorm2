@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using RoR2.ContentManagement;
 using System.Collections;
 using MSU.Config;
+using R2API;
 
 namespace SS2.Items
 {
@@ -33,9 +34,12 @@ namespace SS2.Items
 
         private static DotController.DotIndex _trematodeDotIndex;
         private static GameObject _biteEffect;
+
+        public BuffDef _buffTrematodes; //SS2Assets.LoadAsset<BuffDef>("BuffTrematodes", SS2Bundle.Items);
+        public Material overlay;//SS2Assets.LoadAsset<Material>("matBloodOverlay", SS2Bundle.Items);
         public override void Initialize()
         {
-
+            _trematodeDotIndex = DotAPI.RegisterDotDef(.5f, .5f, DamageColorIndex.Item, _buffTrematodes);
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -48,6 +52,7 @@ namespace SS2.Items
             /*
              * ItemDef - "DetritiveTrematode" - Items
              * GameObject - "TrematodeBiteEffect" - Items
+             * BuffDef - "BuffTrematodes" - Items
              */
             yield break;
         }
