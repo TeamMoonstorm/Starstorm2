@@ -10,15 +10,9 @@ namespace SS2.Survivors
 {
     public sealed class NemCaptain : SS2Survivor
     {
-        public override SurvivorDef SurvivorDef => _survivorDef;
-        private SurvivorDef _survivorDef;
-        public override NullableRef<GameObject> MasterPrefab => _monsterMaster;
-        private GameObject _monsterMaster;
-        public override GameObject CharacterPrefab => _prefab;
-        private GameObject _prefab;
+        public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acNemCaptain", SS2Bundle.Indev);
 
-        private BuffDef _droneBuff;
-
+        private BuffDef _droneBuff;    
         public override void Initialize()
         {
             ModifyPrefab();
@@ -27,7 +21,7 @@ namespace SS2.Survivors
 
         private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, R2API.RecalculateStatsAPI.StatHookEventArgs args)
         {
-            if(sender.HasBuff(_droneBuff))
+            if(sender.HasBuff(SS2Content.Buffs.bdNemCapDroneBuff))
             {
                 args.armorAdd += 30f;
                 args.baseAttackSpeedAdd += 0.2f;
@@ -36,7 +30,7 @@ namespace SS2.Survivors
 
         public void ModifyPrefab()
         {
-            var cb = _prefab.GetComponent<CharacterBody>();
+            var cb = CharacterPrefab.GetComponent<CharacterBody>();
             cb._defaultCrosshairPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/StandardCrosshair.prefab").WaitForCompletion();
             //cb.GetComponent<ModelLocator>().modelTransform.GetComponent<FootstepHandler>().footstepDustPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/GenericFootstepDust.prefab").WaitForCompletion();
         }
@@ -44,16 +38,6 @@ namespace SS2.Survivors
         public override bool IsAvailable(ContentPack contentPack)
         {
             return false;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * GameObject - "NemCaptainBody" - Indev
-             * SurvivorDef - "survivorNemCaptain" - Indev
-             * BuffDef - "bdNemCapDroneBuff" - Indev
-             */
-            yield break;
         }
     }
 }

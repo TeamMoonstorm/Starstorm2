@@ -15,14 +15,9 @@ using RoR2.ContentManagement;
 
 namespace SS2.Survivors
 {
-    public sealed class Chirr : SS2Survivor, IContentPackModifier
+    public sealed class Chirr : SS2Survivor
     {
-        public override SurvivorDef SurvivorDef => _survivorDef;
-        private SurvivorDef _survivorDef;
-        public override NullableRef<GameObject> MasterPrefab => _monsterMaster;
-        private GameObject _monsterMaster;
-        public override GameObject CharacterPrefab => _prefab;
-        private GameObject _prefab;
+        public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acChirr", SS2Bundle.Chirr);
 
         public static Vector3 chirristmasPos = new Vector3(-6.8455f, -7.0516f, 57.0163f);
         public static Vector3 chirristmasRot = new Vector3(0, 178.3926f, 0);
@@ -36,20 +31,27 @@ namespace SS2.Survivors
         public static ModdedDamageType confuseDamageType;
         public static float _confuseSlowAmount = 0.5f;
         public static float _confuseAttackSpeedSlowAmount = 0.0f;
-        private BuffDef _confuseBuffDef;
 
-        private BuffDef _convertBuffDef;
-        private float _convertDotDamageCoefficient;
+        private float _convertDotDamageCoefficient = 0.8f;
         public static DotController.DotIndex ConvertDotIndex { get; private set; }
 
-        private BuffDef _buffChirrFriend;
         private Material _matFriendOverlay;
 
         private static float _grabFriendAttackBoost = 1f;
-        private BuffDef _buffGrabFriend;
 
         private static float _percentHealthRegen = 0.05f;
-        private BuffDef _buffChirrRegen;
+
+        private BuffDef convertBuffDef;
+        
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            convertBuffDef = assetCollection.FindAsset<BuffDef>("BuffChirrConvert");
+        }
 
         public override void Initialize()
         {
@@ -70,7 +72,19 @@ namespace SS2.Survivors
 
             RegisterConfuseOnHit();
             RegisterConvert();
-            BuffOverlays.AddBuffOverlay(_buffChirrFriend, _matFriendOverlay);
+            BuffOverlays.AddBuffOverlay(SS2Content.Buffs.BuffChirrFriend, _matFriendOverlay);
+        }    
+
+        private void ModifyPrefab()
+        {
+            var cb = CharacterPrefab.GetComponent<CharacterBody>();
+
+            // would be cool to have something unique for her
+            // someone mentioned her "hatching" from a tree i think
+            cb.preferredPodPrefab = Resources.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod");
+
+            cb._defaultCrosshairPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/StandardCrosshair.prefab").WaitForCompletion();
+            cb.GetComponent<ModelLocator>().modelTransform.GetComponent<FootstepHandler>().footstepDustPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/GenericFootstepDust.prefab").WaitForCompletion();
         }
 
         // This is used for Chirr appearing on the menu during the holiday event
@@ -86,7 +100,7 @@ namespace SS2.Survivors
         // only when chirr is in the stage cuz idk how badly it affects performance
         private void FixGoolakeRaycasts(Stage stage)
         {
-            BodyIndex chirr = _prefab.GetComponent<CharacterBody>().bodyIndex;
+            BodyIndex chirr = CharacterPrefab.GetComponent<CharacterBody>().bodyIndex;
             if (stage.sceneDef == SceneCatalog.GetSceneDefFromSceneName("goolake"))
             {
                 foreach (PlayerCharacterMasterController pcmc in PlayerCharacterMasterController.instances)
@@ -113,53 +127,22 @@ namespace SS2.Survivors
 
         private void ModifyStats(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
-            int confuseCount = sender.GetBuffCount(_confuseBuffDef);
-            int grabFriendCount = sender.GetBuffCount(_buffGrabFriend);
-            bool hasRegenBuff = sender.HasBuff(_buffChirrRegen);
-
-            args.moveSpeedMultAdd -= _confuseSlowAmount * confuseCount;
-            args.attackSpeedMultAdd -= _confuseAttackSpeedSlowAmount * confuseCount;
-            args.baseAttackSpeedAdd += _grabFriendAttackBoost;
-
-            if(hasRegenBuff)
+            if(sender.HasBuff(SS2Content.Buffs.BuffChirrConfuse))
+            {
+                args.moveSpeedMultAdd -= _confuseSlowAmount;
+                args.attackSpeedMultAdd -= _confuseAttackSpeedSlowAmount;
+            }         
+            if(sender.HasBuff(SS2Content.Buffs.BuffChirrGrabFriend))
+            {
+                args.baseAttackSpeedAdd += _grabFriendAttackBoost;
+            }         
+            if(sender.HasBuff(SS2Content.Buffs.BuffChirrRegen))
             {
                 args.baseRegenAdd += sender.maxHealth * _percentHealthRegen;
             }
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            //N: Thank fuck the "ParallelAsseTLoadCoroutineHelper" isnt real anymore
-
-            /*
-             * GameObject - "ChirrBody" - Chirr
-             * GameObject - "ChirrMonsterMaster" - Chirr
-             * SurvivorDef - "Chirr" - Chirr
-             * BuffDef - "BuffChirrConfuse" - Chirr
-             * BuffDef - "BuffChirrConvert" - Chirr
-             * Material - "matFriendOverlay" - Chirr
-             * BuffDef - "BuffChirrGrabFriend" - Chirr
-             * BuffDef - "BuffChirrRegen" - Chirr
-             */
-            yield break;
-        }
-
-        private void ModifyPrefab()
-        {
-            var cb = _prefab.GetComponent<CharacterBody>();
-
-            // would be cool to have something unique for her
-            // someone mentioned her "hatching" from a tree i think
-            cb.preferredPodPrefab = Resources.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod");
-
-            cb._defaultCrosshairPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/StandardCrosshair.prefab").WaitForCompletion();
-            cb.GetComponent<ModelLocator>().modelTransform.GetComponent<FootstepHandler>().footstepDustPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/GenericFootstepDust.prefab").WaitForCompletion();
-        }
+        
     
         private void RegisterConfuseOnHit()
         {
@@ -169,7 +152,7 @@ namespace SS2.Survivors
 
         private void RegisterConvert()
         {
-            ConvertDotIndex = DotAPI.RegisterDotDef(0.33f, _convertDotDamageCoefficient, DamageColorIndex.Poison, _convertBuffDef);
+            ConvertDotIndex = DotAPI.RegisterDotDef(0.33f, _convertDotDamageCoefficient, DamageColorIndex.Poison, convertBuffDef);
         }
         private void ApplyConfuse(DamageReport obj)
         {
@@ -181,15 +164,6 @@ namespace SS2.Survivors
             }
         }
 
-        public void ModifyContentPack(ContentPack contentPack)
-        {
-            contentPack.buffDefs.Add(new BuffDef[]
-            {
-                _confuseBuffDef,
-                _convertBuffDef,
-                _buffChirrFriend,
-                _buffGrabFriend,
-            });
-        }
+        
     }
 }

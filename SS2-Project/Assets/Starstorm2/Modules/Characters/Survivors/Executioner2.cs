@@ -17,12 +17,7 @@ namespace SS2.Survivors
 {
     public sealed class Executioner2 : SS2Survivor
     {
-        public override SurvivorDef SurvivorDef => _survivorDef;
-        private SurvivorDef _survivorDef;
-        public override NullableRef<GameObject> MasterPrefab => _monsterMaster;
-        private GameObject _monsterMaster;
-        public override GameObject CharacterPrefab => _prefab;
-        private GameObject _prefab;
+        public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acExecutioner2", SS2Bundle.Executioner2);
 
         private BuffDef _exeChargeBuffDef;
         private BuffDef _exeArmor;
@@ -30,7 +25,13 @@ namespace SS2.Survivors
         public static GameObject plumeEffect;
         public static GameObject plumeEffectLarge;
 
+        
 
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            plumeEffect = assetCollection.FindAsset<GameObject>("exePlume");
+            plumeEffectLarge = assetCollection.FindAsset<GameObject>("exePlumeBig");
+        }
         public sealed class ExeArmorBehavior : BaseBuffBehaviour, IBodyStatArgModifier
         {
             [BuffDefAssociation]
@@ -127,26 +128,10 @@ namespace SS2.Survivors
             return true;
         }
 
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * GameObject - "Executioner2Body" - Executioner2
-             * GameObject - "Executioner2Master" - Executioner2
-             * SurvivorDef - "SurvivorExecutioner2" - Executioner2
-             * BuffDef - "bdExeCharge" - Executioner2
-             * BuffDef - "BuffExecutionerArmor" - Executioenr2
-             * GameObject - "exePlume" - Executioner2
-             * GameObject - "exePlumeBig" - Executioner2
-             * GameObject - "ExecutionerIonOrbEffect" - Executioner2
-             * GameObject - "ExecutionerIonOrbEffectMastery" - Executioner2
-             * GameObject - "ExecutionerIonSuperOrbEffect" - Executioner2
-             */
-            yield break;
-        }
 
         public void ModifyPrefab()
         {
-            var cb = _prefab.GetComponent<CharacterBody>();
+            var cb = CharacterPrefab.GetComponent<CharacterBody>();
             cb.preferredPodPrefab = Resources.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod");
             cb._defaultCrosshairPrefab = Resources.Load<GameObject>("Prefabs/Crosshair/StandardCrosshair");
         }

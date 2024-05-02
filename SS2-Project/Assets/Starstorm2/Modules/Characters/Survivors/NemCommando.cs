@@ -14,12 +14,7 @@ namespace SS2.Survivors
 {
     public sealed class NemCommando : SS2Survivor, IContentPackModifier
     {
-        public override SurvivorDef SurvivorDef => _survivorDef;
-        private SurvivorDef _survivorDef;
-        public override NullableRef<GameObject> MasterPrefab => _monsterMaster;
-        private GameObject _monsterMaster;
-        public override GameObject CharacterPrefab => _prefab;
-        private GameObject _prefab;
+        public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acNemCommando", SS2Bundle.NemCommando);
 
         private static float gougeDuration = 2;
         public static DamageAPI.ModdedDamageType GougeDamageType { get; private set; }
@@ -29,6 +24,16 @@ namespace SS2.Survivors
         private GameObject distantGashProjectileBlue;
         private GameObject distantGashProjectileYellow;
         private GameObject grenadeProjectile;
+
+        
+
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _gougeBuffDef = assetCollection.FindAsset<BuffDef>("BuffGouge");
+            distantGashProjectile = assetCollection.FindAsset<GameObject>("NemCommandoSwordBeamProjectile");
+            distantGashProjectileBlue = assetCollection.FindAsset<GameObject>("NemCommandoSwordBeamProjectileBlue");
+            distantGashProjectileYellow = assetCollection.FindAsset<GameObject>("NemCommandoSwordBeamProjectileYellow");
+        }
 
         public override void Initialize()
         {
@@ -104,35 +109,8 @@ namespace SS2.Survivors
             return true;
         }
 
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * GameObject - "NemCommandoBody" - NemCommando
-             * GameObject - "NemCommandoMonsterMaster" - NemCommando
-             * SurvivorDef - "survivorNemCommando" - NemCommando
-             * BuffDef - "BuffGouge" - NemCommando
-             * GameObject "NemCommandoSwordBeamProjectile" - NemCommando
-             * GameObject "NemCommandoSwordBeamProjectileBlue" - NemCommando
-             * GameObject "NemCommandoSwordBeamProjectileYellow" - NemCommando
-             * GameObject "NemCommandoGrenadeProjectile" - NemCommando
-             */
-            yield break;
-            
-        }
+        
 
-        public void ModifyContentPack(ContentPack contentPack)
-        {
-            contentPack.buffDefs.AddSingle(new BuffDef[]
-            {
-                _gougeBuffDef
-            });
-            contentPack.projectilePrefabs.Add(new GameObject[]
-            {
-                distantGashProjectile,
-                distantGashProjectileBlue,
-                distantGashProjectileYellow,
-            });
-        }
         private void ModifyProjectiles()
         {
             var damageAPIComponent = distantGashProjectile.AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>();

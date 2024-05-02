@@ -11,13 +11,7 @@ namespace SS2.Survivors
 {
     public sealed class NemBandit : SS2Survivor
     {
-        public override SurvivorDef SurvivorDef => _survivorDef;
-        private SurvivorDef _survivorDef;
-        public override NullableRef<GameObject> MasterPrefab => _monsterMaster;
-        private GameObject _monsterMaster;
-        public override GameObject CharacterPrefab => _prefab;
-        private GameObject _prefab;
-
+        public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acNemBandit", SS2Bundle.Indev);
         public override void Initialize()
         {
             ModifyPrefab();
@@ -25,22 +19,13 @@ namespace SS2.Survivors
 
         private void ModifyPrefab()
         {
-            var cb = _prefab.GetComponent<CharacterBody>();
+            var cb = CharacterPrefab.GetComponent<CharacterBody>();
             cb._defaultCrosshairPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/StandardCrosshair.prefab").WaitForCompletion();
         }
 
         public override bool IsAvailable(ContentPack contentPack)
         {
             return false;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * GameObject - "NemBanditBody" - Indev
-             * SurvivorDef - "survivorNemBandit" - Indev
-             */
-            yield break;
         }
     }
 }

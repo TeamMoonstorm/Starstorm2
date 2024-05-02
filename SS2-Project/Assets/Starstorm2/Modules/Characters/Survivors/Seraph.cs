@@ -9,12 +9,7 @@ namespace SS2.Survivors
     #if DEBUG
     public sealed class Seraph : SS2Survivor
     {
-        public override SurvivorDef SurvivorDef => _survivorDef;
-        private SurvivorDef _survivorDef;
-        public override NullableRef<GameObject> MasterPrefab => _monsterMaster;
-        private GameObject _monsterMaster;
-        public override GameObject CharacterPrefab => _prefab;
-        private GameObject _prefab;
+        public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acSeraph", SS2Bundle.Indev);
 
         public override void Initialize()
         {
@@ -26,16 +21,6 @@ namespace SS2.Survivors
         public override bool IsAvailable(ContentPack contentPack)
         {
             return false;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * GameObject - "SeraphBody"
-             * GameObject - "NemmandoMonsterMaster"
-             * SurvivorDef - "survivorSeraph"
-             */
-            yield break;
         }
     }
     #endif
