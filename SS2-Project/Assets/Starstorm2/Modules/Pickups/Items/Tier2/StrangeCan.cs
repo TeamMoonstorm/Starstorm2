@@ -1,5 +1,6 @@
 ﻿using MSU;
 using MSU.Config;
+using R2API;
 using RoR2;
 using RoR2.ContentManagement;
 using RoR2.Items;
@@ -10,7 +11,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 namespace SS2.Items
 {
-    public sealed class StrangeCan : SS2Item
+    public sealed class StrangeCan : SS2Item, IContentPackModifier
     {
         private const string token = "SS2_ITEM_STRANGECAN_DESC";
 
@@ -45,6 +46,10 @@ namespace SS2.Items
 
         private static GameObject _procEffect;
 
+        private BuffDef _buffIntoxicated; //SS2Assets.LoadAsset<BuffDef>("BuffIntoxicated", SS2Bundle.Items);
+        public static DotController.DotIndex index;
+
+
         public static DotController.DotIndex IntoxicatedIndex { get; private set; }
 
         public override void Initialize()
@@ -52,6 +57,8 @@ namespace SS2.Items
             //N: This should be a behaviour, but i CBA to refactor. :sob:
             GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
             GlobalEventManager.onCharacterDeathGlobal += OnCharacterDeathGlobal;
+
+            index = DotAPI.RegisterDotDef(1 / 3f, 1 / 3f, DamageColorIndex.Poison, _buffIntoxicated);
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -64,8 +71,14 @@ namespace SS2.Items
             /*
              * ItemDef - "StrangeCan" - Items
              * GameObject - "StrangeCanEffect" - Items
+             * BuffDef - "BuffIntoxicated" - Items
              */
             yield break;
+        }
+
+        public void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.buffDefs.AddSingle(_buffIntoxicated);
         }
 
         //theres no way this is correct

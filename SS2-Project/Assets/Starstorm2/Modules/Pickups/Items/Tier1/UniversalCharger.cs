@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 namespace SS2.Items
 {
-    public sealed class UniversalCharger : SS2Item
+    public sealed class UniversalCharger : SS2Item, IContentPackModifier
     {
         private const string token = "SS2_ITEM_UNIVERSALCHARGER_DESC";
         public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
@@ -28,6 +28,8 @@ namespace SS2.Items
         public static GameObject overlayPanel;
 
         public static GameObject procEffect;
+
+        private BuffDef _universalChargerBuff; //{ get; } = SS2Assets.LoadAsset<BuffDef>("BuffUniversalCharger", SS2Bundle.Items);
         public override void Initialize()
         {
             On.RoR2.UI.HUD.Awake += AddIcons;
@@ -59,8 +61,14 @@ namespace SS2.Items
              * ItemDef - "UniversalCharger" - Items
              * GameObject - "RefreshPanel" - Items
              * GameObject - "UniversalChargerEffect" - Items
+             * BuffDef - "BuffUniversalCharger" - Items
              */
             yield break;
+        }
+
+        public void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.buffDefs.AddSingle(_universalChargerBuff);
         }
 
         public sealed class Behavior : BaseItemBodyBehavior

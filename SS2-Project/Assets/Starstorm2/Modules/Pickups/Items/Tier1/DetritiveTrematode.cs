@@ -36,10 +36,11 @@ namespace SS2.Items
         private static GameObject _biteEffect;
 
         public BuffDef _buffTrematodes; //SS2Assets.LoadAsset<BuffDef>("BuffTrematodes", SS2Bundle.Items);
-        public Material overlay;//SS2Assets.LoadAsset<Material>("matBloodOverlay", SS2Bundle.Items);
+        public Material _overlay;//SS2Assets.LoadAsset<Material>("matBloodOverlay", SS2Bundle.Items);
         public override void Initialize()
         {
             _trematodeDotIndex = DotAPI.RegisterDotDef(.5f, .5f, DamageColorIndex.Item, _buffTrematodes);
+            BuffOverlays.AddBuffOverlay(_buffTrematodes, _overlay);
         }
 
         public override bool IsAvailable(ContentPack contentPack)

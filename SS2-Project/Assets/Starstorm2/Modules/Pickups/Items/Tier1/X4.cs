@@ -11,7 +11,7 @@ using MSU.Config;
 
 namespace SS2.Items
 {
-    public sealed class X4 : SS2Item
+    public sealed class X4 : SS2Item, IContentPackModifier
     {
         public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
 
@@ -39,6 +39,8 @@ namespace SS2.Items
         public static ProcChainMask ignoredProcs;
 
         public static ItemDisplay itemDisplay;
+
+        private BuffDef _x4Buff; //SS2Assets.LoadAsset<BuffDef>("BuffX4", SS2Bundle.Items);
 
         //N: Why u no skill index!
         public static Dictionary<string, bool> specialSkillNames;
@@ -73,8 +75,14 @@ namespace SS2.Items
         {
             /*
              * ItemDef - "X4" - Items
+             * BuffDef - "BuffX4" - Items
              */
             yield break;
+        }
+
+        public void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.buffDefs.AddSingle(_x4Buff);
         }
 
         public sealed class Behavior : BaseItemBodyBehavior, IStatItemBehavior
@@ -175,6 +183,27 @@ namespace SS2.Items
             public void RecalculateStatsStart() { }
 
             private static void RecalculateStatsAPI_GetStatCoefficients(CharacterBody self, RecalculateStatsAPI.StatHookEventArgs args) { }
+        }
+
+        public sealed class X4Buff : BaseBuffBehaviour
+        {
+            private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffX4;
+
+            //private float atkMult = Items.X4.atkSpeedBonus;
+
+            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            {
+                //args.attackSpeedMultAdd += atkMult;
+                if (CharacterBody.HasBuff(SS2Content.Buffs.BuffX4))
+                {
+                    int count = CharacterBody.GetItemCount(SS2Content.Items.X4);
+                    float regenAmnt = Items.X4.baseRegenBoost + (Items.X4.stackRegenBoost * (count - 1));
+                    args.baseRegenAdd += (regenAmnt + ((regenAmnt / 5) * CharacterBody.level)) * BuffCount; //original code not taken from bitter root becasue i was lazy
+                                                                                                    //SS2Log.Debug(regenAmnt + " per buff stack");
+
+                    //BuffCount is the replacement for buffStacks right? If it isn't kill me. -Jace
+                }
+            }
         }
     }
 }

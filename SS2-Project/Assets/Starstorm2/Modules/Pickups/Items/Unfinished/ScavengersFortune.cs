@@ -1,4 +1,5 @@
 ﻿using MSU;
+using R2API;
 using RoR2;
 using RoR2.ContentManagement;
 using RoR2.Items;
@@ -9,12 +10,13 @@ using UnityEngine;
 namespace SS2.Items
 {
 #if DEBUG
-    public sealed class ScavengersFortune : SS2Item
+    public sealed class ScavengersFortune : SS2Item, IContentPackModifier
     {
         public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
 
         public override ItemDef ItemDef => _itemDef;
         private ItemDef _itemDef;
+        private BuffDef _buffWealth; //SS2Assets.LoadAsset<BuffDef>("BuffScavenger", SS2Bundle.Indev);
 
         public override void Initialize()
         {
@@ -29,8 +31,14 @@ namespace SS2.Items
         {
             /*
              * ItemDef - "ScavengersFortune" - Indev
+             * BuffDef - "BuffScavenger" - Indev
              */
             yield break;
+        }
+
+        public void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.buffDefs.AddSingle(_buffWealth);
         }
 
         public sealed class Behavior : BaseItemBodyBehavior
@@ -60,6 +68,17 @@ namespace SS2.Items
                     goldAccum -= goldThreshold;
                 }
                 updateMoney = currentMoney;
+            }
+        }
+
+        public sealed class WealthBuffBehavior : BaseBuffBehaviour, IBodyStatArgModifier
+        {
+            [BuffDefAssociation]
+            private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffWealth;
+            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            {
+                args.healthMultAdd += 0.5f;
+                args.damageMultAdd += 0.5f;
             }
         }
     }

@@ -12,7 +12,7 @@ using System;
 namespace SS2.Items
 {
     // needs sound
-    public sealed class Needles : SS2Item
+    public sealed class Needles : SS2Item, IContentPackModifier
     {
         private const string token = "SS2_ITEM_NEEDLES_DESC";
         public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
@@ -53,6 +53,15 @@ namespace SS2.Items
              * BuffDef - "BuffNeedle" - Items
              */
             yield break;
+        }
+
+        public void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.buffDefs.Add(new BuffDef[]
+            {
+                _buffNeedle,
+                _buffNeedleBuildup
+            });
         }
 
         // should just be an ilhook but im lazy

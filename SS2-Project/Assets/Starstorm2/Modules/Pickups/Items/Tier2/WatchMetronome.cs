@@ -1,15 +1,17 @@
 ﻿using MSU;
 using MSU.Config;
+using R2API;
 using RoR2;
 using RoR2.ContentManagement;
 using RoR2.Items;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 namespace SS2.Items
 {
-    public sealed class WatchMetronome : SS2Item
+    public sealed class WatchMetronome : SS2Item, IContentPackModifier
     {
         private const string token = "SS2_ITEM_WATCHMETRONOME_DESC";
         public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
@@ -25,6 +27,7 @@ namespace SS2.Items
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float maxMovementSpeed = 2;
 
+        private BuffDef _buffWatchMetronome; //SS2Assets.LoadAsset<BuffDef>("BuffWatchMetronome", SS2Bundle.Items);
         public override void Initialize()
         {
             throw new System.NotImplementedException();
@@ -39,8 +42,14 @@ namespace SS2.Items
         {
             /*
              * ItemDef - "WatchMetronome" - Items
+             * BuffDef - "BuffWatchMetronome" - Items
              */
             yield break;
+        }
+
+        public void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.buffDefs.AddSingle(_buffWatchMetronome);
         }
 
         public sealed class Behavior : BaseItemBodyBehavior
@@ -83,6 +92,20 @@ namespace SS2.Items
                 if (NetworkServer.active)
                 {
                     body.SetBuffCount(SS2Content.Buffs.BuffWatchMetronome.buffIndex, 0);
+                }
+            }
+        }
+        public sealed class BuffWatchMetronomeBehavior : BaseBuffBehaviour, IBodyStatArgModifier
+        {
+            [BuffDefAssociation]
+            private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffWatchMetronome;
+
+            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            {
+                int buffCount = CharacterBody.GetBuffCount(SS2Content.Buffs.BuffWatchMetronome);
+                if (buffCount > 0 && CharacterBody.isSprinting)
+                {
+                    args.moveSpeedMultAdd += (float)Math.Sqrt(0.1f * buffCount) * Items.WatchMetronome.maxMovementSpeed;
                 }
             }
         }

@@ -13,7 +13,7 @@ using MSU.Config;
 
 namespace SS2.Items
 {
-    public sealed class JetBoots : SS2Item
+    public sealed class JetBoots : SS2Item, IContentPackModifier
     {
         private const string token = "SS2_ITEM_JETBOOTS_DESC";
 
@@ -42,8 +42,9 @@ namespace SS2.Items
         private static GameObject _tracerPrefab;
         private static GameObject _muzzleFlashPrefab;
         private static GameObject _effectPrefab;
-        private static BuffDef _buffCooldown;
-    
+        private static BuffDef _buffCooldown; // SS2Assets.LoadAsset<BuffDef>("BuffJetBootsCooldown", SS2Bundle.Items);
+        private static BuffDef _buffReady; //SS2Assets.LoadAsset<BuffDef>("BuffJetBootsReady", SS2Bundle.Items);
+
         public override void Initialize()
         {            // this will interfere with other bonus jump items but they can be unified in a similar way to this
             IL.RoR2.CharacterBody.RecalculateStats += RecalculateStatsHook; // recalculatestatsapi doesnt have maxjumpcount
@@ -64,8 +65,17 @@ namespace SS2.Items
              * GameObject - "MuzzleflashJetBoots" - Items
              * GameObject - "JetBootsEffect" - Items
              * BuffDef - "BuffJetBootsCooldown" - Items
+             * BuffDef - "BuffJetBootsReady" - Items
              */
             yield break;
+        }
+        public void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.buffDefs.Add(new BuffDef[]
+            {
+                _buffCooldown,
+                _buffReady
+            });
         }
 
         private void RechargeBoots(On.RoR2.CharacterBody.orig_OnBuffFinalStackLost orig, CharacterBody self, BuffDef buffDef)
