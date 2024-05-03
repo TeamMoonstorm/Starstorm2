@@ -36,6 +36,10 @@ namespace SS2.Equipments
         public static int maxGreaterBanners = 5;
 
         private GameObject _warbannerObject;
+
+        // TODO: Make sure you load this
+        public BuffDef _buffGreaterBannerBuff; // { get; } = SS2Assets.LoadAsset<BuffDef>("BuffGreaterBanner", SS2Bundle.Equipments);
+
         public override bool Execute(EquipmentSlot slot)
         {
             var GBToken = slot.characterBody.gameObject.GetComponent<GreaterBannerToken>();
@@ -86,7 +90,7 @@ namespace SS2.Equipments
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            throw new System.NotImplementedException();
+            return true;
         }
 
         public override IEnumerator LoadContentAsync()
@@ -126,6 +130,7 @@ namespace SS2.Equipments
 
         private void RegisterTempVisualEffects()
         {
+            // TODO: MSU 2.0
             /*var effectInstance = SS2Assets.LoadAsset<GameObject>("GreaterBannerBuffEffect", SS2Bundle.Equipments); 
 
             TempVisualEffectAPI.AddTemporaryVisualEffect(effectInstance.InstantiateClone("GreaterBannerBuffEffect", false), (CharacterBody body) => { return body.HasBuff(SS2Content.Buffs.BuffGreaterBanner); }, true, "MainHurtbox");*/
@@ -141,6 +146,21 @@ namespace SS2.Equipments
             private void FixedUpdate()
             {
                 soundCooldown += Time.fixedDeltaTime;
+            }
+        }
+
+        // TODO: Replace class with a single hook on RecalculateSTatsAPI.GetstatCoefficients. This way we replace the monobehaviour with just a method
+        public sealed class GreatBannerBuffBehavior : BaseBuffBehaviour, IBodyStatArgModifier
+        {
+            [BuffDefAssociation]
+            private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffGreaterBanner;
+            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            {
+                if (CharacterBody.HasBuff(SS2Content.Buffs.BuffGreaterBanner))
+                {
+                    args.critAdd += GreaterWarbanner.extraCrit;
+                    args.regenMultAdd += GreaterWarbanner.extraRegeneration;
+                }
             }
         }
     }

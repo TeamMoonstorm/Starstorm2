@@ -23,7 +23,7 @@ namespace SS2.Monsters
 
         public override void Initialize()
         {
-            if(SS2Main.ChristmasTime)
+            if (SS2Main.ChristmasTime)
             {
                 ChristmasTime();
             }

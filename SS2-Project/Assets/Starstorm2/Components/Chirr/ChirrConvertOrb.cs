@@ -63,7 +63,6 @@ namespace SS2.Components
                     if (chirrFriendTracker && chirrFriendTracker.friendOwnership)
                     {
                         chirrFriendTracker.friendOwnership.AddFriend(damageReport.victimMaster);
-                        SS2Log.Info("ChirrFriendOrb.OnArrival: added fren :)");
                         Destroy(this);
                     }
                 }

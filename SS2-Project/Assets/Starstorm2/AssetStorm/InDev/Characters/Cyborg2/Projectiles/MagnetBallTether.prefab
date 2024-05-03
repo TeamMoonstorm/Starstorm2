@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1724884098819418}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3.08, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -54,7 +54,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2c62a10dfc40e7f479c17815ea36743f, type: 2}
+  - {fileID: 2100000, guid: 400a7713c682a1d43b13cea906dbd95b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -76,13 +76,13 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
+  - {x: 3.08, y: 0, z: 0}
+  - {x: 1.7199999, y: 0.44444445, z: 0}
+  - {x: 0.3599999, y: 0.44444442, z: 0}
+  - {x: -1, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.2
+    widthMultiplier: 2
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -96,8 +96,8 @@ LineRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.5339773
-        value: 0.79637784
+        time: 0.2208212
+        value: 0.99049634
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -181,11 +181,11 @@ MonoBehaviour:
   m_Script: {fileID: -354346302, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  v0: {x: 0, y: 0, z: 0}
-  p1: {x: 0, y: 0, z: 0}
+  v0: {x: 0, y: 2, z: 0}
+  p1: {x: -1, y: 0, z: 0}
   v1: {x: 0, y: 0, z: 0}
   endTransform: {fileID: 0}
-  animateBezierWind: 0
+  animateBezierWind: 1
   windMagnitude: {x: 0, y: 0, z: 0}
   windFrequency: {x: 0, y: 0, z: 0}
 --- !u!114 &7522028899852775998
@@ -284,6 +284,6 @@ MonoBehaviour:
   m_Script: {fileID: -408685376, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeOut: {fileID: 0}
+  fadeOut: {fileID: 7766994462199368491}
   tetherEndTransform: {fileID: 0}
   tetherTargetTransform: {fileID: 0}
