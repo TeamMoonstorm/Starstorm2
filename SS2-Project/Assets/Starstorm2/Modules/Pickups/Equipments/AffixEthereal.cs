@@ -55,8 +55,8 @@ namespace SS2.Equipments
             // Add relevant hooks
             IL.RoR2.HealthComponent.TakeDamage += EtherealDeathIL;
 
-            // Add buff overlays
-            BuffOverlays.AddBuffOverlay(_buffEthereal, _matEtherealOverlay);
+            // TODO: Make sure this is handled in unity since its an elite equipment
+            // BuffOverlays.AddBuffOverlay(_buffEthereal, _matEtherealOverlay);
         }
 
         private void EtherealDeathIL(ILContext il)
@@ -162,10 +162,11 @@ namespace SS2.Equipments
                 
             }
 
-            public void OnDestroy()
+            // Pre MSU 2.0 this was an OnDestroy method
+            protected override void OnAllStacksLost()
             {
-                // TODO: I wonder if HasAnyStacks here would cause any issues?
-                if (HasAnyStacks && etherealEffect)
+                // TODO From Nebby: Also, if the Effect is the one from the ExtendedEliteDef, the EliteBehaviour from MSU takes care of enabling and disabling the vfx as needed.
+                if (etherealEffect)
                     Destroy(this.etherealEffect);
             }
 

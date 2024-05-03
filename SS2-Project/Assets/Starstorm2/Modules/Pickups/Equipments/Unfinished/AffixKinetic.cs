@@ -72,10 +72,6 @@ namespace SS2.Equipments
             public static GameObject pulsePrefab = SS2Assets.LoadAsset<GameObject>("VoidElitePulse", SS2Bundle.Indev);
             public static GameObject auraPrefab = SS2Assets.LoadAsset<GameObject>("KineticAOEIndicator", SS2Bundle.Indev);
             GameObject tempAuraPrefab;
-            //Prefab info:
-            //Final radius: 10, Duration 1.0
-            //Destroy On Timer: 3 Seconds
-            //Has Shaker Emiter
             private bool alreadyIn = false;
             private bool hasMadeAura = false;
             private float timer = 0;
@@ -88,39 +84,23 @@ namespace SS2.Equipments
                     return;
                 }
 
-                if (HasAnyStacks && !CharacterBody.outOfCombat && timer > 4f)
+                if (!CharacterBody.outOfCombat && timer > 4f)
                 {
                     PullEnemies();
                     timer = 0;
-                    //GeneratePulse();
-                    //alreadyIn = true;
                 }
-                //else if (body.outOfCombat && alreadyIn)
-                //{
-                //    alreadyIn = false;
-                //}
-                //if (!hasMadeAura)
-                //{
-                //    tempAuraPrefab = UnityEngine.Object.Instantiate<GameObject>(auraPrefab, body.corePosition, Quaternion.identity);
-                //    tempAuraPrefab.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(body.gameObject, null);
-                //    hasMadeAura = true;
-                //}else if(body.equipmentSlot.equipmentIndex != SS2Content.Equipments.EliteKineticEquipment.equipmentIndex)
-                //{
-                //    Destroy(tempAuraPrefab);
-                //}
                 timer += Time.fixedDeltaTime;
             }
 
-            private void OnEnable()
+            protected override void OnFirstStackGained()
             {
                 // TODO from Buns: Remember to remove log after implementation is done Zen :)
                 SS2Log.Info("ahhh");
                 tempAuraPrefab = UnityEngine.Object.Instantiate<GameObject>(auraPrefab, CharacterBody.corePosition, Quaternion.identity);
                 tempAuraPrefab.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(CharacterBody.gameObject, null);
-                //hasMadeAura = true;
             }
 
-            private void OnDisable()
+            protected override void OnAllStacksLost()
             {
                 // TODO from Buns: Remember to remove log after implementation is done Zen :)
                 SS2Log.Info("oooohohohohohohh");
@@ -137,19 +117,8 @@ namespace SS2.Equipments
                 float aoeRadius = 20;// + (aoeRangeStacking.Value * (float)(cryoCount - 1));
                 float bodyRadius = CharacterBody.radius;
                 float effectiveRadius = aoeRadius;// + (bodyRadius * .5f);
-                //float AOEDamageMult = debuffDamage;// + (stackingDamageAOE.Value * (float)(cryoCount - 1));
-                //float AOEDamage = damageReport.attackerBody.damage * AOEDamageMult;
-                //
-                //float duration = debuffDuration; // + (slowDurationStacking.Value * (cryoCount - 1));
 
                 var bodyTeam = CharacterBody.teamComponent.teamIndex;
-
-                //float num = 8f + 4f * (float)cryoCount;
-                //float radius = victimBody.radius;
-                //float num2 = num + radius;
-                //float num3 = 1.5f;
-                //float baseDamage = obj.attackerBody.damage * num3;
-                //float value = (float)(1 + cryoCount) * 0.75f * obj.attackerBody.damage;
 
                 Vector3 corePosition = CharacterBody.corePosition;
 
@@ -179,16 +148,8 @@ namespace SS2.Equipments
                             float dashVelocity = 21f;
                             float shorthopVelocity = .5f;
 
-                            //Quaternion quat = Quaternion.Euler(dir.x, dir.y, dir.z);
-                            //float num = body.acceleration * body.characterMotor.airControl;
-                            //float num2 = Mathf.Sqrt(dashVelocity / num);
-                            //float num3 = body.moveSpeed / num;
-                            //float horizontalBonus = (num2 + num3) / num3;
-                            //Vector3 direction = new Vector3( )
                             Vector3 v1 = CharacterBody.transform.position;
                             Vector3 v2 = victim.transform.position;
-
-                            //GenericCharacterMain.ApplyJumpVelocity(body.characterMotor, body, horizontalBonus, shorthopVelocity, false);
 
                             Vector3 vector = v1 - v2;
                             Vector3.Normalize(vector);
@@ -196,18 +157,7 @@ namespace SS2.Equipments
                             string effectName = "RoR2/DLC1/MoveSpeedOnKill/MoveSpeedOnKillActivate.prefab";
                             GameObject effectPrefab = Addressables.LoadAssetAsync<GameObject>(effectName).WaitForCompletion();
                             EffectManager.SimpleImpactEffect(effectPrefab, v2, vector, true);
-                            //if (vault)
-                            //{
-                            //    characterMotor.velocity = vector;
-                            //}
-                            //else
-                            //{
-                            //vector.y = 0f;
-                            //float magnitude = vector.magnitude;
-                            //if (magnitude > 0f)
-                            //{
-                            //    vector /= magnitude;
-                            //}
+
                             float randMult = Random.Range(1.2f, 1.6f);
                             Vector3 velocity = vector * randMult; // * 1.5f;
                             velocity.y += .75f;
@@ -215,21 +165,8 @@ namespace SS2.Equipments
                             if (motor)
                             {
                                 motor.velocity += velocity;
-                                //}
                                 motor.Motor.ForceUnground();
                             }
-
-
-                            //hurtBox.healthComponent.body.AddTimedBuffAuthority(Buffs.Bane.index, duration);
-                            //var dotInfo = new InflictDotInfo()
-                            //{
-                            //    attackerObject = body.gameObject,
-                            //    victimObject = hurtBox.healthComponent.gameObject,
-                            //    dotIndex = Buffs.Bane.index,
-                            //    duration = damageReport.damageInfo.procCoefficient * duration,
-                            //    damageMultiplier = stack
-                            //};
-                            //DotController.InflictDot(ref dotInfo);
                         }
 
                     }

@@ -87,7 +87,7 @@ namespace SS2.Items
                 {
 
                     // do the first "tick" instantly
-                    FuckinUhhhhhhhhhhOrb orb = new FuckinUhhhhhhhhhhOrb();
+                    ExtraDamageInstanceOrb orb = new ExtraDamageInstanceOrb();
                     orb.origin = victim.body.mainHurtBox.transform.position;
                     orb.target = victim.body.mainHurtBox;
                     orb.damageValue = trematodeDamage * base.body.damage * 0.5f; // 2 ticks per second means divide by 2
@@ -110,7 +110,7 @@ namespace SS2.Items
         }
         // dumb (but probably correct) way of adding an extra instance of damage from within HealthComponent.TakeDamage
         // simply calling TakeDamage again can make enemies die twice
-        private class FuckinUhhhhhhhhhhOrb : Orb
+        private class ExtraDamageInstanceOrb : Orb
         {
             public override void Begin()
             {

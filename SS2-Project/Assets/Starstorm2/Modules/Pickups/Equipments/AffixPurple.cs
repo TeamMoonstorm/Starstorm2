@@ -146,7 +146,9 @@ namespace SS2.Equipments
 
             private void FixedUpdate()
             {
-                if (HasAnyStacks && NetworkServer.active)
+                // HasAnyStacks isnt needed here because epheremal nature of buffs in MSU
+                // means FixedUpdate isnt called if the buff isnt active
+                if (NetworkServer.active)
                 {
                     prevInterval += Time.fixedDeltaTime;
 
