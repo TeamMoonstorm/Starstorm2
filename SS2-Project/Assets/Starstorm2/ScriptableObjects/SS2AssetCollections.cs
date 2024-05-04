@@ -5,6 +5,7 @@ using RoR2.Skills;
 using RoR2.ExpansionManagement;
 using RoR2.EntitlementManagement;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 namespace SS2
@@ -29,12 +30,12 @@ namespace SS2
     [CreateAssetMenu(fileName = "MonsterAssetCollection", menuName = "Starstorm2/AssetCollections/MonsterAssetCollection")]
     public class MonsterAssetCollection : BodyAssetCollection
     {
-        public NullableRef<MonsterCardProvider> monsterCardProvider;
+        public MonsterCardProvider monsterCardProvider;
     }
     [CreateAssetMenu(fileName = "ArtifactAssetCollection", menuName = "Starstorm2/AssetCollections/ArtifactAssetCollection")]
     public class ArtifactAssetCollection : AssetCollection
     {
-        public NullableRef<ArtifactCode> artifactCode;
+        public ArtifactCode artifactCode;
         public ArtifactDef artifactDef;
     }
     [CreateAssetMenu(fileName = "EquipmentAssetCollection", menuName = "Starstorm2/AssetCollections/EquipmentAssetCollection")]
@@ -57,8 +58,8 @@ namespace SS2
     [CreateAssetMenu(fileName = "ItemAssetCollection", menuName = "Starstorm2/AssetCollections/ItemAssetCollection")]
     public class ItemAssetCollection : AssetCollection
     {
-        public GameObject[] itemDisplayPrefabs;
-        public EquipmentDef itemDef;
+        public List<GameObject> itemDisplayPrefabs;
+        public ItemDef itemDef;
     }
     [CreateAssetMenu(fileName = "ItemTierAssetCollection", menuName = "Starstorm2/AssetCollections/ItemTierAssetCollection")]
     public class ItemTierAssetCollection : AssetCollection

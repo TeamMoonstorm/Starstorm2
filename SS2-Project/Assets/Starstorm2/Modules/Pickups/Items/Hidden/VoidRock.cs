@@ -9,11 +9,7 @@ namespace SS2.Items
 {
     public sealed class VoidRock : SS2Item
     {
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
-
+        public override SS2AssetRequest<ItemDef> AssetRequest<ItemDef>() => SS2Assets.LoadAssetAsync<ItemDef>("VoidRock", SS2Bundle.Items);
         public static int initialStage = 0;
         public static bool setStage = false;
         public static bool invasionStage = false;
@@ -35,15 +31,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "VoidRock" - Interactables
-             * ItemDef - "VoidRockTracker" - Interactables
-             */
-            yield break;
         }
 
         public sealed class VoidRockBehavior : BaseItemBodyBehavior

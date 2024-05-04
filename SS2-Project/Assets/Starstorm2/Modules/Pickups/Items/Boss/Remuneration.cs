@@ -17,14 +17,20 @@ namespace SS2.Items
 
     public sealed class Remuneration : SS2Item
     {
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRemuneration", SS2Bundle.Items);
+        }
         public static GameObject remunerationControllerPrefab;
 
         // LAZY SHITCODE ALL TIME EVER. SRY. SHOULD BE TEMPORARY. NEMESIS MERCENARY MUST RELEASE
         // ALL THE BEHAVIOR IS SPLIT UP IN LIKE 10 DIFFERENT CLASSES. HAHA LOL!. IT WILL EVENTUALLY MAKE SENSE WHEN ITS NOT JUST RED ITEMS. UNLESS I DIE BEFORE THEN.
         //i feel sorry for Orb... -N
+
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            remunerationControllerPrefab = assetCollection.FindAsset<GameObject>("RemunerationController");
+        }
         public override void Initialize()
         {
             On.RoR2.PickupDisplay.RebuildModel += EnableVoidParticles;
@@ -33,15 +39,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return contentPack.survivorDefs.Find("survivorNemMerc");
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * GameObject - "RemunerationController" - Items
-             * ItemDef - "Remuneration" - Items
-             */
-            yield break;
         }
 
         // this works for all sibylline items but i dont know where to put general hooks like that

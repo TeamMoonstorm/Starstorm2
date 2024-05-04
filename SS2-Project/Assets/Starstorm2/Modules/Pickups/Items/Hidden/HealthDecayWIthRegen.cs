@@ -11,11 +11,7 @@ namespace SS2.Items
     //ror2 HealthDecay caps regen at 0. was bad for chirr
     public sealed class HealthDecayWithRegen : SS2Item
     {
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
-
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
+        public override SS2AssetRequest<ItemDef> AssetRequest<ItemDef>() => SS2Assets.LoadAssetAsync<ItemDef>("HealthDecayWithRegen", SS2Bundle.Items);
         public override void Initialize()
         {
             RecalculateStatsAPI.GetStatCoefficients += AddRegen;
@@ -24,16 +20,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            var request = SS2Assets.LoadAssetAsync<ItemDef>("HealthDecayWithRegen", SS2Bundle.Chirr);
-            request.StartLoad();
-            while (!request.IsComplete)
-                yield return null;
-
-            _itemDef = request.Asset;
         }
 
         private void AddRegen(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)

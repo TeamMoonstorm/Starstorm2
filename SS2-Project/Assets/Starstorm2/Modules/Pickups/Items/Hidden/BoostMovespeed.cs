@@ -12,10 +12,7 @@ namespace SS2.Items
     //boosts movespeed by 1% per stack
     public sealed class BoostMovespeed : SS2Item
     {
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
-
+        public override SS2AssetRequest<ItemDef> AssetRequest<ItemDef>() => SS2Assets.LoadAssetAsync<ItemDef>("BoostMovespeed", SS2Bundle.Items);
         public override void Initialize()
         {
             RecalculateStatsAPI.GetStatCoefficients += AddMovespeed;
@@ -23,23 +20,12 @@ namespace SS2.Items
 
         private void AddMovespeed(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
-            args.moveSpeedMultAdd += sender.GetItemCount(_itemDef) / 100f;
+            args.moveSpeedMultAdd += sender.GetItemCount(ItemDef) / 100f;
         }
 
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            var request = SS2Assets.LoadAssetAsync<ItemDef>("BoostMovespeed", SS2Bundle.Items);
-
-            request.StartLoad();
-            while (!request.IsComplete)
-                yield return null;
-
-            _itemDef = request.Asset;
         }
     }
 }

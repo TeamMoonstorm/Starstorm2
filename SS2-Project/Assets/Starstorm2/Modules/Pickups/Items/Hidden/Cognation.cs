@@ -9,10 +9,17 @@ namespace SS2.Items
 {
     public sealed class CognationHelper : SS2Item
     {
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acCognation", SS2Bundle.Items);
+        }
 
+        private static Material ghostMaterial;
+
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            ghostMaterial = assetCollection.FindAsset<Material>("matCognation");
+        }
         public override void Initialize()
         {
             On.RoR2.Util.GetBestBodyName += AddCognateName;
@@ -31,24 +38,13 @@ namespace SS2.Items
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "CognationHelper" - Artifacts
-             * Material - "matCognation" - Artifacts
-             */
-            yield break;
+            return false;
         }
 
         public sealed class Behavior : BaseItemBodyBehavior
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.Cognation;
-
-            private static Material ghostMaterial;
 
             private CharacterModel model;
 

@@ -46,7 +46,7 @@ namespace SS2
 
         public virtual void OnAssetCollectionLoaded(AssetCollection assetCollection) { }
 
-        public void ModifyContentPack(ContentPack contentPack)
+        public virtual void ModifyContentPack(ContentPack contentPack)
         {
             contentPack.AddContentFromAssetCollection(AssetCollection);
         }

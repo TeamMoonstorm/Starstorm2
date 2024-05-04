@@ -11,10 +11,12 @@ namespace SS2.Survivors
 {
     public sealed class Knight : SS2Survivor
     {
+        public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acKnight", SS2Bundle.Indev);
+
         private GameObject shieldBeamProjectile;
         private GameObject swordBeamProjectile;
 
-        public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acKnight", SS2Bundle.Indev);
+        
         public override void Initialize()
         {
             CharacterBody.onBodyStartGlobal += KnightBodyStart;
@@ -37,17 +39,6 @@ namespace SS2.Survivors
         public override bool IsAvailable(ContentPack contentPack)
         {
             return false;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * GameObject - "KnightBody" - Indev
-             * SurvivorDef - "survivorKnight" - Indev
-             * GameObject "KnightShieldBeamProjectile" - Indev
-             * GameObject "KnightSwordBeamProjectile" - Indev
-             */
-            yield break;
         }
 
         // TODO: Load the actual buff 

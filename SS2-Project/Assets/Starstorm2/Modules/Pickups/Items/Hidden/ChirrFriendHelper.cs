@@ -16,10 +16,10 @@ namespace SS2.Items
 {
     public sealed class ChirrFriendHelper : SS2Item
     {
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("ChirrFriendHelper", SS2Bundle.Chirr);
+        }
 
         public static float attackSpeedToCooldownConversion = 1f;
         public static float aimSpeedCoefficient = 3f;
@@ -30,6 +30,11 @@ namespace SS2.Items
 
         private static GameObject _jitterEffect;
 
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _jitterEffect = assetCollection.FindAsset<GameObject>("FriendJitterEffect");
+        }
+
         public override void Initialize()
         {
         }
@@ -37,15 +42,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return contentPack.survivorDefs.Find("Chirr");
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "ChirrFriendHelper" - Chirr
-             * GameObject - "FriendJitterEffect" - Chirr
-             */
-            yield break;
         }
 
         public sealed class BodyBehavior : BaseItemBodyBehavior, IBodyStatArgModifier
