@@ -20,11 +20,16 @@ namespace SS2.Items
     public sealed class CompositeInjector : SS2Item
     {
         private const string token = "SS2_ITEM_COMPOSITEINJECTOR_DESC";
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acCompositeInjector", SS2Bundle.Items);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _useEffect = assetCollection.FindAsset<GameObject>("CompositeInjectorEffect");
+        }
 
-		public override ItemDef ItemDef => _itemDef;
-		private ItemDef _itemDef;
-		private static GameObject _useEffect;
+        private static GameObject _useEffect;
 
         public static int funnyNumber = 16;
         public static float funnyNumber2 = 60f; // fuck unity ui. its going off the screen. i dont fcare
@@ -47,15 +52,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-			/*
-			 * ItemDef - "CompositeInjector" - Items
-			 * GameObject - "CompositeInjectorEffect" - Items
-			 */
-			yield break;
         }
 
         #region Gameplay Mechanics

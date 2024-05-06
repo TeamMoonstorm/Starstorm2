@@ -12,10 +12,10 @@ namespace SS2.Items
     public sealed class WatchMetronome : SS2Item
     {
         private const string token = "SS2_ITEM_WATCHMETRONOME_DESC";
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acWatchMetronome", SS2Bundle.Items);
+        }
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of max charges per stack.")]
         [FormatToken(token, 0)]
@@ -27,20 +27,11 @@ namespace SS2.Items
 
         public override void Initialize()
         {
-            throw new System.NotImplementedException();
         }
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "WatchMetronome" - Items
-             */
-            yield break;
+            return true;
         }
 
         public sealed class Behavior : BaseItemBodyBehavior

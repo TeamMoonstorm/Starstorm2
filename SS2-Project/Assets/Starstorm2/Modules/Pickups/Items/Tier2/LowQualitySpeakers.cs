@@ -11,10 +11,14 @@ namespace SS2.Items
     public sealed class LowQualitySpeakers : SS2Item
     {
         private const string token = "SS2_ITEM_LOWQUALITYSPEAKERS_DESC";
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acLowQualitySpeakers", SS2Bundle.Items);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _burstEffect = assetCollection.FindAsset<GameObject>("SpeakerBurstEffect");
+        }
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Radius in which enemies are stunned, in meters.")]
         [FormatToken(token, 0)]
@@ -37,15 +41,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "LowQualitySpeakers" - Items
-             * GameObject - "SpeakerBurstEffect" - Items
-             */
-            yield break;
         }
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnIncomingDamageServerReceiver

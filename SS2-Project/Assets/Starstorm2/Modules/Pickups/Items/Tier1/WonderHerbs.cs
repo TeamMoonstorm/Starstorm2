@@ -12,10 +12,10 @@ namespace SS2.Items
 #if DEBUG
     public sealed class WonderHerbs : SS2Item
     {
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acWonderHerbs", SS2Bundle.Items);
+        }
 
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Bonus healing per herbs. (1 = 100%)")]
@@ -29,14 +29,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             throw new System.NotImplementedException();
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "WonderHerbs" - Items
-             */
-            yield break;
         }
 
         private void BonusHeals(HealthComponent healthComponent, float healAmount, ProcChainMask procChainMask)

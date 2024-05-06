@@ -13,9 +13,19 @@ namespace SS2.Items
     public sealed class BaneFlask : SS2Item, IContentPackModifier
     {
         private const string token = "SS2_ITEM_BANEFLASK_DESC";
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acBaneFlask", SS2Bundle.Items);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _baneBuffDef = assetCollection.FindAsset<BuffDef>("BuffBane");
+
+            // idk which is which
+            explosionGross = assetCollection.FindAsset<GameObject>("BaneHitsparkVFX");
+            particleBase = assetCollection.FindAsset<GameObject>("BaneGrayVFX");
+            floorGloop = assetCollection.FindAsset<GameObject>("BaneGrayGoop");
+        }
         private BuffDef _baneBuffDef;
         public static DotController.DotIndex BaneDotIndex { get; private set; }
 
@@ -45,23 +55,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "BaneFlask" - Items
-             * BuffDef - "BuffBane" - Items
-             * GameObject - "BaneGrayVFX" - Items
-             * GameObject - "BaneHitsparkVFX" - Items
-             * GameObject - "BaneGrayGoop" - Items
-             */
-            yield break;
-        }
-
-        public void ModifyContentPack(ContentPack contentPack)
-        {
-            contentPack.buffDefs.AddSingle(_baneBuffDef);
         }
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver, IOnDamageDealtServerReceiver

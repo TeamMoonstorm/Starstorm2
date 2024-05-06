@@ -12,10 +12,15 @@ namespace SS2.Items
     {
         private const string token = "SS2_ITEM_CRYPTICSOURCE_DESC";
 
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => throw new System.NotImplementedException();
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acCrypticSource", SS2Bundle.Items);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _readyEffectPrefab = assetCollection.FindAsset<GameObject>("CrypticSourceReady");
+            _explosionEffectPrefab = assetCollection.FindAsset<GameObject>("CrypticSourceExplosion");
+        }
 
         private static GameObject _readyEffectPrefab;
         private static GameObject _explosionEffectPrefab;
@@ -37,24 +42,9 @@ namespace SS2.Items
 
         public static float minimumSprintDistance = 12.5f;
 
-        public override void Initialize()
-        {
-            throw new System.NotImplementedException();
-        }
-
         public override bool IsAvailable(ContentPack contentPack)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "CrypticSource" - Items
-             * GameObject - "CrypticSourceReady" - Items
-             * GameObject - "CrypticSourceExplosion - Items
-             */
-            yield break;
+            return true;
         }
 
         public sealed class Behavior : BaseItemBodyBehavior

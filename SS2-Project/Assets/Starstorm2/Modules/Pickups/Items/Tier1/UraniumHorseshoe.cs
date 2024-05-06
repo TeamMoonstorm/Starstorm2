@@ -11,10 +11,10 @@ namespace SS2.Items
     public sealed class UraniumHoreshoe : SS2Item
     {
         private const string token = "SS2_ITEM_URANIUMHORSESHOE_DESC";
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acUraniumHorseshoe", SS2Bundle.Items);
+        }
 
         public override void Initialize()
         {
@@ -23,14 +23,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return false;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "UraniumHoreshoe" - Items
-             */
-            yield break;
         }
     }
 #endif

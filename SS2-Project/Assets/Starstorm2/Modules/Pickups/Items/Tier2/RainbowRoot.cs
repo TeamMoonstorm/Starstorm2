@@ -14,10 +14,10 @@ namespace SS2.Items
     public sealed class RainbowRoot : SS2Item
     {
         private const string token = "SS2_ITEM_RAINBOWROOT_DESC";
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRainbowRoot", SS2Bundle.Items);
+        }
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base portion of damage prevented to be gained as barrier. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
@@ -32,23 +32,13 @@ namespace SS2.Items
         public static float baseArmor = 20;
 
         public override void Initialize()
-        {
-            throw new System.NotImplementedException();
+        {           
         }
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            throw new System.NotImplementedException();
+            return true;
         }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "RainbowRoot" - Items
-             */
-            yield break;
-        }
-
 
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier, IOnTakeDamageServerReceiver
         {

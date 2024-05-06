@@ -15,10 +15,14 @@ namespace SS2.Items
     public sealed class Malice : SS2Item
     {
         private const string token = "SS2_ITEM_MALICE_DESC";
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acMalice", SS2Bundle.Items);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            maliceOrbEffectPrefab = assetCollection.FindAsset<GameObject>("MaliceOrbEffect");
+        }
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Total damage each Malice bounce deals. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
@@ -58,15 +62,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "Malice" - Items
-             * GameObject - "MaliceOrbEffect" - Items
-             */
-            yield break;
         }
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver

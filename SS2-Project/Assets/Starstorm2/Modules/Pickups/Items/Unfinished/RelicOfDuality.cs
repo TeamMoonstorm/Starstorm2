@@ -12,10 +12,11 @@ namespace SS2.Items
 #if DEBUG
     public sealed class RelicOfDuality : SS2Item
     {
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRelicOFDuality", SS2Bundle.Items);
+        }
 
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
 
         public override void Initialize()
         {
@@ -24,14 +25,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return false;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "RelicOfDuality" - Indev
-             */
-            yield break;
         }
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnIncomingDamageServerReceiver, IOnDamageDealtServerReceiver

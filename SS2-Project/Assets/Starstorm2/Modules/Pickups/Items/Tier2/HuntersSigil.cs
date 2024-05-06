@@ -14,10 +14,15 @@ namespace SS2.Items
     public sealed class HuntersSigil : SS2Item
     {
         private const string token = "SS2_ITEM_HUNTERSSIGIL_DESC";
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acHuntersSigil", SS2Bundle.Items);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _effect = assetCollection.FindAsset<GameObject>("SigilEffect");
+            _sigilWard = assetCollection.FindAsset<GameObject>("SigilWard");
+        }
 
         private static GameObject _effect;
         private static GameObject _sigilWard;
@@ -49,16 +54,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "HuntersSigil" - Items
-             * GameObject - "SigilWard" - Items
-             * GameObject - "SigilEffect" - Items
-             */
-            yield break;
         }
 
         public sealed class Behavior : BaseItemBodyBehavior//, IBodyStatArgModifier

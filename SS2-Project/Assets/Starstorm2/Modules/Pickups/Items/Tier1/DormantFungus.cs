@@ -14,9 +14,15 @@ namespace SS2.Items
     public sealed class DormantFungus : SS2Item
     {
         private const string token = "SS2_ITEM_DORMANTFUNGUS_DESC";
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => throw new System.NotImplementedException();
-
-        public override ItemDef ItemDef => throw new System.NotImplementedException();
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acDormantFungus", SS2Bundle.Items);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _dungusTrailEffect = assetCollection.FindAsset<GameObject>("DungusTrailEffect");
+            _dungusTrailEffectAlt = assetCollection.FindAsset<GameObject>("DungusTrailEffectAlt");
+        }
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base amount of healing. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
@@ -35,16 +41,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "DormantFungus" - Items
-             * GameObject - "DungusTrailEffect" - Items
-             * GameObject - "DungusTrailEffectAlt" - Items;
-             */
-            yield break;
         }
 
         public sealed class Behavior : BaseItemBodyBehavior

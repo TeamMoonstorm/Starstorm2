@@ -10,11 +10,14 @@ namespace SS2.Items
 {
     public sealed class MoltenCoin : SS2Item
     {
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
-
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acMoltenCoin", SS2Bundle.Items);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _impactEffect = assetCollection.FindAsset<GameObject>("MoltenCoinEffect");
+        }
         private static GameObject _impactEffect;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance for Molten Coin to Proc. (100 = 100%)")]
@@ -36,15 +39,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "MoltenCoin" - Items
-             * GameObject - "MoltenCoinEffect" - Items
-             */
-            yield break;
         }
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver

@@ -12,10 +12,15 @@ namespace SS2.Items
     public sealed class UniversalCharger : SS2Item
     {
         private const string token = "SS2_ITEM_UNIVERSALCHARGER_DESC";
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acUniversalCharger", SS2Bundle.Items);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            procEffect = assetCollection.FindAsset<GameObject>("UniversalChargerEffect");
+            overlayPanel = assetCollection.FindAsset<GameObject>("RefreshPanel");
+        }
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Time it takes for Universal Charger to recharge, in seconds.")]
         [FormatToken(token, 0)]
@@ -50,17 +55,7 @@ namespace SS2.Items
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return true; ;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "UniversalCharger" - Items
-             * GameObject - "RefreshPanel" - Items
-             * GameObject - "UniversalChargerEffect" - Items
-             */
-            yield break;
+            return true;
         }
 
         public sealed class Behavior : BaseItemBodyBehavior

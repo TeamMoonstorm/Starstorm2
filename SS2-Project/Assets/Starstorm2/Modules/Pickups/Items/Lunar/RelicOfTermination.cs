@@ -19,6 +19,27 @@ namespace SS2.Items
             return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRelicOfTermination", SS2Bundle.Items);
         }
 
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            /*
+             * ItemDef - "RelicOfTermination" - Items
+             * GameObject - "RelicOfTerminationTargetMark" - Items
+             * GameObject - "NemmandoScepterSlashAppear" - NemCommando,
+             * GameObject - "RelicOfTerminationBuffEffect" - Items
+             * GameObject - "TerminationDeathHalo" - Items
+             * GameObject - "TerminationPositionIndicator" - Items
+             * GameObject - "TerminationDebris1" - Items
+             * GameObject - "TerminationDebris2" - Items
+             */
+            markEffect = assetCollection.FindAsset<GameObject>("RelicOfTerminationTargetMark");
+            //failEffect = assetCollection.FindAsset<GameObject>("RelicOfTerminationTargetMark");
+            buffEffect = assetCollection.FindAsset<GameObject>("RelicOfTerminationBuffEffect");
+            deathHalo = assetCollection.FindAsset<GameObject>("TerminationDeathHalo");
+            spawnRock1VFX = assetCollection.FindAsset<GameObject>("TerminationDebris1");
+            spawnRock2VFX = assetCollection.FindAsset<GameObject>("TerminationDebris2");
+            globalMarkEffectTwo = assetCollection.FindAsset<GameObject>("TerminationPositionInidcator");
+        }
+
         private const string token = "SS2_ITEM_RELICOFTERMINATION_DESC";
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Time, in seconds, to kill the marked enemy before going on cooldown.")]
@@ -87,21 +108,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "RelicOfTermination" - Items
-             * GameObject - "RelicOfTerminationTargetMark" - Items
-             * GameObject - "NemmandoScepterSlashAppear" - NemCommando,
-             * GameObject - "RelicOfTerminationBuffEffect" - Items
-             * GameObject - "TerminationDeathHalo" - Items
-             * GameObject - "TerminationPositionIndicator" - Items
-             * GameObject - "TerminationDebris1" - Items
-             * GameObject - "TerminationDebris2" - Items
-             */
-            yield break;
         }
 
         private void OverrideTerminalBossMarker(On.RoR2.TeamComponent.orig_SetupIndicator orig, TeamComponent self)

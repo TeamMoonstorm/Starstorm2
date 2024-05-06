@@ -9,7 +9,10 @@ namespace SS2.Items
 {
     public sealed class FlowerTurret : SS2Item
     {
-        public override SS2AssetRequest<ItemDef> AssetRequest<ItemDef>() => SS2Assets.LoadAssetAsync<ItemDef>("FlowerTurret", SS2Bundle.Items);
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acFlowerTurret", SS2Bundle.Items);
+        }
 
         public override void Initialize()
         {

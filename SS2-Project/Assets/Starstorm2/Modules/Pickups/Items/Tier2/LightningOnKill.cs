@@ -15,10 +15,15 @@ namespace SS2.Items
     {
         private const string token = "SS2_ITEM_LIGHTNINGONKILL_DESC";
 
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acLightningOnKill", SS2Bundle.Items);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _orbEffect = assetCollection.FindAsset<GameObject>("JellyOrbEffect");
+            _soundEffect = assetCollection.FindAsset<GameObject>("nsedProcLightningOnKill");
+        }
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Total damage of Man O' War's lightning. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
@@ -54,16 +59,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "LightningOnKill" - Items
-             * GameObject - "JellyOrbEffect" - Items
-             * NetworkSoundEventDef - "nsedProcLightningOnKill" - Items
-             */
-            yield break;
         }
 
         private void ProcLightningOnKill(DamageReport damageReport)
