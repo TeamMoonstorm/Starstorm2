@@ -12,9 +12,14 @@ namespace SS2.Equipments
     {
         private const string token = "SS2_EQUIP_MAGNET_DESC";
 
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-        public override EquipmentDef EquipmentDef => _equipmentDef;
-        private EquipmentDef _equipmentDef;
+        public override SS2AssetRequest<EquipmentAssetCollection> AssetRequest<EquipmentAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acMagnet", SS2Bundle.Equipments);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _magnetPrefab = assetCollection.FindAsset<GameObject>("PickupMagnetController");
+        }
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Range at which Simple Magnet can pull pickups, in meters.")]
         [FormatToken(token, 0)]
@@ -44,15 +49,6 @@ namespace SS2.Equipments
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * EquipmentDef - "Magnet" - Equipments
-             * GameObject - "PickupMagnetController" - Equipments
-             */
-            yield break;
         }
 
         public override void OnEquipmentLost(CharacterBody body)

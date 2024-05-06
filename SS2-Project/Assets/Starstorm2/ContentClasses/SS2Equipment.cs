@@ -16,14 +16,52 @@ namespace SS2
     /// </summary>
     public abstract class SS2Equipment : IEquipmentContentPiece
     {
-        public abstract NullableRef<List<GameObject>> ItemDisplayPrefabs { get; }
-        EquipmentDef IContentPiece<EquipmentDef>.Asset => EquipmentDef;
-        public abstract EquipmentDef EquipmentDef { get; }
+        public EquipmentAssetCollection AssetCollection { get; private set; }
 
-        public abstract bool Execute(EquipmentSlot slot);
+        public NullableRef<List<GameObject>> ItemDisplayPrefabs;
+        NullableRef<List<GameObject>> IEquipmentContentPiece.ItemDisplayPrefabs => ItemDisplayPrefabs;
+        EquipmentDef IContentPiece<EquipmentDef>.Asset => EquipmentDef;
+
+        public EquipmentDef EquipmentDef;
+
+        public abstract SS2AssetRequest<T> AssetRequest<T>() where T : UnityEngine.Object;
         public abstract void Initialize();
         public abstract bool IsAvailable(ContentPack contentPack);
-        public abstract IEnumerator LoadContentAsync();
+        public virtual IEnumerator LoadContentAsync()
+        {
+            SS2AssetRequest<UnityEngine.Object> request = AssetRequest<UnityEngine.Object>();
+
+            request.StartLoad();
+            while (!request.IsComplete)
+                yield return null;
+
+            if ((EquipmentAssetCollection)request.Asset)
+            {
+                AssetCollection = (EquipmentAssetCollection)request.Asset;
+
+                EquipmentDef = AssetCollection.equipmentDef;
+                ItemDisplayPrefabs = AssetCollection.itemDisplayPrefabs;
+
+                OnAssetCollectionLoaded(AssetCollection);
+            }
+            else if ((EquipmentDef)request.Asset)
+            {
+                EquipmentDef = (EquipmentDef)request.Asset;
+            }
+            else
+            {
+                SS2Log.Error("Invalid AssetRequest " + request.AssetName + " of type " + request.Asset.GetType());
+            }
+        }
+
+        public virtual void OnAssetCollectionLoaded(AssetCollection assetCollection) { }
+
+        public virtual void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.AddContentFromAssetCollection(AssetCollection);
+        }
+
+        public abstract bool Execute(EquipmentSlot slot);       
         public abstract void OnEquipmentLost(CharacterBody body);
         public abstract void OnEquipmentObtained(CharacterBody body);
     }

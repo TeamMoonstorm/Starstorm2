@@ -13,7 +13,10 @@ namespace SS2.Items
 {
     public sealed class RelicOfForce : SS2Item
     {
-        public override SS2AssetRequest<ItemDef> AssetRequest<ItemDef>() => SS2Assets.LoadAssetAsync<ItemDef>("RelicOfForce", SS2Bundle.Items);
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRelicOfForce", SS2Bundle.Items);
+        }
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Attack speed reduction and cooldown increase per stack. (1 = 100% slower attack speed and longer cooldowns)")]
         [FormatToken("SS2_ITEM_RELICOFFORCE_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]

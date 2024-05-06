@@ -14,10 +14,10 @@ namespace SS2.Items
     {
         public const string token = "SS2_ITEM_NKOTASHERITAGE_DESC";
 
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acNkotasHeritage", SS2Bundle.Items);
+        }
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Number of items given upon level up per stack.")]
         [FormatToken(token, 0)]
@@ -39,14 +39,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "NkotasHeritage" - Items
-             */
-            yield break;
         }
 
         private void Stage_onServerStageBegin(Stage obj)

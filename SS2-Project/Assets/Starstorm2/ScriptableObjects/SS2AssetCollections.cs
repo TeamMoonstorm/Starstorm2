@@ -41,13 +41,13 @@ namespace SS2
     [CreateAssetMenu(fileName = "EquipmentAssetCollection", menuName = "Starstorm2/AssetCollections/EquipmentAssetCollection")]
     public class EquipmentAssetCollection : AssetCollection
     {
-        public GameObject[] itemDisplayPrefabs;
+        public List<GameObject> itemDisplayPrefabs;
         public EquipmentDef equipmentDef;
     }
     [CreateAssetMenu(fileName = "EliteAssetCollection", menuName = "Starstorm2/AssetCollections/EliteAssetCollection")]
     public class EliteAssetCollection : EquipmentAssetCollection
     {
-        public EliteDef[] eliteDefs;
+        public List<EliteDef> eliteDefs;
     }
     [CreateAssetMenu(fileName = "InteractableAssetCollection", menuName = "Starstorm2/AssetCollections/InteractableAssetCollection")]
     public class InteractableAssetCollection : AssetCollection

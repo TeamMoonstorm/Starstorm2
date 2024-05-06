@@ -12,12 +12,10 @@ namespace SS2.Equipments
 {
     public sealed class AffixEmpyrean : SS2EliteEquipment
     {
-        public override EquipmentDef EquipmentDef => _equipmentDef;
-        private EquipmentDef _equipmentDef;
-        public override List<EliteDef> EliteDefs => _eliteDefs;
-        private List<EliteDef> _eliteDefs;
-
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+        public override SS2AssetRequest<EliteAssetCollection> AssetRequest<EliteAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<EliteAssetCollection>("acAffixEmpyrean", SS2Bundle.Equipments);
+        }
 
         public static List<EliteDef> blacklistedEliteDefs = new List<EliteDef>();
 

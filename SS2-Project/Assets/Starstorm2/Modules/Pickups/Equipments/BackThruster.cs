@@ -11,9 +11,10 @@ namespace SS2.Equipments
 {
     public sealed class BackThruster : SS2Equipment, IContentPackModifier
     {
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-        public override EquipmentDef EquipmentDef => _equipmentDef;
-        private EquipmentDef _equipmentDef;
+        public override SS2AssetRequest<EquipmentAssetCollection> AssetRequest<EquipmentAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acBackThruster", SS2Bundle.Equipments);
+        }
 
         private const string token = "SS2_EQUIP_BACKTHRUSTER_DESC";
 
@@ -53,26 +54,12 @@ namespace SS2.Equipments
             return true;
         }
 
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * EquipmentDef - "BackThruster" - Equipments
-             * BuffDef - "BuffBackThruster" - Equipments
-             */
-            yield return null;
-        }
-
         public override void OnEquipmentLost(CharacterBody body)
         {
         }
 
         public override void OnEquipmentObtained(CharacterBody body)
         {
-        }
-
-        public void ModifyContentPack(ContentPack contentPack)
-        {
-            contentPack.buffDefs.AddSingle(_buffDef);
         }
 
         public sealed class BackThrusterBuffBehaviour : BaseBuffBehaviour

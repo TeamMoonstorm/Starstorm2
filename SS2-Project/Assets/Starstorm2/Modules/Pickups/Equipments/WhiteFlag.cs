@@ -10,9 +10,14 @@ namespace SS2.Equipments
     public sealed class WhiteFlag : SS2Equipment
     {
         private const string token = "SS2_EQUIP_WHITEFLAG_DESC";
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => throw new System.NotImplementedException();
-
-        public override EquipmentDef EquipmentDef => throw new System.NotImplementedException();
+        public override SS2AssetRequest<EquipmentAssetCollection> AssetRequest<EquipmentAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acWhiteFlag", SS2Bundle.Equipments);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _flagObject = assetCollection.FindAsset<GameObject>("WhiteFlagWard");
+        }
         private GameObject _flagObject;
 
 
@@ -42,15 +47,6 @@ namespace SS2.Equipments
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * EquipmentDef - "WhiteFlag" - Equipments
-             * GameObject - "WhiteFlagWard" - Equipments
-             */
-            yield break;
         }
 
         public override void OnEquipmentLost(CharacterBody body)

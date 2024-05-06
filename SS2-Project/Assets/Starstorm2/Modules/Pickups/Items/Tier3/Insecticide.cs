@@ -43,14 +43,6 @@ namespace SS2.Items
             return true;
         }
 
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "Insecticide" - Items
-             * GameObject - "InsecticideEffect" - Items
-             */
-            yield break;
-        }
 
         //Remove this as DotAPI can handle refreshment.
         private void RefreshInsects(DotController dotController, ref InflictDotInfo inflictDotInfo)
