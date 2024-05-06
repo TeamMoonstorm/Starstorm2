@@ -30,12 +30,21 @@ namespace SS2.Items
         private BuffDef _buffWatchMetronome; //SS2Assets.LoadAsset<BuffDef>("BuffWatchMetronome", SS2Bundle.Items);
         public override void Initialize()
         {
-            throw new System.NotImplementedException();
+            R2API.RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
+        }
+
+        private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
+        {
+            int buffCount = sender.GetBuffCount(SS2Content.Buffs.BuffWatchMetronome);
+            if (buffCount > 0 && sender.isSprinting)
+            {
+                args.moveSpeedMultAdd += (float)Math.Sqrt(0.1f * buffCount) * Items.WatchMetronome.maxMovementSpeed;
+            }
         }
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            throw new System.NotImplementedException();
+            return true;
         }
 
         public override IEnumerator LoadContentAsync()
@@ -92,20 +101,6 @@ namespace SS2.Items
                 if (NetworkServer.active)
                 {
                     body.SetBuffCount(SS2Content.Buffs.BuffWatchMetronome.buffIndex, 0);
-                }
-            }
-        }
-        public sealed class BuffWatchMetronomeBehavior : BaseBuffBehaviour, IBodyStatArgModifier
-        {
-            [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffWatchMetronome;
-
-            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
-            {
-                int buffCount = CharacterBody.GetBuffCount(SS2Content.Buffs.BuffWatchMetronome);
-                if (buffCount > 0 && CharacterBody.isSprinting)
-                {
-                    args.moveSpeedMultAdd += (float)Math.Sqrt(0.1f * buffCount) * Items.WatchMetronome.maxMovementSpeed;
                 }
             }
         }

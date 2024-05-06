@@ -50,6 +50,16 @@ namespace SS2.Items
         public override void Initialize()
         {
             BuffOverlays.AddBuffOverlay(_sigilBuff, _matOverlay);
+
+            R2API.RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
+        }
+
+        private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
+        {
+            int buffCount = sender.GetBuffCount(SS2Content.Buffs.BuffSigilHidden);
+
+            args.armorAdd += HuntersSigil.baseArmor * buffCount;
+            args.damageMultAdd += HuntersSigil.baseDamage * buffCount;
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -138,17 +148,6 @@ namespace SS2.Items
             public void OnDestroy()
             {
                 CharacterBody.SetBuffCount(SS2Content.Buffs.BuffSigilHidden.buffIndex, 0);
-            }
-        }
-        public sealed class BuffSigilHiddenBehavior : BaseBuffBehaviour, IBodyStatArgModifier
-        {
-            [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffSigilHidden;
-
-            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
-            {
-                args.armorAdd += HuntersSigil.baseArmor * BuffCount;
-                args.damageMultAdd += HuntersSigil.baseDamage * BuffCount;
             }
         }
     }

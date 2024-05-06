@@ -32,7 +32,6 @@ namespace SS2.Items
         private static GameObject _critEffect;
 
         private BuffDef _buffNeedleBuildup; //{ get; } = SS2Assets.LoadAsset<BuffDef>("BuffNeedleBuildup", SS2Bundle.Items);
-        private BuffDef _buffNeedle; //{ get; } = SS2Assets.LoadAsset<BuffDef>("BuffNeedle", SS2Bundle.Items);
 
         public override void Initialize()
         {
@@ -50,7 +49,6 @@ namespace SS2.Items
              * GameObject - "NeedlesProcEffect" - Items
              * GameObject - "NeedlesCritEffect" - Items
              * BuffDef - "BuffNeedleBuildup" - Items
-             * BuffDef - "BuffNeedle" - Items
              */
             yield break;
         }
@@ -59,7 +57,6 @@ namespace SS2.Items
         {
             contentPack.buffDefs.Add(new BuffDef[]
             {
-                _buffNeedle,
                 _buffNeedleBuildup
             });
         }
@@ -90,33 +87,6 @@ namespace SS2.Items
                         self.body.AddBuff(SS2Content.Buffs.BuffNeedleBuildup);
 
                     EffectManager.SimpleEffect(_procEffect, damageInfo.position, Quaternion.identity, true);
-                }
-            }
-        }
-
-        public sealed class Needle : BaseBuffBehaviour, RoR2.IOnIncomingDamageServerReceiver
-        {
-            [BuffDefAssociation]
-            public static BuffDef GetBuffDef() => SS2Content.Buffs.BuffNeedle;
-
-            private void Start()
-            {
-                if (CharacterBody.healthComponent)
-                    HG.ArrayUtils.ArrayAppend(ref CharacterBody.healthComponent.onIncomingDamageReceivers, this);
-            }
-            public void OnIncomingDamageServer(DamageInfo info)
-            {
-                info.crit = true;
-            }
-
-            private void OnDestroy()
-            {
-                //This SHOULDNT cause any errors because nothing should be fucking with the order of things in this list... I hope.
-                if (CharacterBody.healthComponent)
-                {
-                    int i = Array.IndexOf(CharacterBody.healthComponent.onIncomingDamageReceivers, this);
-                    if (i > -1)
-                        HG.ArrayUtils.ArrayRemoveAtAndResize(ref CharacterBody.healthComponent.onIncomingDamageReceivers, CharacterBody.healthComponent.onIncomingDamageReceivers.Length, i);
                 }
             }
         }

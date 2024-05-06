@@ -20,6 +20,13 @@ namespace SS2.Items
 
         public override void Initialize()
         {
+            RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
+        }
+
+        private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
+        {
+            args.healthMultAdd += 0.5f;
+            args.damageMultAdd += 0.5f;
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -68,17 +75,6 @@ namespace SS2.Items
                     goldAccum -= goldThreshold;
                 }
                 updateMoney = currentMoney;
-            }
-        }
-
-        public sealed class WealthBuffBehavior : BaseBuffBehaviour, IBodyStatArgModifier
-        {
-            [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffWealth;
-            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
-            {
-                args.healthMultAdd += 0.5f;
-                args.damageMultAdd += 0.5f;
             }
         }
     }

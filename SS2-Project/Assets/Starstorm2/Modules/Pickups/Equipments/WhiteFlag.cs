@@ -12,7 +12,7 @@ namespace SS2.Equipments
     public sealed class WhiteFlag : SS2Equipment, IContentPackModifier
     {
         private const string token = "SS2_EQUIP_WHITEFLAG_DESC";
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => throw new System.NotImplementedException();
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
 
         public override EquipmentDef EquipmentDef => throw new System.NotImplementedException();
         private GameObject _flagObject;

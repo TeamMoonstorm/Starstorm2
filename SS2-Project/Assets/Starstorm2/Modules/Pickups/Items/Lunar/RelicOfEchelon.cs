@@ -25,7 +25,7 @@ namespace SS2.Items
         private BuffDef _buffEchelon ;// { get; } = SS2Assets.LoadAsset<BuffDef>("BuffEchelon", SS2Bundle.Indev);
 
         public static Material _overlay;// => SS2Assets.LoadAsset<Material>("matTerminationOverlay");
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => throw new NotImplementedException();
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Equipment cooldown increase per use, per stack.")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
@@ -197,17 +197,6 @@ namespace SS2.Items
             {
                 yield return new WaitForSeconds(buffDuration + .01f);
                 body.RecalculateStats();
-            }
-        }
-
-        public sealed class EchelonBuffBehavior : BaseBuffBehaviour, IBodyStatArgModifier
-        {
-            [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffEchelon;
-            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
-            {
-                args.baseDamageAdd += RelicOfEchelon.damageBonus;
-                args.baseHealthAdd += RelicOfEchelon.healthBonus;
             }
         }
 

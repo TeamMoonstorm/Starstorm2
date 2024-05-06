@@ -420,8 +420,6 @@ namespace SS2
 
             public static BuffDef BuffCoffeeBag;
 
-            public static BuffDef BuffNeedle;
-
             public static BuffDef BuffNeedleBuildup;
 
             public static BuffDef BuffNucleatorSpecial;
