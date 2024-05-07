@@ -43,12 +43,6 @@ namespace SS2.Equipments
         public override void OnEquipmentObtained(CharacterBody body)
         {
         }
-
-        public void ModifyContentPack(ContentPack contentPack)
-        {
-            contentPack.buffDefs.AddSingle(_canJumpBuffDef);
-        }
-
         public sealed class PressurizedCanisterBehavior : BaseBuffBehaviour
 
         {

@@ -27,7 +27,7 @@ namespace SS2
 
         public abstract SS2AssetRequest<SurvivorAssetCollection> AssetRequest { get; }
 
-        public IEnumerator LoadContentAsync()
+        public virtual IEnumerator LoadContentAsync()
         {
             SS2AssetRequest<SurvivorAssetCollection> request = AssetRequest;
 

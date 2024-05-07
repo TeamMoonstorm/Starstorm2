@@ -47,6 +47,10 @@ namespace SS2.Items
             return true;
         }
 
+        public override void Initialize()
+        {
+        }
+
         public sealed class Behavior : BaseItemBodyBehavior
         {
             [ItemDefAssociation]

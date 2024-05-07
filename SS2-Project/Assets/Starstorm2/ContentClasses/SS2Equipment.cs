@@ -35,7 +35,7 @@ namespace SS2
             while (!request.IsComplete)
                 yield return null;
 
-            if ((EquipmentAssetCollection)request.Asset)
+            if (request.Asset is EquipmentAssetCollection)
             {
                 AssetCollection = (EquipmentAssetCollection)request.Asset;
 
@@ -44,7 +44,7 @@ namespace SS2
 
                 OnAssetCollectionLoaded(AssetCollection);
             }
-            else if ((EquipmentDef)request.Asset)
+            else if (request.Asset is EquipmentDef)
             {
                 EquipmentDef = (EquipmentDef)request.Asset;
             }

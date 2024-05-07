@@ -54,7 +54,7 @@ namespace SS2.Items
 
         private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, R2API.RecalculateStatsAPI.StatHookEventArgs args)
         {
-            int buffStacks = sender.GetBuffCount(_buffDef);
+            int buffStacks = sender.GetBuffCount(SS2Content.Buffs.BuffChocolate);
             args.critAdd += buffCrit * buffStacks;
             args.damageMultAdd += buffDamage * buffStacks;
         }

@@ -12,11 +12,10 @@ namespace SS2.Interactables
 {
     public sealed class ShockDroneDamaged : SS2Interactable
     {
-        public override InteractableCardProvider CardProvider => _cardProvider;
-        private InteractableCardProvider _cardProvider;
-
-        public override GameObject InteractablePrefab => _interactablePrefab;
-        private GameObject _interactablePrefab;
+        public override SS2AssetRequest<InteractableAssetCollection> AssetRequest()
+        {
+            return SS2Assets.LoadAssetAsync<InteractableAssetCollection>("acShockDroneDamaged", SS2Bundle.Interactables);
+        }
 
         private SummonMasterBehavior smb;
         private CharacterMaster cm;
@@ -29,7 +28,7 @@ namespace SS2.Interactables
             On.EntityStates.Drone.DeathState.OnImpactServer += SpawnShockCorpse;
 
             //add sound events, the bad way
-            smb = _interactablePrefab.GetComponent<SummonMasterBehavior>();
+            smb = InteractablePrefab.GetComponent<SummonMasterBehavior>();
             cm = smb.masterPrefab.GetComponent<CharacterMaster>();
             bodyPrefab = cm.bodyPrefab;
 
@@ -55,15 +54,6 @@ namespace SS2.Interactables
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * GameObject - "ShockDroneBroken" - Interactables
-             * InteractableCardProvider - "???" - Interactables
-             */
-            yield break;
         }
 
         private void SpawnShockCorpse(On.EntityStates.Drone.DeathState.orig_OnImpactServer orig, EntityStates.Drone.DeathState self, Vector3 contactPoint)

@@ -24,17 +24,6 @@ namespace SS2.Monsters
         {
             return true;
         }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * GameObject - "RunshroomBody" - Monsters
-             * GameObject - "RunshroomMaster" - Monsters
-             * MonsterCardProvider - ??? - Monsters
-             */
-            yield break;
-        }
-
         private void ChristmasTime()
         {
             CharacterPrefab.AddComponent<SantaHatPickup>();

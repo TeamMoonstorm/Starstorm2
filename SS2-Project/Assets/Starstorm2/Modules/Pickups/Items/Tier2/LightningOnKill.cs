@@ -22,7 +22,7 @@ namespace SS2.Items
         public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
         {
             _orbEffect = assetCollection.FindAsset<GameObject>("JellyOrbEffect");
-            _soundEffect = assetCollection.FindAsset<GameObject>("nsedProcLightningOnKill");
+            _soundEffect = assetCollection.FindAsset<NetworkSoundEventDef>("nsedProcLightningOnKill");
         }
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Total damage of Man O' War's lightning. (1 = 100%)")]
