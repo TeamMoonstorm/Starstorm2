@@ -14,6 +14,10 @@ namespace SS2.Survivors
     {
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acNemMerc", SS2Bundle.NemMercenary);
 
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _knifeProjectile = assetCollection.FindAsset<GameObject>("KnifeProjectile");
+        }
         // configggggggg
         public static int maxClones = 1;
         public static int maxHolograms = 10;
@@ -22,7 +26,6 @@ namespace SS2.Survivors
 
         public static DamageAPI.ModdedDamageType damageType;
         private GameObject _knifeProjectile;
-        private GameObject _hologramPrefab;
 
         
         public override void Initialize()
@@ -82,22 +85,5 @@ namespace SS2.Survivors
             return true;
         }
 
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * GameObject - "NemMercBody" - NemMercenary
-             * GameObject - "NemMercMonsterMaster" - NemMercenary
-             * SurvivorDef - "survivorNemMerc" - NemMercenary
-             * GameObject - "KnifeProjectile" - NemMercenary
-             * GameObject - "NemMercHologram" - NemMercenary
-             */
-            yield break;
-        }
-
-        public void ModifyContentPack(ContentPack contentPack)
-        {
-            contentPack.networkedObjectPrefabs.AddSingle(_hologramPrefab);
-            contentPack.projectilePrefabs.AddSingle(_knifeProjectile);
-        }
     }
 }

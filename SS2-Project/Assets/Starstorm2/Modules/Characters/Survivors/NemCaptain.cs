@@ -11,8 +11,7 @@ namespace SS2.Survivors
     public sealed class NemCaptain : SS2Survivor
     {
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acNemCaptain", SS2Bundle.Indev);
-
-        private BuffDef _droneBuff;    
+ 
         public override void Initialize()
         {
             ModifyPrefab();

@@ -50,6 +50,7 @@ namespace SS2.Survivors
         }
         public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
         {
+            _matFriendOverlay = assetCollection.FindAsset<Material>("matFriendOverlay");
             convertBuffDef = assetCollection.FindAsset<BuffDef>("BuffChirrConvert");
         }
 

@@ -29,7 +29,6 @@ namespace SS2.Survivors
         private GameObject bloonTrapPrefab;
         internal static DeployableSlot shockMine;
         private GameObject shockMinePrefab;
-        private BuffDef _buffCyborgPrimary;
 
         public static float cooldownReduction = 0.5f;
         public static float percentHealthShieldPerSecond = 0.075f;
@@ -81,13 +80,6 @@ namespace SS2.Survivors
             cb._defaultCrosshairPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/StandardCrosshair.prefab").WaitForCompletion();
             cb.GetComponent<ModelLocator>().modelTransform.GetComponent<FootstepHandler>().footstepDustPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/GenericFootstepDust.prefab").WaitForCompletion();
         }
-
-        public void ModifyContentPack(ContentPack contentPack)
-        {
-            contentPack.buffDefs.AddSingle(_buffCyborgPrimary);
-        }
-
-        
 
         public sealed class CyborgTeleBuffBehavior : BaseBuffBehaviour
         {

@@ -10,9 +10,9 @@ using RoR2.ContentManagement;
 
 namespace SS2.Survivors
 {
-    public sealed class NemesisHuntress : SS2Survivor, IContentPackModifier
+    public sealed class NemHuntress : SS2Survivor, IContentPackModifier
     {
-        public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acNemesisHuntress", SS2Bundle.Indev);
+        public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acNemHuntress", SS2Bundle.Indev);
 
         public static BodyIndex bodyIndex;
         public static GameObject crosshairPrefab;
