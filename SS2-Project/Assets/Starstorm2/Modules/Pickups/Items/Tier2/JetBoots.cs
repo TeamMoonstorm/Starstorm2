@@ -13,7 +13,7 @@ using MSU.Config;
 
 namespace SS2.Items
 {
-    public sealed class JetBoots : SS2Item
+    public sealed class JetBoots : SS2Item, IContentPackModifier
     {
         private const string token = "SS2_ITEM_JETBOOTS_DESC";
 
@@ -47,7 +47,7 @@ namespace SS2.Items
         private static GameObject _tracerPrefab;
         private static GameObject _muzzleFlashPrefab;
         private static GameObject _effectPrefab;
-    
+
         public override void Initialize()
         {            // this will interfere with other bonus jump items but they can be unified in a similar way to this
             IL.RoR2.CharacterBody.RecalculateStats += RecalculateStatsHook; // recalculatestatsapi doesnt have maxjumpcount

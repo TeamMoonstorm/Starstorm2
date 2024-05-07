@@ -12,7 +12,7 @@ using MSU.Config;
 
 namespace SS2.Items
 {
-    public sealed class RelicOfTermination : SS2Item
+    public sealed class RelicOfTermination : SS2Item, IContentPackModifier
     {
         public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
         {
@@ -87,6 +87,13 @@ namespace SS2.Items
         public static GameObject failEffect;
         public static GameObject buffEffect;
 
+        public static Material overlayMaterial; // SS2Assets.LoadAsset<Material>("matTerminationOverlay");
+        public BuffDef _buffCooldown; //{ get; } = SS2Assets.LoadAsset<BuffDef>("BuffTerminationCooldown", SS2Bundle.Items);
+        public BuffDef _buffFailed;//{ get; } = SS2Assets.LoadAsset<BuffDef>("BuffTerminationFailed", SS2Bundle.Items);
+        public BuffDef _buffReady;//{ get; } = SS2Assets.LoadAsset<BuffDef>("BuffTerminationReady", SS2Bundle.Items);
+        public BuffDef _buffVfx;//{ get; } = SS2Assets.LoadAsset<BuffDef>("BuffTerminationVFX", SS2Bundle.Items);
+
+
         public static Xoroshiro128Plus terminationRNG;
 
         TerminationDropTable dropTable;
@@ -103,6 +110,11 @@ namespace SS2.Items
 
             dropTable = ScriptableObject.CreateInstance<TerminationDropTable>();
             bossOptions = new List<PickupIndex>();
+
+            BuffOverlays.AddBuffOverlay(_buffCooldown, overlayMaterial);
+            BuffOverlays.AddBuffOverlay(_buffFailed, overlayMaterial);
+            BuffOverlays.AddBuffOverlay(_buffReady, overlayMaterial);
+            BuffOverlays.AddBuffOverlay(_buffVfx, overlayMaterial);
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -550,6 +562,5 @@ namespace SS2.Items
 
             new private readonly WeightedSelection<PickupIndex> selector = new WeightedSelection<PickupIndex>(8);
         }
-
     }
 }

@@ -11,7 +11,7 @@ using MSU.Config;
 
 namespace SS2.Items
 {
-    public sealed class X4 : SS2Item
+    public sealed class X4 : SS2Item, IContentPackModifier
     {
         public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
         {
@@ -40,13 +40,28 @@ namespace SS2.Items
 
         public static ItemDisplay itemDisplay;
 
+        private BuffDef _x4Buff; //SS2Assets.LoadAsset<BuffDef>("BuffX4", SS2Bundle.Items);
+
         //N: Why u no skill index!
         public static Dictionary<string, bool> specialSkillNames;
 
         public override void Initialize()
         {
             InitalizeSpecialSkillsList(); // hi nebby :)
+
+            R2API.RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
             //N: I hate you 3000
+        }
+
+        private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
+        {
+            int buffCount = sender.GetBuffCount(SS2Content.Buffs.BuffX4);
+            if (sender.HasBuff(SS2Content.Buffs.BuffX4))
+            {
+                int count = sender.GetItemCount(SS2Content.Items.X4);
+                float regenAmnt = Items.X4.baseRegenBoost + (Items.X4.stackRegenBoost * (count - 1));
+                args.baseRegenAdd += (regenAmnt + ((regenAmnt / 5) * sender.level)) * buffCount;
+            }
         }
 
         public void InitalizeSpecialSkillsList()

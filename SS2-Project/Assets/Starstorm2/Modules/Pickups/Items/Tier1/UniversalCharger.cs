@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 namespace SS2.Items
 {
-    public sealed class UniversalCharger : SS2Item
+    public sealed class UniversalCharger : SS2Item, IContentPackModifier
     {
         private const string token = "SS2_ITEM_UNIVERSALCHARGER_DESC";
         public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
@@ -24,15 +24,17 @@ namespace SS2.Items
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Time it takes for Universal Charger to recharge, in seconds.")]
         [FormatToken(token, 0)]
-        public static float baseCooldown = 15f;
+        public static float baseCooldown = 18f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigNameOverride = "How much faster Universal Charger recharges, per stack. (1 = 100%)")]
         [FormatToken(token, 1)]
-        public static float cooldownReductionPerStack = 20f; // percent
+        public static float cooldownReductionPerStack = 10f; // percent
 
         public static GameObject overlayPanel;
 
         public static GameObject procEffect;
+
+        private BuffDef _universalChargerBuff; //{ get; } = SS2Assets.LoadAsset<BuffDef>("BuffUniversalCharger", SS2Bundle.Items);
         public override void Initialize()
         {
             On.RoR2.UI.HUD.Awake += AddIcons;
@@ -56,6 +58,11 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
+        }     
+
+        public void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.buffDefs.AddSingle(_universalChargerBuff);
         }
 
         public sealed class Behavior : BaseItemBodyBehavior

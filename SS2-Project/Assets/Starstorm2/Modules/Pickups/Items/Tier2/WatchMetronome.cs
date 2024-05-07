@@ -1,15 +1,17 @@
 ﻿using MSU;
 using MSU.Config;
+using R2API;
 using RoR2;
 using RoR2.ContentManagement;
 using RoR2.Items;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 namespace SS2.Items
 {
-    public sealed class WatchMetronome : SS2Item
+    public sealed class WatchMetronome : SS2Item, IContentPackModifier
     {
         private const string token = "SS2_ITEM_WATCHMETRONOME_DESC";
         public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
@@ -25,13 +27,29 @@ namespace SS2.Items
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float maxMovementSpeed = 2;
 
+        private BuffDef _buffWatchMetronome; //SS2Assets.LoadAsset<BuffDef>("BuffWatchMetronome", SS2Bundle.Items);
         public override void Initialize()
         {
+            R2API.RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
+        }
+
+        private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
+        {
+            int buffCount = sender.GetBuffCount(SS2Content.Buffs.BuffWatchMetronome);
+            if (buffCount > 0 && sender.isSprinting)
+            {
+                args.moveSpeedMultAdd += (float)Math.Sqrt(0.1f * buffCount) * Items.WatchMetronome.maxMovementSpeed;
+            }
         }
 
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
+        }
+
+        public void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.buffDefs.AddSingle(_buffWatchMetronome);
         }
 
         public sealed class Behavior : BaseItemBodyBehavior

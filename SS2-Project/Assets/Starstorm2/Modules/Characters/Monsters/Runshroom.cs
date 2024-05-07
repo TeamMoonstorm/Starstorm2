@@ -14,7 +14,7 @@ namespace SS2.Monsters
         public override SS2AssetRequest<MonsterAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<MonsterAssetCollection>("acRunshroom", SS2Bundle.Monsters);
         public override void Initialize()
         {
-            if(SS2Main.ChristmasTime)
+            if (SS2Main.ChristmasTime)
             {
                 ChristmasTime();
             }

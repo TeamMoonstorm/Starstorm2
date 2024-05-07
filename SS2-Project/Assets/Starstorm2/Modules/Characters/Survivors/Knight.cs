@@ -6,6 +6,8 @@ using UnityEngine.AddressableAssets;
 using RoR2.ContentManagement;
 using R2API;
 using static MSU.BaseBuffBehaviour;
+using EntityStates;
+using System;
 #if DEBUG
 namespace SS2.Survivors
 {
@@ -13,14 +15,28 @@ namespace SS2.Survivors
     {
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acKnight", SS2Bundle.Indev);
 
-        private GameObject shieldBeamProjectile;
-        private GameObject swordBeamProjectile;
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _buffKnightCharged = assetCollection.FindAsset<BuffDef>("bdKnightCharged");
+            _matChargedOverlay = assetCollection.FindAsset<Material>("matKnightSuperShield");
+            _buffKnightSpecialPower = assetCollection.FindAsset<BuffDef>("bdKnightSpecialPowerBuff");
+            _matSpecialPowerOverlay = assetCollection.FindAsset<Material>("matKnightBuffOverlay");
+        }
 
-        
+        public BuffDef _buffKnightCharged;
+        public Material _matChargedOverlay;
+
+        public BuffDef _buffKnightSpecialPower; 
+        public Material _matSpecialPowerOverlay; 
+
         public override void Initialize()
         {
             CharacterBody.onBodyStartGlobal += KnightBodyStart;
             ModifyPrefab();
+
+            // Add the buff material overlays to buffoverlay dict
+            BuffOverlays.AddBuffOverlay(_buffKnightCharged, _matChargedOverlay);
+            BuffOverlays.AddBuffOverlay(_buffKnightSpecialPower, _matSpecialPowerOverlay);
         }
 
 
@@ -55,18 +71,15 @@ namespace SS2.Survivors
         }
 
         // TODO: Comment explaining the buff
-        // TODO: replace public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdKnightCharged", SS2Bundle.Indev);
+        
         public class KnightChargedUpBuff : BaseBuffBehaviour
         {
             [BuffDefAssociation]
             private static BuffDef GetBuffDef() => SS2Content.Buffs.bdKnightCharged;
-
-            // TODO: idk if this works since in MSU 1.0 this was overriden property
-            public Material OverlayMaterial { get; } = SS2Assets.LoadAsset<Material>("matKnightSuperShield", SS2Bundle.Indev);
         }
 
         // TODO: Comment explaining the buff
-        // TODO: replace public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("bdShield", SS2Bundle.Indev);
+        // TODO: Replace class with a single hook on RecalculateSTatsAPI.GetstatCoefficients. This way we replace the monobehaviour with just a method
         public class KnightShieldBuff : BaseBuffBehaviour, IBodyStatArgModifier
         {
             [BuffDefAssociation]
@@ -76,6 +89,71 @@ namespace SS2.Survivors
             {
                 args.armorAdd += 100f;
                 args.moveSpeedReductionMultAdd += 0.6f;
+            }
+        }
+
+        // TODO: Replace class with a single hook on RecalculateSTatsAPI.GetstatCoefficients. This way we replace the monobehaviour with just a method
+        public class KnightSpecialEmpowerBuff : BaseBuffBehaviour, IBodyStatArgModifier
+        {
+            [BuffDefAssociation]
+            private static BuffDef GetBuffDef() => SS2Content.Buffs.bdKnightSpecialPowerBuff;
+            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            {
+                args.baseJumpPowerAdd += 0.7f;
+                args.baseMoveSpeedAdd += 0.4f;
+            }
+        }
+
+        // TODO: Replace class with a single hook on RecalculateSTatsAPI.GetstatCoefficients. This way we replace the monobehaviour with just a method
+        public class KnightSpecialSlowEnemiesBuff : BaseBuffBehaviour, IBodyStatArgModifier
+        {
+            [BuffDefAssociation]
+            private static BuffDef GetBuffDef() => SS2Content.Buffs.bdKnightSpecialSlowBuff;
+            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            {
+                args.attackSpeedReductionMultAdd += 2;
+                args.moveSpeedReductionMultAdd += 2;
+            }
+        }
+
+        public class KnightParryBuff : BaseBuffBehaviour, IOnIncomingDamageServerReceiver
+        {
+            [BuffDefAssociation]
+            private static BuffDef GetBuffDef() => SS2Content.Buffs.bdParry;
+
+            // Called when the body with this buff takes damage
+            public void OnIncomingDamageServer(DamageInfo damageInfo)
+            {
+                if (HasAnyStacks && damageInfo.attacker != CharacterBody)
+                {
+                    // We want to ensure that Knight is the one taking damage
+                    if (CharacterBody.baseNameToken != "SS2_KNIGHT_BODY_NAME")
+                        return;
+
+                    damageInfo.rejected = true;
+
+                    SetStateOnHurt ssoh = damageInfo.attacker.GetComponent<SetStateOnHurt>();
+                    if (ssoh)
+                    {
+                        // Stun the enemy
+                        Type state = ssoh.targetStateMachine.state.GetType();
+                        if (state != typeof(StunState) && state != typeof(ShockState) && state != typeof(FrozenState))
+                        {
+                            ssoh.SetStun(3f);
+                        }
+                    }
+
+                    // TODO: Should we have a custom sound for this?
+                    Util.PlaySound("NemmandoDecisiveStrikeReady", gameObject);
+
+                    EntityStateMachine weaponEsm = EntityStateMachine.FindByCustomName(gameObject, "Weapon");
+                    if (weaponEsm != null)
+                    {
+                        weaponEsm.SetNextState(new EntityStates.Knight.Parry());
+                    }
+
+                    Destroy(this);
+                }
             }
         }
     }

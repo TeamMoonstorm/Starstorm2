@@ -3,7 +3,8 @@ using RoR2.Achievements;
 using UnityEngine;
 namespace SS2.Unlocks.NemCommando
 {
-    /*public sealed class NemCommandoBeamUnlock : UnlockableBase
+    /*
+    public sealed class NemCommandoBeamUnlock : UnlockableBase
     {
         public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skill.nemcommando.swordbeam", SS2Bundle.NemCommando);
 
@@ -12,55 +13,23 @@ namespace SS2.Unlocks.NemCommando
             public override void OnInstall()
             {
                 base.OnInstall();
-                SetServerTracked(true);
+                RoR2Application.onUpdate += CheckBleedChance;
             }
 
             public override void OnUninstall()
             {
                 base.OnUninstall();
+                RoR2Application.onUpdate -= CheckBleedChance;
             }
 
-            private class NemCommandoBeamUnlockServerAchievement : BaseServerAchievement
+            private void CheckBleedChance()
             {
-                public BodyIndex nemCommandoBodyIndex
+                if (localUser != null && localUser.cachedBody && localUser.cachedBody.bleedChance >= 100f)
                 {
-                    get
-                    {
-                        var nemCommandoBodyPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoBody", SS2Bundle.NemCommando);
-                        if (nemCommandoBodyPrefab)
-                        {
-                            return nemCommandoBodyPrefab.GetComponent<CharacterBody>().bodyIndex;
-                        }
-                        return BodyIndex.None;
-                    }
-                }
-
-                public override void OnInstall()
-                {
-                    base.OnInstall();
-                    RoR2Application.onUpdate += CheckBleedChance;
-                }
-
-                public override void OnUninstall()
-                {
-                    RoR2Application.onUpdate -= CheckBleedChance;
-                    base.OnUninstall();
-                }
-
-                private void CheckBleedChance()
-                {
-                    if (networkUser != null && networkUser.GetCurrentBody() != null)
-                    {
-                        if (networkUser.GetCurrentBody().bodyIndex == nemCommandoBodyIndex)
-                        {
-                            if (networkUser.GetCurrentBody().bleedChance >= 100f)
-                            {
-                                Grant();
-                            }
-                        }
-                    }
+                    Grant();
                 }
             }
         }
-    }*/
+    }
+    */
 }

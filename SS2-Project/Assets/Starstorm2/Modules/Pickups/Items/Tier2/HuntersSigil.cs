@@ -8,10 +8,11 @@ using System.Collections.Generic;
 using RoR2.ContentManagement;
 using System.Collections;
 using MSU.Config;
+using R2API;
 
 namespace SS2.Items
 {
-    public sealed class HuntersSigil : SS2Item
+    public sealed class HuntersSigil : SS2Item, IContentPackModifier
     {
         private const string token = "SS2_ITEM_HUNTERSSIGIL_DESC";
         public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
@@ -47,8 +48,23 @@ namespace SS2.Items
         [FormatToken(token, 0)]
         public static float radius = 8f;
 
+        public Material _matOverlay; //SS2Assets.LoadAsset<Material>("matSigilBuffOverlay", SS2Bundle.Items);
+        private BuffDef _sigilBuff; //SS2Assets.LoadAsset<BuffDef>("BuffSigil", SS2Bundle.Items);
+        private BuffDef _sigilBuffHidden; //SS2Assets.LoadAsset<BuffDef>("BuffSigilHidden", SS2Bundle.Items);
+
         public override void Initialize()
         {
+            BuffOverlays.AddBuffOverlay(_sigilBuff, _matOverlay);
+
+            R2API.RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
+        }
+
+        private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
+        {
+            int buffCount = sender.GetBuffCount(SS2Content.Buffs.BuffSigilHidden);
+
+            args.armorAdd += HuntersSigil.baseArmor * buffCount;
+            args.damageMultAdd += HuntersSigil.baseDamage * buffCount;
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -106,6 +122,16 @@ namespace SS2.Items
             {
                 if (sigilInstance != null)
                     Destroy(sigilInstance);
+            }
+        }
+
+        public sealed class BuffSigilBehavior : BaseBuffBehaviour
+        {
+            [BuffDefAssociation]
+            private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffSigil;
+            public void OnDestroy()
+            {
+                CharacterBody.SetBuffCount(SS2Content.Buffs.BuffSigilHidden.buffIndex, 0);
             }
         }
     }
