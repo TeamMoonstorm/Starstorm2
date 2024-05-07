@@ -18,7 +18,7 @@ namespace SS2.Items
     {
         public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
         {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("ChirrFriendHelper", SS2Bundle.Chirr);
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acChirrFriendHelper", SS2Bundle.Chirr);
         }
 
         public static float attackSpeedToCooldownConversion = 1f;

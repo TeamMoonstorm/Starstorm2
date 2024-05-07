@@ -20,6 +20,7 @@ namespace SS2.Equipments
         public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
         {
             _flagObject = assetCollection.FindAsset<GameObject>("WhiteFlagWard");
+            _overlay = assetCollection.FindAsset<Material>("matSurrenderOverlay");
         }
 
         private GameObject _flagObject;
