@@ -1,5 +1,6 @@
 ﻿using MSU;
 using MSU.Config;
+using R2API;
 using RoR2;
 using RoR2.ContentManagement;
 using RoR2.Items;
@@ -8,7 +9,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace SS2.Items
 {
-    public sealed class Insecticide : SS2Item
+    public sealed class Insecticide : SS2Item, IContentPackModifier
     {
         public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
 
@@ -27,11 +28,15 @@ namespace SS2.Items
         public static float duration = 3;
 
         private static GameObject _hitEffect;
+        private BuffDef _buffInsecticide;// SS2Assets.LoadAsset<BuffDef>("BuffInsecticide", SS2Bundle.Items);
+        public static DotController.DotIndex index;
+
 
         public static DotController.DotIndex DotIndex { get; private set; }
         public override void Initialize()
         {
             DotController.onDotInflictedServerGlobal += RefreshInsects;
+            index = DotAPI.RegisterDotDef(0.25f, 0.15f, DamageColorIndex.DeathMark, _buffInsecticide);
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -39,11 +44,17 @@ namespace SS2.Items
             return true;
         }
 
+        public void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.buffDefs.AddSingle(_buffInsecticide);
+        }
+
         public override IEnumerator LoadContentAsync()
         {
             /*
              * ItemDef - "Insecticide" - Items
              * GameObject - "InsecticideEffect" - Items
+             * BuffDef - "BuffInsecticide" - Items
              */
             yield break;
         }
@@ -66,6 +77,7 @@ namespace SS2.Items
                 }
             }
         }
+
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
         {

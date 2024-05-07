@@ -11,7 +11,7 @@ using MSU.Config;
 
 namespace SS2.Items
 {
-    public sealed class SwiftSkateboard : SS2Item
+    public sealed class SwiftSkateboard : SS2Item, IContentPackModifier
     {
         public const string token = "SS2_ITEM_SKATEBOARD_DESC";
         public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
@@ -44,6 +44,8 @@ namespace SS2.Items
 
         private static GameObject _effectPrefab;
 
+        private BuffDef _buffKickflip; // SS2Assets.LoadAsset<BuffDef>("BuffKickflip", SS2Bundle.Items);
+
         public override void Initialize()
         {
         }
@@ -58,8 +60,14 @@ namespace SS2.Items
             /*
              * ItemDef - "SwiftSkateboard" - Items
              * GameObject - "SkateboardActivate" - Items
+             * BuffDef - "BuffKickflip" - Items
              */
             yield break;
+        }
+
+        public void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.buffDefs.AddSingle(_buffKickflip);
         }
 
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier

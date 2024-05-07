@@ -108,10 +108,6 @@ namespace SS2.Items
                             token = damageReport.victim.body.gameObject.AddComponent<ForceHitToken>();
                             EnemyToken = token;
                             token.CallMoreHits(damageReport, count);
-                            //token = damageReport.victim.body.gameObject.GetComponent<ForceHitToken>();
-                            //token.count = count;
-                            //token.damageReport = damageReport;
-                            //token.enabled = true;
                         }
 
                     }

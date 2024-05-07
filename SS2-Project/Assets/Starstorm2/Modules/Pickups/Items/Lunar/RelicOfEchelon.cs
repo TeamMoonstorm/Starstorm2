@@ -9,17 +9,23 @@ using System.Collections;
 
 using MSU;
 using MSU.Config;
+using RoR2.ContentManagement;
 
 //Had disabled content, to the nether realm with you. -N
-/*
+
 #if DEBUG
 namespace SS2.Items
 {
-    public sealed class RelicOfEchelon : SS2Item
+    public sealed class RelicOfEchelon : SS2Item, IContentPackModifier
     {
         private const string token = "SS2_ITEM_RELICOFECHELON_DESC";
+        public override ItemDef ItemDef => _itemDef;
+        private ItemDef _itemDef;
 
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfEchelon", SS2Bundle.Items);
+        private BuffDef _buffEchelon ;// { get; } = SS2Assets.LoadAsset<BuffDef>("BuffEchelon", SS2Bundle.Indev);
+
+        public static Material _overlay;// => SS2Assets.LoadAsset<Material>("matTerminationOverlay");
+        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Equipment cooldown increase per use, per stack.")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
@@ -39,97 +45,71 @@ namespace SS2.Items
 
         public static Color echelonColor;
 
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return false; //disabled for now
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            //ItemDef - "RelicOfEchelon" - Items
+            //BuffDef - "BuffEchelon" - Indev
+            yield break;
+        }
         public override void Initialize()
         {
-            base.Initialize();
-            On.RoR2.Inventory.CalculateEquipmentCooldownScale += (orig, self) =>
-            {
-                //SS2Log.Debug("begin1");
-                float num = orig.Invoke(self);
-                //SS2Log.Debug("begin1.2");
-                EquipmentIndex eqp = self.currentEquipmentIndex;
-                var token = self.gameObject.GetComponent<EchelonToken>();
-                var def = EquipmentCatalog.GetEquipmentDef(eqp);
+            BuffOverlays.AddBuffOverlay(_buffEchelon, _overlay);
 
-                int useCount;
-                int itemCount = self.GetItemCount(SS2Content.Items.RelicOfEchelon);
-                if (itemCount > 0)
-                {
-                    //int multiplier;
-                    if (token)
-                    {
-                        //token exists. this is not the first use with echelon.
-                        //SS2Log.Debug("token" + token + " eqp: " + eqp);
-                        if (token.usedEquipment.ContainsKey(eqp)) //token has the equipment that is currently being used
-                        {
-                            //int useCount = token.usedEquipment[eqp];
+            On.RoR2.Inventory.CalculateEquipmentCooldownScale += Inventory_CalculateEquipmentCooldownScale;
 
-                            //token.usedEquipment[eqp] += itemCount;
-                            //useCount = token.usedEquipment[eqp];
-                            //int count = self.GetItemCount(SS2Content.Items.RelicOfEchelon);
-                            //var def = EquipmentCatalog.GetEquipmentDef(eqp);
-                            //multiplier = itemCount + useCount;
-                            //float baseCD = def.cooldown;
-                            //float adjusted = def.cooldown + (6.5f * useCount);
-                            //float mod = adjusted / def.cooldown;
-
-                            //goddamn it
-
-                            //float cooldownAdjustment = 1 - ((1 + def.cooldown) / def.cooldown); //acounts for low cooldown equipments 
-                            ////count = token.usedEquipment[eqp];
-                            //float modifier = 1 + (.15f * Mathf.Pow(count, 2f)); // .1 + (Mathf.Pow(count, 2));
-                            //float mod = Mathf.Pow(1.2f + cooldownAdjustment, count);
-                            ////var val = (1 + MSUtil.InverseHyperbolicScaling(cooldownIncrease, cooldownIncrease, 0.7f, count));
-                            //SS2Log.Debug("val: " + modifier + " | count: " + count + " | num: " + num + " | ans: " + num * modifier + " ans2: " + num * mod);
-                            //num *= val;
-                            //float adjusted = def.cooldown + (6.5f * useCount);
-                            //float mod = adjusted / def.cooldown;
-                            //num *= mod;
-                        }
-                        else
-                        {
-                            //Debug.Log("Test!");
-                            //multiplier = itemCount;
-                            //token.usedEquipment.Add(eqp, itemCount);
-                            token.usedEquipment.Add(eqp, itemCount);
-                        }
-                    }
-                    else
-                    {
-                        //SS2Log.Debug("No token? :pleading:");
-                        //no token. so this is the first use, ever
-                        //itemCount = self.GetItemCount(SS2Content.Items.RelicOfEchelon);
-                        //multiplier = itemCount;
-                        token = self.gameObject.AddComponent<EchelonToken>();
-                        token.usedEquipment = new Dictionary<EquipmentIndex, int>();
-                        token.usedEquipment.Add(eqp, itemCount);
-                        token.body = null;
-
-                    }
-
-                    //float adjusted = def.cooldown + (6.5f * multiplier);
-                    //float mod = adjusted / def.cooldown;
-                    //num *= mod;
-                    useCount = token.usedEquipment[eqp];
-                    //int count = self.GetItemCount(SS2Content.Items.RelicOfEchelon);
-                    //var def = EquipmentCatalog.GetEquipmentDef(eqp);
-                    //float cooldownAdjustment = Math.Abs(((.7f + def.cooldown) / def.cooldown) - 1);
-                    float mod = Mathf.Pow(1 + cooldownIncrease, useCount);
-                    float cooldownAdjustment = Math.Abs(((.7f + def.cooldown) / def.cooldown) - 1);
-                    if (def.cooldown < 5) //really didnt want to do this but it normalizes the otherwise weird extra cd that exec card gets
-                    {
-                        cooldownAdjustment -= Mathf.Max(0, 6 - useCount);
-                    }
-                    float adjusted = def.cooldown + cooldownAdjustment;
-                    float adj2 = adjusted * mod;
-                    float mod2 = adj2 / def.cooldown;
-
-                    //SS2Log.Debug("count: " + useCount + " | mod: " + mod + " | adj: " + adjusted + " | cdadj: " + cooldownAdjustment + " | mod2: " + mod2 + " | ans2: " + num * mod2);
-                    num *= mod2;
-                }
-                return num;
-            };
             echelonColor = new Color(0.4235f, 0.6706f, 0.6588f);
+        }
+
+        public void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.buffDefs.AddSingle(_buffEchelon);
+        }
+
+        private float Inventory_CalculateEquipmentCooldownScale(On.RoR2.Inventory.orig_CalculateEquipmentCooldownScale orig, Inventory self)
+        {
+            float num = orig.Invoke(self);
+            EquipmentIndex eqp = self.currentEquipmentIndex;
+            var token = self.gameObject.GetComponent<EchelonToken>();
+            var def = EquipmentCatalog.GetEquipmentDef(eqp);
+
+            int useCount;
+            int itemCount = self.GetItemCount(SS2Content.Items.RelicOfEchelon);
+            if (itemCount > 0)
+            {
+                if (token)
+                {
+                    if(!token.usedEquipment.ContainsKey(eqp))
+                    {
+                        token.usedEquipment.Add(eqp, itemCount);
+                    }
+                }
+                else
+                {
+                    token = self.gameObject.AddComponent<EchelonToken>();
+                    token.usedEquipment = new Dictionary<EquipmentIndex, int>();
+                    token.usedEquipment.Add(eqp, itemCount);
+                    token.body = null;
+
+                }
+
+                useCount = token.usedEquipment[eqp];
+                float mod = Mathf.Pow(1 + cooldownIncrease, useCount);
+                float cooldownAdjustment = Math.Abs(((.7f + def.cooldown) / def.cooldown) - 1);
+                if (def.cooldown < 5)
+                {
+                    cooldownAdjustment -= Mathf.Max(0, 6 - useCount);
+                }
+                float adjusted = def.cooldown + cooldownAdjustment;
+                float adj2 = adjusted * mod;
+                float mod2 = adj2 / def.cooldown;
+                num *= mod2;
+            }
+            return num;
         }
 
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier
@@ -151,10 +131,8 @@ namespace SS2.Items
 
             private void GrantEchelonBuff(EquipmentSlot arg1, EquipmentIndex arg2)
             {
-                //SS2Log.Debug("beginhook2");
                 var token = arg1.characterBody.inventory.gameObject.GetComponent<EchelonToken>();
                 var inv = arg1.characterBody.inventory;
-                //int itemCount = self.GetItemCount(SS2Content.Items.RelicOfEchelon);
                 if (inv)
                 {
                     int count = inv.GetItemCount(SS2Content.Items.RelicOfEchelon);
@@ -182,35 +160,27 @@ namespace SS2.Items
                         }
                         arg1.characterBody.AddTimedBuffAuthority(SS2Content.Buffs.BuffEchelon.buffIndex, buffDuration);
                         StartCoroutine(token.callRecalcOnBuffEnd());
-                        //RoR2.UI.HealthBar.UpdateHealthbar(Time.de);
-                        //arg1.characterBody.
-                        //arg1.characterBody.healthComponent.GetHealthBarValues().heal;
                     }
                 }
             }
 
             private void Echelon2(On.RoR2.UI.HealthBar.orig_UpdateBarInfos orig, HealthBar self)
             {
-                //SS2Log.Info("calling orig");
                 orig(self);
                 var healthComponent = self._source;
                 if (healthComponent)
                 {
-                    //var iv = healthComponent.body.inventory;
                     if (healthComponent.body.HasBuff(SS2Content.Buffs.BuffEchelon))
                     {
-                        //SS2Log.Info("ahh bees bees bees bees 2");
                         self.barInfoCollection.trailingOverHealthbarInfo.color = echelonColor;
                     }
                 }
-                //throw new NotImplementedException();
             }
 
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
             {
                 if (body.HasBuff(SS2Content.Buffs.BuffEchelon))
                 {
-                    //the base amounts are added by the buff itself in case the buff is gained from another source such as Aetherium's Accursed Potion
                     args.baseDamageAdd += (damageBonus * (stack - 1));
                     args.baseHealthAdd += (healthBonus * (stack - 1));
                 }
@@ -219,25 +189,17 @@ namespace SS2.Items
 
         public class EchelonToken : MonoBehaviour
         {
-            //helps keep track of the target and player responsible
-            //public CharacterBody PlayerOwner;
             public IDictionary<EquipmentIndex, int> usedEquipment;
             public CharacterBody body;
             public bool hadBuff;
 
-            //public void FixedUpdate()
-            //{
-            //    if()
-            //}
             public IEnumerator callRecalcOnBuffEnd()
             {
-                //SS2Log.Info("i have been awoken");
                 yield return new WaitForSeconds(buffDuration + .01f);
                 body.RecalculateStats();
-                //SS2Log.Info("zzzzzzzzzzzzzzzzzz....");
             }
         }
 
     }
 }
-#endif*/
+#endif

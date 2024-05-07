@@ -7,11 +7,12 @@ using System.Collections.Generic;
 using RoR2.ContentManagement;
 using System.Collections;
 using MSU.Config;
+using System;
 
 namespace SS2.Items
 {
     // needs sound
-    public sealed class Needles : SS2Item
+    public sealed class Needles : SS2Item, IContentPackModifier
     {
         private const string token = "SS2_ITEM_NEEDLES_DESC";
         public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
@@ -30,6 +31,8 @@ namespace SS2.Items
         private static GameObject _procEffect;
         private static GameObject _critEffect;
 
+        private BuffDef _buffNeedleBuildup; //{ get; } = SS2Assets.LoadAsset<BuffDef>("BuffNeedleBuildup", SS2Bundle.Items);
+
         public override void Initialize()
         {
         }
@@ -45,8 +48,17 @@ namespace SS2.Items
              * ItemDef - "Needles" - Items
              * GameObject - "NeedlesProcEffect" - Items
              * GameObject - "NeedlesCritEffect" - Items
+             * BuffDef - "BuffNeedleBuildup" - Items
              */
             yield break;
+        }
+
+        public void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.buffDefs.Add(new BuffDef[]
+            {
+                _buffNeedleBuildup
+            });
         }
 
         // should just be an ilhook but im lazy
