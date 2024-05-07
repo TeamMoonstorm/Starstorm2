@@ -9,9 +9,10 @@ namespace SS2.Equipments
 {
     public sealed class MIDAS : SS2Equipment
     {
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-        public override EquipmentDef EquipmentDef => _equipmentDef;
-        private EquipmentDef _equipmentDef;
+        public override SS2AssetRequest<EquipmentAssetCollection> AssetRequest<EquipmentAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acMIDAS", SS2Bundle.Equipments);
+        }
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Health percentage sacrificed (1 = 100%)")]
         [FormatToken("SS2_EQUIP_MIDAS_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
@@ -69,14 +70,6 @@ namespace SS2.Equipments
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * EquipmentDef - "MIDAS" - Equipment
-             */
-            yield break;
         }
 
         public override void OnEquipmentLost(CharacterBody body)

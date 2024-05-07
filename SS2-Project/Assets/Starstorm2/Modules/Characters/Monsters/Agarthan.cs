@@ -9,15 +9,7 @@ namespace SS2.Monsters
 #if DEBUG
     public sealed class Agarthan : SS2Monster
     {
-        public override NullableRef<MonsterCardProvider> CardProvider => null;
-
-        public override NullableRef<DirectorAPI.DirectorCardHolder> DissonanceCard => null;
-
-        public override NullableRef<GameObject> MasterPrefab => _masterPrefab;
-        private GameObject _masterPrefab;
-
-        public override GameObject CharacterPrefab => _characterPrefab;
-        private GameObject _characterPrefab;
+        public override SS2AssetRequest<MonsterAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<MonsterAssetCollection>("acAgarthan", SS2Bundle.Indev);
 
         public override void Initialize()
         {
@@ -26,15 +18,6 @@ namespace SS2.Monsters
         public override bool IsAvailable(ContentPack contentPack)
         {
             return false;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * GameObject - "AgarthanBody" - Indev
-             * GameObject - "AgarthanMaster" - Indev
-             */
-            yield break;
         }
     }
 #endif

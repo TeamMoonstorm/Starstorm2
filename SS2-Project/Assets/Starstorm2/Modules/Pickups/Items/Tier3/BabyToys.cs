@@ -18,10 +18,10 @@ namespace SS2.Items
         private const string pickupToken = "SS2_ITEM_BABYTOYS_PICKUP";
         private const string descToken = "SS2_ITEM_BABYTOYS_DESC";
 
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acBabyToys", SS2Bundle.Items);
+        }
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Levels removed per stack.")]
         [FormatToken(pickupToken, 0)]
@@ -30,21 +30,13 @@ namespace SS2.Items
 
         public override void Initialize()
         {
-            throw new NotImplementedException();
         }
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            throw new NotImplementedException();
+            return false;
         }
 
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "BabyToys" - Items
-             */
-            yield break;
-        }
 
         public sealed class MasterBehavior : BaseItemMasterBehaviour
         {

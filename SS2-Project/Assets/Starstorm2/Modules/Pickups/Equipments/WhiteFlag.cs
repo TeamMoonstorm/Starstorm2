@@ -12,9 +12,16 @@ namespace SS2.Equipments
     public sealed class WhiteFlag : SS2Equipment, IContentPackModifier
     {
         private const string token = "SS2_EQUIP_WHITEFLAG_DESC";
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
 
-        public override EquipmentDef EquipmentDef => throw new System.NotImplementedException();
+        public override SS2AssetRequest<EquipmentAssetCollection> AssetRequest<EquipmentAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acWhiteFlag", SS2Bundle.Equipments);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _flagObject = assetCollection.FindAsset<GameObject>("WhiteFlagWard");
+        }
+
         private GameObject _flagObject;
         private BuffDef _surrenderBuff;  //SS2Assets.LoadAsset<BuffDef>("BuffSurrender", SS2Bundle.Items);
         public static Material _overlay;// SS2Assets.LoadAsset<Material>("matSurrenderOverlay", SS2Bundle.Items);
@@ -50,16 +57,8 @@ namespace SS2.Equipments
             return true;
         }
 
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * EquipmentDef - "WhiteFlag" - Equipments
-             * GameObject - "WhiteFlagWard" - Equipments
-             * BuffDef - "BuffSurrender" - Items
-             */
-            yield break;
-        }
-
+        public override void OnEquipmentLost(CharacterBody body)
+        
         public override void OnEquipmentLost(CharacterBody CharacterBody)
         {
         }

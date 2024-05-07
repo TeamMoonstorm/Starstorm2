@@ -24,10 +24,16 @@ namespace SS2.Items
     public sealed class ErraticGadget : SS2Item
     {
         private const string token = "SS2_ITEM_ERRATICGADGET_DESC";
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acErraticGadget", SS2Bundle.Items);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _orbEffectPrefab = assetCollection.FindAsset<GameObject>("GadgetOrbEffect");
+            _procEffectPrefab = assetCollection.FindAsset<GameObject>("GadgetLightningStartEffect");
+            _displayEffectPrefab = assetCollection.FindAsset<GameObject>("GadgetLightningProcEffect");
+        }
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance on hit to fire lightning. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
@@ -66,16 +72,6 @@ namespace SS2.Items
             return true;
         }
 
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "ErraticGadget" - Items
-             * GameObject - "GadgetOrbEffect" - Items
-             * GameObject - "GadgetLightningStartEffect" - Items
-             * GameObject - "GadgetLightningProc" - Items
-             */
-            yield break;
-        }
         // figure out if a lightningorb "ends", then figure out how many objects it bounced to, then spawn a gadgetlightningorb with the same stats that bounces to that many targets
         private void LightningOrb_OnArrival(On.RoR2.Orbs.LightningOrb.orig_OnArrival orig, LightningOrb self)
         {

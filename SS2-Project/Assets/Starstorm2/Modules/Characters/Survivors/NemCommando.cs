@@ -12,19 +12,28 @@ using RoR2.ContentManagement;
 
 namespace SS2.Survivors
 {
-    public sealed class NemCommando : SS2Survivor
+    public sealed class NemCommando : SS2Survivor, IContentPackModifier
     {
-        public override SurvivorDef SurvivorDef => _survivorDef;
-        private SurvivorDef _survivorDef;
-        public override NullableRef<GameObject> MasterPrefab => _monsterMaster;
-        private GameObject _monsterMaster;
-        public override GameObject CharacterPrefab => _prefab;
-        private GameObject _prefab;
+        public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acNemCommando", SS2Bundle.NemCommando);
 
         private static float gougeDuration = 2;
         public static DamageAPI.ModdedDamageType GougeDamageType { get; private set; }
         public static DotController.DotIndex GougeDotIndex { get; private set; }
         private BuffDef _gougeBuffDef;
+        private GameObject distantGashProjectile;
+        private GameObject distantGashProjectileBlue;
+        private GameObject distantGashProjectileYellow;
+        private GameObject grenadeProjectile;
+
+        
+
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _gougeBuffDef = assetCollection.FindAsset<BuffDef>("BuffGouge");
+            distantGashProjectile = assetCollection.FindAsset<GameObject>("NemCommandoSwordBeamProjectile");
+            distantGashProjectileBlue = assetCollection.FindAsset<GameObject>("NemCommandoSwordBeamProjectileBlue");
+            distantGashProjectileYellow = assetCollection.FindAsset<GameObject>("NemCommandoSwordBeamProjectileYellow");
+        }
 
         public override void Initialize()
         {
@@ -100,20 +109,19 @@ namespace SS2.Survivors
             return true;
         }
 
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * GameObject - "NemCommandoBody" - NemCommando
-             * GameObject - "NemCommandoMonsterMaster" - NemCommando
-             * SurvivorDef - "survivorNemCommando" - NemCommando
-             * BuffDef - "BuffGouge" - NemCommando
-             */
-            yield break;
-        }
-    }
+        
 
-    public class NemmandoPistolToken : MonoBehaviour
-    {
-        public int secondaryStocks = 8;
+        private void ModifyProjectiles()
+        {
+            var damageAPIComponent = distantGashProjectile.AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>();
+            damageAPIComponent.Add(GougeDamageType);
+            damageAPIComponent = distantGashProjectileBlue.AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>();
+            damageAPIComponent.Add(GougeDamageType);
+            damageAPIComponent = distantGashProjectileYellow.AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>();
+            damageAPIComponent.Add(GougeDamageType);
+
+            var pie = grenadeProjectile.GetComponent<RoR2.Projectile.ProjectileImpactExplosion>();
+            pie.impactEffect = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/OmniExplosionVFXCommandoGrenade.prefab").WaitForCompletion();
+        }
     }
 }

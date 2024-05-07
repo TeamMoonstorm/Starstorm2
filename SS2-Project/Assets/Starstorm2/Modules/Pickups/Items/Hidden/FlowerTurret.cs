@@ -9,10 +9,10 @@ namespace SS2.Items
 {
     public sealed class FlowerTurret : SS2Item
     {
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acFlowerTurret", SS2Bundle.Items);
+        }
 
         public override void Initialize()
         {
@@ -21,15 +21,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return contentPack.survivorDefs.Find("Chirr");
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * GameObject - "DisplayFlowerTurret" - Chirr
-             * ItemDef - "FlowerTurret" - Chirr
-             */
-            yield break;
         }
 
         public sealed class BodyBehavior : BaseItemBodyBehavior

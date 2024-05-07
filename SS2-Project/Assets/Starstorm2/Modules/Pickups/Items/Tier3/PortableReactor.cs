@@ -13,10 +13,18 @@ namespace SS2.Items
     {
         private const string token = "SS2_ITEM_PORTABLEREACTOR_DESC";
 
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acPortableReactor", SS2Bundle.Items);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            // load these effects
+            //public override Material OverlayMaterial => SS2Assets.LoadAsset<Material>("matReactorBuffOverlay", SS2Bundle.Items);
+            //public static GameObject bubbleEffectPrefab => SS2Assets.LoadAsset<GameObject>("ReactorBubbleEffect", SS2Bundle.Items);       
+            //public static GameObject endEffectPrefab => SS2Assets.LoadAsset<GameObject>("ReactorBubbleEnd", SS2Bundle.Items);
+            //public static GameObject shieldEffectPrefab => SS2Assets.LoadAsset<GameObject>("ReactorShieldEffect", SS2Bundle.Items);
+        }
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Duration of invulnerability from Portable Reactor. (1 = 1 second)")]
         [FormatToken(token, 0)]
@@ -47,18 +55,9 @@ namespace SS2.Items
             return true;
         }
 
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "PortableReactor" - Items
-             * BuffDef - "BuffReactor" - Items
-             */
-            yield break;
-        }
-
         private void ImFuckingInvincible(CharacterBody obj)
         {
-            if(obj.TryGetItemCount(_itemDef, out var count))
+            if(obj.TryGetItemCount(SS2Content.Items.PortableReactor, out var count))
             {
                 if (obj.isPlayerControlled)
                 {

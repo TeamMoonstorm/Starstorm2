@@ -14,10 +14,7 @@ namespace SS2.Items
 {
     public sealed class TerminationHelper : SS2Item
     {
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => throw new System.NotImplementedException();
-
-        public override ItemDef ItemDef => throw new System.NotImplementedException();
-
+        public override SS2AssetRequest<ItemDef> AssetRequest<ItemDef>() => SS2Assets.LoadAssetAsync<ItemDef>("TerminationHelper", SS2Bundle.Items);
 
         public static GameObject globalMarkEffectTwo;
 
@@ -29,14 +26,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "TerminationHelper" - Items;
-             */
-            yield break;
         }
 
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier

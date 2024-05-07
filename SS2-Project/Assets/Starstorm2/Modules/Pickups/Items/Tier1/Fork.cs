@@ -15,11 +15,10 @@ namespace SS2.Items
     public sealed class Fork : SS2Item
     {
         private const string token = "SS2_ITEM_FORK_DESC";
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
-
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acFork", SS2Bundle.Items);
+        }
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Bonus percent damage per fork. (1 = 1%)")]
         [FormatToken(token, 0)]
         public static float percentDamageBonus = 8f;
@@ -35,14 +34,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "Fork" - Items
-             */
-            yield break;
         }
 
         private void ForkDamage(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)

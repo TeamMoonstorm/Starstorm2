@@ -13,10 +13,10 @@ namespace SS2.Items
     {
         private const string token = "SS2_ITEM_BLOODTESTER_DESC";
 
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acBloodTester", SS2Bundle.Items);
+        }
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of health regeneration granted per 25 gold, per stack. (1 = 1 hp/s)")]
         [FormatToken(token, 0)]

@@ -12,9 +12,15 @@ namespace SS2.Items
     public sealed class CoffeeBag : SS2Item, IContentPackModifier
     {
         public const string token = "SS2_ITEM_COFFEEBAG_DESC";
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acCoffeeBag", SS2Bundle.Items);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _coffeeBean = assetCollection.FindAsset<GameObject>("CoffeeBeanPickup");
+        }
+
         private BuffDef _buffDef;
         private GameObject _coffeeBean;
 
@@ -45,17 +51,6 @@ namespace SS2.Items
             return true;
         }
 
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * BuffDef - "BuffCoffeeBag" - Items
-             * ItemDef - "CoffeeBag" - Items
-             * GameObject - "CoffeeBeanPickup" - Items
-             */
-
-            yield break;
-        }
-
         private void CalculateStatsCoffeeBag(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
             int buffStack = sender.GetBuffCount(SS2Content.Buffs.BuffCoffeeBag);
@@ -80,11 +75,6 @@ namespace SS2.Items
                 }
                 NetworkServer.Spawn(bean);
             }
-        }
-
-        public void ModifyContentPack(ContentPack contentPack)
-        {
-            contentPack.buffDefs.AddSingle(_buffDef);
         }
     }
 }

@@ -16,10 +16,14 @@ namespace SS2.Items
     {
         private const string token = "SS2_ITEM_DETRITIVETREMATODE_DESC";
 
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acDetritiveTrematode", SS2Bundle.Items);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _biteEffect = assetCollection.FindAsset<GameObject>("TrematodeBiteEffect");
+        }
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigNameOverride = "Trematode Threshold", ConfigDescOverride = "Amount of missing health needed for Trematode to proc. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
@@ -47,16 +51,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "DetritiveTrematode" - Items
-             * GameObject - "TrematodeBiteEffect" - Items
-             * BuffDef - "BuffTrematodes" - Items
-             */
-            yield break;
         }
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver

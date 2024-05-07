@@ -14,10 +14,14 @@ namespace SS2.Items
     public sealed class SwiftSkateboard : SS2Item, IContentPackModifier
     {
         public const string token = "SS2_ITEM_SKATEBOARD_DESC";
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acSwiftSkateboard", SS2Bundle.Items);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _effectPrefab = assetCollection.FindAsset<GameObject>("SkateboardActivate");
+        }
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Movement speed bonus for each skateboard push. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
@@ -53,21 +57,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "SwiftSkateboard" - Items
-             * GameObject - "SkateboardActivate" - Items
-             * BuffDef - "BuffKickflip" - Items
-             */
-            yield break;
-        }
-
-        public void ModifyContentPack(ContentPack contentPack)
-        {
-            contentPack.buffDefs.AddSingle(_buffKickflip);
         }
 
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier

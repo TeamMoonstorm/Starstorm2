@@ -12,11 +12,16 @@ namespace SS2.Items
 {
     public sealed class Augury : SS2Item
     {
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
         private static GameObject _attachment;
 
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acAugury", SS2Bundle.Indev);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _attachment = assetCollection.FindAsset<GameObject>("AuguryBodyAttachment");
+        }
         public override void Initialize()
         {
         }
@@ -24,15 +29,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return false; //MSUtil.IsModInstalled("Enforcer GUID goes here... also check if nemforcer is enabled or something."); 
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * GameObject - "AuguryBodyAttachment" - Indev
-             * ItemDef - "Augury" - Items
-             */
-            yield break;
         }
 
         public sealed class AuguryBehavior : BaseItemBodyBehavior, IOnTakeDamageServerReceiver

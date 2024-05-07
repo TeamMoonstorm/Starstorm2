@@ -12,11 +12,15 @@ namespace SS2.Items
     public sealed class GreenChocolate : SS2Item
     {
         private const string token = "SS2_ITEM_GREENCHOCOLATE_DESC";
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acGreenChocolate", SS2Bundle.Items);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _effect = assetCollection.FindAsset<GameObject>("ChocolateEffect");
+        }
         private static GameObject _effect;
-        private BuffDef _buffDef;
 
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Percentage of max hp that must be lost for Green Chocolate's effect to proc. (1 = 100%)")]
@@ -50,7 +54,7 @@ namespace SS2.Items
 
         private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, R2API.RecalculateStatsAPI.StatHookEventArgs args)
         {
-            int buffStacks = sender.GetBuffCount(_buffDef);
+            int buffStacks = sender.GetBuffCount(SS2Content.Buffs.BuffChocolate);
             args.critAdd += buffCrit * buffStacks;
             args.damageMultAdd += buffDamage * buffStacks;
         }
@@ -58,16 +62,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "GreenChocolate" - Items
-             * GameObject - "ChocolateEffect" - Items
-             * BuffDef - "BuffChocolate" - Items
-             */
-            yield break;
         }
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnIncomingDamageServerReceiver

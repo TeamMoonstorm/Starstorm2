@@ -13,10 +13,15 @@ namespace SS2.Items
 {
     public sealed class StirringSoul : SS2Item
     {
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acStirringSoul", SS2Bundle.Items);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _monsterSoulPickup = assetCollection.FindAsset<GameObject>("MonsterSoul");
+        }
 
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
         private static GameObject _monsterSoulPickup;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance to gain soul initially. (1 = 100%)")]

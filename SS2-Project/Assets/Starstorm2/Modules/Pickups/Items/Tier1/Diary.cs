@@ -11,11 +11,10 @@ namespace SS2.Items
     {
         private const string token = "SS2_ITEM_DIARY_DESC";
 
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
-        private static ItemDef _consumedItemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acDiary", SS2Bundle.Items);
+        }
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Number of levels gained when Empty Diary is consumed.")]
         [FormatToken(token)]
@@ -28,20 +27,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "Diary" - Items
-             * ItemDef - "DiaryConsumed" - Items
-             */
-            yield break;
-        }
-
-        public void ModifyContentPack(ContentPack contentPack)
-        {
-            contentPack.itemDefs.AddSingle(_consumedItemDef);
         }
 
         //I have a hunch this could be done without a body behaviour, cant bother with it rn tho. -N

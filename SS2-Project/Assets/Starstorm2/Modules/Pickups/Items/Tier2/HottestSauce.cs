@@ -12,13 +12,17 @@ using MSU.Config;
 namespace SS2.Items
 {
 #if DEBUG
-    public sealed class HottestSauce : SS2Item
+    public sealed class HottestSauce : SS2Item, IContentPackModifier
     {
         private const string token = "SS2_ITEM_HOTTESTSAUCE_DESC";
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acHottestSauce", SS2Bundle.Items);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            sauceProjectile = assetCollection.FindAsset<GameObject>("SauceProjectile");
+        }
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Radius in which the hottest sauce deals damage, in meters.")]
         [FormatToken(token, 0)]
@@ -28,6 +32,8 @@ namespace SS2.Items
         [FormatToken(token, 1)]
         public static float DOTDuration = 6f;
 
+        private GameObject sauceProjectile;
+
         public override void Initialize()
         {
 
@@ -36,14 +42,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return false;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "HottestSauce" - Items
-             */
-            yield break;
         }
 
         public sealed class Behavior : BaseItemBodyBehavior

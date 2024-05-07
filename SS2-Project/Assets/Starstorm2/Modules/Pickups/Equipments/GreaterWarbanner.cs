@@ -15,10 +15,14 @@ namespace SS2.Equipments
     {
         private const string token = "SS2_EQUIP_GREATERWARBANNER_DESC";
 
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-        public override EquipmentDef EquipmentDef => _equipmentDef;
-        private EquipmentDef _equipmentDef;
-
+        public override SS2AssetRequest<EquipmentAssetCollection> AssetRequest<EquipmentAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acGreaterWarbanner", SS2Bundle.Equipments);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _warbannerObject = assetCollection.FindAsset<GameObject>("GreaterWarbannerWard");
+        }
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of Extra Regeneration. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float extraRegeneration = 0.5f;
@@ -105,12 +109,10 @@ namespace SS2.Equipments
 
         public override void OnEquipmentLost(CharacterBody body)
         {
-            throw new System.NotImplementedException();
         }
 
         public override void OnEquipmentObtained(CharacterBody body)
         {
-            throw new System.NotImplementedException();
         }
 
         private void FasterTickrateBannerHook(On.RoR2.GenericSkill.orig_RunRecharge orig, GenericSkill self, float dt)

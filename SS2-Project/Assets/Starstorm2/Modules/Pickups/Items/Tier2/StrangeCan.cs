@@ -15,10 +15,14 @@ namespace SS2.Items
     {
         private const string token = "SS2_ITEM_STRANGECAN_DESC";
 
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acStrangeCan", SS2Bundle.Items);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _procEffect = assetCollection.FindAsset<GameObject>("StrangeCanEffect");
+        }
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance for Intoxicate to be applied on hit. (1 = 1%)")]
         [FormatToken(token, 0)]
@@ -66,20 +70,6 @@ namespace SS2.Items
             return true;
         }
 
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "StrangeCan" - Items
-             * GameObject - "StrangeCanEffect" - Items
-             * BuffDef - "BuffIntoxicated" - Items
-             */
-            yield break;
-        }
-
-        public void ModifyContentPack(ContentPack contentPack)
-        {
-            contentPack.buffDefs.AddSingle(_buffIntoxicated);
-        }
 
         //theres no way this is correct
         //N: Yeah, cuz it aint no behaviour! >:C

@@ -17,11 +17,16 @@ namespace SS2.Items
     {
         private const string token = "SS2_ITEM_JETBOOTS_DESC";
 
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
-
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acJetBoots", SS2Bundle.Items);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _tracerPrefab = assetCollection.FindAsset<GameObject>("TracerJetBoots");
+            _muzzleFlashPrefab = assetCollection.FindAsset<GameObject>("MuzzleflashJetBoots");
+            _effectPrefab = assetCollection.FindAsset<GameObject>("JetBootsEffect");
+        }
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base damage of Prototype Jet Boots' explosion. Burn damage deals an additional 50% of this value. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float baseDamage = 5f;
@@ -42,8 +47,6 @@ namespace SS2.Items
         private static GameObject _tracerPrefab;
         private static GameObject _muzzleFlashPrefab;
         private static GameObject _effectPrefab;
-        private static BuffDef _buffCooldown; // SS2Assets.LoadAsset<BuffDef>("BuffJetBootsCooldown", SS2Bundle.Items);
-        private static BuffDef _buffReady; //SS2Assets.LoadAsset<BuffDef>("BuffJetBootsReady", SS2Bundle.Items);
 
         public override void Initialize()
         {            // this will interfere with other bonus jump items but they can be unified in a similar way to this
@@ -55,27 +58,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "JetBoots" - Items
-             * GameObject - "TracerJetBoots" - Items
-             * GameObject - "MuzzleflashJetBoots" - Items
-             * GameObject - "JetBootsEffect" - Items
-             * BuffDef - "BuffJetBootsCooldown" - Items
-             * BuffDef - "BuffJetBootsReady" - Items
-             */
-            yield break;
-        }
-        public void ModifyContentPack(ContentPack contentPack)
-        {
-            contentPack.buffDefs.Add(new BuffDef[]
-            {
-                _buffCooldown,
-                _buffReady
-            });
         }
 
         private void RechargeBoots(On.RoR2.CharacterBody.orig_OnBuffFinalStackLost orig, CharacterBody self, BuffDef buffDef)

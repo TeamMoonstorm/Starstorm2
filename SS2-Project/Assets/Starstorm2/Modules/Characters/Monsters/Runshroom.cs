@@ -11,16 +11,7 @@ namespace SS2.Monsters
 {
     public sealed class Runshroom : SS2Monster
     {
-        public override NullableRef<MonsterCardProvider> CardProvider => null;
-
-        public override NullableRef<DirectorAPI.DirectorCardHolder> DissonanceCard => null;
-
-        public override NullableRef<GameObject> MasterPrefab => _masterPrefab;
-        private GameObject _masterPrefab;
-
-        public override GameObject CharacterPrefab => _characterPrefab;
-        private GameObject _characterPrefab;
-
+        public override SS2AssetRequest<MonsterAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<MonsterAssetCollection>("acRunshroom", SS2Bundle.Monsters);
         public override void Initialize()
         {
             if (SS2Main.ChristmasTime)
@@ -33,17 +24,6 @@ namespace SS2.Monsters
         {
             return true;
         }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * GameObject - "RunshroomBody" - Monsters
-             * GameObject - "RunshroomMaster" - Monsters
-             * MonsterCardProvider - ??? - Monsters
-             */
-            yield break;
-        }
-
         private void ChristmasTime()
         {
             CharacterPrefab.AddComponent<SantaHatPickup>();

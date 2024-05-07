@@ -8,10 +8,10 @@ namespace SS2.Equipments
 {
     public sealed class RockFruit : SS2Equipment
     {
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-        public override EquipmentDef EquipmentDef => _equipmentDef;
-        private EquipmentDef _equipmentDef;
-
+        public override SS2AssetRequest<EquipmentAssetCollection> AssetRequest<EquipmentAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acRockFruit", SS2Bundle.Equipments);
+        }
         public override bool Execute(EquipmentSlot slot)
         {
             var allItems = new List<ItemIndex>();
@@ -74,14 +74,6 @@ namespace SS2.Equipments
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * EquipmentDef - "RockFruit" - Equipments
-             */
-            yield break;
         }
 
         public override void OnEquipmentLost(CharacterBody body)

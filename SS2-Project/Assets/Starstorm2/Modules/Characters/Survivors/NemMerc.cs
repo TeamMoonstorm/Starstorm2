@@ -12,12 +12,7 @@ namespace SS2.Survivors
 {
     public sealed class NemMerc : SS2Survivor, IContentPackModifier
     {
-        public override SurvivorDef SurvivorDef => _survivorDef;
-        private SurvivorDef _survivorDef;
-        public override NullableRef<GameObject> MasterPrefab => _monsterMaster;
-        private GameObject _monsterMaster;
-        public override GameObject CharacterPrefab => _prefab;
-        private GameObject _prefab;
+        public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acNemMerc", SS2Bundle.NemMercenary);
 
         // configggggggg
         public static int maxClones = 1;
@@ -28,6 +23,8 @@ namespace SS2.Survivors
         public static DamageAPI.ModdedDamageType damageType;
         private GameObject _knifeProjectile;
         private GameObject _hologramPrefab;
+
+        
         public override void Initialize()
         {
             damageType = DamageAPI.ReserveDamageType();
@@ -73,7 +70,7 @@ namespace SS2.Survivors
 
         public void ModifyPrefab()
         {
-            var cb = _prefab.GetComponent<CharacterBody>();
+            var cb = CharacterPrefab.GetComponent<CharacterBody>();
 
             cb.GetComponent<ModelLocator>().modelTransform.GetComponent<FootstepHandler>().footstepDustPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/GenericFootstepDust.prefab").WaitForCompletion();
 
@@ -100,6 +97,7 @@ namespace SS2.Survivors
         public void ModifyContentPack(ContentPack contentPack)
         {
             contentPack.networkedObjectPrefabs.AddSingle(_hologramPrefab);
+            contentPack.projectilePrefabs.AddSingle(_knifeProjectile);
         }
     }
 }

@@ -10,10 +10,10 @@ namespace SS2.Items
 {
     public sealed class SantaHat : SS2Item
     {
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acSantaHat", SS2Bundle.Items);
+        }
 
         public static float percentHatChance = 10f;
 
@@ -27,15 +27,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return SS2Main.ChristmasTime;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "SantaHat" - Items
-             * GameObject - "DisplaySantaHat" - Items
-             */
-            yield break;
         }
 
         // always enable outside of runs

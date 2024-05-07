@@ -10,12 +10,10 @@ namespace SS2.Equipments
 {
     public sealed class PressurizedCanister : SS2Equipment, IContentPackModifier
     {
-        public override EquipmentDef EquipmentDef => _equipmentDef;
-        private EquipmentDef _equipmentDef;
-        public BuffDef _canJumpBuffDef;
-
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => throw new System.NotImplementedException();
-
+        public override SS2AssetRequest<EquipmentAssetCollection> AssetRequest<EquipmentAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acPressurizedCanister", SS2Bundle.Equipments);
+        }
         public override bool Execute(EquipmentSlot slot)
         {
             var characterMotor = slot.characterBody.characterMotor;
@@ -37,14 +35,6 @@ namespace SS2.Equipments
             return true;
         }
 
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * EquipmentDef - "PressurizedCanister" - Equipments
-             * BuffDef - "bdCanJump" - Equipments
-             */
-            yield return null;
-        }
 
         public override void OnEquipmentLost(CharacterBody body)
         {
@@ -53,12 +43,6 @@ namespace SS2.Equipments
         public override void OnEquipmentObtained(CharacterBody body)
         {
         }
-
-        public void ModifyContentPack(ContentPack contentPack)
-        {
-            contentPack.buffDefs.AddSingle(_canJumpBuffDef);
-        }
-
         public sealed class PressurizedCanisterBehavior : BaseBuffBehaviour
 
         {

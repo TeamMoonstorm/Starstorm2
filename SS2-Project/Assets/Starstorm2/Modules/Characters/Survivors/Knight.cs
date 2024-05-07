@@ -13,24 +13,21 @@ namespace SS2.Survivors
 {
     public sealed class Knight : SS2Survivor
     {
-        public override SurvivorDef SurvivorDef => _survivorDef;
-        private SurvivorDef _survivorDef;
-        public override NullableRef<GameObject> MasterPrefab => _monsterMaster;
-        private GameObject _monsterMaster;
-        public override GameObject CharacterPrefab => _prefab;
-        private GameObject _prefab;
+        public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acKnight", SS2Bundle.Indev);
 
-        public BuffDef _buffKnightCharged; // TODO { get; } = SS2Assets.LoadAsset<BuffDef>("bdKnightCharged", SS2Bundle.Indev);
-        public Material _matChargedOverlay; //{ get; } = SS2Assets.LoadAsset<Material>("matKnightSuperShield", SS2Bundle.Indev);
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _buffKnightCharged = assetCollection.FindAsset<BuffDef>("bdKnightCharged");
+            _matChargedOverlay = assetCollection.FindAsset<Material>("matKnightSuperShield");
+            _buffKnightSpecialPower = assetCollection.FindAsset<BuffDef>("bdKnightSpecialPowerBuff");
+            _matSpecialPowerOverlay = assetCollection.FindAsset<Material>("matKnightBuffOverlay");
+        }
 
-        public BuffDef _buffKnightSpecialPower; //{ get; } = SS2Assets.LoadAsset<BuffDef>("bdKnightSpecialPowerBuff", SS2Bundle.Indev);
-        public Material _matSpecialPowerOverlay; //{ get; } = SS2Assets.LoadAsset<Material>("matKnightBuffOverlay", SS2Bundle.Indev);
+        public BuffDef _buffKnightCharged;
+        public Material _matChargedOverlay;
 
-        public BuffDef _buffKnightShield; //{ get; } = SS2Assets.LoadAsset<BuffDef>("bdShield", SS2Bundle.Indev);
-
-        public BuffDef _buffKnightSpecialSlow; //{ get; } = SS2Assets.LoadAsset<BuffDef>("bdKnightSpecialSlowBuff", SS2Bundle.Indev);
-
-        public BuffDef _buffKnightParry; //{ get; } = SS2Assets.LoadAsset<BuffDef>("bdParry", SS2Bundle.Indev);
+        public BuffDef _buffKnightSpecialPower; 
+        public Material _matSpecialPowerOverlay; 
 
         public override void Initialize()
         {
@@ -45,7 +42,7 @@ namespace SS2.Survivors
 
         public void ModifyPrefab()
         {
-            var cb = _prefab.GetComponent<CharacterBody>();
+            var cb = CharacterPrefab.GetComponent<CharacterBody>();
             cb._defaultCrosshairPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/SimpleDotCrosshair.prefab").WaitForCompletion();
         }
 
@@ -58,29 +55,6 @@ namespace SS2.Survivors
         public override bool IsAvailable(ContentPack contentPack)
         {
             return false;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * GameObject - "KnightBody" - Indev
-             * SurvivorDef - "survivorKnight" - Indev
-             * BuffDef - "bdKnightBuff" - idk
-             * BuffDef 
-             */
-            yield break;
-        }
-
-        public void ModifyContentPack(ContentPack contentPack)
-        {
-            contentPack.buffDefs.Add(new BuffDef[]
-            {
-                _buffKnightCharged,
-                _buffKnightSpecialPower,
-                _buffKnightShield,
-                _buffKnightSpecialSlow,
-                _buffKnightParry
-            });
         }
 
         // TODO: Load the actual buff 

@@ -15,10 +15,15 @@ namespace SS2.Items
     public sealed class Needles : SS2Item, IContentPackModifier
     {
         private const string token = "SS2_ITEM_NEEDLES_DESC";
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acNeedles", SS2Bundle.Items);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _procEffect = assetCollection.FindAsset<GameObject>("NeedlesProcEffect");
+            _critEffect = assetCollection.FindAsset<GameObject>("NeedlesCritEffect");
+        }
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance for the debuff to be applied on hit. (1 = 1%)")]
         [FormatToken(token, 0)]
@@ -40,25 +45,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "Needles" - Items
-             * GameObject - "NeedlesProcEffect" - Items
-             * GameObject - "NeedlesCritEffect" - Items
-             * BuffDef - "BuffNeedleBuildup" - Items
-             */
-            yield break;
-        }
-
-        public void ModifyContentPack(ContentPack contentPack)
-        {
-            contentPack.buffDefs.Add(new BuffDef[]
-            {
-                _buffNeedleBuildup
-            });
         }
 
         // should just be an ilhook but im lazy

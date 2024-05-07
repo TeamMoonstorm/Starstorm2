@@ -16,12 +16,7 @@ namespace SS2.Survivors
 {
     public sealed class Cyborg2 : SS2Survivor, IContentPackModifier
     {
-        public override SurvivorDef SurvivorDef => _survivorDef;
-        private SurvivorDef _survivorDef;
-        public override NullableRef<GameObject> MasterPrefab => _monsterMaster;
-        private GameObject _monsterMaster;
-        public override GameObject CharacterPrefab => _prefab;
-        private GameObject _prefab;
+        public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acCyborg2", SS2Bundle.Indev);
 
         //configgggggggg
         internal static int maxTeleporters = 1;
@@ -38,8 +33,7 @@ namespace SS2.Survivors
 
         public static float cooldownReduction = 0.5f;
         public static float percentHealthShieldPerSecond = 0.075f;
-        private BuffDef _buffCyborgTeleporter;
-
+        
 
         public override void Initialize()
         {
@@ -74,20 +68,6 @@ namespace SS2.Survivors
             return false;
         }
 
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * GameObject - "CyborgBuffTeleporter" - Indev
-             * GameObject - "BloonTrap" - Indev
-             * GameObject - "ShockMine" - Indev
-             * GameObject - "Cyborg2Body" - Indev
-             * SurvivorDef - "survivorCyborg2" - Indev
-             * BuffDef - "BuffCyborgPrimary" - Indev
-             * BuffDef - "BuffCyborgTeleporter" - Indev
-             */
-            yield break;
-        }
-
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         public void ScepterCompat()
         {
@@ -97,7 +77,7 @@ namespace SS2.Survivors
 
         public void ModifyPrefab()
         {
-            var cb = _prefab.GetComponent<CharacterBody>();
+            var cb = CharacterPrefab.GetComponent<CharacterBody>();
             cb._defaultCrosshairPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/StandardCrosshair.prefab").WaitForCompletion();
             cb.GetComponent<ModelLocator>().modelTransform.GetComponent<FootstepHandler>().footstepDustPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/GenericFootstepDust.prefab").WaitForCompletion();
         }
@@ -106,6 +86,8 @@ namespace SS2.Survivors
         {
             contentPack.buffDefs.AddSingle(_buffCyborgPrimary);
         }
+
+        
 
         public sealed class CyborgTeleBuffBehavior : BaseBuffBehaviour
         {

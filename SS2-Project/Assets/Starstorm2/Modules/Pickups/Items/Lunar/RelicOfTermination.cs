@@ -14,10 +14,31 @@ namespace SS2.Items
 {
     public sealed class RelicOfTermination : SS2Item, IContentPackModifier
     {
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRelicOfTermination", SS2Bundle.Items);
+        }
 
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            /*
+             * ItemDef - "RelicOfTermination" - Items
+             * GameObject - "RelicOfTerminationTargetMark" - Items
+             * GameObject - "NemmandoScepterSlashAppear" - NemCommando,
+             * GameObject - "RelicOfTerminationBuffEffect" - Items
+             * GameObject - "TerminationDeathHalo" - Items
+             * GameObject - "TerminationPositionIndicator" - Items
+             * GameObject - "TerminationDebris1" - Items
+             * GameObject - "TerminationDebris2" - Items
+             */
+            markEffect = assetCollection.FindAsset<GameObject>("RelicOfTerminationTargetMark");
+            //failEffect = assetCollection.FindAsset<GameObject>("RelicOfTerminationTargetMark");
+            buffEffect = assetCollection.FindAsset<GameObject>("RelicOfTerminationBuffEffect");
+            deathHalo = assetCollection.FindAsset<GameObject>("TerminationDeathHalo");
+            spawnRock1VFX = assetCollection.FindAsset<GameObject>("TerminationDebris1");
+            spawnRock2VFX = assetCollection.FindAsset<GameObject>("TerminationDebris2");
+            globalMarkEffectTwo = assetCollection.FindAsset<GameObject>("TerminationPositionInidcator");
+        }
 
         private const string token = "SS2_ITEM_RELICOFTERMINATION_DESC";
 
@@ -99,36 +120,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public void ModifyContentPack(ContentPack contentPack)
-        {
-            contentPack.buffDefs.Add(new BuffDef[]
-            {
-                _buffCooldown,
-                _buffFailed,
-                _buffReady,
-                _buffVfx
-            });
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "RelicOfTermination" - Items
-             * GameObject - "RelicOfTerminationTargetMark" - Items
-             * GameObject - "NemmandoScepterSlashAppear" - NemCommando,
-             * GameObject - "RelicOfTerminationBuffEffect" - Items
-             * GameObject - "TerminationDeathHalo" - Items
-             * GameObject - "TerminationPositionIndicator" - Items
-             * GameObject - "TerminationDebris1" - Items
-             * GameObject - "TerminationDebris2" - Items
-             * BuffDef - "BuffTerminationCooldown" - Items
-             * BuffDef - "BuffTerminationFailed" - Items
-             * BuffDef - "BuffTerminationReady" - Items
-             * BuffDef - "BuffTerminationVFX" - Items
-             */
-            yield break;
         }
 
         private void OverrideTerminalBossMarker(On.RoR2.TeamComponent.orig_SetupIndicator orig, TeamComponent self)
