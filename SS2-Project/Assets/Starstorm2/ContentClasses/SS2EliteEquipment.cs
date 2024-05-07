@@ -25,31 +25,24 @@ namespace SS2
         EquipmentDef IContentPiece<EquipmentDef>.Asset => EquipmentDef;     
 
         public EquipmentDef EquipmentDef;
-        public abstract SS2AssetRequest<T> AssetRequest<T>() where T : UnityEngine.Object;
+        public abstract SS2AssetRequest<EliteAssetCollection> AssetRequest();
         public abstract void Initialize();
         public abstract bool IsAvailable(ContentPack contentPack);
         public virtual IEnumerator LoadContentAsync()
         {
-            SS2AssetRequest<UnityEngine.Object> request = AssetRequest<UnityEngine.Object>();
+            SS2AssetRequest<EliteAssetCollection> request = AssetRequest();
 
             request.StartLoad();
             while (!request.IsComplete)
                 yield return null;
 
-            if ((EliteAssetCollection)request.Asset)
-            {
-                AssetCollection = (EliteAssetCollection)request.Asset;
+            AssetCollection = request.Asset;
 
-                EliteDefs = AssetCollection.eliteDefs;
-                EquipmentDef = AssetCollection.equipmentDef;
-                ItemDisplayPrefabs = AssetCollection.itemDisplayPrefabs;
+            EliteDefs = AssetCollection.eliteDefs;
+            EquipmentDef = AssetCollection.equipmentDef;
+            ItemDisplayPrefabs = AssetCollection.itemDisplayPrefabs;
 
-                OnAssetCollectionLoaded(AssetCollection);
-            }
-            else
-            {
-                SS2Log.Error("Invalid AssetRequest " + request.AssetName + " of type " + request.Asset.GetType());
-            }
+            OnAssetCollectionLoaded(AssetCollection);
         }
 
         public virtual void OnAssetCollectionLoaded(AssetCollection assetCollection) { }

@@ -12,7 +12,7 @@ namespace SS2.Equipments
 {
     public sealed class AffixEmpyrean : SS2EliteEquipment
     {
-        public override SS2AssetRequest<EliteAssetCollection> AssetRequest<EliteAssetCollection>()
+        public override SS2AssetRequest<EliteAssetCollection> AssetRequest()
         {
             return SS2Assets.LoadAssetAsync<EliteAssetCollection>("acAffixEmpyrean", SS2Bundle.Equipments);
         }

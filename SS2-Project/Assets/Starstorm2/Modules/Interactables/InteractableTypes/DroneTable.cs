@@ -14,11 +14,14 @@ namespace SS2.Interactables
 {
     public sealed class DroneTable : SS2Interactable
     {
-        public override InteractableCardProvider CardProvider => _cardProvider;
-        private InteractableCardProvider _cardProvider;
-
-        public override GameObject InteractablePrefab => _interactablePrefab;
-        private GameObject _interactablePrefab;
+        public override SS2AssetRequest<InteractableAssetCollection> AssetRequest()
+        {
+            return SS2Assets.LoadAssetAsync<InteractableAssetCollection>("acDroneTable", SS2Bundle.Interactables);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            bodyOrb = assetCollection.FindAsset<GameObject>("CharacterBodyOrbEffect");
+        }
 
         /// <summary>
         /// List of drone and interactable cost pairs. String is the body.name, int is the price a player pays, not the director.
@@ -47,8 +50,8 @@ namespace SS2.Interactables
 
             On.EntityStates.Drone.DeathState.OnEnter += OverrideDroneCorpse;
 
-            var interactionToken = _interactablePrefab.AddComponent<RefabricatorInteractionToken>();
-            interactionToken.PurchaseInteraction = _interactablePrefab.GetComponent<PurchaseInteraction>();
+            var interactionToken = InteractablePrefab.AddComponent<RefabricatorInteractionToken>();
+            interactionToken.PurchaseInteraction = InteractablePrefab.GetComponent<PurchaseInteraction>();
 
             droneDropTable = ScriptableObject.CreateInstance<DroneTableDropTable>();
 

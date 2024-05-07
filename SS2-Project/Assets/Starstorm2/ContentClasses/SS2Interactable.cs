@@ -16,13 +16,33 @@ namespace SS2
     /// </summary>
     public abstract class SS2Interactable : IInteractableContentPiece
     {
-        public abstract InteractableCardProvider CardProvider { get; }
+        public InteractableAssetCollection AssetCollection { get; private set; }
+        public InteractableCardProvider CardProvider;
         IInteractable IGameObjectContentPiece<IInteractable>.Component => InteractablePrefab.GetComponent<IInteractable>();
         GameObject IContentPiece<GameObject>.Asset => InteractablePrefab;
-        public abstract GameObject InteractablePrefab { get; }
+        InteractableCardProvider IInteractableContentPiece.CardProvider => CardProvider;
 
+        public GameObject InteractablePrefab;
+
+        public abstract SS2AssetRequest<InteractableAssetCollection> AssetRequest();
         public abstract void Initialize();
         public abstract bool IsAvailable(ContentPack contentPack);
-        public abstract IEnumerator LoadContentAsync();
+        public virtual IEnumerator LoadContentAsync()
+        {
+            SS2AssetRequest<InteractableAssetCollection> request = AssetRequest();
+
+            request.StartLoad();
+            while (!request.IsComplete)
+                yield return null;
+
+            AssetCollection = request.Asset;
+
+            CardProvider = AssetCollection.interactableCardProvider;
+            InteractablePrefab = AssetCollection.interactablePrefab;
+
+            OnAssetCollectionLoaded(AssetCollection);
+        }
+
+        public virtual void OnAssetCollectionLoaded(AssetCollection assetCollection) { }
     }
 }

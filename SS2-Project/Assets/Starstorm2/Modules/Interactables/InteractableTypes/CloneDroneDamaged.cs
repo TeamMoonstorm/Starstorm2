@@ -12,11 +12,10 @@ namespace SS2.Interactables
 {
     public sealed class CloneDroneDamaged : SS2Interactable
     {
-        public override InteractableCardProvider CardProvider => _cardProvider;
-        private InteractableCardProvider _cardProvider;
-
-        public override GameObject InteractablePrefab => _interactablePrefab;
-        private GameObject _interactablePrefab;
+        public override SS2AssetRequest<InteractableAssetCollection> AssetRequest()
+        {
+            return SS2Assets.LoadAssetAsync<InteractableAssetCollection>("acCloneDroneDamaged", SS2Bundle.Interactables);
+        }
 
         private GameObject _interactable;
         private SummonMasterBehavior smb;
