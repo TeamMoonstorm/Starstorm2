@@ -13,11 +13,14 @@ namespace SS2.Items
     //N: This is so fucking epic
     public sealed class ChucklingFungus : SS2VoidItem
     {
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
-        private ItemDef _dungusItem;
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acChucklingFungus", SS2Bundle.Items);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _chungusWard = assetCollection.FindAsset<GameObject>("ChungusWard");
+        }
         private static GameObject _chungusWard;
 
         public static float baseHealFractionPerSecond = 0.055f;
@@ -28,7 +31,7 @@ namespace SS2.Items
         {
             return new List<ItemDef>
             {
-                _dungusItem
+                SS2Content.Items.DormantFungus
             };
         }
 
@@ -39,18 +42,9 @@ namespace SS2.Items
         //Should return true only if dungus is available as well, unsure how to do that lol
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return false;
+            return contentPack.itemDefs.Find("DormantFungus"); // ^like this
         }
 
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "ChucklingFungus" - Items
-             * ItemDef - "DormantFungus" - Items
-             * GameObject - "ChungusWard" - Items
-             */
-            yield break;
-        }
 
         public sealed class Behavior : BaseItemBodyBehavior
         {
