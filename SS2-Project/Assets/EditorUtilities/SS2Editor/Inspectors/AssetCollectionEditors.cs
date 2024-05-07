@@ -21,7 +21,7 @@ namespace Moonstorm.Starstorm2.Editor
     {
         public override void OnInspectorGUI()
         {
-            DrawDefaultInspector();
+            base.OnInspectorGUI();
             EditorGUILayout.BeginVertical("box");
 
             if (GUILayout.Button("Add Selected Objects"))
@@ -38,6 +38,7 @@ namespace Moonstorm.Starstorm2.Editor
         private void AddSelection()
         {
             Undo.RecordObject(target, "Add selected assets to AssetCollection");
+            
 
             UnityEngine.Object[] objects = Selection.objects;
 
@@ -65,7 +66,8 @@ namespace Moonstorm.Starstorm2.Editor
                     ArrayUtils.ArrayInsert<UnityEngine.Object>(ref assetCollection.assets, 0, ob);
             }
 
-            assetCollection.OnValidate(); // is this even right?
+            EditorUtility.SetDirty(target);
+            //assetCollection.OnValidate(); // is this even right?
 
         }
 
