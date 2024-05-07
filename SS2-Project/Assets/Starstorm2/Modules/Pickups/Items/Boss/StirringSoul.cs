@@ -40,14 +40,6 @@ namespace SS2.Items
             return true;
         }
 
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "StirringSoul" - Items
-             * GameObject - "MonsterSoul" - Items
-             */
-            yield break;
-        }
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver
         {

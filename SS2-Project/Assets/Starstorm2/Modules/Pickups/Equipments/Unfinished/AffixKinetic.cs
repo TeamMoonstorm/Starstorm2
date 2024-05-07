@@ -14,29 +14,10 @@ namespace SS2.Equipments
 
     public sealed class AffixKinetic : SS2EliteEquipment
     {
-        //public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("EliteKineticEquipment", SS2Bundle.Indev);
-
-        //public override List<MSEliteDef> EliteDefs => new List<MSEliteDef>
-        //{
-        //    SS2Assets.LoadAsset<MSEliteDef>("edKinetic", SS2Bundle.Indev),
-        //    SS2Assets.LoadAsset<MSEliteDef>("edKineticHonor", SS2Bundle.Indev)
-        //};
-
-        //public override bool FireAction(EquipmentSlot slot)
-        //{
-        //    return false;
-        //}
-        public override List<EliteDef> EliteDefs => _eliteDefs;
-        private List<EliteDef> _eliteDefs;
-
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override EquipmentDef EquipmentDef => _equipmentDef;
-        private EquipmentDef _equipmentDef;
-
-        public BuffDef _buffKinetic; //{ get; } = SS2Assets.LoadAsset<BuffDef>("bdEliteKinetic", SS2Bundle.Indev);
-
-
+        public override SS2AssetRequest<EliteAssetCollection> AssetRequest()
+        {
+            return SS2Assets.LoadAssetAsync<EliteAssetCollection>("acAffixKinetic", SS2Bundle.Equipments);
+        }
         public override bool Execute(EquipmentSlot slot)
         {
             return false;

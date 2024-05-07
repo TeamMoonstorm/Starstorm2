@@ -19,13 +19,8 @@ namespace SS2.Items
     public sealed class RelicOfEchelon : SS2Item, IContentPackModifier
     {
         private const string token = "SS2_ITEM_RELICOFECHELON_DESC";
-        public override ItemDef ItemDef => _itemDef;
-        private ItemDef _itemDef;
-
-        private BuffDef _buffEchelon ;// { get; } = SS2Assets.LoadAsset<BuffDef>("BuffEchelon", SS2Bundle.Indev);
 
         public static Material _overlay;// => SS2Assets.LoadAsset<Material>("matTerminationOverlay");
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Equipment cooldown increase per use, per stack.")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
@@ -45,29 +40,30 @@ namespace SS2.Items
 
         public static Color echelonColor;
 
+        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRelicOfEchelon", SS2Bundle.Items);
+        }
+
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            //_overlay = assetCollection.FindAsset<Material>("matCognation");
+
+            //I couldn't find a material corresponding to the cognation overlay -Jace
+        }
+
         public override bool IsAvailable(ContentPack contentPack)
         {
             return false; //disabled for now
         }
 
-        public override IEnumerator LoadContentAsync()
-        {
-            //ItemDef - "RelicOfEchelon" - Items
-            //BuffDef - "BuffEchelon" - Indev
-            yield break;
-        }
         public override void Initialize()
         {
-            BuffOverlays.AddBuffOverlay(_buffEchelon, _overlay);
+            //BuffOverlays.AddBuffOverlay(SS2Content.Buffs.BuffEchelon, _overlay);
 
             On.RoR2.Inventory.CalculateEquipmentCooldownScale += Inventory_CalculateEquipmentCooldownScale;
 
             echelonColor = new Color(0.4235f, 0.6706f, 0.6588f);
-        }
-
-        public void ModifyContentPack(ContentPack contentPack)
-        {
-            contentPack.buffDefs.AddSingle(_buffEchelon);
         }
 
         private float Inventory_CalculateEquipmentCooldownScale(On.RoR2.Inventory.orig_CalculateEquipmentCooldownScale orig, Inventory self)

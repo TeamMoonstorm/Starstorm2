@@ -23,6 +23,7 @@ namespace SS2.Items
         public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
         {
             _biteEffect = assetCollection.FindAsset<GameObject>("TrematodeBiteEffect");
+            _overlay = assetCollection.FindAsset<Material>("matBloodOverlay");
         }
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigNameOverride = "Trematode Threshold", ConfigDescOverride = "Amount of missing health needed for Trematode to proc. (1 = 100%)")]
@@ -40,12 +41,11 @@ namespace SS2.Items
         private static DotController.DotIndex _trematodeDotIndex;
         private static GameObject _biteEffect;
 
-        public BuffDef _buffTrematodes; //SS2Assets.LoadAsset<BuffDef>("BuffTrematodes", SS2Bundle.Items);
-        public Material _overlay;//SS2Assets.LoadAsset<Material>("matBloodOverlay", SS2Bundle.Items);
+        public Material _overlay;
         public override void Initialize()
         {
-            _trematodeDotIndex = DotAPI.RegisterDotDef(.5f, .5f, DamageColorIndex.Item, _buffTrematodes);
-            BuffOverlays.AddBuffOverlay(_buffTrematodes, _overlay);
+            _trematodeDotIndex = DotAPI.RegisterDotDef(.5f, .5f, DamageColorIndex.Item, SS2Content.Buffs.BuffTrematodes);
+            BuffOverlays.AddBuffOverlay(SS2Content.Buffs.BuffTrematodes, _overlay);
         }
 
         public override bool IsAvailable(ContentPack contentPack)

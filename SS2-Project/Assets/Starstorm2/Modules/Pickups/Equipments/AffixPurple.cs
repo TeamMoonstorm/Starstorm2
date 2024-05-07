@@ -14,37 +14,15 @@ namespace SS2.Equipments
 #if DEBUG
     public class AffixPurple : SS2EliteEquipment
     {
-        //public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("ElitePurpleEquipment", SS2Bundle.Indev);
-
-        //public override List<MSEliteDef> EliteDefs { get; } = new List<MSEliteDef>
-        //{
-        //    SS2Assets.LoadAsset<MSEliteDef>("edPurple", SS2Bundle.Indev),
-        //    SS2Assets.LoadAsset<MSEliteDef>("edPurpleHonor", SS2Bundle.Indev)
-        //};
-
-        //public override bool FireAction(EquipmentSlot slot)
-        //{
-        //    return false;
-        //}
-
-        public override List<EliteDef> EliteDefs => _eliteDefs;
-        private List<EliteDef> _eliteDefs;
-
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override EquipmentDef EquipmentDef => _equipmentDef;
-        private EquipmentDef _equipmentDef;
-
         public static DotController.DotIndex index;
-
-        public BuffDef _buffPurplePoisonBuildup; // TODO: { get; } = SS2Assets.LoadAsset<BuffDef>("bdPoisonBuildup", SS2Bundle.Indev);
-        public BuffDef _buffPurplePoisonDebuff; // { get; } = SS2Assets.LoadAsset<BuffDef>("bdPurplePoison", SS2Bundle.Indev);
-        public BuffDef _buffAffixPurple; //{ get; } = SS2Assets.LoadAsset<BuffDef>("bdElitePurple", SS2Bundle.Indev);
-
+        public override SS2AssetRequest<EliteAssetCollection> AssetRequest()
+        {
+            return SS2Assets.LoadAssetAsync<EliteAssetCollection>("acAffixPurple", SS2Bundle.Equipments);
+        }
         public override void Initialize()
         {
             // TODO: Do I need a separate dot for poisondebuff buffdef? idk
-            index = DotAPI.RegisterDotDef(0.25f, 0.18f, DamageColorIndex.DeathMark, _buffPurplePoisonBuildup);
+            index = DotAPI.RegisterDotDef(0.25f, 0.18f, DamageColorIndex.DeathMark, SS2Content.Buffs.bdPoisonBuildup);
         }
 
         public override bool IsAvailable(ContentPack contentPack)

@@ -38,6 +38,7 @@ namespace SS2.Items
             spawnRock1VFX = assetCollection.FindAsset<GameObject>("TerminationDebris1");
             spawnRock2VFX = assetCollection.FindAsset<GameObject>("TerminationDebris2");
             globalMarkEffectTwo = assetCollection.FindAsset<GameObject>("TerminationPositionInidcator");
+            overlayMaterial = assetCollection.FindAsset<Material>("matTerminationOverlay");
         }
 
         private const string token = "SS2_ITEM_RELICOFTERMINATION_DESC";
