@@ -31,6 +31,7 @@ namespace SS2
     public class MonsterAssetCollection : BodyAssetCollection
     {
         public MonsterCardProvider monsterCardProvider;
+        public R2API.DirectorAPI.DirectorCardHolder dissonanceCardHolder;
     }
     [CreateAssetMenu(fileName = "ArtifactAssetCollection", menuName = "Starstorm2/AssetCollections/ArtifactAssetCollection")]
     public class ArtifactAssetCollection : AssetCollection

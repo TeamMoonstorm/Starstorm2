@@ -17,15 +17,46 @@ namespace SS2
     /// </summary>
     public abstract class SS2Monster : IMonsterContentPiece
     {
-        public abstract NullableRef<MonsterCardProvider> CardProvider { get; }
-        public abstract NullableRef<DirectorAPI.DirectorCardHolder> DissonanceCard { get; }
-        public abstract NullableRef<GameObject> MasterPrefab { get; }
+        public NullableRef<MonsterCardProvider> CardProvider;
+        public NullableRef<DirectorAPI.DirectorCardHolder> DissonanceCard;
+        public MonsterAssetCollection AssetCollection { get; private set; }
+        public NullableRef<GameObject> MasterPrefab { get; private set; }
+
+        NullableRef<DirectorAPI.DirectorCardHolder> IMonsterContentPiece.DissonanceCard => DissonanceCard;
         CharacterBody IGameObjectContentPiece<CharacterBody>.Component => CharacterPrefab.GetComponent<CharacterBody>();
+        NullableRef<MonsterCardProvider> IMonsterContentPiece.CardProvider => CardProvider;
         GameObject IContentPiece<GameObject>.Asset => CharacterPrefab;
-        public abstract GameObject CharacterPrefab { get; }
+        public GameObject CharacterPrefab { get; private set; }
 
         public abstract void Initialize();
         public abstract bool IsAvailable(ContentPack contentPack);
-        public abstract IEnumerator LoadContentAsync();
+
+        public abstract SS2AssetRequest<MonsterAssetCollection> AssetRequest { get; }
+
+        
+
+        public virtual IEnumerator LoadContentAsync()
+        {
+            SS2AssetRequest<MonsterAssetCollection> request = AssetRequest;
+
+            request.StartLoad();
+            while (!request.IsComplete)
+                yield return null;
+
+            AssetCollection = request.Asset;
+
+            CharacterPrefab = AssetCollection.bodyPrefab;
+            MasterPrefab = AssetCollection.masterPrefab;
+            CardProvider = AssetCollection.monsterCardProvider;
+            DissonanceCard = AssetCollection.dissonanceCardHolder;
+            OnAssetCollectionLoaded(AssetCollection);
+        }
+
+        public virtual void OnAssetCollectionLoaded(AssetCollection assetCollection) { }
+
+        public virtual void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.AddContentFromAssetCollection(AssetCollection);
+        }
     }
 }

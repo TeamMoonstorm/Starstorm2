@@ -10,16 +10,7 @@ namespace SS2.Monsters
 {
     public sealed class LampBoss : SS2Monster
     {
-        public override NullableRef<MonsterCardProvider> CardProvider => null;
-
-        public override NullableRef<DirectorAPI.DirectorCardHolder> DissonanceCard => null;
-
-        public override NullableRef<GameObject> MasterPrefab => _masterPrefab;
-        private GameObject _masterPrefab;
-
-        public override GameObject CharacterPrefab => _characterPrefab;
-        private GameObject _characterPrefab;
-
+        public override SS2AssetRequest<MonsterAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<MonsterAssetCollection>("acLampBoss", SS2Bundle.Monsters);
         public override void Initialize()
         {
             On.RoR2.CharacterBody.AddBuff_BuffDef += CharacterBody_AddBuff_BuffDef;
@@ -65,20 +56,10 @@ namespace SS2.Monsters
             return true;
         }
 
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * GameObject - "LampBossBody" - Monsters
-             * GameObject - "LampBossMaster" - Monsters
-             * MonsterCardProvider - "???" - Monsters
-             */
-            yield break;
-        }
-
         private static void CharacterBody_AddBuff_BuffDef(On.RoR2.CharacterBody.orig_AddBuff_BuffDef orig, CharacterBody self, BuffDef buffDef)
         {
             //wayfarer can't buff itself/other wayfarers
-            if (self.bodyIndex == BodyCatalog.FindBodyIndex("LampBossBody") && buffDef == SS2Content.Buffs.bdLampBuff)
+            if (buffDef == SS2Content.Buffs.bdLampBuff && self.bodyIndex == BodyCatalog.FindBodyIndex("LampBossBody"))
                 return;
             orig(self, buffDef);
         }

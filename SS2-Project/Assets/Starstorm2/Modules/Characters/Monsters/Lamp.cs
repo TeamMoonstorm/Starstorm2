@@ -7,15 +7,7 @@ namespace SS2.Monsters
 {
     public sealed class Lamp : SS2Monster
     {
-        public override NullableRef<MonsterCardProvider> CardProvider => null;
-
-        public override NullableRef<DirectorAPI.DirectorCardHolder> DissonanceCard => null;
-
-        public override NullableRef<GameObject> MasterPrefab => _masterPrefab;
-        private GameObject _masterPrefab;
-
-        public override GameObject CharacterPrefab => _characterPrefab;
-        private GameObject _characterPrefab;
+        public override SS2AssetRequest<MonsterAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<MonsterAssetCollection>("acLamp", SS2Bundle.Monsters);
 
         public override void Initialize()
         {
@@ -26,14 +18,5 @@ namespace SS2.Monsters
             return true;
         }
 
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * GameObject - "LampBody" - Monsters
-             * GameObject - "LampMaster" - Monsters
-             * MonsterCardProvider - ??? - Monsters
-             */
-            yield break;
-        }
     }
 }
