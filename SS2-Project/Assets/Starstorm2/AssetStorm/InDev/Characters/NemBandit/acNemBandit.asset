@@ -12,7 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f3ec09e496de5d43881ddbb384b2d3a, type: 3}
   m_Name: acNemBandit
   m_EditorClassIdentifier: 
-  assets: []
-  bodyPrefab: {fileID: 0}
+  assets:
+  - {fileID: 11400000, guid: f1fe1e7a72fffcc48a58d3a475dc1acf, type: 2}
+  - {fileID: 11400000, guid: 07504047209f418469209f13a58e14d1, type: 2}
+  - {fileID: 11400000, guid: d4862923b9ed146489e017675678f263, type: 2}
+  - {fileID: 11400000, guid: 02631857b48b8b54094f5495be193f9f, type: 2}
+  - {fileID: 11400000, guid: 41d72260bb638c149bb9511ec0b7b8d0, type: 2}
+  - {fileID: 11400000, guid: 65afaaffdbcc76f49a3721686ed8c5b4, type: 2}
+  - {fileID: 11400000, guid: e8f238b7310c33a4cb306a0d6f93e8fc, type: 2}
+  - {fileID: 11400000, guid: d1d52c08a964af0418fe6df4b027ce05, type: 2}
+  - {fileID: 4548354091730101217, guid: e9b2f5ef82b5d1540bb6223bbdfed5a3, type: 3}
+  - {fileID: 395510800138327857, guid: 82dc4b2eb13213a449e61b00445eecea, type: 3}
+  bodyPrefab: {fileID: 395510800138327857, guid: 82dc4b2eb13213a449e61b00445eecea,
+    type: 3}
   masterPrefab: {fileID: 0}
-  survivorDef: {fileID: 0}
+  survivorDef: {fileID: 11400000, guid: f1fe1e7a72fffcc48a58d3a475dc1acf, type: 2}

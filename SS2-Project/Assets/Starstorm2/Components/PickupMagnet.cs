@@ -7,7 +7,8 @@ namespace SS2.Components
     public class PickupMagnet : MonoBehaviour
     {
         // this thing fucking sucks. im so stupid
-        static PickupMagnet()
+        [RuntimeInitializeOnLoadMethod]
+        static void Init()
         {
             On.RoR2.GravitatePickup.Start += AddToList;
             RoR2Application.onFixedUpdate += CleanList;
