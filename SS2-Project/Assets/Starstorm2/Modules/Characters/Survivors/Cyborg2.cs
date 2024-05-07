@@ -33,8 +33,6 @@ namespace SS2.Survivors
 
         public static float cooldownReduction = 0.5f;
         public static float percentHealthShieldPerSecond = 0.075f;
-        private BuffDef _buffCyborgTeleporter;
-
         
 
         public override void Initialize()
