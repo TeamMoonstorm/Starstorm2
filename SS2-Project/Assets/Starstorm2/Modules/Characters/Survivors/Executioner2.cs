@@ -19,9 +19,6 @@ namespace SS2.Survivors
     {
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acExecutioner2", SS2Bundle.Executioner2);
 
-        private BuffDef _exeChargeBuffDef;
-        private BuffDef _exeArmor;
-
         public static GameObject plumeEffect;
         public static GameObject plumeEffectLarge;
 

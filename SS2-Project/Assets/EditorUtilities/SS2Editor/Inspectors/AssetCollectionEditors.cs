@@ -13,6 +13,7 @@ using System.IO;
 using Path = System.IO.Path;
 using SS2;
 using UnityEngine.Networking;
+using System.Linq;
 namespace Moonstorm.Starstorm2.Editor
 {
     [CustomEditor(typeof(ExtendedAssetCollection))]
@@ -26,8 +27,11 @@ namespace Moonstorm.Starstorm2.Editor
             if (GUILayout.Button("Add Selected Objects"))
             {
                 AddSelection();
-
             }
+            //if (GUILayout.Button("Remove Duplicates"))
+            //{
+            //    RemoveDuplicates();
+            //}
             EditorGUILayout.EndVertical();
         }
 
@@ -40,8 +44,6 @@ namespace Moonstorm.Starstorm2.Editor
             string path = GetSelectedFolderPath();
             if (!string.IsNullOrEmpty(path))
             {
-                Debug.Log("FOLDER: " + path);
-
                 string[] guids = AssetDatabase.FindAssets("*", new string[] { path });
                 List<UnityEngine.Object> folderObjects = new List<UnityEngine.Object>();
                 foreach (string guid in guids)
@@ -54,17 +56,25 @@ namespace Moonstorm.Starstorm2.Editor
             }
 
 
-            AssetCollection assetCollection = (AssetCollection)target;
+            ExtendedAssetCollection assetCollection = (ExtendedAssetCollection)target;
 
             for (int i = 0; i < objects.Length; i++)
             {
                 UnityEngine.Object ob = (UnityEngine.Object)objects[i];
-                if (ob && IsAsset(ob))
+                if (ob && IsAsset(ob) && !assetCollection.assets.Contains(ob)) //we O^50 in this bitch
                     ArrayUtils.ArrayInsert<UnityEngine.Object>(ref assetCollection.assets, 0, ob);
             }
 
-            (target as ExtendedAssetCollection).OnValidate(); // is this even right?
+            assetCollection.OnValidate(); // is this even right?
 
+        }
+
+        void RemoveDuplicates()
+        {
+            Undo.RecordObject(target, "Remove duplicate entries from AssetCollection");
+            ExtendedAssetCollection assetCollection = (ExtendedAssetCollection)target;
+            assetCollection.assets = assetCollection.assets.Distinct().ToArray();
+            assetCollection.OnValidate();
         }
 
         public static string GetSelectedFolderPath()
