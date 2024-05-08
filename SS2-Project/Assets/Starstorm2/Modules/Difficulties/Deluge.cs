@@ -8,8 +8,7 @@ namespace SS2
 {
     public class Deluge : SS2Difficulty
     {
-        public override SerializableDifficultyDef DifficultyDef => _difficultyDef;
-        private SerializableDifficultyDef _difficultyDef;
+        public override SS2AssetRequest<SerializableDifficultyDef> AssetRequest => SS2Assets.LoadAssetAsync<SerializableDifficultyDef>("Deluge", SS2Bundle.Base);
 
         private int defMonsterCap;
         public override void Initialize()
@@ -21,13 +20,6 @@ namespace SS2
             return true;
         }
 
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * SerializableDifficultyDef - "Deluge" Base
-             */
-            yield break;
-        }
 
         public override void OnRunEnd(Run run)
         {

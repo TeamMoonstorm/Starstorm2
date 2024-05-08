@@ -9,8 +9,7 @@ namespace SS2
 {
     public class Typhoon : SS2Difficulty
     {
-        public override SerializableDifficultyDef DifficultyDef => _difficultyDef;
-        private SerializableDifficultyDef _difficultyDef;
+        public override SS2AssetRequest<SerializableDifficultyDef> AssetRequest => SS2Assets.LoadAssetAsync<SerializableDifficultyDef>("Typhoon", SS2Bundle.Base);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_MAIN, ConfigSectionOverride = "Typhoon", ConfigNameOverride = "Increase Team Limit", ConfigDescOverride = "Multiplies the Monster, Lunar, and Void Team maximum size by 2 when enabled. May affect performance.")]
         internal static bool IncreaseSpawnCap = true;
@@ -25,14 +24,6 @@ namespace SS2
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * SerializableDifficultyDef - "Typhoon" - Base
-             */
-            yield break;
         }
 
         public override void OnRunEnd(Run run)

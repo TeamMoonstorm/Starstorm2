@@ -16,14 +16,25 @@ namespace SS2
     /// </summary>
     public abstract class SS2Difficulty : IDifficultyContentPiece
     {
-        public abstract SerializableDifficultyDef DifficultyDef { get; }
+        public SerializableDifficultyDef DifficultyDef;
 
         SerializableDifficultyDef IContentPiece<SerializableDifficultyDef>.Asset => DifficultyDef;
 
+        public abstract SS2AssetRequest<SerializableDifficultyDef> AssetRequest { get; }
 
         public abstract void Initialize();
         public abstract bool IsAvailable(ContentPack contentPack);
-        public abstract IEnumerator LoadContentAsync();
+        public virtual IEnumerator LoadContentAsync()
+        {
+            var assetRequest = AssetRequest;
+
+            assetRequest.StartLoad();
+            while (!assetRequest.IsComplete)
+                yield return null;
+
+            DifficultyDef = assetRequest.Asset;
+            yield break;
+        }
         public abstract void OnRunEnd(Run run);
         public abstract void OnRunStart(Run run);
     }

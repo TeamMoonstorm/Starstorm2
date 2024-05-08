@@ -3,14 +3,12 @@ using R2API.ScriptableObjects;
 using RoR2;
 using RoR2.ContentManagement;
 using System.Collections;
-
+using MSU;
 namespace SS2
 {
-    //TODO: Create proper difficulty module home-made
     public class Cyclone : SS2Difficulty
     {
-        public override SerializableDifficultyDef DifficultyDef => _difficultyDef;
-        private SerializableDifficultyDef _difficultyDef;
+        public override SS2AssetRequest<SerializableDifficultyDef> AssetRequest => SS2Assets.LoadAssetAsync<SerializableDifficultyDef>("Cyclone", SS2Bundle.Base);
 
         private int defMonsterCap;
         public override void Initialize()
@@ -22,13 +20,6 @@ namespace SS2
             return true;
         }
 
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * SerializableDifficultyDef - "Cyclone" - Base
-             */
-            yield break;
-        }
 
         public override void OnRunEnd(Run run)
         {
