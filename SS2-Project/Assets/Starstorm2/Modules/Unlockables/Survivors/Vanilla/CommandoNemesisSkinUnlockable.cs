@@ -3,71 +3,46 @@ using RoR2.Achievements;
 using UnityEngine;
 namespace SS2.Unlocks.VanillaSurvivors
 {
-    /*public sealed class CommandoNemesisSkinUnlockable : UnlockableBase
+    public sealed class CommandoNemesisSkinAchievement : BaseAchievement
     {
-        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skin.commando.nemesisskin", SS2Bundle.Vanilla);
+        public override BodyIndex LookUpRequiredBodyIndex()
+        {
+            return BodyCatalog.FindBodyIndex("CommandoBody");
+        }
+        public override void OnBodyRequirementMet()
+        {
+            base.OnBodyRequirementMet();
+            SetServerTracked(true);
+        }
+        public override void OnBodyRequirementBroken()
+        {
+            base.OnBodyRequirementBroken();
+            SetServerTracked(false);
+        }
 
-        public sealed class CommandoNemesisSkinAchievement : BaseAchievement
+        // TODO: fix whenever events get done
+        private class CommandoNemesisSkinServerAchievement : BaseServerAchievement
         {
             public override void OnInstall()
             {
                 base.OnInstall();
-                base.SetServerTracked(true);
+                EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal += OnNemCommandoDefeated;
             }
 
             public override void OnUninstall()
             {
+                EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal -= OnNemCommandoDefeated;
                 base.OnUninstall();
             }
 
-            private class CommandoNemesisSkinServerAchievement : BaseServerAchievement
+            private void OnNemCommandoDefeated(CharacterBody obj)
             {
-                public BodyIndex nemCommandoBodyIndex
+                if (obj.bodyIndex == BodyCatalog.FindBodyIndex("NemCommandoBody"))
                 {
-                    get
-                    {
-                        var nemCommandoBodyPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoBody", SS2Bundle.NemCommando);
-                        if (nemCommandoBodyPrefab)
-                        {
-                            return nemCommandoBodyPrefab.GetComponent<CharacterBody>().bodyIndex;
-                        }
-                        return BodyIndex.None;
-                    }
-                }
-
-                public BodyIndex commandoBodyIndex
-                {
-                    get
-                    {
-                        var commandoBodyPrefab = RoR2Content.Survivors.Commando.bodyPrefab;
-                        if (commandoBodyPrefab)
-                        {
-                            return commandoBodyPrefab.GetComponent<CharacterBody>().bodyIndex;
-                        }
-                        return BodyIndex.None;
-                    }
-                }
-
-                public override void OnInstall()
-                {
-                    base.OnInstall();
-                    EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal += OnNemCommandoDefeated;
-                }
-
-                public override void OnUninstall()
-                {
-                    EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal -= OnNemCommandoDefeated;
-                    base.OnUninstall();
-                }
-
-                private void OnNemCommandoDefeated(CharacterBody obj)
-                {
-                    if (obj.bodyIndex == nemCommandoBodyIndex && networkUser.GetCurrentBody().bodyIndex == commandoBodyIndex)
-                    {
-                        Grant();
-                    }
+                    Grant();
                 }
             }
         }
-    }*/
+    }
+    
 }

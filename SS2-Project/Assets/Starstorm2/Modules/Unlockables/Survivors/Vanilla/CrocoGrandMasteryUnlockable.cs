@@ -2,15 +2,14 @@
 using UnityEngine;
 namespace SS2.Unlocks.VanillaSurvivors
 {
-    /*public class CrocoGrandMasteryUnlockable : UnlockableBase
+    public sealed class CrocoGrandMasteryAchievement : GenericMasteryAchievement
     {
-        public override MSUnlockableDef UnlockableDef => SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skin.croco.grandmastery", SS2Bundle.Vanilla);
+        public override float RequiredDifficultyCoefficient => 3.5f;
 
-        public sealed class CrocoGrandMasteryAchievement : GenericMasteryAchievement
+        public override BodyIndex LookUpRequiredBodyIndex()
         {
-            public override float RequiredDifficultyCoefficient { get; set; } = 3.5f;
-
-            public override CharacterBody RequiredCharacterBody { get; set; } = Resources.Load<GameObject>("prefabs/characterbodies/crocobody").GetComponent<CharacterBody>();
+            return BodyCatalog.FindBodyIndex("CrocoBody");
         }
-    }*/
+    }
+    
 }

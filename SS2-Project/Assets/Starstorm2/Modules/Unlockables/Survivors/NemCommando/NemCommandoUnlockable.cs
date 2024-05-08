@@ -3,57 +3,41 @@ using RoR2.Achievements;
 using UnityEngine;
 namespace SS2.Unlocks.NemCommando
 {
-    /*public sealed class NemCommandoUnlockable : UnlockableBase
+    public sealed class NemCommandoAchievement : BaseAchievement
     {
-        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.survivor.nemcommando", SS2Bundle.NemCommando);
+        public override void OnInstall()
+        {
+            base.OnInstall();
+            base.SetServerTracked(true);
+        }
 
-        public sealed class NemCommandoAchievement : BaseAchievement
+        public override void OnUninstall()
+        {
+            base.OnUninstall();
+        }
+
+        private class NemCommandoUnlockableServerAchievement : BaseServerAchievement
         {
             public override void OnInstall()
             {
                 base.OnInstall();
-                base.SetServerTracked(true);
+                EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal += OnNemCommandoDefeated;
             }
 
             public override void OnUninstall()
             {
+                EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal -= OnNemCommandoDefeated;
                 base.OnUninstall();
             }
 
-            private class NemCommandoUnlockableServerAchievement : BaseServerAchievement
+            private void OnNemCommandoDefeated(CharacterBody obj)
             {
-                public BodyIndex nemCommandoBodyIndex
+                if (obj.bodyIndex == BodyCatalog.FindBodyIndex("NemCommandoBody"))
                 {
-                    get
-                    {
-                        var nemCommandoBodyPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoBody", SS2Bundle.NemCommando);
-                        if (nemCommandoBodyPrefab)
-                        {
-                            return nemCommandoBodyPrefab.GetComponent<CharacterBody>().bodyIndex;
-                        }
-                        return BodyIndex.None;
-                    }
-                }
-                public override void OnInstall()
-                {
-                    base.OnInstall();
-                    EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal += OnNemCommandoDefeated;
-                }
-
-                public override void OnUninstall()
-                {
-                    EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal -= OnNemCommandoDefeated;
-                    base.OnUninstall();
-                }
-
-                private void OnNemCommandoDefeated(CharacterBody obj)
-                {
-                    if (obj.bodyIndex == nemCommandoBodyIndex)
-                    {
-                        Grant();
-                    }
+                    Grant();
                 }
             }
         }
-    }*/
+    }
+    
 }

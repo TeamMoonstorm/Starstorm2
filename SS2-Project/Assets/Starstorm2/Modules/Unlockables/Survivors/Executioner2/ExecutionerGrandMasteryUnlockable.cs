@@ -2,15 +2,14 @@
 using UnityEngine;
 namespace SS2.Unlocks.Executioner2
 {
-    /*public sealed class Executioner2GrandMasteryUnlockable : UnlockableBase
+    public sealed class Executioner2GrandMasteryAchievement : GenericMasteryAchievement
     {
-        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skin.executioner2.grandmastery", SS2Bundle.Executioner2);
+        public override float RequiredDifficultyCoefficient => 3.5f;
 
-        public sealed class Executioner2GrandMasteryAchievement : GenericMasteryAchievement
+        public override BodyIndex LookUpRequiredBodyIndex()
         {
-            public override float RequiredDifficultyCoefficient { get; set; } = 3.5f;
-
-            public override CharacterBody RequiredCharacterBody { get; set; } = SS2Assets.LoadAsset<GameObject>("Executioner2Body", SS2Bundle.Executioner2).GetComponent<CharacterBody>();
+            return BodyCatalog.FindBodyIndex("Executioner2Body");
         }
-    }*/
+    }
+    
 }

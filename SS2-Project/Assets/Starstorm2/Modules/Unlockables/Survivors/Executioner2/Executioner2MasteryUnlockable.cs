@@ -2,20 +2,13 @@
 using UnityEngine;
 namespace SS2.Unlocks.Executioner2
 {
-    /*public sealed class Executioner2MasteryUnlockable : UnlockableBase
+    public sealed class Executioner2MasteryAchievement : GenericMasteryAchievement
     {
-        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skin.executioner2.mastery", SS2Bundle.Executioner2);
+        public override float RequiredDifficultyCoefficient => 3.0f;
 
-        /*public override void Initialize()
+        public override BodyIndex LookUpRequiredBodyIndex()
         {
-            AddRequiredType<Survivors.Executioner>();
+            return BodyCatalog.FindBodyIndex("Executioner2Body");
         }
-
-        public sealed class Executioner2MasteryAchievement : GenericMasteryAchievement
-        {
-            public override float RequiredDifficultyCoefficient { get; set; } = 3.0f;
-
-            public override CharacterBody RequiredCharacterBody { get; set; } = SS2Assets.LoadAsset<GameObject>("Executioner2Body", SS2Bundle.Executioner2).GetComponent<CharacterBody>();
-        }
-    }*/
+    }   
 }

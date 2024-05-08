@@ -3,59 +3,48 @@ using RoR2.Achievements;
 using UnityEngine;
 namespace SS2.Unlocks.NemMercenary
 {
-    /*public sealed class NemMercenaryNemesisSkinUnlockable : UnlockableBase
+    public sealed class NemMercenaryNemesisSkinAchievement : BaseAchievement
     {
-        public override MSUnlockableDef UnlockableDef { get; } = SS2Assets.LoadAsset<MSUnlockableDef>("ss2.skin.nemmerc.nemesisskin", SS2Bundle.NemMercenary);
-
-        public sealed class NemMercenaryNemesisSkinAchievement : BaseAchievement
+        public override BodyIndex LookUpRequiredBodyIndex()
         {
+            return BodyCatalog.FindBodyIndex("NemMercBody");
+        }
+        public override void OnBodyRequirementMet()
+        {
+            base.OnBodyRequirementMet();
+            SetServerTracked(true);
+        }
+        public override void OnBodyRequirementBroken()
+        {
+            base.OnBodyRequirementBroken();
+            SetServerTracked(false);
+        }
+
+        private class NemMercenaryNemesisSkinServerAchievement : BaseServerAchievement
+        {
+
+            // TODO: fix this whenever events get done
             public override void OnInstall()
             {
                 base.OnInstall();
-                SetServerTracked(true);
+                EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal += OnNemMercenaryDefeated;
             }
 
             public override void OnUninstall()
             {
+                EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal -= OnNemMercenaryDefeated;
                 base.OnUninstall();
             }
 
-            private class NemMercenaryNemesisSkinServerAchievement : BaseServerAchievement
+            private void OnNemMercenaryDefeated(CharacterBody obj)
             {
-                public BodyIndex nemMercBodyIndex
+                if (obj.bodyIndex == BodyCatalog.FindBodyIndex("NemMercBody"))
                 {
-                    get
-                    {
-                        var nemCommandoBodyPrefab = SS2Assets.LoadAsset<GameObject>("NemMercBody", SS2Bundle.NemMercenary);
-                        if (nemCommandoBodyPrefab)
-                        {
-                            return nemCommandoBodyPrefab.GetComponent<CharacterBody>().bodyIndex;
-                        }
-                        return BodyIndex.None;
-                    }
+                    Grant();
                 }
-
-                public override void OnInstall()
-                {
-                    base.OnInstall();
-                    EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal += OnNemMercenaryDefeated;
-                }
-
-                public override void OnUninstall()
-                {
-                    EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal -= OnNemMercenaryDefeated;
-                    base.OnUninstall();
-                }
-
-                private void OnNemMercenaryDefeated(CharacterBody obj)
-                {
-                    if (obj.bodyIndex == nemMercBodyIndex && networkUser.GetCurrentBody().bodyIndex == nemMercBodyIndex)
-                    {
-                        Grant();
-                    }
-                }
-
             }
+
         }
-    }*/
+    }
+    
 }
