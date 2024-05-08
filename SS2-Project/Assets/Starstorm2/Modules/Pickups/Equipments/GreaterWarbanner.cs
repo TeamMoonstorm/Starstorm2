@@ -41,9 +41,6 @@ namespace SS2.Equipments
 
         private GameObject _warbannerObject;
 
-        // TODO: Make sure you load this
-        public BuffDef _buffGreaterBannerBuff; // { get; } = SS2Assets.LoadAsset<BuffDef>("BuffGreaterBanner", SS2Bundle.Equipments);
-
         public override bool Execute(EquipmentSlot slot)
         {
             var GBToken = slot.characterBody.gameObject.GetComponent<GreaterBannerToken>();

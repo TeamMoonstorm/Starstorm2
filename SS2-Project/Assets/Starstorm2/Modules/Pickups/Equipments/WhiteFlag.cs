@@ -12,6 +12,7 @@ namespace SS2.Equipments
     public sealed class WhiteFlag : SS2Equipment, IContentPackModifier
     {
         private const string token = "SS2_EQUIP_WHITEFLAG_DESC";
+        private BuffDef _buffSurrender;
 
         public override SS2AssetRequest<EquipmentAssetCollection> AssetRequest<EquipmentAssetCollection>()
         {
@@ -19,11 +20,12 @@ namespace SS2.Equipments
         }
         public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
         {
+            _buffSurrender = assetCollection.FindAsset<BuffDef>("BuffSurrender");
             _flagObject = assetCollection.FindAsset<GameObject>("WhiteFlagWard");
+            _overlay = assetCollection.FindAsset<Material>("matSurrenderOverlay");
         }
 
         private GameObject _flagObject;
-        private BuffDef _surrenderBuff;  //SS2Assets.LoadAsset<BuffDef>("BuffSurrender", SS2Bundle.Items);
         public static Material _overlay;// SS2Assets.LoadAsset<Material>("matSurrenderOverlay", SS2Bundle.Items);
         public static SkillDef disabledSkill;// SS2Assets.LoadAsset<SkillDef>("DisabledSkill", SS2Bundle.Items);
 
@@ -49,27 +51,19 @@ namespace SS2.Equipments
 
         public override void Initialize()
         {
-            BuffOverlays.AddBuffOverlay(_surrenderBuff, _overlay);
+            BuffOverlays.AddBuffOverlay(_buffSurrender, _overlay);
         }
 
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
         }
-
-        public override void OnEquipmentLost(CharacterBody body)
-        
         public override void OnEquipmentLost(CharacterBody CharacterBody)
         {
         }
 
         public override void OnEquipmentObtained(CharacterBody CharacterBody)
         {
-        }
-
-        public void ModifyContentPack(ContentPack contentPack)
-        {
-            contentPack.buffDefs.AddSingle(_surrenderBuff);
         }
 
         public sealed class Behavior : BaseBuffBehaviour

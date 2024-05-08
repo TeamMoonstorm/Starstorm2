@@ -21,7 +21,6 @@ namespace SS2.Items
             _coffeeBean = assetCollection.FindAsset<GameObject>("CoffeeBeanPickup");
         }
 
-        private BuffDef _buffDef;
         private GameObject _coffeeBean;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance on hit to drop a coffee bean. (1 = 100%)")]
