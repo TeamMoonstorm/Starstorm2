@@ -33,17 +33,6 @@ namespace SS2.Equipments
             return true;
         }
 
-        public override IEnumerator LoadContentAsync()
-        {
-            //N: Thank fuck the "ParallelAsseTLoadCoroutineHelper" isnt real anymore
-
-            /*
-             * EquipmentDef - "AffixEmpyrean" - AffixEmpyrean
-             * BuffDef - "bdEmpyrean" - AffixEmpyrean
-             */
-            yield break;
-        }
-
         #region Hooks
         private void RecalculateStatsEmpyreanIL(ILContext il)
         {

@@ -32,8 +32,6 @@ namespace SS2.Equipments
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Maximum turning angle before losing built up speed")]
         public static float maxAngle = 15f;
 
-        private BuffDef _buffDef;
-
         public override bool Execute(EquipmentSlot slot)
         {
             var characterMotor = slot.characterBody.characterMotor;

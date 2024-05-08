@@ -18,12 +18,12 @@ MonoBehaviour:
   hidden: 0
   achievementIcon: {fileID: 21300000, guid: e896983dfb7030a46b2b9f48823e30cb, type: 3}
   achievementCondition:
-    assemblyQualifiedName: Moonstorm.Starstorm2.Unlocks.Pickups.HuntersSigilUnlockable+HuntersSigilAchievement,
-      Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  serverAchievementCondition:
+    assemblyQualifiedName: 
+  serverTracked: 0
+  baseServerAchievement:
     assemblyQualifiedName: 
   achievementNameToken: SS2_ACHIEVEMENT_HUNTERSSIGIL_NAME
-  achievementDescriptionToken: SS2_ACHIEVEMENT_HUNTERSSIGIL_DESC
-  _preRequisiteAchievement:
-    unlockableDef: {fileID: 0}
-    achievementIdentifier: 
+  achievementDescToken: SS2_ACHIEVEMENT_HUNTERSSIGIL_DESC
+  prerequisiteAchievement:
+    AchievementIdentifier: 
+    UnlockableDef: {fileID: 0}

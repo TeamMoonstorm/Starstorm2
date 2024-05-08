@@ -22,28 +22,17 @@ namespace SS2.Equipments
 #if DEBUG
     public sealed class AffixEthereal : SS2EliteEquipment
     {
-        //public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("AffixEthereal", SS2Bundle.Equipments);
-
-        //public override List<MSEliteDef> EliteDefs { get; } = new List<MSEliteDef>
-        //{
-        //    SS2Assets.LoadAsset<MSEliteDef>("edEthereal", SS2Bundle.Equipments),
-        //};
-
-        //public override bool FireAction(EquipmentSlot slot)
-        //{
-        //    return false;
-        //}
-        public override List<EliteDef> EliteDefs => _eliteDefs;
-        private List<EliteDef> _eliteDefs;
-
-        public override NullableRef<List<GameObject>> ItemDisplayPrefabs => null;
-
-        public override EquipmentDef EquipmentDef => _equipmentDef;
-        private EquipmentDef _equipmentDef;
-
-        public  BuffDef _buffEthereal; //TODO MSU 2.0 replace { get; } = SS2Assets.LoadAsset<BuffDef>("bdEthereal", SS2Bundle.Equipments);
         public Material _matEtherealOverlay; //=> SS2Assets.LoadAsset<Material>("matEtherealOverlay", SS2Bundle.Equipments);
 
+
+        public override SS2AssetRequest<EliteAssetCollection> AssetRequest()
+        {
+            return SS2Assets.LoadAssetAsync<EliteAssetCollection>("acAFfixEthereal", SS2Bundle.Equipments);
+        }
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _matEtherealOverlay = assetCollection.FindAsset<Material>("matEtherealOverlay");
+        }
 
         public override bool Execute(EquipmentSlot slot)
         {
@@ -94,13 +83,6 @@ namespace SS2.Equipments
         {
             return false;
         }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            // TODO: Load content!
-            yield break;
-        }
-
         public override void OnEquipmentLost(CharacterBody body)
         {
         }
@@ -108,7 +90,6 @@ namespace SS2.Equipments
         public override void OnEquipmentObtained(CharacterBody body)
         {
         }
-
         public sealed class EtherealBehavior : BaseBuffBehaviour
         {
             [BuffDefAssociation]
