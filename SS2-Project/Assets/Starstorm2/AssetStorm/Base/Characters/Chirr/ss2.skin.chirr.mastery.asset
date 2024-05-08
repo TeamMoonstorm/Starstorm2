@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d2dc8cbdb9720c418fcff8f84588cab, type: 3}
+  m_Script: {fileID: 11500000, guid: 02a17d3a7bea384489c0fc6e66051d29, type: 3}
   m_Name: ss2.skin.chirr.mastery
   m_EditorClassIdentifier: 
   nameToken: ???
@@ -18,15 +18,11 @@ MonoBehaviour:
   hidden: 0
   achievementIcon: {fileID: 21300000, guid: f911ac31fcc727442a323f3500148c18, type: 3}
   achievementCondition:
-    assemblyQualifiedName: Moonstorm.Starstorm2.Unlocks.Chirr.ChirrMasteryUnlockable+ChirrMasteryAchievement,
-      Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  serverTracked: 0
-  baseServerAchievement:
+    assemblyQualifiedName: 
+  serverAchievementCondition:
     assemblyQualifiedName: 
   achievementNameToken: SS2_ACHIEVEMENT_CHIRR_MASTERY_NAME
-  achievementDescToken: SS2_ACHIEVEMENT_CHIRR_MASTERY_DESC
-  achievedIcon: {fileID: 21300000, guid: cc1f2d88e24c002468c61929027ca4f7, type: 3}
-  unachievedIcon: {fileID: 0}
-  prerequisiteAchievement:
-    AchievementIdentifier: 
-    UnlockableDef: {fileID: 11400000, guid: 5e208fc0692b3c347b2b267901a24979, type: 2}
+  achievementDescriptionToken: SS2_ACHIEVEMENT_CHIRR_MASTERY_DESC
+  _preRequisiteAchievement:
+    unlockableDef: {fileID: 0}
+    achievementIdentifier: 

@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 055ad47894d63994fa4e32d1cfa2f4d3, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ec7c971f3e8f244fb157e465be87abe, type: 3}
   m_Name: SkinCommandoClassic
   m_EditorClassIdentifier: 
   baseSkins: []
@@ -27,29 +27,28 @@ MonoBehaviour:
   displayAddress: RoR2/Base/Commando/CommandoDisplay.prefab
   _baseSkins: []
   _rendererInfos:
-  - defaultMaterial: {fileID: 2100000, guid: 8dd677474a6180f4fafd70cc96bc3a6e, type: 2}
+  - renderer: 2
+    defaultMaterial: {fileID: 2100000, guid: 8dd677474a6180f4fafd70cc96bc3a6e, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
-    rendererIndex: 2
-  - defaultMaterial: {fileID: 2100000, guid: 8dd677474a6180f4fafd70cc96bc3a6e, type: 2}
+  - renderer: 1
+    defaultMaterial: {fileID: 2100000, guid: 8dd677474a6180f4fafd70cc96bc3a6e, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
-    rendererIndex: 1
-  - defaultMaterial: {fileID: 2100000, guid: 8dd677474a6180f4fafd70cc96bc3a6e, type: 2}
+  - renderer: 0
+    defaultMaterial: {fileID: 2100000, guid: 8dd677474a6180f4fafd70cc96bc3a6e, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
-    rendererIndex: 0
   _gameObjectActivations: []
   _meshReplacements:
-  - mesh: {fileID: 4300000, guid: f68c3d18a2b127348ae10eda9c6c40c2, type: 2}
-    rendererIndex: 2
-  - mesh: {fileID: 4300000, guid: 15fa1dbf6b5ea3d45a86ca0be12dc373, type: 2}
-    rendererIndex: 1
-  - mesh: {fileID: 4300000, guid: 15fa1dbf6b5ea3d45a86ca0be12dc373, type: 2}
-    rendererIndex: 0
+  - renderer: 2
+    newMesh: {fileID: 4300000, guid: f68c3d18a2b127348ae10eda9c6c40c2, type: 2}
+  - renderer: 1
+    newMesh: {fileID: 4300000, guid: 15fa1dbf6b5ea3d45a86ca0be12dc373, type: 2}
+  - renderer: 0
+    newMesh: {fileID: 4300000, guid: 15fa1dbf6b5ea3d45a86ca0be12dc373, type: 2}
   _projectileGhostReplacements: []
   _minionSkinReplacements: []
-  rendererAmounts: 3
