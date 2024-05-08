@@ -27,12 +27,12 @@ namespace SS2.Unlocks.NemMercenary
             public override void OnInstall()
             {
                 base.OnInstall();
-                EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal += OnNemMercenaryDefeated;
+                //EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal += OnNemMercenaryDefeated;
             }
 
             public override void OnUninstall()
             {
-                EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal -= OnNemMercenaryDefeated;
+                //EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal -= OnNemMercenaryDefeated;
                 base.OnUninstall();
             }
 

@@ -13,12 +13,12 @@ namespace SS2.Unlocks.NemMercenary
         public override void OnBodyRequirementMet()
         {
             base.OnBodyRequirementMet();
-            EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal += OnNemMercenaryDefeated;
+            //EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal += OnNemMercenaryDefeated;
         }
         public override void OnBodyRequirementBroken()
         {
             base.OnBodyRequirementBroken();
-            EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal -= OnNemMercenaryDefeated;
+            //EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal -= OnNemMercenaryDefeated;
         }
         // TODO: fix this whenever events get done
         private void OnNemMercenaryDefeated(CharacterBody obj)

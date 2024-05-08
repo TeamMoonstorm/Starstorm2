@@ -1,48 +1,50 @@
 ﻿using RoR2;
 using RoR2.Achievements;
 using UnityEngine;
-namespace SS2.Unlocks.VanillaSurvivors
+namespace SS2.Unlocks.NemCommando
 {
-    public sealed class CommandoNemesisSkinAchievement : BaseAchievement
+    public sealed class NemCommandoNemesisSkinAchievement : BaseAchievement
     {
         public override BodyIndex LookUpRequiredBodyIndex()
         {
-            return BodyCatalog.FindBodyIndex("CommandoBody");
+            return BodyCatalog.FindBodyIndex("NemCommandoBody");
         }
+
         public override void OnBodyRequirementMet()
         {
             base.OnBodyRequirementMet();
-            SetServerTracked(true);
+            base.SetServerTracked(true);
         }
         public override void OnBodyRequirementBroken()
         {
             base.OnBodyRequirementBroken();
-            SetServerTracked(false);
+            base.SetServerTracked(false);
         }
 
-        // TODO: fix whenever events get done
-        private class CommandoNemesisSkinServerAchievement : BaseServerAchievement
+        // TODO: fix this whenever events get done
+        private class NemCommandoNemesisSkinServerAchievement : BaseServerAchievement
         {
             public override void OnInstall()
             {
                 base.OnInstall();
-                EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal += OnNemCommandoDefeated;
+                //EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal += OnNemCommandoDefeated;
             }
 
             public override void OnUninstall()
             {
-                EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal -= OnNemCommandoDefeated;
+                //EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal -= OnNemCommandoDefeated;
                 base.OnUninstall();
             }
 
             private void OnNemCommandoDefeated(CharacterBody obj)
             {
-                if (obj.bodyIndex == BodyCatalog.FindBodyIndex("NemCommandoBody"))
+                // if nemado = nemado
+                if (obj.bodyIndex == networkUser.GetCurrentBody().bodyIndex)
                 {
                     Grant();
                 }
             }
+
         }
-    }
-    
+    }    
 }
