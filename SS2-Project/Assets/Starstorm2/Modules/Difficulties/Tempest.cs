@@ -6,12 +6,9 @@ using System.Collections;
 
 namespace SS2
 {
-
-    //TODO: Create proper difficulty module home-made
     public class Tempest : SS2Difficulty
     {
-        public override SerializableDifficultyDef DifficultyDef => _difficultyDef;
-        private SerializableDifficultyDef _difficultyDef;
+        public override SS2AssetRequest<SerializableDifficultyDef> AssetRequest => SS2Assets.LoadAssetAsync<SerializableDifficultyDef>("Tempest", SS2Bundle.Base);
 
         private int defMonsterCap;
         private RuleChoiceDef rcd;
@@ -25,13 +22,6 @@ namespace SS2
             return true;
         }
 
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * SerializableDifficultyDef - "Tempest" - Base
-             */
-            yield break;
-        }
 
         public override void OnRunEnd(Run run)
         {

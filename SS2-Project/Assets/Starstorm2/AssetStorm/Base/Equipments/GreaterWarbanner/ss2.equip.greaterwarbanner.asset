@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d2dc8cbdb9720c418fcff8f84588cab, type: 3}
+  m_Script: {fileID: 11500000, guid: 02a17d3a7bea384489c0fc6e66051d29, type: 3}
   m_Name: ss2.equip.greaterwarbanner
   m_EditorClassIdentifier: 
   nameToken: ???
@@ -20,13 +20,10 @@ MonoBehaviour:
   achievementCondition:
     assemblyQualifiedName: Moonstorm.Starstorm2.Unlocks.Pickups.GreaterWarbannerUnlockable+GreaterWarbannerAchievement,
       Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  serverTracked: 0
-  baseServerAchievement:
+  serverAchievementCondition:
     assemblyQualifiedName: 
   achievementNameToken: SS2_ACHIEVEMENT_GREATERWARBANNER_NAME
-  achievementDescToken: SS2_ACHIEVEMENT_GREATERWARBANNER_DESC
-  achievedIcon: {fileID: 21300000, guid: 39f860408b2aba24197cd2df9b28d6cb, type: 3}
-  unachievedIcon: {fileID: 21300000, guid: 39f860408b2aba24197cd2df9b28d6cb, type: 3}
-  prerequisiteAchievement:
-    AchievementIdentifier: 
-    UnlockableDef: {fileID: 0}
+  achievementDescriptionToken: SS2_ACHIEVEMENT_GREATERWARBANNER_DESC
+  _preRequisiteAchievement:
+    unlockableDef: {fileID: 0}
+    achievementIdentifier: 

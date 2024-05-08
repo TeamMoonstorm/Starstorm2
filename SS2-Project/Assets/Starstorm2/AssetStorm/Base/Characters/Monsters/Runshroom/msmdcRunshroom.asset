@@ -7,58 +7,141 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0777505d690470442828b06f82250916, type: 3}
+  m_Script: {fileID: 11500000, guid: 68b43d1b0b7e3074e9c105a44212585b, type: 3}
   m_Name: msmdcRunshroom
   m_EditorClassIdentifier: 
-  prefab: {fileID: 320081282386812563, guid: 46d73e7a95628d84c85217125655e8cb, type: 3}
-  sendOverNetwork: 1
-  hullSize: 0
-  nodeGraphType: 0
-  requiredFlags: 0
-  forbiddenFlags: 4
-  directorCreditCost: 22
-  occupyPosition: 0
-  eliteRules: 0
-  noElites: 0
-  forbiddenAsBoss: 0
-  _loadout:
-    bodyLoadouts: []
-  inventoryToCopy: {fileID: 0}
-  equipmentToGrant: []
-  itemsToGrant: []
-  addressReferencedDirectorCard:
-    spawnCard:
-      _asset: {fileID: 11400000}
-      _address: 
-      _useDirectReference: 1
-    selectionWeight: 1
-    spawnDistance: 0
-    preventOverhead: 0
-    minimumStageCompletions: 2
-    requiredUnlockableDef:
-      _asset: {fileID: 0}
-      _address: 
-      _useDirectReference: 0
-    forbiddenUnlockableDef:
-      _asset: {fileID: 0}
-      _address: 
-      _useDirectReference: 0
-  directorCard:
-    spawnCard: {fileID: 11400000}
-    selectionWeight: 1
-    spawnDistance: 2
-    preventOverhead: 0
-    minimumStageCompletions: 3
-    requiredUnlockable: 
-    forbiddenUnlockable: 
-    requiredUnlockableDef: {fileID: 0}
-    forbiddenUnlockableDef: {fileID: 0}
-  monsterCategory: 2
-  customCategory: 
-  customCategoryWeight: 1
-  stages: 33705996
-  customStages: []
-  requiredExpansionDefs: []
-  requiredExpansions: []
+  _serializedCardPairs:
+  - stageEnum: 4
+    customStageName: 
+    monsterCategory: 2
+    customCategoryWeight: 0
+    customCategoryName: 
+    card:
+      spawnCard:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 1
+      selectionWeight: 1
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 2
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+  - stageEnum: 8
+    customStageName: 
+    monsterCategory: 2
+    customCategoryWeight: 0
+    customCategoryName: 
+    card:
+      spawnCard:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 1
+      selectionWeight: 1
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 2
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+  - stageEnum: 4096
+    customStageName: 
+    monsterCategory: 2
+    customCategoryWeight: 0
+    customCategoryName: 
+    card:
+      spawnCard:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 1
+      selectionWeight: 1
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 2
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+  - stageEnum: 16384
+    customStageName: 
+    monsterCategory: 2
+    customCategoryWeight: 0
+    customCategoryName: 
+    card:
+      spawnCard:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 1
+      selectionWeight: 1
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 2
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+  - stageEnum: 131072
+    customStageName: 
+    monsterCategory: 2
+    customCategoryWeight: 0
+    customCategoryName: 
+    card:
+      spawnCard:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 1
+      selectionWeight: 1
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 2
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+  - stageEnum: 33554432
+    customStageName: 
+    monsterCategory: 2
+    customCategoryWeight: 0
+    customCategoryName: 
+    card:
+      spawnCard:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 1
+      selectionWeight: 1
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 2
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0

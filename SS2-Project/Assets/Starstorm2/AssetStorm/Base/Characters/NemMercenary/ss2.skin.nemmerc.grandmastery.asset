@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d2dc8cbdb9720c418fcff8f84588cab, type: 3}
+  m_Script: {fileID: 11500000, guid: 02a17d3a7bea384489c0fc6e66051d29, type: 3}
   m_Name: ss2.skin.nemmerc.grandmastery
   m_EditorClassIdentifier: 
   nameToken: ???
@@ -20,13 +20,10 @@ MonoBehaviour:
   achievementCondition:
     assemblyQualifiedName: Moonstorm.Starstorm2.Unlocks.NemMercenary.NemMercenaryGrandMasteryUnlockable+NemMercenaryGrandMasteryAchievement,
       Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  serverTracked: 0
-  baseServerAchievement:
+  serverAchievementCondition:
     assemblyQualifiedName: 
   achievementNameToken: SS2_ACHIEVEMENT_NEMESIS_MERCENARY_GRANDMASTERY_NAME
-  achievementDescToken: SS2_ACHIEVEMENT_NEMESIS_MERCENARY_GRANDMASTERY_DESC
-  achievedIcon: {fileID: 21300000, guid: b17754fbbe2375f45bbbcb772270ee68, type: 3}
-  unachievedIcon: {fileID: 21300000, guid: b17754fbbe2375f45bbbcb772270ee68, type: 3}
-  prerequisiteAchievement:
-    AchievementIdentifier: 
-    UnlockableDef: {fileID: 11400000, guid: fbd6c871b7e3f784eb0ad6b3e9a142f2, type: 2}
+  achievementDescriptionToken: SS2_ACHIEVEMENT_NEMESIS_MERCENARY_GRANDMASTERY_DESC
+  _preRequisiteAchievement:
+    unlockableDef: {fileID: 0}
+    achievementIdentifier: 
