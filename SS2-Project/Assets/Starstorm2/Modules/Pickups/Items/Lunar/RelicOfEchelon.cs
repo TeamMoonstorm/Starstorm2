@@ -22,6 +22,8 @@ namespace SS2.Items
 
         public static Material _overlay;// => SS2Assets.LoadAsset<Material>("matTerminationOverlay");
 
+        private BuffDef _buffEchelon;
+
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Equipment cooldown increase per use, per stack.")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float cooldownIncrease = .15f;
@@ -50,6 +52,8 @@ namespace SS2.Items
             //_overlay = assetCollection.FindAsset<Material>("matCognation");
 
             //I couldn't find a material corresponding to the cognation overlay -Jace
+
+            _buffEchelon = assetCollection.FindAsset<BuffDef>("BuffEchelon");
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -59,7 +63,7 @@ namespace SS2.Items
 
         public override void Initialize()
         {
-            //BuffOverlays.AddBuffOverlay(SS2Content.Buffs.BuffEchelon, _overlay);
+            //BuffOverlays.AddBuffOverlay(_buffEchelon, _overlay);
 
             On.RoR2.Inventory.CalculateEquipmentCooldownScale += Inventory_CalculateEquipmentCooldownScale;
 

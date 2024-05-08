@@ -15,6 +15,7 @@ namespace SS2.Equipments
     public class AffixPurple : SS2EliteEquipment
     {
         public static DotController.DotIndex index;
+        private BuffDef _buffPurplePoisonBuildup;
         public override SS2AssetRequest<EliteAssetCollection> AssetRequest()
         {
             return SS2Assets.LoadAssetAsync<EliteAssetCollection>("acAffixPurple", SS2Bundle.Equipments);
@@ -22,7 +23,12 @@ namespace SS2.Equipments
         public override void Initialize()
         {
             // TODO: Do I need a separate dot for poisondebuff buffdef? idk
-            index = DotAPI.RegisterDotDef(0.25f, 0.18f, DamageColorIndex.DeathMark, SS2Content.Buffs.bdPoisonBuildup);
+            index = DotAPI.RegisterDotDef(0.25f, 0.18f, DamageColorIndex.DeathMark, _buffPurplePoisonBuildup);
+        }
+
+        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
+        {
+            _buffPurplePoisonBuildup = assetCollection.FindAsset<BuffDef>("bdPoisonBuildup");
         }
 
         public override bool IsAvailable(ContentPack contentPack)
