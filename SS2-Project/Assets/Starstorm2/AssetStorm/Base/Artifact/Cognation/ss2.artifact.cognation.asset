@@ -18,12 +18,12 @@ MonoBehaviour:
   hidden: 0
   achievementIcon: {fileID: 21300000, guid: 916172fd08d25fd4b8adcece6fc04de2, type: 3}
   achievementCondition:
-    assemblyQualifiedName: 
-  serverTracked: 0
-  baseServerAchievement:
+    assemblyQualifiedName: SS2.Unlocks.Artifacts.CognationAchievement, Starstorm2,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  serverAchievementCondition:
     assemblyQualifiedName: 
   achievementNameToken: SS2_ACHIEVEMENT_COGNATION_NAME
-  achievementDescToken: SS2_ACHIEVEMENT_COGNATION_DESC
-  prerequisiteAchievement:
-    AchievementIdentifier: 
-    UnlockableDef: {fileID: 0}
+  achievementDescriptionToken: 
+  _preRequisiteAchievement:
+    unlockableDef: {fileID: 0}
+    achievementIdentifier: 
