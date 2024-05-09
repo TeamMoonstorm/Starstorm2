@@ -4,20 +4,7 @@ namespace SS2.Unlocks
 {
     public abstract class GenericMasteryAchievement : BaseAchievement
     {
-        public GenericMasteryAchievement(float requiredDifficultyCoef, CharacterBody requiredCharBody)
-        {
-            RequiredDifficultyCoefficient = requiredDifficultyCoef;
-            RequiredCharacterBody = requiredCharBody;
-        }
-
-        public GenericMasteryAchievement()
-        {
-
-        }
-
-        public virtual float RequiredDifficultyCoefficient { get; set; }
-        public virtual CharacterBody RequiredCharacterBody { get; set; }
-
+        public virtual float RequiredDifficultyCoefficient { get; }
         public override void OnBodyRequirementMet()
         {
             base.OnBodyRequirementMet();
@@ -42,11 +29,6 @@ namespace SS2.Unlocks
                     Grant();
                 }
             }
-        }
-
-        public override BodyIndex LookUpRequiredBodyIndex()
-        {
-            return RequiredCharacterBody.bodyIndex;
         }
     }
 }
