@@ -22,7 +22,7 @@ namespace SS2.Items
             _baneBuffDef = assetCollection.FindAsset<BuffDef>("BuffBane");
 
             // idk which is which
-            explosionGross = assetCollection.FindAsset<GameObject>("BaneHitsparkVFX");
+            explosionGross = assetCollection.FindAsset<GameObject>("BaneGraysparkVFX");
             particleBase = assetCollection.FindAsset<GameObject>("BaneGrayVFX");
             floorGloop = assetCollection.FindAsset<GameObject>("BaneGrayGoop");
         }
