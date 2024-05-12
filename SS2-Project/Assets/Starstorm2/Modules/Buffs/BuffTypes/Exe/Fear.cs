@@ -7,7 +7,7 @@ namespace SS2.Buffs
 {
     /*public sealed class Fear : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffFear", SS2Bundle.Executioner);
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffFear", SS2Bundle.Executioner2);
 
         public override void Initialize()
         {

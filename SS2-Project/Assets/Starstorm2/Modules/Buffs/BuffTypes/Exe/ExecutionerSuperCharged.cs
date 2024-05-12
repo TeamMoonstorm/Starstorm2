@@ -5,7 +5,7 @@ namespace SS2.Buffs
 {
     /*public sealed class ExecutionerSuperCharged : BuffBase
     {
-        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffExecutionerSuperCharged", SS2Bundle.Executioner);
+        public override BuffDef BuffDef { get; } = SS2Assets.LoadAsset<BuffDef>("BuffExecutionerSuperCharged", SS2Bundle.Executioner2);
 
         public static GameObject plumeEffect = SS2Assets.LoadAsset<GameObject>("exePlume", SS2Bundle.Executioner2);
         public static GameObject plumeEffectLarge = SS2Assets.LoadAsset<GameObject>("exePlumeBig", SS2Bundle.Executioner2);
