@@ -51,6 +51,26 @@ namespace SS2.Monsters
             }*/
         }
 
+        public sealed class LampBuffBehavior : BaseBuffBehaviour, IBodyStatArgModifier
+        {
+            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            {
+                if (HasAnyStacks && CharacterBody.bodyIndex != BodyCatalog.FindBodyIndex("LampBossBody"))
+                {
+                    args.primaryCooldownMultAdd += 0.5f;
+                    args.secondaryCooldownMultAdd += 0.25f;
+                    args.damageMultAdd += 0.2f;
+                    args.moveSpeedMultAdd += 1.5f;
+                }
+            }
+
+            // TODO: Hey nebby should we add override keyword here?
+            public void OnDestroy()
+            {
+                CharacterBody.RecalculateStats();
+            }
+        }
+
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
