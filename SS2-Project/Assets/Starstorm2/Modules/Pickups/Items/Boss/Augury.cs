@@ -28,7 +28,7 @@ namespace SS2.Items
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return false; //MSUtil.IsModInstalled("Enforcer GUID goes here... also check if nemforcer is enabled or something."); 
+            return false; //TODO: MSUtil.IsModInstalled("Enforcer GUID goes here... also check if nemforcer is enabled or something."); 
         }
 
         public sealed class AuguryBehavior : BaseItemBodyBehavior, IOnTakeDamageServerReceiver

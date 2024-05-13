@@ -22,12 +22,18 @@ namespace SS2.Survivors
         public static GameObject plumeEffect;
         public static GameObject plumeEffectLarge;
 
-        
+
+        public static BuffDef _buffDefFear;
+        public static BuffDef _buffExeMuteCharge;
+        public static BuffDef _buffExeSuperCharged;
 
         public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
         {
             plumeEffect = assetCollection.FindAsset<GameObject>("exePlume");
             plumeEffectLarge = assetCollection.FindAsset<GameObject>("exePlumeBig");
+            _buffDefFear = assetCollection.FindAsset<BuffDef>("BuffFear");
+            _buffExeMuteCharge = assetCollection.FindAsset<BuffDef>("bdExeMuteCharge");
+            _buffExeSuperCharged = assetCollection.FindAsset<BuffDef>("BuffExecutionerSuperCharged");
         }
         public sealed class ExeArmorBehavior : BaseBuffBehaviour, IBodyStatArgModifier
         {
@@ -40,23 +46,33 @@ namespace SS2.Survivors
             }
         }
 
-        public sealed class ExeChargeBehavior : BaseBuffBehaviour
+        public sealed class FearDebuffBehavior : BaseBuffBehaviour, IBodyStatArgModifier
         {
             [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => SS2Content.Buffs.bdExeCharge;
+            private static BuffDef GetBuffDef() => _buffDefFear;
+
+            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            {
+                args.moveSpeedReductionMultAdd += 0.5f;
+            }
+        }
+
+        public sealed class ExeSuperChargeBehavior : BaseBuffBehaviour
+        {
+            [BuffDefAssociation]
+            private static BuffDef GetBuffDef() => _buffExeSuperCharged;
             private float timer;
 
             public void FixedUpdate()
             {
-                if (NetworkServer.active)
+                if (NetworkServer.active && HasAnyStacks)
                 {
-                    //INDICES PEOPLE, INDICES :SOB: -N
-                    if (CharacterBody.baseNameToken != "SS2_EXECUTIONER2_NAME" || CharacterBody.HasBuff(SS2Content.Buffs.bdExeMuteCharge))
+                    if (CharacterBody.baseNameToken != "SS2_EXECUTIONER2_NAME" || CharacterBody.HasBuff(_buffExeMuteCharge))
                         return;
                     else
                         timer += Time.fixedDeltaTime;
 
-                    if (timer >= 1.2f && CharacterBody.skillLocator.secondary.stock < CharacterBody.skillLocator.secondary.maxStock)
+                    if (timer >= 0.2f && CharacterBody.skillLocator.secondary.stock < CharacterBody.skillLocator.secondary.maxStock)
                     {
                         timer = 0f;
 
@@ -73,10 +89,10 @@ namespace SS2.Survivors
                             Util.PlaySound("ExecutionerMaxCharge", gameObject);
                             EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustL", true);
                             EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustR", true);
-                            EffectManager.SimpleEffect(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/LightningFlash.prefab").WaitForCompletion(), CharacterBody.corePosition, Quaternion.identity, true);
+                            EffectManager.SimpleEffect(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/LightningFlash.prefab").WaitForCompletion(), CharacterBody.corePosition, Quaternion.identity, false);
                         }
 
-                        CharacterBody.SetAimTimer(timer);
+                        CharacterBody.SetAimTimer(1.6f);
                     }
                 }
             }
