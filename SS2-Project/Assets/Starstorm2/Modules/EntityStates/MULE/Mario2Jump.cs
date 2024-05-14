@@ -3,7 +3,8 @@ using UnityEngine;
 
 namespace EntityStates.MULE
 {
-    public class Mario2Jump : GenericCharacterMain
+#if DEBUG
+	public class Mario2Jump : GenericCharacterMain
     {
         public bool delayedInputReceived = false;
         public float charge;
@@ -101,4 +102,5 @@ namespace EntityStates.MULE
 			}
 		}
     }
+#endif
 }

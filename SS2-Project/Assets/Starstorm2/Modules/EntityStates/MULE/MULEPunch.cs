@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 
 namespace EntityStates.MULE
 {
+#if DEBUG
     class MULEPunch : BasicMeleeAttack, SteppedSkillDef.IStepSetter
     {
         [FormatToken("SS2_MULE_PRIMARY_PUNCH_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
@@ -55,4 +56,5 @@ namespace EntityStates.MULE
             base.AuthorityModifyOverlapAttack(overlapAttack);
         }
     }
+#endif
 }

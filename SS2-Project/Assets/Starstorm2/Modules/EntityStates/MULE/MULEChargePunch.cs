@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace EntityStates.MULE
 {
+#if DEBUG
     public class MULEChargePunch : BaseSkillState
     {
         public static float baseChargeDuration = 0.5f;
@@ -82,4 +83,5 @@ namespace EntityStates.MULE
             base.OnExit();
         }
     }
+#endif
 }

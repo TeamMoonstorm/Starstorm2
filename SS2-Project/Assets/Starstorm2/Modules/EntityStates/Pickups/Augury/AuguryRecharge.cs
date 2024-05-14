@@ -2,6 +2,7 @@
 
 namespace EntityStates.Pickups.Augury
 {
+#if DEBUG
     public class AuguryRecharge : AuguryBaseState
     {
         public static float BaseDuration = 60f;
@@ -29,4 +30,5 @@ namespace EntityStates.Pickups.Augury
             }
         }
     }
+#endif
 }
