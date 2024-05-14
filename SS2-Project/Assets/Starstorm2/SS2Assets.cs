@@ -417,13 +417,18 @@ namespace SS2
             _asset = (TAsset)request.asset;
 
 #if DEBUG
+            //Asset found, dont try to find it.
+            if (_asset)
+                yield break;
+
             SS2Log.Warning($"The method \"{GetCallingMethod()}\" is calling a CommissionAssetRequest.StartLoad() while the class has the values \"{typeof(TAsset).Name}\", \"{AssetName}\" and \"{TargetBundle}\", however, the asset could not be found.\n" +
     $"A complete search of all the bundles will be done and the correct bundle enum will be logged.");
 
             _targetBundle = SS2Bundle.All;
-            _internalCoroutine.Reset();
-            yield break;
+            _internalCoroutine = LoadSingleAsset();
+            yield return null;
 #endif
+            yield break;
         }
 
         private IEnumerator LoadMultipleAsset()

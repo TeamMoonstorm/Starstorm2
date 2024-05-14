@@ -12,6 +12,7 @@ using RoR2;
 
 namespace SS2.Modules
 {
+    /*
     public sealed class Interactables : IContentPieceProvider<GameObject>
     {
         public ContentPack ContentPack => _contentPack;
@@ -73,5 +74,5 @@ namespace SS2.Modules
             _contentPack = contentPack;
             _unfilteredInteractables = ContentUtil.AnalyzeForGameObjectContentPieces<IInteractable>(plugin);
         }
-    }
+    }*/
 }
