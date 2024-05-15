@@ -35,23 +35,14 @@ namespace SS2.Survivors
         private float _convertDotDamageCoefficient = 0.8f;
         public static DotController.DotIndex ConvertDotIndex { get; private set; }
 
-        private Material _matFriendOverlay;
-
         private static float _grabFriendAttackBoost = 1f;
 
         private static float _percentHealthRegen = 0.05f;
 
-        private BuffDef convertBuffDef;
-        
 
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _matFriendOverlay = assetCollection.FindAsset<Material>("matFriendOverlay");
-            convertBuffDef = assetCollection.FindAsset<BuffDef>("BuffChirrConvert");
         }
 
         public override void Initialize()
@@ -73,7 +64,10 @@ namespace SS2.Survivors
 
             RegisterConfuseOnHit();
             RegisterConvert();
-            BuffOverlays.AddBuffOverlay(SS2Content.Buffs.BuffChirrFriend, _matFriendOverlay);
+
+            Material _matFriendOverlay = AssetCollection.FindAsset<Material>("matFriendOverlay");
+            BuffDef friendBuffDef = AssetCollection.FindAsset<BuffDef>("BuffChirrFriend");
+            BuffOverlays.AddBuffOverlay(friendBuffDef, _matFriendOverlay);
         }    
 
         private void ModifyPrefab()
@@ -153,7 +147,7 @@ namespace SS2.Survivors
 
         private void RegisterConvert()
         {
-            ConvertDotIndex = DotAPI.RegisterDotDef(0.33f, _convertDotDamageCoefficient, DamageColorIndex.Poison, convertBuffDef);
+            ConvertDotIndex = DotAPI.RegisterDotDef(0.33f, _convertDotDamageCoefficient, DamageColorIndex.Poison, AssetCollection.FindAsset<BuffDef>("BuffChirrConvert"));
         }
         private void ApplyConfuse(DamageReport obj)
         {

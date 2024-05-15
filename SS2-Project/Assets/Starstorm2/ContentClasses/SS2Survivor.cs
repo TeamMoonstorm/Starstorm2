@@ -44,6 +44,7 @@ namespace SS2
             OnAssetCollectionLoaded(AssetCollection);
         }
 
+        // idrk why i did this. anything in here can just go in initialize
         public virtual void OnAssetCollectionLoaded(AssetCollection assetCollection) { }
 
         public virtual void ModifyContentPack(ContentPack contentPack)
