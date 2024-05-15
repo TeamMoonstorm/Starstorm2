@@ -5,6 +5,7 @@ using static R2API.DamageAPI;
 
 namespace EntityStates.MULE
 {
+#if DEBUG
     public class MULEAimNet : BaseState
     {
         public static GameObject projectilePrefab;
@@ -67,4 +68,5 @@ namespace EntityStates.MULE
             }    
         }
     }
+#endif
 }

@@ -5,9 +5,9 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using RoR2.ContentManagement;
 
-#if DEBUG
 namespace SS2.Artifacts
 {
+#if DEBUG
     public class Adversity : SS2Artifact
     {
         public override NullableRef<ArtifactCode> ArtifactCode => null;

@@ -32,7 +32,7 @@ namespace SS2.ItemTiers
 
         public override IEnumerator LoadContentAsync()
         {
-            var assetRequest = SS2Assets.LoadAssetAsync<AssetCollection>("acSibylline", SS2Bundle.Items);
+            var assetRequest = SS2Assets.LoadAssetAsync<AssetCollection>("acSibylline", SS2Bundle.Base);
 
             assetRequest.StartLoad();
             while (!assetRequest.IsComplete)

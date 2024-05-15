@@ -11,6 +11,8 @@ using BepInEx;
 
 namespace SS2.Modules
 {
+    //Throws null reference exception because passes filter tries to access the prefab which isnt loaded yet.
+    /*
     public sealed class Characters : IContentPieceProvider<GameObject>
     {
         public ContentPack ContentPack => _contentPack;
@@ -123,5 +125,5 @@ namespace SS2.Modules
             _contentPack = contentPack;
             _unfilteredCharacters = ContentUtil.AnalyzeForGameObjectContentPieces<CharacterBody>(plugin);
         }
-    }
+    }*/
 }

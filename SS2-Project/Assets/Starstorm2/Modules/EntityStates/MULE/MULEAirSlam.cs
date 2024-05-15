@@ -5,6 +5,7 @@ using RoR2.Projectile;
 
 namespace EntityStates.MULE
 {
+#if DEBUG
     public class MULEAirSlam : BaseSkillState
     {
         public float charge;
@@ -146,4 +147,5 @@ namespace EntityStates.MULE
             return InterruptPriority.Frozen;
         }
     }
+#endif
 }

@@ -4,6 +4,7 @@ using SS2;
 
 namespace EntityStates.MULE
 {
+#if DEBUG
     public class MULESlam : BaseSkillState
     {
         public float charge;
@@ -106,4 +107,5 @@ namespace EntityStates.MULE
             return InterruptPriority.Frozen;
         }
     }
+#endif
 }

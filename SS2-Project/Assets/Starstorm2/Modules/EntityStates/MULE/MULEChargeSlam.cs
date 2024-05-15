@@ -3,6 +3,7 @@ using RoR2;
 
 namespace EntityStates.MULE
 {
+#if DEBUG
     public class MULEChargeSlam : BaseSkillState
     {
         public static float baseChargeDuration = 1.25f;
@@ -129,4 +130,5 @@ namespace EntityStates.MULE
             return InterruptPriority.Frozen;
         }
     }
+#endif
 }

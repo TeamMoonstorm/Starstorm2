@@ -120,8 +120,9 @@ namespace EntityStates.Trader.Bag
         {
             //sfx, vfx, etc.
             Util.PlaySound(exitSoundString, gameObject);
-            if (isAuthority)
-                characterBody.SetBuffCount(SS2.SS2Content.Buffs.bdHiddenSlow20.buffIndex, 0);
+            // TODO: Swuff doesnt know why this is here, but ill leave the code if it comes back to swuff, delete this if you dont need it please
+            // if (isAuthority)
+            //     characterBody.SetBuffCount(SS2.SS2Content.Buffs.bdHiddenSlow20.buffIndex, 0);
             base.OnExit();
         }
 

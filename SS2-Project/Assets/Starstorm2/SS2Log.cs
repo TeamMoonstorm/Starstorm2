@@ -46,7 +46,7 @@ namespace SS2
 #else
             object data2 = (level.HasFlag(LogLevel.Warning) || level.HasFlag(LogLevel.Error) || level.HasFlag(LogLevel.Fatal)) ? Format(data, i, member) : data;
 
-            _log.Log(level, data2);
+            logger.Log(level, data2);
 #if DEBUG
             if(_breakableLevel.HasFlag(level))
             {

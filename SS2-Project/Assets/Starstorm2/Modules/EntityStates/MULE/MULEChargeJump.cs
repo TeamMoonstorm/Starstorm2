@@ -4,6 +4,7 @@ using SS2;
 
 namespace EntityStates.MULE
 {
+#if DEBUG
     public class MULEChargeJump : BaseSkillState
     {
         public static float baseChargeDuration = 1.25f;
@@ -77,4 +78,5 @@ namespace EntityStates.MULE
             return InterruptPriority.Frozen;
         }
     }
+#endif
 }

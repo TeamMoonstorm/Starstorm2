@@ -43,7 +43,7 @@ namespace SS2
                 args.ReportProgress(Util.Remap(i + 1, 0f, _loadDispatchers.Length, 0.1f, 0.2f));
                 enumerator = _loadDispatchers[i]();
 
-                while (enumerator.MoveNext()) yield return null;
+                while (enumerator?.MoveNext() ?? false) yield return null;
             }
 
             _parallelPostLoadDispatchers.Start();
@@ -54,7 +54,7 @@ namespace SS2
                 args.ReportProgress(Util.Remap(i + 1, 0f, _fieldAssignDispatchers.Length, 0.95f, 0.99f));
                 enumerator = _fieldAssignDispatchers[i]();
 
-                while (enumerator.MoveNext()) yield return null;
+                while (enumerator?.MoveNext() ?? false) yield return null;
             }
         }
 
@@ -138,7 +138,7 @@ namespace SS2
                 },
                 () =>
                 {
-                    CharacterModule.AddProvider(main, new Modules.Characters(SS2ContentPack, main));
+                    CharacterModule.AddProvider(main, ContentUtil.CreateGameObjectContentPieceProvider<CharacterBody>(main, SS2ContentPack));
                     return CharacterModule.InitializeCharacters(main);
                 },
                 () =>
@@ -163,7 +163,7 @@ namespace SS2
                 },
                 () =>
                 {
-                    InteractableModule.AddProvider(main, new Modules.Interactables(SS2ContentPack, main));
+                    InteractableModule.AddProvider(main, ContentUtil.CreateGameObjectContentPieceProvider<IInteractable>(main, SS2ContentPack));
                     return InteractableModule.InitializeInteractables(main);
                 },
                 LoadFromAssetBundles,

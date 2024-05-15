@@ -2,6 +2,7 @@
 
 namespace EntityStates.Pickups.Augury
 {
+#if DEBUG
     public abstract class AuguryBaseState : BaseBodyAttachmentState
     {
         protected AuguryEffectController auguryEffect;
@@ -17,4 +18,5 @@ namespace EntityStates.Pickups.Augury
             auguryBehavior = attachedBody.GetComponent<SS2.Items.Augury.AuguryBehavior>();
         }
     }
+#endif
 }
