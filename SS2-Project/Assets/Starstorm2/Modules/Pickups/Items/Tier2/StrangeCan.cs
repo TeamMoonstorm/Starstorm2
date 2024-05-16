@@ -15,14 +15,7 @@ namespace SS2.Items
     {
         private const string token = "SS2_ITEM_STRANGECAN_DESC";
 
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acStrangeCan", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _procEffect = assetCollection.FindAsset<GameObject>("StrangeCanEffect");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acStrangeCan", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance for Intoxicate to be applied on hit. (1 = 1%)")]
         [FormatToken(token, 0)]
@@ -58,6 +51,8 @@ namespace SS2.Items
 
         public override void Initialize()
         {
+            _procEffect = AssetCollection.FindAsset<GameObject>("StrangeCanEffect");
+
             //N: This should be a behaviour, but i CBA to refactor. :sob:
             GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
             GlobalEventManager.onCharacterDeathGlobal += OnCharacterDeathGlobal;

@@ -13,18 +13,7 @@ namespace SS2.Items
     {
         private const string token = "SS2_ITEM_PORTABLEREACTOR_DESC";
 
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acPortableReactor", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            // load these effects
-            //public override Material OverlayMaterial => SS2Assets.LoadAsset<Material>("matReactorBuffOverlay", SS2Bundle.Items);
-            //public static GameObject bubbleEffectPrefab => SS2Assets.LoadAsset<GameObject>("ReactorBubbleEffect", SS2Bundle.Items);       
-            //public static GameObject endEffectPrefab => SS2Assets.LoadAsset<GameObject>("ReactorBubbleEnd", SS2Bundle.Items);
-            //public static GameObject shieldEffectPrefab => SS2Assets.LoadAsset<GameObject>("ReactorShieldEffect", SS2Bundle.Items);
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acPortableReactor", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Duration of invulnerability from Portable Reactor. (1 = 1 second)")]
         [FormatToken(token, 0)]
@@ -45,6 +34,12 @@ namespace SS2.Items
         //N: This tbh should be moved to a hook on stage start, to avoid having a resurrected player becoming invincible.
         public override void Initialize()
         {
+            // load these effects
+            //public override Material OverlayMaterial => SS2Assets.LoadAsset<Material>("matReactorBuffOverlay", SS2Bundle.Items);
+            //public static GameObject bubbleEffectPrefab => SS2Assets.LoadAsset<GameObject>("ReactorBubbleEffect", SS2Bundle.Items);       
+            //public static GameObject endEffectPrefab => SS2Assets.LoadAsset<GameObject>("ReactorBubbleEnd", SS2Bundle.Items);
+            //public static GameObject shieldEffectPrefab => SS2Assets.LoadAsset<GameObject>("ReactorShieldEffect", SS2Bundle.Items);
+
             CharacterBody.onBodyStartGlobal += ImFuckingInvincible;
 
             BuffOverlays.AddBuffOverlay(_buffPortableReactor, _overlay);
@@ -68,11 +63,6 @@ namespace SS2.Items
                     obj.AddTimedBuff(SS2Content.Buffs.BuffReactor, invulnTime / 4 + ((count - 1) * stackingInvuln));
                 }
             }
-        }
-
-        public void ModifyContentPack(ContentPack contentPack)
-        {
-            contentPack.buffDefs.AddSingle(_buffPortableReactor);
         }
 
         public sealed class Behavior : BaseBuffBehaviour, RoR2.IOnIncomingDamageServerReceiver, IBodyStatArgModifier

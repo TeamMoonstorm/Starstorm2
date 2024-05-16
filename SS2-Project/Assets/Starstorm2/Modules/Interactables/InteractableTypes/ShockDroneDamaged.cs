@@ -12,10 +12,7 @@ namespace SS2.Interactables
 {
     public sealed class ShockDroneDamaged : SS2Interactable
     {
-        public override SS2AssetRequest<InteractableAssetCollection> AssetRequest()
-        {
-            return SS2Assets.LoadAssetAsync<InteractableAssetCollection>("acShockDrone", SS2Bundle.Interactables);
-        }
+        public override SS2AssetRequest<InteractableAssetCollection> AssetRequest =>  SS2Assets.LoadAssetAsync<InteractableAssetCollection>("acShockDrone", SS2Bundle.Interactables);
 
         private SummonMasterBehavior smb;
         private CharacterMaster cm;

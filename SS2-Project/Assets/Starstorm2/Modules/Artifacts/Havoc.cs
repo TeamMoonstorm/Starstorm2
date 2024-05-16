@@ -8,10 +8,8 @@ namespace SS2.Artifacts
 {
     public class Havoc : SS2Artifact
     {
-        public override NullableRef<ArtifactCode> ArtifactCode => _artifactCode;
-        private ArtifactCode _artifactCode;
-        public override ArtifactDef ArtifactDef => _artifactDef;
-        private ArtifactDef _artifactDef;
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ArtifactAssetCollection>("acHavoc", SS2Bundle.Artifacts);
+
         public override void Initialize()
         {
         }

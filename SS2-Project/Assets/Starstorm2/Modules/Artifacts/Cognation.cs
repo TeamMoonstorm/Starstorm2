@@ -10,17 +10,18 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UObject = UnityEngine.Object;
 using RoR2.ContentManagement;
+using RoR2.Items;
+
 namespace SS2.Artifacts
 {
     public sealed class Cognation : SS2Artifact
     {
-        public override NullableRef<ArtifactCode> ArtifactCode => _artifactCode;
-        private ArtifactCode _artifactCode;
-        public override ArtifactDef ArtifactDef => _artifactDef;
-        private ArtifactDef _artifactDef;
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ArtifactAssetCollection>("acCognation", SS2Bundle.Artifacts);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ARTIFACT, ConfigDescOverride = "Whether or not cognation ghosts inherit all items from the original body")]
-        public static bool InheritInventory = true;
+        public static bool inheritInventory = true;
+
+        private static Material ghostMaterial;
 
         public static ReadOnlyCollection<MasterCatalog.MasterIndex> BlacklistedMasterIndices { get; private set; }
         private static readonly HashSet<string> blacklistedMasters = new HashSet<string>
@@ -39,7 +40,20 @@ namespace SS2.Artifacts
         public override void Initialize()
         {
             //For masters since it doesnt have a resource availability, hotpoo!!!!
+            ghostMaterial = AssetCollection.FindAsset<Material>("matCognation");
             RoR2Application.onLoad += UpdateBlacklistedMasters;
+            On.RoR2.Util.GetBestBodyName += AddCognateName;
+        }
+
+        private string AddCognateName(On.RoR2.Util.orig_GetBestBodyName orig, GameObject bodyObject) //i love stealing
+        {
+            var result = orig(bodyObject);
+            CharacterBody characterBody = bodyObject?.GetComponent<CharacterBody>();
+            if (characterBody && characterBody.inventory && characterBody.inventory.GetItemCount(SS2Content.Items.Cognation) > 0)
+            {
+                result = Language.GetStringFormatted("SS2_ARTIFACT_COGNATION_PREFIX", result);
+            }
+            return result;
         }
 
         private static void UpdateBlacklistedMasters()
@@ -59,21 +73,6 @@ namespace SS2.Artifacts
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*ParallelAssetLoadCoroutineHelper helper = new ParallelAssetLoadCoroutineHelper();
-            helper.AddAssetToLoad<ArtifactDef>("Cognation", SS2Bundle.Artifacts);
-            helper.AddAssetToLoad<ArtifactCode>("CognationCode", SS2Bundle.Artifacts);
-
-            helper.Start();
-            while (!helper.IsDone())
-                yield return null;
-
-            _artifactCode = helper.GetLoadedAsset<ArtifactCode>("CognationCode");
-            _artifactDef = helper.GetLoadedAsset<ArtifactDef>("Cognation");*/
-            yield break;
         }
 
         public override void OnArtifactDisabled()
@@ -135,7 +134,7 @@ namespace SS2.Artifacts
             ghostSummon.rotation = Quaternion.LookRotation(body.inputBank.GetAimRay().direction);
             ghostSummon.teamIndexOverride = master.teamIndex;
             ghostSummon.summonerBodyObject = null;
-            ghostSummon.inventoryToCopy = InheritInventory ? master.inventory : null;
+            ghostSummon.inventoryToCopy = inheritInventory ? master.inventory : null;
 
             return ghostSummon;
         }
@@ -170,6 +169,75 @@ namespace SS2.Artifacts
 
             var timer = ghostMaster.gameObject.AddComponent<MasterSuicideOnTimer>();
             timer.lifeTimer = (originalBody.isChampion || originalBody.isBoss) ? 30 * 2 : 30;
+        }
+
+        public sealed class Behavior : BaseItemBodyBehavior
+        {
+            [ItemDefAssociation]
+            private static ItemDef GetItemDef() => SS2Content.Items.Cognation;
+
+            private CharacterModel model;
+
+            private void Start()
+            {
+                if (body.teamComponent.teamIndex == TeamIndex.Player)
+                {
+                    body.inventory.RemoveItem(SS2Content.Items.Cognation, stack);
+                    Destroy(this);
+                }
+
+                if (body.inventory.GetItemCount(SS2Content.Items.TerminationHelper) > 0)
+                {
+                    body.inventory.RemoveItem(SS2Content.Items.TerminationHelper);
+                }
+
+                body.baseMaxHealth *= 3;
+                body.baseMoveSpeed *= 1.25f;
+                body.baseAttackSpeed *= 1.25f;
+                body.baseDamage *= 0.9f;
+                body.baseArmor -= 25;
+                body.PerformAutoCalculateLevelStats();
+                body.RecalculateStats();
+
+                ModelLocator modelLoc = body.modelLocator;
+                if (modelLoc)
+                {
+                    Transform modelTransform = modelLoc.modelTransform;
+                    if (modelTransform)
+                    {
+                        model = modelTransform.GetComponent<CharacterModel>();
+                    }
+                }
+
+                if (model)
+                {
+                    //SS2Log.Info("swapping shader");
+                    ModifyCharacterModel();
+                }
+            }
+
+            private void ModifyCharacterModel()
+            {
+                for (int i = 0; i < model.baseRendererInfos.Length; i++)
+                {
+                    var mat = model.baseRendererInfos[i].defaultMaterial;
+                    if (mat.shader.name.StartsWith("Hopoo Games/Deferred"))
+                    {
+                        //SS2Log.Info("swapping shader real " +mat.shader.name + " | " + ghostMaterial + "
+                        mat = ghostMaterial;
+                        model.baseRendererInfos[i].defaultMaterial = mat;
+                    }
+                }
+            }
+
+            private void OnDestroy()
+            {
+                if (model)
+                {
+                    var modelDestroyOnUnseen = model.GetComponent<DestroyOnUnseen>() ?? model.gameObject.AddComponent<DestroyOnUnseen>();
+                    modelDestroyOnUnseen.cull = true;
+                }
+            }
         }
     }
 }

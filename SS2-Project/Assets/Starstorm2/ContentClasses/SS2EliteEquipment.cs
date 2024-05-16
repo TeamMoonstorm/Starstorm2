@@ -16,21 +16,21 @@ namespace SS2
     /// </summary>
     public abstract class SS2EliteEquipment : IEliteContentPiece
     {
-        public List<EliteDef> EliteDefs;
+        public List<EliteDef> EliteDefs { get; protected set; }
         List<EliteDef> IEliteContentPiece.EliteDefs => EliteDefs;
         public EliteAssetCollection AssetCollection { get; private set; }
 
-        public NullableRef<List<GameObject>> ItemDisplayPrefabs;
+        public NullableRef<List<GameObject>> ItemDisplayPrefabs { get; protected set; } = new List<GameObject>();
         NullableRef<List<GameObject>> IEquipmentContentPiece.ItemDisplayPrefabs => ItemDisplayPrefabs;
         EquipmentDef IContentPiece<EquipmentDef>.Asset => EquipmentDef;     
 
-        public EquipmentDef EquipmentDef;
-        public abstract SS2AssetRequest<EliteAssetCollection> AssetRequest();
+        public EquipmentDef EquipmentDef { get; protected set; }
+        public abstract SS2AssetRequest<EliteAssetCollection> AssetRequest { get; }
         public abstract void Initialize();
         public abstract bool IsAvailable(ContentPack contentPack);
         public virtual IEnumerator LoadContentAsync()
         {
-            SS2AssetRequest<EliteAssetCollection> request = AssetRequest();
+            SS2AssetRequest<EliteAssetCollection> request = AssetRequest;
 
             request.StartLoad();
             while (!request.IsComplete)
@@ -41,11 +41,7 @@ namespace SS2
             EliteDefs = AssetCollection.eliteDefs;
             EquipmentDef = AssetCollection.equipmentDef;
             ItemDisplayPrefabs = AssetCollection.itemDisplayPrefabs;
-
-            OnAssetCollectionLoaded(AssetCollection);
         }
-
-        public virtual void OnAssetCollectionLoaded(AssetCollection assetCollection) { }
 
         public virtual void ModifyContentPack(ContentPack contentPack)
         {

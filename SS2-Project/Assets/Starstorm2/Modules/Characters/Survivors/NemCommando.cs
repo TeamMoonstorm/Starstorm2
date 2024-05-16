@@ -25,18 +25,13 @@ namespace SS2.Survivors
         private GameObject distantGashProjectileYellow;
         private GameObject grenadeProjectile;
 
-        
-
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _gougeBuffDef = assetCollection.FindAsset<BuffDef>("BuffGouge");
-            distantGashProjectile = assetCollection.FindAsset<GameObject>("NemCommandoSwordBeamProjectile");
-            distantGashProjectileBlue = assetCollection.FindAsset<GameObject>("NemCommandoSwordBeamProjectileBlue");
-            distantGashProjectileYellow = assetCollection.FindAsset<GameObject>("NemCommandoSwordBeamProjectileYellow");
-        }
-
         public override void Initialize()
         {
+            _gougeBuffDef = AssetCollection.FindAsset<BuffDef>("BuffGouge");
+            distantGashProjectile = AssetCollection.FindAsset<GameObject>("NemCommandoSwordBeamProjectile");
+            distantGashProjectileBlue = AssetCollection.FindAsset<GameObject>("NemCommandoSwordBeamProjectileBlue");
+            distantGashProjectileYellow = AssetCollection.FindAsset<GameObject>("NemCommandoSwordBeamProjectileYellow");
+
             On.RoR2.CharacterSelectBarController.Awake += CharacterSelectBarController_Awake;
 
             GougeDamageType = DamageAPI.ReserveDamageType();

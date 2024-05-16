@@ -12,10 +12,7 @@ namespace SS2.Items
 #if DEBUG
     public sealed class RelicOfDuality : SS2Item
     {
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRelicOFDuality", SS2Bundle.Items);
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRelicOFDuality", SS2Bundle.Items);
 
 
         public override void Initialize()

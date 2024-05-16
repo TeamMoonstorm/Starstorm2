@@ -12,10 +12,8 @@ namespace SS2.Artifacts
 {
     public sealed class Deviation : SS2Artifact
     {
-        public override NullableRef<ArtifactCode> ArtifactCode => _artifactCode;
-        private ArtifactCode _artifactCode;
-        public override ArtifactDef ArtifactDef => _artifactDef;
-        private ArtifactDef _artifactDef;
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ArtifactAssetCollection>("acDeviation", SS2Bundle.Artifacts);
+
         public override void Initialize()
         {
         }
@@ -23,22 +21,6 @@ namespace SS2.Artifacts
         public override bool IsAvailable(ContentPack contentPack)
         {
             return false;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*ParallelAssetLoadCoroutineHelper helper = new ParallelAssetLoadCoroutineHelper();
-            
-            helper.AddAssetToLoad<ArtifactDef>("Deviation", SS2Bundle.Artifacts);
-            helper.AddAssetToLoad<ArtifactCode>("DeviationCode", SS2Bundle.Artifacts);
-
-            helper.Start();
-            while (!helper.IsDone())
-                yield return null;
-
-            _artifactCode = helper.GetLoadedAsset<ArtifactCode>("DeviationCode");
-            _artifactDef = helper.GetLoadedAsset<ArtifactDef>("Deviation");*/
-            yield break;
         }
 
         private void DeviationOverride(On.RoR2.TeleporterInteraction.IdleState.orig_OnInteractionBegin orig, BaseState self, Interactor activator)

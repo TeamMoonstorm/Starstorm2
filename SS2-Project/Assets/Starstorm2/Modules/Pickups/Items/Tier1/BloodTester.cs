@@ -13,10 +13,7 @@ namespace SS2.Items
     {
         private const string token = "SS2_ITEM_BLOODTESTER_DESC";
 
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acBloodTester", SS2Bundle.Items);
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acBloodTester", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of health regeneration granted per 25 gold, per stack. (1 = 1 hp/s)")]
         [FormatToken(token, 0)]
@@ -37,14 +34,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "BloodTester"
-             */
-            yield break;
         }
 
         // need to force recalculatestats to make regen update with money

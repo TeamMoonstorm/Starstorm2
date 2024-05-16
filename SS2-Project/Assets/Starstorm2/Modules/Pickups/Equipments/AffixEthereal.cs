@@ -28,18 +28,7 @@ namespace SS2.Equipments
         public BuffDef _buffHakai;
         public Material _matHakaiOverlay;
 
-        public override SS2AssetRequest<EliteAssetCollection> AssetRequest()
-        {
-            return SS2Assets.LoadAssetAsync<EliteAssetCollection>("acAFfixEthereal", SS2Bundle.Equipments);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _matEtherealOverlay = assetCollection.FindAsset<Material>("matEtherealOverlay");
-
-            // Used for suicide buff
-            _buffHakai = assetCollection.FindAsset<BuffDef>("bdHakai");
-            _matHakaiOverlay = assetCollection.FindAsset<Material>("matHakaiOverlay");
-        }
+        public override SS2AssetRequest<EliteAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<EliteAssetCollection>("acAFfixEthereal", SS2Bundle.Equipments);
 
         public override bool Execute(EquipmentSlot slot)
         {
@@ -48,6 +37,11 @@ namespace SS2.Equipments
 
         public override void Initialize()
         {
+            _matEtherealOverlay = AssetCollection.FindAsset<Material>("matEtherealOverlay");
+
+            // Used for suicide buff
+            _buffHakai = AssetCollection.FindAsset<BuffDef>("bdHakai");
+            _matHakaiOverlay = AssetCollection.FindAsset<Material>("matHakaiOverlay");
             // Add relevant hooks
             IL.RoR2.HealthComponent.TakeDamage += EtherealDeathIL;
 

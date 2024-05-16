@@ -17,13 +17,9 @@ namespace SS2.Survivors
 
         public override void Initialize()
         {
+            _buffDefOverstress = AssetCollection.FindAsset<BuffDef>("bdOverstress");
             ModifyPrefab();
             R2API.RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
-        }
-
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _buffDefOverstress = assetCollection.FindAsset<BuffDef>("bdOverstress");
         }
 
         public sealed class OvertressBuffBehavior : BaseBuffBehaviour, IBodyStatArgModifier

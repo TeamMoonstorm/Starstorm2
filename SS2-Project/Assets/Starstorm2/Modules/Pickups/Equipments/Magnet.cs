@@ -12,14 +12,8 @@ namespace SS2.Equipments
     {
         private const string token = "SS2_EQUIP_MAGNET_DESC";
 
-        public override SS2AssetRequest<EquipmentAssetCollection> AssetRequest<EquipmentAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acMagnet", SS2Bundle.Equipments);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _magnetPrefab = assetCollection.FindAsset<GameObject>("PickupMagnetController");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acMagnet", SS2Bundle.Equipments);
+
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Range at which Simple Magnet can pull pickups, in meters.")]
         [FormatToken(token, 0)]
@@ -44,6 +38,7 @@ namespace SS2.Equipments
 
         public override void Initialize()
         {
+            _magnetPrefab = AssetCollection.FindAsset<GameObject>("PickupMagnetController");
         }
 
         public override bool IsAvailable(ContentPack contentPack)

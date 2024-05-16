@@ -42,19 +42,7 @@ namespace SS2.Items
 
         public static Color echelonColor;
 
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRelicOfEchelon", SS2Bundle.Items);
-        }
-
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            //_overlay = assetCollection.FindAsset<Material>("matCognation");
-
-            //I couldn't find a material corresponding to the cognation overlay -Jace
-
-            _buffEchelon = assetCollection.FindAsset<BuffDef>("BuffEchelon");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRelicOfEchelon", SS2Bundle.Items);
 
         public override bool IsAvailable(ContentPack contentPack)
         {
@@ -63,6 +51,11 @@ namespace SS2.Items
 
         public override void Initialize()
         {
+            //_overlay = assetCollection.FindAsset<Material>("matCognation");
+
+            //I couldn't find a material corresponding to the cognation overlay -Jace
+
+            _buffEchelon = AssetCollection.FindAsset<BuffDef>("BuffEchelon");
             //BuffOverlays.AddBuffOverlay(_buffEchelon, _overlay);
 
             On.RoR2.Inventory.CalculateEquipmentCooldownScale += Inventory_CalculateEquipmentCooldownScale;

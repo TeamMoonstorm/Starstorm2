@@ -14,36 +14,7 @@ namespace SS2.Items
 {
     public sealed class RelicOfTermination : SS2Item, IContentPackModifier
     {
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRelicOfTermination", SS2Bundle.Items);
-        }
-
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            /*
-             * ItemDef - "RelicOfTermination" - Items
-             * GameObject - "RelicOfTerminationTargetMark" - Items
-             * GameObject - "NemmandoScepterSlashAppear" - NemCommando,
-             * GameObject - "RelicOfTerminationBuffEffect" - Items
-             * GameObject - "TerminationDeathHalo" - Items
-             * GameObject - "TerminationPositionIndicator" - Items
-             * GameObject - "TerminationDebris1" - Items
-             * GameObject - "TerminationDebris2" - Items
-             */
-            markEffect = assetCollection.FindAsset<GameObject>("RelicOfTerminationTargetMark");
-            //failEffect = assetCollection.FindAsset<GameObject>("RelicOfTerminationTargetMark");
-            buffEffect = assetCollection.FindAsset<GameObject>("RelicOfTerminationBuffEffect");
-            deathHalo = assetCollection.FindAsset<GameObject>("TerminationDeathHalo");
-            spawnRock1VFX = assetCollection.FindAsset<GameObject>("TerminationDebris1");
-            spawnRock2VFX = assetCollection.FindAsset<GameObject>("TerminationDebris2");
-            globalMarkEffectTwo = assetCollection.FindAsset<GameObject>("TerminationPositionInidcator");
-            overlayMaterial = assetCollection.FindAsset<Material>("matTerminationOverlay");
-            _buffCooldown = assetCollection.FindAsset<BuffDef>("BuffTerminationCooldown");
-            _buffFailed = assetCollection.FindAsset<BuffDef>("BuffTerminationFailed");
-            _buffReady = assetCollection.FindAsset<BuffDef>("BuffTerminationReady");
-            _buffVfx = assetCollection.FindAsset<BuffDef>("BuffTerminationVFX");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRelicOfTermination", SS2Bundle.Items);
 
         private const string token = "SS2_ITEM_RELICOFTERMINATION_DESC";
 
@@ -107,6 +78,19 @@ namespace SS2.Items
 
         public override void Initialize()
         {
+            markEffect = AssetCollection.FindAsset<GameObject>("RelicOfTerminationTargetMark");
+            //failEffect = AssetCollection.FindAsset<GameObject>("RelicOfTerminationTargetMark");
+            buffEffect = AssetCollection.FindAsset<GameObject>("RelicOfTerminationBuffEffect");
+            deathHalo = AssetCollection.FindAsset<GameObject>("TerminationDeathHalo");
+            spawnRock1VFX = AssetCollection.FindAsset<GameObject>("TerminationDebris1");
+            spawnRock2VFX = AssetCollection.FindAsset<GameObject>("TerminationDebris2");
+            globalMarkEffectTwo = AssetCollection.FindAsset<GameObject>("TerminationPositionInidcator");
+            overlayMaterial = AssetCollection.FindAsset<Material>("matTerminationOverlay");
+            _buffCooldown = AssetCollection.FindAsset<BuffDef>("BuffTerminationCooldown");
+            _buffFailed = AssetCollection.FindAsset<BuffDef>("BuffTerminationFailed");
+            _buffReady = AssetCollection.FindAsset<BuffDef>("BuffTerminationReady");
+            _buffVfx = AssetCollection.FindAsset<BuffDef>("BuffTerminationVFX");
+
             CharacterBody.onBodyStartGlobal += TerminationSpawnHook;
             GlobalEventManager.onCharacterDeathGlobal += TerminationDeathHook;
             On.RoR2.Util.GetBestBodyName += AddTerminalName;

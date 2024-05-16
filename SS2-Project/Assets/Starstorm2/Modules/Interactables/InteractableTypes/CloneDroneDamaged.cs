@@ -12,12 +12,8 @@ namespace SS2.Interactables
 {
     public sealed class CloneDroneDamaged : SS2Interactable
     {
-        public override SS2AssetRequest<InteractableAssetCollection> AssetRequest()
-        {
-            return SS2Assets.LoadAssetAsync<InteractableAssetCollection>("acCloneDrone", SS2Bundle.Interactables);
-        }
+        public override SS2AssetRequest<InteractableAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<InteractableAssetCollection>("acCloneDrone", SS2Bundle.Interactables);
 
-        private GameObject _interactable;
         private SummonMasterBehavior smb;
         private CharacterMaster cm;
         private GameObject bodyPrefab;
@@ -29,7 +25,7 @@ namespace SS2.Interactables
             On.EntityStates.Drone.DeathState.OnImpactServer += SpawnCloneCorpse;
 
             //add sound events, the bad way
-            smb = _interactable.GetComponent<SummonMasterBehavior>();
+            smb = InteractablePrefab.GetComponent<SummonMasterBehavior>();
             cm = smb.masterPrefab.GetComponent<CharacterMaster>();
             bodyPrefab = cm.bodyPrefab;
 
@@ -55,15 +51,6 @@ namespace SS2.Interactables
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * GameObject - "CloneDroneBroken" - Interactables
-             * InteractableCardProvider - "???" - Interactables
-             */
-            yield break;
         }
 
         

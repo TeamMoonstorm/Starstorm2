@@ -14,14 +14,7 @@ namespace SS2.Interactables
 {
     public sealed class DroneTable : SS2Interactable
     {
-        public override SS2AssetRequest<InteractableAssetCollection> AssetRequest()
-        {
-            return SS2Assets.LoadAssetAsync<InteractableAssetCollection>("acDroneTable", SS2Bundle.Interactables);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            bodyOrb = assetCollection.FindAsset<GameObject>("CharacterBodyOrbEffect");
-        }
+        public override SS2AssetRequest<InteractableAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<InteractableAssetCollection>("acDroneTable", SS2Bundle.Interactables);
 
         /// <summary>
         /// List of drone and interactable cost pairs. String is the body.name, int is the price a player pays, not the director.
@@ -46,6 +39,7 @@ namespace SS2.Interactables
 
         public override void Initialize()
         {
+            bodyOrb = AssetCollection.FindAsset<GameObject>("CharacterBodyOrbEffect");
             CostTypeCatalog.modHelper.getAdditionalEntries += AddDroneCostType;
 
             On.EntityStates.Drone.DeathState.OnEnter += OverrideDroneCorpse;
@@ -61,16 +55,6 @@ namespace SS2.Interactables
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * GameObject - "DroneTablePrefab" - Interactables
-             * GameObject - "CharacterBodyOrbEffect" - Interactables
-             * InteractableCardProvider - "???" - Interactables
-             */
-            yield break;
         }
 
         private void OverrideDroneCorpse(On.EntityStates.Drone.DeathState.orig_OnEnter orig, EntityStates.Drone.DeathState self)

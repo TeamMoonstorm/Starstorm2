@@ -25,15 +25,13 @@ namespace SS2.Survivors
 
         GameObject footstepDust { get; set; } = Resources.Load<GameObject>("Prefabs/GenericFootstepDust");
 
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            miniCritPrefab = assetCollection.FindAsset<GameObject>("CritsparkMini");
-            arrowProjectile = assetCollection.FindAsset<GameObject>("NemHuntressArrowProjectile");
-            explosiveArrowProjectile = assetCollection.FindAsset<GameObject>("NemHuntressArrowExplode");
-        }
 
         public override void Initialize()
         {
+            miniCritPrefab = AssetCollection.FindAsset<GameObject>("CritsparkMini");
+            arrowProjectile = AssetCollection.FindAsset<GameObject>("NemHuntressArrowProjectile");
+            explosiveArrowProjectile = AssetCollection.FindAsset<GameObject>("NemHuntressArrowExplode");
+
             CharacterBody body = CharacterPrefab.GetComponent<CharacterBody>();
             bodyIndex = body.bodyIndex;
             crosshairPrefab = body.defaultCrosshairPrefab;

@@ -10,9 +10,7 @@ namespace SS2.Artifacts
 #if DEBUG
     public class Adversity : SS2Artifact
     {
-        public override NullableRef<ArtifactCode> ArtifactCode => null;
-        public override ArtifactDef ArtifactDef => _artifactDef;
-        private ArtifactDef _artifactDef;
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ArtifactAssetCollection>("acAdversity", SS2Bundle.Artifacts);
 
         public static bool shouldUpgradeTP;
         public static float timer;
@@ -23,16 +21,6 @@ namespace SS2.Artifacts
         public override bool IsAvailable(ContentPack contentPack)
         {
             return false;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            var request = SS2Assets.LoadAssetAsync<ArtifactDef>("Adversity", SS2Bundle.Artifacts);
-            request.StartLoad();
-
-            while (!request.IsComplete) yield return null;
-
-            _artifactDef = request.Asset;
         }
 
         public override void OnArtifactDisabled()

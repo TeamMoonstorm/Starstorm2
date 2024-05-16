@@ -17,16 +17,8 @@ namespace SS2.Items
     {
         private const string token = "SS2_ITEM_JETBOOTS_DESC";
 
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acJetBoots", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _tracerPrefab = assetCollection.FindAsset<GameObject>("TracerJetBoots");
-            _muzzleFlashPrefab = assetCollection.FindAsset<GameObject>("MuzzleflashJetBoots");
-            _effectPrefab = assetCollection.FindAsset<GameObject>("JetBootsEffect");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acJetBoots", SS2Bundle.Items);
+
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base damage of Prototype Jet Boots' explosion. Burn damage deals an additional 50% of this value. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float baseDamage = 5f;
@@ -49,7 +41,12 @@ namespace SS2.Items
         private static GameObject _effectPrefab;
 
         public override void Initialize()
-        {            // this will interfere with other bonus jump items but they can be unified in a similar way to this
+        {
+            _tracerPrefab = AssetCollection.FindAsset<GameObject>("TracerJetBoots");
+            _muzzleFlashPrefab = AssetCollection.FindAsset<GameObject>("MuzzleflashJetBoots");
+            _effectPrefab = AssetCollection.FindAsset<GameObject>("JetBootsEffect");
+
+            // this will interfere with other bonus jump items but they can be unified in a similar way to this
             IL.RoR2.CharacterBody.RecalculateStats += RecalculateStatsHook; // recalculatestatsapi doesnt have maxjumpcount
             IL.EntityStates.GenericCharacterMain.ProcessJump += ProcessJumpHook;
             On.RoR2.CharacterBody.OnBuffFinalStackLost += RechargeBoots;

@@ -12,10 +12,7 @@ namespace SS2.Equipments
 {
     public sealed class AffixEmpyrean : SS2EliteEquipment
     {
-        public override SS2AssetRequest<EliteAssetCollection> AssetRequest()
-        {
-            return SS2Assets.LoadAssetAsync<EliteAssetCollection>("acAffixEmpyrean", SS2Bundle.Equipments);
-        }
+        public override SS2AssetRequest<EliteAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<EliteAssetCollection>("acAffixEmpyrean", SS2Bundle.Equipments);
 
         public static List<EliteDef> blacklistedEliteDefs = new List<EliteDef>();
 

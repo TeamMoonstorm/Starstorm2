@@ -16,7 +16,7 @@ namespace SS2
     /// </summary>
     public abstract class SS2Difficulty : IDifficultyContentPiece
     {
-        public SerializableDifficultyDef DifficultyDef;
+        public SerializableDifficultyDef DifficultyDef { get; protected set; }
 
         SerializableDifficultyDef IContentPiece<SerializableDifficultyDef>.Asset => DifficultyDef;
 

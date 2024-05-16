@@ -15,15 +15,7 @@ namespace SS2.Items
     public sealed class Needles : SS2Item, IContentPackModifier
     {
         private const string token = "SS2_ITEM_NEEDLES_DESC";
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acNeedles", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _procEffect = assetCollection.FindAsset<GameObject>("NeedlesProcEffect");
-            _critEffect = assetCollection.FindAsset<GameObject>("NeedlesCritEffect");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acNeedles", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance for the debuff to be applied on hit. (1 = 1%)")]
         [FormatToken(token, 0)]
@@ -40,6 +32,8 @@ namespace SS2.Items
 
         public override void Initialize()
         {
+            _procEffect = AssetCollection.FindAsset<GameObject>("NeedlesProcEffect");
+            _critEffect = AssetCollection.FindAsset<GameObject>("NeedlesCritEffect");
         }
 
         public override bool IsAvailable(ContentPack contentPack)

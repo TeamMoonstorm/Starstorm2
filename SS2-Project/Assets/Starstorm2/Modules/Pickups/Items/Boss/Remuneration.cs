@@ -8,18 +8,12 @@ namespace SS2.Items
 {
     public sealed class Remuneration : SS2Item
     {
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRemuneration", SS2Bundle.Items);
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRemuneration", SS2Bundle.Items);
         public static GameObject remunerationControllerPrefab;
 
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            remunerationControllerPrefab = assetCollection.FindAsset<GameObject>("RemunerationController");
-        }
         public override void Initialize()
         {
+            remunerationControllerPrefab = AssetCollection.FindAsset<GameObject>("RemunerationController");
             On.RoR2.PickupDisplay.RebuildModel += EnableVoidParticles;
         }
 

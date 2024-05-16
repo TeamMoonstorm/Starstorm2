@@ -14,15 +14,7 @@ namespace SS2.Items
     public sealed class DormantFungus : SS2Item
     {
         private const string token = "SS2_ITEM_DORMANTFUNGUS_DESC";
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acDormantFungus", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _dungusTrailEffect = assetCollection.FindAsset<GameObject>("DungusTrailEffect");
-            _dungusTrailEffectAlt = assetCollection.FindAsset<GameObject>("DungusTrailEffectAlt");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acDormantFungus", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base amount of healing. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
@@ -36,6 +28,8 @@ namespace SS2.Items
         private static GameObject _dungusTrailEffectAlt;
         public override void Initialize()
         {
+            _dungusTrailEffect = AssetCollection.FindAsset<GameObject>("DungusTrailEffect");
+            _dungusTrailEffectAlt = AssetCollection.FindAsset<GameObject>("DungusTrailEffectAlt");
         }
 
         public override bool IsAvailable(ContentPack contentPack)

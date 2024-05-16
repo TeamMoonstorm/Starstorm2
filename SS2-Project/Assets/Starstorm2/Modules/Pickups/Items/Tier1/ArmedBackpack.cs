@@ -10,10 +10,7 @@ namespace SS2.Items
 {
     public sealed class ArmedBackpack : SS2Item
     {
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acArmedBackpack", SS2Bundle.Items);
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acArmedBackpack", SS2Bundle.Items);
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Damage dealt by the missle per stack. (1 = 100%)")]
         [FormatToken("SS2_ITEM_ARMEDBACKPACK_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float backpackDamageCoeff = 4f;

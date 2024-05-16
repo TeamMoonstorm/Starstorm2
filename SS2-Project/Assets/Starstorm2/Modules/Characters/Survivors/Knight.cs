@@ -15,14 +15,6 @@ namespace SS2.Survivors
     {
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acKnight", SS2Bundle.Indev);
 
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _buffKnightCharged = assetCollection.FindAsset<BuffDef>("bdKnightCharged");
-            _matChargedOverlay = assetCollection.FindAsset<Material>("matKnightSuperShield");
-            _buffKnightSpecialPower = assetCollection.FindAsset<BuffDef>("bdKnightSpecialPowerBuff");
-            _matSpecialPowerOverlay = assetCollection.FindAsset<Material>("matKnightBuffOverlay");
-        }
-
         public BuffDef _buffKnightCharged;
         public Material _matChargedOverlay;
 
@@ -31,6 +23,11 @@ namespace SS2.Survivors
 
         public override void Initialize()
         {
+            _buffKnightCharged = AssetCollection.FindAsset<BuffDef>("bdKnightCharged");
+            _matChargedOverlay = AssetCollection.FindAsset<Material>("matKnightSuperShield");
+            _buffKnightSpecialPower = AssetCollection.FindAsset<BuffDef>("bdKnightSpecialPowerBuff");
+            _matSpecialPowerOverlay = AssetCollection.FindAsset<Material>("matKnightBuffOverlay");
+
             CharacterBody.onBodyStartGlobal += KnightBodyStart;
             ModifyPrefab();
 

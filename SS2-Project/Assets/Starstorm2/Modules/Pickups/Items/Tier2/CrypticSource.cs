@@ -12,15 +12,7 @@ namespace SS2.Items
     {
         private const string token = "SS2_ITEM_CRYPTICSOURCE_DESC";
 
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acCrypticSource", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _readyEffectPrefab = assetCollection.FindAsset<GameObject>("CrypticSourceReady");
-            _explosionEffectPrefab = assetCollection.FindAsset<GameObject>("CrypticSourceExplosion");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acCrypticSource", SS2Bundle.Items);
 
         private static GameObject _readyEffectPrefab;
         private static GameObject _explosionEffectPrefab;
@@ -49,6 +41,8 @@ namespace SS2.Items
 
         public override void Initialize()
         {
+            _readyEffectPrefab = AssetCollection.FindAsset<GameObject>("CrypticSourceReady");
+            _explosionEffectPrefab = AssetCollection.FindAsset<GameObject>("CrypticSourceExplosion");
         }
 
         public sealed class Behavior : BaseItemBodyBehavior

@@ -15,18 +15,43 @@ namespace SS2
     /// <summary>
     /// <inheritdoc cref="IItemTierContentPiece"/>
     /// </summary>
-    public abstract class SS2ItemTier : IItemTierContentPiece
+    public abstract class SS2ItemTier : IItemTierContentPiece, IContentPackModifier
     {
-        public abstract NullableRef<SerializableColorCatalogEntry> ColorIndex { get; }
-        public abstract NullableRef<SerializableColorCatalogEntry> DarkColorIndex { get; }
-        public abstract GameObject PickupDisplayVFX { get; }
-        public List<ItemIndex> ItemsWithThisTier { get; set; }
-        public List<PickupIndex> AvailableTierDropList { get; set; }
+        public ItemTierAssetCollection AssetCollection { get; private set; }
+        public NullableRef<SerializableColorCatalogEntry> ColorIndex { get; protected set; }
+        public NullableRef<SerializableColorCatalogEntry> DarkColorIndex { get; protected set; }
+        public GameObject PickupDisplayVFX { get; protected set; }
+        public List<ItemIndex> ItemsWithThisTier { get; set; } = new List<ItemIndex>();
+        public List<PickupIndex> AvailableTierDropList { get; set; } = new List<PickupIndex>();
         ItemTierDef IContentPiece<ItemTierDef>.Asset => ItemTierDef;
-        public abstract ItemTierDef ItemTierDef { get; }
+        public ItemTierDef ItemTierDef { get; protected set;  }
 
+        public abstract SS2AssetRequest<ItemTierAssetCollection> AssetRequest { get; }
         public abstract void Initialize();
         public abstract bool IsAvailable(ContentPack contentPack);
-        public abstract IEnumerator LoadContentAsync();
+
+        public virtual IEnumerator LoadContentAsync()
+        {
+            SS2AssetRequest<ItemTierAssetCollection> request = AssetRequest;
+
+            request.StartLoad();
+            while (!request.IsComplete)
+                yield return null;
+
+            AssetCollection = request.Asset;
+            ItemTierDef = AssetCollection.itemTierDef;
+            
+            if (AssetCollection.colorIndex)
+                ColorIndex = AssetCollection.colorIndex;
+            if (AssetCollection.darkColorIndex)
+                DarkColorIndex = AssetCollection.darkColorIndex;
+
+            PickupDisplayVFX = AssetCollection.pickupDisplayVFX;
+        }
+
+        public void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.AddContentFromAssetCollection(AssetCollection);
+        }
     }
 }

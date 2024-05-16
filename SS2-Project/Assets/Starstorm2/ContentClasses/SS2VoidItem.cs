@@ -17,45 +17,41 @@ namespace SS2
     public abstract class SS2VoidItem : IVoidItemContentPiece
     {
         public ItemAssetCollection AssetCollection { get; private set; }
-        public NullableRef<List<GameObject>> ItemDisplayPrefabs;
-        public ItemDef ItemDef;
+        public NullableRef<List<GameObject>> ItemDisplayPrefabs { get; protected set; } = new List<GameObject>();
+        public ItemDef ItemDef { get; protected set; }
 
         ItemDef IContentPiece<ItemDef>.Asset => ItemDef;
         NullableRef<List<GameObject>> IItemContentPiece.ItemDisplayPrefabs => ItemDisplayPrefabs;
 
-        public abstract SS2AssetRequest<T> AssetRequest<T>() where T : UnityEngine.Object;
+        public abstract SS2AssetRequest AssetRequest();
 
 
         public abstract void Initialize();
         public abstract bool IsAvailable(ContentPack contentPack);
         public virtual IEnumerator LoadContentAsync()
         {
-            SS2AssetRequest<UnityEngine.Object> request = AssetRequest<UnityEngine.Object>();
+            SS2AssetRequest request = AssetRequest();
 
             request.StartLoad();
             while (!request.IsComplete)
                 yield return null;
 
-            if (request.Asset is ItemAssetCollection)
+            if (request.BoxedAsset is ItemAssetCollection collection)
             {
-                AssetCollection = (ItemAssetCollection)request.Asset;
+                AssetCollection = collection;
 
                 ItemDef = AssetCollection.itemDef;
                 ItemDisplayPrefabs = AssetCollection.itemDisplayPrefabs;
-
-                OnAssetCollectionLoaded(AssetCollection);
             }
-            else if (request.Asset is ItemDef)
+            else if (request.BoxedAsset is ItemDef def)
             {
-                ItemDef = (ItemDef)request.Asset;
+                ItemDef = def;
             }
             else
             {
-                SS2Log.Error("Invalid AssetRequest " + request.AssetName + " of type " + request.Asset.GetType());
+                SS2Log.Error("Invalid AssetRequest " + request.AssetName + " of type " + request.BoxedAsset.GetType());
             }
         }
-
-        public virtual void OnAssetCollectionLoaded(AssetCollection assetCollection) { }
 
         public virtual void ModifyContentPack(ContentPack contentPack)
         {

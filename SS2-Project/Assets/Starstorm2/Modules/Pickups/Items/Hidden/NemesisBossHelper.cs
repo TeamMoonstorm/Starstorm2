@@ -12,7 +12,7 @@ namespace SS2.Items
 {
     public sealed class NemesisBossHelper : SS2Item
     {
-        public override SS2AssetRequest<ItemDef> AssetRequest<ItemDef>() => SS2Assets.LoadAssetAsync<ItemDef>("NemBossHelper", SS2Bundle.Items);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemDef>("NemBossHelper", SS2Bundle.Items);
         public override void Initialize()
         {
             RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;

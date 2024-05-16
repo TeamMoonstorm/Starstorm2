@@ -15,10 +15,7 @@ namespace SS2.Items
     public sealed class Fork : SS2Item
     {
         private const string token = "SS2_ITEM_FORK_DESC";
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acFork", SS2Bundle.Items);
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acFork", SS2Bundle.Items);
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Bonus percent damage per fork. (1 = 1%)")]
         [FormatToken(token, 0)]
         public static float percentDamageBonus = 8f;

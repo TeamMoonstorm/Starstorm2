@@ -15,15 +15,7 @@ namespace SS2.Items
     {
         private const string token = "SS2_ITEM_LIGHTNINGONKILL_DESC";
 
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acLightningOnKill", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _orbEffect = assetCollection.FindAsset<GameObject>("JellyOrbEffect");
-            _soundEffect = assetCollection.FindAsset<NetworkSoundEventDef>("nsedProcLightningOnKill");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acLightningOnKill", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Total damage of Man O' War's lightning. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
@@ -53,6 +45,8 @@ namespace SS2.Items
 
         public override void Initialize()
         {
+            _orbEffect = AssetCollection.FindAsset<GameObject>("JellyOrbEffect");
+            _soundEffect = AssetCollection.FindAsset<NetworkSoundEventDef>("nsedProcLightningOnKill");
             GlobalEventManager.onCharacterDeathGlobal += ProcLightningOnKill;
         }
 

@@ -13,14 +13,7 @@ namespace SS2.Items
 {
     public sealed class StirringSoul : SS2Item
     {
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acStirringSoul", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _monsterSoulPickup = assetCollection.FindAsset<GameObject>("MonsterSoul");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acStirringSoul", SS2Bundle.Items);
 
         private static GameObject _monsterSoulPickup;
 
@@ -33,6 +26,7 @@ namespace SS2.Items
 
         public override void Initialize()
         {
+            _monsterSoulPickup = AssetCollection.FindAsset<GameObject>("MonsterSoul");
         }
 
         public override bool IsAvailable(ContentPack contentPack)

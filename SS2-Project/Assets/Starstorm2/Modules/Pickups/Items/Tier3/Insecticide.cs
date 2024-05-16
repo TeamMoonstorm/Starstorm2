@@ -11,14 +11,7 @@ namespace SS2.Items
 {
     public sealed class Insecticide : SS2Item, IContentPackModifier
     {
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acInsecticide", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _hitEffect = assetCollection.FindAsset<GameObject>("InsecticideEffect");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acInsecticide", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance. (1 = 100%)")]
         [FormatToken("SS2_ITEM_INSECTICIDE_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
@@ -39,6 +32,7 @@ namespace SS2.Items
         public static DotController.DotIndex DotIndex { get; private set; }
         public override void Initialize()
         {
+            _hitEffect = AssetCollection.FindAsset<GameObject>("InsecticideEffect");
             DotController.onDotInflictedServerGlobal += RefreshInsects;
             index = DotAPI.RegisterDotDef(0.25f, 0.15f, DamageColorIndex.DeathMark, _buffInsecticide);
         }

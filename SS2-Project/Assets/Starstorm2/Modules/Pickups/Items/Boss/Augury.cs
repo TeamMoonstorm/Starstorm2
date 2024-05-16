@@ -14,16 +14,11 @@ namespace SS2.Items
     {
         private static GameObject _attachment;
 
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acAugury", SS2Bundle.Indev);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _attachment = assetCollection.FindAsset<GameObject>("AuguryBodyAttachment");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acAugury", SS2Bundle.Indev);
+
         public override void Initialize()
         {
+            _attachment = AssetCollection.FindAsset<GameObject>("AuguryBodyAttachment");
         }
 
         public override bool IsAvailable(ContentPack contentPack)

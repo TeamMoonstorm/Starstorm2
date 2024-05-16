@@ -15,7 +15,7 @@ namespace SS2.Items
 
     public sealed class BoostCooldowns : SS2Item
     {
-        public override SS2AssetRequest<ItemDef> AssetRequest<ItemDef>() => SS2Assets.LoadAssetAsync<ItemDef>("BoostCooldowns", SS2Bundle.Items);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemDef>("BoostCooldowns", SS2Bundle.Items);
 
         public override void Initialize()
         {

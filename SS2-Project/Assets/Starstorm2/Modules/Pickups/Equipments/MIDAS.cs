@@ -9,10 +9,7 @@ namespace SS2.Equipments
 {
     public sealed class MIDAS : SS2Equipment
     {
-        public override SS2AssetRequest<EquipmentAssetCollection> AssetRequest<EquipmentAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acMIDAS", SS2Bundle.Equipments);
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acMIDAS", SS2Bundle.Equipments);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Health percentage sacrificed (1 = 100%)")]
         [FormatToken("SS2_EQUIP_MIDAS_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]

@@ -15,15 +15,7 @@ namespace SS2.Items
     public sealed class HuntersSigil : SS2Item, IContentPackModifier
     {
         private const string token = "SS2_ITEM_HUNTERSSIGIL_DESC";
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acHuntersSigil", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _effect = assetCollection.FindAsset<GameObject>("SigilEffect");
-            _sigilWard = assetCollection.FindAsset<GameObject>("SigilWard");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acHuntersSigil", SS2Bundle.Items);
 
         private static GameObject _effect;
         private static GameObject _sigilWard;
@@ -54,6 +46,9 @@ namespace SS2.Items
 
         public override void Initialize()
         {
+            _effect = AssetCollection.FindAsset<GameObject>("SigilEffect");
+            _sigilWard = AssetCollection.FindAsset<GameObject>("SigilWard");
+
             BuffOverlays.AddBuffOverlay(_sigilBuff, _matOverlay);
 
             R2API.RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;

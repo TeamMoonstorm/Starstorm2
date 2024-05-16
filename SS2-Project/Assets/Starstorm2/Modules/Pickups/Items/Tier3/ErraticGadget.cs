@@ -24,16 +24,7 @@ namespace SS2.Items
     public sealed class ErraticGadget : SS2Item
     {
         private const string token = "SS2_ITEM_ERRATICGADGET_DESC";
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acErraticGadget", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _orbEffectPrefab = assetCollection.FindAsset<GameObject>("GadgetOrbEffect");
-            _procEffectPrefab = assetCollection.FindAsset<GameObject>("GadgetLightningStartEffect");
-            _displayEffectPrefab = assetCollection.FindAsset<GameObject>("GadgetLightningProcEffect");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acErraticGadget", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance on hit to fire lightning. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
@@ -59,7 +50,11 @@ namespace SS2.Items
 
         // man o war handled in its own class
         public override void Initialize()
-        {            
+        {
+            _orbEffectPrefab = AssetCollection.FindAsset<GameObject>("GadgetOrbEffect");
+            _procEffectPrefab = AssetCollection.FindAsset<GameObject>("GadgetLightningStartEffect");
+            _displayEffectPrefab = AssetCollection.FindAsset<GameObject>("GadgetLightningProcEffect");
+
             PROCTYPEAPIWHEN = DamageAPI.ReserveDamageType();
             On.RoR2.Orbs.LightningOrb.OnArrival += LightningOrb_OnArrival; // uke tesla BFG arti loader 
             //On.RoR2.Orbs.VoidLightningOrb.Begin += VoidLightningOrb_Begin; // polylute /// nah no thanks not real lightning

@@ -9,20 +9,10 @@ namespace SS2.ItemTiers
 {
     public class Sibylline : SS2ItemTier, IContentPackModifier
     {
-        private AssetCollection _assetCollection;
-        public override NullableRef<SerializableColorCatalogEntry> ColorIndex => null;
-
-        public override NullableRef<SerializableColorCatalogEntry> DarkColorIndex => null;
-
-        public override GameObject PickupDisplayVFX => _pickupDisplayVFX;
-        private GameObject _pickupDisplayVFX;
-
-        public override ItemTierDef ItemTierDef => _itemTierDef;
-        private ItemTierDef _itemTierDef;
+        public override SS2AssetRequest<ItemTierAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<ItemTierAssetCollection>("acSibylline", SS2Bundle.Base);
 
         public override void Initialize()
         {
-            
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -32,24 +22,16 @@ namespace SS2.ItemTiers
 
         public override IEnumerator LoadContentAsync()
         {
-            var assetRequest = SS2Assets.LoadAssetAsync<AssetCollection>("acSibylline", SS2Bundle.Base);
-
-            assetRequest.StartLoad();
-            while (!assetRequest.IsComplete)
+            var enumerator = base.LoadContentAsync();
+            while (!enumerator.IsDone())
                 yield return null;
 
-            _assetCollection = assetRequest.Asset;
+            var request = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/Common/VoidOrb.prefab");
+            while (!request.IsDone)
+                yield return null;
 
-            _pickupDisplayVFX = _assetCollection.FindAsset<GameObject>("SibyllinePickupDisplayVFX");
-            _itemTierDef = _assetCollection.FindAsset<ItemTierDef>("Sibylline");
-            _itemTierDef.dropletDisplayPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/Common/VoidOrb.prefab").WaitForCompletion();
+            ItemTierDef.dropletDisplayPrefab = request.Result;
             yield break;
-           
-        }
-
-        public void ModifyContentPack(ContentPack contentPack)
-        {
-            contentPack.itemTierDefs.AddSingle(_itemTierDef);
         }
     }
 }

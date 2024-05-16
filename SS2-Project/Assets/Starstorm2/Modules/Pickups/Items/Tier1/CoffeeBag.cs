@@ -12,14 +12,7 @@ namespace SS2.Items
     public sealed class CoffeeBag : SS2Item, IContentPackModifier
     {
         public const string token = "SS2_ITEM_COFFEEBAG_DESC";
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acCoffeeBag", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _coffeeBean = assetCollection.FindAsset<GameObject>("CoffeeBeanPickup");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acCoffeeBag", SS2Bundle.Items);
 
         private GameObject _coffeeBean;
 
@@ -41,6 +34,7 @@ namespace SS2.Items
 
         public override void Initialize()
         {
+            _coffeeBean = AssetCollection.FindAsset<GameObject>("CoffeeBeanPickup");
             GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
             RecalculateStatsAPI.GetStatCoefficients += CalculateStatsCoffeeBag;
         }

@@ -14,10 +14,7 @@ namespace SS2.Equipments
 
     public sealed class AffixKinetic : SS2EliteEquipment
     {
-        public override SS2AssetRequest<EliteAssetCollection> AssetRequest()
-        {
-            return SS2Assets.LoadAssetAsync<EliteAssetCollection>("acAffixKinetic", SS2Bundle.Equipments);
-        }
+        public override SS2AssetRequest<EliteAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<EliteAssetCollection>("acAffixKinetic", SS2Bundle.Equipments);
         public override bool Execute(EquipmentSlot slot)
         {
             return false;

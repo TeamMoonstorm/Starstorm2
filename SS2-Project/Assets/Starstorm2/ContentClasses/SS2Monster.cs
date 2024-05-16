@@ -15,12 +15,12 @@ namespace SS2
     /// <summary>
     /// <inheritdoc cref="IMonsterContentPiece"/>
     /// </summary>
-    public abstract class SS2Monster : IMonsterContentPiece
+    public abstract class SS2Monster : IMonsterContentPiece, IContentPackModifier
     {
-        public NullableRef<MonsterCardProvider> CardProvider;
-        public NullableRef<DirectorAPI.DirectorCardHolder> DissonanceCard;
+        public NullableRef<MonsterCardProvider> CardProvider { get; protected set; }
+        public NullableRef<DirectorAPI.DirectorCardHolder> DissonanceCard { get; protected set; }
         public MonsterAssetCollection AssetCollection { get; private set; }
-        public NullableRef<GameObject> MasterPrefab { get; private set; }
+        public NullableRef<GameObject> MasterPrefab { get; protected set; }
 
         NullableRef<DirectorAPI.DirectorCardHolder> IMonsterContentPiece.DissonanceCard => DissonanceCard;
         CharacterBody IGameObjectContentPiece<CharacterBody>.Component => CharacterPrefab.GetComponent<CharacterBody>();
@@ -49,10 +49,8 @@ namespace SS2
             MasterPrefab = AssetCollection.masterPrefab;
             CardProvider = AssetCollection.monsterCardProvider;
             DissonanceCard = AssetCollection.dissonanceCardHolder;
-            OnAssetCollectionLoaded(AssetCollection);
         }
 
-        public virtual void OnAssetCollectionLoaded(AssetCollection assetCollection) { }
 
         public virtual void ModifyContentPack(ContentPack contentPack)
         {

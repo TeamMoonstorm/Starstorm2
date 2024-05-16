@@ -11,10 +11,7 @@ namespace SS2.Items
     public sealed class UraniumHoreshoe : SS2Item
     {
         private const string token = "SS2_ITEM_URANIUMHORSESHOE_DESC";
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acUraniumHorseshoe", SS2Bundle.Items);
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acUraniumHorseshoe", SS2Bundle.Items);
 
         public override void Initialize()
         {

@@ -11,14 +11,7 @@ namespace SS2.Items
     public sealed class GuardingAmulet : SS2Item
     {
         public const string token = "SS2_ITEM_GUARDINGAMULET_DESC";
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acGuardingAmulet", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _shieldEffect = assetCollection.FindAsset<GameObject>("AmuletShieldEffect");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acGuardingAmulet", SS2Bundle.Items);
         private static GameObject _shieldEffect;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Damage reduction per stack. (1 = 100%)")]
@@ -27,6 +20,7 @@ namespace SS2.Items
 
         public override void Initialize()
         {
+            _shieldEffect = AssetCollection.FindAsset<GameObject>("AmuletShieldEffect");
         }
 
         public override bool IsAvailable(ContentPack contentPack)
