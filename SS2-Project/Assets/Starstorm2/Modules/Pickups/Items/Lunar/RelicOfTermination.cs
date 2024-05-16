@@ -39,6 +39,10 @@ namespace SS2.Items
             spawnRock2VFX = assetCollection.FindAsset<GameObject>("TerminationDebris2");
             globalMarkEffectTwo = assetCollection.FindAsset<GameObject>("TerminationPositionInidcator");
             overlayMaterial = assetCollection.FindAsset<Material>("matTerminationOverlay");
+            _buffCooldown = assetCollection.FindAsset<BuffDef>("BuffTerminationCooldown");
+            _buffFailed = assetCollection.FindAsset<BuffDef>("BuffTerminationFailed");
+            _buffReady = assetCollection.FindAsset<BuffDef>("BuffTerminationReady");
+            _buffVfx = assetCollection.FindAsset<BuffDef>("BuffTerminationVFX");
         }
 
         private const string token = "SS2_ITEM_RELICOFTERMINATION_DESC";
@@ -89,8 +93,8 @@ namespace SS2.Items
         public static GameObject buffEffect;
 
         public static Material overlayMaterial; // SS2Assets.LoadAsset<Material>("matTerminationOverlay");
-        public BuffDef _buffCooldown; //{ get; } = SS2Assets.LoadAsset<BuffDef>("BuffTerminationCooldown", SS2Bundle.Items);
-        public BuffDef _buffFailed;//{ get; } = SS2Assets.LoadAsset<BuffDef>("BuffTerminationFailed", SS2Bundle.Items);
+        public BuffDef _buffCooldown;
+        public BuffDef _buffFailed;
         public BuffDef _buffReady;//{ get; } = SS2Assets.LoadAsset<BuffDef>("BuffTerminationReady", SS2Bundle.Items);
         public BuffDef _buffVfx;//{ get; } = SS2Assets.LoadAsset<BuffDef>("BuffTerminationVFX", SS2Bundle.Items);
 

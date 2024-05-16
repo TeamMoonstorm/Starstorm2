@@ -28,7 +28,7 @@ namespace SS2.Items
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            throw new System.NotImplementedException();
+            return false;
         }
 
         private void BonusHeals(HealthComponent healthComponent, float healAmount, ProcChainMask procChainMask)

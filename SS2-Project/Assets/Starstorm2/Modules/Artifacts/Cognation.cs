@@ -14,9 +14,9 @@ namespace SS2.Artifacts
 {
     public sealed class Cognation : SS2Artifact
     {
-        public override NullableRef<ArtifactCode> ArtifactCode => throw new System.NotImplementedException();
+        public override NullableRef<ArtifactCode> ArtifactCode => _artifactCode;
         private ArtifactCode _artifactCode;
-        public override ArtifactDef ArtifactDef => throw new System.NotImplementedException();
+        public override ArtifactDef ArtifactDef => _artifactDef;
         private ArtifactDef _artifactDef;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ARTIFACT, ConfigDescOverride = "Whether or not cognation ghosts inherit all items from the original body")]

@@ -38,14 +38,6 @@ namespace SS2.Items
             return true;
         }
 
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * ItemDef - "ArmedBackpack" - Items
-             */
-            yield break;
-        }
-
         public sealed class Behavior : BaseItemBodyBehavior, IOnTakeDamageServerReceiver
         {
             [ItemDefAssociation]

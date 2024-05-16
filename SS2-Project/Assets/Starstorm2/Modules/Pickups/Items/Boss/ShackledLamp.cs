@@ -13,7 +13,7 @@ namespace SS2.Items
     {
         public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
         {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acShackedLamp", SS2Bundle.Items);
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acShackledLamp", SS2Bundle.Items);
         }
         public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
         {

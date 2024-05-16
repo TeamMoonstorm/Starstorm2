@@ -14,7 +14,7 @@ namespace SS2.Interactables
     {
         public override SS2AssetRequest<InteractableAssetCollection> AssetRequest()
         {
-            return SS2Assets.LoadAssetAsync<InteractableAssetCollection>("acShockDroneDamaged", SS2Bundle.Interactables);
+            return SS2Assets.LoadAssetAsync<InteractableAssetCollection>("acShockDrone", SS2Bundle.Interactables);
         }
 
         private SummonMasterBehavior smb;

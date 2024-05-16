@@ -22,7 +22,7 @@ namespace SS2
         public abstract GameObject PickupDisplayVFX { get; }
         public List<ItemIndex> ItemsWithThisTier { get; set; }
         public List<PickupIndex> AvailableTierDropList { get; set; }
-        ItemTierDef IContentPiece<ItemTierDef>.Asset { get; }
+        ItemTierDef IContentPiece<ItemTierDef>.Asset => ItemTierDef;
         public abstract ItemTierDef ItemTierDef { get; }
 
         public abstract void Initialize();

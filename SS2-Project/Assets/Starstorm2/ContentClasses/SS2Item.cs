@@ -58,7 +58,8 @@ namespace SS2
 
         public virtual void ModifyContentPack(ContentPack contentPack)
         {
-            contentPack.AddContentFromAssetCollection(AssetCollection);
+            if(AssetCollection)
+                contentPack.AddContentFromAssetCollection(AssetCollection);
         }
     }
 }

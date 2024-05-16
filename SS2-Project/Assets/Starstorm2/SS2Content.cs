@@ -79,18 +79,21 @@ namespace SS2
         private static IEnumerator LoadFromAssetBundles()
         {
             SS2Log.Info($"Populating EntityStateTypes array...");
+            SS2ContentPack.entityStateTypes.Clear();
             SS2ContentPack.entityStateTypes.Add(typeof(SS2Content).Assembly.GetTypes().Where(type => typeof(EntityStates.EntityState).IsAssignableFrom(type)).ToArray());
 
             SS2Log.Info("Populating EntityStateConfiguration array...");
             SS2AssetRequest<EntityStateConfiguration> escRequest = new SS2AssetRequest<EntityStateConfiguration>(SS2Bundle.All);
             escRequest.StartLoad();
             while (!escRequest.IsComplete) yield return null;
+            SS2ContentPack.entityStateConfigurations.Clear();
             SS2ContentPack.entityStateConfigurations.Add(escRequest.Assets.ToArray());
 
             SS2Log.Info($"Populating EffectDefs array...");
             SS2AssetRequest<GameObject> gameObjectRequest = new SS2AssetRequest<GameObject>(SS2Bundle.All);
             gameObjectRequest.StartLoad();
             while(!gameObjectRequest.IsComplete) yield return null;
+            SS2ContentPack.effectDefs.Clear();
             SS2ContentPack.effectDefs.Add(gameObjectRequest.Assets.Where(go => go.GetComponent<EffectComponent>()).Select(go => new EffectDef(go)).ToArray());
 
             SS2Log.Info($"Calling AsyncAssetLoad Attribute Methods...");

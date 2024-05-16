@@ -14,7 +14,7 @@ namespace SS2.Interactables
     {
         public override SS2AssetRequest<InteractableAssetCollection> AssetRequest()
         {
-            return SS2Assets.LoadAssetAsync<InteractableAssetCollection>("acCloneDroneDamaged", SS2Bundle.Interactables);
+            return SS2Assets.LoadAssetAsync<InteractableAssetCollection>("acCloneDrone", SS2Bundle.Interactables);
         }
 
         private GameObject _interactable;
