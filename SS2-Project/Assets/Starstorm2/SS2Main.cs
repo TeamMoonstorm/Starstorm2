@@ -53,6 +53,7 @@ namespace SS2
 
             //N: i have no idea if SystemInitializer would be too late for this, so it stays here for now.
             //R2API.Networking.NetworkingAPI.RegisterMessageType<ScriptableObjects.NemesisSpawnCard.SyncBaseStats>();
+
         }
 
         private void Start()
