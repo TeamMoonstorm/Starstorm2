@@ -20,11 +20,12 @@ namespace SS2
         public InteractableCardProvider CardProvider { get; protected set; }
         IInteractable IGameObjectContentPiece<IInteractable>.Component => InteractablePrefab.GetComponent<IInteractable>();
         GameObject IContentPiece<GameObject>.Asset => InteractablePrefab;
-        InteractableCardProvider IInteractableContentPiece.CardProvider => CardProvider;
-
         public GameObject InteractablePrefab { get; protected set; }
 
         public abstract SS2AssetRequest<InteractableAssetCollection> AssetRequest { get; }
+
+        NullableRef<InteractableCardProvider> IInteractableContentPiece.CardProvider => CardProvider;
+
         public abstract void Initialize();
         public abstract bool IsAvailable(ContentPack contentPack);
         public virtual IEnumerator LoadContentAsync()
