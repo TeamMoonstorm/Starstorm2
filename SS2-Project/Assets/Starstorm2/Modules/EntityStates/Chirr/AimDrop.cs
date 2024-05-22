@@ -26,6 +26,8 @@ namespace EntityStates.Chirr
 
 		private Vector3 desiredTrajectory;
 
+		public bool cancelled;
+
 		public override void OnEnter()
         {
             base.OnEnter();
@@ -125,13 +127,12 @@ namespace EntityStates.Chirr
                 }
             }
 
-            if (!this.outer.destroying && this.grabController && this.grabController.IsGrabbing())
+            if (!this.cancelled && !this.outer.destroying && this.grabController && this.grabController.IsGrabbing())
 			{
                 Util.PlaySound("ChirrGrabThrow", base.gameObject);
 				base.PlayAnimation("FullBody, Override", "GrabThrow");
 				base.StartAimMode();
 				bool isFriend = this.grabController.victimInfo.body.teamComponent.teamIndex == this.teamComponent.teamIndex;
-
 
 				if (NetworkServer.active && this.chirrGrabBehavior)
                 {
