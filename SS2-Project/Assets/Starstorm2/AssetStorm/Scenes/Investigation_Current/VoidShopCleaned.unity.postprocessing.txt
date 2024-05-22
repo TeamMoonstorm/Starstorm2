@@ -130,7 +130,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 14997267}
-  - component: {fileID: 14997268}
+  - component: {fileID: 0}
   - component: {fileID: 14997269}
   m_Layer: 20
   m_Name: PP + Amb
@@ -153,23 +153,6 @@ Transform:
   m_Father: {fileID: 1533333761}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &14997268
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 14997266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: 2adf6f3dfca12d349b2f7e777e15e37e, type: 2}
-  isGlobal: 1
-  blendDistance: 0
-  weight: 1
-  priority: 0
 --- !u!114 &14997269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21811,7 +21794,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1549926155}
-  - component: {fileID: 1549926157}
+  - component: {fileID: 0}
   - component: {fileID: 1549926156}
   m_Layer: 20
   m_Name: PP
@@ -21847,23 +21830,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 261.27664
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1549926157
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1549926154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: 4f90b76a42449554596757593732b0e2, type: 2}
-  isGlobal: 0
-  blendDistance: 20
-  weight: 1
-  priority: 999
 --- !u!1001 &1551418442
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -4953,7 +4953,7 @@ GameObject:
   m_Component:
   - component: {fileID: 52475068}
   - component: {fileID: 52475070}
-  - component: {fileID: 52475069}
+  - component: {fileID: 0}
   m_Layer: 0
   m_Name: Directional Light (SUN)
   m_TagString: Untagged
@@ -4975,38 +4975,6 @@ Transform:
   m_Father: {fileID: 1533333761}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &52475069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 52475067}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1654260760, guid: 06dd3d5416bf43ea368cc39ff96e6d5a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NGSS_KEEP_ONDISABLE: 1
-  NGSS_NO_UPDATE_ON_PLAY: 0
-  NGSS_SHADOWS_RESOLUTION: 256
-  NGSS_SAMPLING_TEST: 16
-  NGSS_SAMPLING_FILTER: 48
-  NGSS_SAMPLING_DISTANCE: 75
-  NGSS_SHADOWS_SOFTNESS: 1
-  NGSS_PCSS_ENABLED: 0
-  NGSS_PCSS_SOFTNESS_NEAR: 0.125
-  NGSS_PCSS_SOFTNESS_FAR: 1
-  NGSS_NOISE_TO_DITHERING_SCALE: 0
-  NGSS_NOISE_TEXTURE: {fileID: 0}
-  NGSS_DENOISER_ENABLED: 1
-  NGSS_DENOISER_ITERATIONS: 2
-  NGSS_DENOISER_BLUR: 0.25
-  NGSS_DENOISER_EDGE_TOLERANCE: 0.5
-  NGSS_RECEIVER_PLANE_BIAS: 0
-  NGSS_CASCADES_BLENDING: 1
-  NGSS_CASCADES_BLENDING_VALUE: 1
-  NGSS_CASCADES_SOFTNESS_NORMALIZATION: 1
 --- !u!108 &52475070
 Light:
   m_ObjectHideFlags: 0
