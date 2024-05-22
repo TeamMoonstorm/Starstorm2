@@ -142,10 +142,7 @@ namespace EntityStates.Chirr
                 }
 				
 			}
-			else
-            {
-				SS2Log.Warning("Chirr.AimDrop: didn't see victim! This is fine if you are a client. IsGrabbing = " + this.grabController.IsGrabbing());
-            }
+
 			if (this.areaIndicatorInstance)
 			{
 				EntityState.Destroy(this.areaIndicatorInstance.gameObject);
