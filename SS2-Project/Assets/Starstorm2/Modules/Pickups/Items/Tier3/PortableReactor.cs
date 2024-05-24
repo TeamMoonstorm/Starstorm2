@@ -22,27 +22,20 @@ namespace SS2.Items
         [FormatToken(token, 1)]
         public static float stackingInvuln = 40f;
 
-        private BuffDef _buffPortableReactor; //SS2Assets.LoadAsset<BuffDef>("BuffReactor", SS2Bundle.Items);
-        public static Material _overlay; // SS2Assets.LoadAsset<Material>("matReactorBuffOverlay", SS2Bundle.Items);
+        public static GameObject bubbleEffectPrefab;
+        public static GameObject endEffectPrefab; 
+        public static GameObject shieldEffectPrefab; 
 
-        public static GameObject bubbleEffectPrefab; //SS2Assets.LoadAsset<GameObject>("ReactorBubbleEffect", SS2Bundle.Items);
-        public static GameObject endEffectPrefab; //SS2Assets.LoadAsset<GameObject>("ReactorBubbleEnd", SS2Bundle.Items);
-        public static GameObject shieldEffectPrefab; //SS2Assets.LoadAsset<GameObject>("ReactorShieldEffect", SS2Bundle.Items);
-
-        //★ ty nebby
-        //To-Do: This thing spits out a few errors every time a stage is started. Doesn't really NEED fixed, but probably should be.
         //N: This tbh should be moved to a hook on stage start, to avoid having a resurrected player becoming invincible.
         public override void Initialize()
         {
-            // load these effects
-            //public override Material OverlayMaterial => SS2Assets.LoadAsset<Material>("matReactorBuffOverlay", SS2Bundle.Items);
-            //public static GameObject bubbleEffectPrefab => SS2Assets.LoadAsset<GameObject>("ReactorBubbleEffect", SS2Bundle.Items);       
-            //public static GameObject endEffectPrefab => SS2Assets.LoadAsset<GameObject>("ReactorBubbleEnd", SS2Bundle.Items);
-            //public static GameObject shieldEffectPrefab => SS2Assets.LoadAsset<GameObject>("ReactorShieldEffect", SS2Bundle.Items);
+            bubbleEffectPrefab = AssetCollection.FindAsset<GameObject>("ReactorBubbleEffect");
+            endEffectPrefab = AssetCollection.FindAsset<GameObject>("ReactorBubbleEnd");
+            shieldEffectPrefab = AssetCollection.FindAsset<GameObject>("ReactorShieldEffect");
 
             CharacterBody.onBodyStartGlobal += ImFuckingInvincible;
 
-            BuffOverlays.AddBuffOverlay(_buffPortableReactor, _overlay);
+            BuffOverlays.AddBuffOverlay(AssetCollection.FindAsset<BuffDef>("BuffReactor"), AssetCollection.FindAsset<Material>("matReactorBuffOverlay"));
         }
 
         public override bool IsAvailable(ContentPack contentPack)
