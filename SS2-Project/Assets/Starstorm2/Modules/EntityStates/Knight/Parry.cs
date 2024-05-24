@@ -10,7 +10,7 @@ namespace EntityStates.Knight
     public class Parry : BasicMeleeAttack
     {
         public static float swingTimeCoefficient = 1f;
-        [FormatToken("SS2_KNIGHT_SHIELD_BASH_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
+        [FormatToken("SS2_KNIGHT_SHIELD_BASH_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float TokenModifier_dmgCoefficient => new ShieldPunch().damageCoefficient;
         
         // TODO: Make static once you have a replacement

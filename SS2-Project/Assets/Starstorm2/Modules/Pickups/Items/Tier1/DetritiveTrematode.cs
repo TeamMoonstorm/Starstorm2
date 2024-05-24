@@ -32,17 +32,12 @@ namespace SS2.Items
 
         private static DotController.DotIndex _trematodeDotIndex;
         private static GameObject _biteEffect;
-
-        public Material _overlay;
-
-        private BuffDef _buffTrematodes;
         public override void Initialize()
         {
             _biteEffect = AssetCollection.FindAsset<GameObject>("TrematodeBiteEffect");
-            _overlay = AssetCollection.FindAsset<Material>("matBloodOverlay");
-            _buffTrematodes = AssetCollection.FindAsset<BuffDef>("BuffTrematodes");
-            _trematodeDotIndex = DotAPI.RegisterDotDef(.5f, .5f, DamageColorIndex.Item, _buffTrematodes);
-            BuffOverlays.AddBuffOverlay(_buffTrematodes, _overlay);
+            BuffDef buffTrematodes = AssetCollection.FindAsset<BuffDef>("BuffTrematodes");
+            _trematodeDotIndex = DotAPI.RegisterDotDef(.5f, .5f, DamageColorIndex.Item, buffTrematodes);
+            BuffOverlays.AddBuffOverlay(buffTrematodes, AssetCollection.FindAsset<Material>("matBloodOverlay"));
         }
 
         public override bool IsAvailable(ContentPack contentPack)

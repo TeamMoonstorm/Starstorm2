@@ -20,36 +20,34 @@ namespace SS2.Items
         private static GameObject _effect;
         private static GameObject _sigilWard;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base amount of extra armor added.")]
-        [FormatToken(token, 0)]
-        public static float baseArmor = 20;
-
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of extra armor added per stack.")]
-        [FormatToken(token, 1)]
-        public static float stackArmor = 10;
-
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base amount of extra damage added. (1 = 100%)")]
-        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 2, 100)]
-        public static float baseDamage = .2f;
-
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of extra damage added per stack. (1 = 100%)")]
-        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 3, 100)]
-        public static float stackDamage = .10f;
-
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Radius the effect is applied in.")]
         [FormatToken(token, 0)]
         public static float radius = 8f;
 
-        public Material _matOverlay; //SS2Assets.LoadAsset<Material>("matSigilBuffOverlay", SS2Bundle.Items);
-        private BuffDef _sigilBuff; //SS2Assets.LoadAsset<BuffDef>("BuffSigil", SS2Bundle.Items);
-        private BuffDef _sigilBuffHidden; //SS2Assets.LoadAsset<BuffDef>("BuffSigilHidden", SS2Bundle.Items);
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base amount of extra armor added.")]
+        [FormatToken(token, 1)]
+        public static float baseArmor = 20;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of extra armor added per stack.")]
+        [FormatToken(token, 2)]
+        public static float stackArmor = 10;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base amount of extra damage added. (1 = 100%)")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 3)]
+        public static float baseDamage = .2f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of extra damage added per stack. (1 = 100%)")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 4)]
+        public static float stackDamage = .10f;
+
+        
 
         public override void Initialize()
         {
             _effect = AssetCollection.FindAsset<GameObject>("SigilEffect");
             _sigilWard = AssetCollection.FindAsset<GameObject>("SigilWard");
 
-            BuffOverlays.AddBuffOverlay(_sigilBuff, _matOverlay);
+            BuffOverlays.AddBuffOverlay(AssetCollection.FindAsset<BuffDef>("BuffSigil"), AssetCollection.FindAsset<Material>("matSigilBuffOverlay"));
 
             R2API.RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
         }

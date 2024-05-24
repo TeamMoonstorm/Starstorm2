@@ -14,7 +14,6 @@ namespace SS2
 {
     public class ExtendedAssetCollection : AssetCollection
     {
-#if UNITY_EDITOR
         public void OnValidate()
         {
             // make new entries empty instead of duplicates, so they dont get nuked by the duplicate remover
@@ -68,6 +67,5 @@ namespace SS2
             }
             this.assets = objects.ToArray();
         }
-#endif
     }
 }

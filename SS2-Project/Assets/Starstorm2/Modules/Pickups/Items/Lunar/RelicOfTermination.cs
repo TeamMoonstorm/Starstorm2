@@ -63,13 +63,6 @@ namespace SS2.Items
         public static GameObject failEffect;
         public static GameObject buffEffect;
 
-        public static Material overlayMaterial; // SS2Assets.LoadAsset<Material>("matTerminationOverlay");
-        public BuffDef _buffCooldown;
-        public BuffDef _buffFailed;
-        public BuffDef _buffReady;//{ get; } = SS2Assets.LoadAsset<BuffDef>("BuffTerminationReady", SS2Bundle.Items);
-        public BuffDef _buffVfx;//{ get; } = SS2Assets.LoadAsset<BuffDef>("BuffTerminationVFX", SS2Bundle.Items);
-
-
         public static Xoroshiro128Plus terminationRNG;
 
         TerminationDropTable dropTable;
@@ -85,11 +78,12 @@ namespace SS2.Items
             spawnRock1VFX = AssetCollection.FindAsset<GameObject>("TerminationDebris1");
             spawnRock2VFX = AssetCollection.FindAsset<GameObject>("TerminationDebris2");
             globalMarkEffectTwo = AssetCollection.FindAsset<GameObject>("TerminationPositionInidcator");
-            overlayMaterial = AssetCollection.FindAsset<Material>("matTerminationOverlay");
-            _buffCooldown = AssetCollection.FindAsset<BuffDef>("BuffTerminationCooldown");
-            _buffFailed = AssetCollection.FindAsset<BuffDef>("BuffTerminationFailed");
-            _buffReady = AssetCollection.FindAsset<BuffDef>("BuffTerminationReady");
-            _buffVfx = AssetCollection.FindAsset<BuffDef>("BuffTerminationVFX");
+
+            Material overlayMaterial = AssetCollection.FindAsset<Material>("matTerminationOverlay");
+            BuffDef buffCooldown = AssetCollection.FindAsset<BuffDef>("BuffTerminationCooldown");
+            BuffDef buffFailed = AssetCollection.FindAsset<BuffDef>("BuffTerminationFailed");
+            BuffDef buffReady = AssetCollection.FindAsset<BuffDef>("BuffTerminationReady");
+            BuffDef buffVfx = AssetCollection.FindAsset<BuffDef>("BuffTerminationVFX");
 
             CharacterBody.onBodyStartGlobal += TerminationSpawnHook;
             GlobalEventManager.onCharacterDeathGlobal += TerminationDeathHook;
@@ -100,10 +94,10 @@ namespace SS2.Items
             dropTable = ScriptableObject.CreateInstance<TerminationDropTable>();
             bossOptions = new List<PickupIndex>();
 
-            BuffOverlays.AddBuffOverlay(_buffCooldown, overlayMaterial);
-            BuffOverlays.AddBuffOverlay(_buffFailed, overlayMaterial);
-            BuffOverlays.AddBuffOverlay(_buffReady, overlayMaterial);
-            BuffOverlays.AddBuffOverlay(_buffVfx, overlayMaterial);
+            BuffOverlays.AddBuffOverlay(buffCooldown, overlayMaterial);
+            BuffOverlays.AddBuffOverlay(buffFailed, overlayMaterial);
+            BuffOverlays.AddBuffOverlay(buffReady, overlayMaterial);
+            BuffOverlays.AddBuffOverlay(buffVfx, overlayMaterial);
         }
 
         public override bool IsAvailable(ContentPack contentPack)

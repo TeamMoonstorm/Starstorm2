@@ -15,25 +15,19 @@ namespace SS2.Survivors
     {
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acKnight", SS2Bundle.Indev);
 
-        public BuffDef _buffKnightCharged;
-        public Material _matChargedOverlay;
-
-        public BuffDef _buffKnightSpecialPower; 
-        public Material _matSpecialPowerOverlay; 
-
         public override void Initialize()
         {
-            _buffKnightCharged = AssetCollection.FindAsset<BuffDef>("bdKnightCharged");
-            _matChargedOverlay = AssetCollection.FindAsset<Material>("matKnightSuperShield");
-            _buffKnightSpecialPower = AssetCollection.FindAsset<BuffDef>("bdKnightSpecialPowerBuff");
-            _matSpecialPowerOverlay = AssetCollection.FindAsset<Material>("matKnightBuffOverlay");
+            BuffDef buffKnightCharged = AssetCollection.FindAsset<BuffDef>("bdKnightCharged");
+            Material matChargedOverlay = AssetCollection.FindAsset<Material>("matKnightSuperShield");
+            BuffDef buffKnightSpecialPower = AssetCollection.FindAsset<BuffDef>("bdKnightSpecialPowerBuff");
+            Material matSpecialPowerOverlay = AssetCollection.FindAsset<Material>("matKnightBuffOverlay");
 
             CharacterBody.onBodyStartGlobal += KnightBodyStart;
             ModifyPrefab();
 
             // Add the buff material overlays to buffoverlay dict
-            BuffOverlays.AddBuffOverlay(_buffKnightCharged, _matChargedOverlay);
-            BuffOverlays.AddBuffOverlay(_buffKnightSpecialPower, _matSpecialPowerOverlay);
+            BuffOverlays.AddBuffOverlay(buffKnightCharged, matChargedOverlay);
+            BuffOverlays.AddBuffOverlay(buffKnightSpecialPower, matSpecialPowerOverlay);
         }
 
 
@@ -51,7 +45,7 @@ namespace SS2.Survivors
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return false;
+            return true;
         }
 
         // TODO: Load the actual buff 

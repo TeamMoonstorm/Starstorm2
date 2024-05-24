@@ -12,12 +12,10 @@ namespace SS2.Equipments
     public sealed class WhiteFlag : SS2Equipment, IContentPackModifier
     {
         private const string token = "SS2_EQUIP_WHITEFLAG_DESC";
-        private BuffDef _buffSurrender;
 
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acWhiteFlag", SS2Bundle.Equipments);
 
         private GameObject _flagObject;
-        public static Material _overlay;// SS2Assets.LoadAsset<Material>("matSurrenderOverlay", SS2Bundle.Items);
         public static SkillDef disabledSkill;// SS2Assets.LoadAsset<SkillDef>("DisabledSkill", SS2Bundle.Items);
 
 
@@ -43,10 +41,10 @@ namespace SS2.Equipments
 
         public override void Initialize()
         {
-            _buffSurrender = AssetCollection.FindAsset<BuffDef>("BuffSurrender");
+            BuffDef buffSurrender = AssetCollection.FindAsset<BuffDef>("BuffSurrender");
             _flagObject = AssetCollection.FindAsset<GameObject>("WhiteFlagWard");
-            _overlay = AssetCollection.FindAsset<Material>("matSurrenderOverlay");
-            BuffOverlays.AddBuffOverlay(_buffSurrender, _overlay);
+            Material overlay = AssetCollection.FindAsset<Material>("matSurrenderOverlay");
+            BuffOverlays.AddBuffOverlay(buffSurrender, overlay);
         }
 
         public override bool IsAvailable(ContentPack contentPack)

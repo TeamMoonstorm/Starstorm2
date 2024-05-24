@@ -233,7 +233,8 @@ namespace SS2.Equipments
                             hc.body.AddTimedBuff(BuffCatalog.GetBuffDef(BuffCatalog.FindBuffIndex("BuffFear")), (4 + BuffCount) * hitInfo.hitSeverity);
                             return;
                         }
-                        hc.body.AddTimedBuff(SS2Content.Buffs.BuffVoidLeech, (4 + BuffCount) * hitInfo.hitSeverity);
+                        // commenting this out because swuff said to delete voidleech. dunno why its in affixkinetic. -orb
+                        //hc.body.AddTimedBuff(SS2Content.Buffs.BuffVoidLeech, (4 + BuffCount) * hitInfo.hitSeverity);
                         return;
                     }
                 }

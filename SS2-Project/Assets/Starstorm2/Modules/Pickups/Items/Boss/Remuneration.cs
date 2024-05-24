@@ -1,9 +1,9 @@
 ﻿using MSU;
 using RoR2;
 using RoR2.ContentManagement;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using R2API;
+using UnityEngine.AddressableAssets;
 namespace SS2.Items
 {
     public sealed class Remuneration : SS2Item
@@ -11,10 +11,15 @@ namespace SS2.Items
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRemuneration", SS2Bundle.Items);
         public static GameObject remunerationControllerPrefab;
 
+        public static GameObject deleteEffectPrefab;
         public override void Initialize()
         {
             remunerationControllerPrefab = AssetCollection.FindAsset<GameObject>("RemunerationController");
             On.RoR2.PickupDisplay.RebuildModel += EnableVoidParticles;
+
+            deleteEffectPrefab = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Nullifier/NullifierExplosion.prefab").WaitForCompletion(), "WAWA");
+            deleteEffectPrefab.GetComponent<EffectComponent>().soundName = "Play_nullifier_death_vortex_explode"; // cringe.
+            ContentAddition.AddEffect(deleteEffectPrefab); // i think this is how r2api works? not gonna look it up tehe
         }
 
         public override bool IsAvailable(ContentPack contentPack)

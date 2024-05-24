@@ -234,6 +234,8 @@ namespace SS2
 
             public static ItemDef Cognation;
 
+            public static ItemDef CognationHelper;
+
             public static ItemDef CompositeInjector;
 
             public static ItemDef ChirrFriendHelper;
@@ -335,8 +337,6 @@ namespace SS2
             public static ItemDef X4;
 
             public static ItemDef BaneFlask;
-
-            public static ItemDef NemesisBossHelper;
 
             public static ItemDef TerminationHelper;
 
@@ -441,8 +441,6 @@ namespace SS2
 
             public static BuffDef BuffTrematodes;
 
-            public static BuffDef BuffVoidLeech;
-
             public static BuffDef BuffWatchMetronome;
 
             public static BuffDef BuffWealth;
@@ -482,8 +480,6 @@ namespace SS2
             public static BuffDef BuffBane;
 
             public static BuffDef BuffRiposte;
-
-            public static BuffDef BuffCyborgPrimary;
 
             public static BuffDef BuffCyborgTeleporter;
 
@@ -537,17 +533,15 @@ namespace SS2
         }
         public static class Survivors
         {
-            public static SurvivorDef SurvivorChirr;
+            public static SurvivorDef Chirr;
 
-            public static SurvivorDef SurvivorExecutioner;
-
-            public static SurvivorDef SurvivorNemmando;
+            public static SurvivorDef survivorExecutioner2;
 
             public static SurvivorDef survivorNemCommando;
 
             public static SurvivorDef survivorNemCaptain;
 
-            public static SurvivorDef survivorNemMerc;
+            public static SurvivorDef NemMerc;
         }
 
         public static class ItemTierDefs

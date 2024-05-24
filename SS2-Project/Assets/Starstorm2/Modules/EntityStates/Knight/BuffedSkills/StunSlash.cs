@@ -11,7 +11,7 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
     class StunSlash : BasicMeleeAttack, SteppedSkillDef.IStepSetter
     {
         public static float swingTimeCoefficient = 1.42f;
-        [FormatToken("SS2_KNIGHT_PRIMARY_SWORD_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
+        [FormatToken("SS2_KNIGHT_PRIMARY_SWORD_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static GameObject beamProjectile;
         public static SkillDef originalSkillRef;
         public static float TokenModifier_dmgCoefficient => new SwingSword().damageCoefficient;

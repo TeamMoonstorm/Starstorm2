@@ -5,13 +5,9 @@ using RoR2.ContentManagement;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-using RoR2;
-using System.Collections.Generic;
-using UnityEngine;
+using RoR2.Items;
 using UnityEngine.Networking;
 using Mono.Cecil.Cil;
-using MonoMod.Cil;
 using System;
 using RoR2.Navigation;
 using RoR2.Projectile;
@@ -24,11 +20,7 @@ namespace SS2.Equipments
     {
         public Material _matEtherealOverlay; //=> SS2Assets.LoadAsset<Material>("matEtherealOverlay", SS2Bundle.Equipments);
 
-
-        public BuffDef _buffHakai;
-        public Material _matHakaiOverlay;
-
-        public override SS2AssetRequest<EliteAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<EliteAssetCollection>("acAFfixEthereal", SS2Bundle.Equipments);
+        public override SS2AssetRequest<EliteAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<EliteAssetCollection>("acAffixEthereal", SS2Bundle.Equipments);
 
         public override bool Execute(EquipmentSlot slot)
         {
@@ -40,15 +32,15 @@ namespace SS2.Equipments
             _matEtherealOverlay = AssetCollection.FindAsset<Material>("matEtherealOverlay");
 
             // Used for suicide buff
-            _buffHakai = AssetCollection.FindAsset<BuffDef>("bdHakai");
-            _matHakaiOverlay = AssetCollection.FindAsset<Material>("matHakaiOverlay");
+            BuffDef buffHakai = AssetCollection.FindAsset<BuffDef>("bdHakai");
+            Material matHakaiOverlay = AssetCollection.FindAsset<Material>("matHakaiOverlay");
             // Add relevant hooks
             IL.RoR2.HealthComponent.TakeDamage += EtherealDeathIL;
 
             // TODO: Make sure Eth overlay is handled
 
             // Used for suicide buff
-            BuffOverlays.AddBuffOverlay(_buffHakai, _matHakaiOverlay);
+            BuffOverlays.AddBuffOverlay(buffHakai, matHakaiOverlay);
         }
 
         private void EtherealDeathIL(ILContext il)
@@ -94,6 +86,28 @@ namespace SS2.Equipments
         {
         }
 
+        public sealed class BodyBehavior : BaseItemBodyBehavior
+        {
+            [ItemDefAssociation]
+            private static ItemDef GetItemDef() => SS2Content.Items.EtherealItemAffix;
+
+            public void Start()
+            {
+                if (NetworkServer.active)
+                {
+                    body.AddBuff(SS2Content.Buffs.bdEthereal);
+                }
+            }
+
+            private void OnDestroy()
+            {
+                if (NetworkServer.active && body.enabled)
+                {
+                    body.RemoveBuff(SS2Content.Buffs.bdEthereal);
+                }
+            }
+
+        }
         public sealed class HakaiBuffBehavior : BaseBuffBehaviour
         {
             [BuffDefAssociation]
