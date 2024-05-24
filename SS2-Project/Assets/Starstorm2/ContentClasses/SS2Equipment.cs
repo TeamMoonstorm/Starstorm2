@@ -14,7 +14,7 @@ namespace SS2
     /// <summary>
     /// <inheritdoc cref="IEquipmentContentPiece"/>
     /// </summary>
-    public abstract class SS2Equipment : IEquipmentContentPiece
+    public abstract class SS2Equipment : IEquipmentContentPiece, IContentPackModifier
     {
         public EquipmentAssetCollection AssetCollection { get; private set; }
 

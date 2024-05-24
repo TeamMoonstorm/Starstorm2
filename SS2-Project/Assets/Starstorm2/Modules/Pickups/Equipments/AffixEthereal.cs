@@ -29,7 +29,7 @@ namespace SS2.Equipments
 
         public override void Initialize()
         {
-            _matEtherealOverlay = AssetCollection.FindAsset<Material>("matEtherealOverlay");
+            Material matEtherealOverlay = AssetCollection.FindAsset<Material>("matEtherealOverlay");
 
             // Used for suicide buff
             BuffDef buffHakai = AssetCollection.FindAsset<BuffDef>("bdHakai");
@@ -37,7 +37,7 @@ namespace SS2.Equipments
             // Add relevant hooks
             IL.RoR2.HealthComponent.TakeDamage += EtherealDeathIL;
 
-            // TODO: Make sure Eth overlay is handled
+            BuffOverlays.AddBuffOverlay(EquipmentDef.passiveBuffDef, matEtherealOverlay);
 
             // Used for suicide buff
             BuffOverlays.AddBuffOverlay(buffHakai, matHakaiOverlay);
@@ -76,7 +76,7 @@ namespace SS2.Equipments
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return false;
+            return true;
         }
         public override void OnEquipmentLost(CharacterBody body)
         {

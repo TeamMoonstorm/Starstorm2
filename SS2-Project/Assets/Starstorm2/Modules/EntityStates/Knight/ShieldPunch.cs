@@ -9,7 +9,7 @@ namespace EntityStates.Knight
     class ShieldPunch : BasicMeleeAttack
     {
         public static float swingTimeCoefficient = 1f;
-        [FormatToken("SS2_KNIGHT_SHIELD_BASH_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
+        [FormatToken("SS2_KNIGHT_SHIELD_BASH_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static GameObject beamProjectile;
         public static GameObject bigBeamProjectile;
         private GameObject beam;

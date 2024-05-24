@@ -8,7 +8,7 @@ namespace EntityStates.Knight
     class SwingSword : BasicMeleeAttack, SteppedSkillDef.IStepSetter
     {
         public static float swingTimeCoefficient = 1.42f;
-        [FormatToken("SS2_KNIGHT_PRIMARY_SWORD_DESCRIPTION",  FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
+        [FormatToken("SS2_KNIGHT_PRIMARY_SWORD_DESC",  FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static GameObject beamProjectile;
         public static SkillDef buffedSkillRef;
         public static float TokenModifier_dmgCoefficient => new SwingSword().damageCoefficient;

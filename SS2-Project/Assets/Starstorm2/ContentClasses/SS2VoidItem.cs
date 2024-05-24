@@ -14,7 +14,7 @@ namespace SS2
     /// <summary>
     /// <inheritdoc cref="IVoidItemContentPiece"/>
     /// </summary>
-    public abstract class SS2VoidItem : IVoidItemContentPiece
+    public abstract class SS2VoidItem : IVoidItemContentPiece, IContentPackModifier
     {
         public ItemAssetCollection AssetCollection { get; private set; }
         public NullableRef<List<GameObject>> ItemDisplayPrefabs { get; protected set; } = new List<GameObject>();

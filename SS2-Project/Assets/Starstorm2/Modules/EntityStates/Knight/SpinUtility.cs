@@ -8,7 +8,7 @@ namespace EntityStates.Knight
     class SpinUtility : BasicMeleeAttack
     {
         public static float swingTimeCoefficient = 1f;
-        [FormatToken("SS2_KNIGHT_SPECIAL_SPIN_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
+        [FormatToken("SS2_KNIGHT_SPECIAL_SPIN_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float TokenModifier_dmgCoefficient => new SpinUtility().damageCoefficient;
         public static GameObject buffWard;
         public static SkillDef buffedSkillRef;

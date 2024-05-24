@@ -497,6 +497,8 @@ namespace SS2
 
             public static BuffDef bdKnightSpecialPowerBuff;
 
+            public static BuffDef bdKnightSpecialBuff;
+
             public static BuffDef bdKnightSpecialSlowBuff;
 
             public static BuffDef bdFortified;
@@ -540,6 +542,8 @@ namespace SS2
             public static SurvivorDef survivorNemCommando;
 
             public static SurvivorDef survivorNemCaptain;
+
+            public static SurvivorDef survivorKnight; 
 
             public static SurvivorDef NemMerc;
         }

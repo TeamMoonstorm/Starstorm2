@@ -9,7 +9,7 @@ namespace EntityStates.MULE
 #if DEBUG
     class MULEStunPunch : BasicMeleeAttack, SteppedSkillDef.IStepSetter
     {
-        [FormatToken("SS2_MULE_PRIMARY_PUNCH_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
+        [FormatToken("SS2_MULE_PUNCH_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float dmgCoefficient;
         public static float swingTimeCoefficient = 1.33f;
         public int swingSide;

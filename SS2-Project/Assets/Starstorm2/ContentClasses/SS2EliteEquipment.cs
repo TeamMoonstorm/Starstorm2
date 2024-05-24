@@ -14,7 +14,7 @@ namespace SS2
     /// <summary>
     /// <inheritdoc cref="IEliteContentPiece"/>
     /// </summary>
-    public abstract class SS2EliteEquipment : IEliteContentPiece
+    public abstract class SS2EliteEquipment : IEliteContentPiece, IContentPackModifier
     {
         public List<EliteDef> EliteDefs { get; protected set; }
         List<EliteDef> IEliteContentPiece.EliteDefs => EliteDefs;
