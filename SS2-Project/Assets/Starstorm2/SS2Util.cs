@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 using MSU;
 namespace SS2
 {
@@ -182,7 +182,40 @@ namespace SS2
             }
         }
 
+        [ConCommand(commandName = "one_of_each", flags = ConVarFlags.Cheat, helpText = "Grants one of each item. Format: {itemCount} {itemTier} {itemTag}")]
+        public static void CmdGrantOneOfEachItem(ConCommandArgs args)
+        {
+            CharacterMaster master = args.GetSenderMaster();
 
+            int.TryParse(args[0], out int itemCount);
+            if (itemCount <= 0) itemCount = 1;
+
+            string tier = args[1];
+            if (!ItemTier.TryParse(tier, out ItemTier itemTier))
+                itemTier = ItemTier.AssignedAtRuntime;
+
+            string tag = args[2];
+            if (!ItemTag.TryParse(tag, out ItemTag itemTag))
+                itemTag = ItemTag.Any;
+
+            
+            ItemIndex[] indices = ItemCatalog.GetItemsWithTag(itemTag).Where(index => itemTier == ItemTier.AssignedAtRuntime || ItemCatalog.GetItemDef(index).tier == itemTier).ToArray();
+
+            for(int i = 0; i < indices.Length; i++)
+            {
+                ItemDef itemDef = ItemCatalog.GetItemDef(indices[i]);
+                try
+                {
+                    master.inventory.GiveItem(itemDef, itemCount);
+                }
+                catch(Exception e)
+                {
+                    SS2Log.Warning("Failed to grant ItemIndex " + indices[i] + ", " + Language.GetString(itemDef.nameToken));
+
+                    SS2Log.Error(e);
+                }
+            }
+        }
 
 
         public static IEnumerator BroadcastChat(string token)
