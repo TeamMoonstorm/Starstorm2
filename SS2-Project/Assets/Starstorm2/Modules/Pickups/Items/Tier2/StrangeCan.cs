@@ -43,7 +43,6 @@ namespace SS2.Items
 
         private static GameObject _procEffect;
 
-        private BuffDef _buffIntoxicated; //SS2Assets.LoadAsset<BuffDef>("BuffIntoxicated", SS2Bundle.Items);
         public static DotController.DotIndex index;
 
 
@@ -57,7 +56,7 @@ namespace SS2.Items
             GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
             GlobalEventManager.onCharacterDeathGlobal += OnCharacterDeathGlobal;
 
-            index = DotAPI.RegisterDotDef(1 / 3f, 1 / 3f, DamageColorIndex.Poison, _buffIntoxicated);
+            index = DotAPI.RegisterDotDef(1 / 3f, 1 / 3f, DamageColorIndex.Poison, AssetCollection.FindAsset<BuffDef>("BuffIntoxicated"));
         }
 
         public override bool IsAvailable(ContentPack contentPack)

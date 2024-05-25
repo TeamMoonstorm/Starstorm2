@@ -196,7 +196,7 @@ namespace SS2
             ItemTag argTag = ItemTag.Any;
             if (args.Count > 2) ItemTag.TryParse(args[2], out argTag);
 
-            for (ItemIndex itemIndex = (ItemIndex)0; itemIndex < (ItemIndex)ItemCatalog.itemDefs.Length; itemIndex++)
+            for (ItemIndex itemIndex = 0; itemIndex < (ItemIndex)ItemCatalog.itemDefs.Length; itemIndex++)
             {
                 ItemDef itemDef = ItemCatalog.GetItemDef(itemIndex);
                 bool shouldGive = true;
@@ -210,9 +210,7 @@ namespace SS2
                 catch (Exception e)
                 {
                     SS2Log.Warning("Failed to grant ItemIndex " + itemIndex + ", " + Language.GetString(itemDef.nameToken));
-
                     SS2Log.Error(e);
-
                     continue; //????????????????????????
                 }
             }
