@@ -187,32 +187,33 @@ namespace SS2
         {
             CharacterMaster master = args.GetSenderMaster();
 
-            int.TryParse(args[0], out int itemCount);
-            if (itemCount <= 0) itemCount = 1;
+            int itemCount = 1;
+            if(args.Count > 0) int.TryParse(args[0], out itemCount);
 
-            string tier = args[1];
-            if (!ItemTier.TryParse(tier, out ItemTier itemTier))
-                itemTier = ItemTier.AssignedAtRuntime;
+            ItemTier argTier = (ItemTier)(-1);
+            if (args.Count > 1) ItemTier.TryParse(args[1], out argTier);
 
-            string tag = args[2];
-            if (!ItemTag.TryParse(tag, out ItemTag itemTag))
-                itemTag = ItemTag.Any;
+            ItemTag argTag = ItemTag.Any;
+            if (args.Count > 2) ItemTag.TryParse(args[2], out argTag);
 
-            
-            ItemIndex[] indices = ItemCatalog.GetItemsWithTag(itemTag).Where(index => itemTier == ItemTier.AssignedAtRuntime || ItemCatalog.GetItemDef(index).tier == itemTier).ToArray();
-
-            for(int i = 0; i < indices.Length; i++)
+            for (ItemIndex itemIndex = (ItemIndex)0; itemIndex < (ItemIndex)ItemCatalog.itemDefs.Length; itemIndex++)
             {
-                ItemDef itemDef = ItemCatalog.GetItemDef(indices[i]);
+                ItemDef itemDef = ItemCatalog.GetItemDef(itemIndex);
+                bool shouldGive = true;
+                if (argTier != (ItemTier)(-1)) shouldGive &= itemDef.tier == argTier;
+                if (argTag != ItemTag.Any) shouldGive &= itemDef.ContainsTag(argTag);
+                if (!shouldGive) continue;
                 try
                 {
-                    master.inventory.GiveItem(itemDef, itemCount);
+                        master.inventory.GiveItem(itemDef, itemCount);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    SS2Log.Warning("Failed to grant ItemIndex " + indices[i] + ", " + Language.GetString(itemDef.nameToken));
+                    SS2Log.Warning("Failed to grant ItemIndex " + itemIndex + ", " + Language.GetString(itemDef.nameToken));
 
                     SS2Log.Error(e);
+
+                    continue; //????????????????????????
                 }
             }
         }
