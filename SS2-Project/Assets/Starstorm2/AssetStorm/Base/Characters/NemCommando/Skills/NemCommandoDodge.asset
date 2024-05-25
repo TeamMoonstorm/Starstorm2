@@ -22,8 +22,8 @@ MonoBehaviour:
     _typeName: EntityStates.NemCommmando.Dodge2, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
   interruptPriority: 2
-  baseRechargeInterval: 4
-  baseMaxStock: 1
+  baseRechargeInterval: 3
+  baseMaxStock: 2
   rechargeStock: 1
   requiredStock: 1
   stockToConsume: 1
@@ -31,7 +31,7 @@ MonoBehaviour:
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
   beginSkillCooldownOnSkillEnd: 0
-  cancelSprintingOnActivation: 0
+  cancelSprintingOnActivation: 1
   forceSprintDuringState: 1
   canceledFromSprinting: 0
   isCombatSkill: 0

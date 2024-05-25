@@ -18,31 +18,36 @@ namespace EntityStates.NemCommando
         public int swingSide;
         private bool inCombo = false;
         private string skinNameToken;
+
+        private EntityStateMachine gunSM;
+        private NetworkStateMachine nsm;
         public GenericSkill activatorSkillSlot { get; set; }
 
         public override void OnEnter()
         {
             skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
 
+            nsm = GetComponent<NetworkStateMachine>();
+            gunSM = nsm.stateMachines[2];
+
+            Idle nextState = new Idle();
+            gunSM.SetInterruptState(nextState, InterruptPriority.Skill);
+
             //red default
             swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffect", SS2Bundle.NemCommando);
-            hitEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemmandoImpactSlashEffect", SS2Bundle.NemCommando);
+            hitEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoImpactSlashEffect", SS2Bundle.NemCommando);
 
-            //overrides
-            if (skinNameToken != "SS2_SKIN_NEMCOMMANDO_DEFAULT" && skinNameToken != "SS2_SKIN_NEMCOMMANDO_GRANDMASTERY")
+            //Yellow
+            if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
             {
-                //Yellow
-                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
-                {
-                    swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffectYellow", SS2Bundle.NemCommando);
-                    hitEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoImpactSlashEffectYellow", SS2Bundle.NemCommando);
-                }
-                //Blue
-                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO")
-                {
-                    swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffectBlue", SS2Bundle.NemCommando);
-                    hitEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoImpactSlashEffectBlue", SS2Bundle.NemCommando);
-                }
+                swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffectYellow", SS2Bundle.NemCommando);
+                hitEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoImpactSlashEffectYellow", SS2Bundle.NemCommando);
+            }
+            //Blue
+            if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO")
+            {
+                swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffectBlue", SS2Bundle.NemCommando);
+                hitEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoImpactSlashEffectBlue", SS2Bundle.NemCommando);
             }
 
             base.OnEnter();

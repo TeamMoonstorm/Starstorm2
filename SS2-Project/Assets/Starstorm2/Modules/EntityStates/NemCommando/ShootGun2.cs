@@ -158,20 +158,17 @@ namespace EntityStates.NemCommando
                 Fire();
             }
 
+            if (fixedAge >= minimumDuration && inputBank.skill2.down & skillLocator.secondary.stock >= 1)
+            {
+                outer.SetNextState(new ShootGun2());
+                skillLocator.secondary.stock -= 1;
+                return;
+            }
+
             if (fixedAge >= duration && isAuthority)
             {
-                if (inputBank.skill2.down & skillLocator.secondary.stock >= 1)
-                {
-                    outer.SetNextState(new ShootGun2());
-                    skillLocator.secondary.stock -= 1;
-                    return;
-                }
-                if(fixedAge >= 1.5f * duration)
-                {
-                    outer.SetNextState(new ReloadGun());
-                    return;
-                }
-                //outer.SetNextStateToMain();
+                //outer.SetNextState(new ReloadGun());
+                outer.SetNextStateToMain();
                 //return;
             }
         }

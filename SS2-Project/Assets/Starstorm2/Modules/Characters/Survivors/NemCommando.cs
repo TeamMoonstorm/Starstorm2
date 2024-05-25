@@ -38,6 +38,8 @@ namespace SS2.Survivors
             GougeDotIndex = DotAPI.RegisterDotDef(0.25f, 0.25f, DamageColorIndex.SuperBleed, _gougeBuffDef);
             On.RoR2.HealthComponent.TakeDamage += TakeDamageGouge;
             GlobalEventManager.onServerDamageDealt += ApplyGouge;
+
+            ModifyProjectiles();
         }
 
         private void TakeDamageGouge(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
@@ -115,8 +117,8 @@ namespace SS2.Survivors
             damageAPIComponent = distantGashProjectileYellow.AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>();
             damageAPIComponent.Add(GougeDamageType);
 
-            var pie = grenadeProjectile.GetComponent<RoR2.Projectile.ProjectileImpactExplosion>();
-            pie.impactEffect = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/OmniExplosionVFXCommandoGrenade.prefab").WaitForCompletion();
+            //var pie = grenadeProjectile.GetComponent<RoR2.Projectile.ProjectileImpactExplosion>();
+            //pie.impactEffect = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/OmniExplosionVFXCommandoGrenade.prefab").WaitForCompletion();
         }
     }
 }
