@@ -31,7 +31,7 @@ namespace SS2
             //Loadbearing Spike
             if (!SS2Assets.LoadAsset<Texture2D>("spike", SS2Bundle.Main))
             {
-                SS2Log.Fatal("Spike not found :c");
+                SS2Log.Fatal("MISSSING LOAD BEARING SPIKE");
                 yield break;
             }
 

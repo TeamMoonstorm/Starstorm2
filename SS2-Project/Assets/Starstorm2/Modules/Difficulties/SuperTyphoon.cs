@@ -17,22 +17,23 @@ namespace SS2
         internal static bool IncreaseSpawnCapST = true;
 
         private int defMonsterCap;
-
-
+        public static SerializableDifficultyDef sdd;
         public override void Initialize()
         {
+            sdd = DifficultyDef;
+
             /*
-            //On.RoR2.UI.MPEventSystemLocator.Awake += MPEventSystemLocator_Awake;
+//On.RoR2.UI.MPEventSystemLocator.Awake += MPEventSystemLocator_Awake;
 
-            //On.RoR2.UI.RuleBookViewer.Awake += 
+//On.RoR2.UI.RuleBookViewer.Awake += 
 
-            /*superTyphoonRCD.ruleDef = superTyphoonRuleDef;
-            superTyphoonRCD.localName = "SS2_DIFFICULTY_SUPERTYPHOON_NAME";
-            superTyphoonRCD.globalName = superTyphoonRuleDef.globalName + "." + "SS2_DIFFICULTY_SUPERTYPHOON_NAME";
-            superTyphoonRCD.extraData = null;
-            superTyphoonRCD.excludeByDefault = true;
-            superTyphoonRCD.difficultyIndex = SuperTyphoonIndex;
-            */
+/*superTyphoonRCD.ruleDef = superTyphoonRuleDef;
+superTyphoonRCD.localName = "SS2_DIFFICULTY_SUPERTYPHOON_NAME";
+superTyphoonRCD.globalName = superTyphoonRuleDef.globalName + "." + "SS2_DIFFICULTY_SUPERTYPHOON_NAME";
+superTyphoonRCD.extraData = null;
+superTyphoonRCD.excludeByDefault = true;
+superTyphoonRCD.difficultyIndex = SuperTyphoonIndex;
+*/
         }
 
         public override bool IsAvailable(ContentPack contentPack)

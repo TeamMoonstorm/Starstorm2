@@ -34,7 +34,7 @@ namespace SS2.Components
             //Initialize new difficulties
 
             //N: These are done by a new module exclusive to ss2, refactor as needed
-            /*Deluge.Init();
+            /*Deluge.;
             Tempest.Init();
             Cyclone.Init();
             SuperTyphoon.Init();*/
@@ -384,7 +384,7 @@ namespace SS2.Components
                 //maybe move to when tp finishes charging?
                 if (teleIsEthereal && (currStage != "artifactworld" && currStage != "arena" && currStage != "artifactworld" && currStage != "forgottenhaven"))
                 {
-                    ChatMessage.Send("SS2_ETHEREAL_DIFFICULTY_WARNING");
+                    ChatMessage.Send(Language.GetStringFormatted("SS2_ETHEREAL_DIFFICULTY_WARNING"));
                     teleIsEthereal = false;
                     etherealsCompleted++;
 
@@ -450,41 +450,39 @@ namespace SS2.Components
                                 {
                                     //N: Sorry swuff, difficulties are now a module, need to refactor this as well, easy to do tbh, just store the serializable difficulty def in a static field and access that.
                                     //drizzle
-                                    /*case DifficultyIndex.Easy:
+                                    case DifficultyIndex.Easy:
                                         {
-                                            run.selectedDifficulty = Deluge.DelugeIndex;
+                                            run.selectedDifficulty = Deluge.sdd.DifficultyIndex;
                                             Debug.Log("drizzle detected; trying to override");
-                                            run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(Deluge.DelugeDef.nameToken)));
+                                            run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(Deluge.sdd.nameToken)));
                                         }
                                         break;
                                     //rainstorm
                                     case DifficultyIndex.Normal:
                                         {
-                                            run.selectedDifficulty = Tempest.TempestIndex;
+                                            run.selectedDifficulty = Tempest.sdd.DifficultyIndex;
                                             Debug.Log("rainstorm detected; trying to override");
-                                            run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(Tempest.TempestDef.nameToken)));
+                                            run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(Tempest.sdd.nameToken)));
                                         }
                                         break;
                                     //monsoon
                                     case DifficultyIndex.Hard:
                                         {
-                                            run.selectedDifficulty = Cyclone.CycloneIndex;
+                                            run.selectedDifficulty = Cyclone.sdd.DifficultyIndex;
                                             Debug.Log("monsoon detected; trying to override");
-                                            run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(Cyclone.CycloneDef.nameToken)));
+                                            run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(Cyclone.sdd.nameToken)));
                                         }
                                         break;
                                 }
 
                                 //typhoon is a modded difficulty and its index is not constant
-                                if (ruleChoiceDef.difficultyIndex == Typhoon.TyphoonIndex)
+                                if (ruleChoiceDef.difficultyIndex == Typhoon.sdd.DifficultyIndex)
                                 {
-                                    run.selectedDifficulty = SuperTyphoon.SuperTyphoonIndex;
+                                    run.selectedDifficulty = SuperTyphoon.sdd.DifficultyIndex;
                                     Debug.Log("typhoon detected; trying to override");
-                                    run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(SuperTyphoon.SuperTyphoonDef.nameToken)));
+                                    run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(SuperTyphoon.sdd.nameToken)));
                                     //for some reason appears as deluge in run history???
                                     //appears correctly mid-run & at run end so will ignore for now...
-                                }
-                                    */
                                 }
 
                                 diffIndex = run.ruleBook.FindDifficulty();

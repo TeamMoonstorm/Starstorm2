@@ -15,12 +15,13 @@ namespace SS2
         internal static bool IncreaseSpawnCap = true;
 
         private int defMonsterCap;
-
+        public static SerializableDifficultyDef sdd;
         public override void Initialize()
         {
+            sdd = DifficultyDef;
         }
 
-        
+
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;

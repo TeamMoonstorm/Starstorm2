@@ -12,9 +12,10 @@ namespace SS2
 
         private int defMonsterCap;
         private RuleChoiceDef rcd;
-
+        public static SerializableDifficultyDef sdd;
         public override void Initialize()
         {
+            sdd = DifficultyDef;
         }
 
         public override bool IsAvailable(ContentPack contentPack)
