@@ -12,14 +12,11 @@ namespace SS2.Scenes
 {
     public sealed class VoidShop : SS2Scene
     {
-        public static GameObject portalPrefab;
-
         public override SS2AssetRequest<SceneAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SceneAssetCollection>("acVoidShop", SS2Bundle.SharedStages);
 
         public override void Initialize()
         {
-            portalPrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("PortalStrangerExit", SS2Bundle.SharedStages), "StrangerPortal", true);
-            portalPrefab.RegisterNetworkPrefab();
+            Asset.mainTrack = Addressables.LoadAssetAsync<MusicTrackDef>("RoR2/Base/Common/muSong08.asset").WaitForCompletion();
         }
 
 

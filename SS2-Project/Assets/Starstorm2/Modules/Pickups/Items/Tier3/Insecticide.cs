@@ -25,7 +25,6 @@ namespace SS2.Items
         public static float duration = 3;
 
         private static GameObject _hitEffect;
-        private BuffDef _buffInsecticide;// SS2Assets.LoadAsset<BuffDef>("BuffInsecticide", SS2Bundle.Items);
         public static DotController.DotIndex index;
 
 
@@ -34,7 +33,7 @@ namespace SS2.Items
         {
             _hitEffect = AssetCollection.FindAsset<GameObject>("InsecticideEffect");
             DotController.onDotInflictedServerGlobal += RefreshInsects;
-            index = DotAPI.RegisterDotDef(0.25f, 0.15f, DamageColorIndex.DeathMark, _buffInsecticide);
+            index = DotAPI.RegisterDotDef(0.25f, 0.15f, DamageColorIndex.DeathMark, AssetCollection.FindAsset<BuffDef>("BuffInsecticide"));
         }
 
         public override bool IsAvailable(ContentPack contentPack)

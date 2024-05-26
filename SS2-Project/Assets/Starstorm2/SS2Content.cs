@@ -169,6 +169,11 @@ namespace SS2
                     InteractableModule.AddProvider(main, ContentUtil.CreateGameObjectContentPieceProvider<IInteractable>(main, SS2ContentPack));
                     return InteractableModule.InitializeInteractables(main);
                 },
+                () =>
+                {
+                    SceneModule.AddProvider(main, ContentUtil.CreateContentPieceProvider<SceneDef>(main, SS2ContentPack));
+                    return SceneModule.InitializeScenes(main);
+                },
                 LoadFromAssetBundles,
             };
 
