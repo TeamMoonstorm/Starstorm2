@@ -9,6 +9,7 @@ using R2API;
 using System.Reflection;
 using UnityEngine.Networking;
 using RoR2.ContentManagement;
+using UnityEngine.AddressableAssets;
 
 namespace SS2.Survivors
 {
@@ -24,6 +25,10 @@ namespace SS2.Survivors
         private GameObject distantGashProjectileBlue;
         private GameObject distantGashProjectileYellow;
         private GameObject grenadeProjectile;
+        private GameObject bodyPrefab;
+        private CharacterBody characterBody;
+        public GameObject nemesisPodPrefab;
+        public GameObject podPanelPrefab;
 
         public override void Initialize()
         {
@@ -31,6 +36,9 @@ namespace SS2.Survivors
             distantGashProjectile = AssetCollection.FindAsset<GameObject>("NemCommandoSwordBeamProjectile");
             distantGashProjectileBlue = AssetCollection.FindAsset<GameObject>("NemCommandoSwordBeamProjectileBlue");
             distantGashProjectileYellow = AssetCollection.FindAsset<GameObject>("NemCommandoSwordBeamProjectileYellow");
+            bodyPrefab = AssetCollection.FindAsset<GameObject>("NemCommandoBody");
+
+            characterBody = bodyPrefab.GetComponent<CharacterBody>();
 
             On.RoR2.CharacterSelectBarController.Awake += CharacterSelectBarController_Awake;
 
@@ -40,6 +48,9 @@ namespace SS2.Survivors
             GlobalEventManager.onServerDamageDealt += ApplyGouge;
 
             ModifyProjectiles();
+            CreatePod();
+
+            characterBody.preferredPodPrefab = nemesisPodPrefab;
         }
 
         private void TakeDamageGouge(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
@@ -106,7 +117,29 @@ namespace SS2.Survivors
             return true;
         }
 
-        
+        public void CreatePod()
+        {
+            Material podMat = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/TrimSheets/matTrimSheetMetal.mat").WaitForCompletion();
+            nemesisPodPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/SurvivorPod/SurvivorPod.prefab").WaitForCompletion().InstantiateClone("NemesisSurvivorPod", true);
+
+            Transform modelTransform = nemesisPodPrefab.GetComponent<ModelLocator>().modelTransform;
+
+            modelTransform.Find("EscapePodArmature/Base/Door/EscapePodDoorMesh").GetComponent<MeshRenderer>().material = podMat;
+            modelTransform.Find("EscapePodArmature/Base/ReleaseExhaustFX/Door,Physics").GetComponent<MeshRenderer>().material = podMat;
+            modelTransform.Find("EscapePodArmature/Base/EscapePodMesh").GetComponent<MeshRenderer>().material = podMat;
+            modelTransform.Find("EscapePodArmature/Base/RotatingPanel/EscapePodMesh.002").GetComponent<MeshRenderer>().material = podMat;
+
+            podPanelPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/SurvivorPod/SurvivorPodBatteryPanel.prefab").WaitForCompletion().InstantiateClone("NemesisPanel", true);
+            podPanelPrefab.GetComponent<Highlight>().targetRenderer.material = podMat;
+
+            InstantiatePrefabBehavior[] ipb;
+            ipb = nemesisPodPrefab.GetComponents<InstantiatePrefabBehavior>();
+            foreach (InstantiatePrefabBehavior prefab in ipb)
+            {
+                if (prefab.prefab == Addressables.LoadAssetAsync<GameObject>("RoR2/Base/SurvivorPod/SurvivorPodBatteryPanel.prefab").WaitForCompletion())
+                    prefab.prefab = podPanelPrefab;
+            }
+        }
 
         private void ModifyProjectiles()
         {

@@ -131,8 +131,8 @@ namespace SS2
                 DifficultyModule.Init,
                 Events.Init,
                 //Bulwark.Init,
-                //Ethereal.Init,
                 Components.EtherealBehavior.Init,
+                Components.VoidBehavior.Init,
                 Void.Init,
                 () =>
                 {

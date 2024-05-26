@@ -44,8 +44,6 @@ namespace SS2
         {
             //Add shrine use effect EffectManager.SpawnEffect() https://github.com/Flanowski/Moonstorm/blob/0.4/Starstorm%202/Cores/EtherealCore.cs
 
-            Util.PlaySound("Play_UI_shrineActivate", this.gameObject);
-
             if (purchaseCount == 0)
             {
                 //Debug.Log("Processed first ethereal terminal use...");
@@ -54,6 +52,8 @@ namespace SS2
                 purchaseInteraction.displayNameToken = "SS2_ETHEREAL_NAME2";
                 purchaseCount++;
                 refreshTimer = 2;
+
+                Util.PlaySound("EtherealActivate", this.gameObject);
 
                 CharacterBody body = interactor.GetComponent<CharacterBody>();
                 Chat.SendBroadcastChat(new Chat.SubjectFormatChatMessage
@@ -120,7 +120,7 @@ namespace SS2
                     childLocator.FindChild("Burst").gameObject.SetActive(true);
                 }
 
-                Util.PlaySound("Play_UI_teleporter_event_complete", this.gameObject);
+                Util.PlaySound("EtherealBell", this.gameObject);
 
                 purchaseCount++;
                 refreshTimer = 2;

@@ -209,6 +209,11 @@ namespace SS2.Components
                             rotation = Quaternion.Euler(0, 0, 0);
                             //in a cranny near collapsed aqueducts
                             break;
+                        case "lakes":
+                            position = new Vector3(-58.33718f, -28.5005f, -181.3314f);
+                            rotation = Quaternion.Euler(0, 0, 0);
+                            //behind a waterfall on the map's edge (how is there not already a secret here??)
+                            break;
                     }
 
                     Debug.Log("POS : " + position);
@@ -371,6 +376,11 @@ namespace SS2.Components
                         position = new Vector3(149.4f, 65.7f, -212.7f);
                         rotation = Quaternion.Euler(0, 0, 0);
                         //in a cranny near collapsed aqueducts
+                        break;
+                    case "lakes":
+                        position = new Vector3(355f, 59.07873f, -181.3314f);
+                        rotation = Quaternion.Euler(355f, 325f, 0);
+                        //behind a waterfall on the map's edge (how is there not already a secret here??)
                         break;
                 }
 
