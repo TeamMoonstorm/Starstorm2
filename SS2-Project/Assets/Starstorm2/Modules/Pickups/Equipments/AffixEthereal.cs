@@ -141,6 +141,8 @@ namespace SS2.Equipments
 
                 timer = 0;
 
+                Util.PlaySound("EtherealActivate", this.gameObject);
+
                 Transform modelTransform = CharacterBody.modelLocator.modelTransform;
                 if (modelTransform)
                 {
@@ -227,7 +229,7 @@ namespace SS2.Equipments
                 if (timer >= timerDur && !expired)
                 {
                     //Debug.Log("KILL");
-                    Util.PlaySound("Play_UI_teleporter_event_complete", this.gameObject);
+                    Util.PlaySound("Play_UI_charTeleport", this.gameObject);
                     var charModel = CharacterBody.modelLocator.modelTransform.gameObject;
                     var mdl = charModel.GetComponent<CharacterModel>();
                     if (mdl != null)
@@ -267,6 +269,7 @@ namespace SS2.Equipments
                         {
                             Vector3 position;
                             groundNodes.GetNodePosition(randomNode, out position);
+                            Util.PlaySound("EtherealBell", this.gameObject);
                             ProjectileManager.instance.FireProjectile(projectilePrefab, position, new Quaternion(0, 0, 0, 0), CharacterBody.gameObject, 1f, 0f, CharacterBody.RollCrit(), DamageColorIndex.Default, null, 0);
                         }
                     }
@@ -293,7 +296,7 @@ namespace SS2.Equipments
                 timerDur = baseTimerDur; // / body.attackSpeed;   >
                 timer = timerDur * 0.75f;
 
-                Util.PlaySound("Play_ui_teleporter_activate", this.gameObject);
+                Util.PlaySound("EtherealSpawn", this.gameObject);
 
                 model = CharacterBody.modelLocator.modelTransform.GetComponent<CharacterModel>();
                 if (model != null)
