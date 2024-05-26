@@ -38,7 +38,6 @@ namespace SS2.Equipments
             IL.RoR2.HealthComponent.TakeDamage += EtherealDeathIL;
 
             BuffOverlays.AddBuffOverlay(EquipmentDef.passiveBuffDef, matEtherealOverlay);
-
             // Used for suicide buff
             BuffOverlays.AddBuffOverlay(buffHakai, matHakaiOverlay);
         }

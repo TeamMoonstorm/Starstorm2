@@ -4,54 +4,45 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using R2API;
 using UnityEngine.AddressableAssets;
+using MSU;
+using System.Collections;
+using RoR2.ContentManagement;
+
 namespace SS2.Scenes
 {
-     //TODO: figure out how we'll amange scenes, as MSU doesnt have a scene module anymore. I'm not deleting this because it has relevant code for zanzan and stuff.
-    /*
-    //[DisabledContent]
-    public sealed class VoidShop : SceneBase
+    public sealed class VoidShop : SS2Scene
     {
-        public override SceneDef SceneDef { get; } = SS2Assets.LoadAsset<SceneDef>("VoidShop", SS2Bundle.SharedStages);
-        private static MusicTrackDef music = Addressables.LoadAssetAsync<MusicTrackDef>("RoR2/Base/Common/muSong08.asset").WaitForCompletion();
         public static GameObject portalPrefab;
+
+        public override SS2AssetRequest<SceneAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SceneAssetCollection>("acVoidShop", SS2Bundle.SharedStages);
 
         public override void Initialize()
         {
-            SceneDef.mainTrack = music; //If there is custom music this is temporary. This is the Void Fields theme
-
             portalPrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("PortalStrangerExit", SS2Bundle.SharedStages), "StrangerPortal", true);
             portalPrefab.RegisterNetworkPrefab();
-
-            //is there a better way to spawn zanzan directly in the scene?
-            //probably.
-            //here's a hook:
-            On.RoR2.SceneDirector.Start += SceneDirector_Start;
         }
 
-        public static void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)
+
+        public override void OnServerStageBegin(Stage stage)
         {
-            orig(self);
+            //summon trader
+            var traderSummon = new MasterSummon();
+            traderSummon.position = new Vector3(-26f, 0f, 65.5f);
+            traderSummon.rotation = new Quaternion(0f, 90f, 0f, 0f);
+            traderSummon.masterPrefab = SS2Assets.LoadAsset<GameObject>("TraderMaster", SS2Bundle.Indev);
+            traderSummon.teamIndexOverride = TeamIndex.Neutral;
+            traderSummon.Perform();
 
-            var currStage = SceneManager.GetActiveScene().name;
-            if (currStage == "VoidShop")
-            {
-                //summon trader
-                var traderSummon = new MasterSummon();
-                traderSummon.position = new Vector3(-26f, 0f, 65.5f);
-                traderSummon.rotation = new Quaternion(0f, 90f, 0f, 0f);
-                traderSummon.masterPrefab = SS2Assets.LoadAsset<GameObject>("TraderMaster", SS2Bundle.Indev);
-                traderSummon.teamIndexOverride = TeamIndex.Neutral;
-                traderSummon.Perform();
-
-                //place exit portal
-                var position = new Vector3(9f, 35f, -110f);
-                var rotation = Quaternion.Euler(330, 0, 0);
-                GameObject portal = GameObject.Instantiate(portalPrefab, position, rotation);
-                NetworkServer.Spawn(portal);
-                //Debug.Log("TERM : " + portal);
-
-               // Debug.Log("placed portal at: " + position + "pos & " + rotation + "rot");
-            }
+            //place exit portal
+            var position = new Vector3(9f, 35f, -110f);
+            var rotation = Quaternion.Euler(330, 0, 0);
+            GameObject portal = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("PortalStrangerExit", SS2Bundle.SharedStages), position, rotation);
+            NetworkServer.Spawn(portal);
         }
-    }*/
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+    }
 }
