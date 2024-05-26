@@ -358,7 +358,7 @@ namespace SS2.Components
                         //on top of a lone elevated platform on a tree
                         break;
                     case "ancientloft":
-                        position = new Vector3(-133.4f, 33.5f, -280f);
+                        position = new Vector3(-133.4f, 33f, -280f);
                         rotation = Quaternion.Euler(0, 354.5f, 0);
                         //on a branch under the main platform in the back corner of the map
                         break;
@@ -378,7 +378,7 @@ namespace SS2.Components
                         //in a cranny near collapsed aqueducts
                         break;
                     case "lakes":
-                        position = new Vector3(355f, 59.07873f, -181.3314f);
+                        position = new Vector3(139f, 59.07873f, -181.3314f);
                         rotation = Quaternion.Euler(355f, 325f, 0);
                         //behind a waterfall on the map's edge (how is there not already a secret here??)
                         break;
