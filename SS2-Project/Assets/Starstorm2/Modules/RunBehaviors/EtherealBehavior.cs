@@ -102,7 +102,7 @@ namespace SS2.Components
             {
                 CharacterMaster bodyMaster = master.GetComponent<CharacterMaster>();
                 bodyMaster.inventory.GiveItem(SS2Content.Items.EtherealItemAffix);
-                bodyMaster.inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(20 + (15 * etherealsCompleted)));
+                bodyMaster.inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(12 + (6 * etherealsCompleted)));
             }
         }
 
