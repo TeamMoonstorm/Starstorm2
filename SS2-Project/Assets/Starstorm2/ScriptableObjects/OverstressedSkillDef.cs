@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 using RoR2;
 using SS2.Components;
 
-namespace Assets.Starstorm2.ScriptableObjects
+namespace SS2
 {
     [CreateAssetMenu(menuName = "Starstorm2/SkillDef/OverstressedSkillDef")]
     public class OverstressedSkillDef : SkillDef

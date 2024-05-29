@@ -41,6 +41,7 @@ namespace SS2.Equipments
 
         public override void Initialize()
         {
+            disabledSkill = AssetCollection.FindAsset<SkillDef>("DisabledSkill");
             BuffDef buffSurrender = AssetCollection.FindAsset<BuffDef>("BuffSurrender");
             _flagObject = AssetCollection.FindAsset<GameObject>("WhiteFlagWard");
             Material overlay = AssetCollection.FindAsset<Material>("matSurrenderOverlay");

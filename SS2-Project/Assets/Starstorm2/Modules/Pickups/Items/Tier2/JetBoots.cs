@@ -10,6 +10,9 @@ using MSU;
 using RoR2.ContentManagement;
 using System.Collections;
 using MSU.Config;
+using System.Reflection;
+using System.Linq;
+using UnityEngine.Networking;
 
 namespace SS2.Items
 {
@@ -71,6 +74,16 @@ namespace SS2.Items
                 x => x.MatchLdarg(0),
                 x => x.MatchLdarg(0),
                 x => x.MatchLdfld<CharacterBody>(nameof(CharacterBody.baseJumpCount)));
+
+            BindingFlags allFlags = (BindingFlags)(-1);
+            Type type = typeof(CombatDirector).GetNestedTypes(allFlags).FirstOrDefault(t => t.Name == "NameOfMethod");
+
+            bool ILFound = c.TryGotoNext(MoveType.After,
+                x => x.MatchLdloc(0),
+                x => x.MatchLdftn(type, ),
+                x => x.MatchNewobj(typeof(Action<SpawnCard.SpawnResult>).GetConstructor(new Type[] { typeof(object), typeof(IntPtr) })),
+                x => x.MatchStfld(typeof(DirectorSpawnRequest).GetField("onSpawnedServer"))
+                );
             if (b)
             {
                 c.Emit(OpCodes.Ldarg_0); // body
@@ -201,6 +214,8 @@ namespace SS2.Items
 
             private void Start()
             {
+                if (!NetworkServer.active) return;
+
                 this.body.AddBuff(SS2Content.Buffs.BuffJetBootsReady);
                 if (this.body.characterMotor)
                 {
@@ -217,6 +232,15 @@ namespace SS2.Items
                             }
                         }
                     };
+                }
+            }
+
+            private void OnDestroy()
+            {
+                if(NetworkServer.active)
+                {
+                    if (this.body.HasBuff(SS2Content.Buffs.BuffJetBootsReady))
+                        this.body.RemoveBuff(SS2Content.Buffs.BuffJetBootsReady);
                 }
             }
         }
