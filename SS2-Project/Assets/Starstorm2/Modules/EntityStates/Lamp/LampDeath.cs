@@ -55,6 +55,12 @@ namespace EntityStates.Lamp
             Destroy(gameObject);
         }
 
+        public override void OnExit()
+        {
+            base.OnExit();
+            DestroyLamp();
+        }
+
         public override void FixedUpdate()
         {
             base.FixedUpdate();

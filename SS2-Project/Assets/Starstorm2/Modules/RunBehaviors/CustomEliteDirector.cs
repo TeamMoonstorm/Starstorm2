@@ -7,37 +7,60 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static RoR2.CombatDirector;
 
 namespace SS2.Components
 {
     //This is a basic director for a custom elite to attempt to spawn.
     //Currently, it's planned to have unique directors for certain elites, due to intended scaling and overlap.
-    //In my head right now-
+
+
+    //TO-DO:
+
     //Ethereals- unique director, tied to Ethereal completion count, can overlap with other types
-    //Condemned, Gilded, future elites that represent explicit affiliation- shared director with no overlap, added as made available
+    //DONE!!!!!!!!!!!!!!
+
+    //Condemned
+    //Gilded
+    //Twisted?- all of these will be like ethereals BUT they share a check. ethereal gets its own for overlap.
+
     //Empyreans- hijack vanilla director to essentially add as T3
-    //Ultras- mix of above + ethereal? post-ethereal tier 4? honestly, idk entirely
-    //I feel like this should maybe be separate directors inheriting from one class but will figure that out & possibly regret it when I get there!!!
+
+    //Ultras- mix of above + ethereal? post-ethereal tier 4? honestly, idk entirely :')
+
+
+    //I feel like this should maybe be separate director cmponents inheriting from one class but will figure that out & possibly regret it when I get there!!!
+    //idk if i can make this an abstract and then inherit the il hook so its a monolith.
+    //SORRY!!!!!!!!!!
+
     public class CustomEliteDirector : MonoBehaviour
     {
-        [Header("Core Director Values")]
+        public float directorTickRate = 4f;
+        //numbers currently based off of Instinct.
+        [Header("Elite Director Values")]
         public float eliteCredit;
-        public float expRewardCoefficient;
-        public float goldRewardCoefficient;
-        public float minCreditPerTick = 2.2f;
-        public float maxCreditPerTick = 5.2f;
+        public float minEliteCreditPerTick = 1.6f;
+        public float maxEliteCreditPerTick = 5.2f;
+
+        [Header("Minion Director Values")]
+        public float minionCredit;
+        public float minMinionCreditPerTick = 0.2f;
+        public float maxMinionCreditPerTick = 4.6f;
+        public float followerCost = 28f;
+        private bool followerStage = false;
+
         private Xoroshiro128Plus rng;
 
         private DirectorCardCategorySelection dccs = null;
         private Dictionary<GameObject, float> cardCosts = new Dictionary<GameObject, float>();
         private List<EquipmentDef> eliteEquips = new List<EquipmentDef>();
         private bool hasMadeCardCosts = false;
-        private CombatDirector combatDirector;
+        private CombatDirector fastCombatDirector;
+        private CombatDirector slowCombatDirector;
         private float timer = 0;
 
         [Header("Ethereal-Related")]
-        public EliteDef etherealEliteDef;
         private float etherealEliteCost = 80f;
         private float etherealMultiplier = 4f;
         private EtherealBehavior ethInstance;
@@ -53,8 +76,15 @@ namespace SS2.Components
             GameObject director = GameObject.Find("Director");
             if (director != null)
             {
-                combatDirector = director.GetComponent<CombatDirector>();
-                //im pretty sure this always gets the first instance of a component it finds?? in this case, aggressive director.
+                fastCombatDirector = director.GetComponents<CombatDirector>()[0];
+                //the first director spams his shit
+                slowCombatDirector = director.GetComponents<CombatDirector>()[1];
+                //the second director loves to build big guys 
+                if (!fastCombatDirector || !slowCombatDirector)
+                {
+                    SS2Log.Fatal("No combat director found. Killing custom director.");
+                    Destroy(this);
+                }
             }
 
             GameObject sceneInfo = GameObject.Find("SceneInfo");
@@ -87,11 +117,16 @@ namespace SS2.Components
                             }
                         }
 
-                        foreach (var key in cardCosts)
+                        /*foreach (var key in cardCosts)
                         {
                             Debug.Log("PAIR: " + key.Key.name + " | " + key.Value);
-                        }
+                        }*/
                     }
+                }
+                else
+                {
+                    SS2Log.Fatal("No ClassicStageInfo found. Killing custom director.");
+                    Destroy(this);
                 }
 
             }
@@ -99,24 +134,26 @@ namespace SS2.Components
 
         public void Start()
         {
-            Debug.Log("CED Start");
             //CharacterBody.onBodyStartGlobal += TryEliteSpawn;
             IL.RoR2.CombatDirector.Spawn += SpawnEliteIL;
+            On.RoR2.SceneDirector.Start += SceneDirector_Start;
         }
 
         public void OnDestroy()
         {
             //CharacterBody.onBodyStartGlobal -= TryEliteSpawn;
             IL.RoR2.CombatDirector.Spawn -= SpawnEliteIL;
+            On.RoR2.SceneDirector.Start -= SceneDirector_Start;
         }
 
         public void FixedUpdate()
         {
             timer += Time.fixedDeltaTime;
-            if (timer > 3f)
+            if (timer > directorTickRate)
             {
                 timer = 0f;
-                eliteCredit += rng.RangeFloat(minCreditPerTick, maxCreditPerTick);
+                eliteCredit += rng.RangeFloat(minEliteCreditPerTick, maxEliteCreditPerTick);
+                minionCredit += rng.RangeFloat(minMinionCreditPerTick, maxMinionCreditPerTick);
             }
         }
 
@@ -131,7 +168,7 @@ namespace SS2.Components
             bool ILFound = c.TryGotoNext(MoveType.After,
                 x => x.MatchLdloc(0),
                 x => x.MatchLdftn(cdMethod),
-                x => x.MatchNewobj(typeof(Action<SpawnCard.SpawnResult>).GetConstructor(new Type[] { typeof(object), typeof(IntPtr) 
+                x => x.MatchNewobj(typeof(Action<SpawnCard.SpawnResult>).GetConstructor(new Type[] { typeof(object), typeof(IntPtr)
                 })));
 
             if (ILFound)
@@ -141,34 +178,66 @@ namespace SS2.Components
                     return new Action<SpawnCard.SpawnResult>((spawnResult) =>
                     {
                         ogMethod(spawnResult);
-                        ModifySpawnCard(spawnResult);
+                        ModifySpawn(spawnResult);
                     });
                 });
             }
             else
-                SS2Log.Fatal("Custom Elite IL Hook Failed. :(");
+                SS2Log.Fatal("Custom Elite IL Hook Failed ! ! !");
         }
 
-        public void ModifySpawnCard(SpawnCard.SpawnResult spawnResult)
+        public void ModifySpawn(SpawnCard.SpawnResult spawnResult)
         {
             Debug.Log(spawnResult.spawnedInstance.name);
             CharacterMaster cm = spawnResult.spawnedInstance.GetComponent<CharacterMaster>();
+            if (cm == null)
+                return;
             CharacterBody cb = cm.bodyInstanceObject.GetComponent<CharacterBody>();
+            if (cb == null)
+                return;
             cardCosts.TryGetValue(cm.bodyPrefab, out float baseCost);
             Debug.Log(cm.name + " base cost: " + baseCost);
-            if (cb.isElite)
+            if (cb.eliteBuffCount > 0)
             {
                 baseCost *= baseEliteCostMultiplier;
+                Debug.Log(cm.name + " elite cost: " + baseCost);
             }
 
-            float baseEtherealCost = baseCost * (etherealMultiplier / (ethInstance.etherealsCompleted + 1f));
-
-            if (etherealEliteCost <= eliteCredit && baseCost * baseEtherealCost <= combatDirector.monsterCredit)
+            if (baseCost * 2.5f <= fastCombatDirector.monsterCredit)
             {
-                MakeEthereal(cb);
-                combatDirector.monsterCredit -= baseCost * baseEtherealCost;
-                Debug.Log(baseEtherealCost);
-                eliteCredit -= etherealEliteCost;
+                if (followerStage && followerCost <= minionCredit)
+                {
+                    var followerSummon = new MasterSummon();
+                    followerSummon.position = cb.corePosition + (Vector3.up * 3);
+                    followerSummon.masterPrefab = Monsters.Lamp._masterPrefab;
+                    followerSummon.summonerBodyObject = cb.gameObject;
+                    var followerMaster = followerSummon.Perform();
+                    fastCombatDirector.monsterCredit -= followerCost;
+                    minionCredit -= followerCost;
+                    if (followerMaster)
+                    {
+                        var masterEquip = cb.inventory.GetEquipmentIndex();
+                        if (masterEquip != null)
+                        {
+                            followerMaster.inventory.SetEquipmentIndex(masterEquip);
+                            fastCombatDirector.monsterCredit -= followerCost * 2f;
+                            minionCredit -= followerCost * 2f;
+                        }
+                    }
+                }
+            }
+
+            if (ethInstance.etherealsCompleted >= 1)
+            {
+                float baseEtherealCost = (baseCost * etherealMultiplier) / ethInstance.etherealsCompleted; //possibly too mean?? lol
+
+                if (etherealEliteCost <= eliteCredit && baseCost * baseEtherealCost <= fastCombatDirector.monsterCredit)
+                {
+                    MakeEthereal(cb);
+                    fastCombatDirector.monsterCredit -= baseCost * baseEtherealCost * 1.25f; //fuck you go broke
+                    Debug.Log(cm.name + " ethereal monster cost: " + baseCost);
+                    eliteCredit -= etherealEliteCost;
+                }
             }
         }
 
@@ -187,6 +256,18 @@ namespace SS2.Components
             {
                 rewards.expReward *= (uint)(2 + (2 * ethInstance.etherealsCompleted));
                 rewards.goldReward *= (uint)(2 + (2 * ethInstance.etherealsCompleted));
+            }
+        }
+
+        public void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)
+        {
+            orig(self);
+
+            var currStage = SceneManager.GetActiveScene().name;
+
+            if (currStage == "foggyswamp" || currStage == "stadiajungle" || currStage == "skymeadow")
+            {
+                followerStage = true;
             }
         }
     }
