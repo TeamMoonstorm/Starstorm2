@@ -119,7 +119,7 @@ namespace SS2.Survivors
 
         public void CreatePod()
         {
-            Material podMat = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/TrimSheets/matTrimSheetMetal.mat").WaitForCompletion();
+            Material podMat = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/TrimSheets/matTrimSheetConstructionBlue.mat").WaitForCompletion();
             nemesisPodPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/SurvivorPod/SurvivorPod.prefab").WaitForCompletion().InstantiateClone("NemesisSurvivorPod", true);
 
             Transform modelTransform = nemesisPodPrefab.GetComponent<ModelLocator>().modelTransform;

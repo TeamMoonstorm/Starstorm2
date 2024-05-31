@@ -98,6 +98,13 @@ namespace EntityStates.NemCommando
             //swingEffectMuzzleString = (swingSide == 0) ? "SwingLeft" : "SwingRight";
         }
 
+        public override void OnExit()
+        {
+            base.OnExit();
+            Idle nextState = new Idle();
+            gunSM.SetInterruptState(nextState, InterruptPriority.Skill);
+        }
+
         public override void OnSerialize(NetworkWriter writer)
         {
             base.OnSerialize(writer);
