@@ -35,7 +35,6 @@ namespace SS2.Equipments
             buffWard.expireDuration = flagDuration;
             buffWard.radius = flagRadius;
             gameObject.GetComponent<TeamFilter>().teamIndex = slot.teamComponent.teamIndex;
-
             return true;
         }
 
