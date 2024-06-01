@@ -114,7 +114,7 @@ namespace SS2.Equipments
             public static GameObject projectilePrefab = SS2Assets.LoadAsset<GameObject>("EtherealCircle", SS2Bundle.Equipments);
             private static System.Random random = new System.Random();
             public static float baseProjTimerDur = 12.5f;
-            public static float baseTimerDur = 4f;
+            public static float baseTimerDur = 5f;
             private float timer;
             private float timerDur;
             private bool expired = false;
@@ -129,9 +129,9 @@ namespace SS2.Equipments
                     return;
 
                 if (CharacterBody.hullClassification == HullClassification.BeetleQueen)
-                    timerDur = baseTimerDur * 3f;
-                else if (CharacterBody.hullClassification == HullClassification.Golem)
                     timerDur = baseTimerDur * 2f;
+                else if (CharacterBody.hullClassification == HullClassification.Golem)
+                    timerDur = baseTimerDur * 1.5f;
                 else
                     timerDur = baseTimerDur;
 
@@ -184,12 +184,19 @@ namespace SS2.Equipments
             {
                 if (HasAnyStacks && modelRenderer is MeshRenderer || modelRenderer is SkinnedMeshRenderer)
                 {
-                    GameObject effectPrefab = null;
+                    GameObject effectPrefab;
 
                     if (CharacterBody.hullClassification == HullClassification.BeetleQueen)
                         effectPrefab = Instantiate(SS2Assets.LoadAsset<GameObject>("HakaiLightningBig", SS2Bundle.Equipments), targetParentTransform);
                     else
                         effectPrefab = Instantiate(SS2Assets.LoadAsset<GameObject>("HakaiLightning", SS2Bundle.Equipments), targetParentTransform);
+
+                    if (effectPrefab == null)
+                    {
+                        
+                        return null;
+                        SS2Log.Error("Ethereal death particles null ... how did we get here?");
+                    }
 
                     ParticleSystem ps = effectPrefab.GetComponent<ParticleSystem>();
                     ParticleSystem.ShapeModule shape = ps.shape;
@@ -255,7 +262,7 @@ namespace SS2.Equipments
 
             private void PlaceCircle()
             {
-                Debug.Log("Firing projectile: " + projectilePrefab);
+                //Debug.Log("Firing projectile: " + projectilePrefab);
 
                 if (CharacterBody != null)
                 {
@@ -340,7 +347,7 @@ namespace SS2.Equipments
 
             private void PlaceCircle()
             {
-                Debug.Log("Firing projectile: " + projectilePrefab);
+                //Debug.Log("Firing projectile: " + projectilePrefab);
 
                 // We dont need a HasAnyStacks check since we check in the FixedUpdate before it calls this method.
                 if (CharacterBody != null)
