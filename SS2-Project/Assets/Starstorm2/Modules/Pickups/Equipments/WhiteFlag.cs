@@ -35,12 +35,12 @@ namespace SS2.Equipments
             buffWard.expireDuration = flagDuration;
             buffWard.radius = flagRadius;
             gameObject.GetComponent<TeamFilter>().teamIndex = slot.teamComponent.teamIndex;
-
             return true;
         }
 
         public override void Initialize()
         {
+            disabledSkill = AssetCollection.FindAsset<SkillDef>("DisabledSkill");
             BuffDef buffSurrender = AssetCollection.FindAsset<BuffDef>("BuffSurrender");
             _flagObject = AssetCollection.FindAsset<GameObject>("WhiteFlagWard");
             Material overlay = AssetCollection.FindAsset<Material>("matSurrenderOverlay");

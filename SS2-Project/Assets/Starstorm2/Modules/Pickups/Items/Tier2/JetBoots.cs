@@ -10,6 +10,9 @@ using MSU;
 using RoR2.ContentManagement;
 using System.Collections;
 using MSU.Config;
+using System.Reflection;
+using System.Linq;
+using UnityEngine.Networking;
 
 namespace SS2.Items
 {
@@ -201,6 +204,8 @@ namespace SS2.Items
 
             private void Start()
             {
+                if (!NetworkServer.active) return;
+
                 this.body.AddBuff(SS2Content.Buffs.BuffJetBootsReady);
                 if (this.body.characterMotor)
                 {
@@ -217,6 +222,15 @@ namespace SS2.Items
                             }
                         }
                     };
+                }
+            }
+
+            private void OnDestroy()
+            {
+                if(NetworkServer.active)
+                {
+                    if (this.body.HasBuff(SS2Content.Buffs.BuffJetBootsReady))
+                        this.body.RemoveBuff(SS2Content.Buffs.BuffJetBootsReady);
                 }
             }
         }

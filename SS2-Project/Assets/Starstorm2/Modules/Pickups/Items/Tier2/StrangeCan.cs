@@ -43,10 +43,8 @@ namespace SS2.Items
 
         private static GameObject _procEffect;
 
-        public static DotController.DotIndex index;
 
-
-        public static DotController.DotIndex IntoxicatedIndex { get; private set; }
+        public static DotController.DotIndex DotIndex { get; private set; }
 
         public override void Initialize()
         {
@@ -56,7 +54,7 @@ namespace SS2.Items
             GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
             GlobalEventManager.onCharacterDeathGlobal += OnCharacterDeathGlobal;
 
-            index = DotAPI.RegisterDotDef(1 / 3f, 1 / 3f, DamageColorIndex.Poison, AssetCollection.FindAsset<BuffDef>("BuffIntoxicated"));
+            DotIndex = DotAPI.RegisterDotDef(1 / 3f, 1 / 3f, DamageColorIndex.Poison, AssetCollection.FindAsset<BuffDef>("BuffIntoxicated"));
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -80,7 +78,7 @@ namespace SS2.Items
             for (int i = 0; i < dotController.dotStackList.Count; i++)
             {
                 DotController.DotStack dot = dotController.dotStackList[i];
-                if (dot.dotIndex == IntoxicatedIndex)
+                if (dot.dotIndex == DotIndex)
                 {
                     GameObject inflictor = dot.attackerObject;
 
@@ -126,7 +124,7 @@ namespace SS2.Items
                 {
                     attackerObject = body.gameObject,
                     victimObject = report.victim.gameObject,
-                    dotIndex = IntoxicatedIndex,
+                    dotIndex = DotIndex,
                     duration = buffDuration,
                     maxStacksFromAttacker = (uint)maxStacks,
                     damageMultiplier = damageCoefficient,

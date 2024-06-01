@@ -7,9 +7,9 @@ namespace EntityStates.NemCommmando
 {
     public class Dodge2 : BaseSkillState
     {
-        public float duration = 0.6f;
-        public float initialSpeedCoefficient = 7.5f;
-        public float finalSpeedCoefficient = 1f;
+        private static float duration = 0.5f;
+        private static float initialSpeedCoefficient = 6.5f;
+        private static float finalSpeedCoefficient = 1.5f;
         public static float dodgeFOV = -1f;
         public static GameObject JetEffect;
         public static string DashJetL;
@@ -98,6 +98,8 @@ namespace EntityStates.NemCommmando
         {
             base.FixedUpdate();
             RecalculateRollSpeed();
+
+            base.characterBody.isSprinting = true; // makes cryptic source work when not rolling forwards. sprintanydirection flag also works but this is easier
 
             if (isAuthority)
             {
