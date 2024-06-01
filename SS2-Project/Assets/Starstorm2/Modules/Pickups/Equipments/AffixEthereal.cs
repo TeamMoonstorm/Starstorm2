@@ -149,7 +149,7 @@ namespace SS2.Equipments
                     temporaryOverlay.duration = timerDur;
 
                     temporaryOverlay.animateShaderAlpha = true;
-                    temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 0.1f, 1f, 1f);
+                    temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 0f, timerDur, 1f);
                     temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matHakaiOverlay", SS2Bundle.Equipments);
                     temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
                 }
@@ -182,7 +182,7 @@ namespace SS2.Equipments
 
             private GameObject AddParticles(Renderer modelRenderer, Transform targetParentTransform, float duration)
             {
-                if (HasAnyStacks && modelRenderer is MeshRenderer || modelRenderer is SkinnedMeshRenderer)
+                if (HasAnyStacks && (modelRenderer is MeshRenderer || modelRenderer is SkinnedMeshRenderer))
                 {
                     GameObject effectPrefab;
 
@@ -191,9 +191,9 @@ namespace SS2.Equipments
                     else
                         effectPrefab = Instantiate(SS2Assets.LoadAsset<GameObject>("HakaiLightning", SS2Bundle.Equipments), targetParentTransform);
 
+                    Debug.Log("made effect prefab");
                     if (effectPrefab == null)
                     {
-                        
                         return null;
                         SS2Log.Error("Ethereal death particles null ... how did we get here?");
                     }
@@ -213,14 +213,20 @@ namespace SS2.Equipments
                             shape.skinnedMeshRenderer = (SkinnedMeshRenderer)modelRenderer;
                         }
                     }
+                    else
+                        return null;
+                    Debug.Log("set shape / mes hrenderer");
                     ParticleSystem.MainModule main = ps.main;
                     main.duration = duration;
                     ps.gameObject.SetActive(true);
+                    Debug.Log("set active");
                     BoneParticleController bpc = effectPrefab.GetComponent<BoneParticleController>();
                     if (bpc != null && modelRenderer is SkinnedMeshRenderer)
                     {
                         bpc.skinnedMeshRenderer = (SkinnedMeshRenderer)modelRenderer;
+                        Debug.Log("bpc set");
                     }
+                    Debug.Log("abt to return effect");
                     return effectPrefab;
                 }
                 return null;
@@ -319,6 +325,11 @@ namespace SS2.Equipments
                 // TODO: Will HasAnyStacks break this fixed update? I hope not!
                 if (HasAnyStacks)
                 {
+                    if (!CharacterBody.healthComponent.alive && etherealEffect != null)
+                    {
+                        Destroy(etherealEffect);
+                    }
+
                     timer += Time.fixedDeltaTime;
                     if (timer >= timerDur)
                     {
