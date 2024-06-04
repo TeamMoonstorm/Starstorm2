@@ -246,7 +246,8 @@ namespace SS2.Equipments
                     projTimer = 0;
 
                     //you never know.
-                    if (projectilePrefab != null)
+                    // yes u do wtf?
+                    if (true)//projectilePrefab != null)
                     {
                         PlaceCircle();
                     }

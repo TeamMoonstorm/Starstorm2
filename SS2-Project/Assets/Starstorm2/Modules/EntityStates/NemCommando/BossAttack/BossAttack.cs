@@ -23,6 +23,7 @@ namespace EntityStates.Nemmando
         public static float maxEmission;
         public static float minEmission;
         public static GameObject effectPrefab;
+        public static GameObject hitEffectPrefab;
 
         private float hitStopwatch;
         private float duration;
@@ -98,6 +99,7 @@ namespace EntityStates.Nemmando
                 procChainMask = default,
                 procCoefficient = 1f,
                 radius = radius,
+                impactEffect = EffectCatalog.FindEffectIndexFromPrefab(hitEffectPrefab),
                 teamIndex = GetTeam()
             };
             DamageAPI.AddModdedDamageType(blastAttack, SS2.Survivors.NemCommando.GougeDamageType);
