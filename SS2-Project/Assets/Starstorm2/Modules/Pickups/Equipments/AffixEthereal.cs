@@ -281,7 +281,7 @@ namespace SS2.Equipments
                         {
                             Vector3 position;
                             groundNodes.GetNodePosition(randomNode, out position);
-                            Util.PlaySound("EtherealBell", this.gameObject);
+                            Util.PlaySound("EtherealActivate", this.gameObject);
                             ProjectileManager.instance.FireProjectile(projectilePrefab, position, new Quaternion(0, 0, 0, 0), CharacterBody.gameObject, 1f, 0f, CharacterBody.RollCrit(), DamageColorIndex.Default, null, 0);
                         }
                     }
@@ -308,7 +308,7 @@ namespace SS2.Equipments
                 timerDur = baseTimerDur; // / body.attackSpeed;   >
                 timer = timerDur * 0.75f;
 
-                Util.PlaySound("EtherealSpawn", this.gameObject);
+                Util.PlaySound("EtherealBell", this.gameObject);
 
                 model = CharacterBody.modelLocator.modelTransform.GetComponent<CharacterModel>();
                 if (model != null)
