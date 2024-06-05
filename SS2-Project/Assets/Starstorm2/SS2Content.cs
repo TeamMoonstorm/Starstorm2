@@ -101,6 +101,13 @@ namespace SS2
             asyncAssetLoadCoroutines.Start();
             while (!asyncAssetLoadCoroutines.IsDone)
                 yield return null;
+
+            SS2Log.Info($"Populating UnlockableDefs array...");
+            SS2AssetRequest<UnlockableDef> udRequest = new SS2AssetRequest<UnlockableDef>(SS2Bundle.Vanilla);
+            udRequest.StartLoad();
+            while (!udRequest.IsComplete)
+                yield return null;
+            SS2ContentPack.unlockableDefs.Add(udRequest.Assets.ToArray());
         }
 
         private IEnumerator AddSS2ExpansionDef()
