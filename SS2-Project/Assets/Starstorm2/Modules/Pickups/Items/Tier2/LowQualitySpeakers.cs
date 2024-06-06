@@ -75,7 +75,7 @@ namespace SS2.Items
                     blastAttack.teamIndex = body.teamComponent.teamIndex;
                     blastAttack.crit = false;
                     blastAttack.procChainMask = default(ProcChainMask);
-                    blastAttack.procCoefficient = 1f;
+                    blastAttack.procCoefficient = 0f;
                     blastAttack.falloffModel = BlastAttack.FalloffModel.Linear;
                     blastAttack.damageColorIndex = DamageColorIndex.Default;
                     blastAttack.damageType = DamageType.Stun1s;
