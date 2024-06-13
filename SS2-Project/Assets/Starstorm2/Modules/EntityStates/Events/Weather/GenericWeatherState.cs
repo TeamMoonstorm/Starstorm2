@@ -1,70 +1,21 @@
-﻿/*using SS2.Components;
+﻿using SS2.Components;
 using RoR2;
 using UnityEngine;
-
+using MSU;
+using UnityEngine.Networking;
+using SS2;
 namespace EntityStates.Events
 {
-    public abstract class GenericWeatherState : EventState
+    public abstract class GenericWeatherState : EntityState
     {
-        [SerializeField]
-        public GameObject effectPrefab;
-        [SerializeField]
-        public static float fadeDuration = 7f;
-
-
-        private GameObject effectInstance;
-        private EventStateEffect eventStateEffect;
+        protected GameplayEvent gameplayEvent;
+        protected StormController stormController;
         public override void OnEnter()
         {
             base.OnEnter();
-            if (effectPrefab)
-            {
-                effectInstance = Object.Instantiate(effectPrefab);
-                eventStateEffect = effectInstance.GetComponent<EventStateEffect>();
-                if (eventStateEffect)
-                {
-                    eventStateEffect.intensityMultiplier = DiffScalingValue;
-                }
-            }
-        }
-
-        public override void StartEvent()
-        {
-            base.StartEvent();
-            if (eventStateEffect)
-            {
-                eventStateEffect.OnEffectStart();
-            }
-
-            RoR2.Run.onRunDestroyGlobal += RunEndRemoveWeather;
-            RoR2.Stage.onServerStageComplete += StageEndRemoveWeather;
-        }
-
-        private void StageEndRemoveWeather(Stage obj)
-        {
-            RoR2.Run.onRunDestroyGlobal -= RunEndRemoveWeather;
-            RoR2.Stage.onServerStageComplete -= StageEndRemoveWeather;
-        }
-
-        private void RunEndRemoveWeather(Run obj)
-        {
-            RoR2.Run.onRunDestroyGlobal -= RunEndRemoveWeather;
-            RoR2.Stage.onServerStageComplete -= StageEndRemoveWeather;
-        }
-
-        public override void OnExit()
-        {
-            base.OnExit();
-            if (eventStateEffect)
-            {
-                eventStateEffect.OnEndingStart(fadeDuration);
-            }
-            if (HasWarned)
-            {
-                RoR2.Run.onRunDestroyGlobal -= RunEndRemoveWeather;
-                RoR2.Stage.onServerStageComplete -= StageEndRemoveWeather;
-            }
+            this.gameplayEvent = base.GetComponent<GameplayEvent>();
+            this.stormController = base.GetComponent<StormController>();
         }
     }
 
-}*/
+}

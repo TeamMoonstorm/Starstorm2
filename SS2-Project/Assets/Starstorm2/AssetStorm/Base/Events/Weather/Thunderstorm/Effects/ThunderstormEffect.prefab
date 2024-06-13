@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2730292147841769568}
   - component: {fileID: 3630749552425093669}
+  - component: {fileID: 2217513675909066282}
   m_Layer: 20
   m_Name: PP
   m_TagString: Untagged
@@ -48,6 +49,36 @@ MonoBehaviour:
   blendDistance: 0
   weight: 0
   priority: 7
+--- !u!114 &2217513675909066282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4085520846235831843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 682a8bea9902b1f40906f5109e31780f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentIntensity: 0
+  postProcessVolume: {fileID: 3630749552425093669}
+  breakpoints:
+  - requiredIntensity: 1
+    weight: 0.35
+    rainIntensity: 10
+  - requiredIntensity: 2
+    weight: 0.7
+    rainIntensity: 20
+  - requiredIntensity: 3
+    weight: 0.9
+    rainIntensity: 30
+  - requiredIntensity: 4
+    weight: 0.95
+    rainIntensity: 40
+  - requiredIntensity: 5
+    weight: 1
+    rainIntensity: 50
 --- !u!1 &5557705817396211732
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,7 +89,6 @@ GameObject:
   m_Component:
   - component: {fileID: 840303959914180082}
   - component: {fileID: 2055360629883558824}
-  - component: {fileID: 6407097951720824131}
   - component: {fileID: 4007388288420887208}
   - component: {fileID: 3325511590296837680}
   - component: {fileID: 7127935376762008174}
@@ -104,50 +134,6 @@ MonoBehaviour:
   vfxIntensity: 0
   optionalLights: []
   secondaryParticleSystem: []
---- !u!114 &6407097951720824131
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5557705817396211732}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c3ff36cc29787b43aad239d83a6f075, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  intensityMultiplier: 1
-  onEffectStart:
-    m_PersistentCalls:
-      m_Calls: []
-  onEndingStart:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 9202850511914689674}
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7280755655724198528}
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-  onDestroyEffect:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &4007388288420887208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,13 +390,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7416982578018888513}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3069229972012724806}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!199 &1939220664953177940
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -557,8 +543,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.075
-      minScalar: 0.025
+      scalar: 0.25
+      minScalar: 0.15
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -610,8 +596,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 2.5
-      minScalar: 2.25
+      scalar: 4
+      minScalar: 3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -664,7 +650,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 0.49019608}
+      maxColor: {r: 1, g: 1, b: 1, a: 0.03137255}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -726,7 +712,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.05
+      scalar: 0.4
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -1048,7 +1034,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -1188,7 +1174,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.1
+      value: 0.62
       mode: 0
       spread: 0
       speed:
@@ -4054,7 +4040,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 1
+    enabled: 0
     serializedVersion: 3
     type: 1
     collisionMode: 0
@@ -5201,8 +5187,7 @@ GameObject:
   - component: {fileID: 3069229972012724806}
   - component: {fileID: 3130259091456555306}
   - component: {fileID: 8900538215075386285}
-  - component: {fileID: 6329578771373940898}
-  - component: {fileID: 2833104062641541188}
+  - component: {fileID: 6348378885180685393}
   m_Layer: 0
   m_Name: Rain
   m_TagString: Untagged
@@ -7140,7 +7125,7 @@ ParticleSystem:
         m_RotationOrder: 4
     minKillSpeed: 0
     maxKillSpeed: 0
-    radiusScale: 1
+    radiusScale: 10
     collidesWith:
       serializedVersion: 2
       m_Bits: 4294967295
@@ -7732,7 +7717,7 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!114 &6329578771373940898
+--- !u!114 &6348378885180685393
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7741,27 +7726,47 @@ MonoBehaviour:
   m_GameObject: {fileID: 9139585698443817123}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c0a716bdef7c8a47bb6b94f959dec22, type: 3}
+  m_Script: {fileID: 11500000, guid: 5c3ff36cc29787b43aad239d83a6f075, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particlesPerDifficultyIncrease: 200
-  particleSpeedPerDifficultyIncrease: 0.2
-  simulationSpeedPerDifficultyIncrease: 0.2
---- !u!114 &2833104062641541188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9139585698443817123}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6d203db848d9d94f873bc2a026ff266, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  localRotationOnly: 1
-  rotationPerDifficultyIncrease: {x: 0, y: 0, z: 7}
-  transformOffsetPerDifficultyIncrease: {x: 1, y: 1, z: 1}
+  particleSystem: {fileID: 3130259091456555306}
+  minimumIntensity: 0.1
+  breakpoints:
+  - requiredIntensity: 1
+    alpha: 0.03
+    startSpeed: 250
+    startSize: 0.02
+    rateOverTime: 300
+    simulationSpeed: 1
+    rotation: {x: 0, y: 0, z: 0}
+  - requiredIntensity: 2
+    alpha: 0.05
+    startSpeed: 250
+    startSize: 0.03
+    rateOverTime: 500
+    simulationSpeed: 1.2
+    rotation: {x: 0, y: 0, z: 5}
+  - requiredIntensity: 3
+    alpha: 0.1
+    startSpeed: 300
+    startSize: 0.03
+    rateOverTime: 1000
+    simulationSpeed: 1.5
+    rotation: {x: 0, y: 0, z: 12}
+  - requiredIntensity: 4
+    alpha: 0.1
+    startSpeed: 350
+    startSize: 0.04
+    rateOverTime: 2000
+    simulationSpeed: 1.8
+    rotation: {x: 0, y: 0, z: 19}
+  - requiredIntensity: 5
+    alpha: 0.1
+    startSpeed: 500
+    startSize: 0.08
+    rateOverTime: 3000
+    simulationSpeed: 3
+    rotation: {x: 0, y: 0, z: 30}
 --- !u!1 &9202850511914689674
 GameObject:
   m_ObjectHideFlags: 0
@@ -7781,7 +7786,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9146905060449768105
 Transform:
   m_ObjectHideFlags: 0

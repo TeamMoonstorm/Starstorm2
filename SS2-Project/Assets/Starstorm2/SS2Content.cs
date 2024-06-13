@@ -102,7 +102,7 @@ namespace SS2
             while (!asyncAssetLoadCoroutines.IsDone)
                 yield return null;
 
-            SS2Log.Info($"Populating UnlockableDefs array...");
+            SS2Log.Info($"Populating UnlockableDefs array from Vanilla Skins...");
             SS2AssetRequest<UnlockableDef> udRequest = new SS2AssetRequest<UnlockableDef>(SS2Bundle.Vanilla);
             udRequest.StartLoad();
             while (!udRequest.IsComplete)
@@ -141,6 +141,7 @@ namespace SS2
                 Components.EtherealBehavior.Init,
                 Components.VoidBehavior.Init,
                 Void.Init,
+                Storm.Init,
                 () =>
                 {
                     //new Modules.Scenes().Initialize();
