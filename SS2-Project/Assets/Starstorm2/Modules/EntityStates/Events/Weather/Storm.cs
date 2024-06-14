@@ -43,23 +43,65 @@ namespace EntityStates.Events
                 eventColor = Color.gray,
                 textDuration = 6,
             });
-
-            rng = new Xoroshiro128Plus((ulong)Run.instance.stageRng.nextUint);
-            mobRng = new Xoroshiro128Plus((ulong)Run.instance.stageRng.nextUint);
-
-            GlobalEventManager.onCharacterDeathGlobal += AddCharge;
-            CharacterBody.onBodyStartGlobal += BuffEnemy;
-
-            var enemies = TeamComponent.GetTeamMembers(TeamIndex.Monster).Concat(TeamComponent.GetTeamMembers(TeamIndex.Lunar)).Concat(TeamComponent.GetTeamMembers(TeamIndex.Void));
-            foreach (var teamMember in enemies)
-            {
-                BuffEnemy(teamMember.body);
-            }
-
             this.stormController.StartLerp(stormLevel, lerpDuration);
+
+            if(NetworkServer.active)
+            {
+                rng = new Xoroshiro128Plus((ulong)Run.instance.stageRng.nextUint);
+                mobRng = new Xoroshiro128Plus((ulong)Run.instance.stageRng.nextUint);
+
+                GlobalEventManager.onCharacterDeathGlobal += AddCharge;
+                CharacterBody.onBodyStartGlobal += BuffEnemy;
+
+                var enemies = TeamComponent.GetTeamMembers(TeamIndex.Monster).Concat(TeamComponent.GetTeamMembers(TeamIndex.Lunar)).Concat(TeamComponent.GetTeamMembers(TeamIndex.Void));
+                foreach (var teamMember in enemies)
+                {
+                    BuffEnemy(teamMember.body);
+                }
+
+                CombatDirector bossDirector = TeleporterInteraction.instance?.bossDirector;
+                if (bossDirector && stormLevel >= 5)
+                {                 
+                    bossDirector.onSpawnedServer.AddListener(new UnityEngine.Events.UnityAction<GameObject>(ModifySpawnedBoss));
+                }
+                    
+
+                foreach (CombatDirector combatDirector in CombatDirector.instancesList)
+                {
+                    if(combatDirector != bossDirector)
+                        combatDirector.onSpawnedServer.AddListener(new UnityEngine.Events.UnityAction<GameObject>(ModifySpawnedMasters));
+                }
+                
+            }
+            
+            
         }
 
-        
+        // TODO: move elite spawning to stormcontroller, use credits
+        private void ModifySpawnedMasters(GameObject masterObject)
+        {
+            if(Util.CheckRoll(5f * (stormLevel - 3)))
+            {
+                CreateStormElite(masterObject);
+            }
+        }
+        private void ModifySpawnedBoss(GameObject masterObject)
+        {
+            CreateStormElite(masterObject);
+        }
+
+        private void CreateStormElite(GameObject masterObject)
+        {
+            CharacterMaster master = masterObject.GetComponent<CharacterMaster>();
+            master.inventory.GiveItem(SS2Content.Items.AffixStorm);
+
+            GameObject bodyObject = master.GetBodyObject();
+            if (bodyObject)
+            {
+                EntityStateMachine bodyMachine = EntityStateMachine.FindByCustomName(bodyObject, "Body");
+                bodyMachine.initialStateType = new SerializableEntityStateType(typeof(AffixStorm.SpawnState));
+            }
+        }
 
         private void AddCharge(DamageReport damageReport)
         {

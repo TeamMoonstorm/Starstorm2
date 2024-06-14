@@ -237,6 +237,8 @@ namespace SS2
         }
         public static class Items
         {
+            public static ItemDef AffixStorm;
+
             public static ItemDef ArmedBackpack;
 
             public static ItemDef BoostCooldowns;
@@ -396,6 +398,8 @@ namespace SS2
 
         public static class Buffs
         {
+            public static BuffDef BuffAffixStorm;
+
             public static BuffDef BuffAffixVoid;
 
             public static BuffDef BuffBackThruster;
@@ -534,6 +538,8 @@ namespace SS2
 
         public static class Elites
         {
+            public static EliteDef edStorm;
+
             public static EliteDef edPurple;
 
             public static EliteDef edKinetic;

@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: matLightning
+  m_Name: matLightningSpawn
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
-  m_ShaderKeywords: USE_CLOUDS VERTEXCOLOR _EMISSION
+  m_ShaderKeywords: USE_CLOUDS USE_UV1 _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -20,69 +20,72 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Cloud1Tex:
-        m_Texture: {fileID: 2800000, guid: 7d141824ada450747b17a50e01bef09a, type: 3}
-        m_Scale: {x: 0.01, y: 0.01}
+        m_Texture: {fileID: 2800000, guid: 4e8ef691f4d8e9b4d93e18c535f7fbc5, type: 2}
+        m_Scale: {x: 0.2, y: 0.2}
         m_Offset: {x: 0, y: 0}
     - _Cloud2Tex:
-        m_Texture: {fileID: 2800000, guid: 7d141824ada450747b17a50e01bef09a, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 0.1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: bba2f3be4807bf8418622540a6ebc79d, type: 3}
-        m_Scale: {x: 0.1, y: 1}
+        m_Texture: {fileID: 2800000, guid: 66ec261d07b2f48458fdeadd8ceee069, type: 2}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RemapTex:
-        m_Texture: {fileID: 2800000, guid: 19e35658522b8c540a57b77d439d87c8, type: 3}
+        m_Texture: {fileID: 2800000, guid: e9a4b2703e9b1f44d9f0ec113994b2b2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _AlphaBias: 0.196
-    - _AlphaBoost: 1.1
-    - _AlphaThreshold: 0.03
-    - _Boost: 3.89
+    - _AlphaBias: 1
+    - _AlphaBoost: 12
+    - _AlphaThreshold: 0.295
+    - _Boost: 5
     - _BumpScale: 1
     - _CalcTextureAlphaOn: 0
     - _CloudOffsetOn: 0
     - _CloudsOn: 1
-    - _Cull: 0
-    - _Cutoff: 0.855
+    - _Cull: 2
+    - _Cutoff: 1
     - _DepthOffset: 0
     - _DetailNormalMapScale: 1
     - _DisableRemapOn: 0
     - _DistortionStrength: 0.1
-    - _DstBlend: 10
+    - _DstBlend: 1
     - _ExternalAlpha: 1
     - _Fade: 1
     - _FadeCloseDistance: 0.5
     - _FadeCloseOn: 0
     - _FresnelOn: 0
-    - _FresnelPower: 0
+    - _FresnelPower: 0.3
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _InternalSimpleBlendMode: 0
-    - _InvFade: 1.16
+    - _InvFade: 0
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _OffsetAlpha: 0
     - _OffsetAmount: 0
     - _Parallax: 0.02
+    - _RimPower: 0.5
+    - _SinRate: 0
     - _SkyboxOnly: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SrcBlend: 5
+    - _SrcBlend: 1
     - _UVSec: 0
     - _UVSwapOn: 0
-    - _UseColor: 0
-    - _UseUV1On: 0
+    - _UseUV1On: 1
     - _VertexAlphaOn: 0
-    - _VertexColorOn: 1
+    - _VertexColorOn: 0
     - _VertexOffsetOn: 0
     - _ZTest: 4
     - _ZWrite: 1
     m_Colors:
+    - _BorderScale: {r: 0.3, g: 0.19, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _CutoffScroll: {r: 200, g: 200, b: 15, a: 15}
+    - _CutoffScroll: {r: 20, g: -5, b: 3, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _TintColor: {r: 0.495283, g: 1, b: 0.9760415, a: 1}
+    - _RimColor: {r: 1, g: 0.68275857, b: 0, a: 0}
+    - _TimeScale: {r: 25, g: 10, b: 1, a: 1}
+    - _TintColor: {r: 1.2984567, g: 3.484466, b: 3.4233878, a: 1}
