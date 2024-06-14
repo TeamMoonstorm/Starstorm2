@@ -103,7 +103,7 @@ For contributors, what you need to know is the following:
 ## Issues Q&A
 
 Q: I'm still having errors in the console after importing
-* A: Try importing the game again as sometimes thunderkit settings aren't set correctly on the first import.
+* A: Try reimporting RoR2 as in some cases Thunderkit settings aren't set correctly on the first game import.
 
 Q: I'm having an issue where certain components cannot be added or general instability
 * A: Make sure you didn't leave Install RoR2MultiplayerHLAPI and Install RoR2EditorKit enabled, having these enabled will cause issues due to duplicate assemblies
