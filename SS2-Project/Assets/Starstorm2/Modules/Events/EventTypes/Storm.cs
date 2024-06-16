@@ -19,11 +19,11 @@ namespace SS2
             int stack = sender.GetBuffCount(SS2Content.Buffs.BuffStorm);
             if (stack > 0)
             {
-                args.armorAdd += 10f + 2.5f * (stack - 1);
-                args.damageMultAdd += 0.1f * stack;
-                args.attackSpeedMultAdd += 0.15f * (stack - 1);
-                args.moveSpeedMultAdd += 0.15f * stack;
-                args.cooldownMultAdd += 0.15f * stack;
+                args.armorAdd += 5f + 2.5f * (stack - 1);
+                //args.damageMultAdd += 0.1f * stack; // i dont like damage
+                args.attackSpeedMultAdd += 0.08f * (stack - 1);
+                args.moveSpeedMultAdd += 0.1f * stack;
+                args.cooldownMultAdd += 0.1f * stack;
             }
 
         }

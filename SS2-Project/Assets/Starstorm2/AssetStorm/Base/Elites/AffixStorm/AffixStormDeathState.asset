@@ -10,19 +10,24 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: escSpawnState
+  m_Name: AffixStormDeathState
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.AffixStorm.SpawnState, Starstorm2, Version=1.0.0.0,
+    assemblyQualifiedName: EntityStates.AffixStorm.DeathState, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
     - fieldName: duration
       fieldValue:
-        stringValue: 0.5
+        stringValue: 2
         objectValue: {fileID: 0}
     - fieldName: spawnEffectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 1463258888072463, guid: ff11a370d5eb4064eb8a6bae5362a783,
+        objectValue: {fileID: 4160310693552044995, guid: c6f5ab63dd75e50449ba644a361856a4,
+          type: 3}
+    - fieldName: blastEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1474477433803458803, guid: 1d4886a8465d5234398a993b5e11f595,
           type: 3}

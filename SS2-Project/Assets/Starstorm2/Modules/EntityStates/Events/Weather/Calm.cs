@@ -32,7 +32,7 @@ namespace EntityStates.Events
             this.totalMultiplier = rng.RangeFloat(1, 1 + chargeVariance);
             GlobalEventManager.onCharacterDeathGlobal += AddCharge;
 
-            this.stormController.SetStormLevel(0, 0);
+            this.stormController.SetEffectIntensity(0);
         }
 
 
@@ -61,8 +61,6 @@ namespace EntityStates.Events
                 this.chargeStopwatch += chargeInterval;
                 this.charge += CalculateCharge(chargeInterval);
             }
-
-            this.stormController.SetStormLevel(0, this.charge);
 
             if (charge >= 100f)
             {

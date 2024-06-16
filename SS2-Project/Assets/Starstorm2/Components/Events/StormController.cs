@@ -8,7 +8,7 @@ using RoR2.UI;
 
 namespace SS2.Components
 {
-    public class StormController : MonoBehaviour
+    public class StormController : NetworkBehaviour
     {
         public static StormController instance;
 
@@ -18,6 +18,7 @@ namespace SS2.Components
         {
             Stage.onStageStartGlobal += (stage) =>
             {
+                // IMPLEMENT STAGE CHECK!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 if(NetworkServer.active)
                 {
                     GameObject stormController = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("StormController", SS2Bundle.Events));
@@ -25,6 +26,22 @@ namespace SS2.Components
                 }
                 
             };
+        }
+        [ConCommand(commandName = "start_storm", flags = ConVarFlags.Cheat | ConVarFlags.ExecuteOnServer, helpText = "Sets the current storm level. Zero to disable. Format: {stormLevel}")]
+        public static void CCSetStormLevel(ConCommandArgs args)
+        {
+            if (!NetworkServer.active) return;
+
+            int level = args.GetArgInt(0);
+            StormController stormController = StormController.instance;
+            if(!stormController)
+            {
+                stormController = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("StormController", SS2Bundle.Events)).GetComponent<StormController>();
+                NetworkServer.Spawn(stormController.gameObject);              
+            }
+
+            stormController.ForceStormLevel(level);
+
         }
         [Serializable]
         public struct StormVFX
@@ -35,6 +52,21 @@ namespace SS2.Components
         }
         public StormVFX[] eventVFX = Array.Empty<StormVFX>();
 
+        private float endLerpIntensity;
+        private float startLerpIntensity;
+        private float lerpTimeScale;
+        private float lerpTime = 1f;
+        private float effectIntensity;
+
+        public IIntensityScaler[] intensityScalers;
+
+        private int stormLevel;
+        private float levelPercentComplete;
+
+        private EntityStateMachine stateMachine;
+
+        [SyncVar]
+        private float chargeInCurrentLevel;
         private void OnEnable()
         {
             if (StormController.instance)
@@ -55,7 +87,8 @@ namespace SS2.Components
         private void Start()
         {
             InstantiateEffect();
-            this.SetIntensity(this.effectIntensity);
+            this.stateMachine = base.GetComponent<EntityStateMachine>();
+            this.SetEffectIntensity(this.effectIntensity);
             ObjectivePanelController.collectObjectiveSources += StormObjective;           
         }
         private void OnDestroy()
@@ -63,17 +96,7 @@ namespace SS2.Components
             ObjectivePanelController.collectObjectiveSources -= StormObjective;
         }
 
-        private float endLerpIntensity;
-        private float startLerpIntensity;
-        private float lerpTimeScale;
-        private float lerpTime = 1f;
-        private float effectIntensity;
-
-        public IIntensityScaler[] intensityScalers;
-
-        private int stormLevel;
-        private float levelPercentComplete;
-
+        
         public void StartLerp(float newIntensity, float lerpDuration)
         {
             this.endLerpIntensity = newIntensity;
@@ -90,18 +113,20 @@ namespace SS2.Components
 
         private void FixedUpdate()
         {
+            this.levelPercentComplete = Mathf.Clamp(this.chargeInCurrentLevel, 0, 100);
+
             this.lerpTime += Time.fixedDeltaTime * lerpTimeScale;
             if(this.lerpTime <= 1)
             {
-                this.SetIntensity(Mathf.Lerp(startLerpIntensity, endLerpIntensity, this.lerpTime));
+                this.SetEffectIntensity(Mathf.Lerp(startLerpIntensity, endLerpIntensity, this.lerpTime));
             }
             else
             {
-                this.SetIntensity(endLerpIntensity);
+                this.SetEffectIntensity(endLerpIntensity);
             }
         }
 
-        public void SetIntensity(float newIntensity)
+        public void SetEffectIntensity(float newIntensity)
         {
             if (newIntensity == this.effectIntensity) return;
 
@@ -112,10 +137,31 @@ namespace SS2.Components
                 scaler.SetIntensity(newIntensity);
             }
         }
-        public void SetStormLevel(int stormLevel, float percentComplete)
+
+        [Server]
+        public void ForceStormLevel(int stormLevel)
         {
+            if(stormLevel > 0)
+            {
+                this.stateMachine.SetNextState(new EntityStates.Events.Storm(stormLevel, 5f));
+            }
+            else
+            {
+                this.stateMachine.SetNextState(new EntityStates.Events.Calm());
+            }
+
             this.stormLevel = stormLevel;
-            this.levelPercentComplete = percentComplete;
+        }
+
+        public void OnStormLevelCompleted()
+        {
+            this.stormLevel++;
+        }
+
+        [Server]
+        public void AddCharge(float charge)
+        {
+            this.chargeInCurrentLevel += charge;         
         }
 
         public void InstantiateEffect()

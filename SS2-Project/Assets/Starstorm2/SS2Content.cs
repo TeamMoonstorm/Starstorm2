@@ -241,6 +241,8 @@ namespace SS2
 
             public static ItemDef ArmedBackpack;
 
+            public static ItemDef BoostCharacterSize;
+
             public static ItemDef BoostCooldowns;
 
             public static ItemDef BoostMovespeed;
@@ -401,6 +403,8 @@ namespace SS2
             public static BuffDef BuffAffixStorm;
 
             public static BuffDef BuffAffixVoid;
+
+            public static BuffDef BuffAffixUltra;
 
             public static BuffDef BuffBackThruster;
 

@@ -71,6 +71,7 @@ namespace SS2.Components
                     Color color = startColor.color;
                     color.a = state.alpha;
                     startColor.color = color;
+                    main.startColor = startColor; // we love unity
                 }
                 if (state.startSize != -1) main.startSize = state.startSize;
                 if (state.startSpeed != -1) main.startSpeedMultiplier = state.startSpeed;

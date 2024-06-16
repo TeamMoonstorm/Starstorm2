@@ -77,10 +77,11 @@ namespace EntityStates.Events
             
         }
 
+        private static float SPAWNCHANCETEMPJUSTFORTESTINGIPROMISE = 10f;
         // TODO: move elite spawning to stormcontroller, use credits
         private void ModifySpawnedMasters(GameObject masterObject)
         {
-            if(Util.CheckRoll(5f * (stormLevel - 3)))
+            if(Util.CheckRoll(SPAWNCHANCETEMPJUSTFORTESTINGIPROMISE * (stormLevel - 3)))
             {
                 CreateStormElite(masterObject);
             }
@@ -103,6 +104,7 @@ namespace EntityStates.Events
             }
         }
 
+        // TODO: stronger enemies give more charge(?), move charge to stormcontroller, stop charge gain during teleporter
         private void AddCharge(DamageReport damageReport)
         {
             CharacterBody body = damageReport.victimBody;
@@ -114,6 +116,7 @@ namespace EntityStates.Events
                 float charge1 = mobRng.RangeFloat(charge - variance, charge + variance);
                 this.chargeFromKills += charge1;
                 this.charge += charge1;
+                this.stormController.AddCharge(charge1);
             }
         }
 
@@ -126,10 +129,10 @@ namespace EntityStates.Events
             if(this.chargeStopwatch <= 0)
             {
                 this.chargeStopwatch = chargeInterval; 
-                this.charge += CalculateCharge(chargeInterval);
+                float charge = CalculateCharge(chargeInterval);
+                this.charge += charge;
+                this.stormController.AddCharge(charge);
             }
-
-            this.stormController.SetStormLevel(this.stormLevel, this.charge);
 
             if (stormLevel < maxStormLevel && charge >= 100f)
             {

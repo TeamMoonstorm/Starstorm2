@@ -93,6 +93,8 @@ namespace SS2
             {
                 if (obj == textComponent)
                     textChanged = true;
+
+                this.enabled = true;
             }
 
             public void Update()
@@ -115,48 +117,52 @@ namespace SS2
 
                         var anythingChanged = false;
 
-                        foreach (var link in textInfo.linkInfo.Where(x => x.GetLinkID() == "textWavy"))
+                        foreach(var link in textInfo.linkInfo)
                         {
-                            for (int i = link.linkTextfirstCharacterIndex; i < link.linkTextfirstCharacterIndex + link.linkTextLength; i++)
+                            if (link.GetLinkID().Equals("textWavy"))
                             {
-                                var charInfo = textInfo.characterInfo[i];
-                                if (!charInfo.isVisible) continue;
-
-                                anythingChanged = true;
-
-                                var waveAmount = 6f * charInfo.scale;
-                                var origVerts = cachedMeshInfo[charInfo.materialReferenceIndex].vertices;
-                                var origColors = cachedMeshInfo[charInfo.materialReferenceIndex].colors32;
-                                var destVerts = textInfo.meshInfo[charInfo.materialReferenceIndex].vertices;
-                                var destColors = textInfo.meshInfo[charInfo.materialReferenceIndex].colors32;
-                                var charOffset = new Vector3(0f, Mathf.Sin(Time.time * 8f + 0.22f * i) * waveAmount, 0f);
-                                for (var j = 0; j <= 3; j++)
+                                for (int i = link.linkTextfirstCharacterIndex; i < link.linkTextfirstCharacterIndex + link.linkTextLength; i++)
                                 {
-                                    destVerts[charInfo.vertexIndex + j] = origVerts[charInfo.vertexIndex + j] + charOffset;
+                                    var charInfo = textInfo.characterInfo[i];
+                                    if (!charInfo.isVisible) continue;
+
+                                    anythingChanged = true;
+
+                                    var waveAmount = 6f * charInfo.scale;
+                                    var origVerts = cachedMeshInfo[charInfo.materialReferenceIndex].vertices;
+                                    var origColors = cachedMeshInfo[charInfo.materialReferenceIndex].colors32;
+                                    var destVerts = textInfo.meshInfo[charInfo.materialReferenceIndex].vertices;
+                                    var destColors = textInfo.meshInfo[charInfo.materialReferenceIndex].colors32;
+                                    var charOffset = new Vector3(0f, Mathf.Sin(Time.time * 8f + 0.22f * i) * waveAmount, 0f);
+                                    for (var k = 0; k <= 3; k++)
+                                    {
+                                        destVerts[charInfo.vertexIndex + k] = origVerts[charInfo.vertexIndex + k] + charOffset;
+                                    }
                                 }
                             }
-                        }
-
-                        foreach (var link in textInfo.linkInfo.Where(x => x.GetLinkID() == "textShaky"))
-                        {
-                            for (int i = link.linkTextfirstCharacterIndex; i < link.linkTextfirstCharacterIndex + link.linkTextLength; i++)
+                            
+                            if (link.GetLinkID().Equals("textShaky"))
                             {
-                                var charInfo = textInfo.characterInfo[i];
-                                if (!charInfo.isVisible) continue;
-
-                                anythingChanged = true;
-
-                                var shakeAmount = 3f * charInfo.scale;
-                                var origVerts = cachedMeshInfo[charInfo.materialReferenceIndex].vertices;
-                                var origColors = cachedMeshInfo[charInfo.materialReferenceIndex].colors32;
-                                var destVerts = textInfo.meshInfo[charInfo.materialReferenceIndex].vertices;
-                                var destColors = textInfo.meshInfo[charInfo.materialReferenceIndex].colors32;
-                                var charOffset = new Vector3(Random.Range(-shakeAmount, shakeAmount), Random.Range(-shakeAmount, shakeAmount), 0f);
-                                for (var j = 0; j <= 3; j++)
+                                for (int i = link.linkTextfirstCharacterIndex; i < link.linkTextfirstCharacterIndex + link.linkTextLength; i++)
                                 {
-                                    destVerts[charInfo.vertexIndex + j] = origVerts[charInfo.vertexIndex + j] + charOffset;
+                                    var charInfo = textInfo.characterInfo[i];
+                                    if (!charInfo.isVisible) continue;
+
+                                    anythingChanged = true;
+
+                                    var shakeAmount = 3f * charInfo.scale;
+                                    var origVerts = cachedMeshInfo[charInfo.materialReferenceIndex].vertices;
+                                    var origColors = cachedMeshInfo[charInfo.materialReferenceIndex].colors32;
+                                    var destVerts = textInfo.meshInfo[charInfo.materialReferenceIndex].vertices;
+                                    var destColors = textInfo.meshInfo[charInfo.materialReferenceIndex].colors32;
+                                    var charOffset = new Vector3(Random.Range(-shakeAmount, shakeAmount), Random.Range(-shakeAmount, shakeAmount), 0f);
+                                    for (var j = 0; j <= 3; j++)
+                                    {
+                                        destVerts[charInfo.vertexIndex + j] = origVerts[charInfo.vertexIndex + j] + charOffset;
+                                    }
                                 }
                             }
+                            
                         }
 
                         if (anythingChanged)
@@ -169,6 +175,10 @@ namespace SS2
                                 textComponent.UpdateGeometry(meshInfo.mesh, i);
                                 textComponent.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
                             }
+                        }
+                        else
+                        {
+                            this.enabled = false; // for performance 
                         }
                     }
                 }

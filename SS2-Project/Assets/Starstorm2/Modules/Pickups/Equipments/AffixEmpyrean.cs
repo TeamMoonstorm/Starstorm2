@@ -19,8 +19,6 @@ namespace SS2.Equipments
         public override void Initialize()
         {
             CreateBlacklist();
-
-            On.RoR2.Util.GetBestBodyName += MakeEmpyreanName;
             RoR2Application.onLoad += CreateBlacklist;
             IL.RoR2.CharacterBody.RecalculateStats += RecalculateStatsEmpyreanIL;
         }
@@ -84,34 +82,6 @@ namespace SS2.Equipments
             {
                 SS2Log.Fatal("Failed to find IL match for Empyrean hook 2!");
             }
-        }
-
-        private static string MakeEmpyreanName(On.RoR2.Util.orig_GetBestBodyName orig, GameObject bodyObject)
-        {
-            var text = orig(bodyObject);
-            var empyreanIndex = SS2Content.Buffs.bdEmpyrean.buffIndex;
-            if (!bodyObject)
-                return text;
-
-            if (!bodyObject.TryGetComponent<CharacterBody>(out var body))
-                return text;
-
-            if (!body.HasBuff(empyreanIndex))
-            {
-                return text;
-            }
-
-            foreach (BuffIndex buffIndex in BuffCatalog.eliteBuffIndices)
-            {
-                if (buffIndex == empyreanIndex)
-                    continue;
-
-                var eliteToken = Language.GetString(BuffCatalog.GetBuffDef(buffIndex).eliteDef.modifierToken);
-                eliteToken = eliteToken.Replace("{0}", string.Empty);
-                text = text.Replace(eliteToken, string.Empty);
-            }
-
-            return text;
         }
         #endregion
 
