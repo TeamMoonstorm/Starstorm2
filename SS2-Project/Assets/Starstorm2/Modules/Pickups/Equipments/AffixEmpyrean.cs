@@ -169,6 +169,16 @@ namespace SS2.Equipments
         {
             if (!HasAnyStacks) return; // this feels weird but /shrug
 
+            if (!damageReport.attackerBody) return;
+
+            if (CharacterBody.teamComponent.teamIndex != TeamIndex.Player)
+            {
+                var cedInstance = Components.CustomEliteDirector.instance;
+                if (cedInstance.empyreanActive)
+                    cedInstance.empyreanActive = false;
+            }
+
+
             int numItems = this.CharacterBody.isChampion ? 4 : 2;
             float spreadAngle = 360f / numItems;
             float startingAngle = -(spreadAngle / 2) * (numItems - 1);

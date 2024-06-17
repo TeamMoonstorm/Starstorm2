@@ -33,7 +33,7 @@ namespace EntityStates.Lamp
 
             originalMoveSpeed = characterBody.moveSpeed;
 
-            PlayCrossfade("Body", "Attack", "Primary.playbackRate", duration, 0.05f);
+            PlayCrossfade("FullBody, Override", "Attack", "Primary.playbackRate", duration, 0.05f);
         }
 
         public virtual void FireProjectile()

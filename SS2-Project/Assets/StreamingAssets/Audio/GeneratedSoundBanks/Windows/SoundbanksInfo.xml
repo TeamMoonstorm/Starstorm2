@@ -11,7 +11,7 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="866530374" Language="SFX" Hash="921108865">
+		<SoundBank Id="866530374" Language="SFX" Hash="1917638312">
 			<ObjectPath>\SoundBanks\Default Work Unit\Starstorm2</ObjectPath>
 			<ShortName>Starstorm2</ShortName>
 			<Path>Starstorm2.bnk</Path>
@@ -317,6 +317,62 @@
 						<File Id="1040351984" Language="SFX">
 							<ShortName>item_proc_droneOnKill_01.wav</ShortName>
 							<Path>SFX\item_proc_droneOnKill_01_B6492DA8.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2370200216" Name="EtherealActivate" ObjectPath="\Events\Default Work Unit\Ethereal\EtherealActivate" DurationType="OneShot" DurationMin="6.063857" DurationMax="6.424433">
+					<IncludedMemoryFiles>
+						<File Id="14785789" Language="SFX">
+							<ShortName>ethactivate.wav</ShortName>
+							<Path>SFX\ethactivate_23126B38.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2401444224" Name="EtherealBell" ObjectPath="\Events\Default Work Unit\Ethereal\EtherealBell" DurationType="OneShot" DurationMin="5.004467" DurationMax="5.004467">
+					<IncludedMemoryFiles>
+						<File Id="808118117" Language="SFX">
+							<ShortName>belltest.wav</ShortName>
+							<Path>SFX\belltest_23126B38.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="4294882297" Name="EtherealIdle" ObjectPath="\Events\Default Work Unit\Ethereal\EtherealIdle" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="6.404898" DurationMax="6.404898">
+					<IncludedMemoryFiles>
+						<File Id="717055938" Language="SFX">
+							<ShortName>ethidle2.wav</ShortName>
+							<Path>SFX\ethidle2_23126B38.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1367909893" Name="EtherealPillarIdle" ObjectPath="\Events\Default Work Unit\Ethereal\EtherealPillarIdle" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="12.654528" DurationMax="13.407005">
+					<IncludedMemoryFiles>
+						<File Id="126950648" Language="SFX">
+							<ShortName>pillaridle.wav</ShortName>
+							<Path>SFX\pillaridle_23126B38.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="4148654057" Name="EtherealPillarImpact" ObjectPath="\Events\Default Work Unit\Ethereal\EtherealPillarImpact" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="3.726644" DurationMax="3.726644">
+					<IncludedMemoryFiles>
+						<File Id="536607324" Language="SFX">
+							<ShortName>pillarimpactsofter.wav</ShortName>
+							<Path>SFX\pillarimpactsofter_23126B38.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2943830540" Name="EtherealPillarSpawn" ObjectPath="\Events\Default Work Unit\Ethereal\EtherealPillarSpawn" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="2.535759" DurationMax="2.686543">
+					<IncludedMemoryFiles>
+						<File Id="36144116" Language="SFX">
+							<ShortName>pillarspawn2.wav</ShortName>
+							<Path>SFX\pillarspawn2_23126B38.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="4032524928" Name="EtherealSpawn" ObjectPath="\Events\Default Work Unit\Ethereal\EtherealSpawn" MaxAttenuation="300.000000" DurationType="OneShot" DurationMin="4.366313" DurationMax="4.366313">
+					<IncludedMemoryFiles>
+						<File Id="245079502" Language="SFX">
+							<ShortName>ethspawn2.wav</ShortName>
+							<Path>SFX\ethspawn2_23126B38.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>

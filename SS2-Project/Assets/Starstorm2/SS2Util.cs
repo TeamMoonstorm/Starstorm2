@@ -144,7 +144,7 @@ namespace SS2
             pickup.prefabOverride = PickupCatalog.GetPickupDef(pickupIndex).dropletDisplayPrefab;
 
             pickup.pickupIndex = pickupIndex;
-            PickupDropletController.CreatePickupDroplet(pickup, position, velocity);
+            PickupDropletController.CreatePickupDroplet(pickupIndex, position, velocity);
 
             EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>(vfxPrefab, SS2Bundle.All), new EffectData
             {

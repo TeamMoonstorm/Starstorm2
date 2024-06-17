@@ -37,6 +37,11 @@ namespace EntityStates.LampBoss
             //FindModelChild("GlowParticles").gameObject.SetActive(true);
 
             isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
+
+            hasPlayedEffect = true;
+            var effect = isBlue ? deathVFXblue : deathVFX;
+            if (NetworkServer.active)
+                EffectManager.SimpleEffect(effect, muzzle.position, muzzle.rotation, true);
         }
 
         public override void FixedUpdate()

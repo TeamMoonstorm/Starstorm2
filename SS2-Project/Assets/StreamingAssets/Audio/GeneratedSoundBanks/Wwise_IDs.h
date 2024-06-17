@@ -40,6 +40,13 @@ namespace AK
         static const AkUniqueID CYBORGUTILITY = 613000131U;
         static const AkUniqueID DIARYLEVELUP = 3870731187U;
         static const AkUniqueID DROIDHEAD = 3118940775U;
+        static const AkUniqueID ETHEREALACTIVATE = 2370200216U;
+        static const AkUniqueID ETHEREALBELL = 2401444224U;
+        static const AkUniqueID ETHEREALIDLE = 4294882297U;
+        static const AkUniqueID ETHEREALPILLARIDLE = 1367909893U;
+        static const AkUniqueID ETHEREALPILLARIMPACT = 4148654057U;
+        static const AkUniqueID ETHEREALPILLARSPAWN = 2943830540U;
+        static const AkUniqueID ETHEREALSPAWN = 4032524928U;
         static const AkUniqueID EXECUTIONERGAINCHARGE = 566193013U;
         static const AkUniqueID EXECUTIONERMAXCHARGE = 1925425774U;
         static const AkUniqueID EXECUTIONERPRIMARY = 953642894U;
