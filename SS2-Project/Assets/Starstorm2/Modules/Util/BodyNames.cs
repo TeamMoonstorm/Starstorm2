@@ -25,7 +25,9 @@ namespace SS2
         // To see the names in order, read this file from bottom to top.
 
         public static string AfterElite(string result, CharacterBody characterBody)
-        {          
+        {
+            if (!characterBody) return result;
+
             if (Convert.ToInt32((!(areWeCurrentlyInHell != false) == true)) < 1)
             {
                 result = Language.GetStringFormatted("{0} OF HELL", result);
@@ -48,21 +50,27 @@ namespace SS2
 
         public static string AfterUmbraOf(string result, CharacterBody characterBody)
         {
+            if (!characterBody) return result;
+
             return result;
         }
 
         public static string AfterGummy(string result, CharacterBody characterBody)
         {
+            if (!characterBody) return result;
+
             // "Terminal"
             if (characterBody.inventory && characterBody.inventory.GetItemCount(SS2Content.Items.TerminationHelper) > 0)
             {
-                result = Language.GetStringFormatted("SS2_ITEM_RELICOFTERMINATION_PREFIX", result);
+                result = Language.GetStringFormatted("SS2_ITEM_RELICOFTERMINATION_PREFIX", result); // relicopter
             }
             return result;
         }
         
         public static string BeforeEverything(string result, CharacterBody characterBody)
-        {        
+        {
+            if (!characterBody) return result;
+
             // Delete all elite modifiers, except "Empyrean"
             BuffIndex empyreanIndex = SS2Content.Buffs.bdEmpyrean.buffIndex;
             if (characterBody.HasBuff(empyreanIndex))
@@ -100,6 +108,7 @@ namespace SS2
                 c.Emit(OpCodes.Ldloc_2); // load text2
                 c.Emit(OpCodes.Ldloc_0); // load characterBody
                 c.EmitDelegate<Func<string, CharacterBody, string>>((text, cb) => AfterElite(text, cb));
+                c.Emit(OpCodes.Stloc_2);
             }
             else
             {
@@ -108,13 +117,14 @@ namespace SS2
 
             b = c.TryGotoNext(MoveType.Before,
                 x => x.MatchLdloc(0),
-                x => x.MatchCallvirt<CharacterBody>("get_inventory"),
-                x => x.MatchLdsfld<ItemDef>(nameof(RoR2Content.Items.InvadingDoppelganger)));
+                x => x.MatchCallOrCallvirt<CharacterBody>("get_inventory"),
+                x => x.MatchLdsfld(typeof(RoR2Content.Items), nameof(RoR2Content.Items.InvadingDoppelganger)));
             if (b)
             {
                 c.Emit(OpCodes.Ldloc_2); // load text2
                 c.Emit(OpCodes.Ldloc_0); // load characterBody
                 c.EmitDelegate<Func<string, CharacterBody, string>>((text, cb) => AfterUmbraOf(text, cb));
+                c.Emit(OpCodes.Stloc_2);
             }
             else
             {
@@ -124,12 +134,13 @@ namespace SS2
             b = c.TryGotoNext(MoveType.Before,
                 x => x.MatchLdloc(0),
                 x => x.MatchCallvirt<CharacterBody>("get_inventory"),
-                x => x.MatchLdsfld<ItemDef>(nameof(DLC1Content.Items.GummyCloneIdentifier)));
+                x => x.MatchLdsfld(typeof(DLC1Content.Items), nameof(DLC1Content.Items.GummyCloneIdentifier)));
             if (b)
             {
                 c.Emit(OpCodes.Ldloc_2); // load text2
                 c.Emit(OpCodes.Ldloc_0); // load characterBody
                 c.EmitDelegate<Func<string, CharacterBody, string>>((text, cb) => AfterGummy(text, cb));
+                c.Emit(OpCodes.Stloc_2);
             }
             else
             {
@@ -141,7 +152,7 @@ namespace SS2
                 x => x.MatchRet());
             if (b)
             {
-                //c.Emit(OpCodes.Ldloc_2); // load text2
+                c.Index++;
                 c.Emit(OpCodes.Ldloc_0); // load characterBody
                 c.EmitDelegate<Func<string, CharacterBody, string>>((text, cb) => BeforeEverything(text, cb));
             }

@@ -71,7 +71,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   maxDuration: 2
-  destroyOnEnd: 0
+  destroyOnEnd: 1
 --- !u!114 &6100744333954384349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2979,7 +2979,7 @@ ParticleSystem:
       m_RotationOrder: 4
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
-  scalingMode: 0
+  scalingMode: 1
   randomSeed: 0
   InitialModule:
     serializedVersion: 3
@@ -5216,7 +5216,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4852565935755302497
 Transform:
   m_ObjectHideFlags: 0

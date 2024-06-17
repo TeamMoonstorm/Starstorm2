@@ -12,21 +12,33 @@ namespace SS2.Components
     {
         public static StormController instance;
 
+        public static readonly Xoroshiro128Plus chargeRng = new Xoroshiro128Plus(0UL);
+        public static readonly Xoroshiro128Plus mobChargeRng = new Xoroshiro128Plus(0UL);
+        public static readonly Xoroshiro128Plus treasureRng = new Xoroshiro128Plus(0UL);
+        public static PickupDropTable dropTable;
+        public static bool shouldShowObjective = false; // weather radio? config setting?
+
         [SystemInitializer]
         //[RuntimeInitializeOnLoadMethod] // IDK WHY THIS DOESNT WORK. IT WORKS FOR PICKUPMAGNET. EWTF!!!!!!!!!!!!!!!!!!!
         static void Init()
         {
-            Stage.onStageStartGlobal += (stage) =>
+            // custom drop table? maybe?
+            // souls soon.............
+            StormController.dropTable = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<PickupDropTable>("RoR2/Base/Chest1/dtChest1.asset").WaitForCompletion();
+            Stage.onServerStageBegin += (stage) =>
             {
-                // IMPLEMENT STAGE CHECK!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                if(NetworkServer.active)
-                {
-                    GameObject stormController = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("StormController", SS2Bundle.Events));
-                    NetworkServer.Spawn(stormController);
-                }
-                
+                chargeRng.ResetSeed(Run.instance.treasureRng.nextUlong);
+                mobChargeRng.ResetSeed(Run.instance.treasureRng.nextUlong);
+                treasureRng.ResetSeed(Run.instance.treasureRng.nextUlong);
+
+                // IMPLEMENT STAGE CHECK!!!!!!!!!!!!!!!!!!!!!!!!
+                GameObject stormController = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("StormController", SS2Bundle.Events));
+                NetworkServer.Spawn(stormController);
+
             };
         }
+
+        // START STORM 2!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         [ConCommand(commandName = "start_storm", flags = ConVarFlags.Cheat | ConVarFlags.ExecuteOnServer, helpText = "Sets the current storm level. Zero to disable. Format: {stormLevel}")]
         public static void CCSetStormLevel(ConCommandArgs args)
         {
@@ -89,7 +101,8 @@ namespace SS2.Components
             InstantiateEffect();
             this.stateMachine = base.GetComponent<EntityStateMachine>();
             this.SetEffectIntensity(this.effectIntensity);
-            ObjectivePanelController.collectObjectiveSources += StormObjective;           
+            if(shouldShowObjective)
+                ObjectivePanelController.collectObjectiveSources += StormObjective;           
         }
         private void OnDestroy()
         {

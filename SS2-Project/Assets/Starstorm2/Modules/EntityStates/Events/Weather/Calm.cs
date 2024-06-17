@@ -15,8 +15,6 @@ namespace EntityStates.Events
         private static float chargeFromKill = 0.33f;
 
         private float charge;
-        private Xoroshiro128Plus rng;
-        private Xoroshiro128Plus mobRng;
         private float chargeStopwatch = 10f;
 
         private float chargeFromKills;
@@ -27,9 +25,7 @@ namespace EntityStates.Events
         {
             base.OnEnter();
 
-            rng = new Xoroshiro128Plus((ulong)Run.instance.stageRng.nextUint);
-            mobRng = new Xoroshiro128Plus((ulong)Run.instance.stageRng.nextUint);
-            this.totalMultiplier = rng.RangeFloat(1, 1 + chargeVariance);
+            this.totalMultiplier = StormController.chargeRng.RangeFloat(1, 1 + chargeVariance);
             GlobalEventManager.onCharacterDeathGlobal += AddCharge;
 
             this.stormController.SetEffectIntensity(0);
@@ -39,12 +35,12 @@ namespace EntityStates.Events
 
         private void AddCharge(DamageReport damageReport)
         {
-            if (TeamMask.GetEnemyTeams(TeamIndex.Player).HasTeam(damageReport.victimTeamIndex))
+            if (ShouldCharge() && TeamMask.GetEnemyTeams(TeamIndex.Player).HasTeam(damageReport.victimTeamIndex))
             {
                 float charge = chargeFromKill;
                 float variance = chargeVariance * charge;
 
-                float charge1 = mobRng.RangeFloat(charge - variance, charge + variance) * totalMultiplier;
+                float charge1 = StormController.mobChargeRng.RangeFloat(charge - variance, charge + variance) * totalMultiplier;
                 this.chargeFromKills += charge1;
                 this.charge += charge1;
             }
@@ -56,7 +52,7 @@ namespace EntityStates.Events
             if (!NetworkServer.active) return;
 
             this.chargeStopwatch -= Time.fixedDeltaTime;
-            if (this.chargeStopwatch <= 0)
+            if (this.chargeStopwatch <= 0 && ShouldCharge())
             {
                 this.chargeStopwatch += chargeInterval;
                 this.charge += CalculateCharge(chargeInterval);
@@ -83,10 +79,17 @@ namespace EntityStates.Events
             float creditsPerSecond = 100f / (minutesToStorm * 60f);
             float variance = chargeVariance * creditsPerSecond;
 
-            float charge = rng.RangeFloat(creditsPerSecond - variance, creditsPerSecond + variance) * deltaTime * totalMultiplier;
+            float charge = StormController.chargeRng.RangeFloat(creditsPerSecond - variance, creditsPerSecond + variance) * deltaTime * totalMultiplier;
             this.chargeFromTime += charge;
             return charge;
 
+        }
+
+        private bool ShouldCharge()
+        {
+            bool shouldCharge = !TeleporterInteraction.instance;
+            shouldCharge |= TeleporterInteraction.instance && TeleporterInteraction.instance.isIdle;
+            return shouldCharge;
         }
 
         public override void OnExit()
@@ -97,6 +100,7 @@ namespace EntityStates.Events
             SS2Log.Info($"Storm level finished in {fixedAge} seconds.");
             SS2Log.Info($"Charge from kills = {chargeFromKills}");
             SS2Log.Info($"Charge form time = {chargeFromTime}");
+            SS2Log.Info($"TotalMultiplier = {totalMultiplier}");
         }
     }
 }

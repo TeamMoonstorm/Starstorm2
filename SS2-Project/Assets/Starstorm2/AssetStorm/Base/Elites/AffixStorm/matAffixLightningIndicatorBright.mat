@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: matAffixLightningIndicatorBright
   m_Shader: {fileID: 4800000, guid: b12ff619eec8e0a49b65f7bec2dfdc79, type: 2}
-  m_ShaderKeywords: FRESNEL USE_CLOUDS USE_UV1 VERTEXOFFSET _EMISSION
+  m_ShaderKeywords: FRESNEL USE_CLOUDS USE_UV1 VERTEXCOLOR VERTEXOFFSET _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -39,7 +39,7 @@ Material:
     - _AlphaBias: 0.317
     - _AlphaBoost: 2
     - _AlphaThreshold: 0.295
-    - _Boost: 5
+    - _Boost: 8
     - _BumpScale: 1
     - _CalcTextureAlphaOn: 0
     - _CloudOffsetOn: 0
@@ -50,7 +50,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DisableRemapOn: 0
     - _DistortionStrength: 0.1
-    - _DstBlend: 10
+    - _DstBlend: 1
     - _DstBlendFloat: 1
     - _ExternalAlpha: 1
     - _Fade: 1
@@ -77,21 +77,21 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SoftPower: 1
     - _SpecularHighlights: 1
-    - _SrcBlend: 5
+    - _SrcBlend: 1
     - _SrcBlendFloat: 1
     - _TriplanarOn: 0
     - _UVSec: 0
     - _UVSwapOn: 0
     - _UseUV1On: 1
     - _VertexAlphaOn: 0
-    - _VertexColorOn: 0
+    - _VertexColorOn: 1
     - _VertexOffsetOn: 1
     - _ZTest: 4
     - _ZWrite: 1
     m_Colors:
     - _BorderScale: {r: 0.3, g: 0.19, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _CutoffScroll: {r: 0, g: 0, b: 15, a: 5}
+    - _CutoffScroll: {r: 55, g: 55, b: 15, a: 5}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 0.68275857, b: 0, a: 0}
     - _TimeScale: {r: 25, g: 10, b: 1, a: 1}
