@@ -3,7 +3,7 @@ using RoR2.Skills;
 using JetBrains.Annotations;
 using RoR2;
 using EntityStates;
-namespace SS2.ScriptableObjects
+namespace SS2
 {
     [CreateAssetMenu(menuName = "Starstorm2/SkillDef/DuplexSkillDef")]
 

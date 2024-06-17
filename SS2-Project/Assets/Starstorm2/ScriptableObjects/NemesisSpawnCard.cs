@@ -7,7 +7,7 @@ using System;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.Networking;
-namespace SS2.ScriptableObjects
+namespace SS2
 {
     [CreateAssetMenu(fileName = "NemesisSpawnCard", menuName = "Starstorm2/NemesisSpawnCard")]
     public class NemesisSpawnCard : CharacterSpawnCard

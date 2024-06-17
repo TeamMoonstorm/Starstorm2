@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace EntityStates.Nemmando
 {
-    public class BarrageFire : RendHandler
+    public class BarrageFire : BaseState
     {
         [FormatToken("SS2_NEMMANDO_SPECIAL_SUBMISSION_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float damageCoefficient;
@@ -91,7 +91,7 @@ namespace EntityStates.Nemmando
                     maxDistance = range
                 };
 
-                RendMultiplier(bulletAttack);
+                //RendMultiplier(bulletAttack);
 
                 bulletAttack.Fire();
             }

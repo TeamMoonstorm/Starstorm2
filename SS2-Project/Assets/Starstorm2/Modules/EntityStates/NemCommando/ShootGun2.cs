@@ -158,7 +158,7 @@ namespace EntityStates.NemCommando
                 Fire();
             }
 
-            if (fixedAge >= minimumDuration && inputBank.skill2.down & skillLocator.secondary.stock >= 1)
+            if (fixedAge >= minimumDuration / attackSpeedStat && inputBank.skill2.down & skillLocator.secondary.stock >= 1)
             {
                 outer.SetNextState(new ShootGun2());
                 skillLocator.secondary.stock -= 1;

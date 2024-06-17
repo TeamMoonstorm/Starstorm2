@@ -69,6 +69,8 @@ namespace SS2.Items
             {
                 body.onSkillActivatedServer -= RemoveBuff;
                 body.onSkillActivatedAuthority -= TryRefresh;
+                if (body.HasBuff(SS2Content.Buffs.BuffUniversalCharger))
+                    body.RemoveBuff(SS2Content.Buffs.BuffUniversalCharger);
             }
 
             private void RemoveBuff(GenericSkill genericSkill)

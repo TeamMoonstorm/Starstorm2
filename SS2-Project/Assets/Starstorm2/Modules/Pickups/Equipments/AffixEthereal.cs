@@ -114,7 +114,7 @@ namespace SS2.Equipments
             public static GameObject projectilePrefab = SS2Assets.LoadAsset<GameObject>("EtherealCircle", SS2Bundle.Equipments);
             private static System.Random random = new System.Random();
             public static float baseProjTimerDur = 12.5f;
-            public static float baseTimerDur = 4f;
+            public static float baseTimerDur = 5f;
             private float timer;
             private float timerDur;
             private bool expired = false;
@@ -129,9 +129,9 @@ namespace SS2.Equipments
                     return;
 
                 if (CharacterBody.hullClassification == HullClassification.BeetleQueen)
-                    timerDur = baseTimerDur * 3f;
-                else if (CharacterBody.hullClassification == HullClassification.Golem)
                     timerDur = baseTimerDur * 2f;
+                else if (CharacterBody.hullClassification == HullClassification.Golem)
+                    timerDur = baseTimerDur * 1.5f;
                 else
                     timerDur = baseTimerDur;
 
@@ -149,7 +149,7 @@ namespace SS2.Equipments
                     temporaryOverlay.duration = timerDur;
 
                     temporaryOverlay.animateShaderAlpha = true;
-                    temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 0.1f, 1f, 1f);
+                    temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 0f, timerDur, 1f);
                     temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matHakaiOverlay", SS2Bundle.Equipments);
                     temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
                 }
@@ -182,14 +182,21 @@ namespace SS2.Equipments
 
             private GameObject AddParticles(Renderer modelRenderer, Transform targetParentTransform, float duration)
             {
-                if (HasAnyStacks && modelRenderer is MeshRenderer || modelRenderer is SkinnedMeshRenderer)
+                if (HasAnyStacks && (modelRenderer is MeshRenderer || modelRenderer is SkinnedMeshRenderer))
                 {
-                    GameObject effectPrefab = null;
+                    GameObject effectPrefab;
 
                     if (CharacterBody.hullClassification == HullClassification.BeetleQueen)
                         effectPrefab = Instantiate(SS2Assets.LoadAsset<GameObject>("HakaiLightningBig", SS2Bundle.Equipments), targetParentTransform);
                     else
                         effectPrefab = Instantiate(SS2Assets.LoadAsset<GameObject>("HakaiLightning", SS2Bundle.Equipments), targetParentTransform);
+
+                    Debug.Log("made effect prefab");
+                    if (effectPrefab == null)
+                    {
+                        return null;
+                        SS2Log.Error("Ethereal death particles null ... how did we get here?");
+                    }
 
                     ParticleSystem ps = effectPrefab.GetComponent<ParticleSystem>();
                     ParticleSystem.ShapeModule shape = ps.shape;
@@ -206,14 +213,20 @@ namespace SS2.Equipments
                             shape.skinnedMeshRenderer = (SkinnedMeshRenderer)modelRenderer;
                         }
                     }
+                    else
+                        return null;
+                    Debug.Log("set shape / mes hrenderer");
                     ParticleSystem.MainModule main = ps.main;
                     main.duration = duration;
                     ps.gameObject.SetActive(true);
+                    Debug.Log("set active");
                     BoneParticleController bpc = effectPrefab.GetComponent<BoneParticleController>();
                     if (bpc != null && modelRenderer is SkinnedMeshRenderer)
                     {
                         bpc.skinnedMeshRenderer = (SkinnedMeshRenderer)modelRenderer;
+                        Debug.Log("bpc set");
                     }
+                    Debug.Log("abt to return effect");
                     return effectPrefab;
                 }
                 return null;
@@ -255,7 +268,7 @@ namespace SS2.Equipments
 
             private void PlaceCircle()
             {
-                Debug.Log("Firing projectile: " + projectilePrefab);
+                //Debug.Log("Firing projectile: " + projectilePrefab);
 
                 if (CharacterBody != null)
                 {
@@ -268,7 +281,7 @@ namespace SS2.Equipments
                         {
                             Vector3 position;
                             groundNodes.GetNodePosition(randomNode, out position);
-                            Util.PlaySound("EtherealBell", this.gameObject);
+                            Util.PlaySound("EtherealActivate", this.gameObject);
                             ProjectileManager.instance.FireProjectile(projectilePrefab, position, new Quaternion(0, 0, 0, 0), CharacterBody.gameObject, 1f, 0f, CharacterBody.RollCrit(), DamageColorIndex.Default, null, 0);
                         }
                     }
@@ -295,7 +308,7 @@ namespace SS2.Equipments
                 timerDur = baseTimerDur; // / body.attackSpeed;   >
                 timer = timerDur * 0.75f;
 
-                Util.PlaySound("EtherealSpawn", this.gameObject);
+                Util.PlaySound("EtherealBell", this.gameObject);
 
                 model = CharacterBody.modelLocator.modelTransform.GetComponent<CharacterModel>();
                 if (model != null)
@@ -312,6 +325,11 @@ namespace SS2.Equipments
                 // TODO: Will HasAnyStacks break this fixed update? I hope not!
                 if (HasAnyStacks)
                 {
+                    if (!CharacterBody.healthComponent.alive && etherealEffect != null)
+                    {
+                        Destroy(etherealEffect);
+                    }
+
                     timer += Time.fixedDeltaTime;
                     if (timer >= timerDur)
                     {
@@ -340,7 +358,7 @@ namespace SS2.Equipments
 
             private void PlaceCircle()
             {
-                Debug.Log("Firing projectile: " + projectilePrefab);
+                //Debug.Log("Firing projectile: " + projectilePrefab);
 
                 // We dont need a HasAnyStacks check since we check in the FixedUpdate before it calls this method.
                 if (CharacterBody != null)
