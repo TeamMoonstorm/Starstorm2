@@ -1,7 +1,9 @@
 ﻿using R2API;
+using R2API.ScriptableObjects;
 using R2API.Utils;
 using RoR2;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
@@ -15,6 +17,8 @@ namespace SS2.Components
         private static float storedScalingValue;
         private static int storedLevelCap;
         public Run run;
+
+        public static Dictionary<DifficultyIndex, SerializableDifficultyDef> diffDicts = new Dictionary<DifficultyIndex, SerializableDifficultyDef>();
 
         public static GameObject shrinePrefab;
         public static GameObject portalPrefab;
@@ -42,6 +46,9 @@ namespace SS2.Components
             //Save default level cap
             storedLevelCap = Run.ambientLevelCap;
 
+            //Create difficulty indicies dict
+            CreateDifficultyDict();
+
             //Initialize related prefabs
             shrinePrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("ShrineEthereal", SS2Bundle.Indev), "EtherealSapling", true);
             shrinePrefab.RegisterNetworkPrefab();
@@ -58,6 +65,29 @@ namespace SS2.Components
         private void Awake()
         {
             run = GetComponentInParent<Run>();
+        }
+
+        private static void CreateDifficultyDict()
+        {
+            diffDicts.Add(DifficultyIndex.Easy, Deluge.sdd);
+            diffDicts.Add(Deluge.sdd.DifficultyIndex, Deluge1.sdd);
+            diffDicts.Add(Deluge1.sdd.DifficultyIndex, Deluge2.sdd);
+            diffDicts.Add(Deluge2.sdd.DifficultyIndex, Deluge3.sdd);
+
+            diffDicts.Add(DifficultyIndex.Normal, Tempest.sdd);
+            diffDicts.Add(Tempest.sdd.DifficultyIndex, Tempest1.sdd);
+            diffDicts.Add(Tempest1.sdd.DifficultyIndex, Tempest2.sdd);
+            diffDicts.Add(Tempest2.sdd.DifficultyIndex, Tempest3.sdd);
+
+            diffDicts.Add(DifficultyIndex.Hard, Cyclone.sdd);
+            diffDicts.Add(Cyclone.sdd.DifficultyIndex, Cyclone1.sdd);
+            diffDicts.Add(Cyclone1.sdd.DifficultyIndex, Cyclone2.sdd);
+            diffDicts.Add(Cyclone2.sdd.DifficultyIndex, Cyclone3.sdd);
+
+            diffDicts.Add(Typhoon.sdd.DifficultyIndex, SuperTyphoon.sdd);
+            diffDicts.Add(SuperTyphoon.sdd.DifficultyIndex, SuperTyphoon1.sdd);
+            diffDicts.Add(SuperTyphoon1.sdd.DifficultyIndex, SuperTyphoon2.sdd);
+            diffDicts.Add(SuperTyphoon2.sdd.DifficultyIndex, SuperTyphoon3.sdd);
         }
 
         private void Start()
@@ -102,7 +132,7 @@ namespace SS2.Components
             {
                 CharacterMaster bodyMaster = master.GetComponent<CharacterMaster>();
                 bodyMaster.inventory.GiveItem(SS2Content.Items.EtherealItemAffix);
-                bodyMaster.inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(20 + (15 * etherealsCompleted)));
+                bodyMaster.inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(12 + (6 * etherealsCompleted)));
             }
         }
 
@@ -452,11 +482,18 @@ namespace SS2.Components
 
                             Debug.Log("og difficulty diff: " + DifficultyCatalog.GetDifficultyDef(diffIndex).nameToken);
 
+                            SerializableDifficultyDef newDiffDef;
+
                             for (int i = 0; i < run.ruleBook.ruleValues.Length; i++)
                             {
                                 RuleChoiceDef ruleChoiceDef = run.ruleBook.GetRuleChoice(i);
 
-                                switch (ruleChoiceDef.difficultyIndex)
+                                diffDicts.TryGetValue(ruleChoiceDef.difficultyIndex, out newDiffDef);
+
+                                run.selectedDifficulty = newDiffDef.DifficultyIndex;
+                                run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(newDiffDef.nameToken)));
+
+                                /*switch (ruleChoiceDef.difficultyIndex)
                                 {
                                     //N: Sorry swuff, difficulties are now a module, need to refactor this as well, easy to do tbh, just store the serializable difficulty def in a static field and access that.
                                     //drizzle
@@ -493,20 +530,20 @@ namespace SS2.Components
                                     run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(SuperTyphoon.sdd.nameToken)));
                                     //for some reason appears as deluge in run history???
                                     //appears correctly mid-run & at run end so will ignore for now...
-                                }
+                                }*/
 
                                 diffIndex = run.ruleBook.FindDifficulty();
 
                                 run.RecalculateDifficultyCoefficent();
 
-                                Debug.Log("hopefully updated diff: " + DifficultyCatalog.GetDifficultyDef(diffIndex).nameToken);
+                                //Debug.Log("hopefully updated diff: " + DifficultyCatalog.GetDifficultyDef(diffIndex).nameToken);
 
-                                Debug.Log(run.difficultyCoefficient + " - run difficulty coef");
+                                //Debug.Log(run.difficultyCoefficient + " - run difficulty coef");
                             }
 
                             string diffToken = curDiff.nameToken;
-                            Debug.Log(DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).scalingValue + " - current scaling value");
-                            Debug.Log("ethereals completed: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
+                            //Debug.Log(DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).scalingValue + " - current scaling value");
+                            //Debug.Log("ethereals completed: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
                         }
                         else
                         {

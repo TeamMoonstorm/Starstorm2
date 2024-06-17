@@ -8806,6 +8806,7 @@ MonoBehaviour:
   body: {fileID: 5705725385908396509}
   itemDisplayRuleSet: {fileID: 11400000, guid: a0f32be97140cff49b516a8195c67c19, type: 2}
   autoPopulateLightInfos: 1
+  gameObjectActivationTransforms: []
   baseRendererInfos:
   - renderer: {fileID: 1483444258714694913}
     defaultMaterial: {fileID: 2100000, guid: da43e1666cddbc644917d4d3d45fb466, type: 2}
@@ -9149,7 +9150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 4502411360633244519}
   animatorString: gunSpinning
-  minFloatValue: 0.45
+  minFloatValue: 0.2
   maxFloatValue: 0.51
   objectsToEnable:
   - {fileID: 4771206822994148529}

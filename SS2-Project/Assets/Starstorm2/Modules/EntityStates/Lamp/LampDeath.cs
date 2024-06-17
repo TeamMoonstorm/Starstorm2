@@ -23,7 +23,7 @@ namespace EntityStates.Lamp
         {
             base.OnEnter();
             animator = GetModelAnimator();
-            PlayCrossfade("Body", "Death", "deathPlaybackRate", duration, 0.05f);
+            PlayCrossfade("Body", "Death", "deathPlaybackRate", duration * 1.2f, 0.05f);
             muzzle = GetModelChildLocator().FindChild(muzzleString);
             //Util.PlaySound("FollowerVO", gameObject);
             hasPlayedEffect = false;
@@ -32,6 +32,8 @@ namespace EntityStates.Lamp
             //if (modelLocator && initialEffect)
                 //EffectManager.
             isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
+            var effect = isBlue ? deathVFXblue : deathVFX;
+            EffectManager.SimpleEffect(effect, muzzle.position, muzzle.rotation, true);
         }
 
         public void DestroyLamp()
@@ -53,6 +55,12 @@ namespace EntityStates.Lamp
             DestroyBodyAsapServer();
             DestroyModel();
             Destroy(gameObject);
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+            DestroyLamp();
         }
 
         public override void FixedUpdate()
