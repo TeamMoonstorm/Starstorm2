@@ -136,7 +136,7 @@ namespace SS2.Equipments
                     timerDur = baseTimerDur;
 
                 projTimerDur = baseTimerDur / 3f;
-                projTimer = (float)random.NextDouble() * projTimerDur;
+                projTimer = (float)random.NextDouble() * projTimerDur; // doing this so tp bosses stagger their pillars
 
                 timer = 0;
 
