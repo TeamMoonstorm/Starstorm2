@@ -50,11 +50,7 @@ namespace EntityStates.AffixStorm
 			if (base.sfxLocator && base.sfxLocator.barkSound != "")
 			{
 				Util.PlaySound(base.sfxLocator.barkSound, base.gameObject);
-			}
-
-			Transform modelTransform = base.GetModelTransform();
-			if (modelTransform)
-				Destroy(modelTransform.gameObject);
+			}			
 
 			if (NetworkServer.active)
             {
@@ -66,21 +62,19 @@ namespace EntityStates.AffixStorm
 				targetsFromBody = baseTargets + Mathf.RoundToInt(radius - 1); // malachite also uses body radius sooo....
 				durationFromBody = Mathf.RoundToInt(radius) * baseDuration;
 				fireInterval = durationFromBody / targetsFromBody;
-				SS2Log.Info($"DEATHSTATE. FROM BODY RADIUS {radius}, SEARCH={searchRadiusFromBody}, TARGETS={targetsFromBody}, DURATION={durationFromBody}");
 				TeamMask mask = TeamMask.none;
 				mask.AddTeam(base.teamComponent.teamIndex); // fuck it. its only targetting monsters. feels way better
 				SphereSearch search = new SphereSearch
 				{
-					origin = base.characterBody.corePosition,
+					origin = characterBody.corePosition,
 					radius = searchRadiusFromBody,
 					mask = LayerIndex.entityPrecise.mask,
-					queryTriggerInteraction = QueryTriggerInteraction.Ignore,
+					queryTriggerInteraction = QueryTriggerInteraction.UseGlobal,
 				}.RefreshCandidates().FilterCandidatesByHurtBoxTeam(mask).OrderCandidatesByDistance().FilterCandidatesByDistinctHurtBoxEntities();
 				HurtBox[] hurtBoxes = search.GetHurtBoxes();
 				targetQueue = new Queue<HurtBox>();
-				for (int i = 0; i < hurtBoxes.Length - 1; i++)
+				for (int i = 0; i < hurtBoxes.Length; i++)
 				{
-					SS2Log.Error("FOUND " + hurtBoxes[i].healthComponent.name);
 					HurtBox hurtBox = hurtBoxes[i];
 					if(hurtBox.healthComponent != base.healthComponent)
 						targetQueue.Enqueue(hurtBox);
@@ -88,7 +82,10 @@ namespace EntityStates.AffixStorm
 					if (targetQueue.Count >= targetsFromBody) break;
 				}				
 			}
-			
+
+			Transform modelTransform = base.GetModelTransform();
+			if (modelTransform)
+				Destroy(modelTransform.gameObject);
 		}
 
         public override void FixedUpdate()
@@ -124,7 +121,6 @@ namespace EntityStates.AffixStorm
 			if (teamIndex == TeamIndex.None) teamIndex = TeamIndex.Neutral;
 
 			HurtBox hurtBox = targetQueue.Dequeue();
-			SS2Log.Warning("FIRING AT " + hurtBox.healthComponent.name);
 			float damage = characterBody.damage * damageCoefficient + characterBody.healthComponent.fullHealth * percentHealthDamage;
 			OrbManager.instance.AddOrb(new AffixStormStrikeOrb
 			{

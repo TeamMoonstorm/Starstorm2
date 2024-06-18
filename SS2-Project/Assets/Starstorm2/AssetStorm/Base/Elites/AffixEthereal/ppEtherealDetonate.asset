@@ -12,20 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adb84e30e02715445aeb9959894e3b4d, type: 3}
   m_Name: ColorGrading
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
   gradingMode:
-    overrideState: 0
+    overrideState: 1
     value: 1
   externalLut:
     overrideState: 0
     value: {fileID: 0}
     defaultState: 1
   tonemapper:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 1
   toneCurveToeStrength:
     overrideState: 0
     value: 0
@@ -58,7 +58,7 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   colorFilter:
-    overrideState: 1
+    overrideState: 0
     value: {r: 0, g: 1, b: 0.37680292, a: 1}
   hueShift:
     overrideState: 0
@@ -70,8 +70,8 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   postExposure:
-    overrideState: 1
-    value: 1.61
+    overrideState: 0
+    value: 1.43
   contrast:
     overrideState: 0
     value: 0
@@ -1311,7 +1311,7 @@ MonoBehaviour:
       - 0.5
       - 0.5
       - 0.5
---- !u!114 &-4232038196725123352
+--- !u!114 &-2428113867125683960
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1320,46 +1320,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 2011136271, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: RampFog
+  m_Script: {fileID: 11500000, guid: 40b924e2dad56384a8df2a1e111bb675, type: 3}
+  m_Name: Vignette
   m_EditorClassIdentifier: 
   active: 1
   enabled:
     overrideState: 1
     value: 1
-  fogIntensity:
+  mode:
+    overrideState: 1
+    value: 0
+  color:
+    overrideState: 1
+    value: {r: 0.3820755, g: 1, b: 1, a: 0}
+  center:
     overrideState: 0
-    value: 0.5
-  fogPower:
+    value: {x: 0.5, y: 0.5}
+  intensity:
+    overrideState: 1
+    value: 0.466
+  smoothness:
+    overrideState: 1
+    value: 0.505
+  roundness:
+    overrideState: 1
+    value: 1
+  rounded:
+    overrideState: 0
+    value: 0
+  mask:
+    overrideState: 1
+    value: {fileID: 0}
+    defaultState: 1
+  opacity:
     overrideState: 0
     value: 1
-  fogZero:
-    overrideState: 0
-    value: 0
-  fogOne:
-    overrideState: 0
-    value: 1
-  fogHeightStart:
-    overrideState: 0
-    value: 0
-  fogHeightEnd:
-    overrideState: 0
-    value: 100
-  fogHeightIntensity:
-    overrideState: 0
-    value: 0
-  fogColorStart:
-    overrideState: 1
-    value: {r: 0.68485224, g: 0.8490566, b: 0.79154176, a: 0.6666667}
-  fogColorMid:
-    overrideState: 1
-    value: {r: 0.051886797, g: 1, b: 0.30709296, a: 1}
-  fogColorEnd:
-    overrideState: 1
-    value: {r: 0.23113209, g: 1, b: 0.6864713, a: 1}
-  skyboxStrength:
-    overrideState: 0
-    value: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1373,11 +1368,10 @@ MonoBehaviour:
   m_Name: ppEtherealDetonate
   m_EditorClassIdentifier: 
   settings:
-  - {fileID: -4232038196725123352}
   - {fileID: -6229178026921404498}
-  - {fileID: 8722190973937260135}
-  - {fileID: 854630378799083980}
---- !u!114 &854630378799083980
+  - {fileID: -2428113867125683960}
+  - {fileID: 1022619274303386611}
+--- !u!114 &1022619274303386611
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1386,54 +1380,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b77c5407dc277943b591ade9e6b18c5, type: 3}
-  m_Name: LensDistortion
+  m_Script: {fileID: 11500000, guid: 48a79b01ea5641d4aa6daa2e23605641, type: 3}
+  m_Name: Bloom
   m_EditorClassIdentifier: 
   active: 1
   enabled:
     overrideState: 1
     value: 1
   intensity:
-    overrideState: 0
-    value: 0
-  intensityX:
-    overrideState: 0
-    value: 1
-  intensityY:
-    overrideState: 0
-    value: 1
-  centerX:
-    overrideState: 0
-    value: 0
-  centerY:
-    overrideState: 0
-    value: 0
-  scale:
-    overrideState: 0
-    value: 1
---- !u!114 &8722190973937260135
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6050e2d5de785ce4d931e4dbdbf2d755, type: 3}
-  m_Name: ChromaticAberration
-  m_EditorClassIdentifier: 
-  active: 1
-  enabled:
     overrideState: 1
-    value: 1
-  spectralLut:
+    value: 5.99
+  threshold:
+    overrideState: 1
+    value: 1.82
+  softKnee:
+    overrideState: 0
+    value: 0.5
+  clamp:
+    overrideState: 0
+    value: 65472
+  diffusion:
+    overrideState: 0
+    value: 7
+  anamorphicRatio:
+    overrideState: 0
+    value: 0
+  color:
+    overrideState: 0
+    value: {r: 1, g: 1, b: 1, a: 1}
+  fastMode:
+    overrideState: 0
+    value: 0
+  dirtTexture:
     overrideState: 0
     value: {fileID: 0}
     defaultState: 1
-  intensity:
+  dirtIntensity:
     overrideState: 0
     value: 0
-  fastMode:
-    overrideState: 1
-    value: 1

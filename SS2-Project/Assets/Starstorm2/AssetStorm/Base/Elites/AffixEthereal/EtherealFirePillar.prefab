@@ -131,9 +131,9 @@ MonoBehaviour:
   ghostPrefab: {fileID: 1978271999074252, guid: c7aca22e4e3844349b4f3e6c23ac130b,
     type: 3}
   ghostTransformAnchor: {fileID: 0}
-  startSound: Play_moonBrother_blueWall_explode
+  startSound: EtherealPillarImpact
   cannotBeDeleted: 1
-  flightSoundLoop: {fileID: 0}
+  flightSoundLoop: {fileID: 11400000, guid: a0361ae487a83024daab796f63d3f55e, type: 2}
   canImpactOnTrigger: 0
   allowPrediction: 1
   owner: {fileID: 0}
@@ -212,8 +212,8 @@ MonoBehaviour:
   onEnd:
     m_PersistentCalls:
       m_Calls: []
-  soundLoopString: Play_moonBrother_firePillar_loop
-  soundLoopStopString: Stop_moonBrother_firePillar_loop
+  soundLoopString: 
+  soundLoopStopString: 
 --- !u!114 &8744764635411030314
 MonoBehaviour:
   m_ObjectHideFlags: 0

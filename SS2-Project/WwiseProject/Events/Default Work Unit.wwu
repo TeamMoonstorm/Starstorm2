@@ -1985,6 +1985,34 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="Play_ethereal_firePillar_loop" ID="{76E53E99-86B5-46E8-B6E3-FA10E690461A}">
+							<ChildrenList>
+								<Action Name="" ID="{144B6175-9769-4907-A00A-D910D3C1CD88}" ShortID="32133156">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="EtherealPillarIdle" ID="{7BE337B8-C926-4183-BF91-F341D7FD7476}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Stop_ethereal_firePillar_loop" ID="{81AC67C3-AC6D-4E8A-832E-C569407F02C5}">
+							<ChildrenList>
+								<Action Name="" ID="{A88F95CF-0A8C-42A7-ADF2-4CBFE47CAA91}" ShortID="526429719">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="2"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="EtherealPillarIdle" ID="{7BE337B8-C926-4183-BF91-F341D7FD7476}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 			</ChildrenList>

@@ -61,9 +61,8 @@ namespace SS2.Components
             if (!currentState.Equals(state))
             {
                 currentState = state;
-
-                postProcessVolume.weight = state.weight;
-                if(this.rainParam != null)
+                postProcessVolume.weight = Mathf.Clamp01(state.weight);
+                if (this.rainParam != null)
                     rainParam.value = state.rainIntensity;
             }
         }
@@ -78,6 +77,7 @@ namespace SS2.Components
 
             public static PostProcessingState Lerp(ref PostProcessingState a, ref PostProcessingState b, float t)
             {
+                if (a.Equals(b)) return a;
                 return new PostProcessingState
                 {
                     weight = Mathf.LerpUnclamped(a.weight, b.weight, t),

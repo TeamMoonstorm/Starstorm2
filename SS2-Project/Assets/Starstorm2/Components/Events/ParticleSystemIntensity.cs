@@ -104,6 +104,7 @@ namespace SS2.Components
 
             public static ParticleSystemState Lerp(ref ParticleSystemState a, ref ParticleSystemState b, float t)
             {
+                if (a.Equals(b)) return a;
                 return new ParticleSystemState
                 {
                     alpha = Mathf.LerpUnclamped(a.alpha, b.alpha, t),

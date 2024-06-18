@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 3102938378353187367}
   - component: {fileID: 3068719714912240941}
   - component: {fileID: 3152724064691689984}
+  - component: {fileID: 5127523856008010160}
+  - component: {fileID: 6848011823449626577}
   m_Layer: 0
   m_Name: EtherealAffixEffect
   m_TagString: Untagged
@@ -62,6 +64,58 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5127523856008010160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3100401533206085052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cac87242d65fec745867ffae97971bc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_listeners:
+    initialListenerList: []
+    useDefaultListeners: 1
+  isEnvironmentAware: 1
+  isStaticObject: 0
+  m_positionOffsetData:
+    KeepMe: 0
+    positionOffset: {x: 0, y: 0, z: 0}
+  m_posOffsetData: {fileID: 0}
+  listenerMask: 1
+--- !u!114 &6848011823449626577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3100401533206085052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7d40212800c9b2408361fb219fc152a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerList: f7e1664c
+  useOtherObject: 0
+  actionOnEventType: 0
+  curveInterpolation: 4
+  enableActionOnEvent: 0
+  data:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 8655b3c3fde40ef42886d85ca8a3c746,
+      type: 2}
+  useCallbacks: 0
+  Callbacks: []
+  playingId: 0
+  soundEmitterObject: {fileID: 0}
+  transitionDuration: 0
+  eventIdInternal: 0
+  valueGuidInternal: 
+  m_callbackDataInternal: {fileID: 0}
 --- !u!1001 &1638356674899971134
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -128,6 +182,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EtherealParticles
+      objectReference: {fileID: 0}
+    - target: {fileID: 1876697910266149380, guid: 2daca17239b839e4287ced39d5d10e6c,
+        type: 3}
+      propertyPath: ColorModule.enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1876697910266149380, guid: 2daca17239b839e4287ced39d5d10e6c,
         type: 3}
