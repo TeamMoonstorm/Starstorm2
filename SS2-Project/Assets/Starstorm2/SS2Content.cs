@@ -102,12 +102,12 @@ namespace SS2
             while (!asyncAssetLoadCoroutines.IsDone)
                 yield return null;
 
-            SS2Log.Info($"Populating UnlockableDefs array from Vanilla Skins...");
-            SS2AssetRequest<UnlockableDef> udRequest = new SS2AssetRequest<UnlockableDef>(SS2Bundle.Vanilla);
-            udRequest.StartLoad();
-            while (!udRequest.IsComplete)
-                yield return null;
-            SS2ContentPack.unlockableDefs.Add(udRequest.Assets.ToArray());
+            //SS2Log.Info($"Populating UnlockableDefs array from Vanilla Skins...");
+            //SS2AssetRequest<UnlockableDef> udRequest = new SS2AssetRequest<UnlockableDef>(SS2Bundle.Vanilla);
+            //udRequest.StartLoad();
+            //while (!udRequest.IsComplete)
+            //    yield return null;
+            //SS2ContentPack.unlockableDefs.Add(udRequest.Assets.ToArray());
         }
 
         private IEnumerator AddSS2ExpansionDef()

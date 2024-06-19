@@ -18,13 +18,12 @@ namespace SS2.Components
         public static PickupDropTable dropTable;
         public static bool shouldShowObjective = false; // weather radio? config setting?
 
-        //[SystemInitializer]
-        [RuntimeInitializeOnLoadMethod] // IDK WHY THIS DOESNT WORK. IT WORKS FOR PICKUPMAGNET. EWTF!!!!!!!!!!!!!!!!!!!
+        [SystemInitializer]
+        //[RuntimeInitializeOnLoadMethod] // IDK WHY THIS DOESNT WORK
         static void Init()
         {
             // custom drop table? maybe?
             // souls soon.............
-            SS2Log.Info("STORMCONTROLLER PLEEEEEEEEEEEEASEEEEEEEEEEEEEEEEEEEEEE");
             StormController.dropTable = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<PickupDropTable>("RoR2/Base/Chest1/dtChest1.asset").WaitForCompletion();
             Stage.onServerStageBegin += (stage) =>
             {

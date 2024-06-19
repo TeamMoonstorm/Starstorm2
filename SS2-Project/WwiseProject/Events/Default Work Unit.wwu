@@ -786,7 +786,7 @@
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Target">
-											<ObjectRef Name="ProcLightningOnKill" ID="{441EF015-666E-4AB7-9A34-8988DFEF8553}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+											<ObjectRef Name="item_proc_lightningOnKill" ID="{441EF015-666E-4AB7-9A34-8988DFEF8553}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
@@ -2008,6 +2008,34 @@
 									<ReferenceList>
 										<Reference Name="Target">
 											<ObjectRef Name="EtherealPillarIdle" ID="{7BE337B8-C926-4183-BF91-F341D7FD7476}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="EtherealPillarSpawn2" ID="{8CF2FF32-06FC-4F97-B7BD-0218FB935FBD}">
+							<ChildrenList>
+								<Action Name="" ID="{678DAFC3-E661-4A17-8BED-434E33EF2BFA}" ShortID="568122836">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="pillarspawn" ID="{776F8F8C-4998-4C6E-A991-FBF2FE4C0B9C}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="EtherealActivaGlobal" ID="{2EBA40C3-9099-49C1-8A39-634C3564D944}">
+							<ChildrenList>
+								<Action Name="" ID="{5E3B46A7-61BB-47B4-874C-21C36A51B9AB}" ShortID="410091459">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="EtherealActivateGlobal" ID="{55224B92-5912-4CFB-A747-28AB2F8274E5}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>

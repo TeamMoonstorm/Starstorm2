@@ -38,10 +38,9 @@ namespace SS2.Components
     {
         public static CustomEliteDirector instance;
 
-        [RuntimeInitializeOnLoadMethod]
+        [SystemInitializer]
         private static void Init()
         {
-            SS2Log.Info("CUSTOMELITEDIRECTOR PLEEEEEEEEEEEEASEEEEEEEEEEEEEEEEEEEEEE");
             IL.RoR2.CombatDirector.Spawn += SpawnEliteIL;
         }
         
