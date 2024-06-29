@@ -25,18 +25,23 @@ namespace SS2.Components
             // custom drop table? maybe?
             // souls soon.............
             StormController.dropTable = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<PickupDropTable>("RoR2/Base/Chest1/dtChest1.asset").WaitForCompletion();
-            Stage.onServerStageBegin += (stage) =>
+            Stage.onServerStageBegin += OnServerStageBegin;
+        }
+
+        private static void OnServerStageBegin(Stage stage)
+        {
+            if(stage.sceneDef.sceneType == SceneType.Stage && TeleporterInteraction.instance) // this should cover every stage we want storms on? im pretty sure
             {
                 chargeRng.ResetSeed(Run.instance.treasureRng.nextUlong);
                 mobChargeRng.ResetSeed(Run.instance.treasureRng.nextUlong);
                 treasureRng.ResetSeed(Run.instance.treasureRng.nextUlong);
 
-                // IMPLEMENT STAGE CHECK!!!!!!!!!!!!!!!!!!!!!!!!
                 GameObject stormController = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("StormController", SS2Bundle.Events));
                 NetworkServer.Spawn(stormController);
-
-            };
+            }
+   
         }
+
 
         // START STORM 2!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         [ConCommand(commandName = "start_storm", flags = ConVarFlags.Cheat | ConVarFlags.ExecuteOnServer, helpText = "Sets the current storm level. Zero to disable. Format: {stormLevel}")]

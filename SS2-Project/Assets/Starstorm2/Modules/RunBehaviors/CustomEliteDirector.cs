@@ -152,7 +152,7 @@ namespace SS2.Components
         public void ModifySpawn(SpawnCard.SpawnResult spawnResult)
         {
             CharacterMaster cm = spawnResult.spawnedInstance.GetComponent<CharacterMaster>();
-            if (cm == null)
+            if (!cm || !cm.bodyInstanceObject)
                 return;
             CharacterBody cb = cm.bodyInstanceObject.GetComponent<CharacterBody>();
             if (cb == null)
