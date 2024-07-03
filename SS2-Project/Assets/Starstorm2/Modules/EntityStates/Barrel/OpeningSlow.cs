@@ -10,8 +10,7 @@ namespace EntityStates.Barrel
 		{
 			base.OnEnter();
 
-			if (LunarCurseManager.chestTimerCount > 0)
-				duration = 30f * LunarCurseManager.chestTimerCount;
+			duration = LunarCurseManager.GetChestTimer();
 
 			base.PlayAnimation("Body", "Opening", "Opening.playbackRate", Opening.duration);
 			if (base.sfxLocator)
