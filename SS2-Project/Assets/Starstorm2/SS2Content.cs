@@ -539,6 +539,27 @@ namespace SS2
 
             public static BuffDef bdEthereal;
 
+            public static BuffDef bdLunarCurseArmor;
+
+            public static BuffDef bdLunarCurseAttackSpeed;
+
+            public static BuffDef bdLunarCurseCloak;
+
+            public static BuffDef bdLunarCurseCooldownReduction;
+
+            public static BuffDef bdLunarCurseDamage;
+
+            public static BuffDef bdLunarCurseHealth;
+
+            public static BuffDef bdLunarCurseMovementSpeed;
+
+            public static BuffDef bdLunarCurseShield;
+
+            public static BuffDef bdLunarCurseBlind;
+
+            public static BuffDef bdLunarCurseLockSkill;
+
+            public static BuffDef bdLunarCurseNoRegen;
         }
 
         public static class Elites
