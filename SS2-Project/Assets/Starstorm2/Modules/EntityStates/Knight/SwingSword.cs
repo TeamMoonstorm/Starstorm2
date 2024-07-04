@@ -49,6 +49,11 @@ namespace EntityStates.Knight
             base.FixedUpdate();
         }
 
+        public override void OnExit()
+        {
+            base.OnExit();
+        }
+
         public override InterruptPriority GetMinimumInterruptPriority()
         {
             return InterruptPriority.PrioritySkill;

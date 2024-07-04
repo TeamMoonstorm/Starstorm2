@@ -31,7 +31,7 @@ namespace SS2.Equipments
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Max active warbanners for each character.")]
         [FormatToken(token, 3)]
-        public static int maxGreaterBanners = 5;
+        public static int maxGreaterBanners = 1;
 
         private GameObject _warbannerObject;
 

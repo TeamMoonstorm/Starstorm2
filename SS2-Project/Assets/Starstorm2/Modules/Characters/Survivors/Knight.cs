@@ -24,6 +24,7 @@ namespace SS2.Survivors
 
             CharacterBody.onBodyStartGlobal += KnightBodyStart;
             ModifyPrefab();
+            R2API.RecalculateStatsAPI.GetStatCoefficients += ModifyStats;
 
             // Add the buff material overlays to buffoverlay dict
             BuffOverlays.AddBuffOverlay(buffKnightCharged, matChargedOverlay);
@@ -48,64 +49,35 @@ namespace SS2.Survivors
             return true;
         }
 
-        // TODO: Load the actual buff 
-        // The buff behavior for Knight's default passive
-        public class KnightPassiveBuff : BaseBuffBehaviour, IBodyStatArgModifier
+        private void ModifyStats(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
-            [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => SS2Content.Buffs.bdKnightBuff;
-            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            // The buff behavior for Knight's default passive
+            if (sender.HasBuff(SS2Content.Buffs.bdKnightBuff))
             {
                 args.attackSpeedMultAdd += 0.4f;
                 args.damageMultAdd += 0.4f;
             }
-        }
 
-        // TODO: Comment explaining the buff
-        
-        public class KnightChargedUpBuff : BaseBuffBehaviour
-        {
-            [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => SS2Content.Buffs.bdKnightCharged;
-        }
-
-        // TODO: Comment explaining the buff
-        // TODO: Replace class with a single hook on RecalculateSTatsAPI.GetstatCoefficients. This way we replace the monobehaviour with just a method
-        public class KnightShieldBuff : BaseBuffBehaviour, IBodyStatArgModifier
-        {
-            [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => SS2Content.Buffs.bdShield;
-
-            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            if (sender.HasBuff(SS2Content.Buffs.bdShield))
             {
                 args.armorAdd += 100f;
                 args.moveSpeedReductionMultAdd += 0.6f;
             }
-        }
 
-        // TODO: Replace class with a single hook on RecalculateSTatsAPI.GetstatCoefficients. This way we replace the monobehaviour with just a method
-        public class KnightSpecialEmpowerBuff : BaseBuffBehaviour, IBodyStatArgModifier
-        {
-            [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => SS2Content.Buffs.bdKnightSpecialPowerBuff;
-            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            if (sender.HasBuff(SS2Content.Buffs.bdKnightSpecialPowerBuff))
             {
-                args.baseJumpPowerAdd += 0.7f;
-                args.baseMoveSpeedAdd += 0.4f;
+                args.baseJumpPowerAdd += 0.5f;
+                args.baseMoveSpeedAdd += 1.0f;
+                args.jumpPowerMultAdd += 1.2f;
             }
-        }
 
-        // TODO: Replace class with a single hook on RecalculateSTatsAPI.GetstatCoefficients. This way we replace the monobehaviour with just a method
-        public class KnightSpecialSlowEnemiesBuff : BaseBuffBehaviour, IBodyStatArgModifier
-        {
-            [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => SS2Content.Buffs.bdKnightSpecialSlowBuff;
-            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            if (sender.HasBuff(SS2Content.Buffs.bdKnightSpecialSlowBuff))
             {
                 args.attackSpeedReductionMultAdd += 2;
                 args.moveSpeedReductionMultAdd += 2;
             }
         }
+
 
         public class KnightParryBuff : BaseBuffBehaviour, IOnIncomingDamageServerReceiver
         {

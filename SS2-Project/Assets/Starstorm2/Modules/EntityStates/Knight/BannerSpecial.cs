@@ -16,8 +16,11 @@ public class BannerSpecial : BaseState
 
     public override void OnEnter()
     {
-        if (isAuthority)
+        base.OnEnter();
+
+        if (isAuthority & NetworkServer.active)
         {
+            Debug.Log("DEBUGGER The banner slam network check was entered!!");
             Vector3 position = inputBank.aimOrigin - (inputBank.aimDirection);
             powerBuffWardInstance = UnityEngine.Object.Instantiate(powerBuffWard, position, Quaternion.identity);
             slowBuffWardInstance = UnityEngine.Object.Instantiate(slowBuffWard, position, Quaternion.identity);
@@ -25,17 +28,21 @@ public class BannerSpecial : BaseState
             powerBuffWardInstance.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
             slowBuffWardInstance.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
 
-            NetworkServer.Spawn(powerBuffWardInstance);
-            NetworkServer.Spawn(slowBuffWardInstance);
+            Debug.Log("DEBUGGER powerBuffWardInstance: " + powerBuffWardInstance);
+            Debug.Log("DEBUGGER slowBuffWardInstance: " + slowBuffWardInstance);
+
+            powerBuffWardInstance.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(gameObject);
+            slowBuffWardInstance.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(gameObject);
+            }
+    }
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+            outer.SetNextStateToMain();
         }
-    }
 
-    public override void FixedUpdate()
-    {
-        base.FixedUpdate();
-    }
-
-    public override void OnExit()
+        public override void OnExit()
     {
         outer.SetNextStateToMain();
         base.OnExit();
