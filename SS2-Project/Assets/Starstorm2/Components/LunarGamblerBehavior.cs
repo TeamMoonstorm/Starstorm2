@@ -8,7 +8,7 @@ namespace SS2.Components
 {
 	public sealed class LunarGamblerBehavior : NetworkBehaviour
 	{
-		private static float refreshDuration = .2f;
+		private static float refreshDuration = 1f;
 		private bool waitingForRefresh;
 		private float refreshTimer;
 

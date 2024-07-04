@@ -48,18 +48,19 @@ namespace SS2
 		public static Action<Run> onCursesRefreshed;
         private static void Refresh(Run run)
         {
-			UnsetHooks();
+			OnCurseEnd();
 
 			curseStacks = new int[21];
 			bombRequestQueue.Clear();
 			lastMoneyPenalty = Run.FixedTimeStamp.now;
-			curseIntensity = 1f;
 			totalCurses = 0;
-
+			stageStart = 0;
 			onCursesRefreshed?.Invoke(run);
         }
-		private static void SetHooks()
+		private static void OnCurseBegin()
         {
+			stageStart = Run.instance.stageClearCount;
+
 			Stage.onServerStageBegin += OnServerStageBegin;
 			CharacterMaster.onStartGlobal += OnMasterStartGlobal;
 			CharacterBody.onBodyStartGlobal += OnBodyStartGlobal;
@@ -71,7 +72,7 @@ namespace SS2
 			On.RoR2.ChestBehavior.Awake += ChestBehavior_Awake;
 			On.RoR2.ChestBehavior.ItemDrop += ChestBehavior_ItemDrop;
 		}
-		private static void UnsetHooks()
+		private static void OnCurseEnd()
 		{
 			Stage.onServerStageBegin -= OnServerStageBegin;
 			CharacterMaster.onStartGlobal -= OnMasterStartGlobal;
@@ -101,7 +102,7 @@ namespace SS2
             }
 			if(totalCurses > 0 && !hadAnyCurses)
             {
-				SetHooks();
+				OnCurseBegin();
             }
         }
 
@@ -111,13 +112,15 @@ namespace SS2
 			return curseStacks[(int)index];
         }
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static float GetCurseIntensity()
+        {
+			return Mathf.Pow(curseIntensityPerStage, Run.instance.stageClearCount - stageStart);
+		}
+
         private static void OnServerStageBegin(Stage stage)
         {
 			cloakRng = new Xoroshiro128Plus(Run.instance.stageRng.nextUlong);
-            if(true) // curse is active, stage is valid
-            {
-				curseIntensity *= curseIntensityPerStage;
-            }
         }
 
         private static void OnTeleporterBeginChargingGlobal(TeleporterInteraction teleporter)
@@ -135,7 +138,7 @@ namespace SS2
 					NetworkServer.Spawn(gameObject2);
 					FogDamageController fogDamageController = gameObject2.GetComponent<FogDamageController>();
 					fogDamageController.AddSafeZone(teleporter.holdoutZoneController);
-					fogDamageController.tickPeriodSeconds /= curseIntensity;
+					fogDamageController.tickPeriodSeconds /= GetCurseIntensity();
 					EffectData effectData = new EffectData
 					{
 						origin = teleporter.transform.position,
@@ -148,7 +151,7 @@ namespace SS2
             {
 				teleporter.holdoutZoneController.calcRadius += (ref float radius) =>
 				{
-					radius /= 2f * teleporterRadius * curseIntensity;
+					radius /= 2f * teleporterRadius * GetCurseIntensity();
 				};
 
 				teleporter.holdoutZoneController.calcColor += (ref Color color) =>
@@ -169,7 +172,7 @@ namespace SS2
 					Inventory inventory = masterObject.GetComponent<Inventory>();
 					if (inventory)
 					{
-						inventory.GiveItem(RoR2Content.Items.ExtraLife, teleporterRevive); // should this scale with curseIntensity?
+						inventory.GiveItem(RoR2Content.Items.ExtraLife, teleporterRevive); // should this scale with GetCurseIntensity()?
 					}
 				}));
             }
@@ -185,7 +188,7 @@ namespace SS2
 			CharacterBody victimBody = damageReport.victimBody;
 			Vector3 corePosition = victimBody.corePosition;
 			int num = Mathf.Min(BombArtifactManager.maxBombCount, Mathf.CeilToInt(victimBody.bestFitRadius * BombArtifactManager.extraBombPerRadius * monsterSpite));
-			num *= Mathf.RoundToInt(curseIntensity);
+			num *= Mathf.RoundToInt(GetCurseIntensity());
 			for (int i = 0; i < num; i++)
 			{
 				Vector3 b = UnityEngine.Random.insideUnitSphere * (BombArtifactManager.bombSpawnBaseRadius + victimBody.bestFitRadius * BombArtifactManager.bombSpawnRadiusCoefficient);
@@ -221,12 +224,12 @@ namespace SS2
 				int movespeed = sender.GetBuffCount(SS2Content.Buffs.bdLunarCurseMovementSpeed);
 				int shield = sender.GetBuffCount(SS2Content.Buffs.bdLunarCurseShield);
 
-				args.armorAdd += 25f * armor * curseIntensity;
-				args.attackSpeedMultAdd += .25f * attackspeed * curseIntensity;
-				args.cooldownMultAdd -= Util.ConvertAmplificationPercentageIntoReductionPercentage(25f * cooldownreduction * curseIntensity) / 100f;
-				args.damageMultAdd += .25f * damage * curseIntensity;
-				args.healthMultAdd += .25f * health * curseIntensity;
-				args.moveSpeedMultAdd += .25f * movespeed * curseIntensity;
+				args.armorAdd += 25f * armor * GetCurseIntensity();
+				args.attackSpeedMultAdd += .25f * attackspeed * GetCurseIntensity();
+				args.cooldownMultAdd -= Util.ConvertAmplificationPercentageIntoReductionPercentage(25f * cooldownreduction * GetCurseIntensity()) / 100f;
+				args.damageMultAdd += .25f * damage * GetCurseIntensity();
+				args.healthMultAdd += .25f * health * GetCurseIntensity();
+				args.moveSpeedMultAdd += .25f * movespeed * GetCurseIntensity();
 
 				if (shield > 0)
 					args.healthMultAdd -= 0.5f; //undo transendence hp. math is prob wrong. dont care.
@@ -238,7 +241,7 @@ namespace SS2
 				int blind = sender.GetBuffCount(SS2Content.Buffs.bdLunarCurseBlind);
 
 				if (blind > 0)
-					sender.visionDistance = 30f * Mathf.Pow(0.5f, blind) / curseIntensity;
+					sender.visionDistance = 30f * Mathf.Pow(0.5f, blind) / GetCurseIntensity();
             }
 		}
 
@@ -295,7 +298,7 @@ namespace SS2
 				AddBuff(characterBody, SS2Content.Buffs.bdLunarCurseMovementSpeed, monsterMovementSpeed);
 				AddBuff(characterBody, SS2Content.Buffs.bdLunarCurseShield, monsterShield);		
 				
-				if(cloakRng.nextNormalizedFloat > 0.5f / curseIntensity)
+				if(cloakRng.nextNormalizedFloat > 0.5f / GetCurseIntensity())
                 {
 					characterBody.AddBuff(RoR2Content.Buffs.Cloak);
                 }
@@ -333,7 +336,7 @@ namespace SS2
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static float GetChestTimer()
         {
-			return 30f * GetCurseCount(CurseIndex.ChestTimer) * curseIntensity;
+			return 30f * GetCurseCount(CurseIndex.ChestTimer) * GetCurseIntensity();
         }
 
         private static void OnInteractionGlobal(Interactor interactor, IInteractable interactable, GameObject interactableObject)
@@ -351,8 +354,8 @@ namespace SS2
 				PurchaseInteraction purchaseInteraction = chestBehavior.GetComponent<PurchaseInteraction>();
 				if (chestVelocity > 0)
 				{
-					chestBehavior.dropForwardVelocityStrength = 50 * chestVelocity * curseIntensity;
-					chestBehavior.dropUpVelocityStrength = 80 * chestVelocity * curseIntensity;
+					chestBehavior.dropForwardVelocityStrength = 50 * chestVelocity * GetCurseIntensity();
+					chestBehavior.dropUpVelocityStrength = 80 * chestVelocity * GetCurseIntensity();
 				}
 
 				if (chestMonsters > 0)
@@ -365,7 +368,7 @@ namespace SS2
 						CombatDirector combatDirector = gameObject2.GetComponent<CombatDirector>();
 						if (combatDirector && Stage.instance)
 						{
-							float monsterCredit = 40f * Stage.instance.entryDifficultyCoefficient * chestMonsters * curseIntensity;
+							float monsterCredit = 40f * Stage.instance.entryDifficultyCoefficient * chestMonsters * GetCurseIntensity();
 							DirectorCard directorCard = combatDirector.SelectMonsterCardForCombatShrine(monsterCredit);
 							if (directorCard != null)
 							{
@@ -384,7 +387,7 @@ namespace SS2
 					if(chestSpite > 0)
                     {
 						int chestValue = purchaseInteraction.cost / Run.instance.GetDifficultyScaledCost(25, Stage.instance.entryDifficultyCoefficient);
-						int bombCount = chestValue * 6 * Mathf.RoundToInt(curseIntensity);
+						int bombCount = chestValue * 6 * Mathf.RoundToInt(GetCurseIntensity());
 						Vector3 corePosition = chestBehavior.dropTransform.position;
 						float damage = 12f + (2.4f * Run.instance.ambientLevel);
 						EffectData effectData = new EffectData
@@ -436,7 +439,7 @@ namespace SS2
                     {
 						if (!t.body.isPlayerControlled) continue;
 
-						uint moneyPenalty = (uint)Mathf.Min(t.body.master.money, Run.instance.GetDifficultyScaledCost(25, Stage.instance.entryDifficultyCoefficient) * curseIntensity);
+						uint moneyPenalty = (uint)Mathf.Min(t.body.master.money, Run.instance.GetDifficultyScaledCost(25, Stage.instance.entryDifficultyCoefficient) * GetCurseIntensity());
 						t.body.master.money -= moneyPenalty;
 
 						EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("PlayerMoneyCurseEffect", SS2Bundle.Interactables), new EffectData { origin = t.transform.position }, true);
@@ -456,7 +459,7 @@ namespace SS2
 		private static int[] curseStacks = new int[21];
 		private static int totalCurses;
 
-		private static float curseIntensity = 1;
+		private static int stageStart;
 		private static readonly float curseIntensityPerStage = 1.33f;
 		private class SkillDisableBehavior : MonoBehaviour
         {
@@ -485,7 +488,7 @@ namespace SS2
 					return;
                 }
 
-				disableInterval = 16f / (1 + (GetCurseCount(CurseIndex.PlayerLock)-1)) / curseIntensity;
+				disableInterval = 16f / (1 + (GetCurseCount(CurseIndex.PlayerLock)-1)) / GetCurseIntensity();
             }
             private void FixedUpdate()
             {

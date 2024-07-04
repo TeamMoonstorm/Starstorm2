@@ -37,7 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4532018212813325258}
   m_Layer: 0
-  m_Name: PickupOrigin
+  m_Name: ParticleOrigin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,7 +51,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3559080065205341738}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 2.25, z: 0}
+  m_LocalPosition: {x: 0, y: 3.04, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1968428531696665609}
@@ -277,6 +277,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 424c11b1717cbe14585e9a2da2f34ffa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxPurchaseCount: 10
+  cursePool: {fileID: 11400000, guid: 886e0d0f7a1c8d5459c6120230f19a21, type: 2}
+  particleOrigin: {fileID: 4532018212813325258}
 --- !u!114 &4093092628973564110
 MonoBehaviour:
   m_ObjectHideFlags: 0
