@@ -10,7 +10,7 @@ namespace EntityStates.Barrel
 		{
 			base.OnEnter();
 
-			duration = LunarCurseManager.GetChestTimer();
+			duration = CurseManager.GetChestTimer();
 
 			base.PlayAnimation("Body", "Opening", "Opening.playbackRate", Opening.duration);
 			if (base.sfxLocator)

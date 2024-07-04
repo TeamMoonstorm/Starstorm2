@@ -12,14 +12,17 @@ namespace SS2.Components
 		private bool waitingForRefresh;
 		private float refreshTimer;
 
+		private int purchaseCount;
+		public int maxPurchaseCount = 10;
 		private PurchaseInteraction purchaseInteraction;
+		private Xoroshiro128Plus rng;
+		public CursePool cursePool;
+
+		public Transform particleOrigin;
 		private void Start()
 		{
+			this.rng = new Xoroshiro128Plus(Run.instance.stageRng.nextUlong);
 			this.purchaseInteraction = base.GetComponent<PurchaseInteraction>();
-			if (Run.instance)
-			{
-
-			}
 		}
 
 		public void FixedUpdate()
@@ -27,7 +30,7 @@ namespace SS2.Components
 			if (this.waitingForRefresh)
 			{
 				this.refreshTimer -= Time.fixedDeltaTime;
-				if (this.refreshTimer <= 0f)// && this.purchaseCount < this.maxPurchaseCount)
+				if (this.refreshTimer <= 0f && this.purchaseCount < this.maxPurchaseCount)
 				{
 					this.purchaseInteraction.SetAvailable(true);
 					this.waitingForRefresh = false;
@@ -47,6 +50,17 @@ namespace SS2.Components
 				scale = 1f,
 				color = ColorCatalog.GetColor(ColorCatalog.ColorIndex.LunarItem)
 			}, true);
+
+			CurseIndex curseIndex = cursePool.GenerateCurse(this.rng);
+			CurseManager.AddCurse(curseIndex);
+
+			GameObject effectPrefab = SS2Assets.LoadAsset<GameObject>("CurseIconSingle", SS2Bundle.Interactables);
+			EffectData effectData = new EffectData
+			{
+				origin = particleOrigin.position,
+				genericUInt = (uint)(curseIndex + 1)
+			};
+			EffectManager.SpawnEffect(effectPrefab, effectData, true);
 
 			EntityStateMachine machine = base.GetComponent<EntityStateMachine>();
 			if(machine)

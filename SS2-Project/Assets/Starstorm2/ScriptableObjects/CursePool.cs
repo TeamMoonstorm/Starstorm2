@@ -3,66 +3,106 @@ using System.Collections.Generic;
 using RoR2.Items;
 using UnityEngine;
 using RoR2;
-
-namespace SS2.ScriptableObjects
+using static SS2.CurseManager;
+namespace SS2
 {
-	public abstract class CursePool : ScriptableObject
+	// pickupdroptable mostly. but it removes the choice when selected
+
+	[CreateAssetMenu(fileName = "CursePool", menuName = "Starstorm2/CursePool")]
+	public class CursePool : ScriptableObject
 	{
+		private static readonly List<Curse> allCurses = new List<Curse>(); //ughhhhhh why is this in cursepool
+		[Serializable]
 		public struct Curse
         {
-			public Material iconMaterial;
+			public CurseIndex curseIndex;
+			public Material iconMaterial; // bleh
 			public int count;
+			public float weight;
+        }
+		public Curse[] curses;
+
+		private bool init;
+
+		private readonly WeightedSelection<CurseIndex> selector = new WeightedSelection<CurseIndex>(21);
+
+        private void Awake()
+        {
+            if(!init)
+            {
+				init = true;
+				curses = new Curse[20]; // should iterate thru curseindex enum instead
+				for(int i = 1; i < curses.Length; i++)
+                {
+					curses[i] = new Curse { curseIndex = (CurseIndex)i, count = 1, weight = 1 };
+                }
+            }
         }
 
-		protected static PickupIndex[] GenerateUniqueDropsFromWeightedSelection(int maxDrops, Xoroshiro128Plus rng, WeightedSelection<PickupIndex> weightedSelection)
+		// bad planning by me. should have some sort of cursecatalog or cursedef for this
+		public static Material GetCurseMaterial(CurseIndex index)
+        {
+			for(int i = 0; i < allCurses.Count; i++)
+            {
+				if (allCurses[i].curseIndex == index) return allCurses[i].iconMaterial;
+            }
+			return null;
+        }
+
+        protected static CurseIndex[] GenerateUniqueCursesFromWeightedSelection(int maxDrops, Xoroshiro128Plus rng, WeightedSelection<CurseIndex> weightedSelection)
 		{
 			int num = Math.Min(maxDrops, weightedSelection.Count);
 			int[] array = Array.Empty<int>();
-			PickupIndex[] array2 = new PickupIndex[num];
+			CurseIndex[] array2 = new CurseIndex[num];
 			for (int i = 0; i < num; i++)
 			{
-				int num2 = weightedSelection.EvaluateToChoiceIndex(rng.nextNormalizedFloat, array);
-				WeightedSelection<PickupIndex>.ChoiceInfo choice = weightedSelection.GetChoice(num2);
+				int choiceIndex = weightedSelection.EvaluateToChoiceIndex(rng.nextNormalizedFloat, array);
+				weightedSelection.RemoveChoice(choiceIndex);
+				WeightedSelection<CurseIndex>.ChoiceInfo choice = weightedSelection.GetChoice(choiceIndex);
 				array2[i] = choice.value;
 				Array.Resize<int>(ref array, i + 1);
-				array[i] = num2;
+				array[i] = choiceIndex;
 			}
 			return array2;
 		}
 
-		protected static PickupIndex GenerateDropFromWeightedSelection(Xoroshiro128Plus rng, WeightedSelection<PickupIndex> weightedSelection)
+		protected static CurseIndex GenerateCurseFromWeightedSelection(Xoroshiro128Plus rng, WeightedSelection<CurseIndex> weightedSelection)
 		{
 			if (weightedSelection.Count > 0)
 			{
-				return weightedSelection.Evaluate(rng.nextNormalizedFloat);
+				int choiceIndex = weightedSelection.EvaluateToChoiceIndex(rng.nextNormalizedFloat);
+				weightedSelection.RemoveChoice(choiceIndex);
+				return weightedSelection.choices[choiceIndex].value;
 			}
-			return PickupIndex.none;
+			return CurseIndex.None;
 		}
-		protected abstract PickupIndex GenerateDropPreReplacement(Xoroshiro128Plus rng);
 
-		public PickupIndex GenerateDrop(Xoroshiro128Plus rng)
+		public CurseIndex GenerateCurse(Xoroshiro128Plus rng)
 		{
-			PickupIndex pickupIndex = this.GenerateDropPreReplacement(rng);
-			if (pickupIndex == PickupIndex.none)
+			CurseIndex pickupIndex = GenerateCurseFromWeightedSelection(rng, this.selector);
+			if (pickupIndex == CurseIndex.None)
 			{
-				Debug.LogError("Could not generate pickup index from droptable.");
-			}
-			if (!pickupIndex.isValid)
-			{
-				Debug.LogError("Pickup index from droptable is invalid.");
+				SS2Log.Error("Could not generate curse index from cursepool.");
 			}
 			return pickupIndex;
 		}
 
-		protected abstract PickupIndex[] GenerateUniqueDropsPreReplacement(int maxDrops, Xoroshiro128Plus rng);
-		public PickupIndex[] GenerateUniqueDrops(int maxDrops, Xoroshiro128Plus rng)
+		public CurseIndex[] GenerateUniqueCurses(int maxDrops, Xoroshiro128Plus rng)
 		{
-			PickupIndex[] array = this.GenerateUniqueDropsPreReplacement(maxDrops, rng);
+			CurseIndex[] array = GenerateUniqueCursesFromWeightedSelection(maxDrops, rng, this.selector);
 			return array;
 		}
 
-		protected virtual void Regenerate(Run run)
+		protected void Regenerate(Run run)
 		{
+			this.selector.Clear();
+			foreach(Curse curse in this.curses)
+            {
+				for (int i = 0; i < curse.count; i++)
+					this.selector.AddChoice(curse.curseIndex, curse.weight);
+
+				if (!allCurses.Contains(curse)) allCurses.Add(curse); // sry
+            }
 		}
 
 		protected virtual void OnEnable()
@@ -70,7 +110,7 @@ namespace SS2.ScriptableObjects
 			CursePool.instancesList.Add(this);
 			if (Run.instance)
 			{
-				Debug.Log("PickupDropTable '" + base.name + "' has been loaded after the Run started.  This might be an issue with asset duplication across bundles, or it might be fine.  Regenerating...");
+				SS2Log.Info("CursePool '" + base.name + "' has been loaded after the Run started.  This might be an issue with asset duplication across bundles, or it might be fine.  Regenerating...");
 				this.Regenerate(Run.instance);
 			}
 		}
@@ -81,8 +121,7 @@ namespace SS2.ScriptableObjects
 
 		static CursePool()
 		{
-			Run.onRunStartGlobal += CursePool.RegenerateAll;
-			Run.onAvailablePickupsModified += CursePool.RegenerateAll;
+			CurseManager.onCursesRefreshed += CursePool.RegenerateAll;
 		}
 
 		private static void RegenerateAll(Run run)
@@ -92,12 +131,6 @@ namespace SS2.ScriptableObjects
 				CursePool.instancesList[i].Regenerate(run);
 			}
 		}
-
-		public void ModifyTierWeights(float tier1, float tier2, float tier3)
-		{
-		}
-
-		public bool canDropBeReplaced = true;
 
 		private static readonly List<CursePool> instancesList = new List<CursePool>();
 	}

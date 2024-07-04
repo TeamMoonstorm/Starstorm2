@@ -6,31 +6,110 @@ using RoR2;
 using RoR2.Artifacts;
 using RoR2.Skills;
 using UnityEngine.Events;
-using UnityEngine.AddressableAssets;
+using System.Runtime.CompilerServices;
 namespace SS2
 {
+	// welcome to hardcode city
 	// going to assume curses can't change mid stage. for my own sanity.
-    public static class LunarCurseManager
-    {
-		[SystemInitializer(new Type[]
-		{
-
-		})]
+	public enum CurseIndex
+	{
+		None,
+		ChestMonsters,
+		ChestVelocity,
+		ChestSpite,
+		ChestTimer,
+		MonsterArmor,
+		MonsterAttackSpeed,
+		MonsterCloak,
+		MonsterCooldownReduction,
+		MonsterDamage,
+		MonsterHealth,
+		MonsterMovementSpeed,
+		MonsterShield,
+		MonsterSpite,
+		PlayerBlind,
+		PlayerLock,
+		PlayerMoney,
+		PlayerRegen,
+		TeleporterRadius,
+		TeleporterRevive,
+		TeleporterVoid
+	}
+	public static class CurseManager
+    {		
+		[SystemInitializer(typeof(BuffCatalog))]
 		private static void Init()
 		{
-            Stage.onServerStageBegin += OnServerStageBegin;
-            CharacterMaster.onStartGlobal += OnMasterStartGlobal;
-            CharacterBody.onBodyStartGlobal += OnBodyStartGlobal;
-            GlobalEventManager.OnInteractionsGlobal += OnInteractionGlobal;
-            GlobalEventManager.onCharacterDeathGlobal += OnCharacterDeathGlobal;
-            RoR2Application.onFixedUpdate += OnFixedUpdate;
-            TeleporterInteraction.onTeleporterBeginChargingGlobal += OnTeleporterBeginChargingGlobal;
-            R2API.RecalculateStatsAPI.GetStatCoefficients += GetStatCoefficients;
-            On.RoR2.ChestBehavior.Awake += ChestBehavior_Awake;
-            On.RoR2.ChestBehavior.ItemDrop += ChestBehavior_ItemDrop;
-
-			SS2Assets.LoadAsset<GameObject>("VoidTeleporterFogDamager", SS2Bundle.Interactables).GetComponent<FogDamageController>().dangerBuffDef = Addressables.LoadAssetAsync<BuffDef>("RoR2/Base/Common/bdVoidFogMild").WaitForCompletion();
+            Run.onRunStartGlobal += Refresh;
+			Run.onRunDestroyGlobal += Refresh; //idk. just being cautious?    
+			SS2Assets.LoadAsset<GameObject>("VoidTeleporterFogDamager", SS2Bundle.Interactables).GetComponent<FogDamageController>().dangerBuffDef = RoR2Content.Buffs.VoidFogMild;
 		}
+
+		public static Action<Run> onCursesRefreshed;
+        private static void Refresh(Run run)
+        {
+			UnsetHooks();
+
+			curseStacks = new int[21];
+			bombRequestQueue.Clear();
+			lastMoneyPenalty = Run.FixedTimeStamp.now;
+			curseIntensity = 1f;
+			totalCurses = 0;
+
+			onCursesRefreshed?.Invoke(run);
+        }
+		private static void SetHooks()
+        {
+			Stage.onServerStageBegin += OnServerStageBegin;
+			CharacterMaster.onStartGlobal += OnMasterStartGlobal;
+			CharacterBody.onBodyStartGlobal += OnBodyStartGlobal;
+			GlobalEventManager.OnInteractionsGlobal += OnInteractionGlobal;
+			GlobalEventManager.onCharacterDeathGlobal += OnCharacterDeathGlobal;
+			RoR2Application.onFixedUpdate += OnFixedUpdate;
+			TeleporterInteraction.onTeleporterBeginChargingGlobal += OnTeleporterBeginChargingGlobal;
+			R2API.RecalculateStatsAPI.GetStatCoefficients += GetStatCoefficients;
+			On.RoR2.ChestBehavior.Awake += ChestBehavior_Awake;
+			On.RoR2.ChestBehavior.ItemDrop += ChestBehavior_ItemDrop;
+		}
+		private static void UnsetHooks()
+		{
+			Stage.onServerStageBegin -= OnServerStageBegin;
+			CharacterMaster.onStartGlobal -= OnMasterStartGlobal;
+			CharacterBody.onBodyStartGlobal -= OnBodyStartGlobal;
+			GlobalEventManager.OnInteractionsGlobal -= OnInteractionGlobal;
+			GlobalEventManager.onCharacterDeathGlobal -= OnCharacterDeathGlobal;
+			RoR2Application.onFixedUpdate -= OnFixedUpdate;
+			TeleporterInteraction.onTeleporterBeginChargingGlobal -= OnTeleporterBeginChargingGlobal;
+			R2API.RecalculateStatsAPI.GetStatCoefficients -= GetStatCoefficients;
+			On.RoR2.ChestBehavior.Awake -= ChestBehavior_Awake;
+			On.RoR2.ChestBehavior.ItemDrop -= ChestBehavior_ItemDrop;
+		}
+
+		// might need to network this
+		public static void AddCurse(CurseIndex index, int count = 1)
+        {
+            if (!NetworkServer.active)
+            {
+				return;
+            }
+			bool hadAnyCurses = totalCurses > 0;
+			int i = (int)index;
+			if(i >= curseStacks.Length)
+            {
+				curseStacks[i] += count;
+				totalCurses += count;
+            }
+			if(totalCurses > 0 && !hadAnyCurses)
+            {
+				SetHooks();
+            }
+        }
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static int GetCurseCount(CurseIndex index)
+        {
+			return curseStacks[(int)index];
+        }
 
         private static void OnServerStageBegin(Stage stage)
         {
@@ -43,7 +122,11 @@ namespace SS2
 
         private static void OnTeleporterBeginChargingGlobal(TeleporterInteraction teleporter)
         {
-            if (teleporterVoid > 0)
+			int teleporterVoid = GetCurseCount(CurseIndex.TeleporterVoid);
+			int teleporterRadius = GetCurseCount(CurseIndex.TeleporterRadius);
+			int teleporterRevive = GetCurseCount(CurseIndex.TeleporterRevive);
+
+			if (teleporterVoid > 0)
             {
 				GameObject gameObject = SS2Assets.LoadAsset<GameObject>("VoidTeleporterFogDamager", SS2Bundle.Interactables);
 				if (gameObject)
@@ -60,6 +143,7 @@ namespace SS2
 					EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("VoidTeleporterCurseEffect", SS2Bundle.Interactables), effectData, true);
 				}
 			}
+			
 			if (teleporterRadius > 0)
             {
 				teleporter.holdoutZoneController.calcRadius += (ref float radius) =>
@@ -77,6 +161,7 @@ namespace SS2
 				};
 				EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("TeleporterRadiusCurseEffect", SS2Bundle.Interactables), effectData, true);
 			}
+			
 			if (teleporterRevive > 0)
             {
 				teleporter.bossDirector.onSpawnedServer.AddListener(new UnityAction<GameObject>((masterObject) =>
@@ -96,6 +181,7 @@ namespace SS2
 			{
 				return;
 			}
+			int monsterSpite = GetCurseCount(CurseIndex.MonsterSpite);
 			CharacterBody victimBody = damageReport.victimBody;
 			Vector3 corePosition = victimBody.corePosition;
 			int num = Mathf.Min(BombArtifactManager.maxBombCount, Mathf.CeilToInt(victimBody.bestFitRadius * BombArtifactManager.extraBombPerRadius * monsterSpite));
@@ -112,8 +198,14 @@ namespace SS2
 					teamIndex = damageReport.victimTeamIndex,
 					velocityY = UnityEngine.Random.Range(5f, 25f)
 				};
-				LunarCurseManager.bombRequestQueue.Enqueue(item);
+				CurseManager.bombRequestQueue.Enqueue(item);
 			}
+
+			EffectData effectData = new EffectData
+			{
+				origin = damageReport.damageInfo.position,
+			};
+			EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("MonsterSpiteCurseEffect", SS2Bundle.Interactables), effectData, true);
 		}
 
         private static void GetStatCoefficients(CharacterBody sender, R2API.RecalculateStatsAPI.StatHookEventArgs args)
@@ -154,6 +246,7 @@ namespace SS2
 		{
 			if (characterMaster.teamIndex == TeamIndex.Player)
             {
+				int playerRegen = GetCurseCount(CurseIndex.PlayerRegen);
 				if(playerRegen > 0)
                 {
 					float timeUntilDeath = 180f * Mathf.Pow(0.67f, playerRegen);
@@ -162,6 +255,7 @@ namespace SS2
 				return;
             }
 
+			int monsterShield = GetCurseCount(CurseIndex.MonsterShield);
 			if (monsterShield > 0)
 			{
 				characterMaster.inventory.GiveItem(RoR2Content.Items.ShieldOnly); // too lazy to ilhook lol
@@ -169,6 +263,18 @@ namespace SS2
 		}
 		private static void OnBodyStartGlobal(CharacterBody characterBody)
         {
+			int playerLock = GetCurseCount(CurseIndex.PlayerLock);
+			int playerBlind = GetCurseCount(CurseIndex.PlayerBlind);
+			int playerRegen = GetCurseCount(CurseIndex.PlayerRegen);
+			int monsterArmor = GetCurseCount(CurseIndex.MonsterArmor);
+			int monsterAttackSpeed = GetCurseCount(CurseIndex.MonsterAttackSpeed);
+			int monsterCloak = GetCurseCount(CurseIndex.MonsterCloak);
+			int monsterCooldownReduction = GetCurseCount(CurseIndex.MonsterCooldownReduction);
+			int monsterDamage = GetCurseCount(CurseIndex.MonsterDamage);
+			int monsterHealth = GetCurseCount(CurseIndex.MonsterHealth);
+			int monsterMovementSpeed = GetCurseCount(CurseIndex.MonsterMovementSpeed);
+			int monsterShield = GetCurseCount(CurseIndex.MonsterShield);
+
 			if (playerLock > 0 && characterBody.teamComponent.teamIndex == TeamIndex.Player)
 			{
 				characterBody.gameObject.AddComponent<SkillDisableBehavior>();
@@ -212,31 +318,36 @@ namespace SS2
         private static void ChestBehavior_ItemDrop(On.RoR2.ChestBehavior.orig_ItemDrop orig, ChestBehavior self)
         {
 			orig(self);
-			if(chestVelocity > 0)
+			if(GetCurseCount(CurseIndex.ChestVelocity) > 0)
 				EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("ChestVelocityCurseEffect", SS2Bundle.Interactables), new EffectData { origin = self.transform.position }, true);
 		}
 
         private static void ChestBehavior_Awake(On.RoR2.ChestBehavior.orig_Awake orig, ChestBehavior self)
         {
-            if(chestTimer > 0)
+            if(GetCurseCount(CurseIndex.ChestTimer) > 0)
             {
 				self.openState = openState;
             }
 			orig(self);
         }
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static float GetChestTimer()
         {
-			return chestTimer > 0 ? 30f * chestTimer * curseIntensity : 1.5f;
+			return 30f * GetCurseCount(CurseIndex.ChestTimer) * curseIntensity;
         }
 
         private static void OnInteractionGlobal(Interactor interactor, IInteractable interactable, GameObject interactableObject)
         {
             if (!NetworkServer.active) return;
+			int chestVelocity = GetCurseCount(CurseIndex.ChestVelocity);
+			int chestMonsters = GetCurseCount(CurseIndex.ChestMonsters);
+			int chestSpite = GetCurseCount(CurseIndex.ChestSpite);
 
 			ChestBehavior chestBehavior = interactableObject.GetComponent<ChestBehavior>();
 			Vector3 position = interactableObject.transform.position;
 			if(chestBehavior)
             {
+				
 				PurchaseInteraction purchaseInteraction = chestBehavior.GetComponent<PurchaseInteraction>();
 				if (chestVelocity > 0)
 				{
@@ -303,7 +414,7 @@ namespace SS2
 		{
 			if (!NetworkServer.active) return;
 
-			if (LunarCurseManager.bombRequestQueue.Count > 0)
+			if (CurseManager.bombRequestQueue.Count > 0)
 			{
 				BombArtifactManager.BombRequest bombRequest = BombArtifactManager.bombRequestQueue.Dequeue();
 				Ray ray = new Ray(bombRequest.raycastOrigin + new Vector3(0f, BombArtifactManager.maxBombStepUpDistance, 0f), Vector3.down);
@@ -315,9 +426,10 @@ namespace SS2
 				}
 			}
 
-			if(playerMoney > 0)
+			int playerMoney = GetCurseCount(CurseIndex.PlayerMoney);
+			if (playerMoney > 0)
             {
-				if(lastMoneyPenalty.timeSince > 30f)
+				if(lastMoneyPenalty.timeSince > 30f / playerMoney)
                 {
 					lastMoneyPenalty = Run.FixedTimeStamp.now;
 					foreach (TeamComponent t in TeamComponent.GetTeamMembers(TeamIndex.Player))
@@ -333,39 +445,19 @@ namespace SS2
             }
 		}
 
-		private static float curseIntensity = 1;
-		private static readonly float curseIntensityPerStage = 1.33f;
+		
 
 		private static Xoroshiro128Plus cloakRng = new Xoroshiro128Plus(0UL);
 		private static Run.FixedTimeStamp lastMoneyPenalty;
 		private static Color teleporterRadiusColor = new Color(0f, 3.9411764f, 5f, 1f);
 		private static readonly EntityStates.SerializableEntityStateType openState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Barrel.OpeningSlow));
 		private static readonly Queue<BombArtifactManager.BombRequest> bombRequestQueue = new Queue<BombArtifactManager.BombRequest>();
+		
+		private static int[] curseStacks = new int[21];
+		private static int totalCurses;
 
-		private static int chestMonsters;
-		private static int chestVelocity;
-		private static int chestSpite;
-		private static int chestTimer;
-
-		private static int monsterArmor;
-		private static int monsterAttackSpeed;
-		private static int monsterCloak;
-		private static int monsterCooldownReduction;
-		private static int monsterDamage;
-		private static int monsterHealth;
-		private static int monsterMovementSpeed;
-		private static int monsterShield;
-		private static int monsterSpite;
-
-		private static int playerBlind;
-		private static int playerLock;
-		private static int playerMoney;
-		private static int playerRegen;
-
-		private static int teleporterRadius;
-		private static int teleporterVoid;
-		private static int teleporterRevive;
-
+		private static float curseIntensity = 1;
+		private static readonly float curseIntensityPerStage = 1.33f;
 		private class SkillDisableBehavior : MonoBehaviour
         {
 			private static SkillDef disabledSkillDef = SS2Assets.LoadAsset<SkillDef>("DisabledSkill", SS2Bundle.Shared);
@@ -393,7 +485,7 @@ namespace SS2
 					return;
                 }
 
-				disableInterval = 16f / (1 + (playerLock-1)) / curseIntensity;
+				disableInterval = 16f / (1 + (GetCurseCount(CurseIndex.PlayerLock)-1)) / curseIntensity;
             }
             private void FixedUpdate()
             {
