@@ -12,7 +12,7 @@ namespace EntityStates.Barrel
 
 			duration = CurseManager.GetChestTimer();
 
-			base.PlayAnimation("Body", "Opening", "Opening.playbackRate", Opening.duration);
+			base.PlayAnimation("Body", "Opening", "Opening.playbackRate", duration);
 			if (base.sfxLocator)
 			{
 				Util.PlaySound(base.sfxLocator.openSound, base.gameObject);

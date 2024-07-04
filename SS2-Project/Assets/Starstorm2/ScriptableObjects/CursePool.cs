@@ -28,7 +28,7 @@ namespace SS2
 
         private void Awake()
         {
-            if(!init)
+			if(Application.isEditor && !init)
             {
 				init = true;
 				curses = new Curse[20]; // should iterate thru curseindex enum instead
@@ -37,7 +37,7 @@ namespace SS2
 					curses[i] = new Curse { curseIndex = (CurseIndex)i, count = 1, weight = 1 };
                 }
             }
-        }
+		}
 
 		// bad planning by me. should have some sort of cursecatalog or cursedef for this
 		public static Material GetCurseMaterial(CurseIndex index)
@@ -56,9 +56,9 @@ namespace SS2
 			CurseIndex[] array2 = new CurseIndex[num];
 			for (int i = 0; i < num; i++)
 			{
-				int choiceIndex = weightedSelection.EvaluateToChoiceIndex(rng.nextNormalizedFloat, array);
-				weightedSelection.RemoveChoice(choiceIndex);
+				int choiceIndex = weightedSelection.EvaluateToChoiceIndex(rng.nextNormalizedFloat, array);				
 				WeightedSelection<CurseIndex>.ChoiceInfo choice = weightedSelection.GetChoice(choiceIndex);
+				weightedSelection.RemoveChoice(choiceIndex);
 				array2[i] = choice.value;
 				Array.Resize<int>(ref array, i + 1);
 				array[i] = choiceIndex;
@@ -71,8 +71,9 @@ namespace SS2
 			if (weightedSelection.Count > 0)
 			{
 				int choiceIndex = weightedSelection.EvaluateToChoiceIndex(rng.nextNormalizedFloat);
+				CurseIndex curseIndex = weightedSelection.choices[choiceIndex].value;
 				weightedSelection.RemoveChoice(choiceIndex);
-				return weightedSelection.choices[choiceIndex].value;
+				return curseIndex;
 			}
 			return CurseIndex.None;
 		}
@@ -82,7 +83,7 @@ namespace SS2
 			CurseIndex pickupIndex = GenerateCurseFromWeightedSelection(rng, this.selector);
 			if (pickupIndex == CurseIndex.None)
 			{
-				SS2Log.Error("Could not generate curse index from cursepool.");
+				SS2Log.Error("Could not generate curse index from CursePool.");
 			}
 			return pickupIndex;
 		}
@@ -92,6 +93,11 @@ namespace SS2
 			CurseIndex[] array = GenerateUniqueCursesFromWeightedSelection(maxDrops, rng, this.selector);
 			return array;
 		}
+
+		public bool IsEmpty()
+        {
+			return this.selector.Count == 0;
+        }
 
 		protected void Regenerate(Run run)
 		{

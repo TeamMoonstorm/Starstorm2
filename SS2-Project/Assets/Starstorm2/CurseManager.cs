@@ -11,6 +11,7 @@ namespace SS2
 {
 	// welcome to hardcode city
 	// going to assume curses can't change mid stage. for my own sanity.
+	// if something other than lunar gambler adds curses, then we need to track curse sources.
 	public enum CurseIndex
 	{
 		None,
@@ -61,9 +62,11 @@ namespace SS2
         {
 			stageStart = Run.instance.stageClearCount;
 
+            SceneDirector.onPrePopulateSceneServer += OnPrePopulateScene;
 			Stage.onServerStageBegin += OnServerStageBegin;
 			CharacterMaster.onStartGlobal += OnMasterStartGlobal;
 			CharacterBody.onBodyStartGlobal += OnBodyStartGlobal;
+            GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
 			GlobalEventManager.OnInteractionsGlobal += OnInteractionGlobal;
 			GlobalEventManager.onCharacterDeathGlobal += OnCharacterDeathGlobal;
 			RoR2Application.onFixedUpdate += OnFixedUpdate;
@@ -72,11 +75,16 @@ namespace SS2
 			On.RoR2.ChestBehavior.Awake += ChestBehavior_Awake;
 			On.RoR2.ChestBehavior.ItemDrop += ChestBehavior_ItemDrop;
 		}
-		private static void OnCurseEnd()
+
+        
+
+        private static void OnCurseEnd()
 		{
+			SceneDirector.onPrePopulateSceneServer -= OnPrePopulateScene;
 			Stage.onServerStageBegin -= OnServerStageBegin;
 			CharacterMaster.onStartGlobal -= OnMasterStartGlobal;
 			CharacterBody.onBodyStartGlobal -= OnBodyStartGlobal;
+			GlobalEventManager.onServerDamageDealt -= OnServerDamageDealt;
 			GlobalEventManager.OnInteractionsGlobal -= OnInteractionGlobal;
 			GlobalEventManager.onCharacterDeathGlobal -= OnCharacterDeathGlobal;
 			RoR2Application.onFixedUpdate -= OnFixedUpdate;
@@ -95,9 +103,9 @@ namespace SS2
             }
 			bool hadAnyCurses = totalCurses > 0;
 			int i = (int)index;
-			if(i >= curseStacks.Length)
+			if(i < pendingCurses.Length)
             {
-				curseStacks[i] += count;
+				pendingCurses[i] += count;
 				totalCurses += count;
             }
 			if(totalCurses > 0 && !hadAnyCurses)
@@ -113,14 +121,63 @@ namespace SS2
         }
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static float GetCurseIntensity()
-        {
-			return Mathf.Pow(curseIntensityPerStage, Run.instance.stageClearCount - stageStart);
+		public static int GetTotal()
+		{
+			return totalCurses;
 		}
 
-        private static void OnServerStageBegin(Stage stage)
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static float GetCurseIntensity()
         {
+			return Mathf.Pow(curseIntensityPerStage, GetStageClearCount());
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static int GetStageClearCount()
+        {
+			return totalCurses > 0 ? Run.instance.stageClearCount - stageStart : 0;
+        }
+
+		public static void ClearCurses()
+        {
+			OnCurseEnd();
+
+			curseStacks = new int[21];
+			bombRequestQueue.Clear();
+			lastMoneyPenalty = Run.FixedTimeStamp.now;
+			totalCurses = 0;
+			stageStart = Run.instance.stageClearCount;
+		}
+
+
+		// this has to be before chests spawn so we can fuck with them properly
+		private static void OnPrePopulateScene(SceneDirector obj)
+		{
+			for (int i = 0; i < pendingCurses.Length; i++)
+			{
+				curseStacks[i] += pendingCurses[i];
+				pendingCurses[i] = 0;
+			}
+		}
+
+		// TODO: DARK BLUE POSTPROCESSING EFFECT AND ROMAN NUMERALS
+		private static void OnServerStageBegin(Stage stage)
+        {
+			for(int i = 0; i < pendingCurses.Length; i++)
+            {
+				curseStacks[i] += pendingCurses[i];
+				pendingCurses[i] = 0;
+            }
+
+			EffectData effectData = new EffectData
+			{
+				genericUInt = (uint)GetStageClearCount() + 1,
+			};
+			EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("CurseReminder", SS2Bundle.Interactables), effectData, true);
+
 			cloakRng = new Xoroshiro128Plus(Run.instance.stageRng.nextUlong);
+			lastMoneyPenalty = Run.FixedTimeStamp.now;
+			bombRequestQueue.Clear();
         }
 
         private static void OnTeleporterBeginChargingGlobal(TeleporterInteraction teleporter)
@@ -129,6 +186,8 @@ namespace SS2
 			int teleporterRadius = GetCurseCount(CurseIndex.TeleporterRadius);
 			int teleporterRevive = GetCurseCount(CurseIndex.TeleporterRevive);
 
+
+			// TODO: PostProcessing for this? to match void fields and stuff
 			if (teleporterVoid > 0)
             {
 				GameObject gameObject = SS2Assets.LoadAsset<GameObject>("VoidTeleporterFogDamager", SS2Bundle.Interactables);
@@ -177,8 +236,21 @@ namespace SS2
 				}));
             }
         }
-
-        private static void OnCharacterDeathGlobal(DamageReport damageReport)
+		private static void OnServerDamageDealt(DamageReport damageReport)
+		{
+			int bleedCount = GetCurseCount(CurseIndex.PlayerRegen); // not changing the name
+			DamageInfo damageInfo = damageReport.damageInfo;
+			CharacterBody victim = damageReport.victimBody;
+			if(damageReport.victimTeamIndex == TeamIndex.Player)
+            {
+				if(bleedCount > 0)
+                {
+					float damagePercent = .15f * bleedCount * GetCurseIntensity();
+					DotController.InflictDot(victim.gameObject, damageInfo.attacker, DotController.DotIndex.Bleed, damagePercent * damageInfo.damage, 1f, null);
+				}	
+			}				
+		}
+		private static void OnCharacterDeathGlobal(DamageReport damageReport)
         {
 			if (damageReport.victimTeamIndex != TeamIndex.Monster)
 			{
@@ -247,17 +319,6 @@ namespace SS2
 
 		private static void OnMasterStartGlobal(CharacterMaster characterMaster)
 		{
-			if (characterMaster.teamIndex == TeamIndex.Player)
-            {
-				int playerRegen = GetCurseCount(CurseIndex.PlayerRegen);
-				if(playerRegen > 0)
-                {
-					float timeUntilDeath = 180f * Mathf.Pow(0.67f, playerRegen);
-					characterMaster.inventory.GiveItem(RoR2Content.Items.HealthDecay, (int)timeUntilDeath);
-				}
-				return;
-            }
-
 			int monsterShield = GetCurseCount(CurseIndex.MonsterShield);
 			if (monsterShield > 0)
 			{
@@ -354,13 +415,13 @@ namespace SS2
 				PurchaseInteraction purchaseInteraction = chestBehavior.GetComponent<PurchaseInteraction>();
 				if (chestVelocity > 0)
 				{
-					chestBehavior.dropForwardVelocityStrength = 50 * chestVelocity * GetCurseIntensity();
-					chestBehavior.dropUpVelocityStrength = 80 * chestVelocity * GetCurseIntensity();
+					chestBehavior.dropForwardVelocityStrength = 40 * chestVelocity * GetCurseIntensity();
+					chestBehavior.dropUpVelocityStrength = 60 * chestVelocity * GetCurseIntensity();
 				}
 
 				if (chestMonsters > 0)
 				{
-					GameObject gameObject = SS2Assets.LoadAsset<GameObject>("MonsterOnChestOpenEncounter", SS2Bundle.Interactables);
+					GameObject gameObject = SS2Assets.LoadAsset<GameObject>("MonstersOnChestOpenEncounter", SS2Bundle.Interactables);
 					if (gameObject)
 					{
 						GameObject gameObject2 = UnityEngine.Object.Instantiate<GameObject>(gameObject, position, Quaternion.identity);
@@ -377,7 +438,7 @@ namespace SS2
 								{
 									origin = position,
 								};
-								EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("MonsterOnChestOpen", SS2Bundle.Interactables), effectData, true);
+								EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("MonstersOnChestOpen", SS2Bundle.Interactables), effectData, true);
 								return;
 							}
 							NetworkServer.Destroy(gameObject2);
@@ -387,6 +448,7 @@ namespace SS2
 					if(chestSpite > 0)
                     {
 						int chestValue = purchaseInteraction.cost / Run.instance.GetDifficultyScaledCost(25, Stage.instance.entryDifficultyCoefficient);
+						chestValue = Mathf.Max(chestValue, 1);
 						int bombCount = chestValue * 6 * Mathf.RoundToInt(GetCurseIntensity());
 						Vector3 corePosition = chestBehavior.dropTransform.position;
 						float damage = 12f + (2.4f * Run.instance.ambientLevel);
@@ -419,7 +481,7 @@ namespace SS2
 
 			if (CurseManager.bombRequestQueue.Count > 0)
 			{
-				BombArtifactManager.BombRequest bombRequest = BombArtifactManager.bombRequestQueue.Dequeue();
+				BombArtifactManager.BombRequest bombRequest = CurseManager.bombRequestQueue.Dequeue();
 				Ray ray = new Ray(bombRequest.raycastOrigin + new Vector3(0f, BombArtifactManager.maxBombStepUpDistance, 0f), Vector3.down);
 				float maxDistance = BombArtifactManager.maxBombStepUpDistance + BombArtifactManager.maxBombFallDistance;
 				RaycastHit raycastHit;
@@ -442,6 +504,12 @@ namespace SS2
 						uint moneyPenalty = (uint)Mathf.Min(t.body.master.money, Run.instance.GetDifficultyScaledCost(25, Stage.instance.entryDifficultyCoefficient) * GetCurseIntensity());
 						t.body.master.money -= moneyPenalty;
 
+						EffectManager.SpawnEffect(DeathRewards.coinEffectPrefab, new EffectData
+						{
+							origin = t.body.corePosition,
+							genericFloat = moneyPenalty,
+							scale = t.body.radius
+						}, true);
 						EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("PlayerMoneyCurseEffect", SS2Bundle.Interactables), new EffectData { origin = t.transform.position }, true);
 					}					
                 }
@@ -455,7 +523,8 @@ namespace SS2
 		private static Color teleporterRadiusColor = new Color(0f, 3.9411764f, 5f, 1f);
 		private static readonly EntityStates.SerializableEntityStateType openState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Barrel.OpeningSlow));
 		private static readonly Queue<BombArtifactManager.BombRequest> bombRequestQueue = new Queue<BombArtifactManager.BombRequest>();
-		
+
+		private static int[] pendingCurses = new int[21];
 		private static int[] curseStacks = new int[21];
 		private static int totalCurses;
 
@@ -517,11 +586,13 @@ namespace SS2
 						EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("PlayerSkillCurseEffect", SS2Bundle.Interactables), effectData, true);
 					}
 
-					foreach (DisabledSkill skill in disabledSkills)
+					for (int i = disabledSkills.Count - 1; i >= 0; i--)
 					{
+						DisabledSkill skill = disabledSkills[i];
 						if (skill.startTime.timeSince > disableDuration)
 						{
 							EnableSkill(skill.target);
+							disabledSkills.RemoveAt(i);
 						}
 					}
 				}				
@@ -545,14 +616,6 @@ namespace SS2
 
 			private void EnableSkill(GenericSkill skill)
             {
-				for (int i = 0; i < disabledSkills.Count; i++)
-				{
-					if (disabledSkills[i].target == skill)
-					{
-						disabledSkills.RemoveAt(i);
-					}
-				}
-
 				skill.UnsetSkillOverride(this, disabledSkillDef, GenericSkill.SkillOverridePriority.Replacement);
 			}
         }
