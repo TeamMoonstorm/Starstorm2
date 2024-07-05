@@ -15,11 +15,13 @@ namespace SS2.Components
                 return;
             }
             UICamera.onUICameraPreRender += OnPreRenderUI;
-            ParticleSystem.TextureSheetAnimationModule ts = ps.textureSheetAnimation;
-            ts.startFrameMultiplier = 0;
-            ts.frameOverTimeMultiplier = 0; /// cant see this in editor
-            ts.startFrame = base.GetComponent<EffectComponent>().effectData.genericUInt;
+            
             ps.Play();
+            ParticleSystem.TextureSheetAnimationModule ts = ps.textureSheetAnimation;
+            ts.startFrameMultiplier = 0; // ????????????????????????????????????????????????
+            ts.frameOverTimeMultiplier = 0; /// cant see this in editor
+            ts.startFrameMultiplier = 0.1f * (base.GetComponent<EffectComponent>().effectData.genericUInt - 1);
+            // WTF IS THIS SHIT????????????????? LET ME SET THE FUCKING FRAMEEEEEEE
         }
         private void OnDestroy()
         {

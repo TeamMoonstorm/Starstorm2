@@ -11,15 +11,23 @@ namespace SS2.Interactables
 
         public static Vector3 position = new Vector3(-101f, -25.4f, -49.3f); // placement sucks. temp
         public static Vector3 rotation = new Vector3 (0, -90f, 0);
+
+        static Material FUCK;
         public override void Initialize()
         {
             Stage.onServerStageBegin += SpawnTable;
+
+            FUCK = SS2Assets.LoadAsset<Material>("tmpBombDropshadowHologramCursed", SS2Bundle.Interactables);
+            FUCK.shader = LegacyShaderAPI.Find("TextMeshPro/Distance Field");
         }
 
         private void SpawnTable(Stage stage)
         {
             if(DirectorAPI.GetStageEnumFromSceneDef(stage.sceneDef) == DirectorAPI.Stage.Bazaar)
             {
+                // idk
+                
+
                 GameObject table = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("LunarGambler", SS2Bundle.Interactables), position, Quaternion.Euler(rotation));
                 NetworkServer.Spawn(table);
             }

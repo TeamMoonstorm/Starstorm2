@@ -10,6 +10,7 @@ namespace SS2
 		{
 			if (this.targetTextMesh)
 			{
+				targetTextMesh.enabled = true; // tmpro throws an nre in the editor and disables itself :(
 				this.targetTextMesh.text = displayValue.ToString();
 			}
 		}

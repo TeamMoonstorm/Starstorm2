@@ -238,8 +238,19 @@ namespace SS2
             {
 				if(bleedCount > 0)
                 {
-					float damagePercent = .15f * bleedCount * GetCurseIntensity();
-					DotController.InflictDot(victim.gameObject, damageInfo.attacker, DotController.DotIndex.Bleed, damagePercent * damageInfo.damage, 1f, null);
+					//bleed for 20% of damage taken
+					// declaring everything because im slow in the brain
+					// TODO: CUSTOM DOT FOR THIS. BLEED SUX
+					float desiredDamage = .2f * bleedCount * GetCurseIntensity() * damageInfo.damage;
+					float compensated = desiredDamage;
+					float bleedTicksPerSecond = 4f;
+					float bleedDuration = 4f;
+					if (damageReport.attackerBody) compensated /= damageReport.attackerBody.damage;
+					float desiredPerSecond = compensated / bleedDuration;
+					float desiredPerTick = desiredPerSecond / bleedTicksPerSecond;
+					float compensatedForBleedDC = desiredPerTick / 0.2f;
+					
+					DotController.InflictDot(victim.gameObject, damageInfo.attacker, DotController.DotIndex.Bleed, bleedDuration, compensatedForBleedDC, null);
 					EffectData effectData = new EffectData
 					{
 						origin = victim.corePosition,
@@ -258,28 +269,32 @@ namespace SS2
 			int monsterSpite = GetCurseCount(CurseIndex.MonsterSpite);
 			CharacterBody victimBody = damageReport.victimBody;
 			Vector3 corePosition = victimBody.corePosition;
-			int num = Mathf.Min(BombArtifactManager.maxBombCount, Mathf.CeilToInt(victimBody.bestFitRadius * BombArtifactManager.extraBombPerRadius * monsterSpite));
-			num *= Mathf.RoundToInt(GetCurseIntensity());
-			for (int i = 0; i < num; i++)
-			{
-				Vector3 b = UnityEngine.Random.insideUnitSphere * (BombArtifactManager.bombSpawnBaseRadius + victimBody.bestFitRadius * BombArtifactManager.bombSpawnRadiusCoefficient);
-				BombArtifactManager.BombRequest item = new BombArtifactManager.BombRequest
+			if (monsterSpite > 0)
+            {				
+				int num = Mathf.Min(BombArtifactManager.maxBombCount, Mathf.CeilToInt(victimBody.bestFitRadius * BombArtifactManager.extraBombPerRadius) * monsterSpite);
+				num *= Mathf.RoundToInt(GetCurseIntensity());
+				for (int i = 0; i < num; i++)
 				{
-					spawnPosition = corePosition,
-					raycastOrigin = corePosition + b,
-					bombBaseDamage = victimBody.damage * 1.5f,
-					attacker = victimBody.gameObject,
-					teamIndex = damageReport.victimTeamIndex,
-					velocityY = UnityEngine.Random.Range(5f, 25f)
-				};
-				CurseManager.bombRequestQueue.Enqueue(item);
-			}
+					Vector3 b = UnityEngine.Random.insideUnitSphere * (BombArtifactManager.bombSpawnBaseRadius + victimBody.bestFitRadius * BombArtifactManager.bombSpawnRadiusCoefficient);
+					BombArtifactManager.BombRequest item = new BombArtifactManager.BombRequest
+					{
+						spawnPosition = corePosition,
+						raycastOrigin = corePosition + b,
+						bombBaseDamage = victimBody.damage * 1.5f,
+						attacker = victimBody.gameObject,
+						teamIndex = damageReport.victimTeamIndex,
+						velocityY = UnityEngine.Random.Range(5f, 25f)
+					};
+					CurseManager.bombRequestQueue.Enqueue(item);
+				}
 
-			EffectData effectData = new EffectData
-			{
-				origin = damageReport.damageInfo.position,
-			};
-			EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("MonsterSpiteCurseEffect", SS2Bundle.Interactables), effectData, true);
+				EffectData effectData = new EffectData
+				{
+					origin = damageReport.damageInfo.position,
+				};
+				EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("MonsterSpiteCurseEffect", SS2Bundle.Interactables), effectData, true);
+			}
+			
 		}
 
         private static void GetStatCoefficients(CharacterBody sender, R2API.RecalculateStatsAPI.StatHookEventArgs args)

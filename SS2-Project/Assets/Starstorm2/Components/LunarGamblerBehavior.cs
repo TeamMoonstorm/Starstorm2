@@ -72,7 +72,8 @@ namespace SS2.Components
 
 		private int CalculateCashoutValue()
         {
-			float floatVal = Mathf.Pow(1.33f, CurseManager.GetStageClearCount()-1) * CurseManager.GetTotal() * 10f;
+			int stageClearCount = Mathf.Max(CurseManager.GetStageClearCount() - 1, 0); // fucked up fuck fuck redo the curse counting plss
+			float floatVal = Mathf.Pow(1.33f, stageClearCount) * CurseManager.GetTotal() * 10f;
 			return Mathf.RoundToInt(floatVal);
         }
 
