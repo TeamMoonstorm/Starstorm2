@@ -15,7 +15,7 @@ namespace Assets.Starstorm2.Modules.EntityStates.Bandit
         {
             base.ModifyBullet(bulletAttack);
             bulletAttack.falloffModel = BulletAttack.FalloffModel.None;
-            bulletAttack.damageType =DamageType.Stun1s;
+            bulletAttack.damageType = DamageType.Stun1s;
         }
     }
 }

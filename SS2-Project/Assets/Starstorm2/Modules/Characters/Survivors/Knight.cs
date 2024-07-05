@@ -79,6 +79,7 @@ namespace SS2.Survivors
         }
 
 
+
         public class KnightParryBuff : BaseBuffBehaviour, IOnIncomingDamageServerReceiver
         {
             [BuffDefAssociation]

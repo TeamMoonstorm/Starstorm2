@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Starstorm2.Modules.EntityStates.Mercenary
+namespace Assets.Starstorm2.Modules.EntityStates.Executioner2.Templar
 {
-    public class SovereignBash : BaseSkillState
+    internal class HolyWeapon : BaseSkillState
     {
         public float baseDuration = 0.5f;
         private float duration;

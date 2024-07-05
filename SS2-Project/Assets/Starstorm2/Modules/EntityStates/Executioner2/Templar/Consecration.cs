@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Starstorm2.Modules.EntityStates.Bandit
+namespace Assets.Starstorm2.Modules.EntityStates.Executioner2.Templar
 {
-    public class _32Revolver : BaseSkillState
+    public class Consecration : BaseSkillState
     {
         public float baseDuration = 0.5f;
         private float duration;
