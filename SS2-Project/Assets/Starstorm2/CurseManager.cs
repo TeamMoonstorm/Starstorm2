@@ -160,15 +160,8 @@ namespace SS2
 			}
 		}
 
-		// TODO: DARK BLUE POSTPROCESSING EFFECT AND ROMAN NUMERALS
 		private static void OnServerStageBegin(Stage stage)
         {
-			for(int i = 0; i < pendingCurses.Length; i++)
-            {
-				curseStacks[i] += pendingCurses[i];
-				pendingCurses[i] = 0;
-            }
-
 			EffectData effectData = new EffectData
 			{
 				genericUInt = (uint)GetStageClearCount() + 1,
@@ -241,12 +234,18 @@ namespace SS2
 			int bleedCount = GetCurseCount(CurseIndex.PlayerRegen); // not changing the name
 			DamageInfo damageInfo = damageReport.damageInfo;
 			CharacterBody victim = damageReport.victimBody;
-			if(damageReport.victimTeamIndex == TeamIndex.Player)
+			if(damageReport.victimTeamIndex == TeamIndex.Player && damageInfo.procCoefficient > 0)
             {
 				if(bleedCount > 0)
                 {
 					float damagePercent = .15f * bleedCount * GetCurseIntensity();
 					DotController.InflictDot(victim.gameObject, damageInfo.attacker, DotController.DotIndex.Bleed, damagePercent * damageInfo.damage, 1f, null);
+					EffectData effectData = new EffectData
+					{
+						origin = victim.corePosition,
+					};
+					effectData.SetNetworkedObjectReference(victim.gameObject);
+					EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("BleedOnHurtEffect", SS2Bundle.Interactables), effectData, true);
 				}	
 			}				
 		}
@@ -297,11 +296,11 @@ namespace SS2
 				int shield = sender.GetBuffCount(SS2Content.Buffs.bdLunarCurseShield);
 
 				args.armorAdd += 25f * armor * GetCurseIntensity();
-				args.attackSpeedMultAdd += .25f * attackspeed * GetCurseIntensity();
+				args.attackSpeedMultAdd += .30f * attackspeed * GetCurseIntensity();
 				args.cooldownMultAdd -= Util.ConvertAmplificationPercentageIntoReductionPercentage(25f * cooldownreduction * GetCurseIntensity()) / 100f;
-				args.damageMultAdd += .25f * damage * GetCurseIntensity();
-				args.healthMultAdd += .25f * health * GetCurseIntensity();
-				args.moveSpeedMultAdd += .25f * movespeed * GetCurseIntensity();
+				args.damageMultAdd += .30f * damage * GetCurseIntensity();
+				args.healthMultAdd += .30f * health * GetCurseIntensity();
+				args.moveSpeedMultAdd += .30f * movespeed * GetCurseIntensity();
 
 				if (shield > 0)
 					args.healthMultAdd -= 0.5f; //undo transendence hp. math is prob wrong. dont care.
@@ -418,7 +417,6 @@ namespace SS2
 					chestBehavior.dropForwardVelocityStrength = 40 * chestVelocity * GetCurseIntensity();
 					chestBehavior.dropUpVelocityStrength = 60 * chestVelocity * GetCurseIntensity();
 				}
-
 				if (chestMonsters > 0)
 				{
 					GameObject gameObject = SS2Assets.LoadAsset<GameObject>("MonstersOnChestOpenEncounter", SS2Bundle.Interactables);
@@ -443,34 +441,34 @@ namespace SS2
 							}
 							NetworkServer.Destroy(gameObject2);
 						}
-					}
-
-					if(chestSpite > 0)
-                    {
-						int chestValue = purchaseInteraction.cost / Run.instance.GetDifficultyScaledCost(25, Stage.instance.entryDifficultyCoefficient);
-						chestValue = Mathf.Max(chestValue, 1);
-						int bombCount = chestValue * 6 * Mathf.RoundToInt(GetCurseIntensity());
-						Vector3 corePosition = chestBehavior.dropTransform.position;
-						float damage = 12f + (2.4f * Run.instance.ambientLevel);
-						EffectData effectData = new EffectData
+					}					
+				}
+				if (chestSpite > 0)
+				{
+					int chestValue = purchaseInteraction.cost / Run.instance.GetDifficultyScaledCost(25, Stage.instance.entryDifficultyCoefficient);
+					chestValue = Mathf.Max(chestValue, 1);
+					int bombCount = chestValue * 6 * Mathf.RoundToInt(GetCurseIntensity());
+					SS2Log.Info("ChestSpite bombCount=" + bombCount);
+					Vector3 corePosition = chestBehavior.dropTransform.position;
+					float damage = 12f + (2.4f * Run.instance.ambientLevel);
+					EffectData effectData = new EffectData
+					{
+						origin = position,
+					};
+					EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("BombsOnChestOpen", SS2Bundle.Interactables), effectData, true);
+					for (int i = 0; i < bombCount; i++)
+					{
+						bombRequestQueue.Enqueue(new BombArtifactManager.BombRequest
 						{
-							origin = position,
-						};
-						EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("BombsOnChestOpen", SS2Bundle.Interactables), effectData, true);
-						for (int i = 0; i < bombCount; i++)
-                        {
-							bombRequestQueue.Enqueue(new BombArtifactManager.BombRequest
-							{
-								attacker = null,
-								spawnPosition = corePosition,
-								raycastOrigin = corePosition + UnityEngine.Random.insideUnitSphere * 3,
-								bombBaseDamage = damage * 1.5f,
-								teamIndex = TeamIndex.Monster,
-								velocityY = UnityEngine.Random.Range(5f, 25f)
-							});
+							attacker = null,
+							spawnPosition = corePosition,
+							raycastOrigin = corePosition + UnityEngine.Random.insideUnitSphere * 3,
+							bombBaseDamage = damage * 1.5f,
+							teamIndex = TeamIndex.Monster,
+							velocityY = UnityEngine.Random.Range(5f, 25f)
+						});
 
-						}						
-                    }
+					}
 				}
 			}			
         }

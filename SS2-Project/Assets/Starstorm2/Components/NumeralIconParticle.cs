@@ -16,6 +16,8 @@ namespace SS2.Components
             }
             UICamera.onUICameraPreRender += OnPreRenderUI;
             ParticleSystem.TextureSheetAnimationModule ts = ps.textureSheetAnimation;
+            ts.startFrameMultiplier = 0;
+            ts.frameOverTimeMultiplier = 0; /// cant see this in editor
             ts.startFrame = base.GetComponent<EffectComponent>().effectData.genericUInt;
             ps.Play();
         }

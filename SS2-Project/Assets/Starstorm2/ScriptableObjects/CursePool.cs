@@ -22,22 +22,7 @@ namespace SS2
         }
 		public Curse[] curses;
 
-		private bool init;
-
-		private readonly WeightedSelection<CurseIndex> selector = new WeightedSelection<CurseIndex>(21);
-
-        private void Awake()
-        {
-			if(Application.isEditor && !init)
-            {
-				init = true;
-				curses = new Curse[20]; // should iterate thru curseindex enum instead
-				for(int i = 1; i < curses.Length; i++)
-                {
-					curses[i] = new Curse { curseIndex = (CurseIndex)i, count = 1, weight = 1 };
-                }
-            }
-		}
+		private readonly WeightedSelection<CurseIndex> selector = new WeightedSelection<CurseIndex>(20);
 
 		// bad planning by me. should have some sort of cursecatalog or cursedef for this
 		public static Material GetCurseMaterial(CurseIndex index)

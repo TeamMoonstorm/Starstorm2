@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using RoR2;
-
+using RoR2.Hologram;
 namespace SS2.Components
 {
-	public class LunarGamblerBehavior : NetworkBehaviour
+	public class LunarGamblerBehavior : NetworkBehaviour, IHologramContentProvider
 	{
 		private static float refreshDuration = 1f;
 		private bool waitingForRefresh;
@@ -19,7 +19,13 @@ namespace SS2.Components
 		public CursePool cursePool;
 
 		public Transform particleOrigin;
+
+		public HologramProjector valueProjector;
 		private ChildLocator childLocator;
+
+		private bool isCashOut;
+		private int cashoutValue;
+		public float hideValueTimer;
 		private void Start()
 		{
 			this.rng = new Xoroshiro128Plus(Run.instance.stageRng.nextUlong);
@@ -30,21 +36,29 @@ namespace SS2.Components
 			int stageClearCount = CurseManager.GetStageClearCount();
 			if(stageClearCount > 0)
             {
-				ParticleSystem ps = this.childLocator.FindChild("NumeralIconSingle").GetComponent<ParticleSystem>();
-				ParticleSystem.TextureSheetAnimationModule ts = ps.textureSheetAnimation;
-				ts.startFrame = stageClearCount - 1;
-				ps.gameObject.SetActive(true);
-			}		
+				isCashOut = true;
+
+				//ParticleSystem ps = this.childLocator.FindChild("NumeralIconSingle").GetComponent<ParticleSystem>();
+				//ParticleSystem.TextureSheetAnimationModule ts = ps.textureSheetAnimation;
+				//ts.startFrame = stageClearCount - 1;
+				//ps.gameObject.SetActive(true);
+			}
+
+			cashoutValue = CalculateCashoutValue();
 		}
 
 		public void FixedUpdate()
 		{
-			if(this.cursePool.IsEmpty())
+			hideValueTimer -= Time.fixedDeltaTime;
+			if (valueProjector)
+			{
+				valueProjector.contentProvider = this;
+			}
+			if (this.cursePool.IsEmpty())
             {
 				this.waitingForRefresh = false;
 				this.purchaseInteraction.SetAvailable(false);
             }
-
 			if (this.waitingForRefresh)
 			{
 				this.refreshTimer -= Time.fixedDeltaTime;
@@ -56,13 +70,18 @@ namespace SS2.Components
 			}
 		}
 
+		private int CalculateCashoutValue()
+        {
+			float floatVal = Mathf.Pow(1.33f, CurseManager.GetStageClearCount()-1) * CurseManager.GetTotal() * 10f;
+			return Mathf.RoundToInt(floatVal);
+        }
+
 		[Server]
 		public void AddShrineStack(Interactor interactor)
 		{
-			int stageClearCount = CurseManager.GetStageClearCount();
-			if(CurseManager.GetStageClearCount() > 0)
+			if(isCashOut)
             {
-				CashOut(stageClearCount, CurseManager.GetTotal());
+				CashOut(CurseManager.GetStageClearCount(), CurseManager.GetTotal());
 				return;
             }
 			
@@ -74,8 +93,6 @@ namespace SS2.Components
 			this.purchaseInteraction.SetAvailable(false);
 			this.waitingForRefresh = false;
 
-			CurseManager.ClearCurses(); // if something else adds curses, we need to track curse sources.
-
 			EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/ShrineUseEffect"), new EffectData
 			{
 				origin = base.transform.position,
@@ -84,7 +101,10 @@ namespace SS2.Components
 				color = ColorCatalog.GetColor(ColorCatalog.ColorIndex.LunarItem)
 			}, true);
 
-			SS2Log.Info($"CASHOUT. stageClearCount={stageClearCount}  curseCount={curseCount}");
+			SS2Log.Info($"CASHOUT. stageClearCount={stageClearCount}  curseCount={curseCount}  value={cashoutValue}");
+
+			this.cashoutValue = 0;
+			CurseManager.ClearCurses(); // if something else adds curses, we need to track curse sources.
 		}
 		private void AddCurse()
         {
@@ -92,6 +112,7 @@ namespace SS2.Components
 
 			this.waitingForRefresh = true;
 			this.refreshTimer = refreshDuration;
+			this.hideValueTimer = 2f;
 			EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/ShrineUseEffect"), new EffectData
 			{
 				origin = base.transform.position,
@@ -102,6 +123,8 @@ namespace SS2.Components
 
 			CurseIndex curseIndex = cursePool.GenerateCurse(this.rng);
 			CurseManager.AddCurse(curseIndex);
+
+			cashoutValue = CalculateCashoutValue();
 
 			GameObject effectPrefab = SS2Assets.LoadAsset<GameObject>("CurseIconSingle", SS2Bundle.Interactables);
 			EffectData effectData = new EffectData
@@ -117,5 +140,25 @@ namespace SS2.Components
 				machine.SetNextState(new EntityStates.LunarTable.Activate());
 			}
 		}
-	}
+
+		// curse value hologram
+        public bool ShouldDisplayHologram(GameObject viewer)
+        {
+			return hideValueTimer <= 0 && cashoutValue > 0;
+        }
+
+        public GameObject GetHologramContentPrefab()
+        {
+			return SS2Assets.LoadAsset<GameObject>("ValueHologramContent", SS2Bundle.Interactables);
+        }
+
+        public void UpdateHologramContent(GameObject hologramContentObject)
+        {
+			ValueHologramContent component = hologramContentObject.GetComponent<ValueHologramContent>();
+			if (component)
+			{
+				component.displayValue = cashoutValue;
+			}
+		}
+    }
 }
