@@ -1,0 +1,83 @@
+﻿using EntityStates;
+using EntityStates.Commando.CommandoWeapon;
+using RoR2;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using UnityEngine;
+
+namespace Assets.Starstorm2.Modules.EntityStates.Commando
+{
+    public class Deadeye : BaseSkillState
+    {
+        public float baseDuration = 0.5f;
+        private float duration;
+
+        public GameObject hitEffectPrefab = FireBarrage.hitEffectPrefab;
+        public GameObject tracerEffectPrefab = FireBarrage.tracerEffectPrefab;
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            this.duration = this.baseDuration / base.attackSpeedStat;
+            Ray aimRay = base.GetAimRay();
+            base.StartAimMode(aimRay, 2f, false);
+            base.PlayAnimation("Gesture Additive, Right", "FirePistol, Right");
+            Util.PlaySound(FireBarrage.fireBarrageSoundString, base.gameObject);
+            base.AddRecoil(-0.6f, 0.6f, -0.6f, 0.6f);
+
+            if (FireBarrage.effectPrefab)
+            {
+                EffectManager.SimpleMuzzleFlash(FireBarrage.effectPrefab, base.gameObject, "MuzzleRight", false);
+            }
+
+            if (base.isAuthority)
+            {
+                new BulletAttack
+                {
+                    owner = base.gameObject,
+                    weapon = base.gameObject,
+                    origin = aimRay.origin,
+                    aimVector = aimRay.direction,
+                    minSpread = 0f,
+                    maxSpread = base.characterBody.spreadBloomAngle,
+                    bulletCount = 1U,
+                    procCoefficient = 1f,
+                    damage = base.characterBody.damage * 1.65f,
+                    force = 3,
+                    falloffModel = BulletAttack.FalloffModel.DefaultBullet,
+                    tracerEffectPrefab = this.tracerEffectPrefab,
+                    muzzleName = "MuzzleRight",
+                    hitEffectPrefab = this.hitEffectPrefab,
+                    isCrit = base.RollCrit(),
+                    HitEffectNormal = false,
+                    stopperMask = LayerIndex.world.mask,
+                    smartCollision = true,
+                    maxDistance = 300f
+                }.Fire();
+            }
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+        }
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+            if (base.fixedAge >= this.duration && base.isAuthority)
+            {
+                this.outer.SetNextStateToMain();
+                return;
+            }
+        }
+
+        public override InterruptPriority GetMinimumInterruptPriority()
+        {
+            return InterruptPriority.Skill;
+        }
+    }
+}
