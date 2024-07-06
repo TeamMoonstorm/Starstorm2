@@ -1,29 +1,48 @@
 ﻿using Assets.Starstorm2.ContentClasses;
+using MSU;
+using RoR2;
 using RoR2.ContentManagement;
+using RoR2.Skills;
+using SS2;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine.AddressableAssets;
+using UnityEngine;
 
 namespace Assets.Starstorm2.Modules.Characters.Variants
 {
     public sealed class Commando : SS2VanillaSurvivor
     {
+        public override SS2AssetRequest<AssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<AssetCollection>("acCommando", SS2Bundle.Indev);
+        
+
         public override void Initialize()
         {
-            throw new NotImplementedException();
+            SkillDef sdDeeadeye = survivorAssetCollection.FindAsset<SkillDef>("sdDeadeye");
+
+            GameObject commandoBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/CommandoBody.prefab").WaitForCompletion();
+
+            SkillLocator skillLocator = commandoBodyPrefab.GetComponent<SkillLocator>();
+            SkillFamily skillFamily = skillLocator.primary.skillFamily;
+
+            // If this is an alternate skill, use this code.
+            // Here, we add our skill as a variant to the existing Skill Family.
+            Array.Resize(ref skillFamily.variants, skillFamily.variants.Length + 1);
+            skillFamily.variants[skillFamily.variants.Length - 1] = new SkillFamily.Variant
+            {
+                skillDef = sdDeeadeye,
+                unlockableName = "",
+                viewableNode = new ViewablesCatalog.Node(sdDeeadeye.skillNameToken, false, null)
+            };
         }
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            throw new NotImplementedException();
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            throw new NotImplementedException();
+            return true;
         }
     }
 }

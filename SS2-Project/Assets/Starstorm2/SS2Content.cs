@@ -8,6 +8,8 @@ using MSU;
 using RoR2;
 using UnityEditor;
 using System.Collections.Generic;
+using Assets.Starstorm2.ContentClasses;
+using Assets.Starstorm2.Modules.Characters.Variants;
 
 namespace SS2
 {
@@ -103,6 +105,33 @@ namespace SS2
                 yield return null;
         }
 
+        private static IEnumerator LoadVanillaSurvivorBundles()
+        {
+            ParallelMultiStartCoroutine helper = new ParallelMultiStartCoroutine();
+
+            var list = new List<SS2VanillaSurvivor>()
+              {
+                new Commando(),
+                //Add the rest
+              };
+
+            foreach (var survivor in list)
+            {
+                helper.Add(survivor.LoadContentAsync);
+            }
+
+            helper.Start();
+            while (!helper.IsDone)
+            {
+                yield return null;
+            }
+
+            foreach (var survivor in list)
+            {
+                survivor.Initialize();
+            }
+        }
+
         private IEnumerator AddSS2ExpansionDef()
         {
             var expansionRequest = SS2Assets.LoadAssetAsync<ExpansionDef>("SS2ExpansionDef", SS2Bundle.Main);
@@ -176,6 +205,7 @@ namespace SS2
                     return SceneModule.InitializeScenes(main);
                 },
                 LoadFromAssetBundles,
+                LoadVanillaSurvivorBundles
             };
 
             _fieldAssignDispatchers = new Func<IEnumerator>[]

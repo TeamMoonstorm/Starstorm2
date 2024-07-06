@@ -16,35 +16,35 @@ using RoR2.ContentManagement;
 
 namespace Assets.Starstorm2.Modules.Pickups.Equipments
 {
-    public class RelicOfEntropy : SS2Equipment
-    {
-        private const string token = "SS2_EQUIP_RELICOFENTROPY_DESC";
+    //public class RelicOfEntropy : SS2Equipment
+    //{
+    //    private const string token = "SS2_EQUIP_RELICOFENTROPY_DESC";
 
-        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acRelicOfEntropy", SS2Bundle.Equipments);
+    //    public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acRelicOfEntropy", SS2Bundle.Equipments);
 
-        public override bool Execute(EquipmentSlot slot)
-        {
+    //    public override bool Execute(EquipmentSlot slot)
+    //    {
            
 
-            return true;
-        }
+    //        return true;
+    //    }
 
-        public override void Initialize()
-        {
+    //    public override void Initialize()
+    //    {
 
-        }
+    //    }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
+    //    public override bool IsAvailable(ContentPack contentPack)
+    //    {
+    //        return true;
+    //    }
 
-        public override void OnEquipmentLost(CharacterBody body)
-        {
-        }
+    //    public override void OnEquipmentLost(CharacterBody body)
+    //    {
+    //    }
 
-        public override void OnEquipmentObtained(CharacterBody body)
-        {
-        }
-    }
+    //    public override void OnEquipmentObtained(CharacterBody body)
+    //    {
+    //    }
+    //}
 }

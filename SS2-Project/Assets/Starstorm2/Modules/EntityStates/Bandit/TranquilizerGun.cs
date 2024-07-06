@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Starstorm2.Modules.EntityStates.Bandit
 {
-    public class NightTime : Bandit2FirePrimaryBase
+    public class TranquilizerGun : Bandit2FirePrimaryBase
     {
         public override void ModifyBullet(BulletAttack bulletAttack)
         {

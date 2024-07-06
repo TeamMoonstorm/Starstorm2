@@ -10,16 +10,16 @@ using RoR2.ContentManagement;
 
 namespace Assets.Starstorm2.Modules.Characters.Variants
 {
-    public sealed class Bandit : SS2VanillaSurvivor
+    public class Acrid : SS2VanillaSurvivor
     {
-        public override SS2AssetRequest<AssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<AssetCollection>("acBandit", SS2Bundle.Indev);
+        public override SS2AssetRequest<AssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<AssetCollection>("acAcrid", SS2Bundle.Indev);
 
 
         public override void Initialize()
         {
-            SkillDef sdTranquilizerGun = survivorAssetCollection.FindAsset<SkillDef>("sdTranquilizerGun");
+            SkillDef sdCorrodingSpit = survivorAssetCollection.FindAsset<SkillDef>("sdCorrodingSpit");
 
-            GameObject acridBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/Bandit2Body.prefab").WaitForCompletion();
+            GameObject acridBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Croco/CrocoBody.prefab").WaitForCompletion();
 
             SkillLocator skillLocator = acridBodyPrefab.GetComponent<SkillLocator>();
             SkillFamily skillFamily = skillLocator.primary.skillFamily;
@@ -27,11 +27,10 @@ namespace Assets.Starstorm2.Modules.Characters.Variants
             Array.Resize(ref skillFamily.variants, skillFamily.variants.Length + 1);
             skillFamily.variants[skillFamily.variants.Length - 1] = new SkillFamily.Variant
             {
-                skillDef = sdTranquilizerGun,
-                viewableNode = new ViewablesCatalog.Node(sdTranquilizerGun.skillNameToken, false, null)
+                skillDef = sdCorrodingSpit,
+                viewableNode = new ViewablesCatalog.Node(sdCorrodingSpit.skillNameToken, false, null)
             };
         }
-
 
         public override bool IsAvailable(ContentPack contentPack)
         {
