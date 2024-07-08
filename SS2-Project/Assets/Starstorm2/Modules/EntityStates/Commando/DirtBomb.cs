@@ -1,5 +1,8 @@
 ﻿using EntityStates;
-
+using RoR2;
+using RoR2.Projectile;
+using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Assets.Starstorm2.Modules.EntityStates.Commando
 {

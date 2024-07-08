@@ -7,16 +7,20 @@ using RoR2;
 using MSU;
 using RoR2.Skills;
 using RoR2.ContentManagement;
+using R2API;
 
 namespace Assets.Starstorm2.Modules.Characters.Variants
 {
-    public sealed class Bandit : SS2VanillaSurvivor
+    public class Bandit : SS2VanillaSurvivor
     {
         public override SS2AssetRequest<AssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<AssetCollection>("acBandit", SS2Bundle.Indev);
 
+        public static DamageAPI.ModdedDamageType TranqDamageType { get; set; }
 
         public override void Initialize()
         {
+            TranqDamageType = DamageAPI.ReserveDamageType();
+
             SkillDef sdTranquilizerGun = survivorAssetCollection.FindAsset<SkillDef>("sdTranquilizerGun");
 
             GameObject acridBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/Bandit2Body.prefab").WaitForCompletion();
