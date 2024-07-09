@@ -386,6 +386,12 @@ namespace SS2
 
             public static ItemDef RainbowRoot;
 
+            public static ItemDef Balloon;
+
+            public static ItemDef VoidBalloon;
+
+            public static ItemDef RelicOfEntropy;
+
         }
 
         public static class Equipments
