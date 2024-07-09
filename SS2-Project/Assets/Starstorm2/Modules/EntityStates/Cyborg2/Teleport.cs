@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Networking;
 using SS2.Components;
+using System.Collections.Generic;
 namespace EntityStates.Cyborg2
 {
     public class Teleport : BaseSkillState
@@ -14,6 +15,8 @@ namespace EntityStates.Cyborg2
         private Vector3 teleportTarget;
 
         public static float exitVelocityCoefficient = 400f;
+        private static float damageRadius = 10f;
+        private static float damageCoefficient = 3f;
         private Vector3 storedVelocity;
         public override void OnEnter()
         {
@@ -39,6 +42,15 @@ namespace EntityStates.Cyborg2
 
             if (NetworkServer.active)
             {
+                TeleporterOrb teleporterOrb = new TeleporterOrb();
+                teleporterOrb.totalDuration = this.duration;
+                teleporterOrb.attacker = base.gameObject;
+                teleporterOrb.inflictor = base.gameObject;
+                teleporterOrb.damageValue = characterBody.damage * 3f;
+                teleporterOrb.isCrit = base.RollCrit();
+                teleporterOrb.targetObjects = GatherHits(base.teamComponent.teamIndex);
+                RoR2.Orbs.OrbManager.instance.AddOrb(teleporterOrb);
+
                 base.characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
             }
         }
@@ -68,13 +80,13 @@ namespace EntityStates.Cyborg2
                 {
                     TeleportHelper.TeleportBody(base.characterBody, this.teleportTarget);
                     base.characterDirection.forward = base.GetAimRay().direction;
-                    Vector3 velocity = Vector3.zero;
-                    if(this.teleporterOwnership && this.teleporterOwnership.teleporter)
-                    {
-                        velocity = this.teleporterOwnership.teleporter.GetComponent<Rigidbody>().velocity;
-                    }
-                    velocity *= Teleport.exitVelocityCoefficient;
-                    base.characterMotor.ApplyForce(velocity);
+                    //Vector3 velocity = Vector3.zero;
+                    //if(this.teleporterOwnership && this.teleporterOwnership.teleporter)
+                    //{
+                    //    velocity = this.teleporterOwnership.teleporter.GetComponent<Rigidbody>().velocity;
+                    //}
+                    //velocity *= Teleport.exitVelocityCoefficient;
+                    //base.characterMotor.ApplyForce(velocity);
 
                     base.SmallHop(base.characterMotor, Teleport.exitHopVelocity);
                 }
@@ -104,6 +116,23 @@ namespace EntityStates.Cyborg2
             }
         }
 
+        private List<HealthComponent> GatherHits(TeamIndex teamIndex)
+        {
+            Vector3 between = this.teleportTarget - base.characterBody.corePosition;
+            RaycastHit[] array2 = Physics.SphereCastAll(characterBody.corePosition, damageRadius, between.normalized, between.magnitude, LayerIndex.CommonMasks.bullet, QueryTriggerInteraction.UseGlobal);
+            List<HealthComponent> targetList = new List<HealthComponent>();
+            for (int j = 0; j < array2.Length; j++)
+            {
+                HurtBox hurtBox = array2[j].collider.GetComponent<HurtBox>();
+                if (!hurtBox) continue;
+                HealthComponent healthComponent = hurtBox.healthComponent;
+                if (healthComponent && !targetList.Contains(healthComponent) && FriendlyFireManager.ShouldSeekingProceed(healthComponent, teamIndex))
+                {
+                    targetList.Add(healthComponent);
+                }
+            }
+            return targetList;
+        }
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {

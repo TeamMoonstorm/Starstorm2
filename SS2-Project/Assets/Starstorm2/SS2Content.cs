@@ -421,6 +421,8 @@ namespace SS2
 
             public static BuffDef BuffChirrRegen;
 
+            public static BuffDef BuffCyborgPrimed;
+
             public static BuffDef BuffChocolate;
 
             public static BuffDef BuffExecutionerSuperCharged;

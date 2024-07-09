@@ -16,10 +16,9 @@ namespace EntityStates.Cyborg2
 		public static float earlyExitTime = 0.5f;
 		public static float damageCoefficient = 6f;
 		public static float force = 500f;
-		public static float chargeTime = 0.33f;
+		public static float chargeTime = 0.1f;
 
-		[NonSerialized]
-		public static float selfKnockbackForce = 4400f;
+		private static float selfKnockbackForce = 6000f;
 
 		private float duration;
 		private bool hasFired;

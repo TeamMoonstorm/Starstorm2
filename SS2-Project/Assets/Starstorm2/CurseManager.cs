@@ -373,10 +373,14 @@ namespace SS2
 				AddBuff(characterBody, SS2Content.Buffs.bdLunarCurseMovementSpeed, monsterMovementSpeed);
 				AddBuff(characterBody, SS2Content.Buffs.bdLunarCurseShield, monsterShield);		
 				
-				if(cloakRng.nextNormalizedFloat > 0.5f / GetCurseIntensity())
+				if(monsterCloak > 0)
                 {
-					characterBody.AddBuff(RoR2Content.Buffs.Cloak);
-                }
+					if (cloakRng.nextNormalizedFloat > 0.5f / (GetCurseIntensity() * monsterCloak))
+					{
+						characterBody.AddBuff(RoR2Content.Buffs.Cloak);
+					}
+				}
+				
 			}
 			else
             {
@@ -452,7 +456,6 @@ namespace SS2
 									origin = position,
 								};
 								EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("MonstersOnChestOpen", SS2Bundle.Interactables), effectData, true);
-								return;
 							}
 							NetworkServer.Destroy(gameObject2);
 						}
@@ -507,7 +510,7 @@ namespace SS2
 			int playerMoney = GetCurseCount(CurseIndex.PlayerMoney);
 			if (playerMoney > 0)
             {
-				if(lastMoneyPenalty.timeSince > 30f / playerMoney)
+				if(lastMoneyPenalty.timeSince > 60f / playerMoney)
                 {
 					lastMoneyPenalty = Run.FixedTimeStamp.now;
 					foreach (TeamComponent t in TeamComponent.GetTeamMembers(TeamIndex.Player))
@@ -574,6 +577,8 @@ namespace SS2
             }
             private void FixedUpdate()
             {
+				if (CurseManager.GetCurseCount(CurseIndex.PlayerLock) == 0) Destroy(this);
+
 				if(Util.HasEffectiveAuthority(base.gameObject))
                 {
 					disableStopwatch -= Time.fixedDeltaTime;
@@ -622,14 +627,17 @@ namespace SS2
 						return;
                     }
 				}
-
-				skill.SetSkillOverride(this, disabledSkillDef, GenericSkill.SkillOverridePriority.Replacement);
 				disabledSkills.Add(dskill);
+
+				if(skill) // this means nonexistant skills can get "disabled". dont care
+					skill.SetSkillOverride(this, disabledSkillDef, GenericSkill.SkillOverridePriority.Replacement);
+				
 			}
 
 			private void EnableSkill(GenericSkill skill)
             {
-				skill.UnsetSkillOverride(this, disabledSkillDef, GenericSkill.SkillOverridePriority.Replacement);
+				if(skill)
+					skill.UnsetSkillOverride(this, disabledSkillDef, GenericSkill.SkillOverridePriority.Replacement);
 			}
         }
 

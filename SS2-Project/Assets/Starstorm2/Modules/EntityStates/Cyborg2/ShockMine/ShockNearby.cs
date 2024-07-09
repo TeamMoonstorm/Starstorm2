@@ -3,6 +3,7 @@ using UnityEngine;
 using RoR2.Projectile;
 using UnityEngine.Networking;
 using SS2;
+using R2API;
 namespace EntityStates.Cyborg2.ShockMine
 {
     public class ShockNearby : BaseShockMineState
@@ -64,7 +65,7 @@ namespace EntityStates.Cyborg2.ShockMine
             }
             BlastAttack blastAttack = new BlastAttack();
             blastAttack.position = base.transform.position;
-            blastAttack.baseDamage = this.projectileDamage.damage;
+            blastAttack.baseDamage = 0f;
             blastAttack.baseForce = 0f;
             blastAttack.radius = blastRadius;
             blastAttack.attacker = (this.projectileController.owner ? this.projectileController.owner.gameObject : null);
@@ -78,6 +79,7 @@ namespace EntityStates.Cyborg2.ShockMine
             blastAttack.damageColorIndex = this.projectileDamage.damageColorIndex;
             blastAttack.damageType = this.projectileDamage.damageType;
             blastAttack.attackerFiltering = AttackerFiltering.Default;
+            blastAttack.AddModdedDamageType(SS2.Survivors.Cyborg2.applyCyborgPrime);
             blastAttack.Fire();
         }
     }
