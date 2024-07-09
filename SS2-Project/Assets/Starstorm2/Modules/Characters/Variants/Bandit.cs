@@ -9,7 +9,7 @@ using RoR2.Skills;
 using RoR2.ContentManagement;
 using R2API;
 
-namespace Assets.Starstorm2.Modules.Characters.Variants
+namespace SS2.Survivors
 {
     public class Bandit : SS2VanillaSurvivor
     {

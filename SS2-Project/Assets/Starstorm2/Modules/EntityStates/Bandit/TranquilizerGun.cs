@@ -1,13 +1,8 @@
-﻿using EntityStates;
-using EntityStates.Bandit2.Weapon;
+﻿using EntityStates.Bandit2.Weapon;
+using R2API;
 using RoR2;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Assets.Starstorm2.Modules.EntityStates.Bandit
+namespace EntityStates.Bandit
 {
     public class TranquilizerGun : Bandit2FirePrimaryBase
     {
@@ -15,7 +10,8 @@ namespace Assets.Starstorm2.Modules.EntityStates.Bandit
         {
             base.ModifyBullet(bulletAttack);
             bulletAttack.falloffModel = BulletAttack.FalloffModel.None;
-            bulletAttack.damageType = DamageType.Stun1s;
+
+            bulletAttack.AddModdedDamageType(SS2.Survivors.Bandit.TranqDamageType);
         }
     }
 }
