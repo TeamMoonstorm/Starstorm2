@@ -13,6 +13,61 @@ MonoBehaviour:
   m_Name: escDirtBomb
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: 
+    assemblyQualifiedName: Assets.Starstorm2.Modules.EntityStates.Commando.DirtBomb,
+      Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
-    serializedFields: []
+    serializedFields:
+    - fieldName: effectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1050029523852324, guid: 376f6daf64258204994b458521839d97,
+          type: 3}
+    - fieldName: projectilePrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 2347692766690552467, guid: f84ec3818c4a5354097db065e3c07fb8,
+          type: 3}
+    - fieldName: damageCoefficient
+      fieldValue:
+        stringValue: 6
+        objectValue: {fileID: 0}
+    - fieldName: force
+      fieldValue:
+        stringValue: 1000
+        objectValue: {fileID: 0}
+    - fieldName: minSpread
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: maxSpread
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: baseDuration
+      fieldValue:
+        stringValue: 0.5
+        objectValue: {fileID: 0}
+    - fieldName: recoilAmplitude
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: attackSoundString
+      fieldValue:
+        stringValue: Play_commando_M2_grenade_throw
+        objectValue: {fileID: 0}
+    - fieldName: projectilePitchBonus
+      fieldValue:
+        stringValue: -10
+        objectValue: {fileID: 0}
+    - fieldName: baseDelayBeforeFiringProjectile
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: targetMuzzle
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: bloom
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}

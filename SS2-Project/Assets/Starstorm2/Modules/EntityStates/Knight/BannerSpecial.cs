@@ -11,7 +11,7 @@ public class BannerSpecial : BaseState
     public static GameObject powerBuffWard;
     public static GameObject slowBuffWard;
             
-    private GameObject powerBuffWardInstance;
+    private GameObject knightBannerWard;
     private GameObject slowBuffWardInstance;
 
     public override void OnEnter()
@@ -20,29 +20,25 @@ public class BannerSpecial : BaseState
 
         if (isAuthority & NetworkServer.active)
         {
-            Debug.Log("DEBUGGER The banner slam network check was entered!!");
             Vector3 position = inputBank.aimOrigin - (inputBank.aimDirection);
-            powerBuffWardInstance = UnityEngine.Object.Instantiate(powerBuffWard, position, Quaternion.identity);
+            GameObject bannerObject = UnityEngine.Object.Instantiate(knightBannerWard, position, Quaternion.identity);
+
+            bannerObject.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
+            NetworkServer.Spawn(bannerObject);
+
             slowBuffWardInstance = UnityEngine.Object.Instantiate(slowBuffWard, position, Quaternion.identity);
-
-            powerBuffWardInstance.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
             slowBuffWardInstance.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
-
-            Debug.Log("DEBUGGER powerBuffWardInstance: " + powerBuffWardInstance);
-            Debug.Log("DEBUGGER slowBuffWardInstance: " + slowBuffWardInstance);
-
-            powerBuffWardInstance.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(gameObject);
-            slowBuffWardInstance.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(gameObject);
-            }
+            slowBuffWardInstance.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(bannerObject);
+        }
     }
 
-        public override void FixedUpdate()
-        {
-            base.FixedUpdate();
-            outer.SetNextStateToMain();
-        }
+    public override void FixedUpdate()
+    {
+        base.FixedUpdate();
+        outer.SetNextStateToMain();
+    }
 
-        public override void OnExit()
+    public override void OnExit()
     {
         outer.SetNextStateToMain();
         base.OnExit();

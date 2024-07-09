@@ -15,6 +15,10 @@ namespace SS2.Survivors
     {
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acKnight", SS2Bundle.Indev);
 
+        //[RiskOfOptionsConfigureField(LITConfig.ITEMS, ConfigDescOverride = "Amount of gravity removed, as a pecent")]
+        //    //[FormatToken(TOKEN, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
+        public static float reducedGravity = 0.25f;
+
         public override void Initialize()
         {
             BuffDef buffKnightCharged = AssetCollection.FindAsset<BuffDef>("bdKnightCharged");
@@ -77,6 +81,28 @@ namespace SS2.Survivors
                 args.moveSpeedReductionMultAdd += 2;
             }
         }
+
+            public class KnightSpecialPowerBuff : BaseBuffBehaviour
+            {
+                [BuffDefAssociation]
+                private static BuffDef GetBuffDef() => SS2Content.Buffs.bdKnightSpecialPowerBuff;
+
+                private void FixedUpdate()
+                {
+                    if (!HasAnyStacks || !CharacterBody.characterMotor || !CharacterBody)
+                        return;
+
+                    if (CharacterBody.characterMotor.isGrounded)
+                    {
+                        return;
+                    }
+
+                    if (CharacterBody.inputBank.jump.down)
+                    {
+                        CharacterBody.characterMotor.velocity.y -= Time.fixedDeltaTime * Physics.gravity.y * reducedGravity;
+                    }
+                }
+            }
 
 
 

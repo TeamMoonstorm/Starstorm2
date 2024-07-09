@@ -18,20 +18,40 @@ namespace Assets.Starstorm2.Modules.EntityStates.Commando
         public GameObject hitEffectPrefab = FireBarrage.hitEffectPrefab;
         public GameObject tracerEffectPrefab = FireBarrage.tracerEffectPrefab;
 
+        private int pistolSide = 1;
+
+        private void PlayPistolAnimation()
+        {
+            if (pistolSide == 1)
+            {
+                pistolSide = 2;
+                base.PlayAnimation("Gesture Additive, Right", "FirePistol, Right");
+                if (FireBarrage.effectPrefab)
+                {
+                    EffectManager.SimpleMuzzleFlash(FireBarrage.effectPrefab, base.gameObject, "MuzzleRight", false);
+                }
+            } 
+            else if (pistolSide == 2)
+            {
+                pistolSide = 1;
+                base.PlayAnimation("Gesture Additive, Left", "FirePistol, Left");
+                if (FireBarrage.effectPrefab)
+                {
+                    EffectManager.SimpleMuzzleFlash(FireBarrage.effectPrefab, base.gameObject, "MuzzleLeft", false);
+                }
+            }
+        }
+
         public override void OnEnter()
         {
             base.OnEnter();
             this.duration = this.baseDuration / base.attackSpeedStat;
             Ray aimRay = base.GetAimRay();
             base.StartAimMode(aimRay, 2f, false);
-            base.PlayAnimation("Gesture Additive, Right", "FirePistol, Right");
+
+            PlayPistolAnimation();
             Util.PlaySound(FireBarrage.fireBarrageSoundString, base.gameObject);
             base.AddRecoil(-0.6f, 0.6f, -0.6f, 0.6f);
-
-            if (FireBarrage.effectPrefab)
-            {
-                EffectManager.SimpleMuzzleFlash(FireBarrage.effectPrefab, base.gameObject, "MuzzleRight", false);
-            }
 
             if (base.isAuthority)
             {
@@ -44,10 +64,10 @@ namespace Assets.Starstorm2.Modules.EntityStates.Commando
                     minSpread = 0f,
                     maxSpread = base.characterBody.spreadBloomAngle,
                     bulletCount = 1U,
-                    procCoefficient = 1f,
+                    procCoefficient = 0.7f,
                     damage = base.characterBody.damage * 1.65f,
                     force = 3,
-                    falloffModel = BulletAttack.FalloffModel.DefaultBullet,
+                    falloffModel = BulletAttack.FalloffModel.None,
                     tracerEffectPrefab = this.tracerEffectPrefab,
                     muzzleName = "MuzzleRight",
                     hitEffectPrefab = this.hitEffectPrefab,

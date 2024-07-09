@@ -588,5 +588,10 @@ namespace SS2
         {
             public static ItemTierDef Sibylline;
         }
+
+        //public static class DamageTypes
+        //{
+        //    public static DamageType Tranquilizer;
+        //}
     }
 }

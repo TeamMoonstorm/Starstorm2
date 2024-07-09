@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: sdDirtbomb
   m_EditorClassIdentifier: 
   skillName: 
-  skillNameToken: 
-  skillDescriptionToken: 
+  skillNameToken: SS2_COMMANDO_DIRTBOMB_NAME
+  skillDescriptionToken: SS2_COMMANDO_DIRTBOMB_DESC
   keywordTokens: []
   icon: {fileID: 0}
-  activationStateMachineName: 
+  activationStateMachineName: Weapon
   activationState:
     _typeName: 
   interruptPriority: 1
-  baseRechargeInterval: 1
-  baseMaxStock: 1
+  baseRechargeInterval: 4
+  baseMaxStock: 2
   rechargeStock: 1
   requiredStock: 1
   stockToConsume: 1

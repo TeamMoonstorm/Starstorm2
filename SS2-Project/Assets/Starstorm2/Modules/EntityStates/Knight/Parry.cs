@@ -39,13 +39,10 @@ namespace EntityStates.Knight
             originalUtilitySkill = skillLocator.utility;
             originalSpecialSkill = skillLocator.special;
 
-            //var buffedPrimary = originalPrimarySkill.GetFieldValue<SkillDef>("buffedSkillRef");
-
             // Assign the buffed skill versions
             originalPrimarySkill.SetSkillOverride(gameObject, buffedPrimarySkill, GenericSkill.SkillOverridePriority.Contextual);
             originalUtilitySkill.SetSkillOverride(gameObject, buffedUtilitySkill, GenericSkill.SkillOverridePriority.Contextual);
             originalSpecialSkill.SetSkillOverride(gameObject, buffedSpecialSkill, GenericSkill.SkillOverridePriority.Contextual);
-            Debug.Log("setting buffed skills");
 
             EffectData effectData = new EffectData();
             effectData.origin = this.characterBody.corePosition;
