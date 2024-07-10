@@ -13,7 +13,15 @@ MonoBehaviour:
   m_Name: escDeadeye
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: Assets.Starstorm2.Modules.EntityStates.Commando.Deadeye,
-      Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+    assemblyQualifiedName: EntityStates.Commando.Deadeye, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
-    serializedFields: []
+    serializedFields:
+    - fieldName: damageCoeff
+      fieldValue:
+        stringValue: 1.65
+        objectValue: {fileID: 0}
+    - fieldName: procCoeff
+      fieldValue:
+        stringValue: 0.7
+        objectValue: {fileID: 0}

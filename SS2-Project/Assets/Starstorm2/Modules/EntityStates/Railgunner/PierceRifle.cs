@@ -1,13 +1,7 @@
-﻿using EntityStates;
-using RoR2;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RoR2;
 using UnityEngine;
 
-namespace Assets.Starstorm2.Modules.EntityStates.Railgunner
+namespace EntityStates.Railgunner
 {
     public class PierceRifle : BaseSkillState
     {

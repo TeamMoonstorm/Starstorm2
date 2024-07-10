@@ -1,14 +1,9 @@
 ﻿using EntityStates;
 using EntityStates.Commando.CommandoWeapon;
 using RoR2;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets.Starstorm2.Modules.EntityStates.Commando
+namespace EntityStates.Commando
 {
     public class Deadeye : BaseSkillState
     {
@@ -87,7 +82,6 @@ namespace Assets.Starstorm2.Modules.EntityStates.Commando
                     hitEffectPrefab = this.hitEffectPrefab,
                     isCrit = isCrit,
                     HitEffectNormal = false,
-                    stopperMask = LayerIndex.world.mask,
                     smartCollision = true,
                     maxDistance = 300f
                 };

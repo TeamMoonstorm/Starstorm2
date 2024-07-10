@@ -6,10 +6,9 @@ using System.Linq;
 using UnityEngine;
 using MSU;
 using RoR2;
-using UnityEditor;
 using System.Collections.Generic;
 using Assets.Starstorm2.ContentClasses;
-using Assets.Starstorm2.Modules.Characters.Variants;
+using SS2.Survivors;
 
 namespace SS2
 {
@@ -112,6 +111,9 @@ namespace SS2
             var list = new List<SS2VanillaSurvivor>()
               {
                 new Commando(),
+                new Acrid(),
+                new Bandit(),
+                new Railgunner(),
                 //Add the rest
               };
 

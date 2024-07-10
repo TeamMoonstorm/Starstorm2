@@ -14,7 +14,7 @@ using UnityEngine;
 using RoR2;
 using RoR2.ContentManagement;
 
-namespace Assets.Starstorm2.Modules.Pickups.Equipments
+namespace SS2.Items
 {
     //public class RelicOfEntropy : SS2Equipment
     //{

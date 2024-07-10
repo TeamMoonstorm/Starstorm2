@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Starstorm2.Modules.Pickups.Items.Tier3
+namespace SS2.Items
 {
     //internal class WickedStaff
     //{

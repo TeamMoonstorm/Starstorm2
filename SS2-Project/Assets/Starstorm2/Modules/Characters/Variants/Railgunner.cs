@@ -2,6 +2,11 @@
 using SS2;
 using RoR2;
 using RoR2.ContentManagement;
+using MSU;
+using System;
+using UnityEngine.AddressableAssets;
+using UnityEngine;
+using RoR2.Skills;
 
 namespace SS2.Survivors
 {
@@ -12,6 +17,21 @@ namespace SS2.Survivors
 
         public override void Initialize()
         {
+            SkillDef sdPierceRifle = survivorAssetCollection.FindAsset<SkillDef>("sdPierceRifle");
+
+            GameObject commandoBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/Railgunner/RailgunnerBody.prefab").WaitForCompletion();
+
+            SkillLocator skillLocator = commandoBodyPrefab.GetComponent<SkillLocator>();
+            SkillFamily skillFamily = skillLocator.primary.skillFamily;
+
+            // If this is an alternate skill, use this code.
+            // Here, we add our skill as a variant to the existing Skill Family.
+            Array.Resize(ref skillFamily.variants, skillFamily.variants.Length + 1);
+            skillFamily.variants[skillFamily.variants.Length - 1] = new SkillFamily.Variant
+            {
+                skillDef = sdPierceRifle,
+                viewableNode = new ViewablesCatalog.Node(sdPierceRifle.skillNameToken, false, null)
+            };
         }
 
 

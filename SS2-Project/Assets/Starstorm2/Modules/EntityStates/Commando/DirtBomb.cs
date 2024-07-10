@@ -4,7 +4,7 @@ using RoR2.Projectile;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace Assets.Starstorm2.Modules.EntityStates.Commando
+namespace EntityStates.Commando
 {
     public class DirtBomb : GenericProjectileBaseState
     {

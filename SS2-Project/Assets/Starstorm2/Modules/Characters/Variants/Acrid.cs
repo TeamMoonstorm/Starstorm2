@@ -17,6 +17,8 @@ namespace SS2.Survivors
 
         public static DamageAPI.ModdedDamageType ArmorCorrison { get; set; }
 
+        public static GameObject corrodingSpitProjectilePrefab;
+
         public static float armorCorrisonDuration = 3f;
         private static float armorLoseAmount = 10f;
 
@@ -24,6 +26,8 @@ namespace SS2.Survivors
         {
             RegisterArmorCorrison();
             R2API.RecalculateStatsAPI.GetStatCoefficients += ModifyStats;
+
+            CreateProjectilePrefab();
 
             SkillDef sdCorrodingSpit = survivorAssetCollection.FindAsset<SkillDef>("sdCorrodingSpit");
 
@@ -38,6 +42,14 @@ namespace SS2.Survivors
                 skillDef = sdCorrodingSpit,
                 viewableNode = new ViewablesCatalog.Node(sdCorrodingSpit.skillNameToken, false, null)
             };
+        }
+
+        private void CreateProjectilePrefab()
+        {
+            corrodingSpitProjectilePrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Croco/CrocoSpit.prefab").WaitForCompletion().InstantiateClone("CorrodingSpitProjectile");
+
+            var damageAPIComponent = corrodingSpitProjectilePrefab.AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>();
+            damageAPIComponent.Add(ArmorCorrison);
         }
 
         private void RegisterArmorCorrison()

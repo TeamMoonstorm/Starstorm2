@@ -1,11 +1,6 @@
-﻿using EntityStates;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
-namespace Assets.Starstorm2.Modules.EntityStates.MulT
+namespace EntityStates.MulT
 {
     public class ArcThrower : BaseSkillState
     {
@@ -15,7 +10,6 @@ namespace Assets.Starstorm2.Modules.EntityStates.MulT
         public override void OnEnter()
         {
             base.OnEnter();
-            base.characterBody.AddTimedBuff(holyBuff, 10f);
         }
 
         public override void OnExit()

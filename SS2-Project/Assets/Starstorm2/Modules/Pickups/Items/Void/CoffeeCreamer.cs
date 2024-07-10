@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Starstorm2.Modules.Pickups.Items.Void
+namespace SS2.Items
 {
     //internal class CoffeeCreamer
     //{

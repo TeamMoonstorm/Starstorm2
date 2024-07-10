@@ -13,25 +13,25 @@ MonoBehaviour:
   m_Name: escTranquilizerGun
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: Assets.Starstorm2.Modules.EntityStates.Bandit.TranquilizerGun,
-      Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+    assemblyQualifiedName: EntityStates.Bandit.TranquilizerGun, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
     - fieldName: minimumBaseDuration
       fieldValue:
-        stringValue: 0
+        stringValue: 0.1
         objectValue: {fileID: 0}
     - fieldName: baseDuration
       fieldValue:
-        stringValue: 0
+        stringValue: 1
         objectValue: {fileID: 0}
     - fieldName: bulletCount
       fieldValue:
-        stringValue: 0
+        stringValue: 1
         objectValue: {fileID: 0}
     - fieldName: maxDistance
       fieldValue:
-        stringValue: 0
+        stringValue: 750
         objectValue: {fileID: 0}
     - fieldName: bulletRadius
       fieldValue:
@@ -43,15 +43,15 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: damageCoefficient
       fieldValue:
-        stringValue: 0
+        stringValue: 2.7
         objectValue: {fileID: 0}
     - fieldName: procCoefficient
       fieldValue:
-        stringValue: 0
+        stringValue: 0.8
         objectValue: {fileID: 0}
     - fieldName: force
       fieldValue:
-        stringValue: 0
+        stringValue: 200
         objectValue: {fileID: 0}
     - fieldName: minSpread
       fieldValue:
@@ -63,31 +63,31 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: spreadPitchScale
       fieldValue:
-        stringValue: 0
+        stringValue: 0.3
         objectValue: {fileID: 0}
     - fieldName: spreadYawScale
       fieldValue:
-        stringValue: 0
+        stringValue: 1
         objectValue: {fileID: 0}
     - fieldName: spreadBloomValue
       fieldValue:
-        stringValue: 0
+        stringValue: 0.4
         objectValue: {fileID: 0}
     - fieldName: recoilAmplitudeY
       fieldValue:
-        stringValue: 0
+        stringValue: 0.7
         objectValue: {fileID: 0}
     - fieldName: recoilAmplitudeX
       fieldValue:
-        stringValue: 0
+        stringValue: 0.4
         objectValue: {fileID: 0}
     - fieldName: muzzleName
       fieldValue:
-        stringValue: 
+        stringValue: MuzzleShotgun
         objectValue: {fileID: 0}
     - fieldName: fireSoundString
       fieldValue:
-        stringValue: 
+        stringValue: Play_bandit2_m1_rifle
         objectValue: {fileID: 0}
     - fieldName: muzzleFlashPrefab
       fieldValue:
