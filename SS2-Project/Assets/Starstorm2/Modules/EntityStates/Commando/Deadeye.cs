@@ -53,9 +53,17 @@ namespace Assets.Starstorm2.Modules.EntityStates.Commando
             Util.PlaySound(FireBarrage.fireBarrageSoundString, base.gameObject);
             base.AddRecoil(-0.6f, 0.6f, -0.6f, 0.6f);
 
+            var isCrit = base.RollCrit();
+
             if (base.isAuthority)
             {
-                new BulletAttack
+
+                if (isCrit)
+                {
+                    // Do the thing swuff mentioned
+                }
+
+                var bullet = new BulletAttack
                 {
                     owner = base.gameObject,
                     weapon = base.gameObject,
@@ -71,12 +79,14 @@ namespace Assets.Starstorm2.Modules.EntityStates.Commando
                     tracerEffectPrefab = this.tracerEffectPrefab,
                     muzzleName = "MuzzleRight",
                     hitEffectPrefab = this.hitEffectPrefab,
-                    isCrit = base.RollCrit(),
+                    isCrit = isCrit,
                     HitEffectNormal = false,
                     stopperMask = LayerIndex.world.mask,
                     smartCollision = true,
                     maxDistance = 300f
-                }.Fire();
+                };
+
+                bullet.Fire();
             }
         }
 

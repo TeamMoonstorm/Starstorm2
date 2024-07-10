@@ -17,15 +17,20 @@ namespace SS2.Survivors
 
         public static DamageAPI.ModdedDamageType TranqDamageType { get; set; }
 
+        public static float tranqDuration = 5f;
+        public static float _confuseSlowAmount = 0.5f;
+        public static float _confuseAttackSpeedSlowAmount = 0.2f;
+
         public override void Initialize()
         {
-            TranqDamageType = DamageAPI.ReserveDamageType();
+            RegisterTranquilizer();
+            R2API.RecalculateStatsAPI.GetStatCoefficients += ModifyStats;
 
             SkillDef sdTranquilizerGun = survivorAssetCollection.FindAsset<SkillDef>("sdTranquilizerGun");
 
-            GameObject acridBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/Bandit2Body.prefab").WaitForCompletion();
+            GameObject banditBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/Bandit2Body.prefab").WaitForCompletion();
 
-            SkillLocator skillLocator = acridBodyPrefab.GetComponent<SkillLocator>();
+            SkillLocator skillLocator = banditBodyPrefab.GetComponent<SkillLocator>();
             SkillFamily skillFamily = skillLocator.primary.skillFamily;
 
             Array.Resize(ref skillFamily.variants, skillFamily.variants.Length + 1);
@@ -34,6 +39,34 @@ namespace SS2.Survivors
                 skillDef = sdTranquilizerGun,
                 viewableNode = new ViewablesCatalog.Node(sdTranquilizerGun.skillNameToken, false, null)
             };
+        }
+
+        private void RegisterTranquilizer()
+        {
+            TranqDamageType = R2API.DamageAPI.ReserveDamageType();
+            GlobalEventManager.onServerDamageDealt += ApplyTranq;
+        }
+
+        private void ModifyStats(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
+        {
+            if (sender.HasBuff(SS2Content.Buffs.bdBanditTranquilizer))
+            {
+                // TODO: Might need to do some sort of scaling
+                var buffCount = sender.GetBuffCount(SS2Content.Buffs.bdBanditTranquilizer);
+                args.moveSpeedMultAdd -= _confuseSlowAmount * buffCount;
+                args.attackSpeedMultAdd -= _confuseAttackSpeedSlowAmount * buffCount;
+            }
+        }
+
+        private void ApplyTranq(DamageReport obj)
+        {
+            var victimBody = obj.victimBody;
+            var damageInfo = obj.damageInfo;
+
+            if (DamageAPI.HasModdedDamageType(damageInfo, TranqDamageType))
+            {
+                victimBody.AddTimedBuffAuthority(SS2Content.Buffs.bdBanditTranquilizer.buffIndex, tranqDuration);
+            }
         }
 
 

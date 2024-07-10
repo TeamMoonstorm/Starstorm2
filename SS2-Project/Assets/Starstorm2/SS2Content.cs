@@ -559,6 +559,10 @@ namespace SS2
 
             public static BuffDef bdEthereal;
 
+            public static BuffDef bdBanditTranquilizer;
+
+            public static BuffDef bdAcridArmorCorrison;
+
         }
 
         public static class Elites

@@ -7,6 +7,7 @@ using RoR2;
 using MSU;
 using RoR2.Skills;
 using RoR2.ContentManagement;
+using R2API;
 
 namespace Assets.Starstorm2.Modules.Characters.Variants
 {
@@ -14,9 +15,16 @@ namespace Assets.Starstorm2.Modules.Characters.Variants
     {
         public override SS2AssetRequest<AssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<AssetCollection>("acAcrid", SS2Bundle.Indev);
 
+        public static DamageAPI.ModdedDamageType ArmorCorrison { get; set; }
+
+        public static float armorCorrisonDuration = 3f;
+        private static float armorLoseAmount = 10f;
 
         public override void Initialize()
         {
+            RegisterArmorCorrison();
+            R2API.RecalculateStatsAPI.GetStatCoefficients += ModifyStats;
+
             SkillDef sdCorrodingSpit = survivorAssetCollection.FindAsset<SkillDef>("sdCorrodingSpit");
 
             GameObject acridBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Croco/CrocoBody.prefab").WaitForCompletion();
@@ -30,6 +38,31 @@ namespace Assets.Starstorm2.Modules.Characters.Variants
                 skillDef = sdCorrodingSpit,
                 viewableNode = new ViewablesCatalog.Node(sdCorrodingSpit.skillNameToken, false, null)
             };
+        }
+
+        private void RegisterArmorCorrison()
+        {
+            ArmorCorrison = R2API.DamageAPI.ReserveDamageType();
+            GlobalEventManager.onServerDamageDealt += ApplyArmorCorrison;
+        }
+
+        private void ModifyStats(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
+        {
+            if (sender.HasBuff(SS2Content.Buffs.bdAcridArmorCorrison))
+            {
+                args.armorAdd -= armorLoseAmount;
+            }
+        }
+
+        private void ApplyArmorCorrison(DamageReport obj)
+        {
+            var victimBody = obj.victimBody;
+            var damageInfo = obj.damageInfo;
+
+            if (DamageAPI.HasModdedDamageType(damageInfo, ArmorCorrison))
+            {
+                victimBody.AddTimedBuffAuthority(SS2Content.Buffs.bdAcridArmorCorrison.buffIndex, armorCorrisonDuration);
+            }
         }
 
         public override bool IsAvailable(ContentPack contentPack)
