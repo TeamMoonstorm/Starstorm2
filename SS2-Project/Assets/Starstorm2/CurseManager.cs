@@ -138,6 +138,11 @@ namespace SS2
 			return totalCurses > 0 ? Run.instance.stageClearCount - stageStart : 0;
         }
 
+		public static bool IsCurseStage()
+        {
+			return Stage.instance && Stage.instance.sceneDef.sceneType == SceneType.Stage;
+        }
+
 		public static void ClearCurses()
         {
 			OnCurseEnd();
@@ -312,13 +317,13 @@ namespace SS2
 
 				args.armorAdd += 25f * armor * GetCurseIntensity();
 				args.attackSpeedMultAdd += .30f * attackspeed * GetCurseIntensity();
-				args.cooldownMultAdd -= Util.ConvertAmplificationPercentageIntoReductionPercentage(25f * cooldownreduction * GetCurseIntensity()) / 100f;
+				args.cooldownMultAdd -= Util.ConvertAmplificationPercentageIntoReductionPercentage(50f * cooldownreduction * GetCurseIntensity()) / 100f;
 				args.damageMultAdd += .30f * damage * GetCurseIntensity();
-				args.healthMultAdd += .30f * health * GetCurseIntensity();
-				args.moveSpeedMultAdd += .30f * movespeed * GetCurseIntensity();
+				args.healthMultAdd += .50f * health * GetCurseIntensity();
+				args.moveSpeedMultAdd += .50f * movespeed * GetCurseIntensity();
 
 				if (shield > 0)
-					args.healthMultAdd -= 0.5f; //undo transendence hp. math is prob wrong. dont care.
+					args.healthMultAdd -= 0.33f; //undo transendence hp. math is prob wrong. dont care.
 
 			}
 			// Player curses

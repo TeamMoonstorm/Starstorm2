@@ -10,26 +10,39 @@ namespace SS2.Components
     {
         private ProjectileController controller;
         private GameObject owner;
+		private CharacterBody ownerBody;
         private ProjectileTeleporterOwnership ownership;
 		public float damageRadius = 10f;
 		public Transform indicatorStartTransform;
 		public float duration = 3f;
 		private float stopwatch;
 		private bool hasTeleported;
+
+		private static float targetUpdateInterval = 0.167f;
+		private float updateStopwatch;
+		private List<HealthComponent> targetList;
+		private BeamChain beamChain;
         void Start()
         {
             this.controller = base.GetComponent<ProjectileController>();
             this.owner = this.controller.owner;
-
+			beamChain = base.GetComponent<BeamChain>();
+			targetList = new List<HealthComponent>();
             if(this.owner)
             {
                 this.ownership = this.owner.AddComponent<ProjectileTeleporterOwnership>();
                 this.ownership.teleporter = this;
-                
+				ownerBody = owner.GetComponent<CharacterBody>();
             }
         }
         private void FixedUpdate()
         {
+			updateStopwatch -= Time.fixedDeltaTime;
+			if(updateStopwatch <= 0)
+            {
+				updateStopwatch = targetUpdateInterval;
+				UpdateTargets();
+            }
 			stopwatch += Time.fixedDeltaTime;
 			if(!hasTeleported && owner && stopwatch >= duration)
             {
@@ -48,7 +61,43 @@ namespace SS2.Components
 				indicatorStartTransform.position = owner.transform.position;
             }
         }
-        public Vector3 GetSafeTeleportPosition()
+
+		private void UpdateTargets()
+        {
+			Vector3 between = GetSafeTeleportPosition() - ownerBody.corePosition;
+			RaycastHit[] array2 = Physics.SphereCastAll(ownerBody.corePosition, damageRadius, between.normalized, between.magnitude, LayerIndex.CommonMasks.bullet, QueryTriggerInteraction.UseGlobal);
+			//List<HealthComponent> missing = new List<HealthComponent>(targetList);
+			for (int j = 0; j < array2.Length; j++)
+			{
+				HurtBox hurtBox = array2[j].collider.GetComponent<HurtBox>();
+				if (!hurtBox) continue;
+				HealthComponent healthComponent = hurtBox.healthComponent;
+				bool contains = targetList.Contains(healthComponent);
+				if (healthComponent && !contains && FriendlyFireManager.ShouldSeekingProceed(healthComponent, ownerBody.teamComponent.teamIndex))
+				{
+					AddTarget(healthComponent);
+				}
+				//if(contains)
+    //            {
+				//	missing.Remove(healthComponent);
+    //            }
+			}
+
+		}
+		private void AddTarget(HealthComponent healthComponent)
+        {
+			targetList.Add(healthComponent);
+			beamChain.AddTarget(healthComponent.body.mainHurtBox.transform);
+		}
+		//private void ClearTarget(HealthComponent healthComponent)
+		//{
+		//	beamChain.AddTarget(healthComponent.body.mainHurtBox.transform);
+		//}
+		public List<HealthComponent> GetTargets()
+        {
+			return targetList;
+        }
+		public Vector3 GetSafeTeleportPosition()
         {
             //lol
             return base.transform.position;
@@ -132,7 +181,8 @@ namespace SS2.Components
 
 		public override void OnArrival()
 		{
-			if (this.target)
+			// orb "returns" to player at the end sooo
+			if (this.target && this.target.healthComponent != attacker.GetComponent<HealthComponent>())
 			{
 				HealthComponent healthComponent = this.target.healthComponent;
 				if (healthComponent && healthComponent.alive)
@@ -178,6 +228,8 @@ namespace SS2.Components
 		{
 			if (this.targetObjects == null || this.targetObjects.Count == 0)
 			{
+				if (attacker) return attacker.GetComponent<CharacterBody>()?.mainHurtBox;
+
 				return null;
 			}
 

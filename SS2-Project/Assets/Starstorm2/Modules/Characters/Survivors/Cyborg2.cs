@@ -165,7 +165,7 @@ namespace SS2.Survivors
                 if(!body.HasBuff(SS2Content.Buffs.BuffCyborgPrimed))// buffs can apparently stack even if canStack == false ?>???
                     body.AddBuff(SS2Content.Buffs.BuffCyborgPrimed);
             }
-            else if (damageInfo.damage > 0 && body && attackerBody && body.HasBuff(SS2Content.Buffs.BuffCyborgPrimed))
+            else if (damageInfo.damage > 0 && damageInfo.procCoefficient > 0 && body && attackerBody && body.HasBuff(SS2Content.Buffs.BuffCyborgPrimed))
             {
                 body.RemoveBuff(SS2Content.Buffs.BuffCyborgPrimed);
                 explosionRequests.Enqueue(new ExplosionRequest

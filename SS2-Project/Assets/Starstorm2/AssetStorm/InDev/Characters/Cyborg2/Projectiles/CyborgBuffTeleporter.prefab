@@ -286,6 +286,7 @@ GameObject:
   - component: {fileID: 1736695376240547307}
   - component: {fileID: 914602251032593278}
   - component: {fileID: 1235549754574178143}
+  - component: {fileID: 4077155260513973886}
   m_Layer: 14
   m_Name: CyborgBuffTeleporter
   m_TagString: Untagged
@@ -557,6 +558,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 1458198767516364851}
   antiGravityCoefficient: 1
+--- !u!114 &4077155260513973886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6055536033811015727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e44f5b681034a4a49aafd64543d1f29e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineRenderer: {fileID: 942548229365995806}
+  pointEffectPrefab: {fileID: 5527643575821206775, guid: 18046f45474ef884aae737dca6da6199,
+    type: 3}
+  pointSpawnSoundString: Play_engi_seekerMissile_lockOn
+  newPointLerp: 0.2
+  startTransform: {fileID: 450032636870821500}
+  endTransform: {fileID: 5904956839830464160}
 --- !u!1 &8778540996921669706
 GameObject:
   m_ObjectHideFlags: 0
@@ -567,7 +587,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8109120375138809004}
   - component: {fileID: 942548229365995806}
-  - component: {fileID: 8310305663274818414}
   m_Layer: 12
   m_Name: Line
   m_TagString: Untagged
@@ -695,22 +714,6 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!114 &8310305663274818414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8778540996921669706}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 2005159759, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 942548229365995806}
-  pointTransforms:
-  - {fileID: 5904956839830464160}
-  - {fileID: 450032636870821500}
 --- !u!1001 &3633679160831547199
 PrefabInstance:
   m_ObjectHideFlags: 0

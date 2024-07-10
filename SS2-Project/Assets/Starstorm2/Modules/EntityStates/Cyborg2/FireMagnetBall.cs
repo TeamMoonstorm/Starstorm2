@@ -14,9 +14,9 @@ namespace EntityStates.Cyborg2
 		public static float recoilAmplitude = 7f;
 		public static float baseDuration = 1.5f;
 		public static float earlyExitTime = 0.5f;
-		public static float damageCoefficient = 6f;
+		private static float damageCoefficient = 4f;
 		public static float force = 500f;
-		public static float chargeTime = 0.1f;
+		private static float chargeTime = 0.2f;
 
 		private static float selfKnockbackForce = 6000f;
 
@@ -56,7 +56,7 @@ namespace EntityStates.Cyborg2
 
 			if (base.isAuthority)
 			{
-				if (base.characterMotor && !base.characterMotor.isGrounded)
+				if (base.characterMotor)
 				{
 					base.characterMotor.ApplyForce((aimRay.direction * -1f) * selfKnockbackForce);
 				}
