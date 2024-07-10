@@ -3,7 +3,7 @@ using SS2;
 using RoR2;
 using RoR2.ContentManagement;
 
-namespace Assets.Starstorm2.Modules.Characters.Variants
+namespace SS2.Survivors
 {
     public class Artificer : SS2VanillaSurvivor
     {

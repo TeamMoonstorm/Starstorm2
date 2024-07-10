@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 1391837873, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: sdCorrodingSpit
   m_EditorClassIdentifier: 
-  skillName: 
-  skillNameToken: 
-  skillDescriptionToken: 
+  skillName: CorrodingSpit
+  skillNameToken: SS2_ACRID_CORRODING_SPIT_NAME
+  skillDescriptionToken: SS2_ACRID_CORRODING_SPIT_NAME
   keywordTokens: []
   icon: {fileID: 0}
-  activationStateMachineName: 
+  activationStateMachineName: Mouth
   activationState:
     _typeName: Assets.Starstorm2.Modules.EntityStates.Acrid.CorrodingSpit, Starstorm2,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  interruptPriority: 1
-  baseRechargeInterval: 1
+  interruptPriority: 0
+  baseRechargeInterval: 0.5
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 1
@@ -31,7 +31,7 @@ MonoBehaviour:
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
   beginSkillCooldownOnSkillEnd: 0
-  cancelSprintingOnActivation: 1
+  cancelSprintingOnActivation: 0
   forceSprintDuringState: 0
   canceledFromSprinting: 0
   isCombatSkill: 1

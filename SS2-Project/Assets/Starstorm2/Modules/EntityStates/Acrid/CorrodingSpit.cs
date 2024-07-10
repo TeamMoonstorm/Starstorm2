@@ -7,16 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Assets.Starstorm2.Modules.EntityStates.Acrid
 {
     public class CorrodingSpit : BaseSkillState
     {
-        [SerializeField]
-        public GameObject projectilePrefab;
-
-        [SerializeField]
-        public GameObject effectPrefab;
+        public GameObject projectilePrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Croco/CrocoSpit.prefab").WaitForCompletion();
+        public GameObject effectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Croco/MuzzleflashCroco.prefab").WaitForCompletion();
 
         [SerializeField]
         public float baseDuration = 2f;
@@ -57,16 +55,16 @@ namespace Assets.Starstorm2.Modules.EntityStates.Acrid
 
             if (base.isAuthority)
             {
-                DamageType value = DamageType.PoisonOnHit;
                 FireProjectileInfo fireProjectileInfo = default(FireProjectileInfo);
                 fireProjectileInfo.projectilePrefab = projectilePrefab;
                 fireProjectileInfo.position = aimRay.origin;
                 fireProjectileInfo.rotation = Util.QuaternionSafeLookRotation(aimRay.direction);
                 fireProjectileInfo.owner = base.gameObject;
                 fireProjectileInfo.damage = damageStat * damageCoefficient;
-                fireProjectileInfo.damageTypeOverride = value;
+                fireProjectileInfo.damageTypeOverride = (DamageType?)SS2.Survivors.Acrid.ArmorCorrison;
                 fireProjectileInfo.force = force;
                 fireProjectileInfo.crit = Util.CheckRoll(critStat, base.characterBody.master);
+
                 ProjectileManager.instance.FireProjectile(fireProjectileInfo);
             }
         }

@@ -12,6 +12,12 @@ namespace Assets.Starstorm2.Modules.EntityStates.Commando
 {
     public class Deadeye : BaseSkillState
     {
+        [SerializeField]
+        public static float damageCoeff = 1.65f;
+
+        [SerializeField]
+        public static float procCoeff = 0.7f;
+
         public float baseDuration = 0.5f;
         private float duration;
 
@@ -72,8 +78,8 @@ namespace Assets.Starstorm2.Modules.EntityStates.Commando
                     minSpread = 0f,
                     maxSpread = base.characterBody.spreadBloomAngle,
                     bulletCount = 1U,
-                    procCoefficient = 0.7f,
-                    damage = base.characterBody.damage * 1.65f,
+                    procCoefficient = procCoeff,
+                    damage = base.characterBody.damage * damageCoeff,
                     force = 3,
                     falloffModel = BulletAttack.FalloffModel.None,
                     tracerEffectPrefab = this.tracerEffectPrefab,

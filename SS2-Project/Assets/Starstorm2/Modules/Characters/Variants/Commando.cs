@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using UnityEngine.AddressableAssets;
 using UnityEngine;
 
-namespace Assets.Starstorm2.Modules.Characters.Variants
+namespace SS2.Survivors
 {
     public sealed class Commando : SS2VanillaSurvivor
     {
@@ -35,7 +35,6 @@ namespace Assets.Starstorm2.Modules.Characters.Variants
             skillFamily.variants[skillFamily.variants.Length - 1] = new SkillFamily.Variant
             {
                 skillDef = sdDeeadeye,
-                unlockableName = "",
                 viewableNode = new ViewablesCatalog.Node(sdDeeadeye.skillNameToken, false, null)
             };
         }
