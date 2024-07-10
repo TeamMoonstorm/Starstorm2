@@ -1,11 +1,5 @@
-﻿using EntityStates;
-using RoR2.Projectile;
+﻿using RoR2.Projectile;
 using RoR2;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -19,7 +13,7 @@ namespace EntityStates.Acrid
         public float baseDuration = 2f;
 
         [SerializeField]
-        public float damageCoefficient = 1.4f;
+        public float damageCoefficient = 0.7f;
 
         [SerializeField]
         public float force = 20f;

@@ -19,8 +19,8 @@ namespace SS2.Survivors
 
         public static GameObject corrodingSpitProjectilePrefab;
 
-        public static float armorCorrisonDuration = 3f;
-        private static float armorLoseAmount = 10f;
+        public static float armorCorrisonDuration = 1f;
+        private static float armorLoseAmount = 5f;
 
         public override void Initialize()
         {

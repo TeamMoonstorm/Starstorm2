@@ -6,7 +6,7 @@ namespace EntityStates.Railgunner
     public class PierceRifle : BaseSkillState
     {
         [SerializeField]
-        public static float damageCoeff = 1.65f;
+        public static float damageCoeff = 1f;
 
         [SerializeField]
         public static float procCoeff = 0.7f;
