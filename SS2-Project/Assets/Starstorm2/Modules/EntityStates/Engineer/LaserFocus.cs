@@ -13,13 +13,13 @@ namespace EntityStates.Engi
         public static float damageCoeff = 1f;
 
         [SerializeField]
-        public static float procCoeff = 0.7f;
+        public static float procCoeff = 0.5f;
 
         [SerializeField]
-        public float fireFrequency = 5f;
+        public float fireFrequency = 4f;
 
         [SerializeField]
-        public float maxDistance = 50f;
+        public float maxDistance = 25f;
 
         public float baseDuration = 1f;
         private float duration;
@@ -40,34 +40,38 @@ namespace EntityStates.Engi
         private GameObject rightLaserInstance;
         private Transform rightLaserInstanceEnd;
 
+        private Transform muzzleLeft;
+        private Transform muzzleRight;
+
+
         public override void OnEnter()
         {
-            Debug.Log("ENTER!!!!!!!!!!!!");
             base.OnEnter();
-            this.duration = this.baseDuration / base.attackSpeedStat;
+            //this.duration = this.baseDuration / base.attackSpeedStat;
             Ray aimRay = base.GetAimRay();
             base.StartAimMode(aimRay, 2f, false);
 
-            Debug.Log("HI IM ON ENTER");
             this.PlayAnimation("Gesture, Additive", "ChargeGrenades");
 
             Util.PlaySound("Play_engi_R_walkingTurret_laser_start", base.gameObject);
             fireTimer = 0;
             modelTransform = base.GetModelTransform();
-            if (modelTransform){
-
+            if (modelTransform)
+            {
                 ChildLocator component = this.modelTransform.GetComponent<ChildLocator>();
-                if (component){
-                    Transform transformL = component.FindChild("LeftMuzzle");
-                    if (transformL && laserPrefab){
-                        leftLaserInstance = UnityEngine.Object.Instantiate<GameObject>(laserPrefab, transformL.position, transformL.rotation);
+                if (component)
+                {
+                    muzzleLeft = component.FindChild("MuzzleLeft");
+                    if (muzzleLeft && laserPrefab)
+                    {
+                        leftLaserInstance = UnityEngine.Object.Instantiate<GameObject>(laserPrefab, muzzleLeft.position, muzzleLeft.rotation);
                         leftLaserInstance.transform.parent = transform;
                         leftLaserInstanceEnd = leftLaserInstance.GetComponent<ChildLocator>().FindChild("LaserEnd");
                     }
-
-                    Transform transformR = component.FindChild("RightMuzzle");
-                    if (transformR && laserPrefab){
-                        rightLaserInstance = UnityEngine.Object.Instantiate<GameObject>(laserPrefab, transformR.position, transformR.rotation);
+                    muzzleRight = component.FindChild("MuzzleRight");
+                    if (muzzleRight && laserPrefab)
+                    {
+                        rightLaserInstance = UnityEngine.Object.Instantiate<GameObject>(laserPrefab, muzzleRight.position, muzzleRight.rotation);
                         rightLaserInstance.transform.parent = transform;
                         rightLaserInstanceEnd = rightLaserInstance.GetComponent<ChildLocator>().FindChild("LaserEnd");
                     }
@@ -78,7 +82,6 @@ namespace EntityStates.Engi
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            Debug.Log("heyt im fixed update ");
             //Stop_engi_R_walkingTurret_laser_loop
             //Play_engi_R_walkingTurret_laser_end
 
@@ -97,9 +100,16 @@ namespace EntityStates.Engi
                 fireTimer = 0f;
             }
 
-            if (leftLaserInstance && rightLaserInstance && leftLaserInstanceEnd && rightLaserInstanceEnd)
+            if (leftLaserInstance && leftLaserInstanceEnd)
             {
+                leftLaserInstance.transform.position = muzzleLeft.position;
+                leftLaserInstance.transform.rotation = muzzleLeft.rotation;
                 leftLaserInstanceEnd.position = GetBeamEndPoint(aimRay);
+            }
+            if(rightLaserInstance && rightLaserInstanceEnd)
+            {
+                rightLaserInstance.transform.position = muzzleRight.position;
+                rightLaserInstance.transform.rotation = muzzleRight.rotation;
                 rightLaserInstanceEnd.position = GetBeamEndPoint(aimRay);
             }
 
@@ -156,7 +166,8 @@ namespace EntityStates.Engi
                     isCrit = isCrit,
                     HitEffectNormal = false,
                     smartCollision = true,
-                    maxDistance = maxDistance
+                    maxDistance = maxDistance,
+                    radius = 0.7f,
                 };
 
                 var bulletRight = new BulletAttack{
@@ -176,7 +187,8 @@ namespace EntityStates.Engi
                     isCrit = isCrit,
                     HitEffectNormal = false,
                     smartCollision = true,
-                    maxDistance = maxDistance
+                    maxDistance = maxDistance,
+                    radius = 0.7f,
                 };
 
                 bulletLeft.Fire();
@@ -191,13 +203,11 @@ namespace EntityStates.Engi
             Util.PlaySound("Play_engi_R_walkingTurret_laser_end", base.gameObject);
             this.PlayAnimation("Gesture, Additive", "Empty");
 
-            if (leftLaserInstance){
+            if (leftLaserInstance)
                 EntityState.Destroy(leftLaserInstance);
-            }
+
             if (rightLaserInstance)
-            {
                 EntityState.Destroy(rightLaserInstance);
-            }
 
         }
 
