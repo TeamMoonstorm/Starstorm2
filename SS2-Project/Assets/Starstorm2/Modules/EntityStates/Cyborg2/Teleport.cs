@@ -91,7 +91,8 @@ namespace EntityStates.Cyborg2
             base.OnExit();           
             if (didTeleport)
             {
-                base.characterMotor.ApplyForce(storedVelocity * exitVelocityCoefficient);
+                storedVelocity.y = Mathf.Max(storedVelocity.y, 0);
+                //base.characterMotor.velocity = storedVelocity * exitVelocityCoefficient;
             }
             if(this.teleporterOwnership)
             {

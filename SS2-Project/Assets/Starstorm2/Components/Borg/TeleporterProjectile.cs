@@ -203,7 +203,7 @@ namespace SS2.Components
 					GlobalEventManager.instance.OnHitAll(damageInfo, healthComponent.gameObject);
 					healthComponent.body.AddBuff(SS2Content.Buffs.BuffCyborgPrimed);
 				}
-
+				EffectManager.SimpleEffect(SS2Assets.LoadAsset<GameObject>("TeleporterDamageImpact", SS2Bundle.Indev), this.target.transform.position, Quaternion.identity, true);
 				HurtBox hurtBox = this.PickNextTarget(this.target.transform.position);
 				if (hurtBox)
 				{
@@ -226,26 +226,19 @@ namespace SS2.Components
 
 		public HurtBox PickNextTarget(Vector3 position)
 		{
+			HurtBox owner = attacker ? attacker.GetComponent<CharacterBody>()?.mainHurtBox : null;
 			if (this.targetObjects == null || this.targetObjects.Count == 0)
 			{
-				if (attacker) return attacker.GetComponent<CharacterBody>()?.mainHurtBox;
-
-				return null;
+				return owner;
 			}
 
-			//sort by distance
-			HurtBox hurtBox = targetObjects[0].body.mainHurtBox;
-			float maxDistance = Mathf.Infinity;
 			for(int i = 0; i < targetObjects.Count; i++)
             {
-				Vector3 between = targetObjects[i].transform.position - position;
-				if (between.magnitude < maxDistance)
-                {
-					hurtBox = targetObjects[i].body.mainHurtBox;
-					maxDistance = between.magnitude;
-                }
+				HealthComponent h = targetObjects[i];
+				if (h && h.body.mainHurtBox)
+					return h.body.mainHurtBox;
             }
-			return hurtBox;
+			return owner;
 		}
 		public float totalDuration;
 

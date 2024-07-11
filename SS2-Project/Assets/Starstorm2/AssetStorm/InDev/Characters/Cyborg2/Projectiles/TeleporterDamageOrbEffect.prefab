@@ -98,10 +98,11 @@ MonoBehaviour:
   bezierCurveLine: {fileID: 1004595392853033154}
   faceMovement: 1
   callArrivalIfTargetIsGone: 0
-  startEffect: {fileID: 0}
-  startEffectScale: 1
+  startEffect: {fileID: 1807569737220441, guid: eb35c17a74c30004382f6f4545f45e2a,
+    type: 3}
+  startEffectScale: 2
   startEffectCopiesRotation: 0
-  endEffect: {fileID: 1807569737220441, guid: eb35c17a74c30004382f6f4545f45e2a, type: 3}
+  endEffect: {fileID: 0}
   endEffectScale: 2
   endEffectCopiesRotation: 0
   onArrival:
@@ -224,14 +225,14 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 5, y: 0, z: 0}
-  - {x: 4.4285026, y: -0.02943217, z: -0.0268333}
-  - {x: 3.8609905, y: -0.0515063, z: -0.046958275}
-  - {x: 3.2974641, y: -0.066222385, z: -0.060374923}
-  - {x: 2.7379231, y: -0.07358043, z: -0.06708325}
-  - {x: 2.1823676, y: -0.07358042, z: -0.06708325}
-  - {x: 1.6307974, y: -0.066222385, z: -0.060374923}
-  - {x: 1.0832129, y: -0.051506296, z: -0.04695827}
-  - {x: 0.53961366, y: -0.029432168, z: -0.026833298}
+  - {x: 4.4253607, y: -0.016743965, z: 0.02918094}
+  - {x: 3.8554919, y: -0.029301938, z: 0.05106665}
+  - {x: 3.2903943, y: -0.03767392, z: 0.06565712}
+  - {x: 2.7300675, y: -0.041859914, z: 0.07295235}
+  - {x: 2.1745121, y: -0.04185991, z: 0.07295235}
+  - {x: 1.6237274, y: -0.03767392, z: 0.06565712}
+  - {x: 1.077714, y: -0.029301936, z: 0.05106665}
+  - {x: 0.5364715, y: -0.016743964, z: 0.02918094}
   - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3

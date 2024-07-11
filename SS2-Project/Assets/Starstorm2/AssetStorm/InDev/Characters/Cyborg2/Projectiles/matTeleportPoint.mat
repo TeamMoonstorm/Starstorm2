@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: matTeleportPoint
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
-  m_ShaderKeywords: CLOUDOFFSET USE_CLOUDS
+  m_ShaderKeywords: USE_CLOUDS
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -25,7 +25,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _Cloud2Tex:
         m_Texture: {fileID: 2800000, guid: 7d141824ada450747b17a50e01bef09a, type: 3}
-        m_Scale: {x: 0.73, y: 1}
+        m_Scale: {x: 0, y: 0}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 31cc76ee080e7854c98c69b30a557a7a, type: 3}
@@ -41,7 +41,7 @@ Material:
     - _Boost: 2
     - _BumpScale: 1
     - _CalcTextureAlphaOn: 0
-    - _CloudOffsetOn: 1
+    - _CloudOffsetOn: 0
     - _CloudsOn: 1
     - _Cull: 2
     - _Cutoff: 0.5
@@ -79,6 +79,6 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _CutoffScroll: {r: 0, g: 0, b: 20, a: 5}
+    - _CutoffScroll: {r: 2, g: 0, b: 5, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _TintColor: {r: 0.44891423, g: 0.9502121, b: 0.9811321, a: 1}
+    - _TintColor: {r: 0.3443396, g: 0.9614317, b: 1, a: 1}

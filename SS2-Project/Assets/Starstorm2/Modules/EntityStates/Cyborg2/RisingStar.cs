@@ -20,7 +20,7 @@ namespace EntityStates.Cyborg2
         public static float force = 150f;
         public static float recoil = 1;
         public static float bloom = .4f;
-        public static float bulletRadius = .4f;
+        private static float bulletRadius = .1f;
         public static float bulletDistance = 150f;
 
         public static float blastRadius = 5f;
