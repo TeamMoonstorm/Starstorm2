@@ -114,6 +114,7 @@ namespace SS2
                 new Acrid(),
                 new Bandit(),
                 new Railgunner(),
+                new Engineer(),
                 //Add the rest
               };
 
