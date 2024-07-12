@@ -42,56 +42,83 @@ namespace SS2
 		private static void Init()
 		{
             Run.onRunStartGlobal += Refresh;
-			Run.onRunDestroyGlobal += Refresh; //idk. just being cautious?    
+			Run.onRunDestroyGlobal += Refresh;
 			SS2Assets.LoadAsset<GameObject>("VoidTeleporterFogDamager", SS2Bundle.Interactables).GetComponent<FogDamageController>().dangerBuffDef = RoR2Content.Buffs.VoidFogMild;
 		}
 
 		public static Action<Run> onCursesRefreshed;
-        private static void Refresh(Run run)
+		private static bool setHooks;
+		public static bool cashedOut;
+		private static Xoroshiro128Plus cloakRng = new Xoroshiro128Plus(0UL);
+		private static Run.FixedTimeStamp lastMoneyPenalty;
+		private static Color teleporterRadiusColor = new Color(0f, 3.9411764f, 5f, 1f);
+		private static readonly EntityStates.SerializableEntityStateType openState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Barrel.OpeningSlow));
+		private static readonly Queue<BombArtifactManager.BombRequest> bombRequestQueue = new Queue<BombArtifactManager.BombRequest>();
+
+		private static int[] pendingCurses = new int[21];
+		private static int[] curseStacks = new int[21];
+		private static int totalCurses;
+
+		private static int stageStart;
+		private static readonly float curseIntensityPerStage = 1.33f;
+		private static void Refresh(Run run)
         {
-			OnCurseEnd();
+			UnsetHooks();
 
 			curseStacks = new int[21];
 			bombRequestQueue.Clear();
 			lastMoneyPenalty = Run.FixedTimeStamp.now;
 			totalCurses = 0;
 			stageStart = 0;
+			cashedOut = false;
 			onCursesRefreshed?.Invoke(run);
         }
 		private static void OnCurseBegin()
         {
 			stageStart = Run.instance.stageClearCount;
-
-            SceneDirector.onPrePopulateSceneServer += OnPrePopulateScene;
-			Stage.onServerStageBegin += OnServerStageBegin;
-			CharacterMaster.onStartGlobal += OnMasterStartGlobal;
-			CharacterBody.onBodyStartGlobal += OnBodyStartGlobal;
-            GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
-			GlobalEventManager.OnInteractionsGlobal += OnInteractionGlobal;
-			GlobalEventManager.onCharacterDeathGlobal += OnCharacterDeathGlobal;
-			RoR2Application.onFixedUpdate += OnFixedUpdate;
-			TeleporterInteraction.onTeleporterBeginChargingGlobal += OnTeleporterBeginChargingGlobal;
-			R2API.RecalculateStatsAPI.GetStatCoefficients += GetStatCoefficients;
-			On.RoR2.ChestBehavior.Awake += ChestBehavior_Awake;
-			On.RoR2.ChestBehavior.ItemDrop += ChestBehavior_ItemDrop;
+			SetHooks();
 		}
 
-        
+        private static void SetHooks()
+        {
+			if(!setHooks)
+            {
+				setHooks = true;
+				SceneDirector.onPrePopulateSceneServer += OnPrePopulateScene;
+				Stage.onServerStageBegin += OnServerStageBegin;
+				CharacterMaster.onStartGlobal += OnMasterStartGlobal;
+				CharacterBody.onBodyStartGlobal += OnBodyStartGlobal;
+				GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
+				GlobalEventManager.OnInteractionsGlobal += OnInteractionGlobal;
+				GlobalEventManager.onCharacterDeathGlobal += OnCharacterDeathGlobal;
+				RoR2Application.onFixedUpdate += OnFixedUpdate;
+				TeleporterInteraction.onTeleporterBeginChargingGlobal += OnTeleporterBeginChargingGlobal;
+				R2API.RecalculateStatsAPI.GetStatCoefficients += GetStatCoefficients;
+				On.RoR2.ChestBehavior.Awake += ChestBehavior_Awake;
+				On.RoR2.ChestBehavior.ItemDrop += ChestBehavior_ItemDrop;
+			}
+			
+		}
 
-        private static void OnCurseEnd()
+        private static void UnsetHooks()
 		{
-			SceneDirector.onPrePopulateSceneServer -= OnPrePopulateScene;
-			Stage.onServerStageBegin -= OnServerStageBegin;
-			CharacterMaster.onStartGlobal -= OnMasterStartGlobal;
-			CharacterBody.onBodyStartGlobal -= OnBodyStartGlobal;
-			GlobalEventManager.onServerDamageDealt -= OnServerDamageDealt;
-			GlobalEventManager.OnInteractionsGlobal -= OnInteractionGlobal;
-			GlobalEventManager.onCharacterDeathGlobal -= OnCharacterDeathGlobal;
-			RoR2Application.onFixedUpdate -= OnFixedUpdate;
-			TeleporterInteraction.onTeleporterBeginChargingGlobal -= OnTeleporterBeginChargingGlobal;
-			R2API.RecalculateStatsAPI.GetStatCoefficients -= GetStatCoefficients;
-			On.RoR2.ChestBehavior.Awake -= ChestBehavior_Awake;
-			On.RoR2.ChestBehavior.ItemDrop -= ChestBehavior_ItemDrop;
+			if(setHooks)
+            {
+				setHooks = false;
+				SceneDirector.onPrePopulateSceneServer -= OnPrePopulateScene;
+				Stage.onServerStageBegin -= OnServerStageBegin;
+				CharacterMaster.onStartGlobal -= OnMasterStartGlobal;
+				CharacterBody.onBodyStartGlobal -= OnBodyStartGlobal;
+				GlobalEventManager.onServerDamageDealt -= OnServerDamageDealt;
+				GlobalEventManager.OnInteractionsGlobal -= OnInteractionGlobal;
+				GlobalEventManager.onCharacterDeathGlobal -= OnCharacterDeathGlobal;
+				RoR2Application.onFixedUpdate -= OnFixedUpdate;
+				TeleporterInteraction.onTeleporterBeginChargingGlobal -= OnTeleporterBeginChargingGlobal;
+				R2API.RecalculateStatsAPI.GetStatCoefficients -= GetStatCoefficients;
+				On.RoR2.ChestBehavior.Awake -= ChestBehavior_Awake;
+				On.RoR2.ChestBehavior.ItemDrop -= ChestBehavior_ItemDrop;
+			}
+			
 		}
 
 		// might need to network this
@@ -115,8 +142,9 @@ namespace SS2
         }
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static int GetCurseCount(CurseIndex index)
+		public static int GetActiveCurseCount(CurseIndex index)
         {
+			if (!IsCurseStage()) return 0;
 			return curseStacks[(int)index];
         }
 
@@ -138,15 +166,16 @@ namespace SS2
 			return totalCurses > 0 ? Run.instance.stageClearCount - stageStart : 0;
         }
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static bool IsCurseStage()
         {
-			return Stage.instance && Stage.instance.sceneDef.sceneType == SceneType.Stage;
+			return Stage.instance && Stage.instance.sceneDef?.sceneType == SceneType.Stage;
         }
 
-		public static void ClearCurses()
+		public static void OnCashout()
         {
-			OnCurseEnd();
-
+			cashedOut = true;
+			UnsetHooks();
 			curseStacks = new int[21];
 			bombRequestQueue.Clear();
 			lastMoneyPenalty = Run.FixedTimeStamp.now;
@@ -167,11 +196,15 @@ namespace SS2
 
 		private static void OnServerStageBegin(Stage stage)
         {
-			EffectData effectData = new EffectData
-			{
-				genericUInt = (uint)GetStageClearCount() + 1,
-			};
-			EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("CurseReminder", SS2Bundle.Interactables), effectData, true);
+			if(IsCurseStage())
+            {
+				EffectData effectData = new EffectData
+				{
+					genericUInt = (uint)GetStageClearCount() + 1,
+				};
+				EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("CurseReminder", SS2Bundle.Interactables), effectData, true);
+			}
+			
 
 			cloakRng = new Xoroshiro128Plus(Run.instance.stageRng.nextUlong);
 			lastMoneyPenalty = Run.FixedTimeStamp.now;
@@ -180,12 +213,10 @@ namespace SS2
 
         private static void OnTeleporterBeginChargingGlobal(TeleporterInteraction teleporter)
         {
-			int teleporterVoid = GetCurseCount(CurseIndex.TeleporterVoid);
-			int teleporterRadius = GetCurseCount(CurseIndex.TeleporterRadius);
-			int teleporterRevive = GetCurseCount(CurseIndex.TeleporterRevive);
+			int teleporterVoid = GetActiveCurseCount(CurseIndex.TeleporterVoid);
+			int teleporterRadius = GetActiveCurseCount(CurseIndex.TeleporterRadius);
+			int teleporterRevive = GetActiveCurseCount(CurseIndex.TeleporterRevive);
 
-
-			// TODO: PostProcessing for this? to match void fields and stuff
 			if (teleporterVoid > 0)
             {
 				GameObject gameObject = SS2Assets.LoadAsset<GameObject>("VoidTeleporterFogDamager", SS2Bundle.Interactables);
@@ -236,7 +267,7 @@ namespace SS2
         }
 		private static void OnServerDamageDealt(DamageReport damageReport)
 		{
-			int bleedCount = GetCurseCount(CurseIndex.PlayerRegen); // not changing the name
+			int bleedCount = GetActiveCurseCount(CurseIndex.PlayerRegen); // not changing the name
 			DamageInfo damageInfo = damageReport.damageInfo;
 			CharacterBody victim = damageReport.victimBody;
 			if(damageReport.victimTeamIndex == TeamIndex.Player && damageInfo.procCoefficient > 0)
@@ -271,7 +302,7 @@ namespace SS2
 			{
 				return;
 			}
-			int monsterSpite = GetCurseCount(CurseIndex.MonsterSpite);
+			int monsterSpite = GetActiveCurseCount(CurseIndex.MonsterSpite);
 			CharacterBody victimBody = damageReport.victimBody;
 			Vector3 corePosition = victimBody.corePosition;
 			if (monsterSpite > 0)
@@ -338,7 +369,7 @@ namespace SS2
 
 		private static void OnMasterStartGlobal(CharacterMaster characterMaster)
 		{
-			int monsterShield = GetCurseCount(CurseIndex.MonsterShield);
+			int monsterShield = GetActiveCurseCount(CurseIndex.MonsterShield);
 			if (monsterShield > 0)
 			{
 				characterMaster.inventory.GiveItem(RoR2Content.Items.ShieldOnly); // too lazy to ilhook lol
@@ -346,17 +377,17 @@ namespace SS2
 		}
 		private static void OnBodyStartGlobal(CharacterBody characterBody)
         {
-			int playerLock = GetCurseCount(CurseIndex.PlayerLock);
-			int playerBlind = GetCurseCount(CurseIndex.PlayerBlind);
-			int playerRegen = GetCurseCount(CurseIndex.PlayerRegen);
-			int monsterArmor = GetCurseCount(CurseIndex.MonsterArmor);
-			int monsterAttackSpeed = GetCurseCount(CurseIndex.MonsterAttackSpeed);
-			int monsterCloak = GetCurseCount(CurseIndex.MonsterCloak);
-			int monsterCooldownReduction = GetCurseCount(CurseIndex.MonsterCooldownReduction);
-			int monsterDamage = GetCurseCount(CurseIndex.MonsterDamage);
-			int monsterHealth = GetCurseCount(CurseIndex.MonsterHealth);
-			int monsterMovementSpeed = GetCurseCount(CurseIndex.MonsterMovementSpeed);
-			int monsterShield = GetCurseCount(CurseIndex.MonsterShield);
+			int playerLock = GetActiveCurseCount(CurseIndex.PlayerLock);
+			int playerBlind = GetActiveCurseCount(CurseIndex.PlayerBlind);
+			int playerRegen = GetActiveCurseCount(CurseIndex.PlayerRegen);
+			int monsterArmor = GetActiveCurseCount(CurseIndex.MonsterArmor);
+			int monsterAttackSpeed = GetActiveCurseCount(CurseIndex.MonsterAttackSpeed);
+			int monsterCloak = GetActiveCurseCount(CurseIndex.MonsterCloak);
+			int monsterCooldownReduction = GetActiveCurseCount(CurseIndex.MonsterCooldownReduction);
+			int monsterDamage = GetActiveCurseCount(CurseIndex.MonsterDamage);
+			int monsterHealth = GetActiveCurseCount(CurseIndex.MonsterHealth);
+			int monsterMovementSpeed = GetActiveCurseCount(CurseIndex.MonsterMovementSpeed);
+			int monsterShield = GetActiveCurseCount(CurseIndex.MonsterShield);
 
 			if (playerLock > 0 && characterBody.teamComponent.teamIndex == TeamIndex.Player)
 			{
@@ -405,13 +436,13 @@ namespace SS2
         private static void ChestBehavior_ItemDrop(On.RoR2.ChestBehavior.orig_ItemDrop orig, ChestBehavior self)
         {
 			orig(self);
-			if(GetCurseCount(CurseIndex.ChestVelocity) > 0)
+			if(GetActiveCurseCount(CurseIndex.ChestVelocity) > 0)
 				EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("ChestVelocityCurseEffect", SS2Bundle.Interactables), new EffectData { origin = self.transform.position }, true);
 		}
 
         private static void ChestBehavior_Awake(On.RoR2.ChestBehavior.orig_Awake orig, ChestBehavior self)
         {
-            if(GetCurseCount(CurseIndex.ChestTimer) > 0)
+            if(GetActiveCurseCount(CurseIndex.ChestTimer) > 0)
             {
 				self.openState = openState;
             }
@@ -420,15 +451,15 @@ namespace SS2
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static float GetChestTimer()
         {
-			return 30f * GetCurseCount(CurseIndex.ChestTimer) * GetCurseIntensity();
+			return 30f * GetActiveCurseCount(CurseIndex.ChestTimer) * GetCurseIntensity();
         }
 
         private static void OnInteractionGlobal(Interactor interactor, IInteractable interactable, GameObject interactableObject)
         {
             if (!NetworkServer.active) return;
-			int chestVelocity = GetCurseCount(CurseIndex.ChestVelocity);
-			int chestMonsters = GetCurseCount(CurseIndex.ChestMonsters);
-			int chestSpite = GetCurseCount(CurseIndex.ChestSpite);
+			int chestVelocity = GetActiveCurseCount(CurseIndex.ChestVelocity);
+			int chestMonsters = GetActiveCurseCount(CurseIndex.ChestMonsters);
+			int chestSpite = GetActiveCurseCount(CurseIndex.ChestSpite);
 
 			ChestBehavior chestBehavior = interactableObject.GetComponent<ChestBehavior>();
 			Vector3 position = interactableObject.transform.position;
@@ -512,7 +543,7 @@ namespace SS2
 				}
 			}
 
-			int playerMoney = GetCurseCount(CurseIndex.PlayerMoney);
+			int playerMoney = GetActiveCurseCount(CurseIndex.PlayerMoney);
 			if (playerMoney > 0)
             {
 				if(lastMoneyPenalty.timeSince > 60f / playerMoney)
@@ -537,20 +568,8 @@ namespace SS2
             }
 		}
 
+
 		
-
-		private static Xoroshiro128Plus cloakRng = new Xoroshiro128Plus(0UL);
-		private static Run.FixedTimeStamp lastMoneyPenalty;
-		private static Color teleporterRadiusColor = new Color(0f, 3.9411764f, 5f, 1f);
-		private static readonly EntityStates.SerializableEntityStateType openState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Barrel.OpeningSlow));
-		private static readonly Queue<BombArtifactManager.BombRequest> bombRequestQueue = new Queue<BombArtifactManager.BombRequest>();
-
-		private static int[] pendingCurses = new int[21];
-		private static int[] curseStacks = new int[21];
-		private static int totalCurses;
-
-		private static int stageStart;
-		private static readonly float curseIntensityPerStage = 1.33f;
 		private class SkillDisableBehavior : MonoBehaviour
         {
 			private static SkillDef disabledSkillDef = SS2Assets.LoadAsset<SkillDef>("DisabledSkill", SS2Bundle.Shared);
@@ -578,11 +597,11 @@ namespace SS2
 					return;
                 }
 
-				disableInterval = 16f / (1 + (GetCurseCount(CurseIndex.PlayerLock)-1)) / GetCurseIntensity();
+				disableInterval = 16f / (1 + (GetActiveCurseCount(CurseIndex.PlayerLock)-1)) / GetCurseIntensity();
             }
             private void FixedUpdate()
             {
-				if (CurseManager.GetCurseCount(CurseIndex.PlayerLock) == 0) Destroy(this);
+				if (CurseManager.GetActiveCurseCount(CurseIndex.PlayerLock) == 0) Destroy(this);
 
 				if(Util.HasEffectiveAuthority(base.gameObject))
                 {

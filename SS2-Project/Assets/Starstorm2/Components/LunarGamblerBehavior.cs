@@ -32,16 +32,16 @@ namespace SS2.Components
 			this.purchaseInteraction = base.GetComponent<PurchaseInteraction>();
 			this.childLocator = base.GetComponent<ChildLocator>();
 
+			if(CurseManager.cashedOut) // need visuals/animation
+            {
+				this.purchaseInteraction.SetAvailable(false);
+				this.waitingForRefresh = false;
+            }
 
 			int stageClearCount = CurseManager.GetStageClearCount();
 			if(stageClearCount > 0)
             {
 				isCashOut = true;
-
-				//ParticleSystem ps = this.childLocator.FindChild("NumeralIconSingle").GetComponent<ParticleSystem>();
-				//ParticleSystem.TextureSheetAnimationModule ts = ps.textureSheetAnimation;
-				//ts.startFrame = stageClearCount - 1;
-				//ps.gameObject.SetActive(true);
 			}
 
 			cashoutValue = CalculateCashoutValue();
@@ -93,6 +93,7 @@ namespace SS2.Components
         {
 			this.purchaseInteraction.SetAvailable(false);
 			this.waitingForRefresh = false;
+			CurseManager.OnCashout();  // if something else adds curses, we need to track curse sources.
 
 			EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/ShrineUseEffect"), new EffectData
 			{
@@ -102,10 +103,22 @@ namespace SS2.Components
 				color = ColorCatalog.GetColor(ColorCatalog.ColorIndex.LunarItem)
 			}, true);
 
-			SS2Log.Info($"CASHOUT. stageClearCount={stageClearCount}  curseCount={curseCount}  value={cashoutValue}");
+			RewardTierDef rewardTier = RewardCatalog.GetHighestRewardTier(cashoutValue);
+			foreach(PlayerCharacterMasterController player in PlayerCharacterMasterController.instances)
+            {
+				if(player && player.body)
+                {
+					RewardDef reward = rewardTier.GenerateReward(this.rng);
+					RewardDropper rewardDropper = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("RewardDropper", SS2Bundle.Interactables), player.body.corePosition, player.body.transform.rotation).GetComponent<RewardDropper>();
+					rewardDropper.reward = reward;
+					rewardDropper.rng = rng;
+					rewardDropper.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(player.body.gameObject);
+				}
+            }			
 
+			SS2Log.Info($"CASHOUT. stageClearCount={stageClearCount}  curseCount={curseCount}  value={cashoutValue}");
 			this.cashoutValue = 0;
-			CurseManager.ClearCurses(); // if something else adds curses, we need to track curse sources.
+			
 		}
 		private void AddCurse()
         {
@@ -123,7 +136,7 @@ namespace SS2.Components
 			}, true);
 
 			CurseIndex curseIndex = cursePool.GenerateCurse(this.rng);
-			CurseManager.AddCurse(curseIndex);
+			CurseManager.AddCurse(curseIndex, 1);
 
 			cashoutValue = CalculateCashoutValue();
 
