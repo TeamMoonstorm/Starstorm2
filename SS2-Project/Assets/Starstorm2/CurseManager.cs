@@ -122,6 +122,7 @@ namespace SS2
 		}
 
 		// might need to network this
+		// on the other hand, clients only really need to see the cashout value. so we can just syncvar that
 		public static void AddCurse(CurseIndex index, int count = 1)
         {
             if (!NetworkServer.active)

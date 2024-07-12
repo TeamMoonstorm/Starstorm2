@@ -22,9 +22,11 @@ namespace SS2.Components
 
 		public HologramProjector valueProjector;
 		private ChildLocator childLocator;
-
 		private bool isCashOut;
+
+		[SyncVar]
 		private int cashoutValue;
+
 		public float hideValueTimer;
 		private void Start()
 		{
@@ -54,7 +56,7 @@ namespace SS2.Components
 			{
 				valueProjector.contentProvider = this;
 			}
-			if (this.cursePool.IsEmpty())
+			if (!this.isCashOut && this.cursePool.IsEmpty())
             {
 				this.waitingForRefresh = false;
 				this.purchaseInteraction.SetAvailable(false);
@@ -72,8 +74,9 @@ namespace SS2.Components
 
 		private int CalculateCashoutValue()
         {
+			int valuePerCurse = 6 + (Run.instance.stageClearCount - 1);
 			int stageClearCount = Mathf.Max(CurseManager.GetStageClearCount() - 1, 0); // fucked up fuck fuck redo the curse counting plss
-			float floatVal = Mathf.Pow(1.33f, stageClearCount) * CurseManager.GetTotal() * 10f;
+			float floatVal = Mathf.Pow(1.33f, stageClearCount) * CurseManager.GetTotal() * valuePerCurse;
 			return Mathf.RoundToInt(floatVal);
         }
 
@@ -126,6 +129,7 @@ namespace SS2.Components
 
 			this.waitingForRefresh = true;
 			this.refreshTimer = refreshDuration;
+			this.purchaseCount++;
 			this.hideValueTimer = 2f;
 			EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/ShrineUseEffect"), new EffectData
 			{

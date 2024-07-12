@@ -12,10 +12,10 @@ namespace SS2
         [SystemInitializer]
         private static void Init()
         {
-            optionPrefab = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/OptionPickup/OptionPickup").WaitForCompletion();
-            dtTier1 = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<BasicPickupDropTable>("RoR2/Base/Common/dtTier1Item").WaitForCompletion();
-            dtTier2 = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<BasicPickupDropTable>("RoR2/Base/Common/dtTier2Item").WaitForCompletion();
-            dtTier3 = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<BasicPickupDropTable>("RoR2/Base/Common/dtTier3Item").WaitForCompletion();
+            optionPrefab = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/OptionPickup/OptionPickup.prefab").WaitForCompletion();
+            dtTier1 = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<BasicPickupDropTable>("RoR2/Base/Common/dtTier1Item.asset").WaitForCompletion();
+            dtTier2 = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<BasicPickupDropTable>("RoR2/Base/Common/dtTier2Item.asset").WaitForCompletion();
+            dtTier3 = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<BasicPickupDropTable>("RoR2/Base/Common/dtTier3Item.asset").WaitForCompletion();
 
         }
         private static GameObject optionPrefab;
@@ -44,8 +44,10 @@ namespace SS2
         public float maxDropInterval = 0.5f;
         public float minDropInterval = 0.1f;
         public float waitDuration = 2f;
+        public float dropForwardVelocity = 5f;
+        public float dropUpVelocity = 20f;
 
-        private bool waiting;
+        private bool waiting = true;
         private float dropInterval;
         private float dropAngle;
         private float stopwatch;
@@ -84,7 +86,7 @@ namespace SS2
                 }
                 if(pickupQueue.Count == 0)
                 {
-                    Destroy(this); 
+                    Destroy(base.gameObject); 
                 }
             }
         }
@@ -93,7 +95,7 @@ namespace SS2
         {
             RewardInfo rewardInfo = pickupQueue.Dequeue();
 
-            Vector3 vector = (Vector3.up * 40f + Vector3.forward * 5f);
+            Vector3 vector = (Vector3.up * dropUpVelocity + Vector3.forward * dropForwardVelocity);
             Quaternion rotation = Quaternion.AngleAxis(dropAngle * numDropped, Vector3.up);
 
             PickupDropletController.CreatePickupDroplet(new GenericPickupController.CreatePickupInfo
@@ -128,7 +130,7 @@ namespace SS2
             }
             for(int i = 0; i < reward.whiteCommand; i++)
             {
-                pickupQueue.Enqueue(new RewardInfo { pickupIndex = PickupCatalog.FindPickupIndex(ItemTier.Tier1), flag = GenericPickupController.PickupArtifactFlag.COMMAND });
+                pickupQueue.Enqueue(new RewardInfo { pickupIndex = Run.instance.availableTier1DropList[0], flag = GenericPickupController.PickupArtifactFlag.COMMAND });
             }
 
             for (int i = 0; i < reward.green; i++)
@@ -143,7 +145,7 @@ namespace SS2
             }
             for (int i = 0; i < reward.greenCommand; i++)
             {
-                pickupQueue.Enqueue(new RewardInfo { pickupIndex = PickupCatalog.FindPickupIndex(ItemTier.Tier2), flag = GenericPickupController.PickupArtifactFlag.COMMAND });
+                pickupQueue.Enqueue(new RewardInfo { pickupIndex = Run.instance.availableTier2DropList[0], flag = GenericPickupController.PickupArtifactFlag.COMMAND });
             }
 
             for (int i = 0; i < reward.red; i++)
@@ -158,7 +160,7 @@ namespace SS2
             }
             for (int i = 0; i < reward.redCommand; i++)
             {
-                pickupQueue.Enqueue(new RewardInfo { pickupIndex = PickupCatalog.FindPickupIndex(ItemTier.Tier3), flag = GenericPickupController.PickupArtifactFlag.COMMAND });
+                pickupQueue.Enqueue(new RewardInfo { pickupIndex = Run.instance.availableTier3DropList[0], flag = GenericPickupController.PickupArtifactFlag.COMMAND });
             }
         }
     }

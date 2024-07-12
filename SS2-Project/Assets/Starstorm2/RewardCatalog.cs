@@ -22,7 +22,8 @@ namespace SS2
         private static void InitRewardTable()
         {
             Run.onRunStartGlobal += RegenerateAll;
-            DLC1 = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<ExpansionDef>("RoR2/DLC1/Common/DLC1").WaitForCompletion();
+            DLC1 = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<ExpansionDef>("RoR2/DLC1/Common/DLC1.asset").WaitForCompletion();
+            tierDefs = new RewardTierDef[9];
             #region Rewards
             //0
             RewardTierDef tier = new RewardTierDef();
@@ -59,7 +60,7 @@ namespace SS2
             tier.Add(new RewardDef { green = 3, whiteCommand = 1 });           
             tier.Add(new RewardDef { greenOption = 2, whiteOption = 1 });
             tier.Add(new RewardDef { greenCommand = 1, white = 4 });
-            tier.Add(new RewardDef { white = 12 });
+            tier.Add(new RewardDef { white = 9 });
             tier.Add(new RewardDef { whiteCommand = 4 });
             RewardDef fire = new RewardDef();
             fire.AddPickups(RoR2Content.Items.IgniteOnKill, 3);
@@ -167,14 +168,14 @@ namespace SS2
             #endregion
         }
 
-        // return collection of equal-valued rewards that have the highest value less than the argument
+        // return the rewardtier with the highest value less than the argument
         public static RewardTierDef GetHighestRewardTier(int value)
         {
             RewardTierDef highestTier = null;
             int highestValue = 0;
             foreach(RewardTierDef tier in tierDefs)
             {
-                if(tier.valueBreakpoint > highestValue && tier.valueBreakpoint < value)
+                if(tier.valueBreakpoint >= highestValue && tier.valueBreakpoint <= value)
                 {
                     highestValue = tier.valueBreakpoint;
                     highestTier = tier;
@@ -254,7 +255,7 @@ namespace SS2
         public List<WeightedRewardDef> rewardDefs = new List<WeightedRewardDef>();
         public int valueBreakpoint;
         public int lunarCoins;
-        public WeightedSelection<RewardDef> selection;
+        public WeightedSelection<RewardDef> selection = new WeightedSelection<RewardDef>();
 
         public void Add(RewardDef rewardDef)
         {

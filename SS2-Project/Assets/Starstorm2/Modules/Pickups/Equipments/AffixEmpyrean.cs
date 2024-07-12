@@ -138,7 +138,7 @@ namespace SS2.Equipments
             foreach (EliteDef ed in EliteCatalog.eliteDefs)
             {
                 //shitty hardcoded case for blighted; add actual cross compat later!
-                if (ed.IsAvailable() && !AffixEmpyrean.blacklistedEliteDefs.Contains(ed) && !CharacterBody.HasBuff(ed.eliteEquipmentDef.passiveBuffDef) && ed.modifierToken != "LIT_MODIFIER_BLIGHTED")
+                if (ed.IsAvailable() && !AffixEmpyrean.blacklistedEliteDefs.Contains(ed) && !CharacterBody.HasBuff(ed.eliteEquipmentDef?.passiveBuffDef) && ed.modifierToken != "LIT_MODIFIER_BLIGHTED")
                     CharacterBody.AddBuff(ed.eliteEquipmentDef.passiveBuffDef);
             }
             if (setStateOnHurt)
