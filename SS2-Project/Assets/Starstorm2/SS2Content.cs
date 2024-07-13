@@ -368,6 +368,7 @@ namespace SS2
 
             public static ItemDef RainbowRoot;
 
+            public static ItemDef WeatherRadio;
         }
 
         public static class Equipments
