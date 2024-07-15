@@ -16,10 +16,10 @@ namespace EntityStates.Engi
         public static float procCoeff = 0.5f;
 
         [SerializeField]
-        public float fireFrequency = 4f;
+        public static float fireFrequency = 4f;
 
         [SerializeField]
-        public float maxDistance = 25f;
+        public static float maxDistance = 25f;
 
         public float baseDuration = 1f;
         private float duration;
@@ -131,7 +131,7 @@ namespace EntityStates.Engi
             Vector3 point = aimRay.GetPoint(maxDistance);
             RaycastHit raycastHit;
             
-            if (Util.CharacterRaycast(base.gameObject, aimRay, out raycastHit, this.maxDistance, LayerIndex.world.mask | LayerIndex.entityPrecise.mask, QueryTriggerInteraction.UseGlobal))
+            if (Util.CharacterRaycast(base.gameObject, aimRay, out raycastHit, maxDistance, LayerIndex.world.mask | LayerIndex.entityPrecise.mask, QueryTriggerInteraction.UseGlobal))
             {
                 point = raycastHit.point;
             }

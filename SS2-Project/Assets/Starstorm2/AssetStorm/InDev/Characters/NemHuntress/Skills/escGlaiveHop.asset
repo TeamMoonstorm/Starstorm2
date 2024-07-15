@@ -10,26 +10,18 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: escLaserFocus
+  m_Name: escGlaiveHop
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Engi.LaserFocus, Starstorm2, Version=1.0.0.0,
+    assemblyQualifiedName: EntityStates.NemHuntress2.GlaiveHop, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
-    - fieldName: damageCoeff
-      fieldValue:
-        stringValue: 1
-        objectValue: {fileID: 0}
-    - fieldName: procCoeff
+    - fieldName: baseDuration
       fieldValue:
         stringValue: 0.5
         objectValue: {fileID: 0}
-    - fieldName: fireFrequency
+    - fieldName: hopVelocity
       fieldValue:
-        stringValue: 4
-        objectValue: {fileID: 0}
-    - fieldName: maxDistance
-      fieldValue:
-        stringValue: 25
+        stringValue: 28
         objectValue: {fileID: 0}
