@@ -22,20 +22,29 @@ namespace SS2.Survivors
 
         public override void Initialize()
         {
-            SkillDef sdDeeadeye = survivorAssetCollection.FindAsset<SkillDef>("sdDeadeye");
+            SkillDef sdDeadeye = survivorAssetCollection.FindAsset<SkillDef>("sdDeadeye");
+            SkillDef sdDirtbomb = survivorAssetCollection.FindAsset<SkillDef>("sdDirtbomb");
 
             GameObject commandoBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/CommandoBody.prefab").WaitForCompletion();
 
             SkillLocator skillLocator = commandoBodyPrefab.GetComponent<SkillLocator>();
             SkillFamily skillFamily = skillLocator.primary.skillFamily;
+            SkillFamily specialSkillFamily = skillLocator.special.skillFamily;
 
             // If this is an alternate skill, use this code.
             // Here, we add our skill as a variant to the existing Skill Family.
             Array.Resize(ref skillFamily.variants, skillFamily.variants.Length + 1);
             skillFamily.variants[skillFamily.variants.Length - 1] = new SkillFamily.Variant
             {
-                skillDef = sdDeeadeye,
-                viewableNode = new ViewablesCatalog.Node(sdDeeadeye.skillNameToken, false, null)
+                skillDef = sdDeadeye,
+                viewableNode = new ViewablesCatalog.Node(sdDeadeye.skillNameToken, false, null)
+            };
+
+            Array.Resize(ref specialSkillFamily.variants, specialSkillFamily.variants.Length + 1);
+            specialSkillFamily.variants[specialSkillFamily.variants.Length - 1] = new SkillFamily.Variant
+            {
+                skillDef = sdDirtbomb,
+                viewableNode = new ViewablesCatalog.Node(sdDirtbomb.skillNameToken, false, null)
             };
         }
 

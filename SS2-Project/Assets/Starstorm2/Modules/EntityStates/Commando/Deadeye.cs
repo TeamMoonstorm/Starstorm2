@@ -1,11 +1,13 @@
 ﻿using EntityStates;
 using EntityStates.Commando.CommandoWeapon;
 using RoR2;
+using RoR2.Skills;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace EntityStates.Commando
 {
-    public class Deadeye : BaseSkillState
+    public class Deadeye : BaseSkillState, SteppedSkillDef.IStepSetter
     {
         [SerializeField]
         public static float damageCoeff = 1.65f;
@@ -19,22 +21,20 @@ namespace EntityStates.Commando
         public GameObject hitEffectPrefab = FireBarrage.hitEffectPrefab;
         public GameObject tracerEffectPrefab = FireBarrage.tracerEffectPrefab;
 
-        private int pistolSide = 1;
+        private int pistolSide = 0;
 
         private void PlayPistolAnimation()
         {
-            if (pistolSide == 1)
+            if (pistolSide % 1 == 0)
             {
-                pistolSide = 2;
                 base.PlayAnimation("Gesture Additive, Right", "FirePistol, Right");
                 if (FireBarrage.effectPrefab)
                 {
                     EffectManager.SimpleMuzzleFlash(FireBarrage.effectPrefab, base.gameObject, "MuzzleRight", false);
                 }
             } 
-            else if (pistolSide == 2)
+            else
             {
-                pistolSide = 1;
                 base.PlayAnimation("Gesture Additive, Left", "FirePistol, Left");
                 if (FireBarrage.effectPrefab)
                 {
@@ -42,6 +42,24 @@ namespace EntityStates.Commando
                 }
             }
         }
+
+        void SteppedSkillDef.IStepSetter.SetStep(int i)
+        {
+            pistolSide = i;
+            Debug.Log("PISTOL SIDE: " + pistolSide);
+        }
+
+        public override void OnSerialize(NetworkWriter writer)
+        {
+            base.OnSerialize(writer);
+            writer.Write((byte)pistolSide);
+        }
+        public override void OnDeserialize(NetworkReader reader)
+        {
+            base.OnDeserialize(reader);
+            pistolSide = (int)reader.ReadByte();
+        }
+
 
         public override void OnEnter()
         {

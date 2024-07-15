@@ -9,22 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1537144414, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: sdTranquilizerGun
+  m_Script: {fileID: 1391837873, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: sdAssaultRifle
   m_EditorClassIdentifier: 
-  skillName: SS2_BANDIT_TRANQ_GUN
-  skillNameToken: SS2_BANDIT_TRANQ_GUN_NAME
-  skillDescriptionToken: SS2_BANDIT_TRANQ_GUN_DESC
+  skillName: Assault Rifle
+  skillNameToken: SS2_RAILGUNNER_ASSAULT_RIFLE_NAME
+  skillDescriptionToken: SS2_RAILGUNNER_ASSAULT_RIFLE_DESC
   keywordTokens: []
-  icon: {fileID: 21300000, guid: e9f56578c1abf9946b4198a3cf61aeb8, type: 3}
+  icon: {fileID: 21300000, guid: ff43b28e90efe444896b656fa5573b4a, type: 3}
   activationStateMachineName: Weapon
   activationState:
-    _typeName: EntityStates.Bandit.TranquilizerGun, Starstorm2, Version=1.0.0.0,
+    _typeName: EntityStates.Railgunner.AssaultRifle, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   interruptPriority: 1
-  baseRechargeInterval: 0
-  baseMaxStock: 3
-  rechargeStock: 0
+  baseRechargeInterval: 0.5
+  baseMaxStock: 1
+  rechargeStock: 1
   requiredStock: 1
   stockToConsume: 1
   resetCooldownTimerOnUse: 0
@@ -35,9 +35,4 @@ MonoBehaviour:
   forceSprintDuringState: 0
   canceledFromSprinting: 0
   isCombatSkill: 1
-  mustKeyPress: 1
-  reloadState:
-    _typeName: EntityStates.Bandit2.Weapon.EnterReload, RoR2, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  reloadInterruptPriority: 0
-  graceDuration: 0.5
+  mustKeyPress: 0

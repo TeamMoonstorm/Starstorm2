@@ -8,10 +8,10 @@ namespace EntityStates.Knight
 public class BannerSpecial : BaseState
 {
     public static SkillDef buffedSkillRef;
-    public static GameObject powerBuffWard;
+    public static GameObject knightBannerWard;
     public static GameObject slowBuffWard;
             
-    private GameObject knightBannerWard;
+    private GameObject bannerObject;
     private GameObject slowBuffWardInstance;
 
     public override void OnEnter()
@@ -21,7 +21,7 @@ public class BannerSpecial : BaseState
         if (isAuthority & NetworkServer.active)
         {
             Vector3 position = inputBank.aimOrigin - (inputBank.aimDirection);
-            GameObject bannerObject = UnityEngine.Object.Instantiate(knightBannerWard, position, Quaternion.identity);
+            bannerObject = UnityEngine.Object.Instantiate(knightBannerWard, position, Quaternion.identity);
 
             bannerObject.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
             NetworkServer.Spawn(bannerObject);

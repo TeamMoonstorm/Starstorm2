@@ -96,10 +96,12 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
 
             characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage;
 
-            GenericSkill originalUtilitySkill = skillLocator.utility;
-            originalUtilitySkill.UnsetSkillOverride(gameObject, SpinUtility.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+            EntityStateMachine weaponEsm = EntityStateMachine.FindByCustomName(gameObject, "Weapon");
+            if (weaponEsm != null)
+            {
+                weaponEsm.SetNextState(new EntityStates.Knight.ResetOverrides());
+            }
 
-            outer.SetNextStateToMain();
             base.OnExit();
         }
 

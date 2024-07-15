@@ -26,9 +26,12 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
 
         public override void OnExit()
         {
-            GenericSkill originalPrimarySkill = skillLocator.primary;
-            originalPrimarySkill.UnsetSkillOverride(gameObject, SwingSword.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
             base.OnExit();
+            EntityStateMachine weaponEsm = EntityStateMachine.FindByCustomName(gameObject, "Weapon");
+            if (weaponEsm != null)
+            {
+                weaponEsm.SetNextState(new EntityStates.Knight.ResetOverrides());
+            }
         }
 
         public override void PlayAnimation()

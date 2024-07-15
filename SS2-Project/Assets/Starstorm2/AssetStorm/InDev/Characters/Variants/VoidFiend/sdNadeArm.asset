@@ -10,19 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1391837873, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: sdPierceRifle
+  m_Name: sdNadeArm
   m_EditorClassIdentifier: 
-  skillName: DMR
-  skillNameToken: SS2_RAILGUNNER_PIERCE_RIFLE_NAME
-  skillDescriptionToken: SS2_RAILGUNNER_PIERCE_RIFLE_DESC
+  skillName: 
+  skillNameToken: 
+  skillDescriptionToken: 
   keywordTokens: []
   icon: {fileID: 0}
-  activationStateMachineName: Weapon
+  activationStateMachineName: 
   activationState:
-    _typeName: EntityStates.Railgunner.PierceRifle, Starstorm2, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    _typeName: 
   interruptPriority: 1
-  baseRechargeInterval: 0.8
+  baseRechargeInterval: 1
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 1

@@ -14,10 +14,9 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
         public static SkillDef originalSkillRef;
 
         public static SkillDef buffedSkillRef;
-        public static GameObject powerBuffWard;
+        public static GameObject knightBannerWard;
         public static GameObject slowBuffWard;
 
-        private GameObject knightBannerWard;
         private GameObject slowBuffWardInstance;
         public override void OnEnter()
         {
