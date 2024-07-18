@@ -1,4 +1,6 @@
-﻿using RoR2;
+﻿using MSU;
+using MSU.Config;
+using RoR2;
 using RoR2.ContentManagement;
 using RoR2.Items;
 using SS2;
@@ -38,7 +40,7 @@ namespace Assets.Starstorm2.Modules.Pickups.Items.Tier2
 
                 if (body.inputBank.jump.down)
                 {
-                    body.characterMotor.velocity.y -= Time.fixedDeltaTime * Physics.gravity.y * reducedGravity;
+                    body.characterMotor.velocity.y -= Time.fixedDeltaTime * Physics.gravity.y * reducedGravity + ((reducedGravity/2) * stack);
 
                 }
             }
