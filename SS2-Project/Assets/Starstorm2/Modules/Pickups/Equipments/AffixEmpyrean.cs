@@ -155,6 +155,11 @@ namespace SS2.Equipments
             model = CharacterBody.modelLocator.modelTransform.GetComponent<CharacterModel>();           
         }
 
+        private void AddEliteBuffs()
+        {
+
+        }
+
         protected override void OnFirstStackGained()
         {
             base.OnFirstStackGained();

@@ -21,6 +21,9 @@ namespace SS2.Items
 
         public class IceToolBodyBehavior : BaseItemBodyBehavior
         {
+            [ItemDefAssociation(useOnServer = true, useOnClient = true)]
+            public static ItemDef GetItemDef() => SS2Content.Items.IceTool;
+
             private void Update()
             {
                 if (this.body && this.body.hasAuthority && this.body.inputBank && this.body.inputBank.jump.justPressed)

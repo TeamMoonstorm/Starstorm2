@@ -394,6 +394,10 @@ namespace SS2
 
             public static ItemDef RelicOfEntropy;
 
+            public static ItemDef IceTool;
+
+           // public static ItemDef WickedStaff;
+
         }
 
         public static class Equipments
@@ -423,6 +427,8 @@ namespace SS2
             public static EquipmentDef RockFruit;
 
             public static EquipmentDef WhiteFlag;
+
+            public static EquipmentDef SeismicOscillator;
         }
 
         public static class Buffs

@@ -23,7 +23,7 @@ namespace Assets.Starstorm2.Modules.Pickups.Items.Tier2
 
         public class BalloonBehavior : BaseItemBodyBehavior
         {
-            //[ItemDefAssociation(useOnServer = true, useOnClient = true)]
+            [ItemDefAssociation(useOnServer = true, useOnClient = true)]
             public static ItemDef GetItemDef() => SS2Content.Items.Balloon;
 
             private void FixedUpdate()
