@@ -1,8 +1,11 @@
 ﻿using EntityStates;
+using MSU;
+using R2API;
 using RoR2;
 using RoR2.ContentManagement;
 using RoR2.Items;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace SS2.Items
 {
@@ -24,12 +27,38 @@ namespace SS2.Items
             [ItemDefAssociation(useOnServer = true, useOnClient = true)]
             public static ItemDef GetItemDef() => SS2Content.Items.IceTool;
 
+            int jumpTimes = 0;
+
+
+            private void ResetJumps(ref CharacterMotor.HitGroundInfo hitGroundInfo)
+            {
+                jumpTimes = 0;
+            }
+
+            private void Start()
+            {
+                if (NetworkServer.active)
+                    body.characterMotor.onHitGroundServer += ResetJumps;
+                else
+                    body.characterMotor.onHitGroundAuthority += ResetJumps;
+            }
+
+            private bool canStillJump
+            {
+                get
+                {
+                    return jumpTimes < stack;
+                }
+            }
+
+
             private void Update()
             {
                 if (this.body && this.body.hasAuthority && this.body.inputBank && this.body.inputBank.jump.justPressed)
                 {
-                    if (this.canWallJump)
+                    if (this.canWallJump && this.canStillJump)
                     {
+                        jumpTimes++;
                         this.Activate();
                     }
                 }
