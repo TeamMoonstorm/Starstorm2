@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using RoR2;
 using UnityEngine;
+using R2API;
 namespace EntityStates.Cyborg2
 {
     public class RisingStar : BaseSkillState
@@ -13,17 +14,18 @@ namespace EntityStates.Cyborg2
         
         public static float scanAngle = 30f;
 
-        public static float damageCoefficient = 3f;
+        private static float damageCoefficient = 2f;
         public static float procCoefficient = 1f;
         public static float baseFireDuration = 0.5f;
         public static float force = 150f;
         public static float recoil = 1;
         public static float bloom = .4f;
-        public static float bulletRadius = .4f;
+        private static float bulletRadius = .1f;
         public static float bulletDistance = 150f;
 
         public static float blastRadius = 5f;
 
+        private static float baseExitDuration = 0.3f;
         public static int maxShots = 3;
 
         public static float walkSpeedPenaltyCoefficient = 0.33f;
@@ -44,6 +46,7 @@ namespace EntityStates.Cyborg2
         private int shotsFired;
         private float fireInterval;
         private float fireStopwatch;
+        private float exitTimer;
 
         private string muzzleString = "CannonR";
 
@@ -60,14 +63,14 @@ namespace EntityStates.Cyborg2
             this.targetIndicators = new Dictionary<HurtBox, IndicatorInfo>();
 
             this.fireInterval = baseFireDuration / maxShots / this.attackSpeedStat;
-
+            exitTimer = baseExitDuration / attackSpeedStat;
             base.characterMotor.walkSpeedPenaltyCoefficient = walkSpeedPenaltyCoefficient;
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if(base.fixedAge >= this.scanDuration)
+            if(base.fixedAge >= this.scanDuration && this.shotsFired < maxShots)
             {
                 this.fireStopwatch -= Time.fixedDeltaTime;
                 if (this.fireStopwatch <= 0)
@@ -101,8 +104,12 @@ namespace EntityStates.Cyborg2
             }
             if(this.shotsFired >= maxShots)
             {
-                this.outer.SetNextStateToMain();
-                return;
+                exitTimer -= Time.fixedDeltaTime;
+                if(exitTimer <= 0)
+                {
+                    this.outer.SetNextStateToMain();
+                    return;
+                }         
             }
         }
 
@@ -143,6 +150,7 @@ namespace EntityStates.Cyborg2
             }
         }
 
+        private static float wawaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa = 1.6f;
         private void FireAt(HurtBox hurtBox)
         {
             //vfx
@@ -154,12 +162,10 @@ namespace EntityStates.Cyborg2
             EffectManager.SimpleMuzzleFlash(muzzleFlashPrefab, base.gameObject, muzzleString, false);
             base.characterBody.AddSpreadBloom(bloom);
             base.AddRecoil(-1f * recoil, -1.5f * recoil, -1f * recoil, 1f * recoil);
-            Util.PlaySound(fireSoundString, base.gameObject);         
+            Util.PlayAttackSpeedSound(fireSoundString, base.gameObject, wawaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa);         
 
             Ray aimRay = base.GetAimRay();
-            Vector3 direction = hurtBox != null ? (hurtBox.transform.position - aimRay.origin).normalized : aimRay.direction;
-          
-            // "bulletattack" that explodes
+            Vector3 direction = hurtBox != null ? (hurtBox.transform.position - aimRay.origin).normalized : aimRay.direction;         
             if (base.isAuthority)
             {
 
@@ -168,63 +174,67 @@ namespace EntityStates.Cyborg2
                 if (hurtBox)
                     this.RemoveIndicator(hurtBox);
 
-                EffectManager.SpawnEffect(explosionEffectPrefab, new EffectData
-                {
-                    origin = position,
-                    scale = blastRadius,
-                }, true);
+                //EffectManager.SpawnEffect(explosionEffectPrefab, new EffectData
+                //{
+                //    origin = position,
+                //    scale = blastRadius,
+                //}, true);
 
-                EffectData effectData = new EffectData
-                {
-                    origin = position,
-                    start = aimRay.origin,
-                };
-                int muzzleIndex = base.GetModelChildLocator().FindChildIndex("CannonR"); ///////// XXXXXXXDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-                effectData.SetChildLocatorTransformReference(base.gameObject, muzzleIndex);
-                EffectManager.SpawnEffect(tracerPrefab, effectData, true);
+                //EffectData effectData = new EffectData
+                //{
+                //    origin = position,
+                //    start = aimRay.origin,
+                //};
+                //int muzzleIndex = base.GetModelChildLocator().FindChildIndex("CannonR"); ///////// XXXXXXXDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+                //effectData.SetChildLocatorTransformReference(base.gameObject, muzzleIndex);
+                //EffectManager.SpawnEffect(tracerPrefab, effectData, true);
 
-                new BlastAttack
+                //new BlastAttack
+                //{
+                //    attacker = base.gameObject,
+                //    attackerFiltering = AttackerFiltering.Default,
+                //    position = position,
+                //    teamIndex = base.teamComponent.teamIndex,
+                //    radius = blastRadius,
+                //    baseDamage = damageStat * damageCoefficient,
+                //    damageType = DamageType.Stun1s,
+                //    crit = base.RollCrit(),
+                //    procCoefficient = procCoefficient,
+                //    procChainMask = default(ProcChainMask),
+                //    baseForce = force,
+                //    damageColorIndex = DamageColorIndex.Default,
+                //    falloffModel = BlastAttack.FalloffModel.Linear,
+                //    losType = BlastAttack.LoSType.None,
+                //}.Fire();
+
+                BulletAttack bulletAttack = new BulletAttack
                 {
-                    attacker = base.gameObject,
-                    attackerFiltering = AttackerFiltering.Default,
-                    position = position,
-                    teamIndex = base.teamComponent.teamIndex,
-                    radius = blastRadius,
-                    baseDamage = damageStat * damageCoefficient,
-                    damageType = DamageType.Stun1s,
-                    crit = base.RollCrit(),
-                    procCoefficient = procCoefficient,
-                    procChainMask = default(ProcChainMask),
-                    baseForce = force,
+                    aimVector = direction,
+                    origin = aimRay.origin,
+                    owner = base.gameObject,
+                    damage = damageStat * damageCoefficient,
                     damageColorIndex = DamageColorIndex.Default,
-                    falloffModel = BlastAttack.FalloffModel.Linear,
-                    losType = BlastAttack.LoSType.None,
-                }.Fire();
+                    damageType = DamageType.Stun1s,
+                    falloffModel = BulletAttack.FalloffModel.None,
+                    force = force,
+                    HitEffectNormal = false,
+                    procChainMask = default(ProcChainMask),
+                    procCoefficient = procCoefficient,
+                    maxDistance = bulletDistance,
+                    radius = bulletRadius,
+                    isCrit = base.RollCrit(),
+                    muzzleName = muzzleString,
+                    minSpread = 0,
+                    maxSpread = 0,
+                    hitEffectPrefab = hitEffectPrefab,
+                    smartCollision = true,
+                    tracerEffectPrefab = tracerPrefab,
+                };
+                bulletAttack.AddModdedDamageType(SS2.Survivors.Cyborg2.applyCyborgPrime);
+                bulletAttack.Fire();
             }
 
-            //new BulletAttack
-            //{
-            //    aimVector = direction,
-            //    origin = aimRay.origin,
-            //    owner = base.gameObject,
-            //    damage = damageStat * damageCoefficient,
-            //    damageColorIndex = DamageColorIndex.Default,
-            //    damageType = DamageType.Stun1s,
-            //    falloffModel = BulletAttack.FalloffModel.None,
-            //    force = force,
-            //    HitEffectNormal = false,
-            //    procChainMask = default(ProcChainMask),
-            //    procCoefficient = procCoefficient,
-            //    maxDistance = bulletDistance,
-            //    radius = bulletRadius,
-            //    isCrit = base.RollCrit(),
-            //    muzzleName = muzzleString,
-            //    minSpread = 0,
-            //    maxSpread = 0,
-            //    hitEffectPrefab = hitEffectPrefab,
-            //    smartCollision = true,
-            //    tracerEffectPrefab = TRACERTEMP
-            //}.Fire();
+            
 
         }
 

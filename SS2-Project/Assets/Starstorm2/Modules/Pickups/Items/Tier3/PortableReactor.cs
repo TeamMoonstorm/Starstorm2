@@ -34,8 +34,14 @@ namespace SS2.Items
             shieldEffectPrefab = AssetCollection.FindAsset<GameObject>("ReactorShieldEffect");
 
             CharacterBody.onBodyStartGlobal += ImFuckingInvincible;
-
+            RecalculateStatsAPI.GetStatCoefficients += GetStatCoefficients;
             BuffOverlays.AddBuffOverlay(AssetCollection.FindAsset<BuffDef>("BuffReactor"), AssetCollection.FindAsset<Material>("matReactorBuffOverlay"));
+        }
+
+        private void GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
+        {
+            if (sender.HasBuff(SS2Content.Buffs.BuffReactor))
+                args.moveSpeedMultAdd += 1f;
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -58,7 +64,7 @@ namespace SS2.Items
             }
         }
 
-        public sealed class Behavior : BaseBuffBehaviour, RoR2.IOnIncomingDamageServerReceiver, IBodyStatArgModifier
+        public sealed class Behavior : BaseBuffBehaviour, RoR2.IOnIncomingDamageServerReceiver
         {
             [BuffDefAssociation]
             private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffReactor;
@@ -82,14 +88,11 @@ namespace SS2.Items
                 effectData.SetNetworkedObjectReference(this.CharacterBody.gameObject);
                 EffectManager.SpawnEffect(endEffectPrefab, effectData, true);
             }
-            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
-            {
-                args.moveSpeedMultAdd += 1f;
-            }
+            
 
             public void OnIncomingDamageServer(DamageInfo damageInfo)
             {
-                if (damageInfo.damageType == DamageType.VoidDeath) return;
+                if (!CharacterBody.HasBuff(SS2Content.Buffs.BuffReactor) || damageInfo.damageType == DamageType.VoidDeath) return;
 
                 damageInfo.rejected = true;
 

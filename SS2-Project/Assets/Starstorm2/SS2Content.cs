@@ -102,6 +102,13 @@ namespace SS2
             asyncAssetLoadCoroutines.Start();
             while (!asyncAssetLoadCoroutines.IsDone)
                 yield return null;
+
+            //SS2Log.Info($"Populating UnlockableDefs array from Vanilla Skins...");
+            //SS2AssetRequest<UnlockableDef> udRequest = new SS2AssetRequest<UnlockableDef>(SS2Bundle.Vanilla);
+            //udRequest.StartLoad();
+            //while (!udRequest.IsComplete)
+            //    yield return null;
+            //SS2ContentPack.unlockableDefs.Add(udRequest.Assets.ToArray());
         }
 
         private static IEnumerator LoadVanillaSurvivorBundles()
@@ -166,6 +173,7 @@ namespace SS2
                 Components.EtherealBehavior.Init,
                 Components.VoidBehavior.Init,
                 Void.Init,
+                Storm.Init,
                 () =>
                 {
                     //new Modules.Scenes().Initialize();
@@ -262,7 +270,11 @@ namespace SS2
         }
         public static class Items
         {
+            public static ItemDef AffixStorm;
+
             public static ItemDef ArmedBackpack;
+
+            public static ItemDef BoostCharacterSize;
 
             public static ItemDef BoostCooldowns;
 
@@ -397,6 +409,7 @@ namespace SS2
             public static ItemDef IceTool;
 
            // public static ItemDef WickedStaff;
+            public static ItemDef WeatherRadio;
 
         }
 
@@ -433,7 +446,11 @@ namespace SS2
 
         public static class Buffs
         {
+            public static BuffDef BuffAffixStorm;
+
             public static BuffDef BuffAffixVoid;
+
+            public static BuffDef BuffAffixUltra;
 
             public static BuffDef BuffBackThruster;
 
@@ -448,6 +465,8 @@ namespace SS2
             public static BuffDef BuffChirrGrabFriend;
 
             public static BuffDef BuffChirrRegen;
+
+            public static BuffDef BuffCyborgPrimed;
 
             public static BuffDef BuffChocolate;
 
@@ -571,10 +590,33 @@ namespace SS2
 
             public static BuffDef bdAcridArmorCorrison;
 
+            public static BuffDef bdLunarCurseArmor;
+
+            public static BuffDef bdLunarCurseAttackSpeed;
+
+            public static BuffDef bdLunarCurseCloak;
+
+            public static BuffDef bdLunarCurseCooldownReduction;
+
+            public static BuffDef bdLunarCurseDamage;
+
+            public static BuffDef bdLunarCurseHealth;
+
+            public static BuffDef bdLunarCurseMovementSpeed;
+
+            public static BuffDef bdLunarCurseShield;
+
+            public static BuffDef bdLunarCurseBlind;
+
+            public static BuffDef bdLunarCurseLockSkill;
+
+            public static BuffDef bdLunarCurseNoRegen;
         }
 
         public static class Elites
         {
+            public static EliteDef edStorm;
+
             public static EliteDef edPurple;
 
             public static EliteDef edKinetic;

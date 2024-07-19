@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Networking;
 using SS2.Components;
+using System.Collections.Generic;
 namespace EntityStates.Cyborg2
 {
     public class Teleport : BaseSkillState
@@ -13,8 +14,12 @@ namespace EntityStates.Cyborg2
         private TeleporterProjectile.ProjectileTeleporterOwnership teleporterOwnership;
         private Vector3 teleportTarget;
 
-        public static float exitVelocityCoefficient = 400f;
+        private static float exitVelocityCoefficient = 1.25f;
+        private static float damageRadius = 10f;
+        private static float damageCoefficient = 3f;
         private Vector3 storedVelocity;
+        private bool didTeleport;
+        private Vector3 lastPositionBeforeTeleport;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -39,6 +44,7 @@ namespace EntityStates.Cyborg2
 
             if (NetworkServer.active)
             {
+                
                 base.characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
             }
         }
@@ -66,21 +72,14 @@ namespace EntityStates.Cyborg2
                 //for some reason its 0,0,0 on the same frame the teleporter disappears
                 if(this.teleportTarget != Vector3.zero)
                 {
+                    didTeleport = true;
+                    lastPositionBeforeTeleport = base.characterBody.corePosition;
                     TeleportHelper.TeleportBody(base.characterBody, this.teleportTarget);
                     base.characterDirection.forward = base.GetAimRay().direction;
-                    Vector3 velocity = Vector3.zero;
-                    if(this.teleporterOwnership && this.teleporterOwnership.teleporter)
-                    {
-                        velocity = this.teleporterOwnership.teleporter.GetComponent<Rigidbody>().velocity;
-                    }
-                    velocity *= Teleport.exitVelocityCoefficient;
-                    base.characterMotor.ApplyForce(velocity);
+
 
                     base.SmallHop(base.characterMotor, Teleport.exitHopVelocity);
-                }
-                
-                
-                
+                }             
                 this.outer.SetNextStateToMain();
                 return;
             }
@@ -89,10 +88,27 @@ namespace EntityStates.Cyborg2
 
         public override void OnExit()
         {
-            base.OnExit();
+            base.OnExit();           
+            if (didTeleport)
+            {
+                storedVelocity.y = Mathf.Max(storedVelocity.y, 0);
+                //base.characterMotor.velocity = storedVelocity * exitVelocityCoefficient;
+            }
             if(this.teleporterOwnership)
             {
                 this.teleporterOwnership.DoTeleport();
+                if (NetworkServer.active)
+                {
+                    TeleporterOrb teleporterOrb = new TeleporterOrb();
+                    teleporterOrb.origin = lastPositionBeforeTeleport;
+                    teleporterOrb.totalDuration = this.duration;
+                    teleporterOrb.attacker = base.gameObject;
+                    teleporterOrb.inflictor = base.gameObject;
+                    teleporterOrb.damageValue = characterBody.damage * damageCoefficient;
+                    teleporterOrb.isCrit = base.RollCrit();
+                    teleporterOrb.targetObjects = teleporterOwnership.teleporter.GetTargets();
+                    RoR2.Orbs.OrbManager.instance.AddOrb(teleporterOrb);
+                }
             }
             if (this.camera)
             {

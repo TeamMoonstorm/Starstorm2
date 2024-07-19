@@ -65,6 +65,8 @@ namespace SS2.Items
 
             if (!NetworkServer.active) return;
 
+            EffectManager.SimpleEffect(SS2Assets.LoadAsset<GameObject>("JellyLightningStart", SS2Bundle.Items), damageReport.victimBody.corePosition, Quaternion.identity, true);
+
             int bouncesRemaining = bounceBase + bounceStack * (stack - 1) - 1;
 
 

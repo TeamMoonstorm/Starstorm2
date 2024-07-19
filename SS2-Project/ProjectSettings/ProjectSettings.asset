@@ -256,7 +256,7 @@ PlayerSettings:
   clonedFromGUID: 00000000000000000000000000000000
   templatePackageId: 
   templateDefaultScene: 
-  AndroidTargetArchitectures: 1
+  AndroidTargetArchitectures: 0
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
@@ -275,8 +275,8 @@ PlayerSettings:
     banner: {fileID: 0}
   androidGamepadSupportLevel: 0
   chromeosInputEmulation: 1
-  AndroidValidateAppBundleSize: 1
-  AndroidAppBundleSizeToValidate: 150
+  AndroidValidateAppBundleSize: 0
+  AndroidAppBundleSizeToValidate: 0
   m_BuildTargetIcons: []
   m_BuildTargetPlatformIcons: []
   m_BuildTargetBatching: []
@@ -475,21 +475,21 @@ PlayerSettings:
   switchIsHoldTypeHorizontal: 0
   switchSupportedNpadCount: 8
   switchSocketConfigEnabled: 0
-  switchTcpInitialSendBufferSize: 32
-  switchTcpInitialReceiveBufferSize: 64
-  switchTcpAutoSendBufferSizeMax: 256
-  switchTcpAutoReceiveBufferSizeMax: 256
-  switchUdpSendBufferSize: 9
-  switchUdpReceiveBufferSize: 42
-  switchSocketBufferEfficiency: 4
-  switchSocketInitializeEnabled: 1
-  switchNetworkInterfaceManagerInitializeEnabled: 1
-  switchPlayerConnectionEnabled: 1
-  switchUseMicroSleepForYield: 1
+  switchTcpInitialSendBufferSize: 0
+  switchTcpInitialReceiveBufferSize: 0
+  switchTcpAutoSendBufferSizeMax: 0
+  switchTcpAutoReceiveBufferSizeMax: 0
+  switchUdpSendBufferSize: 0
+  switchUdpReceiveBufferSize: 0
+  switchSocketBufferEfficiency: 0
+  switchSocketInitializeEnabled: 0
+  switchNetworkInterfaceManagerInitializeEnabled: 0
+  switchPlayerConnectionEnabled: 0
+  switchUseMicroSleepForYield: 0
   switchEnableRamDiskSupport: 0
-  switchMicroSleepForYieldTime: 25
+  switchMicroSleepForYieldTime: 0
   switchRamDiskSpaceSize: 12
-  ps4NPAgeRating: 12
+  ps4NPAgeRating: 0
   ps4NPTitleSecret: 
   ps4NPTrophyPackPath: 
   ps4ParentalLevel: 11
@@ -560,7 +560,7 @@ PlayerSettings:
   ps4contentSearchFeaturesUsed: 0
   ps4CompatibilityPS5: 0
   ps4AllowPS5Detection: 0
-  ps4GPU800MHz: 1
+  ps4GPU800MHz: 0
   ps4attribEyeToEyeDistanceSettingVR: 0
   ps4IncludedModules: []
   ps4attribVROutputEnabled: 0
@@ -628,7 +628,7 @@ PlayerSettings:
   managedStrippingLevel: {}
   incrementalIl2cppBuild: {}
   suppressCommonWarnings: 1
-  allowUnsafeCode: 0
+  allowUnsafeCode: 1
   additionalIl2CppArgs: 
   scriptingRuntimeVersion: 1
   gcIncremental: 0
