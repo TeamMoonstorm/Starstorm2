@@ -16,6 +16,7 @@ namespace SS2.Survivors
         public override SS2AssetRequest<AssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<AssetCollection>("acBandit", SS2Bundle.Indev);
 
         public static DamageAPI.ModdedDamageType TranqDamageType { get; set; }
+        public static BuffDef _bdBanditTranquilizer;
 
         public static float tranqDuration = 5f;
         public static float _confuseSlowAmount = 0.5f;
@@ -23,6 +24,8 @@ namespace SS2.Survivors
 
         public override void Initialize()
         {
+            _bdBanditTranquilizer = survivorAssetCollection.FindAsset<BuffDef>("bdBanditTranquilizer");
+
             RegisterTranquilizer();
             R2API.RecalculateStatsAPI.GetStatCoefficients += ModifyStats;
 
@@ -49,10 +52,10 @@ namespace SS2.Survivors
 
         private void ModifyStats(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
-            if (sender.HasBuff(SS2Content.Buffs.bdBanditTranquilizer))
+            if (sender.HasBuff(_bdBanditTranquilizer))
             {
                 // TODO: Might need to do some sort of scaling
-                var buffCount = sender.GetBuffCount(SS2Content.Buffs.bdBanditTranquilizer);
+                var buffCount = sender.GetBuffCount(_bdBanditTranquilizer);
                 args.moveSpeedMultAdd -= _confuseSlowAmount * buffCount;
                 args.attackSpeedMultAdd -= _confuseAttackSpeedSlowAmount * buffCount;
             }
@@ -65,7 +68,7 @@ namespace SS2.Survivors
 
             if (DamageAPI.HasModdedDamageType(damageInfo, TranqDamageType))
             {
-                victimBody.AddTimedBuffAuthority(SS2Content.Buffs.bdBanditTranquilizer.buffIndex, tranqDuration);
+                victimBody.AddTimedBuffAuthority(_bdBanditTranquilizer.buffIndex, tranqDuration);
             }
         }
 
