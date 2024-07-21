@@ -87,7 +87,6 @@ namespace SS2.Items
 
             CharacterBody.onBodyStartGlobal += TerminationSpawnHook;
             GlobalEventManager.onCharacterDeathGlobal += TerminationDeathHook;
-            On.RoR2.Util.GetBestBodyName += AddTerminalName;
             RoR2.Inventory.onInventoryChangedGlobal += CheckTerminationBuff;
             On.RoR2.TeamComponent.SetupIndicator += OverrideTerminalBossMarker;
 
@@ -339,17 +338,6 @@ namespace SS2.Items
                 }
             }
         } //awesome
-
-        private string AddTerminalName(On.RoR2.Util.orig_GetBestBodyName orig, GameObject bodyObject) //i love stealing
-        {
-            var result = orig(bodyObject);
-            CharacterBody characterBody = bodyObject?.GetComponent<CharacterBody>();
-            if (characterBody && characterBody.inventory && characterBody.inventory.GetItemCount(SS2Content.Items.TerminationHelper) > 0)
-            {
-                result = Language.GetStringFormatted("SS2_ITEM_RELICOFTERMINATION_PREFIX", result);
-            }
-            return result;
-        }
 
         public sealed class TerminationBehavior : BaseItemBodyBehavior
         {

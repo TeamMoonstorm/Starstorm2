@@ -18,7 +18,7 @@ namespace EntityStates.Lamp
         private Transform muzzle;
 
         private bool isBlue;
-
+        private bool hasDestroyed;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -38,7 +38,10 @@ namespace EntityStates.Lamp
 
         public void DestroyLamp()
         {
+            if (hasDestroyed) return;
+
             hasPlayedEffect = true;
+            hasDestroyed = true;
             var effect = isBlue ? deathVFXblue : deathVFX;
             EffectManager.SimpleEffect(effect, muzzle.position, muzzle.rotation, true);
             Util.PlaySound("LampImpact", gameObject);
@@ -59,8 +62,8 @@ namespace EntityStates.Lamp
 
         public override void OnExit()
         {
-            base.OnExit();
             DestroyLamp();
+            base.OnExit();          
         }
 
         public override void FixedUpdate()

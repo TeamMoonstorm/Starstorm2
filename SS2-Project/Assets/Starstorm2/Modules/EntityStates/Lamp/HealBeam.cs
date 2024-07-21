@@ -34,6 +34,7 @@ namespace EntityStates.Lamp
             base.OnEnter();
 
             PlayCrossfade("Body", "IdleBuff", 0.3f);
+            Util.PlaySound("FollowerCast", gameObject);
 
             originalMoveSpeed = characterBody.moveSpeed;
 
@@ -43,102 +44,51 @@ namespace EntityStates.Lamp
 
             duration = baseDuration / attackSpeedStat;
             float healRate = healCoefficient * damageStat / duration;
-            Ray aimRay = GetAimRay();
+
             Transform transform = FindModelChild("Muzzle");
             if (NetworkServer.active)
             {
+                TeamMask mask = TeamMask.none;
+                mask.AddTeam(base.teamComponent.teamIndex);
                 hits = new List<HurtBox>();
                 sphereSearch = new SphereSearch();
                 sphereSearch.mask = LayerIndex.entityPrecise.mask;
                 sphereSearch.radius = radius;
-
-                hits.Clear();
-                sphereSearch.ClearCandidates();
                 sphereSearch.origin = characterBody.corePosition;
                 sphereSearch.RefreshCandidates();
-                sphereSearch.FilterCandidatesByDistinctHurtBoxEntities();
+                sphereSearch.FilterCandidatesByHurtBoxTeam(mask);
+                sphereSearch.FilterCandidatesByDistinctHurtBoxEntities();            
                 sphereSearch.GetHurtBoxes(hits);
-
-                if (hits.Count == 0)
-                {
-                    Debug.Log("found no one..");
-                    activatorSkillSlot.AddOneStock();
-                    outer.SetNextStateToMain();
-                }
-                else
-                    Util.PlaySound("FollowerCast", gameObject);
 
                 hbcs = new List<HealBeamController>();
 
                 foreach (HurtBox h in hits)
                 {
                     CharacterBody body = h.healthComponent.body;
-                    if (!(body == null || body.teamComponent.teamIndex != characterBody.teamComponent.teamIndex || body.hasCloakBuff || body.bodyIndex == BodyCatalog.FindBodyIndex("LampBody") || currentBuffedEnemies >= maxBuffedEnemies))
+                    if (CanHeal(body) && currentBuffedEnemies < maxBuffedEnemies)
                     {
-                        Debug.Log("trying t buff");
                         currentBuffedEnemies++;
                         GameObject beam = isBlue ? healBeamPrefabBlue : healBeamPrefab;
                         GameObject beamInstance = Object.Instantiate(beam, transform);
-                        Debug.Log("about to add hbc ");
                         HealBeamController healBeamController = beamInstance.GetComponent<HealBeamController>();
-                        Debug.Log("added hbc");
                         healBeamController.healRate = healRate;
                         healBeamController.target = h;
                         healBeamController.ownership.ownerObject = gameObject;
-                        Debug.Log("adding hbc to hbcs");
                         hbcs.Add(healBeamController);
                         NetworkServer.Spawn(gameObject);
                         body.AddTimedBuff(SS2Content.Buffs.bdLampBuff.buffIndex, duration);
-                        Debug.Log("done");
                     }
                 }
-
-                if (hbcs.Count == 0)
-                {
-                    Debug.Log("wtf?");
-                    activatorSkillSlot.AddOneStock();
-                    outer.SetNextStateToMain();
-                }
-
-                /*BullseyeSearch bullseyeSearch = new BullseyeSearch();
-                bullseyeSearch.teamMaskFilter = TeamMask.none;
-                if (teamComponent)
-                    bullseyeSearch.teamMaskFilter.AddTeam(teamComponent.teamIndex);
-                bullseyeSearch.filterByLoS = false;
-                bullseyeSearch.maxDistanceFilter = 18f;
-                bullseyeSearch.maxAngleFilter = 360f;
-                bullseyeSearch.searchOrigin = aimRay.origin;
-                bullseyeSearch.searchDirection = aimRay.direction;
-                bullseyeSearch.sortMode = BullseyeSearch.SortMode.Angle;
-                bullseyeSearch.RefreshCandidates();
-                bullseyeSearch.FilterOutGameObject(gameObject);
-                target = bullseyeSearch.GetResults().FirstOrDefault();
-                if (transform && target && !target.healthComponent.body.hasCloakBuff && target.healthComponent.body.bodyIndex != BodyCatalog.FindBodyIndex("LampBody"))
-                {
-                    Util.PlaySound("FollowerCast", gameObject);
-                    GameObject beam = isBlue ? healBeamPrefabBlue : healBeamPrefab;
-                    GameObject beamInstance = Object.Instantiate(beam, transform);
-                    healBeamController = beamInstance.GetComponent<HealBeamController>();
-                    healBeamController.healRate = healRate;
-                    healBeamController.target = target;
-                    healBeamController.ownership.ownerObject = gameObject;
-                    NetworkServer.Spawn(gameObject);
-                    target.healthComponent.body.AddTimedBuff(SS2Content.Buffs.bdLampBuff.buffIndex, duration);
-                }
-                else
-                {
-                    activatorSkillSlot.AddOneStock();
-                    outer.SetNextStateToMain();
-                }*/
-
-
             }
+        }
+
+        private bool CanHeal(CharacterBody body)
+        {
+            return body.healthComponent.alive && !body.hasCloakBuff && body.bodyIndex != base.characterBody.bodyIndex;
         }
 
         public override void OnExit()
         {
-            /*if (healBeamController)
-                healBeamController.BreakServer();*/
             PlayCrossfade("Body", "Idle", 0.3f);
             if (hbcs.Count > 0)
             {

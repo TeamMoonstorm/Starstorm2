@@ -786,7 +786,7 @@
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Target">
-											<ObjectRef Name="ProcLightningOnKill" ID="{441EF015-666E-4AB7-9A34-8988DFEF8553}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+											<ObjectRef Name="item_proc_lightningOnKill" ID="{441EF015-666E-4AB7-9A34-8988DFEF8553}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
@@ -1980,6 +1980,62 @@
 									<ReferenceList>
 										<Reference Name="Target">
 											<ObjectRef Name="EtherealSpawn" ID="{87EFD802-2F83-4BC8-BD21-C5280B5FF9F4}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_ethereal_firePillar_loop" ID="{76E53E99-86B5-46E8-B6E3-FA10E690461A}">
+							<ChildrenList>
+								<Action Name="" ID="{144B6175-9769-4907-A00A-D910D3C1CD88}" ShortID="32133156">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="EtherealPillarIdle" ID="{7BE337B8-C926-4183-BF91-F341D7FD7476}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Stop_ethereal_firePillar_loop" ID="{81AC67C3-AC6D-4E8A-832E-C569407F02C5}">
+							<ChildrenList>
+								<Action Name="" ID="{A88F95CF-0A8C-42A7-ADF2-4CBFE47CAA91}" ShortID="526429719">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="2"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="EtherealPillarIdle" ID="{7BE337B8-C926-4183-BF91-F341D7FD7476}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="EtherealPillarSpawn2" ID="{8CF2FF32-06FC-4F97-B7BD-0218FB935FBD}">
+							<ChildrenList>
+								<Action Name="" ID="{678DAFC3-E661-4A17-8BED-434E33EF2BFA}" ShortID="568122836">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="pillarspawn" ID="{776F8F8C-4998-4C6E-A991-FBF2FE4C0B9C}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="EtherealActivaGlobal" ID="{2EBA40C3-9099-49C1-8A39-634C3564D944}">
+							<ChildrenList>
+								<Action Name="" ID="{5E3B46A7-61BB-47B4-874C-21C36A51B9AB}" ShortID="410091459">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="EtherealActivateGlobal" ID="{55224B92-5912-4CFB-A747-28AB2F8274E5}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>

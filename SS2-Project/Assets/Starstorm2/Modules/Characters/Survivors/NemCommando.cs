@@ -10,7 +10,7 @@ using System.Reflection;
 using UnityEngine.Networking;
 using RoR2.ContentManagement;
 using UnityEngine.AddressableAssets;
-
+using System.Collections.Generic;
 namespace SS2.Survivors
 {
     public sealed class NemCommando : SS2Survivor, IContentPackModifier
@@ -107,8 +107,24 @@ namespace SS2.Survivors
                     dotIndex = GougeDotIndex,
                     duration = gougeDuration,
                     damageMultiplier = 1,
+                    maxStacksFromAttacker = 5,
                 };
                 DotController.InflictDot(ref dotInfo);
+
+                // refresh stack timers
+                
+                DotController dotController = DotController.FindDotController(victimBody.gameObject);
+                if (!dotController) return;
+                int j = 0;
+                List<DotController.DotStack> dotStackList = dotController.dotStackList;
+                while (j < dotStackList.Count)
+                {
+                    if (dotStackList[j].dotIndex == GougeDotIndex)
+                    {
+                        dotStackList[j].timer = Mathf.Max(dotStackList[j].timer, gougeDuration);
+                    }
+                    j++;
+                }
             }
         }
 

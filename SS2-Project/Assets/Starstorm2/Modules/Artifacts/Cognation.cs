@@ -42,18 +42,6 @@ namespace SS2.Artifacts
             //For masters since it doesnt have a resource availability, hotpoo!!!!
             ghostMaterial = AssetCollection.FindAsset<Material>("matCognation");
             RoR2Application.onLoad += UpdateBlacklistedMasters;
-            On.RoR2.Util.GetBestBodyName += AddCognateName;
-        }
-
-        private string AddCognateName(On.RoR2.Util.orig_GetBestBodyName orig, GameObject bodyObject) //i love stealing
-        {
-            var result = orig(bodyObject);
-            CharacterBody characterBody = bodyObject?.GetComponent<CharacterBody>();
-            if (characterBody && characterBody.inventory && characterBody.inventory.GetItemCount(SS2Content.Items.Cognation) > 0)
-            {
-                result = Language.GetStringFormatted("SS2_ARTIFACT_COGNATION_PREFIX", result);
-            }
-            return result;
         }
 
         private static void UpdateBlacklistedMasters()

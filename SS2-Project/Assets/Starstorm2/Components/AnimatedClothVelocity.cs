@@ -32,7 +32,7 @@ namespace SS2.Components
                 velocity += new Vector3(x, y, z);
             }
             cloth.externalAcceleration = velocity * intensity;
-            /*if (includeWind && WindZoneController.instance)
+            if (includeWind && WindZoneController.instance)
             {
                 WindZone wind = WindZoneController.instance.windZone;
                 float windIntensity = wind.windMain;
@@ -40,7 +40,7 @@ namespace SS2.Components
                 if (stopwatch % wind.windPulseFrequency <= 0.25f) // tbh a random number, may not work all the time.
                     windIntensity += wind.windPulseMagnitude;
                 cloth.externalAcceleration += wind.transform.forward * windIntensity;
-            }*/
+            }
             stopwatch += Time.deltaTime;
         }
     }
