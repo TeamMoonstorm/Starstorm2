@@ -161,7 +161,7 @@ namespace SS2.Components
         {
             if(stormLevel > 0)
             {
-                this.stateMachine.SetNextState(new EntityStates.Events.Storm(stormLevel, 5f));
+                this.stateMachine.SetNextState(new EntityStates.Events.Storm { stormLevel = stormLevel, lerpDuration = 5f });
             }
             else
             {

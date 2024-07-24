@@ -168,7 +168,6 @@ namespace SS2
             #endregion
         }
 
-        // return the rewardtier with the highest value less than the argument
         public static RewardTierDef GetHighestRewardTier(int value)
         {
             RewardTierDef highestTier = null;

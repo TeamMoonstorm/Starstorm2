@@ -104,6 +104,7 @@ namespace SS2
                 prefabOverride = rewardInfo.prefabOverride,
                 position = this.dropTransform.position,
                 rotation = Quaternion.identity,
+                artifactFlag = rewardInfo.flag,
                 pickupIndex = rewardInfo.pickupIndex,
             }, rotation * vector);
 

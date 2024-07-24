@@ -74,8 +74,9 @@ namespace SS2.Components
 
 		private int CalculateCashoutValue()
         {
-			int valuePerCurse = 6 + (Run.instance.stageClearCount - 1);
-			int stageClearCount = Mathf.Max(CurseManager.GetStageClearCount() - 1, 0); // fucked up fuck fuck redo the curse counting plss
+			int valuePerCurse = 6 + (CurseManager.stageStart - 1);
+			valuePerCurse = Mathf.Min(valuePerCurse, 10);
+			int stageClearCount = Mathf.Max(CurseManager.GetStageClearCount() - 1, 0); 
 			float floatVal = Mathf.Pow(1.33f, stageClearCount) * CurseManager.GetTotal() * valuePerCurse;
 			return Mathf.RoundToInt(floatVal);
         }

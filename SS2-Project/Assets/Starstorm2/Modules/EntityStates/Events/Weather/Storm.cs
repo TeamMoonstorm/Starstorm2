@@ -17,17 +17,11 @@ namespace EntityStates.Events
         private static float chargeFromKill = 0.5f;
         private static float effectLerpDuration = 5f;
         
-        public Storm(int stormLevel, float lerpDuration)
-        {
-            this.stormLevel = stormLevel;
-            this.lerpDuration = lerpDuration;
-        }
-
         private float charge;
         private float chargeStopwatch = 10f;
 
-        private float lerpDuration;
-        private int stormLevel;
+        public float lerpDuration;
+        public int stormLevel;
         private int maxStormLevel;
 
         private float chargeFromKills;
@@ -137,7 +131,7 @@ namespace EntityStates.Events
 
             if (stormLevel < maxStormLevel && charge >= 100f)
             {
-                outer.SetNextState(new Storm(stormLevel: stormLevel + 1, lerpDuration: 15f));
+                outer.SetNextState(new Storm { stormLevel = stormLevel + 1, lerpDuration = 15f });
                 return;
             }
                 
@@ -201,10 +195,12 @@ namespace EntityStates.Events
         public override void OnSerialize(NetworkWriter writer)
         {
             writer.Write(this.stormLevel);
+            writer.Write(this.lerpDuration);
         }
         public override void OnDeserialize(NetworkReader reader)
         {
             this.stormLevel = reader.ReadInt32();
+            this.lerpDuration = reader.ReadSingle();
         }
 
         // am i just stupid? where the fuck is the event
