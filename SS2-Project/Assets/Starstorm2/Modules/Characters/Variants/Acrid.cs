@@ -48,6 +48,8 @@ namespace SS2.Survivors
         {
             corrodingSpitProjectilePrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Croco/CrocoSpit.prefab").WaitForCompletion().InstantiateClone("CorrodingSpitProjectile");
 
+           
+
             var damageAPIComponent = corrodingSpitProjectilePrefab.AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>();
             damageAPIComponent.Add(ArmorCorrison);
         }

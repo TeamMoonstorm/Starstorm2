@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Starstorm2.ContentClasses
 {
-    public abstract class SS2VanillaSurvivor : IContentPiece
+    public abstract class SS2VanillaSurvivor : IContentPiece, IContentPackModifier
     {
         public abstract SS2AssetRequest<AssetCollection> AssetRequest { get; }
 
@@ -32,6 +32,11 @@ namespace Assets.Starstorm2.ContentClasses
             survivorAssetCollection = assetRequest.Asset;
 
              yield break;
+        }
+
+        public void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.AddContentFromAssetCollection(survivorAssetCollection);
         }
     }
 }

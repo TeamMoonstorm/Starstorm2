@@ -138,6 +138,7 @@ namespace SS2
             foreach (var survivor in list)
             {
                 survivor.Initialize();
+                survivor.ModifyContentPack(SS2ContentPack);
             }
         }
 

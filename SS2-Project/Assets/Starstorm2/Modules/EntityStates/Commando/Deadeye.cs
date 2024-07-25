@@ -2,6 +2,8 @@
 using EntityStates.Commando.CommandoWeapon;
 using RoR2;
 using RoR2.Skills;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -72,14 +74,64 @@ namespace EntityStates.Commando
             Util.PlaySound(FireBarrage.fireBarrageSoundString, base.gameObject);
             base.AddRecoil(-0.6f, 0.6f, -0.6f, 0.6f);
 
-            var isCrit = base.RollCrit();
+            // TODO: This is manually set to true for testing, undo this in prod
+            var isCrit = true; //base.RollCrit();
 
             if (base.isAuthority)
             {
-
                 if (isCrit)
                 {
-                    // Do the thing swuff mentioned
+                    RaycastHit hit;
+                    // Does the ray intersect any objects excluding the player layer
+                    if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, LayerIndex.world.mask))
+                    {
+                        if (hit.point != null)
+                        {
+                            SphereSearch sphereSearch = new SphereSearch();
+                            sphereSearch.radius = 8;
+                            sphereSearch.origin = hit.point;
+                            sphereSearch.mask = LayerIndex.entityPrecise.mask;
+                            sphereSearch.RefreshCandidates();
+                            sphereSearch.FilterCandidatesByDistinctHurtBoxEntities();
+
+                            HurtBox[] hurtBoxes = sphereSearch.GetHurtBoxes();
+                            int maxExtraBullets = 5;
+                            int numHurtboxes = Math.Min(maxExtraBullets, hurtBoxes.Length);
+
+                            for (int i = 0; i < numHurtboxes; i++)
+                            {
+                                var enemyHurtbox = hurtBoxes[i];
+
+                                if (enemyHurtbox != null)
+                                {
+                                    Vector3 critBulletDirection = enemyHurtbox.transform.position;
+
+                                    var critBullet = new BulletAttack
+                                    {
+                                        owner = base.gameObject,
+                                        weapon = base.gameObject,
+                                        origin = hit.point,
+                                        aimVector = critBulletDirection,
+                                        minSpread = 0f,
+                                        maxSpread = 0f,
+                                        bulletCount = 1U,
+                                        procCoefficient = procCoeff,
+                                        damage = base.characterBody.damage * damageCoeff,
+                                        force = 3,
+                                        falloffModel = BulletAttack.FalloffModel.None,
+                                        tracerEffectPrefab = this.tracerEffectPrefab,
+                                        hitEffectPrefab = this.hitEffectPrefab,
+                                        isCrit = isCrit,
+                                        HitEffectNormal = false,
+                                        smartCollision = true,
+                                        maxDistance = 300f
+                                    };
+
+                                    critBullet.Fire();
+                                }
+                            }
+                        }
+                    }
                 }
 
                 var bullet = new BulletAttack
