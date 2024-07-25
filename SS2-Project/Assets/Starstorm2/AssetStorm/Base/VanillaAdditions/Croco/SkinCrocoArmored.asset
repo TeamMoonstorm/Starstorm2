@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74a4b8a0e9a17f6419d0bf9a23a7c118, type: 3}
+  m_Name: SkinCrocoArmored
+  m_EditorClassIdentifier: 
+  baseSkins: []
+  icon: {fileID: 21300000, guid: a6b622dc722fcc340bf66ca000936870, type: 3}
+  nameToken: SS2_SKIN_CROCO_GRANDMASTERY
+  unlockableName: 
+  unlockableDef: {fileID: 11400000, guid: 8cc332a289f73a0488951ffdcde32add, type: 2}
+  rootObject: {fileID: 0}
+  rendererInfos: []
+  gameObjectActivations: []
+  meshReplacements: []
+  projectileGhostReplacements: []
+  minionSkinReplacements: []
+  _bodyAddress: RoR2/Base/Croco/CrocoBody.prefab
+  _displayAddress: RoR2/Base/Croco/CrocoDisplay.prefab
+  _baseSkins:
+  - _skinAddress: RoR2/Base/Croco/skinCrocoDefault.asset
+    _skinDef: {fileID: 0}
+  _rendererInfos:
+  - defaultMaterial: {fileID: 2100000, guid: 98e04da8c9e26324483565d1220bd1a8, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+    rendererIndex: 0
+  - defaultMaterial: {fileID: 2100000, guid: 8dc44ec726bc7ae47a462071f78ffee9, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+    rendererIndex: 3
+  _gameObjectActivations: []
+  _meshReplacements:
+  - mesh: {fileID: 4300000, guid: 5e04e834a7944ab4aaa54bfd1ddd9ff6, type: 2}
+    rendererIndex: 0
+  - mesh: {fileID: 4300000, guid: c966e8bac3a29424f974e0b20c08f69d, type: 2}
+    rendererIndex: 3
+  _projectileGhostReplacements: []
+  _minionSkinReplacements: []
+  cachedRendererAmount: 0
