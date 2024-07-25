@@ -154,22 +154,22 @@ namespace EntityStates.Executioner2
                         ////var timer = whiffTarget.AddComponent<DestroyOnTimer>();
                         ////timer.duration = 1f;
                         //whiffTarget.AddComponent<NetworkIdentity>();
-                        var whiffTargetInstance = PrefabAPI.InstantiateClone(TaserWhiffTarget, "taserWhiffInstance");
+                        //var whiffTargetInstance = PrefabAPI.InstantiateClone(TaserWhiffTarget, "taserWhiffInstance");
 
 
-                        whiffTargetInstance.AddComponent<TaserWhiffComponent>();
+                        //whiffTargetInstance.AddComponent<TaserWhiffComponent>();
                         //wiffTarget.AddComponent<NetwokIdentity>();
                         //var distance = 28;
                         //var tolerance = 7;
                         //var offset = gameObject.transform.forward * distance;
                         //var position = offset + new Vector3(UnityEngine.Random.Range(-tolerance, tolerance), UnityEngine.Random.Range(0f, 2.0f), UnityEngine.Random.Range(-tolerance, tolerance));
-                        whiffTargetInstance.transform.position = ray;
-                        NetworkServer.Spawn(whiffTargetInstance);
+                        //whiffTargetInstance.transform.position = ray;
+                        //NetworkServer.Spawn(whiffTargetInstance);
 
                         
 
-                        Debug.Log("BENAS : " + ray);
-                        Debug.Log("spawend objewct : " + whiffTargetInstance.transform.position);
+                        Debug.Log("ray eeee : " + ray);
+                        //Debug.Log("spawend objewct : " + whiffTargetInstance.transform.position);
                         Debug.Log("GRAHH !! : " + gameObject.transform.position);
 
                         ExecutionerTaserOrb taserOrb = new ExecutionerTaserOrb();
@@ -182,9 +182,10 @@ namespace EntityStates.Executioner2
                         taserOrb.origin = transform.position;
                         taserOrb.bouncesRemaining = 4;
                         taserOrb.procCoefficient = procCoefficient;
-                        taserOrb.target = whiffTargetInstance.GetComponent<HurtBox>();
+                        taserOrb.target = null;
                         taserOrb.damageColorIndex = DamageColorIndex.Default;
                         taserOrb.damageType = DamageType.Generic;
+                        taserOrb.targetPosition = ray;
                         OrbManager.instance.AddOrb(taserOrb);
                     }
                 }

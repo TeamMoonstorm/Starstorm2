@@ -10,6 +10,8 @@ namespace SS2.Orbs
 {
 	public class ExecutionerTaserOrb : Orb
 	{
+		public Vector3 targetPosition;
+
 		public override void Begin()
 		{
 			base.duration = 0.1f;
@@ -18,7 +20,8 @@ namespace SS2.Orbs
 			EffectData effectData = new EffectData
 			{
 				origin = this.origin,
-				genericFloat = base.duration
+				genericFloat = base.duration,
+				start = this.targetPosition
 			};
 			effectData.SetHurtBoxReference(this.target);
 			EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>(path), effectData, true);
