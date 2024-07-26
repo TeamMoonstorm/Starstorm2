@@ -67,8 +67,7 @@ namespace EntityStates.Commando
             Util.PlaySound(FireBarrage.fireBarrageSoundString, base.gameObject);
             base.AddRecoil(-0.6f, 0.6f, -0.6f, 0.6f);
 
-            // TODO: This is manually set to true for testing, undo this in prod
-            var isCrit = true; //base.RollCrit();
+            var isCrit = base.RollCrit();
 
             if (base.isAuthority)
             {
