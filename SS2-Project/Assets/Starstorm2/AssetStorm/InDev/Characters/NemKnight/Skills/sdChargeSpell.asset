@@ -19,11 +19,12 @@ MonoBehaviour:
   icon: {fileID: 0}
   activationStateMachineName: 
   activationState:
-    _typeName: 
+    _typeName: EntityStates.NemKnight.ChargeSpellsSpecial, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   interruptPriority: 1
   baseRechargeInterval: 1
-  baseMaxStock: 1
-  rechargeStock: 1
+  baseMaxStock: 0
+  rechargeStock: 0
   requiredStock: 1
   stockToConsume: 1
   resetCooldownTimerOnUse: 0
