@@ -582,6 +582,12 @@ namespace SS2
             public static BuffDef bdLunarCurseLockSkill;
 
             public static BuffDef bdLunarCurseNoRegen;
+
+            public static BuffDef bdNukeSpecial;
+
+            public static BuffDef bdNukeSelfDamage;
+
+            public static BuffDef bdIrradiated;
         }
 
         public static class Elites

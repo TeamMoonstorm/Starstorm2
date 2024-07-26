@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using R2API.ScriptableObjects;
-using Moonstorm;
+using MSU;
 using RoR2.Projectile;
 using System.Collections;
 using R2API;
@@ -51,7 +51,7 @@ namespace EntityStates.Nuke.Weapon
                     crit = crit,
                     damageColorIndex = damageColor.DamageColorIndex,
                 };
-                _blastAttack.AddModdedDamageType(Moonstorm.Starstorm2.DamageTypes.Nuclear.NuclearDamageType);
+                _blastAttack.AddModdedDamageType(SS2.Survivors.Nuke.NuclearDamageType);
                 _blastAttack.Fire();
 
                 if(!isGrounded)

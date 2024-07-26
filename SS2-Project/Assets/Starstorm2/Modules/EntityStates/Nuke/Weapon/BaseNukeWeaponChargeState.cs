@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using RoR2;
-using Moonstorm;
-using Moonstorm.Starstorm2.Components;
-using Moonstorm.Starstorm2;
+using MSU;
+using SS2.Components;
+using SS2;
 
 namespace EntityStates.Nuke.Weapon
 {

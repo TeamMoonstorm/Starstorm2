@@ -9,7 +9,7 @@ using UnityEngine;
 using RoR2;
 using RoR2.Projectile;
 
-namespace Moonstorm.Starstorm2.Components
+namespace SS2.Components
 {
     [RequireComponent(typeof(TeamFilter))]
     [RequireComponent(typeof(ProjectileTargetComponent))]

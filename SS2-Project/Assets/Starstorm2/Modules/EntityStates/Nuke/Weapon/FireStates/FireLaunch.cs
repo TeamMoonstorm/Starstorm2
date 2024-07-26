@@ -1,4 +1,4 @@
-﻿using Moonstorm;
+﻿using MSU;
 using R2API;
 using R2API.ScriptableObjects;
 using RoR2;
@@ -56,7 +56,7 @@ namespace EntityStates.Nuke.Weapon
                     crit = RollCrit(),
                     damageColorIndex = damageColor.DamageColorIndex
                 };
-                attack.AddModdedDamageType(Moonstorm.Starstorm2.DamageTypes.Nuclear.NuclearDamageType);
+                attack.AddModdedDamageType(SS2.Survivors.Nuke.NuclearDamageType);
                 attack.Fire();
             }
         }
