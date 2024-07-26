@@ -132,44 +132,18 @@ namespace EntityStates.Executioner2
                     else
                     {
                         Ray aimRay = base.GetAimRay();
+                        //aimRay.direction
                         Vector3 point = aimRay.GetPoint(28);
 
                         //Vector3 axis = Vector3.Cross(Vector3.up, point);
-                        float x = UnityEngine.Random.Range(0f, 25f);
-                        float z = UnityEngine.Random.Range(0f, 360f);
-                        Vector3 vector = Quaternion.Euler(0f, 0f, z) * (Quaternion.Euler(x, 0f, 0f) * Vector3.forward);
-                        Debug.Log("vector: " + vector);
-                        //float y = vector.y;
-                        //vector.y = 0f;
-                        //float angle = (Mathf.Atan2(vector.z, vector.x) * 57.29578f - 90f) * 1;
-                        //float angle2 = Mathf.Atan2(y, vector.magnitude) * 57.29578f * 1;
-                        //Vector3 final = Quaternion.AngleAxis(angle, Vector3.up) * (Quaternion.AngleAxis(angle2, axis) * point);
+                        float x = UnityEngine.Random.Range(0, 25f);
+                        float z = UnityEngine.Random.Range(-90f, 90);
+                        Vector3 vector = Quaternion.Euler(0f, 0f, z) * (Quaternion.Euler(x, 0f, 0f) * aimRay.direction);
+                        Debug.Log(aimRay.direction + " | vector: " + vector + " | " + x + " | " + z);
 
-                        var ray = new Ray(gameObject.transform.position, vector).GetPoint(28);
-
-                        //GameObject whiffTarget = new GameObject();
-                        //var boxc = whiffTarget.AddComponent<BoxCollider>();
-                        //boxc.isTrigger = true;
-                        //var box = whiffTarget.AddComponent<HurtBox>();
-                        ////var timer = whiffTarget.AddComponent<DestroyOnTimer>();
-                        ////timer.duration = 1f;
-                        //whiffTarget.AddComponent<NetworkIdentity>();
-                        //var whiffTargetInstance = PrefabAPI.InstantiateClone(TaserWhiffTarget, "taserWhiffInstance");
-
-
-                        //whiffTargetInstance.AddComponent<TaserWhiffComponent>();
-                        //wiffTarget.AddComponent<NetwokIdentity>();
-                        //var distance = 28;
-                        //var tolerance = 7;
-                        //var offset = gameObject.transform.forward * distance;
-                        //var position = offset + new Vector3(UnityEngine.Random.Range(-tolerance, tolerance), UnityEngine.Random.Range(0f, 2.0f), UnityEngine.Random.Range(-tolerance, tolerance));
-                        //whiffTargetInstance.transform.position = ray;
-                        //NetworkServer.Spawn(whiffTargetInstance);
-
-                        
+                        var ray = new Ray(gameObject.transform.position, aimRay.direction).GetPoint(28);
 
                         Debug.Log("ray eeee : " + ray);
-                        //Debug.Log("spawend objewct : " + whiffTargetInstance.transform.position);
                         Debug.Log("GRAHH !! : " + gameObject.transform.position);
 
                         ExecutionerTaserOrb taserOrb = new ExecutionerTaserOrb();
