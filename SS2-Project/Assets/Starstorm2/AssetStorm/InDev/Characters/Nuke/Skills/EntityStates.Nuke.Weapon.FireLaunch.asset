@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: EntityStates.Nuke.Weapon.FireLaunch
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.Nuke.Weapon.FireLaunch, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: minLaunchSpeed
+      fieldValue:
+        stringValue: 30
+        objectValue: {fileID: 0}
+    - fieldName: maxLaunchSpeed
+      fieldValue:
+        stringValue: 75
+        objectValue: {fileID: 0}
+    - fieldName: damageColor
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 11400000, guid: f34e50c606eb91a40bcd8fbbdb000999, type: 2}
+    - fieldName: baseForce
+      fieldValue:
+        stringValue: 10
+        objectValue: {fileID: 0}
+    - fieldName: baseRadius
+      fieldValue:
+        stringValue: 5
+        objectValue: {fileID: 0}
+    - fieldName: procCoefficient
+      fieldValue:
+        stringValue: 0.5
+        objectValue: {fileID: 0}
+    - fieldName: bonusForce
+      fieldValue:
+        stringValue: 0 20 0
+        objectValue: {fileID: 0}
+    - fieldName: baseDuration
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
