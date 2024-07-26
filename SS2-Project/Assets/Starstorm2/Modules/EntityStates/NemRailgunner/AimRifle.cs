@@ -1,14 +1,13 @@
-﻿using RoR2.Skills;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace EntityStates.NemKnight
+namespace EntityStates.NemRailgunner
 {
-    public class SpearPrimary : BasicMeleeAttack, SteppedSkillDef.IStepSetter
+    public class AimRifle : BaseSkillState
     {
-        public void SetStep(int i)
-        {
-        }
-
         public float baseDuration = 0.5f;
         private float duration;
 
