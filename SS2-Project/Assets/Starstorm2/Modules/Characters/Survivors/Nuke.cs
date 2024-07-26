@@ -10,7 +10,6 @@ using UnityEngine.AddressableAssets;
 
 namespace SS2.Survivors
 {
-#if DEBUG
     public class Nuke : SS2Survivor
     {
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acNuke", SS2Bundle.Nuke);
@@ -29,8 +28,8 @@ namespace SS2.Survivors
             var damageColor = AssetCollection.FindAsset<SerializableDamageColor>("NukeDamageColor");
             ColorsAPI.AddSerializableDamageColor(damageColor);
 
-            _dbdNuclearSickness = AssetCollection.FindAsset<DotBuffDef>("dbdNuclearSickness");
-            _dbdNuclearSickness.Init();
+            /*_dbdNuclearSickness = AssetCollection.FindAsset<DotBuffDef>("dbdNuclearSickness");
+            _dbdNuclearSickness.Init();*/
         }
 
         private void InflictNuclearSickness(DamageReport report)
@@ -82,7 +81,6 @@ namespace SS2.Survivors
             }
         }
     }
-#endif
     /*public class Nuke : SurvivorBase
     {
         public override SurvivorDef SurvivorDef => SS2Assets.LoadAsset<SurvivorDef>("Nuke", SS2Bundle.Indev);
