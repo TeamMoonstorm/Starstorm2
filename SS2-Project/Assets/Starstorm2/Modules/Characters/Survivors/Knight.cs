@@ -5,10 +5,8 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using RoR2.ContentManagement;
 using R2API;
-using static MSU.BaseBuffBehaviour;
 using EntityStates;
 using System;
-#if DEBUG
 namespace SS2.Survivors
 {
     public sealed class Knight : SS2Survivor
@@ -150,4 +148,3 @@ namespace SS2.Survivors
         }
     }
 }
-#endif
