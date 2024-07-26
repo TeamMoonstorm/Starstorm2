@@ -24,6 +24,7 @@ namespace SS2.Survivors
         public static float _maxDebuffAmount = 0.5f;
         public static float _sleepCountThreshold = 3;
         public static float _sleepDuration = 3;
+        public static float _armorLoseAmount = 25;
 
         public override void Initialize()
         {
@@ -68,8 +69,11 @@ namespace SS2.Survivors
                     SetStateOnHurt setStateOnHurt = sender.GetComponent<SetStateOnHurt>();
                     if (setStateOnHurt) setStateOnHurt.SetStun(_sleepDuration);
 
+                    //Remove a stack of tranq
+                    sender.RemoveOldestTimedBuff(_bdBanditTranquilizer);
+
                     // Make them vulnerable
-                    // TODO
+                    args.armorAdd -= _armorLoseAmount;
                 }
             }
         }

@@ -24,31 +24,24 @@ namespace EntityStates.Commando
         public GameObject tracerEffectPrefab = FireBarrage.tracerEffectPrefab;
 
         private int pistolSide = 0;
+        private string pistolEffectMuzzleString = "FirePistol, Right";
+        private string pistolEffectAnimationString = "Gesture Additive, Right";
 
         private void PlayPistolAnimation()
         {
-            if (pistolSide % 1 == 0)
+            base.PlayAnimation(pistolEffectAnimationString, pistolEffectMuzzleString);
+            if (FireBarrage.effectPrefab)
             {
-                base.PlayAnimation("Gesture Additive, Right", "FirePistol, Right");
-                if (FireBarrage.effectPrefab)
-                {
-                    EffectManager.SimpleMuzzleFlash(FireBarrage.effectPrefab, base.gameObject, "MuzzleRight", false);
-                }
-            } 
-            else
-            {
-                base.PlayAnimation("Gesture Additive, Left", "FirePistol, Left");
-                if (FireBarrage.effectPrefab)
-                {
-                    EffectManager.SimpleMuzzleFlash(FireBarrage.effectPrefab, base.gameObject, "MuzzleLeft", false);
-                }
+                EffectManager.SimpleMuzzleFlash(FireBarrage.effectPrefab, base.gameObject, "MuzzleLeft", false);
             }
+            
         }
 
         void SteppedSkillDef.IStepSetter.SetStep(int i)
         {
             pistolSide = i;
-            Debug.Log("PISTOL SIDE: " + pistolSide);
+            pistolEffectMuzzleString = (pistolSide == 0) ? "FirePistol, Left" : "FirePistol, Right";
+            pistolEffectAnimationString = (pistolSide == 0) ? "Gesture Additive, Left" : "Gesture Additive, Right";
         }
 
         public override void OnSerialize(NetworkWriter writer)
@@ -88,7 +81,7 @@ namespace EntityStates.Commando
                         if (hit.point != null)
                         {
                             SphereSearch sphereSearch = new SphereSearch();
-                            sphereSearch.radius = 8;
+                            sphereSearch.radius = 20;
                             sphereSearch.origin = hit.point;
                             sphereSearch.mask = LayerIndex.entityPrecise.mask;
                             sphereSearch.RefreshCandidates();
@@ -102,9 +95,10 @@ namespace EntityStates.Commando
                             {
                                 var enemyHurtbox = hurtBoxes[i];
 
-                                if (enemyHurtbox != null)
+                                if (enemyHurtbox != null && base.isAuthority)
                                 {
-                                    Vector3 critBulletDirection = enemyHurtbox.transform.position;
+                                    Vector3 enemyPosition = enemyHurtbox.transform.position;
+                                    Vector3 critBulletDirection = enemyPosition - hit.point;
 
                                     var critBullet = new BulletAttack
                                     {
@@ -114,6 +108,7 @@ namespace EntityStates.Commando
                                         aimVector = critBulletDirection,
                                         minSpread = 0f,
                                         maxSpread = 0f,
+                                        radius = 5,
                                         bulletCount = 1U,
                                         procCoefficient = procCoeff,
                                         damage = base.characterBody.damage * damageCoeff,
@@ -146,6 +141,7 @@ namespace EntityStates.Commando
                     procCoefficient = procCoeff,
                     damage = base.characterBody.damage * damageCoeff,
                     force = 3,
+                    radius = 5,
                     falloffModel = BulletAttack.FalloffModel.None,
                     tracerEffectPrefab = this.tracerEffectPrefab,
                     muzzleName = "MuzzleRight",
