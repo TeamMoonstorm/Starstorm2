@@ -24,22 +24,19 @@ namespace EntityStates.Nuke.Weapon
 
         public NukeSelfDamageController SelfDamageController { get; private set; }
         public float CurrentCharge { get; protected set; }
-#if DEBUG
-        public string TypeName { get; private set; }
-#endif
         private float chargeGain;
         public override void OnEnter()
         {
             base.OnEnter();
-            SelfDamageController = GetComponent<NukeSelfDamageController>();
             CurrentCharge = startingChargeCoefficient;
             chargeGain = baseChargeGain * attackSpeedStat;
-            if (SelfDamageController.IsImmune)
-                chargeGain *= 2f;
-#if DEBUG
-            TypeName = GetType().Name;
-#endif
-            SelfDamageController.AsValidOrNull()?.SetDefaults(this);
+            if(gameObject.TryGetComponent<NukeSelfDamageController>(out var ctrl))
+            {
+                SelfDamageController = ctrl;
+                if (SelfDamageController.IsImmune)
+                    chargeGain *= 2f;
+                SelfDamageController.AsValidOrNull()?.SetDefaults(this);
+            }
         }
 
         public override void FixedUpdate()
@@ -47,22 +44,13 @@ namespace EntityStates.Nuke.Weapon
             base.FixedUpdate();
             if(IsKeyDownAuthority())
             {
-#if DEBUG
-                var oldCharge = CurrentCharge;
                 CurrentCharge += chargeGain * Time.fixedDeltaTime;
-                SS2Log.Info($"{TypeName} previousCharge: {oldCharge} - newCharge: {CurrentCharge}");
-#else
-                CurrentCharge += chargeGain * Time.fixedDeltaTime;
-#endif
                 if (SelfDamageController)
                     SelfDamageController.Charge = CurrentCharge;
 
                 if(CurrentCharge > chargeCoefficientHardCap)
                 {
                     CurrentCharge = chargeCoefficientHardCap;
-#if DEBUG
-                    SS2Log.Info($"{TypeName} hard cap reached. currentCharge: {CurrentCharge}, hardCap: {chargeCoefficientHardCap}");
-#endif
                     Fire();
                 }
             }

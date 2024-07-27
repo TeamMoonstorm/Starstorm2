@@ -588,6 +588,8 @@ namespace SS2
             public static BuffDef bdNukeSelfDamage;
 
             public static BuffDef bdIrradiated;
+
+            public static BuffDef dbdNuclearSickness;
         }
 
         public static class Elites

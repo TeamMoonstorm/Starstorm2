@@ -39,6 +39,7 @@ namespace EntityStates.Nuke.Weapon
             GameObject earlyTarget = null;
             if(Util.CharacterRaycast(gameObject, aimRay, out var hitInfo, 1024f, LayerIndex.entityPrecise.mask, QueryTriggerInteraction.UseGlobal))
             {
+                Debug.Log(hitInfo.collider);
                 if(hitInfo.collider)
                 {
                     earlyTarget = hitInfo.collider.gameObject;
@@ -47,7 +48,6 @@ namespace EntityStates.Nuke.Weapon
 
             FireProjectileInfo projectileInfo = new FireProjectileInfo
             {
-                target = earlyTarget,
                 crit = RollCrit(),
                 position = aimRay.origin,
                 rotation = Util.QuaternionSafeLookRotation(aimRay.direction),
@@ -59,6 +59,10 @@ namespace EntityStates.Nuke.Weapon
                 useSpeedOverride = true,
                 speedOverride = baseSpeed * Charge,
             };
+            if(earlyTarget)
+            {
+                projectileInfo.target = earlyTarget;
+            }
             ProjectileManager.instance.FireProjectile(projectileInfo);
         }
 

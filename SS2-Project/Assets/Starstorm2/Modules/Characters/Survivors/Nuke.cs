@@ -15,21 +15,58 @@ namespace SS2.Survivors
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acNuke", SS2Bundle.Nuke);
 
         public static DamageAPI.ModdedDamageType NuclearDamageType { get; private set; }
-        private DotBuffDef _dbdNuclearSickness;
+        public static DotController.DotIndex NuclearSicknessDotIndex => _dbdNuclearSickness.DotIndex;
+        private static DotBuffDef _dbdNuclearSickness;
         public override void Initialize()
         {
             FindAndInitAssets();
             NuclearDamageType = DamageAPI.ReserveDamageType();
             GlobalEventManager.onServerDamageDealt += InflictNuclearSickness;
+            R2API.RecalculateStatsAPI.GetStatCoefficients += StatChanges;
+            ModifyPrefabs();
+        }
+
+        private void StatChanges(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
+        {
+            var irradiatedBuffCount = (float)sender.GetBuffCount(SS2Content.Buffs.bdIrradiated);
+            var sicknessBuffCount = (float)sender.GetBuffCount(SS2Content.Buffs.dbdNuclearSickness);
+
+            float finalCount = 0;
+
+            if(irradiatedBuffCount > 0 && sicknessBuffCount > 0)
+            {
+                finalCount = (irradiatedBuffCount + sicknessBuffCount) / 2;
+            }
+            else
+            {
+                finalCount += sicknessBuffCount;
+                finalCount += irradiatedBuffCount;
+            }
+            args.levelMultAdd -= finalCount / 10;
+            args.armorAdd -= sicknessBuffCount * 10;
         }
 
         private void FindAndInitAssets()
         {
             var damageColor = AssetCollection.FindAsset<SerializableDamageColor>("NukeDamageColor");
             ColorsAPI.AddSerializableDamageColor(damageColor);
+            damageColor = AssetCollection.FindAsset<SerializableDamageColor>("NukeSelfDamageColor");
+            ColorsAPI.AddSerializableDamageColor(damageColor);
 
-            /*_dbdNuclearSickness = AssetCollection.FindAsset<DotBuffDef>("dbdNuclearSickness");
-            _dbdNuclearSickness.Init();*/
+            _dbdNuclearSickness = AssetCollection.FindAsset<DotBuffDef>("dbdNuclearSickness");
+            _dbdNuclearSickness.Init();
+        }
+
+        private void ModifyPrefabs()
+        {
+            var cb = CharacterPrefab.GetComponent<CharacterBody>();
+            cb.preferredPodPrefab = Resources.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod");
+            cb._defaultCrosshairPrefab = Resources.Load<GameObject>("Prefabs/Crosshair/StandardCrosshair");
+            var ctp = CharacterPrefab.GetComponent<CameraTargetParams>();
+            ctp.cameraParams = Addressables.LoadAssetAsync<CharacterCameraParams>("RoR2/Base/Croco/ccpCroco.asset").WaitForCompletion();
+
+            AssetCollection.FindAsset<GameObject>("NukeSludgeProjectile").AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>().Add(NuclearDamageType);
+            AssetCollection.FindAsset<GameObject>("NukePoolDOT").AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>().Add(NuclearDamageType);
         }
 
         private void InflictNuclearSickness(DamageReport report)
@@ -52,7 +89,10 @@ namespace SS2.Survivors
                     };
                     DotController.InflictDot(ref dotInfo);
                 }
-                victimBody.AddTimedBuff(SS2Content.Buffs.bdIrradiated, 2, 10);
+                else
+                {
+                    victimBody.AddTimedBuff(SS2Content.Buffs.bdIrradiated, 2, 10);
+                }
             }
         }
 
@@ -61,7 +101,7 @@ namespace SS2.Survivors
             return true;
         }
 
-        public class NukeRadiationSicknessBehaviour : BaseBuffBehaviour, IBodyStatArgModifier, IOnIncomingDamageOtherServerReciever
+        /*public class NukeRadiationSicknessBehaviour : BaseBuffBehaviour, IBodyStatArgModifier, IOnIncomingDamageOtherServerReciever
         {
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
             {
@@ -79,7 +119,7 @@ namespace SS2.Survivors
                 var dmg = damageInfo.damage;
                 damageInfo.damage += (dmg * (BuffCount / 10));
             }
-        }
+        }*/
     }
     /*public class Nuke : SurvivorBase
     {
