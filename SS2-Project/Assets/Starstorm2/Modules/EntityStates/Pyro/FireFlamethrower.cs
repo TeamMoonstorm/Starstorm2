@@ -3,6 +3,7 @@ using SS2.Components;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace EntityStates.Pyro
 {
@@ -45,6 +46,8 @@ namespace EntityStates.Pyro
 
             stopwatch = 0f;
 
+            hasBegunFlamethrower = false;
+
             duration = baseDuration / attackSpeedStat;
             entryDuration = baseEntryDuration / attackSpeedStat;
             tickRate = baseTickFrequency / attackSpeedStat;
@@ -53,8 +56,10 @@ namespace EntityStates.Pyro
             if (modelTransform)
             {
                 childLocator = modelTransform.GetComponent<ChildLocator>();
-                flames = childLocator.FindChild("Flames").GetComponent<ParticleSystem>();
+                //flames = childLocator.FindChild("Flames").GetComponent<ParticleSystem>();
             }
+
+            impactEffectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/MissileExplosionVFX.prefab").WaitForCompletion();
 
             //playanimation
         }
@@ -67,6 +72,7 @@ namespace EntityStates.Pyro
 
             if (stopwatch >= entryDuration && !hasBegunFlamethrower)
             {
+                //Debug.Log("entering flamethrower");
                 hasBegunFlamethrower = true;
                 Fire(muzzleString);
             }
@@ -74,9 +80,10 @@ namespace EntityStates.Pyro
             if (hasBegunFlamethrower)
             {
                 flamethrowerStopwatch += Time.fixedDeltaTime;
-                float tickRate = 1f / baseTickFrequency / attackSpeedStat;
+                float tickRate = baseTickFrequency / attackSpeedStat;
                 if (flamethrowerStopwatch > tickRate)
                 {
+                    //Debug.Log("ticking flamethrower");
                     flamethrowerStopwatch -= tickRate;
                     Fire(muzzleString);
                 }
@@ -85,6 +92,7 @@ namespace EntityStates.Pyro
             if (stopwatch >= baseDuration && !inputBank.skill1.down && isAuthority)
             {
                 outer.SetNextStateToMain();
+                //Debug.Log("exiting flamethrower");
                 return;
             }
         }
@@ -92,6 +100,8 @@ namespace EntityStates.Pyro
         private void Fire(string muzzleString)
         {
             DamageType damageType;
+
+            //Debug.Log("Firing");
 
             if (pc.heat >= heatIgniteThreshold)
                 damageType = (Util.CheckRoll(igniteChanceHighHeat, characterBody.master) ? DamageType.IgniteOnHit : DamageType.Generic);
@@ -129,6 +139,8 @@ namespace EntityStates.Pyro
 
                 if (pc)
                     pc.AddHeat(heatPerTick);
+
+                //Debug.Log("Fired");
             }
         }
 

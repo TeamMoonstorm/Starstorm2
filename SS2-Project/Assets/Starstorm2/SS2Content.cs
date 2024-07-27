@@ -610,7 +610,9 @@ namespace SS2
 
             public static SurvivorDef survivorNemCaptain;
 
-            public static SurvivorDef survivorKnight; 
+            public static SurvivorDef survivorKnight;
+
+            public static SurvivorDef survivorPyro;
 
             public static SurvivorDef NemMerc;
         }

@@ -9,10 +9,12 @@ namespace SS2
     [CreateAssetMenu(menuName = "Starstorm2/SkillDef/HeatSkillDef")]
     public class HeatSkillDef : SkillDef
     {
-        [Tooltip("The amount of heat consumed by this skill.")]
+        [Tooltip("The amount of heat required for this skill.")]
         public float heatValue = 0;
+        [Tooltip("The amount of heat consumed by this skill.")]
+        public float heatConsumed = 0;
         [Tooltip("If the skill can be casted when there is insufficient heat.")]
-        public bool canCastIfWillOverstress = false;
+        public bool canCastIfLowHeat = false;
         public override BaseSkillInstanceData OnAssigned([NotNull] GenericSkill skillSlot)
         {
             return new InstanceData
@@ -37,7 +39,7 @@ namespace SS2
         {
             base.OnExecute(skillSlot);
             PyroController ncc = ((InstanceData)skillSlot.skillInstanceData).pc;
-            ncc.AddHeat(heatValue);
+            ncc.AddHeat(heatConsumed);
         }
 
         protected class InstanceData : SkillDef.BaseSkillInstanceData
