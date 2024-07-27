@@ -336,7 +336,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customName: Weapon
   initialStateType:
-    _typeName: 
+    _typeName: RoR2.RouletteChestController+Idle, RoR2, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   mainStateType:
     _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &241779594850744952
@@ -477,7 +478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeedPenaltyCoefficient: 1
-  characterDirection: {fileID: 0}
+  characterDirection: {fileID: 1301156465497949038}
   muteWalkMotion: 0
   mass: 100
   airControl: 0.25
@@ -557,7 +558,7 @@ MonoBehaviour:
   magnetiCharge: 0
   dontShowHealthbar: 0
   globalDeathEventChanceCoefficient: 1
-  body: {fileID: 0}
+  body: {fileID: 8530518001122098039}
 --- !u!114 &4765393344668698342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -598,10 +599,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathStateMachine: {fileID: 5072596841796980718}
   deathState:
-    _typeName: 
+    _typeName: EntityStates.GenericCharacterDeath, RoR2, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   idleStateMachine:
   - {fileID: 2818190628323442051}
-  - {fileID: 0}
+  - {fileID: 5072596841796980718}
 --- !u!114 &1827339712691547538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -817,6 +819,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: mdlKnight
       objectReference: {fileID: 0}
+    - target: {fileID: 5561807258090426592, guid: 2e15e48e45bae20429f874f2b2323ffa,
+        type: 3}
+      propertyPath: soundCenter
+      value: 
+      objectReference: {fileID: 7725647466612521720}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e15e48e45bae20429f874f2b2323ffa, type: 3}
 --- !u!4 &7372031040038693479 stripped
