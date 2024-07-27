@@ -131,21 +131,38 @@ namespace EntityStates.Executioner2
                     }
                     else
                     {
+                        //Ray aimRay = base.GetAimRay();
+                        ////aimRay.direction
+                        //Vector3 point = aimRay.GetPoint(28);
+                        //
+                        ////Vector3 axis = Vector3.Cross(Vector3.up, point);
+                        //float x = UnityEngine.Random.Range(0, 25f);
+                        //float z = UnityEngine.Random.Range(-90f, 90);
+                        //Vector3 vector = Quaternion.Euler(0f, 0f, z) * (Quaternion.Euler(x, 0f, 0f) * aimRay.direction);
+                        //Debug.Log(aimRay.direction + " | vector: " + vector + " | " + x + " | " + z);
+                        //
+                        
+                        //
+                        //Debug.Log("ray eeee : " + ray);
+                        //Debug.Log("GRAHH !! : " + gameObject.transform.position);
+
+
                         Ray aimRay = base.GetAimRay();
-                        //aimRay.direction
-                        Vector3 point = aimRay.GetPoint(28);
-
-                        //Vector3 axis = Vector3.Cross(Vector3.up, point);
-                        float x = UnityEngine.Random.Range(0, 25f);
-                        float z = UnityEngine.Random.Range(-90f, 90);
-                        Vector3 vector = Quaternion.Euler(0f, 0f, z) * (Quaternion.Euler(x, 0f, 0f) * aimRay.direction);
-                        Debug.Log(aimRay.direction + " | vector: " + vector + " | " + x + " | " + z);
-
-                        var ray = new Ray(gameObject.transform.position, aimRay.direction).GetPoint(28);
-
-                        Debug.Log("ray eeee : " + ray);
-                        Debug.Log("GRAHH !! : " + gameObject.transform.position);
-
+                        var aimVector = aimRay.direction;
+                        Vector3 axis = Vector3.Cross(Vector3.up, aimVector);
+                        float x = UnityEngine.Random.Range(0, 5f); //maxspread
+                        float z = UnityEngine.Random.Range(0f, 360f);
+                        Vector3 vector = Quaternion.Euler(0f, 0f, z) * (Quaternion.Euler(x, 0f, 0f) * Vector3.forward);
+                        float y = vector.y;
+                        vector.y = 0f;
+                        float angle = (Mathf.Atan2(vector.z, vector.x) * 57.29578f - 90f) * 5; //spreadYawScale
+                        float angle2 = Mathf.Atan2(y, vector.magnitude) * 57.29578f;
+                        var finalVec = (Quaternion.AngleAxis(angle, Vector3.up) * (Quaternion.AngleAxis(angle2, axis) * aimVector));
+                        //range
+                        //HurtBox hitTarget = BootlegCharacterRaycastSingle(gameObject, new Ray(aimRay.origin, aimVector), out Vector3 hitPoint, 28, BulletAttack.defaultStopperMask, QueryTriggerInteraction.UseGlobal);
+                        //Util.CharacterRaycast()
+                        var ray = new Ray(gameObject.transform.position, finalVec).GetPoint(28);
+                        
                         ExecutionerTaserOrb taserOrb = new ExecutionerTaserOrb();
                         taserOrb.bouncedObjects = new List<HealthComponent>();
                         taserOrb.attacker = gameObject;
