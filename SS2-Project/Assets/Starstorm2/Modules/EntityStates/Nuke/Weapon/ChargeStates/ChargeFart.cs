@@ -5,13 +5,13 @@ using UnityEngine;
 
 namespace EntityStates.Nuke.Weapon
 {
-    public class ChargeFart : BaseNukeWeaponChargeState
+    public class ChargeFart : BaseNukeChargeState
     {
         public static float lookThreshold;
 
         private Ray aimRay;
 
-        protected override BaseNukeWeaponFireState GetFireState()
+        protected override SS2.Survivors.Nuke.IChargedState GetFireState()
         {
             aimRay = GetAimRay();
             var normalizedDirection = aimRay.direction.normalized;

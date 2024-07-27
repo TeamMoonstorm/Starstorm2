@@ -28,7 +28,7 @@ namespace SS2.Components
             }
         }
         private float _charge;
-        public float ChargeRemap
+        public float chargeRemap
         {
             get
             {
@@ -40,18 +40,18 @@ namespace SS2.Components
             }
         }
         private float _chargeRemap;
-        public float ChargeSoftCap { get; set; }
-        public float ChargeHardCap { get; set; }
-        public int SelfDamageBuffStacks { get; private set; }
-        public bool IsImmune => CharacterBody.HasBuff(SS2Content.Buffs.bdNukeSpecial);
-        public HealthComponent HealthComponent { get; private set; }
-        public CharacterBody CharacterBody { get; private set; }
+        public float chargeSoftCap { get; set; }
+        public float chargeHardCap { get; set; }
+        public int selfDamageBuffStacks { get; private set; }
+        public bool isImmune => characterBody.HasBuff(SS2Content.Buffs.bdNukeSpecial);
+        public HealthComponent healthComponent { get; private set; }
+        public CharacterBody characterBody { get; private set; }
         private float _timer;
 
         private void Awake()
         {
-            HealthComponent = GetComponent<HealthComponent>();
-            CharacterBody = GetComponent<CharacterBody>();
+            healthComponent = GetComponent<HealthComponent>();
+            characterBody = GetComponent<CharacterBody>();
         }
         private void FixedUpdate()
         {
@@ -66,33 +66,33 @@ namespace SS2.Components
 
         private void SetBuffStacks()
         {
-            if(IsImmune)
+            if(isImmune)
             {
-                SelfDamageBuffStacks = 0;
-                if (CharacterBody.GetBuffCount(SS2Content.Buffs.bdNukeSelfDamage) > 0 && NetworkServer.active)
+                selfDamageBuffStacks = 0;
+                if (characterBody.GetBuffCount(SS2Content.Buffs.bdNukeSelfDamage) > 0 && NetworkServer.active)
                 {
-                    CharacterBody.RemoveBuff(SS2Content.Buffs.bdNukeSelfDamage);
+                    characterBody.RemoveBuff(SS2Content.Buffs.bdNukeSelfDamage);
                 }
                 return;
             }
 
-            ChargeRemap = Util.Remap(Charge, ChargeSoftCap, ChargeHardCap, 0, 1);
-            int newBuffStacks = Mathf.FloorToInt(ChargeRemap * 10);
-            if(newBuffStacks != SelfDamageBuffStacks)
+            chargeRemap = Util.Remap(Charge, chargeSoftCap, chargeHardCap, 0, 1);
+            int newBuffStacks = Mathf.FloorToInt(chargeRemap * 10);
+            if(newBuffStacks != selfDamageBuffStacks)
             {
-                SelfDamageBuffStacks = newBuffStacks;
+                selfDamageBuffStacks = newBuffStacks;
                 if (NetworkServer.active)
-                    CharacterBody.SetBuffCount(SS2Content.Buffs.bdNukeSelfDamage.buffIndex, SelfDamageBuffStacks);
+                    characterBody.SetBuffCount(SS2Content.Buffs.bdNukeSelfDamage.buffIndex, selfDamageBuffStacks);
             }
         }
 
         private void TryDealDamage()
         {
-            if (IsImmune || !NetworkServer.active || SelfDamageBuffStacks < 1)
+            if (isImmune || !NetworkServer.active || selfDamageBuffStacks < 1)
                 return;
 
-            float maxHPCoefficient = _maxHPCoefficientAsDamage * ChargeRemap;
-            float damage = CharacterBody.maxHealth * maxHPCoefficient;
+            float maxHPCoefficient = _maxHPCoefficientAsDamage * chargeRemap;
+            float damage = characterBody.maxHealth * maxHPCoefficient;
             DamageInfo damageInfo = new DamageInfo
             {
                 attacker = gameObject,
@@ -105,14 +105,14 @@ namespace SS2.Components
                 position = transform.position,
                 procCoefficient = 0,
             };
-            HealthComponent.TakeDamage(damageInfo);
+            healthComponent.TakeDamage(damageInfo);
         }
 
-        public void SetDefaults(EntityStates.Nuke.Weapon.BaseNukeWeaponChargeState weaponState)
+        public void SetDefaults(Survivors.Nuke.IChargeableState chargeableState)
         {
-            Charge = weaponState?.CurrentCharge ?? 0;
-            ChargeHardCap = weaponState?.chargeCoefficientHardCap ?? 0;
-            ChargeSoftCap = weaponState?.chargeCoefficientSoftCap ?? 0;
+            Charge = chargeableState?.currentCharge ?? 0;
+            chargeHardCap = chargeableState?.chargeCoefficientHardCap ?? 0;
+            chargeSoftCap = chargeableState?.chargeCoefficientSoftCap ?? 0;
         }
     }
 }

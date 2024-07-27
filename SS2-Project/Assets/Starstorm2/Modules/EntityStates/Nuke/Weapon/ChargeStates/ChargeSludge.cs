@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace EntityStates.Nuke.Weapon
 {
-    public class ChargeSludge : BaseNukeWeaponChargeState, SteppedSkillDef.IStepSetter
+    public class ChargeSludge : BaseNukeChargeState, SteppedSkillDef.IStepSetter
     {
         public static GameObject chargePrefab;
         public static string leftMuzzleChildName;
@@ -44,7 +44,7 @@ namespace EntityStates.Nuke.Weapon
             }
         }
 
-        protected override BaseNukeWeaponFireState GetFireState()
+        protected override SS2.Survivors.Nuke.IChargedState GetFireState()
         {
             var fireSludge = new FireSludge();
             fireSludge.chosenMuzzleString = chosenMuzzle;

@@ -13,7 +13,7 @@ using R2API;
 
 namespace EntityStates.Nuke.Weapon
 {
-    public class FireFart : BaseNukeWeaponFireState
+    public class FireFart : BaseNukeFireState
     {
         public static SerializableDamageColor damageColor;
         public static float extraDamageCoefficient;
@@ -38,10 +38,10 @@ namespace EntityStates.Nuke.Weapon
                     attacker = gameObject,
                     inflictor = gameObject,
                     attackerFiltering = AttackerFiltering.NeverHitSelf,
-                    baseDamage = damageStat * Charge * extraDamageCoefficient,
-                    baseForce = baseForce * Charge,
-                    radius = baseRadius * Charge,
-                    bonusForce = bonusForce * Charge,
+                    baseDamage = damageStat * charge * extraDamageCoefficient,
+                    baseForce = baseForce * charge,
+                    radius = baseRadius * charge,
+                    bonusForce = bonusForce * charge,
                     procCoefficient = procCoefficient,
                     teamIndex = teamComponent.AsValidOrNull()?.teamIndex ?? TeamIndex.None,
                     falloffModel = BlastAttack.FalloffModel.Linear,
@@ -57,13 +57,13 @@ namespace EntityStates.Nuke.Weapon
                 if(!isGrounded)
                 {
                     Vector3 velocity = characterMotor.velocity;
-                    float yVelocity = baseUpwardVelocity * Charge;
+                    float yVelocity = baseUpwardVelocity * charge;
                     velocity.y = Mathf.Min(yVelocity, maxUpwardVelocity);
                     characterMotor.velocity = velocity;
                     FireProjectileInfo fireProjectileInfo = new FireProjectileInfo
                     {
                         crit = crit,
-                        damage = damageStat * Charge * extraDamageCoefficient,
+                        damage = damageStat * charge * extraDamageCoefficient,
                         damageColorIndex = damageColor.DamageColorIndex,
                         owner = gameObject,
                         position = characterBody.footPosition,
@@ -77,7 +77,7 @@ namespace EntityStates.Nuke.Weapon
                     FireProjectileInfo fireProjectileInfo = new FireProjectileInfo
                     {
                         crit = crit,
-                        damage = damageStat * Charge * extraDamageCoefficient,
+                        damage = damageStat * charge * extraDamageCoefficient,
                         damageColorIndex = damageColor.DamageColorIndex,
                         owner = gameObject,
                         position = characterBody.footPosition,

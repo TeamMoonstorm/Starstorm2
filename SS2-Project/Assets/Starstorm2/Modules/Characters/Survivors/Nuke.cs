@@ -101,55 +101,16 @@ namespace SS2.Survivors
             return true;
         }
 
-        /*public class NukeRadiationSicknessBehaviour : BaseBuffBehaviour, IBodyStatArgModifier, IOnIncomingDamageOtherServerReciever
+        public interface IChargeableState
         {
-            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
-            {
-                if (!HasAnyStacks)
-                    return;
+            float currentCharge { get; }
+            float chargeCoefficientSoftCap { get; }
+            float chargeCoefficientHardCap { get; }
+        }
 
-                args.levelMultAdd -= BuffCount / 10;
-            }
-
-            public void OnIncomingDamageOther(HealthComponent victimHealthComponent, DamageInfo damageInfo)
-            {
-                if (!HasAnyStacks)
-                    return;
-
-                var dmg = damageInfo.damage;
-                damageInfo.damage += (dmg * (BuffCount / 10));
-            }
-        }*/
+        public interface IChargedState
+        {
+            float charge { get; set; }
+        }
     }
-    /*public class Nuke : SurvivorBase
-    {
-        public override SurvivorDef SurvivorDef => SS2Assets.LoadAsset<SurvivorDef>("Nuke", SS2Bundle.Indev);
-
-        public override GameObject BodyPrefab => SS2Assets.LoadAsset<GameObject>("NukeBody", SS2Bundle.Indev);
-
-        public override GameObject MasterPrefab => null;
-        public override void Initialize()
-        {
-            base.Initialize();
-            var selfDamage = SS2Assets.LoadAsset<BuffDef>("bdNukeSelfDamage", SS2Bundle.Indev);
-            var immune = SS2Assets.LoadAsset<BuffDef>("bdNukeSpecial", SS2Bundle.Indev);
-
-            HG.ArrayUtils.ArrayAppend(ref SS2Content.Instance.SerializableContentPack.buffDefs, selfDamage);
-            HG.ArrayUtils.ArrayAppend(ref SS2Content.Instance.SerializableContentPack.buffDefs, immune);
-        }
-
-        public override void ModifyPrefab()
-        {
-            base.ModifyPrefab();
-
-            var cb = BodyPrefab.GetComponent<CharacterBody>();
-            cb.preferredPodPrefab = Resources.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod");
-            cb._defaultCrosshairPrefab = Resources.Load<GameObject>("Prefabs/Crosshair/StandardCrosshair");
-            var ctp = BodyPrefab.GetComponent<CameraTargetParams>();
-            ctp.cameraParams = Addressables.LoadAssetAsync<CharacterCameraParams>("RoR2/Base/Croco/ccpCroco.asset").WaitForCompletion();
-
-            SS2Assets.LoadAsset<GameObject>("NukeSludgeProjectile", SS2Bundle.Indev).AddComponent<R2API.DamageAPI.ModdedDamageTypeHolderComponent>().Add(DamageTypes.Nuclear.NuclearDamageType);
-            SS2Assets.LoadAsset<GameObject>("NukePoolDOT", SS2Bundle.Indev).AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>().Add(DamageTypes.Nuclear.NuclearDamageType);
-        }
-    }*/
 }

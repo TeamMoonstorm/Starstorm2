@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace EntityStates.Nuke.Weapon
 {
-    public class FireCraterFart : BaseNukeWeaponFireState
+    public class FireCraterFart : BaseNukeFireState
     {
         public static SerializableDamageColor damageColor;
         public static float extraDamageCoefficient;
@@ -38,7 +38,7 @@ namespace EntityStates.Nuke.Weapon
             if(isAuthority)
             {
                 isCrit = RollCrit();
-                float yVelocity = -(baseDownardsVelocity * Charge);
+                float yVelocity = -(baseDownardsVelocity * charge);
                 characterMotor.velocity.y = Mathf.Min(yVelocity, maxDownardsVelocity);
                 characterMotor.onMovementHit += Fart;
             }
@@ -57,10 +57,10 @@ namespace EntityStates.Nuke.Weapon
                         attacker = gameObject,
                         inflictor = gameObject,
                         attackerFiltering = AttackerFiltering.NeverHitSelf,
-                        baseDamage = damageStat * extraDamageCoefficient * Charge,
-                        baseForce = baseForce * Charge,
-                        radius = baseRadius * Charge,
-                        bonusForce = bonusForce * Charge,
+                        baseDamage = damageStat * extraDamageCoefficient * charge,
+                        baseForce = baseForce * charge,
+                        radius = baseRadius * charge,
+                        bonusForce = bonusForce * charge,
                         procCoefficient = procCoefficient,
                         teamIndex = teamComponent.AsValidOrNull()?.teamIndex ?? TeamIndex.None,
                         falloffModel = BlastAttack.FalloffModel.SweetSpot,
@@ -75,7 +75,7 @@ namespace EntityStates.Nuke.Weapon
                     FireProjectileInfo info = new FireProjectileInfo
                     {
                         crit = isCrit,
-                        damage = damageStat * extraDamageCoefficient * Charge,
+                        damage = damageStat * extraDamageCoefficient * charge,
                         damageColorIndex = damageColor.DamageColorIndex,
                         owner = gameObject,
                         position = characterBody.footPosition,

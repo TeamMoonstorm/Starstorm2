@@ -10,30 +10,22 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: EntityStates.Nuke.Weapon.ChargeLaunch
+  m_Name: EntityStates.Nuke.FireFusionImpulse
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Nuke.Weapon.ChargeLaunch, Starstorm2, Version=1.0.0.0,
+    assemblyQualifiedName: EntityStates.Nuke.FireFusionImpulse, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
-    - fieldName: walkSpeedPenaltyCoefficient
+    - fieldName: minLaunchSpeed
       fieldValue:
-        stringValue: 0.3
+        stringValue: 20
         objectValue: {fileID: 0}
-    - fieldName: startingChargeCoefficient
+    - fieldName: maxLaunchSpeed
       fieldValue:
-        stringValue: 3
+        stringValue: 90
         objectValue: {fileID: 0}
-    - fieldName: baseChargeGain
+    - fieldName: baseDuration
       fieldValue:
-        stringValue: 2
-        objectValue: {fileID: 0}
-    - fieldName: chargeCoefficientSoftCap
-      fieldValue:
-        stringValue: 6
-        objectValue: {fileID: 0}
-    - fieldName: chargeCoefficientHardCap
-      fieldValue:
-        stringValue: 9
+        stringValue: 1
         objectValue: {fileID: 0}

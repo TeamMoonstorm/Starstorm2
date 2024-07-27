@@ -18,10 +18,10 @@ MonoBehaviour:
   keywordTokens:
   - SS2_KEYWORD_CHARGEABLE
   icon: {fileID: 0}
-  activationStateMachineName: Weapon
+  activationStateMachineName: Body
   activationState:
-    _typeName: EntityStates.Nuke.Weapon.ChargeLaunch, Starstorm2, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    _typeName: EntityStates.Nuke.ChargeImpulse, Starstorm2, Version=1.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   interruptPriority: 1
   baseRechargeInterval: 6
   baseMaxStock: 1

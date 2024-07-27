@@ -9,21 +9,14 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace EntityStates.Nuke.Weapon
+namespace EntityStates.Nuke
 {
-    public class FireLaunch : BaseNukeWeaponFireState
+    public class FireFusionImpulse : BaseNukeFireState
     {
         [Header("Launch Parameters")]
         public static float minLaunchSpeed;
         public static float maxLaunchSpeed;
         public static float baseDuration;
-
-        [Header("Explosion Parameters")]
-        public static SerializableDamageColor damageColor;
-        public static float baseForce;
-        public static float baseRadius;
-        public static float procCoefficient;
-        public static Vector3 bonusForce;
 
         private float _launchSpeed;
         private Vector3 _velocity;
@@ -34,30 +27,11 @@ namespace EntityStates.Nuke.Weapon
             if(isAuthority)
             {
                 characterMotor.Motor.ForceUnground();
-                _velocity = CalculateLaunchVelocity(characterMotor.velocity, GetAimRay().direction, Charge, minLaunchSpeed, maxLaunchSpeed);
+                _velocity = CalculateLaunchVelocity(characterMotor.velocity, GetAimRay().direction, charge, minLaunchSpeed, maxLaunchSpeed);
                 characterMotor.velocity = _velocity;
                 characterDirection.forward = _velocity.normalized;
                 _launchSpeed = _velocity.magnitude;
                 _duration = baseDuration / attackSpeedStat;
-
-                BlastAttack attack = new BlastAttack
-                {
-                    attacker = gameObject,
-                    baseDamage = damageStat * Charge,
-                    baseForce = baseForce * Charge,
-                    radius = baseRadius * Charge,
-                    bonusForce = bonusForce * Charge,
-                    procCoefficient = procCoefficient,
-                    teamIndex = teamComponent.AsValidOrNull()?.teamIndex ?? TeamIndex.None,
-                    falloffModel = BlastAttack.FalloffModel.Linear,
-                    position = characterBody.footPosition,
-                    canRejectForce = false,
-                    inflictor = gameObject,
-                    crit = RollCrit(),
-                    damageColorIndex = damageColor.DamageColorIndex
-                };
-                attack.AddModdedDamageType(SS2.Survivors.Nuke.NuclearDamageType);
-                attack.Fire();
             }
         }
 

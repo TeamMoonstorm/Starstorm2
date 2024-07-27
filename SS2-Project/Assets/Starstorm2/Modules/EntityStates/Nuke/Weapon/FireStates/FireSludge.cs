@@ -11,7 +11,7 @@ using R2API.ScriptableObjects;
 
 namespace EntityStates.Nuke.Weapon
 {
-    public class FireSludge : BaseNukeWeaponFireState
+    public class FireSludge : BaseNukeFireState
     {
         public static GameObject projectilePrefab;
         public static SerializableDamageColor damageColor;
@@ -53,11 +53,11 @@ namespace EntityStates.Nuke.Weapon
                 rotation = Util.QuaternionSafeLookRotation(aimRay.direction),
                 owner = gameObject,
                 projectilePrefab = projectilePrefab,
-                damage = damageStat * Charge,
+                damage = damageStat * charge,
                 damageColorIndex = damageColor.DamageColorIndex,
                 force = force,
                 useSpeedOverride = true,
-                speedOverride = baseSpeed * Charge,
+                speedOverride = baseSpeed * charge,
             };
             if(earlyTarget)
             {
