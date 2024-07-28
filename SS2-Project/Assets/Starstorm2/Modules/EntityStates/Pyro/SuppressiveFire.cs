@@ -12,6 +12,7 @@ namespace EntityStates.Pyro
         public static float baseDuration;
         public static float baseTickFrequency;
         public static float baseEntryDuration;
+        public static float pressureDuration;
 
         private float tickRate;
         private float stopwatch;
@@ -52,6 +53,8 @@ namespace EntityStates.Pyro
             entryDuration = baseEntryDuration / attackSpeedStat;
             tickRate = baseTickFrequency / attackSpeedStat;
 
+            characterBody.SetAimTimer(duration * 2f);
+
             Transform modelTransform = GetModelTransform();
             if (modelTransform)
             {
@@ -70,7 +73,7 @@ namespace EntityStates.Pyro
 
             stopwatch += Time.fixedDeltaTime;
 
-            if (stopwatch >= entryDuration && !hasBegunFlamethrower)
+            if ((stopwatch >= entryDuration || HasBuff(SS2.SS2Content.Buffs.bdPyroPressure)) && !hasBegunFlamethrower)
             {
                 //Debug.Log("entering flamethrower");
                 hasBegunFlamethrower = true;
@@ -97,9 +100,17 @@ namespace EntityStates.Pyro
             }
         }
 
+        public override void OnExit()
+        {
+            base.OnExit();
+            characterBody.AddTimedBuffAuthority(SS2.SS2Content.Buffs.bdPyroPressure.buffIndex, pressureDuration);
+        }
+
         private void Fire(string muzzleString)
         {
             DamageType damageType;
+
+            characterBody.SetAimTimer(duration * 2f);
 
             //Debug.Log("Firing");
 
