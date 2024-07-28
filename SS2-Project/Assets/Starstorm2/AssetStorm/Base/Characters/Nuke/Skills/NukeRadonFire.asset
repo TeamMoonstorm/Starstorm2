@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1391837873, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: NukeFusionImpulse
+  m_Name: NukeRadonFire
   m_EditorClassIdentifier: 
-  skillName: NukeFusionImpulse
-  skillNameToken: SS2_NUKE_FUSSIONIMPULSE_NAME
-  skillDescriptionToken: SS2_NUKE_FUSSIONIMPULSE_DESC
+  skillName: NukeRadonFire
+  skillNameToken: SS2_NUKE_RADONFIRE_NAME
+  skillDescriptionToken: SS2_NUKE_RADONFIRE_DESCRIPTION
   keywordTokens:
-  - SS2_KEYWORD_CHARGEABLE
+  - SS2_KEYWORD_RADIOACTIVE
   icon: {fileID: 0}
-  activationStateMachineName: Body
+  activationStateMachineName: Weapon
   activationState:
-    _typeName: EntityStates.Nuke.ChargeImpulse, Starstorm2, Version=1.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    _typeName: EntityStates.Nuke.Weapon.ChargeFire, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   interruptPriority: 1
-  baseRechargeInterval: 6
+  baseRechargeInterval: 7
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 1

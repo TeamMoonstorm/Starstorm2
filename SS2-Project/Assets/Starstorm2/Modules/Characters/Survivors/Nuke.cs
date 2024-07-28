@@ -43,7 +43,7 @@ namespace SS2.Survivors
                 finalCount += irradiatedBuffCount;
             }
             args.levelMultAdd -= finalCount / 10;
-            args.armorAdd -= sicknessBuffCount * 10;
+            args.armorAdd -= sicknessBuffCount * 5;
         }
 
         private void FindAndInitAssets()

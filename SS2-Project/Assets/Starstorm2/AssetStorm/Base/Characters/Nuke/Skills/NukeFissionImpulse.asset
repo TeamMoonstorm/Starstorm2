@@ -10,19 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1391837873, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: NukeFissionLaunch
+  m_Name: NukeFissionImpulse
   m_EditorClassIdentifier: 
-  skillName: NukeFissionLaunch
-  skillNameToken: SS2_NUKE_FISSIONLAUNCH_NAME
-  skillDescriptionToken: SS2_NUKE_FISSIONLAUNCH_DESC
+  skillName: NukeFissionImpulse
+  skillNameToken: SS2_NUKE_FISSIONIMPULSE_NAME
+  skillDescriptionToken: SS2_NUKE_FISSIONIMPULSE_DESC
   keywordTokens:
   - SS2_KEYWORD_CHARGEABLE
   icon: {fileID: 0}
   activationStateMachineName: Body
   activationState:
-    _typeName: 
+    _typeName: EntityStates.Nuke.ChargeImpulse, Starstorm2, Version=1.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   interruptPriority: 1
-  baseRechargeInterval: 10
+  baseRechargeInterval: 6
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 1

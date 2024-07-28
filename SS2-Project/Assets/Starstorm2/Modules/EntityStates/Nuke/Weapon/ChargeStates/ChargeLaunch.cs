@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace EntityStates.Nuke
 {
-    public class ChargeImpulse : BaseNukeChargeState
+    public class ChargeLaunch : BaseNukeChargeState
     {
         protected override SS2.Survivors.Nuke.IChargedState GetFireState()
         {
-            return new FireFissionImpulse();
+            return new FireFusionLaunch();
         }
     }
 }
