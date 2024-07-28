@@ -61,7 +61,6 @@ namespace SS2.Survivors
         {
             var cb = CharacterPrefab.GetComponent<CharacterBody>();
             cb.preferredPodPrefab = Resources.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod");
-            cb._defaultCrosshairPrefab = Resources.Load<GameObject>("Prefabs/Crosshair/StandardCrosshair");
             var ctp = CharacterPrefab.GetComponent<CameraTargetParams>();
             ctp.cameraParams = Addressables.LoadAssetAsync<CharacterCameraParams>("RoR2/Base/Croco/ccpCroco.asset").WaitForCompletion();
 

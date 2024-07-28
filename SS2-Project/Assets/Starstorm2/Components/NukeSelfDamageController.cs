@@ -55,6 +55,7 @@ namespace SS2.Components
         }
         private void FixedUpdate()
         {
+            chargeRemap = Util.Remap(Charge, chargeSoftCap, chargeHardCap, 0, 1);
             SetBuffStacks();
             _timer += Time.fixedDeltaTime;
             if(_timer > _timeBetweenTicks)
@@ -76,7 +77,6 @@ namespace SS2.Components
                 return;
             }
 
-            chargeRemap = Util.Remap(Charge, chargeSoftCap, chargeHardCap, 0, 1);
             int newBuffStacks = Mathf.FloorToInt(chargeRemap * 10);
             if(newBuffStacks != selfDamageBuffStacks)
             {
