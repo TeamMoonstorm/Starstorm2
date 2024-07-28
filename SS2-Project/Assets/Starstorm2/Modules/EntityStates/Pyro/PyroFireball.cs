@@ -4,7 +4,7 @@ using RoR2.Projectile;
 using UnityEngine;
 using MSU;
 
-namespace EntityStates.NemCommando
+namespace EntityStates.Pyro
 {
     public class PyroFireball : BaseSkillState
     {

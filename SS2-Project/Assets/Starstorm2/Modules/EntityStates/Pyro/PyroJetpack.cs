@@ -80,7 +80,7 @@ namespace EntityStates.Pyro
 
         private void RecalculateDashSpeed()
         {
-            dashSpeed = characterBody.baseMoveSpeed * Mathf.Lerp(initialSpeedCoefficient, finalSpeedCoefficient, fixedAge / duration);
+            dashSpeed = Mathf.Lerp(initialSpeedCoefficient, finalSpeedCoefficient, fixedAge / duration);
         }
 
         public void Dash()
