@@ -8,27 +8,29 @@ using RoR2;
 using MSU;
 using SS2.Components;
 using SS2;
+using IChargeableState = SS2.Survivors.Nuke.IChargeableState;
 
 namespace EntityStates.Nuke
 {
-    public abstract class BaseNukeChargeState : BaseSkillState, SS2.Survivors.Nuke.IChargeableState
+    public abstract class BaseNukeChargeState : BaseSkillState, IChargeableState
     {
         [SerializeField, Tooltip("The starting chargeCoefficient, this is also the base damage coefficient of this skill.")]
         protected float _startingChargeCoefficient;
         [SerializeField, Tooltip("The amount of charge added to the coefficient per second, this value is multiplied by attack speed")]
-        protected float _baseChargeGain;
+        public float _baseChargeGain;
         [SerializeField, Tooltip("The coefficient at which the skill is considered overcharged.")]
-        protected float _chargeCoefficientSoftCap;
+        public float _chargeCoefficientSoftCap;
         [SerializeField, Tooltip("The coefficient at which the skill is fired automatically")]
-        protected float _chargeCoefficientHardCap;
+        public float _chargeCoefficientHardCap;
 
         public NukeSelfDamageController SelfDamageController { get; private set; }
 
         public float currentCharge { get; protected set; }
 
-        public float chargeCoefficientSoftCap => _chargeCoefficientSoftCap;
+        float IChargeableState.startingChargeCoefficient => _startingChargeCoefficient;
+        float IChargeableState.chargeCoefficientSoftCap => _chargeCoefficientSoftCap;
 
-        public float chargeCoefficientHardCap => _chargeCoefficientHardCap;
+        float IChargeableState.chargeCoefficientHardCap => _chargeCoefficientHardCap;
 
         private float chargeGain;
         public override void OnEnter()
@@ -52,7 +54,7 @@ namespace EntityStates.Nuke
             {
                 currentCharge += chargeGain * Time.fixedDeltaTime;
                 if (SelfDamageController)
-                    SelfDamageController.Charge = currentCharge;
+                    SelfDamageController.charge = currentCharge;
 
                 if(currentCharge > _chargeCoefficientHardCap)
                 {

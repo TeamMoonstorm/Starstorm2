@@ -103,6 +103,7 @@ namespace SS2.Survivors
         public interface IChargeableState
         {
             float currentCharge { get; }
+            float startingChargeCoefficient { get; }
             float chargeCoefficientSoftCap { get; }
             float chargeCoefficientHardCap { get; }
         }

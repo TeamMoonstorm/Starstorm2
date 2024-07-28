@@ -16,7 +16,7 @@ namespace SS2.Components
         [SerializeField] private SerializableDamageColor _selfDamageColor;
         [SerializeField] private float _maxHPCoefficientAsDamage;
         [SerializeField] private float _timeBetweenTicks;
-        public float Charge
+        public float charge
         {
             get
             {
@@ -28,18 +28,19 @@ namespace SS2.Components
             }
         }
         private float _charge;
-        public float chargeRemap
+        public float selfDamageChargeRemap
         {
-            get
-            {
-                return _chargeRemap;
-            }
-            set
-            {
-                _chargeRemap = Mathf.Clamp01(value);
-            }
+            get => _selfDamagechargeRemap;
+            set => _selfDamagechargeRemap = Mathf.Clamp01(value);
         }
-        private float _chargeRemap;
+        private float _selfDamagechargeRemap;
+        public float crosshairChargeRemap
+        {
+            get => _crosshairChargeRemap;
+            set => _crosshairChargeRemap = Mathf.Clamp01(value);
+        }
+        private float _crosshairChargeRemap;
+        public float startingChargeCoefficient { get; set; }
         public float chargeSoftCap { get; set; }
         public float chargeHardCap { get; set; }
         public int selfDamageBuffStacks { get; private set; }
@@ -53,9 +54,21 @@ namespace SS2.Components
             healthComponent = GetComponent<HealthComponent>();
             characterBody = GetComponent<CharacterBody>();
         }
+
+        //Gotta make sure these values are at least valid for the first few moments to make the remap function return a proper value and not NaN
+        private void Start()
+        {
+            charge = 0;
+            crosshairChargeRemap = 0;
+            selfDamageChargeRemap = 0;
+            startingChargeCoefficient = 0;
+            chargeSoftCap = 0;
+            chargeHardCap = 1;
+        }
         private void FixedUpdate()
         {
-            chargeRemap = Util.Remap(Charge, chargeSoftCap, chargeHardCap, 0, 1);
+            selfDamageChargeRemap = Util.Remap(charge, chargeSoftCap, chargeHardCap, 0, 1);
+            crosshairChargeRemap = Util.Remap(charge, startingChargeCoefficient, chargeHardCap, 0, 1);
             SetBuffStacks();
             _timer += Time.fixedDeltaTime;
             if(_timer > _timeBetweenTicks)
@@ -77,7 +90,7 @@ namespace SS2.Components
                 return;
             }
 
-            int newBuffStacks = Mathf.FloorToInt(chargeRemap * 10);
+            int newBuffStacks = Mathf.FloorToInt(selfDamageChargeRemap * 10);
             if(newBuffStacks != selfDamageBuffStacks)
             {
                 selfDamageBuffStacks = newBuffStacks;
@@ -91,7 +104,7 @@ namespace SS2.Components
             if (isImmune || !NetworkServer.active || selfDamageBuffStacks < 1)
                 return;
 
-            float maxHPCoefficient = _maxHPCoefficientAsDamage * chargeRemap;
+            float maxHPCoefficient = _maxHPCoefficientAsDamage * selfDamageChargeRemap;
             float damage = characterBody.maxHealth * maxHPCoefficient;
             DamageInfo damageInfo = new DamageInfo
             {
@@ -110,9 +123,10 @@ namespace SS2.Components
 
         public void SetDefaults(Survivors.Nuke.IChargeableState chargeableState)
         {
-            Charge = chargeableState?.currentCharge ?? 0;
-            chargeHardCap = chargeableState?.chargeCoefficientHardCap ?? 0;
+            charge = chargeableState?.currentCharge ?? 0;
+            chargeHardCap = chargeableState?.chargeCoefficientHardCap ?? 1;
             chargeSoftCap = chargeableState?.chargeCoefficientSoftCap ?? 0;
+            startingChargeCoefficient = chargeableState?.startingChargeCoefficient ?? 0;
         }
     }
 }

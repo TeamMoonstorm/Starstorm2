@@ -21,6 +21,7 @@ namespace SS2.Components
         private void Awake()
         {
             hudElement = GetComponent<HudElement>();
+            crosshairController = GetComponent<CrosshairController>();
         }
         private void Start()
         {
@@ -30,8 +31,8 @@ namespace SS2.Components
         {
             if(nukeSelfDamageController)
             {
-                _radialFillImage.fillAmount = nukeSelfDamageController.chargeRemap;
-                _radialFillImage.color = _radialFillColor.Evaluate(nukeSelfDamageController.chargeRemap);
+                _radialFillImage.fillAmount = nukeSelfDamageController.crosshairChargeRemap;
+                _radialFillImage.color = _radialFillColor.Evaluate(nukeSelfDamageController.crosshairChargeRemap);
             }
         }
     }
