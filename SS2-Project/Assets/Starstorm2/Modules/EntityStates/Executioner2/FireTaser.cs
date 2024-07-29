@@ -15,7 +15,7 @@ namespace EntityStates.Executioner2
     public class FireTaser : BaseSkillState
     {
         public static float damageCoefficient;
-        public static float procCoefficient = 0.75f;
+        public static float procCoefficient = 0.65f;
         public static float baseDuration = 0.4f;
         public static float recoil = 0f;
         public static float spreadBloom = 0.75f;
@@ -27,9 +27,6 @@ namespace EntityStates.Executioner2
         public static GameObject tracerPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/TracerCommandoDefault.prefab").WaitForCompletion();
         [HideInInspector] 
         public static GameObject hitPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/HitsparkCommando.prefab").WaitForCompletion();
-
-        [SerializeField]
-        public static GameObject TaserWhiffTarget;
 
         private float duration;
         private float fireDuration;
@@ -89,8 +86,22 @@ namespace EntityStates.Executioner2
                 string soundString = "ExecutionerPrimary";
                 if (isCrit) soundString += "Crit";
                 //Util.PlaySound(soundString, gameObject);
-                AddRecoil(-0.4f * recoil, -0.8f * recoil, -0.3f * recoil, 0.3f * recoil);
+                //AddRecoil(-0.4f * recoil, -0.8f * recoil, -0.3f * recoil, 0.3f * recoil);
 
+                Vector3 origin = transform.position;
+                var modelTransform = base.GetModelTransform();
+                if (modelTransform){
+                    ChildLocator locator = modelTransform.GetComponent<ChildLocator>();
+                    if (locator){
+                        Transform source = locator.FindChild("Muzzle");
+                        if (source){
+                            origin = source.position;
+                            origin.y -= .75f;
+                        }
+                    }
+                }
+
+                //Transform source = component.FindChild("Muzzle");
                 if (muzzleEffectPrefab)
                     EffectManager.SimpleMuzzleFlash(muzzleEffectPrefab, gameObject, muzzleString, false);
 
@@ -109,6 +120,7 @@ namespace EntityStates.Executioner2
                     search.maxAngleFilter = maxAngleFilter;
                     search.maxDistanceFilter = attackRange;
                     search.RefreshCandidates();
+
                     HurtBox hurtBox = search.GetResults().FirstOrDefault();
                     if (hurtBox)
                     {
@@ -121,7 +133,7 @@ namespace EntityStates.Executioner2
                         taserOrb.teamIndex = GetTeam();
                         taserOrb.damageValue = dmg;
                         taserOrb.isCrit = isCrit;
-                        taserOrb.origin = transform.position;
+                        taserOrb.origin = origin;
                         taserOrb.bouncesRemaining = 4;
                         taserOrb.procCoefficient = procCoefficient;
                         taserOrb.target = hurtBox;
@@ -131,22 +143,6 @@ namespace EntityStates.Executioner2
                     }
                     else
                     {
-                        //Ray aimRay = base.GetAimRay();
-                        ////aimRay.direction
-                        //Vector3 point = aimRay.GetPoint(28);
-                        //
-                        ////Vector3 axis = Vector3.Cross(Vector3.up, point);
-                        //float x = UnityEngine.Random.Range(0, 25f);
-                        //float z = UnityEngine.Random.Range(-90f, 90);
-                        //Vector3 vector = Quaternion.Euler(0f, 0f, z) * (Quaternion.Euler(x, 0f, 0f) * aimRay.direction);
-                        //Debug.Log(aimRay.direction + " | vector: " + vector + " | " + x + " | " + z);
-                        //
-                        
-                        //
-                        //Debug.Log("ray eeee : " + ray);
-                        //Debug.Log("GRAHH !! : " + gameObject.transform.position);
-
-
                         Ray aimRay = base.GetAimRay();
                         var aimVector = aimRay.direction;
                         Vector3 axis = Vector3.Cross(Vector3.up, aimVector);
@@ -158,11 +154,17 @@ namespace EntityStates.Executioner2
                         float angle = (Mathf.Atan2(vector.z, vector.x) * 57.29578f - 90f) * 5; //spreadYawScale
                         float angle2 = Mathf.Atan2(y, vector.magnitude) * 57.29578f;
                         var finalVec = (Quaternion.AngleAxis(angle, Vector3.up) * (Quaternion.AngleAxis(angle2, axis) * aimVector));
-                        //range
-                        //HurtBox hitTarget = BootlegCharacterRaycastSingle(gameObject, new Ray(aimRay.origin, aimVector), out Vector3 hitPoint, 28, BulletAttack.defaultStopperMask, QueryTriggerInteraction.UseGlobal);
-                        //Util.CharacterRaycast()
-                        var ray = new Ray(gameObject.transform.position, finalVec).GetPoint(28);
-                        
+
+                        Vector3 ray = new Ray(gameObject.transform.position, finalVec).GetPoint(attackRange);
+                        var casts = Physics.RaycastAll(new Ray(aimRay.origin, aimVector), attackRange, (LayerIndex.world.mask | LayerIndex.entityPrecise.mask));
+
+                        Debug.Log("aimRay.direction: " + aimRay.direction);
+                        if(casts.Length > 0)
+                        {
+                            ray = casts[0].point;
+                            Debug.Log("Overriding with " + ray + " | " + casts[0].point);
+                        }
+
                         ExecutionerTaserOrb taserOrb = new ExecutionerTaserOrb();
                         taserOrb.bouncedObjects = new List<HealthComponent>();
                         taserOrb.attacker = gameObject;
@@ -170,13 +172,14 @@ namespace EntityStates.Executioner2
                         taserOrb.teamIndex = GetTeam();
                         taserOrb.damageValue = dmg;
                         taserOrb.isCrit = isCrit;
-                        taserOrb.origin = transform.position;
+                        taserOrb.origin = origin;
                         taserOrb.bouncesRemaining = 4;
                         taserOrb.procCoefficient = procCoefficient;
                         taserOrb.target = null;
                         taserOrb.damageColorIndex = DamageColorIndex.Default;
                         taserOrb.damageType = DamageType.Generic;
                         taserOrb.targetPosition = ray;
+                        taserOrb.attackerAimVector = aimRay.direction;
                         OrbManager.instance.AddOrb(taserOrb);
                     }
                 }

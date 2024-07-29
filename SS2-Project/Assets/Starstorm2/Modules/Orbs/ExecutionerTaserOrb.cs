@@ -11,7 +11,7 @@ namespace SS2.Orbs
 	public class ExecutionerTaserOrb : Orb
 	{
 		public Vector3 targetPosition;
-
+		public Vector3 attackerAimVector;
 		public override void Begin()
 		{
 			base.duration = 0.1f;
@@ -52,18 +52,39 @@ namespace SS2.Orbs
 				this.failedToKill |= (!healthComponent || healthComponent.alive);
 				if (this.bouncesRemaining > 0)
 				{
-					for (int i = 0; i < this.targetsToFindPerBounce; i++)
+					if (this.bouncedObjects != null)
 					{
-						if (this.bouncedObjects != null)
-						{
-							if (this.canBounceOnSameTarget)
-							{
-								this.bouncedObjects.Clear();
-							}
-							this.bouncedObjects.Add(this.target.healthComponent);
-						}
-						HurtBox hurtBox = this.PickNextTarget(this.target.transform.position);
-						if (hurtBox && !hurtBox.GetComponent<TaserWhiffComponent>())
+						this.bouncedObjects.Add(this.target.healthComponent);
+					}
+					HurtBox hurtBox = this.PickNextTarget(this.target.transform.position, false);
+					if (hurtBox)
+					{
+						ExecutionerTaserOrb lightningOrb = new ExecutionerTaserOrb();
+						lightningOrb.search = this.search;
+						lightningOrb.origin = this.target.transform.position;
+						lightningOrb.target = hurtBox;
+						lightningOrb.attacker = this.attacker;
+						lightningOrb.inflictor = this.inflictor;
+						lightningOrb.teamIndex = this.teamIndex;
+						lightningOrb.damageValue = this.damageValue * this.damageCoefficientPerBounce;
+						lightningOrb.bouncesRemaining = this.bouncesRemaining - 1;
+						lightningOrb.isCrit = this.isCrit;
+						lightningOrb.bouncedObjects = this.bouncedObjects;
+						lightningOrb.procChainMask = this.procChainMask;
+						lightningOrb.procCoefficient = this.procCoefficient;
+						lightningOrb.damageColorIndex = this.damageColorIndex;
+						lightningOrb.damageCoefficientPerBounce = this.damageCoefficientPerBounce;
+						lightningOrb.speed = this.speed;
+						lightningOrb.range = this.range;
+						lightningOrb.damageType = this.damageType;
+						lightningOrb.failedToKill = this.failedToKill;
+						OrbManager.instance.AddOrb(lightningOrb);
+						Debug.Log("Shot generic hit at " + this.bouncesRemaining);
+					}
+					else
+					{
+						hurtBox = this.PickNextTarget(this.target.transform.position, true); //if no other targets, allow a repeat
+						if (hurtBox && this.bouncesRemaining >= 3)
 						{
 							ExecutionerTaserOrb lightningOrb = new ExecutionerTaserOrb();
 							lightningOrb.search = this.search;
@@ -73,7 +94,7 @@ namespace SS2.Orbs
 							lightningOrb.inflictor = this.inflictor;
 							lightningOrb.teamIndex = this.teamIndex;
 							lightningOrb.damageValue = this.damageValue * this.damageCoefficientPerBounce;
-							lightningOrb.bouncesRemaining = this.bouncesRemaining - 1;
+							lightningOrb.bouncesRemaining = Math.Max(this.bouncesRemaining - 3, 0); // but it costs way more 
 							lightningOrb.isCrit = this.isCrit;
 							lightningOrb.bouncedObjects = this.bouncedObjects;
 							lightningOrb.procChainMask = this.procChainMask;
@@ -85,61 +106,70 @@ namespace SS2.Orbs
 							lightningOrb.damageType = this.damageType;
 							lightningOrb.failedToKill = this.failedToKill;
 							OrbManager.instance.AddOrb(lightningOrb);
+							Debug.Log("Shot repeat hit at " + this.bouncesRemaining + " | next shot has: " + Math.Max(this.bouncesRemaining - 3, 0));
+
 						}
-						else if(this.target.GetComponent<TaserWhiffComponent>())
+						else if (attackerAimVector != null && target.healthComponent.body) //and if all else fails, whiff
 						{
-							//try
-							//{
-							//	if (hurtBox.GetComponent<TaserWhiffComponent>()){ return; }
-							//}
-							//catch (Exception)
-							//{
-							//	Debug.Log("fuck");
-							//}
-							//var mult = this.target.GetComponent<TaserWhiffComponent>().reduction;
-							//int range = 28 / mult;
-							//var newDirection = Quaternion.Euler(0, 0, UnityEngine.Random.Range(-25, 25)) * this.target.transform.forward;
-							//var endpoint = new Ray(this.target.transform.position, newDirection).GetPoint(range);
-							//
-							//
-							//GameObject whiffTarget = new GameObject();
-							//var boxc = whiffTarget.AddComponent<BoxCollider>();
-							//var box = whiffTarget.AddComponent<HurtBox>();
-							//var timer = whiffTarget.AddComponent<DestroyOnTimer>();
-                            //timer.duration = 1f;
-							//var wc = whiffTarget.AddComponent<TaserWhiffComponent>();
-							//wc.reduction = ++mult;
-						    ////wiffTarget.AddComponent<NetwokIdentity>();
-							////var distance = 28;
-							////var tolerance = 7;
-							////var offset = this.attacker.transform.forward * distance;
-							////var position = offset + new Vector3(UnityEngine.Random.Range(-tolerance, tolerance), UnityEngine.Random.Range(0f, 2.0f), UnityEngine.Random.Range(-tolerance, tolerance));
-							//whiffTarget.transform.position = endpoint;
-							//whiffTarget.AddComponent<NetworkIdentity>();
-							//NetworkServer.Spawn(whiffTarget);
-							//
-							////box.transform.position = 
-							//ExecutionerTaserOrb lightningOrb = new ExecutionerTaserOrb();
-							//lightningOrb.search = this.search;
-							//lightningOrb.origin = this.target.transform.position;
-							//lightningOrb.target = box;
-							//lightningOrb.attacker = this.attacker;
-							//lightningOrb.inflictor = this.inflictor;
-							//lightningOrb.teamIndex = this.teamIndex;
-							//lightningOrb.damageValue = this.damageValue * this.damageCoefficientPerBounce;
-							//lightningOrb.bouncesRemaining = this.bouncesRemaining - 1;
-							//lightningOrb.isCrit = this.isCrit;
-							//lightningOrb.bouncedObjects = this.bouncedObjects;
-							//lightningOrb.procChainMask = this.procChainMask;
-							//lightningOrb.procCoefficient = this.procCoefficient;
-							//lightningOrb.damageColorIndex = this.damageColorIndex;
-							//lightningOrb.damageCoefficientPerBounce = this.damageCoefficientPerBounce;
-							//lightningOrb.speed = this.speed;
-							//lightningOrb.range = this.range;
-							//lightningOrb.damageType = this.damageType;
-							//lightningOrb.failedToKill = this.failedToKill;
-							//OrbManager.instance.AddOrb(lightningOrb);
+							var motor = target.healthComponent.body.characterMotor;
+							var stupidMotor = target.healthComponent.gameObject.GetComponent<RigidbodyMotor>();
+							if ((!motor || motor.isGrounded) && !stupidMotor)
+							{
+								//Ray aimRay = aimVector;
+								var aimVector = GenerateValidPosition(attackerAimVector);
+
+								//var aimVector = new Vector3(attackerAimVector.x + UnityEngine.Random.Range(-.1f,.1f), 0, attackerAimVector.z + UnityEngine.Random.Range(-.1f,.1f));
+								Vector3 axis = Vector3.Cross(Vector3.up, aimVector);
+
+								float x = UnityEngine.Random.Range(0, 5f); //maxspread
+								float z = UnityEngine.Random.Range(0f, 360f);
+								Vector3 vector = Quaternion.Euler(0f, 0f, z) * (Quaternion.Euler(x, 0f, 0f) * Vector3.forward);
+								float y = vector.y;
+								vector.y = 0f;
+
+								float angle = (Mathf.Atan2(vector.z, vector.x) * 57.29578f - 90f) * 2.5f; //spreadYawScale
+								float angle2 = Mathf.Atan2(y, vector.magnitude) * 57.29578f;
+								var finalVec = (Quaternion.AngleAxis(angle, Vector3.up) * (Quaternion.AngleAxis(angle2, axis) * aimVector));
+
+								Vector3 ray = new Ray(this.target.transform.position, finalVec).GetPoint(21);
+								//LayerIndex.world.mask | LayerIndex.entityPrecise.mask
+								var casts = Physics.RaycastAll(new Ray(this.target.transform.position, aimVector), 21, LayerIndex.world.mask | LayerIndex.entityPrecise.mask);
+								if (casts.Length > 0)
+								{
+									ray = casts[0].point;
+									//Debug.Log("Overriding with " + ray + " | " + casts[0].point);
+								}
+
+								ExecutionerTaserOrb taserOrb = new ExecutionerTaserOrb();
+								taserOrb.search = this.search;
+								taserOrb.origin = this.target.transform.position;
+								taserOrb.target = null;
+								taserOrb.attacker = this.attacker;
+								taserOrb.inflictor = this.inflictor;
+								taserOrb.teamIndex = this.teamIndex;
+								taserOrb.damageValue = this.damageValue * this.damageCoefficientPerBounce;
+								taserOrb.bouncesRemaining = 0;
+								taserOrb.isCrit = this.isCrit;
+								taserOrb.bouncedObjects = this.bouncedObjects;
+								taserOrb.procChainMask = this.procChainMask;
+								taserOrb.procCoefficient = this.procCoefficient;
+								taserOrb.damageColorIndex = this.damageColorIndex;
+								taserOrb.damageCoefficientPerBounce = this.damageCoefficientPerBounce;
+								taserOrb.speed = this.speed;
+								taserOrb.range = this.range;
+								taserOrb.damageType = this.damageType;
+								taserOrb.failedToKill = this.failedToKill;
+								taserOrb.targetPosition = ray;
+								taserOrb.attackerAimVector = aimVector;
+								OrbManager.instance.AddOrb(taserOrb);
+								Debug.Log("Shot whiff at " + this.bouncesRemaining);
+							}
+							else
+							{
+								Debug.Log("Invalid bounce target; " + target.healthComponent.body.name);
+							}
 						}
+
 					}
 					return;
 				}
@@ -155,35 +185,68 @@ namespace SS2.Orbs
 			}
 		}
 
-		public HurtBox PickNextTarget(Vector3 position)
+		public HurtBox PickNextTarget(Vector3 position, bool repeatsAllowed)
 		{
 			if (this.search == null)
-			{
 				this.search = new BullseyeSearch();
-			}
+
 			this.search.searchOrigin = position;
 			this.search.searchDirection = Vector3.zero;
-			this.search.teamMaskFilter = TeamMask.allButNeutral;
+			this.search.teamMaskFilter = TeamMask.all;
 			this.search.teamMaskFilter.RemoveTeam(this.teamIndex);
 			this.search.filterByLoS = false;
 			this.search.sortMode = BullseyeSearch.SortMode.Distance;
 			this.search.maxDistanceFilter = this.range;
 			this.search.RefreshCandidates();
-			HurtBox hurtBox = (from v in this.search.GetResults()
-							   where !this.bouncedObjects.Contains(v.healthComponent)
-							   select v).FirstOrDefault<HurtBox>();
+
+			HurtBox hurtBox = (from v in this.search.GetResults() where repeatsAllowed == this.bouncedObjects.Contains(v.healthComponent) && v.healthComponent != this.target.healthComponent select v).FirstOrDefault<HurtBox>();
+
 			if (hurtBox)
-			{
-				this.bouncedObjects.Add(hurtBox.healthComponent);
+            {
+                if (!repeatsAllowed)
+                {
+					Debug.Log("newTarget");
+					this.bouncedObjects.Add(hurtBox.healthComponent);
+				}
+				Debug.Log("hitting original guy ");
+				
+            }
+            else if(repeatsAllowed)
+            {
+				if(this.target.healthComponent.alive)
+                {
+					Debug.Log("No options, hitting self");
+					hurtBox = this.target;
+                }
+				//hurtBox = (from v in this.search.GetResults() where repeatsAllowed == this.bouncedObjects.Contains(v.healthComponent) && v.healthComponent.alive select v).FirstOrDefault<HurtBox>(); //should i just do this.target? what if it's dead?
 			}
+
 			return hurtBox;
 		}
 
 
+		public Vector3 GenerateValidPosition(Vector3 aimVec)
+		{
+			float x = aimVec.x + (UnityEngine.Random.value > 0.5f ? UnityEngine.Random.Range(.2f, .4f) : UnityEngine.Random.Range(-.4f, -.2f));
+			float z = aimVec.z + (UnityEngine.Random.value > 0.5f ? UnityEngine.Random.Range(.2f, .4f) : UnityEngine.Random.Range(-.4f, -.2f));
+			float y = UnityEngine.Random.Range(-.25f, -.1f);
+
+			if (x >= 1)
+				x -= 2;
+			else if (x <= -1)
+				x += 2;
+
+			if (z >= 1)
+				z -= 2;
+			else if (z <= -1)
+				z += 2;
+
+			return new Vector3(x, y, z);
+		}
 
 		public static event Action<ExecutionerTaserOrb> onLightningOrbKilledOnAllBounces;
 
-		public float speed = 100f;
+		public float speed = 75f;
 
 		public float damageValue;
 
@@ -201,11 +264,11 @@ namespace SS2.Orbs
 
 		public ProcChainMask procChainMask;
 
-		public float procCoefficient = 1f;
+		public float procCoefficient = .7f;
 
 		public DamageColorIndex damageColorIndex;
 
-		public float range = 20f;
+		public float range = 21;
 
 		public float damageCoefficientPerBounce = 1f;
 
