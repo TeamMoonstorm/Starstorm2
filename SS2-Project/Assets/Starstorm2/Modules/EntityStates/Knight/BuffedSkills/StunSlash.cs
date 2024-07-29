@@ -19,7 +19,6 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
 
         public override void OnEnter()
         {
-            Debug.Log("DEBUGGER The stun slash was entered!!");
             base.OnEnter();
             animator = GetModelAnimator();
         }
@@ -27,23 +26,51 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
         public override void OnExit()
         {
             base.OnExit();
-            EntityStateMachine weaponEsm = EntityStateMachine.FindByCustomName(gameObject, "Weapon");
-            if (weaponEsm != null)
+            if (base.isAuthority)
             {
-                weaponEsm.SetNextState(new EntityStates.Knight.ResetOverrides());
-            }
+                EntityStateMachine weaponEsm = EntityStateMachine.FindByCustomName(gameObject, "Weapon");
+                if (weaponEsm != null)
+                {
+                    weaponEsm.SetNextState(new EntityStates.Knight.ResetOverrides());
+                }
+            } 
         }
 
         public override void PlayAnimation()
         {
-            string animationStateName = (swingSide == 0) ? "SwingSword1" : "SwingSword2";
+            // TODO: THis skill is only ever entered once so none of this is needed
+            string animationStateName = "SwingSword0";
+
+            switch (swingSide)
+            {
+                case 0:
+                    animationStateName = "SwingSword0";
+                    swingEffectMuzzleString = "SwingLeft";
+                    break;
+                case 1:
+                    animationStateName = "SwingSword1";
+                    swingEffectMuzzleString = "SwingRight";
+                    break;
+                case 2:
+                    animationStateName = "SwingSword2";
+                    swingEffectMuzzleString = "SwingLeft";
+                    break;
+                case 3:
+                    animationStateName = "SwingSword3";
+                    swingEffectMuzzleString = "SwingCenter";
+                    break;
+                default:
+                    animationStateName = "SwingSword0";
+                    swingEffectMuzzleString = "SwingLeft";
+                    break;
+            }
+
             PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.05f);
         }
 
         void SteppedSkillDef.IStepSetter.SetStep(int i)
         {
             swingSide = i;
-            swingEffectMuzzleString = (swingSide == 0) ? "SwingLeft" : "SwingRight";
         }
 
         public override void OnSerialize(NetworkWriter writer)

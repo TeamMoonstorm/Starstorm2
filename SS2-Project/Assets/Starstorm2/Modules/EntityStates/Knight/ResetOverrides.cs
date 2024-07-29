@@ -32,14 +32,14 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight
             originalUtilityRef.UnsetSkillOverride(gameObject, buffedUtilityRef, GenericSkill.SkillOverridePriority.Contextual);
         }
 
-        public override void OnExit()
-        {
-            base.OnExit();
-        }
-
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

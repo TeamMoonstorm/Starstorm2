@@ -21,9 +21,6 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
         public override void OnEnter()
         {
             base.OnEnter();
-
-            PlayCrossfade("Body", "SwingSpecial", "Special.playbackRate", duration * swingTimeCoefficient, 0.15f);
-
             if (isAuthority & NetworkServer.active)
             {
                 Vector3 position = inputBank.aimOrigin - (inputBank.aimDirection);
@@ -46,10 +43,16 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
 
         public override void OnExit()
         {
-            GenericSkill originalSpecialSkill = skillLocator.special;
-            originalSpecialSkill.UnsetSkillOverride(gameObject, BannerSpecial.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
-            outer.SetNextStateToMain();
             base.OnExit();
+
+            if (base.isAuthority)
+            {
+                EntityStateMachine weaponEsm = EntityStateMachine.FindByCustomName(gameObject, "Weapon");
+                if (weaponEsm != null)
+                {
+                    weaponEsm.SetNextState(new EntityStates.Knight.ResetOverrides());
+                }
+            }
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

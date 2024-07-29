@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: 5072596841796980718}
   - component: {fileID: 2818190628323442051}
   - component: {fileID: 241779594850744952}
+  - component: {fileID: 8321155026412443090}
   - component: {fileID: 8616875480692789324}
   - component: {fileID: 2356481471171317501}
   - component: {fileID: 7883713811634818016}
@@ -366,6 +367,22 @@ MonoBehaviour:
   secondaryBonusStockOverrideSkill: {fileID: 0}
   utilityBonusStockOverrideSkill: {fileID: 0}
   specialBonusStockOverrideSkill: {fileID: 0}
+--- !u!114 &8321155026412443090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7725647466612521720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillFamily: {fileID: 11400000, guid: e7290a945c0796447a7b745878bb48cc, type: 2}
+  skillName: Passive
+  hideInCharacterSelect: 0
+  hasExecutedSuccessfully: 0
 --- !u!114 &8616875480692789324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,8 +395,8 @@ MonoBehaviour:
   m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillFamily: {fileID: 0}
-  skillName: 
+  _skillFamily: {fileID: 11400000, guid: 08737776e531dcb45acf7dd2a104616a, type: 2}
+  skillName: Primary
   hideInCharacterSelect: 0
   hasExecutedSuccessfully: 0
 --- !u!114 &2356481471171317501
@@ -394,8 +411,8 @@ MonoBehaviour:
   m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillFamily: {fileID: 0}
-  skillName: 
+  _skillFamily: {fileID: 11400000, guid: 5fb4edd7ae499c44993c471180dd55cc, type: 2}
+  skillName: Secondary
   hideInCharacterSelect: 0
   hasExecutedSuccessfully: 0
 --- !u!114 &7883713811634818016
@@ -410,8 +427,8 @@ MonoBehaviour:
   m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillFamily: {fileID: 0}
-  skillName: 
+  _skillFamily: {fileID: 11400000, guid: 473206d75e84c4940a8963e6cd6221e2, type: 2}
+  skillName: Utility
   hideInCharacterSelect: 0
   hasExecutedSuccessfully: 0
 --- !u!114 &1901267314317663771
@@ -426,8 +443,8 @@ MonoBehaviour:
   m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillFamily: {fileID: 0}
-  skillName: 
+  _skillFamily: {fileID: 11400000, guid: 4071100462a1d7b43b99a95701dd9a27, type: 2}
+  skillName: Special
   hideInCharacterSelect: 0
   hasExecutedSuccessfully: 0
 --- !u!114 &2713950319236769457

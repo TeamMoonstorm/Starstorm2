@@ -1,5 +1,6 @@
 ﻿using MSU;
 using RoR2.Skills;
+using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -23,14 +24,38 @@ namespace EntityStates.Knight
 
         public override void PlayAnimation()
         {
-           string animationStateName = (swingSide == 0) ? "SwingSword1" : "SwingSword2";
-           PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.05f);             
+           string animationStateName = "SwingSword0";
+
+            switch (swingSide)
+            {
+                case 0:
+                    animationStateName = "SwingSword0";
+                    swingEffectMuzzleString = "SwingLeft";
+                    break;
+                case 1:
+                    animationStateName = "SwingSword1";
+                    swingEffectMuzzleString = "SwingRight";
+                    break;
+                case 2:
+                    animationStateName = "SwingSword2";
+                    swingEffectMuzzleString = "SwingLeft";
+                    break;
+                case 3:
+                    animationStateName = "SwingSword3";
+                    swingEffectMuzzleString = "SwingCenter";
+                    break;
+                default:
+                    animationStateName = "SwingSword0";
+                    swingEffectMuzzleString = "SwingLeft";
+                    break;
+            }
+
+            PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.05f);             
         }
 
         void SteppedSkillDef.IStepSetter.SetStep(int i)
         {
             swingSide = i;
-            swingEffectMuzzleString = (swingSide == 0) ? "SwingLeft" : "SwingRight";
         }
 
         public override void OnSerialize(NetworkWriter writer)
