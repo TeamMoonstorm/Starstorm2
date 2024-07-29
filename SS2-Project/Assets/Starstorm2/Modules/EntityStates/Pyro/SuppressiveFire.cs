@@ -34,6 +34,9 @@ namespace EntityStates.Pyro
         public static string muzzleString;
 
         public static GameObject impactEffectPrefab;
+        public static GameObject flameEffectPrefab;
+
+        private Transform flamethrowerTransform;
 
         private PyroController pc;
         private ChildLocator childLocator;
@@ -62,7 +65,7 @@ namespace EntityStates.Pyro
                 //flames = childLocator.FindChild("Flames").GetComponent<ParticleSystem>();
             }
 
-            impactEffectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/MissileExplosionVFX.prefab").WaitForCompletion();
+            //impactEffectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/MissileExplosionVFX.prefab").WaitForCompletion();
 
             //playanimation
         }
@@ -77,6 +80,7 @@ namespace EntityStates.Pyro
             {
                 //Debug.Log("entering flamethrower");
                 hasBegunFlamethrower = true;
+                flamethrowerTransform = Object.Instantiate(flameEffectPrefab, childLocator.FindChild(muzzleString)).transform;
                 Fire(muzzleString);
             }
 
@@ -104,6 +108,8 @@ namespace EntityStates.Pyro
         {
             base.OnExit();
             characterBody.AddTimedBuffAuthority(SS2.SS2Content.Buffs.bdPyroPressure.buffIndex, pressureDuration);
+            if (flamethrowerTransform)
+                Destroy(flamethrowerTransform.gameObject);
         }
 
         private void Fire(string muzzleString)
@@ -144,6 +150,9 @@ namespace EntityStates.Pyro
                     smartCollision = true,
                     damageType = damageType,
                 }.Fire();
+
+                if (flamethrowerTransform)
+                    flamethrowerTransform.forward = aimRay.direction;
 
                 if (characterMotor)
                     base.characterMotor.ApplyForce(aimRay.direction * -recoilForce, false, false);

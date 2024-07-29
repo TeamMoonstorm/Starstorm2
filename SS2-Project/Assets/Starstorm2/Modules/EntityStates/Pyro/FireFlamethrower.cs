@@ -1,4 +1,5 @@
-﻿using RoR2;
+﻿using R2API;
+using RoR2;
 using SS2.Components;
 using System.Collections;
 using System.Collections.Generic;
@@ -34,6 +35,9 @@ namespace EntityStates.Pyro
         public static string muzzleString;
 
         public static GameObject impactEffectPrefab;
+        public static GameObject flameEffectPrefab;
+
+        private Transform flamethrowerTransform;
 
         private PyroController pc;
         private ChildLocator childLocator;
@@ -77,6 +81,7 @@ namespace EntityStates.Pyro
             {
                 //Debug.Log("entering flamethrower");
                 hasBegunFlamethrower = true;
+                flamethrowerTransform = Object.Instantiate(flameEffectPrefab, childLocator.FindChild(muzzleString)).transform;
                 Fire(muzzleString);
             }
 
@@ -104,6 +109,8 @@ namespace EntityStates.Pyro
         {
             base.OnExit();
             characterBody.AddTimedBuffAuthority(SS2.SS2Content.Buffs.bdPyroPressure.buffIndex, pressureDuration);
+            if (flamethrowerTransform)
+                Destroy(flamethrowerTransform.gameObject);
         }
 
         private void Fire(string muzzleString)
@@ -124,7 +131,7 @@ namespace EntityStates.Pyro
             Ray aimRay = GetAimRay();
             if (isAuthority)
             {
-                new BulletAttack
+                BulletAttack bulet = new BulletAttack
                 {
                     owner = gameObject,
                     weapon = gameObject,
@@ -143,7 +150,13 @@ namespace EntityStates.Pyro
                     maxDistance = maxDistance,
                     smartCollision = true,
                     damageType = damageType,
-                }.Fire();
+                };
+                DamageAPI.AddModdedDamageType(bulet, SS2.Survivors.Pyro.FlamethrowerDamageType);
+                bulet.Fire();
+
+                if (flamethrowerTransform)
+                    flamethrowerTransform.forward = aimRay.direction;
+
 
                 if (characterMotor)
                     base.characterMotor.ApplyForce(aimRay.direction * -recoilForce, false, false);
