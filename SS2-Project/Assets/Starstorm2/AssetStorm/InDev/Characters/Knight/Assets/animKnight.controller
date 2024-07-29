@@ -152,7 +152,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Swing3Final
+  m_Name: SwingSword3
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -450,14 +450,14 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_SpeedParameterActive: 0
+  m_SpeedParameterActive: 1
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: -1857673920503500487, guid: 65a9a6753e530a041a7156dd60e5cd29,
     type: 3}
   m_Tag: 
-  m_SpeedParameter: 
+  m_SpeedParameter: Secondary.playbackRate
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
@@ -790,7 +790,7 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: Body
     m_StateMachine: {fileID: 1107614207222653016}
-    m_Mask: {fileID: 31900000, guid: 3c0163a93b84df9438d09faed1d34921, type: 2}
+    m_Mask: {fileID: 0}
     m_Motions: []
     m_Behaviours: []
     m_BlendingMode: 0
@@ -838,7 +838,7 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: AimYaw
     m_StateMachine: {fileID: 1107782700161908722}
-    m_Mask: {fileID: 31900000, guid: a022d0b0a6823364ba196d4046bdf51d, type: 2}
+    m_Mask: {fileID: 31900000, guid: 699a2782f88e19d4a94099a45d71dddf, type: 2}
     m_Motions: []
     m_Behaviours: []
     m_BlendingMode: 1
@@ -2487,7 +2487,7 @@ AnimatorStateTransition:
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102390833743075574}
   m_Solo: 0
-  m_Mute: 1
+  m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
   m_TransitionDuration: 0.1
@@ -3004,7 +3004,7 @@ AnimatorStateTransition:
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102390833743075574}
   m_Solo: 0
-  m_Mute: 1
+  m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
   m_TransitionDuration: 0.1
@@ -5151,7 +5151,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1102253924962204930}
-    m_Position: {x: 30, y: 380, z: 0}
+    m_Position: {x: 10, y: 490, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102172776339991732}
     m_Position: {x: 20, y: 200, z: 0}
