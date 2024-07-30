@@ -96,7 +96,7 @@ namespace EntityStates.Executioner2
                         Transform source = locator.FindChild("Muzzle");
                         if (source){
                             origin = source.position;
-                            origin.y -= .75f;
+                            origin.y -= .85f;
                         }
                     }
                 }
@@ -158,11 +158,11 @@ namespace EntityStates.Executioner2
                         Vector3 ray = new Ray(gameObject.transform.position, finalVec).GetPoint(attackRange);
                         var casts = Physics.RaycastAll(new Ray(aimRay.origin, aimVector), attackRange, (LayerIndex.world.mask | LayerIndex.entityPrecise.mask));
 
-                        Debug.Log("aimRay.direction: " + aimRay.direction);
+                        //Debug.Log("aimRay.direction: " + aimRay.direction);
                         if(casts.Length > 0)
                         {
                             ray = casts[0].point;
-                            Debug.Log("Overriding with " + ray + " | " + casts[0].point);
+                            //Debug.Log("Overriding with " + ray + " | " + casts[0].point);
                         }
 
                         ExecutionerTaserOrb taserOrb = new ExecutionerTaserOrb();
