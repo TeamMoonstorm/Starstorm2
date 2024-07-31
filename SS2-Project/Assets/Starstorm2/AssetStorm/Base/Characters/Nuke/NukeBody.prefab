@@ -62,8 +62,8 @@ MonoBehaviour:
   isBullseye: 1
   isSniperTarget: 0
   damageModifier: 0
-  hurtBoxGroup: {fileID: 0}
-  indexInGroup: -1
+  hurtBoxGroup: {fileID: 3860467495734842282}
+  indexInGroup: 0
 --- !u!1 &1479459457953052363
 GameObject:
   m_ObjectHideFlags: 0
@@ -872,9 +872,10 @@ MonoBehaviour:
   m_Script: {fileID: -1792105662, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hurtBoxes: []
+  hurtBoxes:
+  - {fileID: 1767703824560670566}
   mainHurtBox: {fileID: 1767703824560670566}
-  bullseyeCount: 0
+  bullseyeCount: 1
 --- !u!114 &4118076556014829313
 MonoBehaviour:
   m_ObjectHideFlags: 0
