@@ -12,10 +12,7 @@ namespace SS2.Survivors
     public sealed class Knight : SS2Survivor
     {
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acKnight", SS2Bundle.Indev);
-
-        //[RiskOfOptionsConfigureField(LITConfig.ITEMS, ConfigDescOverride = "Amount of gravity removed, as a pecent")]
-        //    //[FormatToken(TOKEN, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
-        public static float reducedGravity = 0.25f;
+        public static float reducedGravity = 0.05f;
 
         public override void Initialize()
         {
@@ -69,9 +66,9 @@ namespace SS2.Survivors
 
             if (sender.HasBuff(SS2Content.Buffs.bdKnightSpecialPowerBuff))
             {
-                args.baseJumpPowerAdd += 0.5f;
-                args.baseMoveSpeedAdd += 1.0f;
-                args.jumpPowerMultAdd += 1.2f;
+                args.baseJumpPowerAdd += 0.3f;
+                args.baseMoveSpeedAdd += 0.2f;
+                args.jumpPowerMultAdd += 0.3f;
             }
 
             if (sender.HasBuff(SS2Content.Buffs.bdKnightSpecialSlowBuff))
@@ -96,10 +93,8 @@ namespace SS2.Survivors
                         return;
                     }
 
-                    if (CharacterBody.inputBank.jump.down)
-                    {
-                        CharacterBody.characterMotor.velocity.y -= Time.fixedDeltaTime * Physics.gravity.y * reducedGravity;
-                    }
+                    // TODO: No clue if this will work
+                    CharacterBody.characterMotor.velocity.y -= Time.fixedDeltaTime * Physics.gravity.y * reducedGravity;
                 }
             }
 

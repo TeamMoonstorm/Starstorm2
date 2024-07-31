@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
 {
-    class TornadoSpin : BasicMeleeAttack
+    class TornadoSpin : BaseBuffedKnightMeleeSkill
     {
         public static float swingTimeCoefficient = 1f;
         [FormatToken("SS2_KNIGHT_SPECIAL_SPIN_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
@@ -24,8 +24,6 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
         public static SkillDef originalSkillRef;
 
         private bool hasSpun;
-
-
 
         public override void OnEnter()
         {
@@ -85,11 +83,7 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
                     80f
                 );
 
-                EntityStateMachine weaponEsm = EntityStateMachine.FindByCustomName(gameObject, "Weapon");
-                if (weaponEsm != null)
-                {
-                    weaponEsm.SetNextState(new EntityStates.Knight.ResetOverrides());
-                }
+                ResetSkills();
             }
         }
 

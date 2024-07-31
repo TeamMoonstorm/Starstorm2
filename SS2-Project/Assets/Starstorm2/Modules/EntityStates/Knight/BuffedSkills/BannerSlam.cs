@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 
 namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
 {
-    public class BannerSlam : BaseState
+    public class BannerSlam : BaseBuffedKnightSkill
     {
         public static int duration;
         public static int swingTimeCoefficient;
@@ -43,16 +43,11 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
 
         public override void OnExit()
         {
-            base.OnExit();
-
             if (base.isAuthority)
             {
-                EntityStateMachine weaponEsm = EntityStateMachine.FindByCustomName(gameObject, "Weapon");
-                if (weaponEsm != null)
-                {
-                    weaponEsm.SetNextState(new EntityStates.Knight.ResetOverrides());
-                }
+                ResetSkills();
             }
+            base.OnExit();
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

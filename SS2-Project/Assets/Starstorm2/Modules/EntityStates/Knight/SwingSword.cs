@@ -50,7 +50,7 @@ namespace EntityStates.Knight
                     break;
             }
 
-            PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.05f);             
+            PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.08f);             
         }
 
         void SteppedSkillDef.IStepSetter.SetStep(int i)

@@ -1,27 +1,17 @@
 ﻿using EntityStates;
-using EntityStates.Knight;
 using RoR2;
 using RoR2.Skills;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Assets.Starstorm2.Modules.EntityStates.Knight
+namespace EntityStates.Knight
 {
-    public class ResetOverrides : BaseState
+    public class BaseBuffedKnightMeleeSkill : BasicMeleeAttack
     {
         public static SkillDef buffedSpecialRef;
-
         public static SkillDef buffedUtilityRef;
-
         public static SkillDef buffedPrimaryRef;
 
-        public override void OnEnter()
+        public void ResetSkills()
         {
-            base.OnEnter();
-
             GenericSkill originalSpecialRef = skillLocator.special;
             originalSpecialRef.UnsetSkillOverride(gameObject, buffedSpecialRef, GenericSkill.SkillOverridePriority.Contextual);
 
@@ -30,21 +20,6 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight
 
             GenericSkill originalUtilityRef = skillLocator.utility;
             originalUtilityRef.UnsetSkillOverride(gameObject, buffedUtilityRef, GenericSkill.SkillOverridePriority.Contextual);
-        }
-
-        public override void FixedUpdate()
-        {
-            base.FixedUpdate();
-        }
-
-        public override void OnExit()
-        {
-            base.OnExit();
-        }
-
-        public override InterruptPriority GetMinimumInterruptPriority()
-        {
-            return InterruptPriority.Skill;
         }
     }
 }

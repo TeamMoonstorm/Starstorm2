@@ -532,8 +532,8 @@ MonoBehaviour:
   m_Script: {fileID: -1067940895, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraParams: {fileID: 0}
-  cameraPivotTransform: {fileID: 0}
+  cameraParams: {fileID: 11400000, guid: 81d531bc024044b489625ba6aa37b18f, type: 2}
+  cameraPivotTransform: {fileID: 3237011897231578761}
   fovOverride: 0
   recoil: {x: 0, y: 0}
   dontRaycastToPivot: 0
@@ -761,6 +761,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7287274351398289365}
     m_Modifications:
+    - target: {fileID: 133498463892550461, guid: 754c1bd78a8009a41b3c312eb5e313ef,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.18
+      objectReference: {fileID: 0}
     - target: {fileID: 2208699705974011844, guid: 754c1bd78a8009a41b3c312eb5e313ef,
         type: 3}
       propertyPath: m_RootOrder
