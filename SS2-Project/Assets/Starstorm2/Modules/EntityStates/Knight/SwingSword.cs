@@ -50,7 +50,13 @@ namespace EntityStates.Knight
                     break;
             }
 
-            PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.08f);             
+            if (base.isGrounded & !base.GetModelAnimator().GetBool("isMoving"))
+            {
+                PlayCrossfade("FullBody, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.08f);
+            } else
+            {
+                PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.08f);
+            }         
         }
 
         void SteppedSkillDef.IStepSetter.SetStep(int i)
