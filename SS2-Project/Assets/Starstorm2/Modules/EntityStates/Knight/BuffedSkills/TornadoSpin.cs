@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
 {
-    class TornadoSpin : BaseBuffedKnightMeleeSkill
+    class TornadoSpin : BasicMeleeAttack
     {
         public static float swingTimeCoefficient = 1f;
         [FormatToken("SS2_KNIGHT_SPECIAL_SPIN_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
@@ -65,7 +65,6 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
 
         public override void OnExit()
         {
-            base.OnExit();
             characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage;
 
             if (base.isAuthority)
@@ -82,9 +81,18 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
                     null,
                     80f
                 );
-
-                ResetSkills();
             }
+
+            GenericSkill primarySkill = skillLocator.primary;
+            GenericSkill utilitySkill = skillLocator.utility;
+            GenericSkill specialSkill = skillLocator.special;
+
+            primarySkill.UnsetSkillOverride(gameObject, SwingSword.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+            utilitySkill.UnsetSkillOverride(gameObject, SpinUtility.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+            specialSkill.UnsetSkillOverride(gameObject, BannerSpecial.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+
+            outer.SetNextStateToMain();
+            base.OnExit();
         }
 
         public override void PlayAnimation()

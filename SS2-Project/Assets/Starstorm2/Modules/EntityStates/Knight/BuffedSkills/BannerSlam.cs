@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 
 namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
 {
-    public class BannerSlam : BaseBuffedKnightSkill
+    public class BannerSlam : BaseState
     {
         public static int duration;
         public static int swingTimeCoefficient;
@@ -43,10 +43,15 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
 
         public override void OnExit()
         {
-            if (base.isAuthority)
-            {
-                ResetSkills();
-            }
+            GenericSkill primarySkill = skillLocator.primary;
+            GenericSkill utilitySkill = skillLocator.utility;
+            GenericSkill specialSkill = skillLocator.special;
+
+            primarySkill.UnsetSkillOverride(gameObject, SwingSword.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+            utilitySkill.UnsetSkillOverride(gameObject, SpinUtility.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+            specialSkill.UnsetSkillOverride(gameObject, BannerSpecial.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+
+            outer.SetNextStateToMain();
             base.OnExit();
         }
 
