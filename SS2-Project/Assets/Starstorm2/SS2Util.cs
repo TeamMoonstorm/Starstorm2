@@ -10,6 +10,12 @@ namespace SS2
     public static class SS2Util
     {
         #region Misc
+        public static T EnsureComponent<T>(this MonoBehaviour component) where T : MonoBehaviour
+        {
+            var c = component.GetComponent<T>();
+            return c ? c : component.gameObject.AddComponent<T>();
+        }
+
         public static void DropShipCall(Transform origin, int tierWeight, uint teamLevel = 1, int amount = 1, ItemTier forcetier = 0, string theWorstCodeOfTheYear = null)
         {
             List<PickupIndex> dropList;

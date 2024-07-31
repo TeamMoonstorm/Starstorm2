@@ -69,6 +69,15 @@ namespace SS2.Components
             }
         }
 
+        private void Update()// buh
+        {
+            if (!this.grabTransform) return;
+            if (this.victimInfo.transform)
+            {
+                this.victimInfo.transform.position = this.grabTransform.position;
+            }
+        }
+
         public void UpdateVictimPosition() 
         {
             if (!this.grabTransform) return;

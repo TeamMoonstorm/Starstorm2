@@ -60,11 +60,7 @@ namespace EntityStates.Events
 
             if (charge >= 100f)
             {
-                outer.SetNextState(new Storm
-                {
-                    stormLevel = 1,
-                    lerpDuration = 15
-                });
+                outer.SetNextState(new Storm { stormLevel = 1, lerpDuration = 15f });
                 return;
             }
 
