@@ -153,12 +153,31 @@ namespace SS2
             SS2ContentPack.expansionDefs.AddSingle(expansionRequest.Asset);
         }
 
+        private IEnumerator InitializeSkinDefs()
+        {
+            var skinDefRequest = SS2Assets.LoadAllAssetsAsync<VanillaSkinDef>(SS2Bundle.Vanilla);
+            skinDefRequest.StartLoad();
+            while (!skinDefRequest.IsComplete)
+                yield return null;
+
+            var helper = new ParallelMultiStartCoroutine();
+            foreach(VanillaSkinDef skinDef in skinDefRequest.Assets)
+            {
+                helper.Add(skinDef.Initialize);
+            }
+
+            helper.Start();
+            while (!helper.IsDone)
+                yield return null;
+        }
+
         internal SS2Content()
         {
             ContentManager.collectContentPackProviders += AddSelf;
             SS2Assets.OnSS2AssetsInitialized += () =>
             {
                 _parallelPreLoadDispatchers.Add(AddSS2ExpansionDef);
+                _parallelPostLoadDispatchers.Add(InitializeSkinDefs);
             };
         }
 

@@ -59,7 +59,7 @@ namespace SS2
 		private static int[] curseStacks = new int[21];
 		private static int totalCurses;
 
-		private static int stageStart;
+		public static int stageStart { get; private set; }
 		private static readonly float curseIntensityPerStage = 1.33f;
 		private static void Refresh(Run run)
         {
