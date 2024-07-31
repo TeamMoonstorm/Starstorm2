@@ -29,18 +29,14 @@ namespace EntityStates.Knight
             switch (swingSide)
             {
                 case 0:
-                    animationStateName = "SwingSword0";
-                    swingEffectMuzzleString = "SwingLeft";
-                    break;
-                case 1:
                     animationStateName = "SwingSword1";
                     swingEffectMuzzleString = "SwingRight";
                     break;
-                case 2:
+                case 1:
                     animationStateName = "SwingSword2";
                     swingEffectMuzzleString = "SwingLeft";
                     break;
-                case 3:
+                case 2:
                     animationStateName = "SwingSword3";
                     swingEffectMuzzleString = "SwingCenter";
                     break;

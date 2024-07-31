@@ -12,7 +12,7 @@ namespace SS2.Survivors
     public sealed class Knight : SS2Survivor
     {
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acKnight", SS2Bundle.Indev);
-        public static float reducedGravity = 0.10f;
+        public static float reducedGravity = 0.12f;
 
         public override void Initialize()
         {
