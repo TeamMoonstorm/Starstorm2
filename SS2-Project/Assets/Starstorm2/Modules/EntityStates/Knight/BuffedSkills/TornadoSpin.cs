@@ -24,10 +24,18 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
         public static SkillDef originalSkillRef;
 
         private bool hasSpun;
+        private int _origLayer;
 
         public override void OnEnter()
         {
             base.OnEnter();
+            if (characterMotor)
+            {
+                _origLayer = characterMotor.capsuleCollider.gameObject.layer;
+                characterMotor.capsuleCollider.gameObject.layer = LayerIndex.fakeActor.intVal;
+                characterMotor.Motor.RebuildCollidableLayers();
+            }
+
             hasSpun = false;
 
             characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
@@ -83,13 +91,22 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
                 );
             }
 
-            GenericSkill primarySkill = skillLocator.primary;
-            GenericSkill utilitySkill = skillLocator.utility;
-            GenericSkill specialSkill = skillLocator.special;
+            if (base.isAuthority)
+            {
+                GenericSkill primarySkill = skillLocator.primary;
+                GenericSkill utilitySkill = skillLocator.utility;
+                GenericSkill specialSkill = skillLocator.special;
 
-            primarySkill.UnsetSkillOverride(gameObject, SwingSword.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
-            utilitySkill.UnsetSkillOverride(gameObject, SpinUtility.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
-            specialSkill.UnsetSkillOverride(gameObject, BannerSpecial.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+                primarySkill.UnsetSkillOverride(gameObject, SwingSword.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+                utilitySkill.UnsetSkillOverride(gameObject, SpinUtility.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+                specialSkill.UnsetSkillOverride(gameObject, BannerSpecial.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+            }
+
+            if (characterMotor) //Nasty fucking hack
+            {
+                characterMotor.capsuleCollider.gameObject.layer = _origLayer;
+                characterMotor.Motor.RebuildCollidableLayers();
+            }
 
             outer.SetNextStateToMain();
             base.OnExit();

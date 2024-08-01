@@ -39,9 +39,9 @@ namespace SS2.Survivors
 
         private void KnightBodyStart(CharacterBody body)
         {
-            // TODO: Are we even using fortified anymore?
-            if (body.baseNameToken == "SS2_KNIGHT_BODY_NAME") // Every time one does an unecesary string comparasion, a developer dies -N
-                body.SetBuffCount(SS2Content.Buffs.bdFortified.buffIndex, 3);
+            //// TODO: Are we even using fortified anymore?
+            //if (body.baseNameToken == "SS2_KNIGHT_BODY_NAME") // Every time one does an unecesary string comparasion, a developer dies -N
+            //    body.SetBuffCount(SS2Content.Buffs.bdFortified.buffIndex, 3);
         }
 
         public override bool IsAvailable(ContentPack contentPack)

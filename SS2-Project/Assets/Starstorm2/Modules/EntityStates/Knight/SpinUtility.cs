@@ -14,6 +14,7 @@ namespace EntityStates.Knight
         public static SkillDef buffedSkillRef;
         public static float hopVelocity;
         private bool hasSpun;
+        private int _origLayer;
 
 
         public static float airControl;
@@ -26,6 +27,14 @@ namespace EntityStates.Knight
         public override void OnEnter()
         {
             base.OnEnter();
+
+            if (characterMotor) //Nasty fucking hack
+            {
+                _origLayer = characterMotor.capsuleCollider.gameObject.layer;
+                characterMotor.capsuleCollider.gameObject.layer = LayerIndex.fakeActor.intVal;
+                characterMotor.Motor.RebuildCollidableLayers();
+            }
+
             hasSpun = false;
 
             characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
@@ -63,6 +72,12 @@ namespace EntityStates.Knight
 
         public override void OnExit()
         {
+            if (characterMotor) //Nasty fucking hack
+            {
+                characterMotor.capsuleCollider.gameObject.layer = _origLayer;
+                characterMotor.Motor.RebuildCollidableLayers();
+            }
+
             characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage;
             base.OnExit();
         }

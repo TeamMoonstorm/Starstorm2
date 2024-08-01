@@ -16,7 +16,7 @@ namespace EntityStates.Knight
         {
             base.OnEnter();
 
-            skillLocator.primary.UnsetSkillOverride(skillLocator.primary, Shield.skillDef, GenericSkill.SkillOverridePriority.Contextual);
+            skillLocator.primary.UnsetSkillOverride(skillLocator.primary, Shield.shieldBashSkillDef, GenericSkill.SkillOverridePriority.Contextual);
 
             animator = GetModelAnimator();
         }
