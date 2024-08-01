@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1391837873, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: sdCorruptSwipe
+  m_Name: sdUncorruptedSwipe
   m_EditorClassIdentifier: 
-  skillName: VoidFiendCorruptSwipe
-  skillNameToken: SS2_VOIDFIEND_CORRUPT_SWIPE_NAME
-  skillDescriptionToken: SS2_VOIDFIEND_CORRUPT_SWIPE_DESC
+  skillName: VoidFiendSwipe
+  skillNameToken: SS2_VOIDFIEND_SWIPE_NAME
+  skillDescriptionToken: SS2_VOIDFIEND_SWIPE_DESC
   keywordTokens: []
   icon: {fileID: 0}
   activationStateMachineName: Weapon
   activationState:
-    _typeName: EntityStates.VoidFiend.CorruptSwipe, Starstorm2, Version=1.0.0.0,
+    _typeName: EntityStates.VoidFiend.UncorruptSwipe, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   interruptPriority: 1
   baseRechargeInterval: 3

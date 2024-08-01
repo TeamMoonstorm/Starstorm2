@@ -42,12 +42,14 @@ namespace SS2.Survivors
 
         private void FixAlts(On.EntityStates.VoidSurvivor.CorruptMode.CorruptMode.orig_OnEnter orig, EntityStates.VoidSurvivor.CorruptMode.CorruptMode self)
         {
-            orig(self);
-            if (self.skillLocator.special == sdUncorruptedSwipe)
+            Debug.Log("AHHH!!!: " + self.skillLocator.special.skillDef + " | " + sdUncorruptedSwipe);
+            if (self.skillLocator.special.skillDef == sdUncorruptedSwipe)
             {
+                Debug.Log("AHHH!!!");
                 self.specialOverrideSkillDef = sdCorruptedSwipe;
                 Debug.Log("Overriding with new speical skill");
             }
+            orig(self);
         }
 
         public override bool IsAvailable(ContentPack contentPack)

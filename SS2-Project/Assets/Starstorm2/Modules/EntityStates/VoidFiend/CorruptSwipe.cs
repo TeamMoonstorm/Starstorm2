@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EntityStates.VoidFiend
 {
-    public class CorruptSwipe : BaseSkillState
+    public class CorruptSwipe : BasicMeleeAttack
     {
         public float baseDuration = 0.5f;
         private float duration;

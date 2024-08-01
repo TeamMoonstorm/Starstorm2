@@ -115,7 +115,7 @@ namespace SS2
                 new Bandit(),
                 new Railgunner(),
                 new Engineer(),
-                new VoidFiend(),
+                //new VoidFiend(),
                 //Add the rest
               };
 
@@ -566,6 +566,8 @@ namespace SS2
             public static BuffDef bdBanditTranquilizer;
 
             public static BuffDef bdAcridArmorCorrison;
+
+            public static BuffDef bdEngiFocused;
 
         }
 

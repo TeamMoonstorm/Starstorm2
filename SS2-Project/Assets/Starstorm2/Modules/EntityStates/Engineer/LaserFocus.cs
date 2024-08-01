@@ -2,15 +2,18 @@
 using EntityStates.Commando.CommandoWeapon;
 using EntityStates.EngiTurret.EngiTurretWeapon;
 using RoR2;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using SS2.Survivors;
+using R2API;
 
 namespace EntityStates.Engi
 {
     public class LaserFocus : BaseSkillState
     {
         [SerializeField]
-        public static float damageCoeff = 1f;
+        public static float damageCoeff = .75f;
 
         [SerializeField]
         public static float procCoeff = 0.5f;
@@ -25,6 +28,7 @@ namespace EntityStates.Engi
         private float duration;
         private float fireTimer;
         private Transform modelTransform;
+        private List<HealthComponent> boostedTargets;
         //MuzzleLeft
         //MuzzleRight
 
@@ -55,6 +59,7 @@ namespace EntityStates.Engi
 
             Util.PlaySound("Play_engi_R_walkingTurret_laser_start", base.gameObject);
             fireTimer = 0;
+            boostedTargets = new List<HealthComponent>();
             modelTransform = base.GetModelTransform();
             if (modelTransform)
             {
@@ -149,7 +154,7 @@ namespace EntityStates.Engi
                     // Do the thing swuff mentioned
                 }
 
-                var bulletLeft = new BulletAttack{
+                var bulletLeft = new BulletAttack {
                     owner = base.gameObject,
                     weapon = base.gameObject,
                     origin = aimRay.origin,
@@ -167,7 +172,7 @@ namespace EntityStates.Engi
                     HitEffectNormal = false,
                     smartCollision = true,
                     maxDistance = maxDistance,
-                    radius = 0.7f,
+                    radius = 0.7f
                 };
 
                 var bulletRight = new BulletAttack{
@@ -188,18 +193,22 @@ namespace EntityStates.Engi
                     HitEffectNormal = false,
                     smartCollision = true,
                     maxDistance = maxDistance,
-                    radius = 0.7f,
+                    radius = 0.7f
                 };
+
+                DamageAPI.AddModdedDamageType(bulletLeft, Engineer.EngiFocusDamage);
+                DamageAPI.AddModdedDamageType(bulletRight, Engineer.EngiFocusDamage);
+
 
                 bulletLeft.Fire();
                 bulletRight.Fire();
+
             }
         }
 
         public override void OnExit()
         {
             base.OnExit();
-            Debug.Log("im on exit.....");
             Util.PlaySound("Play_engi_R_walkingTurret_laser_end", base.gameObject);
             this.PlayAnimation("Gesture, Additive", "Empty");
 

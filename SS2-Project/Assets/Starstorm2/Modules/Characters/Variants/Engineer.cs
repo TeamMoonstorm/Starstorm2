@@ -7,6 +7,8 @@ using SS2;
 using System;
 using UnityEngine.AddressableAssets;
 using UnityEngine;
+using static R2API.DamageAPI;
+using R2API;
 
 namespace SS2.Survivors
 {
@@ -14,6 +16,8 @@ namespace SS2.Survivors
     {
         public override SS2AssetRequest<AssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<AssetCollection>("acEngineer", SS2Bundle.Indev);
 
+        public static ModdedDamageType EngiFocusDamage { get; private set; }
+        //public static BuffDef _buffDefEngiFocused;
 
         public override void Initialize()
         {
@@ -32,12 +36,61 @@ namespace SS2.Survivors
                 skillDef = sdLaserFocus,
                 viewableNode = new ViewablesCatalog.Node(sdLaserFocus.skillNameToken, false, null)
             };
+
+            EngiFocusDamage = DamageAPI.ReserveDamageType();
+            On.RoR2.HealthComponent.TakeDamage += EngiFocusDamageHook;
         }
 
+        private void EngiFocusDamageHook(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
+        {
+            Debug.Log("GRAHH " + EngiFocusDamage + " | " + SS2Content.Buffs.bdEngiFocused);
+            if (damageInfo.HasModdedDamageType(EngiFocusDamage))
+            {
+                if (Util.CheckRoll(damageInfo.procCoefficient))
+                {
+                    Debug.Log("adding buff ");
+                    self.body.AddTimedBuffAuthority(SS2Content.Buffs.bdEngiFocused.buffIndex, 5);
+                }
+
+                int count = self.body.GetBuffCount(SS2Content.Buffs.bdEngiFocused);
+                Debug.Log("count " + count);
+                if (count > 0)
+                {
+                    damageInfo.damage *= 1 + (count * .1f);
+                }
+            }
+            orig(self, damageInfo);
+        }
 
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
+        }
+
+        public sealed class EngiFocusedBuffBehavior : BaseBuffBehaviour
+        {
+            [BuffDefAssociation]
+            private static BuffDef GetBuffDef() => SS2Content.Buffs.bdEngiFocused;
+
+            //public void OnIncomingDamageOther(HealthComponent victimHealthComponent, DamageInfo damageInfo)
+            //{
+            //    Debug.Log("GRAHH " + EngiFocusDamage + " | " + SS2Content.Buffs.bdEngiFocused);
+            //    if (damageInfo.HasModdedDamageType(EngiFocusDamage))
+            //    {
+            //        if (Util.CheckRoll(damageInfo.procCoefficient))
+            //        {
+            //            Debug.Log("adding buff ");
+            //            victimHealthComponent.body.AddTimedBuffAuthority(SS2Content.Buffs.bdEngiFocused.buffIndex, 5);
+            //        }
+            //
+            //        int count = victimHealthComponent.body.GetBuffCount(SS2Content.Buffs.bdEngiFocused);
+            //        Debug.Log("count " + count);
+            //        if (count > 0)
+            //        {
+            //            damageInfo.damage *= 1 + (count * .1f);
+            //        }
+            //    }
+            //}
         }
     }
 }
