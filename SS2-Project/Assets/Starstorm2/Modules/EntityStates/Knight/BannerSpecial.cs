@@ -8,31 +8,34 @@ namespace EntityStates.Knight
 public class BannerSpecial : BaseState
 {
     public static SkillDef buffedSkillRef;
-    public static GameObject powerBuffWard;
+    public static GameObject knightBannerWard;
     public static GameObject slowBuffWard;
             
-    private GameObject powerBuffWardInstance;
+    private GameObject bannerObject;
     private GameObject slowBuffWardInstance;
 
     public override void OnEnter()
     {
-        if (isAuthority)
+        base.OnEnter();
+
+        if (isAuthority & NetworkServer.active)
         {
             Vector3 position = inputBank.aimOrigin - (inputBank.aimDirection);
-            powerBuffWardInstance = UnityEngine.Object.Instantiate(powerBuffWard, position, Quaternion.identity);
+            bannerObject = UnityEngine.Object.Instantiate(knightBannerWard, position, Quaternion.identity);
+
+            bannerObject.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
+            NetworkServer.Spawn(bannerObject);
+
             slowBuffWardInstance = UnityEngine.Object.Instantiate(slowBuffWard, position, Quaternion.identity);
-
-            powerBuffWardInstance.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
             slowBuffWardInstance.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
-
-            NetworkServer.Spawn(powerBuffWardInstance);
-            NetworkServer.Spawn(slowBuffWardInstance);
+            slowBuffWardInstance.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(bannerObject);
         }
     }
 
     public override void FixedUpdate()
     {
         base.FixedUpdate();
+        outer.SetNextStateToMain();
     }
 
     public override void OnExit()

@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace EntityStates.Knight
 {
+    // TODO: Delete this
     public class SkillSwap : BaseState
     {
         private GenericSkill originalPrimarySkill;
