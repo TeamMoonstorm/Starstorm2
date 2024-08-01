@@ -16,13 +16,20 @@ namespace SS2.Survivors
         public override SS2AssetRequest<AssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<AssetCollection>("acBandit", SS2Bundle.Indev);
 
         public static DamageAPI.ModdedDamageType TranqDamageType { get; set; }
+        public static BuffDef _bdBanditTranquilizer;
 
         public static float tranqDuration = 5f;
-        public static float _confuseSlowAmount = 0.5f;
-        public static float _confuseAttackSpeedSlowAmount = 0.2f;
+        public static float _confuseSlowAmount = 0.1f;
+        public static float _confuseAttackSpeedSlowAmount = 0.1f;
+        public static float _maxDebuffAmount = 0.5f;
+        public static float _sleepCountThreshold = 3;
+        public static float _sleepDuration = 3;
+        public static float _armorLoseAmount = 25;
 
         public override void Initialize()
         {
+            _bdBanditTranquilizer = survivorAssetCollection.FindAsset<BuffDef>("bdBanditTranquilizer");
+
             RegisterTranquilizer();
             R2API.RecalculateStatsAPI.GetStatCoefficients += ModifyStats;
 
@@ -49,12 +56,25 @@ namespace SS2.Survivors
 
         private void ModifyStats(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
-            if (sender.HasBuff(SS2Content.Buffs.bdBanditTranquilizer))
+            if (sender.HasBuff(_bdBanditTranquilizer))
             {
-                // TODO: Might need to do some sort of scaling
-                var buffCount = sender.GetBuffCount(SS2Content.Buffs.bdBanditTranquilizer);
-                args.moveSpeedMultAdd -= _confuseSlowAmount * buffCount;
-                args.attackSpeedMultAdd -= _confuseAttackSpeedSlowAmount * buffCount;
+                // TODO: Might need to do some sort of scaling, but this works for now.
+                var buffCount = sender.GetBuffCount(_bdBanditTranquilizer);
+                args.moveSpeedMultAdd -= Math.Min(_confuseSlowAmount * buffCount, _maxDebuffAmount);
+                args.attackSpeedMultAdd -= Math.Min(_confuseAttackSpeedSlowAmount * buffCount, _maxDebuffAmount);
+
+                if (buffCount >= _sleepCountThreshold)
+                {   
+                    // Stun the enemy, thanks orbeez for the code
+                    SetStateOnHurt setStateOnHurt = sender.GetComponent<SetStateOnHurt>();
+                    if (setStateOnHurt) setStateOnHurt.SetStun(_sleepDuration);
+
+                    //Remove a stack of tranq
+                    sender.RemoveOldestTimedBuff(_bdBanditTranquilizer);
+
+                    // Make them vulnerable
+                    args.armorAdd -= _armorLoseAmount;
+                }
             }
         }
 
@@ -65,7 +85,7 @@ namespace SS2.Survivors
 
             if (DamageAPI.HasModdedDamageType(damageInfo, TranqDamageType))
             {
-                victimBody.AddTimedBuffAuthority(SS2Content.Buffs.bdBanditTranquilizer.buffIndex, tranqDuration);
+                victimBody.AddTimedBuffAuthority(_bdBanditTranquilizer.buffIndex, tranqDuration);
             }
         }
 

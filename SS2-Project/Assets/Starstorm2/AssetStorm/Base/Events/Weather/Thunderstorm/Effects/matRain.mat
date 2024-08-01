@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: matRain
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
-  m_ShaderKeywords: USE_CLOUDS _DEPTHFOG_ON _DISPLACEMENTMODE_OFF _DISPLACEMENT_ON
+  m_ShaderKeywords: USE_CLOUDS VERTEXCOLOR _DEPTHFOG_ON _DISPLACEMENTMODE_OFF _DISPLACEMENT_ON
     _DISTORTIONQUALITY_HIGH _EMISSION _NORMALMAP _REFLECTIONTYPE_CUBEMAP
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
@@ -30,14 +30,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: a3255a08fb51cd740ae869008ba7be22, type: 2}
-        m_Scale: {x: -1, y: 1}
+        m_Scale: {x: 0.94, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RemapTex:
-        m_Texture: {fileID: 2800000, guid: f6cb77cfe9a63c9479756eca4f56975f, type: 2}
+        m_Texture: {fileID: 2800000, guid: cd71ebfef392b514eb3e4b3d6af7825c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _AlphaBias: 0
+    - _AlphaBias: 0.293
     - _AlphaBoost: 4
     - _Amplitude: 2
     - _Boost: 1.4
@@ -99,7 +99,7 @@ Material:
     - _UVSec: 0
     - _UseUV1On: 0
     - _VertexAlphaOn: 0
-    - _VertexColorOn: 0
+    - _VertexColorOn: 1
     - _VertexOffsetOn: 0
     - _WorldSpace: 0
     - _ZTest: 4

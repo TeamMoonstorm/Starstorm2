@@ -9,7 +9,7 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static RoR2.CombatDirector;
-
+using R2API;
 namespace SS2.Components
 {
     //This is a basic director for a custom elite to attempt to spawn.
@@ -38,6 +38,12 @@ namespace SS2.Components
     {
         public static CustomEliteDirector instance;
 
+        [SystemInitializer]
+        private static void Init()
+        {
+            IL.RoR2.CombatDirector.Spawn += SpawnEliteIL;
+        }
+        
         public float directorTickRate = 4f;
         //numbers currently based off of Instinct.
         [Header("Elite Director Values")]
@@ -58,10 +64,8 @@ namespace SS2.Components
 
         private Xoroshiro128Plus rng;
 
-        private DirectorCardCategorySelection dccs = null;
-        private Dictionary<GameObject, float> cardCosts = new Dictionary<GameObject, float>();
         private List<EquipmentDef> eliteEquips = new List<EquipmentDef>();
-        private bool hasMadeCardCosts = false;
+
         private CombatDirector fastCombatDirector;
         private CombatDirector slowCombatDirector;
         private float timer = 0;
@@ -75,8 +79,6 @@ namespace SS2.Components
         private float empyreanEliteCost = 280f;
         private float empyreanMultiplier = 25f;
         public bool empyreanActive = false;
-
-        public BindingFlags allFlags = (BindingFlags)(-1);
 
         public void Awake()
         {
@@ -99,64 +101,26 @@ namespace SS2.Components
                     Destroy(this);
                 }
             }
-
-            GameObject sceneInfo = GameObject.Find("SceneInfo");
-
-            //Debug.Log("making card pool");
-            if (sceneInfo)
-            {
-                ClassicStageInfo csi = sceneInfo.GetComponent<ClassicStageInfo>();
-                if (csi)
-                {
-                    //dccs = combatDirector.monsterCards;
-                    dccs = csi.monsterCategories;
-
-                    if (!dccs)
-                    {
-                        //Debug.Log("dccs null!");
-                    }
-                    else
-                    {
-                        hasMadeCardCosts = true;
-                        for (int i = 0; i < dccs.categories.Length; i++)
-                        {
-                            if (dccs.categories[i].cards == null)
-                                return;
-
-                            for (int j = 0; j < dccs.categories[i].cards.Length; j++)
-                            {
-                                SpawnCard sc = dccs.categories[i].cards[j].spawnCard;
-                                cardCosts.Add(sc.prefab.GetComponent<CharacterMaster>().bodyPrefab, sc.directorCreditCost);
-                            }
-                        }
-
-                        /*foreach (var key in cardCosts)
-                        {
-                            Debug.Log("PAIR: " + key.Key.name + " | " + key.Value);
-                        }*/
-                    }
-                }
-                else
-                {
-                    SS2Log.Fatal("No ClassicStageInfo found. Killing custom director.");
-                    Destroy(this);
-                }
-
-            }
         }
 
         public void Start()
         {
-            //CharacterBody.onBodyStartGlobal += TryEliteSpawn;
-            IL.RoR2.CombatDirector.Spawn += SpawnEliteIL;
-            On.RoR2.SceneDirector.Start += SceneDirector_Start;
+            Stage.onServerStageBegin += Stage_onServerStageBegin;
+        }
+
+        // this sucks
+        private void Stage_onServerStageBegin(Stage stage)
+        {
+            DirectorAPI.Stage stageEnum = DirectorAPI.GetStageEnumFromSceneDef(stage.sceneDef);
+            if (stageEnum == DirectorAPI.Stage.WetlandAspect || stageEnum == DirectorAPI.Stage.SunderedGrove || stageEnum == DirectorAPI.Stage.SkyMeadow)
+            {
+                followerStage = true;
+            }
         }
 
         public void OnDestroy()
         {
-            //CharacterBody.onBodyStartGlobal -= TryEliteSpawn;
-            IL.RoR2.CombatDirector.Spawn -= SpawnEliteIL;
-            On.RoR2.SceneDirector.Start -= SceneDirector_Start;
+            Stage.onServerStageBegin -= Stage_onServerStageBegin;
         }
 
         public void FixedUpdate()
@@ -183,44 +147,18 @@ namespace SS2.Components
         }
 
 
-        private void SpawnEliteIL(ILContext il)
-        {
-            ILCursor c = new ILCursor(il);
-
-            var allFlags = (BindingFlags)(-1);
-            var cdMethod = typeof(CombatDirector).GetNestedTypes(allFlags).FirstOrDefault(type => type.Name.Contains("<>") && type.Name.Contains("DisplayClass")).GetMethods(allFlags).FirstOrDefault(method => method.Name.Contains("OnCardSpawned"));
-
-            bool ILFound = c.TryGotoNext(MoveType.After,
-                x => x.MatchLdloc(0),
-                x => x.MatchLdftn(cdMethod),
-                x => x.MatchNewobj(typeof(Action<SpawnCard.SpawnResult>).GetConstructor(new Type[] { typeof(object), typeof(IntPtr)
-                })));
-
-            if (ILFound)
-            {
-                c.EmitDelegate<Func<Action<SpawnCard.SpawnResult>, Action<SpawnCard.SpawnResult>>>((ogMethod) =>
-                {
-                    return new Action<SpawnCard.SpawnResult>((spawnResult) =>
-                    {
-                        ogMethod(spawnResult);
-                        ModifySpawn(spawnResult);
-                    });
-                });
-            }
-            else
-                SS2Log.Fatal("Custom Elite IL Hook Failed ! ! !");
-        }
+        
 
         public void ModifySpawn(SpawnCard.SpawnResult spawnResult)
         {
-            SS2Log.Debug(spawnResult.spawnedInstance.name);
             CharacterMaster cm = spawnResult.spawnedInstance.GetComponent<CharacterMaster>();
-            if (cm == null)
+            if (!cm || !cm.bodyInstanceObject)
                 return;
             CharacterBody cb = cm.bodyInstanceObject.GetComponent<CharacterBody>();
             if (cb == null)
                 return;
-            cardCosts.TryGetValue(cm.bodyPrefab, out float baseCost);
+            //cardCosts.TryGetValue(cm.bodyPrefab, out float baseCost);
+            float baseCost = spawnResult.spawnRequest.spawnCard.directorCreditCost;
             SS2Log.Debug(cm.name + " base cost: " + baseCost);
             float totalCost = baseCost;
             if (cb.eliteBuffCount > 0)
@@ -245,7 +183,7 @@ namespace SS2.Components
                     if (followerMaster)
                     {
                         var masterEquip = cb.inventory.GetEquipmentIndex();
-                        if (masterEquip != null)
+                        if (masterEquip != EquipmentIndex.None)
                         {
                             followerMaster.inventory.SetEquipmentIndex(masterEquip);
                             fastCombatDirector.monsterCredit -= followerCost * 2f;
@@ -276,10 +214,10 @@ namespace SS2.Components
             {
                 float baseEtherealCost = (totalCost * etherealMultiplier) / ethInstance.etherealsCompleted; //possibly too mean?? lol
 
-                if ((etherealEliteCost - (20 * (ethInstance.etherealsCompleted - 1))) <= eliteCredit && totalCost * baseEtherealCost <= fastCombatDirector.monsterCredit)
+                if ((etherealEliteCost - (20 * (ethInstance.etherealsCompleted - 1))) <= eliteCredit && baseEtherealCost <= fastCombatDirector.monsterCredit)
                 {
                     MakeEthereal(cb);
-                    fastCombatDirector.monsterCredit -= totalCost * baseEtherealCost * 1.25f; //fuck you go broke
+                    fastCombatDirector.monsterCredit -= baseEtherealCost * 1.25f; //fuck you go broke
                     SS2Log.Debug(cm.name + " ethereal monster cost: " + totalCost + "    (i am making this bitch ethereal)");
                     eliteCredit -= etherealEliteCost * 1.25f;
                 }
@@ -290,7 +228,6 @@ namespace SS2.Components
         {
             //to-do: everything :)
             var inventory = body.inventory;
-            SS2Log.Debug("making " + body.baseNameToken + " empyrean");
 
             inventory.RemoveItem(RoR2Content.Items.BoostHp, inventory.GetItemCount(RoR2Content.Items.BoostHp));
             inventory.RemoveItem(RoR2Content.Items.BoostDamage, inventory.GetItemCount(RoR2Content.Items.BoostDamage));
@@ -316,7 +253,6 @@ namespace SS2.Components
         public void MakeEthereal(CharacterBody body)
         {
             var inventory = body.inventory;
-            SS2Log.Debug("making " + body.baseNameToken + " ethereal");
 
             inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(30 + (30 * ethInstance.etherealsCompleted)));
             inventory.GiveItem(SS2Content.Items.BoostCooldowns, 15);
@@ -331,16 +267,34 @@ namespace SS2.Components
             }
         }
 
-        public void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)
+        private static void SpawnEliteIL(ILContext il)
         {
-            orig(self);
+            ILCursor c = new ILCursor(il);
 
-            var currStage = SceneManager.GetActiveScene().name;
+            var allFlags = (BindingFlags)(-1);
+            var cdMethod = typeof(CombatDirector).GetNestedTypes(allFlags).FirstOrDefault(type => type.Name.Contains("<>") && type.Name.Contains("DisplayClass")).GetMethods(allFlags).FirstOrDefault(method => method.Name.Contains("OnCardSpawned"));
 
-            if (currStage == "foggyswamp" || currStage == "rootjungle" || currStage == "skymeadow")
+            bool ILFound = c.TryGotoNext(MoveType.After,
+                x => x.MatchLdloc(0),
+                x => x.MatchLdftn(cdMethod),
+                x => x.MatchNewobj(typeof(Action<SpawnCard.SpawnResult>).GetConstructor(new Type[] { typeof(object), typeof(IntPtr)
+                })));
+
+            if (ILFound)
             {
-                followerStage = true;
+                c.EmitDelegate<Func<Action<SpawnCard.SpawnResult>, Action<SpawnCard.SpawnResult>>>((ogMethod) =>
+                {
+                    if (!CustomEliteDirector.instance) return ogMethod;
+                    return new Action<SpawnCard.SpawnResult>((spawnResult) =>
+                    {
+                        ogMethod(spawnResult);
+                        CustomEliteDirector.instance.ModifySpawn(spawnResult);
+                    });
+                });
             }
+            else
+                SS2Log.Fatal("Custom Elite IL Hook Failed ! ! !");
         }
+
     }
 }

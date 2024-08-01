@@ -49,6 +49,7 @@ namespace EntityStates.Acrid
             if (base.isAuthority)
             {
                 FireProjectileInfo fireProjectileInfo = default(FireProjectileInfo);
+                fireProjectileInfo.damageTypeOverride = DamageType.Generic;
                 fireProjectileInfo.projectilePrefab = SS2.Survivors.Acrid.corrodingSpitProjectilePrefab;
                 fireProjectileInfo.position = aimRay.origin;
                 fireProjectileInfo.rotation = Util.QuaternionSafeLookRotation(aimRay.direction);

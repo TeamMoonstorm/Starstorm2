@@ -12,6 +12,7 @@ using System.Text;
 using UObject = UnityEngine.Object;
 namespace SS2
 {
+    [CreateAssetMenu(fileName = "ExtendedAssetCollection", menuName = "Starstorm2/AssetCollections/ExtendedAssetCollection")]
     public class ExtendedAssetCollection : AssetCollection
     {
 #if UNITY_EDITOR

@@ -15,7 +15,7 @@ namespace SS2.Components
             if (Run.instance)
             {
                 Vector3 totalRotation = rotationPerDifficultyIncrease * (Mathf.Clamp(DifficultyCatalog.GetDifficultyDef(Run.instance.selectedDifficulty).scalingValue, 1, maxScaling) - 1);
-                Vector3 finalPosition = new Vector3(transformOffsetPerDifficultyIncrease.x * ((Mathf.Clamp(DifficultyCatalog.GetDifficultyDef(Run.instance.selectedDifficulty).scalingValue, 1, maxScaling) - 1)) * 33f, transformOffsetPerDifficultyIncrease.y * (Mathf.Clamp(DifficultyCatalog.GetDifficultyDef(Run.instance.selectedDifficulty).scalingValue, 1, maxScaling) - 1) + 300f, transformOffsetPerDifficultyIncrease.z * (Mathf.Clamp(DifficultyCatalog.GetDifficultyDef(Run.instance.selectedDifficulty).scalingValue, 1, maxScaling) - 1) * -8.33f);
+                Vector3 finalPosition = new Vector3(transformOffsetPerDifficultyIncrease.x * ((Mathf.Clamp(DifficultyCatalog.GetDifficultyDef(Run.instance.selectedDifficulty).scalingValue, 1, maxScaling) - 1)) * 33f, transformOffsetPerDifficultyIncrease.y * (Mathf.Clamp(DifficultyCatalog.GetDifficultyDef(Run.instance.selectedDifficulty).scalingValue, 1, maxScaling) - 1) + 300f, transformOffsetPerDifficultyIncrease.z * (Mathf.Clamp(DifficultyCatalog.GetDifficultyDef(Run.instance.selectedDifficulty).scalingValue, 1, maxScaling) - 1) * -8.33f); // o_o
                 if (localRotationOnly)
                     transform.localEulerAngles += totalRotation;
                 else

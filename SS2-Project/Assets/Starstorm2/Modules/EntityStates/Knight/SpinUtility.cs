@@ -13,9 +13,7 @@ namespace EntityStates.Knight
         public static GameObject buffWard;
         public static SkillDef buffedSkillRef;
         public static float hopVelocity;
-        private bool hasBuffed;
         private bool hasSpun;
-        private GameObject wardInstance;
 
 
         public static float airControl;
@@ -28,7 +26,6 @@ namespace EntityStates.Knight
         public override void OnEnter()
         {
             base.OnEnter();
-            hasBuffed = false;
             hasSpun = false;
 
             characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
@@ -53,7 +50,7 @@ namespace EntityStates.Knight
         {
             base.FixedUpdate();
 
-            if (animator.GetFloat("SpecialSwing") >= 0.5f && !hasSpun)
+            if (animator.GetFloat("Utility") >= 0.5f && !hasSpun)
             {
                 hasSpun = true;
                 if (!isGrounded)
@@ -72,7 +69,7 @@ namespace EntityStates.Knight
 
         public override void PlayAnimation()
         {
-            PlayCrossfade("Body", "SwingSpecial", "Special.playbackRate", duration * swingTimeCoefficient, 0.15f);   
+            PlayCrossfade("FullBody, Override", "Utility", "Utility.playbackRate", duration * swingTimeCoefficient, 0.15f);   
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

@@ -102,6 +102,13 @@ namespace SS2
             asyncAssetLoadCoroutines.Start();
             while (!asyncAssetLoadCoroutines.IsDone)
                 yield return null;
+
+            //SS2Log.Info($"Populating UnlockableDefs array from Vanilla Skins...");
+            //SS2AssetRequest<UnlockableDef> udRequest = new SS2AssetRequest<UnlockableDef>(SS2Bundle.Vanilla);
+            //udRequest.StartLoad();
+            //while (!udRequest.IsComplete)
+            //    yield return null;
+            //SS2ContentPack.unlockableDefs.Add(udRequest.Assets.ToArray());
         }
 
         private static IEnumerator LoadVanillaSurvivorBundles()
@@ -133,6 +140,7 @@ namespace SS2
             foreach (var survivor in list)
             {
                 survivor.Initialize();
+                survivor.ModifyContentPack(SS2ContentPack);
             }
         }
 
@@ -147,12 +155,31 @@ namespace SS2
             SS2ContentPack.expansionDefs.AddSingle(expansionRequest.Asset);
         }
 
+        private IEnumerator InitializeSkinDefs()
+        {
+            var skinDefRequest = SS2Assets.LoadAllAssetsAsync<VanillaSkinDef>(SS2Bundle.Vanilla);
+            skinDefRequest.StartLoad();
+            while (!skinDefRequest.IsComplete)
+                yield return null;
+
+            var helper = new ParallelMultiStartCoroutine();
+            foreach(VanillaSkinDef skinDef in skinDefRequest.Assets)
+            {
+                helper.Add(skinDef.Initialize);
+            }
+
+            helper.Start();
+            while (!helper.IsDone)
+                yield return null;
+        }
+
         internal SS2Content()
         {
             ContentManager.collectContentPackProviders += AddSelf;
             SS2Assets.OnSS2AssetsInitialized += () =>
             {
                 _parallelPreLoadDispatchers.Add(AddSS2ExpansionDef);
+                _parallelPostLoadDispatchers.Add(InitializeSkinDefs);
             };
         }
 
@@ -168,6 +195,7 @@ namespace SS2
                 Components.EtherealBehavior.Init,
                 Components.VoidBehavior.Init,
                 Void.Init,
+                Storm.Init,
                 () =>
                 {
                     //new Modules.Scenes().Initialize();
@@ -264,7 +292,11 @@ namespace SS2
         }
         public static class Items
         {
+            public static ItemDef AffixStorm;
+
             public static ItemDef ArmedBackpack;
+
+            public static ItemDef BoostCharacterSize;
 
             public static ItemDef BoostCooldowns;
 
@@ -396,6 +428,11 @@ namespace SS2
 
             public static ItemDef RelicOfEntropy;
 
+            public static ItemDef IceTool;
+
+           // public static ItemDef WickedStaff;
+            public static ItemDef WeatherRadio;
+
         }
 
         public static class Equipments
@@ -425,11 +462,17 @@ namespace SS2
             public static EquipmentDef RockFruit;
 
             public static EquipmentDef WhiteFlag;
+
+            public static EquipmentDef SeismicOscillator;
         }
 
         public static class Buffs
         {
+            public static BuffDef BuffAffixStorm;
+
             public static BuffDef BuffAffixVoid;
+
+            public static BuffDef BuffAffixUltra;
 
             public static BuffDef BuffBackThruster;
 
@@ -444,6 +487,8 @@ namespace SS2
             public static BuffDef BuffChirrGrabFriend;
 
             public static BuffDef BuffChirrRegen;
+
+            public static BuffDef BuffCyborgPrimed;
 
             public static BuffDef BuffChocolate;
 
@@ -569,10 +614,33 @@ namespace SS2
 
             public static BuffDef bdEngiFocused;
 
+            public static BuffDef bdLunarCurseArmor;
+
+            public static BuffDef bdLunarCurseAttackSpeed;
+
+            public static BuffDef bdLunarCurseCloak;
+
+            public static BuffDef bdLunarCurseCooldownReduction;
+
+            public static BuffDef bdLunarCurseDamage;
+
+            public static BuffDef bdLunarCurseHealth;
+
+            public static BuffDef bdLunarCurseMovementSpeed;
+
+            public static BuffDef bdLunarCurseShield;
+
+            public static BuffDef bdLunarCurseBlind;
+
+            public static BuffDef bdLunarCurseLockSkill;
+
+            public static BuffDef bdLunarCurseNoRegen;
         }
 
         public static class Elites
         {
+            public static EliteDef edStorm;
+
             public static EliteDef edPurple;
 
             public static EliteDef edKinetic;
@@ -604,10 +672,5 @@ namespace SS2
         {
             public static ItemTierDef Sibylline;
         }
-
-        //public static class DamageTypes
-        //{
-        //    public static DamageType Tranquilizer;
-        //}
     }
 }

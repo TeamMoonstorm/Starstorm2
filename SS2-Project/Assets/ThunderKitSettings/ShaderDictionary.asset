@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5fa10117cd6a9e4ab7dd183cedfe1bb, type: 3}
   m_Name: ShaderDictionary
   m_EditorClassIdentifier: 
+  serializationString: Penistone
   shaderPairs:
   - yaml:
       shaderName: 
@@ -50,17 +51,23 @@ MonoBehaviour:
       shaderName: StubbedCalm Water/UnderWaterFog
       shaderGUID: 9de4aab9101c51143bf82878841a352a
   - yaml:
-      shaderName: 
-      shaderGUID: 
+      shaderName: Decalicious/Deferred Decal
+      shaderGUID: a1aa4ac13f4489e44809dc42a99f56b3
     hlsl:
-      shaderName: StubbedDecalicious/DecaliciousUnlitDecal
+      shaderName: StubbedDecalicious/DecaliciousDeferredDecal
       shaderGUID: 1ba89a45b14bcfa4a99b0cd270d2ee9f
   - yaml:
-      shaderName: 
-      shaderGUID: 
+      shaderName: Hidden/Decalicious Game Object ID
+      shaderGUID: 5b74f7672d8259f4ca90fbd410e270e5
     hlsl:
       shaderName: StubbedDecalicious/DecaliciousGameObjectID
       shaderGUID: 76d3cc91c844a2948962ea616d28b6e2
+  - yaml:
+      shaderName: Decalicious/Unlit Decal
+      shaderGUID: 7689cf2731191644daff784f1a0933a1
+    hlsl:
+      shaderName: StubbedDecalicious/DecaliciousUnlitDecal
+      shaderGUID: b412e88df440efa44b2ee23c533f19ce
   - yaml:
       shaderName: 
       shaderGUID: 
@@ -97,12 +104,6 @@ MonoBehaviour:
     hlsl:
       shaderName: StubbedNGSS/NGSS_FrustumShadows
       shaderGUID: 1a9fd92ccea41214c95aa26934041e35
-  - yaml:
-      shaderName: Hidden/FastBlur
-      shaderGUID: 1f26d6518b9c780478c94f1f0aa7d0b3
-    hlsl:
-      shaderName: Hidden/FastBlur
-      shaderGUID: 96252780476d9cd41aa35787bd4bac02
   - yaml:
       shaderName: Hidden/PostProcessing/HopooSSR
       shaderGUID: 0752f4eba1104a24fbc855557fbdf48d
@@ -224,6 +225,12 @@ MonoBehaviour:
       shaderName: StubbedRoR2/Base/Shaders/HGVertexOnly
       shaderGUID: 74176881887bd7c44afb0eadd5f7f54e
   - yaml:
+      shaderName: Hidden/FastBlur
+      shaderGUID: 1f26d6518b9c780478c94f1f0aa7d0b3
+    hlsl:
+      shaderName: Hidden/FastBlur
+      shaderGUID: 96252780476d9cd41aa35787bd4bac02
+  - yaml:
       shaderName: Hopoo Games/Internal/Outline Highlight
       shaderGUID: 46c56a972addab54ca94b4a87ec6e394
     hlsl:
@@ -295,3 +302,9 @@ MonoBehaviour:
     hlsl:
       shaderName: StubbedRoR2/Base/Shaders/HGUIOverbrighten
       shaderGUID: 129842c72330fd345b366763cb70b3a2
+  - yaml:
+      shaderName: TextMeshPro/Distance Field
+      shaderGUID: c1dbb80ba0f1f3d41b540dfd54caec9b
+    hlsl:
+      shaderName: StubbedTextMeshPro/Distance Field
+      shaderGUID: e9189d82d5d2a4e49b570a679e5ada22
