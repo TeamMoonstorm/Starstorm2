@@ -5,15 +5,14 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using RoR2.ContentManagement;
 using R2API;
-using static MSU.BaseBuffBehaviour;
 using EntityStates;
 using System;
-#if DEBUG
 namespace SS2.Survivors
 {
     public sealed class Knight : SS2Survivor
     {
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acKnight", SS2Bundle.Indev);
+        public static float reducedGravity = 0.12f;
 
         public override void Initialize()
         {
@@ -24,6 +23,7 @@ namespace SS2.Survivors
 
             CharacterBody.onBodyStartGlobal += KnightBodyStart;
             ModifyPrefab();
+            R2API.RecalculateStatsAPI.GetStatCoefficients += ModifyStats;
 
             // Add the buff material overlays to buffoverlay dict
             BuffOverlays.AddBuffOverlay(buffKnightCharged, matChargedOverlay);
@@ -39,8 +39,9 @@ namespace SS2.Survivors
 
         private void KnightBodyStart(CharacterBody body)
         {
-            if (body.baseNameToken == "SS2_KNIGHT_BODY_NAME") // Every time one does an unecesary string comparasion, a developer dies -N
-                body.SetBuffCount(SS2Content.Buffs.bdFortified.buffIndex, 3);
+            //// TODO: Are we even using fortified anymore?
+            //if (body.baseNameToken == "SS2_KNIGHT_BODY_NAME") // Every time one does an unecesary string comparasion, a developer dies -N
+            //    body.SetBuffCount(SS2Content.Buffs.bdFortified.buffIndex, 3);
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -48,64 +49,56 @@ namespace SS2.Survivors
             return true;
         }
 
-        // TODO: Load the actual buff 
-        // The buff behavior for Knight's default passive
-        public class KnightPassiveBuff : BaseBuffBehaviour, IBodyStatArgModifier
+        private void ModifyStats(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
-            [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => SS2Content.Buffs.bdKnightBuff;
-            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            // The buff behavior for Knight's default passive
+            if (sender.HasBuff(SS2Content.Buffs.bdKnightBuff))
             {
                 args.attackSpeedMultAdd += 0.4f;
                 args.damageMultAdd += 0.4f;
             }
-        }
 
-        // TODO: Comment explaining the buff
-        
-        public class KnightChargedUpBuff : BaseBuffBehaviour
-        {
-            [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => SS2Content.Buffs.bdKnightCharged;
-        }
-
-        // TODO: Comment explaining the buff
-        // TODO: Replace class with a single hook on RecalculateSTatsAPI.GetstatCoefficients. This way we replace the monobehaviour with just a method
-        public class KnightShieldBuff : BaseBuffBehaviour, IBodyStatArgModifier
-        {
-            [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => SS2Content.Buffs.bdShield;
-
-            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            if (sender.HasBuff(SS2Content.Buffs.bdShield))
             {
                 args.armorAdd += 100f;
                 args.moveSpeedReductionMultAdd += 0.6f;
             }
-        }
 
-        // TODO: Replace class with a single hook on RecalculateSTatsAPI.GetstatCoefficients. This way we replace the monobehaviour with just a method
-        public class KnightSpecialEmpowerBuff : BaseBuffBehaviour, IBodyStatArgModifier
-        {
-            [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => SS2Content.Buffs.bdKnightSpecialPowerBuff;
-            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            if (sender.HasBuff(SS2Content.Buffs.bdKnightSpecialPowerBuff))
             {
-                args.baseJumpPowerAdd += 0.7f;
-                args.baseMoveSpeedAdd += 0.4f;
+                args.baseJumpPowerAdd += 0.3f;
+                args.baseMoveSpeedAdd += 0.2f;
+                args.jumpPowerMultAdd += 0.3f;
             }
-        }
 
-        // TODO: Replace class with a single hook on RecalculateSTatsAPI.GetstatCoefficients. This way we replace the monobehaviour with just a method
-        public class KnightSpecialSlowEnemiesBuff : BaseBuffBehaviour, IBodyStatArgModifier
-        {
-            [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => SS2Content.Buffs.bdKnightSpecialSlowBuff;
-            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            if (sender.HasBuff(SS2Content.Buffs.bdKnightSpecialSlowBuff))
             {
                 args.attackSpeedReductionMultAdd += 2;
                 args.moveSpeedReductionMultAdd += 2;
             }
         }
+
+            public class KnightSpecialPowerBuff : BaseBuffBehaviour
+            {
+                [BuffDefAssociation]
+                private static BuffDef GetBuffDef() => SS2Content.Buffs.bdKnightSpecialPowerBuff;
+
+                private void FixedUpdate()
+                {
+                    if (!HasAnyStacks || !CharacterBody.characterMotor || !CharacterBody)
+                        return;
+
+                    if (CharacterBody.characterMotor.isGrounded)
+                    {
+                        return;
+                    }
+
+                    // TODO: No clue if this will work
+                    CharacterBody.characterMotor.velocity.y -= Time.fixedDeltaTime * Physics.gravity.y * reducedGravity;
+                }
+            }
+
+
 
         public class KnightParryBuff : BaseBuffBehaviour, IOnIncomingDamageServerReceiver
         {
@@ -117,6 +110,7 @@ namespace SS2.Survivors
             {
                 if (HasAnyStacks && damageInfo.attacker != CharacterBody)
                 {
+                    // TODO: Use body index
                     // We want to ensure that Knight is the one taking damage
                     if (CharacterBody.baseNameToken != "SS2_KNIGHT_BODY_NAME")
                         return;
@@ -149,4 +143,3 @@ namespace SS2.Survivors
         }
     }
 }
-#endif

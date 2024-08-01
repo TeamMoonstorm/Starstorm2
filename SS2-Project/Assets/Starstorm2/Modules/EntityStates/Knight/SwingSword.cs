@@ -1,5 +1,6 @@
 ﻿using MSU;
 using RoR2.Skills;
+using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -23,14 +24,40 @@ namespace EntityStates.Knight
 
         public override void PlayAnimation()
         {
-           string animationStateName = (swingSide == 0) ? "SwingSword1" : "SwingSword2";
-           PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.05f);             
+           string animationStateName = "SwingSword0";
+
+            switch (swingSide)
+            {
+                case 0:
+                    animationStateName = "SwingSword1";
+                    swingEffectMuzzleString = "SwingRight";
+                    break;
+                case 1:
+                    animationStateName = "SwingSword2";
+                    swingEffectMuzzleString = "SwingLeft";
+                    break;
+                case 2:
+                    animationStateName = "SwingSword3";
+                    swingEffectMuzzleString = "SwingCenter";
+                    break;
+                default:
+                    animationStateName = "SwingSword0";
+                    swingEffectMuzzleString = "SwingLeft";
+                    break;
+            }
+
+            if (base.isGrounded & !base.GetModelAnimator().GetBool("isMoving"))
+            {
+                PlayCrossfade("FullBody, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.08f);
+            } else
+            {
+                PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.08f);
+            }         
         }
 
         void SteppedSkillDef.IStepSetter.SetStep(int i)
         {
             swingSide = i;
-            swingEffectMuzzleString = (swingSide == 0) ? "SwingLeft" : "SwingRight";
         }
 
         public override void OnSerialize(NetworkWriter writer)
@@ -47,6 +74,11 @@ namespace EntityStates.Knight
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

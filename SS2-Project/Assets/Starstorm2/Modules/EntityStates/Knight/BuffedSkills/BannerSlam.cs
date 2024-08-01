@@ -3,6 +3,7 @@ using UnityEngine;
 using RoR2;
 using RoR2.Skills;
 using EntityStates.Knight;
+using UnityEngine.Networking;
 
 namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
 {
@@ -13,36 +14,46 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
         public static SkillDef originalSkillRef;
 
         public static SkillDef buffedSkillRef;
-        public static GameObject powerBuffWard;
+        public static GameObject knightBannerWard;
         public static GameObject slowBuffWard;
 
-        private GameObject powerBuffWardInstance;
         private GameObject slowBuffWardInstance;
         public override void OnEnter()
         {
-            PlayCrossfade("Body", "SwingSpecial", "Special.playbackRate", duration * swingTimeCoefficient, 0.15f);
-
-            if (isAuthority)
+            base.OnEnter();
+            if (isAuthority & NetworkServer.active)
             {
                 Vector3 position = inputBank.aimOrigin - (inputBank.aimDirection);
-                powerBuffWardInstance = UnityEngine.Object.Instantiate(powerBuffWard, position, Quaternion.identity);
-                slowBuffWardInstance = UnityEngine.Object.Instantiate(slowBuffWard, position, Quaternion.identity);
+                GameObject bannerObject = UnityEngine.Object.Instantiate(knightBannerWard, position, Quaternion.identity);
 
-                powerBuffWardInstance.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
+                bannerObject.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
+                NetworkServer.Spawn(bannerObject);
+
+                slowBuffWardInstance = UnityEngine.Object.Instantiate(slowBuffWard, position, Quaternion.identity);
                 slowBuffWardInstance.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
+                slowBuffWardInstance.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(bannerObject);
             }
         }
 
         public override void FixedUpdate()
         {
-            outer.SetNextStateToMain();
             base.FixedUpdate();
+            outer.SetNextStateToMain();
         }
 
         public override void OnExit()
         {
-            GenericSkill originalSpecialSkill = skillLocator.special;
-            originalSpecialSkill.UnsetSkillOverride(gameObject, BannerSpecial.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+            if (base.isAuthority)
+            {
+                GenericSkill primarySkill = skillLocator.primary;
+                GenericSkill utilitySkill = skillLocator.utility;
+                GenericSkill specialSkill = skillLocator.special;
+
+                primarySkill.UnsetSkillOverride(gameObject, SwingSword.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+                utilitySkill.UnsetSkillOverride(gameObject, SpinUtility.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+                specialSkill.UnsetSkillOverride(gameObject, BannerSpecial.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+            }
+
             outer.SetNextStateToMain();
             base.OnExit();
         }
