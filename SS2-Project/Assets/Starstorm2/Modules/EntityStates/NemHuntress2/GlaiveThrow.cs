@@ -1,51 +1,66 @@
 ﻿using RoR2;
 using RoR2.Projectile;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace EntityStates.NemHuntress2
 {
-    public class ThrowHatchet : BasicMeleeAttack
+    class GlaiveThrow : BaseSkillState
     {
-        public float charge;
 
+        [SerializeField]
         public static float projectileDmgCoefficient;
+        [SerializeField]
         public static float projectileProcCoefficient;
+        [SerializeField]
         public static float projectileRecoilAmount;
+        [SerializeField]
         public static float projectileBaseSpeed;
+        [SerializeField]
         public static GameObject projectilePrefab;
-        public static float hopVelocity;
+        [SerializeField]
+        public static float baseDuration;
 
-        private float fireDuration;
         private bool hasFired;
-        //private Animator animator;
+        private float duration;
 
         public override void OnEnter()
         {
             base.OnEnter();
-            characterBody.SetAimTimer(2f);
-            //animator = GetModelAnimator();
             hasFired = false;
-            //duration = baseDuration / attackSpeedStat;
-            fireDuration = 0.85f * duration;
-        }
-
-        public override void BeginMeleeAttackEffect()
-        {
-            base.BeginMeleeAttackEffect();
-            FireProjectile();
-            HopIfAirborne();
-        }
-
-        private void HopIfAirborne()
-        {
-            if (!characterMotor.isGrounded)
+            if (characterMotor)
             {
-                SmallHop(characterMotor, hopVelocity);
+                characterMotor.velocity.y = 3;
             }
+            duration = baseDuration / attackSpeedStat;
+        }
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+            CharacterMotor characterMotor = base.characterMotor;
+            characterMotor.velocity.y += 30 * Time.fixedDeltaTime * (1f - fixedAge / duration);
+
+            if (fixedAge >= duration/2 && base.isAuthority)
+            {
+                FireProjectile();
+            }
+
+            if (fixedAge >= duration && base.isAuthority)
+            {
+                outer.SetNextStateToMain();
+                return;
+            }
+
         }
 
         public virtual void FireProjectile()
         {
+
             if (!hasFired)
             {
                 hasFired = true;
@@ -72,25 +87,17 @@ namespace EntityStates.NemHuntress2
             }
         }
 
-        public override void FixedUpdate()
-        {
-            base.FixedUpdate();
 
-            if (fixedAge >= fireDuration)
-            {
-                //FireProjectile();
-            }
+        public override void OnExit()
+        {
+            base.OnExit();
         }
+
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
             return InterruptPriority.Frozen;
         }
 
-        public override void AuthorityModifyOverlapAttack(OverlapAttack overlapAttack)
-        {
-            base.AuthorityModifyOverlapAttack(overlapAttack);
-            //overlapAttack.damageType = DamageType.Stun1s;
-        }
     }
 }

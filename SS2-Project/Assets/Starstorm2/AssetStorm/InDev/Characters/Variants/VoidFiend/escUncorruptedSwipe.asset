@@ -10,87 +10,90 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: escHatchet
+  m_Name: escUncorruptedSwipe
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.NemHuntress2.ThrowHatchet, Starstorm2, Version=1.0.0.0,
+    assemblyQualifiedName: EntityStates.VoidFiend.UncorruptSwipe, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
-    - fieldName: procCoefficient
+    - fieldName: recoilAmplitude
       fieldValue:
         stringValue: 1
         objectValue: {fileID: 0}
+    - fieldName: bloom
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: animationLayerName
+      fieldValue:
+        stringValue: Left Arm, Override
+        objectValue: {fileID: 0}
+    - fieldName: animationStateName
+      fieldValue:
+        stringValue: SwingMelee1
+        objectValue: {fileID: 0}
+    - fieldName: animationPlaybackRateParameter
+      fieldValue:
+        stringValue: Melee.playbackRate
+        objectValue: {fileID: 0}
     - fieldName: baseDuration
-      fieldValue:
-        stringValue: 0.4
-        objectValue: {fileID: 0}
-    - fieldName: projectilePrefab
-      fieldValue:
-        stringValue: 
-        objectValue: {fileID: 4230859849952566902, guid: 1fec91ee57b41cb4e985b0d22a32a4bb,
-          type: 3}
-    - fieldName: projectileDmgCoefficient
-      fieldValue:
-        stringValue: 2.4
-        objectValue: {fileID: 0}
-    - fieldName: projectileRecoilAmount
       fieldValue:
         stringValue: 2
         objectValue: {fileID: 0}
-    - fieldName: projectileBaseSpeed
-      fieldValue:
-        stringValue: 50
-        objectValue: {fileID: 0}
     - fieldName: damageCoefficient
       fieldValue:
-        stringValue: 2.4
+        stringValue: 3
         objectValue: {fileID: 0}
     - fieldName: hitBoxGroupName
       fieldValue:
-        stringValue: HatchetHitbox
+        stringValue: Melee
         objectValue: {fileID: 0}
     - fieldName: hitEffectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 7162646827672994295, guid: 7fd93c4884044c543b37c5603cd8d10f,
+        objectValue: {fileID: 1310465176928669, guid: 5b0b53c51271fb74c8384599f5f017cd,
           type: 3}
+    - fieldName: procCoefficient
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
     - fieldName: pushAwayForce
       fieldValue:
-        stringValue: 2200
+        stringValue: 0
         objectValue: {fileID: 0}
     - fieldName: forceVector
       fieldValue:
-        stringValue: 0 700 0
+        stringValue: 0 0 0
         objectValue: {fileID: 0}
     - fieldName: hitPauseDuration
       fieldValue:
-        stringValue: 0.11
+        stringValue: 0.1
         objectValue: {fileID: 0}
     - fieldName: swingEffectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 2403289935087244035, guid: 29b4a6789b9ae8948bde57ec47eb33f8,
+        objectValue: {fileID: 882779056690891534, guid: c1d1c839551ad024ab2873ac4a71e352,
           type: 3}
     - fieldName: swingEffectMuzzleString
       fieldValue:
-        stringValue: HatchetMuzzle
+        stringValue: MuzzleMelee
         objectValue: {fileID: 0}
     - fieldName: mecanimHitboxActiveParameter
       fieldValue:
-        stringValue: Hatchet.mecanimParameter
+        stringValue: Melee.hitBoxActive
         objectValue: {fileID: 0}
     - fieldName: shorthopVelocityFromHit
       fieldValue:
-        stringValue: 0.5
+        stringValue: 3
         objectValue: {fileID: 0}
     - fieldName: beginStateSoundString
       fieldValue:
-        stringValue: Play_huntress_m2_throw
+        stringValue: 
         objectValue: {fileID: 0}
     - fieldName: beginSwingSoundString
       fieldValue:
-        stringValue: 
+        stringValue: Play_bandit2_m2_slash
         objectValue: {fileID: 0}
     - fieldName: impactSound
       fieldValue:
@@ -102,21 +105,13 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: forwardVelocityCurve
       fieldValue:
-        stringValue: '{"preWrapMode":8,"postWrapMode":8,"keys":[]}'
+        stringValue: '{"preWrapMode":8,"postWrapMode":8,"keys":[{"time":-0.002141237258911133,"value":1.0125588178634644,"inTangent":-2.0,"outTangent":-2.0,"inWeight":0.0,"outWeight":0.0,"weightedMode":0,"tangentMode":0},{"time":0.998929500579834,"value":0.012558817863464356,"inTangent":0.0,"outTangent":0.0,"inWeight":0.0,"outWeight":0.0,"weightedMode":0,"tangentMode":0}]}'
         objectValue: {fileID: 0}
     - fieldName: scaleHitPauseDurationAndVelocityWithAttackSpeed
       fieldValue:
-        stringValue: 0
+        stringValue: 1
         objectValue: {fileID: 0}
     - fieldName: ignoreAttackSpeed
       fieldValue:
         stringValue: 0
-        objectValue: {fileID: 0}
-    - fieldName: projectileProcCoefficient
-      fieldValue:
-        stringValue: 0
-        objectValue: {fileID: 0}
-    - fieldName: hopVelocity
-      fieldValue:
-        stringValue: 7
         objectValue: {fileID: 0}

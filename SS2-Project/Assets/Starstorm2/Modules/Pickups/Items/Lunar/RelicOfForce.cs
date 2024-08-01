@@ -63,7 +63,7 @@ namespace SS2.Items
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.RelicOfForce;
 
-            ForceHitToken EnemyToken;
+            //ForceHitToken EnemyToken;
 
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
             {
@@ -91,12 +91,7 @@ namespace SS2.Items
                         }
                         else
                         {
-                            if (EnemyToken)
-                            {
-                                Destroy(EnemyToken);
-                            }
                             token = damageReport.victim.body.gameObject.AddComponent<ForceHitToken>();
-                            EnemyToken = token;
                             token.CallMoreHits(damageReport, count);
                         }
 
