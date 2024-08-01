@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace EntityStates.NemHuntress2
 {
-    class GlaiveThrow : BaseSkillState
+    internal class GlaiveThrow : BaseSkillState
     {
 
         [SerializeField]
@@ -34,7 +34,27 @@ namespace EntityStates.NemHuntress2
             hasFired = false;
             if (characterMotor)
             {
-                characterMotor.velocity.y = 3;
+                characterMotor.velocity.y = 3f;
+            }
+
+            duration = baseDuration / attackSpeedStat;
+        }
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+            CharacterMotor characterMotor = base.characterMotor;
+            characterMotor.velocity.y += 30 * Time.fixedDeltaTime * (1f - fixedAge / duration);
+
+            if (fixedAge >= duration / 2 && base.isAuthority)
+            {
+                FireProjectile();
+            }
+
+            if (fixedAge >= this.duration && base.isAuthority)
+            {
+                outer.SetNextStateToMain();
+                return;
             }
             duration = baseDuration / attackSpeedStat;
         }
@@ -98,6 +118,5 @@ namespace EntityStates.NemHuntress2
         {
             return InterruptPriority.Frozen;
         }
-
     }
 }
