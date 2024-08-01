@@ -228,7 +228,7 @@ namespace EntityStates.Executioner2
 
             /*if (inputBank.skill1.down && skillLocator.secondary.stock >= 1)
             {
-                characterBody.SetBuffCount(Moonstorm.Starstorm2.SS2Content.Buffs.bdExeCharge.buffIndex, 0);
+                characterBody.SetBuffCount(SS2.SS2Content.Buffs.bdExeCharge.buffIndex, 0);
                 PlayAnimation("Gesture, Override", "FireIonGunStart", "Secondary.playbackRate", duration);
                 FireChargeGun nextState = new FireChargeGun();
                 nextState.activatorSkillSlot = activatorSkillSlot;
