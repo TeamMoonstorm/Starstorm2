@@ -23,7 +23,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: baseDuration
       fieldValue:
-        stringValue: 0.5
+        stringValue: 0.8
         objectValue: {fileID: 0}
     - fieldName: damageCoefficient
       fieldValue:
@@ -52,7 +52,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: hitPauseDuration
       fieldValue:
-        stringValue: 0.14
+        stringValue: 0.4
         objectValue: {fileID: 0}
     - fieldName: swingEffectPrefab
       fieldValue:
@@ -61,11 +61,11 @@ MonoBehaviour:
           type: 3}
     - fieldName: swingEffectMuzzleString
       fieldValue:
-        stringValue: SwingCenterSmall
+        stringValue: SwingCenter
         objectValue: {fileID: 0}
     - fieldName: mecanimHitboxActiveParameter
       fieldValue:
-        stringValue: ShieldPunch
+        stringValue: Primary.Hitbox
         objectValue: {fileID: 0}
     - fieldName: shorthopVelocityFromHit
       fieldValue:

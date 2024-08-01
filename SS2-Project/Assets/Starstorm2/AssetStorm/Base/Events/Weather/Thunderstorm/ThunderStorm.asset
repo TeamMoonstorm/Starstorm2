@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eventFlags: 1
   eventState:
-    _typeName: EntityStates.Events.ThunderstormState, Starstorm2, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    _typeName: 
   requiredStateMachine: 
   startMessageToken: SS2_EVENT_THUNDERSTORM_START
   endMessageToken: SS2_EVENT_THUNDERSTORM_END
@@ -33,23 +32,11 @@ MonoBehaviour:
     _asset: {fileID: 0}
     _address: 
     _useDirectReference: 0
-  requiredUnlockableDef:
-    address: 
-    useDirectReference: 1
-    asset: {fileID: 0}
   forbiddenUnlock:
     _asset: {fileID: 0}
     _address: 
     _useDirectReference: 0
-  forbiddenUnlockableDef:
-    address: 
-    useDirectReference: 1
-    asset: {fileID: 0}
   requiredExpansionDefs:
   - _asset: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
     _address: 
     _useDirectReference: 0
-  requiredExpansions:
-  - address: 
-    useDirectReference: 1
-    asset: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}

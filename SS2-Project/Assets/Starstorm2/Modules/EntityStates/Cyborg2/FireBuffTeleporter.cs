@@ -1,92 +1,81 @@
-﻿using RoR2;
+﻿using System;
+using RoR2;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
+using RoR2.Projectile;
 namespace EntityStates.Cyborg2
 {
-    public class FireBuffTeleporter : AimThrowableBase
+	public class FireBuffTeleporter : BaseSkillState
 	{
-
 		public static GameObject projectilePrefab;
-		public static string soundString = "Play_engi_M2_throw";
+		public static string soundString = "Play_captain_m2_tazer_shoot";
 		public static GameObject muzzleEffectPrefab;
 
-		private static GameObject INDICATOR = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/BasicThrowableVisualizer.prefab").WaitForCompletion();
+		private static float bloom = 0.5f;
+		private static float recoilAmplitude = 7f;
+		private static float baseDuration = 0.6f;
+		private static float earlyExitTime = 0.5f;
+		private static float damageCoefficient = 6f;
+		private static float force = 500f;
+		private static float chargeTime = 0.33f;
 
-		// im so idiot lazy
-		private static float maxDistanceee = 15f;
+		private static float selfKnockbackForce = 6000f;
 
-
-		private float antiGravityCoefficient = 1;
-		//stupid
+		private float duration;
+		private bool hasFired;
 		public override void OnEnter()
 		{
-			this.arcVisualizerPrefab = INDICATOR;
-			this.endpointVisualizerPrefab = Huntress.ArrowRain.areaIndicatorPrefab;
-			this.rayRadius = 0.5f;
-			this.useGravity = true;
-			this.endpointVisualizerRadiusScale = 0.5f;
-			this.maxDistance = maxDistanceee;
-			base.projectilePrefab = FireBuffTeleporter.projectilePrefab;
-			this.damageCoefficient = 0f;
-			this.baseMinimumDuration = 0.15f;
-
-			AntiGravityForce antiGravityForce = base.projectilePrefab.GetComponent<AntiGravityForce>();
-			if (antiGravityForce)
-			{
-				antiGravityCoefficient = antiGravityForce.antiGravityCoefficient;
-			}
-
 			base.OnEnter();
+			this.duration = baseDuration / attackSpeedStat;
 			StartAimMode();
 			//anim
 		}
 
-		public override void UpdateTrajectoryInfo(out AimThrowableBase.TrajectoryInfo dest)
+		public override void FixedUpdate()
 		{
-			dest = default(AimThrowableBase.TrajectoryInfo);
-			Ray aimRay = base.GetAimRay();
-			RaycastHit raycastHit = default(RaycastHit);
-			bool flag = false;
-			if (this.rayRadius > 0f && Util.CharacterSpherecast(base.gameObject, aimRay, this.rayRadius, out raycastHit, this.maxDistance, LayerIndex.CommonMasks.bullet, QueryTriggerInteraction.UseGlobal) && raycastHit.collider.GetComponent<HurtBox>())
+			base.FixedUpdate();
+			if (base.fixedAge >= this.duration * chargeTime && !this.hasFired)
 			{
-				flag = true;
+				this.Fire();
 			}
-			if (!flag)
+			if (base.fixedAge >= this.duration && base.isAuthority)
 			{
-				flag = Util.CharacterRaycast(base.gameObject, aimRay, out raycastHit, this.maxDistance, LayerIndex.CommonMasks.bullet, QueryTriggerInteraction.UseGlobal);
+				outer.SetNextStateToMain();
 			}
-			if (flag)
+		}
+
+
+		private void Fire()
+		{
+			this.hasFired = true;
+			Util.PlaySound(soundString, base.gameObject);
+			EffectManager.SimpleMuzzleFlash(muzzleEffectPrefab, base.gameObject, "CannonR", true);
+			AddRecoil(-1f * recoilAmplitude, -1.5f * recoilAmplitude, -0.25f * recoilAmplitude, 0.25f * recoilAmplitude);
+			base.characterBody.AddSpreadBloom(bloom);
+			Ray aimRay = GetAimRay();
+
+
+			if (base.isAuthority)
 			{
-				dest.hitPoint = raycastHit.point;
-				dest.hitNormal = raycastHit.normal;
+				if (base.characterMotor)
+				{
+					base.characterMotor.ApplyForce((aimRay.direction * -1f) * selfKnockbackForce);
+				}
+
+				FireProjectileInfo fireProjectileInfo = default(FireProjectileInfo);
+				fireProjectileInfo.projectilePrefab = projectilePrefab;
+				fireProjectileInfo.position = aimRay.origin;
+				fireProjectileInfo.rotation = Util.QuaternionSafeLookRotation(aimRay.direction);
+				fireProjectileInfo.owner = base.gameObject;
+				fireProjectileInfo.damage = damageStat * damageCoefficient;
+				fireProjectileInfo.force = force;
+				fireProjectileInfo.crit = RollCrit();
+				ProjectileManager.instance.FireProjectile(fireProjectileInfo);
 			}
-			else
-			{
-				dest.hitPoint = aimRay.GetPoint(this.maxDistance);
-				dest.hitNormal = -aimRay.direction;
-			}
-			Vector3 vector = dest.hitPoint - aimRay.origin;
-			if (this.useGravity)
-			{
-				float num = this.projectileBaseSpeed;
-				Vector2 vector2 = new Vector2(vector.x, vector.z);
-				float magnitude = vector2.magnitude;
-				
-				float y = Trajectory.CalculateInitialYSpeed(magnitude / num, vector.y, this.antiGravityCoefficient * Physics.gravity.y);
-				Vector3 a = new Vector3(vector2.x / magnitude * num, y, vector2.y / magnitude * num);
-				dest.speedOverride = a.magnitude;
-				dest.finalRay = new Ray(aimRay.origin, a / dest.speedOverride);
-				dest.travelTime = Trajectory.CalculateGroundTravelTime(num, magnitude);
-				return;
-			}
-			dest.speedOverride = this.projectileBaseSpeed;
-			dest.finalRay = aimRay;
-			dest.travelTime = this.projectileBaseSpeed / vector.magnitude;
 		}
 
 		public override InterruptPriority GetMinimumInterruptPriority()
 		{
-			return InterruptPriority.PrioritySkill;
+			return (base.fixedAge >= this.duration * earlyExitTime) ? InterruptPriority.Any : InterruptPriority.Pain;
 		}
 	}
 }

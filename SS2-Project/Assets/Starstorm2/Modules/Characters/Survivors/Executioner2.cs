@@ -12,6 +12,8 @@ using UnityEngine.Networking;
 using UnityEngine.AddressableAssets;
 using R2API;
 using RoR2.ContentManagement;
+using RoR2.Orbs;
+using R2API.Utils;
 
 namespace SS2.Survivors
 {
@@ -56,6 +58,38 @@ namespace SS2.Survivors
             BodyCatalog.availability.CallWhenAvailable(UpdateSuperChargeList);
             Hook();
             ModifyPrefab();
+
+            IL.RoR2.Orbs.OrbEffect.Start += OrbEffect_Start;
+        }
+
+        private void OrbEffect_Start(ILContext il)
+        {
+            ILCursor cursor = new ILCursor(il);
+
+            bool ILFound = cursor.TryGotoNext(MoveType.After,
+                instruction => instruction.MatchBrtrue(out _),
+                instruction => instruction.MatchLdarg(0),
+                instruction => instruction.MatchLdfld<OrbEffect>(nameof(OrbEffect.startPosition))
+                );
+            if (ILFound)
+            {
+                cursor.Emit(OpCodes.Ldarg_0);
+                cursor.Emit(OpCodes.Ldfld, typeof(OrbEffect).GetFieldCached(nameof(OrbEffect.targetTransform)));
+                cursor.Emit(OpCodes.Ldloc_0);
+                cursor.EmitDelegate<Func<Vector3, Transform, EffectComponent, Vector3>>((startPosition, targetTransform, effectComponent) =>
+                {
+                    if (targetTransform == null)
+                    {
+                        startPosition = effectComponent.effectData.start;
+                    }
+                    return startPosition;
+                });
+                Debug.Log("Added OrbEffect_Start hook :D");
+            }
+            else
+            {
+                Debug.Log("ah shit");
+            }
         }
 
         private static void UpdateSuperChargeList()

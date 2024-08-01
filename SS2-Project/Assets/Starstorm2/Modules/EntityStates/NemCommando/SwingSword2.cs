@@ -95,7 +95,7 @@ namespace EntityStates.NemCommando
                 inCombo = true;
             }
 
-            //swingEffectMuzzleString = (swingSide == 0) ? "SwingLeft" : "SwingRight";
+            swingEffectMuzzleString = (swingSide == 0) ? "SwingLeft" : "SwingRight";
         }
 
         public override void OnExit()

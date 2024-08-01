@@ -17,7 +17,6 @@ namespace SS2
 
         public void Start()
         {
-            //Debug.Log("starting ethereal shrine behavior");
             purchaseInteraction = GetComponent<PurchaseInteraction>();
             purchaseInteraction.onPurchase.AddListener(ActivateEtherealTerminal);
 
@@ -33,7 +32,6 @@ namespace SS2
                 refreshTimer -= Time.fixedDeltaTime;
                 if (refreshTimer <= 0 && purchaseCount < maxPurchaseCount)
                 {
-                    //Debug.Log("set to avaliable");
                     purchaseInteraction.SetAvailable(true);
                     waitingForRefresh = false;
                 }
@@ -46,14 +44,13 @@ namespace SS2
 
             if (purchaseCount == 0)
             {
-                //Debug.Log("Processed first ethereal terminal use...");
                 purchaseInteraction.SetAvailable(false);
                 purchaseInteraction.contextToken = "SS2_ETHEREAL_WARNING2";
                 purchaseInteraction.displayNameToken = "SS2_ETHEREAL_NAME2";
                 purchaseCount++;
                 refreshTimer = 2;
 
-                Util.PlaySound("EtherealActivate", this.gameObject);
+                Util.PlaySound("Play_UI_shrineActivate", this.gameObject);
 
                 CharacterBody body = interactor.GetComponent<CharacterBody>();
                 Chat.SendBroadcastChat(new Chat.SubjectFormatChatMessage
@@ -70,32 +67,15 @@ namespace SS2
 
                 waitingForRefresh = true;
             }
-
             else
             {
-                //Debug.Log("Beginning to activate ethereal terminal.");
-                /*if (!NetworkServer.active)
-                    return;*/
-
                 purchaseInteraction.SetAvailable(false);
                 waitingForRefresh = true;
 
                 if (TeleporterInteraction.instance != null)
                 {
-                    GameObject teleporterInstance = GameObject.Find("Teleporter1(Clone)");
-                    if (teleporterInstance == null)
-                    {
-                        //Debug.Log("Failed to find regular teleporter, searching for Lunar..");
-                        teleporterInstance = GameObject.Find("LunarTeleporter Variant(Clone)");
-                        if (teleporterInstance == null)
-                        {
-                            //Debug.Log("Could not find teleporter!");
-                            return;
-                        }
 
-                    }
-
-                    TeleporterUpgradeController tuc = teleporterInstance.GetComponent<TeleporterUpgradeController>();
+                    TeleporterUpgradeController tuc = TeleporterInteraction.instance.GetComponent<TeleporterUpgradeController>();
                     if (tuc != null)
                         tuc.CmdUpdateIsEthereal(true);
                     else
@@ -103,7 +83,6 @@ namespace SS2
 
                     Components.EtherealBehavior.teleIsEthereal = true;
 
-                    //Debug.Log("Set ethereal to true");
                 }
 
                 CharacterBody body = interactor.GetComponent<CharacterBody>();
@@ -124,7 +103,6 @@ namespace SS2
 
                 purchaseCount++;
                 refreshTimer = 2;
-                //Debug.Log("Finished ethereal setup from shrine.");
             }
         }
     }

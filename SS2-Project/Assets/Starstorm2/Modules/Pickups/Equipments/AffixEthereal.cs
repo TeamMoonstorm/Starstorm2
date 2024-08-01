@@ -136,47 +136,41 @@ namespace SS2.Equipments
                     timerDur = baseTimerDur;
 
                 projTimerDur = baseTimerDur / 3f;
-                projTimer = timerDur * 0.95f;
+                projTimer = (float)random.NextDouble() * projTimerDur; // doing this so tp bosses stagger their pillars
 
                 timer = 0;
 
                 Util.PlaySound("EtherealActivate", this.gameObject);
 
+                this.effectInstances = new List<GameObject>();
                 Transform modelTransform = CharacterBody.modelLocator.modelTransform;
                 if (modelTransform)
                 {
                     TemporaryOverlay temporaryOverlay = modelTransform.gameObject.AddComponent<TemporaryOverlay>();
                     temporaryOverlay.duration = timerDur;
-
                     temporaryOverlay.animateShaderAlpha = true;
-                    temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 0f, timerDur, 1f);
+                    temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
                     temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matHakaiOverlay", SS2Bundle.Equipments);
                     temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
-                }
 
-                GameObject charModel = CharacterBody.modelLocator.modelTransform.gameObject;
-                if (charModel != null)
-                {
-                    CharacterModel cm = charModel.GetComponent<CharacterModel>();
-                    if (cm != null)
+                    CharacterModel cm = modelTransform.GetComponent<CharacterModel>();
+                    CharacterModel.RendererInfo[] rendererInfos = cm.baseRendererInfos;
+                    if (rendererInfos != null)
                     {
-                        CharacterModel.RendererInfo[] rendererInfos = cm.baseRendererInfos;
-                        if (rendererInfos != null)
+                        for (int i = 0; i < rendererInfos.Length; i++)
                         {
-                            for (int i = 0; i < rendererInfos.Length; i++)
+                            if (rendererInfos[i].renderer != null)
                             {
-                                if (rendererInfos[i].renderer != null)
+                                if (!rendererInfos[i].ignoreOverlays)
                                 {
-                                    if (!rendererInfos[i].ignoreOverlays)
-                                    {
-                                        GameObject effect = AddParticles(rendererInfos[i].renderer, CharacterBody.coreTransform, timerDur);
-                                        if (effect != null)
-                                            effectInstances.Add(effect);
-                                    }
+                                    GameObject effect = AddParticles(rendererInfos[i].renderer, CharacterBody.coreTransform, timerDur);
+                                    if (effect != null)
+                                        effectInstances.Add(effect);
                                 }
                             }
                         }
                     }
+                    
                 }
             }
 
@@ -190,13 +184,6 @@ namespace SS2.Equipments
                         effectPrefab = Instantiate(SS2Assets.LoadAsset<GameObject>("HakaiLightningBig", SS2Bundle.Equipments), targetParentTransform);
                     else
                         effectPrefab = Instantiate(SS2Assets.LoadAsset<GameObject>("HakaiLightning", SS2Bundle.Equipments), targetParentTransform);
-
-                    Debug.Log("made effect prefab");
-                    if (effectPrefab == null)
-                    {
-                        return null;
-                        SS2Log.Error("Ethereal death particles null ... how did we get here?");
-                    }
 
                     ParticleSystem ps = effectPrefab.GetComponent<ParticleSystem>();
                     ParticleSystem.ShapeModule shape = ps.shape;
@@ -258,11 +245,7 @@ namespace SS2.Equipments
                 {
                     projTimer = 0;
 
-                    //you never know.
-                    if (projectilePrefab != null)
-                    {
-                        PlaceCircle();
-                    }
+                    PlaceCircle();                   
                 }
             }
 
@@ -281,7 +264,7 @@ namespace SS2.Equipments
                         {
                             Vector3 position;
                             groundNodes.GetNodePosition(randomNode, out position);
-                            Util.PlaySound("EtherealActivate", this.gameObject);
+                            //Util.PlaySound("EtherealActivate", this.gameObject);
                             ProjectileManager.instance.FireProjectile(projectilePrefab, position, new Quaternion(0, 0, 0, 0), CharacterBody.gameObject, 1f, 0f, CharacterBody.RollCrit(), DamageColorIndex.Default, null, 0);
                         }
                     }
@@ -308,7 +291,7 @@ namespace SS2.Equipments
                 timerDur = baseTimerDur; // / body.attackSpeed;   >
                 timer = timerDur * 0.75f;
 
-                Util.PlaySound("EtherealBell", this.gameObject);
+                //Util.PlaySound("EtherealBell", this.gameObject);
 
                 model = CharacterBody.modelLocator.modelTransform.GetComponent<CharacterModel>();
                 if (model != null)
@@ -337,11 +320,7 @@ namespace SS2.Equipments
                         if (CharacterBody.isChampion)
                             timer = timerDur / 2f;
 
-                        //you never know.
-                        if (projectilePrefab != null)
-                        {
-                            PlaceCircle();
-                        }
+                        PlaceCircle();
                     }
                 }
                 

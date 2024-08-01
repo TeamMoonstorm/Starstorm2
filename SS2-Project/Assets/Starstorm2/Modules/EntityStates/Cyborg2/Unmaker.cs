@@ -9,7 +9,7 @@ namespace EntityStates.Cyborg2
         public static float bulletMaxDistance = 256;
         public static float bulletRadius = 1;
 
-        public static float damageCoefficient = 2.5f;
+        private static float damageCoefficient = 2f;
         public static float procCoefficient = 1f;
         public static float force = 150f;
         public static GameObject tracerPrefab;

@@ -14,17 +14,13 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
         public static SkillDef originalSkillRef;
 
         public static SkillDef buffedSkillRef;
-        public static GameObject powerBuffWard;
+        public static GameObject knightBannerWard;
         public static GameObject slowBuffWard;
 
-        private GameObject knightBannerWard;
         private GameObject slowBuffWardInstance;
         public override void OnEnter()
         {
             base.OnEnter();
-
-            PlayCrossfade("Body", "SwingSpecial", "Special.playbackRate", duration * swingTimeCoefficient, 0.15f);
-
             if (isAuthority & NetworkServer.active)
             {
                 Vector3 position = inputBank.aimOrigin - (inputBank.aimDirection);
@@ -47,8 +43,17 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
 
         public override void OnExit()
         {
-            GenericSkill originalSpecialSkill = skillLocator.special;
-            originalSpecialSkill.UnsetSkillOverride(gameObject, BannerSpecial.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+            if (base.isAuthority)
+            {
+                GenericSkill primarySkill = skillLocator.primary;
+                GenericSkill utilitySkill = skillLocator.utility;
+                GenericSkill specialSkill = skillLocator.special;
+
+                primarySkill.UnsetSkillOverride(gameObject, SwingSword.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+                utilitySkill.UnsetSkillOverride(gameObject, SpinUtility.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+                specialSkill.UnsetSkillOverride(gameObject, BannerSpecial.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+            }
+
             outer.SetNextStateToMain();
             base.OnExit();
         }

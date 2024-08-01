@@ -70,6 +70,11 @@ namespace SS2.Items
         // figure out if a lightningorb "ends", then figure out how many objects it bounced to, then spawn a gadgetlightningorb with the same stats that bounces to that many targets
         private void LightningOrb_OnArrival(On.RoR2.Orbs.LightningOrb.orig_OnArrival orig, LightningOrb self)
         {
+            if(!self.target) // i dont like this... but im also lazy
+            {
+                orig(self);
+                return;
+            }
             // jank ass way to check if a lightning orb "ended" by not finding a new target
             bool orbFoundNewTarget = false;
             if (self.bouncedObjects != null && self.bouncesRemaining > 0)
@@ -84,7 +89,7 @@ namespace SS2.Items
 
             bool isLastBounce = self.bouncedObjects != null && (self.bouncesRemaining == 0 || !orbFoundNewTarget);
 
-            if (isLastBounce && self.attacker?.GetComponent<CharacterBody>()?.inventory?.GetItemCount(SS2Content.Items.ErraticGadget) > 0)
+            if (isLastBounce && self.attacker && self.attacker.GetComponent<CharacterBody>().inventory.GetItemCount(SS2Content.Items.ErraticGadget) > 0)
             {
                 bool canProcGadget = false;
                 bool wasFirstBounceFake = false;

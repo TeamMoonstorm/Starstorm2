@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="12" SoundbankVersion="135">
 	<RootPaths>
-		<ProjectRoot>C:\Users\hanan\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\</ProjectRoot>
-		<SourceFilesRoot>C:\Users\hanan\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\</SourceFilesRoot>
-		<SoundBanksRoot>C:\Users\hanan\Documents\GitHub\Starstorm2\SS2-Project\Assets\StreamingAssets\Audio\GeneratedSoundBanks\Windows\</SoundBanksRoot>
+		<ProjectRoot>C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\</ProjectRoot>
+		<SourceFilesRoot>C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\</SourceFilesRoot>
+		<SoundBanksRoot>C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\Assets\StreamingAssets\Audio\GeneratedSoundBanks\Windows\</SoundBanksRoot>
 		<ExternalSourcesInputFile></ExternalSourcesInputFile>
-		<ExternalSourcesOutputRoot>C:\Users\hanan\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
+		<ExternalSourcesOutputRoot>C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
 	</RootPaths>
 	<DialogueEvents/>
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="866530374" Language="SFX" Hash="1917638312">
+		<SoundBank Id="866530374" Language="SFX" Hash="1945689444">
 			<ObjectPath>\SoundBanks\Default Work Unit\Starstorm2</ObjectPath>
 			<ShortName>Starstorm2</ShortName>
 			<Path>Starstorm2.bnk</Path>
@@ -320,7 +320,15 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="2370200216" Name="EtherealActivate" ObjectPath="\Events\Default Work Unit\Ethereal\EtherealActivate" DurationType="OneShot" DurationMin="6.063857" DurationMax="6.424433">
+				<Event Id="3698808448" Name="EtherealActivaGlobal" ObjectPath="\Events\Default Work Unit\Ethereal\EtherealActivaGlobal" DurationType="OneShot" DurationMin="6.063857" DurationMax="6.424433">
+					<IncludedMemoryFiles>
+						<File Id="14785789" Language="SFX">
+							<ShortName>ethactivate.wav</ShortName>
+							<Path>SFX\ethactivate_23126B38.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2370200216" Name="EtherealActivate" ObjectPath="\Events\Default Work Unit\Ethereal\EtherealActivate" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="6.063857" DurationMax="6.424433">
 					<IncludedMemoryFiles>
 						<File Id="14785789" Language="SFX">
 							<ShortName>ethactivate.wav</ShortName>
@@ -365,6 +373,14 @@
 						<File Id="36144116" Language="SFX">
 							<ShortName>pillarspawn2.wav</ShortName>
 							<Path>SFX\pillarspawn2_23126B38.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1154060502" Name="EtherealPillarSpawn2" ObjectPath="\Events\Default Work Unit\Ethereal\EtherealPillarSpawn2" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="2.934292" DurationMax="2.934292">
+					<IncludedMemoryFiles>
+						<File Id="320047585" Language="SFX">
+							<ShortName>pillarspawn.wav</ShortName>
+							<Path>SFX\pillarspawn_23126B38.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -494,11 +510,15 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="1235706518" Name="JetBootsExplosion" ObjectPath="\Events\Default Work Unit\Items\JetBootsExplosion" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="1.084876" DurationMax="1.366858">
+				<Event Id="1235706518" Name="JetBootsExplosion" ObjectPath="\Events\Default Work Unit\Items\JetBootsExplosion" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="0.903613" DurationMax="1.434396">
 					<IncludedMemoryFiles>
 						<File Id="848587777" Language="SFX">
 							<ShortName>item_proc_explodejump_v2_02.wav</ShortName>
 							<Path>SFX\item_proc_explodejump_v2_02_B6492DA8.wem</Path>
+						</File>
+						<File Id="901058479" Language="SFX">
+							<ShortName>JetBootsExplosion.wav</ShortName>
+							<Path>SFX\JetBootsExplosion_B6492DA8.wem</Path>
 						</File>
 						<File Id="953880137" Language="SFX">
 							<ShortName>item_proc_explodejump_v3_01.wav</ShortName>
@@ -850,6 +870,14 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
+				<Event Id="1371804952" Name="Play_ethereal_firePillar_loop" ObjectPath="\Events\Default Work Unit\Ethereal\Play_ethereal_firePillar_loop" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="12.654528" DurationMax="13.407005">
+					<IncludedMemoryFiles>
+						<File Id="126950648" Language="SFX">
+							<ShortName>pillaridle.wav</ShortName>
+							<Path>SFX\pillaridle_23126B38.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
 				<Event Id="3212416563" Name="Play_nemmerc_clone_spawn" ObjectPath="\Events\Default Work Unit\Nemesis Mercenary\Play_nemmerc_clone_spawn" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="2.416470" DurationMax="2.873683">
 					<IncludedMemoryFiles>
 						<File Id="934322958" Language="SFX">
@@ -1084,6 +1112,7 @@
 				</Event>
 				<Event Id="3156814475" Name="Stop_ChirrCSS" ObjectPath="\Events\Default Work Unit\Chirr\Stop_ChirrCSS" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="1032313774" Name="Stop_ChirrSpitBombLoop" ObjectPath="\Events\Default Work Unit\Chirr\Stop_ChirrSpitBombLoop" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
+				<Event Id="2875515542" Name="Stop_ethereal_firePillar_loop" ObjectPath="\Events\Default Work Unit\Ethereal\Stop_ethereal_firePillar_loop" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="4234730185" Name="Stop_Soft_Rain" ObjectPath="\Events\Default Work Unit\Environment\Ambient\Stop_Soft_Rain" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="3750145159" Name="StrangeCan" ObjectPath="\Events\Default Work Unit\Items\StrangeCan" MaxAttenuation="200.000000" DurationType="OneShot" DurationMin="0.963347" DurationMax="1.362379">
 					<IncludedMemoryFiles>
@@ -1236,7 +1265,7 @@
 			<ShortName>SS2Init</ShortName>
 			<Path>SS2Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="2545819644" Language="SFX">
+		<SoundBank Id="2545819644" Language="SFX" Hash="4052498927">
 			<ObjectPath>\SoundBanks\Default Work Unit\SS2Music</ObjectPath>
 			<ShortName>SS2Music</ShortName>
 			<Path>SS2Music.bnk</Path>
