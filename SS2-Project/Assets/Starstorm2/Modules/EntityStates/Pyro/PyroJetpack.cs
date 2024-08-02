@@ -1,4 +1,5 @@
 ﻿using RoR2;
+using SS2.Components;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,9 +8,9 @@ namespace EntityStates.Pyro
 {
     public class PyroJetpack : BaseState
     {
-        public static float baseDuration = 0.5f;
-        public static float initialSpeedCoefficient = 6.5f;
-        public static float finalSpeedCoefficient = 1.5f;
+        public static float baseDuration = 0.7f;
+        public static float initialSpeedCoefficient = 7.5f;
+        public static float finalSpeedCoefficient = 2.5f;
 
         public static float upwardVelocity;
         public static float forwardVelocity;
@@ -21,12 +22,15 @@ namespace EntityStates.Pyro
         private bool endNextFrame = false;
 
         private float dashSpeed;
-        private float duration = 0.5f;
+        private float duration = 0.7f;
         private Vector3 forwardDirection;
         private Vector3 previousPosition;
         private bool isDashing = false;
+        private bool hasDashed = false;
         private bool hasJumped = false;
         private float stopwatch;
+
+        private PyroController pyroController;
 
         public override void OnEnter()
         {
@@ -40,6 +44,8 @@ namespace EntityStates.Pyro
                 RecalculateDashSpeed();
 
                 previousAirControl = characterMotor.airControl;
+
+                pyroController = characterBody.GetComponent<PyroController>();
 
                 Vector3 velocity = characterMotor ? characterMotor.velocity : Vector3.zero;
                 previousPosition = transform.position - velocity;
@@ -85,6 +91,11 @@ namespace EntityStates.Pyro
 
         public void Dash()
         {
+            if (!hasDashed)
+            {
+                hasDashed = true;
+                pyroController.AddHeat(-20f);
+            }
             characterBody.isSprinting = true;
             if (isAuthority)
             {
@@ -126,6 +137,8 @@ namespace EntityStates.Pyro
             if (!hasJumped)
             {
                 hasJumped = true;
+
+                pyroController.AddHeat(-50f);
 
                 Vector3 direction = forwardDirection;
                 if (isAuthority)
