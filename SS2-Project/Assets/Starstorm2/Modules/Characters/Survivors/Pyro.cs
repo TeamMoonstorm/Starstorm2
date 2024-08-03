@@ -24,9 +24,10 @@ namespace SS2.Survivors
         public static ModdedDamageType FireballDamageType { get; private set; }
         public static ModdedDamageType FireballImpactDamageType { get; private set; }
 
-        private GameObject _hotFireVFX;
-        private GameObject _fireballExplosionVFX;
-
+        public static GameObject _hotFireVFX;
+        public static GameObject _fireballExplosionVFX;
+        public static BuffDef _bdPyroManiac;
+        public static BuffDef _bdPyroJet;
 
         public override void Initialize()
         {
@@ -37,10 +38,14 @@ namespace SS2.Survivors
 
             _hotFireVFX = AssetCollection.FindAsset<GameObject>("PyroHotFireVFX");
             _fireballExplosionVFX = AssetCollection.FindAsset<GameObject>("PyroFireballExplosionVFX");
+            _bdPyroManiac = AssetCollection.FindAsset<BuffDef>("bdPyroManiac");
+            _bdPyroJet = AssetCollection.FindAsset<BuffDef>("bdPyroJet");
 
             On.RoR2.Projectile.ProjectileSingleTargetImpact.OnProjectileImpact += PSTI_OPI;
 
-            GlobalEventManager.onServerDamageDealt += PyroDamageChecks;
+            //GlobalEventManager.onServerDamageDealt += PyroDamageChecks;
+            On.RoR2.HealthComponent.TakeDamage += HealthComponent_TakeDamage;
+            //On.RoR2.DotController.OnDotStackAddedServer += DotController_OnDotStackAddedServer;
         }
 
 
@@ -74,42 +79,44 @@ namespace SS2.Survivors
                         damageInfo.damageType = DamageType.IgniteOnHit;
                 }
             }
+        }
 
-            /*if (DamageAPI.HasModdedDamageType(damageInfo, FireballDamageType))
+        private void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
+        {
+            if (damageInfo.HasModdedDamageType(FlamethrowerDamageType))
             {
-                float burnCount = 0;
-                burnCount += victimBody.GetBuffCount(RoR2Content.Buffs.OnFire);
-                burnCount += victimBody.GetBuffCount(DLC1Content.Buffs.StrongerBurn);
-
-                if (burnCount > 0)
+                CharacterBody attackerBody = damageInfo.attacker.transform.GetComponent<CharacterBody>();
+                if (attackerBody)
                 {
-                    BlastAttack boom = new BlastAttack()
-                    {
-                        radius = 8f + burnCount,
-                        procCoefficient = 1f,
-                        position = damageInfo.position,
-                        teamIndex = attackerBody.teamComponent.teamIndex,
-                        crit = Util.CheckRoll(attackerBody.crit, attackerBody.master),
-                        baseDamage = attackerBody.damage + 4f + burnCount,
-                        damageColorIndex = DamageColorIndex.Default,
-                        falloffModel = BlastAttack.FalloffModel.SweetSpot,
-                        attackerFiltering = AttackerFiltering.NeverHitSelf,
-                        damageType = DamageType.IgniteOnHit,
-                    };
-                    boom.AddModdedDamageType(FireballImpactDamageType);
-                    boom.Fire();
+                    PyroController pc = attackerBody.GetComponent<PyroController>();
+                    if (pc == null)
+                        return;
 
-                    EffectData effectData = new EffectData()
-                    {
-                        scale = 8f + burnCount,
-                        origin = damageInfo.position,
-                        rotation = Quaternion.identity
-                    };
+                    float distance = Vector3.Distance(damageInfo.position, attackerBody.corePosition);
 
-                    EffectManager.SpawnEffect(_fireballExplosionVFX, effectData, true);
-                    //EffectManager.SimpleEffect(_fireballExplosionVFX, damageInfo.position, Quaternion.identity, true);
+                    if (distance > 17.5f)
+                    {
+                        //Debug.Log("pre damage: " + damageInfo.damage);
+                        damageInfo.damage *= 1.5f;
+                        //Debug.Log("post damage: " + damageInfo.damage);
+                        damageInfo.damageColorIndex = DamageColorIndex.WeakPoint;
+                        EffectManager.SimpleEffect(_hotFireVFX, damageInfo.position, Quaternion.identity, true);
+                        if (Util.CheckRoll(50f, attackerBody.master) && pc.heat >= 30f)
+                            damageInfo.damageType = DamageType.IgniteOnHit;
+                    }
                 }
-            }*/
+            }
+
+            if (self.body.baseNameToken == "SS2_PYRO_NAME")
+            {
+                if (self.body.HasBuff(RoR2Content.Buffs.OnFire) || self.body.HasBuff(DLC1Content.Buffs.StrongerBurn))
+                {
+                    self.body.SetBuffCount(RoR2Content.Buffs.OnFire.buffIndex, 0);
+                    self.body.SetBuffCount(DLC1Content.Buffs.StrongerBurn.buffIndex, 0);
+                }
+            }
+
+            orig(self, damageInfo);
         }
 
         private void PSTI_OPI(On.RoR2.Projectile.ProjectileSingleTargetImpact.orig_OnProjectileImpact orig, ProjectileSingleTargetImpact self, ProjectileImpactInfo impactInfo)
@@ -120,6 +127,7 @@ namespace SS2.Survivors
                 ProjectileExplosion pe = self.projectileController.gameObject.GetComponent<ProjectileExplosion>();
                 if (pe)
                 {
+                    float burnCount = 0;
                     Collider collider = impactInfo.collider;
                     if (collider)
                     {
@@ -130,22 +138,33 @@ namespace SS2.Survivors
                                 HealthComponent healthComponent = component.healthComponent;
                                 if (healthComponent)
                                 {
-                                    float burnCount = 0;
                                     CharacterBody body = healthComponent.body;
 
                                     if (body)
                                     {
                                         burnCount += body.GetBuffCount(RoR2Content.Buffs.OnFire);
                                         burnCount += body.GetBuffCount(DLC1Content.Buffs.StrongerBurn);
+                                        burnCount += 1.5f; //we do a little trolling
                                     }
 
                                     pe.blastRadius += burnCount;
                                     pe.blastDamageCoefficient += burnCount;
                                 }
                             }
+                            else
+                                pe.blastRadius /= 2f;
                         }
                     }
+
                     pe.Detonate();
+
+                    EffectData effectData = new EffectData()
+                    {
+                        scale = pe.blastRadius,
+                        origin = impactInfo.estimatedPointOfImpact,
+                        rotation = Quaternion.identity
+                    };
+                    EffectManager.SpawnEffect(_fireballExplosionVFX, effectData, true);
                 }
             }
 
@@ -159,5 +178,34 @@ namespace SS2.Survivors
             cb._defaultCrosshairPrefab = Resources.Load<GameObject>("Prefabs/Crosshair/StandardCrosshair");
         }
 
+        public sealed class PyromaniacBuffBehavior : BaseBuffBehaviour, IBodyStatArgModifier
+        {
+            [BuffDefAssociation]
+            private static BuffDef GetBuffDef() => _bdPyroManiac;
+
+            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            {
+                if (HasAnyStacks)
+                {
+                    args.armorAdd += Math.Max(2f * BuffCount, 10f);
+                    args.regenMultAdd += Math.Max(0.1f * BuffCount, 0.5f);
+                }
+            }
+        }
+
+        public sealed class PyroJetBuffBehavior : BaseBuffBehaviour
+        {
+            [BuffDefAssociation]
+            private static BuffDef GetBuffDef() => _bdPyroJet;
+
+            public void FixedUpdate()
+            {
+                if (HasAnyStacks)
+                {
+                    CharacterBody.characterMotor.velocity.y -= Time.fixedDeltaTime * Physics.gravity.y * 0.2f;
+                }
+            }
+
+        }
     }
 }

@@ -16,13 +16,13 @@ MonoBehaviour:
   skillNameToken: SS2_PYRO_UTILITY_NAME
   skillDescriptionToken: SS2_PYRO_UTILITY_DESC
   keywordTokens: []
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 29c78a69126125d4c97ea4985025274a, type: 3}
   activationStateMachineName: Jetpack
   activationState:
-    _typeName: EntityStates.Pyro.PyroJetpack, Starstorm2, Version=1.0.0.0, Culture=neutral,
+    _typeName: EntityStates.Pyro.PyroJumppack, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
   interruptPriority: 1
-  baseRechargeInterval: 1
+  baseRechargeInterval: 3
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 1
@@ -36,6 +36,6 @@ MonoBehaviour:
   canceledFromSprinting: 0
   isCombatSkill: 0
   mustKeyPress: 1
-  heatValue: 20
-  heatConsumed: 0
+  heatValue: 35
+  heatConsumed: 35
   canCastIfLowHeat: 0

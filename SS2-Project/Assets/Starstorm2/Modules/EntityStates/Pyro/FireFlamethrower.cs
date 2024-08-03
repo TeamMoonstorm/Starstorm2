@@ -47,6 +47,8 @@ namespace EntityStates.Pyro
         {
             base.OnEnter();
 
+            characterBody.isSprinting = false;
+
             pc = GetComponent<PyroController>();
 
             stopwatch = 0f;

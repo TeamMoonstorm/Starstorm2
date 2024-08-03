@@ -15,8 +15,9 @@ MonoBehaviour:
   skillName: PyroSecondary
   skillNameToken: SS2_PYRO_SECONDARY_NAME
   skillDescriptionToken: SS2_PYRO_SECONDARY_DESC
-  keywordTokens: []
-  icon: {fileID: 0}
+  keywordTokens:
+  - KEYWORD_IGNITE
+  icon: {fileID: 21300000, guid: 062b88e123bc060418bd339f2b83e7d0, type: 3}
   activationStateMachineName: Weapon
   activationState:
     _typeName: EntityStates.Pyro.SuppressiveFire, Starstorm2, Version=1.0.0.0, Culture=neutral,
@@ -36,6 +37,6 @@ MonoBehaviour:
   canceledFromSprinting: 1
   isCombatSkill: 1
   mustKeyPress: 0
-  heatValue: 2
+  heatValue: 1.5
   heatConsumed: 0
   canCastIfLowHeat: 0

@@ -38,8 +38,8 @@ namespace SS2
         public override void OnExecute([NotNull] GenericSkill skillSlot)
         {
             base.OnExecute(skillSlot);
-            PyroController ncc = ((InstanceData)skillSlot.skillInstanceData).pc;
-            ncc.AddHeat(heatConsumed);
+            PyroController pc = ((InstanceData)skillSlot.skillInstanceData).pc;
+            pc.AddHeat(heatConsumed * -1);
         }
 
         protected class InstanceData : SkillDef.BaseSkillInstanceData

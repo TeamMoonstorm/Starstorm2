@@ -584,6 +584,10 @@ namespace SS2
             public static BuffDef bdLunarCurseNoRegen;
 
             public static BuffDef bdPyroPressure;
+
+            public static BuffDef bdPyroManiac;
+
+            public static BuffDef bdPyroJet;
         }
 
         public static class Elites

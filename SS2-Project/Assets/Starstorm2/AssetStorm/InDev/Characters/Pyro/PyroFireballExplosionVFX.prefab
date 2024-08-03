@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4033524232082375}
   - component: {fileID: 114704532083856325}
   - component: {fileID: 114607931356572869}
-  - component: {fileID: 54570379580514451}
   - component: {fileID: 114904408055395810}
   m_Layer: 0
   m_Name: PyroFireballExplosionVFX
@@ -65,22 +64,6 @@ MonoBehaviour:
   applyScale: 1
   soundName: 
   disregardZScale: 0
---- !u!54 &54570379580514451
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1039620303202951}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &114904408055395810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4534,7 +4517,7 @@ Transform:
   m_GameObject: {fileID: 1298163217218094}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4037143648971101}
   - {fileID: 4677961306792282}
@@ -4625,7 +4608,7 @@ ParticleSystem:
       m_RotationOrder: 4
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
-  scalingMode: 1
+  scalingMode: 0
   randomSeed: 0
   InitialModule:
     serializedVersion: 3
@@ -4633,8 +4616,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.2
-      minScalar: 0.2
+      scalar: 0.3
+      minScalar: 0.3
       maxCurve:
         serializedVersion: 2
         m_Curve: []
@@ -4730,7 +4713,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 3
+      scalar: 2
       minScalar: 2
       maxCurve:
         serializedVersion: 2
@@ -4904,7 +4887,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.65
+      value: 1
       mode: 0
       spread: 0
       speed:
@@ -4989,7 +4972,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 5
+        scalar: 10
         minScalar: 5
         maxCurve:
           serializedVersion: 2
@@ -5160,7 +5143,7 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 0.96862745, b: 0.61960787, a: 0}
-        key1: {r: 0.9137255, g: 0.16470589, b: 0, a: 1}
+        key1: {r: 0.9137255, g: 0.71560204, b: 0, a: 1}
         key2: {r: 0.9137255, g: 0.16470589, b: 0, a: 0}
         key3: {r: 0.42745098, g: 0, b: 0, a: 0}
         key4: {r: 0.42745098, g: 0, b: 0, a: 0}

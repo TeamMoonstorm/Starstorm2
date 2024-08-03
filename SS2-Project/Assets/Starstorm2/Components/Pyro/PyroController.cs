@@ -1,7 +1,6 @@
 ﻿using RoR2;
-using RoR2.UI;
 using RoR2.HudOverlay;
-using System.Collections;
+using RoR2.UI;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
@@ -17,12 +16,12 @@ namespace SS2.Components
 
         public float numberAround;
         [HideInInspector]
-        public static float enemyCheckInterval = 0.03333333f;
+        public static float enemyCheckInterval = 0.16f;
         [HideInInspector]
         private static float enemyCheckStopwatch = 0f;
-        private SphereSearch enemySearch;
+        private SphereSearch bodySearch;
         private List<HurtBox> hits;
-        public float enemyRadius = 18f;
+        public float enemyRadius = 25f;
 
         [Header("Heat UI")]
         [SerializeField]
@@ -82,6 +81,12 @@ namespace SS2.Components
             heatOverlayController = HudOverlayManager.AddOverlay(gameObject, heatOverlayCreationParams);
             heatOverlayController.onInstanceAdded += OnHeatOverlayInstanceAdded;
             heatOverlayController.onInstanceRemove += OnHeatOverlayInstanceRemoved;
+            characterBody = GetComponent<CharacterBody>();
+
+            hits = new List<HurtBox>();
+            bodySearch = new SphereSearch();
+            bodySearch.mask = LayerIndex.entityPrecise.mask;
+            bodySearch.radius = enemyRadius;
         }
 
         private void OnDisable()
@@ -97,7 +102,59 @@ namespace SS2.Components
 
         private void FixedUpdate()
         {
-            UpdateUI();
+            if (NetworkServer.active)
+            {
+                UpdateUI();
+
+                enemyCheckStopwatch += Time.fixedDeltaTime;
+                if (enemyCheckStopwatch >= enemyCheckInterval)
+                {
+                    enemyCheckStopwatch -= enemyCheckInterval;
+
+                    float burnCount = 0f;
+
+                    hits.Clear();
+                    bodySearch.ClearCandidates();
+                    bodySearch.origin = characterBody.corePosition;
+                    bodySearch.RefreshCandidates();
+                    bodySearch.FilterCandidatesByDistinctHurtBoxEntities();
+                    bodySearch.GetHurtBoxes(hits);
+
+                    if (hits.Count > 0)
+                    {
+                        foreach (HurtBox h in hits)
+                        {
+                            HealthComponent hp = h.healthComponent;
+                            if (hp)
+                            {
+                                CharacterBody body = hp?.body;
+                                if (body && !body.bodyFlags.HasFlag(CharacterBody.BodyFlags.Masterless))
+                                {
+                                    if (body.HasBuff(RoR2Content.Buffs.AffixRed))
+                                    {
+                                        burnCount++; //blazing elite are already hot
+                                    }
+
+                                    if (body.HasBuff(RoR2Content.Buffs.OnFire) || body.HasBuff(DLC1Content.Buffs.StrongerBurn))
+                                    {
+                                        burnCount++; //add burn for burning body
+
+                                        if (body.hullClassification == HullClassification.Golem || body.hullClassification == HullClassification.BeetleQueen)
+                                        {
+                                            burnCount++; //bigger enemies burn hotter
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (characterBody)
+                        characterBody.SetBuffCount(SS2Content.Buffs.bdPyroManiac.buffIndex, (int)burnCount);
+
+                    AddHeat(burnCount * 0.25f);
+                }
+            }
         }
 
         private void UpdateUI()
@@ -108,7 +165,7 @@ namespace SS2.Components
             }
             if (heatOverlayInstanceChildlocator)
             {
-                heatOverlayInstanceChildlocator.FindChild("HeatThreshold").rotation = Quaternion.Euler(0f, 0f, Mathf.InverseLerp(0f, heatMax, heat) * -360f);
+                //heatOverlayInstanceChildlocator.FindChild("HeatThreshold").rotation = Quaternion.Euler(0f, 0f, Mathf.InverseLerp(0f, heatMax, heat) * -360f);
             }
         }
 
@@ -133,7 +190,7 @@ namespace SS2.Components
                 return;
             }
 
-            if (isMaxHeat)
+            if (isMaxHeat && amount > 0)
                 amount = 0f;
 
             Network_charge = Mathf.Clamp(heat + amount, 0f, heatMax);

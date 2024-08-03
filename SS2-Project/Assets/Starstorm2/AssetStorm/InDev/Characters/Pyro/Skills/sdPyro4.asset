@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 485a667f85daa004ca6fe47ee0e0dbb2, type: 3}
   m_Name: sdPyro4
   m_EditorClassIdentifier: 
-  skillName: PyroUtility
+  skillName: PyroSpecial
   skillNameToken: SS2_PYRO_SPECIAL_NAME
   skillDescriptionToken: SS2_PYRO_SPECIAL_DESC
-  keywordTokens: []
-  icon: {fileID: 0}
+  keywordTokens:
+  - KEYWORD_IGNITE
+  icon: {fileID: 21300000, guid: 8bf8062dcf7ed9242848e392b5a59456, type: 3}
   activationStateMachineName: Weapon
   activationState:
     _typeName: EntityStates.Pyro.PyroFireball, Starstorm2, Version=1.0.0.0, Culture=neutral,
@@ -36,6 +37,6 @@ MonoBehaviour:
   canceledFromSprinting: 0
   isCombatSkill: 0
   mustKeyPress: 1
-  heatValue: 80
-  heatConsumed: 80
+  heatValue: 75
+  heatConsumed: 75
   canCastIfLowHeat: 0

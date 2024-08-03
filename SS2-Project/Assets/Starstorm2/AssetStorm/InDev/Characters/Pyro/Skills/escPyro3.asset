@@ -13,22 +13,10 @@ MonoBehaviour:
   m_Name: escPyro3
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Pyro.PyroJetpack, Starstorm2, Version=1.0.0.0,
+    assemblyQualifiedName: EntityStates.Pyro.PyroJumppack, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
-    - fieldName: baseDuration
-      fieldValue:
-        stringValue: 0.5
-        objectValue: {fileID: 0}
-    - fieldName: initialSpeedCoefficient
-      fieldValue:
-        stringValue: 7
-        objectValue: {fileID: 0}
-    - fieldName: finalSpeedCoefficient
-      fieldValue:
-        stringValue: 2
-        objectValue: {fileID: 0}
     - fieldName: upwardVelocity
       fieldValue:
         stringValue: 28
@@ -48,4 +36,12 @@ MonoBehaviour:
     - fieldName: airControl
       fieldValue:
         stringValue: 0.3
+        objectValue: {fileID: 0}
+    - fieldName: hoverVelocity
+      fieldValue:
+        stringValue: -1
+        objectValue: {fileID: 0}
+    - fieldName: hoverAcceleration
+      fieldValue:
+        stringValue: 60
         objectValue: {fileID: 0}

@@ -183,7 +183,7 @@ Transform:
   m_LocalScale: {x: 0.3382852, y: 0.33828518, z: 0.3382852}
   m_Children: []
   m_Father: {fileID: 9051920477755995763}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4822361751868081849
 MeshFilter:
@@ -439,6 +439,7 @@ GameObject:
   - component: {fileID: 8270310901733930245}
   - component: {fileID: -8040788396477091899}
   - component: {fileID: 1937542078751538968}
+  - component: {fileID: -3965038473707094309}
   - component: {fileID: 1117021188742849586}
   - component: {fileID: 6898686423231629712}
   - component: {fileID: 5017716832582338029}
@@ -589,7 +590,7 @@ MonoBehaviour:
   hideCrosshair: 0
   aimOriginTransform: {fileID: 5537254157219681571}
   hullClassification: 0
-  portraitIcon: {fileID: 2800000, guid: 7d90bd0331ab07e45b04215c5f0c9308, type: 3}
+  portraitIcon: {fileID: 2800000, guid: a41778578dbf07944a36ebe729dd301e, type: 3}
   bodyColor: {r: 0.84313726, g: 0.5137255, b: 0.14901961, a: 1}
   isChampion: 0
   currentVehicle: {fileID: 0}
@@ -709,15 +710,15 @@ MonoBehaviour:
   special: {fileID: 8821805728481151941}
   passiveSkill:
     enabled: 0
-    skillNameToken: 
-    skillDescriptionToken: 
+    skillNameToken: SS2_PYRO_PASSIVE_NAME
+    skillDescriptionToken: SS2_PYRO_PASSIVE_DESC
     keywordToken: 
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: a41778578dbf07944a36ebe729dd301e, type: 3}
   primaryBonusStockOverrideSkill: {fileID: 0}
   secondaryBonusStockOverrideSkill: {fileID: 0}
   utilityBonusStockOverrideSkill: {fileID: 0}
   specialBonusStockOverrideSkill: {fileID: 0}
---- !u!114 &1117021188742849586
+--- !u!114 &-3965038473707094309
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -730,6 +731,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: 0792720372c028343af33ff94385f86e, type: 2}
+  skillName: 
+  hideInCharacterSelect: 0
+  hasExecutedSuccessfully: 0
+--- !u!114 &1117021188742849586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 738655439022312548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillFamily: {fileID: 11400000, guid: cbf890bf111410c48a0046fab7b29a8f, type: 2}
   skillName: 
   hideInCharacterSelect: 0
   hasExecutedSuccessfully: 0
@@ -866,8 +883,8 @@ MonoBehaviour:
   m_Script: {fileID: -1067940895, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraParams: {fileID: 0}
-  cameraPivotTransform: {fileID: 0}
+  cameraParams: {fileID: 11400000, guid: 0f32a1587e7bad248a563caf83e62fe4, type: 2}
+  cameraPivotTransform: {fileID: 386384427910434244}
   fovOverride: 0
   recoil: {x: 0, y: 0}
   dontRaycastToPivot: 0
@@ -1104,7 +1121,7 @@ MonoBehaviour:
   characterBody: {fileID: 264911434473668516}
   heatMax: 100
   numberAround: 0
-  enemyRadius: 18
+  enemyRadius: 25
   heatOverlayPrefab: {fileID: 1894802512682313, guid: 3b4d968acfd20af40afd2a08353c0331,
     type: 3}
   heatOverlayChildLocatorEntry: CrosshairExtras
@@ -1994,11 +2011,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2583650147590515575}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.99, z: 2.13}
+  m_LocalPosition: {x: 1.258, y: 2.412, z: 3.603}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 9051920477755995763}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2606034339120328495
 GameObject:
@@ -2556,6 +2573,70 @@ Transform:
   m_Father: {fileID: 2212354009787983076}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4130745938195941349
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 270560390592307059}
+  - component: {fileID: 4658709428070848980}
+  - component: {fileID: 3598331318882055692}
+  m_Layer: 12
+  m_Name: MainHurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &270560390592307059
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4130745938195941349}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.5888884, z: 0}
+  m_LocalScale: {x: 2.2222223, y: 2.2222219, z: 2.2222219}
+  m_Children: []
+  m_Father: {fileID: 9051920477755995763}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &4658709428070848980
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4130745938195941349}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.42923093
+  m_Height: 2.2303772
+  m_Direction: 1
+  m_Center: {x: -0.036452293, y: 0, z: 0.024494058}
+--- !u!114 &3598331318882055692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4130745938195941349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 6921280088057762201}
+  isBullseye: 1
+  isSniperTarget: 0
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 6762002909505701217}
+  indexInGroup: 0
 --- !u!1 &4174882148154603439
 GameObject:
   m_ObjectHideFlags: 0
@@ -3020,7 +3101,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 9051920477755995763}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &3064252106812686002
 SkinnedMeshRenderer:
@@ -3189,7 +3270,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5378144464558948336}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.11, z: 0}
+  m_LocalPosition: {x: 0, y: -1.07, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 9051920477755995763}
@@ -3565,7 +3646,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6191066512909334173}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.598, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 9302602284396381}
@@ -3754,7 +3835,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 9051920477755995763}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &3473935662623479518
 SkinnedMeshRenderer:
@@ -4089,7 +4170,7 @@ Transform:
   - {fileID: 8191543379733830261}
   - {fileID: 3163380521046621286}
   m_Father: {fileID: 9051920477755995763}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7238418354067938790
 GameObject:
@@ -4834,6 +4915,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.45, y: 0.45, z: 0.45}
   m_Children:
+  - {fileID: 270560390592307059}
   - {fileID: 1597458617483305009}
   - {fileID: 5917221051022015414}
   - {fileID: 7414406396570167928}
@@ -4887,9 +4969,10 @@ MonoBehaviour:
   m_Script: {fileID: -1792105662, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hurtBoxes: []
-  mainHurtBox: {fileID: 0}
-  bullseyeCount: 0
+  hurtBoxes:
+  - {fileID: 3598331318882055692}
+  mainHurtBox: {fileID: 3598331318882055692}
+  bullseyeCount: 1
 --- !u!114 &1847490631234002882
 MonoBehaviour:
   m_ObjectHideFlags: 0
