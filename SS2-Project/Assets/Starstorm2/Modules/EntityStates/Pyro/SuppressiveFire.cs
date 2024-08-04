@@ -78,7 +78,7 @@ namespace EntityStates.Pyro
 
             stopwatch += Time.fixedDeltaTime;
 
-            if ((stopwatch >= entryDuration || HasBuff(SS2.SS2Content.Buffs.bdPyroPressure)) && !hasBegunFlamethrower)
+            if ((stopwatch >= entryDuration && !hasBegunFlamethrower || HasBuff(SS2.SS2Content.Buffs.bdPyroPressure)) && !hasBegunFlamethrower)
             {
                 //Debug.Log("entering flamethrower");
                 hasBegunFlamethrower = true;

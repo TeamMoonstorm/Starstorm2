@@ -22,7 +22,7 @@ MonoBehaviour:
   activationState:
     _typeName: EntityStates.Pyro.SuppressiveFire, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  interruptPriority: 2
+  interruptPriority: 1
   baseRechargeInterval: 0
   baseMaxStock: 1
   rechargeStock: 1
@@ -34,7 +34,7 @@ MonoBehaviour:
   beginSkillCooldownOnSkillEnd: 1
   cancelSprintingOnActivation: 1
   forceSprintDuringState: 0
-  canceledFromSprinting: 0
+  canceledFromSprinting: 1
   isCombatSkill: 1
   mustKeyPress: 0
   heatValue: 1.5
