@@ -54,33 +54,6 @@ namespace SS2.Survivors
             return true;
         }
 
-        private void PyroDamageChecks(DamageReport report)
-        {
-            var victimBody = report.victimBody;
-            var attackerBody = report.attackerBody;
-            var damageInfo = report.damageInfo;
-
-            if (DamageAPI.HasModdedDamageType(damageInfo, FlamethrowerDamageType))
-            {
-                PyroController pc = attackerBody.GetComponent<PyroController>();
-                if (pc == null)
-                    return;
-
-                float distance = Vector3.Distance(victimBody.corePosition, attackerBody.corePosition);
-
-                if (distance > 17.5f)
-                {
-                    //Debug.Log("pre damage: " + damageInfo.damage);
-                    damageInfo.damage *= 1.5f;
-                    //Debug.Log("post damage: " + damageInfo.damage);
-                    damageInfo.damageColorIndex = DamageColorIndex.WeakPoint;
-                    EffectManager.SimpleEffect(_hotFireVFX, victimBody.transform.position, Quaternion.identity, true);
-                    if (Util.CheckRoll(50f, attackerBody.master) && pc.heat >= 30f)
-                        damageInfo.damageType = DamageType.IgniteOnHit;
-                }
-            }
-        }
-
         private void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
         {
             if (damageInfo.HasModdedDamageType(FlamethrowerDamageType))
@@ -94,14 +67,14 @@ namespace SS2.Survivors
 
                     float distance = Vector3.Distance(damageInfo.position, attackerBody.corePosition);
 
-                    if (distance > 17.5f)
+                    if (distance > 16f)
                     {
                         //Debug.Log("pre damage: " + damageInfo.damage);
                         damageInfo.damage *= 1.5f;
                         //Debug.Log("post damage: " + damageInfo.damage);
                         damageInfo.damageColorIndex = DamageColorIndex.WeakPoint;
                         EffectManager.SimpleEffect(_hotFireVFX, damageInfo.position, Quaternion.identity, true);
-                        if (Util.CheckRoll(50f, attackerBody.master) && pc.heat >= 30f)
+                        if (Util.CheckRoll(75f, attackerBody.master) && pc.heat >= 35f)
                             damageInfo.damageType = DamageType.IgniteOnHit;
                     }
                 }
@@ -187,8 +160,8 @@ namespace SS2.Survivors
             {
                 if (HasAnyStacks)
                 {
-                    args.armorAdd += Math.Max(2f * BuffCount, 10f);
-                    args.regenMultAdd += Math.Max(0.1f * BuffCount, 0.5f);
+                    args.armorAdd += Math.Max(3f * BuffCount, 30f);
+                    args.regenMultAdd += Math.Max(0.2f * BuffCount, 2f);
                 }
             }
         }

@@ -1,4 +1,5 @@
 ﻿using RoR2;
+using SS2;
 using SS2.Components;
 using System.Collections;
 using System.Collections.Generic;
@@ -42,6 +43,19 @@ namespace EntityStates.Pyro
         private ChildLocator childLocator;
         private ParticleSystem flames;
 
+        public CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
+        private CharacterCameraParamsData chargeCameraParams = new CharacterCameraParamsData
+        {
+            maxPitch = 85f,
+            minPitch = -85f,
+            pivotVerticalOffset = 1f,
+            idealLocalCameraPos = cameraPos,
+            wallCushion = 0.1f,
+        };
+
+        [HideInInspector]
+        public static Vector3 cameraPos = new Vector3(0f, -0.1f, -7.2f);
+
         public override void OnEnter()
         {
             base.OnEnter();
@@ -49,6 +63,16 @@ namespace EntityStates.Pyro
             characterBody.isSprinting = false;
 
             pc = GetComponent<PyroController>();
+
+            cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 0.2f);
+
+            CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
+            {
+                cameraParamsData = chargeCameraParams,
+                priority = 0f
+            };
+
+            camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0.2f);
 
             stopwatch = 0f;
 
@@ -98,7 +122,7 @@ namespace EntityStates.Pyro
                 }
             }
 
-            if (stopwatch >= baseDuration && !inputBank.skill2.down && isAuthority)
+            if (stopwatch >= baseDuration && (!inputBank.skill2.down || pc.heat < heatPerTick * -1f) && isAuthority)
             {
                 outer.SetNextStateToMain();
                 //Debug.Log("exiting flamethrower");
@@ -110,6 +134,10 @@ namespace EntityStates.Pyro
         {
             base.OnExit();
             characterBody.AddTimedBuffAuthority(SS2.SS2Content.Buffs.bdPyroPressure.buffIndex, pressureDuration);
+            if (cameraTargetParams)
+            {
+                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 0.7f);
+            }
             if (flamethrowerTransform)
                 Destroy(flamethrowerTransform.gameObject);
         }
@@ -120,14 +148,16 @@ namespace EntityStates.Pyro
 
             characterBody.SetAimTimer(duration * 2f);
 
+            float damage = tickDamageCoefficient * damageStat;
+
             //Debug.Log("Firing");
 
             if (pc.heat >= heatIgniteThreshold)
-                damageType = (Util.CheckRoll(igniteChanceHighHeat, characterBody.master) ? DamageType.IgniteOnHit : DamageType.Generic);
-            //to-do: unique damage type that scales ignite chance based on range / staged heat levels?
+            {
+                damage *= 1.5f;
+            }
 
-            else
-                damageType = DamageType.Generic;
+            damageType = (Util.CheckRoll(igniteChanceHighHeat, characterBody.master) ? DamageType.IgniteOnHit : DamageType.Generic);
 
             Ray aimRay = GetAimRay();
             if (isAuthority)
@@ -143,7 +173,7 @@ namespace EntityStates.Pyro
                     force = force,
                     muzzleName = muzzleString,
                     hitEffectPrefab = impactEffectPrefab,
-                    isCrit = false, //to-do: make crits come in short bursts like tf2
+                    isCrit = RollCrit(), //to-do: make crits come in short bursts like tf2
                     radius = radius,
                     falloffModel = BulletAttack.FalloffModel.None,
                     stopperMask = LayerIndex.world.mask,

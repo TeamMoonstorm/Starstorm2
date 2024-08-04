@@ -146,7 +146,7 @@ namespace EntityStates.Pyro
                     force = force,
                     muzzleName = muzzleString,
                     hitEffectPrefab = impactEffectPrefab,
-                    isCrit = false, //to-do: make crits come in short bursts like tf2
+                    isCrit = RollCrit(), //to-do: make crits come in short bursts like tf2
                     radius = radius,
                     falloffModel = BulletAttack.FalloffModel.None,
                     stopperMask = LayerIndex.world.mask,

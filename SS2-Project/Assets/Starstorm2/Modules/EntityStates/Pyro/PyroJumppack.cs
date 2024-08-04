@@ -24,7 +24,7 @@ namespace EntityStates.Pyro
         private bool endNextFrame = false;
 
         private float jetpackStopwatch = 0.1f;
-        private float jetpackHeat = 0.2f;
+        private float jetpackHeat = 1f;
         private float jetpackTimer = 0f;
 
         private PyroController pc;
@@ -40,7 +40,8 @@ namespace EntityStates.Pyro
 
                 pc = characterBody.GetComponent<PyroController>();
 
-                Vector3 direction = GetAimRay().direction;
+                //Vector3 direction = GetAimRay().direction;
+                Vector3 direction = inputBank.moveVector.normalized;
                 if (isAuthority)
                 {
                     characterBody.isSprinting = true;
@@ -48,13 +49,13 @@ namespace EntityStates.Pyro
                     float fv = forwardVelocity;
                     if (characterMotor.isGrounded)
                     {
-                        //direction.y = 30f;
+                        direction.y = 30f;
                         uv *= 0.75f;
                         fv *= 1.25f;
                     }
                     else
                     {
-                        //direction.y = 70f;
+                        direction.y = 70f;
                         fv *= 0.75f;
                         uv *= 1.25f;
                     }
@@ -102,7 +103,7 @@ namespace EntityStates.Pyro
 
         public void Jets()
         {
-            if (inputBank.skill3.down)
+            if (inputBank.skill3.down && pc.heat > jetpackHeat)
             {
                 if (isAuthority)
                 {
@@ -114,7 +115,7 @@ namespace EntityStates.Pyro
                     {
                         jetpackTimer -= jetpackStopwatch;
                         if (pc != null)
-                            pc.AddHeat(-jetpackHeat);
+                            pc.AddHeat(-1f * jetpackHeat);
                     }
                 }
 
