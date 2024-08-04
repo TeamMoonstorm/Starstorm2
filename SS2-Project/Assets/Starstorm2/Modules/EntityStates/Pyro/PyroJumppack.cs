@@ -24,7 +24,7 @@ namespace EntityStates.Pyro
         private bool endNextFrame = false;
 
         private float jetpackStopwatch = 0.1f;
-        private float jetpackHeat = 0.05f;
+        private float jetpackHeat = 0.2f;
         private float jetpackTimer = 0f;
 
         private PyroController pc;
@@ -109,6 +109,7 @@ namespace EntityStates.Pyro
                     float vel = characterMotor.velocity.y;
                     vel = Mathf.MoveTowards(vel, hoverVelocity, hoverAcceleration * Time.fixedDeltaTime);
                     characterMotor.velocity = new Vector3(characterMotor.velocity.x, vel, characterMotor.velocity.z);
+                    jetpackTimer += Time.fixedDeltaTime;
                     if (jetpackTimer >= jetpackStopwatch)
                     {
                         jetpackTimer -= jetpackStopwatch;

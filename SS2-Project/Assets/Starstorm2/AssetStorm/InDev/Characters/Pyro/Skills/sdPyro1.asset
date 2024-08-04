@@ -23,7 +23,7 @@ MonoBehaviour:
   activationState:
     _typeName: EntityStates.Pyro.FireFlamethrower, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  interruptPriority: 0
+  interruptPriority: 1
   baseRechargeInterval: 0
   baseMaxStock: 1
   rechargeStock: 1
@@ -32,9 +32,9 @@ MonoBehaviour:
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
-  beginSkillCooldownOnSkillEnd: 0
+  beginSkillCooldownOnSkillEnd: 1
   cancelSprintingOnActivation: 1
   forceSprintDuringState: 0
-  canceledFromSprinting: 1
+  canceledFromSprinting: 0
   isCombatSkill: 1
   mustKeyPress: 0

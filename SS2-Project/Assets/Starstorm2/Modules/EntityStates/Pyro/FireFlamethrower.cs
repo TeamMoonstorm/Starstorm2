@@ -51,6 +51,8 @@ namespace EntityStates.Pyro
 
             pc = GetComponent<PyroController>();
 
+            Debug.Log("flamer on enter");
+
             stopwatch = 0f;
 
             hasBegunFlamethrower = false;
