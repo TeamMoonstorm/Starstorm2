@@ -591,6 +591,8 @@ namespace SS2
             public static BuffDef bdPyroManiac;
 
             public static BuffDef bdPyroJet;
+
+            public static BuffDef bdUltraBuff;
         }
 
         public static class Elites
