@@ -10,6 +10,7 @@ using UnityEngine.AddressableAssets;
 
 namespace SS2.Survivors
 {
+#if DEBUG
     public class Nuke : SS2Survivor
     {
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acNuke", SS2Bundle.Nuke);
@@ -97,7 +98,7 @@ namespace SS2.Survivors
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return true;
+            return false;
         }
 
         public interface IChargeableState
@@ -113,4 +114,5 @@ namespace SS2.Survivors
             float charge { get; set; }
         }
     }
+#endif
 }
