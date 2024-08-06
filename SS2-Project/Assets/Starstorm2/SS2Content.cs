@@ -260,6 +260,8 @@ namespace SS2
         {
             public static ItemDef AffixStorm;
 
+            public static ItemDef AffixUltra;
+
             public static ItemDef ArmedBackpack;
 
             public static ItemDef BoostCharacterSize;
@@ -426,8 +428,6 @@ namespace SS2
 
             public static BuffDef BuffAffixVoid;
 
-            public static BuffDef BuffAffixUltra;
-
             public static BuffDef BuffBackThruster;
 
             public static BuffDef BuffUniversalCharger;
@@ -558,6 +558,8 @@ namespace SS2
 
             public static BuffDef bdEmpyrean;
 
+            public static BuffDef bdUltra;
+
             public static BuffDef bdPoisonBuildup;
 
             public static BuffDef bdEthereal;
@@ -602,6 +604,8 @@ namespace SS2
             public static EliteDef edEmpyrean;
 
             public static EliteDef edEthereal;
+
+            public static EliteDef edUltra;
         }
         public static class Scenes
         {

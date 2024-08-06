@@ -21,17 +21,17 @@ namespace SS2.Items
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float damageThreshold = 0.2f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Percent damage reduction that the damage in excess of the above threshold (base value 20%) is reduced by. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Percent damage reduction that the damage in excess of the above threshold is reduced by. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float damageReduction = 0.5f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base duration of the buff provided by Green Chocolate. (1 = 1 second)")]
         [FormatToken(token, 2)]
-        public static float baseDuration = 12f;
+        public static float baseDuration = 6f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Duration of the buff gained per stack. (1 = 1 second)")]
         [FormatToken(token, 3)]
-        public static float stackDuration = 6f;
+        public static float stackDuration = 3f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Percent damage increase from the buff. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 4)]

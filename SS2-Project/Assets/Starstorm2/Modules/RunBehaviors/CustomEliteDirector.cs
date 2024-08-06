@@ -80,6 +80,11 @@ namespace SS2.Components
         private float empyreanMultiplier = 25f;
         public bool empyreanActive = false;
 
+        [Header("Ultra-Related")]
+        private float ultraEliteCost = 320f;
+        private float ultraMultiplier = 35f;
+        
+
         public void Awake()
         {
             instance = this; //I guess there will only be one of you after all...
@@ -199,7 +204,7 @@ namespace SS2.Components
                 }
             }
 
-            if (Run.instance.stageClearCount > 8 && !empyreanActive)
+            if (Run.instance.stageClearCount > 8)
             {
                 if (empyreanEliteCost <= eliteCredit && (baseCost * empyreanMultiplier <= fastCombatDirector.monsterCredit) || (baseCost * empyreanMultiplier <= slowCombatDirector.monsterCredit))
                 {
@@ -214,6 +219,17 @@ namespace SS2.Components
             {
                 float baseEtherealCost = (totalCost * etherealMultiplier) / ethInstance.etherealsCompleted; //possibly too mean?? lol
 
+                if (Run.instance.stageClearCount > 5)
+                {
+                    if ((ultraEliteCost - (20 * (ethInstance.etherealsCompleted - 1))) <= eliteCredit && baseEtherealCost * 3f <= fastCombatDirector.monsterCredit)
+                    {
+                        MakeUltra(cb);
+                        fastCombatDirector.monsterCredit -= baseEtherealCost * 5f;
+                        SS2Log.Debug(cm.name + " ultra monster cost: " + totalCost + "  yuou are now Ultra. :D");
+                        eliteCredit -= ultraEliteCost * 1.5f;
+                    }
+                }
+
                 if ((etherealEliteCost - (20 * (ethInstance.etherealsCompleted - 1))) <= eliteCredit && baseEtherealCost <= fastCombatDirector.monsterCredit)
                 {
                     MakeEthereal(cb);
@@ -226,15 +242,14 @@ namespace SS2.Components
 
         public void MakeEmpyrean(CharacterBody body)
         {
-            //to-do: everything :)
             var inventory = body.inventory;
 
             inventory.RemoveItem(RoR2Content.Items.BoostHp, inventory.GetItemCount(RoR2Content.Items.BoostHp));
             inventory.RemoveItem(RoR2Content.Items.BoostDamage, inventory.GetItemCount(RoR2Content.Items.BoostDamage));
 
             inventory.GiveItem(RoR2Content.Items.BoostHp, 500);
-            inventory.GiveItem(SS2Content.Items.BoostMovespeed, 50);
-            inventory.GiveItem(SS2Content.Items.BoostCooldowns, 70);
+            inventory.GiveItem(SS2Content.Items.BoostMovespeed, 35);
+            inventory.GiveItem(SS2Content.Items.BoostCooldowns, 50);
             inventory.GiveItem(RoR2Content.Items.BoostDamage, 80);
             inventory.GiveItem(RoR2Content.Items.TeleportWhenOob); //REALLY DON'T LIKE THIS ONE. knocking enemies off the stage is a RIGHT. going to make a specific elite to replace this functionality.
             inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
@@ -248,6 +263,28 @@ namespace SS2.Components
             }
 
             empyreanActive = true;
+        }
+
+        public void MakeUltra(CharacterBody body)
+        {
+            var inventory = body.inventory;
+
+            inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(500f + (250f * ethInstance.etherealsCompleted)));
+            //inventory.GiveItem(SS2Content.Items.BoostMovespeed, 50);
+            inventory.GiveItem(SS2Content.Items.BoostCooldowns, 70);
+            inventory.GiveItem(RoR2Content.Items.BoostDamage, 100);
+            inventory.GiveItem(RoR2Content.Items.TeleportWhenOob); //REALLY DON'T LIKE THIS ONE. knocking enemies off the stage is a RIGHT. going to make a specific elite to replace this functionality.
+            inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
+            inventory.GiveItem(SS2Content.Items.AffixUltra);
+
+            DeathRewards rewards = body.GetComponent<DeathRewards>();
+            if (rewards)
+            {
+                rewards.expReward *= (uint)(10 + (5 * ethInstance.etherealsCompleted));
+                rewards.goldReward *= (uint)(10 + (5 * ethInstance.etherealsCompleted));
+            }
+
+
         }
 
         public void MakeEthereal(CharacterBody body)
