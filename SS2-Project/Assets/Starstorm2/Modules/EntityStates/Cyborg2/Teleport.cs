@@ -20,6 +20,7 @@ namespace EntityStates.Cyborg2
         private Vector3 storedVelocity;
         private bool didTeleport;
         private Vector3 lastPositionBeforeTeleport;
+        Vector3 initialPosition;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -32,6 +33,7 @@ namespace EntityStates.Cyborg2
                 return;
             }
 
+            this.initialPosition = base.transform.position;
             this.teleportTarget = this.teleporterOwnership.teleporter.GetSafeTeleportPosition();
 
             this.duration = baseDuration; //movespeed? attackspeed?
@@ -96,19 +98,7 @@ namespace EntityStates.Cyborg2
             }
             if(this.teleporterOwnership)
             {
-                this.teleporterOwnership.DoTeleport();
-                if (NetworkServer.active)
-                {
-                    TeleporterOrb teleporterOrb = new TeleporterOrb();
-                    teleporterOrb.origin = lastPositionBeforeTeleport;
-                    teleporterOrb.totalDuration = this.duration;
-                    teleporterOrb.attacker = base.gameObject;
-                    teleporterOrb.inflictor = base.gameObject;
-                    teleporterOrb.damageValue = characterBody.damage * damageCoefficient;
-                    teleporterOrb.isCrit = base.RollCrit();
-                    teleporterOrb.targetObjects = teleporterOwnership.teleporter.GetTargets();
-                    RoR2.Orbs.OrbManager.instance.AddOrb(teleporterOrb);
-                }
+                this.teleporterOwnership.DoTeleport(initialPosition);
             }
             if (this.camera)
             {

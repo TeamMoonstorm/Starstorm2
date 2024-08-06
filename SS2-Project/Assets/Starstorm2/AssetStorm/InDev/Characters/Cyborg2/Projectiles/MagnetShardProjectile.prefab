@@ -128,8 +128,9 @@ GameObject:
   - component: {fileID: 3823113393451570404}
   - component: {fileID: 873040815566630765}
   - component: {fileID: 4506577062129598372}
-  m_Layer: 14
-  m_Name: MagnetProjectile
+  - component: {fileID: 474758547539477905}
+  m_Layer: 17
+  m_Name: MagnetShardProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -194,7 +195,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
@@ -238,7 +239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   catalogIndex: -1
-  ghostPrefab: {fileID: 1288649414446836, guid: 497a8748e6bfabd42b9ca65cf7861f72,
+  ghostPrefab: {fileID: 1288649414446836, guid: 2fc87eaf401f99b4c8a6da0855e5d7d8,
     type: 3}
   ghostTransformAnchor: {fileID: 0}
   startSound: 
@@ -260,9 +261,9 @@ MonoBehaviour:
   m_Script: {fileID: -1819008361, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifetime: 3
+  lifetime: 20
   lifetimeExpiredEffect: {fileID: 0}
-  desiredForwardSpeed: 80
+  desiredForwardSpeed: 22
   updateAfterFiring: 0
   enableVelocityOverLifetime: 0
   velocityOverLifetime:
@@ -320,28 +321,27 @@ MonoBehaviour:
   m_Script: {fileID: -317677761, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  falloffModel: 2
-  blastRadius: 18
+  falloffModel: 0
+  blastRadius: 4
   blastDamageCoefficient: 1
   blastProcCoefficient: 1
   blastAttackerFiltering: 0
   bonusBlastForce: {x: 0, y: 0, z: 0}
   canRejectForce: 1
   projectileHealthComponent: {fileID: 0}
-  explosionEffect: {fileID: 1365531750748189, guid: 27e7fd746c409f34395b53a521129dc5,
+  explosionEffect: {fileID: 5527643575821206775, guid: 9237907a7cf877f43b10002d342d3743,
     type: 3}
   explosionSoundString: 
-  fireChildren: 1
-  childrenProjectilePrefab: {fileID: 6055536033811015727, guid: bc6852547b8edc447890490fa5dfa2ff,
-    type: 3}
-  childrenCount: 6
-  childrenDamageCoefficient: 0.25
-  minAngleOffset: {x: -120, y: -120, z: -120}
-  maxAngleOffset: {x: 120, y: 120, z: 120}
+  fireChildren: 0
+  childrenProjectilePrefab: {fileID: 0}
+  childrenCount: 0
+  childrenDamageCoefficient: 0
+  minAngleOffset: {x: 0, y: 0, z: 0}
+  maxAngleOffset: {x: 0, y: 0, z: 0}
   minRollDegrees: 0
-  rangeRollDegrees: 360
+  rangeRollDegrees: 0
   minPitchDegrees: 0
-  rangePitchDegrees: 80
+  rangePitchDegrees: 0
   useLocalSpaceForChildren: 0
   applyDot: 0
   dotIndex: -1
@@ -355,7 +355,7 @@ MonoBehaviour:
   lifetimeExpiredSoundString: 
   lifetimeExpiredSound: {fileID: 0}
   offsetForLifetimeExpiredSound: 0
-  destroyOnEnemy: 0
+  destroyOnEnemy: 1
   destroyOnWorld: 1
   impactOnWorld: 0
   timerAfterImpact: 0
@@ -363,3 +363,17 @@ MonoBehaviour:
   lifetimeAfterImpact: 0
   lifetimeRandomOffset: 0
   transformSpace: 0
+--- !u!114 &474758547539477905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6055536033811015727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1184802484, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 1458198767516364851}
+  antiGravityCoefficient: -0.5

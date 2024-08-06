@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: matMagnetTether
+  m_Name: matShardRing
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
   m_ShaderKeywords: USE_CLOUDS
   m_LightmapFlags: 4
@@ -20,25 +20,25 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Cloud1Tex:
-        m_Texture: {fileID: 2800000, guid: 7d141824ada450747b17a50e01bef09a, type: 3}
+        m_Texture: {fileID: 2800000, guid: d439f0d4fa539a345bd0f9964157f9ae, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Cloud2Tex:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 0.73, y: 1}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: ed30efad3c2f4dd43b2b0b7cecf94bc8, type: 3}
+        m_Texture: {fileID: 2800000, guid: 8030de7ddc7c5ac4d919caa5f5586897, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RemapTex:
-        m_Texture: {fileID: 2800000, guid: 12f0f02e427f1c94282fc0d5e71184e0, type: 3}
+        m_Texture: {fileID: 2800000, guid: cd71ebfef392b514eb3e4b3d6af7825c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _AlphaBias: 0
-    - _AlphaBoost: 1.6
-    - _Boost: 2
+    - _AlphaBoost: 0.65
+    - _Boost: 3.03
     - _BumpScale: 1
     - _CalcTextureAlphaOn: 0
     - _CloudOffsetOn: 0
@@ -79,6 +79,6 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _CutoffScroll: {r: -3.61, g: 0, b: 0, a: 5}
+    - _CutoffScroll: {r: 22, g: 34.94, b: 8, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _TintColor: {r: 0.44891423, g: 0.9502121, b: 0.9811321, a: 1}
