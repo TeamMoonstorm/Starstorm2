@@ -10,7 +10,8 @@ using RoR2.ContentManagement;
 
 namespace SS2.Survivors
 {
-    public sealed class NemHuntress : SS2Survivor, IContentPackModifier
+#if DEBUG
+    public class NemHuntress : SS2Survivor, IContentPackModifier
     {
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acNemHuntress", SS2Bundle.Indev);
 
@@ -44,7 +45,7 @@ namespace SS2.Survivors
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return true;
+            return false;
         }
 
         private void CrosshairManager_UpdateCrosshair(On.RoR2.UI.CrosshairManager.orig_UpdateCrosshair orig, RoR2.UI.CrosshairManager self, CharacterBody characterBody, Vector3 crosshairWorldPosition, Camera uiCamera)
@@ -107,4 +108,5 @@ namespace SS2.Survivors
             });           
         }
     }
+#endif
 }
