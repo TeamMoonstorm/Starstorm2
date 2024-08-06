@@ -63,7 +63,9 @@ namespace EntityStates.Events
             if (this.chargeStopwatch <= 0 && ShouldCharge())
             {
                 this.chargeStopwatch += chargeInterval;
-                this.charge += CalculateCharge(chargeInterval);
+                float f = CalculateCharge(chargeInterval);
+                this.charge += f;
+                this.stormController.AddCharge(f);
             }
 
             if (charge >= 100f)

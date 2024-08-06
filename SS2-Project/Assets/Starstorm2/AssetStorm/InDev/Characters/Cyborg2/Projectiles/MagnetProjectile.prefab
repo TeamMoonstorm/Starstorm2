@@ -210,7 +210,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.8
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4503017066129919853
 MonoBehaviour:
@@ -262,7 +262,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifetime: 3
   lifetimeExpiredEffect: {fileID: 0}
-  desiredForwardSpeed: 80
+  desiredForwardSpeed: 70
   updateAfterFiring: 0
   enableVelocityOverLifetime: 0
   velocityOverLifetime:
@@ -338,10 +338,10 @@ MonoBehaviour:
   childrenDamageCoefficient: 0.25
   minAngleOffset: {x: -120, y: -120, z: -120}
   maxAngleOffset: {x: 120, y: 120, z: 120}
-  minRollDegrees: 0
-  rangeRollDegrees: 360
-  minPitchDegrees: 0
-  rangePitchDegrees: 80
+  minRollDegrees: -11
+  rangeRollDegrees: 22
+  minPitchDegrees: -11
+  rangePitchDegrees: 22
   useLocalSpaceForChildren: 0
   applyDot: 0
   dotIndex: -1
@@ -355,7 +355,7 @@ MonoBehaviour:
   lifetimeExpiredSoundString: 
   lifetimeExpiredSound: {fileID: 0}
   offsetForLifetimeExpiredSound: 0
-  destroyOnEnemy: 0
+  destroyOnEnemy: 1
   destroyOnWorld: 1
   impactOnWorld: 0
   timerAfterImpact: 0

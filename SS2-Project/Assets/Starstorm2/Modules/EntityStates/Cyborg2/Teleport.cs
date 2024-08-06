@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Networking;
 using SS2.Components;
+using SS2;
 using System.Collections.Generic;
 namespace EntityStates.Cyborg2
 {
@@ -96,7 +97,18 @@ namespace EntityStates.Cyborg2
                 storedVelocity.y = Mathf.Max(storedVelocity.y, 0);
                 //base.characterMotor.velocity = storedVelocity * exitVelocityCoefficient;
             }
-            if(this.teleporterOwnership)
+            Transform modelTransform = base.characterBody.modelLocator.modelTransform;
+            if (modelTransform)
+            {
+                TemporaryOverlay temporaryOverlay2 = modelTransform.gameObject.AddComponent<TemporaryOverlay>();
+                temporaryOverlay2.duration = 0.67f;
+                temporaryOverlay2.animateShaderAlpha = true;
+                temporaryOverlay2.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
+                temporaryOverlay2.destroyComponentOnEnd = true;
+                temporaryOverlay2.originalMaterial = SS2Assets.LoadAsset<Material>("matTeleportOverlay", SS2Bundle.Indev);
+                temporaryOverlay2.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
+            }
+            if (this.teleporterOwnership)
             {
                 this.teleporterOwnership.DoTeleport(initialPosition);
             }

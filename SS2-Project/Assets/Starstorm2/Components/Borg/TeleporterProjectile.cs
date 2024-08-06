@@ -61,10 +61,27 @@ namespace SS2.Components
                 {
 					if(hurtBoxes[i].healthComponent)
                     {
-						CharacterBody body = hurtBoxes[i].healthComponent.body;
-						Vector3 offset = body.footPosition - base.transform.position;
-						TeleportHelper.TeleportBody(body, startPosition + (offset*funnyNumber));
+                        CharacterBody body = hurtBoxes[i].healthComponent.body;
+                        Vector3 offset = body.footPosition - base.transform.position;
+                        Vector3 dest = startPosition + (offset * funnyNumber);
+                        EffectManager.SimpleEffect(SS2Assets.LoadAsset<GameObject>("TeleportDashEffect", SS2Bundle.Indev), body.corePosition, Quaternion.LookRotation(dest - body.corePosition), true);
+					
+						TeleportHelper.TeleportBody(body, dest);
 
+                        if(body.modelLocator && body.modelLocator.modelTransform)
+                        {
+                            Transform modelTransform = body.modelLocator.modelTransform;
+                            if (modelTransform)
+                            {
+                                TemporaryOverlay temporaryOverlay2 = modelTransform.gameObject.AddComponent<TemporaryOverlay>();
+                                temporaryOverlay2.duration = 0.67f;
+                                temporaryOverlay2.animateShaderAlpha = true;
+                                temporaryOverlay2.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
+                                temporaryOverlay2.destroyComponentOnEnd = true;
+                                temporaryOverlay2.originalMaterial = SS2Assets.LoadAsset<Material>("matTeleportOverlay", SS2Bundle.Indev);
+                                temporaryOverlay2.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
+                            }
+                        }
 					}
 						
                 }
