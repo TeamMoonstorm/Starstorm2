@@ -7,7 +7,7 @@ namespace SS2.Equipments
 {
     public class SeismicOscillator : SS2Equipment
     {
-        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acSeismicOscillator", SS2Bundle.Equipments);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acSeismicOscillator", SS2Bundle.Indev);
 
         public static float duration = 6;
         public static int totalTicks = 24;
