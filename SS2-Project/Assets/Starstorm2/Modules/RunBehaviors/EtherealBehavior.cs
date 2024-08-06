@@ -23,7 +23,7 @@ namespace SS2.Components
         public static GameObject shrinePrefab;
         public static GameObject portalPrefab;
 
-        public float etherealsCompleted = 0;
+        public int etherealsCompleted = 0;
         public static bool teleIsEthereal = false;
 
         public bool teleUpgraded;

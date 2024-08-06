@@ -5,6 +5,9 @@ using RoR2;
 using System;
 using R2API;
 using RoR2.UI;
+using EntityStates;
+using EntityStates.Events;
+using UnityEngine.Events;
 
 namespace SS2.Components
 {
@@ -24,6 +27,7 @@ namespace SS2.Components
         {
             // custom drop table? maybe?
             // souls soon.............
+
             StormController.dropTable = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<PickupDropTable>("RoR2/Base/Chest1/dtChest1.asset").WaitForCompletion();
             Stage.onServerStageBegin += OnServerStageBegin;
         }
@@ -78,7 +82,11 @@ namespace SS2.Components
         public IIntensityScaler[] intensityScalers;
 
         private int stormLevel;
+        public int MaxStormLevel { get; private set; }
+        public bool IsPermanent { get; private set; }
+
         private float levelPercentComplete;
+        private Run.FixedTimeStamp stormStartTime;
 
         private EntityStateMachine stateMachine;
 
@@ -106,9 +114,39 @@ namespace SS2.Components
             InstantiateEffect();
             this.stateMachine = base.GetComponent<EntityStateMachine>();
             this.SetEffectIntensity(this.effectIntensity);
-            if(shouldShowObjective)
-                ObjectivePanelController.collectObjectiveSources += StormObjective;           
+
+#if DEBUG
+            shouldShowObjective = true;
+#endif
+
+            stormStartTime = Run.FixedTimeStamp.now + UnityEngine.Random.Range(180, 360); // TODO: Event director that handles this. this fucking sux lol
+
+            DifficultyDef difficulty = DifficultyCatalog.GetDifficultyDef(Run.instance.selectedDifficulty);
+            MaxStormLevel = Mathf.FloorToInt(difficulty.scalingValue) + 1;
+            MaxStormLevel = Mathf.Clamp(MaxStormLevel, 2, 4); // drizzle 2, monsoon/typhoon+ 4
+
+            IsPermanent = difficulty.scalingValue >= Typhoon.sdd.scalingValue; // TODO: RunFlags. difficulties r a shit
+            if (shouldShowObjective)
+                ObjectivePanelController.collectObjectiveSources += StormObjective;
+         
         }
+             
+        private EntityState InstantiateInitialState()
+        {
+
+            return new Calm();
+        }
+        // TODO: Stage cooldown on skipping the initial "calm" level
+        public bool AttemptSkip(int consecutiveSkips = 0)
+        {
+            float chance = 0;
+            int etherealsCompleted = EtherealBehavior.instance.etherealsCompleted;
+            if (etherealsCompleted > 0)
+                chance = (25f + 10f * (etherealsCompleted - 1)) * Mathf.Pow(0.5f, consecutiveSkips);
+            bool doSkip = Util.CheckRoll(chance);
+            return Util.CheckRoll(chance);
+        }
+
         private void OnDestroy()
         {
             ObjectivePanelController.collectObjectiveSources -= StormObjective;
@@ -165,7 +203,7 @@ namespace SS2.Components
             }
             else
             {
-                this.stateMachine.SetNextState(new EntityStates.Events.Calm());
+                this.stateMachine.SetNextState(new Calm());
             }
 
             this.stormLevel = stormLevel;

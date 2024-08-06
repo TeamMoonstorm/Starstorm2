@@ -24,11 +24,19 @@ namespace EntityStates.Events
         public override void OnEnter()
         {
             base.OnEnter();
+            this.stormController.SetEffectIntensity(0);
+            if (stormController.AttemptSkip()) // TEMPORARY. FUUUUUUUUUCK
+            {
+                EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("EtherealStormWarning", SS2Bundle.Events), new EffectData { }, true);
+                this.outer.SetNextState(new Storm { stormLevel = 1, lerpDuration = 15f });
+                return;
+            }
+
 
             this.totalMultiplier = StormController.chargeRng.RangeFloat(1, 1 + chargeVariance);
             GlobalEventManager.onCharacterDeathGlobal += AddCharge;
 
-            this.stormController.SetEffectIntensity(0);
+            
         }
 
 

@@ -60,7 +60,7 @@ namespace SS2
             tier.Add(new RewardDef { green = 3, whiteCommand = 1 });           
             tier.Add(new RewardDef { greenOption = 2, whiteOption = 1 });
             tier.Add(new RewardDef { greenCommand = 1, white = 4 });
-            tier.Add(new RewardDef { white = 9 });
+            tier.Add(new RewardDef { white = 8 });
             tier.Add(new RewardDef { whiteCommand = 4 });
             RewardDef fire = new RewardDef();
             fire.AddPickups(RoR2Content.Items.IgniteOnKill, 3);

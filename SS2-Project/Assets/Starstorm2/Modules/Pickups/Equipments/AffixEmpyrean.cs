@@ -19,15 +19,8 @@ namespace SS2.Equipments
         public override void Initialize()
         {
             CreateBlacklist();
-            CreatePillarDecal();
             RoR2Application.onLoad += CreateBlacklist;
             IL.RoR2.CharacterBody.RecalculateStats += RecalculateStatsEmpyreanIL;
-        }
-
-        private void CreatePillarDecal()
-        {
-            GameObject pillarGhost = SS2Assets.LoadAsset<GameObject>("EtherealFirePillarGhost", SS2Bundle.Equipments);
-            Transform decal = pillarGhost.transform.Find("Scale/RuntimeDecal");
         }
         public override bool IsAvailable(ContentPack contentPack)
         {

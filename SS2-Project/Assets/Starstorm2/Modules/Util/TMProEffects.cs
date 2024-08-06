@@ -42,6 +42,7 @@ namespace SS2
             if (!component)
             {
                 component = self.messagesText.textComponent.gameObject.AddComponent<SS2TextEffects>();
+                component.textComponent = self.messagesText.textComponent; // TODO: TEST THIS idk if it works
             }
         }
 
