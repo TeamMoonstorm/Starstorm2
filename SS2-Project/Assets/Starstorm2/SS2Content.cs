@@ -679,6 +679,8 @@ namespace SS2
         public static class ItemTierDefs
         {
             public static ItemTierDef Sibylline;
+
+            //public static ItemTierDef Relic;
         }
     }
 }

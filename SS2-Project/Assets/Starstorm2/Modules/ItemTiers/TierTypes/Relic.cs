@@ -1,10 +1,8 @@
 ﻿using RoR2.ContentManagement;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace SS2.ItemTiers
 {
+#if DEBUG
     public class Relic : SS2ItemTier
     {
         public override SS2AssetRequest<ItemTierAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<ItemTierAssetCollection>("acRelic", SS2Bundle.Base);
@@ -16,7 +14,8 @@ namespace SS2.ItemTiers
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return true;
+            return false;
         }
     }
+#endif
 }
