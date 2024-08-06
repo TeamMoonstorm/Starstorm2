@@ -11,7 +11,7 @@ namespace Assets.Starstorm2.Modules.Pickups.Items.Tier2
 {
     public class Balloon : SS2Item
     {
-        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acBalloon", SS2Bundle.Items);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acBalloon", SS2Bundle.Indev);
 
         private const string TOKEN = "SS2_ITEM_BALLOON_DESC";
 
