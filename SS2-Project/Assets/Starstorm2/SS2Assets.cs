@@ -27,7 +27,7 @@ namespace SS2
         Chirr,
         NemCommando,
         NemMercenary,
-        Nuke,
+       // Nuke,
         Equipments,
         Items,
         Events,
@@ -49,7 +49,7 @@ namespace SS2
         private const string CHIRR = "ss2chirr";
         private const string NEMCOMMANDO = "ss2nemcommando";
         private const string NEMMERCENARY = "ss2nemmercenary";
-        private const string NUKE = "ss2nuke";
+        //private const string NUKE = "ss2nuke";
         private const string EQUIPS = "ss2equipments";
         private const string ITEMS = "ss2items";
         private const string EVENTS = "ss2events";
@@ -204,7 +204,7 @@ namespace SS2
                 case MONSTERS: commissionBundleEnum = SS2Bundle.Monsters; break;
                 case DEV: commissionBundleEnum = SS2Bundle.Indev; break;
                 case SHARED: commissionBundleEnum = SS2Bundle.Shared; break;
-                case NUKE: commissionBundleEnum = SS2Bundle.Nuke; break;
+               // case NUKE: commissionBundleEnum = SS2Bundle.Nuke; break;
                 //This path does not match any of the non scene bundles, could be a scene, we will mark these on only this ocassion as "Invalid".
                 default: commissionBundleEnum = SS2Bundle.Invalid; break;
             }
