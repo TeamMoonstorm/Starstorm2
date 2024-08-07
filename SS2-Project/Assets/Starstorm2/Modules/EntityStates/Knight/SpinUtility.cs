@@ -10,25 +10,24 @@ namespace EntityStates.Knight
         public static float swingTimeCoefficient = 1f;
         [FormatToken("SS2_KNIGHT_SPECIAL_SPIN_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float TokenModifier_dmgCoefficient => new SpinUtility().damageCoefficient;
-        public static GameObject buffWard;
         public static SkillDef buffedSkillRef;
-        public static float hopVelocity;
+        
         private bool hasSpun;
         private int _origLayer;
 
-
-        public static float airControl;
-        public static float upwardVelocity;
-        public static float forwardVelocity;
-        public static float minimumY;
-        public static float aimVelocity;
+        public float hopVelocity = 35;
+        public float airControl = 0.25f;
+        public float upwardVelocity = 5f;
+        public float forwardVelocity = 9f;
+        public float minimumY = 1f;
+        public float aimVelocity = 6f;
 
 
         public override void OnEnter()
         {
             base.OnEnter();
 
-            if (characterMotor) //Nasty fucking hack
+            if (characterMotor)
             {
                 _origLayer = characterMotor.capsuleCollider.gameObject.layer;
                 characterMotor.capsuleCollider.gameObject.layer = LayerIndex.fakeActor.intVal;

@@ -21,7 +21,7 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
         public override void OnEnter()
         {
             base.OnEnter();
-            if (isAuthority & NetworkServer.active)
+            if (NetworkServer.active)
             {
                 Vector3 position = inputBank.aimOrigin - (inputBank.aimDirection);
                 GameObject bannerObject = UnityEngine.Object.Instantiate(knightBannerWard, position, Quaternion.identity);

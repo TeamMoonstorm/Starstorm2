@@ -13,13 +13,28 @@ namespace EntityStates.Knight
         public static GameObject beamProjectile;
         public static SkillDef buffedSkillRef;
         public static float TokenModifier_dmgCoefficient => new SwingSword().damageCoefficient;
-        public int swingSide;
+        public int swingSide = 0;
+
+        public static float baseDurationBeforeInterruptable;
+        public static float comboFinisherBaseDurationBeforeInterruptable;
+        private float durationBeforeInterruptable;
+        public static float comboFinisherhitPauseDuration;
+
+        public static float comboFinisherDamageCoefficient;
+
+        private bool isComboFinisher => swingSide == 2;
 
         public override void OnEnter()
         {
             base.OnEnter();
-
             animator = GetModelAnimator();
+
+            if (isComboFinisher)
+            {
+                //swingEffectPrefab = comboFinisherSwingEffectPrefab;
+                hitPauseDuration = comboFinisherhitPauseDuration;
+                damageCoefficient = comboFinisherDamageCoefficient;
+            }
         }
 
         public override void PlayAnimation()
@@ -29,11 +44,11 @@ namespace EntityStates.Knight
             switch (swingSide)
             {
                 case 0:
-                    animationStateName = "SwingSword1";
+                    animationStateName = "SwingSword0";
                     swingEffectMuzzleString = "SwingRight";
                     break;
                 case 1:
-                    animationStateName = "SwingSword2";
+                    animationStateName = "SwingSword1";
                     swingEffectMuzzleString = "SwingLeft";
                     break;
                 case 2:
@@ -83,6 +98,10 @@ namespace EntityStates.Knight
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
+            if (!(base.fixedAge < durationBeforeInterruptable))
+            {
+                return InterruptPriority.Skill;
+            }
             return InterruptPriority.PrioritySkill;
         }
     }

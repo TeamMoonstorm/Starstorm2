@@ -18,7 +18,7 @@ public class BannerSpecial : BaseState
     {
         base.OnEnter();
 
-        if (isAuthority & NetworkServer.active)
+        if (NetworkServer.active)
         {
             Vector3 position = inputBank.aimOrigin - (inputBank.aimDirection);
             bannerObject = UnityEngine.Object.Instantiate(knightBannerWard, position, Quaternion.identity);

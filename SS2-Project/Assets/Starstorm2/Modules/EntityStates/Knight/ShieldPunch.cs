@@ -12,6 +12,13 @@ namespace EntityStates.Knight
         public static float TokenModifier_dmgCoefficient => new ShieldPunch().damageCoefficient;
         public int swingSide;
 
+        public float hopVelocity = 25;
+        public float airControl = 0.15f;
+        public float upwardVelocity = 1f;
+        public float forwardVelocity = 4f;
+        public float minimumY = 0.05f;
+        public float aimVelocity = 2f;
+
         public override void OnEnter()
         {
             base.OnEnter();
@@ -19,6 +26,25 @@ namespace EntityStates.Knight
             skillLocator.primary.UnsetSkillOverride(skillLocator.primary, Shield.shieldBashSkillDef, GenericSkill.SkillOverridePriority.Contextual);
 
             animator = GetModelAnimator();
+
+            Vector3 direction = GetAimRay().direction;
+
+            // Launch Knight where they are aiming
+            if (isAuthority)
+            {
+                characterBody.isSprinting = true;
+                direction.y = Mathf.Max(direction.y, minimumY);
+                Vector3 a = direction.normalized * aimVelocity * moveSpeedStat;
+                Vector3 b = Vector3.up * upwardVelocity;
+                Vector3 b2 = new Vector3(direction.x, 0f, direction.z).normalized * forwardVelocity;
+                characterMotor.Motor.ForceUnground();
+                characterMotor.velocity = a + b + b2;
+            }
+
+            if (!isGrounded)
+            {
+                SmallHop(characterMotor, hopVelocity);
+            }
         }
 
         public override void FixedUpdate()

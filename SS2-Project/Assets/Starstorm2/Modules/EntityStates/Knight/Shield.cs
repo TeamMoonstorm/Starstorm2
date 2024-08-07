@@ -70,6 +70,7 @@ namespace EntityStates.Knight
             if (inputBank.skill2.down)
             {
                 outer.SetNextState(new Shield());
+                characterBody.RemoveBuff(shieldBuff);
             } 
             else
             {
@@ -83,8 +84,10 @@ namespace EntityStates.Knight
             // If the player did not parry we need to unset the skill override
             if (!hasParried)
             {
-                skillLocator.primary.UnsetSkillOverride(skillLocator.primary, shieldBashSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+                //skillLocator.primary.UnsetSkillOverride(skillLocator.primary, shieldBashSkillDef, GenericSkill.SkillOverridePriority.Contextual);
             }
+
+            skillLocator.primary.UnsetSkillOverride(skillLocator.primary, shieldBashSkillDef, GenericSkill.SkillOverridePriority.Contextual);
 
             base.OnExit();
         }

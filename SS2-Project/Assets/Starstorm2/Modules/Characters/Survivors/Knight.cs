@@ -14,6 +14,10 @@ namespace SS2.Survivors
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acKnight", SS2Bundle.Indev);
         public static float reducedGravity = 0.12f;
 
+        public static DamageAPI.ModdedDamageType ExtendedStunDamageType { get; set; }
+
+        private static float stunDebuffDuration = 3f;
+
         public override void Initialize()
         {
             BuffDef buffKnightCharged = AssetCollection.FindAsset<BuffDef>("bdKnightCharged");
@@ -21,7 +25,7 @@ namespace SS2.Survivors
             BuffDef buffKnightSpecialPower = AssetCollection.FindAsset<BuffDef>("bdKnightSpecialPowerBuff");
             Material matSpecialPowerOverlay = AssetCollection.FindAsset<Material>("matKnightBuffOverlay");
 
-            CharacterBody.onBodyStartGlobal += KnightBodyStart;
+            RegisterKnightDamageTypes();
             ModifyPrefab();
             R2API.RecalculateStatsAPI.GetStatCoefficients += ModifyStats;
 
@@ -30,18 +34,27 @@ namespace SS2.Survivors
             BuffOverlays.AddBuffOverlay(buffKnightSpecialPower, matSpecialPowerOverlay);
         }
 
+        private void RegisterKnightDamageTypes()
+        {
+            ExtendedStunDamageType = R2API.DamageAPI.ReserveDamageType();
+            GlobalEventManager.onServerDamageDealt += ApplyExtendedStun;
+        }
+        private void ApplyExtendedStun(DamageReport obj)
+        {
+            var victimBody = obj.victimBody;
+            var damageInfo = obj.damageInfo;
+
+            if (DamageAPI.HasModdedDamageType(damageInfo, ExtendedStunDamageType))
+            {
+                victimBody.AddTimedBuffAuthority(SS2Content.Buffs.bdKnightStunAttack.buffIndex, stunDebuffDuration);
+            }
+        }
+
 
         public void ModifyPrefab()
         {
             var cb = CharacterPrefab.GetComponent<CharacterBody>();
             cb._defaultCrosshairPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/SimpleDotCrosshair.prefab").WaitForCompletion();
-        }
-
-        private void KnightBodyStart(CharacterBody body)
-        {
-            //// TODO: Are we even using fortified anymore?
-            //if (body.baseNameToken == "SS2_KNIGHT_BODY_NAME") // Every time one does an unecesary string comparasion, a developer dies -N
-            //    body.SetBuffCount(SS2Content.Buffs.bdFortified.buffIndex, 3);
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -66,15 +79,26 @@ namespace SS2.Survivors
 
             if (sender.HasBuff(SS2Content.Buffs.bdKnightSpecialPowerBuff))
             {
-                args.baseJumpPowerAdd += 0.3f;
-                args.baseMoveSpeedAdd += 0.2f;
-                args.jumpPowerMultAdd += 0.3f;
+                args.baseJumpPowerAdd += 1f;
+                args.baseMoveSpeedAdd += 0.3f;
+                args.jumpPowerMultAdd += 0.5f;
             }
 
             if (sender.HasBuff(SS2Content.Buffs.bdKnightSpecialSlowBuff))
             {
                 args.attackSpeedReductionMultAdd += 2;
                 args.moveSpeedReductionMultAdd += 2;
+            }
+
+            if (sender.HasBuff(SS2Content.Buffs.bdKnightStunAttack))
+            {
+                SetStateOnHurt setStateOnHurt = sender.GetComponent<SetStateOnHurt>();
+                
+                if (setStateOnHurt)
+                {
+                    setStateOnHurt.SetStun(3f);
+                    sender.RemoveOldestTimedBuff(SS2Content.Buffs.bdKnightStunAttack);
+                }
             }
         }
 
