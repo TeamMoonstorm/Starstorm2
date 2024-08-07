@@ -96,14 +96,16 @@ namespace SS2.Components
             GameObject director = GameObject.Find("Director");
             if (director != null)
             {
-                fastCombatDirector = director.GetComponents<CombatDirector>()[0];
+                if (director.GetComponents<CombatDirector>().Length > 0 && director.GetComponents<CombatDirector>()[0] != null)
+                    fastCombatDirector = director.GetComponents<CombatDirector>()[0];
                 //the first director spams his shit
-                slowCombatDirector = director.GetComponents<CombatDirector>()[1];
+                if (director.GetComponents<CombatDirector>().Length > 1 && director.GetComponents<CombatDirector>()[1] != null)
+                    slowCombatDirector = director.GetComponents<CombatDirector>()[1];
                 //the second director loves to build big guys 
-                if (!fastCombatDirector || !slowCombatDirector)
+                if (fastCombatDirector == null || slowCombatDirector == null)
                 {
-                    SS2Log.Fatal("No combat director found. Killing custom director.");
-                    Destroy(this);
+                    SS2Log.Info("No combat director found. Killing custom director.");
+                    Destroy(instance);
                 }
             }
         }
@@ -156,13 +158,16 @@ namespace SS2.Components
 
         public void ModifySpawn(SpawnCard.SpawnResult spawnResult)
         {
+            if (spawnResult.spawnedInstance == null || spawnResult.spawnRequest == null || spawnResult.spawnRequest.spawnCard == null)
+                return;
             CharacterMaster cm = spawnResult.spawnedInstance.GetComponent<CharacterMaster>();
-            if (!cm || !cm.bodyInstanceObject)
+            if (cm == null || cm.bodyInstanceObject == null)
                 return;
             CharacterBody cb = cm.bodyInstanceObject.GetComponent<CharacterBody>();
             if (cb == null)
                 return;
             //cardCosts.TryGetValue(cm.bodyPrefab, out float baseCost);
+
             float baseCost = spawnResult.spawnRequest.spawnCard.directorCreditCost;
             SS2Log.Debug(cm.name + " base cost: " + baseCost);
             float totalCost = baseCost;
@@ -273,7 +278,7 @@ namespace SS2.Components
             //inventory.GiveItem(SS2Content.Items.BoostMovespeed, 50);
             inventory.GiveItem(SS2Content.Items.BoostCooldowns, 70);
             inventory.GiveItem(RoR2Content.Items.BoostDamage, 100);
-            inventory.GiveItem(RoR2Content.Items.TeleportWhenOob); //REALLY DON'T LIKE THIS ONE. knocking enemies off the stage is a RIGHT. going to make a specific elite to replace this functionality.
+            inventory.GiveItem(RoR2Content.Items.TeleportWhenOob); 
             inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
             inventory.GiveItem(SS2Content.Items.AffixUltra);
 
@@ -321,7 +326,7 @@ namespace SS2.Components
             {
                 c.EmitDelegate<Func<Action<SpawnCard.SpawnResult>, Action<SpawnCard.SpawnResult>>>((ogMethod) =>
                 {
-                    if (!CustomEliteDirector.instance) return ogMethod;
+                    if (CustomEliteDirector.instance == null) return ogMethod;
                     return new Action<SpawnCard.SpawnResult>((spawnResult) =>
                     {
                         ogMethod(spawnResult);
