@@ -8,19 +8,27 @@ using UnityEngine;
 using MonoMod.Cil;
 using Mono.Cecil.Cil;
 using System.Linq;
+using MSU.Config;
+
 namespace SS2.Equipments
 {
     public sealed class AffixEmpyrean : SS2EliteEquipment
     {
         public override SS2AssetRequest<EliteAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<EliteAssetCollection>("acAffixEmpyrean", SS2Bundle.Equipments);
 
-        public static List<EliteDef> blacklistedEliteDefs = new List<EliteDef>();
+        public static List<EliteDef> whitelistedEliteDefs = new List<EliteDef>();
+
+        public static List<String> whitelistedEliteDefStrings = new List<String>();
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Enabled Elite types, separated by commas. WARNING: MAY CAUSE GAME TO FAIL TO LOAD IF MIS-CONFIGURED.      Default: \"EliteFireEquipment,EliteIceEquipment,EliteLightningEquipment,EliteHauntedEquipment,ElitePoisonEquipment,EliteEarthEquipment\"")]
+        public static string eliteDefEnabledStrings = "EliteFireEquipment,EliteIceEquipment,EliteLightningEquipment,EliteHauntedEquipment,ElitePoisonEquipment,EliteEarthEquipment";
+        public static void AddEliteToWhitelist(EliteDef eliteDef) => whitelistedEliteDefs.Add(eliteDef);
 
         public override void Initialize()
         {
-            CreateBlacklist();
+            CreateWhitelist();
             CreatePillarDecal();
-            RoR2Application.onLoad += CreateBlacklist;
+            //RoR2Application.onLoad += CreateWhitelist;
             IL.RoR2.CharacterBody.RecalculateStats += RecalculateStatsEmpyreanIL;
         }
 
@@ -91,11 +99,51 @@ namespace SS2.Equipments
         }
         #endregion
 
-        private static void CreateBlacklist()
+        private static void CreateWhitelist()
         {
-            AddEliteToBlacklist(RoR2Content.Elites.Lunar);
-            AddEliteToBlacklist(DLC1Content.Elites.Void);
+            SS2Log.Debug("empy whitelist being made");
+
+            string[] splitString = eliteDefEnabledStrings.Split(',');
+
+            SS2Log.Debug("empy split strings made");
+
+            whitelistedEliteDefStrings = new List<string>(splitString);
+
+            SS2Log.Debug("empy split strings in list");
+
+            foreach (string name in whitelistedEliteDefStrings)
+            {
+                SS2Log.Debug("looking for elite");
+                EliteDef ed = GetEliteDefFromString(name);
+                SS2Log.Debug("got ed from name");
+                if (ed != null)
+                {
+                    whitelistedEliteDefs.Add(ed);
+                    SS2Log.Debug("added " + ed.name + " to empy whitelist");
+                }
+            }
         }
+
+        public static EliteDef GetEliteDefFromString(String defString)
+        {
+            SS2Log.Debug("elite def from string");
+            foreach (EliteDef ed in EliteCatalog.eliteDefs)
+            {
+                if (ed.eliteEquipmentDef.name == defString)
+                {
+                    SS2Log.Debug("elite def from string found");
+                    return ed;
+                }
+                else
+                {
+                    SS2Log.Debug("elite def from string failed, should be retrying..");
+                }
+            }
+
+            SS2Log.Debug("Failed to find elite from string: " + defString);
+            return null;
+        }
+ 
 
         public override bool Execute(EquipmentSlot slot)
         {
@@ -109,8 +157,6 @@ namespace SS2.Equipments
         public override void OnEquipmentObtained(CharacterBody body)
         {
         }
-
-        public static void AddEliteToBlacklist(EliteDef eliteDef) => blacklistedEliteDefs.Add(eliteDef);
     }
 
     public sealed class AffixEmpyreanBehavior : BaseBuffBehaviour, IOnKilledServerReceiver
@@ -138,7 +184,7 @@ namespace SS2.Equipments
             foreach (EliteDef ed in EliteCatalog.eliteDefs)
             {
                 //shitty hardcoded case for blighted; add actual cross compat later!
-                if (ed.IsAvailable() && !AffixEmpyrean.blacklistedEliteDefs.Contains(ed) && !CharacterBody.HasBuff(ed.eliteEquipmentDef?.passiveBuffDef) && ed.modifierToken != "LIT_MODIFIER_BLIGHTED")
+                if (ed.IsAvailable() && AffixEmpyrean.whitelistedEliteDefs.Contains(ed) && !CharacterBody.HasBuff(ed.eliteEquipmentDef?.passiveBuffDef))
                     CharacterBody.AddBuff(ed.eliteEquipmentDef.passiveBuffDef);
             }
             if (setStateOnHurt)
