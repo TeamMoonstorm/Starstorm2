@@ -28,7 +28,7 @@ namespace EntityStates.Engi
         private float duration;
         private float fireTimer;
         private Transform modelTransform;
-        private List<HealthComponent> boostedTargets;
+        private float counter = 0;
         //MuzzleLeft
         //MuzzleRight
 
@@ -36,6 +36,7 @@ namespace EntityStates.Engi
         //public GameObject tracerEffectPrefab = FireBarrage.tracerEffectPrefab;
 
         public GameObject hitsparkPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/Hitspark1.prefab").WaitForCompletion();
+        public GameObject hitsparkPrefab2 = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/Railgunner/HitsparkRailgunnerPistol.prefab").WaitForCompletion();
         public GameObject laserPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Engi/LaserEngiTurret.prefab").WaitForCompletion();
 
         private GameObject leftLaserInstance;
@@ -59,7 +60,7 @@ namespace EntityStates.Engi
 
             Util.PlaySound("Play_engi_R_walkingTurret_laser_start", base.gameObject);
             fireTimer = 0;
-            boostedTargets = new List<HealthComponent>();
+            counter = 0;
             modelTransform = base.GetModelTransform();
             if (modelTransform)
             {
@@ -101,6 +102,7 @@ namespace EntityStates.Engi
             float rateAdjusted = 1f / fireRate;
             if (fireTimer > rateAdjusted)
             {
+                ++counter;
                 FireLasers(aimRay);
                 fireTimer = 0f;
             }
@@ -124,6 +126,11 @@ namespace EntityStates.Engi
                 return;
             }
 
+            if (counter >= 8)
+            {
+                counter = 0;
+            }
+            
             //if (base.fixedAge >= this.duration && base.isAuthority)
             //{
             //    this.outer.SetNextStateToMain();
@@ -157,7 +164,7 @@ namespace EntityStates.Engi
                 var bulletLeft = new BulletAttack {
                     owner = base.gameObject,
                     weapon = base.gameObject,
-                    origin = aimRay.origin,
+                    origin = muzzleLeft.position,
                     aimVector = aimRay.direction,
                     minSpread = 0f,
                     maxSpread = base.characterBody.spreadBloomAngle,
@@ -167,18 +174,18 @@ namespace EntityStates.Engi
                     force = 0,
                     falloffModel = BulletAttack.FalloffModel.None,
                     muzzleName = "MuzzleLeft",
-                    hitEffectPrefab = hitsparkPrefab,
+                    hitEffectPrefab = counter == 4 || counter == 8 ? hitsparkPrefab2 : hitsparkPrefab, // i would do % 4 but then the first hit procs it :(
                     isCrit = isCrit,
                     HitEffectNormal = false,
                     smartCollision = true,
                     maxDistance = maxDistance,
-                    radius = 0.7f
+                    radius = 0.6f
                 };
 
                 var bulletRight = new BulletAttack{
                     owner = base.gameObject,
                     weapon = base.gameObject,
-                    origin = aimRay.origin,
+                    origin = muzzleRight.position,
                     aimVector = aimRay.direction,
                     minSpread = 0f,
                     maxSpread = base.characterBody.spreadBloomAngle,
@@ -188,16 +195,29 @@ namespace EntityStates.Engi
                     force = 0,
                     falloffModel = BulletAttack.FalloffModel.None,
                     muzzleName = "MuzzleRight",
-                    hitEffectPrefab = hitsparkPrefab,
+                    hitEffectPrefab = counter == 4 || counter == 8 ? hitsparkPrefab2 : hitsparkPrefab,
                     isCrit = isCrit,
                     HitEffectNormal = false,
                     smartCollision = true,
                     maxDistance = maxDistance,
-                    radius = 0.7f
+                    radius = 0.6f
                 };
 
-                DamageAPI.AddModdedDamageType(bulletLeft, Engineer.EngiFocusDamage);
-                DamageAPI.AddModdedDamageType(bulletRight, Engineer.EngiFocusDamage);
+                if (counter == 5)
+                {
+                    DamageAPI.AddModdedDamageType(bulletLeft, Engineer.EngiFocusDamageProc);
+                    DamageAPI.AddModdedDamageType(bulletRight, Engineer.EngiFocusDamage);
+                }
+                else if(counter == 10)
+                {
+                    DamageAPI.AddModdedDamageType(bulletRight, Engineer.EngiFocusDamageProc);
+                    DamageAPI.AddModdedDamageType(bulletLeft, Engineer.EngiFocusDamage);
+                }
+                else
+                {
+                    DamageAPI.AddModdedDamageType(bulletLeft, Engineer.EngiFocusDamage);
+                    DamageAPI.AddModdedDamageType(bulletRight, Engineer.EngiFocusDamage);
+                }
 
 
                 bulletLeft.Fire();
