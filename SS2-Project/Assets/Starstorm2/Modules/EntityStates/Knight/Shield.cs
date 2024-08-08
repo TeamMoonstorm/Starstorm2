@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using RoR2;
 using RoR2.Skills;
+using SS2;
 
 namespace EntityStates.Knight
 {
@@ -18,6 +19,14 @@ namespace EntityStates.Knight
 
         private Animator animator;
 
+        private void SetShieldOverride()
+        {
+            if (!characterBody.HasBuff(SS2Content.Buffs.bdKnightShieldCooldown))
+            {
+                skillLocator.primary.SetSkillOverride(skillLocator.primary, shieldBashSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+            }
+        }
+
         public override void OnEnter()
         {
             base.OnEnter();
@@ -33,7 +42,7 @@ namespace EntityStates.Knight
             characterBody.AddBuff(shieldBuff);
 
             // This sets the shield bash skill
-            skillLocator.primary.SetSkillOverride(skillLocator.primary, shieldBashSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+            SetShieldOverride();
         }
 
         public override void FixedUpdate()

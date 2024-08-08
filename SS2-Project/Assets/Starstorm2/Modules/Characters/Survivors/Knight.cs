@@ -12,16 +12,49 @@ namespace SS2.Survivors
     public sealed class Knight : SS2Survivor
     {
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acKnight", SS2Bundle.Indev);
-        public static float reducedGravity = 0.12f;
+        
+        public SS2AssetRequest<AssetCollection> ExtraKnightAssets => SS2Assets.LoadAssetAsync<AssetCollection>("acKnightExtra", SS2Bundle.Indev);
+
+        public AssetCollection ExtraAssetCollection { get; set; }
+
+        public static float reducedGravity = 0.10f;
 
         public static DamageAPI.ModdedDamageType ExtendedStunDamageType { get; set; }
 
         private static float stunDebuffDuration = 3f;
 
+        public override IEnumerator LoadContentAsync()
+        {
+            SS2AssetRequest<SurvivorAssetCollection> request = AssetRequest;
+            SS2AssetRequest<AssetCollection> extraRequest = ExtraKnightAssets;
+
+            request.StartLoad();
+            while (!request.IsComplete)
+                yield return null;
+
+            AssetCollection = request.Asset;
+
+            CharacterPrefab = AssetCollection.bodyPrefab;
+            MasterPrefab = AssetCollection.masterPrefab;
+            SurvivorDef = AssetCollection.survivorDef;
+
+
+            extraRequest.StartLoad();
+            while (!extraRequest.IsComplete)
+                yield return null;
+
+            ExtraAssetCollection = extraRequest.Asset;
+
+        }
+
+        public override void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.AddContentFromAssetCollection(ExtraAssetCollection);
+            contentPack.AddContentFromAssetCollection(AssetCollection);
+        }
+
         public override void Initialize()
         {
-            BuffDef buffKnightCharged = AssetCollection.FindAsset<BuffDef>("bdKnightCharged");
-            Material matChargedOverlay = AssetCollection.FindAsset<Material>("matKnightSuperShield");
             BuffDef buffKnightSpecialPower = AssetCollection.FindAsset<BuffDef>("bdKnightSpecialPowerBuff");
             Material matSpecialPowerOverlay = AssetCollection.FindAsset<Material>("matKnightBuffOverlay");
 
@@ -30,7 +63,6 @@ namespace SS2.Survivors
             R2API.RecalculateStatsAPI.GetStatCoefficients += ModifyStats;
 
             // Add the buff material overlays to buffoverlay dict
-            BuffOverlays.AddBuffOverlay(buffKnightCharged, matChargedOverlay);
             BuffOverlays.AddBuffOverlay(buffKnightSpecialPower, matSpecialPowerOverlay);
         }
 

@@ -35,6 +35,8 @@ namespace EntityStates.Knight
                 hitPauseDuration = comboFinisherhitPauseDuration;
                 damageCoefficient = comboFinisherDamageCoefficient;
             }
+
+            durationBeforeInterruptable = (isComboFinisher ? (comboFinisherBaseDurationBeforeInterruptable / attackSpeedStat) : (baseDurationBeforeInterruptable / attackSpeedStat));
         }
 
         public override void PlayAnimation()

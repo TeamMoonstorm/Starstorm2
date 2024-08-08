@@ -52,6 +52,8 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
                 primarySkill.UnsetSkillOverride(gameObject, SwingSword.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
                 utilitySkill.UnsetSkillOverride(gameObject, SpinUtility.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
                 specialSkill.UnsetSkillOverride(gameObject, BannerSpecial.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+
+                specialSkill.DeductStock(1);
             }
 
             outer.SetNextStateToMain();

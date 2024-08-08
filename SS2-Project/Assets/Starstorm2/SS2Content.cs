@@ -594,9 +594,7 @@ namespace SS2
 
             public static BuffDef bdKnightStunAttack;
 
-            public static BuffDef bdFortified;
-
-            public static BuffDef bdKnightCharged;
+            public static BuffDef bdKnightShieldCooldown;
 
             public static BuffDef bdLampBuff;
 

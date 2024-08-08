@@ -12,38 +12,40 @@ namespace EntityStates.Knight
         public static float TokenModifier_dmgCoefficient => new ShieldPunch().damageCoefficient;
         public int swingSide;
 
-        public float hopVelocity = 25;
+        public float hopVelocity = 10;
         public float airControl = 0.15f;
-        public float upwardVelocity = 1f;
-        public float forwardVelocity = 4f;
+        public float upwardVelocity = 0.2f;
+        public float forwardVelocity = 2f;
         public float minimumY = 0.05f;
-        public float aimVelocity = 2f;
+        public float aimVelocity = 1f;
 
         public override void OnEnter()
         {
             base.OnEnter();
 
-            skillLocator.primary.UnsetSkillOverride(skillLocator.primary, Shield.shieldBashSkillDef, GenericSkill.SkillOverridePriority.Contextual);
-
-            animator = GetModelAnimator();
-
-            Vector3 direction = GetAimRay().direction;
-
-            // Launch Knight where they are aiming
-            if (isAuthority)
+            if (!characterBody.HasBuff(SS2Content.Buffs.bdKnightShieldCooldown))
             {
-                characterBody.isSprinting = true;
-                direction.y = Mathf.Max(direction.y, minimumY);
-                Vector3 a = direction.normalized * aimVelocity * moveSpeedStat;
-                Vector3 b = Vector3.up * upwardVelocity;
-                Vector3 b2 = new Vector3(direction.x, 0f, direction.z).normalized * forwardVelocity;
-                characterMotor.Motor.ForceUnground();
-                characterMotor.velocity = a + b + b2;
-            }
+                characterBody.AddTimedBuff(SS2Content.Buffs.bdKnightShieldCooldown, 5f);
+                animator = GetModelAnimator();
 
-            if (!isGrounded)
-            {
-                SmallHop(characterMotor, hopVelocity);
+                Vector3 direction = GetAimRay().direction;
+
+                // Launch Knight where they are aiming
+                if (isAuthority)
+                {
+                    characterBody.isSprinting = true;
+                    direction.y = Mathf.Max(direction.y, minimumY);
+                    Vector3 a = direction.normalized * aimVelocity * moveSpeedStat;
+                    Vector3 b = Vector3.up * upwardVelocity;
+                    Vector3 b2 = new Vector3(direction.x, 0f, direction.z).normalized * forwardVelocity;
+                    characterMotor.Motor.ForceUnground();
+                    characterMotor.velocity = a + b + b2;
+                }
+
+                if (!isGrounded)
+                {
+                    SmallHop(characterMotor, hopVelocity);
+                }
             }
         }
 
@@ -59,6 +61,7 @@ namespace EntityStates.Knight
 
         public override void OnExit()
         {
+            skillLocator.primary.UnsetSkillOverride(skillLocator.primary, Shield.shieldBashSkillDef, GenericSkill.SkillOverridePriority.Contextual);
             base.OnExit();
         }
 

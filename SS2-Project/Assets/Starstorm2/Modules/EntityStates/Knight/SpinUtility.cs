@@ -17,10 +17,10 @@ namespace EntityStates.Knight
 
         public float hopVelocity = 35;
         public float airControl = 0.25f;
-        public float upwardVelocity = 5f;
-        public float forwardVelocity = 9f;
-        public float minimumY = 1f;
-        public float aimVelocity = 6f;
+        public float upwardVelocity = 4f;
+        public float forwardVelocity = 8f;
+        public float minimumY = 0.3f;
+        public float aimVelocity = 1f;
 
 
         public override void OnEnter()
