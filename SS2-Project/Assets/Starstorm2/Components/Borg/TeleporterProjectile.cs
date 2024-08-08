@@ -64,6 +64,10 @@ namespace SS2.Components
                         CharacterBody body = hurtBoxes[i].healthComponent.body;
                         Vector3 offset = body.footPosition - base.transform.position;
                         Vector3 dest = startPosition + (offset * funnyNumber);
+                        if(Physics.Raycast(startPosition, offset.normalized, out RaycastHit hit, offset.magnitude * funnyNumber, LayerIndex.world.mask))
+                        {
+                            dest = hit.point;
+                        }
                         EffectManager.SimpleEffect(SS2Assets.LoadAsset<GameObject>("TeleportDashEffect", SS2Bundle.Indev), body.corePosition, Quaternion.LookRotation(dest - body.corePosition), true);
 					
 						TeleportHelper.TeleportBody(body, dest);

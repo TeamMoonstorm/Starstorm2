@@ -115,6 +115,7 @@ namespace SS2.Survivors
             }
         }
 
+
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
@@ -171,6 +172,7 @@ namespace SS2.Survivors
                 explosionRequests.Enqueue(new ExplosionRequest
                 {
                     target = body.mainHurtBox,
+                    initialPosition = body.corePosition,
                     attacker = attackerBody.gameObject,
                     damageTotal = 3f * attackerBody.damage,
                     crit = damageInfo.crit,

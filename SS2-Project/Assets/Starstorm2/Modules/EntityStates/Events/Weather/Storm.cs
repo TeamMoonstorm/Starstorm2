@@ -56,7 +56,7 @@ namespace EntityStates.Events
             this.stormController.StartLerp(stormLevel, lerpDuration);
 
 
-            isPermanent = stormController.IsPermanent;
+            isPermanent = stormController.IsPermanent && this.stormLevel == stormController.MaxStormLevel;
 
             if (NetworkServer.active)
             {
@@ -88,6 +88,7 @@ namespace EntityStates.Events
             int extraLevels = this.stormLevel - eliteLevel;
             if (Util.CheckRoll(eliteChance * extraLevels * eliteChancePerExtraLevelCoefficient))
             {
+                eliteChance /= 2f;
                 CreateStormElite(masterObject);
             }
         }
@@ -154,7 +155,7 @@ namespace EntityStates.Events
         {
             bool shouldCharge = !TeleporterInteraction.instance;
             shouldCharge |= TeleporterInteraction.instance && TeleporterInteraction.instance.isIdle;
-            shouldCharge |= this.stormLevel < this.stormController.MaxStormLevel;
+            shouldCharge &= this.stormLevel < this.stormController.MaxStormLevel;
             return shouldCharge;
         }
 
