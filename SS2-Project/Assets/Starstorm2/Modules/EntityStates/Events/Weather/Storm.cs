@@ -85,7 +85,7 @@ namespace EntityStates.Events
 
         private void ModifySpawnedMasters(GameObject masterObject)
         {
-            int extraLevels = this.stormLevel - eliteLevel;
+            int extraLevels = this.stormLevel - eliteLevel + 1;
             if (Util.CheckRoll(eliteChance * extraLevels * eliteChancePerExtraLevelCoefficient))
             {
                 eliteChance /= 2f;
