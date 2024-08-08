@@ -19,6 +19,39 @@ namespace EntityStates.Knight
 
         private Animator animator;
 
+        private bool useAltCamera = false;
+        public CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
+
+        private void CameraSwap()
+        {
+            if (useAltCamera)
+            {
+                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 0.2f);
+
+                CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
+                {
+                    cameraParamsData = SS2.Survivors.Knight.altCameraParams,
+                    priority = 0f
+                };
+
+                camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0.2f);
+            }
+            else
+            {
+                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 0.2f);
+
+                CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
+                {
+                    cameraParamsData = SS2.Survivors.Knight.chargeCameraParams,
+                    priority = 0f
+                };
+
+                camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0.2f);
+            }
+        }
+
+
+
         private void SetShieldOverride()
         {
             if (!characterBody.HasBuff(SS2Content.Buffs.bdKnightShieldCooldown))
@@ -43,6 +76,19 @@ namespace EntityStates.Knight
 
             // This sets the shield bash skill
             SetShieldOverride();
+
+            CameraSwap();
+        }
+
+        public override void Update()
+        {
+            base.Update();
+
+            if (Input.GetKeyDown(KeyCode.V) && isAuthority)
+            {
+                useAltCamera = !useAltCamera;
+                CameraSwap();
+            }
         }
 
         public override void FixedUpdate()
@@ -75,6 +121,10 @@ namespace EntityStates.Knight
 
         public override void OnExit()
         {
+            if (cameraTargetParams)
+            {
+                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 0.7f);
+            }
 
             if (inputBank.skill2.down)
             {

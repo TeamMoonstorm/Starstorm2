@@ -12,11 +12,11 @@ namespace EntityStates.Knight
         public static float TokenModifier_dmgCoefficient => new ShieldPunch().damageCoefficient;
         public int swingSide;
 
-        public float hopVelocity = 10;
-        public float airControl = 0.15f;
-        public float upwardVelocity = 0.2f;
-        public float forwardVelocity = 2f;
-        public float minimumY = 0.05f;
+        public float hopVelocity = 12.5f;
+        public float airControl = 0.30f;
+        public float upwardVelocity = 0.5f;
+        public float forwardVelocity = 4f;
+        public float minimumY = 0.10f;
         public float aimVelocity = 1f;
 
         public override void OnEnter()
@@ -25,7 +25,7 @@ namespace EntityStates.Knight
 
             if (!characterBody.HasBuff(SS2Content.Buffs.bdKnightShieldCooldown))
             {
-                characterBody.AddTimedBuff(SS2Content.Buffs.bdKnightShieldCooldown, 5f);
+                characterBody.AddTimedBuff(SS2Content.Buffs.bdKnightShieldCooldown, 3f);
                 animator = GetModelAnimator();
 
                 Vector3 direction = GetAimRay().direction;
@@ -42,16 +42,16 @@ namespace EntityStates.Knight
                     characterMotor.velocity = a + b + b2;
                 }
 
-                if (!isGrounded)
-                {
-                    SmallHop(characterMotor, hopVelocity);
-                }
+                
+                SmallHop(characterMotor, hopVelocity);
+               
             }
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+            if (base.cameraTargetParams) base.cameraTargetParams.fovOverride = Mathf.Lerp(SS2.Survivors.Knight.dodgeFOV, 60f, base.fixedAge / duration);
         }
 
         public override void PlayAnimation()

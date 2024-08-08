@@ -30,6 +30,26 @@ public class BannerSpecial : BaseState
             slowBuffWardInstance.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
             slowBuffWardInstance.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(bannerObject);
         }
+
+        if (base.isAuthority)
+        {
+            new BlastAttack
+            {
+                attacker = base.gameObject,
+                baseDamage = damageStat,
+                baseForce = 10f,
+                bonusForce = Vector3.up, 
+                crit = false,
+                damageType = DamageType.Generic,
+                falloffModel = BlastAttack.FalloffModel.Linear,
+                procCoefficient = 0.1f, 
+                radius = 3f,
+                position = base.characterBody.footPosition,
+                attackerFiltering = AttackerFiltering.NeverHitSelf,
+                impactEffect = EffectCatalog.FindEffectIndexFromPrefab(SS2.Survivors.Knight.KnightImpactEffect),
+                teamIndex = base.teamComponent.teamIndex,
+            }.Fire();
+        }
     }
 
     public override void FixedUpdate()

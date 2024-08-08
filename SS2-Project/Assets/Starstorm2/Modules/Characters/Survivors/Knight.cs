@@ -15,6 +15,32 @@ namespace SS2.Survivors
         
         public SS2AssetRequest<AssetCollection> ExtraKnightAssets => SS2Assets.LoadAssetAsync<AssetCollection>("acKnightExtra", SS2Bundle.Indev);
 
+        public static GameObject KnightImpactEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/Bandit2SmokeBomb.prefab").WaitForCompletion();
+
+        public static float dodgeFOV = EntityStates.Commando.DodgeState.dodgeFOV;
+
+        public static Vector3 chargeCameraPos = new Vector3(1.2f, -0.65f, -6.1f);
+        public static Vector3 altCameraPos = new Vector3(-1.2f, -0.65f, -6.1f);
+
+        
+        public static CharacterCameraParamsData chargeCameraParams = new CharacterCameraParamsData
+        {
+            maxPitch = 85f,
+            minPitch = -85f,
+            pivotVerticalOffset = 1f,
+            idealLocalCameraPos = chargeCameraPos,
+            wallCushion = 0.1f,
+        };
+
+        public static CharacterCameraParamsData altCameraParams = new CharacterCameraParamsData
+        {
+            maxPitch = 85f,
+            minPitch = -85f,
+            pivotVerticalOffset = 1f,
+            idealLocalCameraPos = altCameraPos,
+            wallCushion = 0.1f,
+        };
+
         public AssetCollection ExtraAssetCollection { get; set; }
 
         public static float reducedGravity = 0.10f;
@@ -105,7 +131,7 @@ namespace SS2.Survivors
 
             if (sender.HasBuff(SS2Content.Buffs.bdShield))
             {
-                args.armorAdd += 100f;
+                args.armorAdd += 200f;
                 args.moveSpeedReductionMultAdd += 0.6f;
             }
 
@@ -114,6 +140,9 @@ namespace SS2.Survivors
                 args.baseJumpPowerAdd += 1f;
                 args.baseMoveSpeedAdd += 0.3f;
                 args.jumpPowerMultAdd += 0.5f;
+                args.damageMultAdd += 0.4f;
+                args.armorAdd += 100f;
+                args.baseRegenAdd += 3f;
             }
 
             if (sender.HasBuff(SS2Content.Buffs.bdKnightSpecialSlowBuff))

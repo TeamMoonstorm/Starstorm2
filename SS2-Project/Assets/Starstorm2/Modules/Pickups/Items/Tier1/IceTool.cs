@@ -24,41 +24,12 @@ namespace SS2.Items
 
         public class IceToolBodyBehavior : BaseItemBodyBehavior
         {
-            [ItemDefAssociation(useOnServer = true, useOnClient = true)]
-            public static ItemDef GetItemDef() => SS2Content.Items.IceTool;
-
-            int jumpTimes = 0;
-
-
-            private void ResetJumps(ref CharacterMotor.HitGroundInfo hitGroundInfo)
-            {
-                jumpTimes = 0;
-            }
-
-            private void Start()
-            {
-                if (NetworkServer.active)
-                    body.characterMotor.onHitGroundServer += ResetJumps;
-                else
-                    body.characterMotor.onHitGroundAuthority += ResetJumps;
-            }
-
-            private bool canStillJump
-            {
-                get
-                {
-                    return jumpTimes < stack;
-                }
-            }
-
-
             private void Update()
             {
                 if (this.body && this.body.hasAuthority && this.body.inputBank && this.body.inputBank.jump.justPressed)
                 {
-                    if (this.canWallJump && this.canStillJump)
+                    if (this.canWallJump)
                     {
-                        jumpTimes++;
                         this.Activate();
                     }
                 }
@@ -104,7 +75,7 @@ namespace SS2.Items
                     {
                         float horizontalBonus = 1f;
                         float verticalBonus = 1f;
-                        GenericCharacterMain.ApplyJumpVelocity(this.body.characterMotor, this.body, horizontalBonus, verticalBonus, false);
+                        EntityStates.GenericCharacterMain.ApplyJumpVelocity(this.body.characterMotor, this.body, horizontalBonus, verticalBonus, false);
 
                         if (this.hasModelAnimator)
                         {
