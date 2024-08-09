@@ -7,6 +7,8 @@ using RoR2.ContentManagement;
 using R2API;
 using EntityStates;
 using System;
+using UnityEngine.Networking;
+
 namespace SS2.Survivors
 {
     public sealed class Knight : SS2Survivor
