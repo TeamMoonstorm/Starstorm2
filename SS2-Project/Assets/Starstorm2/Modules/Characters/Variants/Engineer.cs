@@ -22,8 +22,16 @@ namespace SS2.Survivors
 
         public override void Initialize()
         {
-            _buffDefEngiFocused = survivorAssetCollection.FindAsset<BuffDef>("bdEngiFocused");
-
+            //_buffDefEngiFocused = survivorAssetCollection.FindAsset<BuffDef>("bdEngiFocused");
+            Debug.Log("graaa can stack " + SS2Content.Buffs.bdEngiFocused);
+            try
+            {
+                Debug.Log("graaa can stack " + SS2Content.Buffs.bdEngiFocused.canStack);
+            }
+            catch(Exception e) 
+            {
+                Debug.Log("what the fuck " + e);
+            }
             SkillDef sdLaserFocus = survivorAssetCollection.FindAsset<SkillDef>("sdLaserFocus");
 
             GameObject engiBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Engi/EngiBody.prefab").WaitForCompletion();
@@ -54,6 +62,7 @@ namespace SS2.Survivors
             {
                 int count = self.body.GetBuffCount(SS2Content.Buffs.bdEngiFocused);
                 Debug.Log("count " + count);
+                //Debug.Log("graaa can stack " + _buffDefEngiFocused.canStack + " |" + SS2Content.Buffs.bdEngiFocused.canStack);
                 if (proc && count < 5)
                 {
                     Debug.Log("adding buff ");
