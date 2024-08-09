@@ -16,11 +16,13 @@ namespace SS2.Survivors
         public SS2AssetRequest<AssetCollection> ExtraKnightAssets => SS2Assets.LoadAssetAsync<AssetCollection>("acKnightExtra", SS2Bundle.Indev);
 
         public static GameObject KnightImpactEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/Bandit2SmokeBomb.prefab").WaitForCompletion();
+        public static GameObject KnightCrosshair = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/SimpleDotCrosshair.prefab").WaitForCompletion();
+        public static GameObject KnightDroppod = Resources.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod");
 
         public static float dodgeFOV = EntityStates.Commando.DodgeState.dodgeFOV;
 
-        public static Vector3 chargeCameraPos = new Vector3(1.2f, -0.65f, -6.1f);
-        public static Vector3 altCameraPos = new Vector3(-1.2f, -0.65f, -6.1f);
+        public static Vector3 chargeCameraPos = new Vector3(1.2f, -0.25f, -6.1f);
+        public static Vector3 altCameraPos = new Vector3(-1.2f, -0.25f, -6.1f);
 
         
         public static CharacterCameraParamsData chargeCameraParams = new CharacterCameraParamsData
@@ -112,7 +114,8 @@ namespace SS2.Survivors
         public void ModifyPrefab()
         {
             var cb = CharacterPrefab.GetComponent<CharacterBody>();
-            cb._defaultCrosshairPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/SimpleDotCrosshair.prefab").WaitForCompletion();
+            cb._defaultCrosshairPrefab = KnightCrosshair;
+            cb.preferredPodPrefab = KnightDroppod;
         }
 
         public override bool IsAvailable(ContentPack contentPack)

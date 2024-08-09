@@ -1093,7 +1093,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves:
-      - name: Primary.Hitbox
+      - name: Util.Hitbox
         curve:
           serializedVersion: 2
           curve:
@@ -1103,6 +1103,15 @@ ModelImporter:
             inSlope: Infinity
             outSlope: Infinity
             tangentMode: 103
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 0.047685638
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
             weightedMode: 0
             inWeight: 0
             outWeight: 0
@@ -1126,7 +1135,7 @@ ModelImporter:
             outWeight: 0
           - serializedVersion: 3
             time: 0.71631944
-            value: 0
+            value: 1
             inSlope: 0
             outSlope: 0
             tangentMode: 0
@@ -1858,8 +1867,8 @@ ModelImporter:
             inWeight: 0
             outWeight: 0
           - serializedVersion: 3
-            time: 0.19491525
-            value: 0
+            time: 0.19660898
+            value: 1
             inSlope: Infinity
             outSlope: Infinity
             tangentMode: 103

@@ -12,11 +12,11 @@ namespace EntityStates.Knight
         public static float TokenModifier_dmgCoefficient => new ShieldPunch().damageCoefficient;
         public int swingSide;
 
-        public float hopVelocity = 12.5f;
+        public float hopVelocity = 15f;
         public float airControl = 0.30f;
         public float upwardVelocity = 0.5f;
-        public float forwardVelocity = 4f;
-        public float minimumY = 0.10f;
+        public float forwardVelocity = 15f;
+        public float minimumY = 0.05f;
         public float aimVelocity = 1f;
 
         public override void OnEnter()
@@ -25,7 +25,7 @@ namespace EntityStates.Knight
 
             if (!characterBody.HasBuff(SS2Content.Buffs.bdKnightShieldCooldown))
             {
-                characterBody.AddTimedBuff(SS2Content.Buffs.bdKnightShieldCooldown, 3f);
+                characterBody.AddTimedBuff(SS2Content.Buffs.bdKnightShieldCooldown, 1f);
                 animator = GetModelAnimator();
 
                 Vector3 direction = GetAimRay().direction;
@@ -40,11 +40,8 @@ namespace EntityStates.Knight
                     Vector3 b2 = new Vector3(direction.x, 0f, direction.z).normalized * forwardVelocity;
                     characterMotor.Motor.ForceUnground();
                     characterMotor.velocity = a + b + b2;
+                    SmallHop(characterMotor, hopVelocity);
                 }
-
-                
-                SmallHop(characterMotor, hopVelocity);
-               
             }
         }
 

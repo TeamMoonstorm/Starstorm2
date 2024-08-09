@@ -55,7 +55,7 @@ namespace EntityStates.Knight
                     break;
                 case 2:
                     animationStateName = "SwingSword3";
-                    swingEffectMuzzleString = "SwingCenter";
+                    swingEffectMuzzleString = "SwingLeft";
                     break;
                 default:
                     animationStateName = "SwingSword0";

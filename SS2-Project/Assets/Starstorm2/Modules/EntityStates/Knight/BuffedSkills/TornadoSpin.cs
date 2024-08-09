@@ -17,10 +17,9 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
         public static GameObject beamProjectile;
         public static SkillDef originalSkillRef;
 
-        private bool hasSpun;
         private int _origLayer;
 
-        public float hopVelocity = new SpinUtility().hopVelocity + 10f;
+        public float hopVelocity = new SpinUtility().hopVelocity;
         public float airControl = new SpinUtility().airControl + 1f;
         public float upwardVelocity = new SpinUtility().upwardVelocity + 1f;
         public float forwardVelocity = new SpinUtility().forwardVelocity + 1f;
@@ -36,8 +35,6 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
                 characterMotor.capsuleCollider.gameObject.layer = LayerIndex.fakeActor.intVal;
                 characterMotor.Motor.RebuildCollidableLayers();
             }
-
-            hasSpun = false;
 
             characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
             animator = GetModelAnimator();
@@ -55,6 +52,11 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
                 Vector3 val4 = val3.normalized * forwardVelocity;
                 base.characterMotor.Motor.ForceUnground();
                 base.characterMotor.velocity = val + val2 + val4;
+            }
+
+            if (!isGrounded)
+            {
+                SmallHop(characterMotor, hopVelocity);
             }
         }
 
