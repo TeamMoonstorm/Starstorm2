@@ -10,13 +10,15 @@ using System.Linq;
 using UnityEngine.Events;
 namespace EntityStates.Events
 {
+    // being lazy. should be StormX : Storm and use entitystateconfigs
     public class Storm : GenericWeatherState
     {
         private static float chargeInterval = 10f;
         private static float chargeVariance = 0.66f;
         private static float chargeFromKill = 0.5f;
         private static float effectLerpDuration = 5f;
-
+        private static SerializableEntityStateType textState = new SerializableEntityStateType(typeof(StormController.EtherealFadeIn));
+        private static Color textColor = Color.gray;       
         private static int bossEliteLevel = 4;
         private static int eliteLevel = 3;
         private static float eliteChancePerExtraLevelCoefficient = 2f;
@@ -39,20 +41,21 @@ namespace EntityStates.Events
 
 
             bool skip = stormController.AttemptSkip();
-            Color color = Color.gray;
-            if(skip)
-            {
-                color = Color.green; // TEMPORARY. i just need to work on something else rn
-                this.stormLevel++;
-                stormController.OnStormLevelCompleted(); ///////////////////////////////////////////////////////////////////
-                EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("EtherealStormWarning", SS2Bundle.Events), new EffectData { }, true);
-            }
-            GameplayEventTextController.Instance.EnqueueNewTextRequest(new GameplayEventTextController.EventTextRequest
+            GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
             {
                 eventToken = "ermmmm..... storm " + stormLevel,
-                eventColor = color,
+                eventColor = textColor,
                 textDuration = 6,
-            });
+            };
+            if (skip)
+            {              
+                this.stormLevel++;             
+                stormController.OnStormLevelCompleted(); /////////////////////////////////////////////////////////////////// lmao
+                request.eventToken = "ermmmm..... storm " + stormLevel;
+                request.customTextState = textState;
+                request.textDuration = 2;
+            }
+            GameplayEventTextController.Instance.EnqueueNewTextRequest(request);
             this.stormController.StartLerp(stormLevel, lerpDuration);
 
 
@@ -146,6 +149,7 @@ namespace EntityStates.Events
 
             if (!isPermanent && charge >= 100f)
             {
+                this.stormController.OnStormLevelCompleted();
                 outer.SetNextState(new Storm { stormLevel = stormLevel + 1, lerpDuration = 8f });
                 return;
             }               

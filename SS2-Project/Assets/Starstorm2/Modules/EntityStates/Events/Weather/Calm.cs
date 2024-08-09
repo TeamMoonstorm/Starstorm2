@@ -27,7 +27,6 @@ namespace EntityStates.Events
             this.stormController.SetEffectIntensity(0);
             if (stormController.AttemptSkip()) // TEMPORARY. FUUUUUUUUUCK
             {
-                EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("EtherealStormWarning", SS2Bundle.Events), new EffectData { }, true);
                 this.outer.SetNextState(new Storm { stormLevel = 1, lerpDuration = 15f });
                 return;
             }
@@ -70,6 +69,7 @@ namespace EntityStates.Events
 
             if (charge >= 100f)
             {
+                this.stormController.OnStormLevelCompleted();
                 outer.SetNextState(new Storm { stormLevel = 1, lerpDuration = 15f });
                 return;
             }

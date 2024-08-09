@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace RoR2
+namespace SS2
 {
 	public class ApplyRandomForceOnStart : MonoBehaviour
 	{

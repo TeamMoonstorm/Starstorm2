@@ -8,7 +8,7 @@ using RoR2.UI;
 using EntityStates;
 using EntityStates.Events;
 using UnityEngine.Events;
-
+using static MSU.GameplayEventTextController;
 namespace SS2.Components
 {
     public class StormController : NetworkBehaviour
@@ -20,6 +20,7 @@ namespace SS2.Components
         public static readonly Xoroshiro128Plus treasureRng = new Xoroshiro128Plus(0UL);
         public static PickupDropTable dropTable;
         public static bool shouldShowObjective = false; // weather radio? config setting?
+        private static Color etherealTextColor = new Color(.204f, .921f, .561f);
 
         [SystemInitializer]
         //[RuntimeInitializeOnLoadMethod] // IDK WHY THIS DOESNT WORK
@@ -256,6 +257,96 @@ namespace SS2.Components
             public override bool IsDirty()
             {
                 return true;
+            }
+        }
+
+        public class EtherealFadeIn : EventTextState
+        {
+            public override void OnEnter()
+            {
+                base.OnEnter();
+                Juice.destroyOnEndOfTransition = false;
+                Juice.transitionDuration = duration;
+                Juice.TransitionAlphaFadeIn();
+                Juice.originalAlpha = 1;
+                Juice.transitionEndAlpha = 1;
+            }
+
+            public override void Update()
+            {
+                base.Update();
+                if (age > duration)
+                {
+                    outer.SetNextState(new EtherealBlinkOut
+                    {
+                        duration = duration
+                    });
+                }
+            }
+        }
+
+        public class EtherealBlinkOut : EventTextState
+        {
+            public static float endX = 0f;
+            public static float endY = 11f;
+            public static float FUCK = 6200;
+            private static float blinkDuration = 0.07f;
+            public override void OnEnter()
+            {
+                base.OnEnter();
+                duration = .5f;
+            }
+
+            public override void Update()
+            {
+                base.Update();
+                float t = Mathf.Clamp01(age / blinkDuration);
+                float x = Mathf.Lerp(1, endX, t);
+                float y = Mathf.Lerp(1, endY, t);
+                float fuck = Mathf.Lerp(690, FUCK, t);
+                base.transform.localScale = new Vector3(x, y, 1);              
+                base.transform.localPosition = new Vector3(0, fuck, 0); // the text isnt fucking centered so scaling it is fucked
+                if (age > duration)
+                {
+                    base.TextController.enabled = false;
+                    outer.SetNextState(new EtherealBlinkIn
+                    {
+                        duration = duration
+                    });
+                }
+            }
+        }
+
+        public class EtherealBlinkIn : EventTextState
+        {
+            private static float blinkDuration = 0.07f;
+            public override void OnEnter()
+            {
+                base.OnEnter();
+                base.TextController.enabled = true; // wtffffffffffffffffffffffffffff
+                base.TextController.TextMeshProUGUI.color = etherealTextColor;
+                base.TextController.TextMeshProUGUI.SetText("<link=\"textShaky\">ethereal moment</link>");// String.Format("<link=\"textShaky\">{0}</link>", TextController.TextMeshProUGUI.text));
+                EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("EtherealStormWarning", SS2Bundle.Events), new EffectData { }, false);
+                duration = blinkDuration;
+            }
+
+            public override void Update()
+            {
+                base.Update();
+                float t = Mathf.Clamp01(age / duration);
+                float x = Mathf.Lerp(EtherealBlinkOut.endX, 1, t);
+                float y = Mathf.Lerp(EtherealBlinkOut.endY, 1, t);
+                float fuck = Mathf.Lerp(EtherealBlinkOut.FUCK, 690, t);
+                base.transform.localScale = new Vector3(x, y, 1);
+                base.transform.localPosition = new Vector3(0, fuck, 0); // the text isnt fucking centered so scaling it is fucked
+
+                if (age > duration)
+                {
+                    outer.SetNextState(new WaitState
+                    {
+                        duration = 3f
+                    });
+                }
             }
         }
     }

@@ -553,5 +553,20 @@ namespace SS2.Components
                 }
             }
         }
+
+
+        // this doesnt change the actual difficulty. i do not want to touch this code holy fuck
+        [ConCommand(commandName = "run_set_ethereals_cleared", flags = ConVarFlags.Cheat | ConVarFlags.ExecuteOnServer, helpText = "Sets the number of ethereal teleporters completed. Zero to disable. Format: {etherealsCompleted}")]
+        public static void CCSetEtherealsCleared(ConCommandArgs args)
+        {
+            if (!NetworkServer.active) return;
+
+            int level = args.GetArgInt(0);
+            EtherealBehavior etherealBehavior = EtherealBehavior.instance;
+            if (etherealBehavior)
+            {
+                etherealBehavior.etherealsCompleted = level;
+            }
+        }
     }
 }

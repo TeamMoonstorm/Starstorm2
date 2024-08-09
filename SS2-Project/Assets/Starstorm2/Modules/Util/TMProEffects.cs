@@ -78,14 +78,9 @@ namespace SS2
                 {
                     textComponent.ForceMeshUpdate();
                 }
-            }
-
-            public void OnEnable()
-            {
                 TMPro_EventManager.TEXT_CHANGED_EVENT.Add(ON_TEXT_CHANGED);
             }
-
-            public void OnDisable()
+            private void OnDestroy()
             {
                 TMPro_EventManager.TEXT_CHANGED_EVENT.Remove(ON_TEXT_CHANGED);
             }
