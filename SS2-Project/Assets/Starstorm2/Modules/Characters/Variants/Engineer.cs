@@ -23,29 +23,32 @@ namespace SS2.Survivors
         public override void Initialize()
         {
             //_buffDefEngiFocused = survivorAssetCollection.FindAsset<BuffDef>("bdEngiFocused");
-            Debug.Log("graaa can stack " + SS2Content.Buffs.bdEngiFocused);
-            try
-            {
-                Debug.Log("graaa can stack " + SS2Content.Buffs.bdEngiFocused.canStack);
-            }
-            catch(Exception e) 
-            {
-                Debug.Log("what the fuck " + e);
-            }
+
             SkillDef sdLaserFocus = survivorAssetCollection.FindAsset<SkillDef>("sdLaserFocus");
+            SkillDef sdRapidDisplacement = survivorAssetCollection.FindAsset<SkillDef>("sdRapidDisplacement");
 
             GameObject engiBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Engi/EngiBody.prefab").WaitForCompletion();
 
             SkillLocator skillLocator = engiBodyPrefab.GetComponent<SkillLocator>();
-            SkillFamily skillFamily = skillLocator.primary.skillFamily;
+            SkillFamily skillFamilyPrimary = skillLocator.primary.skillFamily;
+            SkillFamily skillFamilyUtility = skillLocator.utility.skillFamily;
+
+            Debug.Log("sdRD: " + sdRapidDisplacement);
 
             // If this is an alternate skill, use this code.
             // Here, we add our skill as a variant to the existing Skill Family.
-            Array.Resize(ref skillFamily.variants, skillFamily.variants.Length + 1);
-            skillFamily.variants[skillFamily.variants.Length - 1] = new SkillFamily.Variant
+            Array.Resize(ref skillFamilyPrimary.variants, skillFamilyPrimary.variants.Length + 1);
+            skillFamilyPrimary.variants[skillFamilyPrimary.variants.Length - 1] = new SkillFamily.Variant
             {
                 skillDef = sdLaserFocus,
                 viewableNode = new ViewablesCatalog.Node(sdLaserFocus.skillNameToken, false, null)
+            };
+
+            Array.Resize(ref skillFamilyUtility.variants, skillFamilyUtility.variants.Length + 1);
+            skillFamilyUtility.variants[skillFamilyUtility.variants.Length - 1] = new SkillFamily.Variant
+            {
+                skillDef = sdRapidDisplacement,
+                viewableNode = new ViewablesCatalog.Node(sdRapidDisplacement.skillNameToken, false, null)
             };
 
             EngiFocusDamage = DamageAPI.ReserveDamageType();
