@@ -18,21 +18,16 @@ namespace SS2.Components
 
     //TO-DO:
 
-    //Ethereals- unique director, tied to Ethereal completion count, can overlap with other types
-    //DONE!!!!!!!!!!!!!!
+    //figure out ethereal / ultra spawning balance. possible conflicts?
 
     //Condemned
     //Gilded
     //Twisted?- all of these will be like ethereals BUT they share a check. ethereal gets its own for overlap.
 
-    //Empyreans- hijack vanilla director to essentially add as T3
-
-    //Ultras- mix of above + ethereal? post-ethereal tier 4? honestly, idk entirely :')
+    //add support for appropriate hidden realms
 
 
-    //I feel like this should maybe be separate director cmponents inheriting from one class but will figure that out & possibly regret it when I get there!!!
-    //idk if i can make this an abstract and then inherit the il hook so its a monolith.
-    //SORRY!!!!!!!!!!
+    //maybe should've been an abstract with inheritence for different director types but scared to do that with il hook
 
     public class CustomEliteDirector : MonoBehaviour
     {
