@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1512808244, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: equipSeismicOscillator
+  m_Name: SeismicOscillator
   m_EditorClassIdentifier: 
   pickupModelPrefab: {fileID: 8349224457750773638, guid: 6cf25c9278f6d0d4dbabf65ccbfac20d,
     type: 3}
@@ -22,12 +22,12 @@ MonoBehaviour:
   pickupIconSprite: {fileID: 21300000, guid: 203582222e29b8641961218a3a522d49, type: 3}
   unlockableDef: {fileID: 0}
   colorIndex: 5
-  canDrop: 0
+  canDrop: 1
   dropOnDeathChance: 0
   canBeRandomlyTriggered: 1
   enigmaCompatible: 0
   isLunar: 0
-  isBoss: 1
+  isBoss: 0
   passiveBuffDef: {fileID: 0}
   appearsInSinglePlayer: 1
   appearsInMultiPlayer: 1
