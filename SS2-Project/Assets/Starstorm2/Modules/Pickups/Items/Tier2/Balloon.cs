@@ -17,7 +17,8 @@ namespace Assets.Starstorm2.Modules.Pickups.Items.Tier2
 
         //[RiskOfOptionsConfigureField(LITConfig.ITEMS, ConfigDescOverride = "Amount of gravity removed, as a pecent")]
         //[FormatToken(TOKEN, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
-        public static float reducedGravity = 0.30f;
+        public static float reducedGravity = 0.50f;
+        public static float stackingEffect = 0.05f;
 
         public override void Initialize()
         {
@@ -40,7 +41,7 @@ namespace Assets.Starstorm2.Modules.Pickups.Items.Tier2
 
                 if (body.inputBank.jump.down)
                 {
-                    body.characterMotor.velocity.y -= Time.fixedDeltaTime * Physics.gravity.y * reducedGravity + ((reducedGravity/2) * stack);
+                    body.characterMotor.velocity.y -= Time.fixedDeltaTime * Physics.gravity.y * reducedGravity + (stackingEffect * stack);
 
                 }
             }
