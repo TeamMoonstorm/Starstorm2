@@ -346,7 +346,7 @@ namespace SS2.Components
 
                 if (age > duration)
                 {                 
-                    outer.SetNextState(new WaitState
+                    outer.SetNextState(new EtherealWait
                     {
                         duration = 3f
                     });
@@ -357,6 +357,7 @@ namespace SS2.Components
         {
             public override void Update()
             {
+                base.Update();
                 if (age > duration)
                 {
                     outer.SetNextState(new EtherealFadeOut
@@ -372,6 +373,8 @@ namespace SS2.Components
             {
                 base.OnEnter();
                 Juice.transitionDuration = duration;
+                Juice.originalAlpha = 1;
+                Juice.transitionEndAlpha = 1;
                 Juice.TransitionAlphaFadeOut();
             }
 
