@@ -44,12 +44,12 @@ namespace SS2.Survivors
                 viewableNode = new ViewablesCatalog.Node(sdLaserFocus.skillNameToken, false, null)
             };
 
-            //Array.Resize(ref skillFamilyUtility.variants, skillFamilyUtility.variants.Length + 1);
-            //skillFamilyUtility.variants[skillFamilyUtility.variants.Length - 1] = new SkillFamily.Variant
-            //{
-            //    skillDef = sdRapidDisplacement,
-            //    viewableNode = new ViewablesCatalog.Node(sdRapidDisplacement.skillNameToken, false, null)
-            //};
+            Array.Resize(ref skillFamilyUtility.variants, skillFamilyUtility.variants.Length + 1);
+            skillFamilyUtility.variants[skillFamilyUtility.variants.Length - 1] = new SkillFamily.Variant
+            {
+                skillDef = sdRapidDisplacement,
+                viewableNode = new ViewablesCatalog.Node(sdRapidDisplacement.skillNameToken, false, null)
+            };
 
             EngiFocusDamage = DamageAPI.ReserveDamageType();
             EngiFocusDamageProc = DamageAPI.ReserveDamageType();
