@@ -16,7 +16,7 @@ namespace EntityStates.Engi
         public static float damageCoeff = .75f;
 
         [SerializeField]
-        public static float procCoeff = 0.5f;
+        public static float procCoeff = 0.3f;
 
         [SerializeField]
         public static float fireFrequency = 4f;
@@ -126,7 +126,7 @@ namespace EntityStates.Engi
                 return;
             }
 
-            if (counter >= 8)
+            if (counter >= 6)
             {
                 counter = 0;
             }
@@ -174,7 +174,7 @@ namespace EntityStates.Engi
                     force = 0,
                     falloffModel = BulletAttack.FalloffModel.None,
                     muzzleName = "MuzzleLeft",
-                    hitEffectPrefab = counter == 4 || counter == 8 ? hitsparkPrefab2 : hitsparkPrefab, // i would do % 4 but then the first hit procs it :(
+                    hitEffectPrefab = counter == 3 || counter == 6 ? hitsparkPrefab2 : hitsparkPrefab, // i would do % 4 but then the first hit procs it :(
                     isCrit = isCrit,
                     HitEffectNormal = false,
                     smartCollision = true,
@@ -195,7 +195,7 @@ namespace EntityStates.Engi
                     force = 0,
                     falloffModel = BulletAttack.FalloffModel.None,
                     muzzleName = "MuzzleRight",
-                    hitEffectPrefab = counter == 4 || counter == 8 ? hitsparkPrefab2 : hitsparkPrefab,
+                    hitEffectPrefab = counter == 3 || counter == 6 ? hitsparkPrefab2 : hitsparkPrefab,
                     isCrit = isCrit,
                     HitEffectNormal = false,
                     smartCollision = true,

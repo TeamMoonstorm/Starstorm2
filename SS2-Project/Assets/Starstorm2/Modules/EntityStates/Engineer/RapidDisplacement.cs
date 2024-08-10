@@ -15,7 +15,7 @@ namespace EntityStates.Engi
         [SerializeField]
         public static float baseDuration = 0.6f;
         [SerializeField]
-        public static float speedMultiplier = 3.0f;
+        public static float speedMultiplier = 2;
         [SerializeField]
         public static float hitRadius = 5f;
         //[FormatToken("SS2_EXECUTIONER_DASH_DESCRIPTION", 0)]
@@ -26,7 +26,7 @@ namespace EntityStates.Engi
         public static float damageCoeff = .75f;
 
         [SerializeField]
-        public static float procCoeff = 0.5f;
+        public static float procCoeff = 1;
 
         [SerializeField]
         public static float maxDistance = 25f;

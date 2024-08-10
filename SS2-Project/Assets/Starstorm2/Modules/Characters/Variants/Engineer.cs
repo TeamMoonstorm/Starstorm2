@@ -44,12 +44,12 @@ namespace SS2.Survivors
                 viewableNode = new ViewablesCatalog.Node(sdLaserFocus.skillNameToken, false, null)
             };
 
-            Array.Resize(ref skillFamilyUtility.variants, skillFamilyUtility.variants.Length + 1);
-            skillFamilyUtility.variants[skillFamilyUtility.variants.Length - 1] = new SkillFamily.Variant
-            {
-                skillDef = sdRapidDisplacement,
-                viewableNode = new ViewablesCatalog.Node(sdRapidDisplacement.skillNameToken, false, null)
-            };
+            //Array.Resize(ref skillFamilyUtility.variants, skillFamilyUtility.variants.Length + 1);
+            //skillFamilyUtility.variants[skillFamilyUtility.variants.Length - 1] = new SkillFamily.Variant
+            //{
+            //    skillDef = sdRapidDisplacement,
+            //    viewableNode = new ViewablesCatalog.Node(sdRapidDisplacement.skillNameToken, false, null)
+            //};
 
             EngiFocusDamage = DamageAPI.ReserveDamageType();
             EngiFocusDamageProc = DamageAPI.ReserveDamageType();
@@ -69,7 +69,9 @@ namespace SS2.Survivors
                 if (proc && count < 5)
                 {
                     Debug.Log("adding buff ");
+                    SS2Util.RefreshAllBuffStacks(self.body, SS2Content.Buffs.bdEngiFocused, 5);
                     self.body.AddTimedBuffAuthority(SS2Content.Buffs.bdEngiFocused.buffIndex, 5);
+
                 }
                 else if (proc)
                 {
@@ -79,7 +81,7 @@ namespace SS2.Survivors
 
                 if (count > 0)
                 {
-                    damageInfo.damage *= 1 + (count * .1f);
+                    damageInfo.damage *= 1 + (count * .15f);
                 }
             }
             orig(self, damageInfo);
@@ -94,27 +96,6 @@ namespace SS2.Survivors
         {
             [BuffDefAssociation]
             private static BuffDef GetBuffDef() => SS2Content.Buffs.bdEngiFocused;
-
-            //public void OnIncomingDamageOther(HealthComponent victimHealthComponent, DamageInfo damageInfo)
-            //{
-            //    Debug.Log("GRAHH " + EngiFocusDamage + " | " + SS2Content.Buffs.bdEngiFocused);
-            //    if (damageInfo.HasModdedDamageType(EngiFocusDamage))
-            //    {
-            //        int count = victimHealthComponent.body.GetBuffCount(SS2Content.Buffs.bdEngiFocused);
-            //        if (Util.CheckRoll(damageInfo.procCoefficient/2f) && count < 5)
-            //        {
-            //            Debug.Log("adding buff ");
-            //            victimHealthComponent.body.AddTimedBuffAuthority(SS2Content.Buffs.bdEngiFocused.buffIndex, 5);
-            //        }
-            //
-            //        //int count = victimHealthComponent.body.GetBuffCount(SS2Content.Buffs.bdEngiFocused);
-            //        Debug.Log("count " + count);
-            //        if (count > 0)
-            //        {
-            //            damageInfo.damage *= 1 + (count * .1f);
-            //        }
-            //    }
-            //}
         }
     }
 }
