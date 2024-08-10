@@ -85,6 +85,11 @@ namespace SS2
                 TMPro_EventManager.TEXT_CHANGED_EVENT.Remove(ON_TEXT_CHANGED);
             }
 
+            private void OnDisable()
+            {
+                this.textComponent.textInfo.linkInfo = new TMPro.TMP_LinkInfo[0]; // fuck tmpro wtf is this. text effects wont go away
+            }
+
             public void ON_TEXT_CHANGED(Object obj)
             {
                 if (obj == textComponent)

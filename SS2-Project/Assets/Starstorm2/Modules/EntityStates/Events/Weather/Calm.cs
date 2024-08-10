@@ -27,7 +27,7 @@ namespace EntityStates.Events
             this.stormController.SetEffectIntensity(0);
             if (stormController.AttemptSkip()) // TEMPORARY. FUUUUUUUUUCK
             {
-                this.outer.SetNextState(new Storm { stormLevel = 1, lerpDuration = 15f });
+                this.outer.SetNextState(new Storm { stormLevel = 1, lerpDuration = 15f, instantStorm = true });
                 return;
             }
 

@@ -18,6 +18,7 @@ namespace EntityStates.Events
         private static float chargeFromKill = 0.5f;
         private static float effectLerpDuration = 5f;
         private static SerializableEntityStateType textState = new SerializableEntityStateType(typeof(StormController.EtherealFadeIn));
+        private static SerializableEntityStateType textState2 = new SerializableEntityStateType(typeof(StormController.EtherealBlinkIn)); // fuck my life
         private static Color textColor = Color.gray;       
         private static int bossEliteLevel = 4;
         private static int eliteLevel = 3;
@@ -29,9 +30,14 @@ namespace EntityStates.Events
         private float chargeStopwatch = 10f; // longer stopwatch means more variance
         private bool isPermanent;
         private float eliteChance;
+        private float eliteChanceStopwatch;
+        private float eliteChanceTimer;
+        private float maxEliteChanceInterval = 24f;
+        private float minEliteChanceInterval = 4f;
 
         public float lerpDuration;
         public int stormLevel;
+        public bool instantStorm;
 
         private UnityAction<GameObject> modifyMonsters;
         private UnityAction<GameObject> modifyBoss;
@@ -52,11 +58,15 @@ namespace EntityStates.Events
                 this.stormLevel++;             
                 stormController.OnStormLevelCompleted(); /////////////////////////////////////////////////////////////////// lmao
                 request.eventToken = "ermmmm..... storm " + stormLevel;
-                request.customTextState = textState;
+                request.customTextState = instantStorm ? textState2 : textState;
                 request.textDuration = 2;
             }
             GameplayEventTextController.Instance.EnqueueNewTextRequest(request);
-            this.stormController.StartLerp(stormLevel, lerpDuration);
+            
+            if(instantStorm)
+                this.stormController.StartLerp(stormLevel, 0);
+            else
+                this.stormController.StartLerp(stormLevel, lerpDuration);
 
 
             isPermanent = stormController.IsPermanent && this.stormLevel == stormController.MaxStormLevel;
@@ -137,7 +147,15 @@ namespace EntityStates.Events
             base.FixedUpdate();
             if (!NetworkServer.active) return;
 
-            this.eliteChance += eliteChancePerSecond * Time.fixedDeltaTime;
+            // im stupid or what
+            this.eliteChanceStopwatch -= Time.fixedDeltaTime;
+            eliteChanceTimer += Time.fixedDeltaTime;
+            if(eliteChanceStopwatch <= 0)
+            {               
+                eliteChanceStopwatch += UnityEngine.Random.Range(minEliteChanceInterval, maxEliteChanceInterval);
+                eliteChance += eliteChancePerSecond * Time.fixedDeltaTime * eliteChanceTimer;
+                eliteChanceTimer = 0;
+            }
             this.chargeStopwatch -= Time.fixedDeltaTime;
             if(this.chargeStopwatch <= 0 && ShouldCharge())
             {

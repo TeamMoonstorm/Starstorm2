@@ -288,8 +288,8 @@ namespace SS2.Components
         public class EtherealBlinkOut : EventTextState
         {
             public static float endX = 0f;
-            public static float endY = 11f;
-            public static float FUCK = 6200;
+            public static float endY = 4f;
+            public static float FUCK = 2350;
             private static float blinkDuration = 0.07f;
             public override void OnEnter()
             {
@@ -308,7 +308,6 @@ namespace SS2.Components
                 base.transform.localPosition = new Vector3(0, fuck, 0); // the text isnt fucking centered so scaling it is fucked
                 if (age > duration)
                 {
-                    base.TextController.enabled = false;
                     outer.SetNextState(new EtherealBlinkIn
                     {
                         duration = duration
@@ -323,7 +322,12 @@ namespace SS2.Components
             public override void OnEnter()
             {
                 base.OnEnter();
-                base.TextController.enabled = true; // wtffffffffffffffffffffffffffff
+                // ??????????????????? i hate this so much
+                Juice.transitionDuration = 0.01f;
+                Juice.TransitionAlphaFadeIn();
+                Juice.originalAlpha = 1;
+                Juice.transitionEndAlpha = 1;
+
                 base.TextController.TextMeshProUGUI.color = etherealTextColor;
                 base.TextController.TextMeshProUGUI.SetText("<link=\"textShaky\">ethereal moment</link>");// String.Format("<link=\"textShaky\">{0}</link>", TextController.TextMeshProUGUI.text));
                 EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("EtherealStormWarning", SS2Bundle.Events), new EffectData { }, false);
@@ -341,11 +345,44 @@ namespace SS2.Components
                 base.transform.localPosition = new Vector3(0, fuck, 0); // the text isnt fucking centered so scaling it is fucked
 
                 if (age > duration)
-                {
+                {                 
                     outer.SetNextState(new WaitState
                     {
                         duration = 3f
                     });
+                }
+            }
+        }
+        public class EtherealWait : EventTextState
+        {
+            public override void Update()
+            {
+                if (age > duration)
+                {
+                    outer.SetNextState(new EtherealFadeOut
+                    {
+                        duration = 2f
+                    });
+                }
+            }
+        }
+        public class EtherealFadeOut : EventTextState
+        {
+            public override void OnEnter()
+            {
+                base.OnEnter();
+                Juice.transitionDuration = duration;
+                Juice.TransitionAlphaFadeOut();
+            }
+
+            public override void Update()
+            {
+                base.Update();
+                if (age > duration)
+                {
+                    NullRequest();
+                    
+                    outer.SetNextStateToMain();
                 }
             }
         }
