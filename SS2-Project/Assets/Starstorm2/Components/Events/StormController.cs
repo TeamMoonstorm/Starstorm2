@@ -71,6 +71,7 @@ namespace SS2.Components
             public R2API.DirectorAPI.Stage stageEnum;
             public string customStageName;
             public GameObject effectPrefab;
+            public float cloudHeight;
         }
         public StormVFX[] eventVFX = Array.Empty<StormVFX>();
 
@@ -224,15 +225,25 @@ namespace SS2.Components
         public void InstantiateEffect()
         {
             GameObject effectPrefab = SS2Assets.LoadAsset<GameObject>("ThunderstormEffect", SS2Bundle.Events);
+            float cloudHeight = -5000f;
             foreach(StormVFX vfx in this.eventVFX)
             {
                 if(DirectorAPI.GetStageEnumFromSceneDef(Stage.instance.sceneDef) == vfx.stageEnum)
                 {
                     effectPrefab = vfx.effectPrefab;
+                    cloudHeight = vfx.cloudHeight;
                     break;
                 }
             }
-            this.intensityScalers = GameObject.Instantiate(effectPrefab, base.gameObject.transform).GetComponentsInChildren<IIntensityScaler>(true);
+            GameObject effectInstance = GameObject.Instantiate(effectPrefab, base.gameObject.transform);
+            this.intensityScalers = effectInstance.GetComponentsInChildren<IIntensityScaler>(true);
+            Transform cloud = effectInstance.GetComponent<ChildLocator>().FindChild("CloudLayer");
+            if(cloud)
+            {
+                cloud.gameObject.SetActive(true);
+                cloud.position = Vector3.up * cloudHeight;
+            }
+            
         }
 
         private void StormObjective(CharacterMaster master, List<ObjectivePanelController.ObjectiveSourceDescriptor> dest)

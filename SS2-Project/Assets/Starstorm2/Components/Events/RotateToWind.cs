@@ -32,12 +32,16 @@ namespace SS2.Components
 
         private void FixedUpdate()
         {
-            float angle = Vector2.SignedAngle(transform.eulerAngles, WindZoneController.instance.windZone.transform.eulerAngles);
-            if (Mathf.Approximately(0f, angle))
+            if(WindZoneController.instance.windZone) // windzone doesnt exist for one frame?
             {
-                var degreesMoved = Mathf.MoveTowards(0, angle, maxRotation);
-                transform.eulerAngles = Util.RotateVector2(transform.eulerAngles, degreesMoved);
+                float angle = Vector2.SignedAngle(transform.eulerAngles, WindZoneController.instance.windZone.transform.eulerAngles);
+                if (Mathf.Approximately(0f, angle))
+                {
+                    var degreesMoved = Mathf.MoveTowards(0, angle, maxRotation);
+                    transform.eulerAngles = Util.RotateVector2(transform.eulerAngles, degreesMoved);
+                }
             }
+            
         }
     }
 }
