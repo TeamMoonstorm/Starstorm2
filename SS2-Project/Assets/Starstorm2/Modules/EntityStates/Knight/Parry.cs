@@ -64,11 +64,15 @@ namespace EntityStates.Knight
             if (inputBank.skill2.down)
             {
                 outer.SetNextState(new Shield());
+            } 
+            else
+            {
+                outer.SetNextStateToMain();
             }
 
             characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility);
 
-            outer.SetNextStateToMain();
+            
             base.OnExit();
         }
         public override void AuthorityModifyOverlapAttack(OverlapAttack overlapAttack)

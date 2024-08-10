@@ -1,6 +1,7 @@
 ﻿using EntityStates;
 using EntityStates.Knight;
 using MSU;
+using R2API;
 using RoR2;
 using RoR2.Skills;
 using UnityEngine;
@@ -53,7 +54,7 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
         public override void AuthorityModifyOverlapAttack(OverlapAttack overlapAttack)
         {
             base.AuthorityModifyOverlapAttack(overlapAttack);
-            overlapAttack.damageType = DamageType.Stun1s;
+            overlapAttack.AddModdedDamageType(SS2.Survivors.Knight.ExtendedStunDamageType);
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

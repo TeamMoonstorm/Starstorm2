@@ -18,7 +18,7 @@ public class BannerSpecial : BaseState
     {
         base.OnEnter();
 
-        if (isAuthority & NetworkServer.active)
+        if (NetworkServer.active)
         {
             Vector3 position = inputBank.aimOrigin - (inputBank.aimDirection);
             bannerObject = UnityEngine.Object.Instantiate(knightBannerWard, position, Quaternion.identity);
@@ -29,6 +29,26 @@ public class BannerSpecial : BaseState
             slowBuffWardInstance = UnityEngine.Object.Instantiate(slowBuffWard, position, Quaternion.identity);
             slowBuffWardInstance.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
             slowBuffWardInstance.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(bannerObject);
+        }
+
+        if (base.isAuthority)
+        {
+            new BlastAttack
+            {
+                attacker = base.gameObject,
+                baseDamage = damageStat,
+                baseForce = 20f,
+                bonusForce = Vector3.up, 
+                crit = false,
+                damageType = DamageType.Generic,
+                falloffModel = BlastAttack.FalloffModel.Linear,
+                procCoefficient = 0.1f, 
+                radius = 5f,
+                position = base.characterBody.footPosition,
+                attackerFiltering = AttackerFiltering.NeverHitSelf,
+                impactEffect = EffectCatalog.FindEffectIndexFromPrefab(SS2.Survivors.Knight.KnightImpactEffect),
+                teamIndex = base.teamComponent.teamIndex,
+            }.Fire();
         }
     }
 
