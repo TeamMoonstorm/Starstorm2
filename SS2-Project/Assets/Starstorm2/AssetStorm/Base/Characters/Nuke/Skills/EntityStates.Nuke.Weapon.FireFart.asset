@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: EntityStates.Nuke.Weapon.FireFart
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: 
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: damageColor
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 11400000, guid: f34e50c606eb91a40bcd8fbbdb000999, type: 2}
+    - fieldName: baseForce
+      fieldValue:
+        stringValue: 300
+        objectValue: {fileID: 0}
+    - fieldName: baseRadius
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: procCoefficient
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: bonusForce
+      fieldValue:
+        stringValue: 0 150 0
+        objectValue: {fileID: 0}
+    - fieldName: extraDamageCoefficient
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: baseUpwardVelocity
+      fieldValue:
+        stringValue: 15
+        objectValue: {fileID: 0}
+    - fieldName: maxUpwardVelocity
+      fieldValue:
+        stringValue: 25
+        objectValue: {fileID: 0}
+    - fieldName: poolProjectile
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 3017407370360207458, guid: 74042442dd7b71c4d86511fc637cda36,
+          type: 3}
+    - fieldName: poolDOT
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 5889861227055509402, guid: e119e5bcc2eab834297dd8da79826015,
+          type: 3}

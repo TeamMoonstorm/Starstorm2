@@ -171,7 +171,7 @@ namespace SS2.Components
         {
             if (!NetworkServer.active)
             {
-                Debug.LogWarning("[Server] function 'Moonstorm.Starstorm2.Components.NemCaptainController::AddStress(System.Single)' called on client");
+                Debug.LogWarning("[Server] function 'SS2.Components.NemCaptainController::AddStress(System.Single)' called on client");
                 return;
             }
 

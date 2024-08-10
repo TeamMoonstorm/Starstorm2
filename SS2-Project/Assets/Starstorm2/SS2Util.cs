@@ -188,7 +188,22 @@ namespace SS2
             }
         }
 
-        [ConCommand(commandName = "one_of_each", flags = ConVarFlags.Cheat, helpText = "Grants one of each item. Format: {itemCount} {itemTier} {itemTag}")]
+        public static void RefreshAllBuffStacks(CharacterBody charBody, BuffDef buff, float duration)
+        {
+            var buffs = charBody.timedBuffs;
+
+            foreach( CharacterBody.TimedBuff current in buffs)
+            {
+                if(current.buffIndex == buff.buffIndex)
+                {
+                    Debug.Log("current bufdf " + current.buffIndex + " | " + current.timer);
+                    current.timer = duration;
+                }
+            }
+        }
+
+
+            [ConCommand(commandName = "one_of_each", flags = ConVarFlags.Cheat, helpText = "Grants one of each item. Format: {itemCount} {itemTier} {itemTag}")]
         public static void CmdGrantOneOfEachItem(ConCommandArgs args)
         {
             CharacterMaster master = args.GetSenderMaster();
