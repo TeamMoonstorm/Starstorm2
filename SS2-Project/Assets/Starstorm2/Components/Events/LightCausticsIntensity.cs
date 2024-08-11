@@ -19,9 +19,7 @@ namespace SS2.Components
         private CausticsState currentState;
 
         private void Start()
-        {
-            breakpoints = breakpoints.OrderBy(bp => bp.requiredIntensity).ToArray();
-
+        {          
             NGSS_Directional sun = GameObject.FindObjectOfType<NGSS_Directional>();
             if(!sun)
             {
@@ -29,6 +27,8 @@ namespace SS2.Components
                 Destroy(this);
                 return;
             }
+
+            breakpoints = breakpoints.OrderBy(bp => bp.requiredIntensity).ToArray();
             Light light = sun.GetComponent<Light>();
             light.cookie = cookie;
             light.cookieSize = 150;
@@ -36,6 +36,7 @@ namespace SS2.Components
             if(customRenderTexture)
             {
                 material = customRenderTexture.material;
+                material.SetFloat("_AlphaBias", 1);
             }
 
             if (minimumIntensity >= currentIntensity)

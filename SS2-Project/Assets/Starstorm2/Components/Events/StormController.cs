@@ -225,7 +225,7 @@ namespace SS2.Components
         public void InstantiateEffect()
         {
             GameObject effectPrefab = SS2Assets.LoadAsset<GameObject>("ThunderstormEffect", SS2Bundle.Events);
-            float cloudHeight = -5000f;
+            float cloudHeight = 100f;
             foreach(StormVFX vfx in this.eventVFX)
             {
                 if(DirectorAPI.GetStageEnumFromSceneDef(Stage.instance.sceneDef) == vfx.stageEnum)
@@ -237,7 +237,7 @@ namespace SS2.Components
             }
             GameObject effectInstance = GameObject.Instantiate(effectPrefab, base.gameObject.transform);
             this.intensityScalers = effectInstance.GetComponentsInChildren<IIntensityScaler>(true);
-            Transform cloud = effectInstance.GetComponent<ChildLocator>().FindChild("CloudLayer");
+            Transform cloud = effectInstance.GetComponent<ChildLocator>()?.FindChild("CloudLayer");
             if(cloud)
             {
                 cloud.gameObject.SetActive(true);
