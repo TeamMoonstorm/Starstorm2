@@ -27,7 +27,7 @@ namespace SS2.Equipments
         public override void Initialize()
         {
             //CreateWhitelist();
-            CreatePillarDecal();
+            //CreatePillarDecal();
             RoR2Application.onLoad += CreateWhitelist;
             IL.RoR2.CharacterBody.RecalculateStats += RecalculateStatsEmpyreanIL;
         }
