@@ -40,8 +40,6 @@ namespace SS2.Survivors
 
             characterBody = bodyPrefab.GetComponent<CharacterBody>();
 
-            On.RoR2.CharacterSelectBarController.Awake += CharacterSelectBarController_Awake;
-
             GougeDamageType = DamageAPI.ReserveDamageType();
             GougeDotIndex = DotAPI.RegisterDotDef(0.25f, 0.25f, DamageColorIndex.SuperBleed, _gougeBuffDef);
             On.RoR2.HealthComponent.TakeDamage += TakeDamageGouge;
@@ -82,15 +80,6 @@ namespace SS2.Survivors
                     GlobalEventManager.instance.OnHitEnemy(damageInfo, self.gameObject);
                 }
             }
-        }
-
-        //N: I should make this an utility idk
-        private void CharacterSelectBarController_Awake(On.RoR2.CharacterSelectBarController.orig_Awake orig, CharacterSelectBarController self)
-        {
-            //hide nemcommando from css proper
-            SS2Content.Survivors.NemMerc.hidden = !SurvivorCatalog.SurvivorIsUnlockedOnThisClient(SS2Content.Survivors.NemMerc.survivorIndex); // hello nem comado
-            SS2Content.Survivors.survivorNemCommando.hidden = !SurvivorCatalog.SurvivorIsUnlockedOnThisClient(SS2Content.Survivors.survivorNemCommando.survivorIndex);
-            orig(self);
         }
 
         private void ApplyGouge(DamageReport report)

@@ -46,6 +46,7 @@ namespace SS2
             LanguageFileLoader.AddLanguageFilesFromMod(this, "SS2Lang");
             TMProEffects.Init();
             BodyNames.Hook();
+            HideUnlocks.Hook();
             //N: Not gonna lie, i love the idea of seasonal effects, but having the same date time check is silly, so there's that internal static bool now.
             DateTime today = DateTime.Today;
             if (today.Month == 12 && ((today.Day == 27) || (today.Day == 26) || (today.Day == 25) || (today.Day == 24) || (today.Day == 23)))

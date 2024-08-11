@@ -1,15 +1,57 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using RoR2;
+using R2API;
+using SS2;
+using MSU;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class RulebookEnabler : MonoBehaviour
 {
+    public static RuleDef rule;
+    public static RuleCategoryDef ruleCategoryDef;
+    private static int ruleCategoryIndex;
+    public static bool categoryEnabled = false;
     internal static IEnumerator Init()
     {
-        RoR2.PreGameController.onPreGameControllerSetRuleBookGlobal += RuleBookGlobal;
-        RoR2.PreGameController.onPreGameControllerSetRuleBookServerGlobal += ServerRuleBookGlobal;
-        RoR2.PreGameController.onServerRecalculatedModifierAvailability += onServerRecalculatedModifierAvailability;
-        RoR2.PreGameRuleVoteController.onVotesUpdated += OnVotesUpdated;
+        PreGameController.onPreGameControllerSetRuleBookGlobal += RuleBookGlobal;
+        PreGameController.onPreGameControllerSetRuleBookServerGlobal += ServerRuleBookGlobal;
+        PreGameController.onServerRecalculatedModifierAvailability += onServerRecalculatedModifierAvailability;
+        PreGameRuleVoteController.onVotesUpdated += OnVotesUpdated;
+
+        ruleCategoryDef = RuleCatalog.AddCategory("SS2_RULEBOOK_NAME", "SS2_RULEBOOK_DESC", Color.red, "SS2_RULEBOOK_EMPTY", "SS2_RULEBOOK_EDIT", () => categoryEnabled, RuleCatalog.RuleCategoryType.VoteResultGrid);
+        ruleCategoryDef.position = 250;
+
+        rule = new RuleDef("ss2TestRuleInternal", "SS2_RULE_TEST_NAME");
+        rule.category = ruleCategoryDef;
+        rule.defaultChoiceIndex = 0;
+
+        RuleChoiceDef enabledChoice = rule.AddChoice("SS2_RULE_TEST_ENABLED", "Enabled");
+        enabledChoice.sprite = Addressables.LoadAssetAsync<Sprite>("RoR2/Base/Achievements/texCrocoClearGameMonsoonIcon.png").WaitForCompletion();
+        enabledChoice.tooltipNameToken = "SS2_RULE_TEST_NAME_TOKEN";
+        enabledChoice.tooltipNameColor = Color.white;
+        enabledChoice.tooltipBodyToken = "SS2_RULE_TEST_BODY_TOKEN";
+        enabledChoice.excludeByDefault = false;
+        rule.MakeNewestChoiceDefault();
+
+        RuleChoiceDef disabledChoice = rule.AddChoice("SS2_RULE_TEST_DISABLED", "Disabled");
+        disabledChoice.sprite = Addressables.LoadAssetAsync<Sprite>("RoR2/Base/Achievements/texEngiClearGameMonsoonIcon.png").WaitForCompletion();
+        disabledChoice.tooltipNameToken = "SS2_RULE_TEST_DISABLED_NAME_TOKEN";
+        disabledChoice.tooltipNameColor = Color.black;
+        disabledChoice.tooltipBodyToken = "SS2_RULE_TEST_DISABLED_BODY_TOKEN";
+        disabledChoice.excludeByDefault = false;
+
+        RuleChoiceDef thirdThingChoice = rule.AddChoice("SS2_RULE_TEST_THIRDTHIND", "ThirdThing");
+        thirdThingChoice.sprite = Addressables.LoadAssetAsync<Sprite>("RoR2/Base/Common/MiscIcons/texRuleMapIsRandom.png").WaitForCompletion();
+        thirdThingChoice.tooltipNameToken = "SS2_RULE_TEST_THIRDTHING_NAME_TOKEN";
+        thirdThingChoice.tooltipNameColor = Color.green;
+        thirdThingChoice.tooltipBodyToken = "SS2_RULE_TEST_THIRDTHING_BODY_TOKEN";
+        thirdThingChoice.excludeByDefault = false;
+
+
+        RuleCatalog.AddRule(rule);
+        
+        
 
         yield return null;
     }
@@ -24,39 +66,50 @@ public class RulebookEnabler : MonoBehaviour
         FixRules();
     }
 
-    private static void NetworkRuleBookComponent_onRuleBookUpdated(RoR2.NetworkRuleBook nrb)
+    private static void NetworkRuleBookComponent_onRuleBookUpdated(NetworkRuleBook nrb)
     {
         FixRules();
     }
 
-    private static void ServerRuleBookGlobal(RoR2.PreGameController pgc, RoR2.RuleBook rb)
+    private static void ServerRuleBookGlobal(PreGameController preGameController, RuleBook rb)
     {
-        pgc.networkRuleBookComponent.onRuleBookUpdated += NetworkRuleBookComponent_onRuleBookUpdated;
-        ExposeRulebook(pgc.networkRuleBookComponent.ruleBook);
+        preGameController.networkRuleBookComponent.onRuleBookUpdated += NetworkRuleBookComponent_onRuleBookUpdated;
+        ExposeRulebook(preGameController.networkRuleBookComponent.ruleBook);
         FixRules();
     }
 
-    private static void RuleBookGlobal(RoR2.PreGameController pgc, RoR2.RuleBook rb)
+    private static void RuleBookGlobal(PreGameController preGameController, RuleBook ruleBook)
     {
-        if (pgc != null && pgc.gameModeIndex == RoR2.GameModeCatalog.FindGameModeIndex("ClassicRun") || pgc.gameModeIndex == RoR2.GameModeCatalog.FindGameModeIndex("InfiniteTowerRun"))
+        if (preGameController != null && preGameController.gameModeIndex == GameModeCatalog.FindGameModeIndex("ClassicRun") || preGameController.gameModeIndex == GameModeCatalog.FindGameModeIndex("InfiniteTowerRun"))
         {
-            ExposeRulebook(pgc.networkRuleBookComponent.ruleBook);
+            ExposeRulebook(preGameController.networkRuleBookComponent.ruleBook);
         }
     }
 
-    private static void ExposeRulebook(RoR2.RuleBook rulebook)
+    private static void ExposeRulebook(RuleBook rulebook)
     {
-        foreach (var rcd in rulebook.choices)
+        bool hasUpdatedRules = false;
+        foreach (var ruleChoiceDef in rulebook.choices)
         {
-            RoR2.RuleCategoryDef cat = rcd.ruleDef.category;
-            if (cat.displayToken == "RULE_HEADER_MISC")
+            RuleCategoryDef category = ruleChoiceDef.ruleDef.category;
+            if (category.displayToken == "RULE_HEADER_MISC" && !hasUpdatedRules)
             {
-                foreach (var rd in cat.children)
+                foreach (var ruleDef in category.children)
                 {
-                    foreach (var srcd in rd.choices)
+                    ruleDef.category = ruleCategoryDef;
+                    foreach (var subRuleChoiceDef in ruleDef.choices)
                     {
-                        srcd.excludeByDefault = false;
+                        subRuleChoiceDef.excludeByDefault = false;
+                        
                     }
+                }
+            }
+
+            if (category.displayToken == "RULE_HEADER_DIFFICULTY")
+            {
+                foreach (var ruleDef in category.children)
+                {
+                    Debug.Log("ruledef name : " + ruleDef.displayToken);
                 }
             }
         }

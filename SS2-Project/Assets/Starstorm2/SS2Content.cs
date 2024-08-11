@@ -597,7 +597,7 @@ namespace SS2
 
         public static class Elites
         {
-            public static EliteDef edStorm;
+            //public static EliteDef edStorm;
 
             public static EliteDef edPurple;
 
@@ -607,7 +607,7 @@ namespace SS2
 
             public static EliteDef edEthereal;
 
-            public static EliteDef edUltra;
+            //public static EliteDef edUltra;
         }
         public static class Scenes
         {
