@@ -194,8 +194,9 @@ namespace SS2
                 Components.StarstormBehavior.Init,
                 Components.EtherealBehavior.Init,
                 Components.VoidBehavior.Init,
-                Void.Init,
+                //Void.Init,
                 Storm.Init,
+                RulebookEnabler.Init,
                 () =>
                 {
                     //new Modules.Scenes().Initialize();
