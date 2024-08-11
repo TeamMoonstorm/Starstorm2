@@ -15,10 +15,10 @@ public class RulebookEnabler : MonoBehaviour
     public static bool categoryEnabled = false;
     internal static IEnumerator Init()
     {
-        PreGameController.onPreGameControllerSetRuleBookGlobal += RuleBookGlobal;
-        PreGameController.onPreGameControllerSetRuleBookServerGlobal += ServerRuleBookGlobal;
-        PreGameController.onServerRecalculatedModifierAvailability += onServerRecalculatedModifierAvailability;
-        PreGameRuleVoteController.onVotesUpdated += OnVotesUpdated;
+        //PreGameController.onPreGameControllerSetRuleBookGlobal += RuleBookGlobal;
+        //PreGameController.onPreGameControllerSetRuleBookServerGlobal += ServerRuleBookGlobal;
+        //PreGameController.onServerRecalculatedModifierAvailability += onServerRecalculatedModifierAvailability;
+        //PreGameRuleVoteController.onVotesUpdated += OnVotesUpdated;
 
         //ruleCategoryDef = RuleCatalog.AddCategory("SS2_RULEBOOK_NAME", "SS2_RULEBOOK_DESC", Color.red, "SS2_RULEBOOK_EMPTY", "SS2_RULEBOOK_EDIT", () => categoryEnabled, RuleCatalog.RuleCategoryType.VoteResultGrid);
 
@@ -42,7 +42,7 @@ public class RulebookEnabler : MonoBehaviour
         enabledChoice.tooltipNameColor = Color.white;
         enabledChoice.tooltipBodyToken = "SS2_RULE_TEST_BODY_TOKEN";
         enabledChoice.excludeByDefault = false;
-        //rule.MakeNewestChoiceDefault();
+        rule.MakeNewestChoiceDefault();
 
         ExtendedRuleChoiceDef disabledChoice = rule.AddExtendedRuleChoiceDef("SS2_RULE_TEST_DISABLED", "Disabled");
         disabledChoice.sprite = Addressables.LoadAssetAsync<Sprite>("RoR2/Base/Achievements/texEngiClearGameMonsoonIcon.png").WaitForCompletion();
