@@ -8,12 +8,12 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: matCloudLayer2
-  m_Shader: {fileID: 4800000, guid: 6294c93e1c9048742a30db0ae205fdf9, type: 2}
+  m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
   m_ShaderKeywords: USE_CLOUDS
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2900
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -28,11 +28,7 @@ Material:
         m_Scale: {x: 40, y: 40}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _NormalTex:
-        m_Texture: {fileID: 2800000, guid: af164025a0e3a4f4eb5175507a6bc6fb, type: 3}
+        m_Texture: {fileID: 2800000, guid: 2cdc2de5e8574f048a7a29f601ca7411, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RemapTex:
@@ -41,23 +37,20 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _AlphaBias: 0
-    - _AlphaBoost: 0.7
-    - _Boost: 7
+    - _AlphaBoost: 3.2
+    - _Boost: 1
     - _BumpScale: 1
     - _CalcTextureAlphaOn: 0
-    - _CloudNormalMap: 0
     - _CloudOffsetOn: 0
     - _CloudsOn: 1
     - _Cull: 0
-    - _Cutoff: 0.235
+    - _Cutoff: 0.5
     - _DepthOffset: 0
     - _DetailNormalMapScale: 1
     - _DisableRemapOn: 0
     - _DistortionStrength: 0.1
     - _DstBlend: 10
-    - _EmissionFromAlbedo: 0
     - _ExternalAlpha: 1
-    - _ExtrusionStrength: 1
     - _Fade: 1
     - _FadeCloseDistance: 0.5
     - _FadeCloseOn: 0
@@ -67,19 +60,15 @@ Material:
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _InternalSimpleBlendMode: 1
-    - _InvFade: 0.02
+    - _InvFade: 0.2
     - _Metallic: 0
     - _Mode: 0
-    - _NormalStrength: 0.85
     - _OcclusionStrength: 1
     - _OffsetAmount: 0
     - _Parallax: 0.02
-    - _RampInfo: 0
     - _SkyboxOnly: 0
     - _SmoothnessTextureChannel: 0
-    - _SpecularExponent: 1
     - _SpecularHighlights: 1
-    - _SpecularStrength: 0
     - _SrcBlend: 5
     - _UVSec: 0
     - _UseUV1On: 0
@@ -92,4 +81,4 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _CutoffScroll: {r: 0, g: 0, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _TintColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+    - _TintColor: {r: 0.1509434, g: 0.1509434, b: 0.1509434, a: 1}

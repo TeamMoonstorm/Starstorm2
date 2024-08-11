@@ -18,7 +18,7 @@ namespace SS2.Components
         private bool alive = true;
         private CausticsState currentState;
 
-        private void Start()
+        private void Awake()
         {          
             NGSS_Directional sun = GameObject.FindObjectOfType<NGSS_Directional>();
             if(!sun)

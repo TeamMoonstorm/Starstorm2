@@ -18,7 +18,7 @@ namespace SS2.Components
         private ShaderAlphaState currentState;
         private Material[] materials;
         private MaterialPropertyBlock _propBlock;
-        private void Start()
+        private void Awake()
         {
             this.targetRenderer = base.GetComponent<Renderer>();
             if (this.targetRenderer)
@@ -66,13 +66,10 @@ namespace SS2.Components
 
             if (!currentState.Equals(state))
             {
-                foreach (Material material in this.materials) // idk why this is iterating but vanilla does this and im scared
-                {
-                    this._propBlock = new MaterialPropertyBlock();
-                    this.targetRenderer.GetPropertyBlock(this._propBlock);
-                    this._propBlock.SetFloat("_ExternalAlpha", state.alpha);
-                    this.targetRenderer.SetPropertyBlock(this._propBlock);
-                }
+                this._propBlock = new MaterialPropertyBlock();
+                this.targetRenderer.GetPropertyBlock(this._propBlock);
+                this._propBlock.SetFloat("_ExternalAlpha", state.alpha);
+                this.targetRenderer.SetPropertyBlock(this._propBlock);               
                 this.currentState = state;
             }
         }

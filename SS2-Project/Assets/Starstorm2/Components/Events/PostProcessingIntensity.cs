@@ -16,7 +16,7 @@ namespace SS2.Components
 
         private bool alive = true;
         private float minimumIntensity;
-        private void Start()
+        private void Awake()
         {
             if (!postProcessVolume) postProcessVolume = base.GetComponent<PostProcessVolume>();
             rainParam = postProcessVolume.profile.GetSetting<SobelRain>()?.rainIntensity;

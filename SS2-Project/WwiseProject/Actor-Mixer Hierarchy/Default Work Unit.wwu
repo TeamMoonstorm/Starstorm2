@@ -2633,53 +2633,6 @@
 												<ActiveSource Name="item_proc_explodejump_v2_02" ID="{0D594F0B-801B-4A15-8A7F-DCCC0EFEBC64}" Platform="Linked"/>
 											</ActiveSourceList>
 										</Sound>
-										<Sound Name="JetBootsExplosion" ID="{89CD4140-C217-461D-9EBC-B69FA98B6A52}" ShortID="168505324">
-											<PropertyList>
-												<Property Name="3DSpatialization" Type="int16" Value="1"/>
-												<Property Name="OverridePositioning" Type="bool" Value="True"/>
-												<Property Name="Pitch" Type="int32">
-													<ModifierList>
-														<ModifierInfo>
-															<Modifier Name="" ID="{5129CDB3-D07A-4637-8C9D-010755EDA7CC}">
-																<PropertyList>
-																	<Property Name="Enabled" Type="bool" Value="True"/>
-																	<Property Name="Max" Type="Real64" Value="200"/>
-																	<Property Name="Min" Type="Real64" Value="-200"/>
-																</PropertyList>
-															</Modifier>
-														</ModifierInfo>
-													</ModifierList>
-												</Property>
-												<Property Name="Volume" Type="Real64">
-													<ValueList>
-														<Value>-6</Value>
-													</ValueList>
-												</Property>
-											</PropertyList>
-											<ReferenceList>
-												<Reference Name="Attenuation">
-													<ObjectRef Name="BodyAttenuation" ID="{A986EB11-7B06-4BE3-9630-2DEB2646D5C4}" WorkUnitID="{01E36904-BE25-433F-9547-3A046044CA56}"/>
-												</Reference>
-												<Reference Name="Conversion">
-													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
-												</Reference>
-												<Reference Name="OutputBus">
-													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
-												</Reference>
-											</ReferenceList>
-											<ChildrenList>
-												<AudioFileSource Name="JetBootsExplosion" ID="{5A60A34C-542B-4CCE-944A-51D0385DDD93}">
-													<Language>SFX</Language>
-													<AudioFile>JetBootsExplosion.wav</AudioFile>
-													<MediaIDList>
-														<MediaID ID="901058479"/>
-													</MediaIDList>
-												</AudioFileSource>
-											</ChildrenList>
-											<ActiveSourceList>
-												<ActiveSource Name="JetBootsExplosion" ID="{5A60A34C-542B-4CCE-944A-51D0385DDD93}" Platform="Linked"/>
-											</ActiveSourceList>
-										</Sound>
 									</ChildrenList>
 								</RandomSequenceContainer>
 								<RandomSequenceContainer Name="HotSauce" ID="{287F999E-FB96-4E0F-A074-7A028A931BA2}" ShortID="834029613">
@@ -4244,6 +4197,53 @@
 									</ChildrenList>
 									<ActiveSourceList>
 										<ActiveSource Name="item_crypticsource_start" ID="{DC023B84-B286-41E0-87B5-E149F0EC242D}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="JetBootsExplosion" ID="{89CD4140-C217-461D-9EBC-B69FA98B6A52}" ShortID="168505324">
+									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="1"/>
+										<Property Name="OverridePositioning" Type="bool" Value="True"/>
+										<Property Name="Pitch" Type="int32">
+											<ModifierList>
+												<ModifierInfo>
+													<Modifier Name="" ID="{5129CDB3-D07A-4637-8C9D-010755EDA7CC}">
+														<PropertyList>
+															<Property Name="Enabled" Type="bool" Value="True"/>
+															<Property Name="Max" Type="Real64" Value="200"/>
+															<Property Name="Min" Type="Real64" Value="-200"/>
+														</PropertyList>
+													</Modifier>
+												</ModifierInfo>
+											</ModifierList>
+										</Property>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>-6</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Attenuation">
+											<ObjectRef Name="BodyAttenuation" ID="{A986EB11-7B06-4BE3-9630-2DEB2646D5C4}" WorkUnitID="{01E36904-BE25-433F-9547-3A046044CA56}"/>
+										</Reference>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="JetBootsExplosion" ID="{5A60A34C-542B-4CCE-944A-51D0385DDD93}">
+											<Language>SFX</Language>
+											<AudioFile>JetBootsExplosion.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="901058479"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="JetBootsExplosion" ID="{5A60A34C-542B-4CCE-944A-51D0385DDD93}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
 							</ChildrenList>
