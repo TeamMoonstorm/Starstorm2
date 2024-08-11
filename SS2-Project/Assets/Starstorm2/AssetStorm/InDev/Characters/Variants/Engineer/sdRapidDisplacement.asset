@@ -17,22 +17,22 @@ MonoBehaviour:
   skillDescriptionToken: SS2_ENGINEER_RAPIDDISPLACEMENT_DESC
   keywordTokens: []
   icon: {fileID: 21300000, guid: 7c16121ea96d98f42b19370781040f0c, type: 3}
-  activationStateMachineName: Body
+  activationStateMachineName: Weapon
   activationState:
     _typeName: EntityStates.Engi.RapidDisplacement, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   interruptPriority: 1
-  baseRechargeInterval: 0
+  baseRechargeInterval: 1
   baseMaxStock: 1
-  rechargeStock: 0
-  requiredStock: 0
-  stockToConsume: 0
+  rechargeStock: 1
+  requiredStock: 1
+  stockToConsume: 1
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
-  beginSkillCooldownOnSkillEnd: 0
-  cancelSprintingOnActivation: 1
+  beginSkillCooldownOnSkillEnd: 1
+  cancelSprintingOnActivation: 0
   forceSprintDuringState: 0
-  canceledFromSprinting: 1
+  canceledFromSprinting: 0
   isCombatSkill: 1
-  mustKeyPress: 1
+  mustKeyPress: 0

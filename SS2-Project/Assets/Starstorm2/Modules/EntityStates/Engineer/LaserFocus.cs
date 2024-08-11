@@ -126,7 +126,7 @@ namespace EntityStates.Engi
                 return;
             }
 
-            if (counter >= 6)
+            if (counter >= 8)
             {
                 counter = 0;
             }
@@ -156,11 +156,6 @@ namespace EntityStates.Engi
 
             if (base.isAuthority)
             {
-                if (isCrit)
-                {
-                    // Do the thing swuff mentioned
-                }
-
                 var bulletLeft = new BulletAttack {
                     owner = base.gameObject,
                     weapon = base.gameObject,
@@ -174,7 +169,7 @@ namespace EntityStates.Engi
                     force = 0,
                     falloffModel = BulletAttack.FalloffModel.None,
                     muzzleName = "MuzzleLeft",
-                    hitEffectPrefab = counter == 3 || counter == 6 ? hitsparkPrefab2 : hitsparkPrefab, // i would do % 4 but then the first hit procs it :(
+                    hitEffectPrefab = counter == 4 || counter == 8 ? hitsparkPrefab2 : hitsparkPrefab, // i would do % 4 but then the first hit procs it :(
                     isCrit = isCrit,
                     HitEffectNormal = false,
                     smartCollision = true,
@@ -195,7 +190,7 @@ namespace EntityStates.Engi
                     force = 0,
                     falloffModel = BulletAttack.FalloffModel.None,
                     muzzleName = "MuzzleRight",
-                    hitEffectPrefab = counter == 3 || counter == 6 ? hitsparkPrefab2 : hitsparkPrefab,
+                    hitEffectPrefab = counter == 4 || counter == 8 ? hitsparkPrefab2 : hitsparkPrefab,
                     isCrit = isCrit,
                     HitEffectNormal = false,
                     smartCollision = true,
@@ -203,20 +198,26 @@ namespace EntityStates.Engi
                     radius = 0.6f
                 };
 
-                if (counter == 5)
+                if (counter == 4)
                 {
                     DamageAPI.AddModdedDamageType(bulletLeft, Engineer.EngiFocusDamageProc);
                     DamageAPI.AddModdedDamageType(bulletRight, Engineer.EngiFocusDamage);
+                    base.PlayCrossfade("Gesture Left Cannon, Additive", "FireGrenadeLeft", 0.1f);
+                    base.PlayCrossfade("Gesture Right Cannon, Additive", "FireGrenadeRight", 0.1f);
+
                 }
-                else if(counter == 10)
+                else if(counter == 8)
                 {
                     DamageAPI.AddModdedDamageType(bulletRight, Engineer.EngiFocusDamageProc);
                     DamageAPI.AddModdedDamageType(bulletLeft, Engineer.EngiFocusDamage);
+                    base.PlayCrossfade("Gesture Left Cannon, Additive", "FireGrenadeLeft", 0.1f);
+                    base.PlayCrossfade("Gesture Right Cannon, Additive", "FireGrenadeRight", 0.1f);
                 }
                 else
                 {
                     DamageAPI.AddModdedDamageType(bulletLeft, Engineer.EngiFocusDamage);
                     DamageAPI.AddModdedDamageType(bulletRight, Engineer.EngiFocusDamage);
+
                 }
 
 

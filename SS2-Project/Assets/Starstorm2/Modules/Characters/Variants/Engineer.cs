@@ -55,6 +55,22 @@ namespace SS2.Survivors
             EngiFocusDamageProc = DamageAPI.ReserveDamageType();
 
             On.RoR2.HealthComponent.TakeDamage += EngiFocusDamageHook;
+            On.EntityStates.EntityState.PlayAnimation_string_string += Greaaa;
+            On.EntityStates.EntityState.PlayAnimation_string_string_string_float += Greaaa2;
+
+
+        }
+
+        private void Greaaa2(On.EntityStates.EntityState.orig_PlayAnimation_string_string_string_float orig, EntityStates.EntityState self, string layerName, string animationStateName, string playbackRateParam, float duration)
+        {
+            Debug.Log("self: " + self + " | layername: " + layerName + " | animstatename: " + animationStateName + " | playbackRateParam: " + playbackRateParam + " | duration: " + duration);
+            orig(self, layerName, animationStateName, playbackRateParam, duration);
+        }
+
+        private void Greaaa(On.EntityStates.EntityState.orig_PlayAnimation_string_string orig, EntityStates.EntityState self, string layerName, string animationStateName)
+        {
+            Debug.Log("self: " + self + " | layername: " + layerName + " | animstatename: " + animationStateName);
+            orig(self, layerName, animationStateName);
         }
 
         private void EngiFocusDamageHook(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)

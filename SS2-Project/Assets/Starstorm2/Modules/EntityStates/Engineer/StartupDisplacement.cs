@@ -10,24 +10,13 @@ using R2API;
 
 namespace EntityStates.Engi
 {
-    public class RapidDisplacement : BaseSkillState
+    public class StartupDisplacement : BaseSkillState
     {
         [SerializeField]
-        public static float baseDuration = 1;
-        [SerializeField]
-        public static float speedMultiplier = 2;
-        [SerializeField]
-        public static float hitRadius = 5f;
+        public static float baseDuration = .15f;
         //[FormatToken("SS2_EXECUTIONER_DASH_DESCRIPTION", 0)]
-
         [SerializeField]
-        public static float damageCoeff = .75f;
-
-        [SerializeField]
-        public static float procCoeff = 1;
-
-        [SerializeField]
-        public static float maxDistance = 25f;
+        public static float hopVelocity = 10f;
 
 
         private float duration;
@@ -62,11 +51,10 @@ namespace EntityStates.Engi
             //this.duration = this.baseDuration / base.attackSpeedStat;
             Ray aimRay = base.GetAimRay();
             base.StartAimMode(aimRay, 2f, false);
-            duration = baseDuration;
-            characterBody.isSprinting = true;
-            //this.PlayAnimation("Body", "Sprinting", "walkSpeed", duration);
 
-            Util.PlaySound("Play_engi_R_walkingTurret_laser_start", base.gameObject);
+            this.PlayAnimation("Body", "SprintEnter");
+
+            //Util.PlaySound("Play_engi_R_walkingTurret_laser_start", base.gameObject);
             //fireTimer = 0;
             //counter = 0;
             modelTransform = base.GetModelTransform();
@@ -79,28 +67,32 @@ namespace EntityStates.Engi
                     muzzleRight = component.FindChild("MuzzleRight");
                 }
             }
-            duration = baseDuration; 
-            characterDirection.turnSpeed = 300; 
+
+            duration = baseDuration;
+            //characterDirection.turnSpeed = 240f; 
             Debug.Log("begin " + fixedAge + " | " + duration);
-            if(duration < 1)
+            if(duration < .15f)
             {
-                duration = 1;
+                duration = .15f;
             }
-            //this.PlayAnimation("Body", "Sprinting", "walkSpeed", duration);
+            HopIfAirborne();
         }
         
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            characterBody.isSprinting = true;
+            //characterBody.isSprinting = true;
             Debug.Log("yeah " + fixedAge);
 
-            if (characterDirection && characterMotor)
-                characterMotor.rootMotion += characterDirection.forward * characterBody.moveSpeed * speedMultiplier * Time.fixedDeltaTime;
+            //this.PlayAnimation("Body", "Sprinting");
+
+            //if (characterDirection && characterMotor)
+            //    characterMotor.rootMotion += characterDirection.forward * characterBody.moveSpeed * speedMultiplier * Time.fixedDeltaTime;
 
             if (fixedAge >= duration)
             {
-                outer.SetNextStateToMain();
+                var rapid = new RapidDisplacement();
+                outer.SetNextState(rapid);
 
                 Debug.Log("goodbye " + fixedAge + " | " + duration);
             }
@@ -110,7 +102,7 @@ namespace EntityStates.Engi
         public override void OnExit()
         {
             base.OnExit();
-            Util.PlaySound("Play_engi_R_walkingTurret_laser_end", base.gameObject);
+            //Util.PlaySound("Play_engi_R_walkingTurret_laser_end", base.gameObject);
             //this.PlayAnimation("Gesture, Additive", "Empty");
             //
             //if (leftLaserInstance)
@@ -119,7 +111,16 @@ namespace EntityStates.Engi
             //if (rightLaserInstance)
             //    EntityState.Destroy(rightLaserInstance);
             Debug.Log("i have been killed " + fixedAge + " | " + duration);
-            characterDirection.turnSpeed = 720f;
+            //characterDirection.turnSpeed = 720f;
+            //this.PlayAnimation("Body", "IdleIn");
+        }
+
+        private void HopIfAirborne()
+        {
+            if (!characterMotor.isGrounded)
+            {
+                SmallHop(characterMotor, hopVelocity);
+            }
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()
