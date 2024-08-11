@@ -173,9 +173,9 @@ namespace EntityStates.NemMerc
             hologram.owner = base.gameObject;
             hologram.target = target;
 
-            //Moonstorm.Starstorm2.SS2Log.Info("-------------------");
-            //Moonstorm.Starstorm2.SS2Log.Info("timeUntilReveal: " + hologram.timeUntilReveal);
-            //Moonstorm.Starstorm2.SS2Log.Info("-------------------");
+            //SS2.SS2Log.Info("-------------------");
+            //SS2.SS2Log.Info("timeUntilReveal: " + hologram.timeUntilReveal);
+            //SS2.SS2Log.Info("-------------------");
             NetworkServer.Spawn(hologram.gameObject);
         }
 

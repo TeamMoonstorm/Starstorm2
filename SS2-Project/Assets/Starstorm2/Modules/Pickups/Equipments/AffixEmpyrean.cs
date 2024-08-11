@@ -31,12 +31,6 @@ namespace SS2.Equipments
             RoR2Application.onLoad += CreateWhitelist;
             IL.RoR2.CharacterBody.RecalculateStats += RecalculateStatsEmpyreanIL;
         }
-
-        private void CreatePillarDecal()
-        {
-            GameObject pillarGhost = SS2Assets.LoadAsset<GameObject>("EtherealFirePillarGhost", SS2Bundle.Equipments);
-            Transform decal = pillarGhost.transform.Find("Scale/RuntimeDecal");
-        }
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
@@ -175,6 +169,11 @@ namespace SS2.Equipments
             this.setStateOnHurt = base.GetComponent<SetStateOnHurt>();           
             ogSubtitle = CharacterBody.subtitleNameToken;
             model = CharacterBody.modelLocator.modelTransform.GetComponent<CharacterModel>();           
+        }
+
+        private void AddEliteBuffs()
+        {
+
         }
 
         protected override void OnFirstStackGained()

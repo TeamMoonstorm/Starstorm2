@@ -1,6 +1,7 @@
 ﻿using EntityStates;
 using EntityStates.Knight;
 using MSU;
+using R2API;
 using RoR2;
 using RoR2.Skills;
 using UnityEngine;
@@ -8,61 +9,52 @@ using UnityEngine.Networking;
 
 namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
 {
-    class StunSlash : BasicMeleeAttack, SteppedSkillDef.IStepSetter
+    class StunSlash : BasicMeleeAttack
     {
         public static float swingTimeCoefficient = 1.42f;
         [FormatToken("SS2_KNIGHT_PRIMARY_SWORD_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static GameObject beamProjectile;
-        public static SkillDef originalSkillRef;
         public static float TokenModifier_dmgCoefficient => new SwingSword().damageCoefficient;
-        public int swingSide;
 
         public override void OnEnter()
         {
-            Debug.Log("DEBUGGER The stun slash was entered!!");
             base.OnEnter();
             animator = GetModelAnimator();
-        }
-
-        public override void OnExit()
-        {
-            GenericSkill originalPrimarySkill = skillLocator.primary;
-            originalPrimarySkill.UnsetSkillOverride(gameObject, SwingSword.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
-            base.OnExit();
-        }
-
-        public override void PlayAnimation()
-        {
-            string animationStateName = (swingSide == 0) ? "SwingSword1" : "SwingSword2";
-            PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.05f);
-        }
-
-        void SteppedSkillDef.IStepSetter.SetStep(int i)
-        {
-            swingSide = i;
-            swingEffectMuzzleString = (swingSide == 0) ? "SwingLeft" : "SwingRight";
-        }
-
-        public override void OnSerialize(NetworkWriter writer)
-        {
-            base.OnSerialize(writer);
-            writer.Write((byte)swingSide);
-        }
-        public override void OnDeserialize(NetworkReader reader)
-        {
-            base.OnDeserialize(reader);
-            swingSide = (int)reader.ReadByte();
-        }
-
-        public override void AuthorityModifyOverlapAttack(OverlapAttack overlapAttack)
-        {
-            base.AuthorityModifyOverlapAttack(overlapAttack);
-            overlapAttack.damageType = DamageType.Stun1s;
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+        }
+
+        public override void OnExit()
+        {
+            if (base.isAuthority)
+            {
+                GenericSkill primarySkill = skillLocator.primary;
+                GenericSkill utilitySkill = skillLocator.utility;
+                GenericSkill specialSkill = skillLocator.special;
+
+                primarySkill.UnsetSkillOverride(gameObject, SwingSword.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+                utilitySkill.UnsetSkillOverride(gameObject, SpinUtility.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+                specialSkill.UnsetSkillOverride(gameObject, BannerSpecial.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+            }
+            
+            outer.SetNextStateToMain();
+            base.OnExit();
+        }
+
+        public override void PlayAnimation()
+        {
+            string animationStateName = "SwingSword3";
+            swingEffectMuzzleString = "SwingCenter";
+            PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.05f);
+        }
+
+        public override void AuthorityModifyOverlapAttack(OverlapAttack overlapAttack)
+        {
+            base.AuthorityModifyOverlapAttack(overlapAttack);
+            overlapAttack.AddModdedDamageType(SS2.Survivors.Knight.ExtendedStunDamageType);
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

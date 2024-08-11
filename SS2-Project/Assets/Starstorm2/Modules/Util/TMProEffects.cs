@@ -42,6 +42,7 @@ namespace SS2
             if (!component)
             {
                 component = self.messagesText.textComponent.gameObject.AddComponent<SS2TextEffects>();
+                component.textComponent = self.messagesText.textComponent; // TODO: TEST THIS idk if it works
             }
         }
 
@@ -77,16 +78,16 @@ namespace SS2
                 {
                     textComponent.ForceMeshUpdate();
                 }
-            }
-
-            public void OnEnable()
-            {
                 TMPro_EventManager.TEXT_CHANGED_EVENT.Add(ON_TEXT_CHANGED);
             }
-
-            public void OnDisable()
+            private void OnDestroy()
             {
                 TMPro_EventManager.TEXT_CHANGED_EVENT.Remove(ON_TEXT_CHANGED);
+            }
+
+            private void OnDisable()
+            {
+                this.textComponent.textInfo.linkInfo = new TMPro.TMP_LinkInfo[0]; // fuck tmpro wtf is this. text effects wont go away
             }
 
             public void ON_TEXT_CHANGED(Object obj)

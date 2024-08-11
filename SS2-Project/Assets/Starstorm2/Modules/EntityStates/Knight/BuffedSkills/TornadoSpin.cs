@@ -8,33 +8,33 @@ using UnityEngine;
 
 namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
 {
-    class TornadoSpin : BasicMeleeAttack
+    public class TornadoSpin : BasicMeleeAttack
     {
         public static float swingTimeCoefficient = 1f;
         [FormatToken("SS2_KNIGHT_SPECIAL_SPIN_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float TokenModifier_dmgCoefficient => new SpinUtility().damageCoefficient;
-        public static GameObject buffWard;
-        public static float hopVelocity;
-        public static float airControl;
-        public static float upwardVelocity;
-        public static float forwardVelocity;
-        public static float minimumY;
-        public static float aimVelocity;
+
         public static GameObject beamProjectile;
         public static SkillDef originalSkillRef;
 
-        private bool hasBuffed;
-        private bool hasSpun;
-        private GameObject wardInstance;
-        private bool hasFiredBeam = true;
+        private int _origLayer;
 
+        public float hopVelocity = new SpinUtility().hopVelocity;
+        public float airControl = new SpinUtility().airControl + 1f;
+        public float upwardVelocity = new SpinUtility().upwardVelocity + 1f;
+        public float forwardVelocity = new SpinUtility().forwardVelocity + 1f;
+        public float minimumY = new SpinUtility().minimumY + 1f;
+        public float aimVelocity = new SpinUtility().aimVelocity + 1f;
 
         public override void OnEnter()
         {
-            Debug.Log("DEBUGGER The tornado spin was entered!!");
             base.OnEnter();
-            hasBuffed = false;
-            hasSpun = false;
+            if (characterMotor)
+            {
+                _origLayer = characterMotor.capsuleCollider.gameObject.layer;
+                characterMotor.capsuleCollider.gameObject.layer = LayerIndex.fakeActor.intVal;
+                characterMotor.Motor.RebuildCollidableLayers();
+            }
 
             characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
             animator = GetModelAnimator();
@@ -42,15 +42,21 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
             Vector3 direction = GetAimRay().direction;
 
             // Launch Knight where they are aiming
-            if (isAuthority)
+            if (base.isAuthority)
             {
-                characterBody.isSprinting = true;
+                base.characterBody.isSprinting = false;
                 direction.y = Mathf.Max(direction.y, minimumY);
-                Vector3 a = direction.normalized * aimVelocity * moveSpeedStat;
-                Vector3 b = Vector3.up * upwardVelocity;
-                Vector3 b2 = new Vector3(direction.x, 0f, direction.z).normalized * forwardVelocity;
-                characterMotor.Motor.ForceUnground();
-                characterMotor.velocity = a + b + b2;
+                Vector3 val = direction.normalized * aimVelocity * moveSpeedStat;
+                Vector3 val2 = Vector3.up * upwardVelocity;
+                Vector3 val3 = new Vector3(direction.x, 0f, direction.z);
+                Vector3 val4 = val3.normalized * forwardVelocity;
+                base.characterMotor.Motor.ForceUnground();
+                base.characterMotor.velocity = val + val2 + val4;
+            }
+
+            if (!isGrounded)
+            {
+                SmallHop(characterMotor, hopVelocity);
             }
         }
 
@@ -58,46 +64,54 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
         {
             base.FixedUpdate();
 
-            if (animator.GetFloat("BuffActive") >= 0.5f && !hasBuffed)
-            {
-                hasBuffed = true;
-                wardInstance = Object.Instantiate(buffWard);
-                wardInstance.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
-                wardInstance.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(gameObject);
-                Util.PlaySound("CyborgUtility", gameObject);
-            }
+            if (base.cameraTargetParams) base.cameraTargetParams.fovOverride = Mathf.Lerp(SS2.Survivors.Knight.dodgeFOV, 60f, base.fixedAge / duration);
+            base.characterMotor.moveDirection = base.inputBank.moveVector;
 
-            if (animator.GetFloat("SpecialSwing") >= 0.5f && !hasSpun)
+            if (base.isAuthority && base.characterMotor.isGrounded)
             {
-                hasSpun = true;
-                if (!isGrounded)
-                {
-                    SmallHop(characterMotor, hopVelocity);
-                }
+                this.outer.SetNextStateToMain();
+                return;
             }
         }
 
-
         public override void OnExit()
         {
-            Debug.Log("DEBUGGER The passive was exited!!");
-
-            ProjectileManager.instance.FireProjectile(
-                beamProjectile,
-                GetAimRay().origin,
-                Util.QuaternionSafeLookRotation(GetAimRay().direction),
-                gameObject,
-                damageStat * damageCoefficient,
-                0f,
-                RollCrit(),
-                DamageColorIndex.Default,
-                null,
-                80f);
-
             characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage;
 
-            GenericSkill originalUtilitySkill = skillLocator.utility;
-            originalUtilitySkill.UnsetSkillOverride(gameObject, SpinUtility.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+            if (base.isAuthority)
+            {
+                ProjectileManager.instance.FireProjectile(
+                    beamProjectile,
+                    GetAimRay().origin,
+                    Util.QuaternionSafeLookRotation(GetAimRay().direction),
+                    gameObject,
+                    damageStat * damageCoefficient,
+                    0f,
+                    RollCrit(),
+                    DamageColorIndex.Default,
+                    null,
+                    80f
+                );
+            }
+
+            if (base.isAuthority)
+            {
+                GenericSkill primarySkill = skillLocator.primary;
+                GenericSkill utilitySkill = skillLocator.utility;
+                GenericSkill specialSkill = skillLocator.special;
+
+                primarySkill.UnsetSkillOverride(gameObject, SwingSword.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+                utilitySkill.UnsetSkillOverride(gameObject, SpinUtility.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+                specialSkill.UnsetSkillOverride(gameObject, BannerSpecial.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+
+                utilitySkill.DeductStock(1);
+            }
+
+            if (characterMotor) //Nasty fucking hack
+            {
+                characterMotor.capsuleCollider.gameObject.layer = _origLayer;
+                characterMotor.Motor.RebuildCollidableLayers();
+            }
 
             outer.SetNextStateToMain();
             base.OnExit();
@@ -105,7 +119,7 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
 
         public override void PlayAnimation()
         {
-            PlayCrossfade("Body", "SwingSpecial", "Special.playbackRate", duration * swingTimeCoefficient, 0.15f);
+            PlayCrossfade("FullBody, Override", "Utility", "Utility.playbackRate", duration * swingTimeCoefficient, 0.15f);
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

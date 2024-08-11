@@ -94,7 +94,6 @@ namespace SS2
 				RoR2Application.onFixedUpdate += OnFixedUpdate;
 				TeleporterInteraction.onTeleporterBeginChargingGlobal += OnTeleporterBeginChargingGlobal;
 				R2API.RecalculateStatsAPI.GetStatCoefficients += GetStatCoefficients;
-				On.RoR2.ChestBehavior.Awake += ChestBehavior_Awake;
 				On.RoR2.ChestBehavior.ItemDrop += ChestBehavior_ItemDrop;
 			}
 			
@@ -115,7 +114,6 @@ namespace SS2
 				RoR2Application.onFixedUpdate -= OnFixedUpdate;
 				TeleporterInteraction.onTeleporterBeginChargingGlobal -= OnTeleporterBeginChargingGlobal;
 				R2API.RecalculateStatsAPI.GetStatCoefficients -= GetStatCoefficients;
-				On.RoR2.ChestBehavior.Awake -= ChestBehavior_Awake;
 				On.RoR2.ChestBehavior.ItemDrop -= ChestBehavior_ItemDrop;
 			}
 			
@@ -441,14 +439,6 @@ namespace SS2
 				EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("ChestVelocityCurseEffect", SS2Bundle.Interactables), new EffectData { origin = self.transform.position }, true);
 		}
 
-        private static void ChestBehavior_Awake(On.RoR2.ChestBehavior.orig_Awake orig, ChestBehavior self)
-        {
-            if(GetActiveCurseCount(CurseIndex.ChestTimer) > 0)
-            {
-				self.openState = openState;
-            }
-			orig(self);
-        }
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static float GetChestTimer()
         {
@@ -461,6 +451,7 @@ namespace SS2
 			int chestVelocity = GetActiveCurseCount(CurseIndex.ChestVelocity);
 			int chestMonsters = GetActiveCurseCount(CurseIndex.ChestMonsters);
 			int chestSpite = GetActiveCurseCount(CurseIndex.ChestSpite);
+			int chestTimer = GetActiveCurseCount(CurseIndex.ChestTimer);
 
 			ChestBehavior chestBehavior = interactableObject.GetComponent<ChestBehavior>();
 			Vector3 position = interactableObject.transform.position;
@@ -494,7 +485,8 @@ namespace SS2
 								};
 								EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("MonstersOnChestOpen", SS2Bundle.Interactables), effectData, true);
 							}
-							NetworkServer.Destroy(gameObject2);
+							else
+								NetworkServer.Destroy(gameObject2);
 						}
 					}					
 				}
@@ -525,6 +517,10 @@ namespace SS2
 
 					}
 				}
+				if(chestTimer > 0)
+                {
+					chestBehavior.openState = openState;
+                }
 			}			
         }
 

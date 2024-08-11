@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Networking;
 using SS2.Components;
+using SS2;
 using System.Collections.Generic;
 namespace EntityStates.Cyborg2
 {
@@ -20,6 +21,7 @@ namespace EntityStates.Cyborg2
         private Vector3 storedVelocity;
         private bool didTeleport;
         private Vector3 lastPositionBeforeTeleport;
+        Vector3 initialPosition;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -32,6 +34,7 @@ namespace EntityStates.Cyborg2
                 return;
             }
 
+            this.initialPosition = base.transform.position;
             this.teleportTarget = this.teleporterOwnership.teleporter.GetSafeTeleportPosition();
 
             this.duration = baseDuration; //movespeed? attackspeed?
@@ -94,21 +97,20 @@ namespace EntityStates.Cyborg2
                 storedVelocity.y = Mathf.Max(storedVelocity.y, 0);
                 //base.characterMotor.velocity = storedVelocity * exitVelocityCoefficient;
             }
-            if(this.teleporterOwnership)
+            Transform modelTransform = base.characterBody.modelLocator.modelTransform;
+            if (modelTransform)
             {
-                this.teleporterOwnership.DoTeleport();
-                if (NetworkServer.active)
-                {
-                    TeleporterOrb teleporterOrb = new TeleporterOrb();
-                    teleporterOrb.origin = lastPositionBeforeTeleport;
-                    teleporterOrb.totalDuration = this.duration;
-                    teleporterOrb.attacker = base.gameObject;
-                    teleporterOrb.inflictor = base.gameObject;
-                    teleporterOrb.damageValue = characterBody.damage * damageCoefficient;
-                    teleporterOrb.isCrit = base.RollCrit();
-                    teleporterOrb.targetObjects = teleporterOwnership.teleporter.GetTargets();
-                    RoR2.Orbs.OrbManager.instance.AddOrb(teleporterOrb);
-                }
+                TemporaryOverlay temporaryOverlay2 = modelTransform.gameObject.AddComponent<TemporaryOverlay>();
+                temporaryOverlay2.duration = 0.67f;
+                temporaryOverlay2.animateShaderAlpha = true;
+                temporaryOverlay2.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
+                temporaryOverlay2.destroyComponentOnEnd = true;
+                temporaryOverlay2.originalMaterial = SS2Assets.LoadAsset<Material>("matTeleportOverlay", SS2Bundle.Indev);
+                temporaryOverlay2.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
+            }
+            if (this.teleporterOwnership)
+            {
+                this.teleporterOwnership.DoTeleport(initialPosition);
             }
             if (this.camera)
             {

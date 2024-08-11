@@ -15,7 +15,7 @@ namespace SS2
     /// </summary>
     public abstract class SS2Survivor : ISurvivorContentPiece, IContentPackModifier
     {
-        public  SurvivorAssetCollection AssetCollection { get; private set; }
+        public  SurvivorAssetCollection AssetCollection { get; set; }
         public SurvivorDef SurvivorDef { get; protected  set; }
         public NullableRef<GameObject> MasterPrefab { get; protected set; }
         CharacterBody IGameObjectContentPiece<CharacterBody>.Component => CharacterPrefab.GetComponent<CharacterBody>();

@@ -4,6 +4,7 @@ using RoR2;
 using RoR2.Skills;
 using RoR2.Orbs;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 namespace SS2.Components
 {
     public class TeleporterProjectile : MonoBehaviour
@@ -12,22 +13,16 @@ namespace SS2.Components
         private GameObject owner;
 		private CharacterBody ownerBody;
         private ProjectileTeleporterOwnership ownership;
-		public float damageRadius = 10f;
+		public float teleportRadius = 10f;
 		public Transform indicatorStartTransform;
-		public float duration = 3f;
 		private float stopwatch;
 		private bool hasTeleported;
 
-		private static float targetUpdateInterval = 0.167f;
-		private float updateStopwatch;
-		private List<HealthComponent> targetList;
-		private BeamChain beamChain;
+		private static float funnyNumber = 0.5f;
         void Start()
         {
             this.controller = base.GetComponent<ProjectileController>();
             this.owner = this.controller.owner;
-			beamChain = base.GetComponent<BeamChain>();
-			targetList = new List<HealthComponent>();
             if(this.owner)
             {
                 this.ownership = this.owner.AddComponent<ProjectileTeleporterOwnership>();
@@ -35,25 +30,7 @@ namespace SS2.Components
 				ownerBody = owner.GetComponent<CharacterBody>();
             }
         }
-        private void FixedUpdate()
-        {
-			updateStopwatch -= Time.fixedDeltaTime;
-			if(updateStopwatch <= 0)
-            {
-				updateStopwatch = targetUpdateInterval;
-				UpdateTargets();
-            }
-			stopwatch += Time.fixedDeltaTime;
-			if(!hasTeleported && owner && stopwatch >= duration)
-            {
-				hasTeleported = true;
-				EntityStateMachine body = EntityStateMachine.FindByCustomName(owner, "Body");
-				if(body)
-                {
-					body.SetInterruptState(new EntityStates.Cyborg2.Teleport(), EntityStates.InterruptPriority.Vehicle);
-                }
-            }
-        }
+
         private void Update()
         {
             if(indicatorStartTransform && owner)
@@ -61,80 +38,89 @@ namespace SS2.Components
 				indicatorStartTransform.position = owner.transform.position;
             }
         }
-
-		private void UpdateTargets()
-        {
-			Vector3 between = GetSafeTeleportPosition() - ownerBody.corePosition;
-			RaycastHit[] array2 = Physics.SphereCastAll(ownerBody.corePosition, damageRadius, between.normalized, between.magnitude, LayerIndex.CommonMasks.bullet, QueryTriggerInteraction.UseGlobal);
-			//List<HealthComponent> missing = new List<HealthComponent>(targetList);
-			for (int j = 0; j < array2.Length; j++)
-			{
-				HurtBox hurtBox = array2[j].collider.GetComponent<HurtBox>();
-				if (!hurtBox) continue;
-				HealthComponent healthComponent = hurtBox.healthComponent;
-				bool contains = targetList.Contains(healthComponent);
-				if (healthComponent && !contains && FriendlyFireManager.ShouldSeekingProceed(healthComponent, ownerBody.teamComponent.teamIndex))
-				{
-					AddTarget(healthComponent);
-				}
-				//if(contains)
-    //            {
-				//	missing.Remove(healthComponent);
-    //            }
-			}
-
-		}
-		private void AddTarget(HealthComponent healthComponent)
-        {
-			targetList.Add(healthComponent);
-			beamChain.AddTarget(healthComponent.body.mainHurtBox.transform);
-		}
-		//private void ClearTarget(HealthComponent healthComponent)
-		//{
-		//	beamChain.AddTarget(healthComponent.body.mainHurtBox.transform);
-		//}
-		public List<HealthComponent> GetTargets()
-        {
-			return targetList;
-        }
 		public Vector3 GetSafeTeleportPosition()
         {
             //lol
             return base.transform.position;
         }
-        public void OnTeleport()
+        public void OnTeleport(Vector3 startPosition)
         {
 			Destroy(base.gameObject);
 			if (!this.owner) return;
+
+			if(NetworkServer.active)
+            {
+				SphereSearch search = new SphereSearch();
+				search.radius = teleportRadius;
+				search.origin = base.transform.position;
+				search.mask = LayerIndex.entityPrecise.mask;
+				TeamMask mask = TeamMask.GetUnprotectedTeams(this.controller.teamFilter.teamIndex);
+				HurtBox[] hurtBoxes = search.RefreshCandidates().FilterCandidatesByHurtBoxTeam(mask).FilterCandidatesByDistinctHurtBoxEntities().GetHurtBoxes();
+
+				for(int i = 0; i < hurtBoxes.Length; i++)
+                {
+					if(hurtBoxes[i].healthComponent)
+                    {
+                        CharacterBody body = hurtBoxes[i].healthComponent.body;
+                        Vector3 offset = body.footPosition - base.transform.position;
+                        Vector3 dest = startPosition + (offset * funnyNumber);
+                        if(Physics.Raycast(startPosition, offset.normalized, out RaycastHit hit, offset.magnitude * funnyNumber, LayerIndex.world.mask))
+                        {
+                            dest = hit.point;
+                        }
+                        EffectManager.SimpleEffect(SS2Assets.LoadAsset<GameObject>("TeleportDashEffect", SS2Bundle.Indev), body.corePosition, Quaternion.LookRotation(dest - body.corePosition), true);
+					
+						TeleportHelper.TeleportBody(body, dest);
+
+                        if(body.modelLocator && body.modelLocator.modelTransform)
+                        {
+                            Transform modelTransform = body.modelLocator.modelTransform;
+                            if (modelTransform)
+                            {
+                                TemporaryOverlay temporaryOverlay2 = modelTransform.gameObject.AddComponent<TemporaryOverlay>();
+                                temporaryOverlay2.duration = 0.67f;
+                                temporaryOverlay2.animateShaderAlpha = true;
+                                temporaryOverlay2.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
+                                temporaryOverlay2.destroyComponentOnEnd = true;
+                                temporaryOverlay2.originalMaterial = SS2Assets.LoadAsset<Material>("matTeleportOverlay", SS2Bundle.Indev);
+                                temporaryOverlay2.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
+                            }
+                        }
+					}
+						
+                }
+				
+			}
+
 			//vfx
 			//sound
 			//teleporter anim??
-        }
+		}
 
-		
-        public class ProjectileTeleporterOwnership : MonoBehaviour
+
+		public class ProjectileTeleporterOwnership : MonoBehaviour
         {
             public TeleporterProjectile teleporter;
             private SkillDef teleportSkillDef;
             private CharacterBody body;
             private SkillLocator skillLocator;
 
-            public static bool destroyOnFirstTeleport = false;
+            public static bool destroyOnFirstTeleport = true;
             private void Awake()
             {
-                //this.body = base.GetComponent<CharacterBody>();
+                this.body = base.GetComponent<CharacterBody>();
 
-                //this.teleportSkillDef = SS2Assets.LoadAsset<SkillDef>("Cyborg2Teleport", SS2Bundle.Indev);
-                //if(this.body)
-                //{
-                //    this.skillLocator = body.skillLocator;
-                //    this.skillLocator.utility.SetSkillOverride(this, teleportSkillDef, GenericSkill.SkillOverridePriority.Contextual);
-                //}
+                this.teleportSkillDef = SS2Assets.LoadAsset<SkillDef>("Cyborg2Teleport", SS2Bundle.Indev);
+                if (this.body)
+                {
+                    this.skillLocator = body.skillLocator;
+                    this.skillLocator.utility.SetSkillOverride(this, teleportSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+                }
             }
 
-            public void DoTeleport()
+            public void DoTeleport(Vector3 startPosition)
             {
-                this.teleporter.OnTeleport();
+                this.teleporter.OnTeleport(startPosition);
 
                 if(destroyOnFirstTeleport)
                     this.UnsetOverride();
@@ -142,10 +128,10 @@ namespace SS2.Components
 
             public void UnsetOverride()
             {
-                //if(this.skillLocator)
-                //{
-                //    this.skillLocator.utility.UnsetSkillOverride(this, teleportSkillDef, GenericSkill.SkillOverridePriority.Contextual);
-                //}
+                if (this.skillLocator)
+                {
+                    this.skillLocator.utility.UnsetSkillOverride(this, teleportSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+                }
                 Destroy(this);
             }
 
@@ -158,109 +144,5 @@ namespace SS2.Components
             }
         }
     }
-
-	public class TeleporterOrb : Orb
-	{
-		public override void Begin()
-		{
-			base.duration = 0.1f;
-			this.target = PickNextTarget(origin);
-			if(this.target)
-            {
-				this.targetObjects.Remove(this.target.healthComponent);
-				// this.totalDuration / this.targetObjects.Count;
-				EffectData effectData = new EffectData
-				{
-					origin = this.origin,
-					genericFloat = base.duration
-				};
-				effectData.SetHurtBoxReference(this.target);
-				EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("TeleporterDamageOrbEffect", SS2Bundle.Indev), effectData, true);
-			}			
-		}
-
-		public override void OnArrival()
-		{
-			// orb "returns" to player at the end sooo
-			if (this.target && this.target.healthComponent != attacker.GetComponent<HealthComponent>())
-			{
-				HealthComponent healthComponent = this.target.healthComponent;
-				if (healthComponent && healthComponent.alive)
-				{
-					DamageInfo damageInfo = new DamageInfo();
-					damageInfo.damage = this.damageValue;
-					damageInfo.attacker = this.attacker;
-					damageInfo.inflictor = this.inflictor;
-					damageInfo.force = Vector3.zero;
-					damageInfo.crit = this.isCrit;
-					damageInfo.procChainMask = this.procChainMask;
-					damageInfo.procCoefficient = 1f;
-					damageInfo.position = this.target.transform.position;
-					damageInfo.damageColorIndex = DamageColorIndex.Default;
-					damageInfo.damageType = DamageType.Shock5s;					
-					healthComponent.TakeDamage(damageInfo);
-					GlobalEventManager.instance.OnHitEnemy(damageInfo, healthComponent.gameObject);
-					GlobalEventManager.instance.OnHitAll(damageInfo, healthComponent.gameObject);
-					healthComponent.body.AddBuff(SS2Content.Buffs.BuffCyborgPrimed);
-				}
-				EffectManager.SimpleEffect(SS2Assets.LoadAsset<GameObject>("TeleporterDamageImpact", SS2Bundle.Indev), this.target.transform.position, Quaternion.identity, true);
-				HurtBox hurtBox = this.PickNextTarget(this.target.transform.position);
-				if (hurtBox)
-				{
-					TeleporterOrb lightningOrb = new TeleporterOrb();
-					lightningOrb.origin = this.target.transform.position;
-					lightningOrb.target = hurtBox;
-					lightningOrb.attacker = this.attacker;
-					lightningOrb.inflictor = this.inflictor;
-					lightningOrb.teamIndex = this.teamIndex;
-					lightningOrb.isCrit = this.isCrit;
-					lightningOrb.targetObjects = this.targetObjects;
-					lightningOrb.procChainMask = default(ProcChainMask);
-					lightningOrb.procCoefficient = 1f;
-					lightningOrb.damageColorIndex = DamageColorIndex.Default;
-					lightningOrb.damageType = DamageType.Shock5s;
-					OrbManager.instance.AddOrb(lightningOrb);
-				}
-			}
-		}
-
-		public HurtBox PickNextTarget(Vector3 position)
-		{
-			HurtBox owner = attacker ? attacker.GetComponent<CharacterBody>()?.mainHurtBox : null;
-			if (this.targetObjects == null || this.targetObjects.Count == 0)
-			{
-				return owner;
-			}
-
-			for(int i = 0; i < targetObjects.Count; i++)
-            {
-				HealthComponent h = targetObjects[i];
-				if (h && h.body.mainHurtBox)
-					return h.body.mainHurtBox;
-            }
-			return owner;
-		}
-		public float totalDuration;
-
-		public float damageValue;
-
-		public GameObject attacker;
-
-		public GameObject inflictor;
-
-		public List<HealthComponent> targetObjects;
-
-		public TeamIndex teamIndex;
-
-		public bool isCrit;
-
-		public ProcChainMask procChainMask;
-
-		public float procCoefficient = 1f;
-
-		public DamageColorIndex damageColorIndex;
-
-		public DamageType damageType;
-	}
 }
 

@@ -56,11 +56,11 @@ namespace SS2.Survivors
             shockMine = DeployableAPI.RegisterDeployableSlot((self, deployableCountMultiplier) => { return maxShockMines; });
 
             SS2Assets.LoadAsset<GameObject>("ShockMine", SS2Bundle.Indev).GetComponent<RoR2.Projectile.ProjectileDeployToOwner>().deployableSlot = shockMine;
-            SS2Assets.LoadAsset<GameObject>("CyborgBuffTeleporter", SS2Bundle.Indev).GetComponent<RoR2.Projectile.ProjectileDeployToOwner>().deployableSlot = teleporter;
+            //SS2Assets.LoadAsset<GameObject>("CyborgBuffTeleporter", SS2Bundle.Indev).GetComponent<RoR2.Projectile.ProjectileDeployToOwner>().deployableSlot = teleporter;
             SS2Assets.LoadAsset<GameObject>("BloonTrap", SS2Bundle.Indev).GetComponent<RoR2.Projectile.ProjectileDeployToOwner>().deployableSlot = bloonTrap;
 
             applyCyborgPrime = DamageAPI.ReserveDamageType();
-            SS2Assets.LoadAsset<GameObject>("MagnetProjectile", SS2Bundle.Indev).AddComponent<R2API.DamageAPI.ModdedDamageTypeHolderComponent>().Add(applyCyborgPrime);
+            SS2Assets.LoadAsset<GameObject>("MagnetShardProjectile", SS2Bundle.Indev).AddComponent<R2API.DamageAPI.ModdedDamageTypeHolderComponent>().Add(applyCyborgPrime);
             if (SS2Main.ScepterInstalled)
             {
                 //ScepterCompat();
@@ -114,6 +114,7 @@ namespace SS2.Survivors
                 }, true);
             }
         }
+
 
         public override bool IsAvailable(ContentPack contentPack)
         {
@@ -171,6 +172,7 @@ namespace SS2.Survivors
                 explosionRequests.Enqueue(new ExplosionRequest
                 {
                     target = body.mainHurtBox,
+                    initialPosition = body.corePosition,
                     attacker = attackerBody.gameObject,
                     damageTotal = 3f * attackerBody.damage,
                     crit = damageInfo.crit,

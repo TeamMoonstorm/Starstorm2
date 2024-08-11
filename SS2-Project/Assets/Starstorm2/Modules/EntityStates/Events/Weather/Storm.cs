@@ -10,70 +10,98 @@ using System.Linq;
 using UnityEngine.Events;
 namespace EntityStates.Events
 {
+    // being lazy. should be StormX : Storm and use entitystateconfigs
     public class Storm : GenericWeatherState
     {
         private static float chargeInterval = 10f;
         private static float chargeVariance = 0.66f;
         private static float chargeFromKill = 0.5f;
         private static float effectLerpDuration = 5f;
-        
+        private static SerializableEntityStateType textState = new SerializableEntityStateType(typeof(StormController.EtherealFadeIn));
+        private static SerializableEntityStateType textState2 = new SerializableEntityStateType(typeof(StormController.EtherealBlinkIn)); // fuck my life
+        private static Color textColor = Color.gray;       
+        private static int bossEliteLevel = 4;
+        private static int eliteLevel = 3;
+        private static float eliteChancePerExtraLevelCoefficient = 2f;
+        private static float eliteChancePerSecond = 3f;
+        private static float baseEliteChance = 10f;
+
         private float charge;
-        private float chargeStopwatch = 10f;
+        private float chargeStopwatch = 10f; // longer stopwatch means more variance
+        private bool isPermanent;
+        private float eliteChance;
+        private float eliteChanceStopwatch;
+        private float eliteChanceTimer;
+        private float maxEliteChanceInterval = 24f;
+        private float minEliteChanceInterval = 4f;
 
         public float lerpDuration;
         public int stormLevel;
-        private int maxStormLevel;
+        public bool instantStorm;
 
-        private float chargeFromKills;
-        private float chargeFromTime;
+        private UnityAction<GameObject> modifyMonsters;
+        private UnityAction<GameObject> modifyBoss;
         public override void OnEnter()
         {
             base.OnEnter();
 
-            GameplayEventTextController.Instance.EnqueueNewTextRequest(new GameplayEventTextController.EventTextRequest
+
+            bool skip = stormController.AttemptSkip();
+            GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
             {
                 eventToken = "ermmmm..... storm " + stormLevel,
-                eventColor = Color.gray,
+                eventColor = textColor,
                 textDuration = 6,
-            });
-            this.stormController.StartLerp(stormLevel, lerpDuration);
-            maxStormLevel = Mathf.FloorToInt(DifficultyCatalog.GetDifficultyDef(Run.instance.selectedDifficulty).scalingValue) + 2; // drizzle 3, monsoon/typhoon 5
-            if(NetworkServer.active)
+            };
+            if (skip)
+            {              
+                this.stormLevel++;             
+                stormController.OnStormLevelCompleted(); /////////////////////////////////////////////////////////////////// lmao
+                request.eventToken = "ermmmm..... storm " + stormLevel;
+                request.customTextState = instantStorm ? textState2 : textState;
+                request.textDuration = 2;
+            }
+            GameplayEventTextController.Instance.EnqueueNewTextRequest(request);
+            
+            if(instantStorm)
+                this.stormController.StartLerp(stormLevel, 0);
+            else
+                this.stormController.StartLerp(stormLevel, lerpDuration);
+
+
+            isPermanent = stormController.IsPermanent && this.stormLevel == stormController.MaxStormLevel;
+
+            if (NetworkServer.active)
             {
-                GlobalEventManager.onCharacterDeathGlobal += AddCharge;
-                CharacterBody.onBodyStartGlobal += BuffEnemy;
-
-                var enemies = TeamComponent.GetTeamMembers(TeamIndex.Monster).Concat(TeamComponent.GetTeamMembers(TeamIndex.Lunar)).Concat(TeamComponent.GetTeamMembers(TeamIndex.Void));
-                foreach (var teamMember in enemies)
-                {
-                    BuffEnemy(teamMember.body);
-                }
-
                 CombatDirector bossDirector = TeleporterInteraction.instance?.bossDirector;
-                if (bossDirector && stormLevel >= 5)
-                {                 
-                    bossDirector.onSpawnedServer.AddListener(new UnityAction<GameObject>(ModifySpawnedBoss));
+                if (bossDirector && stormLevel >= bossEliteLevel)
+                {
+                    bossDirector.onSpawnedServer.AddListener(modifyBoss = new UnityAction<GameObject>(ModifySpawnedBoss));
                 }
-                    
+
 
                 foreach (CombatDirector combatDirector in CombatDirector.instancesList)
                 {
-                    if(combatDirector != bossDirector)
-                        combatDirector.onSpawnedServer.AddListener(new UnityAction<GameObject>(ModifySpawnedMasters));
+                    if (combatDirector != bossDirector)
+                        combatDirector.onSpawnedServer.AddListener(modifyMonsters = new UnityAction<GameObject>(ModifySpawnedMasters));
                 }
-                
+
             }
-            
-            
+
+            CharacterBody.onBodyStartGlobal += BuffEnemy;
+            var enemies = TeamComponent.GetTeamMembers(TeamIndex.Monster).Concat(TeamComponent.GetTeamMembers(TeamIndex.Lunar)).Concat(TeamComponent.GetTeamMembers(TeamIndex.Void));
+            foreach (var teamMember in enemies)
+            {
+                BuffEnemy(teamMember.body);
+            }
         }
 
-        private static float SPAWNCHANCETEMPJUSTFORTESTINGIPROMISE = 10f;
-        // TODO: move elite spawning to stormcontroller, use credits
-        // idk why this is in the entitystates tbh
         private void ModifySpawnedMasters(GameObject masterObject)
         {
-            if(Util.CheckRoll(SPAWNCHANCETEMPJUSTFORTESTINGIPROMISE * (stormLevel - 3)))
+            int extraLevels = this.stormLevel - eliteLevel + 1;
+            if (Util.CheckRoll(eliteChance * extraLevels * eliteChancePerExtraLevelCoefficient))
             {
+                eliteChance /= 2f;
                 CreateStormElite(masterObject);
             }
         }
@@ -99,27 +127,35 @@ namespace EntityStates.Events
             }
         }
 
-        // TODO: stronger enemies give more charge(?), move charge to stormcontroller(?)
-        private void AddCharge(DamageReport damageReport)
+        private void BuffEnemy(CharacterBody body)
         {
-            CharacterBody body = damageReport.victimBody;
-            if(ShouldCharge() && TeamMask.GetEnemyTeams(TeamIndex.Player).HasTeam(damageReport.victimTeamIndex))//body.HasBuff(SS2Content.Buffs.BuffStorm) && damageReport.attackerTeamIndex == TeamIndex.Player)
+            if (!NetworkServer.active)
+                return;
+            var team = body.teamComponent.teamIndex;
+            int buffCount = body.GetBuffCount(SS2Content.Buffs.BuffStorm);
+            if (TeamMask.GetEnemyTeams(TeamIndex.Player).HasTeam(team) && !body.bodyFlags.HasFlag(CharacterBody.BodyFlags.Masterless))
             {
-                float charge = chargeFromKill;
-                float variance = chargeVariance * charge;
-
-                float charge1 = StormController.mobChargeRng.RangeFloat(charge - variance, charge + variance);
-                this.chargeFromKills += charge1;
-                this.charge += charge1;
-                this.stormController.AddCharge(charge1);
+                int buffsToGrant = stormLevel - buffCount;
+                for (int i = 0; i < buffsToGrant; i++)
+                    body.AddBuff(SS2Content.Buffs.BuffStorm);
             }
         }
+
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
             if (!NetworkServer.active) return;
 
+            // im stupid or what
+            this.eliteChanceStopwatch -= Time.fixedDeltaTime;
+            eliteChanceTimer += Time.fixedDeltaTime;
+            if(eliteChanceStopwatch <= 0)
+            {               
+                eliteChanceStopwatch += UnityEngine.Random.Range(minEliteChanceInterval, maxEliteChanceInterval);
+                eliteChance += eliteChancePerSecond * Time.fixedDeltaTime * eliteChanceTimer;
+                eliteChanceTimer = 0;
+            }
             this.chargeStopwatch -= Time.fixedDeltaTime;
             if(this.chargeStopwatch <= 0 && ShouldCharge())
             {
@@ -129,18 +165,19 @@ namespace EntityStates.Events
                 this.stormController.AddCharge(charge);
             }
 
-            if (stormLevel < maxStormLevel && charge >= 100f)
+            if (!isPermanent && charge >= 100f)
             {
-                outer.SetNextState(new Storm { stormLevel = stormLevel + 1, lerpDuration = 15f });
+                this.stormController.OnStormLevelCompleted();
+                outer.SetNextState(new Storm { stormLevel = stormLevel + 1, lerpDuration = 8f });
                 return;
-            }
-                
+            }               
         }
 
         private bool ShouldCharge()
         {
             bool shouldCharge = !TeleporterInteraction.instance;
-            shouldCharge |= TeleporterInteraction.instance && TeleporterInteraction.instance.isIdle && stormLevel < maxStormLevel;
+            shouldCharge |= TeleporterInteraction.instance && TeleporterInteraction.instance.isIdle;
+            shouldCharge &= this.stormLevel < this.stormController.MaxStormLevel;
             return shouldCharge;
         }
 
@@ -151,7 +188,6 @@ namespace EntityStates.Events
             float variance = chargeVariance * creditsPerSecond;
 
             float charge = StormController.chargeRng.RangeFloat(creditsPerSecond - variance, creditsPerSecond + variance) * deltaTime;
-            this.chargeFromTime += charge;
             return charge;
 
         }
@@ -160,37 +196,22 @@ namespace EntityStates.Events
         {
             base.OnExit();
             SS2Log.Info($"Storm level finished in {fixedAge} seconds.");
-            SS2Log.Info($"Charge from kills = {chargeFromKills}");
-            SS2Log.Info($"Charge form time = {chargeFromTime}");
 
-            GlobalEventManager.onCharacterDeathGlobal -= AddCharge;
             CharacterBody.onBodyStartGlobal -= BuffEnemy;
 
             CombatDirector bossDirector = TeleporterInteraction.instance?.bossDirector;
-            if (bossDirector && stormLevel >= 5)
+            if (bossDirector && stormLevel >= 4)
             {
-                bossDirector.onSpawnedServer.RemoveListener(new UnityEngine.Events.UnityAction<GameObject>(ModifySpawnedBoss));
+                bossDirector.onSpawnedServer.RemoveListener(modifyBoss);
             }
             foreach (CombatDirector combatDirector in CombatDirector.instancesList)
             {
                 if (combatDirector != bossDirector)
-                    combatDirector.onSpawnedServer.RemoveListener(new UnityEngine.Events.UnityAction<GameObject>(ModifySpawnedMasters));
+                    combatDirector.onSpawnedServer.RemoveListener(modifyMonsters);
             }
         }
 
-        private void BuffEnemy(CharacterBody body)
-        {
-            if (!NetworkServer.active)
-                return;
-            var team = body.teamComponent.teamIndex;
-            int buffCount = body.GetBuffCount(SS2Content.Buffs.BuffStorm);
-            if (TeamMask.GetEnemyTeams(TeamIndex.Player).HasTeam(team) && !body.bodyFlags.HasFlag(CharacterBody.BodyFlags.Masterless))
-            {
-                int buffsToGrant = stormLevel - buffCount;
-                for(int i = 0; i < buffsToGrant; i++)
-                    body.AddBuff(SS2Content.Buffs.BuffStorm);
-            }
-        }
+        
 
         public override void OnSerialize(NetworkWriter writer)
         {
@@ -204,6 +225,7 @@ namespace EntityStates.Events
         }
 
         // am i just stupid? where the fuck is the event
+        // TODO: souls curios idk whenever the fuck our modelers stop being depressed sacks of shit
         private class OnBossKilled : MonoBehaviour, IOnKilledServerReceiver
         {
             public void OnKilledServer(DamageReport damageReport)

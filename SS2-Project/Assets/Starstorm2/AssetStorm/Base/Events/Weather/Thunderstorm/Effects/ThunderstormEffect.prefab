@@ -68,18 +68,15 @@ MonoBehaviour:
     weight: 0
     rainIntensity: 0
   - requiredIntensity: 1
-    weight: 0.35
-    rainIntensity: 10
-  - requiredIntensity: 2
-    weight: 0.7
+    weight: 0.5
     rainIntensity: 20
-  - requiredIntensity: 3
+  - requiredIntensity: 2
     weight: 0.9
     rainIntensity: 30
-  - requiredIntensity: 4
+  - requiredIntensity: 3
     weight: 0.95
     rainIntensity: 40
-  - requiredIntensity: 5
+  - requiredIntensity: 4
     weight: 1
     rainIntensity: 50
 --- !u!1 &5557705817396211732
@@ -7131,9 +7128,9 @@ ParticleSystem:
     radiusScale: 10
     collidesWith:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 6160
     maxCollisionShapes: 1028
-    quality: 1
+    quality: 2
     voxelSize: 0.5
     collisionMessages: 0
     collidesWithDynamic: 1
@@ -7743,27 +7740,20 @@ MonoBehaviour:
     simulationSpeed: 1
     rotation: {x: 0, y: 0, z: 0}
   - requiredIntensity: 2
-    alpha: 0.05
-    startSpeed: 250
-    startSize: 0.03
-    rateOverTime: 500
-    simulationSpeed: 1.2
-    rotation: {x: 0, y: 0, z: 5}
-  - requiredIntensity: 3
-    alpha: 0.1
+    alpha: 0.08
     startSpeed: 300
     startSize: 0.03
-    rateOverTime: 1000
-    simulationSpeed: 1.5
-    rotation: {x: 0, y: 0, z: 12}
-  - requiredIntensity: 4
+    rateOverTime: 800
+    simulationSpeed: 1.3
+    rotation: {x: 0, y: 0, z: 10}
+  - requiredIntensity: 3
     alpha: 0.1
     startSpeed: 350
     startSize: 0.04
     rateOverTime: 2000
     simulationSpeed: 1.8
     rotation: {x: 0, y: 0, z: 19}
-  - requiredIntensity: 5
+  - requiredIntensity: 4
     alpha: 0.1
     startSpeed: 500
     startSize: 0.08

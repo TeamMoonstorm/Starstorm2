@@ -10,6 +10,12 @@ namespace SS2
     public static class SS2Util
     {
         #region Misc
+        public static T EnsureComponent<T>(this MonoBehaviour component) where T : MonoBehaviour
+        {
+            var c = component.GetComponent<T>();
+            return c ? c : component.gameObject.AddComponent<T>();
+        }
+
         public static void DropShipCall(Transform origin, int tierWeight, uint teamLevel = 1, int amount = 1, ItemTier forcetier = 0, string theWorstCodeOfTheYear = null)
         {
             List<PickupIndex> dropList;
@@ -182,7 +188,22 @@ namespace SS2
             }
         }
 
-        [ConCommand(commandName = "one_of_each", flags = ConVarFlags.Cheat, helpText = "Grants one of each item. Format: {itemCount} {itemTier} {itemTag}")]
+        public static void RefreshAllBuffStacks(CharacterBody charBody, BuffDef buff, float duration)
+        {
+            var buffs = charBody.timedBuffs;
+
+            foreach( CharacterBody.TimedBuff current in buffs)
+            {
+                if(current.buffIndex == buff.buffIndex)
+                {
+                    Debug.Log("current bufdf " + current.buffIndex + " | " + current.timer);
+                    current.timer = duration;
+                }
+            }
+        }
+
+
+            [ConCommand(commandName = "one_of_each", flags = ConVarFlags.Cheat, helpText = "Grants one of each item. Format: {itemCount} {itemTier} {itemTag}")]
         public static void CmdGrantOneOfEachItem(ConCommandArgs args)
         {
             CharacterMaster master = args.GetSenderMaster();

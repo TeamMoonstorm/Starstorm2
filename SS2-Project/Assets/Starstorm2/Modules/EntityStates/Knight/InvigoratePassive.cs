@@ -10,7 +10,7 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight
         public static float baseDuration = 5f;
         public static GameObject buffWard;
         private GameObject wardInstance;
-        private bool hasBuffed;
+        private bool hasBuffed = false;
         public static string mecanimParameter;
 
         public override void OnEnter()

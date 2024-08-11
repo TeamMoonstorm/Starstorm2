@@ -1,7 +1,7 @@
 
 ![Starstorm 2](https://github.com/swuff-star/Starstorm2/blob/main/SS2-Project/Assets/Starstorm2/ReadmeAssets/ss2logopurple.gif?raw=true)
 
-**Starstorm 2** is a work-in-progress adaptation of the Risk of Rain 1 mod "Starstorm". It currently features four new survivors, three new monsters, over 20 new items and equipment, and numerous new challenges to shake up your runs. In-depth information can be found on our [Wiki](https://thunderstore.io/package/TeamMoonstorm/Starstorm2/wiki/).
+**Starstorm 2** is a work-in-progress sequel to the Risk of Rain 1 mod "Starstorm". It currently features four new survivors, three new monsters, over 20 new items and equipment, and numerous new challenges to shake up your runs. In-depth information can be found on our [Wiki](https://thunderstore.io/package/TeamMoonstorm/Starstorm2/wiki/).
 
 ![New Survivors...](https://github.com/swuff-star/Starstorm2/blob/main/SS2-Project/Assets/Starstorm2/ReadmeAssets/ss2survivorpromo.gif?raw=true)
 

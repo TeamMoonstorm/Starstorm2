@@ -6,8 +6,9 @@ using System.Linq;
 using UnityEngine;
 using MSU;
 using RoR2;
-using UnityEditor;
 using System.Collections.Generic;
+using Assets.Starstorm2.ContentClasses;
+using SS2.Survivors;
 
 namespace SS2
 {
@@ -110,6 +111,39 @@ namespace SS2
             //SS2ContentPack.unlockableDefs.Add(udRequest.Assets.ToArray());
         }
 
+        private static IEnumerator LoadVanillaSurvivorBundles()
+        {
+            ParallelMultiStartCoroutine helper = new ParallelMultiStartCoroutine();
+
+            var list = new List<SS2VanillaSurvivor>()
+              {
+                new Commando(),
+                new Acrid(),
+                new Bandit(),
+                new Railgunner(),
+                new Engineer(),
+                //new VoidFiend(),
+                //Add the rest
+              };
+
+            foreach (var survivor in list)
+            {
+                helper.Add(survivor.LoadContentAsync);
+            }
+
+            helper.Start();
+            while (!helper.IsDone)
+            {
+                yield return null;
+            }
+
+            foreach (var survivor in list)
+            {
+                survivor.Initialize();
+                survivor.ModifyContentPack(SS2ContentPack);
+            }
+        }
+
         private IEnumerator AddSS2ExpansionDef()
         {
             var expansionRequest = SS2Assets.LoadAssetAsync<ExpansionDef>("SS2ExpansionDef", SS2Bundle.Main);
@@ -204,6 +238,7 @@ namespace SS2
                     return SceneModule.InitializeScenes(main);
                 },
                 LoadFromAssetBundles,
+                LoadVanillaSurvivorBundles
             };
 
             _fieldAssignDispatchers = new Func<IEnumerator>[]
@@ -390,7 +425,17 @@ namespace SS2
 
             public static ItemDef RainbowRoot;
 
+            public static ItemDef Balloon;
+
+            public static ItemDef VoidBalloon;
+
+            public static ItemDef RelicOfEntropy;
+
+            public static ItemDef IceTool;
+
+           // public static ItemDef WickedStaff;
             public static ItemDef WeatherRadio;
+
         }
 
         public static class Equipments
@@ -420,6 +465,8 @@ namespace SS2
             public static EquipmentDef RockFruit;
 
             public static EquipmentDef WhiteFlag;
+
+            public static EquipmentDef SeismicOscillator;
         }
 
         public static class Buffs
@@ -546,9 +593,9 @@ namespace SS2
 
             public static BuffDef bdKnightSpecialSlowBuff;
 
-            public static BuffDef bdFortified;
+            public static BuffDef bdKnightStunAttack;
 
-            public static BuffDef bdKnightCharged;
+            public static BuffDef bdKnightShieldCooldown;
 
             public static BuffDef bdLampBuff;
 
@@ -563,6 +610,12 @@ namespace SS2
             public static BuffDef bdPoisonBuildup;
 
             public static BuffDef bdEthereal;
+
+            public static BuffDef bdBanditTranquilizer;
+
+            public static BuffDef bdAcridArmorCorrison;
+
+            public static BuffDef bdEngiFocused;
 
             public static BuffDef bdLunarCurseArmor;
 
@@ -593,6 +646,14 @@ namespace SS2
             public static BuffDef bdPyroJet;
 
             public static BuffDef bdUltraBuff;
+
+            public static BuffDef bdNukeSpecial;
+
+            public static BuffDef bdNukeSelfDamage;
+
+            public static BuffDef bdIrradiated;
+
+            public static BuffDef dbdNuclearSickness;
         }
 
         public static class Elites
@@ -633,6 +694,8 @@ namespace SS2
         public static class ItemTierDefs
         {
             public static ItemTierDef Sibylline;
+
+            //public static ItemTierDef Relic;
         }
     }
 }

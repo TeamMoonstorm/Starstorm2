@@ -24,11 +24,18 @@ namespace EntityStates.Events
         public override void OnEnter()
         {
             base.OnEnter();
+            this.stormController.SetEffectIntensity(0);
+            if (stormController.AttemptSkip()) // TEMPORARY. FUUUUUUUUUCK
+            {
+                this.outer.SetNextState(new Storm { stormLevel = 1, lerpDuration = 15f, instantStorm = true });
+                return;
+            }
+
 
             this.totalMultiplier = StormController.chargeRng.RangeFloat(1, 1 + chargeVariance);
             GlobalEventManager.onCharacterDeathGlobal += AddCharge;
 
-            this.stormController.SetEffectIntensity(0);
+            
         }
 
 
@@ -55,16 +62,15 @@ namespace EntityStates.Events
             if (this.chargeStopwatch <= 0 && ShouldCharge())
             {
                 this.chargeStopwatch += chargeInterval;
-                this.charge += CalculateCharge(chargeInterval);
+                float f = CalculateCharge(chargeInterval);
+                this.charge += f;
+                this.stormController.AddCharge(f);
             }
 
             if (charge >= 100f)
             {
-                outer.SetNextState(new Storm
-                {
-                    stormLevel = 1,
-                    lerpDuration = 15
-                });
+                this.stormController.OnStormLevelCompleted();
+                outer.SetNextState(new Storm { stormLevel = 1, lerpDuration = 15f });
                 return;
             }
 
