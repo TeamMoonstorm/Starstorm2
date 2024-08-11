@@ -36,6 +36,7 @@ namespace SS2.Components
             if (breakpoints.Length == 0) return;
 
             main = particleSystem.main; // this shit makes no sense man wtf
+            em = particleSystem.emission;
             bool alive = intensity >= minimumIntensity;
             if(this.alive != alive)
             {
