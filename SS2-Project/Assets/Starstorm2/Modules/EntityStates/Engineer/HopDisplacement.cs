@@ -10,14 +10,15 @@ using R2API;
 
 namespace EntityStates.Engi
 {
-    public class StartupDisplacement : BaseSkillState
+    public class HopDisplacement : BaseSkillState
     {
         [SerializeField]
         public static float baseDuration = .15f;
         //[FormatToken("SS2_EXECUTIONER_DASH_DESCRIPTION", 0)]
         [SerializeField]
         public static float hopVelocity = 10f;
-
+        [SerializeField]
+        public static AnimationCurve jumpCurve;
 
         private float duration;
         //public float baseDuration = 1f;
@@ -27,7 +28,7 @@ namespace EntityStates.Engi
         //private float counter = 0;
         //MuzzleLeft
         //MuzzleRight
-
+        public bool fromDash = false;
         //public GameObject hitEffectPrefab = FireBarrage.hitEffectPrefab;
         //public GameObject tracerEffectPrefab = FireBarrage.tracerEffectPrefab;
 
@@ -69,13 +70,6 @@ namespace EntityStates.Engi
             }
 
             duration = baseDuration;
-            //characterDirection.turnSpeed = 240f; 
-            Debug.Log("begin " + fixedAge + " | " + duration);
-            if(duration < .15f)
-            {
-                duration = .15f;
-            }
-            HopIfAirborne();
         }
         
         public override void FixedUpdate()
@@ -84,15 +78,16 @@ namespace EntityStates.Engi
             //characterBody.isSprinting = true;
             Debug.Log("yeah " + fixedAge);
 
-            //this.PlayAnimation("Body", "Sprinting");
-
-            //if (characterDirection && characterMotor)
-            //    characterMotor.rootMotion += characterDirection.forward * characterBody.moveSpeed * speedMultiplier * Time.fixedDeltaTime;
+            if (characterMotor && characterDirection)
+            {
+                var curve = jumpCurve.Evaluate(fixedAge / duration);
+                base.characterMotor.rootMotion += 2 * curve * this.moveSpeedStat * (characterDirection.forward / 2f) * Time.fixedDeltaTime;
+            }
+            
 
             if (fixedAge >= duration)
             {
-                var rapid = new RapidDisplacement();
-                outer.SetNextState(rapid);
+                outer.SetNextStateToMain();
 
                 Debug.Log("goodbye " + fixedAge + " | " + duration);
             }

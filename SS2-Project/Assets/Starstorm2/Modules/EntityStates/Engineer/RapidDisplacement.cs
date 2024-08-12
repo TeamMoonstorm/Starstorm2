@@ -82,10 +82,16 @@ namespace EntityStates.Engi
             duration = baseDuration; 
             characterDirection.turnSpeed = 300; 
             Debug.Log("begin " + fixedAge + " | " + duration);
-            if(duration < 1)
+
+            HopIfAirborne();
+            if (!characterMotor.isGrounded)
             {
-                duration = 1;
+                var hop = new HopDisplacement();
+                hop.fromDash = false;
+                Debug.Log("from yea");
+                outer.SetNextState(hop);
             }
+
             //this.PlayAnimation("Body", "Sprinting", "walkSpeed", duration);
         }
         
@@ -94,9 +100,21 @@ namespace EntityStates.Engi
             base.FixedUpdate();
             characterBody.isSprinting = true;
             Debug.Log("yeah " + fixedAge);
+            if (characterMotor.isGrounded)
+            {
+                if (characterDirection && characterMotor)
+                    characterMotor.rootMotion += characterDirection.forward * characterBody.moveSpeed * speedMultiplier * Time.fixedDeltaTime;
 
-            if (characterDirection && characterMotor)
-                characterMotor.rootMotion += characterDirection.forward * characterBody.moveSpeed * speedMultiplier * Time.fixedDeltaTime;
+            }
+            else
+            {
+                var hop = new HopDisplacement();
+                hop.fromDash = true;
+                Debug.Log("from dash");
+                outer.SetNextState(hop);
+            }
+
+
 
             if (fixedAge >= duration)
             {
@@ -120,6 +138,13 @@ namespace EntityStates.Engi
             //    EntityState.Destroy(rightLaserInstance);
             Debug.Log("i have been killed " + fixedAge + " | " + duration);
             characterDirection.turnSpeed = 720f;
+        }
+        private void HopIfAirborne()
+        {
+            if (!characterMotor.isGrounded)
+            {
+                SmallHop(characterMotor, 10);
+            }
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()
