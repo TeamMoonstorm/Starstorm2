@@ -153,7 +153,7 @@ namespace EntityStates.Events
             if(eliteChanceStopwatch <= 0)
             {               
                 eliteChanceStopwatch += UnityEngine.Random.Range(minEliteChanceInterval, maxEliteChanceInterval);
-                eliteChance += eliteChancePerSecond * Time.fixedDeltaTime * eliteChanceTimer;
+                eliteChance += eliteChancePerSecond * eliteChanceTimer;
                 eliteChanceTimer = 0;
             }
             this.chargeStopwatch -= Time.fixedDeltaTime;
