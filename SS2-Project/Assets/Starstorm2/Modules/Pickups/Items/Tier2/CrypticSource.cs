@@ -6,6 +6,7 @@ using RoR2.Items;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 namespace SS2.Items
 {
     public sealed class CrypticSource : SS2Item
@@ -98,6 +99,7 @@ namespace SS2.Items
             private void Fire()
             {
                 this.attackReady = false;
+                if (!NetworkServer.active) return;
 
                 float radius = baseRadius + stackRadius * (stack - 1);
                 EffectManager.SpawnEffect(_explosionEffectPrefab, new EffectData
