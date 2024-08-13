@@ -12,10 +12,10 @@ namespace EntityStates.Knight
         public static float TokenModifier_dmgCoefficient => new ShieldPunch().damageCoefficient;
         public int swingSide;
 
-        public float hopVelocity = 15f;
+        public float hopVelocity = 10f;
         public float airControl = 0.30f;
         public float upwardVelocity = 0.5f;
-        public float forwardVelocity = 15f;
+        public float forwardVelocity = 17f;
         public float minimumY = 0.05f;
         public float aimVelocity = 1f;
 
@@ -38,8 +38,12 @@ namespace EntityStates.Knight
                     Vector3 a = direction.normalized * aimVelocity * moveSpeedStat;
                     Vector3 b = Vector3.up * upwardVelocity;
                     Vector3 b2 = new Vector3(direction.x, 0f, direction.z).normalized * forwardVelocity;
-                    characterMotor.Motor.ForceUnground();
+                    //characterMotor.Motor.ForceUnground();
                     characterMotor.velocity = a + b + b2;
+                }
+
+                if (!isGrounded)
+                {
                     SmallHop(characterMotor, hopVelocity);
                 }
             }

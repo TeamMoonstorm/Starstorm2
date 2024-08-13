@@ -14,8 +14,8 @@ namespace EntityStates.Knight
         
         private int _origLayer;
 
-        public float hopVelocity = 35f;
-        public float airControl = 1f;
+        public float hopVelocity = 30f;
+        public float airControl = 2f;
         public float upwardVelocity = 4f;
         public float forwardVelocity = 20f;
         public float minimumY = 0.10f;
@@ -47,7 +47,7 @@ namespace EntityStates.Knight
                 Vector3 val2 = Vector3.up * upwardVelocity;
                 Vector3 val3 = new Vector3(direction.x, 0f, direction.z).normalized;
                 Vector3 val4 = val3.normalized * forwardVelocity;
-                base.characterMotor.Motor.ForceUnground();
+                //base.characterMotor.Motor.ForceUnground();
                 base.characterMotor.velocity = val + val2 + val4;
             }
 

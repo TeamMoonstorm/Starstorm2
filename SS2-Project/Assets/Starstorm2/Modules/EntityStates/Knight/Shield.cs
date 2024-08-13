@@ -2,6 +2,7 @@
 using RoR2;
 using RoR2.Skills;
 using SS2;
+using System;
 
 namespace EntityStates.Knight
 {
@@ -20,6 +21,7 @@ namespace EntityStates.Knight
         private Animator animator;
 
         private bool useAltCamera = false;
+        private bool parryHookRemoved = false;
         public CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
 
         private void CameraSwap()
@@ -50,8 +52,6 @@ namespace EntityStates.Knight
             }
         }
 
-
-
         private void SetShieldOverride()
         {
             if (!characterBody.HasBuff(SS2Content.Buffs.bdKnightShieldCooldown))
@@ -59,6 +59,63 @@ namespace EntityStates.Knight
                 skillLocator.primary.SetSkillOverride(skillLocator.primary, shieldBashSkillDef, GenericSkill.SkillOverridePriority.Contextual);
             }
         }
+
+        private void AddParryHook()
+        {
+            GlobalEventManager.onClientDamageNotified += ParryWindowOverride;
+        }
+
+        private void RemoveParryHook()
+        {
+            if (!parryHookRemoved)
+            {
+                GlobalEventManager.onClientDamageNotified -= ParryWindowOverride;
+                parryHookRemoved = true;
+            }
+        }
+
+        private void ParryWindowOverride(DamageDealtMessage msg)
+        {
+            if (!msg.victim)
+            {
+                return;
+            }
+
+            if (msg.attacker != msg.victim)
+            {
+                // TODO: Use body index
+                // We want to ensure that Knight is the one taking damage
+                //if (CharacterBody.baseNameToken != "SS2_KNIGHT_BODY_NAME")
+                  //  return;
+
+                msg.damage = 0;
+
+                SetStateOnHurt ssoh = msg.attacker.GetComponent<SetStateOnHurt>();
+                if (ssoh)
+                {
+                    // Stun the enemy
+                    Type state = ssoh.targetStateMachine.state.GetType();
+                    if (state != typeof(StunState) && state != typeof(ShockState) && state != typeof(FrozenState))
+                    {
+                        ssoh.SetStun(3f);
+                    }
+                }
+
+                // TODO: Should we have a custom sound for this?
+                Util.PlaySound("NemmandoDecisiveStrikeReady", gameObject);
+
+                if (base.isAuthority)
+                {
+                    EntityStateMachine weaponEsm = EntityStateMachine.FindByCustomName(gameObject, "Weapon");
+                    if (weaponEsm != null)
+                    {
+                        weaponEsm.SetNextState(new EntityStates.Knight.Parry());
+                    }
+                }
+            }
+
+        }
+
 
         public override void OnEnter()
         {
@@ -76,6 +133,7 @@ namespace EntityStates.Knight
 
             // This sets the shield bash skill
             SetShieldOverride();
+            AddParryHook();
 
             CameraSwap();
         }
@@ -106,6 +164,11 @@ namespace EntityStates.Knight
                 //EffectData effectData = new EffectData();
                 //effectData.origin = this.characterBody.corePosition;
                 //EffectManager.SpawnEffect(parryFlashEffectPrefab, effectData, transmit: true);
+            }
+
+            if (fixedAge >= parryBuffDuration)
+            {
+                RemoveParryHook();
             }
 
             stopwatch += fixedAge;
@@ -148,6 +211,7 @@ namespace EntityStates.Knight
 
             skillLocator.primary.UnsetSkillOverride(skillLocator.primary, shieldBashSkillDef, GenericSkill.SkillOverridePriority.Contextual);
 
+            RemoveParryHook();
             base.OnExit();
         }
 
