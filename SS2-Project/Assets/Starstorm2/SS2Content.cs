@@ -524,8 +524,6 @@ namespace SS2
 
             public static BuffDef BuffSigil;
 
-            public static BuffDef BuffSigilHidden;
-
             public static BuffDef BuffKickflip;
 
             public static BuffDef BuffStorm;

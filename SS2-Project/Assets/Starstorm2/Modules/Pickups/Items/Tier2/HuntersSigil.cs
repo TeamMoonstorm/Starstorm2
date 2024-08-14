@@ -54,7 +54,7 @@ namespace SS2.Items
 
         private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
-            int buffCount = sender.GetBuffCount(SS2Content.Buffs.BuffSigilHidden);
+            int buffCount = sender.GetBuffCount(SS2Content.Buffs.BuffSigil);
 
             args.armorAdd += HuntersSigil.baseArmor * buffCount;
             args.damageMultAdd += HuntersSigil.baseDamage * buffCount;
@@ -75,11 +75,11 @@ namespace SS2.Items
             public void FixedUpdate()
             {
                 if (!NetworkServer.active) return;
-                if (body.notMovingStopwatch > 1f)
+                if (body.notMovingStopwatch > 1f && !body.HasBuff(SS2Content.Buffs.BuffSigil))
                 {
                     if (!sigilActive)
                     {
-                        EffectManager.SimpleEffect(_effect, body.aimOrigin + new Vector3(0, 0f), Quaternion.identity, true);
+                        EffectManager.SimpleEffect(_effect, body.aimOrigin, Quaternion.identity, true);
                         Vector3 position = body.corePosition;
                         //float radius = 13f;
 
@@ -89,11 +89,10 @@ namespace SS2.Items
                         sigilInstance = Object.Instantiate(_sigilWard, position, Quaternion.identity);
                         sigilInstance.GetComponent<TeamFilter>().teamIndex = body.teamComponent.teamIndex;
                         sigilInstance.GetComponent<BuffWard>().radius = radius;
+
                         WardUtils wu = sigilInstance.GetComponent<WardUtils>();
                         wu.body = body;
                         wu.radius = radius;
-                        wu.buffCount = stack;
-                        wu.amplifiedBuff = SS2Content.Buffs.BuffSigilHidden;
 
                         NetworkServer.Spawn(sigilInstance);
 
@@ -115,16 +114,6 @@ namespace SS2.Items
             {
                 if (sigilInstance != null)
                     Destroy(sigilInstance);
-            }
-        }
-
-        public sealed class BuffSigilBehavior : BaseBuffBehaviour
-        {
-            [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffSigil;
-            public void OnDestroy()
-            {
-                CharacterBody.SetBuffCount(SS2Content.Buffs.BuffSigilHidden.buffIndex, 0);
             }
         }
     }
