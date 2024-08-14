@@ -11,14 +11,7 @@ namespace SS2.Items
 {
     public sealed class Insecticide : SS2Item, IContentPackModifier
     {
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acInsecticide", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _hitEffect = assetCollection.FindAsset<GameObject>("InsecticideEffect");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acInsecticide", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance. (1 = 100%)")]
         [FormatToken("SS2_ITEM_INSECTICIDE_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
@@ -32,15 +25,35 @@ namespace SS2.Items
         public static float duration = 3;
 
         private static GameObject _hitEffect;
-        private BuffDef _buffInsecticide;// SS2Assets.LoadAsset<BuffDef>("BuffInsecticide", SS2Bundle.Items);
-        public static DotController.DotIndex index;
-
-
         public static DotController.DotIndex DotIndex { get; private set; }
         public override void Initialize()
         {
+            _hitEffect = AssetCollection.FindAsset<GameObject>("InsecticideEffect");
             DotController.onDotInflictedServerGlobal += RefreshInsects;
-            index = DotAPI.RegisterDotDef(0.25f, 0.15f, DamageColorIndex.DeathMark, _buffInsecticide);
+            DotIndex = DotAPI.RegisterDotDef(0.25f, 0.15f, DamageColorIndex.DeathMark, AssetCollection.FindAsset<BuffDef>("BuffInsecticide"));
+            GlobalEventManager.onServerDamageDealt += GlobalEventManager_onServerDamageDealt;
+        }
+
+        private void GlobalEventManager_onServerDamageDealt(DamageReport report)
+        {
+            if (!report.attackerMaster || !report.attackerBody) return;
+
+            int stack = report.attackerMaster.inventory.GetItemCount(SS2Content.Items.Insecticide);
+            if (stack > 0 && report.victimBody.teamComponent.teamIndex != report.attackerBody.teamComponent.teamIndex && report.damageInfo.procCoefficient > 0 && Util.CheckRoll(chance * 100, report.attackerMaster))
+            {
+                var dotInfo = new InflictDotInfo()
+                {
+                    attackerObject = report.attacker,
+                    victimObject = report.victim.gameObject,
+                    dotIndex = DotIndex,
+                    duration = report.damageInfo.procCoefficient * duration,
+                    damageMultiplier = stack * (damageCoeff / 1.8f)
+                };
+                DotController.InflictDot(ref dotInfo);
+
+                // GOOPY SOUNDS HERE WOULD BE FANTASTIC!!!!!!!!!!!!!!!!!!!!!!!!!!
+                EffectManager.SimpleEffect(_hitEffect, report.damageInfo.position, Quaternion.identity, true);
+            }
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -63,31 +76,6 @@ namespace SS2.Items
                         dotController.dotStackList[i].timer = Mathf.Max(dotController.dotStackList[i].timer, duration);
                     }
                     i++;
-                }
-            }
-        }
-
-
-        public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
-        {
-            [ItemDefAssociation]
-            private static ItemDef GetItemDef() => SS2Content.Items.Insecticide;
-            public void OnDamageDealtServer(DamageReport report)
-            {
-                if (report.victimBody.teamComponent.teamIndex != report.attackerBody.teamComponent.teamIndex && report.damageInfo.procCoefficient > 0 && Util.CheckRoll(chance * 100, report.attackerMaster))
-                {
-                    var dotInfo = new InflictDotInfo()
-                    {
-                        attackerObject = body.gameObject,
-                        victimObject = report.victim.gameObject,
-                        dotIndex = DotIndex,
-                        duration = report.damageInfo.procCoefficient * duration,
-                        damageMultiplier = stack * (damageCoeff / 1.8f)
-                    };
-                    DotController.InflictDot(ref dotInfo);
-
-                    // GOOPY SOUNDS HERE WOULD BE FANTASTIC!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    EffectManager.SimpleEffect(_hitEffect, report.damageInfo.position, Quaternion.identity, true);
                 }
             }
         }

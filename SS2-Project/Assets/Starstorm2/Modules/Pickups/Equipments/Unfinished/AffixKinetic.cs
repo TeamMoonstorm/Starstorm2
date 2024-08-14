@@ -14,10 +14,7 @@ namespace SS2.Equipments
 
     public sealed class AffixKinetic : SS2EliteEquipment
     {
-        public override SS2AssetRequest<EliteAssetCollection> AssetRequest()
-        {
-            return SS2Assets.LoadAssetAsync<EliteAssetCollection>("acAffixKinetic", SS2Bundle.Equipments);
-        }
+        public override SS2AssetRequest<EliteAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<EliteAssetCollection>("acAffixKinetic", SS2Bundle.Equipments);
         public override bool Execute(EquipmentSlot slot)
         {
             return false;
@@ -236,7 +233,8 @@ namespace SS2.Equipments
                             hc.body.AddTimedBuff(BuffCatalog.GetBuffDef(BuffCatalog.FindBuffIndex("BuffFear")), (4 + BuffCount) * hitInfo.hitSeverity);
                             return;
                         }
-                        hc.body.AddTimedBuff(SS2Content.Buffs.BuffVoidLeech, (4 + BuffCount) * hitInfo.hitSeverity);
+                        // commenting this out because swuff said to delete voidleech. dunno why its in affixkinetic. -orb
+                        //hc.body.AddTimedBuff(SS2Content.Buffs.BuffVoidLeech, (4 + BuffCount) * hitInfo.hitSeverity);
                         return;
                     }
                 }

@@ -11,10 +11,7 @@ namespace SS2.Equipments
 {
     public sealed class BackThruster : SS2Equipment, IContentPackModifier
     {
-        public override SS2AssetRequest<EquipmentAssetCollection> AssetRequest<EquipmentAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acBackThruster", SS2Bundle.Equipments);
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acBackThruster", SS2Bundle.Equipments);
 
         private const string token = "SS2_EQUIP_BACKTHRUSTER_DESC";
 

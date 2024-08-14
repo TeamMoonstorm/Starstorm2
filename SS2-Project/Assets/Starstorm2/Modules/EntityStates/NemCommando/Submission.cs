@@ -8,13 +8,13 @@ namespace EntityStates.NemCommando
 {
     public class Submission : BaseSkillState
     {
-        [FormatToken("SS2_NEMMANDO_SUBMISSION_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
+        [FormatToken("SS2_NEMMANDO_SPECIAL_SUBMISSION_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float damageCoefficient;
         public static float procCoefficient;
         public static uint bulletCountPerShot;
         public static float range;
         public static float maxSpread;
-        [FormatToken("SS2_NEMMANDO_SUBMISSION_DESCRIPTION",   0)]
+        [FormatToken("SS2_NEMMANDO_SPECIAL_SUBMISSION_DESCRIPTION",   0)]
         public static int BulletCount;
         public static float baseDuration;
         //public static float timeBetweenShots;

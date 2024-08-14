@@ -8,10 +8,7 @@ namespace SS2.Equipments
 {
     public sealed class DivineRight : SS2Equipment
     {
-        public override SS2AssetRequest<EquipmentAssetCollection> AssetRequest<EquipmentAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acDivineRight", SS2Bundle.Equipments);
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acDivineRight", SS2Bundle.Indev);
 
         public override bool Execute(EquipmentSlot slot)
         {

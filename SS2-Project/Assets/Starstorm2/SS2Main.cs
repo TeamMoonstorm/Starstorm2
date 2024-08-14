@@ -23,7 +23,7 @@ namespace SS2
     [BepInPlugin(GUID, MODNAME, VERSION)]
     public class SS2Main : BaseUnityPlugin
     {
-        internal const string GUID = "com.TeamMoonstorm.Starstorm2";
+        internal const string GUID = "com.TeamSS2";
         internal const string MODNAME = "Starstorm 2";
         internal const string VERSION = "0.6.7";
 
@@ -45,7 +45,7 @@ namespace SS2
             new SS2Content();
             LanguageFileLoader.AddLanguageFilesFromMod(this, "SS2Lang");
             TMProEffects.Init();
-
+            BodyNames.Hook();
             //N: Not gonna lie, i love the idea of seasonal effects, but having the same date time check is silly, so there's that internal static bool now.
             DateTime today = DateTime.Today;
             if (today.Month == 12 && ((today.Day == 27) || (today.Day == 26) || (today.Day == 25) || (today.Day == 24) || (today.Day == 23)))
@@ -53,6 +53,7 @@ namespace SS2
 
             //N: i have no idea if SystemInitializer would be too late for this, so it stays here for now.
             //R2API.Networking.NetworkingAPI.RegisterMessageType<ScriptableObjects.NemesisSpawnCard.SyncBaseStats>();
+
         }
 
         private void Start()

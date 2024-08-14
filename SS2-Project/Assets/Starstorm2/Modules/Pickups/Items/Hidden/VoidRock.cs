@@ -9,7 +9,7 @@ namespace SS2.Items
 {
     public sealed class VoidRock : SS2Item
     {
-        public override SS2AssetRequest<ItemDef> AssetRequest<ItemDef>() => SS2Assets.LoadAssetAsync<ItemDef>("VoidRock", SS2Bundle.Items);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemDef>("VoidRock", SS2Bundle.Interactables);
         public static int initialStage = 0;
         public static bool setStage = false;
         public static bool invasionStage = false;

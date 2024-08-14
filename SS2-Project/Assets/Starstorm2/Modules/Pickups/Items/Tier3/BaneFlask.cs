@@ -13,19 +13,8 @@ namespace SS2.Items
     public sealed class BaneFlask : SS2Item, IContentPackModifier
     {
         private const string token = "SS2_ITEM_BANEFLASK_DESC";
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acBaneFlask", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _baneBuffDef = assetCollection.FindAsset<BuffDef>("BuffBane");
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acBaneFlask", SS2Bundle.Items);
 
-            // idk which is which
-            explosionGross = assetCollection.FindAsset<GameObject>("BaneGraysparkVFX");
-            particleBase = assetCollection.FindAsset<GameObject>("BaneGrayVFX");
-            floorGloop = assetCollection.FindAsset<GameObject>("BaneGrayGoop");
-        }
         private BuffDef _baneBuffDef;
         public static DotController.DotIndex BaneDotIndex { get; private set; }
 
@@ -49,12 +38,19 @@ namespace SS2.Items
 
         public override void Initialize()
         {
+            _baneBuffDef = AssetCollection.FindAsset<BuffDef>("BuffBane");
+
+            // idk which is which
+            explosionGross = AssetCollection.FindAsset<GameObject>("BaneGraysparkVFX");
+            particleBase = AssetCollection.FindAsset<GameObject>("BaneGrayVFX");
+            floorGloop = AssetCollection.FindAsset<GameObject>("BaneGrayGoop");
+
             BaneDotIndex = DotAPI.RegisterDotDef(1f, .15f, DamageColorIndex.Poison, _baneBuffDef);
         }
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return true;
+            return false;
         }
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver, IOnDamageDealtServerReceiver

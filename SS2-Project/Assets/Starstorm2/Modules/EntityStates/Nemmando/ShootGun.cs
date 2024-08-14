@@ -5,7 +5,7 @@ using UnityEngine;
 //Dont fix what isnt broken or something
 namespace EntityStates.Nemmando
 {
-    public class ShootGun : RendHandler
+    public class ShootGun : BaseState
     {
         [FormatToken("SS2_NEMMANDO_SECONDARY_SHOOT_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float damageCoefficient;
@@ -109,7 +109,7 @@ namespace EntityStates.Nemmando
                     hitEffectPrefab = EntityStates.Commando.CommandoWeapon.FirePistol2.hitEffectPrefab
                 };
 
-                RendMultiplier(bulletAttack);
+                //RendMultiplier(bulletAttack);
 
                 bulletAttack.Fire();
 

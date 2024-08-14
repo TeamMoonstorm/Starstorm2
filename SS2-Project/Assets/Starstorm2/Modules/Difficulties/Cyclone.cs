@@ -11,8 +11,10 @@ namespace SS2
         public override SS2AssetRequest<SerializableDifficultyDef> AssetRequest => SS2Assets.LoadAssetAsync<SerializableDifficultyDef>("Cyclone", SS2Bundle.Base);
 
         private int defMonsterCap;
+        public static SerializableDifficultyDef sdd;
         public override void Initialize()
         {
+            sdd = DifficultyDef;
         }
 
         public override bool IsAvailable(ContentPack contentPack)

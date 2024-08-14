@@ -23,6 +23,7 @@ namespace EntityStates.Nemmando
         public static float maxEmission;
         public static float minEmission;
         public static GameObject effectPrefab;
+        public static GameObject hitEffectPrefab;
 
         private float hitStopwatch;
         private float duration;
@@ -90,7 +91,7 @@ namespace EntityStates.Nemmando
                 bonusForce = Vector3.zero,
                 crit = RollCrit(),
                 damageColorIndex = DamageColorIndex.Default,
-                damageType = RoR2.DamageType.Generic,
+                damageType = RoR2.DamageType.Stun1s,
                 falloffModel = BlastAttack.FalloffModel.None,
                 inflictor = gameObject,
                 losType = BlastAttack.LoSType.None,
@@ -98,6 +99,7 @@ namespace EntityStates.Nemmando
                 procChainMask = default,
                 procCoefficient = 1f,
                 radius = radius,
+                impactEffect = EffectCatalog.FindEffectIndexFromPrefab(hitEffectPrefab),
                 teamIndex = GetTeam()
             };
             DamageAPI.AddModdedDamageType(blastAttack, SS2.Survivors.NemCommando.GougeDamageType);
@@ -136,7 +138,7 @@ namespace EntityStates.Nemmando
                 blastAttack.position = characterBody.corePosition;
 
                 int hitcount = blastAttack.Fire().hitCount;
-                if (hitCount > 0) Util.PlaySound(EntityStates.Merc.GroundLight.hitSoundString, gameObject);
+                if (hitcount > 0) Util.PlaySound(EntityStates.Merc.GroundLight.hitSoundString, gameObject);
 
                 EffectData data = new EffectData();
                 data.scale = characterBody.bestFitRadius * 10;

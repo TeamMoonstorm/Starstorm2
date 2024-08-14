@@ -14,32 +14,7 @@ namespace SS2.Items
 {
     public sealed class RelicOfTermination : SS2Item, IContentPackModifier
     {
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRelicOfTermination", SS2Bundle.Items);
-        }
-
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            /*
-             * ItemDef - "RelicOfTermination" - Items
-             * GameObject - "RelicOfTerminationTargetMark" - Items
-             * GameObject - "NemmandoScepterSlashAppear" - NemCommando,
-             * GameObject - "RelicOfTerminationBuffEffect" - Items
-             * GameObject - "TerminationDeathHalo" - Items
-             * GameObject - "TerminationPositionIndicator" - Items
-             * GameObject - "TerminationDebris1" - Items
-             * GameObject - "TerminationDebris2" - Items
-             */
-            markEffect = assetCollection.FindAsset<GameObject>("RelicOfTerminationTargetMark");
-            //failEffect = assetCollection.FindAsset<GameObject>("RelicOfTerminationTargetMark");
-            buffEffect = assetCollection.FindAsset<GameObject>("RelicOfTerminationBuffEffect");
-            deathHalo = assetCollection.FindAsset<GameObject>("TerminationDeathHalo");
-            spawnRock1VFX = assetCollection.FindAsset<GameObject>("TerminationDebris1");
-            spawnRock2VFX = assetCollection.FindAsset<GameObject>("TerminationDebris2");
-            globalMarkEffectTwo = assetCollection.FindAsset<GameObject>("TerminationPositionInidcator");
-            overlayMaterial = assetCollection.FindAsset<Material>("matTerminationOverlay");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRelicOfTermination", SS2Bundle.Items);
 
         private const string token = "SS2_ITEM_RELICOFTERMINATION_DESC";
 
@@ -88,13 +63,6 @@ namespace SS2.Items
         public static GameObject failEffect;
         public static GameObject buffEffect;
 
-        public static Material overlayMaterial; // SS2Assets.LoadAsset<Material>("matTerminationOverlay");
-        public BuffDef _buffCooldown; //{ get; } = SS2Assets.LoadAsset<BuffDef>("BuffTerminationCooldown", SS2Bundle.Items);
-        public BuffDef _buffFailed;//{ get; } = SS2Assets.LoadAsset<BuffDef>("BuffTerminationFailed", SS2Bundle.Items);
-        public BuffDef _buffReady;//{ get; } = SS2Assets.LoadAsset<BuffDef>("BuffTerminationReady", SS2Bundle.Items);
-        public BuffDef _buffVfx;//{ get; } = SS2Assets.LoadAsset<BuffDef>("BuffTerminationVFX", SS2Bundle.Items);
-
-
         public static Xoroshiro128Plus terminationRNG;
 
         TerminationDropTable dropTable;
@@ -103,19 +71,32 @@ namespace SS2.Items
 
         public override void Initialize()
         {
+            markEffect = AssetCollection.FindAsset<GameObject>("RelicOfTerminationTargetMark");
+            //failEffect = AssetCollection.FindAsset<GameObject>("RelicOfTerminationTargetMark");
+            buffEffect = AssetCollection.FindAsset<GameObject>("RelicOfTerminationBuffEffect");
+            deathHalo = AssetCollection.FindAsset<GameObject>("TerminationDeathHalo");
+            spawnRock1VFX = AssetCollection.FindAsset<GameObject>("TerminationDebris1");
+            spawnRock2VFX = AssetCollection.FindAsset<GameObject>("TerminationDebris2");
+            globalMarkEffectTwo = AssetCollection.FindAsset<GameObject>("TerminationPositionInidcator");
+
+            Material overlayMaterial = AssetCollection.FindAsset<Material>("matTerminationOverlay");
+            BuffDef buffCooldown = AssetCollection.FindAsset<BuffDef>("BuffTerminationCooldown");
+            BuffDef buffFailed = AssetCollection.FindAsset<BuffDef>("BuffTerminationFailed");
+            BuffDef buffReady = AssetCollection.FindAsset<BuffDef>("BuffTerminationReady");
+            BuffDef buffVfx = AssetCollection.FindAsset<BuffDef>("BuffTerminationVFX");
+
             CharacterBody.onBodyStartGlobal += TerminationSpawnHook;
             GlobalEventManager.onCharacterDeathGlobal += TerminationDeathHook;
-            On.RoR2.Util.GetBestBodyName += AddTerminalName;
             RoR2.Inventory.onInventoryChangedGlobal += CheckTerminationBuff;
             On.RoR2.TeamComponent.SetupIndicator += OverrideTerminalBossMarker;
 
             dropTable = ScriptableObject.CreateInstance<TerminationDropTable>();
             bossOptions = new List<PickupIndex>();
 
-            BuffOverlays.AddBuffOverlay(_buffCooldown, overlayMaterial);
-            BuffOverlays.AddBuffOverlay(_buffFailed, overlayMaterial);
-            BuffOverlays.AddBuffOverlay(_buffReady, overlayMaterial);
-            BuffOverlays.AddBuffOverlay(_buffVfx, overlayMaterial);
+            BuffOverlays.AddBuffOverlay(buffCooldown, overlayMaterial);
+            BuffOverlays.AddBuffOverlay(buffFailed, overlayMaterial);
+            BuffOverlays.AddBuffOverlay(buffReady, overlayMaterial);
+            BuffOverlays.AddBuffOverlay(buffVfx, overlayMaterial);
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -357,17 +338,6 @@ namespace SS2.Items
                 }
             }
         } //awesome
-
-        private string AddTerminalName(On.RoR2.Util.orig_GetBestBodyName orig, GameObject bodyObject) //i love stealing
-        {
-            var result = orig(bodyObject);
-            CharacterBody characterBody = bodyObject?.GetComponent<CharacterBody>();
-            if (characterBody && characterBody.inventory && characterBody.inventory.GetItemCount(SS2Content.Items.TerminationHelper) > 0)
-            {
-                result = Language.GetStringFormatted("SS2_ITEM_RELICOFTERMINATION_PREFIX", result);
-            }
-            return result;
-        }
 
         public sealed class TerminationBehavior : BaseItemBodyBehavior
         {

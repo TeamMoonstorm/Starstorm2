@@ -6,21 +6,14 @@ using RoR2.Items;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 namespace SS2.Items
 {
     public sealed class CrypticSource : SS2Item
     {
         private const string token = "SS2_ITEM_CRYPTICSOURCE_DESC";
 
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acCrypticSource", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _readyEffectPrefab = assetCollection.FindAsset<GameObject>("CrypticSourceReady");
-            _explosionEffectPrefab = assetCollection.FindAsset<GameObject>("CrypticSourceExplosion");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acCrypticSource", SS2Bundle.Items);
 
         private static GameObject _readyEffectPrefab;
         private static GameObject _explosionEffectPrefab;
@@ -49,6 +42,8 @@ namespace SS2.Items
 
         public override void Initialize()
         {
+            _readyEffectPrefab = AssetCollection.FindAsset<GameObject>("CrypticSourceReady");
+            _explosionEffectPrefab = AssetCollection.FindAsset<GameObject>("CrypticSourceExplosion");
         }
 
         public sealed class Behavior : BaseItemBodyBehavior
@@ -104,6 +99,7 @@ namespace SS2.Items
             private void Fire()
             {
                 this.attackReady = false;
+                if (!NetworkServer.active) return;
 
                 float radius = baseRadius + stackRadius * (stack - 1);
                 EffectManager.SpawnEffect(_explosionEffectPrefab, new EffectData

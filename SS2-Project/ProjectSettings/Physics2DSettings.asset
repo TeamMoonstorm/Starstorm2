@@ -2,6 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!19 &1
 Physics2DSettings:
+  serializedVersion: 4
   m_Gravity:
     x: 0
     y: -9.81
@@ -20,6 +21,7 @@ Physics2DSettings:
   m_AngularSleepTolerance: 2
   m_DefaultContactOffset: 0.01
   m_JobOptions:
+    serializedVersion: 2
     useMultithreading: 0
     useConsistencySorting: 0
     m_InterpolationPosesPerJob: 100

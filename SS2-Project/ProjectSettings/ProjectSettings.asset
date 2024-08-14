@@ -31,14 +31,14 @@ PlayerSettings:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 0
-    height: 0
+    width: 1
+    height: 1
   m_SplashScreenBackgroundPortraitUvs:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 0
-    height: 0
+    width: 1
+    height: 1
   m_SplashScreenLogos:
   - logo: {fileID: 0}
     duration: 2
@@ -68,6 +68,12 @@ PlayerSettings:
   androidRenderOutsideSafeArea: 0
   androidUseSwappy: 0
   androidBlitType: 0
+  androidResizableWindow: 0
+  androidDefaultWindowWidth: 1920
+  androidDefaultWindowHeight: 1080
+  androidMinimumWindowWidth: 400
+  androidMinimumWindowHeight: 300
+  androidFullscreenMode: 1
   defaultIsNativeResolution: 1
   macRetinaSupport: 1
   runInBackground: 1
@@ -128,7 +134,7 @@ PlayerSettings:
     Others: 1
   bundleVersion: 1.2.4.4
   preloadedAssets: []
-  metroInputSource: 1
+  metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
   xboxOneDisableKinectGpuReservation: 0
@@ -169,11 +175,7 @@ PlayerSettings:
   resolutionScalingMode: 0
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
-  applicationIdentifier:
-    Android: 
-    Standalone: unity.Hopoo Games, LLC.Risk of Rain 2
-    iPhone: 
-    tvOS: 
+  applicationIdentifier: {}
   buildNumber: {}
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 19
@@ -251,9 +253,10 @@ PlayerSettings:
   templatePackageId: 
   templateDefaultScene: 
   AndroidTargetArchitectures: 1
+  AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: '{inproject}: {inproject}: {inproject}: '
+  AndroidKeystoreName: '{inproject}: {inproject}: '
   AndroidKeyaliasName: 
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
@@ -267,51 +270,14 @@ PlayerSettings:
     height: 180
     banner: {fileID: 0}
   androidGamepadSupportLevel: 0
+  chromeosInputEmulation: 1
   AndroidValidateAppBundleSize: 1
   AndroidAppBundleSizeToValidate: 150
   m_BuildTargetIcons: []
   m_BuildTargetPlatformIcons: []
   m_BuildTargetBatching: []
-  m_BuildTargetGraphicsJobs:
-  - m_BuildTarget: MacStandaloneSupport
-    m_GraphicsJobs: 0
-  - m_BuildTarget: Switch
-    m_GraphicsJobs: 1
-  - m_BuildTarget: MetroSupport
-    m_GraphicsJobs: 1
-  - m_BuildTarget: GameCoreScarlettSupport
-    m_GraphicsJobs: 1
-  - m_BuildTarget: AppleTVSupport
-    m_GraphicsJobs: 0
-  - m_BuildTarget: BJMSupport
-    m_GraphicsJobs: 1
-  - m_BuildTarget: LinuxStandaloneSupport
-    m_GraphicsJobs: 1
-  - m_BuildTarget: GameCoreXboxOneSupport
-    m_GraphicsJobs: 1
-  - m_BuildTarget: PS4Player
-    m_GraphicsJobs: 1
-  - m_BuildTarget: iOSSupport
-    m_GraphicsJobs: 0
-  - m_BuildTarget: PS5Player
-    m_GraphicsJobs: 1
-  - m_BuildTarget: WindowsStandaloneSupport
-    m_GraphicsJobs: 1
-  - m_BuildTarget: XboxOnePlayer
-    m_GraphicsJobs: 1
-  - m_BuildTarget: LuminSupport
-    m_GraphicsJobs: 0
-  - m_BuildTarget: CloudRendering
-    m_GraphicsJobs: 1
-  - m_BuildTarget: AndroidPlayer
-    m_GraphicsJobs: 0
-  - m_BuildTarget: WebGLSupport
-    m_GraphicsJobs: 0
-  m_BuildTargetGraphicsJobMode:
-  - m_BuildTarget: PS4Player
-    m_GraphicsJobMode: 2
-  - m_BuildTarget: XboxOnePlayer
-    m_GraphicsJobMode: 2
+  m_BuildTargetGraphicsJobs: []
+  m_BuildTargetGraphicsJobMode: []
   m_BuildTargetGraphicsAPIs: []
   m_BuildTargetVRSettings: []
   openGLRequireES31: 0
@@ -322,17 +288,7 @@ PlayerSettings:
     Android: 1
     iPhone: 1
     tvOS: 1
-  m_BuildTargetGroupLightmapEncodingQuality:
-  - m_BuildTarget: Standalone
-    m_EncodingQuality: 1
-  - m_BuildTarget: XboxOne
-    m_EncodingQuality: 1
-  - m_BuildTarget: PS4
-    m_EncodingQuality: 1
-  - m_BuildTarget: GameCoreScarlett
-    m_EncodingQuality: 1
-  - m_BuildTarget: GameCoreXboxOne
-    m_EncodingQuality: 1
+  m_BuildTargetGroupLightmapEncodingQuality: []
   m_BuildTargetGroupLightmapSettings: []
   playModeTestRunnerEnabled: 0
   runPlayModeTestAsEditModeTest: 0
@@ -478,7 +434,9 @@ PlayerSettings:
   switchNetworkInterfaceManagerInitializeEnabled: 1
   switchPlayerConnectionEnabled: 1
   switchUseMicroSleepForYield: 1
+  switchEnableRamDiskSupport: 0
   switchMicroSleepForYieldTime: 25
+  switchRamDiskSpaceSize: 12
   ps4NPAgeRating: 12
   ps4NPTitleSecret: 
   ps4NPTrophyPackPath: 
@@ -549,6 +507,7 @@ PlayerSettings:
   ps4videoRecordingFeaturesUsed: 0
   ps4contentSearchFeaturesUsed: 0
   ps4CompatibilityPS5: 0
+  ps4AllowPS5Detection: 0
   ps4GPU800MHz: 1
   ps4attribEyeToEyeDistanceSettingVR: 0
   ps4IncludedModules: []
@@ -598,24 +557,25 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLWasmStreaming: 0
   scriptingDefineSymbols:
-    1: RISKOFRAIN2;UNITY_POST_PROCESSING_STACK_V2;TK_ADDRESSABLE
-    7: RISKOFRAIN2;UNITY_POST_PROCESSING_STACK_V2;TK_ADDRESSABLE
-    13: RISKOFRAIN2;UNITY_POST_PROCESSING_STACK_V2;TK_ADDRESSABLE
-    14: RISKOFRAIN2;UNITY_POST_PROCESSING_STACK_V2;TK_ADDRESSABLE
-    19: RISKOFRAIN2;UNITY_POST_PROCESSING_STACK_V2;TK_ADDRESSABLE
-    21: RISKOFRAIN2;UNITY_POST_PROCESSING_STACK_V2;TK_ADDRESSABLE
-    25: RISKOFRAIN2;UNITY_POST_PROCESSING_STACK_V2;TK_ADDRESSABLE
-    27: RISKOFRAIN2;UNITY_POST_PROCESSING_STACK_V2;TK_ADDRESSABLE
-    28: RISKOFRAIN2;UNITY_POST_PROCESSING_STACK_V2;TK_ADDRESSABLE
-    29: RISKOFRAIN2;UNITY_POST_PROCESSING_STACK_V2;TK_ADDRESSABLE
-    30: RISKOFRAIN2;UNITY_POST_PROCESSING_STACK_V2;TK_ADDRESSABLE
-    32: RISKOFRAIN2;UNITY_POST_PROCESSING_STACK_V2;TK_ADDRESSABLE
-    33: RISKOFRAIN2;UNITY_POST_PROCESSING_STACK_V2;TK_ADDRESSABLE
+    1: RISKOFRAIN2;TK_ADDRESSABLE;UNITY_POST_PROCESSING_STACK_V2
+    7: RISKOFRAIN2;TK_ADDRESSABLE;UNITY_POST_PROCESSING_STACK_V2
+    13: RISKOFRAIN2;TK_ADDRESSABLE;UNITY_POST_PROCESSING_STACK_V2
+    14: RISKOFRAIN2;TK_ADDRESSABLE;UNITY_POST_PROCESSING_STACK_V2
+    19: RISKOFRAIN2;TK_ADDRESSABLE;UNITY_POST_PROCESSING_STACK_V2
+    21: RISKOFRAIN2;TK_ADDRESSABLE;UNITY_POST_PROCESSING_STACK_V2
+    25: RISKOFRAIN2;TK_ADDRESSABLE;UNITY_POST_PROCESSING_STACK_V2
+    27: RISKOFRAIN2;TK_ADDRESSABLE;UNITY_POST_PROCESSING_STACK_V2
+    28: RISKOFRAIN2;TK_ADDRESSABLE;UNITY_POST_PROCESSING_STACK_V2
+    29: RISKOFRAIN2;TK_ADDRESSABLE;UNITY_POST_PROCESSING_STACK_V2
+    30: RISKOFRAIN2;TK_ADDRESSABLE;UNITY_POST_PROCESSING_STACK_V2
+    32: RISKOFRAIN2;TK_ADDRESSABLE;UNITY_POST_PROCESSING_STACK_V2
+    33: RISKOFRAIN2;TK_ADDRESSABLE;UNITY_POST_PROCESSING_STACK_V2
   platformArchitecture: {}
   scriptingBackend: {}
   il2cppCompilerConfiguration: {}
   managedStrippingLevel: {}
   incrementalIl2cppBuild: {}
+  suppressCommonWarnings: 1
   allowUnsafeCode: 0
   additionalIl2CppArgs: 
   scriptingRuntimeVersion: 1

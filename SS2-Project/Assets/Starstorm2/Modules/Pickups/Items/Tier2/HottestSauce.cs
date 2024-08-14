@@ -15,14 +15,7 @@ namespace SS2.Items
     public sealed class HottestSauce : SS2Item, IContentPackModifier
     {
         private const string token = "SS2_ITEM_HOTTESTSAUCE_DESC";
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acHottestSauce", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            sauceProjectile = assetCollection.FindAsset<GameObject>("SauceProjectile");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acHottestSauce", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Radius in which the hottest sauce deals damage, in meters.")]
         [FormatToken(token, 0)]
@@ -36,7 +29,7 @@ namespace SS2.Items
 
         public override void Initialize()
         {
-
+            sauceProjectile = AssetCollection.FindAsset<GameObject>("SauceProjectile");
         }
 
         public override bool IsAvailable(ContentPack contentPack)

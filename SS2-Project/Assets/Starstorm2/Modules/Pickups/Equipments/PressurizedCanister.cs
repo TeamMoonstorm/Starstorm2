@@ -10,10 +10,8 @@ namespace SS2.Equipments
 {
     public sealed class PressurizedCanister : SS2Equipment, IContentPackModifier
     {
-        public override SS2AssetRequest<EquipmentAssetCollection> AssetRequest<EquipmentAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acPressurizedCanister", SS2Bundle.Equipments);
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acPressurizedCannister", SS2Bundle.Equipments);
+
         public override bool Execute(EquipmentSlot slot)
         {
             var characterMotor = slot.characterBody.characterMotor;

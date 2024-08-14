@@ -5,7 +5,7 @@ namespace EntityStates.MULE
 #if DEBUG
     class MULESpinStart : BaseSkillState
     {
-        [FormatToken("SS2_MULE_PRIMARY_SPIN_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
+        [FormatToken("SS2_MULE_SPIN_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float swingTimeCoefficient = 1f;
         public static float duration = 0.2f;
 

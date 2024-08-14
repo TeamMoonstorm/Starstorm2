@@ -2500,6 +2500,7 @@ GameObject:
   - component: {fileID: 4856902412063288266}
   - component: {fileID: 4856504357721324521}
   - component: {fileID: 8412396956397005059}
+  - component: {fileID: 2263209155945674776}
   m_Layer: 0
   m_Name: TracerJetBoots
   m_TagString: Untagged
@@ -2743,6 +2744,22 @@ MonoBehaviour:
   destroyOnEnd: 1
   disableOnEnd: 0
   time: 0
+--- !u!114 &2263209155945674776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4824494160354591493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 816898038, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vfxPriority: 2
+  vfxIntensity: 0
+  optionalLights: []
+  secondaryParticleSystem: []
 --- !u!1 &4824552327681302233
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,10 +13,7 @@ namespace SS2.Items
 {
     public sealed class RelicOfForce : SS2Item
     {
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRelicOfForce", SS2Bundle.Items);
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRelicOfForce", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Attack speed reduction and cooldown increase per stack. (1 = 100% slower attack speed and longer cooldowns)")]
         [FormatToken("SS2_ITEM_RELICOFFORCE_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
@@ -66,7 +63,7 @@ namespace SS2.Items
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.RelicOfForce;
 
-            ForceHitToken EnemyToken;
+            //ForceHitToken EnemyToken;
 
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
             {
@@ -94,12 +91,7 @@ namespace SS2.Items
                         }
                         else
                         {
-                            if (EnemyToken)
-                            {
-                                Destroy(EnemyToken);
-                            }
                             token = damageReport.victim.body.gameObject.AddComponent<ForceHitToken>();
-                            EnemyToken = token;
                             token.CallMoreHits(damageReport, count);
                         }
 

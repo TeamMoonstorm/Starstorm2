@@ -14,10 +14,7 @@ namespace SS2.Items
     public sealed class WatchMetronome : SS2Item, IContentPackModifier
     {
         private const string token = "SS2_ITEM_WATCHMETRONOME_DESC";
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acWatchMetronome", SS2Bundle.Items);
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acWatchMetronome", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of max charges per stack.")]
         [FormatToken(token, 0)]
@@ -45,11 +42,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public void ModifyContentPack(ContentPack contentPack)
-        {
-            contentPack.buffDefs.AddSingle(_buffWatchMetronome);
         }
 
         public sealed class Behavior : BaseItemBodyBehavior

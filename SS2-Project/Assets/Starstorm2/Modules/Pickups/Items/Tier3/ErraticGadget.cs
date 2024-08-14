@@ -24,16 +24,7 @@ namespace SS2.Items
     public sealed class ErraticGadget : SS2Item
     {
         private const string token = "SS2_ITEM_ERRATICGADGET_DESC";
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acErraticGadget", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _orbEffectPrefab = assetCollection.FindAsset<GameObject>("GadgetOrbEffect");
-            _procEffectPrefab = assetCollection.FindAsset<GameObject>("GadgetLightningStartEffect");
-            _displayEffectPrefab = assetCollection.FindAsset<GameObject>("GadgetLightningProcEffect");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acErraticGadget", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance on hit to fire lightning. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
@@ -59,7 +50,11 @@ namespace SS2.Items
 
         // man o war handled in its own class
         public override void Initialize()
-        {            
+        {
+            _orbEffectPrefab = AssetCollection.FindAsset<GameObject>("GadgetOrbEffect");
+            _procEffectPrefab = AssetCollection.FindAsset<GameObject>("GadgetLightningStartEffect");
+            _displayEffectPrefab = AssetCollection.FindAsset<GameObject>("GadgetLightningProcEffect");
+
             PROCTYPEAPIWHEN = DamageAPI.ReserveDamageType();
             On.RoR2.Orbs.LightningOrb.OnArrival += LightningOrb_OnArrival; // uke tesla BFG arti loader 
             //On.RoR2.Orbs.VoidLightningOrb.Begin += VoidLightningOrb_Begin; // polylute /// nah no thanks not real lightning
@@ -75,6 +70,11 @@ namespace SS2.Items
         // figure out if a lightningorb "ends", then figure out how many objects it bounced to, then spawn a gadgetlightningorb with the same stats that bounces to that many targets
         private void LightningOrb_OnArrival(On.RoR2.Orbs.LightningOrb.orig_OnArrival orig, LightningOrb self)
         {
+            if(!self.target) // i dont like this... but im also lazy
+            {
+                orig(self);
+                return;
+            }
             // jank ass way to check if a lightning orb "ended" by not finding a new target
             bool orbFoundNewTarget = false;
             if (self.bouncedObjects != null && self.bouncesRemaining > 0)
@@ -89,7 +89,7 @@ namespace SS2.Items
 
             bool isLastBounce = self.bouncedObjects != null && (self.bouncesRemaining == 0 || !orbFoundNewTarget);
 
-            if (isLastBounce && self.attacker?.GetComponent<CharacterBody>()?.inventory?.GetItemCount(SS2Content.Items.ErraticGadget) > 0)
+            if (isLastBounce && self.attacker && self.attacker.GetComponent<CharacterBody>().inventory.GetItemCount(SS2Content.Items.ErraticGadget) > 0)
             {
                 bool canProcGadget = false;
                 bool wasFirstBounceFake = false;

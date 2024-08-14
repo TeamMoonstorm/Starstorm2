@@ -9,7 +9,8 @@ using R2API;
 using System.Reflection;
 using UnityEngine.Networking;
 using RoR2.ContentManagement;
-
+using UnityEngine.AddressableAssets;
+using System.Collections.Generic;
 namespace SS2.Survivors
 {
     public sealed class NemCommando : SS2Survivor, IContentPackModifier
@@ -24,25 +25,32 @@ namespace SS2.Survivors
         private GameObject distantGashProjectileBlue;
         private GameObject distantGashProjectileYellow;
         private GameObject grenadeProjectile;
-
-        
-
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _gougeBuffDef = assetCollection.FindAsset<BuffDef>("BuffGouge");
-            distantGashProjectile = assetCollection.FindAsset<GameObject>("NemCommandoSwordBeamProjectile");
-            distantGashProjectileBlue = assetCollection.FindAsset<GameObject>("NemCommandoSwordBeamProjectileBlue");
-            distantGashProjectileYellow = assetCollection.FindAsset<GameObject>("NemCommandoSwordBeamProjectileYellow");
-        }
+        private GameObject bodyPrefab;
+        private CharacterBody characterBody;
+        public GameObject nemesisPodPrefab;
+        public GameObject podPanelPrefab;
 
         public override void Initialize()
         {
+            _gougeBuffDef = AssetCollection.FindAsset<BuffDef>("BuffGouge");
+            distantGashProjectile = AssetCollection.FindAsset<GameObject>("NemCommandoSwordBeamProjectile");
+            distantGashProjectileBlue = AssetCollection.FindAsset<GameObject>("NemCommandoSwordBeamProjectileBlue");
+            distantGashProjectileYellow = AssetCollection.FindAsset<GameObject>("NemCommandoSwordBeamProjectileYellow");
+            bodyPrefab = AssetCollection.FindAsset<GameObject>("NemCommandoBody");
+
+            characterBody = bodyPrefab.GetComponent<CharacterBody>();
+
             On.RoR2.CharacterSelectBarController.Awake += CharacterSelectBarController_Awake;
 
             GougeDamageType = DamageAPI.ReserveDamageType();
             GougeDotIndex = DotAPI.RegisterDotDef(0.25f, 0.25f, DamageColorIndex.SuperBleed, _gougeBuffDef);
             On.RoR2.HealthComponent.TakeDamage += TakeDamageGouge;
             GlobalEventManager.onServerDamageDealt += ApplyGouge;
+
+            ModifyProjectiles();
+            CreatePod();
+
+            characterBody.preferredPodPrefab = nemesisPodPrefab;
         }
 
         private void TakeDamageGouge(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
@@ -80,7 +88,7 @@ namespace SS2.Survivors
         private void CharacterSelectBarController_Awake(On.RoR2.CharacterSelectBarController.orig_Awake orig, CharacterSelectBarController self)
         {
             //hide nemcommando from css proper
-            SS2Content.Survivors.survivorNemMerc.hidden = !SurvivorCatalog.SurvivorIsUnlockedOnThisClient(SS2Content.Survivors.survivorNemMerc.survivorIndex); // hello nem comado
+            SS2Content.Survivors.NemMerc.hidden = !SurvivorCatalog.SurvivorIsUnlockedOnThisClient(SS2Content.Survivors.NemMerc.survivorIndex); // hello nem comado
             SS2Content.Survivors.survivorNemCommando.hidden = !SurvivorCatalog.SurvivorIsUnlockedOnThisClient(SS2Content.Survivors.survivorNemCommando.survivorIndex);
             orig(self);
         }
@@ -99,8 +107,24 @@ namespace SS2.Survivors
                     dotIndex = GougeDotIndex,
                     duration = gougeDuration,
                     damageMultiplier = 1,
+                    maxStacksFromAttacker = 5,
                 };
                 DotController.InflictDot(ref dotInfo);
+
+                // refresh stack timers
+                
+                DotController dotController = DotController.FindDotController(victimBody.gameObject);
+                if (!dotController) return;
+                int j = 0;
+                List<DotController.DotStack> dotStackList = dotController.dotStackList;
+                while (j < dotStackList.Count)
+                {
+                    if (dotStackList[j].dotIndex == GougeDotIndex)
+                    {
+                        dotStackList[j].timer = Mathf.Max(dotStackList[j].timer, gougeDuration);
+                    }
+                    j++;
+                }
             }
         }
 
@@ -109,7 +133,29 @@ namespace SS2.Survivors
             return true;
         }
 
-        
+        public void CreatePod()
+        {
+            Material podMat = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/TrimSheets/matTrimSheetConstructionBlue.mat").WaitForCompletion();
+            nemesisPodPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/SurvivorPod/SurvivorPod.prefab").WaitForCompletion().InstantiateClone("NemesisSurvivorPod", true);
+
+            Transform modelTransform = nemesisPodPrefab.GetComponent<ModelLocator>().modelTransform;
+
+            modelTransform.Find("EscapePodArmature/Base/Door/EscapePodDoorMesh").GetComponent<MeshRenderer>().material = podMat;
+            modelTransform.Find("EscapePodArmature/Base/ReleaseExhaustFX/Door,Physics").GetComponent<MeshRenderer>().material = podMat;
+            modelTransform.Find("EscapePodArmature/Base/EscapePodMesh").GetComponent<MeshRenderer>().material = podMat;
+            modelTransform.Find("EscapePodArmature/Base/RotatingPanel/EscapePodMesh.002").GetComponent<MeshRenderer>().material = podMat;
+
+            podPanelPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/SurvivorPod/SurvivorPodBatteryPanel.prefab").WaitForCompletion().InstantiateClone("NemesisPanel", true);
+            podPanelPrefab.GetComponent<Highlight>().targetRenderer.material = podMat;
+
+            InstantiatePrefabBehavior[] ipb;
+            ipb = nemesisPodPrefab.GetComponents<InstantiatePrefabBehavior>();
+            foreach (InstantiatePrefabBehavior prefab in ipb)
+            {
+                if (prefab.prefab == Addressables.LoadAssetAsync<GameObject>("RoR2/Base/SurvivorPod/SurvivorPodBatteryPanel.prefab").WaitForCompletion())
+                    prefab.prefab = podPanelPrefab;
+            }
+        }
 
         private void ModifyProjectiles()
         {
@@ -120,8 +166,8 @@ namespace SS2.Survivors
             damageAPIComponent = distantGashProjectileYellow.AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>();
             damageAPIComponent.Add(GougeDamageType);
 
-            var pie = grenadeProjectile.GetComponent<RoR2.Projectile.ProjectileImpactExplosion>();
-            pie.impactEffect = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/OmniExplosionVFXCommandoGrenade.prefab").WaitForCompletion();
+            //var pie = grenadeProjectile.GetComponent<RoR2.Projectile.ProjectileImpactExplosion>();
+            //pie.impactEffect = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/OmniExplosionVFXCommandoGrenade.prefab").WaitForCompletion();
         }
     }
 }

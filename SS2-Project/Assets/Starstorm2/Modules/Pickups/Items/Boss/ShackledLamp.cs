@@ -11,14 +11,7 @@ namespace SS2.Items
 {
     public sealed class ShackledLamp : SS2Item, IContentPackModifier
     {
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acShackedLamp", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            projectilePrefab = assetCollection.FindAsset<GameObject>("LampBulletPlayer");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acShackledLamp", SS2Bundle.Items);
 
         public ItemDef.Pair lampPair;
 
@@ -26,6 +19,7 @@ namespace SS2.Items
 
         public override void Initialize()
         {
+            projectilePrefab = AssetCollection.FindAsset<GameObject>("LampBulletPlayer");
         }
 
         public override bool IsAvailable(ContentPack contentPack)

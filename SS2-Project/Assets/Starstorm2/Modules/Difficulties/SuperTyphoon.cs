@@ -13,26 +13,24 @@ namespace SS2
     {
         public override SS2AssetRequest<SerializableDifficultyDef> AssetRequest => SS2Assets.LoadAssetAsync<SerializableDifficultyDef>("SuperTyphoon", SS2Bundle.Base);
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_MAIN, ConfigSectionOverride = "Super Typhoon", ConfigNameOverride = "Increase Team Limit", ConfigDescOverride = "Multiplies the Monster, Lunar, and Void Team maximum size by 3 when enabled. May affect performance.")]
-        internal static bool IncreaseSpawnCapST = true;
-
         private int defMonsterCap;
-
-
+        public static SerializableDifficultyDef sdd;
         public override void Initialize()
         {
+            sdd = DifficultyDef;
+
             /*
-            //On.RoR2.UI.MPEventSystemLocator.Awake += MPEventSystemLocator_Awake;
+//On.RoR2.UI.MPEventSystemLocator.Awake += MPEventSystemLocator_Awake;
 
-            //On.RoR2.UI.RuleBookViewer.Awake += 
+//On.RoR2.UI.RuleBookViewer.Awake += 
 
-            /*superTyphoonRCD.ruleDef = superTyphoonRuleDef;
-            superTyphoonRCD.localName = "SS2_DIFFICULTY_SUPERTYPHOON_NAME";
-            superTyphoonRCD.globalName = superTyphoonRuleDef.globalName + "." + "SS2_DIFFICULTY_SUPERTYPHOON_NAME";
-            superTyphoonRCD.extraData = null;
-            superTyphoonRCD.excludeByDefault = true;
-            superTyphoonRCD.difficultyIndex = SuperTyphoonIndex;
-            */
+/*superTyphoonRCD.ruleDef = superTyphoonRuleDef;
+superTyphoonRCD.localName = "SS2_DIFFICULTY_SUPERTYPHOON_NAME";
+superTyphoonRCD.globalName = superTyphoonRuleDef.globalName + "." + "SS2_DIFFICULTY_SUPERTYPHOON_NAME";
+superTyphoonRCD.extraData = null;
+superTyphoonRCD.excludeByDefault = true;
+superTyphoonRCD.difficultyIndex = SuperTyphoonIndex;
+*/
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -54,13 +52,6 @@ namespace SS2
             foreach (CharacterMaster cm in run.userMasters.Values)
                 if (NetworkServer.active)
                     cm.inventory.GiveItem(RoR2Content.Items.MonsoonPlayerHelper.itemIndex);
-
-            if (IncreaseSpawnCapST)
-            {
-                TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit *= 3;
-                TeamCatalog.GetTeamDef(TeamIndex.Void).softCharacterLimit *= 3;
-                TeamCatalog.GetTeamDef(TeamIndex.Lunar).softCharacterLimit *= 3;
-            }
         }
 
         //Bad Ending

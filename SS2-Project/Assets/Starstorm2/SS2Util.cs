@@ -3,13 +3,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 using MSU;
 namespace SS2
 {
     public static class SS2Util
     {
         #region Misc
+        public static T EnsureComponent<T>(this MonoBehaviour component) where T : MonoBehaviour
+        {
+            var c = component.GetComponent<T>();
+            return c ? c : component.gameObject.AddComponent<T>();
+        }
+
         public static void DropShipCall(Transform origin, int tierWeight, uint teamLevel = 1, int amount = 1, ItemTier forcetier = 0, string theWorstCodeOfTheYear = null)
         {
             List<PickupIndex> dropList;
@@ -144,7 +150,7 @@ namespace SS2
             pickup.prefabOverride = PickupCatalog.GetPickupDef(pickupIndex).dropletDisplayPrefab;
 
             pickup.pickupIndex = pickupIndex;
-            PickupDropletController.CreatePickupDroplet(pickup, position, velocity);
+            PickupDropletController.CreatePickupDroplet(pickupIndex, position, velocity);
 
             EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>(vfxPrefab, SS2Bundle.All), new EffectData
             {
@@ -182,7 +188,54 @@ namespace SS2
             }
         }
 
+        public static void RefreshAllBuffStacks(CharacterBody charBody, BuffDef buff, float duration)
+        {
+            var buffs = charBody.timedBuffs;
 
+            foreach( CharacterBody.TimedBuff current in buffs)
+            {
+                if(current.buffIndex == buff.buffIndex)
+                {
+                    Debug.Log("current bufdf " + current.buffIndex + " | " + current.timer);
+                    current.timer = duration;
+                }
+            }
+        }
+
+
+            [ConCommand(commandName = "one_of_each", flags = ConVarFlags.Cheat, helpText = "Grants one of each item. Format: {itemCount} {itemTier} {itemTag}")]
+        public static void CmdGrantOneOfEachItem(ConCommandArgs args)
+        {
+            CharacterMaster master = args.GetSenderMaster();
+
+            int itemCount = 1;
+            if(args.Count > 0) int.TryParse(args[0], out itemCount);
+
+            ItemTier argTier = (ItemTier)(-1);
+            if (args.Count > 1) ItemTier.TryParse(args[1], out argTier);
+
+            ItemTag argTag = ItemTag.Any;
+            if (args.Count > 2) ItemTag.TryParse(args[2], out argTag);
+
+            for (ItemIndex itemIndex = 0; itemIndex < (ItemIndex)ItemCatalog.itemDefs.Length; itemIndex++)
+            {
+                ItemDef itemDef = ItemCatalog.GetItemDef(itemIndex);
+                bool shouldGive = true;
+                if (argTier != (ItemTier)(-1)) shouldGive &= itemDef.tier == argTier;
+                if (argTag != ItemTag.Any) shouldGive &= itemDef.ContainsTag(argTag);
+                if (!shouldGive) continue;
+                try
+                {
+                        master.inventory.GiveItem(itemDef, itemCount);
+                }
+                catch (Exception e)
+                {
+                    SS2Log.Warning("Failed to grant ItemIndex " + itemIndex + ", " + Language.GetString(itemDef.nameToken));
+                    SS2Log.Error(e);
+                    continue; //????????????????????????
+                }
+            }
+        }
 
 
         public static IEnumerator BroadcastChat(string token)

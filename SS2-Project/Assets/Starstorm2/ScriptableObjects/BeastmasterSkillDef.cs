@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-namespace Assets.Starstorm2.ScriptableObjects
+namespace SS2
 {
     [CreateAssetMenu(menuName = "Starstorm2/SkillDef/BeastmasterSkillDef")]
     internal class BeastmasterSkillDef : SkillDef

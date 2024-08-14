@@ -20,14 +20,7 @@ namespace SS2.Items
     public sealed class CompositeInjector : SS2Item
     {
         private const string token = "SS2_ITEM_COMPOSITEINJECTOR_DESC";
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acCompositeInjector", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _useEffect = assetCollection.FindAsset<GameObject>("CompositeInjectorEffect");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acCompositeInjector", SS2Bundle.Items);
 
         private static GameObject _useEffect;
 
@@ -36,7 +29,8 @@ namespace SS2.Items
         public static Vector3 funnyVector = new Vector3(-72f, 0f, 0f);
 
         public override void Initialize()
-        {            
+        {
+            _useEffect = AssetCollection.FindAsset<GameObject>("CompositeInjectorEffect");
             // 10 hooks lol
             var hook = new Hook(typeof(EquipmentIcon).GetMethod(nameof(EquipmentIcon.GenerateDisplayData), (System.Reflection.BindingFlags)(-1)), typeof(CompositeInjector).GetMethod(nameof(EquipmentIcon_GenerateDisplayData), (System.Reflection.BindingFlags)(-1)));
             On.RoR2.UI.HUD.Awake += AddIcons;

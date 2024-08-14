@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2530083043610570316}
   - component: {fileID: 2254589286883865306}
+  - component: {fileID: 7040212369123792329}
   m_Layer: 0
   m_Name: RefreshPanel
   m_TagString: Untagged
@@ -50,6 +51,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panel: {fileID: 1556845958215851161}
+--- !u!222 &7040212369123792329
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1160558681053595639}
+  m_CullTransparentMesh: 0
 --- !u!1 &1623060801511151243
 GameObject:
   m_ObjectHideFlags: 0
@@ -60,7 +69,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1556845958215851161}
   - component: {fileID: 1557640804218824065}
-  - component: {fileID: 485972730822790031}
+  - component: {fileID: 6941377236311232702}
   - component: {fileID: 1662812360713240656}
   m_Layer: 5
   m_Name: Panel
@@ -97,7 +106,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1623060801511151243}
   m_CullTransparentMesh: 0
---- !u!114 &485972730822790031
+--- !u!114 &6941377236311232702
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -171,7 +180,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  image: {fileID: 485972730822790031}
+  image: {fileID: 6941377236311232702}
   rawImage: {fileID: 0}
   spriteRenderer: {fileID: 0}
   timeMax: 1
@@ -189,7 +198,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1556344808949343851}
   - component: {fileID: 1554352373371032874}
-  - component: {fileID: 5269370953785409332}
+  - component: {fileID: 8765642169620320417}
   - component: {fileID: 1665692390618685163}
   m_Layer: 5
   m_Name: FlashPanel, Expanding
@@ -225,7 +234,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1623068960681245581}
   m_CullTransparentMesh: 0
---- !u!114 &5269370953785409332
+--- !u!114 &8765642169620320417
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -290,7 +299,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  image: {fileID: 5269370953785409332}
+  image: {fileID: 8765642169620320417}
   rawImage: {fileID: 0}
   spriteRenderer: {fileID: 0}
   timeMax: 0.2

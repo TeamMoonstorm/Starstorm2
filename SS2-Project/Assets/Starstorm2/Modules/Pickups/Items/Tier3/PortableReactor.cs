@@ -13,18 +13,7 @@ namespace SS2.Items
     {
         private const string token = "SS2_ITEM_PORTABLEREACTOR_DESC";
 
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acPortableReactor", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            // load these effects
-            //public override Material OverlayMaterial => SS2Assets.LoadAsset<Material>("matReactorBuffOverlay", SS2Bundle.Items);
-            //public static GameObject bubbleEffectPrefab => SS2Assets.LoadAsset<GameObject>("ReactorBubbleEffect", SS2Bundle.Items);       
-            //public static GameObject endEffectPrefab => SS2Assets.LoadAsset<GameObject>("ReactorBubbleEnd", SS2Bundle.Items);
-            //public static GameObject shieldEffectPrefab => SS2Assets.LoadAsset<GameObject>("ReactorShieldEffect", SS2Bundle.Items);
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acPortableReactor", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Duration of invulnerability from Portable Reactor. (1 = 1 second)")]
         [FormatToken(token, 0)]
@@ -33,21 +22,26 @@ namespace SS2.Items
         [FormatToken(token, 1)]
         public static float stackingInvuln = 40f;
 
-        private BuffDef _buffPortableReactor; //SS2Assets.LoadAsset<BuffDef>("BuffReactor", SS2Bundle.Items);
-        public static Material _overlay; // SS2Assets.LoadAsset<Material>("matReactorBuffOverlay", SS2Bundle.Items);
+        public static GameObject bubbleEffectPrefab;
+        public static GameObject endEffectPrefab; 
+        public static GameObject shieldEffectPrefab; 
 
-        public static GameObject bubbleEffectPrefab; //SS2Assets.LoadAsset<GameObject>("ReactorBubbleEffect", SS2Bundle.Items);
-        public static GameObject endEffectPrefab; //SS2Assets.LoadAsset<GameObject>("ReactorBubbleEnd", SS2Bundle.Items);
-        public static GameObject shieldEffectPrefab; //SS2Assets.LoadAsset<GameObject>("ReactorShieldEffect", SS2Bundle.Items);
-
-        //★ ty nebby
-        //To-Do: This thing spits out a few errors every time a stage is started. Doesn't really NEED fixed, but probably should be.
         //N: This tbh should be moved to a hook on stage start, to avoid having a resurrected player becoming invincible.
         public override void Initialize()
         {
-            CharacterBody.onBodyStartGlobal += ImFuckingInvincible;
+            bubbleEffectPrefab = AssetCollection.FindAsset<GameObject>("ReactorBubbleEffect");
+            endEffectPrefab = AssetCollection.FindAsset<GameObject>("ReactorBubbleEnd");
+            shieldEffectPrefab = AssetCollection.FindAsset<GameObject>("ReactorShieldEffect");
 
-            BuffOverlays.AddBuffOverlay(_buffPortableReactor, _overlay);
+            CharacterBody.onBodyStartGlobal += ImFuckingInvincible;
+            RecalculateStatsAPI.GetStatCoefficients += GetStatCoefficients;
+            BuffOverlays.AddBuffOverlay(AssetCollection.FindAsset<BuffDef>("BuffReactor"), AssetCollection.FindAsset<Material>("matReactorBuffOverlay"));
+        }
+
+        private void GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
+        {
+            if (sender.HasBuff(SS2Content.Buffs.BuffReactor))
+                args.moveSpeedMultAdd += 1f;
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -70,12 +64,7 @@ namespace SS2.Items
             }
         }
 
-        public void ModifyContentPack(ContentPack contentPack)
-        {
-            contentPack.buffDefs.AddSingle(_buffPortableReactor);
-        }
-
-        public sealed class Behavior : BaseBuffBehaviour, RoR2.IOnIncomingDamageServerReceiver, IBodyStatArgModifier
+        public sealed class Behavior : BaseBuffBehaviour, RoR2.IOnIncomingDamageServerReceiver
         {
             [BuffDefAssociation]
             private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffReactor;
@@ -99,14 +88,11 @@ namespace SS2.Items
                 effectData.SetNetworkedObjectReference(this.CharacterBody.gameObject);
                 EffectManager.SpawnEffect(endEffectPrefab, effectData, true);
             }
-            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
-            {
-                args.moveSpeedMultAdd += 1f;
-            }
+            
 
             public void OnIncomingDamageServer(DamageInfo damageInfo)
             {
-                if (damageInfo.damageType == DamageType.VoidDeath) return;
+                if (!CharacterBody.HasBuff(SS2Content.Buffs.BuffReactor) || damageInfo.damageType == DamageType.VoidDeath) return;
 
                 damageInfo.rejected = true;
 

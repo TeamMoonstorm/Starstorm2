@@ -11,14 +11,7 @@ namespace SS2.Items
     public sealed class DroidHead : SS2Item
     {
         private const string token = "SS2_ITEM_DROIDHEAD_DESC";
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acDroidHead", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _droidDroneMaster = assetCollection.FindAsset<GameObject>("DroidDroneMaster");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acDroidHead", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Damage dealt by Security Drones, at base and per stack. Percentage (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
@@ -36,6 +29,7 @@ namespace SS2.Items
 
         public override void Initialize()
         {
+            _droidDroneMaster = AssetCollection.FindAsset<GameObject>("DroidDroneMaster");
         }
 
         public override bool IsAvailable(ContentPack contentPack)

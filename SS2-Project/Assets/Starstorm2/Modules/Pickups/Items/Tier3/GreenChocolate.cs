@@ -12,14 +12,8 @@ namespace SS2.Items
     public sealed class GreenChocolate : SS2Item
     {
         private const string token = "SS2_ITEM_GREENCHOCOLATE_DESC";
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acGreenChocolate", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _effect = assetCollection.FindAsset<GameObject>("ChocolateEffect");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acGreenChocolate", SS2Bundle.Items);
+
         private static GameObject _effect;
 
 
@@ -49,6 +43,9 @@ namespace SS2.Items
 
         public override void Initialize()
         {
+
+            _effect = AssetCollection.FindAsset<GameObject>("ChocolateEffect");
+
             R2API.RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
         }
 

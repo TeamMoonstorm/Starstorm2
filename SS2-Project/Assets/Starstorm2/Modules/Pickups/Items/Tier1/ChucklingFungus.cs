@@ -13,14 +13,11 @@ namespace SS2.Items
     //N: This is so fucking epic
     public sealed class ChucklingFungus : SS2VoidItem
     {
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
+        public override SS2AssetRequest AssetRequest()
         {
             return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acChucklingFungus", SS2Bundle.Items);
         }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _chungusWard = assetCollection.FindAsset<GameObject>("ChungusWard");
-        }
+
         private static GameObject _chungusWard;
 
         public static float baseHealFractionPerSecond = 0.055f;
@@ -37,6 +34,7 @@ namespace SS2.Items
 
         public override void Initialize()
         {
+            _chungusWard = AssetCollection.FindAsset<GameObject>("ChungusWard");
         }
 
         //Should return true only if dungus is available as well, unsure how to do that lol

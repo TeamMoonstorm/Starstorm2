@@ -19,15 +19,15 @@ namespace SS2.Orbs
         {
             ParallelMultiStartAssetLoadCoroutine helper = new ParallelMultiStartAssetLoadCoroutine();
 
-            helper.AddAssetToLoad<GameObject>("ExecutioenrIonSuperOrbEffect", SS2Bundle.Executioner2);
-            helper.AddAssetToLoad<NetworkSoundEventDef>("SoundEventExecutionerGainCharge", SS2Bundle.Executioner2);
+            helper.AddAssetToLoad<GameObject>("ExecutionerIonSuperOrbEffect", SS2Bundle.Executioner2);
+            helper.AddAssetToLoad<NetworkSoundEventDef>("ExecutionerGainCharge", SS2Bundle.Executioner2);
 
             helper.Start();
             while (!helper.IsDone)
                 yield return null;
 
-            orbEffect = helper.GetLoadedAsset<GameObject>("ExecutioenrIonSuperOrbEffect");
-            sound = helper.GetLoadedAsset<NetworkSoundEventDef>("SoundEventExecutionerGainCharge");
+            orbEffect = helper.GetLoadedAsset<GameObject>("ExecutionerIonSuperOrbEffect");
+            sound = helper.GetLoadedAsset<NetworkSoundEventDef>("ExecutionerGainCharge");
         }
         public override void Begin()
         {

@@ -10,10 +10,7 @@ namespace SS2.Items
 {
     public sealed class SantaHat : SS2Item
     {
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acSantaHat", SS2Bundle.Items);
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acSantaHat", SS2Bundle.Items);
 
         public static float percentHatChance = 10f;
 

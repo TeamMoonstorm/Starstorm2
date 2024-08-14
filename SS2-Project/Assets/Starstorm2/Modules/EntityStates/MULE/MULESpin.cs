@@ -8,7 +8,7 @@ namespace EntityStates.MULE
 #if DEBUG
     class MULESpin : BasicMeleeAttack
     {
-        [FormatToken("SS2_MULE_PRIMARY_SPIN_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
+        [FormatToken("SS2_MULE_SPIN_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float dmgCoefficient;
         public static float minSpinCount;
         public static float maxSpinCount;

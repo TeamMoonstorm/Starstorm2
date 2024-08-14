@@ -12,6 +12,8 @@ using UnityEngine.Networking;
 using UnityEngine.AddressableAssets;
 using R2API;
 using RoR2.ContentManagement;
+using RoR2.Orbs;
+using R2API.Utils;
 
 namespace SS2.Survivors
 {
@@ -27,76 +29,6 @@ namespace SS2.Survivors
         public static BuffDef _buffExeMuteCharge;
         public static BuffDef _buffExeSuperCharged;
 
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            plumeEffect = assetCollection.FindAsset<GameObject>("exePlume");
-            plumeEffectLarge = assetCollection.FindAsset<GameObject>("exePlumeBig");
-            _buffDefFear = assetCollection.FindAsset<BuffDef>("BuffFear");
-            _buffExeMuteCharge = assetCollection.FindAsset<BuffDef>("bdExeMuteCharge");
-            _buffExeSuperCharged = assetCollection.FindAsset<BuffDef>("BuffExecutionerSuperCharged");
-        }
-        public sealed class ExeArmorBehavior : BaseBuffBehaviour, IBodyStatArgModifier
-        {
-            [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffExecutionerArmor;
-            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
-            {
-                //the stacking amounts are added by the item - these base values are here in case the buff is granted by something other than sigil
-                args.armorAdd += 60;
-            }
-        }
-
-        public sealed class FearDebuffBehavior : BaseBuffBehaviour, IBodyStatArgModifier
-        {
-            [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => _buffDefFear;
-
-            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
-            {
-                args.moveSpeedReductionMultAdd += 0.5f;
-            }
-        }
-
-        public sealed class ExeSuperChargeBehavior : BaseBuffBehaviour
-        {
-            [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => _buffExeSuperCharged;
-            private float timer;
-
-            public void FixedUpdate()
-            {
-                if (NetworkServer.active && HasAnyStacks)
-                {
-                    if (CharacterBody.baseNameToken != "SS2_EXECUTIONER2_NAME" || CharacterBody.HasBuff(_buffExeMuteCharge))
-                        return;
-                    else
-                        timer += Time.fixedDeltaTime;
-
-                    if (timer >= 0.2f && CharacterBody.skillLocator.secondary.stock < CharacterBody.skillLocator.secondary.maxStock)
-                    {
-                        timer = 0f;
-
-                        CharacterBody.skillLocator.secondary.AddOneStock();
-
-                        if (CharacterBody.skillLocator.secondary.stock < CharacterBody.skillLocator.secondary.maxStock)
-                        {
-                            Util.PlaySound("ExecutionerGainCharge", gameObject);
-                            EffectManager.SimpleMuzzleFlash(plumeEffect, gameObject, "ExhaustL", true);
-                            EffectManager.SimpleMuzzleFlash(plumeEffect, gameObject, "ExhaustR", true);
-                        }
-                        if (CharacterBody.skillLocator.secondary.stock >= CharacterBody.skillLocator.secondary.maxStock)
-                        {
-                            Util.PlaySound("ExecutionerMaxCharge", gameObject);
-                            EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustL", true);
-                            EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustR", true);
-                            EffectManager.SimpleEffect(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/LightningFlash.prefab").WaitForCompletion(), CharacterBody.corePosition, Quaternion.identity, false);
-                        }
-
-                        CharacterBody.SetAimTimer(1.6f);
-                    }
-                }
-            }
-        }
 
         public static ReadOnlyCollection<BodyIndex> BodiesThatGiveSuperCharge { get; private set; }
         private static HashSet<string> bodiesThatGiveSuperCharge = new HashSet<string>
@@ -117,9 +49,47 @@ namespace SS2.Survivors
 
         public override void Initialize()
         {
+            plumeEffect = AssetCollection.FindAsset<GameObject>("exePlume");
+            plumeEffectLarge = AssetCollection.FindAsset<GameObject>("exePlumeBig");
+            _buffDefFear = AssetCollection.FindAsset<BuffDef>("BuffFear");
+            _buffExeMuteCharge = AssetCollection.FindAsset<BuffDef>("bdExeMuteCharge");
+            _buffExeSuperCharged = AssetCollection.FindAsset<BuffDef>("BuffExecutionerSuperCharged");
+
             BodyCatalog.availability.CallWhenAvailable(UpdateSuperChargeList);
             Hook();
             ModifyPrefab();
+
+            IL.RoR2.Orbs.OrbEffect.Start += OrbEffect_Start;
+        }
+
+        private void OrbEffect_Start(ILContext il)
+        {
+            ILCursor cursor = new ILCursor(il);
+
+            bool ILFound = cursor.TryGotoNext(MoveType.After,
+                instruction => instruction.MatchBrtrue(out _),
+                instruction => instruction.MatchLdarg(0),
+                instruction => instruction.MatchLdfld<OrbEffect>(nameof(OrbEffect.startPosition))
+                );
+            if (ILFound)
+            {
+                cursor.Emit(OpCodes.Ldarg_0);
+                cursor.Emit(OpCodes.Ldfld, typeof(OrbEffect).GetFieldCached(nameof(OrbEffect.targetTransform)));
+                cursor.Emit(OpCodes.Ldloc_0);
+                cursor.EmitDelegate<Func<Vector3, Transform, EffectComponent, Vector3>>((startPosition, targetTransform, effectComponent) =>
+                {
+                    if (targetTransform == null)
+                    {
+                        startPosition = effectComponent.effectData.start;
+                    }
+                    return startPosition;
+                });
+                Debug.Log("Added OrbEffect_Start hook :D");
+            }
+            else
+            {
+                Debug.Log("ah shit");
+            }
         }
 
         private static void UpdateSuperChargeList()
@@ -271,6 +241,68 @@ namespace SS2.Survivors
                     return 5;
                 default:
                     return 1;
+            }
+        }
+        public sealed class ExeArmorBehavior : BaseBuffBehaviour, IBodyStatArgModifier
+        {
+            [BuffDefAssociation]
+            private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffExecutionerArmor;
+            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            {
+                //the stacking amounts are added by the item - these base values are here in case the buff is granted by something other than sigil
+                args.armorAdd += 60;
+            }
+        }
+
+        public sealed class FearDebuffBehavior : BaseBuffBehaviour, IBodyStatArgModifier
+        {
+            [BuffDefAssociation]
+            private static BuffDef GetBuffDef() => _buffDefFear;
+
+            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            {
+                args.moveSpeedReductionMultAdd += 0.5f;
+            }
+        }
+
+        public sealed class ExeSuperChargeBehavior : BaseBuffBehaviour
+        {
+            [BuffDefAssociation]
+            private static BuffDef GetBuffDef() => _buffExeSuperCharged;
+            private float timer;
+
+            public void FixedUpdate()
+            {
+                if (NetworkServer.active && HasAnyStacks)
+                {
+                    if (CharacterBody.baseNameToken != "SS2_EXECUTIONER2_NAME" || CharacterBody.HasBuff(_buffExeMuteCharge))
+                        return;
+                    else
+                        timer += Time.fixedDeltaTime;
+
+                    if (timer >= 0.2f && CharacterBody.skillLocator.secondary.stock < CharacterBody.skillLocator.secondary.maxStock)
+                    {
+                        timer = 0f;
+
+                        CharacterBody.skillLocator.secondary.AddOneStock();
+
+                        if (CharacterBody.skillLocator.secondary.stock < CharacterBody.skillLocator.secondary.maxStock)
+                        {
+                            Util.PlaySound("ExecutionerGainCharge", gameObject);
+                            EffectManager.SimpleMuzzleFlash(plumeEffect, gameObject, "ExhaustL", true);
+                            EffectManager.SimpleMuzzleFlash(plumeEffect, gameObject, "ExhaustR", true);
+                        }
+                        if (CharacterBody.skillLocator.secondary.stock >= CharacterBody.skillLocator.secondary.maxStock)
+                        {
+                            Util.PlaySound("ExecutionerMaxCharge", gameObject);
+                            EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustL", true);
+                            EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustR", true);
+                            EffectManager.SimpleEffect(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/LightningFlash.prefab").WaitForCompletion(), CharacterBody.corePosition, Quaternion.identity, false);
+                        }
+
+                        CharacterBody.SetAimTimer(1.6f);
+                    }
+                }
             }
         }
     }

@@ -11,10 +11,7 @@ namespace SS2.Items
     {
         private const string token = "SS2_ITEM_DIARY_DESC";
 
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acDiary", SS2Bundle.Items);
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acDiary", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Number of levels gained when Empty Diary is consumed.")]
         [FormatToken(token)]

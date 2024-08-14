@@ -14,10 +14,7 @@ namespace SS2.Items
     {
         public const string token = "SS2_ITEM_NKOTASHERITAGE_DESC";
 
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acNkotasHeritage", SS2Bundle.Items);
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acNkotasHeritage", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Number of items given upon level up per stack.")]
         [FormatToken(token, 0)]

@@ -27,6 +27,7 @@ namespace SS2
         Chirr,
         NemCommando,
         NemMercenary,
+       // Nuke,
         Equipments,
         Items,
         Events,
@@ -48,6 +49,7 @@ namespace SS2
         private const string CHIRR = "ss2chirr";
         private const string NEMCOMMANDO = "ss2nemcommando";
         private const string NEMMERCENARY = "ss2nemmercenary";
+        //private const string NUKE = "ss2nuke";
         private const string EQUIPS = "ss2equipments";
         private const string ITEMS = "ss2items";
         private const string EVENTS = "ss2events";
@@ -202,6 +204,7 @@ namespace SS2
                 case MONSTERS: commissionBundleEnum = SS2Bundle.Monsters; break;
                 case DEV: commissionBundleEnum = SS2Bundle.Indev; break;
                 case SHARED: commissionBundleEnum = SS2Bundle.Shared; break;
+               // case NUKE: commissionBundleEnum = SS2Bundle.Nuke; break;
                 //This path does not match any of the non scene bundles, could be a scene, we will mark these on only this ocassion as "Invalid".
                 default: commissionBundleEnum = SS2Bundle.Invalid; break;
             }
@@ -340,13 +343,11 @@ namespace SS2
         }
 #endif
     }
-    public class SS2AssetRequest<TAsset> where TAsset : UObject
-    {
-        public TAsset Asset => _asset;
-        private TAsset _asset;
 
-        public IEnumerable<TAsset> Assets => _assets;
-        private List<TAsset> _assets;
+    public abstract class SS2AssetRequest
+    {
+        public abstract UObject BoxedAsset { get; }
+        public abstract IEnumerable<UObject> BoxedAssets { get; }
 
         public SS2Bundle TargetBundle => _targetBundle;
         private SS2Bundle _targetBundle;
@@ -354,61 +355,57 @@ namespace SS2
         public NullableRef<string> AssetName => _assetName;
         private NullableRef<string> _assetName;
 
-        private bool _singleAssetLoad = true;
-
-        public bool IsComplete => !_internalCoroutine.MoveNext();
-        private IEnumerator _internalCoroutine;
+        protected bool SingleAssetLoad { get; private set; }
+        public bool IsComplete => !internalCoroutine.MoveNext();
+        protected IEnumerator internalCoroutine;
+        protected string assetTypeName;
 
         public void StartLoad()
         {
-            if (_singleAssetLoad)
+            if (SingleAssetLoad)
             {
-                _internalCoroutine = LoadSingleAsset();
+                internalCoroutine = LoadSingleAsset();
             }
             else
             {
-                _internalCoroutine = LoadMultipleAsset();
+                internalCoroutine = LoadMultipleAsset();
             }
         }
 
-        private IEnumerator LoadSingleAsset()
+        protected abstract IEnumerator LoadSingleAsset();
+        protected abstract IEnumerator LoadMultipleAsset();
+
+
+        public SS2AssetRequest(string assetName, SS2Bundle bundleEnum)
+        {
+            _assetName = assetName;
+            _targetBundle = bundleEnum;
+            SingleAssetLoad = true;
+            assetTypeName = "UnityEngine.Object";
+        }
+
+        public SS2AssetRequest(SS2Bundle bundleEnum)
+        {
+            _assetName = string.Empty;
+            _targetBundle = bundleEnum;
+            SingleAssetLoad = false;
+            assetTypeName = "UnityEngine.Object";
+        }
+    }
+
+    public class SS2AssetRequest<TAsset> : SS2AssetRequest where TAsset : UObject
+    {
+        public override UObject BoxedAsset => _asset;
+        public TAsset Asset => _asset;
+        private TAsset _asset;
+
+        public override IEnumerable<UObject> BoxedAssets => _assets;
+        public IEnumerable<TAsset> Assets => _assets;
+        private List<TAsset> _assets;
+
+        protected override IEnumerator LoadSingleAsset()
         {
             AssetBundleRequest request = null;
-            if (_targetBundle == SS2Bundle.All)
-            {
-                foreach (SS2Bundle enumVal in Enum.GetValues(typeof(SS2Bundle)))
-                {
-                    if (enumVal == SS2Bundle.Invalid || enumVal == SS2Bundle.All)
-                        continue;
-
-                    var bundle = SS2Assets.GetAssetBundle(enumVal);
-                    request = bundle.LoadAssetAsync<TAsset>(AssetName);
-                    while (!request.isDone)
-                    {
-                        yield return null;
-                    }
-
-                    _asset = (TAsset)request.asset;
-                    if (Asset)
-                    {
-                        _targetBundle = enumVal;
-                        yield break;
-                    }
-                }
-
-#if DEBUG
-                if (!Asset)
-                {
-                    _targetBundle = SS2Bundle.Invalid;
-                    SS2Log.Warning($"Could not find asset of type {typeof(TAsset).Name} with name {AssetName} in any of the bundles.");
-                }
-                else
-                {
-                    SS2Log.Info($"Asset of type {typeof(TAsset).Name} with name {AssetName} was found inside bundle {TargetBundle}, it is recommended that you load the asset directly.");
-                }
-#endif
-                yield break;
-            }
 
             request = SS2Assets.GetAssetBundle(TargetBundle).LoadAssetAsync<TAsset>(AssetName); ;
             while (!request.isDone)
@@ -421,17 +418,42 @@ namespace SS2
             if (_asset)
                 yield break;
 
-            SS2Log.Warning($"The method \"{GetCallingMethod()}\" is calling a CommissionAssetRequest.StartLoad() while the class has the values \"{typeof(TAsset).Name}\", \"{AssetName}\" and \"{TargetBundle}\", however, the asset could not be found.\n" +
+            SS2Log.Warning($"The method \"{GetCallingMethod()}\" is calling a SS2AssetRequest.StartLoad() while the class has the values \"{assetTypeName}\", \"{AssetName}\" and \"{TargetBundle}\", however, the asset could not be found.\n" +
     $"A complete search of all the bundles will be done and the correct bundle enum will be logged.");
 
-            _targetBundle = SS2Bundle.All;
-            _internalCoroutine = LoadSingleAsset();
-            yield return null;
+            SS2Bundle foundInBundle = SS2Bundle.Invalid;
+            foreach(SS2Bundle bundleEnum in Enum.GetValues(typeof(SS2Bundle)))
+            {
+                if (bundleEnum == SS2Bundle.All || bundleEnum == SS2Bundle.Invalid)
+                    continue;
+
+                request = SS2Assets.GetAssetBundle(bundleEnum).LoadAssetAsync<TAsset>(AssetName);
+                while(!request.isDone)
+                {
+                    yield return null;
+                }
+
+                if(request.asset)
+                {
+                    _asset = (TAsset)request.asset;
+                    foundInBundle = bundleEnum;
+                    break;
+                }
+            }
+
+            if(_asset)
+            {
+                SS2Log.Info($"Asset of type {assetTypeName} and name {AssetName} was found inside bundle {foundInBundle}. It is recommended to load the asset directly.");
+            }
+            else
+            {
+                SS2Log.Fatal($"Could not find asset of type {assetTypeName} and name {AssetName} In any of the bundles, exceptions may occur.");
+            }
 #endif
             yield break;
         }
 
-        private IEnumerator LoadMultipleAsset()
+        protected override IEnumerator LoadMultipleAsset()
         {
             _assets.Clear();
 
@@ -453,7 +475,7 @@ namespace SS2
 #if DEBUG
                 if (_assets.Count == 0)
                 {
-                    SS2Log.Warning($"Could not find any asset of type {typeof(TAsset).Name} in any of the bundles");
+                    SS2Log.Warning($"Could not find any asset of type {assetTypeName} in any of the bundles");
                 }
 #endif
                 yield break;
@@ -467,7 +489,7 @@ namespace SS2
 #if DEBUG
             if (_assets.Count == 0)
             {
-                SS2Log.Warning($"Could not find any asset of type {typeof(TAsset)} inside the bundle {TargetBundle}");
+                SS2Log.Warning($"Could not find any asset of type {assetTypeName} inside the bundle {TargetBundle}");
             }
 #endif
 
@@ -517,19 +539,15 @@ namespace SS2
         }
 #endif
 
-        internal SS2AssetRequest(string name, SS2Bundle bundle)
+        internal SS2AssetRequest(string name, SS2Bundle bundle) : base(name, bundle)
         {
-            _singleAssetLoad = true;
-            _assetName = name;
-            _targetBundle = bundle;
+            assetTypeName = typeof(TAsset).Name;
         }
 
-        internal SS2AssetRequest(SS2Bundle bundle)
+        internal SS2AssetRequest(SS2Bundle bundle) : base(bundle)
         {
-            _singleAssetLoad = false;
-            _assetName = new NullableRef<string>();
             _assets = new List<TAsset>();
-            _targetBundle = bundle;
+            assetTypeName = typeof(TAsset).Name;
         }
     }
 }

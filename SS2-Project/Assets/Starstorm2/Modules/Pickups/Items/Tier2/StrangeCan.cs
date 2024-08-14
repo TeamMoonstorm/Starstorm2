@@ -15,14 +15,7 @@ namespace SS2.Items
     {
         private const string token = "SS2_ITEM_STRANGECAN_DESC";
 
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acStrangeCan", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _procEffect = assetCollection.FindAsset<GameObject>("StrangeCanEffect");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acStrangeCan", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance for Intoxicate to be applied on hit. (1 = 1%)")]
         [FormatToken(token, 0)]
@@ -50,19 +43,18 @@ namespace SS2.Items
 
         private static GameObject _procEffect;
 
-        private BuffDef _buffIntoxicated; //SS2Assets.LoadAsset<BuffDef>("BuffIntoxicated", SS2Bundle.Items);
-        public static DotController.DotIndex index;
 
-
-        public static DotController.DotIndex IntoxicatedIndex { get; private set; }
+        public static DotController.DotIndex DotIndex { get; private set; }
 
         public override void Initialize()
         {
+            _procEffect = AssetCollection.FindAsset<GameObject>("StrangeCanEffect");
+
             //N: This should be a behaviour, but i CBA to refactor. :sob:
             GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
             GlobalEventManager.onCharacterDeathGlobal += OnCharacterDeathGlobal;
 
-            index = DotAPI.RegisterDotDef(1 / 3f, 1 / 3f, DamageColorIndex.Poison, _buffIntoxicated);
+            DotIndex = DotAPI.RegisterDotDef(1 / 3f, 1 / 3f, DamageColorIndex.Poison, AssetCollection.FindAsset<BuffDef>("BuffIntoxicated"));
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -86,7 +78,7 @@ namespace SS2.Items
             for (int i = 0; i < dotController.dotStackList.Count; i++)
             {
                 DotController.DotStack dot = dotController.dotStackList[i];
-                if (dot.dotIndex == IntoxicatedIndex)
+                if (dot.dotIndex == DotIndex)
                 {
                     GameObject inflictor = dot.attackerObject;
 
@@ -132,7 +124,7 @@ namespace SS2.Items
                 {
                     attackerObject = body.gameObject,
                     victimObject = report.victim.gameObject,
-                    dotIndex = IntoxicatedIndex,
+                    dotIndex = DotIndex,
                     duration = buffDuration,
                     maxStacksFromAttacker = (uint)maxStacks,
                     damageMultiplier = damageCoefficient,

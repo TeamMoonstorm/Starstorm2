@@ -12,21 +12,13 @@ namespace SS2.Items
     public sealed class UniversalCharger : SS2Item, IContentPackModifier
     {
         private const string token = "SS2_ITEM_UNIVERSALCHARGER_DESC";
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acUniversalCharger", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            procEffect = assetCollection.FindAsset<GameObject>("UniversalChargerEffect");
-            overlayPanel = assetCollection.FindAsset<GameObject>("RefreshPanel");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acUniversalCharger", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Time it takes for Universal Charger to recharge, in seconds.")]
         [FormatToken(token, 0)]
         public static float baseCooldown = 18f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigNameOverride = "How much faster Universal Charger recharges, per stack. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "How much faster Universal Charger recharges, per stack. (1 = 100%)")]
         [FormatToken(token, 1)]
         public static float cooldownReductionPerStack = 10f; // percent
 
@@ -37,6 +29,8 @@ namespace SS2.Items
         private BuffDef _universalChargerBuff; //{ get; } = SS2Assets.LoadAsset<BuffDef>("BuffUniversalCharger", SS2Bundle.Items);
         public override void Initialize()
         {
+            procEffect = AssetCollection.FindAsset<GameObject>("UniversalChargerEffect");
+            overlayPanel = AssetCollection.FindAsset<GameObject>("RefreshPanel");
             On.RoR2.UI.HUD.Awake += AddIcons;
         }
 
@@ -58,11 +52,6 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }     
-
-        public void ModifyContentPack(ContentPack contentPack)
-        {
-            contentPack.buffDefs.AddSingle(_universalChargerBuff);
         }
 
         public sealed class Behavior : BaseItemBodyBehavior
@@ -80,6 +69,8 @@ namespace SS2.Items
             {
                 body.onSkillActivatedServer -= RemoveBuff;
                 body.onSkillActivatedAuthority -= TryRefresh;
+                if (body.HasBuff(SS2Content.Buffs.BuffUniversalCharger))
+                    body.RemoveBuff(SS2Content.Buffs.BuffUniversalCharger);
             }
 
             private void RemoveBuff(GenericSkill genericSkill)

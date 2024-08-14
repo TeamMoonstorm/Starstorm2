@@ -1,7 +1,9 @@
 ﻿using R2API;
+using R2API.ScriptableObjects;
 using R2API.Utils;
 using RoR2;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
@@ -16,10 +18,12 @@ namespace SS2.Components
         private static int storedLevelCap;
         public Run run;
 
+        public static Dictionary<DifficultyIndex, SerializableDifficultyDef> diffDicts = new Dictionary<DifficultyIndex, SerializableDifficultyDef>();
+
         public static GameObject shrinePrefab;
         public static GameObject portalPrefab;
 
-        public float etherealsCompleted = 0;
+        public int etherealsCompleted = 0;
         public static bool teleIsEthereal = false;
 
         public bool teleUpgraded;
@@ -34,13 +38,16 @@ namespace SS2.Components
             //Initialize new difficulties
 
             //N: These are done by a new module exclusive to ss2, refactor as needed
-            /*Deluge.Init();
+            /*Deluge.;
             Tempest.Init();
             Cyclone.Init();
             SuperTyphoon.Init();*/
 
             //Save default level cap
             storedLevelCap = Run.ambientLevelCap;
+
+            //Create difficulty indicies dict
+            CreateDifficultyDict();
 
             //Initialize related prefabs
             shrinePrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("ShrineEthereal", SS2Bundle.Indev), "EtherealSapling", true);
@@ -58,6 +65,29 @@ namespace SS2.Components
         private void Awake()
         {
             run = GetComponentInParent<Run>();
+        }
+
+        private static void CreateDifficultyDict()
+        {
+            diffDicts.Add(DifficultyIndex.Easy, Deluge.sdd);
+            diffDicts.Add(Deluge.sdd.DifficultyIndex, Deluge1.sdd);
+            diffDicts.Add(Deluge1.sdd.DifficultyIndex, Deluge2.sdd);
+            diffDicts.Add(Deluge2.sdd.DifficultyIndex, Deluge3.sdd);
+
+            diffDicts.Add(DifficultyIndex.Normal, Tempest.sdd);
+            diffDicts.Add(Tempest.sdd.DifficultyIndex, Tempest1.sdd);
+            diffDicts.Add(Tempest1.sdd.DifficultyIndex, Tempest2.sdd);
+            diffDicts.Add(Tempest2.sdd.DifficultyIndex, Tempest3.sdd);
+
+            diffDicts.Add(DifficultyIndex.Hard, Cyclone.sdd);
+            diffDicts.Add(Cyclone.sdd.DifficultyIndex, Cyclone1.sdd);
+            diffDicts.Add(Cyclone1.sdd.DifficultyIndex, Cyclone2.sdd);
+            diffDicts.Add(Cyclone2.sdd.DifficultyIndex, Cyclone3.sdd);
+
+            diffDicts.Add(Typhoon.sdd.DifficultyIndex, SuperTyphoon.sdd);
+            diffDicts.Add(SuperTyphoon.sdd.DifficultyIndex, SuperTyphoon1.sdd);
+            diffDicts.Add(SuperTyphoon1.sdd.DifficultyIndex, SuperTyphoon2.sdd);
+            diffDicts.Add(SuperTyphoon2.sdd.DifficultyIndex, SuperTyphoon3.sdd);
         }
 
         private void Start()
@@ -102,7 +132,7 @@ namespace SS2.Components
             {
                 CharacterMaster bodyMaster = master.GetComponent<CharacterMaster>();
                 bodyMaster.inventory.GiveItem(SS2Content.Items.EtherealItemAffix);
-                bodyMaster.inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(20 + (15 * etherealsCompleted)));
+                bodyMaster.inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(12 + (6 * etherealsCompleted)));
             }
         }
 
@@ -208,6 +238,11 @@ namespace SS2.Components
                             position = new Vector3(149.4f, 69.7f, -212.7f);
                             rotation = Quaternion.Euler(0, 0, 0);
                             //in a cranny near collapsed aqueducts
+                            break;
+                        case "lakes":
+                            position = new Vector3(-58.33718f, -28.5005f, -181.3314f);
+                            rotation = Quaternion.Euler(0, 0, 0);
+                            //behind a waterfall on the map's edge (how is there not already a secret here??)
                             break;
                     }
 
@@ -353,7 +388,7 @@ namespace SS2.Components
                         //on top of a lone elevated platform on a tree
                         break;
                     case "ancientloft":
-                        position = new Vector3(-133.4f, 33.5f, -280f);
+                        position = new Vector3(-133.4f, 33f, -280f);
                         rotation = Quaternion.Euler(0, 354.5f, 0);
                         //on a branch under the main platform in the back corner of the map
                         break;
@@ -372,6 +407,11 @@ namespace SS2.Components
                         rotation = Quaternion.Euler(0, 0, 0);
                         //in a cranny near collapsed aqueducts
                         break;
+                    case "lakes":
+                        position = new Vector3(139f, 59.07873f, -181.3314f);
+                        rotation = Quaternion.Euler(355f, 325f, 0);
+                        //behind a waterfall on the map's edge (how is there not already a secret here??)
+                        break;
                 }
 
                 if (NetworkServer.active)
@@ -384,7 +424,7 @@ namespace SS2.Components
                 //maybe move to when tp finishes charging?
                 if (teleIsEthereal && (currStage != "artifactworld" && currStage != "arena" && currStage != "artifactworld" && currStage != "forgottenhaven"))
                 {
-                    ChatMessage.Send("SS2_ETHEREAL_DIFFICULTY_WARNING");
+                    ChatMessage.Send(Language.GetStringFormatted("SS2_ETHEREAL_DIFFICULTY_WARNING"));
                     teleIsEthereal = false;
                     etherealsCompleted++;
 
@@ -442,63 +482,68 @@ namespace SS2.Components
 
                             Debug.Log("og difficulty diff: " + DifficultyCatalog.GetDifficultyDef(diffIndex).nameToken);
 
+                            SerializableDifficultyDef newDiffDef;
+
                             for (int i = 0; i < run.ruleBook.ruleValues.Length; i++)
                             {
                                 RuleChoiceDef ruleChoiceDef = run.ruleBook.GetRuleChoice(i);
 
-                                switch (ruleChoiceDef.difficultyIndex)
+                                diffDicts.TryGetValue(ruleChoiceDef.difficultyIndex, out newDiffDef);
+
+                                run.selectedDifficulty = newDiffDef.DifficultyIndex;
+                                run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(newDiffDef.nameToken)));
+
+                                /*switch (ruleChoiceDef.difficultyIndex)
                                 {
                                     //N: Sorry swuff, difficulties are now a module, need to refactor this as well, easy to do tbh, just store the serializable difficulty def in a static field and access that.
                                     //drizzle
-                                    /*case DifficultyIndex.Easy:
+                                    case DifficultyIndex.Easy:
                                         {
-                                            run.selectedDifficulty = Deluge.DelugeIndex;
+                                            run.selectedDifficulty = Deluge.sdd.DifficultyIndex;
                                             Debug.Log("drizzle detected; trying to override");
-                                            run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(Deluge.DelugeDef.nameToken)));
+                                            run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(Deluge.sdd.nameToken)));
                                         }
                                         break;
                                     //rainstorm
                                     case DifficultyIndex.Normal:
                                         {
-                                            run.selectedDifficulty = Tempest.TempestIndex;
+                                            run.selectedDifficulty = Tempest.sdd.DifficultyIndex;
                                             Debug.Log("rainstorm detected; trying to override");
-                                            run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(Tempest.TempestDef.nameToken)));
+                                            run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(Tempest.sdd.nameToken)));
                                         }
                                         break;
                                     //monsoon
                                     case DifficultyIndex.Hard:
                                         {
-                                            run.selectedDifficulty = Cyclone.CycloneIndex;
+                                            run.selectedDifficulty = Cyclone.sdd.DifficultyIndex;
                                             Debug.Log("monsoon detected; trying to override");
-                                            run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(Cyclone.CycloneDef.nameToken)));
+                                            run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(Cyclone.sdd.nameToken)));
                                         }
                                         break;
                                 }
 
                                 //typhoon is a modded difficulty and its index is not constant
-                                if (ruleChoiceDef.difficultyIndex == Typhoon.TyphoonIndex)
+                                if (ruleChoiceDef.difficultyIndex == Typhoon.sdd.DifficultyIndex)
                                 {
-                                    run.selectedDifficulty = SuperTyphoon.SuperTyphoonIndex;
+                                    run.selectedDifficulty = SuperTyphoon.sdd.DifficultyIndex;
                                     Debug.Log("typhoon detected; trying to override");
-                                    run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(SuperTyphoon.SuperTyphoonDef.nameToken)));
+                                    run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(SuperTyphoon.sdd.nameToken)));
                                     //for some reason appears as deluge in run history???
                                     //appears correctly mid-run & at run end so will ignore for now...
-                                }
-                                    */
-                                }
+                                }*/
 
                                 diffIndex = run.ruleBook.FindDifficulty();
 
                                 run.RecalculateDifficultyCoefficent();
 
-                                Debug.Log("hopefully updated diff: " + DifficultyCatalog.GetDifficultyDef(diffIndex).nameToken);
+                                //Debug.Log("hopefully updated diff: " + DifficultyCatalog.GetDifficultyDef(diffIndex).nameToken);
 
-                                Debug.Log(run.difficultyCoefficient + " - run difficulty coef");
+                                //Debug.Log(run.difficultyCoefficient + " - run difficulty coef");
                             }
 
                             string diffToken = curDiff.nameToken;
-                            Debug.Log(DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).scalingValue + " - current scaling value");
-                            Debug.Log("ethereals completed: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
+                            //Debug.Log(DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).scalingValue + " - current scaling value");
+                            //Debug.Log("ethereals completed: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
                         }
                         else
                         {
@@ -506,6 +551,21 @@ namespace SS2.Components
                         }
                     }
                 }
+            }
+        }
+
+
+        // this doesnt change the actual difficulty. i do not want to touch this code holy fuck
+        [ConCommand(commandName = "run_set_ethereals_cleared", flags = ConVarFlags.Cheat | ConVarFlags.ExecuteOnServer, helpText = "Sets the number of ethereal teleporters completed. Zero to disable. Format: {etherealsCompleted}")]
+        public static void CCSetEtherealsCleared(ConCommandArgs args)
+        {
+            if (!NetworkServer.active) return;
+
+            int level = args.GetArgInt(0);
+            EtherealBehavior etherealBehavior = EtherealBehavior.instance;
+            if (etherealBehavior)
+            {
+                etherealBehavior.etherealsCompleted = level;
             }
         }
     }

@@ -15,14 +15,8 @@ namespace SS2.Equipments
     {
         private const string token = "SS2_EQUIP_GREATERWARBANNER_DESC";
 
-        public override SS2AssetRequest<EquipmentAssetCollection> AssetRequest<EquipmentAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acGreaterWarbanner", SS2Bundle.Equipments);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _warbannerObject = assetCollection.FindAsset<GameObject>("GreaterWarbannerWard");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acGreaterWarbanner", SS2Bundle.Equipments);
+
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of Extra Regeneration. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float extraRegeneration = 0.5f;
@@ -37,7 +31,7 @@ namespace SS2.Equipments
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Max active warbanners for each character.")]
         [FormatToken(token, 3)]
-        public static int maxGreaterBanners = 5;
+        public static int maxGreaterBanners = 1;
 
         private GameObject _warbannerObject;
 
@@ -85,6 +79,7 @@ namespace SS2.Equipments
 
         public override void Initialize()
         {
+            _warbannerObject = AssetCollection.FindAsset<GameObject>("GreaterWarbannerWard");
             RegisterTempVisualEffects();
             On.RoR2.GenericSkill.RunRecharge += FasterTickrateBannerHook;
         }
@@ -92,16 +87,6 @@ namespace SS2.Equipments
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            /*
-             * EquipmentDef - "GreaterWarbanner" - Equipments
-             * GameObject - "GreaterWarbannerWard" - Equipments
-             * GameObject - "GreaterBannerBuffEffect" - Equipments
-             */
-            yield break;
         }
 
         public override void OnEquipmentLost(CharacterBody body)

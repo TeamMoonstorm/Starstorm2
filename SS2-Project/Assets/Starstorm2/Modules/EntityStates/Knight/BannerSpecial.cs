@@ -8,31 +8,54 @@ namespace EntityStates.Knight
 public class BannerSpecial : BaseState
 {
     public static SkillDef buffedSkillRef;
-    public static GameObject powerBuffWard;
+    public static GameObject knightBannerWard;
     public static GameObject slowBuffWard;
             
-    private GameObject powerBuffWardInstance;
+    private GameObject bannerObject;
     private GameObject slowBuffWardInstance;
 
     public override void OnEnter()
     {
-        if (isAuthority)
+        base.OnEnter();
+
+        if (NetworkServer.active)
         {
             Vector3 position = inputBank.aimOrigin - (inputBank.aimDirection);
-            powerBuffWardInstance = UnityEngine.Object.Instantiate(powerBuffWard, position, Quaternion.identity);
+            bannerObject = UnityEngine.Object.Instantiate(knightBannerWard, position, Quaternion.identity);
+
+            bannerObject.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
+            NetworkServer.Spawn(bannerObject);
+
             slowBuffWardInstance = UnityEngine.Object.Instantiate(slowBuffWard, position, Quaternion.identity);
-
-            powerBuffWardInstance.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
             slowBuffWardInstance.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
+            slowBuffWardInstance.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(bannerObject);
+        }
 
-            NetworkServer.Spawn(powerBuffWardInstance);
-            NetworkServer.Spawn(slowBuffWardInstance);
+        if (base.isAuthority)
+        {
+            new BlastAttack
+            {
+                attacker = base.gameObject,
+                baseDamage = damageStat,
+                baseForce = 20f,
+                bonusForce = Vector3.up, 
+                crit = false,
+                damageType = DamageType.Generic,
+                falloffModel = BlastAttack.FalloffModel.Linear,
+                procCoefficient = 0.1f, 
+                radius = 5f,
+                position = base.characterBody.footPosition,
+                attackerFiltering = AttackerFiltering.NeverHitSelf,
+                impactEffect = EffectCatalog.FindEffectIndexFromPrefab(SS2.Survivors.Knight.KnightImpactEffect),
+                teamIndex = base.teamComponent.teamIndex,
+            }.Fire();
         }
     }
 
     public override void FixedUpdate()
     {
         base.FixedUpdate();
+        outer.SetNextStateToMain();
     }
 
     public override void OnExit()

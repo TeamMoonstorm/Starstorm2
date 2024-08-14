@@ -21,42 +21,13 @@ MonoBehaviour:
       fieldValue:
         stringValue: 1
         objectValue: {fileID: 0}
-    - fieldName: buffWard
-      fieldValue:
-        stringValue: 
-        objectValue: {fileID: 1703809909102045, guid: bf8e2245939c26e458c06fb893df9129,
-          type: 3}
-    - fieldName: hopVelocity
-      fieldValue:
-        stringValue: 25
-        objectValue: {fileID: 0}
-    - fieldName: airControl
-      fieldValue:
-        stringValue: 0.2
-        objectValue: {fileID: 0}
-    - fieldName: upwardVelocity
-      fieldValue:
-        stringValue: 3
-        objectValue: {fileID: 0}
-    - fieldName: forwardVelocity
-      fieldValue:
-        stringValue: 6
-        objectValue: {fileID: 0}
-    - fieldName: minimumY
-      fieldValue:
-        stringValue: 0.05
-        objectValue: {fileID: 0}
-    - fieldName: aimVelocity
-      fieldValue:
-        stringValue: 4
-        objectValue: {fileID: 0}
     - fieldName: baseDuration
       fieldValue:
-        stringValue: 0.7
+        stringValue: 1
         objectValue: {fileID: 0}
     - fieldName: damageCoefficient
       fieldValue:
-        stringValue: 9
+        stringValue: 13
         objectValue: {fileID: 0}
     - fieldName: hitBoxGroupName
       fieldValue:
@@ -94,7 +65,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: mecanimHitboxActiveParameter
       fieldValue:
-        stringValue: SpecialSwing
+        stringValue: Util.Hitbox
         objectValue: {fileID: 0}
     - fieldName: shorthopVelocityFromHit
       fieldValue:
@@ -133,3 +104,7 @@ MonoBehaviour:
         stringValue: 
         objectValue: {fileID: 1166276589453209, guid: b427d6842457eba47a8e3aeed1c0883a,
           type: 3}
+    - fieldName: originalSkillRef
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}

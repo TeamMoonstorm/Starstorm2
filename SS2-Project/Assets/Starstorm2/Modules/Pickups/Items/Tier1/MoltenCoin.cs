@@ -10,14 +10,7 @@ namespace SS2.Items
 {
     public sealed class MoltenCoin : SS2Item
     {
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acMoltenCoin", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _impactEffect = assetCollection.FindAsset<GameObject>("MoltenCoinEffect");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acMoltenCoin", SS2Bundle.Items);
         private static GameObject _impactEffect;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance for Molten Coin to Proc. (100 = 100%)")]
@@ -34,6 +27,7 @@ namespace SS2.Items
 
         public override void Initialize()
         {
+            _impactEffect = AssetCollection.FindAsset<GameObject>("MoltenCoinEffect");
         }
 
         public override bool IsAvailable(ContentPack contentPack)

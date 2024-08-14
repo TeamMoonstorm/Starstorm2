@@ -248,7 +248,7 @@ namespace EntityStates.Executioner2
 
                 if (skillLocator.secondary.stock == 1)
                 {
-                    //characterBody.SetBuffCount(Moonstorm.Starstorm2.SS2Content.Buffs.bdExeMuteCharge.buffIndex, 0);
+                    //characterBody.SetBuffCount(SS2.SS2Content.Buffs.bdExeMuteCharge.buffIndex, 0);
 
                     if (fullBurst)
                     {

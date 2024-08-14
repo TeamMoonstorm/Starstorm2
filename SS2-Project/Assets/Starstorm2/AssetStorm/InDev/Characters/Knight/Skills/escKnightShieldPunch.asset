@@ -19,11 +19,11 @@ MonoBehaviour:
     serializedFields:
     - fieldName: swingTimeCoefficient
       fieldValue:
-        stringValue: 1.41
+        stringValue: 1.42
         objectValue: {fileID: 0}
     - fieldName: baseDuration
       fieldValue:
-        stringValue: 0.5
+        stringValue: 0.8
         objectValue: {fileID: 0}
     - fieldName: damageCoefficient
       fieldValue:
@@ -40,11 +40,11 @@ MonoBehaviour:
           type: 3}
     - fieldName: procCoefficient
       fieldValue:
-        stringValue: 1
+        stringValue: 0.5
         objectValue: {fileID: 0}
     - fieldName: pushAwayForce
       fieldValue:
-        stringValue: 40
+        stringValue: 200
         objectValue: {fileID: 0}
     - fieldName: forceVector
       fieldValue:
@@ -52,7 +52,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: hitPauseDuration
       fieldValue:
-        stringValue: 0.14
+        stringValue: 0.4
         objectValue: {fileID: 0}
     - fieldName: swingEffectPrefab
       fieldValue:
@@ -61,11 +61,11 @@ MonoBehaviour:
           type: 3}
     - fieldName: swingEffectMuzzleString
       fieldValue:
-        stringValue: SwingCenterSmall
+        stringValue: SwingCenter
         objectValue: {fileID: 0}
     - fieldName: mecanimHitboxActiveParameter
       fieldValue:
-        stringValue: ShieldPunch
+        stringValue: Primary.Hitbox
         objectValue: {fileID: 0}
     - fieldName: shorthopVelocityFromHit
       fieldValue:
@@ -99,13 +99,3 @@ MonoBehaviour:
       fieldValue:
         stringValue: 0
         objectValue: {fileID: 0}
-    - fieldName: beamProjectile
-      fieldValue:
-        stringValue: 
-        objectValue: {fileID: 3724400527434834182, guid: 1bca203d3b4f3b3429fd70a1ba05c583,
-          type: 3}
-    - fieldName: bigBeamProjectile
-      fieldValue:
-        stringValue: 
-        objectValue: {fileID: 1166276589453209, guid: b427d6842457eba47a8e3aeed1c0883a,
-          type: 3}

@@ -12,22 +12,16 @@ namespace SS2.Equipments
 {
     public sealed class AffixEmpyrean : SS2EliteEquipment
     {
-        public override SS2AssetRequest<EliteAssetCollection> AssetRequest()
-        {
-            return SS2Assets.LoadAssetAsync<EliteAssetCollection>("acAffixEmpyrean", SS2Bundle.Equipments);
-        }
+        public override SS2AssetRequest<EliteAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<EliteAssetCollection>("acAffixEmpyrean", SS2Bundle.Equipments);
 
         public static List<EliteDef> blacklistedEliteDefs = new List<EliteDef>();
 
         public override void Initialize()
         {
             CreateBlacklist();
-
-            On.RoR2.Util.GetBestBodyName += MakeEmpyreanName;
             RoR2Application.onLoad += CreateBlacklist;
             IL.RoR2.CharacterBody.RecalculateStats += RecalculateStatsEmpyreanIL;
         }
-
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
@@ -88,34 +82,6 @@ namespace SS2.Equipments
                 SS2Log.Fatal("Failed to find IL match for Empyrean hook 2!");
             }
         }
-
-        private static string MakeEmpyreanName(On.RoR2.Util.orig_GetBestBodyName orig, GameObject bodyObject)
-        {
-            var text = orig(bodyObject);
-            var empyreanIndex = SS2Content.Buffs.bdEmpyrean.buffIndex;
-            if (!bodyObject)
-                return text;
-
-            if (!bodyObject.TryGetComponent<CharacterBody>(out var body))
-                return text;
-
-            if (!body.HasBuff(empyreanIndex))
-            {
-                return text;
-            }
-
-            foreach (BuffIndex buffIndex in BuffCatalog.eliteBuffIndices)
-            {
-                if (buffIndex == empyreanIndex)
-                    continue;
-
-                var eliteToken = Language.GetString(BuffCatalog.GetBuffDef(buffIndex).eliteDef.modifierToken);
-                eliteToken = eliteToken.Replace("{0}", string.Empty);
-                text = text.Replace(eliteToken, string.Empty);
-            }
-
-            return text;
-        }
         #endregion
 
         private static void CreateBlacklist()
@@ -158,6 +124,11 @@ namespace SS2.Equipments
             model = CharacterBody.modelLocator.modelTransform.GetComponent<CharacterModel>();           
         }
 
+        private void AddEliteBuffs()
+        {
+
+        }
+
         protected override void OnFirstStackGained()
         {
             base.OnFirstStackGained();
@@ -165,7 +136,7 @@ namespace SS2.Equipments
             foreach (EliteDef ed in EliteCatalog.eliteDefs)
             {
                 //shitty hardcoded case for blighted; add actual cross compat later!
-                if (ed.IsAvailable() && !AffixEmpyrean.blacklistedEliteDefs.Contains(ed) && !CharacterBody.HasBuff(ed.eliteEquipmentDef.passiveBuffDef) && ed.modifierToken != "LIT_MODIFIER_BLIGHTED")
+                if (ed.IsAvailable() && !AffixEmpyrean.blacklistedEliteDefs.Contains(ed) && !CharacterBody.HasBuff(ed.eliteEquipmentDef?.passiveBuffDef) && ed.modifierToken != "LIT_MODIFIER_BLIGHTED")
                     CharacterBody.AddBuff(ed.eliteEquipmentDef.passiveBuffDef);
             }
             if (setStateOnHurt)
@@ -201,6 +172,16 @@ namespace SS2.Equipments
         public void OnKilledServer(DamageReport damageReport)
         {
             if (!HasAnyStacks) return; // this feels weird but /shrug
+
+            if (!damageReport.attackerBody) return;
+
+            if (CharacterBody.teamComponent.teamIndex != TeamIndex.Player)
+            {
+                var cedInstance = Components.CustomEliteDirector.instance;
+                if (cedInstance.empyreanActive)
+                    cedInstance.empyreanActive = false;
+            }
+
 
             int numItems = this.CharacterBody.isChampion ? 4 : 2;
             float spreadAngle = 360f / numItems;

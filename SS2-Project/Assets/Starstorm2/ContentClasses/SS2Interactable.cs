@@ -14,22 +14,23 @@ namespace SS2
     /// <summary>
     /// <inheritdoc cref="IInteractableContentPiece"/>
     /// </summary>
-    public abstract class SS2Interactable : IInteractableContentPiece
+    public abstract class SS2Interactable : IInteractableContentPiece, IContentPackModifier
     {
         public InteractableAssetCollection AssetCollection { get; private set; }
-        public InteractableCardProvider CardProvider;
+        public InteractableCardProvider CardProvider { get; protected set; }
         IInteractable IGameObjectContentPiece<IInteractable>.Component => InteractablePrefab.GetComponent<IInteractable>();
         GameObject IContentPiece<GameObject>.Asset => InteractablePrefab;
-        InteractableCardProvider IInteractableContentPiece.CardProvider => CardProvider;
+        public GameObject InteractablePrefab { get; protected set; }
 
-        public GameObject InteractablePrefab;
+        public abstract SS2AssetRequest<InteractableAssetCollection> AssetRequest { get; }
 
-        public abstract SS2AssetRequest<InteractableAssetCollection> AssetRequest();
+        NullableRef<InteractableCardProvider> IInteractableContentPiece.CardProvider => CardProvider;
+
         public abstract void Initialize();
         public abstract bool IsAvailable(ContentPack contentPack);
         public virtual IEnumerator LoadContentAsync()
         {
-            SS2AssetRequest<InteractableAssetCollection> request = AssetRequest();
+            SS2AssetRequest<InteractableAssetCollection> request = AssetRequest;
 
             request.StartLoad();
             while (!request.IsComplete)
@@ -40,9 +41,11 @@ namespace SS2
             CardProvider = AssetCollection.interactableCardProvider;
             InteractablePrefab = AssetCollection.interactablePrefab;
 
-            OnAssetCollectionLoaded(AssetCollection);
         }
 
-        public virtual void OnAssetCollectionLoaded(AssetCollection assetCollection) { }
+        public void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.AddContentFromAssetCollection(AssetCollection);
+        }
     }
 }

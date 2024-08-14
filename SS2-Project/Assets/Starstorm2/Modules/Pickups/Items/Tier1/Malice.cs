@@ -15,14 +15,7 @@ namespace SS2.Items
     public sealed class Malice : SS2Item
     {
         private const string token = "SS2_ITEM_MALICE_DESC";
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acMalice", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            maliceOrbEffectPrefab = assetCollection.FindAsset<GameObject>("MaliceOrbEffect");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acMalice", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Total damage each Malice bounce deals. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
@@ -55,6 +48,7 @@ namespace SS2.Items
 
         public override void Initialize()
         {
+            maliceOrbEffectPrefab = AssetCollection.FindAsset<GameObject>("MaliceOrbEffect");
             MaliceDamageType = DamageAPI.ReserveDamageType();
             ignoredProcs.AddProc(ProcType.Backstab);
         }

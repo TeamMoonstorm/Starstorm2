@@ -16,16 +16,7 @@ namespace SS2.Items
     {
         private const string token = "SS2_ITEM_DETRITIVETREMATODE_DESC";
 
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acDetritiveTrematode", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _biteEffect = assetCollection.FindAsset<GameObject>("TrematodeBiteEffect");
-            _overlay = assetCollection.FindAsset<Material>("matBloodOverlay");
-            _buffTrematodes = assetCollection.FindAsset<BuffDef>("BuffTrematodes");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acDetritiveTrematode", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigNameOverride = "Trematode Threshold", ConfigDescOverride = "Amount of missing health needed for Trematode to proc. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
@@ -41,14 +32,12 @@ namespace SS2.Items
 
         private static DotController.DotIndex _trematodeDotIndex;
         private static GameObject _biteEffect;
-
-        public Material _overlay;
-
-        private BuffDef _buffTrematodes;
         public override void Initialize()
         {
-            _trematodeDotIndex = DotAPI.RegisterDotDef(.5f, .5f, DamageColorIndex.Item, _buffTrematodes);
-            BuffOverlays.AddBuffOverlay(_buffTrematodes, _overlay);
+            _biteEffect = AssetCollection.FindAsset<GameObject>("TrematodeBiteEffect");
+            BuffDef buffTrematodes = AssetCollection.FindAsset<BuffDef>("BuffTrematodes");
+            _trematodeDotIndex = DotAPI.RegisterDotDef(.5f, .5f, DamageColorIndex.Item, buffTrematodes);
+            BuffOverlays.AddBuffOverlay(buffTrematodes, AssetCollection.FindAsset<Material>("matBloodOverlay"));
         }
 
         public override bool IsAvailable(ContentPack contentPack)

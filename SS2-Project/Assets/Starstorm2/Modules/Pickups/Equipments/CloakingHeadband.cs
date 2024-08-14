@@ -10,10 +10,7 @@ namespace SS2.Equipments
 {
     public sealed class CloakingHeadband : SS2Equipment
     {
-        public override SS2AssetRequest<EquipmentAssetCollection> AssetRequest<EquipmentAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acCloakingHeadband", SS2Bundle.Equipments);
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acCloakingHeadband", SS2Bundle.Equipments);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "How long the Cloak buff lasts, in seconds.")]
         [FormatToken("SS2_EQUIP_CLOAKINGHEADBAND_DESC")]

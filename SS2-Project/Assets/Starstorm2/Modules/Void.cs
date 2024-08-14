@@ -16,7 +16,7 @@ namespace SS2
         {
             shrinePrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("VoidRockPickup", SS2Bundle.Interactables), "BondPickup", true);
             shrinePrefab.RegisterNetworkPrefab();
-            On.RoR2.SceneDirector.Start += SceneDirector_Start;
+            //On.RoR2.SceneDirector.Start += SceneDirector_Start;
             yield break;
         }
 

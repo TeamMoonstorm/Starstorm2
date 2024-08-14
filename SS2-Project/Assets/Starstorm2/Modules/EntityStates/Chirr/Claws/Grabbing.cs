@@ -88,11 +88,13 @@ namespace EntityStates.Chirr.Claws
             {
                 base.SmallHop(base.characterMotor, 9f); // hop :)
                 EntityStateMachine weapon = EntityStateMachine.FindByCustomName(base.gameObject, "Weapon"); // throw instead of dropping
-                if (weapon && weapon.state is AimDrop) weapon.SetNextStateToMain();
-                else
+                if (weapon && weapon.state is AimDrop)
                 {
-                    this.grabController.AttemptGrab(null);
+                    (weapon.state as AimDrop).cancelled = true;
+                    weapon.SetNextStateToMain();
                 }
+                this.grabController.AttemptGrab(null);
+                
                 this.outer.SetNextStateToMain();
                 return;
             }

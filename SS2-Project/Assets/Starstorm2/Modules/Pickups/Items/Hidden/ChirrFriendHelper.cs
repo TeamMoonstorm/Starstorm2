@@ -16,10 +16,7 @@ namespace SS2.Items
 {
     public sealed class ChirrFriendHelper : SS2Item
     {
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acChirrFriendHelper", SS2Bundle.Chirr);
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acChirrFriendHelper", SS2Bundle.Chirr);
 
         public static float attackSpeedToCooldownConversion = 1f;
         public static float aimSpeedCoefficient = 3f;
@@ -30,13 +27,10 @@ namespace SS2.Items
 
         private static GameObject _jitterEffect;
 
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _jitterEffect = assetCollection.FindAsset<GameObject>("FriendJitterEffect");
-        }
 
         public override void Initialize()
         {
+            _jitterEffect = AssetCollection.FindAsset<GameObject>("FriendJitterEffect");
         }
 
         public override bool IsAvailable(ContentPack contentPack)

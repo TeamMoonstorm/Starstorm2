@@ -13,10 +13,7 @@ namespace SS2.Items
 {
     public sealed class X4 : SS2Item, IContentPackModifier
     {
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acX4", SS2Bundle.Items);
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acX4", SS2Bundle.Items);
 
         public static float secCooldown = 0.25f;
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Cooldown reduction per X-4 Stimulant. (1 = 100%)")]

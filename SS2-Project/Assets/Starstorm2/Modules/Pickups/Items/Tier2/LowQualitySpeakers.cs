@@ -11,14 +11,7 @@ namespace SS2.Items
     public sealed class LowQualitySpeakers : SS2Item
     {
         private const string token = "SS2_ITEM_LOWQUALITYSPEAKERS_DESC";
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acLowQualitySpeakers", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _burstEffect = assetCollection.FindAsset<GameObject>("SpeakerBurstEffect");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acLowQualitySpeakers", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Radius in which enemies are stunned, in meters.")]
         [FormatToken(token, 0)]
@@ -37,6 +30,7 @@ namespace SS2.Items
 
         public override void Initialize()
         {
+            _burstEffect = AssetCollection.FindAsset<GameObject>("SpeakerBurstEffect");
         }
 
         public override bool IsAvailable(ContentPack contentPack)

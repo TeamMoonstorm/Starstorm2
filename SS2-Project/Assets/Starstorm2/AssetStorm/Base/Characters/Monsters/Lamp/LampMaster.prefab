@@ -235,7 +235,7 @@ MonoBehaviour:
   m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customName: StrafeNearbyEnemies
+  customName: StrafeNearMaster
   skillSlot: 0
   requiredSkill: {fileID: 0}
   requireSkillReady: 1
@@ -244,13 +244,13 @@ MonoBehaviour:
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 0
-  maxDistance: 15
+  minDistance: 8
+  maxDistance: 25
   selectionRequiresTargetLoS: 1
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
   maxTimesSelected: -1
-  moveTargetType: 0
+  moveTargetType: 2
   activationRequiresTargetLoS: 1
   activationRequiresAimTargetLoS: 0
   activationRequiresAimConfirmation: 1

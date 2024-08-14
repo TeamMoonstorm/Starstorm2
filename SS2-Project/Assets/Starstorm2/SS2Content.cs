@@ -6,8 +6,9 @@ using System.Linq;
 using UnityEngine;
 using MSU;
 using RoR2;
-using UnityEditor;
 using System.Collections.Generic;
+using Assets.Starstorm2.ContentClasses;
+using SS2.Survivors;
 
 namespace SS2
 {
@@ -31,7 +32,7 @@ namespace SS2
             //Loadbearing Spike
             if (!SS2Assets.LoadAsset<Texture2D>("spike", SS2Bundle.Main))
             {
-                SS2Log.Fatal("Spike not found :c");
+                SS2Log.Fatal("MISSSING LOAD BEARING SPIKE");
                 yield break;
             }
 
@@ -79,18 +80,21 @@ namespace SS2
         private static IEnumerator LoadFromAssetBundles()
         {
             SS2Log.Info($"Populating EntityStateTypes array...");
+            SS2ContentPack.entityStateTypes.Clear();
             SS2ContentPack.entityStateTypes.Add(typeof(SS2Content).Assembly.GetTypes().Where(type => typeof(EntityStates.EntityState).IsAssignableFrom(type)).ToArray());
 
             SS2Log.Info("Populating EntityStateConfiguration array...");
             SS2AssetRequest<EntityStateConfiguration> escRequest = new SS2AssetRequest<EntityStateConfiguration>(SS2Bundle.All);
             escRequest.StartLoad();
             while (!escRequest.IsComplete) yield return null;
+            SS2ContentPack.entityStateConfigurations.Clear();
             SS2ContentPack.entityStateConfigurations.Add(escRequest.Assets.ToArray());
 
             SS2Log.Info($"Populating EffectDefs array...");
             SS2AssetRequest<GameObject> gameObjectRequest = new SS2AssetRequest<GameObject>(SS2Bundle.All);
             gameObjectRequest.StartLoad();
             while(!gameObjectRequest.IsComplete) yield return null;
+            SS2ContentPack.effectDefs.Clear();
             SS2ContentPack.effectDefs.Add(gameObjectRequest.Assets.Where(go => go.GetComponent<EffectComponent>()).Select(go => new EffectDef(go)).ToArray());
 
             SS2Log.Info($"Calling AsyncAssetLoad Attribute Methods...");
@@ -98,6 +102,46 @@ namespace SS2
             asyncAssetLoadCoroutines.Start();
             while (!asyncAssetLoadCoroutines.IsDone)
                 yield return null;
+
+            //SS2Log.Info($"Populating UnlockableDefs array from Vanilla Skins...");
+            //SS2AssetRequest<UnlockableDef> udRequest = new SS2AssetRequest<UnlockableDef>(SS2Bundle.Vanilla);
+            //udRequest.StartLoad();
+            //while (!udRequest.IsComplete)
+            //    yield return null;
+            //SS2ContentPack.unlockableDefs.Add(udRequest.Assets.ToArray());
+        }
+
+        private static IEnumerator LoadVanillaSurvivorBundles()
+        {
+            ParallelMultiStartCoroutine helper = new ParallelMultiStartCoroutine();
+
+            var list = new List<SS2VanillaSurvivor>()
+              {
+                new Commando(),
+                new Acrid(),
+                new Bandit(),
+                new Railgunner(),
+                new Engineer(),
+                //new VoidFiend(),
+                //Add the rest
+              };
+
+            foreach (var survivor in list)
+            {
+                helper.Add(survivor.LoadContentAsync);
+            }
+
+            helper.Start();
+            while (!helper.IsDone)
+            {
+                yield return null;
+            }
+
+            foreach (var survivor in list)
+            {
+                survivor.Initialize();
+                survivor.ModifyContentPack(SS2ContentPack);
+            }
         }
 
         private IEnumerator AddSS2ExpansionDef()
@@ -111,12 +155,31 @@ namespace SS2
             SS2ContentPack.expansionDefs.AddSingle(expansionRequest.Asset);
         }
 
+        private IEnumerator InitializeSkinDefs()
+        {
+            var skinDefRequest = SS2Assets.LoadAllAssetsAsync<VanillaSkinDef>(SS2Bundle.Vanilla);
+            skinDefRequest.StartLoad();
+            while (!skinDefRequest.IsComplete)
+                yield return null;
+
+            var helper = new ParallelMultiStartCoroutine();
+            foreach(VanillaSkinDef skinDef in skinDefRequest.Assets)
+            {
+                helper.Add(skinDef.Initialize);
+            }
+
+            helper.Start();
+            while (!helper.IsDone)
+                yield return null;
+        }
+
         internal SS2Content()
         {
             ContentManager.collectContentPackProviders += AddSelf;
             SS2Assets.OnSS2AssetsInitialized += () =>
             {
                 _parallelPreLoadDispatchers.Add(AddSS2ExpansionDef);
+                _parallelPostLoadDispatchers.Add(InitializeSkinDefs);
             };
         }
 
@@ -128,9 +191,11 @@ namespace SS2
                 DifficultyModule.Init,
                 Events.Init,
                 //Bulwark.Init,
-                //Ethereal.Init,
+                Components.StarstormBehavior.Init,
                 Components.EtherealBehavior.Init,
+                Components.VoidBehavior.Init,
                 Void.Init,
+                Storm.Init,
                 () =>
                 {
                     //new Modules.Scenes().Initialize();
@@ -166,7 +231,13 @@ namespace SS2
                     InteractableModule.AddProvider(main, ContentUtil.CreateGameObjectContentPieceProvider<IInteractable>(main, SS2ContentPack));
                     return InteractableModule.InitializeInteractables(main);
                 },
+                () =>
+                {
+                    SceneModule.AddProvider(main, ContentUtil.CreateContentPieceProvider<SceneDef>(main, SS2ContentPack));
+                    return SceneModule.InitializeScenes(main);
+                },
                 LoadFromAssetBundles,
+                LoadVanillaSurvivorBundles
             };
 
             _fieldAssignDispatchers = new Func<IEnumerator>[]
@@ -221,7 +292,11 @@ namespace SS2
         }
         public static class Items
         {
+            public static ItemDef AffixStorm;
+
             public static ItemDef ArmedBackpack;
+
+            public static ItemDef BoostCharacterSize;
 
             public static ItemDef BoostCooldowns;
 
@@ -230,6 +305,8 @@ namespace SS2
             public static ItemDef CoffeeBag;
 
             public static ItemDef Cognation;
+
+            public static ItemDef CognationHelper;
 
             public static ItemDef CompositeInjector;
 
@@ -333,8 +410,6 @@ namespace SS2
 
             public static ItemDef BaneFlask;
 
-            public static ItemDef NemesisBossHelper;
-
             public static ItemDef TerminationHelper;
 
             public static ItemDef GildedAmulet;
@@ -346,6 +421,17 @@ namespace SS2
             public static ItemDef UraniumHorseshoe;
 
             public static ItemDef RainbowRoot;
+
+            public static ItemDef Balloon;
+
+            public static ItemDef VoidBalloon;
+
+            public static ItemDef RelicOfEntropy;
+
+            public static ItemDef IceTool;
+
+           // public static ItemDef WickedStaff;
+            public static ItemDef WeatherRadio;
 
         }
 
@@ -376,11 +462,17 @@ namespace SS2
             public static EquipmentDef RockFruit;
 
             public static EquipmentDef WhiteFlag;
+
+            public static EquipmentDef SeismicOscillator;
         }
 
         public static class Buffs
         {
+            public static BuffDef BuffAffixStorm;
+
             public static BuffDef BuffAffixVoid;
+
+            public static BuffDef BuffAffixUltra;
 
             public static BuffDef BuffBackThruster;
 
@@ -395,6 +487,8 @@ namespace SS2
             public static BuffDef BuffChirrGrabFriend;
 
             public static BuffDef BuffChirrRegen;
+
+            public static BuffDef BuffCyborgPrimed;
 
             public static BuffDef BuffChocolate;
 
@@ -430,15 +524,11 @@ namespace SS2
 
             public static BuffDef BuffSigil;
 
-            public static BuffDef BuffSigilHidden;
-
             public static BuffDef BuffKickflip;
 
             public static BuffDef BuffStorm;
 
             public static BuffDef BuffTrematodes;
-
-            public static BuffDef BuffVoidLeech;
 
             public static BuffDef BuffWatchMetronome;
 
@@ -480,8 +570,6 @@ namespace SS2
 
             public static BuffDef BuffRiposte;
 
-            public static BuffDef BuffCyborgPrimary;
-
             public static BuffDef BuffCyborgTeleporter;
 
             public static BuffDef BuffBloonTrap;
@@ -498,11 +586,13 @@ namespace SS2
 
             public static BuffDef bdKnightSpecialPowerBuff;
 
+            public static BuffDef bdKnightSpecialBuff;
+
             public static BuffDef bdKnightSpecialSlowBuff;
 
-            public static BuffDef bdFortified;
+            public static BuffDef bdKnightStunAttack;
 
-            public static BuffDef bdKnightCharged;
+            public static BuffDef bdKnightShieldCooldown;
 
             public static BuffDef bdLampBuff;
 
@@ -516,10 +606,47 @@ namespace SS2
 
             public static BuffDef bdEthereal;
 
+            public static BuffDef bdBanditTranquilizer;
+
+            public static BuffDef bdAcridArmorCorrison;
+
+            public static BuffDef bdEngiFocused;
+
+            public static BuffDef bdLunarCurseArmor;
+
+            public static BuffDef bdLunarCurseAttackSpeed;
+
+            public static BuffDef bdLunarCurseCloak;
+
+            public static BuffDef bdLunarCurseCooldownReduction;
+
+            public static BuffDef bdLunarCurseDamage;
+
+            public static BuffDef bdLunarCurseHealth;
+
+            public static BuffDef bdLunarCurseMovementSpeed;
+
+            public static BuffDef bdLunarCurseShield;
+
+            public static BuffDef bdLunarCurseBlind;
+
+            public static BuffDef bdLunarCurseLockSkill;
+
+            public static BuffDef bdLunarCurseNoRegen;
+
+            public static BuffDef bdNukeSpecial;
+
+            public static BuffDef bdNukeSelfDamage;
+
+            public static BuffDef bdIrradiated;
+
+            public static BuffDef dbdNuclearSickness;
         }
 
         public static class Elites
         {
+            public static EliteDef edStorm;
+
             public static EliteDef edPurple;
 
             public static EliteDef edKinetic;
@@ -534,22 +661,24 @@ namespace SS2
         }
         public static class Survivors
         {
-            public static SurvivorDef SurvivorChirr;
+            public static SurvivorDef Chirr;
 
-            public static SurvivorDef SurvivorExecutioner;
-
-            public static SurvivorDef SurvivorNemmando;
+            public static SurvivorDef survivorExecutioner2;
 
             public static SurvivorDef survivorNemCommando;
 
             public static SurvivorDef survivorNemCaptain;
 
-            public static SurvivorDef survivorNemMerc;
+            public static SurvivorDef survivorKnight; 
+
+            public static SurvivorDef NemMerc;
         }
 
         public static class ItemTierDefs
         {
             public static ItemTierDef Sibylline;
+
+            //public static ItemTierDef Relic;
         }
     }
 }

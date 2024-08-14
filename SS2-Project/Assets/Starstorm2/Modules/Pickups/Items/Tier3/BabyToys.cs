@@ -18,10 +18,7 @@ namespace SS2.Items
         private const string pickupToken = "SS2_ITEM_BABYTOYS_PICKUP";
         private const string descToken = "SS2_ITEM_BABYTOYS_DESC";
 
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acBabyToys", SS2Bundle.Items);
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acBabyToys", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Levels removed per stack.")]
         [FormatToken(pickupToken, 0)]

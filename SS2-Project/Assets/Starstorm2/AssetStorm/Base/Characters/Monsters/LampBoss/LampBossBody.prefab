@@ -14241,7 +14241,6 @@ GameObject:
   - component: {fileID: 4518887274636510872}
   - component: {fileID: 3239268561119236091}
   - component: {fileID: 81179489079014442}
-  - component: {fileID: 4354887866029301393}
   - component: {fileID: 7040613045096028987}
   - component: {fileID: 4655319437521976201}
   - component: {fileID: 5065244686899065093}
@@ -14379,24 +14378,6 @@ MonoBehaviour:
   - {fileID: 8184195956271989660}
   mainHurtBox: {fileID: 2950681265253728716}
   bullseyeCount: 1
---- !u!114 &4354887866029301393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3502845028911919073}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1480773730, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseFootstepString: 
-  baseFootliftString: 
-  sprintFootstepOverrideString: 
-  sprintFootliftOverrideString: 
-  enableFootstepDust: 1
-  footstepDustPrefab: {fileID: 0}
 --- !u!114 &7040613045096028987
 MonoBehaviour:
   m_ObjectHideFlags: 0

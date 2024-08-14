@@ -80,8 +80,12 @@ namespace EntityStates.Nemmando
                     main.startLifetime = chargeDuration;
                     //main = effectChildLocator.FindChild("Shadow").GetComponent<ParticleSystem>().main;
                     //main.startLifetime = chargeDuration;
-                    main = effectChildLocator.FindChild("FullCharge").GetComponent<ParticleSystem>().main;
-                    main.startDelay = chargeDuration;
+                    Transform fullCharge = effectChildLocator.FindChild("FullCharge");
+                    foreach (ParticleSystem particleSystem in fullCharge.GetComponentsInChildren<ParticleSystem>()) // bleh sry
+                    {
+                        var main2 = particleSystem.main;
+                        main2.startDelay = chargeDuration;
+                    }
                     foreach (ParticleSystem particleSystem in chargeEffectInstance.GetComponentsInChildren<ParticleSystem>())
                     {
                         particleSystem.Play();

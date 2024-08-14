@@ -14,10 +14,6 @@ namespace SS2.Survivors
     {
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acNemMerc", SS2Bundle.NemMercenary);
 
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _knifeProjectile = assetCollection.FindAsset<GameObject>("KnifeProjectile");
-        }
         // configggggggg
         public static int maxClones = 1;
         public static int maxHolograms = 10;
@@ -30,6 +26,7 @@ namespace SS2.Survivors
         
         public override void Initialize()
         {
+            _knifeProjectile = AssetCollection.FindAsset<GameObject>("KnifeProjectile");
             damageType = DamageAPI.ReserveDamageType();
 
             clone = DeployableAPI.RegisterDeployableSlot((self, deployableCountMultiplier) =>

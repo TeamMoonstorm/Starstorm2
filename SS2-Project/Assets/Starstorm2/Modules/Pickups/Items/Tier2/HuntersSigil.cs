@@ -15,53 +15,46 @@ namespace SS2.Items
     public sealed class HuntersSigil : SS2Item, IContentPackModifier
     {
         private const string token = "SS2_ITEM_HUNTERSSIGIL_DESC";
-        public override SS2AssetRequest<ItemAssetCollection> AssetRequest<ItemAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acHuntersSigil", SS2Bundle.Items);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _effect = assetCollection.FindAsset<GameObject>("SigilEffect");
-            _sigilWard = assetCollection.FindAsset<GameObject>("SigilWard");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acHuntersSigil", SS2Bundle.Items);
 
         private static GameObject _effect;
         private static GameObject _sigilWard;
-
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base amount of extra armor added.")]
-        [FormatToken(token, 0)]
-        public static float baseArmor = 20;
-
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of extra armor added per stack.")]
-        [FormatToken(token, 1)]
-        public static float stackArmor = 10;
-
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base amount of extra damage added. (1 = 100%)")]
-        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 2, 100)]
-        public static float baseDamage = .2f;
-
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of extra damage added per stack. (1 = 100%)")]
-        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 3, 100)]
-        public static float stackDamage = .10f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Radius the effect is applied in.")]
         [FormatToken(token, 0)]
         public static float radius = 8f;
 
-        public Material _matOverlay; //SS2Assets.LoadAsset<Material>("matSigilBuffOverlay", SS2Bundle.Items);
-        private BuffDef _sigilBuff; //SS2Assets.LoadAsset<BuffDef>("BuffSigil", SS2Bundle.Items);
-        private BuffDef _sigilBuffHidden; //SS2Assets.LoadAsset<BuffDef>("BuffSigilHidden", SS2Bundle.Items);
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base amount of extra armor added.")]
+        [FormatToken(token, 1)]
+        public static float baseArmor = 20;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of extra armor added per stack.")]
+        [FormatToken(token, 2)]
+        public static float stackArmor = 10;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base amount of extra damage added. (1 = 100%)")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 3)]
+        public static float baseDamage = .2f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of extra damage added per stack. (1 = 100%)")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 4)]
+        public static float stackDamage = .10f;
+
+        
 
         public override void Initialize()
         {
-            BuffOverlays.AddBuffOverlay(_sigilBuff, _matOverlay);
+            _effect = AssetCollection.FindAsset<GameObject>("SigilEffect");
+            _sigilWard = AssetCollection.FindAsset<GameObject>("SigilWard");
+
+            BuffOverlays.AddBuffOverlay(AssetCollection.FindAsset<BuffDef>("BuffSigil"), AssetCollection.FindAsset<Material>("matSigilBuffOverlay"));
 
             R2API.RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
         }
 
         private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
-            int buffCount = sender.GetBuffCount(SS2Content.Buffs.BuffSigilHidden);
+            int buffCount = sender.GetBuffCount(SS2Content.Buffs.BuffSigil);
 
             args.armorAdd += HuntersSigil.baseArmor * buffCount;
             args.damageMultAdd += HuntersSigil.baseDamage * buffCount;
@@ -82,11 +75,11 @@ namespace SS2.Items
             public void FixedUpdate()
             {
                 if (!NetworkServer.active) return;
-                if (body.notMovingStopwatch > 1f)
+                if (body.notMovingStopwatch > 1f && !body.HasBuff(SS2Content.Buffs.BuffSigil))
                 {
                     if (!sigilActive)
                     {
-                        EffectManager.SimpleEffect(_effect, body.aimOrigin + new Vector3(0, 0f), Quaternion.identity, true);
+                        EffectManager.SimpleEffect(_effect, body.aimOrigin, Quaternion.identity, true);
                         Vector3 position = body.corePosition;
                         //float radius = 13f;
 
@@ -96,11 +89,10 @@ namespace SS2.Items
                         sigilInstance = Object.Instantiate(_sigilWard, position, Quaternion.identity);
                         sigilInstance.GetComponent<TeamFilter>().teamIndex = body.teamComponent.teamIndex;
                         sigilInstance.GetComponent<BuffWard>().radius = radius;
+
                         WardUtils wu = sigilInstance.GetComponent<WardUtils>();
                         wu.body = body;
                         wu.radius = radius;
-                        wu.buffCount = stack;
-                        wu.amplifiedBuff = SS2Content.Buffs.BuffSigilHidden;
 
                         NetworkServer.Spawn(sigilInstance);
 
@@ -122,16 +114,6 @@ namespace SS2.Items
             {
                 if (sigilInstance != null)
                     Destroy(sigilInstance);
-            }
-        }
-
-        public sealed class BuffSigilBehavior : BaseBuffBehaviour
-        {
-            [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffSigil;
-            public void OnDestroy()
-            {
-                CharacterBody.SetBuffCount(SS2Content.Buffs.BuffSigilHidden.buffIndex, 0);
             }
         }
     }

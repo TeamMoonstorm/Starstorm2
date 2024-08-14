@@ -12,21 +12,10 @@ namespace SS2.Equipments
     public sealed class WhiteFlag : SS2Equipment, IContentPackModifier
     {
         private const string token = "SS2_EQUIP_WHITEFLAG_DESC";
-        private BuffDef _buffSurrender;
 
-        public override SS2AssetRequest<EquipmentAssetCollection> AssetRequest<EquipmentAssetCollection>()
-        {
-            return SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acWhiteFlag", SS2Bundle.Equipments);
-        }
-        public override void OnAssetCollectionLoaded(AssetCollection assetCollection)
-        {
-            _buffSurrender = assetCollection.FindAsset<BuffDef>("BuffSurrender");
-            _flagObject = assetCollection.FindAsset<GameObject>("WhiteFlagWard");
-            _overlay = assetCollection.FindAsset<Material>("matSurrenderOverlay");
-        }
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acWhiteFlag", SS2Bundle.Equipments);
 
         private GameObject _flagObject;
-        public static Material _overlay;// SS2Assets.LoadAsset<Material>("matSurrenderOverlay", SS2Bundle.Items);
         public static SkillDef disabledSkill;// SS2Assets.LoadAsset<SkillDef>("DisabledSkill", SS2Bundle.Items);
 
 
@@ -39,19 +28,23 @@ namespace SS2.Equipments
         public static float flagDuration = 8f;
 
         public override bool Execute(EquipmentSlot slot)
-        {            //To do: make better placement system
+        {            
+            //To do: make better placement system
             GameObject gameObject = Object.Instantiate(_flagObject, slot.characterBody.corePosition, Quaternion.identity);
             BuffWard buffWard = gameObject.GetComponent<BuffWard>();
             buffWard.expireDuration = flagDuration;
             buffWard.radius = flagRadius;
             gameObject.GetComponent<TeamFilter>().teamIndex = slot.teamComponent.teamIndex;
-
             return true;
         }
 
         public override void Initialize()
         {
-            BuffOverlays.AddBuffOverlay(_buffSurrender, _overlay);
+            disabledSkill = SS2Assets.LoadAsset<SkillDef>("DisabledSkill", SS2Bundle.Shared);
+            BuffDef buffSurrender = AssetCollection.FindAsset<BuffDef>("BuffSurrender");
+            _flagObject = AssetCollection.FindAsset<GameObject>("WhiteFlagWard");
+            Material overlay = AssetCollection.FindAsset<Material>("matSurrenderOverlay");
+            BuffOverlays.AddBuffOverlay(buffSurrender, overlay);
         }
 
         public override bool IsAvailable(ContentPack contentPack)

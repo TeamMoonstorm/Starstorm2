@@ -19,7 +19,7 @@ namespace SS2.Components
         private BuffDef buffToAmplify;
         public BuffDef amplifiedBuff;
         public float buffCount;
-
+        public AnimateShaderAlpha thing;
         private void Start()
         {
             if (body == null)
@@ -76,35 +76,40 @@ namespace SS2.Components
             if (!NetworkServer.active)
                 return;
 
-            bool foundOwner = false;
+            bool foundOwner = body && body.HasBuff(buffWard.buffDef);
 
-            hits.Clear();
-            ownerSearch.ClearCandidates();
-            ownerSearch.origin = this.transform.position;
-            ownerSearch.RefreshCandidates();
-            ownerSearch.FilterCandidatesByDistinctHurtBoxEntities();
-            ownerSearch.FilterCandidatesByHurtBoxTeam(TeamMask.allButNeutral);
-            ownerSearch.GetHurtBoxes(hits);
-            foreach (HurtBox h in hits)
-            {
-                CharacterBody charBody = h.healthComponent.body;
+            //idk what this does and only hunter sigil "used" it so im commenting it out
+            //bool foundOwner = false;
 
-                if (buffToAmplify != null)
-                {
-                    if (charBody.HasBuff(buffToAmplify))
-                    {
-                        /*if (charBody.GetBuffCount(buffToAmplify) < buffCount)
-                            charBody.SetBuffCount(buffToAmplify.buffIndex, (int)buffCount);*/
-                        charBody.SetBuffCount(amplifiedBuff.buffIndex, (int)buffCount);
-                    }
-                }
+            //hits.Clear();
+            //ownerSearch.ClearCandidates();
+            //ownerSearch.origin = this.transform.position;
+            //ownerSearch.RefreshCandidates();
+            //ownerSearch.FilterCandidatesByDistinctHurtBoxEntities();
+            //ownerSearch.FilterCandidatesByHurtBoxTeam(TeamMask.allButNeutral);
+            //ownerSearch.GetHurtBoxes(hits);
+            //foreach (HurtBox h in hits)
+            //{
+            //    CharacterBody charBody = h.healthComponent.body;
 
-                if (charBody == body)
-                    foundOwner = true;
-            }
+            //    if (buffToAmplify != null)
+            //    {
+            //        if (charBody.HasBuff(buffToAmplify))
+            //        {
+            //            charBody.SetBuffCount(amplifiedBuff.buffIndex, (int)buffCount);
+            //        }
+            //    }
+
+            //    if (charBody == body)
+            //        foundOwner = true;
+            //}
 
             if (!foundOwner)
+            {
                 shouldDestroySoon = true;
+                if(thing) thing.enabled = true;
+            }
+                
         }
     }
 }

@@ -9,53 +9,46 @@ namespace EntityStates.Knight
     class ShieldPunch : BasicMeleeAttack
     {
         public static float swingTimeCoefficient = 1f;
-        [FormatToken("SS2_KNIGHT_SHIELD_BASH_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
-        public static GameObject beamProjectile;
-        public static GameObject bigBeamProjectile;
-        private GameObject beam;
         public static float TokenModifier_dmgCoefficient => new ShieldPunch().damageCoefficient;
         public int swingSide;
-        private bool hasFiredBeam = false;
+
+        public float hopVelocity = 15f;
+        public float airControl = 0.30f;
+        public float upwardVelocity = 0.5f;
+        public float forwardVelocity = 15f;
+        public float minimumY = 0.05f;
+        public float aimVelocity = 1f;
 
         public override void OnEnter()
         {
             base.OnEnter();
 
-            skillLocator.primary.UnsetSkillOverride(skillLocator.primary, Shield.skillDef, GenericSkill.SkillOverridePriority.Contextual);
+            if (!characterBody.HasBuff(SS2Content.Buffs.bdKnightShieldCooldown))
+            {
+                characterBody.AddTimedBuff(SS2Content.Buffs.bdKnightShieldCooldown, 1f);
+                animator = GetModelAnimator();
 
-            animator = GetModelAnimator();
+                Vector3 direction = GetAimRay().direction;
+
+                // Launch Knight where they are aiming
+                if (isAuthority)
+                {
+                    characterBody.isSprinting = true;
+                    direction.y = Mathf.Max(direction.y, minimumY);
+                    Vector3 a = direction.normalized * aimVelocity * moveSpeedStat;
+                    Vector3 b = Vector3.up * upwardVelocity;
+                    Vector3 b2 = new Vector3(direction.x, 0f, direction.z).normalized * forwardVelocity;
+                    characterMotor.Motor.ForceUnground();
+                    characterMotor.velocity = a + b + b2;
+                    SmallHop(characterMotor, hopVelocity);
+                }
+            }
         }
 
         public override void FixedUpdate()
         {
-            if (animator.GetFloat(mecanimHitboxActiveParameter) > 0.5f && fixedAge >= duration * 0.1f)
-            {
-                if (isAuthority && !hasFiredBeam)
-                {
-                    hasFiredBeam = true;
-
-                    float damage = damageStat * damageCoefficient * 2f;
-                    beam = beamProjectile;
-                    if (characterBody.HasBuff(SS2Content.Buffs.bdKnightCharged))
-                    {
-                        damage *= 1.5f;
-                        beam = bigBeamProjectile;
-                    }
-
-                    ProjectileManager.instance.FireProjectile(
-                    beam,
-                    GetAimRay().origin,
-                    Util.QuaternionSafeLookRotation(GetAimRay().direction),
-                    gameObject,
-                    damage,
-                    0f,
-                    RollCrit(),
-                    DamageColorIndex.Default,
-                    null,
-                    80f);
-                }
-            }
             base.FixedUpdate();
+            if (base.cameraTargetParams) base.cameraTargetParams.fovOverride = Mathf.Lerp(SS2.Survivors.Knight.dodgeFOV, 60f, base.fixedAge / duration);
         }
 
         public override void PlayAnimation()
@@ -65,8 +58,7 @@ namespace EntityStates.Knight
 
         public override void OnExit()
         {
-            if (characterBody.HasBuff(SS2Content.Buffs.bdKnightCharged))
-                characterBody.SetBuffCount(SS2Content.Buffs.bdKnightCharged.buffIndex, 0);
+            skillLocator.primary.UnsetSkillOverride(skillLocator.primary, Shield.shieldBashSkillDef, GenericSkill.SkillOverridePriority.Contextual);
             base.OnExit();
         }
 
@@ -78,8 +70,6 @@ namespace EntityStates.Knight
         {
             base.AuthorityModifyOverlapAttack(overlapAttack);
             overlapAttack.damageType = DamageType.Stun1s;
-            if (characterBody.HasBuff(SS2Content.Buffs.bdKnightCharged))
-                overlapAttack.damage *= 2f;
         }
     }
 }

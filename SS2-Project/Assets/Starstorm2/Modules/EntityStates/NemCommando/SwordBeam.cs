@@ -58,27 +58,23 @@ namespace EntityStates.NemCommando
 
                 skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
 
-                if (skinNameToken != "SS2_SKIN_NEMCOMMANDO_DEFAULT")
+                //red
+                muzzleFlash = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoRed", SS2Bundle.NemCommando);
+                projectilePrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwordBeamProjectile", SS2Bundle.NemCommando);
+
+
+                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO")
                 {
-                    //Blue
-                    if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO")
-                    {
-                        muzzleFlash = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoYellow", SS2Bundle.NemCommando);
-                        projectilePrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwordBeamProjectileBlue", SS2Bundle.NemCommando);
-                    }
-                    //Yellow
-                    if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
-                    {
-                        muzzleFlash = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoYellow", SS2Bundle.NemCommando);
-                        projectilePrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwordBeamProjectileYellow", SS2Bundle.NemCommando);
-                    }
+                    muzzleFlash = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoYellow", SS2Bundle.NemCommando);
+                    projectilePrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwordBeamProjectileBlue", SS2Bundle.NemCommando);
                 }
-                //Red
-                else
+                //Yellow
+                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
                 {
-                    muzzleFlash = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoRed", SS2Bundle.NemCommando);
-                    projectilePrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwordBeamProjectile", SS2Bundle.NemCommando);
+                    muzzleFlash = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoYellow", SS2Bundle.NemCommando);
+                    projectilePrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwordBeamProjectileYellow", SS2Bundle.NemCommando);
                 }
+
 
                 EffectManager.SimpleMuzzleFlash(muzzleFlash, gameObject, muzzleString, false);
 
