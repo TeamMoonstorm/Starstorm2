@@ -32,7 +32,7 @@ namespace EntityStates.Hero
             modelAnimator = GetModelAnimator();
             modelTransform = GetModelTransform();
             Util.PlayAttackSpeedSound(attackSoundString, gameObject, attackSpeedStat);
-            PlayCrossfade("Fullbody,Override", "WeaponSlam", "WeaponSlam.playbackRate", duration, 0.1f);
+            PlayCrossfade("FullBody Override", "WeaponSlam", "WeaponSlam.playbackRate", duration, 0.1f);
             if (characterDirection)
             {
                 characterDirection.moveVector = GetAimRay().direction;
