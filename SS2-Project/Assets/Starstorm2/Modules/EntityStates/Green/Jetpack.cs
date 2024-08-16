@@ -18,46 +18,28 @@ namespace EntityStates.Invaders.Green
         {
             base.OnEnter();
             startPosition = characterBody.footPosition;
-            if (targetPosition == null)
+            NodeGraph groundNodes = SceneInfo.instance.groundNodes;
+            List<NodeGraph.NodeIndex> nodeList = groundNodes.FindNodesInRange(characterBody.transform.position, 64f, 80f, HullMask.Human);
+            NodeGraph.NodeIndex randomNode = nodeList[random.Next(nodeList.Count)];
+            if (randomNode != null)
             {
-                NodeGraph groundNodes = SceneInfo.instance.groundNodes;
-                List<NodeGraph.NodeIndex> nodeList = groundNodes.FindNodesInRange(characterBody.transform.position, 0f, 32f, HullMask.Human);
-                NodeGraph.NodeIndex randomNode = nodeList[random.Next(nodeList.Count)];
-                if (randomNode != null)
-                {
-                    Vector3 position;
-                    groundNodes.GetNodePosition(randomNode, out position);
-                    targetPosition = position;
-                }
+                Vector3 position;
+                groundNodes.GetNodePosition(randomNode, out position);
+                targetPosition = position;
             }
             ICanDoMath();
         }
 
         private void ICanDoMath()
         {
-            Vector3 displacement = targetPosition - startPosition;
-            Vector3 horizontalDisplacement = new Vector3(displacement.x, 0, displacement.z);
-            float horizontalDistance= horizontalDisplacement.magnitude;
+            float yInitSpeed = Trajectory.CalculateInitialYSpeed(4f, targetPosition.y - startPosition.y);
+            float xOffset = targetPosition.x - startPosition.x;
+            float zOffset = targetPosition.z - startPosition.z;
+            Vector3 launchVector = new Vector3(xOffset / 4f, yInitSpeed, zOffset / 4f);
 
-            float launchAngle = 35 * Mathf.Deg2Rad;
-
-            float horizontalSpeed = Mathf.Sqrt((horizontalDistance * 9.81f) / (Mathf.Sin(2 * launchAngle))); //i forget how to access gravity PLEASE BE JUST LIKE EARTH LOL!
-            float verticalSpeed = horizontalSpeed * Mathf.Tan(launchAngle);
-
-            Vector3 launchDirection = horizontalDisplacement.normalized * horizontalSpeed;
-            launchDirection.y = verticalSpeed;
-
-            launchSpeed = launchDirection.magnitude;
+            characterMotor.velocity = launchVector;
+            characterMotor.disableAirControlUntilCollision = true;
             characterMotor.Motor.ForceUnground();
-            characterMotor.velocity = launchDirection;
-
-            Vector3 direction = (targetPosition - characterBody.footPosition).normalized;
-            float distance = Vector3.Distance(characterBody.footPosition, targetPosition);
-            float launchSpeed2 = Mathf.Sqrt(distance * 9.81f / Mathf.Sin(2 * 35 * Mathf.Deg2Rad));
-
-            Vector3 velocity = direction * launchSpeed2;
-            velocity.y = launchSpeed * Mathf.Sin(35f * Mathf.Deg2Rad);
-            characterMotor.velocity = velocity;
         }
 
         public override void FixedUpdate()
