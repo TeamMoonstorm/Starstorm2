@@ -10,7 +10,10 @@ using RoR2.UI;
 
 public class RulebookEnabler : MonoBehaviour
 {
+    //adding your own rules i guess-
+    //define a rule, give it this rulecategorydef v
     public static RuleCategoryDef ruleCategoryDef;
+    //look below for how rules are defined and how they're hooked. its done on scenestart for savemod purposes.
 
     //player dealt damage rule
     public static RuleDef playerDamageRule;
@@ -22,8 +25,25 @@ public class RulebookEnabler : MonoBehaviour
     public static int playerArmorRuleIndex;
     public static float playerArmorModifier;
 
-    public static RuleDef rule;
-    public static RuleDef rule2;
+    //orb just grab the bools here when you grab them.
+    //you might cry if you scroll down.
+
+    //storm toggle rule
+    public static RuleDef stormsEnabledRule;
+    public static int stormsEnabledRuleIndex;
+    public static bool stormsEnabled;
+
+    //event toggle rule
+    public static RuleDef eventsEnabledRule;
+    public static int eventsEnabledRuleIndex;
+    public static bool eventsEnabled;
+
+    //ss elites toggle rule
+    public static RuleDef starstormElitesEnabledRule;
+    public static int starstormElitesEnabledRuleIndex;
+    public static bool starstormElitesEnabled;
+
+    //call me 195 the amount of times ive written 'rule'
     public static Color color = new Color(0.52f, 0.74f, 0.87f, 1);
     private static int ruleCategoryIndex;
     public static bool categoryEnabled = false;
@@ -191,6 +211,79 @@ public class RulebookEnabler : MonoBehaviour
             playerArmorRuleIndex = playerArmorRule.globalIndex;
         }
 
+        //Starstorm Storms Toggle
+        {
+            stormsEnabledRule = new RuleDef("ss2StormsEnabled", "SS2_STORMS_ENABLED_RULE_NAME");
+            stormsEnabledRule.category = ruleCategoryDef;
+
+            ExtendedRuleChoiceDef stormsEnabled = stormsEnabledRule.AddExtendedRuleChoiceDef("ss2StormsEnabled", "StormsEnabled");
+            stormsEnabled.sprite = null;
+            stormsEnabled.tooltipNameToken = "SS2_STORMS_ENABLED_NAME_TOKEN";
+            stormsEnabled.tooltipNameColor = color;
+            stormsEnabled.tooltipBodyToken = "SS2_STORMS_ENABLED_BODY_TOKEN";
+            stormsEnabled.excludeByDefault = false;
+            stormsEnabledRule.MakeNewestChoiceDefault();
+
+            ExtendedRuleChoiceDef stormsDisabled = stormsEnabledRule.AddExtendedRuleChoiceDef("ss2StormsDisabled", "StormsDisabled");
+            stormsDisabled.sprite = null;
+            stormsDisabled.tooltipNameToken = "SS2_STORMS_DISABLED_NAME_TOKEN";
+            stormsDisabled.tooltipNameColor = color;
+            stormsDisabled.tooltipBodyToken = "SS2_STORMS_DISABLED_BODY_TOKEN";
+            stormsDisabled.excludeByDefault = false;
+
+            RuleCatalogExtras.AddRuleToCatalog(stormsEnabledRule, ruleCategoryIndex);
+            stormsEnabledRuleIndex = stormsEnabledRule.globalIndex;
+        }
+
+        //Starstorm Event Toggle
+        {
+            eventsEnabledRule = new RuleDef("ss2EventsEnabled", "SS2_EVENTS_ENABLED_RULE_NAME");
+            eventsEnabledRule.category = ruleCategoryDef;
+
+            ExtendedRuleChoiceDef eventsEnabled = eventsEnabledRule.AddExtendedRuleChoiceDef("ss2EventsEnabled", "EventsEnabled");
+            eventsEnabled.sprite = null;
+            eventsEnabled.tooltipNameToken = "SS2_EVENTS_ENABLED_NAME_TOKEN";
+            eventsEnabled.tooltipNameColor = color;
+            eventsEnabled.tooltipBodyToken = "SS2_EVENTS_ENABLED_BODY_TOKEN";
+            eventsEnabled.excludeByDefault = false;
+            eventsEnabledRule.MakeNewestChoiceDefault();
+
+            ExtendedRuleChoiceDef eventsDisabled = eventsEnabledRule.AddExtendedRuleChoiceDef("ss2EventsDisabled", "EventsDisabled");
+            eventsDisabled.sprite = null;
+            eventsDisabled.tooltipNameToken = "SS2_EVENTS_DISABLED_NAME_TOKEN";
+            eventsDisabled.tooltipNameColor = color;
+            eventsDisabled.tooltipBodyToken = "SS2_EVENTS_DISABLED_BODY_TOKEN";
+            eventsDisabled.excludeByDefault = false;
+
+            RuleCatalogExtras.AddRuleToCatalog(eventsEnabledRule, ruleCategoryIndex);
+            eventsEnabledRuleIndex = eventsEnabledRule.globalIndex;
+        }
+
+        //Starstorm Elite Toggle
+        {
+            starstormElitesEnabledRule = new RuleDef("ss2StarstormElitesEnabled", "SS2_STARSTORM_ELITES_ENABLED_RULE_NAME");
+            starstormElitesEnabledRule.category = ruleCategoryDef;
+
+            ExtendedRuleChoiceDef starstormElitesEnabled = starstormElitesEnabledRule.AddExtendedRuleChoiceDef("ss2StarstormElitesEnabled", "StarstormElitesEnabled");
+            starstormElitesEnabled.sprite = null;
+            starstormElitesEnabled.tooltipNameToken = "SS2_STARSTORM_ELITES_ENABLED_NAME_TOKEN";
+            starstormElitesEnabled.tooltipNameColor = color;
+            starstormElitesEnabled.tooltipBodyToken = "SS2_STARSTORM_ELITES_ENABLED_BODY_TOKEN";
+            starstormElitesEnabled.excludeByDefault = false;
+            starstormElitesEnabledRule.MakeNewestChoiceDefault();
+
+            ExtendedRuleChoiceDef starstormElitesDisabled = starstormElitesEnabledRule.AddExtendedRuleChoiceDef("ss2StarstormElitesDisabled", "StarstormElitesDisabled");
+            starstormElitesDisabled.sprite = null;
+            starstormElitesDisabled.tooltipNameToken = "SS2_STARSTORM_ELITES_DISABLED_NAME_TOKEN";
+            starstormElitesDisabled.tooltipNameColor = color;
+            starstormElitesDisabled.tooltipBodyToken = "SS2_STARSTORM_ELITES_DISABLED_BODY_TOKEN";
+            starstormElitesDisabled.excludeByDefault = false;
+
+            RuleCatalogExtras.AddRuleToCatalog(starstormElitesEnabledRule, ruleCategoryIndex);
+            starstormElitesEnabledRuleIndex = starstormElitesEnabledRule.globalIndex;
+        }
+
+
         yield return null;
     }
 
@@ -231,6 +324,7 @@ public class RulebookEnabler : MonoBehaviour
         orig(self, damageInfo);
     }
 
+    //these are checked on stage start because savemod. assuming these are saved by that (they should be..?)
     public static void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)
     {
         orig(self);
@@ -245,7 +339,7 @@ public class RulebookEnabler : MonoBehaviour
                 {
                     case "SS2_PLAYER_DAMAGE_25_INCREASE_NAME_TOKEN":    //something something 'token never  changes'
                         playerDamageModifier = 1.25f;                   //just feeling lazy this time
-                        break;
+                        break;                                          //but should probably be rulechoicedef index...
                     case "SS2_PLAYER_DAMAGE_50_INCREASE_NAME_TOKEN":
                         playerDamageModifier = 1.5f;
                         break;
@@ -312,6 +406,36 @@ public class RulebookEnabler : MonoBehaviour
                         playerArmorModifier = 1f;
                         break;
                 }
+            }
+
+            //Storms Enabled Rule
+            if (rcd.ruleDef == stormsEnabledRule)
+            {
+                if (rcd.tooltipNameToken == "SS2_STORMS_DISABLED_NAME")
+                    stormsEnabled = false;
+
+                else
+                    stormsEnabled = true;
+            }
+
+            //Events Enabled Rule
+            if (rcd.ruleDef == eventsEnabledRule)
+            {
+                if (rcd.tooltipNameToken == "SS2_EVENTS_DISABLED_NAME")
+                    eventsEnabled = false;
+
+                else
+                    eventsEnabled = true;
+            }
+
+            //Starstorm Elites Enabled Rule
+            if (rcd.ruleDef == starstormElitesEnabledRule)
+            {
+                if (rcd.tooltipNameToken == "SS2_STARSTORM_ELITES_DISABLED_NAME")
+                    starstormElitesEnabled = false;
+
+                else
+                    starstormElitesEnabled = true;
             }
         }
     }
