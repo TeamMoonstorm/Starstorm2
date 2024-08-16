@@ -20,6 +20,8 @@ namespace SS2.Survivors
         public static ModdedDamageType EngiFocusDamageProc { get; private set; }
         public static BuffDef _buffDefEngiFocused;
 
+        public static GameObject displacementGroundHitbox;
+
         public override void Initialize()
         {
             //_buffDefEngiFocused = survivorAssetCollection.FindAsset<BuffDef>("bdEngiFocused");
@@ -28,6 +30,25 @@ namespace SS2.Survivors
             SkillDef sdRapidDisplacement = survivorAssetCollection.FindAsset<SkillDef>("sdRapidDisplacement");
 
             GameObject engiBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Engi/EngiBody.prefab").WaitForCompletion();
+
+
+            var modelTransform  = engiBodyPrefab.GetComponent<ModelLocator>().modelTransform;
+            GameObject groundbox = survivorAssetCollection.FindAsset<GameObject>("HitboxGround");
+            GameObject hopbox = survivorAssetCollection.FindAsset<GameObject>("HitboxHop");
+
+            groundbox.transform.parent = modelTransform;
+            hopbox.transform.parent = modelTransform;
+
+            var hbg1 = modelTransform.gameObject.AddComponent<HitBoxGroup>();
+            hbg1.groupName = "HitboxGround";
+            hbg1.hitBoxes = new HitBox[1];
+            hbg1.hitBoxes[0] = groundbox.GetComponent<HitBox>();
+
+            var hbg2 = modelTransform.gameObject.AddComponent<HitBoxGroup>();
+            hbg2.groupName = "HitboxHop";
+            hbg2.hitBoxes = new HitBox[1];
+            hbg2.hitBoxes[0] = hopbox.GetComponent<HitBox>();
+
 
             SkillLocator skillLocator = engiBodyPrefab.GetComponent<SkillLocator>();
             SkillFamily skillFamilyPrimary = skillLocator.primary.skillFamily;
@@ -55,22 +76,6 @@ namespace SS2.Survivors
             EngiFocusDamageProc = DamageAPI.ReserveDamageType();
 
             On.RoR2.HealthComponent.TakeDamage += EngiFocusDamageHook;
-            On.EntityStates.EntityState.PlayAnimation_string_string += Greaaa;
-            On.EntityStates.EntityState.PlayAnimation_string_string_string_float += Greaaa2;
-
-
-        }
-
-        private void Greaaa2(On.EntityStates.EntityState.orig_PlayAnimation_string_string_string_float orig, EntityStates.EntityState self, string layerName, string animationStateName, string playbackRateParam, float duration)
-        {
-            Debug.Log("self: " + self + " | layername: " + layerName + " | animstatename: " + animationStateName + " | playbackRateParam: " + playbackRateParam + " | duration: " + duration);
-            orig(self, layerName, animationStateName, playbackRateParam, duration);
-        }
-
-        private void Greaaa(On.EntityStates.EntityState.orig_PlayAnimation_string_string orig, EntityStates.EntityState self, string layerName, string animationStateName)
-        {
-            Debug.Log("self: " + self + " | layername: " + layerName + " | animstatename: " + animationStateName);
-            orig(self, layerName, animationStateName);
         }
 
         private void EngiFocusDamageHook(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
+using SS2.Survivors;
 
 namespace SS2.Orbs
 {
@@ -15,7 +16,6 @@ namespace SS2.Orbs
 		public override void Begin()
 		{
 			base.duration = 0.1f;
-			string path = "Prefabs/Effects/OrbEffects/LightningOrbEffect";
 
 			EffectData effectData = new EffectData
 			{
@@ -24,7 +24,14 @@ namespace SS2.Orbs
 				start = this.targetPosition
 			};
 			effectData.SetHurtBoxReference(this.target);
-			EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>(path), effectData, true);
+            //if (this.groundHit)
+            //{
+				EffectManager.SpawnEffect(Executioner2.taserVFX, effectData, true);
+            //}
+            //else
+            //{
+			//	EffectManager.SpawnEffect(Executioner2.taserVFXFade, effectData, true);
+			//}
 		}
 
 		public override void OnArrival()
@@ -50,63 +57,63 @@ namespace SS2.Orbs
 					GlobalEventManager.instance.OnHitAll(damageInfo, healthComponent.gameObject);
 				}
 				this.failedToKill |= (!healthComponent || healthComponent.alive);
-				if (this.bouncesRemaining > 0)
+				if (this.bouncesRemaining > 0 || this.bouncesRemaining == -1) //for the repeat whiff
 				{
 					if (this.bouncedObjects != null)
 					{
 						this.bouncedObjects.Add(this.target.healthComponent);
 					}
 					HurtBox hurtBox = this.PickNextTarget(this.target.transform.position, false);
-					if (hurtBox)
+					if (hurtBox && this.bouncesRemaining != -1)
 					{
-						ExecutionerTaserOrb lightningOrb = new ExecutionerTaserOrb();
-						lightningOrb.search = this.search;
-						lightningOrb.origin = this.target.transform.position;
-						lightningOrb.target = hurtBox;
-						lightningOrb.attacker = this.attacker;
-						lightningOrb.inflictor = this.inflictor;
-						lightningOrb.teamIndex = this.teamIndex;
-						lightningOrb.damageValue = this.damageValue * this.damageCoefficientPerBounce;
-						lightningOrb.bouncesRemaining = this.bouncesRemaining - 1;
-						lightningOrb.isCrit = this.isCrit;
-						lightningOrb.bouncedObjects = this.bouncedObjects;
-						lightningOrb.procChainMask = this.procChainMask;
-						lightningOrb.procCoefficient = this.procCoefficient;
-						lightningOrb.damageColorIndex = this.damageColorIndex;
-						lightningOrb.damageCoefficientPerBounce = this.damageCoefficientPerBounce;
-						lightningOrb.speed = this.speed;
-						lightningOrb.range = this.range;
-						lightningOrb.damageType = this.damageType;
-						lightningOrb.failedToKill = this.failedToKill;
-						OrbManager.instance.AddOrb(lightningOrb);
-						Debug.Log("Shot generic hit at " + this.bouncesRemaining);
+						ExecutionerTaserOrb taserOrb = new ExecutionerTaserOrb();
+						taserOrb.search = this.search;
+						taserOrb.origin = this.target.transform.position;
+						taserOrb.target = hurtBox;
+						taserOrb.attacker = this.attacker;
+						taserOrb.inflictor = this.inflictor;
+						taserOrb.teamIndex = this.teamIndex;
+						taserOrb.damageValue = this.damageValue * this.damageCoefficientPerBounce;
+						taserOrb.bouncesRemaining = this.bouncesRemaining - 1;
+						taserOrb.isCrit = this.isCrit;
+						taserOrb.bouncedObjects = this.bouncedObjects;
+						taserOrb.procChainMask = this.procChainMask;
+						taserOrb.procCoefficient = this.procCoefficient;
+						taserOrb.damageColorIndex = this.damageColorIndex;
+						taserOrb.damageCoefficientPerBounce = this.damageCoefficientPerBounce;
+						taserOrb.speed = this.speed;
+						taserOrb.range = this.range;
+						taserOrb.damageType = this.damageType;
+						taserOrb.failedToKill = this.failedToKill;
+						OrbManager.instance.AddOrb(taserOrb);
+						//Debug.Log("Shot generic hit at " + this.bouncesRemaining);
 					}
 					else
 					{
 						hurtBox = this.PickNextTarget(this.target.transform.position, true); //if no other targets, allow a repeat
 						if (hurtBox && this.bouncesRemaining >= 3)
 						{
-							ExecutionerTaserOrb lightningOrb = new ExecutionerTaserOrb();
-							lightningOrb.search = this.search;
-							lightningOrb.origin = this.target.transform.position;
-							lightningOrb.target = hurtBox;
-							lightningOrb.attacker = this.attacker;
-							lightningOrb.inflictor = this.inflictor;
-							lightningOrb.teamIndex = this.teamIndex;
-							lightningOrb.damageValue = this.damageValue * this.damageCoefficientPerBounce;
-							lightningOrb.bouncesRemaining = Math.Max(this.bouncesRemaining - 3, 0); // but it costs way more 
-							lightningOrb.isCrit = this.isCrit;
-							lightningOrb.bouncedObjects = this.bouncedObjects;
-							lightningOrb.procChainMask = this.procChainMask;
-							lightningOrb.procCoefficient = this.procCoefficient;
-							lightningOrb.damageColorIndex = this.damageColorIndex;
-							lightningOrb.damageCoefficientPerBounce = this.damageCoefficientPerBounce;
-							lightningOrb.speed = this.speed;
-							lightningOrb.range = this.range;
-							lightningOrb.damageType = this.damageType;
-							lightningOrb.failedToKill = this.failedToKill;
-							OrbManager.instance.AddOrb(lightningOrb);
-							Debug.Log("Shot repeat hit at " + this.bouncesRemaining + " | next shot has: " + Math.Max(this.bouncesRemaining - 3, 0));
+							ExecutionerTaserOrb taserOrb = new ExecutionerTaserOrb();
+							taserOrb.search = this.search;
+							taserOrb.origin = this.target.transform.position;
+							taserOrb.target = hurtBox;
+							taserOrb.attacker = this.attacker;
+							taserOrb.inflictor = this.inflictor;
+							taserOrb.teamIndex = this.teamIndex;
+							taserOrb.damageValue = this.damageValue * this.damageCoefficientPerBounce;
+							taserOrb.bouncesRemaining = -1; // prevents further bounces
+							taserOrb.isCrit = this.isCrit;
+							taserOrb.bouncedObjects = this.bouncedObjects;
+							taserOrb.procChainMask = this.procChainMask;
+							taserOrb.procCoefficient = this.procCoefficient;
+							taserOrb.damageColorIndex = this.damageColorIndex;
+							taserOrb.damageCoefficientPerBounce = this.damageCoefficientPerBounce;
+							taserOrb.speed = this.speed;
+							taserOrb.range = this.range;
+							taserOrb.damageType = this.damageType;
+							taserOrb.failedToKill = this.failedToKill;
+							OrbManager.instance.AddOrb(taserOrb);
+							//Debug.Log("Shot repeat hit at " + this.bouncesRemaining + " | next shot has: " + Math.Max(this.bouncesRemaining - 3, 0));
 
 						}
 						else if (attackerAimVector != null && target.healthComponent.body) //and if all else fails, whiff
@@ -115,10 +122,7 @@ namespace SS2.Orbs
 							var stupidMotor = target.healthComponent.gameObject.GetComponent<RigidbodyMotor>();
 							if ((!motor || motor.isGrounded) && !stupidMotor)
 							{
-								//Ray aimRay = aimVector;
 								var aimVector = GenerateValidPosition(attackerAimVector);
-
-								//var aimVector = new Vector3(attackerAimVector.x + UnityEngine.Random.Range(-.1f,.1f), 0, attackerAimVector.z + UnityEngine.Random.Range(-.1f,.1f));
 								Vector3 axis = Vector3.Cross(Vector3.up, aimVector);
 
 								float x = UnityEngine.Random.Range(0, 5f); //maxspread
@@ -132,11 +136,13 @@ namespace SS2.Orbs
 								var finalVec = (Quaternion.AngleAxis(angle, Vector3.up) * (Quaternion.AngleAxis(angle2, axis) * aimVector));
 
 								Vector3 ray = new Ray(this.target.transform.position, finalVec).GetPoint(21);
-								//LayerIndex.world.mask | LayerIndex.entityPrecise.mask
 								var casts = Physics.RaycastAll(new Ray(this.target.transform.position, aimVector), 21, LayerIndex.world.mask | LayerIndex.entityPrecise.mask);
+
+								//bool groundHit = false;
 								if (casts.Length > 0)
 								{
 									ray = casts[0].point;
+									//groundHit = true;
 									//Debug.Log("Overriding with " + ray + " | " + casts[0].point);
 								}
 
@@ -161,6 +167,7 @@ namespace SS2.Orbs
 								taserOrb.failedToKill = this.failedToKill;
 								taserOrb.targetPosition = ray;
 								taserOrb.attackerAimVector = aimVector;
+								//taserOrb.groundHit = groundHit;
 								OrbManager.instance.AddOrb(taserOrb);
 								Debug.Log("Shot whiff at " + this.bouncesRemaining);
 							}
@@ -281,6 +288,8 @@ namespace SS2.Orbs
 		private bool failedToKill;
 
 		private BullseyeSearch search;
+
+		public bool groundHit;
 
 		public class TaserWhiffComponent : MonoBehaviour
 		{

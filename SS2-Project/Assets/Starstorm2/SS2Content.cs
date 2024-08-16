@@ -122,7 +122,7 @@ namespace SS2
                 new Bandit(),
                 new Railgunner(),
                 new Engineer(),
-                //new VoidFiend(),
+                new VoidFiend(),
                 //Add the rest
               };
 

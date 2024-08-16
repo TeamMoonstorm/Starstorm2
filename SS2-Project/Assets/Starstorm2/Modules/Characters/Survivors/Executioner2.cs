@@ -21,9 +21,12 @@ namespace SS2.Survivors
     {
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acExecutioner2", SS2Bundle.Executioner2);
 
+        static string path = "Prefabs/Effects/OrbEffects/LightningOrbEffect";
+
         public static GameObject plumeEffect;
         public static GameObject plumeEffectLarge;
-
+        public static GameObject taserVFX;
+        public static GameObject taserVFXFade;
 
         public static BuffDef _buffDefFear;
         public static BuffDef _buffExeMuteCharge;
@@ -58,6 +61,39 @@ namespace SS2.Survivors
             BodyCatalog.availability.CallWhenAvailable(UpdateSuperChargeList);
             Hook();
             ModifyPrefab();
+
+            taserVFX = LegacyResourcesAPI.Load<GameObject>(path);
+
+            //taserVFX = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/ChainLightning/ChainLightningOrbEffect.prefab").WaitForCompletion().InstantiateClone("ExecutionerTaserVFX");
+            //taserVFXFade = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/ChainLightning/ChainLightningOrbEffect.prefab").WaitForCompletion().InstantiateClone("ExecutionerTaserVFXFade");
+            //var arrival = taserVFXFade.GetComponent<OrbEffect>().onArrival;
+            //Debug.Log("arrival: " + arrival);
+            //
+            //var lr = taserVFXFade.GetComponentInChildren<LineRenderer>();
+            //foreach(var key in lr.colorGradient.alphaKeys)
+            //{
+            //    Debug.Log("key: " + key.alpha + " | " + key.time);
+            //}
+            //foreach (var key in lr.colorGradient.colorKeys)
+            //{
+            //    Debug.Log("key: " + key.color + " | " + key.time);
+            //}
+            //
+            //Gradient grad = new Gradient();
+            //var alpha = new GradientAlphaKey[4];
+            //alpha[0] = new GradientAlphaKey(0, 0);
+            //alpha[1] = new GradientAlphaKey(1, .1f);
+            //alpha[2] = new GradientAlphaKey(1, .5f);
+            //alpha[3] = new GradientAlphaKey(0, 0);
+            //
+            //var color = new GradientColorKey[2];
+            //color[0] = new GradientColorKey(Color.white, 0);
+            //color[1] = new GradientColorKey(Color.white, 1);
+            //
+            //grad.alphaKeys = alpha;
+            //grad.colorKeys = color;
+            //grad.mode = GradientMode.Blend;
+            //lr.colorGradient = grad;
 
             IL.RoR2.Orbs.OrbEffect.Start += OrbEffect_Start;
         }
