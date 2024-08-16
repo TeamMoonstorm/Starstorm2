@@ -437,6 +437,14 @@ namespace SS2
 
         public static class Equipments
         {
+            public static EquipmentDef EliteSuperLightningEquipment;
+
+            public static EquipmentDef EliteSuperIceEquipment;
+
+            public static EquipmentDef EliteSuperFireEquipment;
+
+            public static EquipmentDef EliteSuperEarthEquipment;
+
             public static EquipmentDef ElitePurpleEquipment;
 
             public static EquipmentDef EliteKineticEquipment;
@@ -468,6 +476,14 @@ namespace SS2
 
         public static class Buffs
         {
+            public static BuffDef BuffAffixSuperLightning;
+
+            public static BuffDef BuffAffixSuperIce;
+
+            public static BuffDef BuffAffixSuperFire;
+
+            public static BuffDef BuffAffixSuperEarth;
+
             public static BuffDef BuffAffixStorm;
 
             public static BuffDef BuffAffixVoid;
@@ -645,6 +661,14 @@ namespace SS2
 
         public static class Elites
         {
+            public static EliteDef edSuperLightning;
+
+            public static EliteDef edSuperIce;
+
+            public static EliteDef edSuperFire;
+
+            public static EliteDef edSuperEarth;
+
             public static EliteDef edStorm;
 
             public static EliteDef edPurple;
