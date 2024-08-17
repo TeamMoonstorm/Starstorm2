@@ -51,21 +51,20 @@ namespace SS2.Monsters
             }*/
 
             RoR2Application.onLoad += () => BodyIndex = BodyCatalog.FindBodyIndex("LampBossBody");
+            R2API.RecalculateStatsAPI.GetStatCoefficients += GetStatCoefficients;
         }
 
-        public sealed class LampBuffBehavior : BaseBuffBehaviour, IBodyStatArgModifier
+        private void GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
-            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            if (sender.HasBuff(SS2Content.Buffs.bdLampBuff) && sender.bodyIndex != BodyIndex)
             {
-                if (HasAnyStacks && CharacterBody.bodyIndex != BodyIndex)
-                {
-                    args.primaryCooldownMultAdd += 0.5f;
-                    args.secondaryCooldownMultAdd += 0.25f;
-                    args.damageMultAdd += 0.2f;
-                    args.moveSpeedMultAdd += 1.5f;
-                }
+                args.primaryCooldownMultAdd += 0.5f;
+                args.secondaryCooldownMultAdd += 0.25f;
+                args.damageMultAdd += 0.2f;
+                args.moveSpeedMultAdd += 1.5f;
             }
         }
+
 
         public override bool IsAvailable(ContentPack contentPack)
         {

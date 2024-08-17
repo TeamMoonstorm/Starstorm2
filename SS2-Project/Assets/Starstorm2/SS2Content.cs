@@ -490,6 +490,8 @@ namespace SS2
 
             public static BuffDef BuffAffixUltra;
 
+            public static BuffDef BuffBloodTesterRegen;
+
             public static BuffDef BuffBackThruster;
 
             public static BuffDef BuffUniversalCharger;

@@ -79,7 +79,7 @@ namespace SS2.Items
                 {
                     if (!sigilActive)
                     {
-                        EffectManager.SimpleEffect(_effect, body.aimOrigin, Quaternion.identity, true);
+                        //EffectManager.SimpleEffect(_effect, body.aimOrigin, Quaternion.identity, true);
                         Vector3 position = body.corePosition;
                         //float radius = 13f;
 

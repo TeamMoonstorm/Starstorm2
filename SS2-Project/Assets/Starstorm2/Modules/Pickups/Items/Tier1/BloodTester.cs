@@ -6,7 +6,7 @@ using RoR2.Items;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Networking;
 namespace SS2.Items
 {
     public sealed class BloodTester : SS2Item
@@ -15,20 +15,19 @@ namespace SS2.Items
 
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acBloodTester", SS2Bundle.Items);
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of health regeneration granted per 25 gold, per stack. (1 = 1 hp/s)")]
+        
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Time, in seconds, between health regeneration boosts.")]
         [FormatToken(token, 0)]
-        public static float healthRegen = 0.4f;
+        public static float cooldown = 30f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of health restored per 25 gold, per stack. (1 = 1 hp)")]
+        [FormatToken(token, 1)]
+        public static float healthRegen = 10f;
+
+        public static float buffRegenPerSecond = 10f;
 
         public override void Initialize()
         {
-            R2API.RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
-        }
-
-        private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, R2API.RecalculateStatsAPI.StatHookEventArgs args)
-        {
-            int stack = sender.inventory?.GetItemCount(SS2Content.Items.BloodTester) ?? 0;
-            if (stack > 0 && Stage.instance)
-                args.baseRegenAdd += (healthRegen * stack) * sender.master.money / Run.instance.GetDifficultyScaledCost(25, Stage.instance.entryDifficultyCoefficient);
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -36,21 +35,54 @@ namespace SS2.Items
             return true;
         }
 
-        // need to force recalculatestats to make regen update with money
-        // not ideal, but isnt a performance hit. only really runs when killing an enemy or using an interactable
         public sealed class Behavior : BaseItemBodyBehavior
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.BloodTester;
-            private uint moneyLastFrame;
+            private float stopwatch = cooldown; // if the player wants to tech it then let them :)
 
             private void FixedUpdate()
             {
-                if (!body.master) return;
-                if (moneyLastFrame != body.master.money)
-                    body.statsDirty = true;
-                moneyLastFrame = body.master.money;
+                if(NetworkServer.active && body.master)
+                {
+                    stopwatch += Time.fixedDeltaTime;
+                    if (stopwatch >= cooldown)
+                    {
+                        // NEED SOUNDS REALLY BAD
+                        stopwatch -= cooldown;
+                        float totalHealing = healthRegen * body.master.money / Run.instance.GetDifficultyScaledCost(25, Stage.instance.entryDifficultyCoefficient);
+                        body.AddTimedBuff(SS2Content.Buffs.BuffBloodTesterRegen, totalHealing / buffRegenPerSecond);
+                    }
+
+                }               
             }
+        }
+
+        public sealed class BuffBehavior : BaseBuffBehaviour
+        {
+            [BuffDefAssociation]
+            private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffBloodTesterRegen;
+            private static float healInterval = 0.33f;
+            private float healTimer;
+            private void FixedUpdate()
+            {
+                if (NetworkServer.active)
+                {
+                    healTimer -= Time.fixedDeltaTime;
+                    if(healTimer <= 0)
+                    {
+                        healTimer += healInterval;
+                        CharacterBody.healthComponent.Heal(buffRegenPerSecond * healInterval, default(ProcChainMask));
+                    }
+                }
+            }
+
+            private void OnDisable()
+            {
+                float fractionRemaining = (healInterval - healTimer) / healInterval;
+                CharacterBody.healthComponent.Heal(buffRegenPerSecond * healInterval * fractionRemaining, default(ProcChainMask));
+            }
+
         }
     }
 }
