@@ -40,6 +40,9 @@ namespace SS2.Equipments
         {
             if (NetworkServer.active)
             {
+                Debug.Log("Firing Roller");
+                Debug.Log(rollerProjectile);
+
                 Ray aimRay = slot.inputBank.GetAimRay();
 
                 FireProjectileInfo fireProjectileInfo = default(FireProjectileInfo);
@@ -52,6 +55,8 @@ namespace SS2.Equipments
                 fireProjectileInfo.force = force;
 
                 ProjectileManager.instance.FireProjectile(fireProjectileInfo);
+
+                Debug.Log("Roller Projectile Fired");
             }
             return true;
         }
@@ -62,39 +67,6 @@ namespace SS2.Equipments
 
         public override void OnEquipmentObtained(CharacterBody body)
         {
-        }
-
-        public class SquashedComponent : MonoBehaviour
-        {
-            public float speed = 5f;
-            private Vector3 originalScale;
-
-            private void Awake()
-            {
-                originalScale = transform.localScale;
-                transform.localScale = new Vector3(1.25f * transform.localScale.x, 0.05f * transform.localScale.y, 1.25f * transform.localScale.z);
-
-                StartCoroutine("EndSquash");
-            }
-
-            IEnumerator EndSquash()
-            {
-                yield return new WaitForSeconds(2f);
-
-                float t = 0f;
-                while (t < 1f)
-                {
-                    t += speed * Time.deltaTime;
-                    transform.localScale = Vector3.Lerp(transform.localScale, originalScale, t);
-
-                    yield return 0;
-                }
-
-                transform.localScale = originalScale;
-                Destroy(this);
-
-                yield return null;
-            }
         }
     }
 }

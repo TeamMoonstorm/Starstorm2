@@ -71,12 +71,13 @@ namespace EntityStates.Knight
             {
                 GlobalEventManager.onClientDamageNotified -= ParryWindowOverride;
                 parryHookRemoved = true;
+                hasParried = false;
             }
         }
 
         private void ParryWindowOverride(DamageDealtMessage msg)
         {
-            if (!msg.victim)
+            if (!msg.victim || msg.victim != base.characterBody || hasParried || msg.attacker == msg.victim)
             {
                 return;
             }
@@ -111,6 +112,8 @@ namespace EntityStates.Knight
                     {
                         weaponEsm.SetNextState(new EntityStates.Knight.Parry());
                     }
+
+                    hasParried = true;
                 }
             }
 
