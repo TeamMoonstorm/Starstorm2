@@ -38,6 +38,12 @@ namespace SS2.Survivors
 
             groundbox.transform.parent = modelTransform;
             hopbox.transform.parent = modelTransform;
+            groundbox.transform.localPosition = new Vector3(0, 1.5f, 0);
+            hopbox.transform.localPosition = new Vector3(0, 0.65f, -1);
+            groundbox.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            hopbox.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            groundbox.transform.localScale = new Vector3(3.25f, 3.25f, 3.25f);
+            hopbox.transform.localScale = new Vector3(4.25f, 4.25f, 4.25f);
 
             var hbg1 = modelTransform.gameObject.AddComponent<HitBoxGroup>();
             hbg1.groupName = "HitboxGround";

@@ -57,7 +57,8 @@ namespace EntityStates.Engi
         private Transform muzzleRight;
         private OverlapAttack attack;
         private List<HurtBox> victimsStruck = new List<HurtBox>();
-
+        int count = 1;
+        bool fromDash;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -90,6 +91,7 @@ namespace EntityStates.Engi
                 var hop = new HopDisplacement { fromDash = false };
                 Debug.Log("from yea");
                 outer.SetNextState(hop);
+                fromDash = false;
             }
             else
             {
@@ -99,24 +101,25 @@ namespace EntityStates.Engi
                 {
                     var multi = modelTransform.GetComponentsInChildren<HitBoxGroup>();
                     hitBoxGroup = Array.Find<HitBoxGroup>(modelTransform.GetComponents<HitBoxGroup>(), (HitBoxGroup element) => element.groupName == "HitboxGround");
-                    Debug.Log("hitbox found grond: " + hitBoxGroup);
+                    Debug.Log("hitbox found grond: " + hitBoxGroup + " | " + hitBoxGroup.groupName);
                 }
                 attack = new OverlapAttack();
                 attack.attacker = base.gameObject;
                 attack.inflictor = base.gameObject;
                 attack.teamIndex = base.GetTeam();
-                attack.damage = 1 * this.damageStat;
+                attack.damage = 2 * this.damageStat;
                 //attack.hitEffectPrefab = ToolbotDash.impactEffectPrefab;
-                attack.forceVector = Vector3.up * 1;
-                attack.pushAwayForce = 2;
+                attack.forceVector = (characterDirection.forward + (Vector3.up/1.125f)) * 1000;
+                attack.pushAwayForce = 500;
                 attack.hitBoxGroup = hitBoxGroup;
                 attack.isCrit = base.RollCrit();
                 attack.damageType = DamageType.Stun1s;
                 attack.damageColorIndex = DamageColorIndex.Default;
                 attack.procChainMask = default(ProcChainMask);
                 attack.procCoefficient = 1;
+                fromDash = true;
             }
-
+            count = 1;
 
             //this.PlayAnimation("Body", "Sprinting", "walkSpeed", duration);
         }
@@ -125,21 +128,23 @@ namespace EntityStates.Engi
         {
             base.FixedUpdate();
             characterBody.isSprinting = true;
-            Debug.Log("yeah " + fixedAge);
-            if (characterMotor.isGrounded)
+            //Debug.Log("yeah " + fixedAge);
+            if (characterMotor.isGrounded && fromDash)
             {
                 if (characterDirection && characterMotor)
                     characterMotor.rootMotion += characterDirection.forward * characterBody.moveSpeed * speedMultiplier * Time.fixedDeltaTime;
                 if (attack != null)
                 {
                     attack.Fire(victimsStruck);
-                    foreach (var victim in victimsStruck)
+                    if (fixedAge >= (duration/4) * count)
                     {
-                        Debug.Log("OWWW: " + victim);
+                        Debug.Log("Wiping list");
+                        attack.ignoredHealthComponentList = new List<HealthComponent>();
+                        ++count;
                     }
                 }
             }
-            else
+            else if(fromDash)
             {
                 var hop = new HopDisplacement { fromDash = true };
                 Debug.Log("from dash");
