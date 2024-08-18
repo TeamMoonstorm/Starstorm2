@@ -48,12 +48,12 @@ MonoBehaviour:
   rendererInfos:
   - renderer: {fileID: 2193795084610499159}
     defaultMaterial: {fileID: 2100000, guid: f28df4bc656849c4f94cd38fa7e7a6c9, type: 2}
-    defaultShadowCastingMode: 0
+    defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
   - renderer: {fileID: 2193795084610499159}
     defaultMaterial: {fileID: 2100000, guid: d2877ec60a6f4c849824800fde0bbb7c, type: 2}
-    defaultShadowCastingMode: 0
+    defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
   hideOnDeathObjects: []
@@ -69,9 +69,7 @@ MonoBehaviour:
   m_Script: {fileID: -226763392, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transformPairs:
-  - name: mesh
-    transform: {fileID: 4999469772269524565}
+  transformPairs: []
 --- !u!1 &6212907227188380861
 GameObject:
   m_ObjectHideFlags: 0
