@@ -62,6 +62,12 @@ namespace EntityStates.Knight
 
         private void AddParryHook()
         {
+            // TODO
+            //EffectData effectData = new EffectData();
+            //effectData.origin = this.characterBody.corePosition;
+            //EffectManager.SpawnEffect(parryFlashEffectPrefab, effectData, transmit: true);
+
+            characterBody.AddTimedBuff(parryBuff, parryBuffDuration);
             GlobalEventManager.onClientDamageNotified += ParryWindowOverride;
         }
 
@@ -77,12 +83,16 @@ namespace EntityStates.Knight
 
         private void ParryWindowOverride(DamageDealtMessage msg)
         {
-            if (!msg.victim || msg.victim != base.characterBody || hasParried || msg.attacker == msg.victim)
+            Debug.Log("msg.victim: " + msg.victim);
+            Debug.Log("base.characterBody" + base.characterBody);
+
+            // || msg.victim != base.characterBody
+            if (!msg.victim || hasParried || msg.attacker == msg.victim)
             {
                 return;
             }
 
-            if (msg.attacker != msg.victim)
+            if (msg.attacker != msg.victim && msg.victim == base.characterBody)
             {
                 // TODO: Use body index
                 // We want to ensure that Knight is the one taking damage
@@ -155,19 +165,6 @@ namespace EntityStates.Knight
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-
-            if (fixedAge >= 0.075f && !hasParried)
-            {
-                // Remove the shield bash since the parry state will override skills too 
-                // skillLocator.primary.UnsetSkillOverride(skillLocator.primary, shieldBashSkillDef, GenericSkill.SkillOverridePriority.Contextual);
-                hasParried = true;
-                characterBody.AddTimedBuff(parryBuff, parryBuffDuration);
-
-                // TODO
-                //EffectData effectData = new EffectData();
-                //effectData.origin = this.characterBody.corePosition;
-                //EffectManager.SpawnEffect(parryFlashEffectPrefab, effectData, transmit: true);
-            }
 
             if (fixedAge >= parryBuffDuration)
             {

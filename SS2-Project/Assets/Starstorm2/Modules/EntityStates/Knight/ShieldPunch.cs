@@ -9,8 +9,8 @@ namespace EntityStates.Knight
 {
     class ShieldPunch : BasicMeleeAttack
     {
-        public static float initialSpeedCoefficient = 3f;
-        public static float finalSpeedCoefficient = 1.5f;
+        public float initialSpeedCoefficient = 6f;
+        public float finalSpeedCoefficient = 2.5f;
 
         //public static string dodgeSoundString = "HenryRoll";
 
@@ -29,30 +29,19 @@ namespace EntityStates.Knight
         public float minimumY = 0.05f;
         public float aimVelocity = 1f;
 
+        private float shieldPunchCooldownDuration = 1.5f;
+
         private bool hasShieldPunch = false;
 
         public override void OnEnter()
         {
             base.OnEnter();
 
-            if (!characterBody.HasBuff(SS2Content.Buffs.bdKnightShieldCooldown) && !hasShieldPunch)
+            if (!characterBody.HasBuff(SS2Content.Buffs.bdKnightShieldCooldown) && !hasShieldPunch && isAuthority && inputBank && characterDirection)
             {
-                if (isAuthority && inputBank && characterDirection)
-                {
-                    forwardDirection = (inputBank.moveVector == Vector3.zero ? characterDirection.forward : inputBank.moveVector).normalized;
-                }
 
-                characterBody.AddTimedBuff(SS2Content.Buffs.bdKnightShieldCooldown, 1f);
-                animator = GetModelAnimator();
-
-                Vector3 direction = GetAimRay().direction;
-
-                Vector3 rhs = characterDirection ? characterDirection.forward : forwardDirection;
-                Vector3 rhs2 = Vector3.Cross(Vector3.up, rhs);
-
-                float num = Vector3.Dot(forwardDirection, rhs);
-                float num2 = Vector3.Dot(forwardDirection, rhs2);
-
+                forwardDirection = (inputBank.moveVector == Vector3.zero ? characterDirection.forward : inputBank.moveVector).normalized;
+                
                 RecalculateRollSpeed();
 
                 if (characterMotor && characterDirection)
@@ -79,22 +68,26 @@ namespace EntityStates.Knight
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            RecalculateRollSpeed();
-
-            if (characterDirection) characterDirection.forward = forwardDirection;
-            if (cameraTargetParams) cameraTargetParams.fovOverride = Mathf.Lerp(SS2.Survivors.Knight.dodgeFOV, 60f, fixedAge / duration);
-
-            Vector3 normalized = (transform.position - previousPosition).normalized;
-            if (characterMotor && characterDirection && normalized != Vector3.zero)
+            if (base.isAuthority && !characterBody.HasBuff(SS2Content.Buffs.bdKnightShieldCooldown) && !hasShieldPunch)
             {
-                Vector3 vector = normalized * rollSpeed;
-                float d = Mathf.Max(Vector3.Dot(vector, forwardDirection), 0f);
-                vector = forwardDirection * d;
-                vector.y = 0f;
+                RecalculateRollSpeed();
 
-                characterMotor.velocity = vector;
+                if (characterDirection) characterDirection.forward = forwardDirection;
+                if (cameraTargetParams) cameraTargetParams.fovOverride = Mathf.Lerp(SS2.Survivors.Knight.dodgeFOV, 60f, fixedAge / duration);
+
+                Vector3 normalized = (transform.position - previousPosition).normalized;
+                if (characterMotor && characterDirection && normalized != Vector3.zero)
+                {
+                    Vector3 vector = normalized * rollSpeed;
+                    float d = Mathf.Max(Vector3.Dot(vector, forwardDirection), 0f);
+                    vector = forwardDirection * d;
+                    vector.y = 0f;
+
+                    characterMotor.velocity = vector;
+                }
+                previousPosition = transform.position;
             }
-            previousPosition = transform.position;
+            
 
             if (isAuthority && fixedAge >= duration)
             {
@@ -115,6 +108,7 @@ namespace EntityStates.Knight
             
             if (!hasShieldPunch)
             {
+                characterBody.AddTimedBuff(SS2Content.Buffs.bdKnightShieldCooldown, shieldPunchCooldownDuration);
                 hasShieldPunch = true;
             }
             
