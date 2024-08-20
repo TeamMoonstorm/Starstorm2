@@ -63,8 +63,8 @@ namespace SS2
             tier.Add(new RewardDef { white = 8 });
             tier.Add(new RewardDef { whiteCommand = 4 });
             RewardDef fire = new RewardDef();
-            fire.AddPickups(RoR2Content.Items.IgniteOnKill, 3);
-            fire.AddPickups(SS2Content.Items.MoltenCoin, 3);
+            fire.AddPickups(RoR2Content.Items.IgniteOnKill, 2);
+            fire.AddPickups(SS2Content.Items.MoltenCoin, 2);
             fire.AddPickups(DLC1Content.Items.StrengthenBurn, 1);
             fire.isAvailable = RequireDLC1;
             tier.Add(fire, 1f);

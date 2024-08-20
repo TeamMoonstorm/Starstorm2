@@ -95,9 +95,9 @@ namespace SS2
 				TeleporterInteraction.onTeleporterBeginChargingGlobal += OnTeleporterBeginChargingGlobal;
 				R2API.RecalculateStatsAPI.GetStatCoefficients += GetStatCoefficients;
 				On.RoR2.ChestBehavior.ItemDrop += ChestBehavior_ItemDrop;
-			}
-			
-		}
+                On.RoR2.ChestBehavior.Open += ChestBehavior_Open;
+			}			
+		}		
 
         private static void UnsetHooks()
 		{
@@ -115,6 +115,7 @@ namespace SS2
 				TeleporterInteraction.onTeleporterBeginChargingGlobal -= OnTeleporterBeginChargingGlobal;
 				R2API.RecalculateStatsAPI.GetStatCoefficients -= GetStatCoefficients;
 				On.RoR2.ChestBehavior.ItemDrop -= ChestBehavior_ItemDrop;
+				On.RoR2.ChestBehavior.Open -= ChestBehavior_Open;
 			}
 			
 		}
@@ -378,7 +379,6 @@ namespace SS2
         {
 			int playerLock = GetActiveCurseCount(CurseIndex.PlayerLock);
 			int playerBlind = GetActiveCurseCount(CurseIndex.PlayerBlind);
-			int playerRegen = GetActiveCurseCount(CurseIndex.PlayerRegen);
 			int monsterArmor = GetActiveCurseCount(CurseIndex.MonsterArmor);
 			int monsterAttackSpeed = GetActiveCurseCount(CurseIndex.MonsterAttackSpeed);
 			int monsterCloak = GetActiveCurseCount(CurseIndex.MonsterCloak);
@@ -397,30 +397,29 @@ namespace SS2
 
 			if(characterBody.teamComponent.teamIndex != TeamIndex.Player)
             {
-				if (characterBody.bodyFlags.HasFlag(CharacterBody.BodyFlags.Masterless)) return;
-
-                AddBuff(characterBody, SS2Content.Buffs.bdLunarCurseArmor, monsterArmor);
-				AddBuff(characterBody, SS2Content.Buffs.bdLunarCurseAttackSpeed, monsterAttackSpeed);
-				AddBuff(characterBody, SS2Content.Buffs.bdLunarCurseCloak, monsterCloak);
-				AddBuff(characterBody, SS2Content.Buffs.bdLunarCurseCooldownReduction, monsterCooldownReduction);
-				AddBuff(characterBody, SS2Content.Buffs.bdLunarCurseDamage, monsterDamage);
-				AddBuff(characterBody, SS2Content.Buffs.bdLunarCurseHealth, monsterHealth);
-				AddBuff(characterBody, SS2Content.Buffs.bdLunarCurseMovementSpeed, monsterMovementSpeed);
-				AddBuff(characterBody, SS2Content.Buffs.bdLunarCurseShield, monsterShield);		
-				
-				if(monsterCloak > 0)
+				if (!characterBody.bodyFlags.HasFlag(CharacterBody.BodyFlags.Masterless))
                 {
-					if (cloakRng.nextNormalizedFloat > 0.5f / (GetCurseIntensity() * monsterCloak))
+					AddBuff(characterBody, SS2Content.Buffs.bdLunarCurseArmor, monsterArmor);
+					AddBuff(characterBody, SS2Content.Buffs.bdLunarCurseAttackSpeed, monsterAttackSpeed);
+					AddBuff(characterBody, SS2Content.Buffs.bdLunarCurseCloak, monsterCloak);
+					AddBuff(characterBody, SS2Content.Buffs.bdLunarCurseCooldownReduction, monsterCooldownReduction);
+					AddBuff(characterBody, SS2Content.Buffs.bdLunarCurseDamage, monsterDamage);
+					AddBuff(characterBody, SS2Content.Buffs.bdLunarCurseHealth, monsterHealth);
+					AddBuff(characterBody, SS2Content.Buffs.bdLunarCurseMovementSpeed, monsterMovementSpeed);
+					AddBuff(characterBody, SS2Content.Buffs.bdLunarCurseShield, monsterShield);
+
+					if (monsterCloak > 0)
 					{
-						characterBody.AddBuff(RoR2Content.Buffs.Cloak);
+						if (cloakRng.nextNormalizedFloat > 0.5f / (GetCurseIntensity() * monsterCloak))
+						{
+							characterBody.AddBuff(RoR2Content.Buffs.Cloak);
+						}
 					}
-				}
-				
+				}				
 			}
 			else
             {
-				AddBuff(characterBody, SS2Content.Buffs.bdLunarCurseBlind, playerBlind);
-				AddBuff(characterBody, SS2Content.Buffs.bdLunarCurseBlind, playerRegen);				
+				AddBuff(characterBody, SS2Content.Buffs.bdLunarCurseBlind, playerBlind);			
 			}
         }
 
@@ -432,7 +431,17 @@ namespace SS2
 				body.AddBuff(buff);
             }
         }
-        private static void ChestBehavior_ItemDrop(On.RoR2.ChestBehavior.orig_ItemDrop orig, ChestBehavior self)
+
+		// doing this in awake didnt work idk
+		private static void ChestBehavior_Open(On.RoR2.ChestBehavior.orig_Open orig, ChestBehavior self)
+		{
+			if (GetActiveCurseCount(CurseIndex.ChestTimer) > 0)
+			{
+				self.openState = openState;
+			}
+			orig(self);
+		}
+		private static void ChestBehavior_ItemDrop(On.RoR2.ChestBehavior.orig_ItemDrop orig, ChestBehavior self)
         {
 			orig(self);
 			if(GetActiveCurseCount(CurseIndex.ChestVelocity) > 0)
@@ -495,7 +504,6 @@ namespace SS2
 					int chestValue = purchaseInteraction.cost / Run.instance.GetDifficultyScaledCost(25, Stage.instance.entryDifficultyCoefficient);
 					chestValue = Mathf.Max(chestValue, 1);
 					int bombCount = chestValue * 6 * Mathf.RoundToInt(GetCurseIntensity());
-					SS2Log.Info("ChestSpite bombCount=" + bombCount);
 					Vector3 corePosition = chestBehavior.dropTransform.position;
 					float damage = 12f + (2.4f * Run.instance.ambientLevel);
 					EffectData effectData = new EffectData
