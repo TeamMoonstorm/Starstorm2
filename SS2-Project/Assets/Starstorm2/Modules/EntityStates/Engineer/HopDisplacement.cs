@@ -108,8 +108,11 @@ namespace EntityStates.Engi
             if (characterMotor && characterDirection)
             {
                 var curve = jumpCurve.Evaluate(fixedAge / duration);
-                base.characterMotor.rootMotion += (fromDash ? 2.5f : 3.25f) * curve * (this.moveSpeedStat / 2) * Time.fixedDeltaTime * (characterDirection.forward / 1.25f);
-                //Debug.Log("curve: " + curve + " | " + fixedAge);
+                var direction = characterDirection.forward;
+                direction.y = fromDash ? .2f : .3f;
+                direction /= 1.125f; //test this in the morning imn going to bed
+                base.characterMotor.rootMotion += (fromDash ? 2.5f : 3.25f) * curve * (this.moveSpeedStat / 2) * Time.fixedDeltaTime * direction;
+                Debug.Log("characterDirection.forward: " + characterDirection.forward);
             }
             if(fixedAge < duration / 4)
             {
