@@ -22,7 +22,7 @@ namespace SS2.Items
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of health restored per 25 gold, per stack.")]
         [FormatToken(token, 1)]
-        public static float healthRegen = 8f;
+        public static float healthRegen = 10f;
 
         public static float buffDuration = 2f;
 
