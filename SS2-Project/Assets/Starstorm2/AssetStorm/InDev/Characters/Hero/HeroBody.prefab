@@ -1710,6 +1710,7 @@ GameObject:
   - component: {fileID: 5511075818684695694}
   - component: {fileID: 2069856717160514686}
   - component: {fileID: 3175051082435066651}
+  - component: {fileID: -6082167304461677655}
   - component: {fileID: 8716358119272758803}
   - component: {fileID: 1586776076227504023}
   - component: {fileID: 7266375091666312074}
@@ -1908,6 +1909,7 @@ MonoBehaviour:
   stateMachines:
   - {fileID: 2069856717160514686}
   - {fileID: 3175051082435066651}
+  - {fileID: -6082167304461677655}
 --- !u!114 &2069856717160514686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1940,6 +1942,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customName: Weapon
+  initialStateType:
+    _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  mainStateType:
+    _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!114 &-6082167304461677655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2730472498016211242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1297580292, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customName: Spell
   initialStateType:
     _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   mainStateType:
@@ -1998,7 +2017,7 @@ MonoBehaviour:
   m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillFamily: {fileID: 11400000, guid: b06f3348e46423843ba54c7aa824ec91, type: 2}
+  _skillFamily: {fileID: 11400000, guid: 8ca1266f68e671c4990347aa3d080053, type: 2}
   skillName: 
   hideInCharacterSelect: 0
   hasExecutedSuccessfully: 0
@@ -2014,7 +2033,7 @@ MonoBehaviour:
   m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillFamily: {fileID: 11400000, guid: b06f3348e46423843ba54c7aa824ec91, type: 2}
+  _skillFamily: {fileID: 11400000, guid: 62ea1f78e31094e42a61fbc62d15db26, type: 2}
   skillName: 
   hideInCharacterSelect: 0
   hasExecutedSuccessfully: 0
@@ -2207,7 +2226,8 @@ MonoBehaviour:
       PublicKeyToken=null
   idleStateMachine:
   - {fileID: 3175051082435066651}
-  - {fileID: 0}
+  - {fileID: 3175051082435066651}
+  - {fileID: -6082167304461677655}
 --- !u!114 &8956833529749210168
 MonoBehaviour:
   m_ObjectHideFlags: 0

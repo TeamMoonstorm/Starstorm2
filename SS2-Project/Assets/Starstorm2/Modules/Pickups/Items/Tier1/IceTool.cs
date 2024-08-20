@@ -55,7 +55,7 @@ namespace SS2.Items
             {
                 get
                 {
-                    return Physics.CheckSphere(this.transform.position + (Vector3.up * 0.5f), body.radius * 1.2f, LayerIndex.world.mask, QueryTriggerInteraction.Collide);
+                    return Physics.CheckSphere(this.transform.position + (Vector3.up * 0.5f), body.radius * 1.5f, LayerIndex.world.mask, QueryTriggerInteraction.Collide);
                 }
             }
 
@@ -116,7 +116,7 @@ namespace SS2.Items
                         Color effectColor = Color.gray;
 
                         Collider[] hitColliderList;
-                        hitColliderList = Physics.OverlapSphere(transform.position + (Vector3.up * 0.5f), body.radius * 1.2f, LayerIndex.world.mask);
+                        hitColliderList = Physics.OverlapSphere(transform.position + (Vector3.up * 0.5f), body.radius * 1.5f, LayerIndex.world.mask);
                         if (hitColliderList.Length > 0)
                         {
                             foreach (Collider hc in hitColliderList)

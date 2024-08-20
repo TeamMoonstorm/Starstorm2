@@ -10,24 +10,60 @@ namespace EntityStates.Hero
     public class Step : BaseState
     {
         public static float baseDuration;
+        private float duration;
         private Animator animator;
         private HuntressTracker tracker;
+        private Vector3 startPos;
         private Vector3 targetPos;
+        private bool hasBlinked;
 
         public override void OnEnter()
         {
             base.OnEnter();
+            duration = baseDuration / moveSpeedStat;
             tracker = GetComponent<HuntressTracker>();
             if (tracker != null)
             {
                 GetTargetPosition();
             }
 
+            // disappear vfx, animation
+        }
 
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+            if (characterMotor)
+                characterMotor.velocity = Vector3.zero;
+
+            if (!hasBlinked)
+                SetPosition(Vector3.Lerp(startPos, targetPos, fixedAge / duration));
+
+            if (fixedAge >= duration && !hasBlinked)
+            {
+                hasBlinked = true;
+                // reappear vfx
+                SetPosition(targetPos);
+            }
+
+            if (fixedAge >= duration && hasBlinked)
+            {
+                outer.SetNextStateToMain();
+            }
+        }
+
+        private void SetPosition(Vector3 newPosition)
+        {
+            if (characterMotor)
+            {
+                characterMotor.Motor.SetPositionAndRotation(newPosition, Quaternion.identity, true);
+            }
         }
 
         private void GetTargetPosition()
         {
+            startPos = transform.position;
+
             HurtBox hurtBox = tracker.GetTrackingTarget();
             if (hurtBox && hurtBox.healthComponent && hurtBox.healthComponent.body)
             {
@@ -41,6 +77,7 @@ namespace EntityStates.Hero
                 if (randomNode != null)
                 {
                     groundNodes.GetNodePosition(randomNode, out targetPos);
+                    targetPos.y += 5f;
                 }
             }
         }
