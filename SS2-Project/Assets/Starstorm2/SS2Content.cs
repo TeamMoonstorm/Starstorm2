@@ -21,7 +21,7 @@ namespace SS2
         internal static ParallelMultiStartCoroutine _parallelPreLoadDispatchers = new ParallelMultiStartCoroutine();
         private static Func<IEnumerator>[] _loadDispatchers;
         internal static ParallelMultiStartCoroutine _parallelPostLoadDispatchers = new ParallelMultiStartCoroutine();
-        
+
         private static Func<IEnumerator>[] _fieldAssignDispatchers;
         public IEnumerator LoadStaticContentAsync(LoadStaticContentAsyncArgs args)
         {
@@ -93,7 +93,7 @@ namespace SS2
             SS2Log.Info($"Populating EffectDefs array...");
             SS2AssetRequest<GameObject> gameObjectRequest = new SS2AssetRequest<GameObject>(SS2Bundle.All);
             gameObjectRequest.StartLoad();
-            while(!gameObjectRequest.IsComplete) yield return null;
+            while (!gameObjectRequest.IsComplete) yield return null;
             SS2ContentPack.effectDefs.Clear();
             SS2ContentPack.effectDefs.Add(gameObjectRequest.Assets.Where(go => go.GetComponent<EffectComponent>()).Select(go => new EffectDef(go)).ToArray());
 
@@ -163,7 +163,7 @@ namespace SS2
                 yield return null;
 
             var helper = new ParallelMultiStartCoroutine();
-            foreach(VanillaSkinDef skinDef in skinDefRequest.Assets)
+            foreach (VanillaSkinDef skinDef in skinDefRequest.Assets)
             {
                 helper.Add(skinDef.Initialize);
             }
@@ -194,8 +194,9 @@ namespace SS2
                 Components.StarstormBehavior.Init,
                 Components.EtherealBehavior.Init,
                 Components.VoidBehavior.Init,
-                Void.Init,
+                //Void.Init,
                 Storm.Init,
+                RulebookEnabler.Init,
                 () =>
                 {
                     //new Modules.Scenes().Initialize();
@@ -293,6 +294,8 @@ namespace SS2
         public static class Items
         {
             public static ItemDef AffixStorm;
+
+            public static ItemDef AffixUltra;
 
             public static ItemDef ArmedBackpack;
 
@@ -430,7 +433,7 @@ namespace SS2
 
             public static ItemDef IceTool;
 
-           // public static ItemDef WickedStaff;
+            // public static ItemDef WickedStaff;
             public static ItemDef WeatherRadio;
 
         }
@@ -659,6 +662,16 @@ namespace SS2
             public static BuffDef bdIrradiated;
 
             public static BuffDef dbdNuclearSickness;
+
+            public static BuffDef bdUltra;
+
+            public static BuffDef bdUltraBuff;
+
+            public static BuffDef bdPyroPressure;
+
+            public static BuffDef bdPyroManiac;
+
+            public static BuffDef bdPyroJet;
         }
 
         public static class Elites
@@ -695,7 +708,7 @@ namespace SS2
 
             public static SurvivorDef survivorNemCaptain;
 
-            public static SurvivorDef survivorKnight; 
+            public static SurvivorDef survivorKnight;
 
             public static SurvivorDef NemMerc;
         }
