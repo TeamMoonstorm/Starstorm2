@@ -23,11 +23,14 @@ namespace EntityStates.Knight
         public float forwardVelocity = 20f;
         public float minimumY = 0.10f;
         public float aimVelocity = 3f;
+        public float initialSpeedCoefficient = 9f;
+        public float finalSpeedCoefficient = 3f;
 
         private float fireFrequency;
-        private bool hitOverlapLastTick;
         private float fireAge;
-
+        private float rollSpeed;
+        private Vector3 forwardDirection;
+        private Vector3 previousPosition;
 
         public override void OnEnter()
         {
@@ -43,18 +46,19 @@ namespace EntityStates.Knight
                     characterMotor.Motor.RebuildCollidableLayers();
                 }
 
-                // Launch Knight where they are aiming
-                if (base.isAuthority)
+
+                forwardDirection = (inputBank.moveVector == Vector3.zero ? characterDirection.forward : inputBank.moveVector).normalized;
+
+                RecalculateRollSpeed();
+
+                if (characterMotor && characterDirection)
                 {
-                    Vector3 direction = GetAimRay().direction;
-                    base.characterBody.isSprinting = false;
-                    direction.y = Mathf.Max(direction.y, minimumY);
-                    Vector3 val = direction.normalized * aimVelocity * moveSpeedStat;
-                    Vector3 val2 = Vector3.up * upwardVelocity;
-                    Vector3 val3 = new Vector3(direction.x, 0f, direction.z).normalized;
-                    Vector3 val4 = val3.normalized * forwardVelocity;
-                    base.characterMotor.velocity = val + val2 + val4;
+                    characterMotor.velocity.y = 0f;
+                    characterMotor.velocity = forwardDirection * rollSpeed;
                 }
+
+                Vector3 b = characterMotor ? characterMotor.velocity : Vector3.zero;
+                previousPosition = transform.position - b;
 
                 if (!isGrounded)
                 {
@@ -68,7 +72,7 @@ namespace EntityStates.Knight
                 damageCoefficient = 12;
                 procCoefficient = 1f;
                 pushForce = 400f;
-                bonusForce = Vector3.zero;
+                bonusForce = Vector3.forward;
                 baseDuration = 1f;
 
                 //0-1 multiplier of baseduration, used to time when the hitbox is out (usually based on the run time of the animation)
@@ -94,13 +98,18 @@ namespace EntityStates.Knight
             }
         }
 
+        private void RecalculateRollSpeed()
+        {
+            rollSpeed = moveSpeedStat * Mathf.Lerp(initialSpeedCoefficient, finalSpeedCoefficient, fixedAge / duration);
+        }
+
         public override void FixedUpdate()
         {
             if (base.isAuthority)
             {
                 base.FixedUpdate();
                 if (base.cameraTargetParams) base.cameraTargetParams.fovOverride = Mathf.Lerp(SS2.Survivors.Knight.dodgeFOV, 60f, base.fixedAge / duration);
-                base.characterMotor.moveDirection = base.inputBank.moveVector;
+                if (characterDirection) base.characterMotor.moveDirection = base.inputBank.moveVector + forwardDirection;
 
                 fireAge += Time.fixedDeltaTime;
                 base.characterBody.SetAimTimer(2f);
@@ -114,6 +123,24 @@ namespace EntityStates.Knight
                     attack.isCrit = base.characterBody.RollCrit();
                     attack.Fire();
                 }
+
+                Vector3 normalized = (transform.position - previousPosition).normalized;
+                if (characterMotor && characterDirection && normalized != Vector3.zero)
+                {
+                    Vector3 vector = normalized * rollSpeed;
+                    float d = Mathf.Max(Vector3.Dot(vector, forwardDirection), 0f);
+                    vector = forwardDirection * d;
+                    vector.y = 0f;
+
+                    characterMotor.velocity = vector;
+                }
+                previousPosition = transform.position;
+            }
+
+            if (isAuthority && fixedAge >= duration)
+            {
+                outer.SetNextStateToMain();
+                return;
             }
         }
 
