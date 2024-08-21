@@ -24,17 +24,11 @@ namespace SS2.Scenes
         {
             //summon trader
             var traderSummon = new MasterSummon();
-            traderSummon.position = new Vector3(-26f, 0f, 65.5f);
+            traderSummon.position = new Vector3(-0.88f, 0.47f, 60.15f);
             traderSummon.rotation = new Quaternion(0f, 90f, 0f, 0f);
             traderSummon.masterPrefab = SS2Assets.LoadAsset<GameObject>("TraderMaster", SS2Bundle.Indev);
             traderSummon.teamIndexOverride = TeamIndex.Neutral;
             traderSummon.Perform();
-
-            //place exit portal
-            var position = new Vector3(9f, 35f, -110f);
-            var rotation = Quaternion.Euler(330, 0, 0);
-            GameObject portal = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("PortalStrangerExit", SS2Bundle.SharedStages), position, rotation);
-            NetworkServer.Spawn(portal);
         }
 
         public override bool IsAvailable(ContentPack contentPack)

@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: matVoidShopSkyboxScrolling
+  m_Name: matVoidShopBelt
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
-  m_ShaderKeywords: CLOUDOFFSET USE_CLOUDS
+  m_ShaderKeywords: USE_CLOUDS
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -24,12 +24,12 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Cloud1Tex:
-        m_Texture: {fileID: 2800000, guid: 6f26a1b564e83614ba842884ab6301de, type: 3}
-        m_Scale: {x: 4, y: 4}
+        m_Texture: {fileID: 2800000, guid: 25ec9b11a89d7284ab02ab574f86344e, type: 3}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Cloud2Tex:
-        m_Texture: {fileID: 2800000, guid: 6f26a1b564e83614ba842884ab6301de, type: 3}
-        m_Scale: {x: 12, y: 12}
+        m_Texture: {fileID: 2800000, guid: aa1354bb8abb4c94ca840eebc950026b, type: 2}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
         m_Texture: {fileID: 0}
@@ -48,8 +48,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 62406cfe4e663d74fafa21c91ee600e3, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: aa5d19609924d4041bedde2c997febd6, type: 2}
+        m_Scale: {x: 0.5, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -64,23 +64,23 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RemapTex:
-        m_Texture: {fileID: 2800000, guid: db4503594918f28459b94c9c53d909ac, type: 3}
+        m_Texture: {fileID: 2800000, guid: 2576f8536770ba8428b023c250328b90, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _AlphaBias: 0.4116223
-    - _AlphaBoost: 1.726393
-    - _Boost: 1.5
+    - _AlphaBias: 0.353
+    - _AlphaBoost: 6.6
+    - _Boost: 2
     - _BumpScale: 1
     - _CalcTextureAlphaOn: 0
-    - _CloudOffsetOn: 1
+    - _CloudOffsetOn: 0
     - _CloudsOn: 1
     - _Cull: 0
     - _Cutoff: 0.5
     - _DepthOffset: 0
     - _DetailNormalMapScale: 1
     - _DisableRemapOn: 0
-    - _DistortionStrength: 0.6421309
+    - _DistortionStrength: 0.1
     - _DstBlend: 6
     - _ExternalAlpha: 1
     - _Fade: 1
@@ -91,8 +91,8 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _InternalSimpleBlendMode: 1
-    - _InvFade: 0.003
+    - _InternalSimpleBlendMode: 0
+    - _InvFade: 0.1
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -101,7 +101,7 @@ Material:
     - _SkyboxOnly: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SrcBlend: 5
+    - _SrcBlend: 3
     - _UVSec: 0
     - _UseUV1On: 0
     - _VertexAlphaOn: 0
@@ -111,6 +111,6 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _CutoffScroll: {r: 0, g: -0.5, b: 0.1, a: -0.4}
+    - _CutoffScroll: {r: 1, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _TintColor: {r: 1, g: 1, b: 1, a: 0.16862746}
+    - _TintColor: {r: 1, g: 1, b: 1, a: 1}

@@ -696,7 +696,7 @@ namespace SS2
         }
         public static class Scenes
         {
-            public static SceneDef VoidShop;
+            public static SceneDef ss2_voidshop;
         }
         public static class Survivors
         {
