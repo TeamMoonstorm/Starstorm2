@@ -83,13 +83,11 @@ namespace EntityStates.Engi
             }
             duration = baseDuration; 
             characterDirection.turnSpeed = 300; 
-            Debug.Log("begin " + fixedAge + " | " + duration);
 
             HopIfAirborne();
             if (!characterMotor.isGrounded)
             {
                 var hop = new HopDisplacement { fromDash = false };
-                Debug.Log("from yea");
                 outer.SetNextState(hop);
                 fromDash = false;
             }
@@ -101,7 +99,6 @@ namespace EntityStates.Engi
                 {
                     var multi = modelTransform.GetComponentsInChildren<HitBoxGroup>();
                     hitBoxGroup = Array.Find<HitBoxGroup>(modelTransform.GetComponents<HitBoxGroup>(), (HitBoxGroup element) => element.groupName == "HitboxGround");
-                    Debug.Log("hitbox found grond: " + hitBoxGroup + " | " + hitBoxGroup.groupName);
                 }
                 attack = new OverlapAttack();
                 attack.attacker = base.gameObject;
@@ -138,7 +135,6 @@ namespace EntityStates.Engi
                     attack.Fire(victimsStruck);
                     if (fixedAge >= (duration/4) * count)
                     {
-                        Debug.Log("Wiping list");
                         attack.ignoredHealthComponentList = new List<HealthComponent>();
                         ++count;
                     }
@@ -147,7 +143,6 @@ namespace EntityStates.Engi
             else if(fromDash)
             {
                 var hop = new HopDisplacement { fromDash = true };
-                Debug.Log("from dash");
                 outer.SetNextState(hop);
             }
 
@@ -157,7 +152,6 @@ namespace EntityStates.Engi
             {
                 outer.SetNextStateToMain();
 
-                Debug.Log("goodbye " + fixedAge + " | " + duration);
             }
 
         }
@@ -173,7 +167,6 @@ namespace EntityStates.Engi
             //
             //if (rightLaserInstance)
             //    EntityState.Destroy(rightLaserInstance);
-            Debug.Log("i have been killed " + fixedAge + " | " + duration);
             characterDirection.turnSpeed = 720f;
         }
         private void HopIfAirborne()

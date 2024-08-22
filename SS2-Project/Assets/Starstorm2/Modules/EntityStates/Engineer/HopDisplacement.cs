@@ -76,14 +76,13 @@ namespace EntityStates.Engi
             if (modelTransform)
             {
                 hitBoxGroup = Array.Find<HitBoxGroup>(modelTransform.GetComponents<HitBoxGroup>(), (HitBoxGroup element) => element.groupName == "HitboxHop");
-                Debug.Log("hitbox found hop: " + hitBoxGroup + " | " + hitBoxGroup.groupName);
                 attack = new OverlapAttack();
                 attack.attacker = base.gameObject;
                 attack.inflictor = base.gameObject;
                 attack.teamIndex = base.GetTeam();
                 attack.damage = 2 * this.damageStat;
                 //attack.hitEffectPrefab = ToolbotDash.impactEffectPrefab;
-                attack.forceVector = characterDirection.forward * -2000;
+                attack.forceVector = characterDirection.forward * -1800;
                 attack.pushAwayForce = 1000;
                 attack.hitBoxGroup = hitBoxGroup;
                 attack.isCrit = base.RollCrit();
@@ -97,6 +96,25 @@ namespace EntityStates.Engi
                 characterMotor.velocity = velocity;
             }
 
+            EffectData effectDataL = new EffectData
+            {
+                origin = muzzleLeft.position - new Vector3(-.325f, 2.1f, -.7f),
+                rotation = muzzleLeft.rotation, //Quaternion.Euler(new Vector3(muzzleLeft.rotation.x + 180, muzzleLeft.rotation.y, muzzleLeft.rotation.z)),
+                rootObject = characterDirection.gameObject,
+                modelChildIndex = 0 //i dunno test it in the morning
+            };
+            effectDataL.SetNetworkedObjectReference(characterDirection.gameObject);
+            EffectManager.SpawnEffect(Engineer.engiPrefabExplosion, effectDataL, transmit: true);
+
+            EffectData effectDataR = new EffectData
+            {
+                origin = muzzleRight.position - new Vector3(.325f, 2.1f, -.7f),
+                rotation = muzzleRight.rotation,//Quaternion.Euler(new Vector3(muzzleRight.rotation.x + 180, muzzleRight.rotation.y, muzzleRight.rotation.z)),
+                rootObject = characterDirection.gameObject,
+                
+            };
+            effectDataR.SetNetworkedObjectReference(characterDirection.gameObject);
+            EffectManager.SpawnEffect(Engineer.engiPrefabExplosion, effectDataR, transmit: true);
         }
 
         public override void FixedUpdate()
@@ -109,10 +127,9 @@ namespace EntityStates.Engi
             {
                 var curve = jumpCurve.Evaluate(fixedAge / duration);
                 var direction = characterDirection.forward;
-                direction.y = fromDash ? .2f : .3f;
+                direction.y = fromDash ? .175f : .3f;
                 direction /= 1.125f; //test this in the morning imn going to bed
                 base.characterMotor.rootMotion += (fromDash ? 2.5f : 3.25f) * curve * (this.moveSpeedStat / 2) * Time.fixedDeltaTime * direction;
-                Debug.Log("characterDirection.forward: " + characterDirection.forward);
             }
             if(fixedAge < duration / 4)
             {
@@ -122,8 +139,6 @@ namespace EntityStates.Engi
             if (fixedAge >= duration)
             {
                 outer.SetNextStateToMain();
-
-                Debug.Log("goodbye " + fixedAge + " | " + duration);
             }
 
         }
@@ -139,7 +154,6 @@ namespace EntityStates.Engi
             //
             //if (rightLaserInstance)
             //    EntityState.Destroy(rightLaserInstance);
-            Debug.Log("i have been killed " + fixedAge + " | " + duration);
             //characterDirection.turnSpeed = 720f;
             //this.PlayAnimation("Body", "IdleIn");
             var token = base.characterBody.gameObject.AddComponent<EngiHopToken>();

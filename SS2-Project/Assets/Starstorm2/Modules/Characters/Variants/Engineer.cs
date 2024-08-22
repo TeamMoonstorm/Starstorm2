@@ -21,7 +21,7 @@ namespace SS2.Survivors
         public static BuffDef _buffDefEngiFocused;
 
         public static GameObject displacementGroundHitbox;
-
+        public static GameObject engiPrefabExplosion;
         public override void Initialize()
         {
             //_buffDefEngiFocused = survivorAssetCollection.FindAsset<BuffDef>("bdEngiFocused");
@@ -55,10 +55,24 @@ namespace SS2.Survivors
             hbg2.hitBoxes = new HitBox[1];
             hbg2.hitBoxes[0] = hopbox.GetComponent<HitBox>();
 
+            engiPrefabExplosion = Addressables.LoadAssetAsync<GameObject>("RoR2/Junk/Engi/EngiConcussionExplosion.prefab").WaitForCompletion();
+
+            //engiExplosionLeft = survivorAssetCollection.FindAsset<GameObject>("EngiConcussionExplosion").InstantiateClone("LeftExplosion");
+            //engiExplosionRight = survivorAssetCollection.FindAsset<GameObject>("EngiConcussionExplosion").InstantiateClone("RightExplosion");
+            //engiExplosionLeft.transform.parent = modelTransform;
+            //engiExplosionRight.transform.parent = modelTransform;
+            //
+            //engiExplosionLeft.transform.localPosition = new Vector3(-.325f, 2.1f, -.7f);
+            //engiExplosionRight.transform.localPosition = new Vector3(.325f, 2.1f, -.7f);
+            //engiExplosionLeft.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            //engiExplosionRight.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            //engiExplosionLeft.SetActive(false);
+            //engiExplosionRight.SetActive(false);
 
             SkillLocator skillLocator = engiBodyPrefab.GetComponent<SkillLocator>();
             SkillFamily skillFamilyPrimary = skillLocator.primary.skillFamily;
             SkillFamily skillFamilyUtility = skillLocator.utility.skillFamily;
+
 
             Debug.Log("sdRD: " + sdRapidDisplacement);
 

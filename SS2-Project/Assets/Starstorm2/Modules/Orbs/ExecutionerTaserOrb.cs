@@ -78,7 +78,7 @@ namespace SS2.Orbs
 						taserOrb.isCrit = this.isCrit;
 						taserOrb.bouncedObjects = this.bouncedObjects;
 						taserOrb.procChainMask = this.procChainMask;
-						taserOrb.procCoefficient = this.procCoefficient;
+						taserOrb.procCoefficient = this.procCoefficient/2;
 						taserOrb.damageColorIndex = this.damageColorIndex;
 						taserOrb.damageCoefficientPerBounce = this.damageCoefficientPerBounce;
 						taserOrb.speed = this.speed;
@@ -105,7 +105,7 @@ namespace SS2.Orbs
 							taserOrb.isCrit = this.isCrit;
 							taserOrb.bouncedObjects = this.bouncedObjects;
 							taserOrb.procChainMask = this.procChainMask;
-							taserOrb.procCoefficient = this.procCoefficient;
+							taserOrb.procCoefficient = this.procCoefficient / 2;
 							taserOrb.damageColorIndex = this.damageColorIndex;
 							taserOrb.damageCoefficientPerBounce = this.damageCoefficientPerBounce;
 							taserOrb.speed = this.speed;
@@ -158,7 +158,7 @@ namespace SS2.Orbs
 								taserOrb.isCrit = this.isCrit;
 								taserOrb.bouncedObjects = this.bouncedObjects;
 								taserOrb.procChainMask = this.procChainMask;
-								taserOrb.procCoefficient = this.procCoefficient;
+								taserOrb.procCoefficient = this.procCoefficient / 2;
 								taserOrb.damageColorIndex = this.damageColorIndex;
 								taserOrb.damageCoefficientPerBounce = this.damageCoefficientPerBounce;
 								taserOrb.speed = this.speed;
