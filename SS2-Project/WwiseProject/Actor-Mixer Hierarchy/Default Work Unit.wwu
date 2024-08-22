@@ -3377,7 +3377,7 @@
 								</Sound>
 								<RandomSequenceContainer Name="Trematode" ID="{2B0FC3A7-5C08-4746-8CE0-88490606B930}" ShortID="858373719">
 									<PropertyList>
-										<Property Name="3DSpatialization" Type="int16" Value="2"/>
+										<Property Name="3DSpatialization" Type="int16" Value="1"/>
 										<Property Name="OverridePositioning" Type="bool" Value="True"/>
 										<Property Name="Pitch" Type="int32">
 											<ModifierList>
@@ -4248,7 +4248,7 @@
 								</Sound>
 								<Sound Name="item_proc_trematode_init1" ID="{F299E3F9-1ABF-4E5B-ACAA-FF6ED3F7761E}" ShortID="161675639">
 									<PropertyList>
-										<Property Name="3DSpatialization" Type="int16" Value="2"/>
+										<Property Name="3DSpatialization" Type="int16" Value="1"/>
 										<Property Name="OverridePositioning" Type="bool" Value="True"/>
 										<Property Name="Pitch" Type="int32">
 											<ModifierList>
@@ -4262,6 +4262,11 @@
 													</Modifier>
 												</ModifierInfo>
 											</ModifierList>
+										</Property>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>-4</Value>
+											</ValueList>
 										</Property>
 									</PropertyList>
 									<ReferenceList>
@@ -4296,7 +4301,7 @@
 								</Sound>
 								<RandomSequenceContainer Name="MoltenCoin" ID="{D90875C8-CA7E-4F0C-80E2-303BD422B9C0}" ShortID="289864446">
 									<PropertyList>
-										<Property Name="3DSpatialization" Type="int16" Value="2"/>
+										<Property Name="3DSpatialization" Type="int16" Value="1"/>
 										<Property Name="OverridePositioning" Type="bool" Value="True"/>
 										<Property Name="RandomAvoidRepeating" Type="bool" Value="False"/>
 										<Property Name="Volume" Type="Real64">
@@ -4407,7 +4412,7 @@
 									<ChildrenList>
 										<RandomSequenceContainer Name="LowQualitySpeaker" ID="{D8488279-CB39-4BCA-8A8A-0144F73BF591}" ShortID="130474722">
 											<PropertyList>
-												<Property Name="3DSpatialization" Type="int16" Value="2"/>
+												<Property Name="3DSpatialization" Type="int16" Value="1"/>
 												<Property Name="OverridePositioning" Type="bool" Value="True"/>
 												<Property Name="Pitch" Type="int32">
 													<ModifierList>
@@ -4539,7 +4544,7 @@
 												<Property Name="RandomAvoidRepeating" Type="bool" Value="False"/>
 												<Property Name="Volume" Type="Real64">
 													<ValueList>
-														<Value>-3</Value>
+														<Value>-5</Value>
 													</ValueList>
 												</Property>
 											</PropertyList>
@@ -4702,6 +4707,13 @@
 								<Folder Name="BloodTester" ID="{ACFD37CF-DE24-4E33-A039-5D5E918395AC}" ShortID="1018399461">
 									<ChildrenList>
 										<Sound Name="item_proc_bloodtester_proc_01" ID="{E2C9A0A1-A93C-43AA-8486-51DE83535140}" ShortID="438550835">
+											<PropertyList>
+												<Property Name="Volume" Type="Real64">
+													<ValueList>
+														<Value>-1.5</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
 											<ReferenceList>
 												<Reference Name="Conversion">
 													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
