@@ -1,9 +1,8 @@
   **Warning: content spoilers below!**
 ### 0.6.8
-* General
-    * Added a new "rulebook" section to the character select screen, inspired by ruleset settings of Starstorm 1 and Risk of Rain Returns. The intent is to allow players to customize runs in major ways that are less significant than artifacts, without needing to manually edit a config.
 * Items / Equipment
-    * Added: Broken Blood Tester*, Diary*, Guarding Amulet, Universal Charger, Ice Tool, Cryptic Source, Man-o'-War, Strange Can*, Rainbow Root, Composite Injector, Erratic Gadget*, Simple Magnet, White Flag.
+    * Various visual improvements to existing items.
+    * Added: Broken Blood Tester*, Diary*, Guarding Amulet, Universal Charger, Cryptic Source, Man-o'-War, Strange Can*, Composite Injector, Erratic Gadget*, Simple Magnet, White Flag.
         * Items marked with an asterisk were from a previous version of the mod, but have since been reworked. Details of each item can be found on the mod's wiki.
     * Reworked / Rebalanced: Coffee Bag, Detritive Trematode, Needles, Field Accelerator, Hunter's Sigil, Prototype Jet Boots, Low Quality Speakers, Watch Metronome.
         * For the sake of brevity, new item effects can be found on the wiki rather than this changelog.
@@ -14,7 +13,6 @@
     * Hopefully fixed Follower corpse desync on clients for real this time.
     * Slightly increasd health of Follower and Rushrum.
 * Events
-    * Storms reworked fully: rather than randomly occuring, storms now gradully build up throughout a stage, are permanent, and introduce new gameplay effects at higher levels.
     * Empyrean event removed - Empyrean elites now are integrated into late-loop director spawns.
     * Nemesis Invasions ... ??????????????????
 * Executioner
@@ -24,6 +22,9 @@
     * Alt Special now stuns on hit.
     * When selected as a survivor, now drops from a drop pod.
 * Nemesis Mercenary
+    * Increased Alt Utility damage (300% -> 600%).
+    * Reduced Alt Utility speed.
+    * Reduced Special damage (1500% -> 1200%).
     * When selected as a survivor, now drops from a drop pod.
 
 ### 0.6.7
