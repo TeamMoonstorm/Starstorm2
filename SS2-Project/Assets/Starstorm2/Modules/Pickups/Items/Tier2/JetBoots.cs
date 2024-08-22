@@ -66,6 +66,8 @@ namespace SS2.Items
             if (buffDef == SS2Content.Buffs.BuffJetBootsCooldown) self.AddBuff(SS2Content.Buffs.BuffJetBootsReady);
         }
 
+
+        // ALL OF THIS IS TERRIBLE. BANDAIDS ON BANDAIDS. REWRITE FROM SCRATCH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         private void RecalculateStatsHook(ILContext il)
         {
             ILCursor c = new ILCursor(il);
@@ -112,7 +114,9 @@ namespace SS2.Items
                         DoJump(body);
                         // OOPS i fucked up. tying maxjumpcount to the Ready buff makes it so two jumps are technically "used" here
                         body.characterMotor.jumpCount--; // jank fix to that^^
-                        body.RemoveBuff(SS2Content.Buffs.BuffJetBootsReady);
+                        //body.RemoveBuff(SS2Content.Buffs.BuffJetBootsReady); // LOL DUMBFUCK
+                        FriendManager.instance.RpcRemoveBuff(body, SS2Content.Buffs.BuffJetBootsReady); // this is so fucking bad fuck
+                        // clients can probably spam it for a few frames before the buff is removed on the server. oh well.
                     }
                     //fucked up again. need to always skip feathers if we have buff. (* bignumber) is jank fix
                     return body.baseJumpCount + buffCount * 7165471;

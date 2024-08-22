@@ -106,6 +106,7 @@ namespace EntityStates.NemMerc
         public static bool ItemFilter(ItemIndex itemIndex)
         {
             var def = ItemCatalog.GetItemDef(itemIndex);
+            if (def == null) return false;
             if(def.name == "ITEM_ANCIENT_SCEPTER" || def.nameToken == "ITEM_ANCIENT_SCEPTER_NAME")
             {
                 return false;
@@ -116,6 +117,7 @@ namespace EntityStates.NemMerc
             }
             foreach (var item in illegalItems)
             {
+                if (item == null) return false;
                 if(item.itemIndex == itemIndex)
                 {
                     return false;
