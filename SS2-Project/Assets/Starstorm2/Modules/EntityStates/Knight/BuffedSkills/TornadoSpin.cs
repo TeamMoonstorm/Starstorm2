@@ -20,11 +20,11 @@ namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
         private int _origLayer;
 
         public float hopVelocity = new SpinUtility().hopVelocity;
-        public float airControl = new SpinUtility().airControl;
-        public float upwardVelocity = new SpinUtility().upwardVelocity;
-        public float forwardVelocity = new SpinUtility().forwardVelocity + 1f;
-        public float minimumY = new SpinUtility().minimumY;
-        public float aimVelocity = new SpinUtility().aimVelocity;
+        public float airControl = 1f; // new SpinUtility().airControl;
+        public float upwardVelocity = 1f; // SpinUtility().upwardVelocity;
+        public float forwardVelocity = 1f; // SpinUtility().forwardVelocity + 1f;
+        public float minimumY = 1f; // SpinUtility().minimumY;
+        public float aimVelocity = 1f; // SpinUtility().aimVelocity;
 
         public override void OnEnter()
         {

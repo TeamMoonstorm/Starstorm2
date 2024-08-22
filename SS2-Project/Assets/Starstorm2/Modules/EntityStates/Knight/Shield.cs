@@ -92,7 +92,7 @@ namespace EntityStates.Knight
                 return;
             }
 
-            if (msg.attacker != msg.victim && msg.victim == base.characterBody)
+            if (msg.attacker != msg.victim && msg.victim == base.characterBody.gameObject)
             {
                 // TODO: Use body index
                 // We want to ensure that Knight is the one taking damage
