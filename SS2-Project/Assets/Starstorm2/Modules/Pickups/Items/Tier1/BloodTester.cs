@@ -24,7 +24,7 @@ namespace SS2.Items
         [FormatToken(token, 1)]
         public static float healthRegen = 10f;
 
-        public static float buffDuration = 2f;
+        public static float buffDuration = 1f;
 
         public override void Initialize()
         {

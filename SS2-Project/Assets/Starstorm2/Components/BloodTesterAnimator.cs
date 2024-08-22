@@ -25,7 +25,11 @@ namespace SS2.Components
 		private void SetStage(int i)
         {
 			if (currentStage == i) return;
-			if (i > currentStage) stageUpEffectSystem.Play();
+			if (i > currentStage)
+			{
+				stageUpEffectSystem.Play();
+				Util.PlaySound("ActivateBloodTester", RoR2Application.instance.gameObject);
+			}
 			currentStage = i;
 			ParticleSystem.EmissionModule emission = healEffectSystem.emission;
 			switch (currentStage)
