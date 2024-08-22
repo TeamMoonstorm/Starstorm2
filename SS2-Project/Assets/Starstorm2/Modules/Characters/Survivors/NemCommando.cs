@@ -96,13 +96,17 @@ namespace SS2.Survivors
                     dotIndex = GougeDotIndex,
                     duration = gougeDuration,
                     damageMultiplier = 1,
-                    maxStacksFromAttacker = 5,
+                    //maxStacksFromAttacker = 5,
                 };
                 DotController.InflictDot(ref dotInfo);
 
                 // refresh stack timers
-                
-                DotController dotController = DotController.FindDotController(victimBody.gameObject);
+                //★ it is war.
+
+                // just to restate- i feel like this would be best on m2/special as a way to bring the whole kit together rather than just m1 doing lots of work?
+                // i like nemcommando just being a 'plain' generalist rather than having a specific gimmick he's trying to hone in on...
+
+                /*DotController dotController = DotController.FindDotController(victimBody.gameObject);
                 if (!dotController) return;
                 int j = 0;
                 List<DotController.DotStack> dotStackList = dotController.dotStackList;
@@ -113,7 +117,7 @@ namespace SS2.Survivors
                         dotStackList[j].timer = Mathf.Max(dotStackList[j].timer, gougeDuration);
                     }
                     j++;
-                }
+                }*/
             }
         }
 
