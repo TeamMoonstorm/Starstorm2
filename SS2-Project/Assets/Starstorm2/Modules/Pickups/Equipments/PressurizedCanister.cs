@@ -64,7 +64,8 @@ namespace SS2.Equipments
 
             private void RemoveBuff(ref CharacterMotor.HitGroundInfo hitGroundInfo)
             {
-                CharacterBody.RemoveBuff(SS2Content.Buffs.bdCanJump.buffIndex);
+                FriendManager.instance.RpcRemoveBuff(CharacterBody, SS2Content.Buffs.bdCanJump); // jank ultra lazy fix. clients can probably spam for a few frames but at least its not permanent
+                //CharacterBody.RemoveBuff(SS2Content.Buffs.bdCanJump.buffIndex);
             }
 
             protected override void OnAllStacksLost()

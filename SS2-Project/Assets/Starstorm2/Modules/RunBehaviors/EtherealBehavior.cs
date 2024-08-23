@@ -310,7 +310,8 @@ namespace SS2.Components
                 TeleporterUpgradeController tuc = self.teleporterInstance.GetComponent<TeleporterUpgradeController>();
 
                 //if tuc exists & adversity doesn't force ethereal
-                if (tuc != null && !((currStage == "skymeadow" || currStage == "slumbersatellite") && RunArtifactManager.instance.IsArtifactEnabled(SS2Content.Artifacts.Adversity)))
+                bool adversity = !RunArtifactManager.instance || (RunArtifactManager.instance && RunArtifactManager.instance.IsArtifactEnabled(SS2Content.Artifacts.Adversity));
+                if (tuc != null && !((currStage == "skymeadow" || currStage == "slumbersatellite") && adversity))
                 {
                     tuc.isEthereal = false;
                 }

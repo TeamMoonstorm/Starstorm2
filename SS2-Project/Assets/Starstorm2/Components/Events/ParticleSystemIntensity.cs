@@ -16,7 +16,7 @@ namespace SS2.Components
         private ParticleSystemState currentState;
         private ParticleSystem.EmissionModule em;
         private ParticleSystem.MainModule main;
-        private void Start()
+        private void Awake()
         {
             if (!particleSystem) particleSystem = base.GetComponent<ParticleSystem>();
             em = particleSystem.emission;

@@ -138,7 +138,6 @@ GameObject:
   - component: {fileID: 8463919236448585137}
   - component: {fileID: 1874181878979617370}
   - component: {fileID: 7840323801700655401}
-  - component: {fileID: 1732425151898561710}
   m_Layer: 0
   m_Name: AshstormEffect
   m_TagString: Untagged
@@ -228,22 +227,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trackAfterStart: 1
   rotationSpeed: 30
---- !u!114 &1732425151898561710
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1137181066004254477}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6c2065f12b707b41a72f36de2341ec2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  particleSystems:
-  - {fileID: 4154075717281159972}
-  - {fileID: 4965151871618917352}
-  - {fileID: 1928340251751075860}
 --- !u!1 &4024743127604628855
 GameObject:
   m_ObjectHideFlags: 0

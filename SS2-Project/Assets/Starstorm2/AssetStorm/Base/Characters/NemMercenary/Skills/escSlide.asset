@@ -19,7 +19,7 @@ MonoBehaviour:
     serializedFields:
     - fieldName: baseDuration
       fieldValue:
-        stringValue: 1.5
+        stringValue: 1.25
         objectValue: {fileID: 0}
     - fieldName: forwardSpeedCurve
       fieldValue:
@@ -43,7 +43,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: forwardSpeedCurveCoefficient
       fieldValue:
-        stringValue: 3.2
+        stringValue: 5
         objectValue: {fileID: 0}
     - fieldName: smoothTime
       fieldValue:
@@ -51,5 +51,9 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: airFrictionCoefficient
       fieldValue:
-        stringValue: 0.4
+        stringValue: 0.6
+        objectValue: {fileID: 0}
+    - fieldName: movespeedScalingCoefficient
+      fieldValue:
+        stringValue: 1
         objectValue: {fileID: 0}

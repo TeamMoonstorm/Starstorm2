@@ -9865,7 +9865,6 @@ GameObject:
   - component: {fileID: 7035464290839991890}
   - component: {fileID: 8542691989755731976}
   - component: {fileID: 114564971496236892}
-  - component: {fileID: 6455119106176264345}
   - component: {fileID: 4682113249260629814}
   - component: {fileID: 4852845609287999883}
   m_Layer: 0
@@ -9928,24 +9927,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trackAfterStart: 1
   rotationSpeed: 30
---- !u!114 &6455119106176264345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2822430398392994740}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6c2065f12b707b41a72f36de2341ec2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  particleSystems:
-  - {fileID: 4546164003638258832}
-  - {fileID: 2033726481924504016}
-  - {fileID: 1244506987083849629}
-  - {fileID: 7783519829385242449}
-  - {fileID: 8253560417517069035}
 --- !u!114 &4682113249260629814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9960,7 +9941,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cookie: {fileID: 8600000, guid: 8289dbea6c9a09649a6c01dfc2c72e6e, type: 2}
   minimumIntensity: 0
-  breakpoints: []
+  breakpoints:
+  - requiredIntensity: 0
+    alphaBias: 1
+  - requiredIntensity: 1
+    alphaBias: 0.5
+  - requiredIntensity: 2
+    alphaBias: 0.3
+  - requiredIntensity: 3
+    alphaBias: 0.1
+  - requiredIntensity: 4
+    alphaBias: 0
 --- !u!114 &4852845609287999883
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ namespace AK
 {
     namespace EVENTS
     {
+        static const AkUniqueID ACTIVATEBLOODTESTER = 4040666791U;
         static const AkUniqueID AUGURY = 202915568U;
         static const AkUniqueID CHIRRDASHSTART = 874728115U;
         static const AkUniqueID CHIRRFIREPRIMARY = 1172202385U;
@@ -121,9 +122,11 @@ namespace AK
         static const AkUniqueID PLAY_NEMMERC_UTILITY_EXIT = 3128507003U;
         static const AkUniqueID PLAY_SOFT_RAIN = 263522455U;
         static const AkUniqueID PLAY_SS2_MUSIC_SYSTEM = 3480457898U;
+        static const AkUniqueID PROCAMULET = 3464571447U;
         static const AkUniqueID PROCERRATICGADGETCHAIN = 3050313720U;
         static const AkUniqueID PROCERRATICGADGETLIGHTNING = 3125516253U;
         static const AkUniqueID PROCLIGHTNINGONKILL = 3105193662U;
+        static const AkUniqueID PROCSPEAKER = 2402360908U;
         static const AkUniqueID PROCTREMATODES = 1520542387U;
         static const AkUniqueID REFABRICATORACTION = 2808251015U;
         static const AkUniqueID REMUNERATIONSPAWN = 159540939U;

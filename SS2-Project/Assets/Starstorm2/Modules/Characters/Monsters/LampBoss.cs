@@ -11,10 +11,10 @@ namespace SS2.Monsters
     public sealed class LampBoss : SS2Monster
     {
         public override SS2AssetRequest<MonsterAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<MonsterAssetCollection>("acLampBoss", SS2Bundle.Monsters);
+
+        private static BodyIndex BodyIndex;
         public override void Initialize()
         {
-            On.RoR2.CharacterBody.AddBuff_BuffDef += CharacterBody_AddBuff_BuffDef;
-
             //N: i hate that people want to disable the boss's item but keep the boss, it doesnt make any fucking sense imo. Either that or i'm just schizo. Either way item disabling the way prod did it is not really feasable i think rn so i'll just comment this out
             
             /*var lampItem = SS2Assets.LoadAsset<ItemDef>("ShackledLamp", SS2Bundle.Items);
@@ -49,39 +49,26 @@ namespace SS2.Monsters
                 MonsterDirectorCards.Add(defaultCard);
                 Debug.Log("You stand alone in the dark. - " + moonPhase);
             }*/
+
+            RoR2Application.onLoad += () => BodyIndex = BodyCatalog.FindBodyIndex("LampBossBody");
+            R2API.RecalculateStatsAPI.GetStatCoefficients += GetStatCoefficients;
         }
 
-        public sealed class LampBuffBehavior : BaseBuffBehaviour, IBodyStatArgModifier
+        private void GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
-            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            if (sender.HasBuff(SS2Content.Buffs.bdLampBuff) && sender.bodyIndex != BodyIndex)
             {
-                if (HasAnyStacks && CharacterBody.bodyIndex != BodyCatalog.FindBodyIndex("LampBossBody"))
-                {
-                    args.primaryCooldownMultAdd += 0.5f;
-                    args.secondaryCooldownMultAdd += 0.25f;
-                    args.damageMultAdd += 0.2f;
-                    args.moveSpeedMultAdd += 1.5f;
-                }
-            }
-
-            // TODO: Hey nebby should we add override keyword here?
-            public void OnDestroy()
-            {
-                CharacterBody.RecalculateStats();
+                args.primaryCooldownMultAdd += 0.5f;
+                args.secondaryCooldownMultAdd += 0.25f;
+                args.damageMultAdd += 0.2f;
+                args.moveSpeedMultAdd += 1.5f;
             }
         }
+
 
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-        private static void CharacterBody_AddBuff_BuffDef(On.RoR2.CharacterBody.orig_AddBuff_BuffDef orig, CharacterBody self, BuffDef buffDef)
-        {
-            //wayfarer can't buff itself/other wayfarers
-            if (buffDef == SS2Content.Buffs.bdLampBuff && self.bodyIndex == BodyCatalog.FindBodyIndex("LampBossBody"))
-                return;
-            orig(self, buffDef);
         }
 
         [Serializable]

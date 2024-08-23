@@ -146,7 +146,7 @@ namespace SS2.Components
             if (etherealsCompleted > 0)
                 chance = (25f + 10f * (etherealsCompleted - 1)) * Mathf.Pow(0.5f, consecutiveSkips);
             bool doSkip = Util.CheckRoll(chance);
-            return Util.CheckRoll(chance);
+            return doSkip;
         }
 
         private void OnDestroy()
