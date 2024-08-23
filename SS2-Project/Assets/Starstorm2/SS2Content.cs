@@ -122,6 +122,9 @@ namespace SS2
                 new Bandit(),
                 new Railgunner(),
                 new Engineer(),
+                new Captain(),
+                new Huntress(),
+                new Merc(),
                 //new VoidFiend(),
                 //Add the rest
               };
@@ -192,11 +195,11 @@ namespace SS2
                 Events.Init,
                 //Bulwark.Init,
                 Components.StarstormBehavior.Init,
-                Components.EtherealBehavior.Init,
+                //Components.EtherealBehavior.Init,
                 Components.VoidBehavior.Init,
                 //Void.Init,
                 Storm.Init,
-                RulebookEnabler.Init,
+                //RulebookEnabler.Init,
                 () =>
                 {
                     //new Modules.Scenes().Initialize();

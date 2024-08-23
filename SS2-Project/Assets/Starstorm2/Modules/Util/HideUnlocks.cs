@@ -9,11 +9,13 @@ namespace SS2
 {
     public class HideUnlocks
     {
-        public static UnlockableDef[] unlockableDefs = SS2Assets.LoadAllAssets<UnlockableDef>(SS2Bundle.All);
+        public static UnlockableDef[] unlockableDefs;
         public static void Hook()
         {
             //character unlocks
             On.RoR2.CharacterSelectBarController.Awake += CharacterSelectBarController_Awake;
+
+            unlockableDefs = SS2Assets.LoadAllAssets<UnlockableDef>(SS2Bundle.All);
 
             //skins/skills
             On.RoR2.UI.LoadoutPanelController.Row.AddButton += Row_AddButton;
@@ -32,16 +34,23 @@ namespace SS2
 
         private static void Row_AddButton(On.RoR2.UI.LoadoutPanelController.Row.orig_AddButton orig, object self, LoadoutPanelController owner, Sprite icon, string titleToken, string bodyToken, Color tooltipColor, UnityEngine.Events.UnityAction callback, string unlockableName, ViewablesCatalog.Node viewableNode, bool isWIP)
         {
-            foreach (UnlockableDef ud in unlockableDefs)
+            //the implication of this is that any skin with the tokens below are automatically hidden if not unlocked
+            if (titleToken.Contains("SS2_SKIN") && titleToken.Contains("ALT"))
             {
-                //the implication of this is that any skin with the token below is automatically hidden
-                if (unlockableName == ud.nameToken && unlockableName.Contains("SS2_ACHIEVEMENT_RECOLOR"))
+                foreach (UnlockableDef ud in SS2Assets.LoadAllAssets<UnlockableDef>(SS2Bundle.Vanilla))
                 {
-                    bool unlocked = LocalUserManager.readOnlyLocalUsersList.Any((LocalUser localUser) => localUser.userProfile.HasUnlockable(ud));
-                    if (!unlocked) return;
+                    Debug.Log("unlockabledef " + ud.nameToken);
+                    Debug.Log("unlockable " + titleToken);
+
+                    //★ OMFG I HATE IT
+                    if (titleToken == ud.nameToken)
+                    {
+
+                        bool unlocked = LocalUserManager.readOnlyLocalUsersList.Any((LocalUser localUser) => localUser.userProfile.HasUnlockable(ud));
+                        if (!unlocked) return;
+                    }
                 }
             }
-            
             orig(self, owner, icon, titleToken, bodyToken, tooltipColor, callback, unlockableName, viewableNode, isWIP);
         }
     }

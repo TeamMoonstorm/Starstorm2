@@ -48,7 +48,8 @@ namespace SS2.Survivors
             ModifyProjectiles();
             CreatePod();
 
-            characterBody.preferredPodPrefab = nemesisPodPrefab;
+            //characterBody.preferredPodPrefab = nemesisPodPrefab;
+            // https://tenor.com/view/larry-david-unsure-uncertain-cant-decide-undecided-gif-3529136
         }
 
         private void TakeDamageGouge(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)

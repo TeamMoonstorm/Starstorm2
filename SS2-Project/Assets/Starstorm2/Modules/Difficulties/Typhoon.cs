@@ -21,7 +21,6 @@ namespace SS2
             sdd = DifficultyDef;
         }
 
-
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
