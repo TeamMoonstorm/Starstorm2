@@ -1,0 +1,129 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: matVoidPillarSet
+  m_Shader: {fileID: 4800000, guid: 9a79fb5f80d888f4c9cdb96589ecde54, type: 2}
+  m_ShaderKeywords: BINARYBLEND
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _DirtNormalTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DirtTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 47d22a05745597d458131e98e0109ade, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalTex:
+        m_Texture: {fileID: 2800000, guid: 14311a30433228d43a158341ed20340b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SnowNormalTex:
+        m_Texture: {fileID: 2800000, guid: 14311a30433228d43a158341ed20340b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SnowTex:
+        m_Texture: {fileID: 2800000, guid: 4d56bd4ac913c3b47ab17305e53b2362, type: 3}
+        m_Scale: {x: 5, y: 5}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _BinaryBlendOn: 1
+    - _BlueChannelBias: 0
+    - _BlueChannelSmoothness: 0
+    - _BumpScale: 1
+    - _ColorsOn: 0
+    - _Cull: 2
+    - _Cutoff: 0.5
+    - _DecalLayer: 0
+    - _Depth: 0.709
+    - _DetailNormalMapScale: 1
+    - _DirtBias: -2
+    - _DirtOn: 0
+    - _DirtSmoothness: 0
+    - _DirtSpecularExponent: 1
+    - _DirtSpecularStrength: 0
+    - _DitherOn: 0
+    - _DstBlend: 0
+    - _EliteBrightnessMax: 1
+    - _EliteBrightnessMin: 0
+    - _EliteIndex: 0
+    - _EmPower: 0
+    - _EnableCutout: 0
+    - _FEON: 0
+    - _Fade: 1
+    - _FadeBias: 0
+    - _FlowEmissionStrength: 1
+    - _FlowHeightBias: 0
+    - _FlowHeightPower: 1
+    - _FlowMaskStrength: 0
+    - _FlowNormalStrength: 1
+    - _FlowSpeed: 1
+    - _FlowTextureScaleFactor: 1
+    - _FlowmapOn: 0
+    - _ForceSpecOn: 0
+    - _FresnelBoost: 1
+    - _FresnelPower: 1
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _GradientBiasOn: 0
+    - _GreenChannelBias: 0
+    - _GreenChannelSmoothness: 0
+    - _IgnoreBiasOn: 0
+    - _LimbPrimeMask: 1
+    - _LimbRemovalOn: 0
+    - _Metallic: 0
+    - _Mode: 0
+    - _NormalStrength: 0.805
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _PrintBias: 0
+    - _PrintBoost: 1
+    - _PrintDirection: 0
+    - _PrintEmissionToAlbedoLerp: 0
+    - _PrintOn: 0
+    - _RampInfo: 0
+    - _SliceAlphaDepth: 0.1
+    - _SliceBandHeight: 1
+    - _SliceHeight: 5
+    - _Smoothness: 0.155
+    - _SmoothnessTextureChannel: 0
+    - _SnowBias: 0.3
+    - _SnowOn: 0
+    - _SnowSmoothness: 0.234
+    - _SnowSpecularExponent: 0.6
+    - _SnowSpecularStrength: 0.437
+    - _SpecularExponent: 0.7
+    - _SpecularHighlights: 1
+    - _SpecularStrength: 0.175
+    - _SplatmapOn: 0
+    - _SplatmapTileScale: 1
+    - _SrcBlend: 1
+    - _TriplanarOn: 0
+    - _TriplanarTextureFactor: 0.922
+    - _UVSec: 0
+    - _VertexColorOn: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _EmColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FlashColor: {r: 0, g: 0, b: 0, a: 1}
+    - _GradientBiasVector: {r: 0, g: 0, b: 0, a: 0}

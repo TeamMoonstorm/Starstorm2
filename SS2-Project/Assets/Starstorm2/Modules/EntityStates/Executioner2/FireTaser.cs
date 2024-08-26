@@ -145,24 +145,33 @@ namespace EntityStates.Executioner2
                     {
                         Ray aimRay = base.GetAimRay();
                         var aimVector = aimRay.direction;
+                        aimVector.y -= UnityEngine.Random.Range(-.125f, -.05f);
                         Vector3 axis = Vector3.Cross(Vector3.up, aimVector);
+
                         float x = UnityEngine.Random.Range(0, 5f); //maxspread
                         float z = UnityEngine.Random.Range(0f, 360f);
                         Vector3 vector = Quaternion.Euler(0f, 0f, z) * (Quaternion.Euler(x, 0f, 0f) * Vector3.forward);
                         float y = vector.y;
                         vector.y = 0f;
+
                         float angle = (Mathf.Atan2(vector.z, vector.x) * 57.29578f - 90f) * 5; //spreadYawScale
                         float angle2 = Mathf.Atan2(y, vector.magnitude) * 57.29578f;
                         var finalVec = (Quaternion.AngleAxis(angle, Vector3.up) * (Quaternion.AngleAxis(angle2, axis) * aimVector));
 
-                        Vector3 ray = new Ray(gameObject.transform.position, finalVec).GetPoint(attackRange);
-                        var casts = Physics.RaycastAll(new Ray(aimRay.origin, aimVector), attackRange, (LayerIndex.world.mask | LayerIndex.entityPrecise.mask));
+                        Vector3 ray = new Ray(gameObject.transform.position, finalVec).GetPoint(attackRange * .95f);
+                        var casts = Physics.RaycastAll(new Ray(aimRay.origin, aimVector), attackRange * .95f, (LayerIndex.world.mask | LayerIndex.entityPrecise.mask));
 
                         //Debug.Log("aimRay.direction: " + aimRay.direction);
+                        //bool groundHit = false;
                         if(casts.Length > 0)
                         {
                             ray = casts[0].point;
-                            //Debug.Log("Overriding with " + ray + " | " + casts[0].point);
+                            Debug.Log("Overriding with " + ray + " | " + casts[0].point);
+                            //groundHit = true;
+                        }
+                        else
+                        {
+                            Debug.Log("Didnt overide!");
                         }
 
                         ExecutionerTaserOrb taserOrb = new ExecutionerTaserOrb();
@@ -180,6 +189,7 @@ namespace EntityStates.Executioner2
                         taserOrb.damageType = DamageType.Generic;
                         taserOrb.targetPosition = ray;
                         taserOrb.attackerAimVector = aimRay.direction;
+                        //taserOrb.groundHit = groundHit;
                         OrbManager.instance.AddOrb(taserOrb);
                     }
                 }
