@@ -22,7 +22,7 @@ namespace SS2.Survivors
 
         public override void Initialize()
         {
-            SteppedSkillDef sdDeadeye = survivorAssetCollection.FindAsset<SteppedSkillDef>("sdDeadeye");
+            /*SteppedSkillDef sdDeadeye = survivorAssetCollection.FindAsset<SteppedSkillDef>("sdDeadeye");
             SkillDef sdDirtbomb = survivorAssetCollection.FindAsset<SkillDef>("sdDirtbomb");
 
             GameObject commandoBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/CommandoBody.prefab").WaitForCompletion();
@@ -45,7 +45,7 @@ namespace SS2.Survivors
             {
                 skillDef = sdDirtbomb,
                 viewableNode = new ViewablesCatalog.Node(sdDirtbomb.skillNameToken, false, null)
-            };
+            };*/
         }
 
         public override bool IsAvailable(ContentPack contentPack)

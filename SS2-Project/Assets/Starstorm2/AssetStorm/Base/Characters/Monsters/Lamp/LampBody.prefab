@@ -234,7 +234,7 @@ MonoBehaviour:
   bodyFlags: 0
   rootMotionInMainState: 0
   mainRootSpeed: 0
-  baseMaxHealth: 70
+  baseMaxHealth: 90
   baseRegen: 0
   baseMaxShield: 0
   baseMoveSpeed: 6
@@ -248,7 +248,7 @@ MonoBehaviour:
   baseJumpCount: 1
   sprintingSpeedMultiplier: 3
   autoCalculateLevelStats: 1
-  levelMaxHealth: 21
+  levelMaxHealth: 27
   levelRegen: 0
   levelMaxShield: 0
   levelMoveSpeed: 0
@@ -1566,6 +1566,7 @@ MonoBehaviour:
   body: {fileID: 8276266455115842702}
   itemDisplayRuleSet: {fileID: 11400000, guid: 8352d99791dc8e74d9d29f0720bf355f, type: 2}
   autoPopulateLightInfos: 1
+  gameObjectActivationTransforms: []
   baseRendererInfos:
   - renderer: {fileID: 5852362786677278672}
     defaultMaterial: {fileID: 2100000, guid: e28e456ddede81e40a592db1d72cea44, type: 2}

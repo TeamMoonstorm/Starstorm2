@@ -182,7 +182,7 @@ namespace SS2.Components
                     followerSummon.masterPrefab = Monsters.Lamp._masterPrefab;
                     followerSummon.summonerBodyObject = cb.gameObject;
                     var followerMaster = followerSummon.Perform();
-                    SS2Log.Debug("Summoned Follower");
+                    SS2Log.Info("Summoned Follower");
                     fastCombatDirector.monsterCredit -= followerCost;
                     minionCredit -= followerCost;
                     if (followerMaster)

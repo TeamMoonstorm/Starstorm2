@@ -51,7 +51,7 @@ namespace SS2.Survivors
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return true;
+            return false;
         }
 
         private void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
@@ -82,6 +82,7 @@ namespace SS2.Survivors
 
             if (self.body.baseNameToken == "SS2_PYRO_NAME")
             {
+                //needs redone
                 if (self.body.HasBuff(RoR2Content.Buffs.OnFire) || self.body.HasBuff(DLC1Content.Buffs.StrongerBurn))
                 {
                     self.body.SetBuffCount(RoR2Content.Buffs.OnFire.buffIndex, 0);
