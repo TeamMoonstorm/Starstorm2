@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: matSphereFog
+  m_Name: matSphereFogSnow
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
   m_ShaderKeywords: CLOUDOFFSET FADECLOSE USE_CLOUDS
   m_LightmapFlags: 4
@@ -37,7 +37,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _AlphaBias: 0
-    - _AlphaBoost: 1.2
+    - _AlphaBoost: 0.8
     - _Boost: 1
     - _BumpScale: 1
     - _CalcTextureAlphaOn: 0
@@ -49,7 +49,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DisableRemapOn: 0
     - _DistortionStrength: 0.21
-    - _DstBlend: 10
+    - _DstBlend: 1
     - _ExternalAlpha: 1
     - _Fade: 1
     - _FadeCloseDistance: 0.5
@@ -81,4 +81,4 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _CutoffScroll: {r: 0.12, g: 0.12, b: 0.03, a: 0.03}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _TintColor: {r: 0.1792453, g: 0.1792453, b: 0.1792453, a: 1}
+    - _TintColor: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
