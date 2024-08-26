@@ -4,15 +4,15 @@ using UnityEngine.SceneManagement;
 using RoR2;
 namespace SS2
 {
-    // technically we can just throw any rpc methods in here????????? does that really work???????????????? that feels fucking stupid?????????????????????????????????
-    public class FriendManager : NetworkBehaviour
-    {
+	// technically we can just throw any rpc methods in here????????? does that really work???????????????? that feels fucking stupid?????????????????????????????????
+	public class FriendManager : NetworkBehaviour
+	{
 		public static FriendManager instance;
 		[SystemInitializer]
 		private static void Init()
 		{
 			Run.onRunStartGlobal += (run) =>
-			{				
+			{
 				//if (!NetworkServer.active) return; // ???
 				instance = UnityEngine.Object.Instantiate<GameObject>(SS2Assets.LoadAsset<GameObject>("FriendManager", SS2Bundle.Chirr), run.transform).GetComponent<FriendManager>();
 				NetworkServer.Spawn(instance.gameObject);
@@ -43,25 +43,5 @@ namespace SS2
 			}
 
 		}
-
-		// ok we are putting any method we want here now
-		[ClientRpc]
-		public void RpcRemoveBuff(CharacterBody body, BuffDef buff)
-        {
-			RemoveBuffInternal(body, buff.buffIndex);
-        }
-
-		[ClientRpc]
-		public void RpcRemoveBuff(CharacterBody body, BuffIndex buff)
-		{
-			RemoveBuffInternal(body, buff);
-		}
-
-		// feel free to add stacks param if anyone needs it
-		[Server]
-		private void RemoveBuffInternal(CharacterBody body, BuffIndex buffIndex)
-        {
-			body.RemoveBuff(buffIndex);
-        }
 	}
 }

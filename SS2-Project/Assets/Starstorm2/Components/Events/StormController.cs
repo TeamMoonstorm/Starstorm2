@@ -141,6 +141,7 @@ namespace SS2.Components
         // TODO: Stage cooldown on skipping the initial "calm" level
         public bool AttemptSkip(int consecutiveSkips = 0)
         {
+            if (!EtherealBehavior.instance) return false; // ????????? todo: fix shitty ethereal behavior
             float chance = 0;
             int etherealsCompleted = EtherealBehavior.instance.etherealsCompleted;
             if (etherealsCompleted > 0)

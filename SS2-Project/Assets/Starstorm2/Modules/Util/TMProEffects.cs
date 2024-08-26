@@ -112,7 +112,7 @@ namespace SS2
                 {
                     textChanged = true;
                     // dumb fucking hack. textmeshpro is buggy as shit. wont work if both old and new text have links 
-                    if(this.enabled && textComponent && !textComponent.text.Contains("textWavy") && !textComponent.text.Contains("textShaky"))
+                    if(this.enabled && textComponent && textComponent.textInfo != null && textComponent.textInfo.linkInfo != null && !textComponent.text.Contains("textWavy") && !textComponent.text.Contains("textShaky"))
                     {
                         this.textComponent.textInfo.linkInfo = new TMPro.TMP_LinkInfo[0]; // fuck tmpro wtf is this. linkinfos never get cleared when text changes
                         this.enabled = false;

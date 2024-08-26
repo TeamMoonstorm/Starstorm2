@@ -52,7 +52,6 @@ namespace SS2.Items
             // this will interfere with other bonus jump items but they can be unified in a similar way to this
             IL.RoR2.CharacterBody.RecalculateStats += RecalculateStatsHook; // recalculatestatsapi doesnt have maxjumpcount
             IL.EntityStates.GenericCharacterMain.ProcessJump += ProcessJumpHook;
-            On.RoR2.CharacterBody.OnBuffFinalStackLost += RechargeBoots;
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -60,14 +59,8 @@ namespace SS2.Items
             return true;
         }
 
-        private void RechargeBoots(On.RoR2.CharacterBody.orig_OnBuffFinalStackLost orig, CharacterBody self, BuffDef buffDef)
-        {
-            orig(self, buffDef);
-            if (buffDef == SS2Content.Buffs.BuffJetBootsCooldown) self.AddBuff(SS2Content.Buffs.BuffJetBootsReady);
-        }
-
-
         // ALL OF THIS IS TERRIBLE. BANDAIDS ON BANDAIDS. REWRITE FROM SCRATCH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+       // FUCKING CLINET SIDE BUFFS LOL SURELY NOTHING BREAKS
         private void RecalculateStatsHook(ILContext il)
         {
             ILCursor c = new ILCursor(il);
@@ -111,12 +104,9 @@ namespace SS2.Items
 
                     if (buffCount > 0 && body.characterMotor && body.characterMotor.jumpCount >= body.baseJumpCount)
                     {
-                        DoJump(body);
+                        DoJumpAuthority(body);
                         // OOPS i fucked up. tying maxjumpcount to the Ready buff makes it so two jumps are technically "used" here
                         body.characterMotor.jumpCount--; // jank fix to that^^
-                        //body.RemoveBuff(SS2Content.Buffs.BuffJetBootsReady); // LOL DUMBFUCK
-                        FriendManager.instance.RpcRemoveBuff(body, SS2Content.Buffs.BuffJetBootsReady); // this is so fucking bad fuck
-                        // clients can probably spam it for a few frames before the buff is removed on the server. oh well.
                     }
                     //fucked up again. need to always skip feathers if we have buff. (* bignumber) is jank fix
                     return body.baseJumpCount + buffCount * 7165471;
@@ -127,10 +117,11 @@ namespace SS2.Items
                 SS2Log.Fatal("JetBoots.ProcessJumpHook: ILHook failed.");
             }
         }
-        private void DoJump(CharacterBody body)
+        private void DoJumpAuthority(CharacterBody body)
         {
             if (!body.characterMotor) return;
-            //GenericCharacterMain.ApplyJumpVelocity(body.characterMotor, body, 1.5f, 1.5f, false);
+
+            body.SetBuffCount(SS2Content.Buffs.BuffJetBootsReady.buffIndex, 0); // dont care FUCK YOU
 
             Ray footRay = new Ray(body.footPosition, Vector3.down);
             bool hit = Util.CharacterRaycast(body.gameObject, footRay, out RaycastHit hitInfo, 50f, LayerIndex.CommonMasks.bullet, QueryTriggerInteraction.UseGlobal);
@@ -143,6 +134,7 @@ namespace SS2.Items
             EffectManager.SimpleEffect(_effectPrefab, body.footPosition, Quaternion.identity, true);
 
             JetBoots.Behavior behavior = body.GetComponent<JetBoots.Behavior>();
+            if (behavior) behavior.canHaveReadyBuff = false;
             List<Transform> muzzles = behavior ? behavior.GetMuzzleTransforms() : new List<Transform> { body.coreTransform };
             foreach (Transform muzzle in muzzles)
             {
@@ -189,6 +181,8 @@ namespace SS2.Items
             private static ItemDef GetItemDef() => SS2Content.Items.JetBoots;
 
             private List<Transform> muzzleTransforms;
+            public float cooldownTimer;
+            public bool canHaveReadyBuff; // server overwrites client buffs (obviously) so we need to keep giving it back per frame lol
             public List<Transform> GetMuzzleTransforms()
             {
                 if (muzzleTransforms != null) return muzzleTransforms;
@@ -208,24 +202,36 @@ namespace SS2.Items
 
             private void Start()
             {
-                if (!NetworkServer.active) return;
+                if (!this.body.hasEffectiveAuthority) return;
 
-                this.body.AddBuff(SS2Content.Buffs.BuffJetBootsReady);
+                this.body.SetBuffCount(SS2Content.Buffs.BuffJetBootsReady.buffIndex, 1);
+                canHaveReadyBuff = true;
                 if (this.body.characterMotor)
                 {
-                    this.body.characterMotor.onHitGroundServer += (ref CharacterMotor.HitGroundInfo info) =>
+                    this.body.characterMotor.onHitGroundAuthority += (ref CharacterMotor.HitGroundInfo info) =>
                     {
                         // if the jump has been used && the cooldown hasnt been started
                         if (!this.body.HasBuff(SS2Content.Buffs.BuffJetBootsReady) && !this.body.HasBuff(SS2Content.Buffs.BuffJetBootsCooldown))
                         {
-                            int i = 1;
-                            while (i <= jumpCooldown)
-                            {
-                                this.body.AddTimedBuff(SS2Content.Buffs.BuffJetBootsCooldown, i);
-                                i++;
-                            }
+                            this.cooldownTimer = 5f;
+                            canHaveReadyBuff = true;
                         }
+                    
                     };
+                }
+            }
+
+            private void FixedUpdate()
+            {
+                if(this.body.hasEffectiveAuthority)
+                {
+                    cooldownTimer -= Time.fixedDeltaTime;
+                    int stack = Mathf.CeilToInt(cooldownTimer);
+                    if (stack <= 0 && canHaveReadyBuff)
+                    {
+                        body.SetBuffCount(SS2Content.Buffs.BuffJetBootsReady.buffIndex, 1); // :(
+                    }
+                    this.body.SetBuffCount(SS2Content.Buffs.BuffJetBootsCooldown.buffIndex, stack < 0 ? 0 : stack);// dont care stfu fuck you
                 }
             }
 
