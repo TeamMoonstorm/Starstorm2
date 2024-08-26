@@ -57,7 +57,7 @@ namespace SS2.Equipments
         {
         }
 
-        public sealed class BackThrusterBuffBehaviour : BaseBuffBehaviour
+        public sealed class BackThrusterBuffBehaviour : BaseBuffBehaviour, IBodyStatArgModifier
         {
             [BuffDefAssociation]
             private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffBackThruster;
@@ -68,9 +68,11 @@ namespace SS2.Equipments
             private float moveAngle;
             private float lastAngle;
             private float accelCoeff = Equipments.BackThruster.speedCap / (Equipments.BackThruster.accel + 0.00001f);   //Fuck people who put 0 in configs
-            private float cutoff =  maxAngle * Mathf.Deg2Rad;
+            private float cutoff = maxAngle * Mathf.Deg2Rad;
             private void FixedUpdate()
             {
+                if (!HasAnyStacks) return;
+
                 stopwatch += Time.fixedDeltaTime;
                 if (stopwatch > watchInterval)
                 {
@@ -88,12 +90,13 @@ namespace SS2.Equipments
             {
                 args.moveSpeedMultAdd += thrust;
             }
-            public void OnDestroy()
+            protected override void OnAllStacksLost()
             {
                 thrust = 0f;
                 lastAngle = 0f;
                 CharacterBody.RecalculateStats();
             }
+
             private bool CheckAngle()
             {
                 float delta = Mathf.Abs(moveAngle - lastAngle);
