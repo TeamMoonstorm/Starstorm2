@@ -34,10 +34,10 @@ namespace EntityStates.NemCommando
             Idle nextState = new Idle();
             gunSM.SetInterruptState(nextState, InterruptPriority.Skill);
 
-            if(skillLocator.secondary && skillLocator.secondary.skillDef is SS2ReloadSkillDef) // theres better syntax for casting but i stupet :(
+            /*if(skillLocator.secondary && skillLocator.secondary.skillDef is SS2ReloadSkillDef) // theres better syntax for casting but i stupet :(
             {
                 (skillLocator.secondary.skillDef as SS2ReloadSkillDef).SetDelayTimer(skillLocator.secondary, reloadDelay);
-            }
+            }*/
 
             //red default
             swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffect", SS2Bundle.NemCommando);

@@ -24,7 +24,7 @@ namespace SS2.Survivors
 
         public override void Initialize()
         {
-            RegisterArmorCorrison();
+            /*RegisterArmorCorrison();
             R2API.RecalculateStatsAPI.GetStatCoefficients += ModifyStats;
 
             CreateProjectilePrefab();
@@ -41,7 +41,7 @@ namespace SS2.Survivors
             {
                 skillDef = sdCorrodingSpit,
                 viewableNode = new ViewablesCatalog.Node(sdCorrodingSpit.skillNameToken, false, null)
-            };
+            };*/
         }
 
         private void CreateProjectilePrefab()
