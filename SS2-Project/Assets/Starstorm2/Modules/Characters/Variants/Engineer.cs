@@ -96,6 +96,21 @@ namespace SS2.Survivors
             EngiFocusDamageProc = DamageAPI.ReserveDamageType();
 
             On.RoR2.HealthComponent.TakeDamage += EngiFocusDamageHook;
+            On.RoR2.EffectComponent.Start += StopDoingThat;
+        }
+
+        private void StopDoingThat(On.RoR2.EffectComponent.orig_Start orig, EffectComponent self)
+        {
+            if(self && self.effectData != null && self.effectData.genericFloat == -23)
+            {
+                self.transform.localPosition = self.effectData.origin;
+                self.applyScale = true;
+                Debug.Log("oh my god that's the refrance !!! oh my god !!! i love startstorm !!!!!");
+            }
+            
+
+            orig(self);
+
         }
 
         private void EngiFocusDamageHook(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)

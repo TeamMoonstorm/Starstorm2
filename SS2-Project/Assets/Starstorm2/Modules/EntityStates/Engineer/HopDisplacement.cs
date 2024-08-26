@@ -98,20 +98,29 @@ namespace EntityStates.Engi
 
             EffectData effectDataL = new EffectData
             {
-                origin = muzzleLeft.position - new Vector3(-.325f, 2.1f, -.7f),
-                rotation = muzzleLeft.rotation, //Quaternion.Euler(new Vector3(muzzleLeft.rotation.x + 180, muzzleLeft.rotation.y, muzzleLeft.rotation.z)),
-                rootObject = characterDirection.gameObject,
-                modelChildIndex = 0 //i dunno test it in the morning
+                origin = new Vector3(.5f, 1.25f, -.6f),
+                rotation = Quaternion.Euler(aimRay.direction),
+                //rotation = muzzleLeft.rotation, //Quaternion.Euler(new Vector3(muzzleLeft.rotation.x + 180, muzzleLeft.rotation.y, muzzleLeft.rotation.z)),
+                scale = .5f,
+                rootObject = characterBody.gameObject,
+                modelChildIndex = 2, //i dunno test it in the morning
+                genericFloat = -23,
+                
+                
             };
             effectDataL.SetNetworkedObjectReference(characterDirection.gameObject);
             EffectManager.SpawnEffect(Engineer.engiPrefabExplosion, effectDataL, transmit: true);
 
             EffectData effectDataR = new EffectData
             {
-                origin = muzzleRight.position - new Vector3(.325f, 2.1f, -.7f),
-                rotation = muzzleRight.rotation,//Quaternion.Euler(new Vector3(muzzleRight.rotation.x + 180, muzzleRight.rotation.y, muzzleRight.rotation.z)),
-                rootObject = characterDirection.gameObject,
-                
+                origin = new Vector3(-.5f, 1.25f, -.6f),
+                rotation = Quaternion.Euler(aimRay.direction),
+                //rotation = muzzleRight.rotation,//Quaternion.Euler(new Vector3(muzzleRight.rotation.x + 180, muzzleRight.rotation.y, muzzleRight.rotation.z)),
+                scale = .5f,
+                rootObject = characterBody.gameObject,
+                modelChildIndex = 2,
+                genericFloat = -23
+
             };
             effectDataR.SetNetworkedObjectReference(characterDirection.gameObject);
             EffectManager.SpawnEffect(Engineer.engiPrefabExplosion, effectDataR, transmit: true);
