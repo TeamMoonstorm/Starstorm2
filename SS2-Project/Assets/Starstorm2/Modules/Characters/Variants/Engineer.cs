@@ -20,6 +20,8 @@ namespace SS2.Survivors
         public static ModdedDamageType EngiFocusDamageProc { get; private set; }
         public static BuffDef _buffDefEngiFocused;
 
+        public static GameObject displacementGroundHitbox;
+        public static GameObject engiPrefabExplosion;
         public override void Initialize()
         {
             //_buffDefEngiFocused = survivorAssetCollection.FindAsset<BuffDef>("bdEngiFocused");
@@ -29,9 +31,48 @@ namespace SS2.Survivors
 
             GameObject engiBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Engi/EngiBody.prefab").WaitForCompletion();
 
+
+            var modelTransform  = engiBodyPrefab.GetComponent<ModelLocator>().modelTransform;
+            GameObject groundbox = survivorAssetCollection.FindAsset<GameObject>("HitboxGround");
+            GameObject hopbox = survivorAssetCollection.FindAsset<GameObject>("HitboxHop");
+
+            groundbox.transform.parent = modelTransform;
+            hopbox.transform.parent = modelTransform;
+            groundbox.transform.localPosition = new Vector3(0, 1.5f, 0);
+            hopbox.transform.localPosition = new Vector3(0, 0.65f, -1);
+            groundbox.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            hopbox.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            groundbox.transform.localScale = new Vector3(3.25f, 3.25f, 3.25f);
+            hopbox.transform.localScale = new Vector3(4.25f, 4.25f, 4.25f);
+
+            var hbg1 = modelTransform.gameObject.AddComponent<HitBoxGroup>();
+            hbg1.groupName = "HitboxGround";
+            hbg1.hitBoxes = new HitBox[1];
+            hbg1.hitBoxes[0] = groundbox.GetComponent<HitBox>();
+
+            var hbg2 = modelTransform.gameObject.AddComponent<HitBoxGroup>();
+            hbg2.groupName = "HitboxHop";
+            hbg2.hitBoxes = new HitBox[1];
+            hbg2.hitBoxes[0] = hopbox.GetComponent<HitBox>();
+
+            engiPrefabExplosion = Addressables.LoadAssetAsync<GameObject>("RoR2/Junk/Engi/EngiConcussionExplosion.prefab").WaitForCompletion();
+
+            //engiExplosionLeft = survivorAssetCollection.FindAsset<GameObject>("EngiConcussionExplosion").InstantiateClone("LeftExplosion");
+            //engiExplosionRight = survivorAssetCollection.FindAsset<GameObject>("EngiConcussionExplosion").InstantiateClone("RightExplosion");
+            //engiExplosionLeft.transform.parent = modelTransform;
+            //engiExplosionRight.transform.parent = modelTransform;
+            //
+            //engiExplosionLeft.transform.localPosition = new Vector3(-.325f, 2.1f, -.7f);
+            //engiExplosionRight.transform.localPosition = new Vector3(.325f, 2.1f, -.7f);
+            //engiExplosionLeft.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            //engiExplosionRight.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            //engiExplosionLeft.SetActive(false);
+            //engiExplosionRight.SetActive(false);
+
             SkillLocator skillLocator = engiBodyPrefab.GetComponent<SkillLocator>();
             SkillFamily skillFamilyPrimary = skillLocator.primary.skillFamily;
             SkillFamily skillFamilyUtility = skillLocator.utility.skillFamily;
+
 
             Debug.Log("sdRD: " + sdRapidDisplacement);
 
@@ -55,6 +96,21 @@ namespace SS2.Survivors
             EngiFocusDamageProc = DamageAPI.ReserveDamageType();
 
             On.RoR2.HealthComponent.TakeDamage += EngiFocusDamageHook;
+            On.RoR2.EffectComponent.Start += StopDoingThat;
+        }
+
+        private void StopDoingThat(On.RoR2.EffectComponent.orig_Start orig, EffectComponent self)
+        {
+            if(self && self.effectData != null && self.effectData.genericFloat == -23)
+            {
+                self.transform.localPosition = self.effectData.origin;
+                self.applyScale = true;
+                Debug.Log("oh my god that's the refrance !!! oh my god !!! i love startstorm !!!!!");
+            }
+            
+
+            orig(self);
+
         }
 
         private void EngiFocusDamageHook(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
@@ -69,7 +125,9 @@ namespace SS2.Survivors
                 if (proc && count < 5)
                 {
                     Debug.Log("adding buff ");
+                    SS2Util.RefreshAllBuffStacks(self.body, SS2Content.Buffs.bdEngiFocused, 5);
                     self.body.AddTimedBuffAuthority(SS2Content.Buffs.bdEngiFocused.buffIndex, 5);
+
                 }
                 else if (proc)
                 {
@@ -79,7 +137,7 @@ namespace SS2.Survivors
 
                 if (count > 0)
                 {
-                    damageInfo.damage *= 1 + (count * .1f);
+                    damageInfo.damage *= 1 + (count * .15f);
                 }
             }
             orig(self, damageInfo);
@@ -94,27 +152,6 @@ namespace SS2.Survivors
         {
             [BuffDefAssociation]
             private static BuffDef GetBuffDef() => SS2Content.Buffs.bdEngiFocused;
-
-            //public void OnIncomingDamageOther(HealthComponent victimHealthComponent, DamageInfo damageInfo)
-            //{
-            //    Debug.Log("GRAHH " + EngiFocusDamage + " | " + SS2Content.Buffs.bdEngiFocused);
-            //    if (damageInfo.HasModdedDamageType(EngiFocusDamage))
-            //    {
-            //        int count = victimHealthComponent.body.GetBuffCount(SS2Content.Buffs.bdEngiFocused);
-            //        if (Util.CheckRoll(damageInfo.procCoefficient/2f) && count < 5)
-            //        {
-            //            Debug.Log("adding buff ");
-            //            victimHealthComponent.body.AddTimedBuffAuthority(SS2Content.Buffs.bdEngiFocused.buffIndex, 5);
-            //        }
-            //
-            //        //int count = victimHealthComponent.body.GetBuffCount(SS2Content.Buffs.bdEngiFocused);
-            //        Debug.Log("count " + count);
-            //        if (count > 0)
-            //        {
-            //            damageInfo.damage *= 1 + (count * .1f);
-            //        }
-            //    }
-            //}
         }
     }
 }

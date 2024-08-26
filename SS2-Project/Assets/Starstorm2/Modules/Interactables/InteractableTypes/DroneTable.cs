@@ -48,7 +48,6 @@ namespace SS2.Interactables
             interactionToken.PurchaseInteraction = InteractablePrefab.GetComponent<PurchaseInteraction>();
 
             droneDropTable = ScriptableObject.CreateInstance<DroneTableDropTable>();
-
             SetupDroneValueList();
         }
 

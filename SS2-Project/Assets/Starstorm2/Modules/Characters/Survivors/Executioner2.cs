@@ -21,9 +21,12 @@ namespace SS2.Survivors
     {
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acExecutioner2", SS2Bundle.Executioner2);
 
+        static string path = "Prefabs/Effects/OrbEffects/LightningOrbEffect";
+
         public static GameObject plumeEffect;
         public static GameObject plumeEffectLarge;
-
+        public static GameObject taserVFX;
+        public static GameObject taserVFXFade;
 
         public static BuffDef _buffDefFear;
         public static BuffDef _buffExeMuteCharge;
@@ -59,7 +62,17 @@ namespace SS2.Survivors
             Hook();
             ModifyPrefab();
 
+            taserVFX = LegacyResourcesAPI.Load<GameObject>(path);
+
             IL.RoR2.Orbs.OrbEffect.Start += OrbEffect_Start;
+
+            //On.RoR2.UI.CharacterSelectController.RebuildStrip += CheckForSwitches;
+            //On.RoR2.UI.CharacterSelectController.BuildSkillStripDisplayData += CheckForDisplaySwitch;
+        }
+
+        private void CheckForDisplaySwitch(On.RoR2.UI.CharacterSelectController.orig_BuildSkillStripDisplayData orig, RoR2.UI.CharacterSelectController self, Loadout loadout, ValueType bodyInfo, object dest)
+        {
+            orig(self, loadout, bodyInfo, dest);
         }
 
         private void OrbEffect_Start(ILContext il)
