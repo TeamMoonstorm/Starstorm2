@@ -55,8 +55,9 @@ namespace SS2.Survivors
             hbg2.hitBoxes = new HitBox[1];
             hbg2.hitBoxes[0] = hopbox.GetComponent<HitBox>();
 
-            engiPrefabExplosion = Addressables.LoadAssetAsync<GameObject>("RoR2/Junk/Engi/EngiConcussionExplosion.prefab").WaitForCompletion();
-
+            engiPrefabExplosion = Addressables.LoadAssetAsync<GameObject>("RoR2/Junk/Engi/EngiConcussionExplosion.prefab").WaitForCompletion(); //= PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>("RoR2/Junk/Engi/EngiConcussionExplosion.prefab").WaitForCompletion(), "engiDashExplosion");
+            //GameObject.Destroy(engiPrefabExplosion.GetComponent<EffectComponent>());
+            
             //engiExplosionLeft = survivorAssetCollection.FindAsset<GameObject>("EngiConcussionExplosion").InstantiateClone("LeftExplosion");
             //engiExplosionRight = survivorAssetCollection.FindAsset<GameObject>("EngiConcussionExplosion").InstantiateClone("RightExplosion");
             //engiExplosionLeft.transform.parent = modelTransform;
@@ -101,16 +102,14 @@ namespace SS2.Survivors
 
         private void StopDoingThat(On.RoR2.EffectComponent.orig_Start orig, EffectComponent self)
         {
-            if(self && self.effectData != null && self.effectData.genericFloat == -23)
-            {
-                self.transform.localPosition = self.effectData.origin;
-                self.applyScale = true;
-                Debug.Log("oh my god that's the refrance !!! oh my god !!! i love startstorm !!!!!");
-            }
-            
 
             orig(self);
-
+            if (self && self.effectData != null && self.effectData.genericFloat == -23)
+            {
+                self.transform.localPosition = self.effectData.origin;
+                self.transform.localScale = new Vector3(self.effectData.scale, self.effectData.scale, self.effectData.scale);
+                
+            }
         }
 
         private void EngiFocusDamageHook(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)

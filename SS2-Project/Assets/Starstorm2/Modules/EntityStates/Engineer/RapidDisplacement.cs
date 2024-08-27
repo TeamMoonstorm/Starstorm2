@@ -115,6 +115,17 @@ namespace EntityStates.Engi
                 attack.procChainMask = default(ProcChainMask);
                 attack.procCoefficient = 1;
                 fromDash = true;
+
+                EffectData effectDataL = new EffectData
+                {
+                    origin = new Vector3(0, 0, -.875f),
+                    rotation = modelTransform.rotation,
+                    scale = 1,
+                    rootObject = characterBody.gameObject,
+                    modelChildIndex = 2,
+                    genericFloat = -23
+                };
+                EffectManager.SpawnEffect(Engineer.engiPrefabExplosion, effectDataL, transmit: true);
             }
             count = 1;
 
