@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<WwiseDocument Type="WorkUnit" ID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}" SchemaVersion="97">
+<WwiseDocument Type="WorkUnit" ID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}" SchemaVersion="119">
 	<Effects>
 		<WorkUnit Name="Factory Effects" ID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}" PersistMode="Standalone">
 			<ChildrenList>
@@ -1398,82 +1398,8 @@
 										<Property Name="DecayTime" Type="Real32" Value="4.6"/>
 										<Property Name="Density" Type="Real32" Value="100"/>
 										<Property Name="Diffusion" Type="Real32" Value="53"/>
-										<Property Name="DryLevel" Type="Real32" Value="0">
-											<RTPCList>
-												<RTPC Name="" ID="{2603F212-A22E-449F-9AC3-3A6ECDA26AC8}" ShortID="515434839">
-													<ReferenceList>
-														<Reference Name="ControlInput">
-															<ObjectRef Name="playerhealth" ID="{AE335B17-7031-4B25-90D7-4E16F58D6F32}" WorkUnitID="{4E4C0F5E-9CE9-403D-9E94-4785BD5A6B13}"/>
-														</Reference>
-													</ReferenceList>
-													<Curve Name="" ID="{7309CC44-8C80-487B-B32F-06784C65FDA5}">
-														<PropertyList>
-															<Property Name="Flags" Type="int32" Value="3"/>
-														</PropertyList>
-														<PointList>
-															<Point>
-																<XPos>0</XPos>
-																<YPos>-96.3</YPos>
-																<Flags>5</Flags>
-															</Point>
-															<Point>
-																<XPos>20</XPos>
-																<YPos>-96.3</YPos>
-																<Flags>0</Flags>
-															</Point>
-															<Point>
-																<XPos>50</XPos>
-																<YPos>0</YPos>
-																<Flags>0</Flags>
-															</Point>
-															<Point>
-																<XPos>100</XPos>
-																<YPos>0</YPos>
-																<Flags>37</Flags>
-															</Point>
-														</PointList>
-													</Curve>
-												</RTPC>
-											</RTPCList>
-										</Property>
-										<Property Name="ERLevel" Type="Real32" Value="0">
-											<RTPCList>
-												<RTPC Name="" ID="{1C415249-2212-48B3-956D-A56548EDAD0F}" ShortID="177611256">
-													<ReferenceList>
-														<Reference Name="ControlInput">
-															<ObjectRef Name="playerhealth" ID="{AE335B17-7031-4B25-90D7-4E16F58D6F32}" WorkUnitID="{4E4C0F5E-9CE9-403D-9E94-4785BD5A6B13}"/>
-														</Reference>
-													</ReferenceList>
-													<Curve Name="" ID="{AFDC5D9E-AC2B-43DE-81F2-1264D06CC807}">
-														<PropertyList>
-															<Property Name="Flags" Type="int32" Value="3"/>
-														</PropertyList>
-														<PointList>
-															<Point>
-																<XPos>0</XPos>
-																<YPos>0</YPos>
-																<Flags>5</Flags>
-															</Point>
-															<Point>
-																<XPos>20</XPos>
-																<YPos>0</YPos>
-																<Flags>0</Flags>
-															</Point>
-															<Point>
-																<XPos>50</XPos>
-																<YPos>-96.3</YPos>
-																<Flags>0</Flags>
-															</Point>
-															<Point>
-																<XPos>100</XPos>
-																<YPos>-96.3</YPos>
-																<Flags>37</Flags>
-															</Point>
-														</PointList>
-													</Curve>
-												</RTPC>
-											</RTPCList>
-										</Property>
+										<Property Name="DryLevel" Type="Real32" Value="0"/>
+										<Property Name="ERLevel" Type="Real32" Value="0"/>
 										<Property Name="ERPattern" Type="int32" Value="30"/>
 										<Property Name="Filter1Freq" Type="Real32" Value="490"/>
 										<Property Name="Filter1Gain" Type="Real32" Value="-4.5"/>
@@ -1487,6 +1413,100 @@
 										<Property Name="ReverbLevel" Type="Real32" Value="-19"/>
 										<Property Name="RoomSize" Type="Real32" Value="100"/>
 									</PropertyList>
+									<ObjectLists>
+										<ObjectList Name="RTPC">
+											<Reference>
+												<Local>
+													<RTPC Name="" ID="{2603F212-A22E-449F-9AC3-3A6ECDA26AC8}" ShortID="515434839">
+														<PropertyList>
+															<Property Name="PropertyName" Type="string" Value="DryLevel"/>
+														</PropertyList>
+														<ReferenceList>
+															<Reference Name="ControlInput">
+																<ObjectRef Name="playerhealth" ID="{AE335B17-7031-4B25-90D7-4E16F58D6F32}" WorkUnitID="{4E4C0F5E-9CE9-403D-9E94-4785BD5A6B13}"/>
+															</Reference>
+															<Reference Name="Curve">
+																<Custom>
+																	<Curve Name="" ID="{7309CC44-8C80-487B-B32F-06784C65FDA5}">
+																		<PropertyList>
+																			<Property Name="Flags" Type="int32" Value="3"/>
+																		</PropertyList>
+																		<PointList>
+																			<Point>
+																				<XPos>0</XPos>
+																				<YPos>-96.3</YPos>
+																				<Flags>5</Flags>
+																			</Point>
+																			<Point>
+																				<XPos>20</XPos>
+																				<YPos>-96.3</YPos>
+																				<Flags>0</Flags>
+																			</Point>
+																			<Point>
+																				<XPos>50</XPos>
+																				<YPos>0</YPos>
+																				<Flags>0</Flags>
+																			</Point>
+																			<Point>
+																				<XPos>100</XPos>
+																				<YPos>0</YPos>
+																				<Flags>37</Flags>
+																			</Point>
+																		</PointList>
+																	</Curve>
+																</Custom>
+															</Reference>
+														</ReferenceList>
+													</RTPC>
+												</Local>
+											</Reference>
+											<Reference>
+												<Local>
+													<RTPC Name="" ID="{1C415249-2212-48B3-956D-A56548EDAD0F}" ShortID="177611256">
+														<PropertyList>
+															<Property Name="PropertyName" Type="string" Value="ERLevel"/>
+														</PropertyList>
+														<ReferenceList>
+															<Reference Name="ControlInput">
+																<ObjectRef Name="playerhealth" ID="{AE335B17-7031-4B25-90D7-4E16F58D6F32}" WorkUnitID="{4E4C0F5E-9CE9-403D-9E94-4785BD5A6B13}"/>
+															</Reference>
+															<Reference Name="Curve">
+																<Custom>
+																	<Curve Name="" ID="{AFDC5D9E-AC2B-43DE-81F2-1264D06CC807}">
+																		<PropertyList>
+																			<Property Name="Flags" Type="int32" Value="3"/>
+																		</PropertyList>
+																		<PointList>
+																			<Point>
+																				<XPos>0</XPos>
+																				<YPos>0</YPos>
+																				<Flags>5</Flags>
+																			</Point>
+																			<Point>
+																				<XPos>20</XPos>
+																				<YPos>0</YPos>
+																				<Flags>0</Flags>
+																			</Point>
+																			<Point>
+																				<XPos>50</XPos>
+																				<YPos>-96.3</YPos>
+																				<Flags>0</Flags>
+																			</Point>
+																			<Point>
+																				<XPos>100</XPos>
+																				<YPos>-96.3</YPos>
+																				<Flags>37</Flags>
+																			</Point>
+																		</PointList>
+																	</Curve>
+																</Custom>
+															</Reference>
+														</ReferenceList>
+													</RTPC>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
 								</Effect>
 								<Effect Name="Aluminium_Tank" ID="{0D20C91A-F750-47E0-AE32-00E5F2AA1272}" PluginName="Wwise RoomVerb" CompanyID="0" PluginID="118" PluginType="3">
 									<PropertyList>

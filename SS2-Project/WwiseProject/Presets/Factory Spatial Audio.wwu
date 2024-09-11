@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<WwiseDocument Type="WorkUnit" ID="{F7AD8DCD-60E6-4873-9A71-65A083815696}" SchemaVersion="97">
+<WwiseDocument Type="WorkUnit" ID="{F7AD8DCD-60E6-4873-9A71-65A083815696}" SchemaVersion="119">
 	<Presets>
 		<WorkUnit Name="Factory Spatial Audio" ID="{F7AD8DCD-60E6-4873-9A71-65A083815696}" PersistMode="Standalone">
 			<ChildrenList>
@@ -10,13 +10,23 @@
 						<Property Name="ListenerRelativeRouting" Type="bool" Value="True"/>
 						<Property Name="UseGameAuxSends" Type="bool" Value="True"/>
 					</PropertyList>
-					<ReferenceList>
-						<Reference Name="Effect0">
-							<Custom>
-								<Effect Name="Wwise_RoomVerb_(Custom)" ID="{4AF92620-9CD6-4410-BD1D-ADEF5D6FE936}" PluginName="Wwise RoomVerb" CompanyID="0" PluginID="118" PluginType="3"/>
-							</Custom>
-						</Reference>
-					</ReferenceList>
+					<ObjectLists>
+						<ObjectList Name="Effects">
+							<Reference>
+								<Local>
+									<EffectSlot Name="" ID="{AEAF4225-B8BA-4B2E-82E1-F0E5FB83BC3F}">
+										<ReferenceList>
+											<Reference Name="Effect">
+												<Custom>
+													<Effect Name="Wwise_RoomVerb_(Custom)" ID="{4AF92620-9CD6-4410-BD1D-ADEF5D6FE936}" PluginName="Wwise RoomVerb" CompanyID="0" PluginID="118" PluginType="3"/>
+												</Custom>
+											</Reference>
+										</ReferenceList>
+									</EffectSlot>
+								</Local>
+							</Reference>
+						</ObjectList>
+					</ObjectLists>
 				</AuxBus>
 			</ChildrenList>
 		</WorkUnit>
