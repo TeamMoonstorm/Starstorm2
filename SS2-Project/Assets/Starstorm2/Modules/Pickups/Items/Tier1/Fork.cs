@@ -56,7 +56,7 @@ namespace SS2.Items
                 {
                     float damageFromForks = 0;
                     // dots add a lot of clutter
-                    if (!d.damageType.HasFlag(DamageType.DoT) && t && t.body && t.body.inventory)
+                    if (!d.damageType.damageType.HasFlag(DamageType.DoT) && t && t.body && t.body.inventory)
                     {
                         float bodyDamage = t.body.damage;
                         int stack = t.body.inventory.GetItemCount(SS2Content.Items.Fork);

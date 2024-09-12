@@ -76,7 +76,7 @@ namespace SS2.Equipments
             {
                 CharacterBody.baseJumpCount++;
                 CharacterBody.characterMotor.onHitGroundAuthority += fuck;
-                CharacterBody.characterMotor.onHitGroundServer += RemoveBuff;
+                //CharacterBody.characterMotor.onHitGroundServer += RemoveBuff;
                 hasJumped = false;
             }
 
@@ -101,7 +101,7 @@ namespace SS2.Equipments
 
             protected override void OnAllStacksLost()
             {
-                CharacterBody.characterMotor.onHitGroundServer -= RemoveBuff;
+                //CharacterBody.characterMotor.onHitGroundServer -= RemoveBuff;
                 CharacterBody.characterMotor.onHitGroundAuthority -= fuck;
                 if(!hasJumped)
                     CharacterBody.baseJumpCount--;

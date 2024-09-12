@@ -203,7 +203,7 @@ namespace SS2
         }
 
 
-            [ConCommand(commandName = "one_of_each", flags = ConVarFlags.Cheat, helpText = "Grants one of each item. Format: {itemCount} {itemTier} {itemTag}")]
+        [ConCommand(commandName = "one_of_each", flags = ConVarFlags.Cheat, helpText = "Grants one of each item. Format: {itemCount} {itemTier} {itemTag}")]
         public static void CmdGrantOneOfEachItem(ConCommandArgs args)
         {
             CharacterMaster master = args.GetSenderMaster();
@@ -217,7 +217,7 @@ namespace SS2
             ItemTag argTag = ItemTag.Any;
             if (args.Count > 2) ItemTag.TryParse(args[2], out argTag);
 
-            for (ItemIndex itemIndex = 0; itemIndex < (ItemIndex)ItemCatalog.itemDefs.Length; itemIndex++)
+            for (ItemIndex itemIndex = 0; itemIndex < (ItemIndex)ItemCatalog.allItemDefs.Length; itemIndex++)
             {
                 ItemDef itemDef = ItemCatalog.GetItemDef(itemIndex);
                 bool shouldGive = true;

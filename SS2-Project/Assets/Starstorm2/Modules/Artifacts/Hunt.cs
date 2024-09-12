@@ -22,8 +22,10 @@ namespace SS2.Artifacts
             return false;
         }
 
+        //Why are Stage.Start hooks used? just use the events, that way we dont bother with the IEnumerator return type.
         public override void OnArtifactDisabled()
         {
+            On.RoR2.Stage.Start -= SpawnHunter;
             On.RoR2.Stage.Start -= SpawnHunter;
             On.RoR2.CharacterBody.OnDeathStart -= ReviveHunter;
         }
@@ -34,9 +36,9 @@ namespace SS2.Artifacts
             On.RoR2.CharacterBody.OnDeathStart += ReviveHunter;
         }
 
-        public void SpawnHunter(On.RoR2.Stage.orig_Start orig, Stage self)
+        private IEnumerator SpawnHunter(On.RoR2.Stage.orig_Start orig, Stage self)
         {
-            orig(self);
+            yield return orig(self);
             if (NetworkServer.active)
             {
                 if (self)
@@ -52,6 +54,7 @@ namespace SS2.Artifacts
                     }
                 }
             }
+            yield break;
         }
 
         public void ReviveHunter(On.RoR2.CharacterBody.orig_OnDeathStart orig, CharacterBody self)

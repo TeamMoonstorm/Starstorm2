@@ -223,7 +223,7 @@ namespace SS2
                 () =>
                 {
                     EquipmentModule.AddProvider(main, ContentUtil.CreateContentPieceProvider<EquipmentDef>(main, SS2ContentPack));
-                    return EquipmentModule.InitialzeEquipments(main);
+                    return EquipmentModule.InitializeEquipments(main);
                 },
                 () =>
                 {

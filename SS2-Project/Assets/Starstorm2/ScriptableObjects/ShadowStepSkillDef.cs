@@ -62,7 +62,7 @@ namespace SS2
         public override EntityState InstantiateNextState([NotNull] GenericSkill skillSlot)
         {
 			SerializableEntityStateType state = TargetIsHologram(skillSlot) ? hologramOverrideState : this.activationState;
-			EntityState entityState = EntityStateCatalog.InstantiateState(state);
+			EntityState entityState = EntityStateCatalog.InstantiateState(state.stateType);
 			ISkillState skillState;
 			if ((skillState = (entityState as ISkillState)) != null)
 			{

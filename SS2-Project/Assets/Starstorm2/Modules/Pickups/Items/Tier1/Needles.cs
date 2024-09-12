@@ -48,7 +48,7 @@ namespace SS2.Items
             private static ItemDef GetItemDef() => SS2Content.Items.Needles;
             public void OnIncomingDamageOther(HealthComponent self, DamageInfo damageInfo)
             {
-                if (damageInfo.rejected || damageInfo.damageType.HasFlag(DamageType.DoT)) return;
+                if (damageInfo.rejected || damageInfo.damageType.damageType.HasFlag(DamageType.DoT)) return;
 
                 //needles can only proc once crits are depleted
                 bool hasBuff = self.body.HasBuff(SS2Content.Buffs.BuffNeedleBuildup);

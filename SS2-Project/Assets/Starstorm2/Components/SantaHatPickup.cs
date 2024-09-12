@@ -34,6 +34,11 @@ namespace SS2.Components
             return true;
         }
 
+        public bool ShouldProximityHighlight()
+        {
+            return true;
+        }
+
         public bool ShouldShowOnScanner()
         {
             return false;

@@ -174,7 +174,7 @@ namespace SS2.Items
             // jank ass way to check if lightning was spawned by erratic gadget proc
             // can be un-janked whith proctypeapi
             //hopefully no lightning orbs use FruitOnHit lol
-            bool isSecondStrike = self.damageType.HasFlag(DamageType.FruitOnHit);
+            bool isSecondStrike = self.damageType.damageType.HasFlag(DamageType.FruitOnHit);
             if (isSecondStrike) self.damageType &= ~DamageType.FruitOnHit;
             orig(self);
 
@@ -199,7 +199,7 @@ namespace SS2.Items
         // charged perforator strikes twice
         private void SimpleLightningStrikeOrb_OnArrival(On.RoR2.Orbs.SimpleLightningStrikeOrb.orig_OnArrival orig, SimpleLightningStrikeOrb self)
         {
-            bool isSecondStrike = self.damageType.HasFlag(DamageType.FruitOnHit);
+            bool isSecondStrike = self.damageType.damageType.HasFlag(DamageType.FruitOnHit);
             if (isSecondStrike) self.damageType &= ~DamageType.FruitOnHit;
             orig(self);
 

@@ -171,13 +171,13 @@ namespace SS2.Components
 			return SS2Assets.LoadAsset<GameObject>("ValueHologramContent", SS2Bundle.Interactables);
         }
 
-        public void UpdateHologramContent(GameObject hologramContentObject)
+        public void UpdateHologramContent(GameObject hologramContentObject, Transform viewerBody)
         {
-			ValueHologramContent component = hologramContentObject.GetComponent<ValueHologramContent>();
-			if (component)
-			{
-				component.displayValue = cashoutValue;
-			}
-		}
+            ValueHologramContent component = hologramContentObject.GetComponent<ValueHologramContent>();
+            if (component)
+            {
+                component.displayValue = cashoutValue;
+            }
+        }
     }
 }

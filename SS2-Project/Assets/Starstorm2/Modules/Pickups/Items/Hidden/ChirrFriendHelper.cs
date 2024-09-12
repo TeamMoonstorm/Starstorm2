@@ -89,7 +89,7 @@ namespace SS2.Items
                         EntityStateMachine body = EntityStateMachine.FindByCustomName(base.gameObject, "Body");
                         if (body)
                         {
-                            body.SetNextState(EntityStateCatalog.InstantiateState(body.initialStateType)); // doesnt work every time? idk why
+                            body.SetNextState(EntityStateCatalog.InstantiateState(body.initialStateType.stateType)); // doesnt work every time? idk why
                         }
                     }
 
