@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<WwiseDocument Type="UserProjectSettings" SchemaVersion="97">
+<WwiseDocument Type="UserProjectSettings" SchemaVersion="119">
 	<UserProjectSettingsInfo>
 		<UserProjectSettings Name="" ID="{5E1EE914-4465-408C-886B-AC212BF60AAB}">
 			<PropertyList>
@@ -215,6 +215,7 @@
 				<Property Name="RTPC\GameParameterSimValue\{61D029DC-EBF5-4025-B398-AAFF0378BC38}" Type="Real64" Value="50"/>
 				<Property Name="RTPC\GameParameterSimValue\{6C63E699-94A8-48B8-81A5-39AFAEC39B49}" Type="Real64" Value="50"/>
 				<Property Name="RTPC\GameParameterSimValue\{AE335B17-7031-4B25-90D7-4E16F58D6F32}" Type="Real64" Value="100"/>
+				<Property Name="RemoveUnusedGeneratedFiles" Type="bool" Value="False"/>
 				<Property Name="SoundBank Manager\x64_Expand States" Type="string" Value="RjjtMgYDaUaphG0zZEHODw=="/>
 				<Property Name="SoundBankHeaderFilePath" Type="string" Value="GeneratedSoundBanks\"/>
 				<Property Name="SoundBankPaths" Type="string">
@@ -229,7 +230,7 @@
 				</Property>
 				<Property Name="SoundBankPostGenerateCustomCmdLines" Type="string">
 					<ValueList>
-						<Value Platform="Windows">"$(CopyStreamedFilesExePath)" -info "$(InfoFilePath)" -outputpath "$(SoundBankPath)" -banks "$(SoundBankListAsTextFile)" -languages "$(LanguageList)"</Value>
+						<Value Platform="Windows"></Value>
 					</ValueList>
 				</Property>
 				<Property Name="SoundBankPreGenerateCustomCmdDescription" Type="string">
