@@ -1,11 +1,43 @@
   **Warning: content spoilers below!**
 ### 0.6.8
+### 0.6.8
 * Items / Equipment
     * Various visual improvements to existing items.
     * Added: Broken Blood Tester*, Diary*, Guarding Amulet, Universal Charger, Cryptic Source, Man-o'-War, Strange Can*, Composite Injector, Erratic Gadget*, Simple Magnet, White Flag.
         * Items marked with an asterisk were from a previous version of the mod, but have since been reworked. Details of each item can be found on the mod's wiki.
     * Reworked / Rebalanced: Coffee Bag, Detritive Trematode, Needles, Field Accelerator, Hunter's Sigil, Prototype Jet Boots, Low Quality Speakers, Watch Metronome.
-        * For the sake of brevity, new item effects can be found on the wiki rather than this changelog.
+     * <details>
+       <summary>Full list of changes</summary>
+
+       * (NEW) Broken Blood Tester - Every 30 seconds, rapidly heal for 10 (+10 per stack) health for every 25 gold you currently have. Scales with time.
+       * (NEW) Empty Diary - On each stage, gain 3 levels and consume this item.
+       * (NEW) Guarding Amulet - Reduce damage taken from behind by 30%.
+       * (NEW) Universal Charger - Every 18 seconds (-10% per stack), instantly refresh the cooldown of your next skill.
+       * (NEW) Cryptic Source - Upon ending your sprint, unleash a burst of energy in a 15m (+3m per stack) radius for 250% (+250% per stack) base damage.
+       * (NEW) Man-o'-War - On killing an enemy, create an electric discharge for 200% base damage on up to 3 (+2 per stack) targets within 20m (+4m per stack).
+       * (NEW) Strange Can - 10% (5% per stack) chance on hit to intoxicate an enemy dealing 50% damage per seoond. Intoxicate stacks up to 10 times. Killing enemies heals for 10 (+5 per stack) health per stack of intoxicate.
+       * (NEW) Composite Injector - Gain +1 (+1 per stack) equipment slots. Trigger all of your equipment simultaneously.
+       * (NEW) Erratic Gadget - Your lightning strikes twice. 10% chance on hit to fire chain lightning for 300% TOTAL damage on up to 1(+1 per stack) targets.
+       * (NEW) Simple Magnet - Pull surrounding pickups in a 150m radius towards you.
+       * (NEW) White Flag - Place a white flag that disables skill usage within 25m. Lasts 15 seconds.
+       * (REWORKED) Coffee Bag - 8% chance on hit to drop a coffee bean that grants 8% attack speed and movement speed for 5 (+5 per stack) seconds.
+       * (REWORKED) Needles - 4% chance on hit to guarantee critical strikes on an enemy for the next 3 (+3 per stack) hits.
+       * (REWORKED) Field Accelerator - After defeating the boss, the radius of the Teleporter is increased by 20% (+20% per stack) and killing enemies grants +1% teleporter charge.
+       * (REWORKED) Hunter's Sigil - After standing still for at least 1 second, create an 8m zone granting 20 armor (+10 armor per stack) and 20% increased damage (+10% per stack). The zone lasts until you leave it.
+       * (REWORKED) Prototype Jet Boots - Gain +1 extra jump that ignites enemies for 500% base damage in a 7.5m (+5m per stack) radius. Recharges 5 seconds after landing.
+       * (REWORKED) Low Quality Speakers - Chance when getting hit to stun enemies in a 13m (+7m per stack) radius. Chance starts at 10% and increases with low health.
+       * (ADJUSTED) Detritive Trematode - Health threshold now increases per stack, and the first tick of damage applies instantly. New visuals and sounds
+       * (ADJUSTED) Watch Metronome - Maximum sprint boost is now capped at 80%. Stacks of the item instead increase the duration.
+       * (ADJUSTED) Green Chocolate - Buff no longer stacks. New visuals.
+       * (ADJUSTED) Portable Reactor - Additionally grants +100% movespeed for the duration. New visuals and sounds.
+       * (ADJUSTED) Swift Skateboard - Buff lasts longer, but no longer activates from your primary skill. New visuals.
+       * (ADJUSTED) Cloaking Headband - Invisibility lasts longer.
+       * (MISC) Malice - New visuals.
+       * (MISC) Molten Coin - New sounds.
+       * (MISC) Fork - Bonus damage is now displayed as an extra damage number.
+       * (MISC) Insecticide - New visuals and sounds.
+       </details>
+
 * Interactabes
     * Adjusted spawning weight of drones.
 * Enemies
@@ -13,8 +45,12 @@
     * Hopefully fixed Follower corpse desync on clients for real this time.
     * Slightly increasd health of Follower and Rushrum.
 * Events
+    * Storms have updated visuals, and a new surprise!
+    * An early version of the 0.7 Storm rework is available as a config option (disabled by default).
     * Empyrean event removed - Empyrean elites now are integrated into late-loop director spawns.
-    * Nemesis Invasions ... ??????????????????
+    * Nemesis Invaders now have Adaptive Armor, like Mithrix or Alloy Worship Unit
+    * Nemesis invaders now spawn at a minimum level of 24, and always have at least ~25 items. Don't fight them if you aren't prepared!
+    * Nemesis invaders spawn at the beginning of the stage, every three stages
 * Executioner
     * Reduced base max secondary stocks from 10 to 5. Ideally, this should make the move feel a bit better to use, creating less of a 'hoarding' mindset and functioning better with extra secondary stocks.
 * Nemesis Commando
@@ -26,7 +62,9 @@
     * Reduced Alt Utility speed.
     * Reduced Special damage (1500% -> 1200%).
     * When selected as a survivor, now drops from a drop pod.
-
+* Other
+    * Many performance improvements
+    * Reduced file size
 ### 0.6.7
 * Items
     * Fork adjusted (+2 flat damage => +8% damage)

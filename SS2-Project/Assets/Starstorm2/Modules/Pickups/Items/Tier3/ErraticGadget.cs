@@ -53,7 +53,7 @@ namespace SS2.Items
         {
             _orbEffectPrefab = AssetCollection.FindAsset<GameObject>("GadgetOrbEffect");
             _procEffectPrefab = AssetCollection.FindAsset<GameObject>("GadgetLightningStartEffect");
-            _displayEffectPrefab = AssetCollection.FindAsset<GameObject>("GadgetLightningProcEffect");
+            _displayEffectPrefab = AssetCollection.FindAsset<GameObject>("GadgetLightningProc");
 
             PROCTYPEAPIWHEN = DamageAPI.ReserveDamageType();
             On.RoR2.Orbs.LightningOrb.OnArrival += LightningOrb_OnArrival; // uke tesla BFG arti loader 
