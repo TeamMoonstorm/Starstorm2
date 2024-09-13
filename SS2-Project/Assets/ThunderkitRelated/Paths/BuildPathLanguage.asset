@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
+--- !u!114 &-7419916031755635163
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,13 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4f773cd2b7463d44aa153647e991b43, type: 3}
-  m_Name: BuildPathAssets
+  m_Script: {fileID: 11500000, guid: cebc722807299b54bb8733330087d5e3, type: 3}
+  m_Name: Constant
   m_EditorClassIdentifier: 
-  Data:
-  - {fileID: 2307925834480067587}
-  - {fileID: 9206952068042230893}
---- !u!114 &2307925834480067587
+  Value: SS2Lang
+--- !u!114 &-7211161416735696730
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -28,7 +26,7 @@ MonoBehaviour:
   m_Name: OutputReference
   m_EditorClassIdentifier: 
   reference: {fileID: 11400000, guid: 8483c12a10971d54ebec085b9346280a, type: 2}
---- !u!114 &9206952068042230893
+--- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -37,7 +35,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cebc722807299b54bb8733330087d5e3, type: 3}
-  m_Name: Constant
+  m_Script: {fileID: 11500000, guid: b4f773cd2b7463d44aa153647e991b43, type: 3}
+  m_Name: BuildPathLanguage
   m_EditorClassIdentifier: 
-  Value: assetbundles
+  Data:
+  - {fileID: -7211161416735696730}
+  - {fileID: -7419916031755635163}
