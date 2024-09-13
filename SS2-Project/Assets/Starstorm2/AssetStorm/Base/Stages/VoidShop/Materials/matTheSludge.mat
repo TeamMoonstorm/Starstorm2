@@ -2,14 +2,19 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: matTheSludge
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
-  m_ShaderKeywords: USE_CLOUDS _DISPLACEMENTMODE_OFF _DISTORTIONQUALITY_HIGH _REFLECTIONTYPE_NONE
+  m_ValidKeywords:
+  - USE_CLOUDS
+  m_InvalidKeywords:
+  - _DISPLACEMENTMODE_OFF
+  - _DISTORTIONQUALITY_HIGH
+  - _REFLECTIONTYPE_NONE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -83,6 +88,7 @@ Material:
         m_Texture: {fileID: 2800000, guid: c3a1af171f8e3bf4eaa9500ccd934049, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AlphaBias: 0.487
     - _AlphaBoost: 0.86
@@ -161,3 +167,4 @@ Material:
     - _WDirectionAB: {r: 0.3, g: 0.85, b: 0.85, a: 0.25}
     - _WDirectionCD: {r: 0.1, g: 0.9, b: 0.5, a: 0.5}
     - _WSpeed: {r: 1.2, g: 1.375, b: 1.1, a: 1.5}
+  m_BuildTextureStacks: []

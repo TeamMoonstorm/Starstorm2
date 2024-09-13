@@ -2,14 +2,17 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: matOmniRing
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
-  m_ShaderKeywords: RoR2/Base/Common/VFX/matOmniRing1.mat VERTEXCOLOR
+  m_ValidKeywords:
+  - VERTEXCOLOR
+  m_InvalidKeywords:
+  - RoR2/Base/Common/VFX/matOmniRing1.mat
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -67,6 +70,7 @@ Material:
         m_Texture: {fileID: 2800000, guid: 1ba41e2c6f7776a4fba29c96d07a307c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AlphaBias: 0.056
     - _AlphaBoost: 1.89
@@ -114,3 +118,4 @@ Material:
     - _CutoffScroll: {r: 0, g: -10, b: 0, a: -8}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _TintColor: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []

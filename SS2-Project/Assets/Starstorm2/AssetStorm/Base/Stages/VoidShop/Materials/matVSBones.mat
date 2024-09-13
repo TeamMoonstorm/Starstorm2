@@ -2,14 +2,17 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: matVSBones
   m_Shader: {fileID: 4800000, guid: 9a79fb5f80d888f4c9cdb96589ecde54, type: 2}
-  m_ShaderKeywords: BINARYBLEND FORCE_SPEC
+  m_ValidKeywords:
+  - BINARYBLEND
+  - FORCE_SPEC
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -75,6 +78,7 @@ Material:
         m_Texture: {fileID: 2800000, guid: ab3a44b2a0df85b4cb4c70ec38ad27f0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _BinaryBlendOn: 1
     - _BumpScale: 1
@@ -121,3 +125,4 @@ Material:
     - _Color: {r: 0.41273585, g: 0.43426156, b: 0.5, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _GradientBiasVector: {r: 0, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []
