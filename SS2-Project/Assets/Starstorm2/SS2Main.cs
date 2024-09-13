@@ -25,7 +25,7 @@ namespace SS2
     {
         internal const string GUID = "com.TeamSS2";
         internal const string MODNAME = "Starstorm 2";
-        internal const string VERSION = "0.6.7";
+        internal const string VERSION = "0.6.8";
 
         internal static SS2Main Instance { get; private set; }
 

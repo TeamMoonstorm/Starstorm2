@@ -178,7 +178,7 @@ namespace SS2.Survivors
             On.RoR2.HealthComponent.GetHealthBarValues += FearExecuteHealthbar;
 
             //Prone to breaking when the game updates
-            IL.RoR2.HealthComponent.TakeDamage += (il) =>
+            IL.RoR2.HealthComponent.TakeDamageProcess += (il) =>
             {
                 bool error = true;
                 ILCursor c = new ILCursor(il);
