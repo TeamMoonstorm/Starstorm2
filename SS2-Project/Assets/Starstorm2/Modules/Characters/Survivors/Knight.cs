@@ -20,6 +20,10 @@ namespace SS2.Survivors
         public static GameObject KnightImpactEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/Bandit2SmokeBomb.prefab").WaitForCompletion();
         public static GameObject KnightCrosshair = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/SimpleDotCrosshair.prefab").WaitForCompletion();
         public static GameObject KnightDroppod = Resources.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod");
+        public static GameObject KnightHitEffect;
+        public static GameObject KnightSpinEffect;
+
+
 
         public static float dodgeFOV = EntityStates.Commando.DodgeState.dodgeFOV;
 
@@ -87,6 +91,8 @@ namespace SS2.Survivors
         {
             BuffDef buffKnightSpecialPower = AssetCollection.FindAsset<BuffDef>("bdKnightSpecialPowerBuff");
             Material matSpecialPowerOverlay = AssetCollection.FindAsset<Material>("matKnightBuffOverlay");
+            KnightHitEffect = AssetCollection.FindAsset<GameObject>("KnightImpactSlashEffect");
+            KnightSpinEffect = AssetCollection.FindAsset<GameObject>("KnightSpin");
 
             RegisterKnightDamageTypes();
             ModifyPrefab();
@@ -130,8 +136,8 @@ namespace SS2.Survivors
             // The buff behavior for Knight's default passive
             if (sender.HasBuff(SS2Content.Buffs.bdKnightBuff))
             {
-                args.attackSpeedMultAdd += 0.4f;
-                args.damageMultAdd += 0.4f;
+                args.attackSpeedMultAdd += 0.2f;
+                args.damageMultAdd += 0.2f;
             }
 
             if (sender.HasBuff(SS2Content.Buffs.bdShield))
@@ -143,11 +149,9 @@ namespace SS2.Survivors
             if (sender.HasBuff(SS2Content.Buffs.bdKnightSpecialPowerBuff))
             {
                 args.baseJumpPowerAdd += 1f;
-                args.baseMoveSpeedAdd += 0.3f;
+                args.baseMoveSpeedAdd += 0.1f;
                 args.jumpPowerMultAdd += 0.5f;
-                args.damageMultAdd += 0.4f;
-                args.armorAdd += 100f;
-                args.baseRegenAdd += 3f;
+                args.damageMultAdd += 0.2f;
             }
 
             if (sender.HasBuff(SS2Content.Buffs.bdKnightSpecialSlowBuff))
@@ -162,7 +166,7 @@ namespace SS2.Survivors
                 
                 if (setStateOnHurt)
                 {
-                    setStateOnHurt.SetStun(3f);
+                    setStateOnHurt.SetStun(4f);
                     sender.RemoveOldestTimedBuff(SS2Content.Buffs.bdKnightStunAttack);
                 }
             }
@@ -198,37 +202,37 @@ namespace SS2.Survivors
             // Called when the body with this buff takes damage
             public void OnIncomingDamageServer(DamageInfo damageInfo)
             {
-                if (HasAnyStacks && damageInfo.attacker != CharacterBody)
-                {
-                    // TODO: Use body index
-                    // We want to ensure that Knight is the one taking damage
-                    if (CharacterBody.baseNameToken != "SS2_KNIGHT_BODY_NAME")
-                        return;
+                //if (HasAnyStacks && damageInfo.attacker != CharacterBody)
+                //{
+                //    // TODO: Use body index
+                //    // We want to ensure that Knight is the one taking damage
+                //    if (CharacterBody.baseNameToken != "SS2_KNIGHT_BODY_NAME")
+                //        return;
 
-                    damageInfo.rejected = true;
+                //    damageInfo.rejected = true;
 
-                    SetStateOnHurt ssoh = damageInfo.attacker.GetComponent<SetStateOnHurt>();
-                    if (ssoh)
-                    {
-                        // Stun the enemy
-                        Type state = ssoh.targetStateMachine.state.GetType();
-                        if (state != typeof(StunState) && state != typeof(ShockState) && state != typeof(FrozenState))
-                        {
-                            ssoh.SetStun(3f);
-                        }
-                    }
+                //    SetStateOnHurt ssoh = damageInfo.attacker.GetComponent<SetStateOnHurt>();
+                //    if (ssoh)
+                //    {
+                //        // Stun the enemy
+                //        Type state = ssoh.targetStateMachine.state.GetType();
+                //        if (state != typeof(StunState) && state != typeof(ShockState) && state != typeof(FrozenState))
+                //        {
+                //            ssoh.SetStun(3f);
+                //        }
+                //    }
 
-                    // TODO: Should we have a custom sound for this?
-                    Util.PlaySound("NemmandoDecisiveStrikeReady", gameObject);
+                //    // TODO: Should we have a custom sound for this?
+                //    Util.PlaySound("NemmandoDecisiveStrikeReady", gameObject);
 
-                    EntityStateMachine weaponEsm = EntityStateMachine.FindByCustomName(gameObject, "Weapon");
-                    if (weaponEsm != null)
-                    {
-                        weaponEsm.SetNextState(new EntityStates.Knight.Parry());
-                    }
+                //    EntityStateMachine weaponEsm = EntityStateMachine.FindByCustomName(gameObject, "Weapon");
+                //    if (weaponEsm != null )
+                //    {
+                //        weaponEsm.SetNextState(new EntityStates.Knight.Parry());
+                //    }
 
-                    Destroy(this);
-                }
+                //    Destroy(this);
+                //}
             }
         }
     }
