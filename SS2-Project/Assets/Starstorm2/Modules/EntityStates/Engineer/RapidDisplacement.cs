@@ -7,26 +7,25 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using SS2.Survivors;
 using R2API;
+using System;
 
 namespace EntityStates.Engi
 {
     public class RapidDisplacement : BaseSkillState
     {
         [SerializeField]
-        public static float baseDuration = 0.6f;
+        public static float baseDuration = 1;
         [SerializeField]
-        public static float speedMultiplier = 3.0f;
+        public static float speedMultiplier = 2;
         [SerializeField]
         public static float hitRadius = 5f;
         //[FormatToken("SS2_EXECUTIONER_DASH_DESCRIPTION", 0)]
-        [SerializeField]
-        public static float hopVelocity = 10f;
 
         [SerializeField]
         public static float damageCoeff = .75f;
 
         [SerializeField]
-        public static float procCoeff = 0.5f;
+        public static float procCoeff = 1;
 
         [SerializeField]
         public static float maxDistance = 25f;
@@ -56,16 +55,18 @@ namespace EntityStates.Engi
 
         private Transform muzzleLeft;
         private Transform muzzleRight;
-
-
+        private OverlapAttack attack;
+        private List<HurtBox> victimsStruck = new List<HurtBox>();
+        int count = 1;
+        bool fromDash;
         public override void OnEnter()
         {
             base.OnEnter();
             //this.duration = this.baseDuration / base.attackSpeedStat;
             Ray aimRay = base.GetAimRay();
-            base.StartAimMode(aimRay, 2f, false);
-
-            this.PlayAnimation("Gesture, Additive", "ChargeGrenades");
+            duration = baseDuration;
+            characterBody.isSprinting = true;
+            //this.PlayAnimation("Body", "Sprinting", "walkSpeed", duration);
 
             Util.PlaySound("Play_engi_R_walkingTurret_laser_start", base.gameObject);
             //fireTimer = 0;
@@ -80,24 +81,78 @@ namespace EntityStates.Engi
                     muzzleRight = component.FindChild("MuzzleRight");
                 }
             }
-
-            duration = baseDuration;
-            characterDirection.turnSpeed = 240f;
+            duration = baseDuration; 
+            characterDirection.turnSpeed = 300; 
 
             HopIfAirborne();
+            if (!characterMotor.isGrounded)
+            {
+                var hop = new HopDisplacement { fromDash = false };
+                outer.SetNextState(hop);
+                fromDash = false;
+            }
+            else
+            {
+                base.StartAimMode(aimRay, 1.5f, false);
+                HitBoxGroup hitBoxGroup = null;
+                if (modelTransform)
+                {
+                    var multi = modelTransform.GetComponentsInChildren<HitBoxGroup>();
+                    hitBoxGroup = Array.Find<HitBoxGroup>(modelTransform.GetComponents<HitBoxGroup>(), (HitBoxGroup element) => element.groupName == "HitboxGround");
+                }
+                attack = new OverlapAttack();
+                attack.attacker = base.gameObject;
+                attack.inflictor = base.gameObject;
+                attack.teamIndex = base.GetTeam();
+                attack.damage = 2 * this.damageStat;
+                //attack.hitEffectPrefab = ToolbotDash.impactEffectPrefab;
+                attack.forceVector = (characterDirection.forward + (Vector3.up/1.125f)) * 1000;
+                attack.pushAwayForce = 500;
+                attack.hitBoxGroup = hitBoxGroup;
+                attack.isCrit = base.RollCrit();
+                attack.damageType = DamageType.Stun1s;
+                attack.damageColorIndex = DamageColorIndex.Default;
+                attack.procChainMask = default(ProcChainMask);
+                attack.procCoefficient = 1;
+                fromDash = true;
+            }
+            count = 1;
+
+            //this.PlayAnimation("Body", "Sprinting", "walkSpeed", duration);
         }
         
         public override void FixedUpdate()
         {
             base.FixedUpdate();
             characterBody.isSprinting = true;
+            //Debug.Log("yeah " + fixedAge);
+            if (characterMotor.isGrounded && fromDash)
+            {
+                if (characterDirection && characterMotor)
+                    characterMotor.rootMotion += characterDirection.forward * characterBody.moveSpeed * speedMultiplier * Time.fixedDeltaTime;
+                if (attack != null)
+                {
+                    attack.Fire(victimsStruck);
+                    if (fixedAge >= (duration/4) * count)
+                    {
+                        attack.ignoredHealthComponentList = new List<HealthComponent>();
+                        ++count;
+                    }
+                }
+            }
+            else if(fromDash)
+            {
+                var hop = new HopDisplacement { fromDash = true };
+                outer.SetNextState(hop);
+            }
 
 
-            if (characterDirection && characterMotor)
-                characterMotor.rootMotion += characterDirection.forward * characterBody.moveSpeed * speedMultiplier * Time.fixedDeltaTime;
 
             if (fixedAge >= duration)
+            {
                 outer.SetNextStateToMain();
+
+            }
 
         }
 
@@ -113,14 +168,12 @@ namespace EntityStates.Engi
             //if (rightLaserInstance)
             //    EntityState.Destroy(rightLaserInstance);
             characterDirection.turnSpeed = 720f;
-
         }
-
         private void HopIfAirborne()
         {
             if (!characterMotor.isGrounded)
             {
-                SmallHop(characterMotor, hopVelocity);
+                SmallHop(characterMotor, 10);
             }
         }
 

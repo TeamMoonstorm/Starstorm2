@@ -39,7 +39,7 @@ namespace SS2.Items
             if (!report.attackerMaster || !report.attackerBody) return;
 
             int stack = report.attackerMaster.inventory.GetItemCount(SS2Content.Items.Insecticide);
-            if (stack > 0 && report.victimBody.teamComponent.teamIndex != report.attackerBody.teamComponent.teamIndex && report.damageInfo.procCoefficient > 0 && Util.CheckRoll(chance * 100, report.attackerMaster))
+            if (stack > 0 && report.victimBody.teamComponent.teamIndex != report.attackerBody.teamComponent.teamIndex && report.damageInfo.procCoefficient > 0 && Util.CheckRoll(chance * 100 * report.damageInfo.procCoefficient, report.attackerMaster))
             {
                 var dotInfo = new InflictDotInfo()
                 {

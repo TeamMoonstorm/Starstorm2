@@ -646,7 +646,7 @@
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Target">
-											<ObjectRef Name="item_proc_goldonignite_01" ID="{0D0616C2-931A-47AD-BBE8-93A0246B343A}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+											<ObjectRef Name="MoltenCoin" ID="{D90875C8-CA7E-4F0C-80E2-303BD422B9C0}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
@@ -800,7 +800,7 @@
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Target">
-											<ObjectRef Name="Trematode" ID="{2B0FC3A7-5C08-4746-8CE0-88490606B930}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+											<ObjectRef Name="item_proc_trematode_init1" ID="{F299E3F9-1ABF-4E5B-ACAA-FF6ED3F7761E}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
@@ -913,6 +913,48 @@
 									<ReferenceList>
 										<Reference Name="Target">
 											<ObjectRef Name="item_proc_universalcharger" ID="{3606D7F3-9541-4B70-B08E-1A7EFE1ADF12}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ProcSpeaker" ID="{B0A404C2-D700-4C5D-BD71-85DDE889F31E}">
+							<ChildrenList>
+								<Action Name="" ID="{A2403FB9-E0C8-4B6F-A55B-312222CEBAFC}" ShortID="817672851">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="LowQualitySpeaker" ID="{D8488279-CB39-4BCA-8A8A-0144F73BF591}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ProcAmulet" ID="{6EF3E780-B6E7-48E2-9DA4-C0BC5FD7E014}">
+							<ChildrenList>
+								<Action Name="" ID="{AC1BE82C-BA6E-4733-8B15-2D08DD24926E}" ShortID="321957998">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="GuardingAmulet" ID="{644B527A-00A5-4C9F-92FC-D67697A5B8D1}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ActivateBloodTester" ID="{E047E795-BE10-4F3B-A2F6-3236B6A32CB1}">
+							<ChildrenList>
+								<Action Name="" ID="{0D3E0CA4-F454-4AF6-BDEB-45FE05F33CE7}" ShortID="520452324">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="item_proc_bloodtester_proc_01" ID="{E2C9A0A1-A93C-43AA-8486-51DE83535140}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>

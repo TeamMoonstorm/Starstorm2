@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 485a667f85daa004ca6fe47ee0e0dbb2, type: 3}
+  m_Name: sdPyro2
+  m_EditorClassIdentifier: 
+  skillName: PyroSecondary
+  skillNameToken: SS2_PYRO_SECONDARY_NAME
+  skillDescriptionToken: SS2_PYRO_SECONDARY_DESC
+  keywordTokens:
+  - KEYWORD_IGNITE
+  icon: {fileID: 21300000, guid: 062b88e123bc060418bd339f2b83e7d0, type: 3}
+  activationStateMachineName: Weapon
+  activationState:
+    _typeName: EntityStates.Pyro.SuppressiveFire, Starstorm2, Version=1.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  interruptPriority: 1
+  baseRechargeInterval: 0
+  baseMaxStock: 1
+  rechargeStock: 1
+  requiredStock: 1
+  stockToConsume: 0
+  resetCooldownTimerOnUse: 0
+  fullRestockOnAssign: 1
+  dontAllowPastMaxStocks: 0
+  beginSkillCooldownOnSkillEnd: 1
+  cancelSprintingOnActivation: 1
+  forceSprintDuringState: 0
+  canceledFromSprinting: 1
+  isCombatSkill: 1
+  mustKeyPress: 0
+  heatValue: 1.5
+  heatConsumed: 0
+  canCastIfLowHeat: 0

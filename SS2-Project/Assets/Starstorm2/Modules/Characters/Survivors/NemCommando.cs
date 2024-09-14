@@ -40,8 +40,6 @@ namespace SS2.Survivors
 
             characterBody = bodyPrefab.GetComponent<CharacterBody>();
 
-            On.RoR2.CharacterSelectBarController.Awake += CharacterSelectBarController_Awake;
-
             GougeDamageType = DamageAPI.ReserveDamageType();
             GougeDotIndex = DotAPI.RegisterDotDef(0.25f, 0.25f, DamageColorIndex.SuperBleed, _gougeBuffDef);
             On.RoR2.HealthComponent.TakeDamage += TakeDamageGouge;
@@ -50,7 +48,8 @@ namespace SS2.Survivors
             ModifyProjectiles();
             CreatePod();
 
-            characterBody.preferredPodPrefab = nemesisPodPrefab;
+            //characterBody.preferredPodPrefab = nemesisPodPrefab;
+            // https://tenor.com/view/larry-david-unsure-uncertain-cant-decide-undecided-gif-3529136
         }
 
         private void TakeDamageGouge(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
@@ -84,15 +83,6 @@ namespace SS2.Survivors
             }
         }
 
-        //N: I should make this an utility idk
-        private void CharacterSelectBarController_Awake(On.RoR2.CharacterSelectBarController.orig_Awake orig, CharacterSelectBarController self)
-        {
-            //hide nemcommando from css proper
-            SS2Content.Survivors.NemMerc.hidden = !SurvivorCatalog.SurvivorIsUnlockedOnThisClient(SS2Content.Survivors.NemMerc.survivorIndex); // hello nem comado
-            SS2Content.Survivors.survivorNemCommando.hidden = !SurvivorCatalog.SurvivorIsUnlockedOnThisClient(SS2Content.Survivors.survivorNemCommando.survivorIndex);
-            orig(self);
-        }
-
         private void ApplyGouge(DamageReport report)
         {
             var victimBody = report.victimBody;
@@ -107,13 +97,17 @@ namespace SS2.Survivors
                     dotIndex = GougeDotIndex,
                     duration = gougeDuration,
                     damageMultiplier = 1,
-                    maxStacksFromAttacker = 5,
+                    //maxStacksFromAttacker = 5,
                 };
                 DotController.InflictDot(ref dotInfo);
 
                 // refresh stack timers
-                
-                DotController dotController = DotController.FindDotController(victimBody.gameObject);
+                //★ it is war.
+
+                // just to restate- i feel like this would be best on m2/special as a way to bring the whole kit together rather than just m1 doing lots of work?
+                // i like nemcommando just being a 'plain' generalist rather than having a specific gimmick he's trying to hone in on...
+
+                /*DotController dotController = DotController.FindDotController(victimBody.gameObject);
                 if (!dotController) return;
                 int j = 0;
                 List<DotController.DotStack> dotStackList = dotController.dotStackList;
@@ -124,7 +118,7 @@ namespace SS2.Survivors
                         dotStackList[j].timer = Mathf.Max(dotStackList[j].timer, gougeDuration);
                     }
                     j++;
-                }
+                }*/
             }
         }
 

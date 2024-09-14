@@ -18,21 +18,16 @@ namespace SS2.Components
 
     //TO-DO:
 
-    //Ethereals- unique director, tied to Ethereal completion count, can overlap with other types
-    //DONE!!!!!!!!!!!!!!
+    //figure out ethereal / ultra spawning balance. possible conflicts?
 
     //Condemned
     //Gilded
     //Twisted?- all of these will be like ethereals BUT they share a check. ethereal gets its own for overlap.
 
-    //Empyreans- hijack vanilla director to essentially add as T3
-
-    //Ultras- mix of above + ethereal? post-ethereal tier 4? honestly, idk entirely :')
+    //add support for appropriate hidden realms
 
 
-    //I feel like this should maybe be separate director cmponents inheriting from one class but will figure that out & possibly regret it when I get there!!!
-    //idk if i can make this an abstract and then inherit the il hook so its a monolith.
-    //SORRY!!!!!!!!!!
+    //maybe should've been an abstract with inheritence for different director types but scared to do that with il hook
 
     public class CustomEliteDirector : MonoBehaviour
     {
@@ -80,6 +75,11 @@ namespace SS2.Components
         private float empyreanMultiplier = 25f;
         public bool empyreanActive = false;
 
+        [Header("Ultra-Related")]
+        private float ultraEliteCost = 320f;
+        private float ultraMultiplier = 35f;
+        
+
         public void Awake()
         {
             instance = this; //I guess there will only be one of you after all...
@@ -91,14 +91,16 @@ namespace SS2.Components
             GameObject director = GameObject.Find("Director");
             if (director != null)
             {
-                fastCombatDirector = director.GetComponents<CombatDirector>()[0];
+                if (director.GetComponents<CombatDirector>().Length > 0 && director.GetComponents<CombatDirector>()[0] != null)
+                    fastCombatDirector = director.GetComponents<CombatDirector>()[0];
                 //the first director spams his shit
-                slowCombatDirector = director.GetComponents<CombatDirector>()[1];
+                if (director.GetComponents<CombatDirector>().Length > 1 && director.GetComponents<CombatDirector>()[1] != null)
+                    slowCombatDirector = director.GetComponents<CombatDirector>()[1];
                 //the second director loves to build big guys 
-                if (!fastCombatDirector || !slowCombatDirector)
+                if (fastCombatDirector == null || slowCombatDirector == null)
                 {
-                    SS2Log.Fatal("No combat director found. Killing custom director.");
-                    Destroy(this);
+                    SS2Log.Info("No combat director found. Killing custom director.");
+                    Destroy(instance);
                 }
             }
         }
@@ -151,13 +153,16 @@ namespace SS2.Components
 
         public void ModifySpawn(SpawnCard.SpawnResult spawnResult)
         {
+            if (spawnResult.spawnedInstance == null || spawnResult.spawnRequest == null || spawnResult.spawnRequest.spawnCard == null)
+                return;
             CharacterMaster cm = spawnResult.spawnedInstance.GetComponent<CharacterMaster>();
-            if (!cm || !cm.bodyInstanceObject)
+            if (cm == null || cm.bodyInstanceObject == null)
                 return;
             CharacterBody cb = cm.bodyInstanceObject.GetComponent<CharacterBody>();
             if (cb == null)
                 return;
             //cardCosts.TryGetValue(cm.bodyPrefab, out float baseCost);
+
             float baseCost = spawnResult.spawnRequest.spawnCard.directorCreditCost;
             SS2Log.Debug(cm.name + " base cost: " + baseCost);
             float totalCost = baseCost;
@@ -177,7 +182,7 @@ namespace SS2.Components
                     followerSummon.masterPrefab = Monsters.Lamp._masterPrefab;
                     followerSummon.summonerBodyObject = cb.gameObject;
                     var followerMaster = followerSummon.Perform();
-                    SS2Log.Debug("Summoned Follower");
+                    SS2Log.Info("Summoned Follower");
                     fastCombatDirector.monsterCredit -= followerCost;
                     minionCredit -= followerCost;
                     if (followerMaster)
@@ -199,7 +204,7 @@ namespace SS2.Components
                 }
             }
 
-            if (Run.instance.stageClearCount > 8 && !empyreanActive)
+            if (Run.instance.stageClearCount > 8)
             {
                 if (empyreanEliteCost <= eliteCredit && (baseCost * empyreanMultiplier <= fastCombatDirector.monsterCredit) || (baseCost * empyreanMultiplier <= slowCombatDirector.monsterCredit))
                 {
@@ -214,6 +219,17 @@ namespace SS2.Components
             {
                 float baseEtherealCost = (totalCost * etherealMultiplier) / ethInstance.etherealsCompleted; //possibly too mean?? lol
 
+                if (Run.instance.stageClearCount > 5)
+                {
+                    if ((ultraEliteCost - (20 * (ethInstance.etherealsCompleted - 1))) <= eliteCredit && baseEtherealCost * 3f <= fastCombatDirector.monsterCredit)
+                    {
+                        MakeUltra(cb);
+                        fastCombatDirector.monsterCredit -= baseEtherealCost * 5f;
+                        SS2Log.Debug(cm.name + " ultra monster cost: " + totalCost + "  yuou are now Ultra. :D");
+                        eliteCredit -= ultraEliteCost * 1.5f;
+                    }
+                }
+
                 if ((etherealEliteCost - (20 * (ethInstance.etherealsCompleted - 1))) <= eliteCredit && baseEtherealCost <= fastCombatDirector.monsterCredit)
                 {
                     MakeEthereal(cb);
@@ -226,15 +242,14 @@ namespace SS2.Components
 
         public void MakeEmpyrean(CharacterBody body)
         {
-            //to-do: everything :)
             var inventory = body.inventory;
 
             inventory.RemoveItem(RoR2Content.Items.BoostHp, inventory.GetItemCount(RoR2Content.Items.BoostHp));
             inventory.RemoveItem(RoR2Content.Items.BoostDamage, inventory.GetItemCount(RoR2Content.Items.BoostDamage));
 
             inventory.GiveItem(RoR2Content.Items.BoostHp, 500);
-            inventory.GiveItem(SS2Content.Items.BoostMovespeed, 50);
-            inventory.GiveItem(SS2Content.Items.BoostCooldowns, 70);
+            inventory.GiveItem(SS2Content.Items.BoostMovespeed, 35);
+            inventory.GiveItem(SS2Content.Items.BoostCooldowns, 50);
             inventory.GiveItem(RoR2Content.Items.BoostDamage, 80);
             inventory.GiveItem(RoR2Content.Items.TeleportWhenOob); //REALLY DON'T LIKE THIS ONE. knocking enemies off the stage is a RIGHT. going to make a specific elite to replace this functionality.
             inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
@@ -248,6 +263,28 @@ namespace SS2.Components
             }
 
             empyreanActive = true;
+        }
+
+        public void MakeUltra(CharacterBody body)
+        {
+            var inventory = body.inventory;
+
+            inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(500f + (250f * ethInstance.etherealsCompleted)));
+            //inventory.GiveItem(SS2Content.Items.BoostMovespeed, 50);
+            inventory.GiveItem(SS2Content.Items.BoostCooldowns, 70);
+            inventory.GiveItem(RoR2Content.Items.BoostDamage, 100);
+            inventory.GiveItem(RoR2Content.Items.TeleportWhenOob); 
+            inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
+            inventory.GiveItem(SS2Content.Items.AffixUltra);
+
+            DeathRewards rewards = body.GetComponent<DeathRewards>();
+            if (rewards)
+            {
+                rewards.expReward *= (uint)(10 + (5 * ethInstance.etherealsCompleted));
+                rewards.goldReward *= (uint)(10 + (5 * ethInstance.etherealsCompleted));
+            }
+
+
         }
 
         public void MakeEthereal(CharacterBody body)
@@ -284,7 +321,7 @@ namespace SS2.Components
             {
                 c.EmitDelegate<Func<Action<SpawnCard.SpawnResult>, Action<SpawnCard.SpawnResult>>>((ogMethod) =>
                 {
-                    if (!CustomEliteDirector.instance) return ogMethod;
+                    if (CustomEliteDirector.instance == null) return ogMethod;
                     return new Action<SpawnCard.SpawnResult>((spawnResult) =>
                     {
                         ogMethod(spawnResult);

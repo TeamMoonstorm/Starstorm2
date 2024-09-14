@@ -13,17 +13,18 @@ MonoBehaviour:
   m_Name: msidcCloneDrone
   m_EditorClassIdentifier: 
   _serializedCardPairs:
-  - stageEnum: 1
-    customStageName: fblscene
+  - stageEnum: 1275068481
+    customStageNames:
+    - FBLScene
     interactableCategory: 5
     customCategoryWeight: 0
     customCategoryName: 
     card:
       spawnCard:
-        _asset: {fileID: 0}
+        _asset: {fileID: 11400000, guid: db50f44ce7e65dd4dab947ea99fdfbaa, type: 2}
         _address: 
         _useDirectReference: 1
-      selectionWeight: 1
+      selectionWeight: 2
       spawnDistance: 0
       preventOverhead: 0
       minimumStageCompletions: 2
@@ -35,124 +36,14 @@ MonoBehaviour:
         _asset: {fileID: 0}
         _address: 
         _useDirectReference: 0
-  - stageEnum: 64
-    customStageName: 
+  - stageEnum: 147840
+    customStageNames: []
     interactableCategory: 5
     customCategoryWeight: 0
     customCategoryName: 
     card:
       spawnCard:
-        _asset: {fileID: 0}
-        _address: 
-        _useDirectReference: 1
-      selectionWeight: 1
-      spawnDistance: 0
-      preventOverhead: 0
-      minimumStageCompletions: 2
-      requiredUnlockableDef:
-        _asset: {fileID: 0}
-        _address: 
-        _useDirectReference: 0
-      forbiddenUnlockableDef:
-        _asset: {fileID: 0}
-        _address: 
-        _useDirectReference: 0
-  - stageEnum: 128
-    customStageName: 
-    interactableCategory: 5
-    customCategoryWeight: 0
-    customCategoryName: 
-    card:
-      spawnCard:
-        _asset: {fileID: 0}
-        _address: 
-        _useDirectReference: 1
-      selectionWeight: 1
-      spawnDistance: 0
-      preventOverhead: 0
-      minimumStageCompletions: 2
-      requiredUnlockableDef:
-        _asset: {fileID: 0}
-        _address: 
-        _useDirectReference: 0
-      forbiddenUnlockableDef:
-        _asset: {fileID: 0}
-        _address: 
-        _useDirectReference: 0
-  - stageEnum: 256
-    customStageName: 
-    interactableCategory: 5
-    customCategoryWeight: 0
-    customCategoryName: 
-    card:
-      spawnCard:
-        _asset: {fileID: 0}
-        _address: 
-        _useDirectReference: 1
-      selectionWeight: 1
-      spawnDistance: 0
-      preventOverhead: 0
-      minimumStageCompletions: 2
-      requiredUnlockableDef:
-        _asset: {fileID: 0}
-        _address: 
-        _useDirectReference: 0
-      forbiddenUnlockableDef:
-        _asset: {fileID: 0}
-        _address: 
-        _useDirectReference: 0
-  - stageEnum: 131072
-    customStageName: 
-    interactableCategory: 5
-    customCategoryWeight: 0
-    customCategoryName: 
-    card:
-      spawnCard:
-        _asset: {fileID: 0}
-        _address: 
-        _useDirectReference: 1
-      selectionWeight: 1
-      spawnDistance: 0
-      preventOverhead: 0
-      minimumStageCompletions: 2
-      requiredUnlockableDef:
-        _asset: {fileID: 0}
-        _address: 
-        _useDirectReference: 0
-      forbiddenUnlockableDef:
-        _asset: {fileID: 0}
-        _address: 
-        _useDirectReference: 0
-  - stageEnum: 67108864
-    customStageName: 
-    interactableCategory: 5
-    customCategoryWeight: 0
-    customCategoryName: 
-    card:
-      spawnCard:
-        _asset: {fileID: 0}
-        _address: 
-        _useDirectReference: 1
-      selectionWeight: 1
-      spawnDistance: 0
-      preventOverhead: 0
-      minimumStageCompletions: 2
-      requiredUnlockableDef:
-        _asset: {fileID: 0}
-        _address: 
-        _useDirectReference: 0
-      forbiddenUnlockableDef:
-        _asset: {fileID: 0}
-        _address: 
-        _useDirectReference: 0
-  - stageEnum: 134217728
-    customStageName: 
-    interactableCategory: 5
-    customCategoryWeight: 0
-    customCategoryName: 
-    card:
-      spawnCard:
-        _asset: {fileID: 0}
+        _asset: {fileID: 11400000, guid: db50f44ce7e65dd4dab947ea99fdfbaa, type: 2}
         _address: 
         _useDirectReference: 1
       selectionWeight: 1

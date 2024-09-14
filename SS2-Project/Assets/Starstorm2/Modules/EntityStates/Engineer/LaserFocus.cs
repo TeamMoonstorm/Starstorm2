@@ -16,7 +16,7 @@ namespace EntityStates.Engi
         public static float damageCoeff = .75f;
 
         [SerializeField]
-        public static float procCoeff = 0.5f;
+        public static float procCoeff = 0.3f;
 
         [SerializeField]
         public static float fireFrequency = 4f;
@@ -156,11 +156,6 @@ namespace EntityStates.Engi
 
             if (base.isAuthority)
             {
-                if (isCrit)
-                {
-                    // Do the thing swuff mentioned
-                }
-
                 var bulletLeft = new BulletAttack {
                     owner = base.gameObject,
                     weapon = base.gameObject,
@@ -203,20 +198,26 @@ namespace EntityStates.Engi
                     radius = 0.6f
                 };
 
-                if (counter == 5)
+                if (counter == 4)
                 {
                     DamageAPI.AddModdedDamageType(bulletLeft, Engineer.EngiFocusDamageProc);
                     DamageAPI.AddModdedDamageType(bulletRight, Engineer.EngiFocusDamage);
+                    base.PlayCrossfade("Gesture Left Cannon, Additive", "FireGrenadeLeft", 0.1f);
+                    base.PlayCrossfade("Gesture Right Cannon, Additive", "FireGrenadeRight", 0.1f);
+
                 }
-                else if(counter == 10)
+                else if(counter == 8)
                 {
                     DamageAPI.AddModdedDamageType(bulletRight, Engineer.EngiFocusDamageProc);
                     DamageAPI.AddModdedDamageType(bulletLeft, Engineer.EngiFocusDamage);
+                    base.PlayCrossfade("Gesture Left Cannon, Additive", "FireGrenadeLeft", 0.1f);
+                    base.PlayCrossfade("Gesture Right Cannon, Additive", "FireGrenadeRight", 0.1f);
                 }
                 else
                 {
                     DamageAPI.AddModdedDamageType(bulletLeft, Engineer.EngiFocusDamage);
                     DamageAPI.AddModdedDamageType(bulletRight, Engineer.EngiFocusDamage);
+
                 }
 
 

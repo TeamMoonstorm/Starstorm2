@@ -25,7 +25,7 @@ namespace SS2.Equipments
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Duration of White Flag when used, in seconds.")]
         [FormatToken(token, 1)]
-        public static float flagDuration = 8f;
+        public static float flagDuration = 15f;
 
         public override bool Execute(EquipmentSlot slot)
         {            

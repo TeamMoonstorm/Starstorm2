@@ -7,7 +7,7 @@ namespace SS2.Survivors
 {
     public class Captain : SS2VanillaSurvivor
     {
-        public override SS2AssetRequest<AssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<AssetCollection>("acCaptain", SS2Bundle.Indev);
+        public override SS2AssetRequest<AssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<AssetCollection>("acCaptain", SS2Bundle.Vanilla);
 
 
         public override void Initialize()

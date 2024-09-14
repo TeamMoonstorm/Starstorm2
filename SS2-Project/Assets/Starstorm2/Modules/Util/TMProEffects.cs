@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using RoR2;
+using System.Globalization;
 namespace SS2
 {
     //ty for permission to use this Mystic :)
@@ -14,6 +15,21 @@ namespace SS2
         {
             On.RoR2.UI.ChatBox.Start += ChatBox_Start;
             On.RoR2.UI.HGTextMeshProUGUI.Awake += HGTextMeshProUGUI_Awake;
+            On.RoR2.Chat.UserChatMessage.ConstructChatString += UserChatMessage_ConstructChatString;
+        }
+
+        // stops vanilla from stopping chat messages from using tmpro rich text
+        private static string UserChatMessage_ConstructChatString(On.RoR2.Chat.UserChatMessage.orig_ConstructChatString orig, Chat.UserChatMessage self)
+        {
+            if (self.sender)
+            {
+                NetworkUser component = self.sender.GetComponent<NetworkUser>();
+                if (component)
+                {
+                    return string.Format(CultureInfo.InvariantCulture, "<color=#e5eefc>{0}: {1}</color>", Util.EscapeRichTextForTextMeshPro(component.userName), self.text);
+                }
+            }
+            return orig(self);
         }
 
         [ConCommand(commandName = "debug_toggle_texteffects", flags = ConVarFlags.Cheat, helpText = "Enables/disables TMPro effects. Requires HUD reset. Format: {shouldEnable}")]
@@ -87,15 +103,26 @@ namespace SS2
 
             private void OnDisable()
             {
-                this.textComponent.textInfo.linkInfo = new TMPro.TMP_LinkInfo[0]; // fuck tmpro wtf is this. text effects wont go away
+                
             }
 
             public void ON_TEXT_CHANGED(Object obj)
             {
                 if (obj == textComponent)
+                {
                     textChanged = true;
-
-                this.enabled = true;
+                    // dumb fucking hack. textmeshpro is buggy as shit. wont work if both old and new text have links 
+                    if(this.enabled && textComponent && textComponent.textInfo != null && textComponent.textInfo.linkInfo != null && !textComponent.text.Contains("textWavy") && !textComponent.text.Contains("textShaky"))
+                    {
+                        this.textComponent.textInfo.linkInfo = new TMPro.TMP_LinkInfo[0]; // fuck tmpro wtf is this. linkinfos never get cleared when text changes
+                        this.enabled = false;
+                        return;
+                    }
+                    
+                    this.enabled = true;
+                }
+                    
+                
             }
 
             public void Update()

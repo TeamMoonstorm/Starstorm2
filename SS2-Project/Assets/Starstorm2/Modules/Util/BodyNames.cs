@@ -87,7 +87,7 @@ namespace SS2
             }
 
             // "Ultra"
-            if (characterBody.HasBuff(SS2Content.Buffs.BuffAffixUltra))
+            if (characterBody.HasBuff(SS2Content.Buffs.bdUltra))
             {
                 result = Language.GetStringFormatted("SS2_ELITE_MODIFIER_ULTRA", result);
             }

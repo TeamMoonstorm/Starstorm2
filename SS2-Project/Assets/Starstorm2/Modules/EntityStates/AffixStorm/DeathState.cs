@@ -131,7 +131,7 @@ namespace EntityStates.AffixStorm
 				isCrit = Util.CheckRoll(this.characterBody.crit, this.characterBody.master),
 				procChainMask = default(ProcChainMask),
 				damageType = DamageType.Shock5s,
-				procCoefficient = .6f,
+				procCoefficient = 0f,
 				target = hurtBox
 			});
 		}
@@ -190,7 +190,7 @@ namespace EntityStates.AffixStorm
 					inflictor = null,
 					position = this.lastKnownTargetPosition,
 					procChainMask = this.procChainMask,
-					procCoefficient = 0.6f,
+					procCoefficient = 0f,
 					radius = 3f,
 					teamIndex = this.teamIndex
 				}.Fire();

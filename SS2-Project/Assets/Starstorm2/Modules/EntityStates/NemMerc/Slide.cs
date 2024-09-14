@@ -106,7 +106,7 @@ namespace EntityStates.NemMerc
                 float msMultiplier = base.characterBody.moveSpeed / base.characterBody.baseMoveSpeed;
                 msMultiplier *= movespeedScalingCoefficient;
                 if(inMainState && !this.isClone)
-                    base.characterMotor.rootMotion += base.characterBody.moveSpeed * msMultiplier * forwardSpeed * this.forwardDirection * Time.fixedDeltaTime;
+                    base.characterMotor.rootMotion += base.characterBody.baseMoveSpeed * msMultiplier * forwardSpeed * this.forwardDirection * Time.fixedDeltaTime;
 
                 
                 if (!base.IsKeyDownAuthority() && base.fixedAge >= minDuration && inMainState)

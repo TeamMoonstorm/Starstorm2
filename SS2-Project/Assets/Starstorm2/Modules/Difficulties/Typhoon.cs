@@ -21,7 +21,6 @@ namespace SS2
             sdd = DifficultyDef;
         }
 
-
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
@@ -56,7 +55,7 @@ namespace SS2
         {
             if (IncreaseSpawnCap)
             {
-                self.creditMultiplier *= 1.25f;
+                self.creditMultiplier *= 1.4f;
                 self.expRewardCoefficient *= 0.8f;
                 self.goldRewardCoefficient *= 0.8f;
             }

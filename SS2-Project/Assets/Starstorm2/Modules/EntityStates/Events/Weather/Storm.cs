@@ -153,7 +153,7 @@ namespace EntityStates.Events
             if(eliteChanceStopwatch <= 0)
             {               
                 eliteChanceStopwatch += UnityEngine.Random.Range(minEliteChanceInterval, maxEliteChanceInterval);
-                eliteChance += eliteChancePerSecond * Time.fixedDeltaTime * eliteChanceTimer;
+                eliteChance += eliteChancePerSecond * eliteChanceTimer;
                 eliteChanceTimer = 0;
             }
             this.chargeStopwatch -= Time.fixedDeltaTime;
@@ -199,16 +199,17 @@ namespace EntityStates.Events
 
             CharacterBody.onBodyStartGlobal -= BuffEnemy;
 
+            // removelistener makes it so we cant add it back in the next state's onenter. (wtf?????)
             CombatDirector bossDirector = TeleporterInteraction.instance?.bossDirector;
             if (bossDirector && stormLevel >= 4)
             {
                 bossDirector.onSpawnedServer.RemoveListener(modifyBoss);
             }
-            foreach (CombatDirector combatDirector in CombatDirector.instancesList)
-            {
-                if (combatDirector != bossDirector)
-                    combatDirector.onSpawnedServer.RemoveListener(modifyMonsters);
-            }
+            //foreach (CombatDirector combatDirector in CombatDirector.instancesList)
+            //{
+            //    if (combatDirector != bossDirector)
+            //        combatDirector.onSpawnedServer.RemoveListener(modifyMonsters);
+            //}
         }
 
         

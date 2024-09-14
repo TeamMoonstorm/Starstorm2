@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f45f299ca6772244bbd388727fb3b105, type: 3}
+  m_Name: acHero
+  m_EditorClassIdentifier: 
+  assets:
+  - {fileID: 2730472498016211242, guid: cecd3f49aecbfdf4a87232c1508337bc, type: 3}
+  - {fileID: 11400000, guid: bc2a02d7528d44247befb5f07b529cd2, type: 2}
+  - {fileID: 5609412355061465226, guid: 20346d6d5c34da94bbe7de69c884e16d, type: 3}
+  - {fileID: 11400000, guid: 51b44fdceb46a874690501c91b9f944e, type: 2}
+  - {fileID: 11400000, guid: 62d4d5d3f09dbaa43a6259aa712c085b, type: 2}
+  - {fileID: 11400000, guid: b06f3348e46423843ba54c7aa824ec91, type: 2}
+  - {fileID: 11400000, guid: cc2a900cc7f63424684570da8c10691c, type: 2}
+  - {fileID: 11400000, guid: 85c243329e4d8ab43b4b3c0241c978ec, type: 2}
+  bodyPrefab: {fileID: 2730472498016211242, guid: cecd3f49aecbfdf4a87232c1508337bc,
+    type: 3}
+  masterPrefab: {fileID: 5609412355061465226, guid: 20346d6d5c34da94bbe7de69c884e16d,
+    type: 3}
+  monsterCardProvider: {fileID: 11400000, guid: bc2a02d7528d44247befb5f07b529cd2,
+    type: 2}

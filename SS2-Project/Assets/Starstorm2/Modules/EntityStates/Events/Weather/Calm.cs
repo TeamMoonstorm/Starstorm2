@@ -24,7 +24,7 @@ namespace EntityStates.Events
         public override void OnEnter()
         {
             base.OnEnter();
-            this.stormController.SetEffectIntensity(0);
+            this.stormController.StartLerp(0, 5f);
             if (stormController.AttemptSkip()) // TEMPORARY. FUUUUUUUUUCK
             {
                 this.outer.SetNextState(new Storm { stormLevel = 1, lerpDuration = 15f, instantStorm = true });

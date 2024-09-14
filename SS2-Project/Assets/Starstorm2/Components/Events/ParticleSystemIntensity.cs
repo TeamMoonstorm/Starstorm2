@@ -16,7 +16,7 @@ namespace SS2.Components
         private ParticleSystemState currentState;
         private ParticleSystem.EmissionModule em;
         private ParticleSystem.MainModule main;
-        private void Start()
+        private void Awake()
         {
             if (!particleSystem) particleSystem = base.GetComponent<ParticleSystem>();
             em = particleSystem.emission;
@@ -34,8 +34,9 @@ namespace SS2.Components
             currentIntensity = intensity;
 
             if (breakpoints.Length == 0) return;
-            
 
+            main = particleSystem.main; // this shit makes no sense man wtf
+            em = particleSystem.emission;
             bool alive = intensity >= minimumIntensity;
             if(this.alive != alive)
             {
@@ -66,12 +67,10 @@ namespace SS2.Components
             {
 
                 if(state.alpha != -1)
-                {
-                    ParticleSystem.MinMaxGradient startColor = main.startColor;
-                    Color color = startColor.color;
+                {                
+                    Color color = main.startColor.color;
                     color.a = state.alpha;
-                    startColor.color = color;
-                    main.startColor = startColor; // we love unity
+                    main.startColor = new ParticleSystem.MinMaxGradient(color); // we love unity
                 }
                 if (state.startSize != -1) main.startSize = state.startSize;
                 if (state.startSpeed != -1) main.startSpeedMultiplier = state.startSpeed;
