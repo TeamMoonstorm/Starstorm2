@@ -77,13 +77,15 @@ namespace SS2.Components
                             Transform modelTransform = body.modelLocator.modelTransform;
                             if (modelTransform)
                             {
-                                TemporaryOverlay temporaryOverlay2 = modelTransform.gameObject.AddComponent<TemporaryOverlay>();
+                                TemporaryOverlayInstance temporaryOverlay2 = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
                                 temporaryOverlay2.duration = 0.67f;
                                 temporaryOverlay2.animateShaderAlpha = true;
                                 temporaryOverlay2.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
                                 temporaryOverlay2.destroyComponentOnEnd = true;
                                 temporaryOverlay2.originalMaterial = SS2Assets.LoadAsset<Material>("matTeleportOverlay", SS2Bundle.Indev);
-                                temporaryOverlay2.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
+
+                                // TODO: No longer needed post-SOTS, leaving in for now but need to remove later
+                                //temporaryOverlay2.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
                             }
                         }
 					}

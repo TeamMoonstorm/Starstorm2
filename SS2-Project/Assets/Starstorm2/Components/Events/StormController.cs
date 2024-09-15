@@ -68,11 +68,20 @@ namespace SS2.Components
         [Serializable]
         public struct StormVFX
         {
-            public R2API.DirectorAPI.Stage stageEnum;
+            public long stageEnum;
+            public R2API.DirectorAPI.StageSerde stageSerde;
             public string customStageName;
             public GameObject effectPrefab;
             public float cloudHeight;
         }
+        private void OnValidate()
+        {
+            for(int i = 0; i < eventVFX.Length; i++)
+            {
+                eventVFX[i].stageSerde.Value = eventVFX[i].stageEnum;
+            }
+        }
+
         public StormVFX[] eventVFX = Array.Empty<StormVFX>();
 
         private float endLerpIntensity;
@@ -229,7 +238,7 @@ namespace SS2.Components
             float cloudHeight = 100f;
             foreach(StormVFX vfx in this.eventVFX)
             {
-                if(DirectorAPI.GetStageEnumFromSceneDef(Stage.instance.sceneDef) == vfx.stageEnum)
+                if((long)DirectorAPI.GetStageEnumFromSceneDef(Stage.instance.sceneDef) == vfx.stageEnum)
                 {
                     effectPrefab = vfx.effectPrefab;
                     cloudHeight = vfx.cloudHeight;
