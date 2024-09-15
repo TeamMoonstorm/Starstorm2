@@ -1,4 +1,5 @@
-﻿using Assets.Starstorm2.ContentClasses;
+﻿
+using Assets.Starstorm2.ContentClasses;
 using MSU;
 using RoR2;
 using RoR2.ContentManagement;
@@ -32,7 +33,7 @@ namespace SS2.Survivors
             GameObject engiBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Engi/EngiBody.prefab").WaitForCompletion();
 
 
-            var modelTransform  = engiBodyPrefab.GetComponent<ModelLocator>().modelTransform;
+            var modelTransform = engiBodyPrefab.GetComponent<ModelLocator>().modelTransform;
             GameObject groundbox = survivorAssetCollection.FindAsset<GameObject>("HitboxGround");
             GameObject hopbox = survivorAssetCollection.FindAsset<GameObject>("HitboxHop");
 
@@ -55,7 +56,8 @@ namespace SS2.Survivors
             hbg2.hitBoxes = new HitBox[1];
             hbg2.hitBoxes[0] = hopbox.GetComponent<HitBox>();
 
-            engiPrefabExplosion = Addressables.LoadAssetAsync<GameObject>("RoR2/Junk/Engi/EngiConcussionExplosion.prefab").WaitForCompletion();
+            engiPrefabExplosion = Addressables.LoadAssetAsync<GameObject>("RoR2/Junk/Engi/EngiConcussionExplosion.prefab").WaitForCompletion(); //= PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>("RoR2/Junk/Engi/EngiConcussionExplosion.prefab").WaitForCompletion(), "engiDashExplosion");
+                                                                                                                                                //GameObject.Destroy(engiPrefabExplosion.GetComponent<EffectComponent>());
 
             //engiExplosionLeft = survivorAssetCollection.FindAsset<GameObject>("EngiConcussionExplosion").InstantiateClone("LeftExplosion");
             //engiExplosionRight = survivorAssetCollection.FindAsset<GameObject>("EngiConcussionExplosion").InstantiateClone("RightExplosion");
@@ -72,9 +74,6 @@ namespace SS2.Survivors
             SkillLocator skillLocator = engiBodyPrefab.GetComponent<SkillLocator>();
             SkillFamily skillFamilyPrimary = skillLocator.primary.skillFamily;
             SkillFamily skillFamilyUtility = skillLocator.utility.skillFamily;
-
-
-            Debug.Log("sdRD: " + sdRapidDisplacement);
 
             // If this is an alternate skill, use this code.
             // Here, we add our skill as a variant to the existing Skill Family.
@@ -101,16 +100,14 @@ namespace SS2.Survivors
 
         private void StopDoingThat(On.RoR2.EffectComponent.orig_Start orig, EffectComponent self)
         {
-            if(self && self.effectData != null && self.effectData.genericFloat == -23)
-            {
-                self.transform.localPosition = self.effectData.origin;
-                self.applyScale = true;
-                Debug.Log("oh my god that's the refrance !!! oh my god !!! i love startstorm !!!!!");
-            }
-            
 
             orig(self);
+            if (self && self.effectData != null && self.effectData.genericFloat == -23)
+            {
+                self.transform.localPosition = self.effectData.origin;
+                self.transform.localScale = new Vector3(self.effectData.scale, self.effectData.scale, self.effectData.scale);
 
+            }
         }
 
         private void EngiFocusDamageHook(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
@@ -120,18 +117,14 @@ namespace SS2.Survivors
             if (dmg || proc)
             {
                 int count = self.body.GetBuffCount(SS2Content.Buffs.bdEngiFocused);
-                Debug.Log("count " + count);
-                //Debug.Log("graaa can stack " + _buffDefEngiFocused.canStack + " |" + SS2Content.Buffs.bdEngiFocused.canStack);
                 if (proc && count < 5)
                 {
-                    Debug.Log("adding buff ");
                     SS2Util.RefreshAllBuffStacks(self.body, SS2Content.Buffs.bdEngiFocused, 5);
                     self.body.AddTimedBuffAuthority(SS2Content.Buffs.bdEngiFocused.buffIndex, 5);
 
                 }
                 else if (proc)
                 {
-                    Debug.Log("refrsjhes ");
                     SS2Util.RefreshAllBuffStacks(self.body, SS2Content.Buffs.bdEngiFocused, 5);
                 }
 
