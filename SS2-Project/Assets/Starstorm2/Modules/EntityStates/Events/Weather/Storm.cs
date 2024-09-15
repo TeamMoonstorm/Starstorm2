@@ -1,4 +1,5 @@
-﻿using SS2.Components;
+﻿
+using SS2.Components;
 using RoR2;
 using UnityEngine;
 using MSU;
@@ -8,6 +9,7 @@ using RoR2.UI;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Events;
+
 namespace EntityStates.Events
 {
     // being lazy. should be StormX : Storm and use entitystateconfigs
@@ -19,7 +21,7 @@ namespace EntityStates.Events
         private static float effectLerpDuration = 5f;
         private static SerializableEntityStateType textState = new SerializableEntityStateType(typeof(StormController.EtherealFadeIn));
         private static SerializableEntityStateType textState2 = new SerializableEntityStateType(typeof(StormController.EtherealBlinkIn)); // fuck my life
-        private static Color textColor = Color.gray;       
+        private static Color textColor = Color.gray;
         private static int bossEliteLevel = 4;
         private static int eliteLevel = 3;
         private static float eliteChancePerExtraLevelCoefficient = 2f;
@@ -38,7 +40,12 @@ namespace EntityStates.Events
         public float lerpDuration;
         public int stormLevel;
         public bool instantStorm;
+        private bool oldStorm;
 
+
+        private float oldStormMinDuration = 120;
+        private float oldStormMaxDuration = 180;
+        private float oldStormDuration;
         private UnityAction<GameObject> modifyMonsters;
         private UnityAction<GameObject> modifyBoss;
         public override void OnEnter()
@@ -46,27 +53,32 @@ namespace EntityStates.Events
             base.OnEnter();
 
 
-            bool skip = stormController.AttemptSkip();
-            GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
+
+
+            oldStorm = !SS2.Storm.ReworkedStorm;
+
+            if (oldStorm)
             {
-                eventToken = "ermmmm..... storm " + stormLevel,
-                eventColor = textColor,
-                textDuration = 6,
-            };
-            if (skip)
-            {              
-                this.stormLevel++;             
-                stormController.OnStormLevelCompleted(); /////////////////////////////////////////////////////////////////// lmao
-                request.eventToken = "ermmmm..... storm " + stormLevel;
-                request.customTextState = instantStorm ? textState2 : textState;
-                request.textDuration = 2;
+                oldStormDuration = UnityEngine.Random.Range(oldStormMinDuration, oldStormMaxDuration);
+                GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
+                {
+                    eventToken = GETDUMBASSTOKENDELETELATER() + "_START",
+                    eventColor = textColor,
+                    textDuration = 6,
+                };
+                GameplayEventTextController.Instance.EnqueueNewTextRequest(request);
             }
-            GameplayEventTextController.Instance.EnqueueNewTextRequest(request);
-            
-            if(instantStorm)
-                this.stormController.StartLerp(stormLevel, 0);
             else
-                this.stormController.StartLerp(stormLevel, lerpDuration);
+            {
+                GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
+                {
+                    eventToken = "ermmmm..... storm " + stormLevel,
+                    eventColor = textColor,
+                    textDuration = 6,
+                };
+                GameplayEventTextController.Instance.EnqueueNewTextRequest(request);
+            }
+            this.stormController.StartLerp(stormLevel, lerpDuration);
 
 
             isPermanent = stormController.IsPermanent && this.stormLevel == stormController.MaxStormLevel;
@@ -150,29 +162,69 @@ namespace EntityStates.Events
             // im stupid or what
             this.eliteChanceStopwatch -= Time.fixedDeltaTime;
             eliteChanceTimer += Time.fixedDeltaTime;
-            if(eliteChanceStopwatch <= 0)
-            {               
+            if (eliteChanceStopwatch <= 0)
+            {
                 eliteChanceStopwatch += UnityEngine.Random.Range(minEliteChanceInterval, maxEliteChanceInterval);
                 eliteChance += eliteChancePerSecond * eliteChanceTimer;
                 eliteChanceTimer = 0;
             }
-            this.chargeStopwatch -= Time.fixedDeltaTime;
-            if(this.chargeStopwatch <= 0 && ShouldCharge())
+            if (oldStorm)
             {
-                this.chargeStopwatch = chargeInterval; 
-                float charge = CalculateCharge(chargeInterval);
-                this.charge += charge;
-                this.stormController.AddCharge(charge);
+                if (base.fixedAge >= oldStormDuration)
+                {
+                    GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
+                    {
+                        eventToken = GETDUMBASSTOKENDELETELATER() + "_END",
+                        eventColor = textColor,
+                        textDuration = 6,
+                    };
+                    GameplayEventTextController.Instance.EnqueueNewTextRequest(request);
+                    outer.SetNextState(new Calm());
+                }
+            }
+            else
+            {
+                this.chargeStopwatch -= Time.fixedDeltaTime;
+                if (this.chargeStopwatch <= 0 && ShouldCharge())
+                {
+                    this.chargeStopwatch = chargeInterval;
+                    float charge = CalculateCharge(chargeInterval);
+                    this.charge += charge;
+                    this.stormController.AddCharge(charge);
+                }
+
+                if (!isPermanent && charge >= 100f)
+                {
+                    this.stormController.OnStormLevelCompleted();
+                    outer.SetNextState(new Storm { stormLevel = stormLevel + 1, lerpDuration = 8f });
+                    return;
+                }
             }
 
-            if (!isPermanent && charge >= 100f)
-            {
-                this.stormController.OnStormLevelCompleted();
-                outer.SetNextState(new Storm { stormLevel = stormLevel + 1, lerpDuration = 8f });
-                return;
-            }               
         }
 
+        private string GETDUMBASSTOKENDELETELATER()
+        {
+            string fuk;
+            switch (R2API.DirectorAPI.GetStageEnumFromSceneDef(Stage.instance.sceneDef))
+            {
+                case R2API.DirectorAPI.Stage.RallypointDelta:
+                case R2API.DirectorAPI.Stage.SiphonedForest:
+                    fuk = "SS2_EVENT_BLIZZARD";
+                    break;
+                case R2API.DirectorAPI.Stage.AbyssalDepths:
+                case R2API.DirectorAPI.Stage.ScorchedAcres:
+                    fuk = "SS2_EVENT_ASHSTORM";
+                    break;
+                case R2API.DirectorAPI.Stage.AbandonedAqueduct:
+                    fuk = "SS2_EVENT_SANDSTORM";
+                    break;
+                default:
+                    fuk = "SS2_EVENT_THUNDERSTORM";
+                    break;
+            }
+            return fuk;
+        }
         private bool ShouldCharge()
         {
             bool shouldCharge = !TeleporterInteraction.instance;
@@ -195,7 +247,6 @@ namespace EntityStates.Events
         public override void OnExit()
         {
             base.OnExit();
-            SS2Log.Info($"Storm level finished in {fixedAge} seconds.");
 
             CharacterBody.onBodyStartGlobal -= BuffEnemy;
 
@@ -205,14 +256,18 @@ namespace EntityStates.Events
             {
                 bossDirector.onSpawnedServer.RemoveListener(modifyBoss);
             }
-            //foreach (CombatDirector combatDirector in CombatDirector.instancesList)
-            //{
-            //    if (combatDirector != bossDirector)
-            //        combatDirector.onSpawnedServer.RemoveListener(modifyMonsters);
-            //}
+            if (oldStorm)
+            {
+                foreach (CombatDirector combatDirector in CombatDirector.instancesList)
+                {
+                    if (combatDirector != bossDirector)
+                        combatDirector.onSpawnedServer.RemoveListener(modifyMonsters);
+                }
+            }
+
         }
 
-        
+
 
         public override void OnSerialize(NetworkWriter writer)
         {

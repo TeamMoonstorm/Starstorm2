@@ -3,15 +3,29 @@ using RoR2;
 using RoR2.ContentManagement;
 using R2API;
 using System.Collections;
+using MSU.Config;
+using RiskOfOptions;
 namespace SS2
 {
     public class Storm// : SS2Event
     {
+        public static ConfiguredBool ReworkedStorm = SS2Config.ConfigFactory.MakeConfiguredBool(false, b =>
+        {
+            b.Section = "Events";
+            b.Key = "Enable Reworked Storms";
+            b.Description = "Enables Starstorm 2's unfinished Storm rework, which will be shipped fully with version 0.7.0.";
+            b.ConfigFile = SS2Config.ConfigMain;
+            //b.CheckBoxConfig = new CheckBoxConfig
+            //{
+            //    restartRequired = true
+            //};
+        }).DoConfigure();
+
         public static IEnumerator Init()
         {
             R2API.RecalculateStatsAPI.GetStatCoefficients += AddStormBuff;
             ContentUtil.AddContentFromAssetCollection(SS2Content.SS2ContentPack, SS2Assets.LoadAsset<ExtendedAssetCollection>("acStorm", SS2Bundle.Events));
-            yield break;      
+            yield break;
         }
 
         private static void AddStormBuff(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)

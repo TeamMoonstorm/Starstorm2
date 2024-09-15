@@ -1,4 +1,5 @@
-﻿using SS2.Components;
+﻿
+using SS2.Components;
 using RoR2;
 using UnityEngine;
 using MSU;
@@ -21,21 +22,17 @@ namespace EntityStates.Events
         private float chargeFromTime;
 
         private float totalMultiplier;
+
+        private bool oldStorm;
         public override void OnEnter()
         {
             base.OnEnter();
             this.stormController.StartLerp(0, 5f);
-            if (stormController.AttemptSkip()) // TEMPORARY. FUUUUUUUUUCK
-            {
-                this.outer.SetNextState(new Storm { stormLevel = 1, lerpDuration = 15f, instantStorm = true });
-                return;
-            }
-
 
             this.totalMultiplier = StormController.chargeRng.RangeFloat(1, 1 + chargeVariance);
             GlobalEventManager.onCharacterDeathGlobal += AddCharge;
 
-            
+            oldStorm = !SS2.Storm.ReworkedStorm.Value;
         }
 
 
@@ -70,6 +67,11 @@ namespace EntityStates.Events
             if (charge >= 100f)
             {
                 this.stormController.OnStormLevelCompleted();
+                if (oldStorm)
+                {
+                    outer.SetNextState(new Storm { stormLevel = 3, lerpDuration = 10f });
+                    return;
+                }
                 outer.SetNextState(new Storm { stormLevel = 1, lerpDuration = 15f });
                 return;
             }
@@ -106,11 +108,6 @@ namespace EntityStates.Events
         {
             base.OnExit();
             GlobalEventManager.onCharacterDeathGlobal -= AddCharge;
-
-            SS2Log.Info($"Storm level finished in {fixedAge} seconds.");
-            SS2Log.Info($"Charge from kills = {chargeFromKills}");
-            SS2Log.Info($"Charge form time = {chargeFromTime}");
-            SS2Log.Info($"TotalMultiplier = {totalMultiplier}");
         }
     }
 }
