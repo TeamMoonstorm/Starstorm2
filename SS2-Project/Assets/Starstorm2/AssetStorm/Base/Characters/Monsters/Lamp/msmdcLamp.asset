@@ -13,11 +13,14 @@ MonoBehaviour:
   m_Name: msmdcLamp
   m_EditorClassIdentifier: 
   _serializedCardPairs:
-  - stageEnum: 8
+  - stage:
+      Value: 8
+    stageEnum: 8
     customStageNames: []
     monsterCategory: 2
     customCategoryWeight: 0
     customCategoryName: 
+    requiredExpansions: []
     card:
       spawnCard:
         _asset: {fileID: 11400000, guid: a9c2b1f4d4793624386583c7b4f288d0, type: 2}
@@ -35,11 +38,14 @@ MonoBehaviour:
         _asset: {fileID: 0}
         _address: 
         _useDirectReference: 0
-  - stageEnum: 4096
+  - stage:
+      Value: 4096
+    stageEnum: 4096
     customStageNames: []
     monsterCategory: 2
     customCategoryWeight: 0
     customCategoryName: 
+    requiredExpansions: []
     card:
       spawnCard:
         _asset: {fileID: 11400000, guid: a9c2b1f4d4793624386583c7b4f288d0, type: 2}
@@ -57,11 +63,14 @@ MonoBehaviour:
         _asset: {fileID: 0}
         _address: 
         _useDirectReference: 0
-  - stageEnum: 131072
+  - stage:
+      Value: 131072
+    stageEnum: 131072
     customStageNames: []
     monsterCategory: 2
     customCategoryWeight: 0
     customCategoryName: 
+    requiredExpansions: []
     card:
       spawnCard:
         _asset: {fileID: 11400000, guid: a9c2b1f4d4793624386583c7b4f288d0, type: 2}
