@@ -118,7 +118,7 @@ namespace SS2.Components
             this.SetEffectIntensity(this.effectIntensity);
 
 #if DEBUG
-            shouldShowObjective = true;
+            //shouldShowObjective = true;
 #endif
 
             stormStartTime = Run.FixedTimeStamp.now + UnityEngine.Random.Range(180, 360); // TODO: Event director that handles this. this fucking sux lol

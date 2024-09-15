@@ -187,11 +187,11 @@ namespace SS2.Survivors
                     ))
                 {
                     if (c.TryGotoNext(MoveType.After,
-                    x => x.MatchLdloc(8)   //flag 5, this is checked before final Execute damage calculations.
+                    x => x.MatchLdloc(9)   //flag 5, this is checked before final Execute damage calculations.
                     ))
                     {
                         c.Emit(OpCodes.Ldarg_0);//self
-                        c.Emit(OpCodes.Ldloc, 53);//execute fraction
+                        c.Emit(OpCodes.Ldloc, 59);//execute fraction
                         c.EmitDelegate<Func<HealthComponent, float, float>>((self, executeFraction) =>
                         {
                             if (self.body.HasBuff(SS2Content.Buffs.BuffFear))
@@ -201,7 +201,7 @@ namespace SS2.Survivors
                             }
                             return executeFraction;
                         });
-                        c.Emit(OpCodes.Stloc, 53);
+                        c.Emit(OpCodes.Stloc, 59);
 
                         error = false;
                     }
