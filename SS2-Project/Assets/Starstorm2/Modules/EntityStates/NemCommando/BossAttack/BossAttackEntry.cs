@@ -97,13 +97,15 @@ namespace EntityStates.Nemmando
             Transform modelTransform = GetModelTransform();
             if (modelTransform)
             {
-                TemporaryOverlay temporaryOverlay = modelTransform.gameObject.AddComponent<TemporaryOverlay>();
+                TemporaryOverlayInstance temporaryOverlay = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
                 temporaryOverlay.duration = 1.5f * duration;
                 temporaryOverlay.animateShaderAlpha = true;
                 temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
                 temporaryOverlay.destroyComponentOnEnd = true;
                 temporaryOverlay.originalMaterial = Resources.Load<Material>("Materials/matDoppelganger");
-                temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
+
+                // TODO: No longer needed post-SOTS, leaving in for now but need to remove later
+                // temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
             }
         }
 

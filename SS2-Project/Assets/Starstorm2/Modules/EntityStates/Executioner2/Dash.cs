@@ -74,7 +74,7 @@ namespace EntityStates.Executioner2
             Transform modelTransform = GetModelTransform();
             if (modelTransform)
             {
-                TemporaryOverlay temporaryOverlay = modelTransform.gameObject.AddComponent<TemporaryOverlay>();
+                TemporaryOverlayInstance temporaryOverlay = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
                 // yknow i probably should have done !skinNameToken so its easier to understand but this works and i dont wanna change it so idk - b
                 if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
                 {
@@ -99,7 +99,8 @@ namespace EntityStates.Executioner2
                     temporaryOverlay.originalMaterial = Addressables.LoadAssetAsync<Material>("RoR2/Base/Huntress/matHuntressFlashBright.mat").WaitForCompletion();
                 }
 
-                temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
+                // TODO: No longer needed post-SOTS, leaving in for now but need to remove later
+                //temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
             }
         }
 
