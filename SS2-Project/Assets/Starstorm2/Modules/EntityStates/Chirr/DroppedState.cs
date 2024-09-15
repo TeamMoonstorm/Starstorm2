@@ -76,9 +76,10 @@ namespace EntityStates.Chirr
 			
 			if(base.characterMotor)
             {
+				KinematicCharacterController.KinematicCharacterSystem.UnregisterCharacterMotor(base.characterMotor.Motor);
 				bodyWasPlayer = base.characterMotor.Motor.playerCharacter;
 				base.characterMotor.Motor.playerCharacter = true; // FUCK YOU HOPOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO I MEAN GEARBOX
-
+				KinematicCharacterController.KinematicCharacterSystem.RegisterCharacterMotor(base.characterMotor.Motor);
 				base.characterMotor.onMovementHit += DoSplashDamage;
 				base.characterMotor.disableAirControlUntilCollision = true;
                 base.characterMotor.velocity = initialVelocity;
@@ -131,7 +132,7 @@ namespace EntityStates.Chirr
 		// ^^^ would using another RPC call instead of syncvarhook for victimBodyObject make the timing correct?
 		private void ReleaseLatencyFixTEMP(VehicleSeat.PassengerInfo _) 
         {
-			SS2.SS2Log.Warning("ReleaseLatencyFixTEMP: Setting velocity to " + this.initialVelocity);
+			//SS2.SS2Log.Warning("ReleaseLatencyFixTEMP: Setting velocity to " + this.initialVelocity);
 			if (base.characterMotor)
 				base.characterMotor.velocity = initialVelocity;
 			else if (base.rigidbody)
@@ -153,7 +154,9 @@ namespace EntityStates.Chirr
 
 			if (base.characterMotor)
             {
+				KinematicCharacterController.KinematicCharacterSystem.UnregisterCharacterMotor(base.characterMotor.Motor);
 				base.characterMotor.Motor.playerCharacter = bodyWasPlayer;
+				KinematicCharacterController.KinematicCharacterSystem.RegisterCharacterMotor(base.characterMotor.Motor);
 				base.characterMotor.onMovementHit -= DoSplashDamage;
 				base.characterMotor.useGravity = bodyHadGravity;
 				base.characterMotor.gravityParameters = this.gravParams;
