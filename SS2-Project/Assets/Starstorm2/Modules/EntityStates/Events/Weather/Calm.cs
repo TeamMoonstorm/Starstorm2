@@ -97,6 +97,7 @@ namespace EntityStates.Events
 
         private float fuckingduration()
         {
+            if (Run.instance.stageClearCount < 3) return Mathf.Infinity; // >:(
             float stageCount = Run.instance.stageClearCount + 1;
             float minutesToStorm = (-13f * stageCount) / (stageCount + 1) + 13f;
             float variance = chargeVariance * minutesToStorm;
