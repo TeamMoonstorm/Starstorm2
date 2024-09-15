@@ -295,6 +295,7 @@ namespace SS2.Items
         {
             public override void Begin()
             {
+                if (duration <= 0) duration = 0.01f; //??????????????????????????
                 base.duration = duration;
                 EffectData effectData = new EffectData
                 {

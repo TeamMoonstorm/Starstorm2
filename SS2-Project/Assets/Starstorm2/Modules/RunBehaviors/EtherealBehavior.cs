@@ -97,25 +97,13 @@ namespace SS2.Components
             etherealsCompleted = 0;
             storedScalingValue = DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).scalingValue;
             teleIsEthereal = false;
-            Run.ambientLevelCap = storedLevelCap;
 
-            //TeleporterInteraction.onTeleporterBeginChargingGlobal += TeleporterInteraction_onTeleporterBeginChargingGlobal;
-            Run.onRunDestroyGlobal += Run_onRunDestroyGlobal;
-            TeleporterInteraction.onTeleporterChargedGlobal += TeleporterInteraction_onTeleporterChargedGlobal;
-            On.RoR2.TeleporterInteraction.Start += TeleporterInteraction_Start;
-            On.RoR2.SceneDirector.Start += SceneDirector_Start;
-            On.RoR2.TeleporterInteraction.OnBossDirectorSpawnedMonsterServer += TeleporterInteraction_OnBossDirectorSpawnedMonsterServer;
         }
 
 
         private void OnDestroy()
         {
             //TeleporterInteraction.onTeleporterBeginChargingGlobal -= TeleporterInteraction_onTeleporterBeginChargingGlobal;
-            Run.onRunDestroyGlobal -= Run_onRunDestroyGlobal;
-            TeleporterInteraction.onTeleporterChargedGlobal -= TeleporterInteraction_onTeleporterChargedGlobal;
-            On.RoR2.TeleporterInteraction.Start -= TeleporterInteraction_Start;
-            On.RoR2.SceneDirector.Start -= SceneDirector_Start;
-            On.RoR2.TeleporterInteraction.OnBossDirectorSpawnedMonsterServer -= TeleporterInteraction_OnBossDirectorSpawnedMonsterServer;
         }
 
         private void Run_onRunDestroyGlobal(Run run)

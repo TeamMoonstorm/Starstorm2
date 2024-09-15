@@ -1,5 +1,4 @@
-﻿
-using SS2.Components;
+﻿using SS2.Components;
 using RoR2;
 using UnityEngine;
 using MSU;
@@ -42,7 +41,7 @@ namespace EntityStates.Events
         public bool instantStorm;
         private bool oldStorm;
 
-
+        private static float oldstormelitemutlifewafa = 0.67f;
         private float oldStormMinDuration = 120;
         private float oldStormMaxDuration = 180;
         private float oldStormDuration;
@@ -111,7 +110,9 @@ namespace EntityStates.Events
         private void ModifySpawnedMasters(GameObject masterObject)
         {
             int extraLevels = this.stormLevel - eliteLevel + 1;
-            if (Util.CheckRoll(eliteChance * extraLevels * eliteChancePerExtraLevelCoefficient))
+            float chance = eliteChance * extraLevels * eliteChancePerExtraLevelCoefficient;
+            if (oldStorm) chance *= oldstormelitemutlifewafa;
+            if (Util.CheckRoll(chance))
             {
                 eliteChance /= 2f;
                 CreateStormElite(masterObject);
@@ -179,7 +180,16 @@ namespace EntityStates.Events
                         textDuration = 6,
                     };
                     GameplayEventTextController.Instance.EnqueueNewTextRequest(request);
-                    outer.SetNextState(new Calm());
+                    outer.SetNextState(new Calm { thing = 2f });
+
+                    var enemies = TeamComponent.GetTeamMembers(TeamIndex.Monster).Concat(TeamComponent.GetTeamMembers(TeamIndex.Lunar)).Concat(TeamComponent.GetTeamMembers(TeamIndex.Void));
+                    foreach (var teamMember in enemies)
+                    {
+                        int buffCount = teamMember.body.GetBuffCount(SS2Content.Buffs.BuffStorm);
+                        for (int i = 0; i < buffCount; i++)
+                            teamMember.body.RemoveBuff(SS2Content.Buffs.BuffStorm);
+
+                    }
                 }
             }
             else
