@@ -26,6 +26,7 @@ namespace EntityStates.Chirr
 		private bool bodyHadGravity = true;
 		private bool bodyWasKinematic = true;
 		private bool bodyCouldTakeImpactDamage = true;
+		private bool bodyWasPlayer = false;
 		private CharacterGravityParameters gravParams;
 		private Rigidbody tempRigidbody;
 		private SphereCollider tempSphereCollider;
@@ -70,10 +71,15 @@ namespace EntityStates.Chirr
                 }
 			}
 
+
+
 			
 			if(base.characterMotor)
             {
-                base.characterMotor.onMovementHit += DoSplashDamage;
+				bodyWasPlayer = base.characterMotor.Motor.playerCharacter;
+				base.characterMotor.Motor.playerCharacter = true; // FUCK YOU HOPOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO I MEAN GEARBOX
+
+				base.characterMotor.onMovementHit += DoSplashDamage;
 				base.characterMotor.disableAirControlUntilCollision = true;
                 base.characterMotor.velocity = initialVelocity;
 				base.characterMotor.useGravity = true;				
@@ -147,6 +153,7 @@ namespace EntityStates.Chirr
 
 			if (base.characterMotor)
             {
+				base.characterMotor.Motor.playerCharacter = bodyWasPlayer;
 				base.characterMotor.onMovementHit -= DoSplashDamage;
 				base.characterMotor.useGravity = bodyHadGravity;
 				base.characterMotor.gravityParameters = this.gravParams;
