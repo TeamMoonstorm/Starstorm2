@@ -13,11 +13,14 @@ MonoBehaviour:
   m_Name: msmdcLampBossChained
   m_EditorClassIdentifier: 
   _serializedCardPairs:
-  - stageEnum: 64
+  - stage:
+      Value: 0
+    stageEnum: 64
     customStageNames: []
     monsterCategory: 4
     customCategoryWeight: 0
     customCategoryName: 
+    requiredExpansions: []
     card:
       spawnCard:
         _asset: {fileID: 11400000, guid: 42ff2026df39e6849a314684223a2959, type: 2}

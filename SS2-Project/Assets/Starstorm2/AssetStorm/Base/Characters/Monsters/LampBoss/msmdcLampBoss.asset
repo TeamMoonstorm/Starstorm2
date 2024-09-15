@@ -13,12 +13,15 @@ MonoBehaviour:
   m_Name: msmdcLampBoss
   m_EditorClassIdentifier: 
   _serializedCardPairs:
-  - stageEnum: 1
+  - stage:
+      Value: 1
+    stageEnum: 1
     customStageNames:
     - fblscene
     monsterCategory: 4
     customCategoryWeight: 0
     customCategoryName: 
+    requiredExpansions: []
     card:
       spawnCard:
         _asset: {fileID: 11400000, guid: a1c43b746eeff5348ae339604fe3a4a0, type: 2}
@@ -36,11 +39,14 @@ MonoBehaviour:
         _asset: {fileID: 0}
         _address: 
         _useDirectReference: 0
-  - stageEnum: 4
+  - stage:
+      Value: 4
+    stageEnum: 4
     customStageNames: []
     monsterCategory: 4
     customCategoryWeight: 0
     customCategoryName: 
+    requiredExpansions: []
     card:
       spawnCard:
         _asset: {fileID: 11400000, guid: a1c43b746eeff5348ae339604fe3a4a0, type: 2}
@@ -58,11 +64,14 @@ MonoBehaviour:
         _asset: {fileID: 0}
         _address: 
         _useDirectReference: 0
-  - stageEnum: 8
+  - stage:
+      Value: 8
+    stageEnum: 8
     customStageNames: []
     monsterCategory: 4
     customCategoryWeight: 0
     customCategoryName: 
+    requiredExpansions: []
     card:
       spawnCard:
         _asset: {fileID: 11400000, guid: a1c43b746eeff5348ae339604fe3a4a0, type: 2}
@@ -80,11 +89,14 @@ MonoBehaviour:
         _asset: {fileID: 0}
         _address: 
         _useDirectReference: 0
-  - stageEnum: 32
+  - stage:
+      Value: 32
+    stageEnum: 32
     customStageNames: []
     monsterCategory: 4
     customCategoryWeight: 0
     customCategoryName: 
+    requiredExpansions: []
     card:
       spawnCard:
         _asset: {fileID: 11400000, guid: a1c43b746eeff5348ae339604fe3a4a0, type: 2}
@@ -102,11 +114,14 @@ MonoBehaviour:
         _asset: {fileID: 0}
         _address: 
         _useDirectReference: 0
-  - stageEnum: 4096
+  - stage:
+      Value: 4096
+    stageEnum: 4096
     customStageNames: []
     monsterCategory: 4
     customCategoryWeight: 0
     customCategoryName: 
+    requiredExpansions: []
     card:
       spawnCard:
         _asset: {fileID: 11400000, guid: a1c43b746eeff5348ae339604fe3a4a0, type: 2}
@@ -124,11 +139,14 @@ MonoBehaviour:
         _asset: {fileID: 0}
         _address: 
         _useDirectReference: 0
-  - stageEnum: 16384
+  - stage:
+      Value: 16384
+    stageEnum: 16384
     customStageNames: []
     monsterCategory: 4
     customCategoryWeight: 0
     customCategoryName: 
+    requiredExpansions: []
     card:
       spawnCard:
         _asset: {fileID: 11400000, guid: a1c43b746eeff5348ae339604fe3a4a0, type: 2}
@@ -146,11 +164,14 @@ MonoBehaviour:
         _asset: {fileID: 0}
         _address: 
         _useDirectReference: 0
-  - stageEnum: 32768
+  - stage:
+      Value: 32768
+    stageEnum: 32768
     customStageNames: []
     monsterCategory: 4
     customCategoryWeight: 0
     customCategoryName: 
+    requiredExpansions: []
     card:
       spawnCard:
         _asset: {fileID: 11400000, guid: a1c43b746eeff5348ae339604fe3a4a0, type: 2}
@@ -168,11 +189,14 @@ MonoBehaviour:
         _asset: {fileID: 0}
         _address: 
         _useDirectReference: 0
-  - stageEnum: 131072
+  - stage:
+      Value: 131072
+    stageEnum: 131072
     customStageNames: []
     monsterCategory: 4
     customCategoryWeight: 0
     customCategoryName: 
+    requiredExpansions: []
     card:
       spawnCard:
         _asset: {fileID: 11400000, guid: a1c43b746eeff5348ae339604fe3a4a0, type: 2}
@@ -190,11 +214,14 @@ MonoBehaviour:
         _asset: {fileID: 0}
         _address: 
         _useDirectReference: 0
-  - stageEnum: 2097152
+  - stage:
+      Value: 2097152
+    stageEnum: 2097152
     customStageNames: []
     monsterCategory: 4
     customCategoryWeight: 0
     customCategoryName: 
+    requiredExpansions: []
     card:
       spawnCard:
         _asset: {fileID: 11400000, guid: a1c43b746eeff5348ae339604fe3a4a0, type: 2}
@@ -212,11 +239,14 @@ MonoBehaviour:
         _asset: {fileID: 0}
         _address: 
         _useDirectReference: 0
-  - stageEnum: 33554432
+  - stage:
+      Value: 33554432
+    stageEnum: 33554432
     customStageNames: []
     monsterCategory: 4
     customCategoryWeight: 0
     customCategoryName: 
+    requiredExpansions: []
     card:
       spawnCard:
         _asset: {fileID: 11400000, guid: a1c43b746eeff5348ae339604fe3a4a0, type: 2}

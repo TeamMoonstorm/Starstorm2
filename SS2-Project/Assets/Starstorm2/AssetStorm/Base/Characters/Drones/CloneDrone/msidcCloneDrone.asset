@@ -13,12 +13,15 @@ MonoBehaviour:
   m_Name: msidcCloneDrone
   m_EditorClassIdentifier: 
   _serializedCardPairs:
-  - stageEnum: 1275068481
+  - stage:
+      Value: 1275068481
+    stageEnum: 1275068481
     customStageNames:
     - FBLScene
     interactableCategory: 5
     customCategoryWeight: 0
     customCategoryName: 
+    requiredExpansions: []
     card:
       spawnCard:
         _asset: {fileID: 11400000, guid: db50f44ce7e65dd4dab947ea99fdfbaa, type: 2}
@@ -36,11 +39,14 @@ MonoBehaviour:
         _asset: {fileID: 0}
         _address: 
         _useDirectReference: 0
-  - stageEnum: 147840
+  - stage:
+      Value: 147840
+    stageEnum: 147840
     customStageNames: []
     interactableCategory: 5
     customCategoryWeight: 0
     customCategoryName: 
+    requiredExpansions: []
     card:
       spawnCard:
         _asset: {fileID: 11400000, guid: db50f44ce7e65dd4dab947ea99fdfbaa, type: 2}

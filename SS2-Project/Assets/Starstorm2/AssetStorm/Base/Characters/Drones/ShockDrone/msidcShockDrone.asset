@@ -13,11 +13,14 @@ MonoBehaviour:
   m_Name: msidcShockDrone
   m_EditorClassIdentifier: 
   _serializedCardPairs:
-  - stageEnum: 147794
+  - stage:
+      Value: 147794
+    stageEnum: 147794
     customStageNames: []
     interactableCategory: 5
     customCategoryWeight: 0
     customCategoryName: 
+    requiredExpansions: []
     card:
       spawnCard:
         _asset: {fileID: 11400000, guid: c19ed6ace57ce81458342d5bb3a4bebc, type: 2}
@@ -35,11 +38,14 @@ MonoBehaviour:
         _asset: {fileID: 0}
         _address: 
         _useDirectReference: 0
-  - stageEnum: 201326632
+  - stage:
+      Value: 201326632
+    stageEnum: 201326632
     customStageNames: []
     interactableCategory: 5
     customCategoryWeight: 0
     customCategoryName: 
+    requiredExpansions: []
     card:
       spawnCard:
         _asset: {fileID: 11400000, guid: c19ed6ace57ce81458342d5bb3a4bebc, type: 2}
