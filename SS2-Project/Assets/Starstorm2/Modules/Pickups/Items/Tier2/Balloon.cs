@@ -49,7 +49,7 @@ namespace Assets.Starstorm2.Modules.Pickups.Items.Tier2
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return true;
+            return false;
         }
     }
 }

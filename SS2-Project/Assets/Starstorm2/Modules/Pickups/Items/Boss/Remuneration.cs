@@ -43,7 +43,7 @@ namespace SS2.Items
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return contentPack.survivorDefs.Find("survivorNemMerc");
+            return true;
         }
 
 
