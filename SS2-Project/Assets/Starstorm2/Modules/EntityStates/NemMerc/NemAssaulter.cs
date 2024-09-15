@@ -130,7 +130,7 @@ namespace EntityStates.NemMerc
 				base.characterMotor.Motor.RebuildCollidableLayers();
 				if (this.modelTransform)
 				{
-                    TemporaryOverlayInstance temporaryOverlay = TemporaryOverlayManager.AddOverlay(modelTransform.gameObjec);
+                    TemporaryOverlayInstance temporaryOverlay = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
                     temporaryOverlay.duration = 1.2f;
 					temporaryOverlay.animateShaderAlpha = true;
 					temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
