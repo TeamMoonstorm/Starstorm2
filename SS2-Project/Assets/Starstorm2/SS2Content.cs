@@ -117,14 +117,14 @@ namespace SS2
 
             var list = new List<SS2VanillaSurvivor>()
               {
-                new Commando(),
-                new Acrid(),
-                new Bandit(),
-                new Railgunner(),
+                //new Commando(),
+                //new Acrid(),
+                //new Bandit(),
+                //new Railgunner(),
                 new Engineer(),
-                new Captain(),
-                new Huntress(),
-                new Merc(),
+                //new Captain(),
+                //new Huntress(),
+                //new Merc(),
                 //new VoidFiend(),
                 //Add the rest
               };
