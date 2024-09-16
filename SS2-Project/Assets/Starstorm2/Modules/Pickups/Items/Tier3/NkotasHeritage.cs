@@ -68,14 +68,9 @@ namespace SS2.Items
                 HG.ArrayUtils.ArrayAppend(ref characterMasters, obj.master); //Should add the same master in case they level up multiple times... not sure if its ok?
                 return;
             }
-            if (!obj.gameObject.GetComponent<BabyToys.BabyToyToken>())
-            {
-                NkotasManager.ActivateSingle(obj);
-            }
-            else
-            {
-                //SS2Log.Debug("babys removal - ignoring level adjustment");
-            }
+
+            NkotasManager.ActivateSingle(obj);
+
         }
 
         public static class NkotasManager

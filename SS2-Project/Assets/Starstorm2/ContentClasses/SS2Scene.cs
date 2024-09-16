@@ -22,6 +22,12 @@ namespace SS2
 
         public SceneDef asset { get; protected set; }
 
+        public int regularProgressionSlot => throw new System.NotImplementedException();
+
+        public bool preLoop => throw new System.NotImplementedException();
+
+        public bool postLoop => throw new System.NotImplementedException();
+
         public virtual IEnumerator LoadContentAsync()
         {
             SS2AssetRequest<SceneAssetCollection> request = AssetRequest;

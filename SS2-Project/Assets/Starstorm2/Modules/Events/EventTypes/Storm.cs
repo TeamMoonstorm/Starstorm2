@@ -33,11 +33,23 @@ namespace SS2
             int stack = sender.GetBuffCount(SS2Content.Buffs.BuffStorm);
             if (stack > 0)
             {
-                args.armorAdd += 5f + 2.5f * (stack - 1);
-                //args.damageMultAdd += 0.1f * stack; // i dont like damage
-                args.attackSpeedMultAdd += 0.08f * (stack - 1);
-                args.moveSpeedMultAdd += 0.15f * stack;
-                args.cooldownMultAdd += 0.1f * stack;
+                if(ReworkedStorm.value)
+                {
+                    args.armorAdd += 5f + 2.5f * (stack - 1);
+                    //args.damageMultAdd += 0.1f * stack; // i dont like damage
+                    args.attackSpeedMultAdd += 0.08f * (stack - 1);
+                    args.moveSpeedMultAdd += 0.15f * stack;
+                    args.cooldownMultAdd += 0.1f * stack;
+                }
+                else
+                {
+                    args.armorAdd += 20f;
+                    //args.critAdd += 20f;
+                    args.damageMultAdd += 0.2f;
+                    args.attackSpeedMultAdd += 0.5f;
+                    args.moveSpeedMultAdd += 0.5f;
+                    args.cooldownMultAdd += 0.2f;
+                }
             }
 
         }

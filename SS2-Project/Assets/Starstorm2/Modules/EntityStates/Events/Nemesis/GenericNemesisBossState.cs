@@ -250,6 +250,8 @@ namespace EntityStates.Events
             onNemesisDefeatedGlobal?.Invoke(nemesisBossBody);
             // we dont want to go back to main state, since we only want one nemesis boss per stage
             //outer.SetNextStateToMain();
+            if (musicOverridePrefab)
+                musicTrack.track = outroTrack;
             outer.SetNextState(new IdleRestOfStage());
         }
 

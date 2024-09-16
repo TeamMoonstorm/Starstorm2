@@ -26,19 +26,19 @@ namespace SS2.Items
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Base amount of extra armor added.")]
         [FormatToken(token, 1)]
-        public static float baseArmor = 20;
+        public static float baseArmor = 30;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Amount of extra armor added per stack.")]
         [FormatToken(token, 2)]
-        public static float stackArmor = 10;
+        public static float stackArmor = 15;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Base amount of extra damage added. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 3)]
-        public static float baseDamage = .2f;
+        public static float baseDamage = .3f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Amount of extra damage added per stack. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 4)]
-        public static float stackDamage = .10f;
+        public static float stackDamage = .15f;
 
         
 
@@ -79,7 +79,7 @@ namespace SS2.Items
                 {
                     if (!sigilActive)
                     {
-                        //EffectManager.SimpleEffect(_effect, body.aimOrigin, Quaternion.identity, true);
+                        EffectManager.SimpleEffect(_effect, body.aimOrigin, Quaternion.identity, true);
                         Vector3 position = body.corePosition;
                         //float radius = 13f;
 

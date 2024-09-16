@@ -20,11 +20,11 @@ namespace SS2.Items
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configNameOverride = "Trematode Threshold", configDescOverride = "Amount of missing health needed for Trematode to proc. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
-        public static float missingHealthPercentage = 0.30f;
+        public static float missingHealthPercentage = 0.25f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configNameOverride = "Trematode Threshold Per Stack", configDescOverride = "Increase in missing health threshold, per stack. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
-        public static float missingHealthPercentagePerStack = 0.15f;
+        public static float missingHealthPercentagePerStack = 0.10f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Damage dealt by the Trematode debuff, per second. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
