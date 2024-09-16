@@ -14,11 +14,11 @@ namespace SS2.Items
         private const string token = "SS2_ITEM_UNIVERSALCHARGER_DESC";
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acUniversalCharger", SS2Bundle.Items);
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Time it takes for Universal Charger to recharge, in seconds.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Time it takes for Universal Charger to recharge, in seconds.")]
         [FormatToken(token, 0)]
         public static float baseCooldown = 18f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "How much faster Universal Charger recharges, per stack. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "How much faster Universal Charger recharges, per stack. (1 = 100%)")]
         [FormatToken(token, 1)]
         public static float cooldownReductionPerStack = 10f; // percent
 

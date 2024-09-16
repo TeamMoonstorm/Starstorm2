@@ -13,15 +13,15 @@ namespace SS2.Items
         private const string token = "SS2_ITEM_DROIDHEAD_DESC";
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acDroidHead", SS2Bundle.Items);
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Damage dealt by Security Drones, at base and per stack. Percentage (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Damage dealt by Security Drones, at base and per stack. Percentage (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float baseDamage = 1f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base life time of the Security Drone, in seconds.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Base life time of the Security Drone, in seconds.")]
         [FormatToken(token, 1)]
         public static float baseLifeTime = 20f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Life time of the Security Drone per stack, in seconds.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Life time of the Security Drone per stack, in seconds.")]
         [FormatToken(token, 2)]
         public static float stackLifeTime = 10f;
 

@@ -17,19 +17,19 @@ namespace SS2.Equipments
 
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acGreaterWarbanner", SS2Bundle.Equipments);
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of Extra Regeneration. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Amount of Extra Regeneration. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float extraRegeneration = 0.5f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of Extra Crit Chance. (100 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Amount of Extra Crit Chance. (100 = 100%)")]
         [FormatToken(token, 1)]
         public static float extraCrit = 20f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of Cooldown Reduction. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Amount of Cooldown Reduction. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
         public static float cooldownReduction = 0.5f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Max active warbanners for each character.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Max active warbanners for each character.")]
         [FormatToken(token, 3)]
         public static int maxGreaterBanners = 1;
 
@@ -140,7 +140,7 @@ namespace SS2.Equipments
             private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffGreaterBanner;
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
             {
-                if (CharacterBody.HasBuff(SS2Content.Buffs.BuffGreaterBanner))
+                if (characterBody.HasBuff(SS2Content.Buffs.BuffGreaterBanner))
                 {
                     args.critAdd += GreaterWarbanner.extraCrit;
                     args.regenMultAdd += GreaterWarbanner.extraRegeneration;

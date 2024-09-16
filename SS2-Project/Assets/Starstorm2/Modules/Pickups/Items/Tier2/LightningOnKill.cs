@@ -17,27 +17,27 @@ namespace SS2.Items
 
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acLightningOnKill", SS2Bundle.Items);
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Total damage of Man O' War's lightning. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Total damage of Man O' War's lightning. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float damageCoeff = 2f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Number of bounces.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Number of bounces.")]
         [FormatToken(token, 1)]
         public static int bounceBase = 3;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Number of bounces per stack.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Number of bounces per stack.")]
         [FormatToken(token, 2)]
         public static int bounceStack = 2;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Radius of Man O' War's lightning, in meters.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Radius of Man O' War's lightning, in meters.")]
         [FormatToken(token, 3)]
         public static float radiusBase = 20f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Radius of Man O' War's lightning per stack, in meters.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Radius of Man O' War's lightning per stack, in meters.")]
         [FormatToken(token, 4)]
         public static float radiusPerStack = 4f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Proc coefficient of damage dealt by Man o' War.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Proc coefficient of damage dealt by Man o' War.")]
         public static float procCo = 1f;
 
         private static GameObject _orbEffect;

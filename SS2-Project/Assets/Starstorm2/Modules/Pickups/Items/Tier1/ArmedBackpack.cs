@@ -11,15 +11,15 @@ namespace SS2.Items
     public sealed class ArmedBackpack : SS2Item
     {
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acArmedBackpack", SS2Bundle.Items);
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Damage dealt by the missle per stack. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Damage dealt by the missle per stack. (1 = 100%)")]
         [FormatToken("SS2_ITEM_ARMEDBACKPACK_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float backpackDamageCoeff = 4f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Proc multiplier per percentage of health lost. (1 = 100% of health fraction lost)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Proc multiplier per percentage of health lost. (1 = 100% of health fraction lost)")]
         [FormatToken("SS2_ITEM_ARMEDBACKPACK_DESC", 1)]
         public static float procMult = 2.5f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Minimum chance for fired missile. (1 = 1% chance)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Minimum chance for fired missile. (1 = 1% chance)")]
         [FormatToken("SS2_ITEM_ARMEDBACKPACK_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
         public static float procMinimum = 0;
 

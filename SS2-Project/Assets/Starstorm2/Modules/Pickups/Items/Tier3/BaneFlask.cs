@@ -18,15 +18,15 @@ namespace SS2.Items
         private BuffDef _baneBuffDef;
         public static DotController.DotIndex BaneDotIndex { get; private set; }
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Debuff Damage per Second. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Debuff Damage per Second. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float debuffDamage = .3f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Duration of applied Bane debuff. (1 = 1 second)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Duration of applied Bane debuff. (1 = 1 second)")]
         [FormatToken(token, 1)]
         public static float debuffDuration = 5;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Range of on-death AOE. For reference, Gasoline's base range is 12m. (1 = 1m)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Range of on-death AOE. For reference, Gasoline's base range is 12m. (1 = 1m)")]
         [FormatToken(token, 2)]
         public static float aoeRange = 15;
 

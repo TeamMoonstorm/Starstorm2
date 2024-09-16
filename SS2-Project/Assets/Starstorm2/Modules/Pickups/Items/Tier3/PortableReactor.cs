@@ -15,10 +15,10 @@ namespace SS2.Items
 
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acPortableReactor", SS2Bundle.Items);
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Duration of invulnerability from Portable Reactor. (1 = 1 second)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Duration of invulnerability from Portable Reactor. (1 = 1 second)")]
         [FormatToken(token, 0)]
         public static float invulnTime = 80f;
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Stacking duration of invulnerability. (1 = 1 second)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Stacking duration of invulnerability. (1 = 1 second)")]
         [FormatToken(token, 1)]
         public static float stackingInvuln = 40f;
 
@@ -72,8 +72,8 @@ namespace SS2.Items
             private GameObject bubbleEffect;
             private void OnEnable()
             {
-                bubbleEffect = GameObject.Instantiate(bubbleEffectPrefab, CharacterBody.coreTransform);
-                bubbleEffect.transform.localScale *= CharacterBody.radius;
+                bubbleEffect = GameObject.Instantiate(bubbleEffectPrefab, characterBody.coreTransform);
+                bubbleEffect.transform.localScale *= characterBody.radius;
             }
             private void OnDisable()
             {
@@ -81,22 +81,22 @@ namespace SS2.Items
 
                 EffectData effectData = new EffectData
                 {
-                    origin = this.CharacterBody.corePosition,
+                    origin = this.characterBody.corePosition,
                     rotation = Quaternion.identity,
-                    scale = this.CharacterBody.radius,
+                    scale = this.characterBody.radius,
                 };
-                effectData.SetNetworkedObjectReference(this.CharacterBody.gameObject);
+                effectData.SetNetworkedObjectReference(this.characterBody.gameObject);
                 EffectManager.SpawnEffect(endEffectPrefab, effectData, true);
             }
             
 
             public void OnIncomingDamageServer(DamageInfo damageInfo)
             {
-                if (!CharacterBody.HasBuff(SS2Content.Buffs.BuffReactor) || damageInfo.damageType == DamageType.VoidDeath) return;
+                if (!characterBody.HasBuff(SS2Content.Buffs.BuffReactor) || damageInfo.damageType == DamageType.VoidDeath) return;
 
                 damageInfo.rejected = true;
 
-                Vector3 direction = damageInfo.position - this.CharacterBody.corePosition;
+                Vector3 direction = damageInfo.position - this.characterBody.corePosition;
                 if (damageInfo.attacker)
                 {
                     CharacterBody CharacterBody = damageInfo.attacker.GetComponent<CharacterBody>();
@@ -105,11 +105,11 @@ namespace SS2.Items
                 }
                 EffectData effectData = new EffectData
                 {
-                    origin = this.CharacterBody.corePosition,
+                    origin = this.characterBody.corePosition,
                     rotation = Util.QuaternionSafeLookRotation(direction),
-                    scale = this.CharacterBody.radius,
+                    scale = this.characterBody.radius,
                 };
-                effectData.SetNetworkedObjectReference(this.CharacterBody.gameObject);
+                effectData.SetNetworkedObjectReference(this.characterBody.gameObject);
                 EffectManager.SpawnEffect(shieldEffectPrefab, effectData, true);
 
 

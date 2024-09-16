@@ -65,7 +65,7 @@ namespace EntityStates.Events
                     eventColor = textColor,
                     textDuration = 6,
                 };
-                GameplayEventTextController.Instance.EnqueueNewTextRequest(request);
+                GameplayEventTextController.instance.EnqueueNewTextRequest(request);
             }
             else
             {
@@ -75,7 +75,7 @@ namespace EntityStates.Events
                     eventColor = textColor,
                     textDuration = 6,
                 };
-                GameplayEventTextController.Instance.EnqueueNewTextRequest(request);
+                GameplayEventTextController.instance.EnqueueNewTextRequest(request);
             }
             this.stormController.StartLerp(stormLevel, lerpDuration);
 
@@ -179,7 +179,7 @@ namespace EntityStates.Events
                         eventColor = textColor,
                         textDuration = 6,
                     };
-                    GameplayEventTextController.Instance.EnqueueNewTextRequest(request);
+                    GameplayEventTextController.instance.EnqueueNewTextRequest(request);
                     outer.SetNextState(new Calm { thing = 2f });
 
                     var enemies = TeamComponent.GetTeamMembers(TeamIndex.Monster).Concat(TeamComponent.GetTeamMembers(TeamIndex.Lunar)).Concat(TeamComponent.GetTeamMembers(TeamIndex.Void));

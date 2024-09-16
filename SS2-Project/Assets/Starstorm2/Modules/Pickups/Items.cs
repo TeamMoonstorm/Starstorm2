@@ -13,16 +13,16 @@ namespace SS2.Modules
 {
     public sealed class Items : IContentPieceProvider<ItemDef>
     {
-        public ContentPack ContentPack => _contentPack;
+        public ContentPack contentPack => _contentPack;
         private ContentPack _contentPack;
 
         public static ConfiguredBool EnableItems = SS2Config.ConfigFactory.MakeConfiguredBool(true, b =>
         {
-            b.Section = "Enable All Items";
-            b.Key = "Enable All Items";
-            b.Description = "Enables Starstorm 2's items. Set to false to disable all items";
-            b.ConfigFile = SS2Config.ConfigItem;
-            b.CheckBoxConfig = new CheckBoxConfig
+            b.section = "Enable All Items";
+            b.key = "Enable All Items";
+            b.description = "Enables Starstorm 2's items. Set to false to disable all items";
+            b.configFile = SS2Config.ConfigItem;
+            b.checkBoxConfig = new CheckBoxConfig
             {
                 restartRequired = true,
             };
@@ -47,7 +47,7 @@ namespace SS2.Modules
                 return false;
             }
 
-            if (!item.IsAvailable(ContentPack))
+            if (!item.IsAvailable(contentPack))
                 return false;
 
             return true;

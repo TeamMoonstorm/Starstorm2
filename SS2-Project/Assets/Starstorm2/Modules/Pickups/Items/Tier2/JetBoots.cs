@@ -22,19 +22,19 @@ namespace SS2.Items
 
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acJetBoots", SS2Bundle.Items);
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base damage of Prototype Jet Boots' explosion. Burn damage deals an additional 50% of this value. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Base damage of Prototype Jet Boots' explosion. Burn damage deals an additional 50% of this value. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float baseDamage = 5f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base radius of Prototype Jet Boot's explosion, in meters.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Base radius of Prototype Jet Boot's explosion, in meters.")]
         [FormatToken(token, 1)]
         public static float baseRadius = 7.5f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Stacking radius of Prototype Jet Boots' explosion, in meters.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Stacking radius of Prototype Jet Boots' explosion, in meters.")]
         [FormatToken(token, 2)]
         public static float stackRadius = 5f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Cooldown of Prototype Jet Boots' bonus jump, in seconds.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Cooldown of Prototype Jet Boots' bonus jump, in seconds.")]
         [FormatToken(token, 3)]
         public static float jumpCooldown = 5f;
 

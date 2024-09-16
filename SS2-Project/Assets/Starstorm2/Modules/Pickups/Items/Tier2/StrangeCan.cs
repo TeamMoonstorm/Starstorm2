@@ -17,23 +17,23 @@ namespace SS2.Items
 
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acStrangeCan", SS2Bundle.Items);
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance for Intoxicate to be applied on hit. (1 = 1%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Chance for Intoxicate to be applied on hit. (1 = 1%)")]
         [FormatToken(token, 0)]
         public static float procChance = 10;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance for Intoxicate to be applied on hit, per stack of this item. (1 = 1%")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Chance for Intoxicate to be applied on hit, per stack of this item. (1 = 1%")]
         [FormatToken(token, 1)]
         public static float procChancePerStack = 5;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Damage per second, per stack of Intoxicate. (1 = 1%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Damage per second, per stack of Intoxicate. (1 = 1%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
         public static float damageCoefficient = .5f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Health restored when killing intoxicated enemies, per stack of Intoxicate.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Health restored when killing intoxicated enemies, per stack of Intoxicate.")]
         [FormatToken(token, 3)]
         public static float healAmount = 10;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Health restored when killing intoxicated enemies, per stack of Intoxicate, per stack of this item.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Health restored when killing intoxicated enemies, per stack of Intoxicate, per stack of this item.")]
         [FormatToken(token, 4)]
         public static float healAmountPerStack = 5;
 

@@ -74,37 +74,37 @@ namespace SS2.Equipments
 
             protected override void OnFirstStackGained()
             {
-                CharacterBody.baseJumpCount++;
-                CharacterBody.characterMotor.onHitGroundAuthority += fuck;
+                characterBody.baseJumpCount++;
+                characterBody.characterMotor.onHitGroundAuthority += fuck;
                 //CharacterBody.characterMotor.onHitGroundServer += RemoveBuff;
                 hasJumped = false;
             }
 
             public void FixedUpdate()
             {
-                if (CharacterBody.inputBank.jump.justPressed && !hasJumped)
+                if (characterBody.inputBank.jump.justPressed && !hasJumped)
                 {
-                    EffectManager.SimpleEffect(SS2Assets.LoadAsset<GameObject>("canExhaust", SS2Bundle.Equipments), CharacterBody.transform.position, CharacterBody.transform.rotation, false);
+                    EffectManager.SimpleEffect(SS2Assets.LoadAsset<GameObject>("canExhaust", SS2Bundle.Equipments), characterBody.transform.position, characterBody.transform.rotation, false);
                     hasJumped = true;
-                    CharacterBody.baseJumpCount--;
+                    characterBody.baseJumpCount--;
                 }
             }
 
             private void RemoveBuff(ref CharacterMotor.HitGroundInfo hitGroundInfo)
             {
-                CharacterBody.RemoveBuff(SS2Content.Buffs.bdCanJump);
+                characterBody.RemoveBuff(SS2Content.Buffs.bdCanJump);
             }
             private void fuck(ref CharacterMotor.HitGroundInfo hitGroundInfo)
             {
-                if (!hasJumped) CharacterBody.baseJumpCount--;
+                if (!hasJumped) characterBody.baseJumpCount--;
             }
 
             protected override void OnAllStacksLost()
             {
                 //CharacterBody.characterMotor.onHitGroundServer -= RemoveBuff;
-                CharacterBody.characterMotor.onHitGroundAuthority -= fuck;
+                characterBody.characterMotor.onHitGroundAuthority -= fuck;
                 if(!hasJumped)
-                    CharacterBody.baseJumpCount--;
+                    characterBody.baseJumpCount--;
             }
         }
     }

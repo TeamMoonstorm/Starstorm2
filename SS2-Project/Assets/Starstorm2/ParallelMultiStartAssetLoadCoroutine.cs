@@ -16,7 +16,7 @@ namespace SS2
 
         public void Start() => _internalCoroutineHelper.Start();
 
-        public bool IsDone => _internalCoroutineHelper.IsDone;
+        public bool IsDone => _internalCoroutineHelper.isDone;
 
         public void AddAssetToLoad<T>(string assetName, SS2Bundle bundle) where T : UnityEngine.Object
         {

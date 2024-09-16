@@ -36,7 +36,7 @@ namespace SS2.Components
         {
             Run.onRunStartGlobal += (run) =>
             {
-                if (NetworkServer.active && SS2.Events.EnableEvents.Value)
+                if (NetworkServer.active && SS2.Events.EnableEvents.value)
                 {
                     var go = Object.Instantiate(SS2Assets.LoadAsset<GameObject>("SS2EventDirector", SS2Bundle.Events), run.transform);
                     NetworkServer.Spawn(go);

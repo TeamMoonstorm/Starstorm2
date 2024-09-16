@@ -19,11 +19,11 @@ namespace SS2.Equipments
         public static SkillDef disabledSkill;// SS2Assets.LoadAsset<SkillDef>("DisabledSkill", SS2Bundle.Items);
 
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Radius of the White Flag's effect, in meters.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Radius of the White Flag's effect, in meters.")]
         [FormatToken(token, 0)]
         public static float flagRadius = 25f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Duration of White Flag when used, in seconds.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Duration of White Flag when used, in seconds.")]
         [FormatToken(token, 1)]
         public static float flagDuration = 15f;
 
@@ -68,40 +68,40 @@ namespace SS2.Equipments
             //captain is allowed to bomb mobs in the white flag zone because technically safe travels isnt in the zone :3
             private void OnEnable()
             {
-                if (CharacterBody.skillLocator)
+                if (characterBody.skillLocator)
                 {
-                    GenericSkill primary = CharacterBody.skillLocator.primary;
+                    GenericSkill primary = characterBody.skillLocator.primary;
                     if (primary && !(primary.skillDef is CaptainOrbitalSkillDef))// && !primary.skillDef.isCombatSkill)
                         primary.SetSkillOverride(this, disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
 
-                    GenericSkill secondary = CharacterBody.skillLocator.secondary;
+                    GenericSkill secondary = characterBody.skillLocator.secondary;
                     if (secondary && !(secondary.skillDef is CaptainOrbitalSkillDef))// && !secondary.skillDef.isCombatSkill)
                         secondary.SetSkillOverride(this, disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
 
-                    GenericSkill utility = CharacterBody.skillLocator.utility;
+                    GenericSkill utility = characterBody.skillLocator.utility;
                     if (utility && !(utility.skillDef is CaptainOrbitalSkillDef))// && !utility.skillDef.isCombatSkill)
                         utility.SetSkillOverride(this, disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
 
-                    GenericSkill special = CharacterBody.skillLocator.special;
+                    GenericSkill special = characterBody.skillLocator.special;
                     if (special && !(special.skillDef is CaptainOrbitalSkillDef))// && !special.skillDef.isCombatSkill)
                         special.SetSkillOverride(this, disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
                 }
             }
             private void OnDisable()
             {
-                if (CharacterBody.skillLocator)
+                if (characterBody.skillLocator)
                 {
-                    if (CharacterBody.skillLocator.primary)
-                        CharacterBody.skillLocator.primary.UnsetSkillOverride(this, disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
+                    if (characterBody.skillLocator.primary)
+                        characterBody.skillLocator.primary.UnsetSkillOverride(this, disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
 
-                    if (CharacterBody.skillLocator.secondary)
-                        CharacterBody.skillLocator.secondary.UnsetSkillOverride(this, disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
+                    if (characterBody.skillLocator.secondary)
+                        characterBody.skillLocator.secondary.UnsetSkillOverride(this, disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
 
-                    if (CharacterBody.skillLocator.utility)
-                        CharacterBody.skillLocator.utility.UnsetSkillOverride(this, disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
+                    if (characterBody.skillLocator.utility)
+                        characterBody.skillLocator.utility.UnsetSkillOverride(this, disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
 
-                    if (CharacterBody.skillLocator.special)
-                        CharacterBody.skillLocator.special.UnsetSkillOverride(this, disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
+                    if (characterBody.skillLocator.special)
+                        characterBody.skillLocator.special.UnsetSkillOverride(this, disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
                 }
             }
         }

@@ -20,7 +20,7 @@ namespace SS2.Equipments
 
         public static List<String> whitelistedEliteDefStrings = new List<String>();
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Enabled Elite types, separated by commas. WARNING: MAY CAUSE GAME TO FAIL TO LOAD IF MIS-CONFIGURED.      Default: \"EliteFireEquipment,EliteIceEquipment,EliteLightningEquipment,EliteHauntedEquipment,ElitePoisonEquipment,EliteEarthEquipment\"")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Enabled Elite types, separated by commas. WARNING: MAY CAUSE GAME TO FAIL TO LOAD IF MIS-CONFIGURED.      Default: \"EliteFireEquipment,EliteIceEquipment,EliteLightningEquipment,EliteHauntedEquipment,ElitePoisonEquipment,EliteEarthEquipment\"")]
         public static string eliteDefEnabledStrings = "EliteFireEquipment,EliteIceEquipment,EliteLightningEquipment,EliteHauntedEquipment,ElitePoisonEquipment,EliteEarthEquipment";
         public static void AddEliteToWhitelist(EliteDef eliteDef) => whitelistedEliteDefs.Add(eliteDef);
 
@@ -154,8 +154,8 @@ namespace SS2.Equipments
         private void Start()
         {
             this.setStateOnHurt = base.GetComponent<SetStateOnHurt>();           
-            ogSubtitle = CharacterBody.subtitleNameToken;
-            model = CharacterBody.modelLocator.modelTransform.GetComponent<CharacterModel>();           
+            ogSubtitle = characterBody.subtitleNameToken;
+            model = characterBody.modelLocator.modelTransform.GetComponent<CharacterModel>();           
         }
 
         private void AddEliteBuffs()
@@ -170,8 +170,8 @@ namespace SS2.Equipments
             foreach (EliteDef ed in EliteCatalog.eliteDefs)
             {
                 //shitty hardcoded case for blighted; add actual cross compat later!
-                if (ed.IsAvailable() && AffixEmpyrean.whitelistedEliteDefs.Contains(ed) && !CharacterBody.HasBuff(ed.eliteEquipmentDef?.passiveBuffDef))
-                    CharacterBody.AddBuff(ed.eliteEquipmentDef.passiveBuffDef);
+                if (ed.IsAvailable() && AffixEmpyrean.whitelistedEliteDefs.Contains(ed) && !characterBody.HasBuff(ed.eliteEquipmentDef?.passiveBuffDef))
+                    characterBody.AddBuff(ed.eliteEquipmentDef.passiveBuffDef);
             }
             if (setStateOnHurt)
             {
@@ -182,7 +182,7 @@ namespace SS2.Equipments
                 wasFrozen = setStateOnHurt.canBeFrozen;
                 setStateOnHurt.canBeFrozen = false;
             }
-            CharacterBody.subtitleNameToken = "SS2_ELITE_EMPYREAN_SUBTITLE";
+            characterBody.subtitleNameToken = "SS2_ELITE_EMPYREAN_SUBTITLE";
         }
         protected override void OnAllStacksLost()
         {
@@ -195,21 +195,21 @@ namespace SS2.Equipments
             }
             foreach (EliteDef ed in EliteCatalog.eliteDefs)
             {
-                if (CharacterBody.HasBuff(ed.eliteEquipmentDef.passiveBuffDef))
-                    CharacterBody.RemoveBuff(ed.eliteEquipmentDef.passiveBuffDef);
+                if (characterBody.HasBuff(ed.eliteEquipmentDef.passiveBuffDef))
+                    characterBody.RemoveBuff(ed.eliteEquipmentDef.passiveBuffDef);
             }
 
-            CharacterBody.subtitleNameToken = ogSubtitle;
+            characterBody.subtitleNameToken = ogSubtitle;
         }
 
         // item rewards are temporary
         public void OnKilledServer(DamageReport damageReport)
         {
-            if (!HasAnyStacks) return; // this feels weird but /shrug
+            if (!hasAnyStacks) return; // this feels weird but /shrug
 
             if (!damageReport.attackerBody) return;
 
-            if (CharacterBody.teamComponent.teamIndex != TeamIndex.Player)
+            if (characterBody.teamComponent.teamIndex != TeamIndex.Player)
             {
                 var cedInstance = Components.CustomEliteDirector.instance;
                 if (cedInstance.empyreanActive)
@@ -217,7 +217,7 @@ namespace SS2.Equipments
             }
 
 
-            int numItems = this.CharacterBody.isChampion ? 4 : 2;
+            int numItems = this.characterBody.isChampion ? 4 : 2;
             float spreadAngle = 360f / numItems;
             float startingAngle = -(spreadAngle / 2) * (numItems - 1);
             for (int i = 0; i < numItems; i++)
@@ -236,7 +236,7 @@ namespace SS2.Equipments
             if (Util.CheckRoll(20f))
             {
                 // only pull an elite the empyrean has.
-                EliteDef[] eliteDefs = EliteCatalog.eliteDefs.Where(x => x.eliteEquipmentDef && CharacterBody.HasBuff(x.eliteEquipmentDef.passiveBuffDef)).ToArray();
+                EliteDef[] eliteDefs = EliteCatalog.eliteDefs.Where(x => x.eliteEquipmentDef && characterBody.HasBuff(x.eliteEquipmentDef.passiveBuffDef)).ToArray();
                 int eliteIndex = Mathf.FloorToInt(UnityEngine.Random.Range(0, eliteDefs.Length));
 
                 EquipmentIndex equipmentIndex = eliteDefs[eliteIndex].eliteEquipmentDef.equipmentIndex;

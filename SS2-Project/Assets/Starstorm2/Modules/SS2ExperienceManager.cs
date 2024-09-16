@@ -19,7 +19,7 @@ namespace SS2
     public static class SS2ExperienceManager
 	{
         //exp visuals mostly added to make the exp items feel cooler
-        [RiskOfOptionsConfigureField(SS2Config.ID_MISC, ConfigSectionOverride = "Visuals", ConfigNameOverride = "Improved Experience Visuals", ConfigDescOverride = "Enable the new experience visuals?")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_MISC, configSectionOverride = "Visuals", configNameOverride = "Improved Experience Visuals", configDescOverride = "Enable the new experience visuals?")]
         public static bool enableNewExperienceVisuals = true;
 
         public static Dictionary<CharacterMaster, ulong> masterToFoundExperience = new Dictionary<CharacterMaster, ulong>();

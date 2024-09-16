@@ -16,8 +16,8 @@ namespace SS2
     public abstract class SS2Event : IGameObjectContentPiece<GameplayEvent>, IContentPackModifier
     {
         public AssetCollection AssetCollection { get; private set; }
-        GameplayEvent IGameObjectContentPiece<GameplayEvent>.Component => EventPrefab.GetComponent<GameplayEvent>();
-        GameObject IContentPiece<GameObject>.Asset => EventPrefab;
+        GameplayEvent IGameObjectContentPiece<GameplayEvent>.component => EventPrefab.GetComponent<GameplayEvent>();
+        GameObject IContentPiece<GameObject>.asset => EventPrefab;
         public GameObject EventPrefab { get; protected set; }
 
         public abstract void Initialize();
