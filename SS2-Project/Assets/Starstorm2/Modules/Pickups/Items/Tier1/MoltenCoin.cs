@@ -13,15 +13,15 @@ namespace SS2.Items
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acMoltenCoin", SS2Bundle.Items);
         private static GameObject _impactEffect;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance for Molten Coin to Proc. (100 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Chance for Molten Coin to Proc. (100 = 100%)")]
         [FormatToken("SS2_ITEM_MOLTENCOIN_DESC", 0)]
         public static float procChance = 6f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base Damage per stack. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Base Damage per stack. (1 = 100%)")]
         [FormatToken("SS2_ITEM_MOLTENCOIN_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float damageCoeff = 1f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Coin gain on proc. Scales with time. (1 = 1$)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Coin gain on proc. Scales with time. (1 = 1$)")]
         [FormatToken("SS2_ITEM_MOLTENCOIN_DESC", 2)]
         public static int coinGain = 1;
 

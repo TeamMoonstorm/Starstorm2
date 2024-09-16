@@ -16,7 +16,7 @@ namespace SS2.Scenes
 
         public override void Initialize()
         {
-            Asset.mainTrack = Addressables.LoadAssetAsync<MusicTrackDef>("RoR2/Base/Common/muSong08.asset").WaitForCompletion();
+            asset.mainTrack = Addressables.LoadAssetAsync<MusicTrackDef>("RoR2/Base/Common/muSong08.asset").WaitForCompletion();
         }
 
 

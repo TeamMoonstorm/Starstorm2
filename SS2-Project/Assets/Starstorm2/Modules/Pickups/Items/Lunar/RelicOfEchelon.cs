@@ -24,19 +24,19 @@ namespace SS2.Items
 
         private BuffDef _buffEchelon;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Equipment cooldown increase per use, per stack.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Equipment cooldown increase per use, per stack.")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float cooldownIncrease = .15f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base amount of additional base damage added.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Base amount of additional base damage added.")]
         [FormatToken(token,   1)]
         public static float damageBonus = 150;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base amount of additional base health added.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Base amount of additional base health added.")]
         [FormatToken(token,   2)]
         public static float healthBonus = 5000;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Duration of the Echelon buff. Does not scale with stacks. (1 = 1 second)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Duration of the Echelon buff. Does not scale with stacks. (1 = 1 second)")]
         [FormatToken(token,   3)]
         public static float buffDuration = 8;
 

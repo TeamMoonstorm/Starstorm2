@@ -15,12 +15,12 @@ namespace SS2
 
         public abstract SS2AssetRequest<SceneAssetCollection> AssetRequest { get; }
 
-        public NullableRef<MusicTrackDef> MainTrack => Asset.mainTrack;
-        public NullableRef<MusicTrackDef> BossTrack => Asset.bossTrack;
+        public NullableRef<MusicTrackDef> mainTrack => asset.mainTrack;
+        public NullableRef<MusicTrackDef> bossTrack => asset.bossTrack;
 
-        public Texture2D BazaarTextureBase { get; protected set; } // ???
+        public Texture2D bazaarTextureBase { get; protected set; } // ???
 
-        public SceneDef Asset { get; protected set; }
+        public SceneDef asset { get; protected set; }
 
         public virtual IEnumerator LoadContentAsync()
         {
@@ -32,7 +32,7 @@ namespace SS2
 
             AssetCollection = request.Asset;
 
-            Asset = AssetCollection.sceneDef;
+            asset = AssetCollection.sceneDef;
 
         }
 

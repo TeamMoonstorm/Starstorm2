@@ -15,7 +15,7 @@ namespace SS2.Survivors
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acNuke", SS2Bundle.Indev);
 
         public static DamageAPI.ModdedDamageType NuclearDamageType { get; private set; }
-        public static DotController.DotIndex NuclearSicknessDotIndex => _dbdNuclearSickness.DotIndex;
+        public static DotController.DotIndex NuclearSicknessDotIndex => _dbdNuclearSickness.dotIndex;
         private static DotBuffDef _dbdNuclearSickness;
         public override void Initialize()
         {
@@ -82,7 +82,7 @@ namespace SS2.Survivors
                     {
                         attackerObject = attackerBody.gameObject,
                         damageMultiplier = 1,
-                        dotIndex = _dbdNuclearSickness.DotIndex,
+                        dotIndex = _dbdNuclearSickness.dotIndex,
                         duration = 10,
                         victimObject = victimBody.gameObject
                     };

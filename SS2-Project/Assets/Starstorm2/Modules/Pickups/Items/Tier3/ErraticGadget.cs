@@ -26,19 +26,19 @@ namespace SS2.Items
         private const string token = "SS2_ITEM_ERRATICGADGET_DESC";
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acErraticGadget", SS2Bundle.Items);
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance on hit to fire lightning. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Chance on hit to fire lightning. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float procChance = 0.1f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Damage coefficient of Erratic Gadget's lightning proc. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Damage coefficient of Erratic Gadget's lightning proc. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float damageCoefficient = 3f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Number of targets for Erratic Gadget's lightning proc, per stack.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Number of targets for Erratic Gadget's lightning proc, per stack.")]
         [FormatToken(token, 2)]
         public static int bounceTargets = 1;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Damage multiplier for Erratic Gadget's doubled lightning.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Damage multiplier for Erratic Gadget's doubled lightning.")]
         public static int repeatDamageMultiplier = 1;
 
         private static GameObject _orbEffectPrefab;

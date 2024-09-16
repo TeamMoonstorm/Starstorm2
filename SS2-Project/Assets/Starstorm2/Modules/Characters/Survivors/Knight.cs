@@ -65,8 +65,8 @@ namespace SS2.Survivors
             AssetCollection = request.Asset;
 
             CharacterPrefab = AssetCollection.bodyPrefab;
-            MasterPrefab = AssetCollection.masterPrefab;
-            SurvivorDef = AssetCollection.survivorDef;
+            masterPrefab = AssetCollection.masterPrefab;
+            survivorDef = AssetCollection.survivorDef;
 
 
             extraRequest.StartLoad();
@@ -175,16 +175,16 @@ namespace SS2.Survivors
 
                 private void FixedUpdate()
                 {
-                    if (!HasAnyStacks || !CharacterBody.characterMotor || !CharacterBody)
+                    if (!hasAnyStacks || !characterBody.characterMotor || !characterBody)
                         return;
 
-                    if (CharacterBody.characterMotor.isGrounded)
+                    if (characterBody.characterMotor.isGrounded)
                     {
                         return;
                     }
 
                     // TODO: No clue if this will work
-                    CharacterBody.characterMotor.velocity.y -= Time.fixedDeltaTime * Physics.gravity.y * reducedGravity;
+                    characterBody.characterMotor.velocity.y -= Time.fixedDeltaTime * Physics.gravity.y * reducedGravity;
                 }
             }
 
@@ -198,11 +198,11 @@ namespace SS2.Survivors
             // Called when the body with this buff takes damage
             public void OnIncomingDamageServer(DamageInfo damageInfo)
             {
-                if (HasAnyStacks && damageInfo.attacker != CharacterBody)
+                if (hasAnyStacks && damageInfo.attacker != characterBody)
                 {
                     // TODO: Use body index
                     // We want to ensure that Knight is the one taking damage
-                    if (CharacterBody.baseNameToken != "SS2_KNIGHT_BODY_NAME")
+                    if (characterBody.baseNameToken != "SS2_KNIGHT_BODY_NAME")
                         return;
 
                     damageInfo.rejected = true;

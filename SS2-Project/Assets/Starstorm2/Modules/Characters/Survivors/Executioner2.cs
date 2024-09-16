@@ -286,34 +286,34 @@ namespace SS2.Survivors
 
             public void FixedUpdate()
             {
-                if (NetworkServer.active && HasAnyStacks)
+                if (NetworkServer.active && hasAnyStacks)
                 {
-                    if (CharacterBody.baseNameToken != "SS2_EXECUTIONER2_NAME" || CharacterBody.HasBuff(_buffExeMuteCharge))
+                    if (characterBody.baseNameToken != "SS2_EXECUTIONER2_NAME" || characterBody.HasBuff(_buffExeMuteCharge))
                         return;
                     else
                         timer += Time.fixedDeltaTime;
 
-                    if (timer >= 0.2f && CharacterBody.skillLocator.secondary.stock < CharacterBody.skillLocator.secondary.maxStock)
+                    if (timer >= 0.2f && characterBody.skillLocator.secondary.stock < characterBody.skillLocator.secondary.maxStock)
                     {
                         timer = 0f;
 
-                        CharacterBody.skillLocator.secondary.AddOneStock();
+                        characterBody.skillLocator.secondary.AddOneStock();
 
-                        if (CharacterBody.skillLocator.secondary.stock < CharacterBody.skillLocator.secondary.maxStock)
+                        if (characterBody.skillLocator.secondary.stock < characterBody.skillLocator.secondary.maxStock)
                         {
                             Util.PlaySound("ExecutionerGainCharge", gameObject);
                             EffectManager.SimpleMuzzleFlash(plumeEffect, gameObject, "ExhaustL", true);
                             EffectManager.SimpleMuzzleFlash(plumeEffect, gameObject, "ExhaustR", true);
                         }
-                        if (CharacterBody.skillLocator.secondary.stock >= CharacterBody.skillLocator.secondary.maxStock)
+                        if (characterBody.skillLocator.secondary.stock >= characterBody.skillLocator.secondary.maxStock)
                         {
                             Util.PlaySound("ExecutionerMaxCharge", gameObject);
                             EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustL", true);
                             EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustR", true);
-                            EffectManager.SimpleEffect(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/LightningFlash.prefab").WaitForCompletion(), CharacterBody.corePosition, Quaternion.identity, false);
+                            EffectManager.SimpleEffect(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/LightningFlash.prefab").WaitForCompletion(), characterBody.corePosition, Quaternion.identity, false);
                         }
 
-                        CharacterBody.SetAimTimer(1.6f);
+                        characterBody.SetAimTimer(1.6f);
                     }
                 }
             }

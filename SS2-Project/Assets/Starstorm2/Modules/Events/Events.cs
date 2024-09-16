@@ -17,17 +17,17 @@ namespace SS2
     {
         public static ConfiguredBool EnableEvents = SS2Config.ConfigFactory.MakeConfiguredBool(true, b =>
         {
-            b.Section = "Events";
-            b.Key = "Enable Events";
-            b.Description = "Enables Starstorm 2's random events, including storms. Set to false to disable events.";
-            b.ConfigFile = SS2Config.ConfigMain;
-            b.CheckBoxConfig = new CheckBoxConfig
+            b.section = "Events";
+            b.key = "Enable Events";
+            b.description = "Enables Starstorm 2's random events, including storms. Set to false to disable events.";
+            b.configFile = SS2Config.ConfigMain;
+            b.checkBoxConfig = new CheckBoxConfig
             {
                 restartRequired = true
             };
         }).DoConfigure();
 
-        public ContentPack ContentPack => _contentPack;
+        public ContentPack contentPack => _contentPack;
         private ContentPack _contentPack;
 
         private IEnumerable<IContentPiece<GameObject>> _unfilteredCharacters;
@@ -49,7 +49,7 @@ namespace SS2
                 return false;
             }
 
-            if (!item.IsAvailable(ContentPack))
+            if (!item.IsAvailable(contentPack))
                 return false;
 
             return true;
@@ -59,11 +59,11 @@ namespace SS2
         {
             SS2Config.ConfigFactory.MakeConfiguredBool(true, b =>
             {
-                b.Section = "Visuals";
-                b.Key = "Custom Main Menu";
-                b.Description = "Setting this to false returns the main menu to the original, bright one.";
-                b.ConfigFile = SS2Config.ConfigMisc;
-                b.OnConfigChanged += b1 =>
+                b.section = "Visuals";
+                b.key = "Custom Main Menu";
+                b.description = "Setting this to false returns the main menu to the original, bright one.";
+                b.configFile = SS2Config.ConfigMisc;
+                b.onConfigChanged += b1 =>
                 {
                     if (b1)
                     {

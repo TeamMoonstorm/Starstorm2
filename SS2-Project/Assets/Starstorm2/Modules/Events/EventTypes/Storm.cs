@@ -11,10 +11,10 @@ namespace SS2
     {
         public static ConfiguredBool ReworkedStorm = SS2Config.ConfigFactory.MakeConfiguredBool(false, b =>
         {
-            b.Section = "Events";
-            b.Key = "Enable Reworked Storms";
-            b.Description = "Enables Starstorm 2's unfinished Storm rework, which will be shipped fully with version 0.7.0.";
-            b.ConfigFile = SS2Config.ConfigMain;
+            b.section = "Events";
+            b.key = "Enable Reworked Storms";
+            b.description = "Enables Starstorm 2's unfinished Storm rework, which will be shipped fully with version 0.7.0.";
+            b.configFile = SS2Config.ConfigMain;
             //b.CheckBoxConfig = new CheckBoxConfig
             //{
             //    restartRequired = true

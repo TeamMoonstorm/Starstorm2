@@ -100,7 +100,7 @@ namespace EntityStates.Events
                 eventColor = new Color(.67f, .168f, .168f),
                 textDuration = 7,
             };
-            GameplayEventTextController.Instance.EnqueueNewTextRequest(request);
+            GameplayEventTextController.instance.EnqueueNewTextRequest(request);
 
             rng = Run.instance.spawnRng;
             if (!Enum.TryParse(spawnDistanceString, out spawnDistance))
@@ -263,7 +263,7 @@ namespace EntityStates.Events
                 eventColor = new Color(.67f, .168f, .168f),
                 textDuration = 7,
             };
-            GameplayEventTextController.Instance.EnqueueNewTextRequest(request);
+            GameplayEventTextController.instance.EnqueueNewTextRequest(request);
 
             // need to do outro here instead of destroying
             if (musicTrack)

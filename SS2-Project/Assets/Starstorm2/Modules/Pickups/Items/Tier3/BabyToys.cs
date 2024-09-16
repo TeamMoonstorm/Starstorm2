@@ -20,7 +20,7 @@ namespace SS2.Items
 
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acBabyToys", SS2Bundle.Items);
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Levels removed per stack.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Levels removed per stack.")]
         [FormatToken(pickupToken, 0)]
         [FormatToken(descToken, 0)]
         public static int levelReductionPerStack = 3;
@@ -75,10 +75,10 @@ namespace SS2.Items
             public void OnStackChanged(int change)
             {
                 int levelChange = change * levelReductionPerStack;
-                BabyToyToken token = Master.GetBody().GetComponent<BabyToyToken>();
+                BabyToyToken token = master.GetBody().GetComponent<BabyToyToken>();
                 if (!token)
                 {
-                    token = Master.GetBody().gameObject.AddComponent<BabyToyToken>();
+                    token = master.GetBody().gameObject.AddComponent<BabyToyToken>();
                 }
                 if (levelChange > 0)
                 {
@@ -96,7 +96,7 @@ namespace SS2.Items
 
             private void TryIncreaseLevel()
             {
-                ulong currentExperience = Master.SS2GetAdjustedExperience();
+                ulong currentExperience = master.SS2GetAdjustedExperience();
                 uint currentLevel = TeamManager.FindLevelForExperience(currentExperience);
                 uint newLevel = currentLevel + remainingLevelReduction;
 
@@ -124,19 +124,19 @@ namespace SS2.Items
                 long newExperience = (long)Math.Ceiling(newCurrentLevelExperience + (double)(newNextLevelExperience - newCurrentLevelExperience) * currentLevelProgress);
                 long experienceChange = newExperience - (long)currentExperience;
 
-                bool hasBody = Master.hasBody;
+                bool hasBody = master.hasBody;
                 //SS2Log.Debug("about to adjust exp");
 
                 if (hasBody)
                 {
-                    var token = Master.bodyInstanceObject.AddComponent<BabyToyToken>();
+                    var token = master.bodyInstanceObject.AddComponent<BabyToyToken>();
                 }
-                Master.SS2OffsetExperience(experienceChange);
+                master.SS2OffsetExperience(experienceChange);
 
                 if (hasBody)
                 {
-                    Master.GetBody().RecalculateStats();
-                    var token = Master.bodyInstanceObject.GetComponent<BabyToyToken>();
+                    master.GetBody().RecalculateStats();
+                    var token = master.bodyInstanceObject.GetComponent<BabyToyToken>();
                     Destroy(token);
                 }
                 RefreshLevelText();
@@ -144,7 +144,7 @@ namespace SS2.Items
 
             public void TryReduceLevel()
             {
-                ulong currentExperience = Master.SS2GetAdjustedExperience();
+                ulong currentExperience = master.SS2GetAdjustedExperience();
                 uint currentLevel = TeamManager.FindLevelForExperience(currentExperience);
                 uint newLevel = currentLevel - remainingLevelReduction;
                 if (newLevel > currentLevel || newLevel < 1U)
@@ -157,7 +157,7 @@ namespace SS2.Items
                     return;
                 }
                 remainingLevelReduction -= levelsReduced;
-                BabyToyToken token = Master.GetBody().GetComponent<BabyToyToken>();
+                BabyToyToken token = master.GetBody().GetComponent<BabyToyToken>();
                 if (token)
                 {
                     token.remainingLevelReduction = remainingLevelReduction;
@@ -175,11 +175,11 @@ namespace SS2.Items
                 long newExperience = (long)Math.Ceiling(newCurrentLevelExperience + (double)(newNextLevelExperience - newCurrentLevelExperience) * currentLevelProgress);
                 long experienceChange = newExperience - (long)currentExperience;
 
-                Master.SS2OffsetExperience(experienceChange);
+                master.SS2OffsetExperience(experienceChange);
 
-                if (Master.hasBody)
+                if (master.hasBody)
                 {
-                    Master.GetBody().RecalculateStats();
+                    master.GetBody().RecalculateStats();
                 }
                 RefreshLevelText();
             }
@@ -187,7 +187,7 @@ namespace SS2.Items
             {
                 foreach (HUD hud in HUD.readOnlyInstanceList)
                 {
-                    if (hud.targetMaster == Master && hud.levelText)
+                    if (hud.targetMaster == master && hud.levelText)
                     {
                         hud.levelText.displayData = uint.MaxValue;
                         hud.levelText.Update();
@@ -199,14 +199,14 @@ namespace SS2.Items
             private void OnEnable()
             {
                 GlobalEventManager.onCharacterLevelUp += GlobalEventManager_onCharacterLevelUp;
-                Master.inventory.onInventoryChanged += Inventory_onInventoryChanged;
+                master.inventory.onInventoryChanged += Inventory_onInventoryChanged;
                 IL.RoR2.UI.LevelText.SetDisplayData += LevelText_SetDisplayData;
                 IL.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
             }
 
             private void GlobalEventManager_onCharacterLevelUp(CharacterBody body)
             {
-                if (remainingLevelReduction > 0U && body.master == Master)
+                if (remainingLevelReduction > 0U && body.master == master)
                 {
                     TryReduceLevel();
                 }
@@ -233,7 +233,7 @@ namespace SS2.Items
                     c.Emit(OpCodes.Ldarg_0);
                     c.EmitDelegate<Action<LevelText>>((levelText) =>
                     {
-                        bool shouldBeAffected = levelText.source && levelText.source.master == Master && bonusLevelCount > 0;
+                        bool shouldBeAffected = levelText.source && levelText.source.master == master && bonusLevelCount > 0;
                         bool hasBeenAdjusted = adjustedLevelText.Contains(levelText);
                         if (shouldBeAffected)
                         {
@@ -286,7 +286,7 @@ namespace SS2.Items
                     c.Emit(OpCodes.Ldloc, localLevelMultiplierLocIndex);
                     c.EmitDelegate<Func<CharacterBody, float, float>>((body, localLevelMultiplier) =>
                     {
-                        if (body.master == Master)
+                        if (body.master == master)
                         {
                             return localLevelMultiplier + bonusLevelCount;
                         }
@@ -302,7 +302,7 @@ namespace SS2.Items
             {
                 IL.RoR2.CharacterBody.RecalculateStats -= CharacterBody_RecalculateStats;
                 IL.RoR2.UI.LevelText.SetDisplayData -= LevelText_SetDisplayData;
-                Master.inventory.onInventoryChanged -= Inventory_onInventoryChanged;
+                master.inventory.onInventoryChanged -= Inventory_onInventoryChanged;
                 GlobalEventManager.onCharacterLevelUp -= GlobalEventManager_onCharacterLevelUp;
             }
 

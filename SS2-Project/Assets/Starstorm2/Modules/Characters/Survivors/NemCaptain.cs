@@ -28,7 +28,7 @@ namespace SS2.Survivors
             private static BuffDef GetBuffDef() => _buffDefOverstress;
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
             {
-                if (HasAnyStacks)
+                if (hasAnyStacks)
                 {
                     args.armorAdd -= 20f;
                     args.moveSpeedReductionMultAdd += 0.3f;

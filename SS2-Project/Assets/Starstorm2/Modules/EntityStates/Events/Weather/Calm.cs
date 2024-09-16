@@ -29,7 +29,7 @@ namespace EntityStates.Events
         public float thing = 1f;
         public override void OnEnter()
         {
-            if (!SS2.Events.EnableEvents.Value)
+            if (!SS2.Events.EnableEvents.value)
             {
                 Destroy(base.gameObject);
                 return;
@@ -41,7 +41,7 @@ namespace EntityStates.Events
             GlobalEventManager.onCharacterDeathGlobal += AddCharge;
 
             oldDuration = fuckingduration() * 60f * thing;
-            oldStorm = !SS2.Storm.ReworkedStorm.Value;
+            oldStorm = !SS2.Storm.ReworkedStorm.value;
 
 
         }

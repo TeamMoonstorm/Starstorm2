@@ -16,7 +16,7 @@ namespace SS2.Items
 
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acNkotasHeritage", SS2Bundle.Items);
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Number of items given upon level up per stack.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Number of items given upon level up per stack.")]
         [FormatToken(token, 0)]
         public static int itemsPerStack = 1;
 

@@ -16,18 +16,18 @@ namespace SS2.Equipments
 
         private const string token = "SS2_EQUIP_BACKTHRUSTER_DESC";
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "How long the Thruster buff lasts, in seconds.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "How long the Thruster buff lasts, in seconds.")]
         [FormatToken(token)]
         public static float thrustDuration = 8f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Maximum speed bonus from Thruster (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Maximum speed bonus from Thruster (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float speedCap = 2f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "How long it takes to reach maximum speed, in seconds")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "How long it takes to reach maximum speed, in seconds")]
         public static float accel = 1.5f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Maximum turning angle before losing built up speed")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Maximum turning angle before losing built up speed")]
         public static float maxAngle = 15f;
 
         public override bool Execute(EquipmentSlot slot)
@@ -72,18 +72,18 @@ namespace SS2.Equipments
             private float cutoff = maxAngle * Mathf.Deg2Rad;
             private void FixedUpdate()
             {
-                if (!HasAnyStacks) return;
+                if (!hasAnyStacks) return;
 
                 stopwatch += Time.fixedDeltaTime;
                 if (stopwatch > watchInterval)
                 {
                     stopwatch -= watchInterval;
-                    moveAngle = Mathf.Atan2(CharacterBody.characterMotor.velocity.x, CharacterBody.characterMotor.velocity.z) + Mathf.PI;
-                    if (CharacterBody.notMovingStopwatch < 0.1f && CheckAngle())
+                    moveAngle = Mathf.Atan2(characterBody.characterMotor.velocity.x, characterBody.characterMotor.velocity.z) + Mathf.PI;
+                    if (characterBody.notMovingStopwatch < 0.1f && CheckAngle())
                         thrust = Mathf.Min(thrust + (accelCoeff * watchInterval), Equipments.BackThruster.speedCap);
                     else
                         thrust = Mathf.Max(thrust - (accelCoeff * watchInterval * 3), 0f);
-                    CharacterBody.RecalculateStats();
+                    characterBody.RecalculateStats();
                     lastAngle = moveAngle;
                 }
             }
@@ -95,7 +95,7 @@ namespace SS2.Equipments
             {
                 thrust = 0f;
                 lastAngle = 0f;
-                CharacterBody.RecalculateStats();
+                characterBody.RecalculateStats();
             }
 
             private bool CheckAngle()

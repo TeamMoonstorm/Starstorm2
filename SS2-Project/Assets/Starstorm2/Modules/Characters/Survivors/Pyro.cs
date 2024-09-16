@@ -159,10 +159,10 @@ namespace SS2.Survivors
 
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
             {
-                if (HasAnyStacks)
+                if (hasAnyStacks)
                 {
-                    args.armorAdd += Math.Max(3f * BuffCount, 30f);
-                    args.regenMultAdd += Math.Max(0.2f * BuffCount, 2f);
+                    args.armorAdd += Math.Max(3f * buffCount, 30f);
+                    args.regenMultAdd += Math.Max(0.2f * buffCount, 2f);
                 }
             }
         }
@@ -174,9 +174,9 @@ namespace SS2.Survivors
 
             public void FixedUpdate()
             {
-                if (HasAnyStacks)
+                if (hasAnyStacks)
                 {
-                    CharacterBody.characterMotor.velocity.y -= Time.fixedDeltaTime * Physics.gravity.y * 0.2f;
+                    characterBody.characterMotor.velocity.y -= Time.fixedDeltaTime * Physics.gravity.y * 0.2f;
                 }
             }
 

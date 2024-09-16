@@ -100,7 +100,7 @@ namespace SS2
             SS2Log.Info($"Calling AsyncAssetLoad Attribute Methods...");
             ParallelMultiStartCoroutine asyncAssetLoadCoroutines = AsyncAssetLoadAttribute.CreateCoroutineForMod(SS2Main.Instance);
             asyncAssetLoadCoroutines.Start();
-            while (!asyncAssetLoadCoroutines.IsDone)
+            while (!asyncAssetLoadCoroutines.isDone)
                 yield return null;
 
             //SS2Log.Info($"Populating UnlockableDefs array from Vanilla Skins...");
@@ -135,7 +135,7 @@ namespace SS2
             }
 
             helper.Start();
-            while (!helper.IsDone)
+            while (!helper.isDone)
             {
                 yield return null;
             }
@@ -172,7 +172,7 @@ namespace SS2
             }
 
             helper.Start();
-            while (!helper.IsDone)
+            while (!helper.isDone)
                 yield return null;
         }
 

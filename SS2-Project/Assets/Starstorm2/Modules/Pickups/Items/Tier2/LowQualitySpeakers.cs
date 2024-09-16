@@ -13,15 +13,15 @@ namespace SS2.Items
         private const string token = "SS2_ITEM_LOWQUALITYSPEAKERS_DESC";
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acLowQualitySpeakers", SS2Bundle.Items);
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Radius in which enemies are stunned, in meters.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Radius in which enemies are stunned, in meters.")]
         [FormatToken(token, 0)]
         public static float baseRadius = 13f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Additional stun radius per stack.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Additional stun radius per stack.")]
         [FormatToken(token, 1)]
         public static float radiusPerStack = 7f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance for this item to proc on taking damage")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Chance for this item to proc on taking damage")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
         public static float baseProcChance = 0.1f;
 

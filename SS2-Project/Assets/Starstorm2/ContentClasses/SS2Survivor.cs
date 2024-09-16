@@ -16,10 +16,10 @@ namespace SS2
     public abstract class SS2Survivor : ISurvivorContentPiece, IContentPackModifier
     {
         public  SurvivorAssetCollection AssetCollection { get; set; }
-        public SurvivorDef SurvivorDef { get; protected  set; }
-        public NullableRef<GameObject> MasterPrefab { get; protected set; }
-        CharacterBody IGameObjectContentPiece<CharacterBody>.Component => CharacterPrefab.GetComponent<CharacterBody>();
-        GameObject IContentPiece<GameObject>.Asset => CharacterPrefab;
+        public SurvivorDef survivorDef { get; protected  set; }
+        public NullableRef<GameObject> masterPrefab { get; protected set; }
+        CharacterBody IGameObjectContentPiece<CharacterBody>.component => CharacterPrefab.GetComponent<CharacterBody>();
+        GameObject IContentPiece<GameObject>.asset => CharacterPrefab;
         public GameObject CharacterPrefab { get; protected set; }
 
         public abstract void Initialize();
@@ -38,8 +38,8 @@ namespace SS2
             AssetCollection = request.Asset;
 
             CharacterPrefab = AssetCollection.bodyPrefab;
-            MasterPrefab = AssetCollection.masterPrefab;
-            SurvivorDef = AssetCollection.survivorDef;
+            masterPrefab = AssetCollection.masterPrefab;
+            survivorDef = AssetCollection.survivorDef;
 
         }
 

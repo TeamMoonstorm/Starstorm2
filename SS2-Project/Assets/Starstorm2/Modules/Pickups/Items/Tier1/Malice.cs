@@ -17,25 +17,25 @@ namespace SS2.Items
         private const string token = "SS2_ITEM_MALICE_DESC";
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acMalice", SS2Bundle.Items);
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Total damage each Malice bounce deals. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Total damage each Malice bounce deals. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float damageCoeff = 0.25f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Number of bounces per stack.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Number of bounces per stack.")]
         [FormatToken(token, 1)]
         public static int bounceStack = 1;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Radius of Malice, in meters.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Radius of Malice, in meters.")]
         [FormatToken(token, 2)]
         public static float radiusBase = 12f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Radius of Malice per stack, in meters.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Radius of Malice per stack, in meters.")]
         [FormatToken(token, 3)]
         public static float radiusPerStack = 2.4f;
 
 
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Proc coefficient of damage dealt by Malice.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Proc coefficient of damage dealt by Malice.")]
         public static float procCo = 0.1f;
 
         //damage types should not be used as a substitute for proper proc chain masks, but it works here

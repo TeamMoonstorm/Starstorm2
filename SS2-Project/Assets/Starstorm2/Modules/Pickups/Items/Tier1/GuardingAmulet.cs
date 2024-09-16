@@ -14,7 +14,7 @@ namespace SS2.Items
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acGuardingAmulet", SS2Bundle.Items);
         private static GameObject _shieldEffect;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Damage reduction per stack. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Damage reduction per stack. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float damageReduction = 0.3f;
 

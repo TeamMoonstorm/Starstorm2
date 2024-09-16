@@ -18,19 +18,19 @@ namespace SS2.Items
         private static GameObject _readyEffectPrefab;
         private static GameObject _explosionEffectPrefab;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Radius of the energy burst, in meters.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Radius of the energy burst, in meters.")]
         [FormatToken(token, 0)]
         public static float baseRadius = 15f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Radius of the energy burst per stack, in meters.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Radius of the energy burst per stack, in meters.")]
         [FormatToken(token, 1)]
         public static float stackRadius = 3f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Base damage of the energy burst, per stack. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Base damage of the energy burst, per stack. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
         public static float damageCoefficient = 2.5f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Proc coefficient of the energy burst.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Proc coefficient of the energy burst.")]
         public static float procCoefficient = 1f;
 
         public static float minimumSprintDistance = 12.5f;

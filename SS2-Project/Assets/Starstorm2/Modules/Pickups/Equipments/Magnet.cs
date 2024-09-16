@@ -15,11 +15,11 @@ namespace SS2.Equipments
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acMagnet", SS2Bundle.Equipments);
 
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Range at which Simple Magnet can pull pickups, in meters.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Range at which Simple Magnet can pull pickups, in meters.")]
         [FormatToken(token, 0)]
         public static float magnetRadius = 150f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Percent chance for Simple Magnet to unearth treasure.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Percent chance for Simple Magnet to unearth treasure.")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float treasureChance = .1f;
 
