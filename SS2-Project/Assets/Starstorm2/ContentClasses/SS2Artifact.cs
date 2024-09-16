@@ -13,21 +13,21 @@ namespace SS2
     /// </summary>
     public abstract class SS2Artifact : IArtifactContentPiece, IContentPackModifier
     {
-        public ArtifactAssetCollection AssetCollection { get; private set; }
-        public NullableRef<ArtifactCode> ArtifactCode { get; protected set; }
-        public ArtifactDef ArtifactDef { get; protected set; }
+        public ArtifactAssetCollection assetCollection { get; private set; }
+        public NullableRef<ArtifactCode> artifactCode { get; protected set; }
+        public ArtifactDef artifactDef { get; protected set; }
 
         NullableRef<ArtifactCode> IArtifactContentPiece.ArtifactCode { get; }
-        ArtifactDef IContentPiece<ArtifactDef>.asset => ArtifactDef;
+        ArtifactDef IContentPiece<ArtifactDef>.asset => artifactDef;
 
-        public abstract SS2AssetRequest AssetRequest { get; }
+        public abstract SS2AssetRequest assetRequest { get; }
 
         public abstract void Initialize();
         public abstract bool IsAvailable(ContentPack contentPack);
 
         public virtual IEnumerator LoadContentAsync()
         {
-            SS2AssetRequest request = AssetRequest;
+            SS2AssetRequest request = assetRequest;
 
             request.StartLoad();
             while (!request.IsComplete)
@@ -35,13 +35,13 @@ namespace SS2
 
             if(request.BoxedAsset is ArtifactAssetCollection collection)
             {
-                AssetCollection = collection;
-                ArtifactDef = collection.artifactDef;
-                ArtifactCode = collection.artifactCode;
+                assetCollection = collection;
+                artifactDef = collection.artifactDef;
+                artifactCode = collection.artifactCode;
             }
             else if(request.BoxedAsset is ArtifactDef artifact)
             {
-                ArtifactDef = artifact;
+                artifactDef = artifact;
             }
             else
             {
@@ -54,8 +54,8 @@ namespace SS2
 
         public void ModifyContentPack(ContentPack contentPack)
         {
-            if (AssetCollection)
-                contentPack.AddContentFromAssetCollection(AssetCollection);
+            if (assetCollection)
+                contentPack.AddContentFromAssetCollection(assetCollection);
         }
     }
 }

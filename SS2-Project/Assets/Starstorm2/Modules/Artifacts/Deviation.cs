@@ -12,7 +12,7 @@ namespace SS2.Artifacts
 {
     public sealed class Deviation : SS2Artifact
     {
-        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ArtifactAssetCollection>("acDeviation", SS2Bundle.Artifacts);
+        public override SS2AssetRequest assetRequest => SS2Assets.LoadAssetAsync<ArtifactAssetCollection>("acDeviation", SS2Bundle.Artifacts);
 
         public override void Initialize()
         {

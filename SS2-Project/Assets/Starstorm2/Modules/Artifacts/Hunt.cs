@@ -9,7 +9,7 @@ namespace SS2.Artifacts
 {
     public class Hunt : SS2Artifact
     {
-        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ArtifactAssetCollection>("acHavoc", SS2Bundle.Artifacts);
+        public override SS2AssetRequest assetRequest => SS2Assets.LoadAssetAsync<ArtifactAssetCollection>("acHavoc", SS2Bundle.Artifacts);
         public static ArtifactDef huntArtifact;
 
 

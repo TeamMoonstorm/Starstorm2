@@ -9,11 +9,11 @@ namespace SS2
 {
     public abstract class SS2Scene : ISceneContentPiece, IContentPackModifier
     {
-        public SceneAssetCollection AssetCollection { get; private set; }
+        public SceneAssetCollection assetCollection { get; private set; }
         public abstract void Initialize();
         public abstract bool IsAvailable(ContentPack contentPack);
 
-        public abstract SS2AssetRequest<SceneAssetCollection> AssetRequest { get; }
+        public abstract SS2AssetRequest<SceneAssetCollection> assetRequest { get; }
 
         public NullableRef<MusicTrackDef> mainTrack => asset.mainTrack;
         public NullableRef<MusicTrackDef> bossTrack => asset.bossTrack;
@@ -22,30 +22,30 @@ namespace SS2
 
         public SceneDef asset { get; protected set; }
 
-        public int regularProgressionSlot => throw new System.NotImplementedException();
+        public virtual float? weightRelativeToSiblings { get; protected set; } = 1;
 
-        public bool preLoop => throw new System.NotImplementedException();
+        public virtual bool? preLoop { get; protected set; } = true;
 
-        public bool postLoop => throw new System.NotImplementedException();
+        public virtual bool? postLoop { get; protected set; } = true;
 
         public virtual IEnumerator LoadContentAsync()
         {
-            SS2AssetRequest<SceneAssetCollection> request = AssetRequest;
+            SS2AssetRequest<SceneAssetCollection> request = assetRequest;
 
             request.StartLoad();
             while (!request.IsComplete)
                 yield return null;
 
-            AssetCollection = request.Asset;
+            assetCollection = request.Asset;
 
-            asset = AssetCollection.sceneDef;
+            asset = assetCollection.sceneDef;
 
         }
 
 
         public virtual void ModifyContentPack(ContentPack contentPack)
         {
-            contentPack.AddContentFromAssetCollection(AssetCollection);
+            contentPack.AddContentFromAssetCollection(assetCollection);
         }
 
         public virtual void OnServerStageComplete(Stage stage)
