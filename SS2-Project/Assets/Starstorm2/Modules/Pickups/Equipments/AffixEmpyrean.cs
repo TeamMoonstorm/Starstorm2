@@ -21,7 +21,7 @@ namespace SS2.Equipments
         public static List<String> whitelistedEliteDefStrings = new List<String>();
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Enabled Elite types, separated by commas. WARNING: MAY CAUSE GAME TO FAIL TO LOAD IF MIS-CONFIGURED.      Default: \"EliteFireEquipment,EliteIceEquipment,EliteLightningEquipment,EliteHauntedEquipment,ElitePoisonEquipment,EliteEarthEquipment\"")]
-        public static string eliteDefEnabledStrings = "EliteFireEquipment,EliteIceEquipment,EliteLightningEquipment,EliteHauntedEquipment,ElitePoisonEquipment,EliteEarthEquipment";
+        public static string eliteDefEnabledStrings = "EliteFireEquipment,EliteIceEquipment,EliteLightningEquipment,EliteEarthEquipment";
         public static void AddEliteToWhitelist(EliteDef eliteDef) => whitelistedEliteDefs.Add(eliteDef);
 
         public override void Initialize()
