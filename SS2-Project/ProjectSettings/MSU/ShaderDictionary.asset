@@ -12,4 +12,580 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66ae5688171a7bc418dfc9c8816c4b9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shaderPairs: []
+  _shaderPairs:
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedCalm Water/CalmWater - DoubleSided
+      _shaderGuid: 72d376cbea2414248bdeacd852cc46d6
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedCalm Water/CalmWater - DX11 - DoubleSided
+      _shaderGuid: e374e9fbdee268f4d8ce982ae56b7bf8
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedCalm Water/CalmWater - DX11
+      _shaderGuid: 414f975faade42d408c7ba2f5766f402
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedCalm Water/CalmWater - SingleSided
+      _shaderGuid: 34b68f4e1f57f964f931634f71cc6435
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedCalm Water/ProjectorCaustics
+      _shaderGuid: 87742de52ce0e9b4496aa15e56895fd8
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedCalm Water/UnderWaterFog
+      _shaderGuid: 9de4aab9101c51143bf82878841a352a
+  - yaml:
+      _shaderName: Decalicious/Deferred Decal
+      _shaderGuid: a1aa4ac13f4489e44809dc42a99f56b3
+    hlsl:
+      _shaderName: StubbedDecalicious/DecaliciousDeferredDecal
+      _shaderGuid: 1ba89a45b14bcfa4a99b0cd270d2ee9f
+  - yaml:
+      _shaderName: Hidden/Decalicious Game Object ID
+      _shaderGuid: 5b74f7672d8259f4ca90fbd410e270e5
+    hlsl:
+      _shaderName: StubbedDecalicious/DecaliciousGameObjectID
+      _shaderGuid: 76d3cc91c844a2948962ea616d28b6e2
+  - yaml:
+      _shaderName: Decalicious/Unlit Decal
+      _shaderGuid: 7689cf2731191644daff784f1a0933a1
+    hlsl:
+      _shaderName: StubbedDecalicious/DecaliciousUnlitDecal
+      _shaderGuid: b412e88df440efa44b2ee23c533f19ce
+  - yaml:
+      _shaderName: Hidden/Decalicious Game Object ID
+      _shaderGuid: 5b74f7672d8259f4ca90fbd410e270e5
+    hlsl:
+      _shaderName: StubbedDecalicious/DecaliciousGameObjectID
+      _shaderGuid: b04d433c7aa355d47bee10644032f929
+  - yaml:
+      _shaderName: Decalicious/Unlit Decal
+      _shaderGuid: 7689cf2731191644daff784f1a0933a1
+    hlsl:
+      _shaderName: StubbedDecalicious/DecaliciousUnlitDecal
+      _shaderGuid: d062d1a46bd518346a2375b5d4a47e62
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedTranslucentImage/DownTent
+      _shaderGuid: 946f26b534c8c594a83b6df5fcd9e19c
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedTranslucentImage/EfficientBlur
+      _shaderGuid: 3d23e97d466a78c45a12f27c89208446
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedTranslucentImage/FillCrop
+      _shaderGuid: 26d56bbebb347954ebee18729661a321
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedTranslucentImage/QuickDumbBlur
+      _shaderGuid: fac03cd215b001e409023674b6615dc7
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedTranslucentImage/TranslucentImage
+      _shaderGuid: 739cef1cfcbb9084fbd6c043d63d4746
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedNGSS/NGSS_ContactShadows
+      _shaderGuid: 440989ce3499ade49b69ae1198a3ba59
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedNGSS/NGSS_Directional
+      _shaderGuid: b7e7a68fa9532d4498718eb05da13f4b
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedNGSS/NGSS_FrustumShadows
+      _shaderGuid: 1a9fd92ccea41214c95aa26934041e35
+  - yaml:
+      _shaderName: Hopoo Games/Post Process/Screen Damage
+      _shaderGuid: a5447d2c4a90b774b96b9dc5e39d7338
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Core/CameraEffects/HGScreenDamage
+      _shaderGuid: 2bde731d061761a488910ead672ccb6c
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Core/Outline/OutlineHighlightNew
+      _shaderGuid: b9ae365b62b238f45bbf35d51efed0c5
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Core/Outline/OutlineHighlightSurf
+      _shaderGuid: 6db5cadd0a1b28d459376f982de3b4e0
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedRoR2/Base/skymeadow/Fill-Linear
+      _shaderGuid: d6cb924f479bfdf46b56567c84e9985f
+  - yaml:
+      _shaderName: Hidden/PostProcessing/HopooSSR
+      _shaderGuid: 0752f4eba1104a24fbc855557fbdf48d
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HopooSSR
+      _shaderGuid: 3c27412a288dc7e4289632462634f13f
+  - yaml:
+      _shaderName: Hidden/PostProcess/RampFog
+      _shaderGuid: e87ee6b85c59fe24cacecf625e689ef9
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/RampFog
+      _shaderGuid: 85003e623d12edc4fb68bd9fc02f1946
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/SceneTint
+      _shaderGuid: 2e0f4ad600fc94e48acee0a82776ff37
+  - yaml:
+      _shaderName: Hidden/PostProcess/SobelOutline
+      _shaderGuid: 3bad83105e80bb14eb1b8e2f043f97bc
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/SobelOutline
+      _shaderGuid: 921d9b7baafc9fc469453262b491500f
+  - yaml:
+      _shaderName: Hidden/PostProcess/SobelRain
+      _shaderGuid: d445fccb169c6404eb02c096cb29e1ae
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/SobelRain
+      _shaderGuid: 588e4aa1d7c7a24488cfda1c52ae51fe
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGOnTop
+      _shaderGuid: 0a17e04e3c4c10644b58d46f4eac2af0
+  - yaml:
+      _shaderName: Hopoo Games/Deferred/Snow Topped
+      _shaderGuid: 9a79fb5f80d888f4c9cdb96589ecde54
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGSnowTopped
+      _shaderGuid: ed003c2bb69b49e4d925889818c2bf9f
+  - yaml:
+      _shaderName: Hopoo Games/Deferred/Standard
+      _shaderGuid: 9b2024ee08a5bfc418ff897991e84323
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGStandard
+      _shaderGuid: 6983ef21d508b4e46806f5a4283436ce
+  - yaml:
+      _shaderName: Hopoo Games/FX/StandardWithDistortion
+      _shaderGuid: 281fe78626b34a34cb72970863eca2b4
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGStandardWithDistortion
+      _shaderGuid: a7291b4a8ba11fd43af2563171a90164
+  - yaml:
+      _shaderName: Hopoo Games/Deferred/Triplanar Terrain Blend
+      _shaderGuid: 13f33e7cc2faaa645ac64fe35b479ace
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGTriplanarTerrainBlend
+      _shaderGuid: 165e6c7253cce734e82a31b50fe9da6f
+  - yaml:
+      _shaderName: Hopoo Games/Deferred/Wavy Cloth
+      _shaderGuid: 08c40051472c1974da3692a36a1cbc8d
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGWavyCloth
+      _shaderGuid: f74e0dd0e2a28784a9e765e6ddb100ee
+  - yaml:
+      _shaderName: Hopoo Games/Environment/Distant Water
+      _shaderGuid: 4125acd7524434b4a89fb5928fac37a3
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGDistantWater
+      _shaderGuid: 9d68b9ad79c3430448166a51f5f728f2
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGFlag
+      _shaderGuid: 4413d0dfb3dd53a4e891f1b6bcb23ada
+  - yaml:
+      _shaderName: Hopoo Games/Environment/Waving Grass
+      _shaderGuid: 7ff5c5be0a78e204b852d1d3ea197e14
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGGrass
+      _shaderGuid: b157e32a88d2d564b96c5fc3ae7ca430
+  - yaml:
+      _shaderName: Hopoo Games/Environment/Waterfall
+      _shaderGuid: 6057e65b03275234aa9ac79f7334659e
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGWaterfall
+      _shaderGuid: 2d7fdb70434080d4884e17294a63f706
+  - yaml:
+      _shaderName: Hopoo Games/FX/Cloud Remap
+      _shaderGuid: 81e2940ed81972c4aa729667a0a32648
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGCloudRemap
+      _shaderGuid: 8f3f3d0bf2267f74ca405c5ec04db15a
+  - yaml:
+      _shaderName: Hopoo Games/FX/Damage Number
+      _shaderGuid: 4ae336abe1301424cb7f702744c1236a
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGDamageNumber
+      _shaderGuid: e7e00073f69041b4ab1e308fa1c3b8f5
+  - yaml:
+      _shaderName: Hopoo Games/FX/Distortion
+      _shaderGuid: 89d4dc9385e64e24fbe9f05ad56bae8c
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGDistortion
+      _shaderGuid: 1628616b3b837414088d15d5036daf32
+  - yaml:
+      _shaderName: Hopoo Games/FX/Forward Planet
+      _shaderGuid: 1ddfaab7a031647408ffad5e20903d58
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGForwardPlanet
+      _shaderGuid: 8a2507122e3ae32419222a9743260469
+  - yaml:
+      _shaderName: Hopoo Games/FX/Cloud Intersection Remap
+      _shaderGuid: b12ff619eec8e0a49b65f7bec2dfdc79
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGIntersectionCloudRemap
+      _shaderGuid: dc2c161f49c4dca47807911a7b8f9843
+  - yaml:
+      _shaderName: Hopoo Games/FX/Opaque Cloud Remap
+      _shaderGuid: 6294c93e1c9048742a30db0ae205fdf9
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGOpaqueCloudRemap
+      _shaderGuid: 154086fb544b3504c818644bf2719605
+  - yaml:
+      _shaderName: Hopoo Games/FX/Solid Parallax
+      _shaderGuid: a37cfc6085e6fab4f9481e8001ce1dd7
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGSolidParallax
+      _shaderGuid: 599097c2292140042b0ae74510d8c806
+  - yaml:
+      _shaderName: Hopoo Games/FX/Vertex Colors Only
+      _shaderGuid: f1ff419e0a25a4c438172dea774a73b5
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGVertexOnly
+      _shaderGuid: 5363bb2b15f678746a1261e68beea4b2
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/Internal-ScreenSpaceShadows_Cheaper
+      _shaderGuid: ed3fbe7775b61ae4d90389e1bc80c86f
+  - yaml:
+      _shaderName: Hidden/FastBlur
+      _shaderGuid: 1f26d6518b9c780478c94f1f0aa7d0b3
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/MobileBlur
+      _shaderGuid: e90e24f94d0701f4bb9553815ac32f34
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/DoublePassUnlitTemplate
+      _shaderGuid: fce9e9ec768c0034cb49b3957d1289d7
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/DamageIndicator
+      _shaderGuid: d686f26026285aa4b9c2c7e76f5ff74b
+  - yaml:
+      _shaderName: Hopoo Games/Internal/Outline Highlight
+      _shaderGuid: 46c56a972addab54ca94b4a87ec6e394
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGOutlineHighlight
+      _shaderGuid: 1220ddbfe9715bc459a1ac438b8542af
+  - yaml:
+      _shaderName: Hopoo Games/Post Process/Scope Distortion
+      _shaderGuid: 601f0f23331a1ec4a9260fcf26eef866
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGScopeShader
+      _shaderGuid: de5efccc8dfc9014484900d70f31756e
+  - yaml:
+      _shaderName: Hopoo Games/Internal/SobelBuffer
+      _shaderGuid: f8fa70e9832f58b4e93af9b919a16eda
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGSobelBuffer
+      _shaderGuid: 61a6d37e758b2d443b9859ff3912e053
+  - yaml:
+      _shaderName: Hopoo Games/Internal/VisionLimit
+      _shaderGuid: fdab2d18297c43048a6ddf9f43bd4a44
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGVisionLimit
+      _shaderGuid: 50b6b1fc507da66498a0d19bafc421ba
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/SpeedTreeBillboard
+      _shaderGuid: 1595d1d2b8b45874885afa3c404854b4
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/SpeedTreeCustom
+      _shaderGuid: 4cebfae6979cc6147955c0411c1814ff
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HealthBar
+      _shaderGuid: 13ddfc57800be5e468a445193170549d
+  - yaml:
+      _shaderName: Hopoo Games/UI/Animate Alpha
+      _shaderGuid: c1dcd1ea051f96345ae50dbc0687e586
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGUIAnimateAlpha
+      _shaderGuid: 00029646d0498f2458f3361e66379022
+  - yaml:
+      _shaderName: Hopoo Games/UI/UI Bar Remap
+      _shaderGuid: da6c4a82c07690747ba9ac017c179187
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGUIBarRemap
+      _shaderGuid: 6fb63cf5b8ab149408eb532e6c22a232
+  - yaml:
+      _shaderName: Hopoo Games/UI/Masked UI Blur
+      _shaderGuid: 5d86f8cb84be966429e65119f2e77575
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGUIBlur
+      _shaderGuid: 86b17fc33c58716489b73f2d50a7668e
+  - yaml:
+      _shaderName: Hopoo Games/UI/Custom Blend
+      _shaderGuid: f22ecb6656a15cf458a63ed2c1f82308
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGUICustomBlend
+      _shaderGuid: bfb4b6e41daa8b445bba78bd40c0dae3
+  - yaml:
+      _shaderName: Hopoo Games/UI/Debug Ignore Z
+      _shaderGuid: b0a0924d1e1189d4fba42ad6c8580cfe
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGUIIgnoreZ
+      _shaderGuid: e981f9e82f64524498a27ae888bfbd89
+  - yaml:
+      _shaderName: Hopoo Games/UI/Default Overbrighten
+      _shaderGuid: 5c5da986903e84f4ca9657a189122436
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGUIOverbrighten
+      _shaderGuid: acb1e6ebd796cc8469a4d8eb943d4f18
+  - yaml:
+      _shaderName: Hidden/PostProcess/RampFog
+      _shaderGuid: e87ee6b85c59fe24cacecf625e689ef9
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/RampFog
+      _shaderGuid: e8d5c539453196c4a9b1332889bcc4ce
+  - yaml:
+      _shaderName: Hidden/PostProcess/SobelOutline
+      _shaderGuid: 3bad83105e80bb14eb1b8e2f043f97bc
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/SobelOutline
+      _shaderGuid: 03435ef002d8fe74784c93293f16bb07
+  - yaml:
+      _shaderName: Hidden/PostProcess/SobelRain
+      _shaderGuid: d445fccb169c6404eb02c096cb29e1ae
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/SobelRain
+      _shaderGuid: ec37cc153f2f7734d9eaa3eb3611b797
+  - yaml:
+      _shaderName: Hopoo Games/Deferred/Wavy Cloth
+      _shaderGuid: 08c40051472c1974da3692a36a1cbc8d
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGWavyCloth
+      _shaderGuid: 3d4fefbcb8e1c534bbbb202bd44a030e
+  - yaml:
+      _shaderName: Hopoo Games/Environment/Distant Water
+      _shaderGuid: 4125acd7524434b4a89fb5928fac37a3
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGDistantWater
+      _shaderGuid: 1ca181eb87137bb408577e550d9a6851
+  - yaml:
+      _shaderName: Hopoo Games/Environment/Waterfall
+      _shaderGuid: 6057e65b03275234aa9ac79f7334659e
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGWaterfall
+      _shaderGuid: a5db26d6d1842d9468ca656ea7497f3b
+  - yaml:
+      _shaderName: Hopoo Games/FX/Cloud Remap
+      _shaderGuid: 81e2940ed81972c4aa729667a0a32648
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGCloudRemap
+      _shaderGuid: 0d4838f326dd67140acbf335e7b3bffa
+  - yaml:
+      _shaderName: Hopoo Games/FX/Forward Planet
+      _shaderGuid: 1ddfaab7a031647408ffad5e20903d58
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGForwardPlanet
+      _shaderGuid: b1a9332efb3adb04dad2438b551da5c9
+  - yaml:
+      _shaderName: Hopoo Games/FX/Cloud Intersection Remap
+      _shaderGuid: b12ff619eec8e0a49b65f7bec2dfdc79
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGIntersectionCloudRemap
+      _shaderGuid: 16f78897e9497fd44a22aef184544d2e
+  - yaml:
+      _shaderName: Hopoo Games/FX/Opaque Cloud Remap
+      _shaderGuid: 6294c93e1c9048742a30db0ae205fdf9
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGOpaqueCloudRemap
+      _shaderGuid: dda9983ee60dacb4b8c17b2f0b8709d6
+  - yaml:
+      _shaderName: Hopoo Games/FX/Solid Parallax
+      _shaderGuid: a37cfc6085e6fab4f9481e8001ce1dd7
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGSolidParallax
+      _shaderGuid: e4a206b91e4b2b74fb8b438b42f548f0
+  - yaml:
+      _shaderName: Hopoo Games/FX/Vertex Colors Only
+      _shaderGuid: f1ff419e0a25a4c438172dea774a73b5
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGVertexOnly
+      _shaderGuid: 74176881887bd7c44afb0eadd5f7f54e
+  - yaml:
+      _shaderName: Hidden/FastBlur
+      _shaderGuid: 1f26d6518b9c780478c94f1f0aa7d0b3
+    hlsl:
+      _shaderName: Hidden/FastBlur
+      _shaderGuid: 96252780476d9cd41aa35787bd4bac02
+  - yaml:
+      _shaderName: Hopoo Games/Internal/Outline Highlight
+      _shaderGuid: 46c56a972addab54ca94b4a87ec6e394
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGOutlineHighlight
+      _shaderGuid: 2c99b37532d354d4cb34a956bc05de02
+  - yaml:
+      _shaderName: Hopoo Games/Post Process/Screen Damage
+      _shaderGuid: a5447d2c4a90b774b96b9dc5e39d7338
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGScreenDamage
+      _shaderGuid: b10180808e888a842a929e871e1dbe8d
+  - yaml:
+      _shaderName: Hopoo Games/Internal/VisionLimit
+      _shaderGuid: fdab2d18297c43048a6ddf9f43bd4a44
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGVisionLimit
+      _shaderGuid: 3b1f5d41f207f0e4fa40c4b812c94fc0
+  - yaml:
+      _shaderName: Hopoo Games/UI/UI Bar Remap
+      _shaderGuid: da6c4a82c07690747ba9ac017c179187
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGUIBarRemap
+      _shaderGuid: 8680ce9e566a2ad48abf6652148d8497
+  - yaml:
+      _shaderName: Hopoo Games/UI/Masked UI Blur
+      _shaderGuid: 5d86f8cb84be966429e65119f2e77575
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGUIBlur
+      _shaderGuid: 3093fac793efe3243829c874f5e6fb3f
+  - yaml:
+      _shaderName: Hopoo Games/UI/Custom Blend
+      _shaderGuid: f22ecb6656a15cf458a63ed2c1f82308
+    hlsl:
+      _shaderName: StubbedRoR2/Base/Shaders/HGUICustomBlend
+      _shaderGuid: 353744b84efdf0540a675cecec79a2c6
+  - yaml:
+      _shaderName: TextMeshPro/Distance Field
+      _shaderGuid: 68e6db2ebdc24f95958faec2be5558d6
+    hlsl:
+      _shaderName: StubbedTextMeshPro/Distance Field
+      _shaderGuid: e9189d82d5d2a4e49b570a679e5ada22
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedTextMesh Pro/FormerResources/Shaders/TMP_Bitmap-Custom-Atlas
+      _shaderGuid: d389c0409aa22574282f03e0f5ad983f
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedTextMesh Pro/FormerResources/Shaders/TMP_Bitmap-Mobile
+      _shaderGuid: c06d96eff5ba6ed479410dc5522c961b
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedTextMesh Pro/FormerResources/Shaders/TMP_Bitmap
+      _shaderGuid: 8920e0184ad1c2e459ede2f065288700
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedTextMesh Pro/FormerResources/Shaders/TMP_SDF Overlay
+      _shaderGuid: e25ab11fe702f31449d75ea20acd7ba8
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedTextMesh Pro/FormerResources/Shaders/TMP_SDF SSD
+      _shaderGuid: f3c97e6d87a030b489560d1f43d7bd48
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedTextMesh Pro/FormerResources/Shaders/TMP_SDF-Mobile Masking
+      _shaderGuid: 6e5cfc0dc0701a4489f023807562529c
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedTextMesh Pro/FormerResources/Shaders/TMP_SDF-Mobile Overlay
+      _shaderGuid: ecef2ea565cd84249811ef8a6ce37789
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedTextMesh Pro/FormerResources/Shaders/TMP_SDF-Mobile SSD
+      _shaderGuid: 75016871e862bba4a8e66ef4f182cb08
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedTextMesh Pro/FormerResources/Shaders/TMP_SDF-Mobile
+      _shaderGuid: ff9ed3095222b644488b4078766902a7
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedTextMesh Pro/FormerResources/Shaders/TMP_SDF-Surface-Mobile
+      _shaderGuid: 23aed648ccc2d614e91e5f2f2ed76967
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedTextMesh Pro/FormerResources/Shaders/TMP_SDF-Surface
+      _shaderGuid: 670c8f54ad4549b4f9f289d39ebec435
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedTextMesh Pro/FormerResources/Shaders/TMP_SDF
+      _shaderGuid: c684116d980465246833bd4a12c4abb7
+  - yaml:
+      _shaderName: 
+      _shaderGuid: 
+    hlsl:
+      _shaderName: StubbedTextMesh Pro/FormerResources/Shaders/TMP_Sprite
+      _shaderGuid: e10a3a068dfa09b449428c9dafd06422

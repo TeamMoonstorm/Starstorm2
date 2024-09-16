@@ -15,12 +15,18 @@ namespace SS2
 
         public abstract SS2AssetRequest<SceneAssetCollection> assetRequest { get; }
 
-        public NullableRef<MusicTrackDef> mainTrack => asset.mainTrack;
-        public NullableRef<MusicTrackDef> bossTrack => asset.bossTrack;
+        NullableRef<MusicTrackDef> ISceneContentPiece.mainTrack => mainTrack;
+        NullableRef<MusicTrackDef> ISceneContentPiece.bossTrack => bossTrack;
 
-        public Texture2D bazaarTextureBase { get; protected set; } // ???
+        public MusicTrackDef mainTrack { get; protected set; }
 
-        public SceneDef asset { get; protected set; }
+        public MusicTrackDef bossTrack { get; protected set; }
+
+        public NullableRef<Texture2D> bazaarTextureBase { get; protected set; } // ???
+
+        SceneDef IContentPiece<SceneDef>.asset => sceneDef;
+
+        public SceneDef sceneDef { get; protected set; }
 
         public virtual float? weightRelativeToSiblings { get; protected set; } = 1;
 
@@ -38,8 +44,13 @@ namespace SS2
 
             assetCollection = request.Asset;
 
-            asset = assetCollection.sceneDef;
+            sceneDef = assetCollection.sceneDef;
+            mainTrack = assetCollection.mainTrack;
+            bossTrack = assetCollection.bossTrack;
 
+            weightRelativeToSiblings = assetCollection.stageWeightRelativeToSiblings;
+            preLoop = assetCollection.appearsPreLoop;
+            postLoop = assetCollection.appearsPostLoop;
         }
 
 

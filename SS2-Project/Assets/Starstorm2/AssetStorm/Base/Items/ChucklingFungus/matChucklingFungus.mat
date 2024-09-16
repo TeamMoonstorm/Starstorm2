@@ -8,13 +8,13 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: matChucklingFungus
-  m_Shader: {fileID: 4800000, guid: 9b2024ee08a5bfc418ff897991e84323, type: 2}
+  m_Shader: {fileID: 4800000, guid: 6983ef21d508b4e46806f5a4283436ce, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2000
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -124,6 +124,7 @@ Material:
     - _Depth: 0.2
     - _DetailNormalMapScale: 1
     - _DitherOn: 0
+    - _DoubleColorsOn: 0
     - _DstBlend: 0
     - _EliteBrightnessMax: 1
     - _EliteBrightnessMin: 0
@@ -162,6 +163,7 @@ Material:
     - _PrintEmissionToAlbedoLerp: 0
     - _PrintOn: 0
     - _RampInfo: 0
+    - _SecondarySmoothness: 0
     - _SliceAlphaDepth: 0.1
     - _SliceBandHeight: 1
     - _SliceHeight: 5

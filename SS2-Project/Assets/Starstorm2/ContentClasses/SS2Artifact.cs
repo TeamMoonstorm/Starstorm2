@@ -17,7 +17,7 @@ namespace SS2
         public NullableRef<ArtifactCode> artifactCode { get; protected set; }
         public ArtifactDef artifactDef { get; protected set; }
 
-        NullableRef<ArtifactCode> IArtifactContentPiece.ArtifactCode { get; }
+        NullableRef<ArtifactCode> IArtifactContentPiece.artifactCode => artifactCode;
         ArtifactDef IContentPiece<ArtifactDef>.asset => artifactDef;
 
         public abstract SS2AssetRequest assetRequest { get; }

@@ -43,7 +43,7 @@ namespace SS2
             new SS2Log(Logger);
             new SS2Config(this);
             new SS2Content();
-            LanguageFileLoader.AddLanguageFilesFromMod(this, "SS2Lang");
+            LanguageFileLoader.AddLanguageFilesFromMod(this, "languages");
             TMProEffects.Init();
             BodyNames.Hook();
             HideUnlocks.Hook();

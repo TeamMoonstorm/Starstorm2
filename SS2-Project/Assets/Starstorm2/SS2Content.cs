@@ -6,9 +6,6 @@ using System.Linq;
 using UnityEngine;
 using MSU;
 using RoR2;
-using System.Collections.Generic;
-using Assets.Starstorm2.ContentClasses;
-using SS2.Survivors;
 
 namespace SS2
 {
@@ -102,49 +99,6 @@ namespace SS2
             asyncAssetLoadCoroutines.Start();
             while (!asyncAssetLoadCoroutines.isDone)
                 yield return null;
-
-            //SS2Log.Info($"Populating UnlockableDefs array from Vanilla Skins...");
-            //SS2AssetRequest<UnlockableDef> udRequest = new SS2AssetRequest<UnlockableDef>(SS2Bundle.Vanilla);
-            //udRequest.StartLoad();
-            //while (!udRequest.IsComplete)
-            //    yield return null;
-            //SS2ContentPack.unlockableDefs.Add(udRequest.Assets.ToArray());
-        }
-
-        private static IEnumerator LoadVanillaSurvivorBundles()
-        {
-            ParallelMultiStartCoroutine helper = new ParallelMultiStartCoroutine();
-
-            var list = new List<SS2VanillaSurvivor>()
-              {
-                //new Commando(),
-                //new Acrid(),
-                //new Bandit(),
-                //new Railgunner(),
-                new Engineer(),
-                //new Captain(),
-                //new Huntress(),
-                //new Merc(),
-                //new VoidFiend(),
-                //Add the rest
-              };
-
-            foreach (var survivor in list)
-            {
-                helper.Add(survivor.LoadContentAsync);
-            }
-
-            helper.Start();
-            while (!helper.isDone)
-            {
-                yield return null;
-            }
-
-            foreach (var survivor in list)
-            {
-                survivor.Initialize();
-                survivor.ModifyContentPack(SS2ContentPack);
-            }
         }
 
         private IEnumerator AddSS2ExpansionDef()
@@ -158,31 +112,12 @@ namespace SS2
             SS2ContentPack.expansionDefs.AddSingle(expansionRequest.Asset);
         }
 
-        private IEnumerator InitializeSkinDefs()
-        {
-            var skinDefRequest = SS2Assets.LoadAllAssetsAsync<VanillaSkinDef>(SS2Bundle.Vanilla);
-            skinDefRequest.StartLoad();
-            while (!skinDefRequest.IsComplete)
-                yield return null;
-
-            var helper = new ParallelMultiStartCoroutine();
-            foreach (VanillaSkinDef skinDef in skinDefRequest.Assets)
-            {
-                helper.Add(skinDef.Initialize);
-            }
-
-            helper.Start();
-            while (!helper.isDone)
-                yield return null;
-        }
-
         internal SS2Content()
         {
             ContentManager.collectContentPackProviders += AddSelf;
             SS2Assets.OnSS2AssetsInitialized += () =>
             {
                 _parallelPreLoadDispatchers.Add(AddSS2ExpansionDef);
-                _parallelPostLoadDispatchers.Add(InitializeSkinDefs);
             };
         }
 
@@ -207,41 +142,45 @@ namespace SS2
                 },
                 () =>
                 {
-                    CharacterModule.AddProvider(main, ContentUtil.CreateGameObjectContentPieceProvider<CharacterBody>(main, SS2ContentPack));
+                    CharacterModule.AddProvider(main, ContentUtil.CreateGameObjectGenericContentPieceProvider<CharacterBody>(main, SS2ContentPack));
                     return CharacterModule.InitializeCharacters(main);
                 },
                 () =>
                 {
-                    ItemTierModule.AddProvider(main, ContentUtil.CreateContentPieceProvider<ItemTierDef>(main, SS2ContentPack));
+                    ItemTierModule.AddProvider(main, ContentUtil.CreateGenericContentPieceProvider<ItemTierDef>(main, SS2ContentPack));
                     return ItemTierModule.InitializeTiers(main);
                 },
                 () =>
                 {
-                    ItemModule.AddProvider(main, ContentUtil.CreateContentPieceProvider<ItemDef>(main, SS2ContentPack));
+                    ItemModule.AddProvider(main, ContentUtil.CreateGenericContentPieceProvider<ItemDef>(main, SS2ContentPack));
                     return ItemModule.InitializeItems(main);
                 },
                 () =>
                 {
-                    EquipmentModule.AddProvider(main, ContentUtil.CreateContentPieceProvider<EquipmentDef>(main, SS2ContentPack));
+                    EquipmentModule.AddProvider(main, ContentUtil.CreateGenericContentPieceProvider<EquipmentDef>(main, SS2ContentPack));
                     return EquipmentModule.InitializeEquipments(main);
                 },
                 () =>
                 {
-                    ArtifactModule.AddProvider(main, ContentUtil.CreateContentPieceProvider<ArtifactDef>(main, SS2ContentPack));
+                    ArtifactModule.AddProvider(main, ContentUtil.CreateGenericContentPieceProvider<ArtifactDef>(main, SS2ContentPack));
                     return ArtifactModule.InitializeArtifacts(main);
                 },
                 () =>
                 {
-                    InteractableModule.AddProvider(main, ContentUtil.CreateGameObjectContentPieceProvider<IInteractable>(main, SS2ContentPack));
+                    InteractableModule.AddProvider(main, ContentUtil.CreateGameObjectGenericContentPieceProvider<IInteractable>(main, SS2ContentPack));
                     return InteractableModule.InitializeInteractables(main);
                 },
                 () =>
                 {
-                    SceneModule.AddProvider(main, ContentUtil.CreateContentPieceProvider<SceneDef>(main, SS2ContentPack));
+                    SceneModule.AddProvider(main, ContentUtil.CreateGenericContentPieceProvider<SceneDef>(main, SS2ContentPack));
                     return SceneModule.InitializeScenes(main);
                 },
-                LoadFromAssetBundles,
-                LoadVanillaSurvivorBundles
+                () =>
+                {
+                    VanillaSurvivorModule.AddProvider(main, ContentUtil.CreateContentPieceProvider<IVanillaSurvivorContentPiece>(main, SS2ContentPack));
+                    return VanillaSurvivorModule.InitializeVanillaSurvivorContentPieces(main);
+                },
+                LoadFromAssetBundles
             };
 
             _fieldAssignDispatchers = new Func<IEnumerator>[]

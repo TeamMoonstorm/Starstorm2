@@ -193,4 +193,10 @@ namespace Moonstorm.Starstorm2.Editor
     public class SceneAssetCollectionEditor : AssetCollectionEditor
     {
     }
+
+    [CustomEditor(typeof(VanillaSurvivorAssetCollection))]
+    public class VanillaSurvivorAssetCollectionEditor : AssetCollectionEditor
+    {
+
+    }
 }
