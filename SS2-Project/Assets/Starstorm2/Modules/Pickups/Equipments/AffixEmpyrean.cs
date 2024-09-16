@@ -95,46 +95,33 @@ namespace SS2.Equipments
 
         private static void CreateWhitelist()
         {
-            SS2Log.Debug("empy whitelist being made");
-
             string[] splitString = eliteDefEnabledStrings.Split(',');
-
-            SS2Log.Debug("empy split strings made");
 
             whitelistedEliteDefStrings = new List<string>(splitString);
 
-            SS2Log.Debug("empy split strings in list");
-
             foreach (string name in whitelistedEliteDefStrings)
             {
-                SS2Log.Debug("looking for elite");
                 EliteDef ed = GetEliteDefFromString(name);
-                SS2Log.Debug("got ed from name");
                 if (ed != null)
                 {
                     whitelistedEliteDefs.Add(ed);
-                    SS2Log.Debug("added " + ed.name + " to empy whitelist");
                 }
             }
         }
 
         public static EliteDef GetEliteDefFromString(String defString)
         {
-            SS2Log.Debug("elite def from string");
             foreach (EliteDef ed in EliteCatalog.eliteDefs)
             {
                 if (ed.eliteEquipmentDef.name == defString)
                 {
-                    SS2Log.Debug("elite def from string found");
                     return ed;
                 }
                 else
                 {
-                    SS2Log.Debug("elite def from string failed, should be retrying..");
                 }
             }
 
-            SS2Log.Debug("Failed to find elite from string: " + defString);
             return null;
         }
  
