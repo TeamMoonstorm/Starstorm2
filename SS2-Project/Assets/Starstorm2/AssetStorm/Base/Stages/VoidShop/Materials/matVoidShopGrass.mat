@@ -2,21 +2,26 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: matVoidShopGrass
-  m_Shader: {fileID: 4800000, guid: dac5920e21f390243811bdf9e2b9c2df, type: 3}
-  m_ShaderKeywords: EFFECT_BUMP EFFECT_HUE_VARIATION EFFECT_SUBSURFACE GEOM_TYPE_LEAF
-    USE_EMISSION _WINDQUALITY_BEST
+  m_Shader: {fileID: 0}
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - EFFECT_BUMP
+  - EFFECT_HUE_VARIATION
+  - EFFECT_SUBSURFACE
+  - GEOM_TYPE_LEAF
+  - USE_EMISSION
+  - _WINDQUALITY_BEST
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 1
   m_CustomRenderQueue: 2450
-  stringTagMap:
-    RenderType: TreeTransparentCutout
+  stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -45,6 +50,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _BillboardKwToggle: 0
     - _BillboardShadowFade: 0.5
@@ -69,3 +75,4 @@ Material:
     - _HueVariation: {r: 0.7372549, g: 0.8705883, b: 1, a: 0.1}
     - _HueVariationColor: {r: 1, g: 0.5, b: 0, a: 0.1}
     - _SubsurfaceColor: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []

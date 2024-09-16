@@ -23,7 +23,7 @@
        * (REWORKED) Coffee Bag - 8% chance on hit to drop a coffee bean that grants 8% attack speed and movement speed for 5 (+5 per stack) seconds.
        * (REWORKED) Needles - 4% chance on hit to guarantee critical strikes on an enemy for the next 3 (+3 per stack) hits.
        * (REWORKED) Field Accelerator - After defeating the boss, the radius of the Teleporter is increased by 20% (+20% per stack) and killing enemies grants +1% teleporter charge.
-       * (REWORKED) Hunter's Sigil - After standing still for at least 1 second, create an 8m zone granting 20 armor (+10 armor per stack) and 20% increased damage (+10% per stack). The zone lasts until you leave it.
+       * (REWORKED) Hunter's Sigil - After standing still for at least 1 second, create an 8m zone granting 30 armor (+15 armor per stack) and 30% increased damage (+15% per stack). The zone lasts until you leave it.
        * (REWORKED) Prototype Jet Boots - Gain +1 extra jump that ignites enemies for 500% base damage in a 7.5m (+5m per stack) radius. Recharges 5 seconds after landing.
        * (REWORKED) Low Quality Speakers - Chance when getting hit to stun enemies in a 13m (+7m per stack) radius. Chance starts at 10% and increases with low health.
        * (ADJUSTED) Detritive Trematode - Health threshold now increases per stack, and the first tick of damage applies instantly. New visuals and sounds
