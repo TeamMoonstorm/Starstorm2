@@ -52,6 +52,7 @@ namespace SS2
 
         public virtual void ModifyContentPack(ContentPack contentPack)
         {
+            //N- GameplayEvents now use a similar loading system to IContentPackProvider. its untested tho, sad!
             //GameplayEventCatalog.AddGameplayEvent(EventPrefab);
             contentPack.AddContentFromAssetCollection(AssetCollection);
         }
