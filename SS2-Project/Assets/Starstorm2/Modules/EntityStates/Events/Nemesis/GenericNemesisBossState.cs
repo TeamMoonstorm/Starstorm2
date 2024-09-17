@@ -87,7 +87,7 @@ namespace EntityStates.Events
 
         public static event Action<CharacterBody> onNemesisDefeatedGlobal;
 
-        private static int minimumLevel = 24;
+        private static int minimumLevel = 30;
 
         private bool hasSpawned;
         public override void OnEnter()
@@ -225,6 +225,12 @@ namespace EntityStates.Events
                     if (level < minimumLevel)
                     {
                         master.inventory.GiveItem(RoR2Content.Items.LevelBonus, minimumLevel - level);
+                    }
+                    // remove level cap
+                    else if (Run.instance.ambientLevel >= Run.ambientLevelCap)
+                    {
+                        int extraLevels = Mathf.FloorToInt(SS2Util.AmbientLevelUncapped()) - Run.instance.ambientLevelFloor;
+                        master.inventory.GiveItem(RoR2Content.Items.LevelBonus, extraLevels);
                     }
                 }
             }

@@ -249,6 +249,14 @@ namespace SS2.Components
             inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
             inventory.SetEquipmentIndex(SS2Content.Equipments.AffixEmpyrean.equipmentIndex);
 
+            // remove level cap
+            if(Run.instance.ambientLevel >= Run.ambientLevelCap)
+            {
+                int extraLevels = Mathf.FloorToInt(SS2Util.AmbientLevelUncapped()) - Run.instance.ambientLevelFloor;
+                inventory.GiveItem(RoR2Content.Items.LevelBonus, extraLevels);
+            }
+            
+
             DeathRewards rewards = body.GetComponent<DeathRewards>();
             if (rewards)
             {
