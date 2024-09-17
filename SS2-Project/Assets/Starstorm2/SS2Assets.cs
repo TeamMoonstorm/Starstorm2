@@ -41,7 +41,10 @@ namespace SS2
 
     public static class SS2Assets
     {
+
         private const string ASSET_BUNDLE_FOLDER_NAME = "assetbundles";
+        //This just contains the loading screen sprites, its purely for the loading screen and its blacklisted from the enum system
+        private const string LOADING_SCREEN_SPRITES = "ss2loadingscreensprites"; 
         private const string MAIN = "ss2main";
         private const string BASE = "ss2base";
         private const string ARTIFACTS = "ss2artifacts";
@@ -120,6 +123,11 @@ namespace SS2
         public static SS2AssetRequest<TAsset> LoadAllAssetsAsync<TAsset>(SS2Bundle bundle) where TAsset : UObject
         {
             return new SS2AssetRequest<TAsset>(bundle);
+        }
+
+        internal static AssetBundle GetLoadingScreenBundle()
+        {
+            return AssetBundle.LoadFromFile(Path.Combine(AssetBundleFolderPath, LOADING_SCREEN_SPRITES));
         }
 
         internal static IEnumerator Initialize()
@@ -285,7 +293,7 @@ namespace SS2
 
         private static string[] GetAssetBundlePaths()
         {
-            return Directory.GetFiles(AssetBundleFolderPath).Where(filePath => !filePath.EndsWith(".manifest")).ToArray();
+            return Directory.GetFiles(AssetBundleFolderPath).Where(filePath => !filePath.EndsWith(".manifest") && Path.GetFileName(filePath) != LOADING_SCREEN_SPRITES).ToArray();
         }
 
 #if DEBUG
