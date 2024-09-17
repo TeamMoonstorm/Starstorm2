@@ -71,8 +71,8 @@ namespace SS2.Components
         private EtherealBehavior ethInstance;
 
         [Header("Empyrean-Related")]
-        private float empyreanEliteCost = 280f;
-        private float empyreanMultiplier = 25f;
+        private float empyreanEliteCost = 3000f;
+        private float empyreanMultiplier = 50f;
         public bool empyreanActive = false;
 
         [Header("Ultra-Related")]
@@ -265,6 +265,12 @@ namespace SS2.Components
             }
 
             empyreanActive = true;
+
+            CombatSquad squad = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("EliteBossGroup", SS2Bundle.Equipments))?.GetComponent<CombatSquad>();
+            if(squad)
+            {
+                squad.AddMember(body.master);
+            }
         }
 
         public void MakeUltra(CharacterBody body)
@@ -285,6 +291,8 @@ namespace SS2.Components
                 rewards.expReward *= (uint)(10 + (5 * ethInstance.etherealsCompleted));
                 rewards.goldReward *= (uint)(10 + (5 * ethInstance.etherealsCompleted));
             }
+
+            
 
 
         }
