@@ -26,7 +26,7 @@ namespace SS2
             if (moduleAvailability.available)
                 yield break;
 
-            _contentPieceProvider = ContentUtil.CreateContentPieceProvider<SerializableDifficultyDef>(SS2Main.Instance, SS2Content.SS2ContentPack);
+            _contentPieceProvider = ContentUtil.CreateGenericContentPieceProvider<SerializableDifficultyDef>(SS2Main.Instance, SS2Content.SS2ContentPack);
 
             var enumerator = InitializeDifficultiesFromSS2();
             while (!enumerator.IsDone())

@@ -12,11 +12,11 @@ namespace SS2.Scenes
 {
     public sealed class VoidShop : SS2Scene
     {
-        public override SS2AssetRequest<SceneAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SceneAssetCollection>("acVoidShop", SS2Bundle.SharedStages);
+        public override SS2AssetRequest<SceneAssetCollection> assetRequest => SS2Assets.LoadAssetAsync<SceneAssetCollection>("acVoidShop", SS2Bundle.SharedStages);
 
         public override void Initialize()
         {
-            asset.mainTrack = Addressables.LoadAssetAsync<MusicTrackDef>("RoR2/Base/Common/muSong08.asset").WaitForCompletion();
+            sceneDef.mainTrack = Addressables.LoadAssetAsync<MusicTrackDef>("RoR2/Base/Common/muSong08.asset").WaitForCompletion();
         }
 
 

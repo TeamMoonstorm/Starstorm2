@@ -10,7 +10,7 @@ namespace SS2.Artifacts
 #if DEBUG
     public class Adversity : SS2Artifact
     {
-        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ArtifactAssetCollection>("acAdversity", SS2Bundle.Artifacts);
+        public override SS2AssetRequest assetRequest => SS2Assets.LoadAssetAsync<ArtifactAssetCollection>("acAdversity", SS2Bundle.Artifacts);
 
         public static bool shouldUpgradeTP;
         public static float timer;

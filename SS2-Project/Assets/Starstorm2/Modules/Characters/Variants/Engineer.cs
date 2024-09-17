@@ -1,6 +1,4 @@
-﻿
-using Assets.Starstorm2.ContentClasses;
-using MSU;
+﻿using MSU;
 using RoR2;
 using RoR2.ContentManagement;
 using RoR2.Skills;
@@ -15,7 +13,7 @@ namespace SS2.Survivors
 {
     public class Engineer : SS2VanillaSurvivor
     {
-        public override SS2AssetRequest<AssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<AssetCollection>("acEngineer", SS2Bundle.Indev);
+        public override SS2AssetRequest<VanillaSurvivorAssetCollection> assetRequest => SS2Assets.LoadAssetAsync<VanillaSurvivorAssetCollection>("acEngineer", SS2Bundle.Indev);
 
         public static ModdedDamageType EngiFocusDamage { get; private set; }
         public static ModdedDamageType EngiFocusDamageProc { get; private set; }
@@ -27,15 +25,15 @@ namespace SS2.Survivors
         {
             //_buffDefEngiFocused = survivorAssetCollection.FindAsset<BuffDef>("bdEngiFocused");
 
-            SkillDef sdLaserFocus = survivorAssetCollection.FindAsset<SkillDef>("sdLaserFocus");
-            SkillDef sdRapidDisplacement = survivorAssetCollection.FindAsset<SkillDef>("sdRapidDisplacement");
+            SkillDef sdLaserFocus = assetCollection.FindAsset<SkillDef>("sdLaserFocus");
+            SkillDef sdRapidDisplacement = assetCollection.FindAsset<SkillDef>("sdRapidDisplacement");
 
             GameObject engiBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Engi/EngiBody.prefab").WaitForCompletion();
 
 
             var modelTransform = engiBodyPrefab.GetComponent<ModelLocator>().modelTransform;
-            GameObject groundbox = survivorAssetCollection.FindAsset<GameObject>("HitboxGround");
-            GameObject hopbox = survivorAssetCollection.FindAsset<GameObject>("HitboxHop");
+            GameObject groundbox = assetCollection.FindAsset<GameObject>("HitboxGround");
+            GameObject hopbox = assetCollection.FindAsset<GameObject>("HitboxHop");
 
             groundbox.transform.parent = modelTransform;
             hopbox.transform.parent = modelTransform;
@@ -138,9 +136,15 @@ namespace SS2.Survivors
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return true;
+            return false;
         }
 
+        public override void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.AddContentFromAssetCollection(assetCollection);
+        }
+
+        //what even is this -N
         public sealed class EngiFocusedBuffBehavior : BaseBuffBehaviour
         {
             [BuffDefAssociation]

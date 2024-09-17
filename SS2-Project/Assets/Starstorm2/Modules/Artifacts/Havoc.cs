@@ -8,7 +8,7 @@ namespace SS2.Artifacts
 {
     public class Havoc : SS2Artifact
     {
-        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ArtifactAssetCollection>("acHavoc", SS2Bundle.Artifacts);
+        public override SS2AssetRequest assetRequest => SS2Assets.LoadAssetAsync<ArtifactAssetCollection>("acHavoc", SS2Bundle.Artifacts);
 
         public override void Initialize()
         {
