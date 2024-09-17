@@ -52,7 +52,7 @@ namespace SS2
 
         public virtual void ModifyContentPack(ContentPack contentPack)
         {
-            GameplayEventCatalog.AddGameplayEvent(EventPrefab);
+            //GameplayEventCatalog.AddGameplayEvent(EventPrefab);
             contentPack.AddContentFromAssetCollection(AssetCollection);
         }
     }

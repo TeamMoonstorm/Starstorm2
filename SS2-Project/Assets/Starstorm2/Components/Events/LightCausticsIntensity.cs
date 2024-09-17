@@ -36,6 +36,12 @@ namespace SS2.Components
             if(customRenderTexture)
             {
                 material = customRenderTexture.material;
+                if(!material)
+                {
+                    SS2Log.Warning("LightCausticsIntensity.Start(): No light material found. (????)");
+                    Destroy(this);
+                    return;
+                }
                 material.SetFloat("_AlphaBias", 1);
             }
 
