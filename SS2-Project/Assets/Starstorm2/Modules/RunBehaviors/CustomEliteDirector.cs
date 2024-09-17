@@ -71,8 +71,8 @@ namespace SS2.Components
         private EtherealBehavior ethInstance;
 
         [Header("Empyrean-Related")]
-        private float empyreanEliteCost = 3000f;
-        private float empyreanMultiplier = 50f;
+        private float empyreanEliteCost = 2000f;
+        private float empyreanMultiplier = 30f;
         public bool empyreanActive = false;
 
         [Header("Ultra-Related")]
