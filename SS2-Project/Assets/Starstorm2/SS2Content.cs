@@ -202,6 +202,11 @@ namespace SS2
                 },
                 () =>
                 {
+                    ContentUtil.PopulateTypeFields(typeof(Elites), SS2ContentPack.eliteDefs);
+                    return null;
+                },
+                () =>
+                {
                     ContentUtil.PopulateTypeFields(typeof(Buffs), SS2ContentPack.buffDefs);
                     return null;
                 },

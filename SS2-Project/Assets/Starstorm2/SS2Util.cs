@@ -9,6 +9,20 @@ namespace SS2
 {
     public static class SS2Util
     {
+        public static float AmbientLevelUncapped()
+        {
+            if (!Run.instance) return 0f;
+
+            var run = Run.instance;
+            float num = run.GetRunStopwatch();
+            DifficultyDef difficultyDef = DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty);
+            float num3 = (float)run.participatingPlayerCount * 0.3f;
+            float num4 = 0.7f + num3;
+            float num6 = Mathf.Pow((float)run.participatingPlayerCount, 0.2f);
+            float num7 = 0.0506f * difficultyDef.scalingValue * num6;
+            float num10 = (num4 + num7 * (num * 0.016666668f)) * Mathf.Pow(1.15f, (float)run.stageClearCount);
+            return (num10 - num4) / 0.33f + 1f;
+        }
         #region Misc
         public static T EnsureComponent<T>(this MonoBehaviour component) where T : MonoBehaviour
         {
