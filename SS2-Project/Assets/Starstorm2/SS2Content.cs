@@ -115,10 +115,10 @@ namespace SS2
         internal SS2Content()
         {
             ContentManager.collectContentPackProviders += AddSelf;
-            SS2Assets.OnSS2AssetsInitialized += () =>
+            SS2Assets.assetsAvailability.CallWhenAvailable(() =>
             {
                 _parallelPreLoadDispatchers.Add(AddSS2ExpansionDef);
-            };
+            });
         }
 
         static SS2Content()

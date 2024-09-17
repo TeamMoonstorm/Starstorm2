@@ -9,14 +9,10 @@ namespace SS2
 {
     public class HideUnlocks
     {
-        public static UnlockableDef[] unlockableDefs;
         public static void Hook()
         {
             //character unlocks
             On.RoR2.CharacterSelectBarController.Awake += CharacterSelectBarController_Awake;
-
-            unlockableDefs = SS2Assets.LoadAllAssets<UnlockableDef>(SS2Bundle.All);
-
             //skins/skills
             On.RoR2.UI.LoadoutPanelController.Row.AddButton += Row_AddButton;
         }
