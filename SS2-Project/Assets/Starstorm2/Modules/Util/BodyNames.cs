@@ -81,7 +81,7 @@ namespace SS2
                         continue;
 
                     var eliteToken = Language.GetString(BuffCatalog.GetBuffDef(buffIndex).eliteDef.modifierToken);
-                    //eliteToken = eliteToken.Replace("{0}", string.Empty);
+                    eliteToken = eliteToken.Replace("{0}", string.Empty);
                     result = result.Replace(eliteToken, string.Empty);
                 }
             }
