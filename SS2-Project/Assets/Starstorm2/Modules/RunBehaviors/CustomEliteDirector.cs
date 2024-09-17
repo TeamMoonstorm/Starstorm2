@@ -203,7 +203,7 @@ namespace SS2.Components
 
             if (Run.instance.stageClearCount > 8)
             {
-                if (empyreanEliteCost <= eliteCredit && (baseCost * empyreanMultiplier <= fastCombatDirector.monsterCredit) || (baseCost * empyreanMultiplier <= slowCombatDirector.monsterCredit))
+                if (empyreanEliteCost <= eliteCredit && ((baseCost * empyreanMultiplier <= fastCombatDirector.monsterCredit) || (baseCost * empyreanMultiplier <= slowCombatDirector.monsterCredit)))
                 {
                     MakeEmpyrean(cb);
                     fastCombatDirector.monsterCredit -= baseCost * empyreanMultiplier * 1.5f;
@@ -245,8 +245,8 @@ namespace SS2.Components
             inventory.GiveItem(SS2Content.Items.BoostMovespeed, 35);
             inventory.GiveItem(SS2Content.Items.BoostCooldowns, 50);
             inventory.GiveItem(RoR2Content.Items.BoostDamage, 80);
-            inventory.GiveItem(RoR2Content.Items.TeleportWhenOob); //REALLY DON'T LIKE THIS ONE. knocking enemies off the stage is a RIGHT. going to make a specific elite to replace this functionality.
-            inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
+            //inventory.GiveItem(RoR2Content.Items.TeleportWhenOob); //REALLY DON'T LIKE THIS ONE. knocking enemies off the stage is a RIGHT. going to make a specific elite to replace this functionality.
+            //inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
             inventory.SetEquipmentIndex(SS2Content.Equipments.AffixEmpyrean.equipmentIndex);
 
             // remove level cap
