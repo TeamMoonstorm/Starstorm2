@@ -13,7 +13,6 @@ namespace SS2
         {
             //character unlocks
             On.RoR2.CharacterSelectBarController.Awake += CharacterSelectBarController_Awake;
-
             //skins/skills
             On.RoR2.UI.LoadoutPanelController.Row.AddButton += Row_AddButton;
         }
@@ -25,6 +24,9 @@ namespace SS2
             {
                 foreach (UnlockableDef ud in SS2Assets.LoadAllAssets<UnlockableDef>(SS2Bundle.Vanilla))
                 {
+                    Debug.Log("unlockabledef " + ud.nameToken);
+                    Debug.Log("unlockable " + titleToken);
+
                     //★ OMFG I HATE IT
                     if (titleToken == ud.nameToken)
                     {
