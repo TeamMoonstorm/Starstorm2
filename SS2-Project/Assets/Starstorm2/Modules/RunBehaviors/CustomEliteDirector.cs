@@ -164,45 +164,42 @@ namespace SS2.Components
             //cardCosts.TryGetValue(cm.bodyPrefab, out float baseCost);
 
             float baseCost = spawnResult.spawnRequest.spawnCard.directorCreditCost;
-            SS2Log.Debug(cm.name + " base cost: " + baseCost);
             float totalCost = baseCost;
             if (cb.eliteBuffCount > 0)
             {
                 totalCost *= baseEliteCostMultiplier;
-                SS2Log.Debug(cm.name + " elite cost: " + totalCost);
             }
 
-            if (totalCost * 2.5f <= fastCombatDirector.monsterCredit)
-            {
-                if (followerStage && followerCost <= minionCredit)
-                {
-                    var followerSummon = new MasterSummon();
-                    //to-do: get position of nearby air node
-                    followerSummon.position = cb.corePosition + (Vector3.up * 3);
-                    followerSummon.masterPrefab = Monsters.Lamp._masterPrefab;
-                    followerSummon.summonerBodyObject = cb.gameObject;
-                    var followerMaster = followerSummon.Perform();
-                    SS2Log.Info("Summoned Follower");
-                    fastCombatDirector.monsterCredit -= followerCost;
-                    minionCredit -= followerCost;
-                    if (followerMaster)
-                    {
-                        var masterEquip = cb.inventory.GetEquipmentIndex();
-                        if (masterEquip != EquipmentIndex.None)
-                        {
-                            followerMaster.inventory.SetEquipmentIndex(masterEquip);
-                            fastCombatDirector.monsterCredit -= followerCost * 2f;
-                            minionCredit -= followerCost * 2f;
-                            //possibly a bug where would-be masters are getting 'follower' prefix and no minion..???
-                            //saw it once on a scav super deep loop. this isn't even programmed behavior.
-                            //why???
+            //if (totalCost * 2.5f <= fastCombatDirector.monsterCredit)
+            //{
+            //    if (followerStage && followerCost <= minionCredit)
+            //    {
+            //        var followerSummon = new MasterSummon();
+            //        //to-do: get position of nearby air node
+            //        followerSummon.position = cb.corePosition + (Vector3.up * 3);
+            //        followerSummon.masterPrefab = Monsters.Lamp._masterPrefab;
+            //        followerSummon.summonerBodyObject = cb.gameObject;
+            //        var followerMaster = followerSummon.Perform();
+            //        fastCombatDirector.monsterCredit -= followerCost;
+            //        minionCredit -= followerCost;
+            //        if (followerMaster)
+            //        {
+            //            var masterEquip = cb.inventory.GetEquipmentIndex();
+            //            if (masterEquip != EquipmentIndex.None)
+            //            {
+            //                followerMaster.inventory.SetEquipmentIndex(masterEquip);
+            //                fastCombatDirector.monsterCredit -= followerCost * 2f;
+            //                minionCredit -= followerCost * 2f;
+            //                //possibly a bug where would-be masters are getting 'follower' prefix and no minion..???
+            //                //saw it once on a scav super deep loop. this isn't even programmed behavior.
+            //                //why???
 
-                            //im thinking about it even more and it wasnt even on a map where followers were enabled at the time!!!!!!!!!!!!
-                            //WHAT THE FUCK!!!!!!!!!!!
-                        }
-                    }
-                }
-            }
+            //                //im thinking about it even more and it wasnt even on a map where followers were enabled at the time!!!!!!!!!!!!
+            //                //WHAT THE FUCK!!!!!!!!!!!
+            //            }
+            //        }
+            //    }
+            //}
 
             if (Run.instance.stageClearCount > 8)
             {
@@ -210,34 +207,31 @@ namespace SS2.Components
                 {
                     MakeEmpyrean(cb);
                     fastCombatDirector.monsterCredit -= baseCost * empyreanMultiplier * 1.5f;
-                    SS2Log.Debug(cm.name + " empyrean monster cost : " + baseCost * empyreanMultiplier);
                     eliteCredit -= empyreanEliteCost * 1.5f;
                 }
             }
 
-            if (ethInstance.etherealsCompleted >= 1)
-            {
-                float baseEtherealCost = (totalCost * etherealMultiplier) / ethInstance.etherealsCompleted; //possibly too mean?? lol
+            //if (ethInstance.etherealsCompleted >= 1)
+            //{
+            //    float baseEtherealCost = (totalCost * etherealMultiplier) / ethInstance.etherealsCompleted; //possibly too mean?? lol
 
-                if (Run.instance.stageClearCount > 5)
-                {
-                    if ((ultraEliteCost - (20 * (ethInstance.etherealsCompleted - 1))) <= eliteCredit && baseEtherealCost * 3f <= fastCombatDirector.monsterCredit)
-                    {
-                        MakeUltra(cb);
-                        fastCombatDirector.monsterCredit -= baseEtherealCost * 5f;
-                        SS2Log.Debug(cm.name + " ultra monster cost: " + totalCost + "  yuou are now Ultra. :D");
-                        eliteCredit -= ultraEliteCost * 1.5f;
-                    }
-                }
+            //    if (Run.instance.stageClearCount > 5)
+            //    {
+            //        if ((ultraEliteCost - (20 * (ethInstance.etherealsCompleted - 1))) <= eliteCredit && baseEtherealCost * 3f <= fastCombatDirector.monsterCredit)
+            //        {
+            //            MakeUltra(cb);
+            //            fastCombatDirector.monsterCredit -= baseEtherealCost * 5f;
+            //            eliteCredit -= ultraEliteCost * 1.5f;
+            //        }
+            //    }
 
-                if ((etherealEliteCost - (20 * (ethInstance.etherealsCompleted - 1))) <= eliteCredit && baseEtherealCost <= fastCombatDirector.monsterCredit)
-                {
-                    MakeEthereal(cb);
-                    fastCombatDirector.monsterCredit -= baseEtherealCost * 1.25f; //fuck you go broke
-                    SS2Log.Debug(cm.name + " ethereal monster cost: " + totalCost + "    (i am making this bitch ethereal)");
-                    eliteCredit -= etherealEliteCost * 1.25f;
-                }
-            }
+            //    if ((etherealEliteCost - (20 * (ethInstance.etherealsCompleted - 1))) <= eliteCredit && baseEtherealCost <= fastCombatDirector.monsterCredit)
+            //    {
+            //        MakeEthereal(cb);
+            //        fastCombatDirector.monsterCredit -= baseEtherealCost * 1.25f; //fuck you go broke
+            //        eliteCredit -= etherealEliteCost * 1.25f;
+            //    }
+            //}
         }
 
         public void MakeEmpyrean(CharacterBody body)

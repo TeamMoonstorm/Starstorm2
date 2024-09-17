@@ -32,6 +32,23 @@ namespace SS2.Components
         private void Start()
         {
             instance = this;
+            On.RoR2.SceneDirector.Start += SceneDirector_Start;
+        }
+
+        private void OnDestroy()
+        {
+            On.RoR2.SceneDirector.Start -= SceneDirector_Start;
+        }
+
+        public void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)
+        {
+            orig(self);
+
+            if (NetworkServer.active)
+            {
+                directorInstance = Instantiate(directorPrefab);
+                NetworkServer.Spawn(directorInstance);
+            }
         }
     }
 }
