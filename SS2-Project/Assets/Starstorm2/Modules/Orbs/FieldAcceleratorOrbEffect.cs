@@ -14,7 +14,7 @@ namespace SS2.Orbs
                 var fatb = teleInstance.GetComponent<FieldAcceleratorTeleporterBehavior>();
 
                 if (fatb != null)
-                    targetTransform = fatb.displayInstance.transform;
+                    targetTransform = fatb.displayInstance?.transform;
                 else
                     targetTransform = teleInstance.transform;
             }

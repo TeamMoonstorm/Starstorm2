@@ -238,7 +238,7 @@ namespace SS2.Components
             float cloudHeight = 100f;
             foreach(StormVFX vfx in this.eventVFX)
             {
-                if((long)DirectorAPI.GetStageEnumFromSceneDef(Stage.instance.sceneDef) == vfx.stageEnum)
+                if ((long)DirectorAPI.GetStageEnumFromSceneDef(SceneCatalog.GetSceneDefForCurrentScene()) == vfx.stageEnum)
                 {
                     effectPrefab = vfx.effectPrefab;
                     cloudHeight = vfx.cloudHeight;

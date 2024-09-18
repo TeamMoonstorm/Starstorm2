@@ -238,17 +238,17 @@ namespace SS2.Items
                 //set a bunch of variables we'll be using for teleporter modifications:
 
                 //get EVERYTHING
-                telePassiveParticles = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/PassiveParticle, Sphere").GetComponent<ParticleSystem>();
-                teleCenterParticles = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/PassiveParticle, Center").GetComponent<ParticleSystem>();
-                lightningParticles = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargedEffect/LightningAlongProngs").GetComponent<ParticleSystem>();
-                lightningLightRef = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargedEffect/LightningAlongProngs/ReferencePointLight").GetComponent<Light>();
-                betweenProngsCore = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/IdleToChargingEffect/BetweenProngs/Core").GetComponent<ParticleSystem>();
-                coreLightRef = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/IdleToChargingEffect/BetweenProngs/Point light").GetComponent<Light>();
-                debris = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/IdleToChargingEffect/3DDebris").GetComponent<ParticleSystem>();
-                chargingRing = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/Ring").GetComponent<ParticleSystem>();
-                loopLight = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/BetweenProngs/Loop/Point light").GetComponent<Light>();
-                core = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/BetweenProngs/Loop/Core").GetComponent<ParticleSystem>();
-                beam = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/BetweenProngs/Loop/Beam").GetComponent<ParticleSystem>();
+                telePassiveParticles = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/PassiveParticle, Sphere")?.GetComponent<ParticleSystem>();
+                teleCenterParticles = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/PassiveParticle, Center")?.GetComponent<ParticleSystem>();
+                lightningParticles = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargedEffect/LightningAlongProngs")?.GetComponent<ParticleSystem>();
+                lightningLightRef = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargedEffect/LightningAlongProngs/ReferencePointLight")?.GetComponent<Light>();
+                betweenProngsCore = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/IdleToChargingEffect/BetweenProngs/Core")?.GetComponent<ParticleSystem>();
+                coreLightRef = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/IdleToChargingEffect/BetweenProngs/Point light")?.GetComponent<Light>();
+                debris = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/IdleToChargingEffect/3DDebris")?.GetComponent<ParticleSystem>();
+                chargingRing = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/Ring")?.GetComponent<ParticleSystem>();
+                loopLight = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/BetweenProngs/Loop/Point light")?.GetComponent<Light>();
+                core = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/BetweenProngs/Loop/Core")?.GetComponent<ParticleSystem>();
+                beam = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/BetweenProngs/Loop/Beam")?.GetComponent<ParticleSystem>();
                 rangeIndicator = hzc.radiusIndicator;
 
                 //resize & recolor large teleporter particles
@@ -282,16 +282,18 @@ namespace SS2.Items
 
                 //center beam
                 loopLight.color = new Color(0.8f, .42f, 0f);
-                var beamCorePSR = core.GetComponent<ParticleSystemRenderer>();
-                beamCorePSR.material = SS2Assets.LoadAsset<Material>("matAcceleratorTPFire", SS2Bundle.Items);
+                var beamCorePSR = core?.GetComponent<ParticleSystemRenderer>();
+                if(beamCorePSR)
+                    beamCorePSR.material = SS2Assets.LoadAsset<Material>("matAcceleratorTPFire", SS2Bundle.Items);
                 //core.transform.position += new Vector3(core.transform.position.x, core.transform.position.y + 1.5f, core.transform.position.z);
-                var beamPSR = beam.GetComponent<ParticleSystemRenderer>();
-                beamPSR.material = SS2Assets.LoadAsset<Material>("matAcceleratorTPLaser", SS2Bundle.Items);
+                var beamPSR = beam?.GetComponent<ParticleSystemRenderer>();
+                if(beamPSR)
+                    beamPSR.material = SS2Assets.LoadAsset<Material>("matAcceleratorTPLaser", SS2Bundle.Items);
                 //beam.transform.position += new Vector3(beam.transform.position.x, beam.transform.position.y + 1.5f, beam.transform.position.z);
 
-                displayChildLocator.FindChild("Passive").gameObject.SetActive(true);
-                displayChildLocator.FindChild("Burst").gameObject.GetComponent<ParticleSystem>().Emit(40);
-                displayChildLocator.FindChild("Ring").gameObject.GetComponent<ParticleSystem>().Emit(1);
+                displayChildLocator.FindChild("Passive")?.gameObject.SetActive(true);
+                displayChildLocator.FindChild("Burst")?.gameObject.GetComponent<ParticleSystem>().Emit(40);
+                displayChildLocator.FindChild("Ring")?.gameObject.GetComponent<ParticleSystem>().Emit(1);
             }
 
             public void RecalcRadius()
