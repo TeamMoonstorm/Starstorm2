@@ -8,7 +8,8 @@ namespace SS2.Components
     {
         private float timer;
         private float timer2;
-        private bool shouldDestroySoon = false;
+        [SyncVar]
+        public bool shouldDestroySoon = false;
         public CharacterBody body;
         public float radius;
 
@@ -22,13 +23,7 @@ namespace SS2.Components
         public AnimateShaderAlpha thing;
         private void Start()
         {
-            if (body == null)
-            {
-                shouldDestroySoon = true;
-                return;
-            }
 
-            teamIndex = body.teamComponent.teamIndex;
 
             buffWard = GetComponent<BuffWard>();
 
@@ -37,10 +32,15 @@ namespace SS2.Components
                 buffToAmplify = buffWard.buffDef;
             }
 
-            hits = new List<HurtBox>();
-            ownerSearch = new SphereSearch();
-            ownerSearch.mask = LayerIndex.entityPrecise.mask;
-            ownerSearch.radius = radius;
+            if (NetworkServer.active)
+            {
+                teamIndex = body.teamComponent.teamIndex; // trash dont care
+                hits = new List<HurtBox>();
+                ownerSearch = new SphereSearch();
+                ownerSearch.mask = LayerIndex.entityPrecise.mask;
+                ownerSearch.radius = radius;
+            }
+            
         }
         
         private void FixedUpdate()
@@ -50,6 +50,8 @@ namespace SS2.Components
 
             if (shouldDestroySoon == true)
             {
+                if (thing) thing.enabled = true;
+
                 timer2 += Time.fixedDeltaTime;
 
                 if (buffWard && buffWard.radius >= 0f)
@@ -62,7 +64,7 @@ namespace SS2.Components
                 }
             }
 
-            if (timer > 0.3f)
+            if (NetworkServer.active && timer > 0.3f)
             {
                 if (body == null)
                 {
@@ -106,7 +108,7 @@ namespace SS2.Components
             if (!foundOwner)
             {
                 shouldDestroySoon = true;
-                if(thing) thing.enabled = true;
+                
             }
                 
         }

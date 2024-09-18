@@ -130,7 +130,6 @@ namespace SS2.Items
             private bool teleCharging;
             private bool monstersCleared;
 
-            [SyncVar] // this sucks but so does the rest of this
             public GameObject displayInstance;
             private float timer;
 
@@ -178,7 +177,7 @@ namespace SS2.Items
                 if (acceleratorCount == 0)
                     return;
 
-                if (displayChildLocator == null)
+                if (displayChildLocator == null && displayInstance)
                 {
                     displayChildLocator = displayInstance?.GetComponent<ChildLocator>();
                 }
@@ -314,6 +313,7 @@ namespace SS2.Items
                         displayInstance = Instantiate(_objectPrefab, position, new Quaternion(0, 0, 0, 0));
                         displayChildLocator = displayInstance.GetComponent<ChildLocator>();
                         NetworkServer.Spawn(displayInstance);
+
                     }
 
                     if (acceleratorCount == 0 && displayInstance != null)
@@ -325,7 +325,7 @@ namespace SS2.Items
 
                 if (hzc != null && acceleratorCount > 0 && monstersCleared)
                 {
-                    hzc.baseRadius *= 1 + (radiusPerStack * acceleratorCount);
+                    hzc.baseRadius *= 1 + (radiusPerStack * acceleratorCount); // *= is bad. this is run multiple times
                 }
             }
         }
