@@ -67,7 +67,7 @@ namespace EntityStates.Events
                         eventColor = textColor,
                         textDuration = 6,
                     };
-                    GameplayEventTextController.instance.EnqueueNewTextRequest(request,false);
+                    GameplayEventTextController.instance.EnqueueNewTextRequest(request, false);
                 }
                 else
                 {
@@ -77,7 +77,7 @@ namespace EntityStates.Events
                         eventColor = textColor,
                         textDuration = 6,
                     };
-                    GameplayEventTextController.instance.EnqueueNewTextRequest(request,false);
+                    GameplayEventTextController.instance.EnqueueNewTextRequest(request, false);
                 }
             }
             

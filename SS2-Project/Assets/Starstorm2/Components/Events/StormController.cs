@@ -9,6 +9,8 @@ using EntityStates;
 using EntityStates.Events;
 using UnityEngine.Events;
 using static MSU.GameplayEventTextController;
+using MSU;
+
 namespace SS2.Components
 {
     public class StormController : NetworkBehaviour
@@ -41,7 +43,13 @@ namespace SS2.Components
                 mobChargeRng.ResetSeed(Run.instance.treasureRng.nextUlong);
                 treasureRng.ResetSeed(Run.instance.treasureRng.nextUlong);
 
+                //FIXME: Events should only be spawned via the GameplayEventManager Spawn method! -N
                 GameObject stormController = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("StormController", SS2Bundle.Events));
+
+                var evt = stormController.GetComponent<GameplayEvent>();
+                evt.doNotAnnounceEnd = true;
+                evt.doNotAnnounceStart = true;
+
                 NetworkServer.Spawn(stormController);
             }
    
@@ -59,6 +67,11 @@ namespace SS2.Components
             if(!stormController)
             {
                 stormController = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("StormController", SS2Bundle.Events)).GetComponent<StormController>();
+
+                var evt = stormController.GetComponent<GameplayEvent>();
+                evt.doNotAnnounceEnd = true;
+                evt.doNotAnnounceStart = true;
+
                 NetworkServer.Spawn(stormController.gameObject);              
             }
 
