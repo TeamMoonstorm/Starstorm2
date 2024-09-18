@@ -45,12 +45,15 @@ namespace SS2.Components
         
         private void FixedUpdate()
         {
+            if (!NetworkServer.active) return;
+
             timer += Time.fixedDeltaTime;
 
             if (shouldDestroySoon == true)
             {
                 timer2 += Time.fixedDeltaTime;
-                if (buffWard.radius >= 0f)
+
+                if (buffWard && buffWard.radius >= 0f)
                 {
                     buffWard.radius -= buffWard.radius / 2f;
                 }

@@ -56,27 +56,31 @@ namespace EntityStates.Events
 
             oldStorm = !SS2.Storm.ReworkedStorm;
 
-            if (oldStorm)
+            if (true)
             {
-                oldStormDuration = UnityEngine.Random.Range(oldStormMinDuration, oldStormMaxDuration);
-                GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
+                if (oldStorm)
                 {
-                    eventToken = GETDUMBASSTOKENDELETELATER() + "_START",
-                    eventColor = textColor,
-                    textDuration = 6,
-                };
-                GameplayEventTextController.instance.EnqueueNewTextRequest(request);
-            }
-            else
-            {
-                GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
+                    oldStormDuration = UnityEngine.Random.Range(oldStormMinDuration, oldStormMaxDuration);
+                    GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
+                    {
+                        eventToken = GETDUMBASSTOKENDELETELATER() + "_START",
+                        eventColor = textColor,
+                        textDuration = 6,
+                    };
+                    GameplayEventTextController.instance.EnqueueNewTextRequest(request);
+                }
+                else
                 {
-                    eventToken = "ermmmm..... storm " + stormLevel,
-                    eventColor = textColor,
-                    textDuration = 6,
-                };
-                GameplayEventTextController.instance.EnqueueNewTextRequest(request);
+                    GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
+                    {
+                        eventToken = "ermmmm..... storm " + stormLevel,
+                        eventColor = textColor,
+                        textDuration = 6,
+                    };
+                    GameplayEventTextController.instance.EnqueueNewTextRequest(request);
+                }
             }
+            
             this.stormController.StartLerp(stormLevel, lerpDuration);
 
 
@@ -97,14 +101,15 @@ namespace EntityStates.Events
                         combatDirector.onSpawnedServer.AddListener(modifyMonsters = new UnityAction<GameObject>(ModifySpawnedMasters));
                 }
 
+                CharacterBody.onBodyStartGlobal += BuffEnemy;
+                var enemies = TeamComponent.GetTeamMembers(TeamIndex.Monster).Concat(TeamComponent.GetTeamMembers(TeamIndex.Lunar)).Concat(TeamComponent.GetTeamMembers(TeamIndex.Void));
+                foreach (var teamMember in enemies)
+                {
+                    BuffEnemy(teamMember.body);
+                }
             }
 
-            CharacterBody.onBodyStartGlobal += BuffEnemy;
-            var enemies = TeamComponent.GetTeamMembers(TeamIndex.Monster).Concat(TeamComponent.GetTeamMembers(TeamIndex.Lunar)).Concat(TeamComponent.GetTeamMembers(TeamIndex.Void));
-            foreach (var teamMember in enemies)
-            {
-                BuffEnemy(teamMember.body);
-            }
+            
         }
 
         private void ModifySpawnedMasters(GameObject masterObject)
@@ -258,22 +263,25 @@ namespace EntityStates.Events
         {
             base.OnExit();
 
-            CharacterBody.onBodyStartGlobal -= BuffEnemy;
-
-            // removelistener makes it so we cant add it back in the next state's onenter. (wtf?????)
-            CombatDirector bossDirector = TeleporterInteraction.instance?.bossDirector;
-            if (bossDirector && stormLevel >= 4)
+            if(NetworkServer.active)
             {
-                bossDirector.onSpawnedServer.RemoveListener(modifyBoss);
-            }
-            if (oldStorm)
-            {
-                foreach (CombatDirector combatDirector in CombatDirector.instancesList)
+                CharacterBody.onBodyStartGlobal -= BuffEnemy;
+                // removelistener makes it so we cant add it back in the next state's onenter. (wtf?????)
+                CombatDirector bossDirector = TeleporterInteraction.instance?.bossDirector;
+                if (bossDirector && stormLevel >= 4)
                 {
-                    if (combatDirector != bossDirector)
-                        combatDirector.onSpawnedServer.RemoveListener(modifyMonsters);
+                    bossDirector.onSpawnedServer.RemoveListener(modifyBoss);
+                }
+                if (oldStorm)
+                {
+                    foreach (CombatDirector combatDirector in CombatDirector.instancesList)
+                    {
+                        if (combatDirector != bossDirector)
+                            combatDirector.onSpawnedServer.RemoveListener(modifyMonsters);
+                    }
                 }
             }
+            
 
         }
 
@@ -291,7 +299,6 @@ namespace EntityStates.Events
         }
 
         // am i just stupid? where the fuck is the event
-        // TODO: souls curios idk whenever the fuck our modelers stop being depressed sacks of shit
         private class OnBossKilled : MonoBehaviour, IOnKilledServerReceiver
         {
             public void OnKilledServer(DamageReport damageReport)

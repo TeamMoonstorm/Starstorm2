@@ -87,7 +87,6 @@ namespace SS2.Items
                     displayInstance = fatb.displayInstance;
                     if (displayInstance != null)
                         displayHurtbox = displayInstance.GetComponent<HurtBoxGroup>().mainHurtBox;
-                    Debug.Log("displayHurtbox : " + displayHurtbox);
                 }
             }
 
@@ -172,11 +171,12 @@ namespace SS2.Items
             {
                 acceleratorCount = 0;
 
-                foreach (CharacterMaster cm in Run.instance.userMasters.Values)
+                foreach (PlayerCharacterMasterController pcmc in PlayerCharacterMasterController.instances)
                 {
-                    if (cm.inventory)
-                        acceleratorCount += cm.inventory.GetItemCount(SS2Content.Items.FieldAccelerator);
+                    if (pcmc.master && pcmc.master.inventory)
+                        acceleratorCount += pcmc.master.inventory.GetItemCount(SS2Content.Items.FieldAccelerator);
                 }
+
 
                 if (acceleratorCount == 0)
                     return;
@@ -226,10 +226,10 @@ namespace SS2.Items
 
                 acceleratorCount = 0;
 
-                foreach (CharacterMaster cm in Run.instance.userMasters.Values)
+                foreach (PlayerCharacterMasterController pcmc in PlayerCharacterMasterController.instances)
                 {
-                    if (cm.inventory)
-                        acceleratorCount += cm.inventory.GetItemCount(SS2Content.Items.FieldAccelerator);
+                    if (pcmc.master && pcmc.master.inventory)
+                        acceleratorCount += pcmc.master.inventory.GetItemCount(SS2Content.Items.FieldAccelerator);
                 }
 
                 if (acceleratorCount == 0)
@@ -301,24 +301,28 @@ namespace SS2.Items
                 if (hzc == null)
                     hzc = GetComponent<HoldoutZoneController>();
 
-                foreach (CharacterMaster cm in Run.instance.userMasters.Values)
+                foreach (PlayerCharacterMasterController pcmc in PlayerCharacterMasterController.instances)
                 {
-                    if (cm.inventory)
-                        acceleratorCount += cm.inventory.GetItemCount(SS2Content.Items.FieldAccelerator);
+                    if (pcmc.master && pcmc.master.inventory)
+                        acceleratorCount += pcmc.master.inventory.GetItemCount(SS2Content.Items.FieldAccelerator);
                 }
 
-                if (acceleratorCount > 0 && displayInstance == null)
+                if (NetworkServer.active)
                 {
-                    Vector3 position = new Vector3(TeleporterInteraction.instance.transform.position.x, TeleporterInteraction.instance.transform.position.y + 1.5f, TeleporterInteraction.instance.transform.position.z);
-                    displayInstance = Instantiate(_objectPrefab, position, new Quaternion(0, 0, 0, 0));
-                    displayChildLocator = displayInstance.GetComponent<ChildLocator>();
-                    NetworkServer.Spawn(displayInstance);
-                }
+                    if (acceleratorCount > 0 && displayInstance == null)
+                    {
+                        Vector3 position = new Vector3(TeleporterInteraction.instance.transform.position.x, TeleporterInteraction.instance.transform.position.y + 1.5f, TeleporterInteraction.instance.transform.position.z);
+                        displayInstance = Instantiate(_objectPrefab, position, new Quaternion(0, 0, 0, 0));
+                        displayChildLocator = displayInstance.GetComponent<ChildLocator>();
+                        NetworkServer.Spawn(displayInstance);
+                    }
 
-                if (acceleratorCount == 0 && displayInstance != null)
-                {
-                    NetworkServer.Destroy(displayInstance);
+                    if (acceleratorCount == 0 && displayInstance != null)
+                    {
+                        NetworkServer.Destroy(displayInstance);
+                    }
                 }
+                
 
                 if (hzc != null && acceleratorCount > 0 && monstersCleared)
                 {

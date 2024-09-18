@@ -7,6 +7,7 @@ using RoR2.ContentManagement;
 using System.Collections.Generic;
 using RoR2.Items;
 using RoR2.CharacterAI;
+using UnityEngine.Networking;
 namespace SS2.Items
 {
     // body is x% larger
@@ -67,7 +68,7 @@ namespace SS2.Items
                     modelTransform.localScale *= deltaScale;
                 }
 
-                if(modifySkillDrivers && body.master)
+                if(NetworkServer.active && modifySkillDrivers && body.master)
                 {                    
                     ModifySkillDrivers(deltaScale);
                 }
@@ -77,6 +78,7 @@ namespace SS2.Items
 
             private void ModifySkillDrivers(float deltaScale)
             {
+
                 if(skillDriverCache == null)
                 {
                     skillDriverCache = body.master.aiComponents[0].skillDrivers;

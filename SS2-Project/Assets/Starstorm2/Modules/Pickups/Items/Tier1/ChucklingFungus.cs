@@ -40,7 +40,7 @@ namespace SS2.Items
         //Should return true only if dungus is available as well, unsure how to do that lol
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return true;
+            return false;
         }
 
 

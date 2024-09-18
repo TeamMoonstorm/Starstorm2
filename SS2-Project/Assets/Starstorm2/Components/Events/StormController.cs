@@ -30,12 +30,12 @@ namespace SS2.Components
             // souls soon.............
 
             StormController.dropTable = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<PickupDropTable>("RoR2/Base/Chest1/dtChest1.asset").WaitForCompletion();
-            Stage.onServerStageBegin += OnServerStageBegin;
+            Stage.onStageStartGlobal += OnStageStartGlobal;
         }
 
-        private static void OnServerStageBegin(Stage stage)
+        private static void OnStageStartGlobal(Stage stage)
         {
-            if(stage.sceneDef.sceneType == SceneType.Stage && TeleporterInteraction.instance) // this should cover every stage we want storms on? im pretty sure
+            if(NetworkServer.active && stage.sceneDef.sceneType == SceneType.Stage && TeleporterInteraction.instance) // this should cover every stage we want storms on? im pretty sure
             {
                 chargeRng.ResetSeed(Run.instance.treasureRng.nextUlong);
                 mobChargeRng.ResetSeed(Run.instance.treasureRng.nextUlong);
