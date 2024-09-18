@@ -60,12 +60,10 @@
 * Nemesis Commando
     * Utility no longer goes as far/fast, but now starts with 2 stocks. This should help create a finer sense of control while weaving in and out of combat.
     * Alt Special now stuns on hit.
-    * When selected as a survivor, now drops from a drop pod.
 * Nemesis Mercenary
     * Increased Alt Utility damage (300% -> 600%).
     * Reduced Alt Utility speed.
     * Reduced Special damage (1500% -> 1200%).
-    * When selected as a survivor, now drops from a drop pod.
 * Other
     * Many performance improvements
     * Reduced file size
@@ -96,7 +94,8 @@
     * Fixed friend's cooldown reduction not properly scaling with attackspeed.
     * Fixed missing logbook entry.
 * Other
-    * Increased visibility of Mysterious Cuffs
+    * Increased visibility of Mysterious Cuffs.
+    * Adjusted model / texture of Captain and Huntress Grand Mastery skins.
 
 ### 0.6.6
 * Events
