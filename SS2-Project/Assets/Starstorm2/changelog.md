@@ -48,7 +48,11 @@
     * Storms have updated visuals, and a new surprise!
     * An early version of the 0.7 Storm rework is available as a config option (disabled by default).
     * Empyrean event removed - Empyrean elites now are integrated into late-loop director spawns.
-    * Nemesis Invaders now have Adaptive Armor, like Mithrix or Alloy Worship Unit
+    * Empyreans now select their Elite traits from a whitelist, which can be found in the config options.
+    * Empyrean monsters no longer have Adaptive Armor
+    * Empyrean monsters now ignore the level cap of 99.
+    * Nemesis Invaders now have Adaptive Armor, like Mithrix.
+    * Nemesis invaders now ignore the standard level cap of 99.
     * Nemesis invaders now spawn at a minimum level of 24, and always have at least ~25 items. Don't fight them if you aren't prepared!
     * Nemesis invaders spawn at the beginning of the stage, every three stages
 * Executioner

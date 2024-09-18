@@ -84,7 +84,8 @@ namespace SS2.Components
 
             if (!currentState.Equals(state))
             {
-                material.SetFloat("_AlphaBias", state.alphaBias);
+                if(material) // ??????????????? bob omb battlefield deletes it
+                    material.SetFloat("_AlphaBias", state.alphaBias);
 
                 this.currentState = state;
             }
