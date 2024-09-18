@@ -177,7 +177,7 @@ namespace SS2.Items
                 if (acceleratorCount == 0)
                     return;
 
-                if (displayChildLocator == null && displayInstance)
+                if (displayChildLocator == null && displayInstance) // i give up
                 {
                     displayChildLocator = displayInstance?.GetComponent<ChildLocator>();
                 }
