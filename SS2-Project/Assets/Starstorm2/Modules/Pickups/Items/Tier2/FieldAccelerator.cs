@@ -120,7 +120,7 @@ namespace SS2.Items
             }
         }
 
-        public class FieldAcceleratorTeleporterBehavior : NetworkBehaviour
+        public class FieldAcceleratorTeleporterBehavior : MonoBehaviour
         {
             private HoldoutZoneController hzc;
             private Transform pos;
