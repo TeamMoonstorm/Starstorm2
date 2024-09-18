@@ -23,9 +23,9 @@ namespace SS2
 
         public virtual IEnumerator InitializeAsync()
         {
-            var coroutine = assetCollection.CreateCoroutineForVanillaSkinDefInitialization();
+            var coroutine = assetCollection.InitializeSkinDefs();
 
-            while (!coroutine.isDone)
+            while (!coroutine.IsDone())
                 yield return null;
 
             yield break;
