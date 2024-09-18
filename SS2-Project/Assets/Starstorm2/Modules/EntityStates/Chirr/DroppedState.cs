@@ -76,14 +76,16 @@ namespace EntityStates.Chirr
 			
 			if(base.characterMotor)
             {
-				if(base.characterMotor.Motor)
-                {
-					KinematicCharacterController.KinematicCharacterSystem.UnregisterCharacterMotor(base.characterMotor.Motor);
-					bodyWasPlayer = base.characterMotor.Motor.playerCharacter;
-					base.characterMotor.Motor.playerCharacter = true; // FUCK YOU HOPOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO I MEAN GEARBOX
-					KinematicCharacterController.KinematicCharacterSystem.RegisterCharacterMotor(base.characterMotor.Motor);
-				}
-				
+				//if(base.characterMotor.Motor && base.characterMotor.Motor.enabled)
+				//            {
+				//	KinematicCharacterController.KinematicCharacterSystem.UnregisterCharacterMotor(base.characterMotor.Motor);
+				//	bodyWasPlayer = base.characterMotor.Motor.playerCharacter;
+				//	base.characterMotor.Motor.playerCharacter = true; // FUCK YOU HOPOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO I MEAN GEARBOX
+				//	KinematicCharacterController.KinematicCharacterSystem.RegisterCharacterMotor(base.characterMotor.Motor);
+				//}
+
+				this.detonateOnImpact = base.gameObject.AddComponent<DetonateOnImpact>();
+				this.detonateOnImpact.droppedState = this;
 				base.characterMotor.onMovementHit += DoSplashDamage;
 				base.characterMotor.disableAirControlUntilCollision = true;
                 base.characterMotor.velocity = initialVelocity;
@@ -158,12 +160,12 @@ namespace EntityStates.Chirr
 
 			if (base.characterMotor)
             {
-				if(base.characterMotor.Motor)
-                {
-					KinematicCharacterController.KinematicCharacterSystem.UnregisterCharacterMotor(base.characterMotor.Motor);
-					base.characterMotor.Motor.playerCharacter = bodyWasPlayer;
-					KinematicCharacterController.KinematicCharacterSystem.RegisterCharacterMotor(base.characterMotor.Motor);
-				}
+				//if(base.characterMotor.Motor && base.characterMotor.Motor.enabled)
+    //            {
+				//	KinematicCharacterController.KinematicCharacterSystem.UnregisterCharacterMotor(base.characterMotor.Motor);
+				//	base.characterMotor.Motor.playerCharacter = bodyWasPlayer;
+				//	KinematicCharacterController.KinematicCharacterSystem.RegisterCharacterMotor(base.characterMotor.Motor);
+				//}
 				
 				base.characterMotor.onMovementHit -= DoSplashDamage;
 				base.characterMotor.useGravity = bodyHadGravity;
