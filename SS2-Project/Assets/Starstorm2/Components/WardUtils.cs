@@ -62,7 +62,7 @@ namespace SS2.Components
                 }
             }
 
-            if (NetworkServer.active && timer > 0.3f)
+            if (timer > 0.3f)
             {
                 if (body == null)
                 {
@@ -75,9 +75,6 @@ namespace SS2.Components
 
         private void CheckBodyInRadius()
         {
-            if (!NetworkServer.active)
-                return;
-
             bool foundOwner = body && body.HasBuff(buffWard.buffDef);
 
             //idk what this does and only hunter sigil "used" it so im commenting it out

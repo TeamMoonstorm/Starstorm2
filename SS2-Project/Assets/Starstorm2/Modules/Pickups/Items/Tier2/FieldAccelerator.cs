@@ -129,6 +129,8 @@ namespace SS2.Items
             public static float acceleratorCount;
             private bool teleCharging;
             private bool monstersCleared;
+
+            [SyncVar] // this sucks but so does the rest of this
             public GameObject displayInstance;
             private float timer;
 
@@ -178,7 +180,7 @@ namespace SS2.Items
 
                 if (displayChildLocator == null)
                 {
-                    displayChildLocator = displayInstance.GetComponent<ChildLocator>();
+                    displayChildLocator = displayInstance?.GetComponent<ChildLocator>();
                 }
 
                 if (displayChildLocator != null)
