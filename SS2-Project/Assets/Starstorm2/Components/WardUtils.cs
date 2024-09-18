@@ -45,7 +45,6 @@ namespace SS2.Components
         
         private void FixedUpdate()
         {
-            if (!NetworkServer.active) return;
 
             timer += Time.fixedDeltaTime;
 
@@ -57,13 +56,13 @@ namespace SS2.Components
                 {
                     buffWard.radius -= buffWard.radius / 2f;
                 }
-                if (timer2 > 1f)
+                if (NetworkServer.active && timer2 > 1f)
                 {
                     NetworkServer.Destroy(this.gameObject);
                 }
             }
 
-            if (timer > 0.3f)
+            if (NetworkServer.active && timer > 0.3f)
             {
                 if (body == null)
                 {

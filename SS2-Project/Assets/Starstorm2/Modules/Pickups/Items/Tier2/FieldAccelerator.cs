@@ -32,8 +32,6 @@ namespace SS2.Items
         {
             //???
             _objectPrefab = AssetCollection.FindAsset<GameObject>("ObjectFieldAccelerator"); // 
-            _objectPrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("ObjectFieldAccelerator", SS2Bundle.Items), "ObjectDisplayFieldAccelerator", true);
-            _objectPrefab.RegisterNetworkPrefab();
 
             Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/Teleporter1.prefab").Completed+= (r) => r.Result.AddComponent<FieldAcceleratorTeleporterBehavior>();
             Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/LunarTeleporter Variant.prefab").Completed += (r) => r.Result.AddComponent<FieldAcceleratorTeleporterBehavior>();
@@ -97,9 +95,6 @@ namespace SS2.Items
 
                 if (teleInstance)
                 {
-                    if (teleInstance.GetComponent<FieldAcceleratorTeleporterBehavior>() == null)
-                        teleInstance.gameObject.AddComponent<FieldAcceleratorTeleporterBehavior>();
-
                     FieldAcceleratorTeleporterBehavior fatb = teleInstance.GetComponent<FieldAcceleratorTeleporterBehavior>();
 
                     fatb.RecalcRadius();
@@ -291,9 +286,9 @@ namespace SS2.Items
                     beamPSR.material = SS2Assets.LoadAsset<Material>("matAcceleratorTPLaser", SS2Bundle.Items);
                 //beam.transform.position += new Vector3(beam.transform.position.x, beam.transform.position.y + 1.5f, beam.transform.position.z);
 
-                displayChildLocator.FindChild("Passive")?.gameObject.SetActive(true);
-                displayChildLocator.FindChild("Burst")?.gameObject.GetComponent<ParticleSystem>().Emit(40);
-                displayChildLocator.FindChild("Ring")?.gameObject.GetComponent<ParticleSystem>().Emit(1);
+                displayChildLocator?.FindChild("Passive")?.gameObject.SetActive(true);
+                displayChildLocator?.FindChild("Burst")?.gameObject.GetComponent<ParticleSystem>().Emit(40);
+                displayChildLocator?.FindChild("Ring")?.gameObject.GetComponent<ParticleSystem>().Emit(1);
             }
 
             public void RecalcRadius()
