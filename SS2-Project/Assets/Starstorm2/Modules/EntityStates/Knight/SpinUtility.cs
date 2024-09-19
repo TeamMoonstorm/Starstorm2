@@ -1,30 +1,100 @@
 ﻿using MSU;
 using RoR2;
+using RoR2.Audio;
 using RoR2.Skills;
 using UnityEngine;
 
 namespace EntityStates.Knight
 {
-    class SpinUtility : BasicMeleeAttack
+    class SpinUtility : BaseKnightMeleeAttack
     {
         public static float swingTimeCoefficient = 1f;
         [FormatToken("SS2_KNIGHT_SPECIAL_SPIN_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float TokenModifier_dmgCoefficient => new SpinUtility().damageCoefficient;
         public static SkillDef buffedSkillRef;
         
+        // To disable collision
         private int _origLayer;
 
-        public float hopVelocity = 35f;
-        public float airControl = 1f;
-        public float upwardVelocity = 4f;
-        public float forwardVelocity = 20f;
-        public float minimumY = 0.10f;
-        public float aimVelocity = 3f;
+        // Movement variables
+        public new float duration = 1f;
+        public float initialSpeedCoefficient = 10f;
+        public float finalSpeedCoefficient = 5f;
+        public float hopVelocity = 30f;
+        public string dodgeSoundString = "";
+        public float dodgeFOV = SS2.Survivors.Knight.dodgeFOV;
+        public float rollSpeed;
+        public Vector3 forwardDirection;
+        public Vector3 previousPosition;
 
 
-        public override void OnEnter()
+        // Multihit info
+        private float baseFireFrequency = 0.1f;
+        private float fireFrequency;
+        private float fireAge;
+
+        private void CalculateInitialDirection()
         {
-            base.OnEnter();
+            if (inputBank && characterDirection)
+            {
+                forwardDirection = (inputBank.moveVector == Vector3.zero ? characterDirection.forward : inputBank.moveVector).normalized;
+            }
+
+            Vector3 rhs = characterDirection ? characterDirection.forward : forwardDirection;
+            Vector3 rhs2 = Vector3.Cross(Vector3.up, rhs);
+
+            float num = Vector3.Dot(forwardDirection, rhs);
+            float num2 = Vector3.Dot(forwardDirection, rhs2);
+
+            RecalculateRollSpeed();
+
+            if (characterMotor && characterDirection)
+            {
+                characterMotor.velocity.y = 0f;
+                characterMotor.velocity = forwardDirection * rollSpeed;
+            }
+
+            Vector3 b = characterMotor ? characterMotor.velocity : Vector3.zero;
+            previousPosition = transform.position - b;
+
+            if (!isGrounded)
+            {
+                SmallHop(characterMotor, hopVelocity);
+            }
+
+            //Util.PlaySound(dodgeSoundString, gameObject);
+        }
+
+        private void RecalculateRollSpeed()
+        {
+            rollSpeed = moveSpeedStat * Mathf.Lerp(initialSpeedCoefficient, finalSpeedCoefficient, fixedAge / duration);
+        }
+
+        private void MoveKnight()
+        {
+            RecalculateRollSpeed();
+
+            if (characterDirection) characterDirection.forward = forwardDirection;
+            if (cameraTargetParams) cameraTargetParams.fovOverride = Mathf.Lerp(dodgeFOV, 60f, fixedAge / duration);
+
+
+            Vector3 normalized = (transform.position - previousPosition).normalized;
+            if (characterMotor && characterDirection && normalized != Vector3.zero)
+            {
+                Vector3 vector = normalized * rollSpeed;
+                float d = Mathf.Max(Vector3.Dot(vector, forwardDirection), 0f);
+                vector = forwardDirection * d;
+                vector.y = 0f;
+
+                characterMotor.velocity = vector;
+            }
+            previousPosition = transform.position;
+        }
+
+        private void DisableCharacterMotorCollision()
+        {
+            characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
+            animator = GetModelAnimator();
 
             if (characterMotor)
             {
@@ -32,66 +102,113 @@ namespace EntityStates.Knight
                 characterMotor.capsuleCollider.gameObject.layer = LayerIndex.fakeActor.intVal;
                 characterMotor.Motor.RebuildCollidableLayers();
             }
-
-            characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
-            animator = GetModelAnimator();
-
-            Vector3 direction = GetAimRay().direction;
-
-            // Launch Knight where they are aiming
-            if (base.isAuthority)
-            {
-                base.characterBody.isSprinting = false;
-                direction.y = Mathf.Max(direction.y, minimumY);
-                Vector3 val = direction.normalized * aimVelocity * moveSpeedStat;
-                Vector3 val2 = Vector3.up * upwardVelocity;
-                Vector3 val3 = new Vector3(direction.x, 0f, direction.z).normalized;
-                Vector3 val4 = val3.normalized * forwardVelocity;
-                base.characterMotor.Motor.ForceUnground();
-                base.characterMotor.velocity = val + val2 + val4;
-            }
-
-            if (!isGrounded)
-            {
-                SmallHop(characterMotor, hopVelocity);
-            }
         }
 
-        public override void FixedUpdate()
+        private void EnableCharacterMotorCollision()
         {
-            base.FixedUpdate();
-
-            if (base.cameraTargetParams) base.cameraTargetParams.fovOverride = Mathf.Lerp(SS2.Survivors.Knight.dodgeFOV, 60f, base.fixedAge / duration);
-            base.characterMotor.moveDirection = base.inputBank.moveVector;
-
-            if (base.isAuthority && base.characterMotor.isGrounded)
-            {
-                this.outer.SetNextStateToMain();
-                return;
-            }
-        }
-
-
-        public override void OnExit()
-        {
-            if (characterMotor) //Nasty fucking hack
+            if (characterMotor)
             {
                 characterMotor.capsuleCollider.gameObject.layer = _origLayer;
                 characterMotor.Motor.RebuildCollidableLayers();
             }
 
             characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage;
-            base.OnExit();
         }
 
-        public override void PlayAnimation()
+        private void SetupHitbox()
+        {
+            hitboxGroupName = "BigHitbox";
+
+            damageType = DamageType.Generic;
+            damageCoefficient = 12;
+            procCoefficient = 1f;
+            pushForce = 400f;
+            bonusForce = Vector3.forward;
+            baseDuration = 1f;
+
+            //0-1 multiplier of baseduration, used to time when the hitbox is out (usually based on the run time of the animation)
+            //for example, if attackStartPercentTime is 0.5, the attack will start hitting halfway through the ability. if baseduration is 3 seconds, the attack will start happening at 1.5 seconds
+            attackStartPercentTime = 0.1f;
+            attackEndPercentTime = 0.7f;
+
+            //this is the point at which the attack can be interrupted by itself, continuing a combo
+            earlyExitPercentTime = 0.5f;
+
+            hitStopDuration = 0.012f;
+            attackRecoil = 0.5f;
+            hitHopVelocity = 9f;
+
+            swingSoundString = "NemmandoSwing";
+            hitSoundString = "";
+            muzzleString = "SwingCenter";
+            playbackRateParam = "Util.Hitbox";
+            swingEffectPrefab = SS2.Survivors.Knight.KnightSpinEffect;
+            hitEffectPrefab = SS2.Survivors.Knight.KnightHitEffect;
+        }
+
+        private void MultiHitAttack()
+        {
+            fireAge += Time.fixedDeltaTime;
+            base.characterBody.SetAimTimer(2f);
+            attackSpeedStat = base.characterBody.attackSpeed;
+            fireFrequency = baseFireFrequency * attackSpeedStat;
+
+            if (fireAge >= 1f / fireFrequency && base.isAuthority)
+            {
+                fireAge = 0f;
+                attack.ResetIgnoredHealthComponents();
+                attack.isCrit = base.characterBody.RollCrit();
+                attack.Fire();
+            }
+        }
+
+        public override void OnEnter()
+        {
+            if (base.isAuthority)
+            {
+                DisableCharacterMotorCollision();
+                CalculateInitialDirection();
+                SetupHitbox();
+
+                base.OnEnter();
+            }
+        }
+
+        public override void FixedUpdate()
+        {
+            if (base.isAuthority)
+            {
+                base.FixedUpdate();
+                MoveKnight();
+                MultiHitAttack();
+
+                if (fixedAge >= duration)
+                {
+                    outer.SetNextStateToMain();
+                    return;
+                }
+            }
+        }
+
+
+        public override void OnExit()
+        {
+            if (base.isAuthority)
+            {
+                if (cameraTargetParams) cameraTargetParams.fovOverride = -1f;
+                EnableCharacterMotorCollision();
+                base.OnExit();
+            }   
+        }
+
+        public override void PlayAttackAnimation()
         {
             PlayCrossfade("FullBody, Override", "Utility", "Utility.playbackRate", duration * swingTimeCoefficient, 0.15f);   
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.Frozen;
+            return InterruptPriority.Skill;
         }
     }
 }

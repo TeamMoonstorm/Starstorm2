@@ -6,12 +6,11 @@ using UnityEngine.Networking;
 using R2API;
 using MSU;
 using RoR2.ContentManagement;
-using System.Collections;
 using MSU.Config;
 
 namespace SS2.Equipments
 {
-    public sealed class GreaterWarbanner : SS2Equipment
+    public class GreaterWarbanner : SS2Equipment
     {
         private const string token = "SS2_EQUIP_GREATERWARBANNER_DESC";
 

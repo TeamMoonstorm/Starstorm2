@@ -10,8 +10,8 @@ namespace SS2.Equipments
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acSeismicOscillator", SS2Bundle.Indev);
 
         public static float duration = 6;
-        public static int totalTicks = 24;
-        public static float damageCoef = 1f;
+        public static int totalTicks = 32;
+        public static float damageCoef = 1.2f;
 
 
         public override void Initialize()
