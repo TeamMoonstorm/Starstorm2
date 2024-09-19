@@ -14,11 +14,11 @@ namespace SS2.Items
         private const string token = "SS2_ITEM_UNIVERSALCHARGER_DESC";
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acUniversalCharger", SS2Bundle.Items);
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Time it takes for Universal Charger to recharge, in seconds.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Time it takes for Universal Charger to recharge, in seconds.")]
         [FormatToken(token, 0)]
         public static float baseCooldown = 18f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "How much faster Universal Charger recharges, per stack. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "How much faster Universal Charger recharges, per stack. (1 = 100%)")]
         [FormatToken(token, 1)]
         public static float cooldownReductionPerStack = 10f; // percent
 
@@ -77,9 +77,11 @@ namespace SS2.Items
             {
                 // lazy, giga jank. but server needs to see it for skill icon overlay to work
                 // ^ shouod just be some network message but idc
-                if (genericSkill.baseRechargeInterval > 0 && genericSkill.characterBody.skillLocator.primary != genericSkill && body.HasBuff(SS2Content.Buffs.BuffUniversalCharger))
+                if (CanSkillRefresh(genericSkill) && body.HasBuff(SS2Content.Buffs.BuffUniversalCharger))
                 {
                     body.RemoveBuff(SS2Content.Buffs.BuffUniversalCharger);
+                    float cooldownReduction = Util.ConvertAmplificationPercentageIntoReductionPercentage(cooldownReductionPerStack * (stack - 1)) / 100f;
+                    this.cooldownTimer = baseCooldown * (1 - cooldownReduction); // XDDDDDDDDDDDDDDDDD fuck im stupid
                 }
             }
 
@@ -88,7 +90,6 @@ namespace SS2.Items
                 if (CanSkillRefresh(genericSkill))
                 {
                     genericSkill.ApplyAmmoPack();
-                    // probably sounds better when recharged than on skill use but idk. will need feedback
                     EffectData effectData = new EffectData
                     {
                         origin = this.body.corePosition,
@@ -113,7 +114,7 @@ namespace SS2.Items
             //dont want to consume it on skills with no cooldown. or on primaries because loader primary has a cooldown XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
             private bool CanSkillRefresh(GenericSkill skill)
             {
-                return skill && skill.baseRechargeInterval > 0 && skill.characterBody.skillLocator.primary != skill && this.cooldownTimer <= 0;
+                return skill && skill.baseRechargeInterval > 0 && skill.skillDef.stockToConsume > 0 && skill.characterBody.skillLocator.primary != skill && this.cooldownTimer <= 0;
             }
 
 

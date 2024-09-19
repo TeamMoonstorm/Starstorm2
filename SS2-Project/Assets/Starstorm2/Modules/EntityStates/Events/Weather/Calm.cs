@@ -1,4 +1,5 @@
-﻿using SS2.Components;
+﻿
+using SS2.Components;
 using RoR2;
 using UnityEngine;
 using MSU;
@@ -21,21 +22,28 @@ namespace EntityStates.Events
         private float chargeFromTime;
 
         private float totalMultiplier;
+
+        private bool oldStorm;
+        private float oldDuration;
+
+        public float thing = 1f;
         public override void OnEnter()
         {
-            base.OnEnter();
-            this.stormController.StartLerp(0, 5f);
-            if (stormController.AttemptSkip()) // TEMPORARY. FUUUUUUUUUCK
+            if (!SS2.Events.EnableEvents.value)
             {
-                this.outer.SetNextState(new Storm { stormLevel = 1, lerpDuration = 15f, instantStorm = true });
+                Destroy(base.gameObject);
                 return;
             }
-
+            base.OnEnter();
+            this.stormController.StartLerp(0, 5f);
 
             this.totalMultiplier = StormController.chargeRng.RangeFloat(1, 1 + chargeVariance);
             GlobalEventManager.onCharacterDeathGlobal += AddCharge;
 
-            
+            oldDuration = fuckingduration() * 60f * thing;
+            oldStorm = !SS2.Storm.ReworkedStorm.value;
+
+
         }
 
 
@@ -58,22 +66,42 @@ namespace EntityStates.Events
             base.FixedUpdate();
             if (!NetworkServer.active) return;
 
-            this.chargeStopwatch -= Time.fixedDeltaTime;
-            if (this.chargeStopwatch <= 0 && ShouldCharge())
+            if (oldStorm)
             {
-                this.chargeStopwatch += chargeInterval;
-                float f = CalculateCharge(chargeInterval);
-                this.charge += f;
-                this.stormController.AddCharge(f);
+                if (base.fixedAge >= oldDuration)
+                {
+                    outer.SetNextState(new Storm { stormLevel = 3, lerpDuration = 10f });
+                }
+            }
+            else
+            {
+                this.chargeStopwatch -= Time.fixedDeltaTime;
+                if (this.chargeStopwatch <= 0 && ShouldCharge())
+                {
+                    this.chargeStopwatch += chargeInterval;
+                    float f = CalculateCharge(chargeInterval);
+                    this.charge += f;
+                    this.stormController.AddCharge(f);
+                }
+
+                if (charge >= 100f)
+                {
+                    this.stormController.OnStormLevelCompleted();
+                    outer.SetNextState(new Storm { stormLevel = 1, lerpDuration = 15f });
+                    return;
+                }
             }
 
-            if (charge >= 100f)
-            {
-                this.stormController.OnStormLevelCompleted();
-                outer.SetNextState(new Storm { stormLevel = 1, lerpDuration = 15f });
-                return;
-            }
 
+        }
+
+        private float fuckingduration()
+        {
+            if (Run.instance.stageClearCount < 2) return Mathf.Infinity; // >:(
+            float stageCount = Run.instance.stageClearCount + 1;
+            float minutesToStorm = (-13f * stageCount) / (stageCount + 1) + 13f;
+            float variance = chargeVariance * minutesToStorm;
+            return StormController.chargeRng.RangeFloat(minutesToStorm - variance, minutesToStorm + variance) * totalMultiplier;
         }
 
         private float CalculateCharge(float deltaTime)
@@ -106,11 +134,6 @@ namespace EntityStates.Events
         {
             base.OnExit();
             GlobalEventManager.onCharacterDeathGlobal -= AddCharge;
-
-            SS2Log.Info($"Storm level finished in {fixedAge} seconds.");
-            SS2Log.Info($"Charge from kills = {chargeFromKills}");
-            SS2Log.Info($"Charge form time = {chargeFromTime}");
-            SS2Log.Info($"TotalMultiplier = {totalMultiplier}");
         }
     }
 }

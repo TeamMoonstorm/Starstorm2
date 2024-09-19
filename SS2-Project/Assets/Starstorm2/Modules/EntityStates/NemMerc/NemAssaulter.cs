@@ -41,17 +41,19 @@ namespace EntityStates.NemMerc
                     this.childLocator.FindChild("PreDashEffect").gameObject.SetActive(true);
                 }
 
-				TemporaryOverlay temporaryOverlay = this.modelTransform.gameObject.AddComponent<TemporaryOverlay>();
-				temporaryOverlay.duration = NemAssaulter.dashPrepDuration;
+                TemporaryOverlayInstance temporaryOverlay = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
+                temporaryOverlay.duration = NemAssaulter.dashPrepDuration;
 				temporaryOverlay.animateShaderAlpha = true;
 				temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 				temporaryOverlay.destroyComponentOnEnd = true;
 				temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matNemergize", SS2Bundle.NemMercenary);
-				temporaryOverlay.AddToCharacerModel(this.characterModel);
-				
-			}
 
-			float distance = NemAssaulter.dashDistance + minBehindDistance;
+                // TODO: No longer needed post-SOTS, leaving in for now but need to remove later
+                //temporaryOverlay.AddToCharacerModel(this.characterModel);
+
+            }
+
+            float distance = NemAssaulter.dashDistance + minBehindDistance;
 
 			this.dashVector = base.inputBank.aimDirection;
 
@@ -128,13 +130,15 @@ namespace EntityStates.NemMerc
 				base.characterMotor.Motor.RebuildCollidableLayers();
 				if (this.modelTransform)
 				{
-					TemporaryOverlay temporaryOverlay = this.modelTransform.gameObject.AddComponent<TemporaryOverlay>();
-					temporaryOverlay.duration = 1.2f;
+                    TemporaryOverlayInstance temporaryOverlay = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
+                    temporaryOverlay.duration = 1.2f;
 					temporaryOverlay.animateShaderAlpha = true;
 					temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
 					temporaryOverlay.destroyComponentOnEnd = true;
 					temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matNemergize", SS2Bundle.NemMercenary);
-					temporaryOverlay.AddToCharacerModel(this.characterModel);
+
+                    // TODO: No longer needed post-SOTS, leaving in for now but need to remove later
+                    //temporaryOverlay.AddToCharacerModel(this.characterModel);
 				}
 			}
 			if (!this.isDashing)
@@ -177,13 +181,15 @@ namespace EntityStates.NemMerc
 
 						if (this.modelTransform)
 						{
-							TemporaryOverlay temporaryOverlay2 = this.modelTransform.gameObject.AddComponent<TemporaryOverlay>();
-							temporaryOverlay2.duration = NemAssaulter.hitPauseDuration / this.attackSpeedStat;
+                            TemporaryOverlayInstance temporaryOverlay2 = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
+                            temporaryOverlay2.duration = NemAssaulter.hitPauseDuration / this.attackSpeedStat;
 							temporaryOverlay2.animateShaderAlpha = true;
 							temporaryOverlay2.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
 							temporaryOverlay2.destroyComponentOnEnd = true;
 							temporaryOverlay2.originalMaterial = LegacyResourcesAPI.Load<Material>("Materials/matMercEvisTarget");
-							temporaryOverlay2.AddToCharacerModel(this.characterModel);
+
+                            // TODO: No longer needed post-SOTS, leaving in for now but need to remove later
+                            //temporaryOverlay2.AddToCharacerModel(this.characterModel);
 						}
 					}
 					base.characterMotor.rootMotion += this.dashVector * this.dashSpeed * Time.fixedDeltaTime;

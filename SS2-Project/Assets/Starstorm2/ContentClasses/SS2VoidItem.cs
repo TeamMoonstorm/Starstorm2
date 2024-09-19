@@ -20,8 +20,8 @@ namespace SS2
         public NullableRef<List<GameObject>> ItemDisplayPrefabs { get; protected set; } = new List<GameObject>();
         public ItemDef ItemDef { get; protected set; }
 
-        ItemDef IContentPiece<ItemDef>.Asset => ItemDef;
-        NullableRef<List<GameObject>> IItemContentPiece.ItemDisplayPrefabs => ItemDisplayPrefabs;
+        ItemDef IContentPiece<ItemDef>.asset => ItemDef;
+        NullableRef<List<GameObject>> IItemContentPiece.itemDisplayPrefabs => ItemDisplayPrefabs;
 
         public abstract SS2AssetRequest AssetRequest();
 

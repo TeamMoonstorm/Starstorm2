@@ -29,30 +29,31 @@ namespace SS2
 			return new SS2ReloadSkillDef.InstanceData();
 		}
 
-		public override void OnFixedUpdate([NotNull] GenericSkill skillSlot)
-		{
-			base.OnFixedUpdate(skillSlot);
+        public override void OnFixedUpdate([NotNull] GenericSkill skillSlot, float deltaTime)
+        {
+            base.OnFixedUpdate(skillSlot, deltaTime); 
 			SS2ReloadSkillDef.InstanceData instanceData = (SS2ReloadSkillDef.InstanceData)skillSlot.skillInstanceData;
-			instanceData.currentStock = skillSlot.stock;
-			if (instanceData.currentStock < (this.GetMaxStock(skillSlot) + skillSlot.bonusStockFromBody)) //lets reload skill defs account for stock changes properly 
-			{
-				if (skillSlot.stateMachine && !skillSlot.stateMachine.HasPendingState() && skillSlot.stateMachine.CanInterruptState(this.reloadInterruptPriority))
-				{
-					instanceData.graceStopwatch += Time.fixedDeltaTime;
-					instanceData.delayStopwatch -= Time.fixedDeltaTime;
-					if ((instanceData.graceStopwatch >= this.graceDuration || instanceData.currentStock == 0) && instanceData.delayStopwatch <= 0)
-					{
-						skillSlot.stateMachine.SetNextState(EntityStateCatalog.InstantiateState(this.reloadState));
-						return;
-					}
-				}
-				else
-				{
-					instanceData.graceStopwatch = 0f;
-				}
-			}
+            instanceData.currentStock = skillSlot.stock;
+            if (instanceData.currentStock < (this.GetMaxStock(skillSlot) + skillSlot.bonusStockFromBody)) //lets reload skill defs account for stock changes properly 
+            {
+                if (skillSlot.stateMachine && !skillSlot.stateMachine.HasPendingState() && skillSlot.stateMachine.CanInterruptState(this.reloadInterruptPriority))
+                {
+                    instanceData.graceStopwatch += deltaTime;
+                    instanceData.delayStopwatch -= deltaTime;
+                    if ((instanceData.graceStopwatch >= this.graceDuration || instanceData.currentStock == 0) && instanceData.delayStopwatch <= 0)
+                    {
+                        skillSlot.stateMachine.SetNextState(EntityStateCatalog.InstantiateState(this.reloadState.stateType));
+                        return;
+                    }
+                }
+                else
+                {
+                    instanceData.graceStopwatch = 0f;
+                }
+            }
 
-		}
+        }
+
 		public override void OnExecute([NotNull] GenericSkill skillSlot)
 		{
 			base.OnExecute(skillSlot);

@@ -12,9 +12,9 @@ namespace SS2.Equipments
     {
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acCloakingHeadband", SS2Bundle.Equipments);
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "How long the Cloak buff lasts, in seconds.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "How long the Cloak buff lasts, in seconds.")]
         [FormatToken("SS2_EQUIP_CLOAKINGHEADBAND_DESC")]
-        public static float cloakDuration = 8f;
+        public static float cloakDuration = 16f;
 
         public override bool Execute(EquipmentSlot slot)
         {

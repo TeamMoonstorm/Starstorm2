@@ -2,14 +2,18 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: matLightning
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
-  m_ShaderKeywords: USE_CLOUDS VERTEXCOLOR _EMISSION
+  m_ValidKeywords:
+  - USE_CLOUDS
+  - VERTEXCOLOR
+  m_InvalidKeywords:
+  - _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -35,6 +39,7 @@ Material:
         m_Texture: {fileID: 2800000, guid: 19e35658522b8c540a57b77d439d87c8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AlphaBias: 0
     - _AlphaBoost: 1.57
@@ -86,3 +91,4 @@ Material:
     - _CutoffScroll: {r: 200, g: 200, b: 15, a: 15}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _TintColor: {r: 0.495283, g: 1, b: 0.9760415, a: 1}
+  m_BuildTextureStacks: []

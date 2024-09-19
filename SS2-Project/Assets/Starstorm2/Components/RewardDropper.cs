@@ -106,7 +106,7 @@ namespace SS2
                 rotation = Quaternion.identity,
                 artifactFlag = rewardInfo.flag,
                 pickupIndex = rewardInfo.pickupIndex,
-            }, rotation * vector);
+            }, this.dropTransform.position, rotation * vector);
 
             numDropped++;
         }

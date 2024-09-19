@@ -11,7 +11,7 @@ namespace SS2.Items
 {
     public class IceTool : SS2Item
     {
-        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acIceTool", SS2Bundle.Indev);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acIceTool", SS2Bundle.Items);
         public static GameObject _effect;
 
         public override void Initialize()
@@ -21,7 +21,7 @@ namespace SS2.Items
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return true;
+            return false;
         }
 
         public class IceToolBodyBehavior : BaseItemBodyBehavior

@@ -17,11 +17,11 @@ namespace SS2.Items
 
         private static GameObject _monsterSoulPickup;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance to gain soul initially. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Chance to gain soul initially. (1 = 100%)")]
         [FormatToken("SS2_ITEM_STIRRINGSOUL_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float initChance = 0.005f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Soul gain chance cap. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Soul gain chance cap. (1 = 100%)")]
         public static float maxChance = 0.1f;
 
         public override void Initialize()

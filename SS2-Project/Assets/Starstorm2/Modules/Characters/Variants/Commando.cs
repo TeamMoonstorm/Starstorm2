@@ -1,5 +1,4 @@
-﻿using Assets.Starstorm2.ContentClasses;
-using MSU;
+﻿using MSU;
 using RoR2;
 using RoR2.ContentManagement;
 using RoR2.Skills;
@@ -17,7 +16,7 @@ namespace SS2.Survivors
 {
     public sealed class Commando : SS2VanillaSurvivor
     {
-        public override SS2AssetRequest<AssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<AssetCollection>("acCommando", SS2Bundle.Indev);
+        public override SS2AssetRequest<VanillaSurvivorAssetCollection> assetRequest => SS2Assets.LoadAssetAsync<VanillaSurvivorAssetCollection>("acCommando", SS2Bundle.Vanilla);
         
 
         public override void Initialize()
@@ -51,6 +50,11 @@ namespace SS2.Survivors
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
+        }
+
+        public override void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.AddContentFromAssetCollection(assetCollection);
         }
     }
 }

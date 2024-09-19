@@ -172,6 +172,7 @@ namespace SS2.Components
 				Util.CleanseBody(body, true, false, false, true, true, false); // lol
 				body.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 3f);
 				HauntedAffixFix(body, newTeam);
+				BeadAffixFix(body, newTeam);
 				//body.healthComponent.HealFraction(1f, default(ProcChainMask)); // BORING. HEAL IT YOURSELF WITH SECONDARY
 			}
 
@@ -245,6 +246,7 @@ namespace SS2.Components
 			if (body)
 			{
 				HauntedAffixFix(body, newTeam);
+				BeadAffixFix(body, newTeam);
 				SetStateOnHurt setStateOnHurt = body.GetComponent<SetStateOnHurt>(); // stun is good
 				if (setStateOnHurt) setStateOnHurt.SetStun(1f);
 			}
@@ -304,6 +306,15 @@ namespace SS2.Components
 				component.affixHauntedWard.GetComponent<TeamFilter>().teamIndex = newTeam;
             }
         }
+
+		private void BeadAffixFix(CharacterBody body, TeamIndex newTeam)
+		{
+			AffixBeadBehavior component = body.GetComponent<AffixBeadBehavior>();
+			if(component && component.affixBeadWard)
+            {
+				component.affixBeadWard.GetComponent<TeamFilter>().teamIndex = newTeam;
+            }
+		}
 
 		// HEALTHBAR STUFF
 		#region Healthbar Stuff

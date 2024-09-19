@@ -16,19 +16,19 @@ namespace SS2.Items
         private const string token = "SS2_ITEM_WATCHMETRONOME_DESC";
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acWatchMetronome", SS2Bundle.Items);
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Maximum movement speed bonus that can be achieved. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Maximum movement speed bonus that can be achieved. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
-        public static float maxMovementSpeed = 0.8f;
+        public static float maxMovementSpeed = 1f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Maximum duration of the buff.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Maximum duration of the buff.")]
         [FormatToken(token, 1)]
         public static float maxDuration = 5;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Maximum duration of the buff, per stack.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Maximum duration of the buff, per stack.")]
         [FormatToken(token, 2)]
         public static float maxDurationPerStack = 3;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Duration of the buff gained per second, while not sprinting.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Duration of the buff gained per second, while not sprinting.")]
         public static float gainPerSecond = 1;
         public override void Initialize()
         {

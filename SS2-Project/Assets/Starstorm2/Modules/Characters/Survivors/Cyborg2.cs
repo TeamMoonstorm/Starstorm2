@@ -118,7 +118,7 @@ namespace SS2.Survivors
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return true;
+            return false;
         }
 
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
@@ -145,15 +145,15 @@ namespace SS2.Survivors
             private TemporaryVisualEffect instance;
             private void FixedUpdate()
             {
-                CharacterBody.UpdateSingleTemporaryVisualEffect(ref instance, primedEffectPrefab, CharacterBody.radius, CharacterBody.HasBuff(SS2Content.Buffs.BuffCyborgPrimed));
+                characterBody.UpdateSingleTemporaryVisualEffect(ref instance, primedEffectPrefab, characterBody.radius, characterBody.HasBuff(SS2Content.Buffs.BuffCyborgPrimed));
             }
             private void OnEnable()
             {
-                CharacterBody.UpdateSingleTemporaryVisualEffect(ref instance, primedEffectPrefab, CharacterBody.radius, CharacterBody.HasBuff(SS2Content.Buffs.BuffCyborgPrimed));
+                characterBody.UpdateSingleTemporaryVisualEffect(ref instance, primedEffectPrefab, characterBody.radius, characterBody.HasBuff(SS2Content.Buffs.BuffCyborgPrimed));
             }
             private void OnDisable()
             {
-                CharacterBody.UpdateSingleTemporaryVisualEffect(ref instance, primedEffectPrefab, CharacterBody.radius, CharacterBody.HasBuff(SS2Content.Buffs.BuffCyborgPrimed));
+                characterBody.UpdateSingleTemporaryVisualEffect(ref instance, primedEffectPrefab, characterBody.radius, characterBody.HasBuff(SS2Content.Buffs.BuffCyborgPrimed));
             }
         }
         private void OnServerDamageDealt(DamageReport damageReport)
@@ -201,8 +201,8 @@ namespace SS2.Survivors
                 if (!NetworkServer.active)
                     return;
 
-                float maxHP = CharacterBody.healthComponent.fullHealth;
-                CharacterBody.healthComponent.AddBarrier(maxHP * percentHealthShieldPerSecond * Time.fixedDeltaTime);
+                float maxHP = characterBody.healthComponent.fullHealth;
+                characterBody.healthComponent.AddBarrier(maxHP * percentHealthShieldPerSecond * Time.fixedDeltaTime);
             }
         }
 

@@ -16,11 +16,11 @@ namespace SS2.Items
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acBloodTester", SS2Bundle.Items);
 
         
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Time, in seconds, between health regeneration boosts.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Time, in seconds, between health regeneration boosts.")]
         [FormatToken(token, 0)]
         public static float cooldown = 30f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of health restored per 25 gold, per stack.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Amount of health restored per 25 gold, per stack.")]
         [FormatToken(token, 1)]
         public static float healthRegen = 10f;
 
@@ -65,26 +65,26 @@ namespace SS2.Items
             private float healStopwatch;
             private void FixedUpdate()
             {
-                if (NetworkServer.active && CharacterBody.master)
+                if (NetworkServer.active && characterBody.master)
                 {
                     healStopwatch += Time.fixedDeltaTime;
                     if(healStopwatch >= healInterval)
                     {
                         healStopwatch -= healInterval;
-                        float totalHealing = healthRegen * CharacterBody.master.money / Run.instance.GetDifficultyScaledCost(25, Stage.instance.entryDifficultyCoefficient);
+                        float totalHealing = healthRegen * characterBody.master.money / Run.instance.GetDifficultyScaledCost(25, Stage.instance.entryDifficultyCoefficient);
                         float healPerTick = totalHealing / buffDuration * healInterval;
-                        CharacterBody.healthComponent.Heal(healPerTick, default(ProcChainMask));
+                        characterBody.healthComponent.Heal(healPerTick, default(ProcChainMask));
                     }
                 }
             }
             private void OnDisable()
             {
-                if(NetworkServer.active && CharacterBody.master)
+                if(NetworkServer.active && characterBody.master)
                 {
                     float fractionRemaining = healStopwatch / healInterval;
-                    float totalHealing = healthRegen * CharacterBody.master.money / Run.instance.GetDifficultyScaledCost(25, Stage.instance.entryDifficultyCoefficient);
+                    float totalHealing = healthRegen * characterBody.master.money / Run.instance.GetDifficultyScaledCost(25, Stage.instance.entryDifficultyCoefficient);
                     float healPerTick = totalHealing / buffDuration * healInterval;
-                    CharacterBody.healthComponent.Heal(healPerTick * fractionRemaining, default(ProcChainMask));
+                    characterBody.healthComponent.Heal(healPerTick * fractionRemaining, default(ProcChainMask));
                 }              
             }
 

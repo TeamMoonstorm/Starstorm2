@@ -14,7 +14,7 @@ namespace EntityStates.FlowerTurret
 		public override void OnEnter()
 		{
 			base.OnEnter();
-			if (base.isAuthority)
+			if (NetworkServer.active)
 			{
 				this.enemyFinder = new BullseyeSearch();
 				this.enemyFinder.teamMaskFilter = TeamMask.GetEnemyTeams(this.body.teamComponent.teamIndex);

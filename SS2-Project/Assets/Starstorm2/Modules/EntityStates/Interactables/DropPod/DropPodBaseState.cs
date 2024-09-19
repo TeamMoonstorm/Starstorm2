@@ -1,4 +1,6 @@
-﻿using SS2.Components;
+﻿//Kill this once we make a proper drop pod, i hate my old code -N
+
+/*using SS2.Components;
 
 namespace EntityStates.DropPod
 {
@@ -17,3 +19,4 @@ namespace EntityStates.DropPod
         }
     }
 }
+*/

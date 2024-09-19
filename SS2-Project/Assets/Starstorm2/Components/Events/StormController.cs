@@ -9,6 +9,8 @@ using EntityStates;
 using EntityStates.Events;
 using UnityEngine.Events;
 using static MSU.GameplayEventTextController;
+using MSU;
+
 namespace SS2.Components
 {
     public class StormController : NetworkBehaviour
@@ -30,18 +32,24 @@ namespace SS2.Components
             // souls soon.............
 
             StormController.dropTable = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<PickupDropTable>("RoR2/Base/Chest1/dtChest1.asset").WaitForCompletion();
-            Stage.onServerStageBegin += OnServerStageBegin;
+            Stage.onStageStartGlobal += OnStageStartGlobal;
         }
 
-        private static void OnServerStageBegin(Stage stage)
+        private static void OnStageStartGlobal(Stage stage)
         {
-            if(stage.sceneDef.sceneType == SceneType.Stage && TeleporterInteraction.instance) // this should cover every stage we want storms on? im pretty sure
+            if(NetworkServer.active && stage.sceneDef.sceneType == SceneType.Stage && TeleporterInteraction.instance) // this should cover every stage we want storms on? im pretty sure
             {
                 chargeRng.ResetSeed(Run.instance.treasureRng.nextUlong);
                 mobChargeRng.ResetSeed(Run.instance.treasureRng.nextUlong);
                 treasureRng.ResetSeed(Run.instance.treasureRng.nextUlong);
 
+                //FIXME: Events should only be spawned via the GameplayEventManager Spawn method! -N
                 GameObject stormController = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("StormController", SS2Bundle.Events));
+
+                var evt = stormController.GetComponent<GameplayEvent>();
+                evt.doNotAnnounceEnd = true;
+                evt.doNotAnnounceStart = true;
+
                 NetworkServer.Spawn(stormController);
             }
    
@@ -59,6 +67,11 @@ namespace SS2.Components
             if(!stormController)
             {
                 stormController = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("StormController", SS2Bundle.Events)).GetComponent<StormController>();
+
+                var evt = stormController.GetComponent<GameplayEvent>();
+                evt.doNotAnnounceEnd = true;
+                evt.doNotAnnounceStart = true;
+
                 NetworkServer.Spawn(stormController.gameObject);              
             }
 
@@ -68,11 +81,20 @@ namespace SS2.Components
         [Serializable]
         public struct StormVFX
         {
-            public R2API.DirectorAPI.Stage stageEnum;
+            public long stageEnum;
+            public R2API.DirectorAPI.StageSerde stageSerde;
             public string customStageName;
             public GameObject effectPrefab;
             public float cloudHeight;
         }
+        private void OnValidate()
+        {
+            for(int i = 0; i < eventVFX.Length; i++)
+            {
+                eventVFX[i].stageSerde.Value = eventVFX[i].stageEnum;
+            }
+        }
+
         public StormVFX[] eventVFX = Array.Empty<StormVFX>();
 
         private float endLerpIntensity;
@@ -118,7 +140,7 @@ namespace SS2.Components
             this.SetEffectIntensity(this.effectIntensity);
 
 #if DEBUG
-            shouldShowObjective = true;
+            //shouldShowObjective = true;
 #endif
 
             stormStartTime = Run.FixedTimeStamp.now + UnityEngine.Random.Range(180, 360); // TODO: Event director that handles this. this fucking sux lol
@@ -229,7 +251,7 @@ namespace SS2.Components
             float cloudHeight = 100f;
             foreach(StormVFX vfx in this.eventVFX)
             {
-                if(DirectorAPI.GetStageEnumFromSceneDef(Stage.instance.sceneDef) == vfx.stageEnum)
+                if ((long)DirectorAPI.GetStageEnumFromSceneDef(SceneCatalog.GetSceneDefForCurrentScene()) == vfx.stageEnum)
                 {
                     effectPrefab = vfx.effectPrefab;
                     cloudHeight = vfx.cloudHeight;
@@ -277,11 +299,11 @@ namespace SS2.Components
             public override void OnEnter()
             {
                 base.OnEnter();
-                Juice.destroyOnEndOfTransition = false;
-                Juice.transitionDuration = duration;
-                Juice.TransitionAlphaFadeIn();
-                Juice.originalAlpha = 1;
-                Juice.transitionEndAlpha = 1;
+                uiJuice.destroyOnEndOfTransition = false;
+                uiJuice.transitionDuration = duration;
+                uiJuice.TransitionAlphaFadeIn();
+                uiJuice.originalAlpha = 1;
+                uiJuice.transitionEndAlpha = 1;
             }
 
             public override void Update()
@@ -335,13 +357,13 @@ namespace SS2.Components
             {
                 base.OnEnter();
                 // ??????????????????? i hate this so much
-                Juice.transitionDuration = 0.01f;
-                Juice.TransitionAlphaFadeIn();
-                Juice.originalAlpha = 1;
-                Juice.transitionEndAlpha = 1;
+                uiJuice.transitionDuration = 0.01f;
+                uiJuice.TransitionAlphaFadeIn();
+                uiJuice.originalAlpha = 1;
+                uiJuice.transitionEndAlpha = 1;
 
-                base.TextController.TextMeshProUGUI.color = etherealTextColor;
-                base.TextController.TextMeshProUGUI.SetText("<link=\"textShaky\">ethereal moment</link>");// String.Format("<link=\"textShaky\">{0}</link>", TextController.TextMeshProUGUI.text));
+                base.textController.textMeshProUGUI.color = etherealTextColor;
+                base.textController.textMeshProUGUI.SetText("<link=\"textShaky\">ethereal moment</link>");// String.Format("<link=\"textShaky\">{0}</link>", TextController.TextMeshProUGUI.text));
                 EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("EtherealStormWarning", SS2Bundle.Events), new EffectData { }, false);
                 duration = blinkDuration;
             }
@@ -384,10 +406,10 @@ namespace SS2.Components
             public override void OnEnter()
             {
                 base.OnEnter();
-                Juice.transitionDuration = duration;
-                Juice.originalAlpha = 1;
-                Juice.transitionEndAlpha = 1;
-                Juice.TransitionAlphaFadeOut();
+                uiJuice.transitionDuration = duration;
+                uiJuice.originalAlpha = 1;
+                uiJuice.transitionEndAlpha = 1;
+                uiJuice.TransitionAlphaFadeOut();
             }
 
             public override void Update()

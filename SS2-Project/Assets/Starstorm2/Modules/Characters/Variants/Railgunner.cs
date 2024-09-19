@@ -1,5 +1,4 @@
-﻿using Assets.Starstorm2.ContentClasses;
-using SS2;
+﻿using SS2;
 using RoR2;
 using RoR2.ContentManagement;
 using MSU;
@@ -12,13 +11,18 @@ namespace SS2.Survivors
 {
     public class Railgunner : SS2VanillaSurvivor
     {
-        public override SS2AssetRequest<AssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<AssetCollection>("acRailgunner", SS2Bundle.Indev);
+        public override SS2AssetRequest<VanillaSurvivorAssetCollection> assetRequest => SS2Assets.LoadAssetAsync<VanillaSurvivorAssetCollection>("acRailgunner", SS2Bundle.Indev);
 
 
         public override void Initialize()
         {
-            SkillDef sdPierceRifle = survivorAssetCollection.FindAsset<SkillDef>("sdPierceRifle");
-            SkillDef sdAssaultRifle = survivorAssetCollection.FindAsset<SkillDef>("sdAssaultRifle");
+            //ModifyPrefab();
+        }
+
+        private void ModifyPrefab()
+        {
+            SkillDef sdPierceRifle = assetCollection.FindAsset<SkillDef>("sdPierceRifle");
+            SkillDef sdAssaultRifle = assetCollection.FindAsset<SkillDef>("sdAssaultRifle");
 
             GameObject railgunnerBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/Railgunner/RailgunnerBody.prefab").WaitForCompletion();
 
@@ -43,10 +47,13 @@ namespace SS2.Survivors
             };
         }
 
+        public override void ModifyContentPack(ContentPack contentPack)
+        {
+        }
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return true;
+            return false;
         }
     }
 }

@@ -2,14 +2,17 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: matDupingLine
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
-  m_ShaderKeywords: IGNORE_VERTEX_COLORS USE_CLOUDS
+  m_ValidKeywords:
+  - USE_CLOUDS
+  m_InvalidKeywords:
+  - IGNORE_VERTEX_COLORS
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -35,6 +38,7 @@ Material:
         m_Texture: {fileID: 2800000, guid: 2a9ea5eea6bbdf14b816ba9316d55559, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AlphaBias: 0
     - _AlphaBoost: 2
@@ -91,3 +95,4 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 0.14705884, g: 1, b: 0.32941172, a: 0}
     - _TintColor: {r: 0.9433962, g: 0.9432251, b: 0.93894625, a: 1}
+  m_BuildTextureStacks: []

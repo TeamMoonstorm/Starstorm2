@@ -18,14 +18,14 @@ namespace SS2
     public abstract class SS2Monster : IMonsterContentPiece, IContentPackModifier
     {
         public NullableRef<MonsterCardProvider> CardProvider { get; protected set; }
-        public NullableRef<DirectorAPI.DirectorCardHolder> DissonanceCard { get; protected set; }
+        public NullableRef<DirectorCardHolderExtended> DissonanceCard { get; protected set; }
         public MonsterAssetCollection AssetCollection { get; private set; }
-        public NullableRef<GameObject> MasterPrefab { get; protected set; }
+        public NullableRef<GameObject> masterPrefab { get; protected set; }
 
-        NullableRef<DirectorAPI.DirectorCardHolder> IMonsterContentPiece.DissonanceCard => DissonanceCard;
-        CharacterBody IGameObjectContentPiece<CharacterBody>.Component => CharacterPrefab.GetComponent<CharacterBody>();
-        NullableRef<MonsterCardProvider> IMonsterContentPiece.CardProvider => CardProvider;
-        GameObject IContentPiece<GameObject>.Asset => CharacterPrefab;
+        NullableRef<DirectorCardHolderExtended> IMonsterContentPiece.dissonanceCard => DissonanceCard;
+        CharacterBody IGameObjectContentPiece<CharacterBody>.component => CharacterPrefab.GetComponent<CharacterBody>();
+        NullableRef<MonsterCardProvider> IMonsterContentPiece.cardProvider => CardProvider;
+        GameObject IContentPiece<GameObject>.asset => CharacterPrefab;
         public GameObject CharacterPrefab { get; private set; }
 
         public abstract void Initialize();
@@ -46,9 +46,8 @@ namespace SS2
             AssetCollection = request.Asset;
 
             CharacterPrefab = AssetCollection.bodyPrefab;
-            MasterPrefab = AssetCollection.masterPrefab;
+            masterPrefab = AssetCollection.masterPrefab;
             CardProvider = AssetCollection.monsterCardProvider;
-            DissonanceCard = AssetCollection.dissonanceCardHolder;
         }
 
 

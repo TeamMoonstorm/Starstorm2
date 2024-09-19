@@ -66,7 +66,8 @@ namespace SS2.Interactables
             }
         }
 
-        private void OverrideItemIcon(On.RoR2.Orbs.ItemTakenOrbEffect.orig_Start orig, RoR2.Orbs.ItemTakenOrbEffect self)
+        //This is zombie code, it should be deleted when possible, orig_start fails btw. -N
+        /*private void OverrideItemIcon(On.RoR2.Orbs.ItemTakenOrbEffect.orig_Start orig, RoR2.Orbs.ItemTakenOrbEffect self)
         {
             var efc = self.GetComponent<EffectComponent>();
             bool boolean = efc.effectData.genericBool;
@@ -125,7 +126,7 @@ namespace SS2.Interactables
             {
                 orig(self);
             }
-        }
+        }*/
 
         private void SetupDroneValueList()
         {

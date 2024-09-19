@@ -15,7 +15,7 @@ namespace SS2.Items
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acWonderHerbs", SS2Bundle.Items);
 
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Bonus healing per herbs. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Bonus healing per herbs. (1 = 100%)")]
         [FormatToken("SS2_ITEM_FORK_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float healBonus = 0.8f;
         public override void Initialize()

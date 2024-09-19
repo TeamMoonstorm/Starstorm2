@@ -108,6 +108,12 @@ Q: I'm still having errors in the console after importing
 Q: I'm having an issue where certain components cannot be added or general instability
 * A: Make sure you didn't leave Install RoR2MultiplayerHLAPI and Install RoR2EditorKit enabled, having these enabled will cause issues due to duplicate assemblies
 
+Q:I am having an issue with importextensions saying thunderkit is not found (or an error with Player scripts)
+A: Here is a fix by Orbeez ![](./Docs/TroubleshootingPlayerScript.png)
+
+Q: My Shader Dict does not appear in Unity -> Project Settings
+A: Inside the packages folder and in the Risk of Rain 2 folder you need to edit the package file to the correct ror2 version ![](./Docs/ShaderDictError.png)
+
 Q: I'm having an issue where there are compiler errors due to DamageAPI/RecalcStatsAPI/OtherR2APISubmodule is missing
 * A: Some of the project's soft dependencies such as AncientScepter still rely on the old R2API and as such, when they're installed, it installs R2API version 4.x.x, causing duplicate types in the project. To fix this, just delete the R2API folder in the packages folder.
 

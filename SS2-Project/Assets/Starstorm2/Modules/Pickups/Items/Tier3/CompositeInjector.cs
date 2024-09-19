@@ -420,9 +420,10 @@ namespace SS2.Items
             epic.icons = new EquipmentIconButEpic[funnyNumber];
             Transform scaler = self.transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomRightCluster/Scaler");
             Transform slot = scaler.Find("AltEquipmentSlot");
+            if (!scaler || !slot) return;
             for (int i = 1; i <= funnyNumber; i++)
             {
-                Transform newIcon = GameObject.Instantiate(slot.gameObject).transform;
+                Transform newIcon = GameObject.Instantiate(slot.gameObject, slot.parent).transform;
                 newIcon.SetParent(slot.parent, false);
                 newIcon.transform.position += funnyVector + (Vector3.up * funnyNumber2 * i);
 

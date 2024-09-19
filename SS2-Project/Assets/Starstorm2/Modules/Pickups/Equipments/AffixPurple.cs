@@ -77,7 +77,7 @@ namespace SS2.Equipments
 
             public void OnDamageDealtServer(DamageReport damageReport)
             {
-                if (HasAnyStacks && NetworkServer.active)
+                if (hasAnyStacks && NetworkServer.active)
                 {
                     var victim = damageReport.victim;
                     var attacker = damageReport.attacker;
@@ -140,7 +140,7 @@ namespace SS2.Equipments
                         for (int i = 0; i < numProjectiles; i++)
                         {
                             Vector3 forward = Quaternion.AngleAxis(num2 * i, Vector3.up) * val2;
-                            ProjectileManager.instance.FireProjectile(LegacyResourcesAPI.Load<GameObject>("Prefabs/Projectiles/PoisonOrbProjectile"), this.CharacterBody.corePosition, Util.QuaternionSafeLookRotation(forward), this.gameObject, damage * 1f, 0f, Util.CheckRoll(this.CharacterBody.crit, this.CharacterBody.master));
+                            ProjectileManager.instance.FireProjectile(LegacyResourcesAPI.Load<GameObject>("Prefabs/Projectiles/PoisonOrbProjectile"), this.characterBody.corePosition, Util.QuaternionSafeLookRotation(forward), this.gameObject, damage * 1f, 0f, Util.CheckRoll(this.characterBody.crit, this.characterBody.master));
                         }
                     }
                 }

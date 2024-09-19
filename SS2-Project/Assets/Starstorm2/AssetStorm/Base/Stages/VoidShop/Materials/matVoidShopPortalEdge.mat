@@ -2,14 +2,19 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: matVoidShopPortalEdge
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
-  m_ShaderKeywords: CLOUDOFFSET USE_CLOUDS VERTEXALPHA VERTEXOFFSET
+  m_ValidKeywords:
+  - CLOUDOFFSET
+  - USE_CLOUDS
+  - VERTEXALPHA
+  - VERTEXOFFSET
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -67,6 +72,7 @@ Material:
         m_Texture: {fileID: 2800000, guid: 17dd5320d6a75ee488317c47392c2688, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AlphaBias: 0.6707022
     - _AlphaBoost: 3.486684
@@ -114,3 +120,4 @@ Material:
     - _CutoffScroll: {r: 1, g: 4, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _TintColor: {r: 1, g: 1, b: 1, a: 0.6039216}
+  m_BuildTextureStacks: []

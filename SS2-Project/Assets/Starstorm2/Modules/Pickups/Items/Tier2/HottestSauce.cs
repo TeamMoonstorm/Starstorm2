@@ -17,11 +17,11 @@ namespace SS2.Items
         private const string token = "SS2_ITEM_HOTTESTSAUCE_DESC";
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acHottestSauce", SS2Bundle.Items);
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Radius in which the hottest sauce deals damage, in meters.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Radius in which the hottest sauce deals damage, in meters.")]
         [FormatToken(token, 0)]
         public static float radius = 30f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Duration of the burn effect, in seconds.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Duration of the burn effect, in seconds.")]
         [FormatToken(token, 1)]
         public static float DOTDuration = 6f;
 

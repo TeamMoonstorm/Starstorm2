@@ -16,9 +16,9 @@ namespace SS2.Artifacts
 {
     public sealed class Cognation : SS2Artifact
     {
-        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ArtifactAssetCollection>("acCognation", SS2Bundle.Artifacts);
+        public override SS2AssetRequest assetRequest => SS2Assets.LoadAssetAsync<ArtifactAssetCollection>("acCognation", SS2Bundle.Artifacts);
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ARTIFACT, ConfigDescOverride = "Whether or not cognation ghosts inherit all items from the original body")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ARTIFACT, configDescOverride = "Whether or not cognation ghosts inherit all items from the original body")]
         public static bool inheritInventory = true;
 
         private static Material ghostMaterial;
@@ -40,7 +40,7 @@ namespace SS2.Artifacts
         public override void Initialize()
         {
             //For masters since it doesnt have a resource availability, hotpoo!!!!
-            ghostMaterial = AssetCollection.FindAsset<Material>("matCognation");
+            ghostMaterial = assetCollection.FindAsset<Material>("matCognation");
             RoR2Application.onLoad += UpdateBlacklistedMasters;
         }
 

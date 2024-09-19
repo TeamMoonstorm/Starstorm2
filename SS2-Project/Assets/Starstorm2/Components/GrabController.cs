@@ -126,7 +126,7 @@ namespace SS2.Components
                         //interrupt all statemachines
                         if (shouldLog) SS2Log.Warning("GrabController.ForcePassengerState: Interrupted " + this.victimInfo.bodyStateMachine.state + " on " + this.victimBodyObject);
 
-                        EntityState grabState = EntityStateCatalog.InstantiateState(this.grabState);
+                        EntityState grabState = EntityStateCatalog.InstantiateState(this.grabState.stateType);
                         if(this.grabStateModifier != null) 
                         {
                             this.grabStateModifier(this.victimInfo.bodyStateMachine, ref grabState); // the fuck was i thinking? you give it your own grab state anyways...

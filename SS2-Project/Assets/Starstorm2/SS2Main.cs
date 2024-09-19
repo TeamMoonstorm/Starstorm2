@@ -25,7 +25,7 @@ namespace SS2
     {
         internal const string GUID = "com.TeamSS2";
         internal const string MODNAME = "Starstorm 2";
-        internal const string VERSION = "0.6.7";
+        internal const string VERSION = "0.6.8";
 
         internal static SS2Main Instance { get; private set; }
 
@@ -43,7 +43,10 @@ namespace SS2
             new SS2Log(Logger);
             new SS2Config(this);
             new SS2Content();
-            LanguageFileLoader.AddLanguageFilesFromMod(this, "SS2Lang");
+            
+            LanguageFileLoader.AddLanguageFilesFromMod(this, "languages");
+            LoadingScreenSpriteUtility.AddSpriteAnimations(SS2Assets.GetLoadingScreenBundle());
+
             TMProEffects.Init();
             BodyNames.Hook();
             HideUnlocks.Hook();

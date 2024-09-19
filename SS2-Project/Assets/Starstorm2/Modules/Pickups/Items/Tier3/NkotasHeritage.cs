@@ -16,7 +16,7 @@ namespace SS2.Items
 
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acNkotasHeritage", SS2Bundle.Items);
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Number of items given upon level up per stack.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Number of items given upon level up per stack.")]
         [FormatToken(token, 0)]
         public static int itemsPerStack = 1;
 
@@ -68,16 +68,9 @@ namespace SS2.Items
                 HG.ArrayUtils.ArrayAppend(ref characterMasters, obj.master); //Should add the same master in case they level up multiple times... not sure if its ok?
                 return;
             }
-#if DEBUG
-            if (!obj.gameObject.GetComponent<BabyToys.BabyToyToken>())
-            {
-                NkotasManager.ActivateSingle(obj);
-            }
-            else
-            {
-                //SS2Log.Debug("babys removal - ignoring level adjustment");
-            }
-#endif
+
+            NkotasManager.ActivateSingle(obj);
+
         }
 
         public static class NkotasManager

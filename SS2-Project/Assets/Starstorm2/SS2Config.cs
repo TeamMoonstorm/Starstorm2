@@ -28,12 +28,12 @@ namespace SS2
 
         internal static ConfiguredBool unlockAll = new ConfiguredBool(false)
         {
-            Section = "General",
-            Key = "Unlock All",
-            Description = "Setting this to true unlocks all the content in Starstorm 2, excluding skin unlocks.",
-            ModGUID = SS2Main.GUID,
-            ModName = SS2Main.MODNAME,
-            CheckBoxConfig = new CheckBoxConfig
+            section = "General",
+            key = "Unlock All",
+            description = "Setting this to true unlocks all the content in Starstorm 2, excluding skin unlocks.",
+            modGUID = SS2Main.GUID,
+            modName = SS2Main.MODNAME,
+            checkBoxConfig = new CheckBoxConfig
             {
                 restartRequired = true,
             }

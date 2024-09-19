@@ -162,6 +162,7 @@ namespace EntityStates.NemCommando
             {
                 outer.SetNextState(new ShootGun2());
                 skillLocator.secondary.stock -= 1;
+                base.characterBody.OnSkillActivated(skillLocator.secondary); // luiminous shot
                 return;
             }
 

@@ -17,11 +17,11 @@ namespace SS2.Items
         private const string token = "SS2_ITEM_NEEDLES_DESC";
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acNeedles", SS2Bundle.Items);
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance for the debuff to be applied on hit. (1 = 1%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Chance for the debuff to be applied on hit. (1 = 1%)")]
         [FormatToken(token, 0)]
         public static float procChance = 4;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Amount of guaranteed critical hits per stack of this item. (1 = 1 critical hit per stack before the buff is cleared)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Amount of guaranteed critical hits per stack of this item. (1 = 1 critical hit per stack before the buff is cleared)")]
         [FormatToken(token, 1)]
         public static int critsPerStack = 3;
 
@@ -48,7 +48,7 @@ namespace SS2.Items
             private static ItemDef GetItemDef() => SS2Content.Items.Needles;
             public void OnIncomingDamageOther(HealthComponent self, DamageInfo damageInfo)
             {
-                if (damageInfo.rejected || damageInfo.damageType.HasFlag(DamageType.DoT)) return;
+                if (damageInfo.rejected || damageInfo.damageType.damageType.HasFlag(DamageType.DoT)) return;
 
                 //needles can only proc once crits are depleted
                 bool hasBuff = self.body.HasBuff(SS2Content.Buffs.BuffNeedleBuildup);

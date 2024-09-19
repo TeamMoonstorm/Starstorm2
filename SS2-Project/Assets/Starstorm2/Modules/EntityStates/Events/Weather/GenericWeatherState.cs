@@ -6,14 +6,12 @@ using UnityEngine.Networking;
 using SS2;
 namespace EntityStates.Events
 {
-    public abstract class GenericWeatherState : EntityState
+    public abstract class GenericWeatherState : EntityStates.GameplayEvents.GameplayEventState
     {
-        protected GameplayEvent gameplayEvent;
         protected StormController stormController;
         public override void OnEnter()
         {
             base.OnEnter();
-            this.gameplayEvent = base.GetComponent<GameplayEvent>();
             this.stormController = base.GetComponent<StormController>();
         }
     }

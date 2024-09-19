@@ -69,8 +69,8 @@ namespace SS2.Survivors
             AssetCollection = request.Asset;
 
             CharacterPrefab = AssetCollection.bodyPrefab;
-            MasterPrefab = AssetCollection.masterPrefab;
-            SurvivorDef = AssetCollection.survivorDef;
+            masterPrefab = AssetCollection.masterPrefab;
+            survivorDef = AssetCollection.survivorDef;
 
 
             extraRequest.StartLoad();
@@ -128,7 +128,7 @@ namespace SS2.Survivors
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return true;
+            return false;
         }
 
         private void ModifyStats(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
@@ -179,16 +179,16 @@ namespace SS2.Survivors
 
                 private void FixedUpdate()
                 {
-                    if (!HasAnyStacks || !CharacterBody.characterMotor || !CharacterBody)
+                    if (!hasAnyStacks || !characterBody.characterMotor || !characterBody)
                         return;
 
-                    if (CharacterBody.characterMotor.isGrounded)
+                    if (characterBody.characterMotor.isGrounded)
                     {
                         return;
                     }
 
                     // TODO: No clue if this will work
-                    CharacterBody.characterMotor.velocity.y -= Time.fixedDeltaTime * Physics.gravity.y * reducedGravity;
+                    characterBody.characterMotor.velocity.y -= Time.fixedDeltaTime * Physics.gravity.y * reducedGravity;
                 }
             }
 

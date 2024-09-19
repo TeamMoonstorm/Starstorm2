@@ -71,8 +71,8 @@ namespace SS2.Components
         private EtherealBehavior ethInstance;
 
         [Header("Empyrean-Related")]
-        private float empyreanEliteCost = 280f;
-        private float empyreanMultiplier = 25f;
+        private float empyreanEliteCost = 2000f;
+        private float empyreanMultiplier = 30f;
         public bool empyreanActive = false;
 
         [Header("Ultra-Related")]
@@ -164,80 +164,74 @@ namespace SS2.Components
             //cardCosts.TryGetValue(cm.bodyPrefab, out float baseCost);
 
             float baseCost = spawnResult.spawnRequest.spawnCard.directorCreditCost;
-            SS2Log.Debug(cm.name + " base cost: " + baseCost);
             float totalCost = baseCost;
             if (cb.eliteBuffCount > 0)
             {
                 totalCost *= baseEliteCostMultiplier;
-                SS2Log.Debug(cm.name + " elite cost: " + totalCost);
             }
 
-            if (totalCost * 2.5f <= fastCombatDirector.monsterCredit)
-            {
-                if (followerStage && followerCost <= minionCredit)
-                {
-                    var followerSummon = new MasterSummon();
-                    //to-do: get position of nearby air node
-                    followerSummon.position = cb.corePosition + (Vector3.up * 3);
-                    followerSummon.masterPrefab = Monsters.Lamp._masterPrefab;
-                    followerSummon.summonerBodyObject = cb.gameObject;
-                    var followerMaster = followerSummon.Perform();
-                    SS2Log.Info("Summoned Follower");
-                    fastCombatDirector.monsterCredit -= followerCost;
-                    minionCredit -= followerCost;
-                    if (followerMaster)
-                    {
-                        var masterEquip = cb.inventory.GetEquipmentIndex();
-                        if (masterEquip != EquipmentIndex.None)
-                        {
-                            followerMaster.inventory.SetEquipmentIndex(masterEquip);
-                            fastCombatDirector.monsterCredit -= followerCost * 2f;
-                            minionCredit -= followerCost * 2f;
-                            //possibly a bug where would-be masters are getting 'follower' prefix and no minion..???
-                            //saw it once on a scav super deep loop. this isn't even programmed behavior.
-                            //why???
+            //if (totalCost * 2.5f <= fastCombatDirector.monsterCredit)
+            //{
+            //    if (followerStage && followerCost <= minionCredit)
+            //    {
+            //        var followerSummon = new MasterSummon();
+            //        //to-do: get position of nearby air node
+            //        followerSummon.position = cb.corePosition + (Vector3.up * 3);
+            //        followerSummon.masterPrefab = Monsters.Lamp._masterPrefab;
+            //        followerSummon.summonerBodyObject = cb.gameObject;
+            //        var followerMaster = followerSummon.Perform();
+            //        fastCombatDirector.monsterCredit -= followerCost;
+            //        minionCredit -= followerCost;
+            //        if (followerMaster)
+            //        {
+            //            var masterEquip = cb.inventory.GetEquipmentIndex();
+            //            if (masterEquip != EquipmentIndex.None)
+            //            {
+            //                followerMaster.inventory.SetEquipmentIndex(masterEquip);
+            //                fastCombatDirector.monsterCredit -= followerCost * 2f;
+            //                minionCredit -= followerCost * 2f;
+            //                //possibly a bug where would-be masters are getting 'follower' prefix and no minion..???
+            //                //saw it once on a scav super deep loop. this isn't even programmed behavior.
+            //                //why???
 
-                            //im thinking about it even more and it wasnt even on a map where followers were enabled at the time!!!!!!!!!!!!
-                            //WHAT THE FUCK!!!!!!!!!!!
-                        }
-                    }
-                }
-            }
+            //                //im thinking about it even more and it wasnt even on a map where followers were enabled at the time!!!!!!!!!!!!
+            //                //WHAT THE FUCK!!!!!!!!!!!
+            //            }
+            //        }
+            //    }
+            //}
 
             if (Run.instance.stageClearCount > 8)
             {
-                if (empyreanEliteCost <= eliteCredit && (baseCost * empyreanMultiplier <= fastCombatDirector.monsterCredit) || (baseCost * empyreanMultiplier <= slowCombatDirector.monsterCredit))
+                if (empyreanEliteCost <= eliteCredit && ((baseCost * empyreanMultiplier <= fastCombatDirector.monsterCredit) || (baseCost * empyreanMultiplier <= slowCombatDirector.monsterCredit)))
                 {
                     MakeEmpyrean(cb);
                     fastCombatDirector.monsterCredit -= baseCost * empyreanMultiplier * 1.5f;
-                    SS2Log.Debug(cm.name + " empyrean monster cost : " + baseCost * empyreanMultiplier);
                     eliteCredit -= empyreanEliteCost * 1.5f;
                 }
             }
 
-            if (ethInstance.etherealsCompleted >= 1)
-            {
-                float baseEtherealCost = (totalCost * etherealMultiplier) / ethInstance.etherealsCompleted; //possibly too mean?? lol
+            //if (ethInstance.etherealsCompleted >= 1)
+            //{
+            //    float baseEtherealCost = (totalCost * etherealMultiplier) / ethInstance.etherealsCompleted; //possibly too mean?? lol
 
-                if (Run.instance.stageClearCount > 5)
-                {
-                    if ((ultraEliteCost - (20 * (ethInstance.etherealsCompleted - 1))) <= eliteCredit && baseEtherealCost * 3f <= fastCombatDirector.monsterCredit)
-                    {
-                        MakeUltra(cb);
-                        fastCombatDirector.monsterCredit -= baseEtherealCost * 5f;
-                        SS2Log.Debug(cm.name + " ultra monster cost: " + totalCost + "  yuou are now Ultra. :D");
-                        eliteCredit -= ultraEliteCost * 1.5f;
-                    }
-                }
+            //    if (Run.instance.stageClearCount > 5)
+            //    {
+            //        if ((ultraEliteCost - (20 * (ethInstance.etherealsCompleted - 1))) <= eliteCredit && baseEtherealCost * 3f <= fastCombatDirector.monsterCredit)
+            //        {
+            //            MakeUltra(cb);
+            //            fastCombatDirector.monsterCredit -= baseEtherealCost * 5f;
+            //            eliteCredit -= ultraEliteCost * 1.5f;
+            //        }
+            //    }
 
-                if ((etherealEliteCost - (20 * (ethInstance.etherealsCompleted - 1))) <= eliteCredit && baseEtherealCost <= fastCombatDirector.monsterCredit)
-                {
-                    MakeEthereal(cb);
-                    fastCombatDirector.monsterCredit -= baseEtherealCost * 1.25f; //fuck you go broke
-                    SS2Log.Debug(cm.name + " ethereal monster cost: " + totalCost + "    (i am making this bitch ethereal)");
-                    eliteCredit -= etherealEliteCost * 1.25f;
-                }
-            }
+            //    if ((etherealEliteCost - (20 * (ethInstance.etherealsCompleted - 1))) <= eliteCredit && baseEtherealCost <= fastCombatDirector.monsterCredit)
+            //    {
+            //        MakeEthereal(cb);
+            //        fastCombatDirector.monsterCredit -= baseEtherealCost * 1.25f; //fuck you go broke
+            //        eliteCredit -= etherealEliteCost * 1.25f;
+            //    }
+            //}
         }
 
         public void MakeEmpyrean(CharacterBody body)
@@ -251,9 +245,17 @@ namespace SS2.Components
             inventory.GiveItem(SS2Content.Items.BoostMovespeed, 35);
             inventory.GiveItem(SS2Content.Items.BoostCooldowns, 50);
             inventory.GiveItem(RoR2Content.Items.BoostDamage, 80);
-            inventory.GiveItem(RoR2Content.Items.TeleportWhenOob); //REALLY DON'T LIKE THIS ONE. knocking enemies off the stage is a RIGHT. going to make a specific elite to replace this functionality.
-            inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
+            //inventory.GiveItem(RoR2Content.Items.TeleportWhenOob); //REALLY DON'T LIKE THIS ONE. knocking enemies off the stage is a RIGHT. going to make a specific elite to replace this functionality.
+            //inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
             inventory.SetEquipmentIndex(SS2Content.Equipments.AffixEmpyrean.equipmentIndex);
+
+            // remove level cap
+            if(Run.instance.ambientLevel >= Run.ambientLevelCap)
+            {
+                int extraLevels = Mathf.FloorToInt(SS2Util.AmbientLevelUncapped()) - Run.instance.ambientLevelFloor;
+                inventory.GiveItem(RoR2Content.Items.LevelBonus, extraLevels);
+            }
+            
 
             DeathRewards rewards = body.GetComponent<DeathRewards>();
             if (rewards)
@@ -263,6 +265,12 @@ namespace SS2.Components
             }
 
             empyreanActive = true;
+
+            CombatSquad squad = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("EliteBossGroup", SS2Bundle.Equipments))?.GetComponent<CombatSquad>();
+            if(squad)
+            {
+                squad.AddMember(body.master);
+            }
         }
 
         public void MakeUltra(CharacterBody body)
@@ -283,6 +291,8 @@ namespace SS2.Components
                 rewards.expReward *= (uint)(10 + (5 * ethInstance.etherealsCompleted));
                 rewards.goldReward *= (uint)(10 + (5 * ethInstance.etherealsCompleted));
             }
+
+            
 
 
         }

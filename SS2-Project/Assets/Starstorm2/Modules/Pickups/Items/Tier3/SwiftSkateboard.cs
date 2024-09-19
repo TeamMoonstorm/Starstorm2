@@ -16,27 +16,27 @@ namespace SS2.Items
         public const string token = "SS2_ITEM_SKATEBOARD_DESC";
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acSwiftSkateboard", SS2Bundle.Items);
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Movement speed bonus for each skateboard push. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Movement speed bonus for each skateboard push. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float moveSpeedBonus = 0.2f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Movement speed bonus for each skateboard push for each item stack past the first. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Movement speed bonus for each skateboard push for each item stack past the first. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float moveSpeedBonusPerStack = 0.15f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Initial maximum stacks for the Swift Skateboard's movement speed buff.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Initial maximum stacks for the Swift Skateboard's movement speed buff.")]
         [FormatToken(token, 2)]
         public static int maxStacks = 4;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Additional maximum stacks for each item stack of Swift Skateboard past the first.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Additional maximum stacks for each item stack of Swift Skateboard past the first.")]
         [FormatToken(token, 3)]
         public static int maxStacksPerStack = 0;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Duration of Swift Skateboard's movement speed buff.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Duration of Swift Skateboard's movement speed buff.")]
         [FormatToken(token, 4)]
         public static float buffDuration = 6f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Whether Swift Skateboard should allow all-directional sprinting.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Whether Swift Skateboard should allow all-directional sprinting.")]
         public static bool omniSprint = true;
 
         private static GameObject _effectPrefab;

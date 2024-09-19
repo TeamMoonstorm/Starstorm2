@@ -16,9 +16,9 @@ namespace SS2
     /// </summary>
     public abstract class SS2Difficulty : IDifficultyContentPiece
     {
-        public SerializableDifficultyDef DifficultyDef { get; protected set; }
+        public SerializableDifficultyDef difficultyDef { get; protected set; }
 
-        SerializableDifficultyDef IContentPiece<SerializableDifficultyDef>.Asset => DifficultyDef;
+        SerializableDifficultyDef IContentPiece<SerializableDifficultyDef>.asset => difficultyDef;
 
         public abstract SS2AssetRequest<SerializableDifficultyDef> AssetRequest { get; }
 
@@ -32,7 +32,7 @@ namespace SS2
             while (!assetRequest.IsComplete)
                 yield return null;
 
-            DifficultyDef = assetRequest.Asset;
+            difficultyDef = assetRequest.Asset;
             yield break;
         }
         public abstract void OnRunEnd(Run run);

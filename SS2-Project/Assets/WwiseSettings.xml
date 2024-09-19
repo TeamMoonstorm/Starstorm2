@@ -1,14 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WwiseSettings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <CopySoundBanksAsPreBuildStep>true</CopySoundBanksAsPreBuildStep>
+  <GenerateSoundBanksAsPreBuildStep>false</GenerateSoundBanksAsPreBuildStep>
+  <SoundbankPath>Audio/GeneratedSoundBanks</SoundbankPath>
   <CreatedPicker>true</CreatedPicker>
   <CreateWwiseGlobal>true</CreateWwiseGlobal>
   <CreateWwiseListener>true</CreateWwiseListener>
-  <GenerateSoundBanksAsPreBuildStep>false</GenerateSoundBanksAsPreBuildStep>
+  <ObjectReferenceAutoCleanup>true</ObjectReferenceAutoCleanup>
+  <LoadSoundEngineInEditMode>true</LoadSoundEngineInEditMode>
   <ShowMissingRigidBodyWarning>true</ShowMissingRigidBodyWarning>
   <ShowSpatialAudioWarningMsg>true</ShowSpatialAudioWarningMsg>
-  <SoundbankPath>Audio/GeneratedSoundBanks</SoundbankPath>
   <WwiseInstallationPathMac />
-  <WwiseInstallationPathWindows>D:\ProgramFiles\Wwise</WwiseInstallationPathWindows>
-  <WwiseProjectPath>../../SS2-Project/WwiseProject/Starstorm2.wproj</WwiseProjectPath>
+  <WwiseInstallationPathWindows>D:\ProgramFiles\Wwise 2023.1.4.8496</WwiseInstallationPathWindows>
+  <WwiseProjectPath>../WwiseProject/Starstorm2.wproj</WwiseProjectPath>
+  <UseWaapi>true</UseWaapi>
+  <WaapiPort>8080</WaapiPort>
+  <WaapiIP>127.0.0.1</WaapiIP>
+  <XMLTranslatorTimeout>10</XMLTranslatorTimeout>
+  <WaapiTranslatorTimeout>0</WaapiTranslatorTimeout>
 </WwiseSettings>

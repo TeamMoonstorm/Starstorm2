@@ -15,39 +15,36 @@ namespace SS2
         {
 			return new DuplexSkillDef.InstanceData();
         }
-        public override void OnFixedUpdate([NotNull] GenericSkill skillSlot)
-		{
-			base.OnFixedUpdate(skillSlot);
 
-			//lol       
-			if (!skillSlot.characterBody.inputBank.skill1.down && skillSlot.stock % 2 == 1 && skillSlot.CanExecute())
-			{
-				skillSlot.ExecuteIfReady();
-			}
+        public override void OnFixedUpdate([NotNull] GenericSkill skillSlot, float deltaTime)
+        {
+            base.OnFixedUpdate(skillSlot, deltaTime);
+            //lol       
+            if (!skillSlot.characterBody.inputBank.skill1.down && skillSlot.stock % 2 == 1 && skillSlot.CanExecute())
+            {
+                skillSlot.ExecuteIfReady();
+            }
 
-			DuplexSkillDef.InstanceData instanceData = (DuplexSkillDef.InstanceData)skillSlot.skillInstanceData;
-			instanceData.currentStock = skillSlot.stock;
-			if (instanceData.currentStock == 0)
-			{
-				if (skillSlot.stateMachine && !skillSlot.stateMachine.HasPendingState() && skillSlot.stateMachine.CanInterruptState(this.reloadInterruptPriority))
-				{
-					instanceData.graceStopwatch += Time.fixedDeltaTime;
-					float speed = ((skillSlot.characterBody.attackSpeed - 1) * graceAttackSpeedCoefficient) + 1;
-					if (instanceData.graceStopwatch >= this.graceDuration / speed)
-					{
-						skillSlot.stateMachine.SetNextState(EntityStateCatalog.InstantiateState(this.reloadState));
-						return;
-					}
-				}
-				else
-				{
-					instanceData.graceStopwatch = 0f;
-				}
-			}
-
-
-
-		}
+            DuplexSkillDef.InstanceData instanceData = (DuplexSkillDef.InstanceData)skillSlot.skillInstanceData;
+            instanceData.currentStock = skillSlot.stock;
+            if (instanceData.currentStock == 0)
+            {
+                if (skillSlot.stateMachine && !skillSlot.stateMachine.HasPendingState() && skillSlot.stateMachine.CanInterruptState(this.reloadInterruptPriority))
+                {
+                    instanceData.graceStopwatch += deltaTime;
+                    float speed = ((skillSlot.characterBody.attackSpeed - 1) * graceAttackSpeedCoefficient) + 1;
+                    if (instanceData.graceStopwatch >= this.graceDuration / speed)
+                    {
+                        skillSlot.stateMachine.SetNextState(EntityStateCatalog.InstantiateState(this.reloadState.stateType));
+                        return;
+                    }
+                }
+                else
+                {
+                    instanceData.graceStopwatch = 0f;
+                }
+            }
+        }
 
 		[Header("Reload Parameters")]
 		[Tooltip("The reload state to go into, when stock is less than max.")]

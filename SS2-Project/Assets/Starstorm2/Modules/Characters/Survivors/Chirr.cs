@@ -24,7 +24,7 @@ namespace SS2.Survivors
 
         private static GameObject chirristmas;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR, ConfigDescOverride = "Can Weightless Frame be activated by toggling.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR, configDescOverride = "Can Weightless Frame be activated by toggling.")]
         public static bool toggleHover = false;
         
         public static float confuseDuration = 4f;

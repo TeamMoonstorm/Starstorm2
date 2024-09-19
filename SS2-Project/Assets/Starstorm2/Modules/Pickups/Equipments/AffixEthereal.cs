@@ -75,7 +75,7 @@ namespace SS2.Equipments
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return true;
+            return false;
         }
         public override void OnEquipmentLost(CharacterBody body)
         {
@@ -125,12 +125,12 @@ namespace SS2.Equipments
 
             public void Start()
             {
-                if (!HasAnyStacks)
+                if (!hasAnyStacks)
                     return;
 
-                if (CharacterBody.hullClassification == HullClassification.BeetleQueen)
+                if (characterBody.hullClassification == HullClassification.BeetleQueen)
                     timerDur = baseTimerDur * 2f;
-                else if (CharacterBody.hullClassification == HullClassification.Golem)
+                else if (characterBody.hullClassification == HullClassification.Golem)
                     timerDur = baseTimerDur * 1.5f;
                 else
                     timerDur = baseTimerDur;
@@ -143,15 +143,17 @@ namespace SS2.Equipments
                 Util.PlaySound("EtherealActivate", this.gameObject);
 
                 this.effectInstances = new List<GameObject>();
-                Transform modelTransform = CharacterBody.modelLocator.modelTransform;
+                Transform modelTransform = characterBody.modelLocator.modelTransform;
                 if (modelTransform)
                 {
-                    TemporaryOverlay temporaryOverlay = modelTransform.gameObject.AddComponent<TemporaryOverlay>();
+                    TemporaryOverlayInstance temporaryOverlay = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
                     temporaryOverlay.duration = timerDur;
                     temporaryOverlay.animateShaderAlpha = true;
                     temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
                     temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matHakaiOverlay", SS2Bundle.Equipments);
-                    temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
+
+                    // TODO: No longer needed post-SOTS, leaving in for now but need to remove later
+                    //temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
 
                     CharacterModel cm = modelTransform.GetComponent<CharacterModel>();
                     CharacterModel.RendererInfo[] rendererInfos = cm.baseRendererInfos;
@@ -163,7 +165,7 @@ namespace SS2.Equipments
                             {
                                 if (!rendererInfos[i].ignoreOverlays)
                                 {
-                                    GameObject effect = AddParticles(rendererInfos[i].renderer, CharacterBody.coreTransform, timerDur);
+                                    GameObject effect = AddParticles(rendererInfos[i].renderer, characterBody.coreTransform, timerDur);
                                     if (effect != null)
                                         effectInstances.Add(effect);
                                 }
@@ -176,11 +178,11 @@ namespace SS2.Equipments
 
             private GameObject AddParticles(Renderer modelRenderer, Transform targetParentTransform, float duration)
             {
-                if (HasAnyStacks && (modelRenderer is MeshRenderer || modelRenderer is SkinnedMeshRenderer))
+                if (hasAnyStacks && (modelRenderer is MeshRenderer || modelRenderer is SkinnedMeshRenderer))
                 {
                     GameObject effectPrefab;
 
-                    if (CharacterBody.hullClassification == HullClassification.BeetleQueen)
+                    if (characterBody.hullClassification == HullClassification.BeetleQueen)
                         effectPrefab = Instantiate(SS2Assets.LoadAsset<GameObject>("HakaiLightningBig", SS2Bundle.Equipments), targetParentTransform);
                     else
                         effectPrefab = Instantiate(SS2Assets.LoadAsset<GameObject>("HakaiLightning", SS2Bundle.Equipments), targetParentTransform);
@@ -221,7 +223,7 @@ namespace SS2.Equipments
 
             public void FixedUpdate()
             {
-                if (!NetworkServer.active || !HasAnyStacks)
+                if (!NetworkServer.active || !hasAnyStacks)
                     return;
 
                 timer += Time.fixedDeltaTime;
@@ -229,14 +231,14 @@ namespace SS2.Equipments
                 {
                     //Debug.Log("KILL");
                     Util.PlaySound("Play_UI_charTeleport", this.gameObject);
-                    var charModel = CharacterBody.modelLocator.modelTransform.gameObject;
+                    var charModel = characterBody.modelLocator.modelTransform.gameObject;
                     var mdl = charModel.GetComponent<CharacterModel>();
                     if (mdl != null)
                     {
                         mdl.invisibilityCount++;
                     }
-                    CharacterBody.healthComponent.Suicide();
-                    EffectManager.SimpleEffect(SS2Assets.LoadAsset<GameObject>("InitialBurst, Effect", SS2Bundle.Equipments), CharacterBody.corePosition, new Quaternion(0f, 0f, 0f, 0f), true);
+                    characterBody.healthComponent.Suicide();
+                    EffectManager.SimpleEffect(SS2Assets.LoadAsset<GameObject>("InitialBurst, Effect", SS2Bundle.Equipments), characterBody.corePosition, new Quaternion(0f, 0f, 0f, 0f), true);
                     expired = true;
                 }
 
@@ -253,19 +255,19 @@ namespace SS2.Equipments
             {
                 //Debug.Log("Firing projectile: " + projectilePrefab);
 
-                if (CharacterBody != null)
+                if (characterBody != null)
                 {
-                    if (CharacterBody.healthComponent.alive)
+                    if (characterBody.healthComponent.alive)
                     {
                         NodeGraph groundNodes = SceneInfo.instance.groundNodes;
-                        List<NodeGraph.NodeIndex> nodeList = groundNodes.FindNodesInRange(CharacterBody.transform.position, 0f, 32f, HullMask.Human);
+                        List<NodeGraph.NodeIndex> nodeList = groundNodes.FindNodesInRange(characterBody.transform.position, 0f, 32f, HullMask.Human);
                         NodeGraph.NodeIndex randomNode = nodeList[random.Next(nodeList.Count)];
                         if (randomNode != null)
                         {
                             Vector3 position;
                             groundNodes.GetNodePosition(randomNode, out position);
                             //Util.PlaySound("EtherealActivate", this.gameObject);
-                            ProjectileManager.instance.FireProjectile(projectilePrefab, position, new Quaternion(0, 0, 0, 0), CharacterBody.gameObject, 1f, 0f, CharacterBody.RollCrit(), DamageColorIndex.Default, null, 0);
+                            ProjectileManager.instance.FireProjectile(projectilePrefab, position, new Quaternion(0, 0, 0, 0), characterBody.gameObject, 1f, 0f, characterBody.RollCrit(), DamageColorIndex.Default, null, 0);
                         }
                     }
                 }
@@ -293,7 +295,7 @@ namespace SS2.Equipments
 
                 //Util.PlaySound("EtherealBell", this.gameObject);
 
-                model = CharacterBody.modelLocator.modelTransform.GetComponent<CharacterModel>();
+                model = characterBody.modelLocator.modelTransform.GetComponent<CharacterModel>();
                 if (model != null)
                 {
                     this.etherealEffect = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("EtherealAffixEffect", SS2Bundle.Equipments), model.transform);
@@ -306,9 +308,9 @@ namespace SS2.Equipments
                     return;
 
                 // TODO: Will HasAnyStacks break this fixed update? I hope not!
-                if (HasAnyStacks)
+                if (hasAnyStacks)
                 {
-                    if (!CharacterBody.healthComponent.alive && etherealEffect != null)
+                    if (!characterBody.healthComponent.alive && etherealEffect != null)
                     {
                         Destroy(etherealEffect);
                     }
@@ -317,7 +319,7 @@ namespace SS2.Equipments
                     if (timer >= timerDur)
                     {
                         timer = 0;
-                        if (CharacterBody.isChampion)
+                        if (characterBody.isChampion)
                             timer = timerDur / 2f;
 
                         PlaceCircle();
@@ -340,18 +342,18 @@ namespace SS2.Equipments
                 //Debug.Log("Firing projectile: " + projectilePrefab);
 
                 // We dont need a HasAnyStacks check since we check in the FixedUpdate before it calls this method.
-                if (CharacterBody != null)
+                if (characterBody != null)
                 {
-                    if (CharacterBody.healthComponent.alive)
+                    if (characterBody.healthComponent.alive)
                     {
                         NodeGraph groundNodes = SceneInfo.instance.groundNodes;
-                        List<NodeGraph.NodeIndex> nodeList = groundNodes.FindNodesInRange(CharacterBody.transform.position, 0f, 32f, HullMask.Human);
+                        List<NodeGraph.NodeIndex> nodeList = groundNodes.FindNodesInRange(characterBody.transform.position, 0f, 32f, HullMask.Human);
                         NodeGraph.NodeIndex randomNode = nodeList[random.Next(nodeList.Count)];
                         if (randomNode != null)
                         {
                             Vector3 position;
                             groundNodes.GetNodePosition(randomNode, out position);
-                            ProjectileManager.instance.FireProjectile(projectilePrefab, position, new Quaternion(0, 0, 0, 0), CharacterBody.gameObject, 1f, 0f, CharacterBody.RollCrit(), DamageColorIndex.Default, null, 0);
+                            ProjectileManager.instance.FireProjectile(projectilePrefab, position, new Quaternion(0, 0, 0, 0), characterBody.gameObject, 1f, 0f, characterBody.RollCrit(), DamageColorIndex.Default, null, 0);
                         }
                     }
                 }

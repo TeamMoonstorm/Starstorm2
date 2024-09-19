@@ -48,6 +48,9 @@ namespace EntityStates.Engi
         private Transform muzzleRight;
         private List<HurtBox> victimsStruck = new List<HurtBox>();
         private OverlapAttack attack;
+        private GameObject vfxLeft;
+        private GameObject vfxRight;
+
         public override void OnEnter()
         {
             base.OnEnter();
@@ -82,7 +85,7 @@ namespace EntityStates.Engi
                 attack.teamIndex = base.GetTeam();
                 attack.damage = 2 * this.damageStat;
                 //attack.hitEffectPrefab = ToolbotDash.impactEffectPrefab;
-                attack.forceVector = characterDirection.forward * -1800;
+                attack.forceVector = characterDirection.forward * -1600;
                 attack.pushAwayForce = 1000;
                 attack.hitBoxGroup = hitBoxGroup;
                 attack.isCrit = base.RollCrit();
@@ -98,32 +101,30 @@ namespace EntityStates.Engi
 
             EffectData effectDataL = new EffectData
             {
-                origin = new Vector3(.5f, 1.25f, -.6f),
-                rotation = Quaternion.Euler(aimRay.direction),
-                //rotation = muzzleLeft.rotation, //Quaternion.Euler(new Vector3(muzzleLeft.rotation.x + 180, muzzleLeft.rotation.y, muzzleLeft.rotation.z)),
-                scale = .5f,
+                origin = new Vector3(.325f, .2f, -1.1f),
+                rotation = modelTransform.rotation,
+                scale = .375f,
                 rootObject = characterBody.gameObject,
-                modelChildIndex = 2, //i dunno test it in the morning
+                modelChildIndex = 2,
                 genericFloat = -23,
-                
-                
             };
-            effectDataL.SetNetworkedObjectReference(characterDirection.gameObject);
             EffectManager.SpawnEffect(Engineer.engiPrefabExplosion, effectDataL, transmit: true);
 
             EffectData effectDataR = new EffectData
             {
-                origin = new Vector3(-.5f, 1.25f, -.6f),
-                rotation = Quaternion.Euler(aimRay.direction),
-                //rotation = muzzleRight.rotation,//Quaternion.Euler(new Vector3(muzzleRight.rotation.x + 180, muzzleRight.rotation.y, muzzleRight.rotation.z)),
-                scale = .5f,
+                origin = new Vector3(-.325f, .2f, -1.1f),
+                rotation = modelTransform.rotation,
+                scale = .375f,
                 rootObject = characterBody.gameObject,
                 modelChildIndex = 2,
                 genericFloat = -23
-
             };
-            effectDataR.SetNetworkedObjectReference(characterDirection.gameObject);
             EffectManager.SpawnEffect(Engineer.engiPrefabExplosion, effectDataR, transmit: true);
+
+            //vfxLeft = UnityEngine.Object.Instantiate<GameObject>(Engineer.engiPrefabExplosion, new Vector3(.5f, 1.25f, -.7f), Quaternion.Euler(Vector3.zero), modelTransform.GetComponent<ChildLocator>().FindChild("Chest"));
+            //vfxRight = UnityEngine.Object.Instantiate<GameObject>(Engineer.engiPrefabExplosion, new Vector3(-.5f, 1.25f, -.7f), Quaternion.Euler(Vector3.zero), modelTransform.GetComponent<ChildLocator>().FindChild("Chest"));
+
+
         }
 
         public override void FixedUpdate()
@@ -140,7 +141,7 @@ namespace EntityStates.Engi
                 direction /= 1.125f; //test this in the morning imn going to bed
                 base.characterMotor.rootMotion += (fromDash ? 2.5f : 3.25f) * curve * (this.moveSpeedStat / 2) * Time.fixedDeltaTime * direction;
             }
-            if(fixedAge < duration / 4)
+            if (fixedAge < duration / 4)
             {
                 attack.Fire();
             }
@@ -193,11 +194,10 @@ namespace EntityStates.Engi
 
         private void FixedUpdate()
         {
-            
+
             if (motor && motor.isGrounded)
             {
                 body.bodyFlags &= ~CharacterBody.BodyFlags.SprintAnyDirection;
-                Debug.Log("Byebye!");
                 Destroy(this);
             }
 
@@ -205,7 +205,6 @@ namespace EntityStates.Engi
             if (timer > 2f)
             {
                 body.bodyFlags &= ~CharacterBody.BodyFlags.SprintAnyDirection;
-                Debug.Log("Byebye! (timer)");
                 Destroy(this);
             }
         }

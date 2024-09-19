@@ -17,6 +17,7 @@ MonoBehaviour:
   displayModelPrefab: {fileID: 0}
   hidden: 0
   achievementIcon: {fileID: 21300000, guid: 68ced9324e341384091aee9e55753910, type: 3}
+  requiredExpansion: {fileID: 0}
   achievementCondition:
     assemblyQualifiedName: SS2.Unlocks.NemMercenary.NemMercenaryNemesisSkinAchievement,
       Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -25,6 +26,7 @@ MonoBehaviour:
       Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   achievementNameToken: SS2_ACHIEVEMENT_NEMESIS_MERCENARY_NEMESIS_NAME
   achievementDescriptionToken: SS2_ACHIEVEMENT_NEMESIS_MERCENARY_NEMESIS_DESC
+  coinReward: 5
   _preRequisiteAchievement:
-    unlockableDef: {fileID: 0}
+    unlockableDef: {fileID: 11400000, guid: fbd6c871b7e3f784eb0ad6b3e9a142f2, type: 2}
     achievementIdentifier: 

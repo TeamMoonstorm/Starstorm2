@@ -16,7 +16,7 @@ namespace EntityStates.Lamp
             muzzle = GetModelChildLocator().FindChild(muzzleString);
             bool isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
             var effect = isBlue ? spawnVFXblue : spawnVFX;
-            EffectManager.SimpleEffect(effect, new Vector3(muzzle.position.x, muzzle.position.y + 3, muzzle.position.z), muzzle.rotation, true);
+            EffectManager.SimpleEffect(effect, new Vector3(muzzle.position.x, muzzle.position.y + 3, muzzle.position.z), muzzle.rotation, false);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace SS2
             if (moduleAvailability.available)
                 yield break;
 
-            _contentPieceProvider = ContentUtil.CreateContentPieceProvider<SerializableDifficultyDef>(SS2Main.Instance, SS2Content.SS2ContentPack);
+            _contentPieceProvider = ContentUtil.CreateGenericContentPieceProvider<SerializableDifficultyDef>(SS2Main.Instance, SS2Content.SS2ContentPack);
 
             var enumerator = InitializeDifficultiesFromSS2();
             while (!enumerator.IsDone())
@@ -50,7 +50,7 @@ namespace SS2
             var helper = new ParallelMultiStartCoroutine();
             foreach (var difficulty in content)
             {
-                if (!difficulty.IsAvailable(_contentPieceProvider.ContentPack))
+                if (!difficulty.IsAvailable(_contentPieceProvider.contentPack))
                     continue;
 
                 difficulties.Add(difficulty);
@@ -58,7 +58,7 @@ namespace SS2
             }
 
             helper.Start();
-            while (!helper.IsDone)
+            while (!helper.isDone)
                 yield return null;
 
             InitializeDifficulties(difficulties);
@@ -70,16 +70,16 @@ namespace SS2
             {
                 difficulty.Initialize();
 
-                var asset = difficulty.Asset;
+                var asset = difficulty.asset;
                 DifficultyAPI.AddDifficulty(asset);
 
                 if (difficulty is IContentPackModifier packModifier)
                 {
-                    packModifier.ModifyContentPack(_contentPieceProvider.ContentPack);
+                    packModifier.ModifyContentPack(_contentPieceProvider.contentPack);
                 }
                 if (difficulty is IDifficultyContentPiece diffContentPiece)
                 {
-                    _ss2Difficulties.Add(diffContentPiece.Asset.DifficultyDef, diffContentPiece);
+                    _ss2Difficulties.Add(diffContentPiece.asset.DifficultyDef, diffContentPiece);
                 }
             }
         }

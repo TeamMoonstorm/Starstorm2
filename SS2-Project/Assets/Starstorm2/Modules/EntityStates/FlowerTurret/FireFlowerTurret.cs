@@ -55,7 +55,10 @@ namespace EntityStates.FlowerTurret
 					HurtBox hurtBox2 = this.targetHurtBox;
 					if (hurtBox2)
 					{
-						EffectManager.SimpleMuzzleFlash(muzzleFlashPrefab, this.displayTransform.gameObject, "Muzzle", true);
+						if(this.displayTransform)
+                        {
+							EffectManager.SimpleMuzzleFlash(muzzleFlashPrefab, this.displayTransform.gameObject, "Muzzle", true);
+						}						
 						flowerOrb.origin = muzzleTransform.position;
 						flowerOrb.target = hurtBox2;
 						OrbManager.instance.AddOrb(flowerOrb);

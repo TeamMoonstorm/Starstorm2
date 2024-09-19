@@ -27,12 +27,35 @@
       "source": "builtin",
       "dependencies": {}
     },
+    "com.unity.editorcoroutines": {
+      "version": "1.0.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.ext.nunit": {
+      "version": "1.0.6",
+      "depth": 2,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.ide.visualstudio": {
+      "version": "2.0.22",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.test-framework": "1.1.9"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.multiplayer-hlapi": {
-      "version": "https://github.com/risk-of-thunder/UnityMultiplayerHLAPI.git",
+      "version": "https://github.com/risk-of-thunder/UnityMultiplayerHLAPI.git#1.1.0",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "ab4c0e7aca99354e4b5b211906e4acd83264ed12"
+      "hash": "c1528193e8066610d6371f3e03ab9a2d32917941"
     },
     "com.unity.postprocessing": {
       "version": "2.3.0",
@@ -41,26 +64,48 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
-    "com.unity.quicksearch": {
-      "version": "2.0.2",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.com"
-    },
     "com.unity.scriptablebuildpipeline": {
-      "version": "1.16.1",
+      "version": "1.20.1",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
+    },
+    "com.unity.test-framework": {
+      "version": "1.1.33",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.ext.nunit": "1.0.6",
+        "com.unity.modules.imgui": "1.0.0",
+        "com.unity.modules.jsonserialize": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.textmeshpro": {
+      "version": "3.0.9",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.ugui": {
+      "version": "1.0.0",
+      "depth": 0,
+      "source": "builtin",
+      "dependencies": {
+        "com.unity.modules.ui": "1.0.0",
+        "com.unity.modules.imgui": "1.0.0"
+      }
     },
     "jace-locationsofprecipitation": {
       "version": "https://github.com/JaceDaDorito/jace-locationsofprecipitation.git",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "04616c5e0af27f6422beaa2a8726ec61f2e3d777"
+      "hash": "d23f3e51b5cb701b7fa923762bedc4de0f2ad926"
     },
     "mmhook-assemblies": {
       "version": "file:mmhook-assemblies",
@@ -267,18 +312,20 @@
       "dependencies": {}
     },
     "riskofthunder-ror2editorkit": {
-      "version": "https://github.com/risk-of-thunder/RoR2EditorKit.git",
+      "version": "https://github.com/risk-of-thunder/RoR2EditorKit.git#5.2.0",
       "depth": 0,
       "source": "git",
-      "dependencies": {},
-      "hash": "1f026446ee48832fc8f81f64d2e5a1fc65ad6889"
+      "dependencies": {
+        "com.unity.editorcoroutines": "1.0.0"
+      },
+      "hash": "7c2fe25c2817fa313a8be2f61c7d59f765de2dac"
     },
     "riskofthunder-ror2importextensions": {
-      "version": "https://github.com/risk-of-thunder/RoR2ImportExtensions.git#1.5.0",
+      "version": "https://github.com/Nebby1999/RoR2ImportExtensions.git",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "f55a7c99f00b0c9a4d195e227dd0b336136a8568"
+      "hash": "1a9e5430076f23ff212b14cd3d0a922f84fbf10c"
     },
     "rune580-risk_of_options": {
       "version": "file:Risk_Of_Options",
@@ -297,7 +344,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "1588cdb8e58b49dd7bd9a5d5203ebd925f784d7a"
+      "hash": "c20a3a6b2121b329e300fd5306db1057d1873fec"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
@@ -432,6 +479,18 @@
       "depth": 0,
       "source": "builtin",
       "dependencies": {
+        "com.unity.modules.ui": "1.0.0",
+        "com.unity.modules.imgui": "1.0.0",
+        "com.unity.modules.jsonserialize": "1.0.0",
+        "com.unity.modules.uielementsnative": "1.0.0"
+      }
+    },
+    "com.unity.modules.uielementsnative": {
+      "version": "1.0.0",
+      "depth": 1,
+      "source": "builtin",
+      "dependencies": {
+        "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.imgui": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0"
       }

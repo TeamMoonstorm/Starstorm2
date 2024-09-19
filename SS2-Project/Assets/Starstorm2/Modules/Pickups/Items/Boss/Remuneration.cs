@@ -16,24 +16,20 @@ namespace SS2.Items
         {
             remunerationControllerPrefab = AssetCollection.FindAsset<GameObject>("RemunerationController");
             On.RoR2.PickupDisplay.RebuildModel += EnableVoidParticles;
+            On.RoR2.PickupDisplay.RebuildModel += EnableVoidParticles;
 
             deleteEffectPrefab = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Nullifier/NullifierExplosion.prefab").WaitForCompletion(), "WAWA");
             deleteEffectPrefab.GetComponent<EffectComponent>().soundName = "Play_nullifier_death_vortex_explode"; // cringe.
             ContentAddition.AddEffect(deleteEffectPrefab); // i think this is how r2api works? not gonna look it up tehe
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return contentPack.survivorDefs.Find("survivorNemMerc");
-        }
-
         // this works for all sibylline items but i dont know where to put general hooks like that
         // also MSU is apparently supposed to be able to do this. can remove this whenever thats fixed
 
         //That was orb, someone please ask him what he meant by this, he never told me what he was trying to do :,) -N
-        private void EnableVoidParticles(On.RoR2.PickupDisplay.orig_RebuildModel orig, PickupDisplay self)
+        private void EnableVoidParticles(On.RoR2.PickupDisplay.orig_RebuildModel orig, PickupDisplay self, GameObject modelObjectOverride)
         {
-            orig(self);
+            orig(self, modelObjectOverride);
             PickupDef pickupDef = PickupCatalog.GetPickupDef(self.pickupIndex);
             ItemIndex itemIndex = (pickupDef != null) ? pickupDef.itemIndex : ItemIndex.None;
             if (itemIndex != ItemIndex.None && ItemCatalog.GetItemDef(itemIndex).tier == SS2Content.ItemTierDefs.Sibylline.tier)
@@ -44,6 +40,12 @@ namespace SS2.Items
                 }
             }
         }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
 
         public sealed class RemunerationBehavior : BaseItemMasterBehaviour
         {

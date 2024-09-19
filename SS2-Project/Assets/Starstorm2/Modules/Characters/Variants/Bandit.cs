@@ -1,5 +1,4 @@
-﻿using Assets.Starstorm2.ContentClasses;
-using SS2;
+﻿using SS2;
 using System;
 using UnityEngine.AddressableAssets;
 using UnityEngine;
@@ -13,7 +12,7 @@ namespace SS2.Survivors
 {
     public class Bandit : SS2VanillaSurvivor
     {
-        public override SS2AssetRequest<AssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<AssetCollection>("acBandit", SS2Bundle.Indev);
+        public override SS2AssetRequest<VanillaSurvivorAssetCollection> assetRequest => SS2Assets.LoadAssetAsync<VanillaSurvivorAssetCollection>("acBandit", SS2Bundle.Indev);
 
         public static DamageAPI.ModdedDamageType TranqDamageType { get; set; }
         public static BuffDef _bdBanditTranquilizer;
@@ -28,12 +27,12 @@ namespace SS2.Survivors
 
         public override void Initialize()
         {
-            _bdBanditTranquilizer = survivorAssetCollection.FindAsset<BuffDef>("bdBanditTranquilizer");
+            _bdBanditTranquilizer = assetCollection.FindAsset<BuffDef>("bdBanditTranquilizer");
 
             RegisterTranquilizer();
             R2API.RecalculateStatsAPI.GetStatCoefficients += ModifyStats;
 
-            SkillDef sdTranquilizerGun = survivorAssetCollection.FindAsset<SkillDef>("sdTranquilizerGun");
+            SkillDef sdTranquilizerGun = assetCollection.FindAsset<SkillDef>("sdTranquilizerGun");
 
             GameObject banditBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/Bandit2Body.prefab").WaitForCompletion();
 
@@ -64,7 +63,7 @@ namespace SS2.Survivors
                 args.attackSpeedMultAdd -= Math.Min(_confuseAttackSpeedSlowAmount * buffCount, _maxDebuffAmount);
 
                 if (buffCount >= _sleepCountThreshold)
-                {   
+                {
                     // Stun the enemy, thanks orbeez for the code
                     SetStateOnHurt setStateOnHurt = sender.GetComponent<SetStateOnHurt>();
                     if (setStateOnHurt) setStateOnHurt.SetStun(_sleepDuration);
@@ -88,11 +87,13 @@ namespace SS2.Survivors
                 victimBody.AddTimedBuffAuthority(_bdBanditTranquilizer.buffIndex, tranqDuration);
             }
         }
-
+        public override void ModifyContentPack(ContentPack contentPack)
+        {
+        }
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return true;
+            return false;
         }
     }
 }

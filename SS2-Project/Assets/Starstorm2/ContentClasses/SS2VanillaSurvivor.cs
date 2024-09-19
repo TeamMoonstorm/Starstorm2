@@ -9,34 +9,47 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine.AddressableAssets;
 
-namespace Assets.Starstorm2.ContentClasses
+namespace SS2
 {
-    public abstract class SS2VanillaSurvivor : IContentPiece, IContentPackModifier
+    public abstract class SS2VanillaSurvivor : IVanillaSurvivorContentPiece, IContentPackModifier
     {
-        public abstract SS2AssetRequest<AssetCollection> AssetRequest { get; }
+        public VanillaSurvivorAssetCollection assetCollection { get; private set; }
+        public SurvivorDef survivorDef { get; set; }
+        public abstract SS2AssetRequest<VanillaSurvivorAssetCollection> assetRequest { get; }
 
-        public AssetCollection survivorAssetCollection;
         public abstract void Initialize();
-        public abstract bool IsAvailable(ContentPack contentPack);
-        public virtual IEnumerator LoadContentAsync()
+
+        public virtual IEnumerator InitializeAsync()
         {
-            var assetRequest = AssetRequest;
+            var coroutine = assetCollection.InitializeSkinDefs();
+
+            while (!coroutine.IsDone())
+                yield return null;
+
+            yield break;
+        }
+
+        public abstract bool IsAvailable(ContentPack contentPack);
+
+        public IEnumerator LoadContentAsync()
+        {
+            var assetRequest = this.assetRequest;
 
             assetRequest.StartLoad();
             while (!assetRequest.IsComplete)
-            {
                 yield return null;
-            }
 
-            survivorAssetCollection = assetRequest.Asset;
+            assetCollection = assetRequest.Asset;
 
-             yield break;
+            var request = Addressables.LoadAssetAsync<SurvivorDef>(assetCollection.survivorDefAddress);
+            while (!request.IsDone)
+                yield return null;
+
+            survivorDef = request.Result;
         }
 
-        public void ModifyContentPack(ContentPack contentPack)
-        {
-            contentPack.AddContentFromAssetCollection(survivorAssetCollection);
-        }
+        public abstract void ModifyContentPack(ContentPack contentPack);
     }
 }

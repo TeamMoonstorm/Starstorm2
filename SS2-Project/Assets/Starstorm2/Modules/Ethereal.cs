@@ -80,7 +80,6 @@ namespace SS2
             etherealsCompleted = 0;
             storedScalingValue = DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).scalingValue;
             teleIsEthereal = false;
-            Run.ambientLevelCap = storedLevelCap;
             Debug.Log("completed: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
         }
 

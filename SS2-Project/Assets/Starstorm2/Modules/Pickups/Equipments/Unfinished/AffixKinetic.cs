@@ -62,7 +62,7 @@ namespace SS2.Equipments
                     return;
                 }
 
-                if (!CharacterBody.outOfCombat && timer > 4f)
+                if (!characterBody.outOfCombat && timer > 4f)
                 {
                     PullEnemies();
                     timer = 0;
@@ -74,8 +74,8 @@ namespace SS2.Equipments
             {
                 // TODO from Buns: Remember to remove log after implementation is done Zen :)
                 SS2Log.Info("ahhh");
-                tempAuraPrefab = UnityEngine.Object.Instantiate<GameObject>(auraPrefab, CharacterBody.corePosition, Quaternion.identity);
-                tempAuraPrefab.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(CharacterBody.gameObject, null);
+                tempAuraPrefab = UnityEngine.Object.Instantiate<GameObject>(auraPrefab, characterBody.corePosition, Quaternion.identity);
+                tempAuraPrefab.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(characterBody.gameObject, null);
             }
 
             protected override void OnAllStacksLost()
@@ -93,12 +93,12 @@ namespace SS2.Equipments
             private void PullEnemies()
             {
                 float aoeRadius = 20;// + (aoeRangeStacking.Value * (float)(cryoCount - 1));
-                float bodyRadius = CharacterBody.radius;
+                float bodyRadius = characterBody.radius;
                 float effectiveRadius = aoeRadius;// + (bodyRadius * .5f);
 
-                var bodyTeam = CharacterBody.teamComponent.teamIndex;
+                var bodyTeam = characterBody.teamComponent.teamIndex;
 
-                Vector3 corePosition = CharacterBody.corePosition;
+                Vector3 corePosition = characterBody.corePosition;
 
                 SphereSearch kineticAOESphereSearch = new SphereSearch();
                 List<HurtBox> kineticAOEHurtBoxBuffer = new List<HurtBox>();
@@ -126,7 +126,7 @@ namespace SS2.Equipments
                             float dashVelocity = 21f;
                             float shorthopVelocity = .5f;
 
-                            Vector3 v1 = CharacterBody.transform.position;
+                            Vector3 v1 = characterBody.transform.position;
                             Vector3 v2 = victim.transform.position;
 
                             Vector3 vector = v1 - v2;
@@ -180,17 +180,17 @@ namespace SS2.Equipments
 
             private void GeneratePulse()
             {
-                GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(pulsePrefab, CharacterBody.transform.position, CharacterBody.transform.rotation);
+                GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(pulsePrefab, characterBody.transform.position, characterBody.transform.rotation);
                 PulseController component = gameObject.GetComponent<PulseController>();
                 sphereSearch = new RoR2.SphereSearch()
                 {
                     queryTriggerInteraction = UnityEngine.QueryTriggerInteraction.Collide,
                     mask = LayerIndex.entityPrecise.mask,
-                    origin = CharacterBody.transform.position,
+                    origin = characterBody.transform.position,
                 };
 
-                component.finalRadius += BuffCount;
-                component.duration += (BuffCount * 0.1f); //Artificially increase duration because in higher radius its almost instant
+                component.finalRadius += buffCount;
+                component.duration += (buffCount * 0.1f); //Artificially increase duration because in higher radius its almost instant
                 component.performSearch += PerformSearch;
                 component.onPulseHit += OnPulseHit;
                 component.StartPulseServer();
@@ -206,7 +206,7 @@ namespace SS2.Equipments
                     return;
                 }
                 List<HurtBox> hurtBoxes = CollectionPool<HurtBox, List<HurtBox>>.RentCollection();
-                sphereSearch.RefreshCandidates().FilterCandidatesByDistinctHurtBoxEntities().FilterCandidatesByHurtBoxTeam(TeamMask.GetEnemyTeams(CharacterBody.teamComponent.teamIndex)).GetHurtBoxes(hurtBoxes);
+                sphereSearch.RefreshCandidates().FilterCandidatesByDistinctHurtBoxEntities().FilterCandidatesByHurtBoxTeam(TeamMask.GetEnemyTeams(characterBody.teamComponent.teamIndex)).GetHurtBoxes(hurtBoxes);
                 for (int i = 0; i < hurtBoxes.Count; i++)
                 {
                     if (hurtBoxes[i].healthComponent)
@@ -225,12 +225,12 @@ namespace SS2.Equipments
                 if (hitInfo.hitObject)
                 {
                     HealthComponent hc = (HealthComponent)hitInfo.hitObject;
-                    if (TeamManager.IsTeamEnemy(hc.body.teamComponent.teamIndex, CharacterBody.teamComponent.teamIndex))
+                    if (TeamManager.IsTeamEnemy(hc.body.teamComponent.teamIndex, characterBody.teamComponent.teamIndex))
                     {
                         // TODO: THis was commented out before, idk if it needs to be kept
                         if (BuffCatalog.GetBuffDef(BuffCatalog.FindBuffIndex("BuffFear"))) //Lazy to check for SS2 installation, check if catalog has fear in
                         {
-                            hc.body.AddTimedBuff(BuffCatalog.GetBuffDef(BuffCatalog.FindBuffIndex("BuffFear")), (4 + BuffCount) * hitInfo.hitSeverity);
+                            hc.body.AddTimedBuff(BuffCatalog.GetBuffDef(BuffCatalog.FindBuffIndex("BuffFear")), (4 + buffCount) * hitInfo.hitSeverity);
                             return;
                         }
                         // commenting this out because swuff said to delete voidleech. dunno why its in affixkinetic. -orb

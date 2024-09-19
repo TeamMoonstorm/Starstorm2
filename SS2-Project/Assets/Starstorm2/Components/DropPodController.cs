@@ -1,4 +1,6 @@
-﻿using JetBrains.Annotations;
+﻿//Kill this once we make a proper drop pod, i hate my old code -N
+
+/*using JetBrains.Annotations;
 using RoR2;
 using RoR2.Networking;
 using System;
@@ -177,4 +179,4 @@ namespace SS2.Components
             NetworkServer.Spawn(instancedSurvivor);
         }
     }
-}
+}*/

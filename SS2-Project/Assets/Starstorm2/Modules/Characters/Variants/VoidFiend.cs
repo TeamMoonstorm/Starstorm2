@@ -1,5 +1,4 @@
-﻿using Assets.Starstorm2.ContentClasses;
-using MSU;
+﻿using MSU;
 using RoR2;
 using RoR2.ContentManagement;
 using RoR2.Skills;
@@ -11,14 +10,14 @@ namespace SS2.Survivors
 {
     public class VoidFiend : SS2VanillaSurvivor
     {
-        public override SS2AssetRequest<AssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<AssetCollection>("acVoidFiend", SS2Bundle.Indev);
+        public override SS2AssetRequest<VanillaSurvivorAssetCollection> assetRequest => SS2Assets.LoadAssetAsync<VanillaSurvivorAssetCollection>("acVoidFiend", SS2Bundle.Indev);
 
         SkillDef sdUncorruptedSwipe;
         SkillDef sdCorruptedSwipe;
         public override void Initialize()
         {
-            sdUncorruptedSwipe = survivorAssetCollection.FindAsset<SkillDef>("sdUncorruptedSwipe");
-            sdCorruptedSwipe = survivorAssetCollection.FindAsset<SkillDef>("sdCorruptedSwipe");
+            sdUncorruptedSwipe = assetCollection.FindAsset<SkillDef>("sdUncorruptedSwipe");
+            sdCorruptedSwipe = assetCollection.FindAsset<SkillDef>("sdCorruptedSwipe");
 
             GameObject voidSurvivorBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/VoidSurvivor/VoidSurvivorBody.prefab").WaitForCompletion();
 
@@ -54,7 +53,11 @@ namespace SS2.Survivors
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return true;
+            return false;
+        }
+
+        public override void ModifyContentPack(ContentPack contentPack)
+        {
         }
     }
 }

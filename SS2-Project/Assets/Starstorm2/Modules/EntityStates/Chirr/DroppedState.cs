@@ -26,6 +26,7 @@ namespace EntityStates.Chirr
 		private bool bodyHadGravity = true;
 		private bool bodyWasKinematic = true;
 		private bool bodyCouldTakeImpactDamage = true;
+		private bool bodyWasPlayer = false;
 		private CharacterGravityParameters gravParams;
 		private Rigidbody tempRigidbody;
 		private SphereCollider tempSphereCollider;
@@ -70,10 +71,22 @@ namespace EntityStates.Chirr
                 }
 			}
 
+
+
 			
 			if(base.characterMotor)
             {
-                base.characterMotor.onMovementHit += DoSplashDamage;
+				//if(base.characterMotor.Motor && base.characterMotor.Motor.enabled)
+				//            {
+				//	KinematicCharacterController.KinematicCharacterSystem.UnregisterCharacterMotor(base.characterMotor.Motor);
+				//	bodyWasPlayer = base.characterMotor.Motor.playerCharacter;
+				//	base.characterMotor.Motor.playerCharacter = true; // FUCK YOU HOPOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO I MEAN GEARBOX
+				//	KinematicCharacterController.KinematicCharacterSystem.RegisterCharacterMotor(base.characterMotor.Motor);
+				//}
+
+				this.detonateOnImpact = base.gameObject.AddComponent<DetonateOnImpact>();
+				this.detonateOnImpact.droppedState = this;
+				base.characterMotor.onMovementHit += DoSplashDamage;
 				base.characterMotor.disableAirControlUntilCollision = true;
                 base.characterMotor.velocity = initialVelocity;
 				base.characterMotor.useGravity = true;				
@@ -125,7 +138,7 @@ namespace EntityStates.Chirr
 		// ^^^ would using another RPC call instead of syncvarhook for victimBodyObject make the timing correct?
 		private void ReleaseLatencyFixTEMP(VehicleSeat.PassengerInfo _) 
         {
-			SS2.SS2Log.Warning("ReleaseLatencyFixTEMP: Setting velocity to " + this.initialVelocity);
+			//SS2.SS2Log.Warning("ReleaseLatencyFixTEMP: Setting velocity to " + this.initialVelocity);
 			if (base.characterMotor)
 				base.characterMotor.velocity = initialVelocity;
 			else if (base.rigidbody)
@@ -147,6 +160,13 @@ namespace EntityStates.Chirr
 
 			if (base.characterMotor)
             {
+				//if(base.characterMotor.Motor && base.characterMotor.Motor.enabled)
+    //            {
+				//	KinematicCharacterController.KinematicCharacterSystem.UnregisterCharacterMotor(base.characterMotor.Motor);
+				//	base.characterMotor.Motor.playerCharacter = bodyWasPlayer;
+				//	KinematicCharacterController.KinematicCharacterSystem.RegisterCharacterMotor(base.characterMotor.Motor);
+				//}
+				
 				base.characterMotor.onMovementHit -= DoSplashDamage;
 				base.characterMotor.useGravity = bodyHadGravity;
 				base.characterMotor.gravityParameters = this.gravParams;

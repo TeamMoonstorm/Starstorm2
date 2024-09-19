@@ -1,6 +1,8 @@
 ﻿using R2API.Utils;
 using RoR2;
 using UnityEngine;
+
+//This is a bit of a mess, should be refactored eventually into not a monobehaviour. if anything the behaviour could be a "Tag" of sorts.
 namespace SS2.Components
 {
     public class NemesisResistances : MonoBehaviour
@@ -35,11 +37,11 @@ namespace SS2.Components
 
         static NemesisResistances()
         {
-            On.RoR2.HealthComponent.Suicide += ResistVoid;
+            On.RoR2.HealthComponent.Suicide += ResistVoid; ;
             //On.RoR2.MapZone.TryZoneStart += TPBack;
         }
 
-        private static void ResistVoid(On.RoR2.HealthComponent.orig_Suicide orig, RoR2.HealthComponent self, GameObject killerOverride, GameObject inflictorOverride, DamageType damageType)
+        private static void ResistVoid(On.RoR2.HealthComponent.orig_Suicide orig, HealthComponent self, GameObject killerOverride, GameObject inflictorOverride, DamageTypeCombo damageType)
         {
             var body = self.body;
             if (body)
@@ -47,7 +49,7 @@ namespace SS2.Components
                 var master = body.master;
                 if (master)
                 {
-                    if (damageType == DamageType.VoidDeath && body.GetComponent<NemesisResistances>() != null)
+                    if (damageType.damageType.HasFlag(DamageType.VoidDeath) && body.GetComponent<NemesisResistances>() != null)
                     {
                         body.SetBodyStateToPreferredInitialState();
                         //ChatMessage.SendColored("He laughs in the face of the void.", ColorCatalog.ColorIndex.VoidItem);

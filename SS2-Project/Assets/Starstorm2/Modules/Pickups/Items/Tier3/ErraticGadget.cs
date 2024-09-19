@@ -26,19 +26,19 @@ namespace SS2.Items
         private const string token = "SS2_ITEM_ERRATICGADGET_DESC";
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acErraticGadget", SS2Bundle.Items);
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Chance on hit to fire lightning. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Chance on hit to fire lightning. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float procChance = 0.1f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Damage coefficient of Erratic Gadget's lightning proc. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Damage coefficient of Erratic Gadget's lightning proc. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float damageCoefficient = 3f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Number of targets for Erratic Gadget's lightning proc, per stack.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Number of targets for Erratic Gadget's lightning proc, per stack.")]
         [FormatToken(token, 2)]
         public static int bounceTargets = 1;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Damage multiplier for Erratic Gadget's doubled lightning.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Damage multiplier for Erratic Gadget's doubled lightning.")]
         public static int repeatDamageMultiplier = 1;
 
         private static GameObject _orbEffectPrefab;
@@ -53,7 +53,7 @@ namespace SS2.Items
         {
             _orbEffectPrefab = AssetCollection.FindAsset<GameObject>("GadgetOrbEffect");
             _procEffectPrefab = AssetCollection.FindAsset<GameObject>("GadgetLightningStartEffect");
-            _displayEffectPrefab = AssetCollection.FindAsset<GameObject>("GadgetLightningProcEffect");
+            _displayEffectPrefab = AssetCollection.FindAsset<GameObject>("GadgetLightningProc");
 
             PROCTYPEAPIWHEN = DamageAPI.ReserveDamageType();
             On.RoR2.Orbs.LightningOrb.OnArrival += LightningOrb_OnArrival; // uke tesla BFG arti loader 
@@ -174,7 +174,7 @@ namespace SS2.Items
             // jank ass way to check if lightning was spawned by erratic gadget proc
             // can be un-janked whith proctypeapi
             //hopefully no lightning orbs use FruitOnHit lol
-            bool isSecondStrike = self.damageType.HasFlag(DamageType.FruitOnHit);
+            bool isSecondStrike = self.damageType.damageType.HasFlag(DamageType.FruitOnHit);
             if (isSecondStrike) self.damageType &= ~DamageType.FruitOnHit;
             orig(self);
 
@@ -199,7 +199,7 @@ namespace SS2.Items
         // charged perforator strikes twice
         private void SimpleLightningStrikeOrb_OnArrival(On.RoR2.Orbs.SimpleLightningStrikeOrb.orig_OnArrival orig, SimpleLightningStrikeOrb self)
         {
-            bool isSecondStrike = self.damageType.HasFlag(DamageType.FruitOnHit);
+            bool isSecondStrike = self.damageType.damageType.HasFlag(DamageType.FruitOnHit);
             if (isSecondStrike) self.damageType &= ~DamageType.FruitOnHit;
             orig(self);
 
@@ -295,6 +295,7 @@ namespace SS2.Items
         {
             public override void Begin()
             {
+                if (duration <= 0) duration = 0.01f; //??????????????????????????
                 base.duration = duration;
                 EffectData effectData = new EffectData
                 {

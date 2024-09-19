@@ -19,8 +19,8 @@ namespace SS2
         public EquipmentAssetCollection AssetCollection { get; private set; }
 
         public NullableRef<List<GameObject>> ItemDisplayPrefabs { get; protected set; } = new List<GameObject>();
-        NullableRef<List<GameObject>> IEquipmentContentPiece.ItemDisplayPrefabs => ItemDisplayPrefabs;
-        EquipmentDef IContentPiece<EquipmentDef>.Asset => EquipmentDef;
+        NullableRef<List<GameObject>> IEquipmentContentPiece.itemDisplayPrefabs => ItemDisplayPrefabs;
+        EquipmentDef IContentPiece<EquipmentDef>.asset => EquipmentDef;
 
         public EquipmentDef EquipmentDef { get; protected set; }
 

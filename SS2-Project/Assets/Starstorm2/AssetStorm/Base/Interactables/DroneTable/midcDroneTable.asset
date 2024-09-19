@@ -13,11 +13,14 @@ MonoBehaviour:
   m_Name: midcDroneTable
   m_EditorClassIdentifier: 
   _serializedCardPairs:
-  - stageEnum: 262160
+  - stage:
+      Value: 262160
+    stageEnum: 262160
     customStageNames: []
     interactableCategory: 8
     customCategoryWeight: 0
     customCategoryName: 
+    requiredExpansions: []
     card:
       spawnCard:
         _asset: {fileID: 11400000, guid: 0b5d8345c7c1ceb49b4ef989db60d4ed, type: 2}
@@ -35,11 +38,14 @@ MonoBehaviour:
         _asset: {fileID: 0}
         _address: 
         _useDirectReference: 0
-  - stageEnum: 201343008
+  - stage:
+      Value: 201343008
+    stageEnum: 201343008
     customStageNames: []
     interactableCategory: 8
     customCategoryWeight: 0
     customCategoryName: 
+    requiredExpansions: []
     card:
       spawnCard:
         _asset: {fileID: 11400000, guid: 0b5d8345c7c1ceb49b4ef989db60d4ed, type: 2}
@@ -57,11 +63,14 @@ MonoBehaviour:
         _asset: {fileID: 0}
         _address: 
         _useDirectReference: 0
-  - stageEnum: 1073742208
+  - stage:
+      Value: 1073742208
+    stageEnum: 1073742208
     customStageNames: []
     interactableCategory: 8
     customCategoryWeight: 0
     customCategoryName: 
+    requiredExpansions: []
     card:
       spawnCard:
         _asset: {fileID: 11400000, guid: 0b5d8345c7c1ceb49b4ef989db60d4ed, type: 2}

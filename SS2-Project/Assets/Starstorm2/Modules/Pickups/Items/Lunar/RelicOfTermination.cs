@@ -18,36 +18,36 @@ namespace SS2.Items
 
         private const string token = "SS2_ITEM_RELICOFTERMINATION_DESC";
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Time, in seconds, to kill the marked enemy before going on cooldown.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Time, in seconds, to kill the marked enemy before going on cooldown.")]
         [FormatToken(token, 0)]
         [FormatToken("SS2_ITEM_RELICOFTERMINATION_PICKUP", 0)]
         public static float maxTime = 30f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Percent reduction in time to kill per stack. (1 = 100% reduction, .1 = 10% reduction)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Percent reduction in time to kill per stack. (1 = 100% reduction, .1 = 10% reduction)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float timeReduction = .1f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Damage multiplier which is added to the marked enemy. (1 = 100% more damage).")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Damage multiplier which is added to the marked enemy. (1 = 100% more damage).")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
         public static float damageMult = 1.5f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Health multiplier which is added to the marked enemy. (1 = 100% more health).")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Health multiplier which is added to the marked enemy. (1 = 100% more health).")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 3)]
         public static float hpMult = 2.5f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Flat additional health which is added to the marked enemy. (1 = 100% more health).")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Flat additional health which is added to the marked enemy. (1 = 100% more health).")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 7)]
         public static float hpAdd = 225;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Speed multiplier which is added to the marked enemy. (1 = 100% more speed).")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Speed multiplier which is added to the marked enemy. (1 = 100% more speed).")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 4)]
         public static float speedMult = .5f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Attack speed multiplier which is added to the marked enemy. (1 = 100% more attack speed).")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Attack speed multiplier which is added to the marked enemy. (1 = 100% more attack speed).")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 5)]
         public static float atkSpeedMult = 1f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Scale multiplier applied to marked enemies. (1 = 100% of normal scale (no change)).")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Scale multiplier applied to marked enemies. (1 = 100% of normal scale (no change)).")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 6)]
         public static float scaleMod = 1.5f;
 
@@ -77,7 +77,7 @@ namespace SS2.Items
             deathHalo = AssetCollection.FindAsset<GameObject>("TerminationDeathHalo");
             spawnRock1VFX = AssetCollection.FindAsset<GameObject>("TerminationDebris1");
             spawnRock2VFX = AssetCollection.FindAsset<GameObject>("TerminationDebris2");
-            globalMarkEffectTwo = AssetCollection.FindAsset<GameObject>("TerminationPositionInidcator");
+            globalMarkEffectTwo = AssetCollection.FindAsset<GameObject>("TerminationPositionIndicator");
 
             Material overlayMaterial = AssetCollection.FindAsset<Material>("matTerminationOverlay");
             BuffDef buffCooldown = AssetCollection.FindAsset<BuffDef>("BuffTerminationCooldown");

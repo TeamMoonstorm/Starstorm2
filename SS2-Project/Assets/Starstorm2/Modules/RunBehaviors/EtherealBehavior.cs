@@ -69,25 +69,6 @@ namespace SS2.Components
 
         private static void CreateDifficultyDict()
         {
-            diffDicts.Add(DifficultyIndex.Easy, Deluge.sdd);
-            diffDicts.Add(Deluge.sdd.DifficultyIndex, Deluge1.sdd);
-            diffDicts.Add(Deluge1.sdd.DifficultyIndex, Deluge2.sdd);
-            diffDicts.Add(Deluge2.sdd.DifficultyIndex, Deluge3.sdd);
-
-            diffDicts.Add(DifficultyIndex.Normal, Tempest.sdd);
-            diffDicts.Add(Tempest.sdd.DifficultyIndex, Tempest1.sdd);
-            diffDicts.Add(Tempest1.sdd.DifficultyIndex, Tempest2.sdd);
-            diffDicts.Add(Tempest2.sdd.DifficultyIndex, Tempest3.sdd);
-
-            diffDicts.Add(DifficultyIndex.Hard, Cyclone.sdd);
-            diffDicts.Add(Cyclone.sdd.DifficultyIndex, Cyclone1.sdd);
-            diffDicts.Add(Cyclone1.sdd.DifficultyIndex, Cyclone2.sdd);
-            diffDicts.Add(Cyclone2.sdd.DifficultyIndex, Cyclone3.sdd);
-
-            diffDicts.Add(Typhoon.sdd.DifficultyIndex, SuperTyphoon.sdd);
-            diffDicts.Add(SuperTyphoon.sdd.DifficultyIndex, SuperTyphoon1.sdd);
-            diffDicts.Add(SuperTyphoon1.sdd.DifficultyIndex, SuperTyphoon2.sdd);
-            diffDicts.Add(SuperTyphoon2.sdd.DifficultyIndex, SuperTyphoon3.sdd);
         }
 
         private void Start()
@@ -97,25 +78,13 @@ namespace SS2.Components
             etherealsCompleted = 0;
             storedScalingValue = DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).scalingValue;
             teleIsEthereal = false;
-            Run.ambientLevelCap = storedLevelCap;
 
-            //TeleporterInteraction.onTeleporterBeginChargingGlobal += TeleporterInteraction_onTeleporterBeginChargingGlobal;
-            Run.onRunDestroyGlobal += Run_onRunDestroyGlobal;
-            TeleporterInteraction.onTeleporterChargedGlobal += TeleporterInteraction_onTeleporterChargedGlobal;
-            On.RoR2.TeleporterInteraction.Start += TeleporterInteraction_Start;
-            On.RoR2.SceneDirector.Start += SceneDirector_Start;
-            On.RoR2.TeleporterInteraction.OnBossDirectorSpawnedMonsterServer += TeleporterInteraction_OnBossDirectorSpawnedMonsterServer;
         }
 
 
         private void OnDestroy()
         {
             //TeleporterInteraction.onTeleporterBeginChargingGlobal -= TeleporterInteraction_onTeleporterBeginChargingGlobal;
-            Run.onRunDestroyGlobal -= Run_onRunDestroyGlobal;
-            TeleporterInteraction.onTeleporterChargedGlobal -= TeleporterInteraction_onTeleporterChargedGlobal;
-            On.RoR2.TeleporterInteraction.Start -= TeleporterInteraction_Start;
-            On.RoR2.SceneDirector.Start -= SceneDirector_Start;
-            On.RoR2.TeleporterInteraction.OnBossDirectorSpawnedMonsterServer -= TeleporterInteraction_OnBossDirectorSpawnedMonsterServer;
         }
 
         private void Run_onRunDestroyGlobal(Run run)

@@ -43,7 +43,9 @@ namespace EntityStates.FlowerTurret
 							ChildLocator childLocator = gameObject.GetComponentInChildren<ChildLocator>();
 							if (childLocator)
 							{
-								return childLocator.FindChild("Muzzle");
+								Transform muzzle = childLocator.FindChild("Muzzle");
+								if(muzzle)
+									return muzzle;
 							}
 						}
 					}

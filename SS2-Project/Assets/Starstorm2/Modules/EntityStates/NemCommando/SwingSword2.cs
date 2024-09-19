@@ -28,12 +28,6 @@ namespace EntityStates.NemCommando
         {
             skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
 
-            nsm = GetComponent<NetworkStateMachine>();
-            gunSM = nsm.stateMachines[2];
-
-            Idle nextState = new Idle();
-            gunSM.SetInterruptState(nextState, InterruptPriority.Skill);
-
             /*if(skillLocator.secondary && skillLocator.secondary.skillDef is SS2ReloadSkillDef) // theres better syntax for casting but i stupet :(
             {
                 (skillLocator.secondary.skillDef as SS2ReloadSkillDef).SetDelayTimer(skillLocator.secondary, reloadDelay);
@@ -101,8 +95,6 @@ namespace EntityStates.NemCommando
         public override void OnExit()
         {
             base.OnExit();
-            Idle nextState = new Idle();
-            gunSM.SetInterruptState(nextState, InterruptPriority.Skill);
         }
 
         public override void OnSerialize(NetworkWriter writer)

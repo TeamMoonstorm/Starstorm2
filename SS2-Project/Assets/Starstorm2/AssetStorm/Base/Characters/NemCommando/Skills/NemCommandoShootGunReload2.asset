@@ -22,12 +22,14 @@ MonoBehaviour:
   activationState:
     _typeName: EntityStates.NemCommando.ShootGun2, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  interruptPriority: 2
+  interruptPriority: 1
   baseRechargeInterval: 0
   baseMaxStock: 8
   rechargeStock: 0
   requiredStock: 1
   stockToConsume: 1
+  attackSpeedBuffsRestockSpeed: 0
+  attackSpeedBuffsRestockSpeed_Multiplier: 1
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
@@ -36,7 +38,9 @@ MonoBehaviour:
   forceSprintDuringState: 0
   canceledFromSprinting: 0
   isCombatSkill: 1
-  mustKeyPress: 1
+  mustKeyPress: 0
+  autoHandleLuminousShot: 1
+  hideStockCount: 0
   reloadState:
     _typeName: EntityStates.NemCommando.ReloadGun, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null

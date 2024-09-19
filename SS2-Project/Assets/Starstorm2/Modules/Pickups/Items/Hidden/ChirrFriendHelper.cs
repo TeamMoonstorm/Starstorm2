@@ -89,7 +89,7 @@ namespace SS2.Items
                         EntityStateMachine body = EntityStateMachine.FindByCustomName(base.gameObject, "Body");
                         if (body)
                         {
-                            body.SetNextState(EntityStateCatalog.InstantiateState(body.initialStateType)); // doesnt work every time? idk why
+                            body.SetNextState(EntityStateCatalog.InstantiateState(body.initialStateType.stateType)); // doesnt work every time? idk why
                         }
                     }
 
@@ -118,9 +118,9 @@ namespace SS2.Items
 
             private void OnEnable()
             {
-                if (Master.aiComponents.Length > 0)
+                if (master.aiComponents.Length > 0)
                 {
-                    this.ai = Master.aiComponents[0];
+                    this.ai = master.aiComponents[0];
                     ai.aimVectorMaxSpeed *= aimSpeedCoefficient;
                     this.stateMachine = ai.stateMachine;
                     this.stateMachine.nextStateModifier += ModifyNextState;
@@ -137,9 +137,9 @@ namespace SS2.Items
             private void FixedUpdate()
             {
                 //get chirr's and our own body objects
-                CharacterMaster ownerMaster = Master.minionOwnership.ownerMaster;
+                CharacterMaster ownerMaster = master.minionOwnership.ownerMaster;
                 this.ownerBodyObject = ownerMaster ? ownerMaster.GetBodyObject() : null;
-                GameObject bodyObject = Master.GetBodyObject();
+                GameObject bodyObject = master.GetBodyObject();
 
                 if (!ai || !bodyObject) return;
 
@@ -173,9 +173,9 @@ namespace SS2.Items
             }
             private void OnDisable()
             {
-                if (Master.aiComponents.Length > 0 && Master.aiComponents[0].enabled)
+                if (master.aiComponents.Length > 0 && master.aiComponents[0].enabled)
                 {
-                    BaseAI ai = Master.aiComponents[0];
+                    BaseAI ai = master.aiComponents[0];
                     ai.aimVectorMaxSpeed /= aimSpeedCoefficient;
                     ai.stateMachine.nextStateModifier -= ModifyNextState;
                     ai.scanState = new EntityStates.SerializableEntityStateType(typeof(Wander)); // this should be fine. all ai uses wander.

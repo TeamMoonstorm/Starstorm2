@@ -1,5 +1,4 @@
-﻿using Assets.Starstorm2.ContentClasses;
-using SS2;
+﻿using SS2;
 using System;
 using UnityEngine.AddressableAssets;
 using UnityEngine;
@@ -13,7 +12,7 @@ namespace SS2.Survivors
 {
     public class Acrid : SS2VanillaSurvivor
     {
-        public override SS2AssetRequest<AssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<AssetCollection>("acAcrid", SS2Bundle.Indev);
+        public override SS2AssetRequest<VanillaSurvivorAssetCollection> assetRequest => SS2Assets.LoadAssetAsync<VanillaSurvivorAssetCollection>("acAcrid", SS2Bundle.Vanilla);
 
         public static DamageAPI.ModdedDamageType ArmorCorrison { get; set; }
 
@@ -75,6 +74,11 @@ namespace SS2.Survivors
             {
                 victimBody.AddTimedBuffAuthority(SS2Content.Buffs.bdAcridArmorCorrison.buffIndex, armorCorrisonDuration);
             }
+        }
+
+        public override void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.AddContentFromAssetCollection(assetCollection);
         }
 
         public override bool IsAvailable(ContentPack contentPack)

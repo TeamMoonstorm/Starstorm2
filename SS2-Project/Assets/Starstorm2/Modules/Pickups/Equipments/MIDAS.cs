@@ -11,7 +11,7 @@ namespace SS2.Equipments
     {
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acMIDAS", SS2Bundle.Equipments);
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, ConfigDescOverride = "Health percentage sacrificed (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Health percentage sacrificed (1 = 100%)")]
         [FormatToken("SS2_EQUIP_MIDAS_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float healthPercentage = 0.5f;
 
