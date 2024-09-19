@@ -115,10 +115,10 @@ namespace SS2
         internal SS2Content()
         {
             ContentManager.collectContentPackProviders += AddSelf;
-            SS2Assets.OnSS2AssetsInitialized += () =>
+            SS2Assets.assetsAvailability.CallWhenAvailable(() =>
             {
                 _parallelPreLoadDispatchers.Add(AddSS2ExpansionDef);
-            };
+            });
         }
 
         static SS2Content()
@@ -198,6 +198,11 @@ namespace SS2
                 () =>
                 {
                     ContentUtil.PopulateTypeFields(typeof(Equipments), SS2ContentPack.equipmentDefs);
+                    return null;
+                },
+                () =>
+                {
+                    ContentUtil.PopulateTypeFields(typeof(Elites), SS2ContentPack.eliteDefs);
                     return null;
                 },
                 () =>
@@ -614,6 +619,8 @@ namespace SS2
             public static BuffDef bdPyroManiac;
 
             public static BuffDef bdPyroJet;
+
+            public static BuffDef bdOil;
         }
 
         public static class Elites

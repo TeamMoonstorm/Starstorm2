@@ -48,7 +48,11 @@
     * Storms have updated visuals, and a new surprise!
     * An early version of the 0.7 Storm rework is available as a config option (disabled by default).
     * Empyrean event removed - Empyrean elites now are integrated into late-loop director spawns.
-    * Nemesis Invaders now have Adaptive Armor, like Mithrix or Alloy Worship Unit
+    * Empyreans now select their Elite traits from a whitelist, which can be found in the config options.
+    * Empyrean monsters no longer have Adaptive Armor
+    * Empyrean monsters now ignore the level cap of 99.
+    * Nemesis Invaders now have Adaptive Armor, like Mithrix.
+    * Nemesis invaders now ignore the standard level cap of 99.
     * Nemesis invaders now spawn at a minimum level of 24, and always have at least ~25 items. Don't fight them if you aren't prepared!
     * Nemesis invaders spawn at the beginning of the stage, every three stages
 * Executioner
@@ -56,12 +60,10 @@
 * Nemesis Commando
     * Utility no longer goes as far/fast, but now starts with 2 stocks. This should help create a finer sense of control while weaving in and out of combat.
     * Alt Special now stuns on hit.
-    * When selected as a survivor, now drops from a drop pod.
 * Nemesis Mercenary
     * Increased Alt Utility damage (300% -> 600%).
     * Reduced Alt Utility speed.
     * Reduced Special damage (1500% -> 1200%).
-    * When selected as a survivor, now drops from a drop pod.
 * Other
     * Many performance improvements
     * Reduced file size
@@ -92,7 +94,8 @@
     * Fixed friend's cooldown reduction not properly scaling with attackspeed.
     * Fixed missing logbook entry.
 * Other
-    * Increased visibility of Mysterious Cuffs
+    * Increased visibility of Mysterious Cuffs.
+    * Adjusted model / texture of Captain and Huntress Grand Mastery skins.
 
 ### 0.6.6
 * Events

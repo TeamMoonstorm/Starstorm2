@@ -9,6 +9,8 @@ using EntityStates;
 using EntityStates.Events;
 using UnityEngine.Events;
 using static MSU.GameplayEventTextController;
+using MSU;
+
 namespace SS2.Components
 {
     public class StormController : NetworkBehaviour
@@ -30,18 +32,24 @@ namespace SS2.Components
             // souls soon.............
 
             StormController.dropTable = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<PickupDropTable>("RoR2/Base/Chest1/dtChest1.asset").WaitForCompletion();
-            Stage.onServerStageBegin += OnServerStageBegin;
+            Stage.onStageStartGlobal += OnStageStartGlobal;
         }
 
-        private static void OnServerStageBegin(Stage stage)
+        private static void OnStageStartGlobal(Stage stage)
         {
-            if(stage.sceneDef.sceneType == SceneType.Stage && TeleporterInteraction.instance) // this should cover every stage we want storms on? im pretty sure
+            if(NetworkServer.active && stage.sceneDef.sceneType == SceneType.Stage && TeleporterInteraction.instance) // this should cover every stage we want storms on? im pretty sure
             {
                 chargeRng.ResetSeed(Run.instance.treasureRng.nextUlong);
                 mobChargeRng.ResetSeed(Run.instance.treasureRng.nextUlong);
                 treasureRng.ResetSeed(Run.instance.treasureRng.nextUlong);
 
+                //FIXME: Events should only be spawned via the GameplayEventManager Spawn method! -N
                 GameObject stormController = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("StormController", SS2Bundle.Events));
+
+                var evt = stormController.GetComponent<GameplayEvent>();
+                evt.doNotAnnounceEnd = true;
+                evt.doNotAnnounceStart = true;
+
                 NetworkServer.Spawn(stormController);
             }
    
@@ -59,6 +67,11 @@ namespace SS2.Components
             if(!stormController)
             {
                 stormController = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("StormController", SS2Bundle.Events)).GetComponent<StormController>();
+
+                var evt = stormController.GetComponent<GameplayEvent>();
+                evt.doNotAnnounceEnd = true;
+                evt.doNotAnnounceStart = true;
+
                 NetworkServer.Spawn(stormController.gameObject);              
             }
 
@@ -238,7 +251,7 @@ namespace SS2.Components
             float cloudHeight = 100f;
             foreach(StormVFX vfx in this.eventVFX)
             {
-                if((long)DirectorAPI.GetStageEnumFromSceneDef(Stage.instance.sceneDef) == vfx.stageEnum)
+                if ((long)DirectorAPI.GetStageEnumFromSceneDef(SceneCatalog.GetSceneDefForCurrentScene()) == vfx.stageEnum)
                 {
                     effectPrefab = vfx.effectPrefab;
                     cloudHeight = vfx.cloudHeight;

@@ -1,5 +1,6 @@
 using MSU;
 using RoR2;
+using System.Collections;
 using UnityEngine;
 
 namespace SS2
@@ -9,15 +10,17 @@ namespace SS2
     {
         public string survivorDefAddress;
 
-        public ParallelMultiStartCoroutine CreateCoroutineForVanillaSkinDefInitialization()
+        public IEnumerator InitializeSkinDefs()
         {
             var vanillaSkinDefs = this.FindAssets<VanillaSkinDef>();
-            ParallelMultiStartCoroutine coroutine = new ParallelMultiStartCoroutine();
-            foreach(VanillaSkinDef skinDef in vanillaSkinDefs)
+            foreach(var skinDef in vanillaSkinDefs)
             {
-                coroutine.Add(skinDef.Initialize);
+                var routine = skinDef.Initialize();
+                while(!routine.IsDone())
+                {
+                    yield return null;
+                }
             }
-            return coroutine;
         }
     }
 }

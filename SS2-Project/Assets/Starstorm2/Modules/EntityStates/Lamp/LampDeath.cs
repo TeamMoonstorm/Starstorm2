@@ -33,7 +33,7 @@ namespace EntityStates.Lamp
                 //EffectManager.
             isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
             var effect = isBlue ? deathVFXblue : deathVFX;
-            EffectManager.SimpleEffect(effect, muzzle.position, muzzle.rotation, true);
+            EffectManager.SimpleEffect(effect, muzzle.position, muzzle.rotation, false);
         }
 
         public void DestroyLamp()

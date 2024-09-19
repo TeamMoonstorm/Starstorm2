@@ -41,7 +41,10 @@ namespace SS2
 
     public static class SS2Assets
     {
+
         private const string ASSET_BUNDLE_FOLDER_NAME = "assetbundles";
+        //This just contains the loading screen sprites, its purely for the loading screen and its blacklisted from the enum system
+        private const string LOADING_SCREEN_SPRITES = "ss2loadingscreensprites"; 
         private const string MAIN = "ss2main";
         private const string BASE = "ss2base";
         private const string ARTIFACTS = "ss2artifacts";
@@ -65,19 +68,7 @@ namespace SS2
         private static Dictionary<SS2Bundle, AssetBundle> _assetBundles = new Dictionary<SS2Bundle, AssetBundle>();
         private static AssetBundle[] _streamedSceneBundles = Array.Empty<AssetBundle>();
 
-        public static event Action OnSS2AssetsInitialized
-        {
-            add
-            {
-                _onSS2AssetsInitialized -= value;
-                _onSS2AssetsInitialized += value;
-            }
-            remove
-            {
-                _onSS2AssetsInitialized -= value;
-            }
-        }
-        private static Action _onSS2AssetsInitialized;
+        public static ResourceAvailability assetsAvailability;
 
         public static AssetBundle GetAssetBundle(SS2Bundle bundle)
         {
@@ -134,6 +125,11 @@ namespace SS2
             return new SS2AssetRequest<TAsset>(bundle);
         }
 
+        internal static AssetBundle GetLoadingScreenBundle()
+        {
+            return AssetBundle.LoadFromFile(Path.Combine(AssetBundleFolderPath, LOADING_SCREEN_SPRITES));
+        }
+
         internal static IEnumerator Initialize()
         {
             SS2Log.Info($"Initializing Assets...");
@@ -148,7 +144,7 @@ namespace SS2
             helper.Start();
             while (!helper.IsDone()) yield return null;
 
-            _onSS2AssetsInitialized?.Invoke();
+            assetsAvailability.MakeAvailable();
             yield break;
         }
 
@@ -297,7 +293,7 @@ namespace SS2
 
         private static string[] GetAssetBundlePaths()
         {
-            return Directory.GetFiles(AssetBundleFolderPath).Where(filePath => !filePath.EndsWith(".manifest")).ToArray();
+            return Directory.GetFiles(AssetBundleFolderPath).Where(filePath => !filePath.EndsWith(".manifest") && Path.GetFileName(filePath) != LOADING_SCREEN_SPRITES).ToArray();
         }
 
 #if DEBUG

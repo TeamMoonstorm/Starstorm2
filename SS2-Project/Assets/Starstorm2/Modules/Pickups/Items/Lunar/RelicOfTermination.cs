@@ -77,7 +77,7 @@ namespace SS2.Items
             deathHalo = AssetCollection.FindAsset<GameObject>("TerminationDeathHalo");
             spawnRock1VFX = AssetCollection.FindAsset<GameObject>("TerminationDebris1");
             spawnRock2VFX = AssetCollection.FindAsset<GameObject>("TerminationDebris2");
-            globalMarkEffectTwo = AssetCollection.FindAsset<GameObject>("TerminationPositionInidcator");
+            globalMarkEffectTwo = AssetCollection.FindAsset<GameObject>("TerminationPositionIndicator");
 
             Material overlayMaterial = AssetCollection.FindAsset<Material>("matTerminationOverlay");
             BuffDef buffCooldown = AssetCollection.FindAsset<BuffDef>("BuffTerminationCooldown");
