@@ -82,7 +82,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   beginOnStart: 0
-  doNotAnnounceEnding: 0
+  _announcementDuration: 6
+  _eventDuration: -1
   _eventStartToken: 
   _eventStartSfx: {fileID: 0}
   _eventEndToken: 
@@ -205,9 +206,9 @@ MonoBehaviour:
     effectPrefab: {fileID: 4585279034334340887, guid: 3fe9eb9289526064eb1df6ddec1f2042,
       type: 3}
     cloudHeight: 150
-  - stageEnum: 131072
+  - stageEnum: 0
     stageSerde:
-      Value: 131072
+      Value: 0
     customStageName: 
     effectPrefab: {fileID: 1137181066004254477, guid: f30be4c3160479549b905e2e49393224,
       type: 3}

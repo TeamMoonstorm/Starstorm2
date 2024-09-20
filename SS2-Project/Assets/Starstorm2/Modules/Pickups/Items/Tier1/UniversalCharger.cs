@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using SS2.Components;
 namespace SS2.Items
 {
     public sealed class UniversalCharger : SS2Item, IContentPackModifier
@@ -62,27 +63,11 @@ namespace SS2.Items
             private float cooldownTimer;
             private void OnEnable()
             {
-                body.onSkillActivatedServer += RemoveBuff;
                 body.onSkillActivatedAuthority += TryRefresh;
             }
             private void OnDisable()
             {
-                body.onSkillActivatedServer -= RemoveBuff;
                 body.onSkillActivatedAuthority -= TryRefresh;
-                if (body.HasBuff(SS2Content.Buffs.BuffUniversalCharger))
-                    body.RemoveBuff(SS2Content.Buffs.BuffUniversalCharger);
-            }
-
-            private void RemoveBuff(GenericSkill genericSkill)
-            {
-                // lazy, giga jank. but server needs to see it for skill icon overlay to work
-                // ^ shouod just be some network message but idc
-                if (CanSkillRefresh(genericSkill) && body.HasBuff(SS2Content.Buffs.BuffUniversalCharger))
-                {
-                    body.RemoveBuff(SS2Content.Buffs.BuffUniversalCharger);
-                    float cooldownReduction = Util.ConvertAmplificationPercentageIntoReductionPercentage(cooldownReductionPerStack * (stack - 1)) / 100f;
-                    this.cooldownTimer = baseCooldown * (1 - cooldownReduction); // XDDDDDDDDDDDDDDDDD fuck im stupid
-                }
             }
 
             private void TryRefresh(GenericSkill genericSkill)
@@ -98,17 +83,18 @@ namespace SS2.Items
                     EffectManager.SpawnEffect(procEffect, effectData, true);
                     float cooldownReduction = Util.ConvertAmplificationPercentageIntoReductionPercentage(cooldownReductionPerStack * (stack - 1)) / 100f;
                     this.cooldownTimer = baseCooldown * (1 - cooldownReduction);
+                    SkillRefreshPanel.SetActive(false, body.skillLocator.FindSkillSlot(genericSkill));
+
                 }
             }
 
             private void FixedUpdate()
             {
                 this.cooldownTimer -= Time.fixedDeltaTime;
-                // buff is just for server jank
-                if (!NetworkServer.active) return;
-                if (!body.HasBuff(SS2Content.Buffs.BuffUniversalCharger) && this.cooldownTimer <= 0)
+
+                if(this.cooldownTimer <= 0)
                 {
-                    body.AddBuff(SS2Content.Buffs.BuffUniversalCharger);
+                    SkillRefreshPanel.SetActive(true, SkillSlot.None);
                 }
             }
             //dont want to consume it on skills with no cooldown. or on primaries because loader primary has a cooldown XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD

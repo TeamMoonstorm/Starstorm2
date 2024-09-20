@@ -451,6 +451,11 @@ namespace SS2.Items
 
             private void Update()
             {
+                if(!hud)
+                {
+                    Destroy(this);
+                    return;
+                }
                 foreach (EquipmentIconButEpic epic in icons)
                     epic.targetInventory = hud.targetMaster?.inventory;
             }
