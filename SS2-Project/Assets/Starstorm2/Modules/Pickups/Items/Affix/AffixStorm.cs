@@ -40,7 +40,7 @@ namespace SS2.Items
                     // FOR TESTING, JUST TO MAKE THEM STRONGER. MAKE A REAL EFFECT LATER(?)
                     body.inventory.GiveItem(SS2Content.Items.BoostMovespeed, 35);
                     body.inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 20);
-                    if(Storm.ReworkedStorm.value) // only bonus HP on new storms
+                    if(!Storm.ReworkedStorm.value) // only bonus HP on new storms
                         body.inventory.GiveItem(RoR2Content.Items.BoostHp, 30);
                     body.inventory.GiveItem(RoR2Content.Items.BoostAttackSpeed, 15);
                 }

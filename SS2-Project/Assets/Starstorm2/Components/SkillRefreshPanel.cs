@@ -35,22 +35,30 @@ namespace SS2.Components
 
         public void SetActiveSingle(bool shouldBeActive, SkillSlot skillSlot)
         {
-            this.panel.gameObject.SetActive(shouldBeActive);
-            if (panelActive != shouldBeActive)
+            if(skillIcon && CanSkillRefresh(skillIcon.targetSkill))
             {
-                this.panelActive = shouldBeActive;
-
-                if(this.skillIcon && this.skillIcon.targetSkillSlot == skillSlot)
+                this.panel.gameObject.SetActive(shouldBeActive);
+                if (panelActive != shouldBeActive)
                 {
-                    if (panelActive)
-                        Util.PlaySound("Play_UI_cooldownRefresh", RoR2Application.instance.gameObject);
-                    else
+                    this.panelActive = shouldBeActive;
+
+                    if (this.skillIcon.targetSkillSlot == skillSlot)
                     {
-                        // flash when charger gets consumed
-                        this.skillIcon.flashPanelObject.SetActive(true);
+                        if (panelActive)
+                            Util.PlaySound("Play_UI_cooldownRefresh", RoR2Application.instance.gameObject);
+                        else
+                        {
+                            // flash when charger gets consumed
+                            this.skillIcon.flashPanelObject.SetActive(true);
+                        }
                     }
-                }              
-            }
+                }
+            }           
+        }
+
+        private bool CanSkillRefresh(GenericSkill skill)
+        {
+            return skill && skill.baseRechargeInterval > 0 && skill.skillDef.stockToConsume > 0 && skill.characterBody.skillLocator.primary != skill;
         }
     }
 }

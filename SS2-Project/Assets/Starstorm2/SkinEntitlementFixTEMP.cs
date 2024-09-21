@@ -21,7 +21,11 @@ namespace SS2
                     for (int j = 0; j < skins.Length; j++)
                     {
                         if (skins[j].unlockableDef)
+                        {
                             skins[j].unlockableDef.requiredExpansion = null;
+                            UnlockableCatalog.unlockableToExpansionTable.Remove(skins[j].unlockableDef.index);
+                        }
+                            
                     }
                 }
                 

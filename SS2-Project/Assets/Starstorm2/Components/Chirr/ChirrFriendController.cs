@@ -169,9 +169,9 @@ namespace SS2.Components
             {
 				body.teamComponent.teamIndex = newTeam;
 				body.healthComponent.Networkhealth = body.healthComponent.fullCombinedHealth * 0.5f;
-				//Util.CleanseBody(body, true, false, false, true, true, false); // lol
+				Util.CleanseBody(body, false, false, false, true, true, false); // lol
 
-				// manual cleanse cuz cleansebody only works on timed buffs
+				// manual cleanse cuz debuffs cleansebody only works on timed buffs
 				BuffIndex buffIndex = (BuffIndex)0;
 				BuffIndex buffCount = (BuffIndex)BuffCatalog.buffCount;
 				while (buffIndex < buffCount)

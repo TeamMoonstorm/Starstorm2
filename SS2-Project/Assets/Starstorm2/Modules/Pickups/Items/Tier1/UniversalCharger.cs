@@ -72,7 +72,7 @@ namespace SS2.Items
 
             private void TryRefresh(GenericSkill genericSkill)
             {
-                if (CanSkillRefresh(genericSkill))
+                if (CanSkillRefresh(genericSkill) && this.cooldownTimer <= 0)
                 {
                     genericSkill.ApplyAmmoPack();
                     EffectData effectData = new EffectData
@@ -100,7 +100,7 @@ namespace SS2.Items
             //dont want to consume it on skills with no cooldown. or on primaries because loader primary has a cooldown XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
             private bool CanSkillRefresh(GenericSkill skill)
             {
-                return skill && skill.baseRechargeInterval > 0 && skill.skillDef.stockToConsume > 0 && skill.characterBody.skillLocator.primary != skill && this.cooldownTimer <= 0;
+                return skill && skill.baseRechargeInterval > 0 && skill.skillDef.stockToConsume > 0 && skill.characterBody.skillLocator.primary != skill;
             }
 
 
