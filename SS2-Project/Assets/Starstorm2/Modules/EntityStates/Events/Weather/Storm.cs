@@ -24,7 +24,7 @@ namespace EntityStates.Events
         private static int bossEliteLevel = 4;
         private static int eliteLevel = 3;
         private static float eliteChancePerExtraLevelCoefficient = 2f;
-        private static float eliteChancePerSecond = 3f;
+        private static float eliteChancePerSecond = 2f;
         private static float baseEliteChance = 10f;
 
         private float charge;
@@ -177,6 +177,7 @@ namespace EntityStates.Events
             {
                 eliteChanceStopwatch += UnityEngine.Random.Range(minEliteChanceInterval, maxEliteChanceInterval);
                 eliteChance += eliteChancePerSecond * eliteChanceTimer;
+                if (eliteChance > 100) eliteChance = 100;
                 eliteChanceTimer = 0;
             }
             if (oldStorm)

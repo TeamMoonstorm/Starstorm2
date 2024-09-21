@@ -166,7 +166,7 @@ namespace SS2.Components
             }
             else
             {
-                SS2Log.Error("CloneInputBank: Missing InputBanks! inputBank: " + this.inputBank + " | ownerInputBank: " + this.ownerInputBank);
+                //SS2Log.Error("CloneInputBank: Missing InputBanks! inputBank: " + this.inputBank + " | ownerInputBank: " + this.ownerInputBank);
             }
             
             if(copyMovements)

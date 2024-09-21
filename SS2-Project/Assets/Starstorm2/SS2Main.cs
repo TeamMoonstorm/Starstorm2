@@ -6,7 +6,6 @@ using R2API.Networking;
 using UnityEngine;
 using MSU;
 using System;
-
 namespace SS2
 {
     #region R2API
@@ -57,8 +56,10 @@ namespace SS2
 
             //N: i have no idea if SystemInitializer would be too late for this, so it stays here for now.
             //R2API.Networking.NetworkingAPI.RegisterMessageType<ScriptableObjects.NemesisSpawnCard.SyncBaseStats>();
-
+            
         }
+
+
 
         private void Start()
         {

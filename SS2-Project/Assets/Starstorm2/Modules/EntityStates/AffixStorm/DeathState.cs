@@ -4,11 +4,15 @@ using UnityEngine.Networking;
 using SS2;
 using System.Collections.Generic;
 using RoR2.Orbs;
+using Stage = R2API.DirectorAPI.Stage;
 namespace EntityStates.AffixStorm
 {
 	public class DeathState : BaseState
 	{
 		public static GameObject spawnEffectPrefab;
+		public static GameObject spawnBrightEffectPrefab;
+
+		
 
 		private static float baseDuration = 0.3f;
 
@@ -30,6 +34,8 @@ namespace EntityStates.AffixStorm
 
 		private TeamIndex killerTeamIndex;
 		private GameObject killer;
+
+		
 		public override void OnEnter()
 		{
 			base.OnEnter();
@@ -40,7 +46,9 @@ namespace EntityStates.AffixStorm
 			Util.PlayAttackSpeedSound("Play_golem_laser_fire", base.gameObject, 2f);
 			if (DeathState.spawnEffectPrefab)
 			{
-				EffectManager.SpawnEffect(DeathState.spawnEffectPrefab, new EffectData
+				GameObject effect = DeathState.spawnEffectPrefab;
+				if (Storm.brightStages.Contains(R2API.DirectorAPI.GetStageEnumFromSceneDef(RoR2.Stage.instance.sceneDef))) effect = spawnBrightEffectPrefab;
+				EffectManager.SpawnEffect(effect, new EffectData
 				{
 					origin = base.characterBody.footPosition,
 					scale = radius,

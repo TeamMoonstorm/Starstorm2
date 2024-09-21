@@ -13,7 +13,9 @@ namespace EntityStates.AffixStorm
 			//base.PlayAnimation("Body", "Idle");
 			if (SpawnState.spawnEffectPrefab)
 			{
-				EffectManager.SpawnEffect(SpawnState.spawnEffectPrefab, new EffectData
+				GameObject effect = SpawnState.spawnEffectPrefab;
+				if (Storm.brightStages.Contains(R2API.DirectorAPI.GetStageEnumFromSceneDef(RoR2.Stage.instance.sceneDef))) effect = spawnBrightEffectPrefab;
+				EffectManager.SpawnEffect(effect, new EffectData
 				{
 					origin = base.characterBody.corePosition,
 					scale = base.characterBody.radius,
@@ -62,6 +64,7 @@ namespace EntityStates.AffixStorm
         }
 		public static float duration = 0.5f;
 
-        public static GameObject spawnEffectPrefab;
+		public static GameObject spawnBrightEffectPrefab;
+		public static GameObject spawnEffectPrefab;
 	}
 }
