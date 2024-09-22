@@ -149,16 +149,12 @@ namespace SS2.Equipments
         private bool wasHitStun;
         private bool wasFrozen;
 
-        private void Start()
+        protected override void Awake()
         {
+            base.Awake();
             this.setStateOnHurt = base.GetComponent<SetStateOnHurt>();           
             ogSubtitle = characterBody.subtitleNameToken;
             model = characterBody.modelLocator.modelTransform.GetComponent<CharacterModel>();           
-        }
-
-        private void AddEliteBuffs()
-        {
-
         }
 
         protected override void OnFirstStackGained()
@@ -231,10 +227,10 @@ namespace SS2.Equipments
                 }
             }
 
-            if (Util.CheckRoll(20f))
+            if (Util.CheckRoll(8f))
             {
                 // only pull an elite the empyrean has.
-                EliteDef[] eliteDefs = EliteCatalog.eliteDefs.Where(x => x.eliteEquipmentDef && characterBody.HasBuff(x.eliteEquipmentDef.passiveBuffDef)).ToArray();
+                EliteDef[] eliteDefs = EliteCatalog.eliteDefs.Where(x => x.eliteEquipmentDef && x.eliteEquipmentDef != SS2Content.Equipments.AffixEmpyrean && characterBody.HasBuff(x.eliteEquipmentDef.passiveBuffDef)).ToArray();
                 int eliteIndex = Mathf.FloorToInt(UnityEngine.Random.Range(0, eliteDefs.Length));
 
                 EquipmentIndex equipmentIndex = eliteDefs[eliteIndex].eliteEquipmentDef.equipmentIndex;

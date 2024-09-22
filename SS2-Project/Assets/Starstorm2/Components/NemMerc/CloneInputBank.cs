@@ -179,6 +179,19 @@ namespace SS2.Components
             {
                 this.inputBank.activateEquipment.PushState(this.ownerInputBank.activateEquipment.down);
             }
+
+            if(this.body)
+            {
+                Vector3 huh = body.transform.position;
+                if(float.IsNaN(huh.x) || float.IsNaN(huh.y) || float.IsNaN(huh.z))
+                {
+                    Chat.AddMessage("why is your clone infinitely far away. how did you do that. please report this");
+                    SS2Log.Fatal($"Clone is fucked. {huh}");
+                    Destroy(body.gameObject);
+                    Destroy(body.masterObject);
+                    return;
+                }
+            }
         }
 
         public Vector3 HandleAimDirection()

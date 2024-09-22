@@ -82,7 +82,7 @@ namespace EntityStates.Chirr
 			Vector3 victimFootPosition = aimOrigin;
 			if (this.grabController.IsGrabbing()) victimFootPosition = GetBetterFootPosition();
 			float flightDuration = Trajectory.CalculateFlightDuration(victimFootPosition.y, hitPoint.y, 0f, Physics.gravity.y + extraGravity);
-
+			if (flightDuration <= .2f) flightDuration = .2f; // hopefully final crash fix
 			Vector3 hBetween = hitPoint - aimOrigin;
 			hBetween.y = 0;
 			float hDistance = hBetween.magnitude;

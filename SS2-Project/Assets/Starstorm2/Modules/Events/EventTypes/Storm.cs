@@ -23,6 +23,14 @@ namespace SS2
             //};
         }).DoConfigure();
 
+        public static ConfiguredFloat EffectIntensity = SS2Config.ConfigFactory.MakeConfiguredFloat(100, b =>
+        {
+            b.section = "Events";
+            b.key = "Storm Effect Intensity";
+            b.description = "Changes the visual intensity of storms, from 0-100.";
+            b.configFile = SS2Config.ConfigMain;
+        }).DoConfigure();
+
         public static List<Stage> brightStages = new List<Stage> { Stage.RallypointDelta, Stage.SiphonedForest }; // should probs just check for blizzard
         public static IEnumerator Init()
         {

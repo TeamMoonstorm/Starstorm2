@@ -5,6 +5,7 @@ namespace SS2.Unlocks.NemCommando
 {  
     public sealed class NemCommandoBeamAchievement : BaseAchievement
     {
+        private BodyIndex bodyIndex;
         public override void OnInstall()
         {
             base.OnInstall();
@@ -19,12 +20,13 @@ namespace SS2.Unlocks.NemCommando
 
         public override BodyIndex LookUpRequiredBodyIndex()
         {
-            return BodyCatalog.FindBodyIndex("NemCommandoBody");
+            bodyIndex = BodyCatalog.FindBodyIndex("NemCommandoBody");
+            return bodyIndex;
         }
 
         private void CheckBleedChance()
         {
-            if (localUser != null && localUser.cachedBody && localUser.cachedBody.bleedChance >= 100f)
+            if (localUser != null && localUser.cachedBody && localUser.cachedBody.bodyIndex == bodyIndex && localUser.cachedBody.bleedChance >= 100f)
             {
                 Grant();
             }

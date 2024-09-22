@@ -48,10 +48,8 @@ namespace EntityStates.Nemmando
             duration = baseDuration / attackSpeedStat;
             hitCount = Mathf.RoundToInt(Util.Remap(charge, 0f, 1f, minHits, maxHits));
 
-            SS2Log.Debug("hit count inital: " + hitCount + "| " + characterBody.attackSpeed);
             int hitCountModified = (int)(hitCount * ((.5f * characterBody.attackSpeed) + .5f));
             hitCount = Mathf.Max(hitCount, hitCountModified);
-            SS2Log.Debug("hit count after: " + hitCount);
 
             damageCoefficient = maxDamageCoefficient;
             radius = maxRadius;
@@ -68,11 +66,13 @@ namespace EntityStates.Nemmando
                 if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY" || skinNameToken.Contains("YELLOW"))
                 {
                     effectPrefab = SS2Assets.LoadAsset<GameObject>("DecisiveStrikeSlashYellow", SS2Bundle.NemCommando);
+                    hitEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoImpactSlashEffectYellow", SS2Bundle.NemCommando);
                 }
                 //Blue
                 if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO" || skinNameToken.Contains("BLUE"))
                 {
                     effectPrefab = SS2Assets.LoadAsset<GameObject>("DecisiveStrikeSlashBlue", SS2Bundle.NemCommando);
+                    hitEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoImpactSlashEffectBlue", SS2Bundle.NemCommando);
                 }
             }
             //Red

@@ -23,11 +23,11 @@ MonoBehaviour:
     overrideState: 1
     value: 0.4
   fogZero:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 0.036
   fogOne:
     overrideState: 1
-    value: 0.1
+    value: 0.231
   fogHeightStart:
     overrideState: 1
     value: 35
@@ -39,10 +39,10 @@ MonoBehaviour:
     value: 3.2
   fogColorStart:
     overrideState: 1
-    value: {r: 0.258, g: 0.272, b: 0.278, a: 0.53333336}
+    value: {r: 0.258, g: 0.272, b: 0.278, a: 0.92941177}
   fogColorMid:
     overrideState: 1
-    value: {r: 0.20776966, g: 0.2735849, b: 0.21671748, a: 0.6431373}
+    value: {r: 0.20776966, g: 0.2735849, b: 0.21671748, a: 1}
   fogColorEnd:
     overrideState: 1
     value: {r: 0.119128615, g: 0.14150941, b: 0.10346207, a: 1}
@@ -77,7 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 986234029, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: SobelRain
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
