@@ -1,13 +1,6 @@
-﻿using EntityStates;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EntityStates.MulT
+﻿namespace EntityStates.Engineer
 {
-    public class GlueGun : BaseSkillState
+    public class QuantumTranslocator : BaseSkillState
     {
         public float baseDuration = 0.5f;
         private float duration;
@@ -30,6 +23,5 @@ namespace EntityStates.MulT
         public override InterruptPriority GetMinimumInterruptPriority()
         {
             return InterruptPriority.Skill;
+
         }
-    }
-}
