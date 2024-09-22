@@ -7,13 +7,14 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: distortion
-  m_Shader: {fileID: 4800000, guid: 89d4dc9385e64e24fbe9f05ad56bae8c, type: 2}
-  m_ValidKeywords: []
+  m_Name: matDash
+  m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
+  m_ValidKeywords:
+  - USE_CLOUDS
+  - VERTEXCOLOR
   m_InvalidKeywords:
-  - EFFECT_BUMP
-  - _ALPHABLEND_ON
-  - _NORMALMAP
+  - _ALPHATEST_ON
+  - _EMISSION
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -24,7 +25,15 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 0f40f56b468bc18418b04d776895c2f5, type: 3}
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Cloud1Tex:
+        m_Texture: {fileID: 2800000, guid: 7d141824ada450747b17a50e01bef09a, type: 3}
+        m_Scale: {x: 0.21, y: 2}
+        m_Offset: {x: 0, y: 0}
+    - _Cloud2Tex:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -44,11 +53,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MaskTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: d47a1b36b21286e4faa1cdd9092ee28b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -63,52 +68,94 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _RemapTex:
+        m_Texture: {fileID: 2800000, guid: ac03cd838aff4251a3204bb71034f566, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ScrollingNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AlphaBias: 0
+    - _AlphaBoost: 1.8
     - _BlendOp: 0
+    - _Boost: 8.78
     - _BumpScale: 1
+    - _CalcTextureAlphaOn: 0
     - _CameraFadingEnabled: 0
     - _CameraFarFadeDistance: 2
     - _CameraNearFadeDistance: 1
+    - _CloudOffsetOn: 0
+    - _CloudsOn: 1
+    - _ColorMask: 15
     - _ColorMode: 0
     - _Cull: 0
-    - _Cutoff: 0.427
+    - _Cutoff: 0.303
+    - _DepthOffset: 0
     - _DetailNormalMapScale: 1
-    - _DistanceModulationMagnitude: 0.5
-    - _DistanceModulationOn: 0
-    - _DistortionBlend: 1
-    - _DistortionEnabled: 1
-    - _DistortionStrength: 4
-    - _DistortionStrengthScaled: 0.4
-    - _DstBlend: 10
-    - _EmissionEnabled: 0
-    - _FarFadeOneDistance: 200000
-    - _FarFadeZeroDistance: 250000
+    - _DisableRemapOn: 0
+    - _DistortionBlend: 0.5
+    - _DistortionEnabled: 0
+    - _DistortionStrength: 1
+    - _DistortionStrengthScaled: 0
+    - _DstBlend: 1
+    - _EmissionEnabled: 1
+    - _EnableVertexColorDistortion: 0
+    - _ExternalAlpha: 1
+    - _Fade: 1
+    - _FadeCloseDistance: 0.5
+    - _FadeCloseOn: 0
     - _FlipbookMode: 0
+    - _FresnelOn: 0
+    - _FresnelPower: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _InvFade: 0.1
+    - _InternalSimpleBlendMode: 0
+    - _InvFade: 0
     - _LightingEnabled: 0
-    - _Magnitude: 0.05
     - _Metallic: 0
-    - _Mode: 2
-    - _NearFadeOneDistance: 5
-    - _NearFadeZeroDistance: 0
+    - _Mode: 1
+    - _NormalStrength: 0
     - _OcclusionStrength: 1
+    - _OffsetAmount: 0
+    - _OverbrightenScale: 1
     - _Parallax: 0.02
+    - _RampInfo: 0
+    - _SkyboxOnly: 0
+    - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _SoftParticlesEnabled: 0
     - _SoftParticlesFarFadeDistance: 1
     - _SoftParticlesNearFadeDistance: 0
+    - _SpecularExponent: 1
     - _SpecularHighlights: 1
-    - _SrcBlend: 5
+    - _SpecularStrength: 0
+    - _SrcBlend: 1
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
     - _UVSec: 0
-    - _ZWrite: 0
+    - _UseUIAlphaClip: 0
+    - _UseUV1On: 0
+    - _VertexAlphaOn: 0
+    - _VertexColorOn: 1
+    - _VertexOffsetOn: 0
+    - _VertexOffsetStrength: 0
+    - _ZTest: 4
+    - _ZWrite: 1
     m_Colors:
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
+    - _CutoffScroll: {r: 15, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Scroll: {r: 0, g: 0, b: 0, a: 0}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
+    - _TintColor: {r: 1, g: 1, b: 1, a: 1}
+    - _WindVector: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

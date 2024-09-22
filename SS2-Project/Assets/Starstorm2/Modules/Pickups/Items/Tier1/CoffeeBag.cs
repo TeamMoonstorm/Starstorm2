@@ -62,10 +62,8 @@ namespace SS2.Items
             {
                 GameObject bean = UnityEngine.Object.Instantiate<GameObject>(_coffeeBean, report.damageInfo.position, UnityEngine.Random.rotation);
                 TeamFilter teamFilter = bean.GetComponent<TeamFilter>();
-                if (teamFilter)
-                {
-                    teamFilter.teamIndex = report.attackerTeamIndex;
-                }
+                bean.GetComponent<SS2.Components.CoffeeBeanPickup>().ownerBody = report.attackerBody;
+                teamFilter.teamIndex = report.attackerTeamIndex;
                 NetworkServer.Spawn(bean);
             }
         }

@@ -7,14 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: distortion
-  m_Shader: {fileID: 4800000, guid: 89d4dc9385e64e24fbe9f05ad56bae8c, type: 2}
-  m_ValidKeywords: []
+  m_Name: matOmniHitsparkRed
+  m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
+  m_ValidKeywords:
+  - VERTEXCOLOR
   m_InvalidKeywords:
-  - EFFECT_BUMP
-  - _ALPHABLEND_ON
-  - _NORMALMAP
-  m_LightmapFlags: 0
+  - RoR2/Base/Common/VFX/matOmniHitspark1.mat
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -24,7 +23,15 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 0f40f56b468bc18418b04d776895c2f5, type: 3}
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Cloud1Tex:
+        m_Texture: {fileID: 2800000, guid: 7d141824ada450747b17a50e01bef09a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Cloud2Tex:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -40,15 +47,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 2800000, guid: 602c836e3b75772438c3896e2265ac49, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MaskTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: d1d3441ed2427d348a3a760980d3737c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -63,52 +66,56 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _RemapTex:
+        m_Texture: {fileID: 2800000, guid: db9064bd7614bb54aacc4e95082c466b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _BlendOp: 0
+    - _AlphaBias: 0.43
+    - _AlphaBoost: 1.2
+    - _Boost: 4.5
     - _BumpScale: 1
-    - _CameraFadingEnabled: 0
-    - _CameraFarFadeDistance: 2
-    - _CameraNearFadeDistance: 1
-    - _ColorMode: 0
+    - _CalcTextureAlphaOn: 0
+    - _CloudOffsetOn: 0
+    - _CloudsOn: 0
     - _Cull: 0
-    - _Cutoff: 0.427
+    - _Cutoff: 0.5
+    - _DepthOffset: 0
     - _DetailNormalMapScale: 1
-    - _DistanceModulationMagnitude: 0.5
-    - _DistanceModulationOn: 0
-    - _DistortionBlend: 1
-    - _DistortionEnabled: 1
-    - _DistortionStrength: 4
-    - _DistortionStrengthScaled: 0.4
+    - _DisableRemapOn: 0
+    - _DistortionStrength: 0.05
     - _DstBlend: 10
-    - _EmissionEnabled: 0
-    - _FarFadeOneDistance: 200000
-    - _FarFadeZeroDistance: 250000
-    - _FlipbookMode: 0
+    - _ExternalAlpha: 1
+    - _Fade: 1
+    - _FadeCloseDistance: 0.5
+    - _FadeCloseOn: 0
+    - _FresnelOn: 0
+    - _FresnelPower: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _InvFade: 0.1
-    - _LightingEnabled: 0
-    - _Magnitude: 0.05
+    - _InternalSimpleBlendMode: 1
+    - _InvFade: 0
     - _Metallic: 0
-    - _Mode: 2
-    - _NearFadeOneDistance: 5
-    - _NearFadeZeroDistance: 0
+    - _Mode: 0
     - _OcclusionStrength: 1
+    - _OffsetAmount: 0
     - _Parallax: 0.02
+    - _SkyboxOnly: 0
     - _SmoothnessTextureChannel: 0
-    - _SoftParticlesEnabled: 0
-    - _SoftParticlesFarFadeDistance: 1
-    - _SoftParticlesNearFadeDistance: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 5
     - _UVSec: 0
-    - _ZWrite: 0
+    - _UseUV1On: 0
+    - _VertexAlphaOn: 0
+    - _VertexColorOn: 1
+    - _VertexOffsetOn: 0
+    - _ZTest: 4
+    - _ZWrite: 1
     m_Colors:
-    - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
-    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
+    - _CutoffScroll: {r: 0, g: -10, b: 0, a: -8}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _TintColor: {r: 0.8867924, g: 0.012548926, b: 0.012548926, a: 1}
   m_BuildTextureStacks: []
