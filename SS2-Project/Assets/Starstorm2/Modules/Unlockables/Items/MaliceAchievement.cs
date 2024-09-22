@@ -30,7 +30,11 @@ namespace SS2.Unlocks.Pickups
                      * - J
                     */
 
-                    if (/*currentRun.selectedDifficulty == Typhoon.DifficultyDef.DifficultyIndex &&*/ sceneDefForCurrentScene.stageOrder == 3)
+                    //★- im just making it typhoon diff coef or higher for support with post-ethereal diffs
+
+                    DifficultyIndex difficultyIndex = Run.instance.ruleBook.FindDifficulty();
+                    DifficultyDef runDifficulty = DifficultyCatalog.GetDifficultyDef(difficultyIndex);
+                    if (runDifficulty.countsAsHardMode && runDifficulty.scalingValue >= 3.5f && sceneDefForCurrentScene.stageOrder == 3)
                     {
                         Grant();
                     }

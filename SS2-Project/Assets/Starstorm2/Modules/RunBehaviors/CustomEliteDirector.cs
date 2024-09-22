@@ -51,7 +51,6 @@ namespace SS2.Components
         public float minMinionCreditPerTick = 0.2f;
         public float maxMinionCreditPerTick = 4.6f;
         public float followerCost = 28f;
-        private bool followerStage = false;
         public float minionCooldown = 18f;
         private bool enableMinionDirector = true;
         private float minionCooldownTimer = 0f;
@@ -71,13 +70,13 @@ namespace SS2.Components
         private EtherealBehavior ethInstance;
 
         [Header("Empyrean-Related")]
-        private float empyreanEliteCost = 2000f;
-        private float empyreanMultiplier = 30f;
+        private float empyreanEliteCost = 420f;
+        private float empyreanMultiplier = 22.5f;
         public bool empyreanActive = false;
 
         [Header("Ultra-Related")]
-        private float ultraEliteCost = 320f;
-        private float ultraMultiplier = 35f;
+        private float ultraEliteCost = 550f;
+        private float ultraMultiplier = 30f;
         
 
         public void Awake()
@@ -107,17 +106,14 @@ namespace SS2.Components
 
         public void Start()
         {
-            Stage.onServerStageBegin += Stage_onServerStageBegin;
+            //Stage.onServerStageBegin += Stage_onServerStageBegin;
         }
 
         // this sucks
         private void Stage_onServerStageBegin(Stage stage)
         {
             DirectorAPI.Stage stageEnum = DirectorAPI.GetStageEnumFromSceneDef(stage.sceneDef);
-            if (stageEnum == DirectorAPI.Stage.WetlandAspect || stageEnum == DirectorAPI.Stage.SunderedGrove || stageEnum == DirectorAPI.Stage.SkyMeadow)
-            {
-                followerStage = true;
-            }
+            // and does nothing atm.
         }
 
         public void OnDestroy()
@@ -162,6 +158,9 @@ namespace SS2.Components
             if (cb == null)
                 return;
             //cardCosts.TryGetValue(cm.bodyPrefab, out float baseCost);
+
+            if (spawnResult.spawnRequest.spawnCard.eliteRules != SpawnCard.EliteRules.Default)
+                return;
 
             float baseCost = spawnResult.spawnRequest.spawnCard.directorCreditCost;
             float totalCost = baseCost;
@@ -244,7 +243,7 @@ namespace SS2.Components
             inventory.GiveItem(RoR2Content.Items.BoostHp, 500);
             inventory.GiveItem(SS2Content.Items.BoostMovespeed, 35);
             inventory.GiveItem(SS2Content.Items.BoostCooldowns, 50);
-            inventory.GiveItem(RoR2Content.Items.BoostDamage, 80);
+            inventory.GiveItem(RoR2Content.Items.BoostDamage, 60);
             //inventory.GiveItem(RoR2Content.Items.TeleportWhenOob); //REALLY DON'T LIKE THIS ONE. knocking enemies off the stage is a RIGHT. going to make a specific elite to replace this functionality.
             //inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
             inventory.SetEquipmentIndex(SS2Content.Equipments.AffixEmpyrean.equipmentIndex);
@@ -260,8 +259,8 @@ namespace SS2.Components
             DeathRewards rewards = body.GetComponent<DeathRewards>();
             if (rewards)
             {
-                rewards.expReward *= 12;
-                rewards.goldReward *= 12;
+                rewards.expReward *= 15;
+                rewards.goldReward *= 15;
             }
 
             empyreanActive = true;
@@ -291,10 +290,6 @@ namespace SS2.Components
                 rewards.expReward *= (uint)(10 + (5 * ethInstance.etherealsCompleted));
                 rewards.goldReward *= (uint)(10 + (5 * ethInstance.etherealsCompleted));
             }
-
-            
-
-
         }
 
         public void MakeEthereal(CharacterBody body)

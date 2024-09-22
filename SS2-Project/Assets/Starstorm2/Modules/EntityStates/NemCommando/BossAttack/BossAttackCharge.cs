@@ -54,12 +54,12 @@ namespace EntityStates.Nemmando
                 if (skinNameToken != "SS2_SKIN_NEMCOMMANDO_DEFAULT" && skinNameToken != "SS2_SKIN_NEMCOMMANDO_GRANDMASTERY")
                 {
                     //Yellow
-                    if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
+                    if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY" || skinNameToken.Contains("YELLOW"))
                     {
                         chargeEffect = SS2Assets.LoadAsset<GameObject>("DecisiveStrikeChargeYellow", SS2Bundle.NemCommando);
                     }
                     //Blue
-                    if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO")
+                    if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO" || skinNameToken.Contains("BLUE"))
                     {
                         chargeEffect = SS2Assets.LoadAsset<GameObject>("DecisiveStrikeChargeBlue", SS2Bundle.NemCommando);
                     }

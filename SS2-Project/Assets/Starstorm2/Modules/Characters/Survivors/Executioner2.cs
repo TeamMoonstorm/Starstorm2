@@ -97,11 +97,13 @@ namespace SS2.Survivors
                     }
                     return startPosition;
                 });
-                Debug.Log("Added OrbEffect_Start hook :D");
+                SS2Log.Info("Added OrbEffect_Start hook :D");
+                //Debug.Log("Added OrbEffect_Start hook :D");
             }
             else
             {
-                Debug.Log("ah shit");
+                SS2Log.Error("OrbEffect_Start hook failed.");
+                //Debug.Log("ah shit");  soulless but informative
             }
         }
 
@@ -242,16 +244,16 @@ namespace SS2.Survivors
                 return 100;
 
             if (body.isChampion)
-                return 10;
+                return 5;
 
             switch (body.hullClassification)
             {
                 case HullClassification.Human:
                     return 1;
                 case HullClassification.Golem:
-                    return 3;
+                    return 2;
                 case HullClassification.BeetleQueen:
-                    return 5;
+                    return 3;
                 default:
                     return 1;
             }

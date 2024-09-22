@@ -27,7 +27,7 @@ namespace SS2.Components
             /*if (report.attackerBody.skillLocator.secondary.stock == 0 || report.damageInfo.damageType.HasFlag(DamageType.Shock5s))
                 orbCount *= 0;*/
             if (report.victimBody.teamComponent.teamIndex == TeamIndex.Lunar)
-                orbCount *= 3;
+                orbCount *= 2;
             if (report.victimBody.isElite)
                 orbCount *= 2;
             if (report.damageInfo.damageType.damageType.HasFlag(DamageType.BypassOneShotProtection))

@@ -38,13 +38,13 @@ namespace EntityStates.NemCommando
             hitEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoImpactSlashEffect", SS2Bundle.NemCommando);
 
             //Yellow
-            if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
+            if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY" || skinNameToken.Contains("YELLOW"))
             {
                 swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffectYellow", SS2Bundle.NemCommando);
                 hitEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoImpactSlashEffectYellow", SS2Bundle.NemCommando);
             }
             //Blue
-            if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO")
+            if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO" || skinNameToken.Contains("BLUE"))
             {
                 swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffectBlue", SS2Bundle.NemCommando);
                 hitEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoImpactSlashEffectBlue", SS2Bundle.NemCommando);
