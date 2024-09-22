@@ -37,14 +37,9 @@ namespace SS2.Survivors
             GameObject banditBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/Bandit2Body.prefab").WaitForCompletion();
 
             SkillLocator skillLocator = banditBodyPrefab.GetComponent<SkillLocator>();
-            SkillFamily skillFamily = skillLocator.primary.skillFamily;
+            SkillFamily skillFamilyPrimary = skillLocator.primary.skillFamily;
 
-            Array.Resize(ref skillFamily.variants, skillFamily.variants.Length + 1);
-            skillFamily.variants[skillFamily.variants.Length - 1] = new SkillFamily.Variant
-            {
-                skillDef = sdTranquilizerGun,
-                viewableNode = new ViewablesCatalog.Node(sdTranquilizerGun.skillNameToken, false, null)
-            };
+            AddSkill(skillFamilyPrimary, sdTranquilizerGun);
         }
 
         private void RegisterTranquilizer()
@@ -93,7 +88,7 @@ namespace SS2.Survivors
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return false;
+            return true;
         }
     }
 }

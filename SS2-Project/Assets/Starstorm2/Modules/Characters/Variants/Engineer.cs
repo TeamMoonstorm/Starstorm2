@@ -27,6 +27,7 @@ namespace SS2.Survivors
 
             SkillDef sdLaserFocus = assetCollection.FindAsset<SkillDef>("sdLaserFocus");
             SkillDef sdRapidDisplacement = assetCollection.FindAsset<SkillDef>("sdRapidDisplacement");
+            SkillDef sdQuantumTranslocator = assetCollection.FindAsset<SkillDef>("sdQuantumTranslocator");
 
             GameObject engiBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Engi/EngiBody.prefab").WaitForCompletion();
 
@@ -72,22 +73,11 @@ namespace SS2.Survivors
             SkillLocator skillLocator = engiBodyPrefab.GetComponent<SkillLocator>();
             SkillFamily skillFamilyPrimary = skillLocator.primary.skillFamily;
             SkillFamily skillFamilyUtility = skillLocator.utility.skillFamily;
+            SkillFamily skillFamilySecondary = skillLocator.secondary.skillFamily;
 
-            // If this is an alternate skill, use this code.
-            // Here, we add our skill as a variant to the existing Skill Family.
-            Array.Resize(ref skillFamilyPrimary.variants, skillFamilyPrimary.variants.Length + 1);
-            skillFamilyPrimary.variants[skillFamilyPrimary.variants.Length - 1] = new SkillFamily.Variant
-            {
-                skillDef = sdLaserFocus,
-                viewableNode = new ViewablesCatalog.Node(sdLaserFocus.skillNameToken, false, null)
-            };
-
-            Array.Resize(ref skillFamilyUtility.variants, skillFamilyUtility.variants.Length + 1);
-            skillFamilyUtility.variants[skillFamilyUtility.variants.Length - 1] = new SkillFamily.Variant
-            {
-                skillDef = sdRapidDisplacement,
-                viewableNode = new ViewablesCatalog.Node(sdRapidDisplacement.skillNameToken, false, null)
-            };
+            AddSkill(skillFamilyPrimary, sdLaserFocus);
+            AddSkill(skillFamilyUtility, sdQuantumTranslocator);
+            AddSkill(skillFamilyUtility, sdRapidDisplacement);
 
             EngiFocusDamage = DamageAPI.ReserveDamageType();
             EngiFocusDamageProc = DamageAPI.ReserveDamageType();

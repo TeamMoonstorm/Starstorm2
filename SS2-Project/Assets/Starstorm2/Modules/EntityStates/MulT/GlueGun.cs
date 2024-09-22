@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Starstorm2.Modules.EntityStates.MulT
+namespace EntityStates.MulT
 {
     public class GlueGun : BaseSkillState
     {
