@@ -12,6 +12,7 @@ namespace SS2
     {
         const string WIKI_OUTPUT_FOLDER = "wiki";
         const string WIKI_OUTPUT_ITEM = "Items.txt";
+        const string WIKI_OUTPUT_EQUIPMENT = "Equipments.txt";
         static string WikiOutputPath = Path.Combine(Path.GetDirectoryName(SS2Main.Instance.Info.Location), WIKI_OUTPUT_FOLDER);
 
         [ConCommand(commandName = "ss2wiki_item", flags = ConVarFlags.None, helpText = "Print Starstorm 2 item information to a Wiki.GG format.")]
@@ -59,6 +60,34 @@ namespace SS2
                 
                 string format = Language.GetStringFormatted(f, itemName, rarity, pickup, desc, tags, unlock, String.Empty, String.Empty, token);
                 tw.WriteLine(format);           
+            }
+            tw.Close();
+        }
+
+        [ConCommand(commandName = "ss2wiki_equipment", flags = ConVarFlags.None, helpText = "Print Starstorm 2 equipment information to a Wiki.GG format.")]
+        public static void FormatEquipment(ConCommandArgs args)
+        {
+            string path = Path.Combine(WikiOutputPath, WIKI_OUTPUT_EQUIPMENT);
+            string f = "[\u201C{0}\u201C] = {{\n\tRarity = \u201C{1}\u201C,\n\tQuote = \u201C{2}\u201C,\n\tDesc = \u201C{3}\u201C,\n\tUnlock = \u201C{4}\u201C,\n\t ID = ,\n\tLocalizationInternalName = \u201C{5}\u201C\n\t}}";
+            if (!Directory.Exists(WikiOutputPath))
+            {
+                Directory.CreateDirectory(WikiOutputPath);
+            }
+            TextWriter tw = new StreamWriter(path, false);
+            foreach (EquipmentDef equip in SS2Assets.LoadAllAssets<EquipmentDef>(SS2Bundle.All))
+            {
+                string itemName = Language.GetString(equip.nameToken);
+                bool isLunar = equip.isLunar;
+                string rarity = isLunar ? "Lunar Equipment" : "Equipment";
+                string pickup = Language.GetString(equip.pickupToken);
+                string desc = Language.GetString(equip.descriptionToken);
+                string unlock = "";
+                if (equip.unlockableDef)
+                    unlock = Language.GetString(AchievementManager.GetAchievementDefFromUnlockable(equip.unlockableDef.cachedName)?.nameToken);
+                string token = equip.nameToken;
+
+                string format = Language.GetStringFormatted(f, itemName, rarity, pickup, desc, unlock, token);
+                tw.WriteLine(format);
             }
             tw.Close();
         }
