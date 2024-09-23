@@ -26,10 +26,13 @@ namespace EntityStates.Engineer
 
                     if (masterComponent)
                     {
-                        CharacterBody characterBody = component.GetBody();
-                        if (characterBody && characterBody.baseNameToken == "Hi Hello")
+                        
+                        Debug.Log("CharacterMaster name is " + masterComponent.name);
+
+                        CharacterBody characterBody = masterComponent.GetBody();
+                        if (characterBody)
                         {
-                            Debug.Log("We have an engineer turret!!!");
+                            Debug.Log("CharacterBody baseNameToken is " + characterBody.baseNameToken);
                         }
                     }
                 }

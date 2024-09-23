@@ -124,6 +124,9 @@ Q: Any mods I should have on my r2modman development profile?
 Q: I'm still having errors in the console after importing
 * A: Try reimporting RoR2 as in some cases Thunderkit settings aren't set correctly on the first game import.
 
+Q: I am having missing references errors in my Visual Studio to various parts of RoR2/Networking/etc
+* A: Delete all your packages and package-lock file found under the Packages/ folder and reimport the game exe following the same thunderkit import configuration settings/guide up above
+
 Q: I'm having an issue where certain components cannot be added or general instability
 * A: Make sure you didn't leave Install RoR2MultiplayerHLAPI and Install RoR2EditorKit enabled, having these enabled will cause issues due to duplicate assemblies
 
@@ -137,7 +140,7 @@ Q: I'm having an issue where there are compiler errors due to DamageAPI/RecalcSt
 * A: Some of the project's soft dependencies such as AncientScepter still rely on the old R2API and as such, when they're installed, it installs R2API version 4.x.x, causing duplicate types in the project. To fix this, just delete the R2API folder in the packages folder.
 
 Q: I am getting errors about missing NewtonsoftJson.dll?
-* A: Uninstall ror2bepinexpack with the thunderkit package manager then install it again OR use the dll in our development discord thats pinned and place it inside packages/Bep In Ex/BepInEx/core
+* A: Uninstall ror2bepinexpack with the thunderkit package manager then install it again OR use the dll in our development discord thats pinned and place it inside packages\BepInExPack\BepInExPack\BepInEx\core
 
 Q: The RoR2EK CharacterBody wizard does nothing and returns an error in the console OR my CharacterBody is missing Network components
 * A: In the project tab of Unity, scroll down to packages, and right click Risk of Rain 2, select "reimport", repeat the same for Multiplayer HLAPI
