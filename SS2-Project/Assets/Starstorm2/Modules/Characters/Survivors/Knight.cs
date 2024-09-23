@@ -128,7 +128,7 @@ namespace SS2.Survivors
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return true;
+            return false;
         }
 
         private void ModifyStats(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
