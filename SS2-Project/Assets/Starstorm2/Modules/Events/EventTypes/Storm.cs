@@ -5,6 +5,8 @@ using R2API;
 using System.Collections;
 using MSU.Config;
 using RiskOfOptions;
+using Stage = R2API.DirectorAPI.Stage;
+using System.Collections.Generic;
 namespace SS2
 {
     public class Storm// : SS2Event
@@ -21,6 +23,7 @@ namespace SS2
             //};
         }).DoConfigure();
 
+        public static List<Stage> brightStages = new List<Stage> { Stage.RallypointDelta, Stage.SiphonedForest }; // should probs just check for blizzard
         public static IEnumerator Init()
         {
             R2API.RecalculateStatsAPI.GetStatCoefficients += AddStormBuff;

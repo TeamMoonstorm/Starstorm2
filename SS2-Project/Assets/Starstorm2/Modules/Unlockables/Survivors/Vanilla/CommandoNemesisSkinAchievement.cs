@@ -20,18 +20,17 @@ namespace SS2.Unlocks.VanillaSurvivors
             SetServerTracked(false);
         }
 
-        // TODO: fix whenever events get done
         private class CommandoNemesisSkinServerAchievement : BaseServerAchievement
         {
             public override void OnInstall()
             {
                 base.OnInstall();
-                //EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal += OnNemCommandoDefeated;
+                EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal += OnNemCommandoDefeated;
             }
 
             public override void OnUninstall()
             {
-                //EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal -= OnNemCommandoDefeated;
+                EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal -= OnNemCommandoDefeated;
                 base.OnUninstall();
             }
 

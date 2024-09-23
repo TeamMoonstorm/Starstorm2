@@ -81,18 +81,10 @@ namespace SS2.Components
         [Serializable]
         public struct StormVFX
         {
-            public long stageEnum;
             public R2API.DirectorAPI.StageSerde stageSerde;
             public string customStageName;
             public GameObject effectPrefab;
             public float cloudHeight;
-        }
-        private void OnValidate()
-        {
-            for(int i = 0; i < eventVFX.Length; i++)
-            {
-                eventVFX[i].stageSerde.Value = eventVFX[i].stageEnum;
-            }
         }
 
         public StormVFX[] eventVFX = Array.Empty<StormVFX>();
@@ -140,7 +132,7 @@ namespace SS2.Components
             this.SetEffectIntensity(this.effectIntensity);
 
 #if DEBUG
-            //shouldShowObjective = true;
+            shouldShowObjective = true;
 #endif
 
             stormStartTime = Run.FixedTimeStamp.now + UnityEngine.Random.Range(180, 360); // TODO: Event director that handles this. this fucking sux lol
@@ -251,7 +243,7 @@ namespace SS2.Components
             float cloudHeight = 100f;
             foreach(StormVFX vfx in this.eventVFX)
             {
-                if ((long)DirectorAPI.GetStageEnumFromSceneDef(SceneCatalog.GetSceneDefForCurrentScene()) == vfx.stageEnum)
+                if (((DirectorAPI.Stage)vfx.stageSerde.Value).HasFlag(DirectorAPI.GetStageEnumFromSceneDef(SceneCatalog.GetSceneDefForCurrentScene()))) // im gonna puke
                 {
                     effectPrefab = vfx.effectPrefab;
                     cloudHeight = vfx.cloudHeight;

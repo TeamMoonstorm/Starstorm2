@@ -24,7 +24,7 @@ namespace EntityStates.Events
         private static int bossEliteLevel = 4;
         private static int eliteLevel = 3;
         private static float eliteChancePerExtraLevelCoefficient = 2f;
-        private static float eliteChancePerSecond = 3f;
+        private static float eliteChancePerSecond = 2f;
         private static float baseEliteChance = 10f;
 
         private float charge;
@@ -109,7 +109,12 @@ namespace EntityStates.Events
                 }
             }
 
-            
+            TeleporterInteraction.onTeleporterChargedGlobal += OnTeleporterChargedGlobal;
+        }
+
+        private void OnTeleporterChargedGlobal(TeleporterInteraction _)
+        {
+            this.outer.SetNextState(new Calm());
         }
 
         private void ModifySpawnedMasters(GameObject masterObject)
@@ -172,6 +177,7 @@ namespace EntityStates.Events
             {
                 eliteChanceStopwatch += UnityEngine.Random.Range(minEliteChanceInterval, maxEliteChanceInterval);
                 eliteChance += eliteChancePerSecond * eliteChanceTimer;
+                if (eliteChance > 100) eliteChance = 100;
                 eliteChanceTimer = 0;
             }
             if (oldStorm)
@@ -263,9 +269,12 @@ namespace EntityStates.Events
         {
             base.OnExit();
 
-            if(NetworkServer.active)
+            CharacterBody.onBodyStartGlobal -= BuffEnemy;
+            TeleporterInteraction.onTeleporterChargedGlobal += OnTeleporterChargedGlobal;
+            if (NetworkServer.active)
             {
-                CharacterBody.onBodyStartGlobal -= BuffEnemy;
+                SS2Log.Warning("HOW THE FUCK??????????????????????????????????????????????????????????????????????????????????????");
+               
                 // removelistener makes it so we cant add it back in the next state's onenter. (wtf?????)
                 CombatDirector bossDirector = TeleporterInteraction.instance?.bossDirector;
                 if (bossDirector && stormLevel >= 4)

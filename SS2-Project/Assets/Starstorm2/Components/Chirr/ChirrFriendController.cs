@@ -169,7 +169,24 @@ namespace SS2.Components
             {
 				body.teamComponent.teamIndex = newTeam;
 				body.healthComponent.Networkhealth = body.healthComponent.fullCombinedHealth * 0.5f;
-				Util.CleanseBody(body, true, false, false, true, true, false); // lol
+				Util.CleanseBody(body, false, false, false, true, true, false); // lol
+
+				// manual cleanse cuz debuffs cleansebody only works on timed buffs
+				BuffIndex buffIndex = (BuffIndex)0;
+				BuffIndex buffCount = (BuffIndex)BuffCatalog.buffCount;
+				while (buffIndex < buffCount)
+				{
+					BuffDef buffDef = BuffCatalog.GetBuffDef(buffIndex);
+					if (buffDef.isDebuff)
+					{
+						body.ClearTimedBuffs(buffIndex);
+						if(body.HasBuff(buffIndex)) // if cleartimedbuff didnt work, then its not a timed buff
+                        {
+							body.RemoveBuff(buffIndex);
+                        }
+					}
+					buffIndex++;
+				}
 				body.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 3f);
 				HauntedAffixFix(body, newTeam);
 				BeadAffixFix(body, newTeam);

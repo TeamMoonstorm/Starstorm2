@@ -65,12 +65,12 @@ namespace EntityStates.Nemmando
             if (skinNameToken != "SS2_SKIN_NEMCOMMANDO_DEFAULT" && skinNameToken != "SS2_SKIN_NEMCOMMANDO_GRANDMASTERY")
             {
                 //Yellow
-                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
+                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY" || skinNameToken.Contains("YELLOW"))
                 {
                     effectPrefab = SS2Assets.LoadAsset<GameObject>("DecisiveStrikeSlashYellow", SS2Bundle.NemCommando);
                 }
                 //Blue
-                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO")
+                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO" || skinNameToken.Contains("BLUE"))
                 {
                     effectPrefab = SS2Assets.LoadAsset<GameObject>("DecisiveStrikeSlashBlue", SS2Bundle.NemCommando);
                 }
@@ -184,13 +184,13 @@ namespace EntityStates.Nemmando
                 cameraTargetParams.RemoveParamsOverride(camOverrideHandle, duration/1.5f);
             }
             ref CharacterModel.RendererInfo renderInfo = ref GetModelTransform().GetComponent<CharacterModel>().baseRendererInfos[1];
-            if (matInstance)
+            /*if (matInstance && swordMat != null)
             {
                 renderInfo.defaultMaterial = swordMat;
                 swordMat.SetFloat("_EmPower", 1f);
                 renderInfo.defaultMaterial.SetFloat("_EmPower", 1f);
                 Object.Destroy(matInstance);
-            }
+            }*/
             
             renderInfo.defaultMaterial.SetFloat("_EmPower", 1f);
         }

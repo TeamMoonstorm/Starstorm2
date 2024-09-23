@@ -8,7 +8,7 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
-  m_EditorHideFlags: 0
+  m_EditorHideFlags: 1
   m_Script: {fileID: 12004, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -451,7 +451,7 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
-      snapOffset: {x: 0, y: 0}
+      snapOffset: {x: 0, y: 25}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
       id: unity-scene-view-toolbar
@@ -473,7 +473,7 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
-      snapOffset: {x: 0, y: 0}
+      snapOffset: {x: 0, y: 25}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
       id: unity-transform-toolbar
@@ -495,7 +495,7 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
-      snapOffset: {x: 67.5, y: 86}
+      snapOffset: {x: 67.5, y: 26}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
       id: Orientation
@@ -616,7 +616,7 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 0
-      snapOffset: {x: 0, y: 0}
+      snapOffset: {x: 0, y: 25}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
       id: Scene View/Particles
@@ -655,9 +655,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 3.3028111, y: 1.7329615, z: 2.5523427}
+    m_Target: {x: 0.8846331, y: 0.46218756, z: -2.4664564}
     speed: 2
-    m_Value: {x: 3.3028111, y: 1.7329615, z: 2.5523427}
+    m_Value: {x: 0, y: 0, z: 0}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -704,19 +704,19 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.0011843098, y: 0.100924596, z: 0.000120545104, w: -0.99489725}
+    m_Target: {x: -0.0031303565, y: 0.99680936, z: -0.06169086, w: -0.050581258}
     speed: 2
-    m_Value: {x: 0.0011843053, y: 0.10092421, z: 0.000120544646, w: -0.99489343}
+    m_Value: {x: -0.0031303521, y: 0.99680793, z: -0.06169077, w: -0.050581187}
   m_Size:
-    m_Target: 2.1983328
+    m_Target: 2.3847
     speed: 2
-    m_Value: 2.1983328
+    m_Value: 10
   m_Ortho:
     m_Target: 0
     speed: 2
     m_Value: 0
   m_CameraSettings:
-    m_Speed: 1
+    m_Speed: 1.005
     m_SpeedNormalized: 0.5
     m_SpeedMin: 0.01
     m_SpeedMax: 2
@@ -770,7 +770,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 966d0000
       m_LastClickedID: 0
-      m_ExpandedIDs: dafaffff
+      m_ExpandedIDs: 2edefdff6ee2fdffe2d4ffffe6d4ffff2ed5ffff3ad6ffff46d6ffff52d6ffff56d6ffff60d6ffff68d6ffff6cd6ffff74d6ffff78d6ffff80d6ffff84d6ffff8cd6ffff90d6ffff9cd6ffffa4d6ffffa8d6ffffacd6ffffb6d6ffffc0d6ffffc4d6ffffccd6ffffd0d6ffffe4d6ffffecd6fffff0d6fffff8d6fffffcd6ffff04d7ffff08d7ffff10d7ffff14d7ffff18d7ffff22d7ffff2cd7ffff30d7ffff3ad7ffff42d7ffff4ad7ffff54d7ffff62d7ffff6ad7ffff74d7ffff7ed7ffff88d7ffff8cd7ffffa4d7ffffacd7ffffb8d7ffff00d8ffff48d8ffff2cf7ffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -991,7 +991,7 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 0}
+      m_ClientGUIView: {fileID: 10}
     m_SearchString: 
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
