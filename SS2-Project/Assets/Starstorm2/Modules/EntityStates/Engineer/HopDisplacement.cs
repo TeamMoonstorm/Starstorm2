@@ -108,7 +108,7 @@ namespace EntityStates.Engi
                 modelChildIndex = 2,
                 genericFloat = -23,
             };
-            EffectManager.SpawnEffect(Engineer.engiPrefabExplosion, effectDataL, transmit: true);
+            EffectManager.SpawnEffect(SS2.Survivors.Engineer.engiPrefabExplosion, effectDataL, transmit: true);
 
             EffectData effectDataR = new EffectData
             {
@@ -119,7 +119,7 @@ namespace EntityStates.Engi
                 modelChildIndex = 2,
                 genericFloat = -23
             };
-            EffectManager.SpawnEffect(Engineer.engiPrefabExplosion, effectDataR, transmit: true);
+            EffectManager.SpawnEffect(SS2.Survivors.Engineer.engiPrefabExplosion, effectDataR, transmit: true);
 
             //vfxLeft = UnityEngine.Object.Instantiate<GameObject>(Engineer.engiPrefabExplosion, new Vector3(.5f, 1.25f, -.7f), Quaternion.Euler(Vector3.zero), modelTransform.GetComponent<ChildLocator>().FindChild("Chest"));
             //vfxRight = UnityEngine.Object.Instantiate<GameObject>(Engineer.engiPrefabExplosion, new Vector3(-.5f, 1.25f, -.7f), Quaternion.Euler(Vector3.zero), modelTransform.GetComponent<ChildLocator>().FindChild("Chest"));

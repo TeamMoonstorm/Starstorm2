@@ -125,7 +125,7 @@ namespace EntityStates.Engi
                     modelChildIndex = 2,
                     genericFloat = -23
                 };
-                EffectManager.SpawnEffect(Engineer.engiPrefabExplosion, effectDataL, transmit: true);
+                EffectManager.SpawnEffect(SS2.Survivors.Engineer.engiPrefabExplosion, effectDataL, transmit: true);
             }
             count = 1;
 
