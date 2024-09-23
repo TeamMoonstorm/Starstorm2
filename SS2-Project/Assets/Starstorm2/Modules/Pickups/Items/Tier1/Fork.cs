@@ -55,12 +55,13 @@ namespace SS2.Items
                 c.EmitDelegate<Action<TeamComponent, DamageDealtMessage>>((t, d) =>
                 {
                     float damageFromForks = 0;
+                    float damageFromChocolate = 0;
                     // dots add a lot of clutter
                     if (!d.damageType.damageType.HasFlag(DamageType.DoT) && t && t.body && t.body.inventory)
                     {
                         float bodyDamage = t.body.damage;
                         int stack = t.body.inventory.GetItemCount(SS2Content.Items.Fork);
-
+                        bool hasChocolate = t.body.HasBuff(SS2Content.Buffs.BuffChocolate);
 
                         if (stack > 0)
                         {
@@ -68,8 +69,14 @@ namespace SS2.Items
                             damageFromForks = d.damage - damageWithoutForks;
                             DamageNumberManager.instance.SpawnDamageNumber(damageFromForks, d.position + Vector3.up * 0.6f, d.crit, t.teamIndex, DamageColorIndex.Item);
                         }
+                        if (hasChocolate) // hello fork
+                        {
+                            float damageWithoutChocolate = d.damage / (1 + GreenChocolate.buffDamage);
+                            damageFromChocolate = d.damage - damageWithoutChocolate;
+                            DamageNumberManager.instance.SpawnDamageNumber(damageFromChocolate, d.position + Vector3.up * 0.8f, d.crit, t.teamIndex, GreenChocolate.damageColor);
+                        }
                     }
-                    d.damage -= damageFromForks;
+                    d.damage -= damageFromForks + damageFromChocolate;
                 });
             }
             else

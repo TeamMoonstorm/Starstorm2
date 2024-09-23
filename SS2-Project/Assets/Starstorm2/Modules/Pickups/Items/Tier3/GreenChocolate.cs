@@ -15,7 +15,7 @@ namespace SS2.Items
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acGreenChocolate", SS2Bundle.Items);
 
         private static GameObject _effect;
-
+        private static GameObject _damageBonusEffect;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Percentage of max hp that must be lost for Green Chocolate's effect to proc. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
@@ -41,12 +41,20 @@ namespace SS2.Items
         [FormatToken(token, 5)]
         public static float buffCrit = 20f;
 
+        public static DamageColorIndex damageColor;
         public override void Initialize()
         {
-
             _effect = AssetCollection.FindAsset<GameObject>("ChocolateEffect");
-
+            _damageBonusEffect = AssetCollection.FindAsset<GameObject>("ChocolateDamageBonusEffect");
+            damageColor = R2API.ColorsAPI.RegisterDamageColor(new Color(.428f, .8f, 0f));
             R2API.RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
+            GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
+        }
+
+        private void OnServerDamageDealt(DamageReport damageReport)
+        {
+            if (damageReport.attackerBody && damageReport.attackerBody.HasBuff(SS2Content.Buffs.BuffChocolate))
+                EffectManager.SimpleImpactEffect(_damageBonusEffect, damageReport.damageInfo.position, Vector3.zero, true);
         }
 
         private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, R2API.RecalculateStatsAPI.StatHookEventArgs args)
@@ -71,11 +79,42 @@ namespace SS2.Items
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.GreenChocolate;
+            private GameObject effectInstance;
+            private PostProcessDuration ppUp;
+            private PostProcessDuration ppDown;
+            private bool effectEnabled;
             public void Start()
             {
                 if (body.healthComponent)
                 {
                     HG.ArrayUtils.ArrayAppend(ref body.healthComponent.onIncomingDamageReceivers, this);
+                }
+            }
+
+            private void FixedUpdate()
+            {
+                if (body.HasBuff(SS2Content.Buffs.BuffChocolate))
+                {
+                    if (!effectInstance)
+                    {
+                        effectInstance = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("ChocolatePP", SS2Bundle.Items), body.coreTransform);
+                        effectInstance.GetComponent<LocalCameraEffect>().targetCharacter = base.gameObject;
+                        ppUp = effectInstance.transform.Find("CameraEffect/PP").GetComponent<PostProcessDuration>();
+                        ppDown = effectInstance.GetComponent<PostProcessDuration>();
+                        effectEnabled = true;
+                    }
+                    if (!effectEnabled)
+                    {
+                        ppUp.enabled = true;
+                        ppDown.enabled = false;
+                        effectEnabled = true;
+                    }
+                }
+                else if (effectEnabled)
+                {
+                    ppUp.enabled = false;
+                    ppDown.enabled = true;
+                    effectEnabled = false;
                 }
             }
 

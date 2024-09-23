@@ -35,7 +35,7 @@ namespace EntityStates.Events
                 return;
             }
             base.OnEnter();
-            this.stormController.StartLerp(0, 5f);
+            this.stormController.StartLerp(0, 8f);
 
             this.totalMultiplier = StormController.chargeRng.RangeFloat(1, 1 + chargeVariance);
             GlobalEventManager.onCharacterDeathGlobal += AddCharge;
