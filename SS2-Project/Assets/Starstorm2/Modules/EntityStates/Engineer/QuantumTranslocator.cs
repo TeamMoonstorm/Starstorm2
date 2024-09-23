@@ -1,6 +1,6 @@
 ﻿using RoR2;
+using System.ComponentModel;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace EntityStates.Engineer
 {
@@ -11,30 +11,45 @@ namespace EntityStates.Engineer
 
         public override void OnEnter()
         {
-            base.OnEnter();
             MinionOwnership.MinionGroup minionGroup = MinionOwnership.MinionGroup.FindGroup(characterBody.master.netId);
 
             if (minionGroup != null)
             {
-                foreach (var item in minionGroup.members)
+                foreach (var minion in minionGroup.members)
                 {
-                    Debug.Log(item);
+                    if (!minion)
+                    {
+                        continue;
+                    }
+
+                    CharacterMaster masterComponent = minion.GetComponent<CharacterMaster>();
+
+                    if (masterComponent)
+                    {
+                        CharacterBody characterBody = component.GetBody();
+                        if (characterBody && characterBody.baseNameToken == "Hi Hello")
+                        {
+                            Debug.Log("We have an engineer turret!!!");
+                        }
+                    }
                 }
             }
             else
             {
                 Debug.Log("YOU FAILED");
             }
-        }
 
-        public override void OnExit()
-        {
-            base.OnExit();
+            base.OnEnter();
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

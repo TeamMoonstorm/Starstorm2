@@ -139,6 +139,9 @@ Q: I'm having an issue where there are compiler errors due to DamageAPI/RecalcSt
 Q: I am getting errors about missing NewtonsoftJson.dll?
 * A: Uninstall ror2bepinexpack with the thunderkit package manager then install it again OR use the dll in our development discord thats pinned and place it inside packages/Bep In Ex/BepInEx/core
 
+Q: The RoR2EK CharacterBody wizard does nothing and returns an error in the console OR my CharacterBody is missing Network components
+* A: In the project tab of Unity, scroll down to packages, and right click Risk of Rain 2, select "reimport", repeat the same for Multiplayer HLAPI
+
 Q: When I build my project using the pipelines no DLL is created
 * A: Check the pipeline log, it usually logs anything and everything regarding issues with the build process, there's also a high chance that a duplicate MMHook assembly (such as AssemblyCSharp mmhook) is causing issues. If this is the case, go into HookGenPatcher's plugins folder and delete MMHOOK_AssemblyCSharp.dll
 
