@@ -180,7 +180,8 @@ namespace SS2
                     VanillaSurvivorModule.AddProvider(main, ContentUtil.CreateContentPieceProvider<IVanillaSurvivorContentPiece>(main, SS2ContentPack));
                     return VanillaSurvivorModule.InitializeVanillaSurvivorContentPieces(main);
                 },
-                LoadFromAssetBundles
+                LoadFromAssetBundles,
+                SS2Config.CreateConfigs
             };
 
             _fieldAssignDispatchers = new Func<IEnumerator>[]

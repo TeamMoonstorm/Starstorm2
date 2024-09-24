@@ -17,10 +17,10 @@ namespace SS2
     {
         public static ConfiguredBool EnableEvents = SS2Config.ConfigFactory.MakeConfiguredBool(true, b =>
         {
-            b.section = "Events";
+            b.section = "Storms";
             b.key = "Enable Storms";
             b.description = "Enables Starstorm 2's storms. Set to false to disable storms.";
-            b.configFile = SS2Config.ConfigMain;
+            b.configFile = SS2Config.ConfigEvent;
             b.checkBoxConfig = new CheckBoxConfig
             {
                 restartRequired = true

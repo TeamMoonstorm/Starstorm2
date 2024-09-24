@@ -63,8 +63,7 @@ namespace EntityStates.AffixEmpyrean
 			}
 
 			characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreKnockback;
-			if (base.characterMotor)
-				base.characterMotor.enabled = false;
+			
 			Transform modelTransform = base.GetModelTransform();
 			if (modelTransform)
 			{
@@ -76,7 +75,8 @@ namespace EntityStates.AffixEmpyrean
 				temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matRainbowSpawnOverlay2", SS2Bundle.Equipments);
 				temporaryOverlay.AddToCharacterModel(modelTransform.gameObject.GetComponent<CharacterModel>());
 
-				modelTransform.GetComponent<PrintController>()?.enabled = false;
+				var pc = modelTransform.GetComponent<PrintController>();
+				if (pc) pc.enabled = false;
 			}
 
 		}

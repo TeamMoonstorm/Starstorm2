@@ -107,11 +107,11 @@ namespace SS2.Equipments
             }
         }
 
-        public static EliteDef GetEliteDefFromString(String defString)
+        public static EliteDef GetEliteDefFromString(string defString)
         {
             foreach (EliteDef ed in EliteCatalog.eliteDefs)
             {
-                if (ed.eliteEquipmentDef.name == defString)
+                if (ed.eliteEquipmentDef?.name == defString)
                 {
                     return ed;
                 }
@@ -211,13 +211,14 @@ namespace SS2.Equipments
             }
 
 
-            int numItems = this.characterBody.isChampion ? 4 : 2;
+            int numItems = this.characterBody.isChampion ? 2 : 1;
             float spreadAngle = 360f / numItems;
             float startingAngle = -(spreadAngle / 2) * (numItems - 1);
             for (int i = 0; i < numItems; i++)
             {
                 float angle = startingAngle + i * spreadAngle;
                 Vector3 direction = Quaternion.Euler(0, angle, 0) * damageReport.victimBody.coreTransform.forward;
+                if (numItems == 1) direction = Vector3.zero;
                 Vector3 velocity = Vector3.up * 20f + direction * 10f;
 
                 PickupIndex pickupIndex = RoR2.Artifacts.SacrificeArtifactManager.dropTable.GenerateDrop(RoR2.Artifacts.SacrificeArtifactManager.treasureRng);
