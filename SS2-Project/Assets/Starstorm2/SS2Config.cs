@@ -90,7 +90,7 @@ namespace SS2
 
         // should probably try catch. but no thanks
         [SystemInitializer(typeof(ItemTierCatalog))] // need to check if item's tier can drop in game
-        public static IEnumerator CreateConfigs()
+        public static void CreateConfigs()
         {
             EnableItems = SS2Config.ConfigFactory.MakeConfiguredBool(true, b =>
             {
@@ -193,14 +193,17 @@ namespace SS2
                 b.description = "Enables Starstorm 2's survivors. Set to false to disable survivors.";
                 b.configFile = SS2Config.ConfigMain;
                 b.onConfigChanged += EnableAllSurvivor;
-            }).DoConfigure();                     
-            foreach (IContentPiece<GameObject> bodyCP in bodyObjects)
+            }).DoConfigure();
+            List<GameObject> uniquePrefabs = new List<GameObject>();
+            foreach(CharacterSpawnCard csc in SS2Assets.LoadAllAssets<CharacterSpawnCard>(SS2Bundle.All))
             {
-                CharacterBody body = null;
-                if (bodyCP is SS2Monster monster && (body = monster.CharacterPrefab?.GetComponent<CharacterBody>()))
+                if(csc.prefab && !uniquePrefabs.Contains(csc.prefab))
                 {
-                    ExpansionRequirementComponent item = GetExpansion(body.gameObject);
-                    string niceName = Language.GetString(body.baseNameToken);
+                    uniquePrefabs.Add(csc.prefab);
+                    CharacterMaster master = csc.prefab.GetComponent<CharacterMaster>();
+                    if (!master || (master && !master.bodyPrefab)) continue;
+                    ExpansionRequirementComponent item = master.GetComponent<ExpansionRequirementComponent>();
+                    string niceName = Language.GetString(master.bodyPrefab.GetComponent<CharacterBody>().baseNameToken);
                     var cfg = SS2Config.ConfigFactory.MakeConfiguredBool(true, b =>
                     {
                         b.section = "Enable Monsters";
@@ -215,10 +218,13 @@ namespace SS2
                     cfg.onConfigChanged += (b) => EnableItem(item, b);
                     EnableItem(item, cfg.value);
                 }
-                else if (bodyCP is SS2Survivor survivor && (body = survivor.CharacterPrefab?.GetComponent<CharacterBody>()))
+            }
+            foreach (SurvivorDef sd in SS2Assets.LoadAllAssets<SurvivorDef>(SS2Bundle.All))
+            {
+                if (sd.bodyPrefab)
                 {
-                    if (!body) continue;
-                    ExpansionRequirementComponent item = GetExpansion(body.gameObject);
+                    CharacterBody body = sd.bodyPrefab.GetComponent<CharacterBody>();
+                    ExpansionRequirementComponent item = body.GetComponent<ExpansionRequirementComponent>();
                     string niceName = Language.GetString(body.baseNameToken);
                     var cfg = SS2Config.ConfigFactory.MakeConfiguredBool(true, b =>
                     {
@@ -233,9 +239,8 @@ namespace SS2
                     }).DoConfigure();
                     cfg.onConfigChanged += (b) => EnableItem(item, b);
                     EnableItem(item, cfg.value);
-                }              
+                }
             }
-            yield return null;
         }
 
         private static ExpansionRequirementComponent GetExpansion(GameObject gameObject)

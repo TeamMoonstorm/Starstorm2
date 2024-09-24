@@ -181,7 +181,6 @@ namespace SS2
                     return VanillaSurvivorModule.InitializeVanillaSurvivorContentPieces(main);
                 },
                 LoadFromAssetBundles,
-                SS2Config.CreateConfigs
             };
 
             _fieldAssignDispatchers = new Func<IEnumerator>[]
