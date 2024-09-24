@@ -46,11 +46,24 @@ namespace SS2.Orbs
             };
             effectData.SetHurtBoxReference(target);
 
-            EffectManager.SpawnEffect(_orbEffect, effectData, true);
+            
 
             HurtBox hurtBox = target.GetComponent<HurtBox>();
             if (hurtBox)
+            {
                 execController = hurtBox.healthComponent.GetComponent<ExecutionerController>();
+                skinNameToken = hurtBox.gameObject.transform.root.GetComponentInChildren<ModelSkinController>().skins[hurtBox.healthComponent.body.skinIndex].nameToken;
+
+
+                if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
+                {
+                    EffectManager.SpawnEffect(_masteryOrbEffect, effectData, true);
+                }
+                else
+                {
+                    EffectManager.SpawnEffect(_orbEffect, effectData, true);
+                }
+            }
         }
 
         public override void OnArrival()

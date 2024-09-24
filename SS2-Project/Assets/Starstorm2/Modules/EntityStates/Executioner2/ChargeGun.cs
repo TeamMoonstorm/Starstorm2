@@ -77,7 +77,7 @@ namespace EntityStates.Executioner2
 
             skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
 
-            if (skinNameToken == "SS2_SKIN_EXECUTIONER_MASTERY")
+            if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
             {
                 chargeEffectPrefab = masteryChargeEffectPrefab;
                 //plumeEffect = masteryPlume;
@@ -241,7 +241,7 @@ namespace EntityStates.Executioner2
             {
                 ChildLocator cl = modelLocator.modelTransform.GetComponent<ChildLocator>();
                 Transform muzzle = cl.FindChild("ExhaustGun");
-                if (skinNameToken == "SS2_SKIN_EXECUTIONER_MASTERY")
+                if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
                     chargeEffectInstance = UnityEngine.Object.Instantiate(masteryChargeEffectPrefab, muzzle.position, muzzle.rotation);
                 else
                     chargeEffectInstance = UnityEngine.Object.Instantiate(defaultChargeEffectPrefab, muzzle.position, muzzle.rotation);
