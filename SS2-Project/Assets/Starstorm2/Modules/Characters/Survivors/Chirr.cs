@@ -28,7 +28,7 @@ namespace SS2.Survivors
         public static bool toggleHover = false;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR, configDescOverride = "Can Abduct grab friendly drones.")]
-        public static bool grabDrones = true;
+        public static bool grabDrones = false;
 
         public static float confuseDuration = 4f;
         public static ModdedDamageType confuseDamageType;

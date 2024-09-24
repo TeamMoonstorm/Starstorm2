@@ -200,7 +200,7 @@ namespace SS2.Components
             //    }
             //}
 
-            if (Run.instance.stageClearCount > 8)
+            if (Run.instance.stageClearCount > 7)
             {
                 if (empyreanEliteCost <= eliteCredit && ((baseCost * empyreanMultiplier <= fastCombatDirector.monsterCredit) || (baseCost * empyreanMultiplier <= slowCombatDirector.monsterCredit)))
                 {
@@ -248,14 +248,21 @@ namespace SS2.Components
             //inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
             inventory.SetEquipmentIndex(SS2Content.Equipments.AffixEmpyrean.equipmentIndex);
 
+            int extraStages = Mathf.Max(Run.instance.stageClearCount - 7, 0);
+            int extraLoops = Mathf.FloorToInt(extraStages / Run.stagesPerLoop);
+            //inventory.GiveItem(SS2Content.Items.DoubleAllStats, extraLoops); // it is not yet your time
+            inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 15 * extraLoops); // teehee
             // remove level cap
             if(Run.instance.ambientLevel >= Run.ambientLevelCap)
             {
                 int extraLevels = Mathf.FloorToInt(SS2Util.AmbientLevelUncapped()) - Run.instance.ambientLevelFloor;
                 inventory.GiveItem(RoR2Content.Items.LevelBonus, extraLevels);
             }
-            
 
+            EntityStateMachine bodyMachine = EntityStateMachine.FindByCustomName(body.gameObject, "Body");
+            if(bodyMachine)
+                bodyMachine.initialStateType = new EntityStates.SerializableEntityStateType(typeof(EntityStates.AffixEmpyrean.SpawnState));
+            
             DeathRewards rewards = body.GetComponent<DeathRewards>();
             if (rewards)
             {

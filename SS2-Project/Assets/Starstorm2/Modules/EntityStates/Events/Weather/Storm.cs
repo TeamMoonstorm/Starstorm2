@@ -84,7 +84,7 @@ namespace EntityStates.Events
             this.stormController.StartLerp(stormLevel, lerpDuration);
 
 
-            isPermanent = stormController.IsPermanent && this.stormLevel == stormController.MaxStormLevel;
+            isPermanent = stormController.IsPermanent && this.stormLevel >= stormController.MaxStormLevel;
 
             if (NetworkServer.active)
             {

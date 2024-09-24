@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 418323186c6d3bf4aa9fab1aa65bef7c, type: 3}
   m_Name: edEmpyrean
   m_EditorClassIdentifier: 
-  modifierToken: SS2_ELITE_MODIFIER_EMPYREAN
+  modifierToken: '{0}'
   eliteEquipmentDef: {fileID: 11400000, guid: 7e2a253192d65124088ff608423f76b4, type: 2}
   color:
     serializedVersion: 2
     rgba: 4293519849
   shaderEliteRampIndex: -1
-  healthBoostCoefficient: 1
-  damageBoostCoefficient: 1
+  healthBoostCoefficient: 50
+  damageBoostCoefficient: 16
   eliteTier: 0
   eliteRamp: {fileID: 2800000, guid: 978889064ab598c44ab1c54ff69c7a6d, type: 3}
   overlayMaterial: {fileID: 2100000, guid: 88b2fc6dda09e3d409e4a11271c2d5d5, type: 2}

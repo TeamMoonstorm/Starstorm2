@@ -112,7 +112,7 @@ namespace EntityStates.Chirr
 
         private bool CheckDrone(CharacterBody body)
         {
-            return body.GetDisplayName().Contains("drone", System.StringComparison.InvariantCultureIgnoreCase);
+            return !SS2.Survivors.Chirr.grabDrones && !body.GetDisplayName().Contains("drone", System.StringComparison.InvariantCultureIgnoreCase);
         }
         // cant grab something that is grabbing us
         // cant grab something that is being grabbed (nvm)

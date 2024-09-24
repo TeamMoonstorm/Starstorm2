@@ -272,6 +272,8 @@ namespace SS2
 
             public static ItemDef DormantFungus;
 
+            public static ItemDef DoubleAllStats;
+
             public static ItemDef EtherealItemAffix;
 
             public static ItemDef Fork;

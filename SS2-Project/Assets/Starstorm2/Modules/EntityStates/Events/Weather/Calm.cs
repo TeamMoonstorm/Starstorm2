@@ -101,7 +101,7 @@ namespace EntityStates.Events
             float stageCount = Run.instance.stageClearCount + 1;
             float minutesToStorm = (-13f * stageCount) / (stageCount + 1) + 13f;
             float variance = chargeVariance * minutesToStorm;
-            return StormController.chargeRng.RangeFloat(minutesToStorm - variance, minutesToStorm + variance) * totalMultiplier;
+            return Mathf.Max(StormController.chargeRng.RangeFloat(minutesToStorm - variance, minutesToStorm + variance) * totalMultiplier, 60f);
         }
 
         private float CalculateCharge(float deltaTime)

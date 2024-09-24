@@ -7,13 +7,15 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: matRainbowOverlay
+  m_Name: matRainbowSpawnOverlayBright
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
   m_ValidKeywords:
-  - FRESNEL
   - USE_CLOUDS
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
+  - USE_UV1
+  - VERTEXOFFSET
+  m_InvalidKeywords:
+  - _EMISSION
+  m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -22,48 +24,16 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _BumpMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _Cloud1Tex:
-        m_Texture: {fileID: 2800000, guid: 2e0310a73054ccb4a9e17de6be40e4e0, type: 3}
-        m_Scale: {x: 0, y: 0.1}
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 5, y: 5}
         m_Offset: {x: 0, y: 0}
     - _Cloud2Tex:
-        m_Texture: {fileID: 2800000, guid: d439f0d4fa539a345bd0f9964157f9ae, type: 2}
-        m_Scale: {x: 0, y: 0}
-        m_Offset: {x: 0, y: 0}
-    - _DetailAlbedoMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailMask:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailNormalMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _EmissionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 1, y: 0.1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 0, y: 0}
-        m_Offset: {x: 0, y: 0}
-    - _MetallicGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _OcclusionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _ParallaxMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: b72b6d09036cc6f43b27dfaaa37840ed, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RemapTex:
@@ -72,26 +42,27 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaBias: 0.061
-    - _AlphaBoost: 1.4
-    - _Boost: 2
+    - _AlphaBias: 0.186
+    - _AlphaBoost: 2
+    - _AlphaThreshold: 0.295
+    - _Boost: 3
     - _BumpScale: 1
     - _CalcTextureAlphaOn: 0
     - _CloudOffsetOn: 0
     - _CloudsOn: 1
-    - _Cull: 0
-    - _Cutoff: 0.5
+    - _Cull: 2
+    - _Cutoff: 1
     - _DepthOffset: 0
     - _DetailNormalMapScale: 1
     - _DisableRemapOn: 0
-    - _DistortionStrength: -0.19
+    - _DistortionStrength: 0.1
     - _DstBlend: 10
     - _ExternalAlpha: 1
     - _Fade: 1
     - _FadeCloseDistance: 0.5
     - _FadeCloseOn: 0
-    - _FresnelOn: 1
-    - _FresnelPower: 0.2
+    - _FresnelOn: 0
+    - _FresnelPower: 0.3
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -100,22 +71,28 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _OffsetAmount: 0
+    - _OffsetAmount: 0.03
     - _Parallax: 0.02
+    - _RimPower: 0.5
+    - _SinRate: 0
     - _SkyboxOnly: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 5
     - _UVSec: 0
-    - _UseUV1On: 0
+    - _UVSwapOn: 0
+    - _UseUV1On: 1
     - _VertexAlphaOn: 0
     - _VertexColorOn: 0
-    - _VertexOffsetOn: 0
-    - _ZTest: 3
+    - _VertexOffsetOn: 1
+    - _ZTest: 4
     - _ZWrite: 1
     m_Colors:
+    - _BorderScale: {r: 0.3, g: 0.19, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _CutoffScroll: {r: 0, g: 0.5, b: 0, a: 0}
+    - _CutoffScroll: {r: 20, g: -5, b: 3, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _TintColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimColor: {r: 1, g: 0.68275857, b: 0, a: 0}
+    - _TimeScale: {r: 25, g: 10, b: 1, a: 1}
+    - _TintColor: {r: 4.520374, g: 4.520374, b: 4.520374, a: 1}
   m_BuildTextureStacks: []
