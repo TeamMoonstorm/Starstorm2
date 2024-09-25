@@ -20,13 +20,10 @@ namespace SS2.Survivors
         public static DeployableSlot clone;
         public static DeployableSlot hologram;
 
-        public static DamageAPI.ModdedDamageType damageType;
-        private GameObject _knifeProjectile;
-
-        
+        public static DamageAPI.ModdedDamageType damageType;     
         public override void Initialize()
         {
-            _knifeProjectile = AssetCollection.FindAsset<GameObject>("KnifeProjectile");
+            AssetCollection.FindAsset<GameObject>("KnifeProjectile").AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>().Add(damageType); ;
             damageType = DamageAPI.ReserveDamageType();
 
             clone = DeployableAPI.RegisterDeployableSlot((self, deployableCountMultiplier) =>
@@ -73,8 +70,6 @@ namespace SS2.Survivors
             var cb = CharacterPrefab.GetComponent<CharacterBody>();
 
             cb.GetComponent<ModelLocator>().modelTransform.GetComponent<FootstepHandler>().footstepDustPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/GenericFootstepDust.prefab").WaitForCompletion();
-
-            _knifeProjectile.AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>().Add(damageType);
         }
 
         public override bool IsAvailable(ContentPack contentPack)
