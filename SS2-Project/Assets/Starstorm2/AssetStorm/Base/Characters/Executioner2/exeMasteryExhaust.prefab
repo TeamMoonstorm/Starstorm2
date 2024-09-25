@@ -29,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4083582623801865051}
   - {fileID: 219564528447278106}
@@ -65,6 +66,7 @@ MonoBehaviour:
   effectIndex: -1
   positionAtReferencedTransform: 1
   parentToReferencedTransform: 1
+  noEffectData: 0
   applyScale: 0
   soundName: 
   disregardZScale: 0
@@ -82,6 +84,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vfxPriority: 2
   vfxIntensity: 1
+  DoNotPool: 0
+  DoNotCullPool: 0
   optionalLights: []
   secondaryParticleSystem: []
 --- !u!1 &1424691891061307315
@@ -112,6 +116,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 314740412663849232}
   m_RootOrder: 2
@@ -175,6 +180,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!114 &1308240287755598508
