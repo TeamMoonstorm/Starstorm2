@@ -1,5 +1,48 @@
   **Warning: content spoilers below!**
-### 0.6.8
+### 0.6.9
+* Items / Equipment
+	* Cloaking Headband duration changed to 12 seconds, from 16
+	* Broken Blood Tester heal increased to 15, from 10
+	* New visuals for Broken Blood Tester
+	* Coffee Bag now grants the full buff duration to allies
+	* New visuals for Green Chocolate
+	* Universal Charger's glow now properly disappears when consumed
+	* Composite Injector no longer throws errors with some UI mods.
+	* Blacklisted the following items from monsters: Detritive Trematodes, Portable Reactor, and Low Quality Speakers
+* Enemies
+	* Empyreans are slightly more common
+	* Empreans now only drop one item
+	* Reduced chance for Empyreans to drop Elite Aspects
+	* Fixed Empyrean Aspect dropping more often than intended
+	* Implemented spawn animation for Empyrean monsters
+* Events
+	* Adjusted Storm visuals on certain stages
+	* Added new config option to adjust the visual intensity of storms
+	* Config option to disable storms now works properly
+	* Reworked storms are now only permanent on Typhoon difficulty
+	* Stormborn spawn and death effects are less intense on certain stages
+	* Stormborn monsters no longer spawn twice as often as intended
+	* Stormborn monsters no longer gain bonus health in default Storms
+	* Added buff icon for Stormborn monsters
+	* Slightly nerfed bonus movement speed and attack speed for Stormborn monsters
+	* Storm buffs no longer persist between runs
+	* Nemesis invaders now spawn targeting the player holding the Condemned Bond
+* Chirr
+	* Fixed Abduct crashes
+	* Fixed some debuffs not being cleansed from friends
+	* Added config option to change whether Abduct can grab friendly drones. Off by default.
+* Nemesis Commando
+	* Implemented updated VFX for alt skins
+	* Added missing sound effect for Blade of Cessation
+	* Fixed missing materials after using Decisive Strike
+* Nemesis Mercenary
+	* Fixed model jittering at higher FPS
+	* Fixed rare Proliferate crash
+* Other
+	* Reimplemented config options to disable content
+	* Fixed Language files
+	* Fixed skins being unselectable
+	* Fixed many achievements being unobtainable, or being obtained incorrectly.
 ### 0.6.8
 * Items / Equipment
     * Various visual improvements to existing items.

@@ -90,6 +90,7 @@ namespace SS2
         }
 
         // should probably try catch. but no thanks
+        // tried to make this work at runtime at first. gave up. its good enough for now
         public static void CreateConfigs()
         {
             EnableItems = SS2Config.ConfigFactory.MakeConfiguredBool(true, b =>
@@ -98,8 +99,12 @@ namespace SS2
                 b.key = "Enable All Items";
                 b.description = "Enables Starstorm 2's items. Set to false to disable all items";
                 b.configFile = SS2Config.ConfigMain;
-                b.onConfigChanged += EnableAllItem;
-            }).DoConfigure();
+                b.checkBoxConfig = new CheckBoxConfig
+                {
+                    restartRequired = true,
+                };
+                //b.onConfigChanged += EnableAllItem;
+            }).DoConfigure();            
             foreach (ItemDef item in SS2Content.SS2ContentPack.itemDefs)
             {
                 if(ItemTierCatalog.GetItemTierDef(item.tier)?.isDroppable == true)
@@ -114,19 +119,25 @@ namespace SS2
                         b.checkBoxConfig = new CheckBoxConfig
                         {
                             checkIfDisabled = () => !EnableItems.value,
+                            restartRequired = true,
                         };
                     }).DoConfigure();
-                    cfg.onConfigChanged += (b) => EnableItem(item, b);
+                    //cfg.onConfigChanged += (b) => EnableItem(item, b);
                     EnableItem(item, cfg.value);
                 }              
             }
+            EnableAllItem(EnableItems.value);
             EnableEquipments = SS2Config.ConfigFactory.MakeConfiguredBool(true, b =>
             {
                 b.section = "Enable Equipments";
                 b.key = "Enable All Equipments";
                 b.description = "Enables Starstorm 2's equipments. Set to false to disable all equipments";
                 b.configFile = SS2Config.ConfigMain;
-                b.onConfigChanged += EnableAllEquipment;
+                b.checkBoxConfig = new CheckBoxConfig
+                {
+                    restartRequired = true,
+                };
+                //b.onConfigChanged += EnableAllEquipment;
             }).DoConfigure();
             foreach (EquipmentDef item in SS2Content.SS2ContentPack.equipmentDefs)
             {
@@ -142,12 +153,14 @@ namespace SS2
                         b.checkBoxConfig = new CheckBoxConfig
                         {
                             checkIfDisabled = () => !EnableEquipments.value,
+                            restartRequired = true,
                         };
                     }).DoConfigure();
-                    cfg.onConfigChanged += (b) => EnableItem(item, b);
+                    //cfg.onConfigChanged += (b) => EnableItem(item, b);
                     EnableItem(item, cfg.value);
                 }
             }
+            EnableAllEquipment(EnableEquipments.value);
             EnableInteractables = SS2Config.ConfigFactory.MakeConfiguredBool(true, (b) =>
             {
                 b.section = "Enable Interactables";
@@ -182,12 +195,14 @@ namespace SS2
                         b.checkBoxConfig = new CheckBoxConfig
                         {
                             checkIfDisabled = () => !EnableInteractables.value,
+                            restartRequired = true,
                         };
                     }).DoConfigure();
-                    cfg.onConfigChanged += (b) => EnableItem(item, b);
+                    //cfg.onConfigChanged += (b) => EnableItem(item, b);
                     EnableItem(item, cfg.value);
                 }
             }
+            EnableAllInteractable(EnableInteractables.value);
             EnableMonsters = SS2Config.ConfigFactory.MakeConfiguredBool(true, (b) =>
             {
                 b.section = "Enable Monsters";
@@ -195,15 +210,19 @@ namespace SS2
                 b.description = "Enables Starstorm 2's monsters. Set to false to disable monsters.";
                 b.configFile = SS2Config.ConfigMain;
                 b.onConfigChanged += EnableAllMonster;
-            }).DoConfigure();
+            }).DoConfigure();            
             EnableSurvivors = SS2Config.ConfigFactory.MakeConfiguredBool(true, (b) =>
             {
                 b.section = "Enable Survivors";
                 b.key = "Enable All Survivors";
                 b.description = "Enables Starstorm 2's survivors. Set to false to disable survivors.";
                 b.configFile = SS2Config.ConfigMain;
-                b.onConfigChanged += EnableAllSurvivor;
-            }).DoConfigure();
+                b.checkBoxConfig = new CheckBoxConfig
+                {
+                    restartRequired = true,
+                };
+                //b.onConfigChanged += EnableAllSurvivor;
+            }).DoConfigure();         
             List<GameObject> uniquePrefabs = new List<GameObject>();
             foreach(CharacterSpawnCard csc in SS2Assets.LoadAllAssets<CharacterSpawnCard>(SS2Bundle.All))
             {
@@ -225,12 +244,14 @@ namespace SS2
                         b.checkBoxConfig = new CheckBoxConfig
                         {
                             checkIfDisabled = () => !EnableMonsters.value,
+                            restartRequired = true,
                         };
                     }).DoConfigure();
-                    cfg.onConfigChanged += (b) => EnableItem(item, b);
+                    //cfg.onConfigChanged += (b) => EnableItem(item, b);
                     EnableItem(item, cfg.value);
                 }
             }
+            EnableAllMonster(EnableMonsters.value);
             foreach (SurvivorDef sd in SS2Content.SS2ContentPack.survivorDefs)
             {
                 if (sd.bodyPrefab)
@@ -248,12 +269,14 @@ namespace SS2
                         b.checkBoxConfig = new CheckBoxConfig
                         {
                             checkIfDisabled = () => !EnableSurvivors.value,
+                            restartRequired = true,
                         };
                     }).DoConfigure();
-                    cfg.onConfigChanged += (b) => EnableItem(item, b);
+                    //cfg.onConfigChanged += (b) => EnableItem(item, b);
                     EnableItem(item, cfg.value);
                 }
             }
+            EnableAllSurvivor(EnableSurvivors.value);
         }
 
         private static ExpansionRequirementComponent GetExpansion(GameObject gameObject)

@@ -20,7 +20,7 @@ namespace SS2.Equipments
 
         public static List<String> whitelistedEliteDefStrings = new List<String>();
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Enabled Elite types, separated by commas. WARNING: MAY CAUSE GAME TO FAIL TO LOAD IF MIS-CONFIGURED.      Default: \"EliteFireEquipment,EliteIceEquipment,EliteLightningEquipment,EliteHauntedEquipment,ElitePoisonEquipment,EliteEarthEquipment\"")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Enabled Elite types, separated by commas. Default: \"EliteFireEquipment,EliteIceEquipment,EliteLightningEquipment,EliteHauntedEquipment,ElitePoisonEquipment,EliteEarthEquipment\"")]
         public static string eliteDefEnabledStrings = "EliteFireEquipment,EliteIceEquipment,EliteLightningEquipment,EliteEarthEquipment";
         public static void AddEliteToWhitelist(EliteDef eliteDef) => whitelistedEliteDefs.Add(eliteDef);
 
@@ -93,17 +93,26 @@ namespace SS2.Equipments
 
         private static void CreateWhitelist()
         {
-            string[] splitString = eliteDefEnabledStrings.Split(',');
-
-            whitelistedEliteDefStrings = new List<string>(splitString);
-
-            foreach (string name in whitelistedEliteDefStrings)
+            try
             {
-                EliteDef ed = GetEliteDefFromString(name);
-                if (ed != null)
+                string[] splitString = eliteDefEnabledStrings.Split(',');
+
+                whitelistedEliteDefStrings = new List<string>(splitString);
+
+                foreach (string name in whitelistedEliteDefStrings)
                 {
-                    whitelistedEliteDefs.Add(ed);
+                    EliteDef ed = GetEliteDefFromString(name);
+                    if (ed != null)
+                    {
+                        whitelistedEliteDefs.Add(ed);
+                    }
                 }
+            }
+            catch (NullReferenceException nre) // lol. lmao
+            {
+                SS2Log.Fatal("AffixEmpyrean.CreateWhitelist(): Failed to create whitelist. Using default.");
+                SS2Log.Fatal(nre);
+                whitelistedEliteDefs = new List<EliteDef> { RoR2Content.Elites.Fire, RoR2Content.Elites.Ice, RoR2Content.Elites.Lightning, DLC1Content.Elites.Earth };
             }
         }
 
