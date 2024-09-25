@@ -24,7 +24,7 @@ namespace EntityStates.Events
         private static int bossEliteLevel = 4;
         private static int eliteLevel = 3;
         private static float eliteChancePerExtraLevelCoefficient = 2f;
-        private static float eliteChancePerSecond = 2f;
+        private static float eliteChancePerSecond = 2.5f;
         private static float baseEliteChance = 10f;
 
         private float charge;
@@ -84,7 +84,7 @@ namespace EntityStates.Events
             this.stormController.StartLerp(stormLevel, lerpDuration);
 
 
-            isPermanent = stormController.IsPermanent && this.stormLevel == stormController.MaxStormLevel;
+            isPermanent = stormController.IsPermanent && this.stormLevel >= stormController.MaxStormLevel;
 
             if (NetworkServer.active)
             {
@@ -119,8 +119,8 @@ namespace EntityStates.Events
 
         private void ModifySpawnedMasters(GameObject masterObject)
         {
-            int extraLevels = this.stormLevel - eliteLevel + 1;
-            float chance = eliteChance * extraLevels * eliteChancePerExtraLevelCoefficient;
+            int extraLevels = this.stormLevel - eliteLevel;
+            float chance = eliteChance * (1 + extraLevels * eliteChancePerExtraLevelCoefficient);
             if (oldStorm) chance *= oldstormelitemutlifewafa;
             if (Util.CheckRoll(chance))
             {
@@ -216,6 +216,27 @@ namespace EntityStates.Events
 
                 if (!isPermanent && charge >= 100f)
                 {
+                    if(stormLevel == stormController.MaxStormLevel && !stormController.IsPermanent)
+                    {
+                        outer.SetNextState(new Calm());
+                        var enemies = TeamComponent.GetTeamMembers(TeamIndex.Monster).Concat(TeamComponent.GetTeamMembers(TeamIndex.Lunar)).Concat(TeamComponent.GetTeamMembers(TeamIndex.Void));
+                        foreach (var teamMember in enemies)
+                        {
+                            int buffCount = teamMember.body.GetBuffCount(SS2Content.Buffs.BuffStorm);
+                            for (int i = 0; i < buffCount; i++)
+                                teamMember.body.RemoveBuff(SS2Content.Buffs.BuffStorm);
+
+                        }
+                        GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
+                        {
+                            eventToken = "ermmmm..... bye storm",
+                            eventColor = textColor,
+                            textDuration = 6,
+                        };
+                        GameplayEventTextController.instance.EnqueueNewTextRequest(request, false);
+                        return;
+                    }
+
                     this.stormController.OnStormLevelCompleted();
                     outer.SetNextState(new Storm { stormLevel = stormLevel + 1, lerpDuration = 8f });
                     return;
@@ -250,7 +271,6 @@ namespace EntityStates.Events
         {
             bool shouldCharge = !TeleporterInteraction.instance;
             shouldCharge |= TeleporterInteraction.instance && TeleporterInteraction.instance.isIdle;
-            shouldCharge &= this.stormLevel < this.stormController.MaxStormLevel;
             return shouldCharge;
         }
 
@@ -273,15 +293,13 @@ namespace EntityStates.Events
             TeleporterInteraction.onTeleporterChargedGlobal += OnTeleporterChargedGlobal;
             if (NetworkServer.active)
             {
-                SS2Log.Warning("HOW THE FUCK??????????????????????????????????????????????????????????????????????????????????????");
-               
                 // removelistener makes it so we cant add it back in the next state's onenter. (wtf?????)
                 CombatDirector bossDirector = TeleporterInteraction.instance?.bossDirector;
                 if (bossDirector && stormLevel >= 4)
                 {
                     bossDirector.onSpawnedServer.RemoveListener(modifyBoss);
                 }
-                if (oldStorm)
+                if (oldStorm || !stormController.IsPermanent)
                 {
                     foreach (CombatDirector combatDirector in CombatDirector.instancesList)
                     {

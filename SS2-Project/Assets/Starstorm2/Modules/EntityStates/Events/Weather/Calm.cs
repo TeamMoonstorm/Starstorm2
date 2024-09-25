@@ -35,7 +35,7 @@ namespace EntityStates.Events
                 return;
             }
             base.OnEnter();
-            this.stormController.StartLerp(0, 5f);
+            this.stormController.StartLerp(0, 8f);
 
             this.totalMultiplier = StormController.chargeRng.RangeFloat(1, 1 + chargeVariance);
             GlobalEventManager.onCharacterDeathGlobal += AddCharge;
@@ -101,7 +101,7 @@ namespace EntityStates.Events
             float stageCount = Run.instance.stageClearCount + 1;
             float minutesToStorm = (-13f * stageCount) / (stageCount + 1) + 13f;
             float variance = chargeVariance * minutesToStorm;
-            return StormController.chargeRng.RangeFloat(minutesToStorm - variance, minutesToStorm + variance) * totalMultiplier;
+            return Mathf.Max(StormController.chargeRng.RangeFloat(minutesToStorm - variance, minutesToStorm + variance) * totalMultiplier, 1f);
         }
 
         private float CalculateCharge(float deltaTime)

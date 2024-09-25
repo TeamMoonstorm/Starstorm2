@@ -26,7 +26,10 @@ namespace SS2.Survivors
 
         [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR, configDescOverride = "Can Weightless Frame be activated by toggling.")]
         public static bool toggleHover = false;
-        
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR, configDescOverride = "Can Abduct grab friendly drones.")]
+        public static bool grabDrones = false;
+
         public static float confuseDuration = 4f;
         public static ModdedDamageType confuseDamageType;
         public static float _confuseSlowAmount = 0.5f;

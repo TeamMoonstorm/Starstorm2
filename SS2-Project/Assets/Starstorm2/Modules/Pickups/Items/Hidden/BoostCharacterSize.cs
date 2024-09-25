@@ -93,7 +93,8 @@ namespace SS2.Items
 
             private void OnDestroy()
             {
-                UpdateScale(0);
+                if(body.healthComponent.alive)
+                    UpdateScale(0);
             }
         }
     }

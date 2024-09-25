@@ -10,6 +10,7 @@ namespace EntityStates.NemCommmando
         private static float duration = 0.5f;
         private static float initialSpeedCoefficient = 6.5f;
         private static float finalSpeedCoefficient = 1.5f;
+        private static float upThing = 0.67f;
         public static float dodgeFOV = -1f;
         public static GameObject JetEffect;
         public static string DashJetL;
@@ -55,8 +56,10 @@ namespace EntityStates.NemCommmando
             RecalculateRollSpeed();
             if (characterMotor && characterDirection)
             {
-                characterMotor.velocity.y = 0f;
+                // min is 0, max is rollSpeed
+                float y = Mathf.Min(Mathf.Max(characterMotor.velocity.y, 0), rollSpeed) * upThing;
                 characterMotor.velocity = forwardDirection * rollSpeed;
+                characterMotor.velocity.y = y;
             }
 
             skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;

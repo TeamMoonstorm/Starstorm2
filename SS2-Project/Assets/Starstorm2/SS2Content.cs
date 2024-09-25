@@ -180,7 +180,7 @@ namespace SS2
                     VanillaSurvivorModule.AddProvider(main, ContentUtil.CreateContentPieceProvider<IVanillaSurvivorContentPiece>(main, SS2ContentPack));
                     return VanillaSurvivorModule.InitializeVanillaSurvivorContentPieces(main);
                 },
-                LoadFromAssetBundles
+                LoadFromAssetBundles,
             };
 
             _fieldAssignDispatchers = new Func<IEnumerator>[]
@@ -271,6 +271,8 @@ namespace SS2
             public static ItemDef DiaryConsumed;
 
             public static ItemDef DormantFungus;
+
+            public static ItemDef DoubleAllStats;
 
             public static ItemDef EtherealItemAffix;
 

@@ -5,15 +5,14 @@ namespace SS2.Unlocks.NemCommando
 {  
     public sealed class NemCommandoBeamAchievement : BaseAchievement
     {
-        public override void OnInstall()
+        public override void OnBodyRequirementMet()
         {
-            base.OnInstall();
+            base.OnBodyRequirementMet();
             RoR2Application.onUpdate += CheckBleedChance;
         }
-
-        public override void OnUninstall()
+        public override void OnBodyRequirementBroken()
         {
-            base.OnUninstall();
+            base.OnBodyRequirementBroken();
             RoR2Application.onUpdate -= CheckBleedChance;
         }
 

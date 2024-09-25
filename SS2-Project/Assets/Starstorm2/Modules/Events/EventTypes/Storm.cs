@@ -13,14 +13,18 @@ namespace SS2
     {
         public static ConfiguredBool ReworkedStorm = SS2Config.ConfigFactory.MakeConfiguredBool(false, b =>
         {
-            b.section = "Events";
-            b.key = "Enable Reworked Storms";
+            b.section = "Storms";
+            b.key = "Enable Storm Rework";
             b.description = "Enables Starstorm 2's unfinished Storm rework, which will be shipped fully with version 0.7.0.";
-            b.configFile = SS2Config.ConfigMain;
-            //b.CheckBoxConfig = new CheckBoxConfig
-            //{
-            //    restartRequired = true
-            //};
+            b.configFile = SS2Config.ConfigEvent;
+        }).DoConfigure();
+
+        public static ConfiguredFloat EffectIntensity = SS2Config.ConfigFactory.MakeConfiguredFloat(100, b =>
+        {
+            b.section = "Storms";
+            b.key = "Storm Effect Intensity";
+            b.description = "Changes the visual intensity of storms, from 0-100.";
+            b.configFile = SS2Config.ConfigEvent;
         }).DoConfigure();
 
         public static List<Stage> brightStages = new List<Stage> { Stage.RallypointDelta, Stage.SiphonedForest }; // should probs just check for blizzard

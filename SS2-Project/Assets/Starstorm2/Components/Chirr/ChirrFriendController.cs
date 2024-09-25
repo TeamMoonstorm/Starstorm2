@@ -180,10 +180,15 @@ namespace SS2.Components
 					if (buffDef.isDebuff)
 					{
 						body.ClearTimedBuffs(buffIndex);
-						if(body.HasBuff(buffIndex)) // if cleartimedbuff didnt work, then its not a timed buff
+						int count = body.GetBuffCount(buffIndex);
+						if(count > 0)
                         {
-							body.RemoveBuff(buffIndex);
-                        }
+							for (int i = 0; i < count; i++)
+							{
+								body.RemoveBuff(buffIndex);
+							}
+						}
+						
 					}
 					buffIndex++;
 				}

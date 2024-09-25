@@ -206,7 +206,19 @@ namespace EntityStates.Events
                     body.gameObject.AddComponent<NemesisResistances>();
                     AddHurtboxForBody(body);
                 };
-
+                GameObject target = null;
+                foreach(PlayerCharacterMasterController pcmc in PlayerCharacterMasterController.instances)
+                {
+                    if(pcmc && pcmc.master && pcmc.master.inventory.GetItemCount(SS2Content.Items.VoidRock) > 0)
+                    {
+                        target = pcmc.master.GetBodyObject();
+                        break;
+                    }
+                       
+                }
+                RoR2.CharacterAI.BaseAI ai = master.GetComponent<RoR2.CharacterAI.BaseAI>();
+                if(ai)
+                    ai.currentEnemy.gameObject = target;
                 new NemesisSpawnCard.SyncBaseStats(nemesisBossBody).Send(R2API.Networking.NetworkDestination.Clients);
                 combatSquad.AddMember(master);
                 master.onBodyDeath.AddListener(OnBodyDeath);

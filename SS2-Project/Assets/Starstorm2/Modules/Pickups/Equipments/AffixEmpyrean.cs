@@ -26,8 +26,6 @@ namespace SS2.Equipments
 
         public override void Initialize()
         {
-            //CreateWhitelist();
-            //CreatePillarDecal();
             RoR2Application.onLoad += CreateWhitelist;
             IL.RoR2.CharacterBody.RecalculateStats += RecalculateStatsEmpyreanIL;
         }
@@ -109,11 +107,11 @@ namespace SS2.Equipments
             }
         }
 
-        public static EliteDef GetEliteDefFromString(String defString)
+        public static EliteDef GetEliteDefFromString(string defString)
         {
             foreach (EliteDef ed in EliteCatalog.eliteDefs)
             {
-                if (ed.eliteEquipmentDef.name == defString)
+                if (ed.eliteEquipmentDef?.name == defString)
                 {
                     return ed;
                 }
@@ -151,16 +149,12 @@ namespace SS2.Equipments
         private bool wasHitStun;
         private bool wasFrozen;
 
-        private void Start()
+        protected override void Awake()
         {
+            base.Awake();
             this.setStateOnHurt = base.GetComponent<SetStateOnHurt>();           
             ogSubtitle = characterBody.subtitleNameToken;
             model = characterBody.modelLocator.modelTransform.GetComponent<CharacterModel>();           
-        }
-
-        private void AddEliteBuffs()
-        {
-
         }
 
         protected override void OnFirstStackGained()
@@ -217,13 +211,14 @@ namespace SS2.Equipments
             }
 
 
-            int numItems = this.characterBody.isChampion ? 4 : 2;
+            int numItems = this.characterBody.isChampion ? 2 : 1;
             float spreadAngle = 360f / numItems;
             float startingAngle = -(spreadAngle / 2) * (numItems - 1);
             for (int i = 0; i < numItems; i++)
             {
                 float angle = startingAngle + i * spreadAngle;
                 Vector3 direction = Quaternion.Euler(0, angle, 0) * damageReport.victimBody.coreTransform.forward;
+                if (numItems == 1) direction = Vector3.zero;
                 Vector3 velocity = Vector3.up * 20f + direction * 10f;
 
                 PickupIndex pickupIndex = RoR2.Artifacts.SacrificeArtifactManager.dropTable.GenerateDrop(RoR2.Artifacts.SacrificeArtifactManager.treasureRng);
@@ -233,10 +228,10 @@ namespace SS2.Equipments
                 }
             }
 
-            if (Util.CheckRoll(20f))
+            if (Util.CheckRoll(8f))
             {
                 // only pull an elite the empyrean has.
-                EliteDef[] eliteDefs = EliteCatalog.eliteDefs.Where(x => x.eliteEquipmentDef && characterBody.HasBuff(x.eliteEquipmentDef.passiveBuffDef)).ToArray();
+                EliteDef[] eliteDefs = EliteCatalog.eliteDefs.Where(x => x.eliteEquipmentDef && x.eliteEquipmentDef != SS2Content.Equipments.AffixEmpyrean && characterBody.HasBuff(x.eliteEquipmentDef.passiveBuffDef)).ToArray();
                 int eliteIndex = Mathf.FloorToInt(UnityEngine.Random.Range(0, eliteDefs.Length));
 
                 EquipmentIndex equipmentIndex = eliteDefs[eliteIndex].eliteEquipmentDef.equipmentIndex;

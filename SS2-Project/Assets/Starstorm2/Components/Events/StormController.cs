@@ -37,7 +37,7 @@ namespace SS2.Components
 
         private static void OnStageStartGlobal(Stage stage)
         {
-            if(NetworkServer.active && stage.sceneDef.sceneType == SceneType.Stage && TeleporterInteraction.instance) // this should cover every stage we want storms on? im pretty sure
+            if(Run.instance.IsExpansionEnabled(SS2Content.SS2ContentPack.expansionDefs[0]) && Events.EnableEvents.value && NetworkServer.active && stage.sceneDef.sceneType == SceneType.Stage && TeleporterInteraction.instance) // this should cover every stage we want storms on? im pretty sure
             {
                 chargeRng.ResetSeed(Run.instance.treasureRng.nextUlong);
                 mobChargeRng.ResetSeed(Run.instance.treasureRng.nextUlong);
@@ -201,6 +201,7 @@ namespace SS2.Components
 
         public void SetEffectIntensity(float newIntensity)
         {
+            newIntensity *= (Storm.EffectIntensity.value / 100f);
             if (newIntensity == this.effectIntensity) return;
 
             this.effectIntensity = newIntensity;
@@ -239,11 +240,12 @@ namespace SS2.Components
 
         public void InstantiateEffect()
         {
-            GameObject effectPrefab = SS2Assets.LoadAsset<GameObject>("ThunderstormEffect", SS2Bundle.Events);
+            GameObject effectPrefab = SS2Assets.LoadAsset<GameObject>("DefaultThunderstormEffect", SS2Bundle.Events);
             float cloudHeight = 100f;
             foreach(StormVFX vfx in this.eventVFX)
             {
-                if (((DirectorAPI.Stage)vfx.stageSerde.Value).HasFlag(DirectorAPI.GetStageEnumFromSceneDef(SceneCatalog.GetSceneDefForCurrentScene()))) // im gonna puke
+                var stageFlags = (DirectorAPI.Stage)vfx.stageSerde;
+                if (stageFlags.HasFlag(DirectorAPI.GetStageEnumFromSceneDef(SceneCatalog.GetSceneDefForCurrentScene()))) // im gonna puke
                 {
                     effectPrefab = vfx.effectPrefab;
                     cloudHeight = vfx.cloudHeight;

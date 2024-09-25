@@ -7,30 +7,22 @@ using System.Collections.Generic;
 using System.Linq;
 namespace SS2.Modules
 {
-    /*
-    public sealed class Artifacts : ArtifactModuleBase
+    
+    public sealed class Artifacts
     {
-        public static Artifacts Instance { get; private set; }
-        public override R2APISerializableContentPack SerializableContentPack { get; } = SS2Content.Instance.SerializableContentPack;
-
-        public override void Initialize()
+        [AsyncAssetLoad]
+        public static System.Collections.IEnumerator Initialize()
         {
-            Instance = this;
-            base.Initialize();
-            SS2Log.Info($"Initializing Artifacts");
-            GetArtifactBases();
 
-            var compound = SS2Assets.LoadAsset<ArtifactCompoundDef>("acdStar", SS2Bundle.Artifacts);
+            SS2AssetRequest request = SS2Assets.LoadAssetAsync<ArtifactCompoundDef>("acdStar", SS2Bundle.Artifacts);
+            request.StartLoad();
+            while (!request.IsComplete)
+                yield return null;
+
+            var compound = request.BoxedAsset;
             //compound.decalMaterial.shader = Resources.Load<ArtifactCompoundDef>("artifactcompound/acdCircle").decalMaterial.shader;
-            ArtifactCodeAPI.AddCompound(compound);
+            ArtifactCodeAPI.AddCompound(compound as ArtifactCompoundDef);
         }
 
-        protected override IEnumerable<SS2Artifact> GetArtifactBases()
-        {
-            base.GetArtifactBases()
-                .ToList()
-                .ForEach(artifact => AddArtifact(artifact));
-            return null;
-        }
-    }*/
+    }
 }
