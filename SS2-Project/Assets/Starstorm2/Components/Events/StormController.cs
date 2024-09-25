@@ -37,7 +37,7 @@ namespace SS2.Components
 
         private static void OnStageStartGlobal(Stage stage)
         {
-            if(Events.EnableEvents.value && NetworkServer.active && stage.sceneDef.sceneType == SceneType.Stage && TeleporterInteraction.instance) // this should cover every stage we want storms on? im pretty sure
+            if(Run.instance.IsExpansionEnabled(SS2Content.SS2ContentPack.expansionDefs[0]) && Events.EnableEvents.value && NetworkServer.active && stage.sceneDef.sceneType == SceneType.Stage && TeleporterInteraction.instance) // this should cover every stage we want storms on? im pretty sure
             {
                 chargeRng.ResetSeed(Run.instance.treasureRng.nextUlong);
                 mobChargeRng.ResetSeed(Run.instance.treasureRng.nextUlong);

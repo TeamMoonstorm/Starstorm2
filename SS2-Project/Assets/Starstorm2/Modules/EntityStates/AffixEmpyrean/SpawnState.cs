@@ -57,7 +57,7 @@ namespace EntityStates.AffixEmpyrean
 			{
 				EffectManager.SpawnEffect(SpawnState.spawnEffectPrefab, new EffectData
 				{
-					origin = base.characterBody.corePosition,
+					origin = base.characterBody.isFlying ? characterBody.corePosition : characterBody.footPosition,
 					scale = scale,
 				}, false);
 			}

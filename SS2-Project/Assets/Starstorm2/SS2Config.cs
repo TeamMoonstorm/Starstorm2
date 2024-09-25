@@ -8,6 +8,7 @@ using MSU.Config;
 using System.Collections;
 using RoR2;
 using MSU;
+using System;
 using RoR2.ExpansionManagement;
 using System.Linq;
 namespace SS2
@@ -25,9 +26,6 @@ namespace SS2
         public const string ID_MISC = PREFIX + "Miscellaneous";
 
         private static ExpansionDef fuckyou = ScriptableObject.CreateInstance<ExpansionDef>();
-
-        internal static IContentPiece<GameObject>[] bodyObjects;
-
         internal static ConfigFactory ConfigFactory { get; private set; }
         public static ConfigFile ConfigMain { get; private set; }
         public static ConfigFile ConfigItem { get; private set; }
@@ -75,6 +73,7 @@ namespace SS2
 
         internal SS2Config(BaseUnityPlugin bup)
         {
+
             ConfigFactory = new ConfigFactory(bup, true);          
             ConfigMain = CreateConfigFile(ID_MAIN, true);
             ConfigItem = CreateConfigFile(ID_ITEM, true);           
@@ -86,10 +85,11 @@ namespace SS2
             ConfigArtifact = CreateConfigFile(ID_ARTIFACT, true);
             ConfigMisc = CreateConfigFile(ID_MISC, true);
             unlockAll.WithConfigFile(ConfigMain).DoConfigure();
+
+            RoR2Application.onLoad += CreateConfigs;
         }
 
         // should probably try catch. but no thanks
-        [SystemInitializer(typeof(ItemTierCatalog))] // need to check if item's tier can drop in game
         public static void CreateConfigs()
         {
             EnableItems = SS2Config.ConfigFactory.MakeConfiguredBool(true, b =>
@@ -104,7 +104,7 @@ namespace SS2
             {
                 if(ItemTierCatalog.GetItemTierDef(item.tier)?.isDroppable == true)
                 {
-                    string niceName = Language.GetString(item.nameToken);
+                    string niceName = Language.GetString(item.nameToken).Replace("'", String.Empty);
                     var cfg = SS2Config.ConfigFactory.MakeConfiguredBool(true, b =>
                     {
                         b.section = "Enable Items";
@@ -132,7 +132,7 @@ namespace SS2
             {
                 if (item.canDrop)
                 {
-                    string niceName = Language.GetString(item.nameToken);
+                    string niceName = Language.GetString(item.nameToken).Replace("'", String.Empty);
                     var cfg = SS2Config.ConfigFactory.MakeConfiguredBool(true, b =>
                     {
                         b.section = "Enable Equipments";
@@ -156,12 +156,23 @@ namespace SS2
                 b.configFile = SS2Config.ConfigMain;
                 b.onConfigChanged += EnableAllInteractable;
             }).DoConfigure();
-            foreach (GameObject interactable in SS2Content.SS2ContentPack.networkedObjectPrefabs)
+            foreach (InteractableSpawnCard isc in SS2Assets.LoadAllAssets<InteractableSpawnCard>(SS2Bundle.All))
             {
-                if (interactable.TryGetComponent<IInteractable>(out _))
+                GameObject interactable = isc.prefab;
+                if (interactable?.TryGetComponent<IInteractable>(out _) == true)
                 {
                     ExpansionRequirementComponent item = GetExpansion(interactable);
+                    if (!item) continue;
                     string niceName = MSUtil.NicifyString(interactable.name);
+                    if(interactable.TryGetComponent<GenericDisplayNameProvider>(out var name))
+                    {
+                        niceName = Language.GetString(name.displayToken);
+                    }
+                    else if (interactable.TryGetComponent<PurchaseInteraction>(out var purchaseInteraction))
+                    {
+                        niceName = purchaseInteraction.displayNameToken;
+                    }
+                    niceName = niceName.Replace("'", String.Empty);
                     var cfg = SS2Config.ConfigFactory.MakeConfiguredBool(true, b =>
                     {
                         b.section = "Enable Interactables";
@@ -177,7 +188,6 @@ namespace SS2
                     EnableItem(item, cfg.value);
                 }
             }
-            bodyObjects = ContentUtil.AnalyzeForGameObjectGenericContentPieces<CharacterBody>(SS2Main.Instance).ToArray();
             EnableMonsters = SS2Config.ConfigFactory.MakeConfiguredBool(true, (b) =>
             {
                 b.section = "Enable Monsters";
@@ -197,13 +207,15 @@ namespace SS2
             List<GameObject> uniquePrefabs = new List<GameObject>();
             foreach(CharacterSpawnCard csc in SS2Assets.LoadAllAssets<CharacterSpawnCard>(SS2Bundle.All))
             {
-                if(csc.prefab && !uniquePrefabs.Contains(csc.prefab))
+                if(!(csc is NemesisSpawnCard) && csc.prefab && !uniquePrefabs.Contains(csc.prefab))
                 {
                     uniquePrefabs.Add(csc.prefab);
                     CharacterMaster master = csc.prefab.GetComponent<CharacterMaster>();
                     if (!master || (master && !master.bodyPrefab)) continue;
-                    ExpansionRequirementComponent item = master.GetComponent<ExpansionRequirementComponent>();
-                    string niceName = Language.GetString(master.bodyPrefab.GetComponent<CharacterBody>().baseNameToken);
+                    if (!SS2Content.SS2ContentPack.bodyPrefabs.Contains(master.bodyPrefab)) continue;
+                    ExpansionRequirementComponent item = GetExpansion(master.gameObject);
+                    if (!item) continue;
+                    string niceName = Language.GetString(master.bodyPrefab.GetComponent<CharacterBody>().baseNameToken).Replace("'", String.Empty);
                     var cfg = SS2Config.ConfigFactory.MakeConfiguredBool(true, b =>
                     {
                         b.section = "Enable Monsters";
@@ -219,13 +231,14 @@ namespace SS2
                     EnableItem(item, cfg.value);
                 }
             }
-            foreach (SurvivorDef sd in SS2Assets.LoadAllAssets<SurvivorDef>(SS2Bundle.All))
+            foreach (SurvivorDef sd in SS2Content.SS2ContentPack.survivorDefs)
             {
                 if (sd.bodyPrefab)
-                {
+                {                   
                     CharacterBody body = sd.bodyPrefab.GetComponent<CharacterBody>();
                     ExpansionRequirementComponent item = body.GetComponent<ExpansionRequirementComponent>();
-                    string niceName = Language.GetString(body.baseNameToken);
+                    if (!item) continue;
+                    string niceName = Language.GetString(body.baseNameToken).Replace("'", String.Empty);
                     var cfg = SS2Config.ConfigFactory.MakeConfiguredBool(true, b =>
                     {
                         b.section = "Enable Survivors";
@@ -259,11 +272,6 @@ namespace SS2
 
         private static void EnableAllItem(bool enable)
         {
-            if(!SS2Assets.assetsAvailability.available)
-            {
-                // no error message fuck oyu
-                return;
-            }
             foreach (ItemDef item in SS2Content.SS2ContentPack.itemDefs)
             {
                 if (ItemTierCatalog.GetItemTierDef(item.tier)?.isDroppable == true)
@@ -274,10 +282,6 @@ namespace SS2
         }
         private static void EnableAllEquipment(bool enable)
         {
-            if (!SS2Assets.assetsAvailability.available)
-            {
-                return;
-            }
             foreach (EquipmentDef item in SS2Content.SS2ContentPack.equipmentDefs)
             {
                 if (item.canDrop)
@@ -288,34 +292,23 @@ namespace SS2
         }
         private static void EnableAllSurvivor(bool enable)
         {
-            if (!SS2Assets.assetsAvailability.available)
+            foreach (SurvivorDef sd in SS2Content.SS2ContentPack.survivorDefs)
             {
-                return;
-            }
-            foreach (IContentPiece<GameObject> bodyCP in bodyObjects)
-            {
-                CharacterBody body;
-                if (bodyCP is SS2Survivor survivor && (body = survivor.CharacterPrefab?.GetComponent<CharacterBody>()))
+                if (sd.bodyPrefab)
                 {
-                    ExpansionRequirementComponent item = GetExpansion(body.gameObject);
+                    ExpansionRequirementComponent item = GetExpansion(sd.bodyPrefab);
                     EnableItem(item, enable);
                 }
             }
         }
         private static void EnableAllMonster(bool enable)
         {
-            if (!SS2Assets.assetsAvailability.available)
+            foreach (CharacterSpawnCard csc in SS2Assets.LoadAllAssets<CharacterSpawnCard>(SS2Bundle.All))
             {
-                return;
-            }
-            foreach (IContentPiece<GameObject> bodyCP in bodyObjects)
-            {
-                CharacterBody body;               
-                if (bodyCP is SS2Monster monster && (body = monster.CharacterPrefab?.GetComponent<CharacterBody>()))
-                {
-                    ExpansionRequirementComponent item = GetExpansion(body.gameObject);
-                    EnableItem(item, enable);
-                }
+                CharacterMaster master = csc.prefab?.GetComponent<CharacterMaster>();
+                if (!master || (master && !master.bodyPrefab)) continue;
+                ExpansionRequirementComponent item = GetExpansion(master.gameObject);
+                EnableItem(item, enable);
             }
         }
         private static void EnableAllInteractable(bool enable)

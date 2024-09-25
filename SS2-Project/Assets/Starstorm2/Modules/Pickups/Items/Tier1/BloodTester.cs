@@ -59,7 +59,7 @@ namespace SS2.Items
                             TemporaryOverlayInstance temporaryOverlay = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
                             temporaryOverlay.duration = buffDuration;
                             temporaryOverlay.animateShaderAlpha = true;
-                            temporaryOverlay.alphaCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(.15f, 1f), new Keyframe(.85f, .8f), new Keyframe(1f, 0f));
+                            temporaryOverlay.alphaCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(.15f, 1f), new Keyframe(.85f, 1f), new Keyframe(1f, 0f));
                             temporaryOverlay.destroyComponentOnEnd = true;
                             temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matHealOverlayBright", SS2Bundle.Items);
                             temporaryOverlay.AddToCharacterModel(modelTransform.gameObject.GetComponent<CharacterModel>());
