@@ -23,8 +23,8 @@ namespace EntityStates.Executioner2
         public static GameObject plumeEffectLarge = SS2Assets.LoadAsset<GameObject>("exePlumeBig", SS2Bundle.Executioner2);
         public static GameObject defaultPlume;
         public static GameObject defaultPlumeLarge;
-        //public static GameObject masteryPlume;
-        //public static GameObject masteryPlumeLarge;
+        public static GameObject masteryPlume;
+        public static GameObject masteryPlumeLarge;
 
         [SerializeField]
         public SkillDef primaryOverride;
@@ -80,14 +80,12 @@ namespace EntityStates.Executioner2
             if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
             {
                 chargeEffectPrefab = masteryChargeEffectPrefab;
-                //plumeEffect = masteryPlume;
-                //plumeEffectLarge = masteryPlumeLarge;
+                plumeEffect = masteryPlume;
+                plumeEffectLarge = masteryPlumeLarge;
             }
             else
             {
                 chargeEffectPrefab = defaultChargeEffectPrefab;
-                //plumeEffect = defaultPlume;
-                //plumeEffectLarge = defaultPlumeLarge;
             }
 
             nsm = GetComponent<NetworkStateMachine>();
