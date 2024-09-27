@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 using SS2.Survivors;
+using UnityEngine.AddressableAssets;
 
 namespace SS2.Orbs
 {
@@ -24,14 +25,17 @@ namespace SS2.Orbs
 				start = this.targetPosition
 			};
 			effectData.SetHurtBoxReference(this.target);
+			taserVFXMastery = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/ChainLightning/ChainLightningOrbEffect.prefab").WaitForCompletion();
             //if (this.groundHit)
             //{
-				EffectManager.SpawnEffect(Executioner2.taserVFX, effectData, true);
+            //EffectManager.SpawnEffect(Executioner2.taserVFX, effectData, true);
+            EffectManager.SpawnEffect(taserVFXMastery, effectData, true);
             //}
             //else
             //{
 			//	EffectManager.SpawnEffect(Executioner2.taserVFXFade, effectData, true);
 			//}
+			
 		}
 
 		public override void OnArrival()
@@ -291,7 +295,9 @@ namespace SS2.Orbs
 
 		public bool groundHit;
 
-		public class TaserWhiffComponent : MonoBehaviour
+		private GameObject taserVFXMastery;
+
+        public class TaserWhiffComponent : MonoBehaviour
 		{
 			public int reduction = 2;
 
