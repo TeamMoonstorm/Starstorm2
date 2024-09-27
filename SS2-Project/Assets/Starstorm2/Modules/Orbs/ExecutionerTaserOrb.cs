@@ -16,7 +16,9 @@ namespace SS2.Orbs
 		public Vector3 attackerAimVector;
 		public override void Begin()
 		{
-			base.duration = 0.1f;
+            taserVFXMastery = SS2Assets.LoadAsset<GameObject>("exeTaserOrbBlack", SS2Bundle.Executioner2);
+
+            base.duration = 0.1f;
 
 			EffectData effectData = new EffectData
 			{
@@ -24,21 +26,28 @@ namespace SS2.Orbs
 				genericFloat = base.duration,
 				start = this.targetPosition
 			};
-			effectData.SetHurtBoxReference(this.target);
-			taserVFXMastery = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/ChainLightning/ChainLightningOrbEffect.prefab").WaitForCompletion();
-            //if (this.groundHit)
-            //{
-            //EffectManager.SpawnEffect(Executioner2.taserVFX, effectData, true);
-            EffectManager.SpawnEffect(taserVFXMastery, effectData, true);
-            //}
-            //else
-            //{
-			//	EffectManager.SpawnEffect(Executioner2.taserVFXFade, effectData, true);
-			//}
-			
-		}
 
-		public override void OnArrival()
+            effectData.SetHurtBoxReference(this.target);
+
+            if (skinNameToken != null)
+			{
+				if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY") // michelangelo ? leonardo>? davinci ? theyre all dead . I REmain. you understand ? I REMAIN. as a starstorm contributor.,.,..
+				{
+					EffectManager.SpawnEffect(taserVFXMastery, effectData, true);
+
+				}
+				else
+				{
+					EffectManager.SpawnEffect(Executioner2.taserVFX, effectData, true);
+				}
+			} else
+			{
+                Debug.Log("something wrong happened .,. oh well !");
+            }
+
+        }
+
+        public override void OnArrival()
 		{
 			if (this.target)
 			{
@@ -89,7 +98,8 @@ namespace SS2.Orbs
 						taserOrb.range = this.range;
 						taserOrb.damageType = this.damageType;
 						taserOrb.failedToKill = this.failedToKill;
-						OrbManager.instance.AddOrb(taserOrb);
+                        taserOrb.skinNameToken = this.skinNameToken;
+                        OrbManager.instance.AddOrb(taserOrb);
 						//Debug.Log("Shot generic hit at " + this.bouncesRemaining);
 					}
 					else
@@ -116,7 +126,8 @@ namespace SS2.Orbs
 							taserOrb.range = this.range;
 							taserOrb.damageType = this.damageType;
 							taserOrb.failedToKill = this.failedToKill;
-							OrbManager.instance.AddOrb(taserOrb);
+							taserOrb.skinNameToken = this.skinNameToken;
+                            OrbManager.instance.AddOrb(taserOrb);
 							//Debug.Log("Shot repeat hit at " + this.bouncesRemaining + " | next shot has: " + Math.Max(this.bouncesRemaining - 3, 0));
 
 						}
@@ -171,8 +182,9 @@ namespace SS2.Orbs
 								taserOrb.failedToKill = this.failedToKill;
 								taserOrb.targetPosition = ray;
 								taserOrb.attackerAimVector = aimVector;
-								//taserOrb.groundHit = groundHit;
-								OrbManager.instance.AddOrb(taserOrb);
+                                taserOrb.skinNameToken = this.skinNameToken;
+                                //taserOrb.groundHit = groundHit;
+                                OrbManager.instance.AddOrb(taserOrb);
 								Debug.Log("Shot whiff at " + this.bouncesRemaining);
 							}
 							else
@@ -296,6 +308,8 @@ namespace SS2.Orbs
 		public bool groundHit;
 
 		private GameObject taserVFXMastery;
+
+		public string skinNameToken;
 
         public class TaserWhiffComponent : MonoBehaviour
 		{
