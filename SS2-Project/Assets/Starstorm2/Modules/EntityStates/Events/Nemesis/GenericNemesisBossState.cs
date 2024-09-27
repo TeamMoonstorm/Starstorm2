@@ -179,7 +179,6 @@ namespace EntityStates.Events
                 SS2Log.Error("Unable to spawn Nemesis Event. Returning.");
                 return;
             }
-
             DirectorPlacementRule directorPlacementRule = new DirectorPlacementRule
             {
                 spawnOnTarget = spawnTarget,
@@ -191,83 +190,57 @@ namespace EntityStates.Events
             DirectorSpawnRequest directorSpawnRequest = new DirectorSpawnRequest(spawnCard, directorPlacementRule, rng);
             directorSpawnRequest.teamIndexOverride = new TeamIndex?(TeamIndex.Monster);
             directorSpawnRequest.ignoreTeamMemberLimit = true;
-
-            CombatSquad combatSquad = null;
-            directorSpawnRequest.onSpawnedServer = (spawnResult) =>
-            {
-                if (!combatSquad)
-                    combatSquad = UnityEngine.Object.Instantiate(encounterPrefab).GetComponent<CombatSquad>();
-                CharacterMaster master = spawnResult.spawnedInstance.GetComponent<CharacterMaster>();
-                //master.gameObject.AddComponent<NemesisResistances>();
-                nemesisBossBody = master.GetBody();
-
-                master.onBodyStart += (body) =>
-                {
-                    body.gameObject.AddComponent<NemesisResistances>();
-                    AddHurtboxForBody(body);
-                };
-                GameObject target = null;
-                foreach(PlayerCharacterMasterController pcmc in PlayerCharacterMasterController.instances)
-                {
-                    if(pcmc && pcmc.master && pcmc.master.inventory.GetItemCount(SS2Content.Items.VoidRock) > 0)
-                    {
-                        target = pcmc.master.GetBodyObject();
-                        break;
-                    }
-                       
-                }
-                RoR2.CharacterAI.BaseAI ai = master.GetComponent<RoR2.CharacterAI.BaseAI>();
-                if(ai)
-                    ai.currentEnemy.gameObject = target;
-                new NemesisSpawnCard.SyncBaseStats(nemesisBossBody).Send(R2API.Networking.NetworkDestination.Clients);
-                combatSquad.AddMember(master);
-                master.onBodyDeath.AddListener(OnBodyDeath);
-            };
+            directorSpawnRequest.onSpawnedServer += OnBossSpawned;
             DirectorCore.instance.TrySpawnObject(directorSpawnRequest);
-            if (combatSquad)
-            {
-                combatSquad.GetComponent<TeamFilter>().defaultTeam = TeamIndex.Monster;
-                NetworkServer.Spawn(combatSquad.gameObject);
-
-                foreach (CharacterMaster master in combatSquad.membersList)
-                {
-                    master.inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
-                    master.inventory.GiveItem(RoR2Content.Items.UseAmbientLevel);
-                    int level = Mathf.FloorToInt(Run.instance.ambientLevel);
-                    if (level < minimumLevel)
-                    {
-                        master.inventory.GiveItem(RoR2Content.Items.LevelBonus, minimumLevel - level);
-                    }
-                    // remove level cap
-                    else if (Run.instance.ambientLevel >= Run.ambientLevelCap)
-                    {
-                        int extraLevels = Mathf.FloorToInt(SS2Util.AmbientLevelUncapped()) - Run.instance.ambientLevelFloor;
-                        master.inventory.GiveItem(RoR2Content.Items.LevelBonus, extraLevels);
-                    }
-                }
-            }
             UnityEngine.Object.Destroy(spawnCard);
         }
 
-
-        public void AddHurtboxForBody(CharacterBody body)
-        {
-            if (body.mainHurtBox)
+        private void OnBossSpawned(SpawnCard.SpawnResult spawnResult)
+        {          
+            CombatSquad combatSquad = UnityEngine.Object.Instantiate(encounterPrefab).GetComponent<CombatSquad>();
+            CharacterMaster master = spawnResult.spawnedInstance.GetComponent<CharacterMaster>();
+            //master.gameObject.AddComponent<NemesisResistances>();
+            nemesisBossBody = master.GetBody();
+            master.onBodyDeath.AddListener(OnBodyDeath);
+            master.onBodyStart += (body) =>
             {
-                CapsuleCollider capsuleCollider = body.mainHurtBox.GetComponent<CapsuleCollider>();
-                if (capsuleCollider)
+                FriendManager.instance.RpcSetupNemBoss(body.gameObject, spawnCard.visualEffect.name); // lol. lmao
+            };
+            master.inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
+            master.inventory.GiveItem(RoR2Content.Items.UseAmbientLevel);
+            int level = Mathf.FloorToInt(Run.instance.ambientLevel);
+            if (level < minimumLevel)
+            {
+                master.inventory.GiveItem(RoR2Content.Items.LevelBonus, minimumLevel - level);
+            }
+            // remove level cap
+            else if (Run.instance.ambientLevel >= Run.ambientLevelCap)
+            {
+                int extraLevels = Mathf.FloorToInt(SS2Util.AmbientLevelUncapped()) - Run.instance.ambientLevelFloor;
+                master.inventory.GiveItem(RoR2Content.Items.LevelBonus, extraLevels);
+            }
+            GameObject target = null;
+            foreach (PlayerCharacterMasterController pcmc in PlayerCharacterMasterController.instances)
+            {
+                if (pcmc && pcmc.master && pcmc.master.inventory.GetItemCount(SS2Content.Items.VoidRock) > 0)
                 {
-                    capsuleCollider.height = 4f;
-                    capsuleCollider.radius = 4f;
+                    target = pcmc.master.GetBodyObject();
+                    break;
                 }
 
             }
+            RoR2.CharacterAI.BaseAI ai = master.GetComponent<RoR2.CharacterAI.BaseAI>();
+            if (ai)
+                ai.currentEnemy.gameObject = target;
+            new NemesisSpawnCard.SyncBaseStats(nemesisBossBody).Send(R2API.Networking.NetworkDestination.Clients);
+            combatSquad.AddMember(master);
+            combatSquad.GetComponent<TeamFilter>().defaultTeam = TeamIndex.Monster;
+            NetworkServer.Spawn(combatSquad.gameObject);
         }
+
         public virtual void OnBodyDeath()
         {
             onNemesisDefeatedGlobal?.Invoke(nemesisBossBody);
-            // we dont want to go back to main state, since we only want one nemesis boss per stage
-            //outer.SetNextStateToMain();
             if (musicOverridePrefab)
                 musicTrack.track = outroTrack;
             outer.SetNextState(new IdleRestOfStage());

@@ -37,7 +37,8 @@ namespace EntityStates.AffixEmpyrean
 
 			float scale = Mathf.Max(minX, maxX, minZ, maxZ);
 			scale = Mathf.Max(scale, 1);
-			
+			int sizeBoost = characterBody.inventory.GetItemCount(SS2Content.Items.BoostCharacterSize);
+			scale *= (1 + sizeBoost / 100f);
 			this.animator = base.GetModelAnimator();
 			if(animator)
             {

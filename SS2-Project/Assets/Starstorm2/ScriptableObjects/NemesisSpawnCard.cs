@@ -55,13 +55,6 @@ namespace SS2
                 foreach (var skillOverride in skillOverrides)
                     skillLocator.GetSkill(skillOverride.skillSlot).SetSkillOverride(this, skillOverride.skillDef, GenericSkill.SkillOverridePriority.Replacement);
 
-                ChildLocator childLocator = body.modelLocator.modelTransform.GetComponent<ChildLocator>();
-                var effect = GameObject.Instantiate(visualEffect, body.corePosition, Quaternion.identity, childLocator.FindChild(childName));
-
-                master.onBodyDeath.AddListener(RemoveEffect);
-                void RemoveEffect() => Destroy(effect);
-
-
                 if (useOverrideState)
                 {
                     EntityStateMachine stateMachine;

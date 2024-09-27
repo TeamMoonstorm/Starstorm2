@@ -2332,8 +2332,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4333825071528141}
-  - component: {fileID: 114551274427787207}
   - component: {fileID: 54050074464172266}
+  - component: {fileID: 340610781762855330}
   m_Layer: 0
   m_Name: RainbowAffixEffect
   m_TagString: Untagged
@@ -2363,19 +2363,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
---- !u!114 &114551274427787207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1804642473221974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1080798252, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  particleSystem: {fileID: 198516984813395245}
 --- !u!54 &54050074464172266
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2392,6 +2379,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &340610781762855330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804642473221974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6c2065f12b707b41a72f36de2341ec2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleSystems:
+  - {fileID: 198516984813395245}
+  - {fileID: 285986638095506140}
+  - {fileID: 1564657428628530816}
+  - {fileID: 2936845015293745899}
 --- !u!1 &2499818426320805790
 GameObject:
   m_ObjectHideFlags: 0

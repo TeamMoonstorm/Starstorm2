@@ -16,11 +16,10 @@ namespace SS2.Components
         public static GameObject directorPrefab;
         public GameObject directorInstance;
 
+        [MSU.AsyncAssetLoad]
         internal static IEnumerator Init()
         {
-            directorPrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("StarstormDirectors", SS2Bundle.Base), "StarstormDirector", true);
-            directorPrefab.RegisterNetworkPrefab();
-
+            directorPrefab = SS2Assets.LoadAsset<GameObject>("StarstormDirectors", SS2Bundle.Base);
             yield return null;
         }
 
@@ -32,7 +31,8 @@ namespace SS2.Components
         private void Start()
         {
             instance = this;
-            On.RoR2.SceneDirector.Start += SceneDirector_Start;
+            On.RoR2.SceneDirector.Start += SceneDirector_Start; /////// fuck OFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            base.transform.SetParent(Run.instance.transform);
         }
 
         private void OnDestroy()

@@ -212,13 +212,7 @@ namespace SS2.Equipments
 
             if (!damageReport.attackerBody) return;
 
-            if (characterBody.teamComponent.teamIndex != TeamIndex.Player)
-            {
-                var cedInstance = Components.CustomEliteDirector.instance;
-                if (cedInstance.empyreanActive)
-                    cedInstance.empyreanActive = false;
-            }
-
+            if (characterBody.teamComponent.teamIndex == TeamIndex.Player) return;
 
             int numItems = this.characterBody.isChampion ? 2 : 1;
             float spreadAngle = 360f / numItems;

@@ -56,12 +56,14 @@ namespace SS2.Items
                 {
                     float damageFromForks = 0;
                     float damageFromChocolate = 0;
+                    float damageFromSigil = 0;
                     // dots add a lot of clutter
                     if (!d.damageType.damageType.HasFlag(DamageType.DoT) && t && t.body && t.body.inventory)
                     {
                         float bodyDamage = t.body.damage;
                         int stack = t.body.inventory.GetItemCount(SS2Content.Items.Fork);
                         bool hasChocolate = t.body.HasBuff(SS2Content.Buffs.BuffChocolate);
+                        int sigil = t.body.GetBuffCount(SS2Content.Buffs.BuffSigil);
 
                         if (stack > 0)
                         {
@@ -73,10 +75,16 @@ namespace SS2.Items
                         {
                             float damageWithoutChocolate = d.damage / (1 + GreenChocolate.buffDamage);
                             damageFromChocolate = d.damage - damageWithoutChocolate;
-                            DamageNumberManager.instance.SpawnDamageNumber(damageFromChocolate, d.position + Vector3.up * 0.8f, d.crit, t.teamIndex, GreenChocolate.damageColor);
+                            DamageNumberManager.instance.SpawnDamageNumber(damageFromChocolate, d.position + Vector3.up * 0.85f, d.crit, t.teamIndex, GreenChocolate.damageColor);
+                        }
+                        if (sigil > 0) // hello fork and chocolate
+                        {
+                            float damageWithoutSigil = d.damage / (1 + (HuntersSigil.baseDamage + HuntersSigil.stackDamage * (sigil - 1)));
+                            damageFromSigil = d.damage - damageWithoutSigil;
+                            DamageNumberManager.instance.SpawnDamageNumber(damageFromSigil, d.position + Vector3.up * 0.75f, d.crit, t.teamIndex, DamageColorIndex.Bleed);
                         }
                     }
-                    d.damage -= damageFromForks + damageFromChocolate;
+                    d.damage -= damageFromForks + damageFromChocolate + damageFromSigil;
                 });
             }
             else

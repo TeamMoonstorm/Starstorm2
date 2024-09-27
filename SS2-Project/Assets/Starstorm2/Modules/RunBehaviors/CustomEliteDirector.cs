@@ -10,6 +10,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using static RoR2.CombatDirector;
 using R2API;
+using UnityEngine.Networking;
 namespace SS2.Components
 {
     //This is a basic director for a custom elite to attempt to spawn.
@@ -81,10 +82,10 @@ namespace SS2.Components
 
         public void Awake()
         {
-            instance = this; //I guess there will only be one of you after all...
-
+            instance = this; //I guess there will only be one of you after all...        
             ethInstance = EtherealBehavior.instance;
 
+            if (!NetworkServer.active) return;
             rng = new Xoroshiro128Plus(Run.instance.stageRng.nextUint);
 
             GameObject director = GameObject.Find("Director");
@@ -123,25 +124,29 @@ namespace SS2.Components
 
         public void FixedUpdate()
         {
-            timer += Time.fixedDeltaTime;
-            if (timer > directorTickRate)
+            if(NetworkServer.active)
             {
-                timer = 0f;
-                eliteCredit += (rng.RangeFloat(minEliteCreditPerTick, maxEliteCreditPerTick) * Run.instance.compensatedDifficultyCoefficient * 0.4f);
-                minionCredit += (rng.RangeFloat(minMinionCreditPerTick, maxMinionCreditPerTick) * Run.instance.compensatedDifficultyCoefficient * 0.4f);
-            }
-
-            if (!enableMinionDirector)
-            {
-                if (minionCooldownTimer < minionCooldown)
-                    minionCooldownTimer += Time.fixedDeltaTime;
-
-                else
+                timer += Time.fixedDeltaTime;
+                if (timer > directorTickRate)
                 {
-                    enableMinionDirector = true;
-                    minionCooldownTimer = 0f;
+                    timer = 0f;
+                    eliteCredit += (rng.RangeFloat(minEliteCreditPerTick, maxEliteCreditPerTick) * Run.instance.compensatedDifficultyCoefficient * 0.4f);
+                    minionCredit += (rng.RangeFloat(minMinionCreditPerTick, maxMinionCreditPerTick) * Run.instance.compensatedDifficultyCoefficient * 0.4f);
+                }
+
+                if (!enableMinionDirector)
+                {
+                    if (minionCooldownTimer < minionCooldown)
+                        minionCooldownTimer += Time.fixedDeltaTime;
+
+                    else
+                    {
+                        enableMinionDirector = true;
+                        minionCooldownTimer = 0f;
+                    }
                 }
             }
+            
         }
 
 

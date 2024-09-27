@@ -37,7 +37,7 @@ namespace SS2.Components
 
         static NemesisResistances()
         {
-            On.RoR2.HealthComponent.Suicide += ResistVoid; ;
+            On.RoR2.HealthComponent.Suicide += ResistVoid;
             //On.RoR2.MapZone.TryZoneStart += TPBack;
         }
 

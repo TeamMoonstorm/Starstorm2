@@ -38,6 +38,7 @@ namespace SS2.Components
         private float stopwatch;
         private struct Pickup
         {
+            public GravitatePickup gravComponent;
             public Rigidbody rigidbody;
             public Vector3 target;
             public int layer;
@@ -65,7 +66,7 @@ namespace SS2.Components
             foreach (GravitatePickup pickup in PickupMagnet.trackedPickups)
             {
                 pickup.gravitateTarget = null;
-                pickupsToPull.Add(new Pickup { rigidbody = pickup.rigidbody, target = base.transform.position, layer = pickup.rigidbody.gameObject.layer });
+                pickupsToPull.Add(new Pickup { gravComponent = pickup, rigidbody = pickup.rigidbody, target = base.transform.position, layer = pickup.rigidbody.gameObject.layer });
             }
         }
 
@@ -80,6 +81,7 @@ namespace SS2.Components
             for(int i = 0; i < pickupsToPull.Count; i++)
             {
                 Pickup pickup = pickupsToPull[i];
+                if (pickup.gravComponent && pickup.gravComponent.gravitateTarget) continue; // let coffee beans and stuff gravitate to player
                 if(pickup.rigidbody)
                 {
                     pickup.rigidbody.velocity = Vector3.zero;

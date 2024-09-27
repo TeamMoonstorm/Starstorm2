@@ -37,9 +37,10 @@ namespace SS2.Components
         {
             if(skillIcon && CanSkillRefresh(skillIcon.targetSkill))
             {
-                this.panel.gameObject.SetActive(shouldBeActive);
+                
                 if (panelActive != shouldBeActive)
                 {
+                    this.panel.gameObject.SetActive(shouldBeActive);
                     this.panelActive = shouldBeActive;
 
                     if (this.skillIcon.targetSkillSlot == skillSlot)

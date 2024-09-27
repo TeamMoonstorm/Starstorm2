@@ -4,29 +4,36 @@
 	* Cloaking Headband duration changed to 12 seconds, from 16
 	* Broken Blood Tester heal increased to 15, from 10
 	* New visuals for Broken Blood Tester
+	* Hunter's Sigil now properly stacks
+	* Added extra damage numbers for Hunter's Sigil's bonus damage
 	* Coffee Bag now grants the full buff duration to allies
-	* New visuals for Green Chocolate
+	* Pickups pulled by Simple Magnet, like Coffee Beans and Ammo Packs, now prioritize the player over the magnet.
+	* New visuals and extra damage numbers for Green Chocolate
 	* Universal Charger's glow now properly disappears when consumed
-	* Composite Injector no longer throws errors with some UI mods.
+	* Composite Injector no longer throws errors with some UI mods
+	* Composite Injector now properly uses elite overlays when they aren't in the first equipment slot
 	* Blacklisted the following items from monsters: Detritive Trematodes, Portable Reactor, and Low Quality Speakers
 * Enemies
 	* Empyreans are slightly more common
 	* Empreans now only drop one item
-	* Reduced chance for Empyreans to drop Elite Aspects
-	* Fixed Empyrean Aspect dropping more often than intended
-	* Implemented spawn animation for Empyrean monsters
+	* Fixed Empyrean particle effects stacking on top of eachother
+	* Reduced chance for Empyreans to drop elite aspects
+	* Fixed Empyrean aspect dropping more often than intended
+	* Added spawn animation for Empyrean monsters
 * Events
-	* Adjusted Storm visuals on certain stages
+	* Adjusted storm visuals on several stages
 	* Added new config option to adjust the visual intensity of storms
 	* Config option to disable storms now works properly
+	* Storms now only appear with the SS2 expansion enabled.
 	* Reworked storms are now only permanent on Typhoon difficulty
 	* Stormborn spawn and death effects are less intense on certain stages
 	* Stormborn monsters no longer spawn twice as often as intended
 	* Stormborn monsters no longer gain bonus health in default Storms
-	* Added buff icon for Stormborn monsters
+	* Added healthbar icon for Stormborn monsters
 	* Slightly nerfed bonus movement speed and attack speed for Stormborn monsters
 	* Storm buffs no longer persist between runs
 	* Nemesis invaders now spawn targeting the player holding the Condemned Bond
+	* Networked indicator ring and boss healthbar for Nemesis invaders
 * Chirr
 	* Fixed Abduct crashes
 	* Fixed some debuffs not being cleansed from friends
