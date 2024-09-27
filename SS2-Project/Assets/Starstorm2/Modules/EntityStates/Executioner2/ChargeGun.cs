@@ -80,13 +80,13 @@ namespace EntityStates.Executioner2
             if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
             {
                 chargeEffectPrefab = masteryChargeEffectPrefab;
-                plumeEffect = defaultPlume;
-                plumeEffectLarge = defaultPlumeLarge;
+                plumeEffect = masteryPlume;
+                plumeEffectLarge = masteryPlumeLarge;
             }
             else
             {
-                plumeEffect = masteryPlume;
-                plumeEffectLarge = masteryPlumeLarge;
+                plumeEffect = defaultPlume;
+                plumeEffectLarge = defaultPlumeLarge;
                 chargeEffectPrefab = defaultChargeEffectPrefab;
             }
 
