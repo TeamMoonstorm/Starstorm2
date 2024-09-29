@@ -2,7 +2,7 @@
 using UnityEngine;
 using RoR2;
 using HG;
-
+using UnityEngine.Networking;
 namespace EntityStates.CloneDrone
 {
     public class CloneDroneSearch : BaseSkillState
@@ -23,7 +23,7 @@ namespace EntityStates.CloneDrone
             //Animator = GetModelAnimator(); does this thing even need an animator?
             childLocator = GetModelChildLocator();
 
-            if (isAuthority)
+            if (NetworkServer.active)
             {
                 sphereSearch = new SphereSearch();
                 sphereSearch.origin = transform.position;

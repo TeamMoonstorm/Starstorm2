@@ -16,12 +16,13 @@
 	* Blacklisted the following items from monsters: Detritive Trematodes, Portable Reactor, and Low Quality Speakers
 	* Removed colliders from Haunted Lamp. Again.
 * Enemies
-	* Empyreans are slightly more common
+	* Increased health of Empyrean monsters
 	* Empreans now only drop one item
 	* Fixed Empyrean particle effects stacking on top of eachother
 	* Reduced chance for Empyreans to drop elite aspects
 	* Fixed Empyrean aspect dropping more often than intended
 	* Added spawn animation for Empyrean monsters
+	* Empyreans can no longer be Stormborn
 * Events
 	* Adjusted storm visuals on several stages
 	* Added new config option to adjust the visual intensity of storms
