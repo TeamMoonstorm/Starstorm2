@@ -12,25 +12,13 @@ namespace SS2.Components
         [SyncVar]
         public bool shouldDestroySoon = false;
         public CharacterBody body;
-        public float radius;
-
         private BuffWard buffWard;
-        private SphereSearch ownerSearch;
-        public BuffDef amplifiedBuff;
         public int buffStacks = 1;
+        public BuffIndex stackBuff; //goofy ahh code. if you use this you need to remove the buff manually in a CharacterBody.RemoveBuff hook. check HuntersSigil.cs
         public AnimateShaderAlpha thing;
         private void Start()
         {
-
-
-            buffWard = GetComponent<BuffWard>();
-            if (NetworkServer.active)
-            {
-                ownerSearch = new SphereSearch();
-                ownerSearch.mask = LayerIndex.entityPrecise.mask;
-                ownerSearch.radius = radius;
-            }
-            
+            buffWard = GetComponent<BuffWard>();      
         }
         
         private void FixedUpdate()
@@ -69,7 +57,7 @@ namespace SS2.Components
                 if(timerfuck <= 0 && buffStacks > 0)
                 {
                     timerfuck = buffWard.interval;
-                    this.SetBuffStacks(TeamComponent.GetTeamMembers(buffWard.teamFilter.teamIndex), buffWard.radius, base.transform.position);
+                    this.SetBuffStacks(TeamComponent.GetTeamMembers(buffWard.teamFilter.teamIndex), buffWard.radius*buffWard.radius, base.transform.position);
                 }
                     
             }
@@ -98,10 +86,10 @@ namespace SS2.Components
                 {               
                     if (component && component.HasBuff(buffWard.buffDef) && (!buffWard.requireGrounded || !component.characterMotor || component.characterMotor.isGrounded))
                     {
-                        int buffCount = component.GetBuffCount(buffWard.buffDef);
+                        int buffCount = component.GetBuffCount(stackBuff);
                         for(int i = buffCount; i < buffStacks; i++)
                         {
-                            component.AddBuff(buffWard.buffDef);// fug
+                            component.AddBuff(stackBuff);// fug
                         }
                     }
                 }

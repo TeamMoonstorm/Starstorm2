@@ -99,7 +99,7 @@ namespace SS2.Artifacts
             if (!victimMaster.hasBody)
                 return false;
 
-            if (victimMaster.inventory.GetItemCount(SS2Content.Items.Cognation) != 0)
+            if (victimMaster.inventory.GetItemCount(SS2Content.Items.CognationHelper) != 0)
                 return false;
 
             if (BlacklistedMasterIndices.Contains(victimMaster.masterIndex))
@@ -152,7 +152,7 @@ namespace SS2.Artifacts
                 }
 
                 ghostMaster.inventory.SetEquipmentIndex(originalMaster.inventory.currentEquipmentIndex);
-                ghostMaster.inventory.GiveItem(SS2Content.Items.Cognation);
+                ghostMaster.inventory.GiveItem(SS2Content.Items.CognationHelper);
             }
 
             var timer = ghostMaster.gameObject.AddComponent<MasterSuicideOnTimer>();
@@ -162,7 +162,7 @@ namespace SS2.Artifacts
         public sealed class Behavior : BaseItemBodyBehavior
         {
             [ItemDefAssociation]
-            private static ItemDef GetItemDef() => SS2Content.Items.Cognation;
+            private static ItemDef GetItemDef() => SS2Content.Items.CognationHelper;
 
             private CharacterModel model;
 
@@ -170,7 +170,7 @@ namespace SS2.Artifacts
             {
                 if (body.teamComponent.teamIndex == TeamIndex.Player)
                 {
-                    body.inventory.RemoveItem(SS2Content.Items.Cognation, stack);
+                    body.inventory.RemoveItem(SS2Content.Items.CognationHelper, stack);
                     Destroy(this);
                 }
 

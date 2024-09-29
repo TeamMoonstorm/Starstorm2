@@ -35,6 +35,8 @@ namespace SS2.Items
 
         public static float minimumSprintDistance = 12.5f;
 
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Should Cryptic Source explode automatically after most dash skills.")]
+        public static bool AutoBurst = true;
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
@@ -63,6 +65,15 @@ namespace SS2.Items
             private void Start()
             {
                 this.bodyStateMachine = EntityStateMachine.FindByCustomName(base.gameObject, "Body");
+                if(AutoBurst)
+                    this.bodyStateMachine.nextStateModifier += TryBurst;
+            }
+            private void TryBurst(EntityStateMachine machine, ref EntityStates.EntityState nextState)
+            {
+                if (!machine.IsInMainState() && nextState.GetType() == machine.mainStateType.stateType && this.attackReady)
+                {
+                    DoBurst();
+                }
             }
             private void FixedUpdate()
             {
@@ -73,10 +84,7 @@ namespace SS2.Items
                     // do burst                   
                     if (this.attackReady)
                     {
-                        this.attackReady = false;
-                        if (this.readyEffect) Destroy(this.readyEffect);
-                        AkSoundEngine.StopPlayingID(soundId);
-                        this.Fire();
+                        DoBurst();
                     }
                     this.distanceTravelledThisSprint = 0;
                 }
@@ -96,6 +104,14 @@ namespace SS2.Items
                 wasSprinting = isSprinting;
             }
 
+            private void DoBurst()
+            {
+                this.distanceTravelledThisSprint = 0;
+                this.attackReady = false;
+                if (this.readyEffect) Destroy(this.readyEffect);
+                AkSoundEngine.StopPlayingID(soundId);
+                this.Fire();
+            }
             private void Fire()
             {
                 this.attackReady = false;

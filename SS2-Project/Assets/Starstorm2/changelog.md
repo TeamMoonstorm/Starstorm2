@@ -4,6 +4,7 @@
 	* Cloaking Headband duration changed to 12 seconds, from 16
 	* Broken Blood Tester heal increased to 15, from 10
 	* New visuals for Broken Blood Tester
+	* Cryptic Source now explodes automatically after using most dash skills. New config option to disable this behavior.
 	* Hunter's Sigil now properly stacks
 	* Added extra damage numbers for Hunter's Sigil's bonus damage
 	* Coffee Bag now grants the full buff duration to allies
@@ -13,6 +14,7 @@
 	* Composite Injector no longer throws errors with some UI mods
 	* Composite Injector now properly uses elite overlays when they aren't in the first equipment slot
 	* Blacklisted the following items from monsters: Detritive Trematodes, Portable Reactor, and Low Quality Speakers
+	* Removed colliders from Haunted Lamp. Again.
 * Enemies
 	* Empyreans are slightly more common
 	* Empreans now only drop one item
@@ -34,6 +36,8 @@
 	* Storm buffs no longer persist between runs
 	* Nemesis invaders now spawn targeting the player holding the Condemned Bond
 	* Networked indicator ring and boss healthbar for Nemesis invaders
+* Artifacts
+	* Artifact of Cognation no longer spawns enemies infinitely
 * Chirr
 	* Fixed Abduct crashes
 	* Fixed some debuffs not being cleansed from friends
@@ -45,11 +49,16 @@
 * Nemesis Mercenary
 	* Fixed model jittering at higher FPS
 	* Fixed rare Proliferate crash
+* Duplicator Drone
+	* Can now only clone a dropped item once
+	* Cannot clone an item that was spawned by a Duplicator Drone
 * Other
 	* Reimplemented config options to disable content
 	* Fixed Language files
+	* Drones no longer create two broken drones when destroyed
 	* Fixed skins being unselectable
 	* Fixed many achievements being unobtainable, or being obtained incorrectly.
+	* Fixed some startup errors
 ### 0.6.8
 * Items / Equipment
     * Various visual improvements to existing items.

@@ -7,12 +7,14 @@ using RoR2.ContentManagement;
 using System.Collections;
 using SS2.Modules;
 using System.Linq;
-
+using R2API;
 namespace SS2.Interactables
 {
     public sealed class CloneDroneDamaged : SS2Interactable
     {
         public override SS2AssetRequest<InteractableAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<InteractableAssetCollection>("acCloneDrone", SS2Bundle.Interactables);
+
+        public static GameObject clonedPickupPrefab;
 
         private SummonMasterBehavior smb;
         private CharacterMaster cm;
@@ -29,6 +31,8 @@ namespace SS2.Interactables
             cm = smb.masterPrefab.GetComponent<CharacterMaster>();
             bodyPrefab = cm.bodyPrefab;
 
+            clonedPickupPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/GenericPickup.prefab").WaitForCompletion().InstantiateClone("ClonedPickup");
+            clonedPickupPrefab.AddComponent<ClonedPickup>();
             var droneBody = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Drones/Drone1Body.prefab").WaitForCompletion();
 
             droneAkEvents = droneBody.GetComponents<AkEvent>();
@@ -53,10 +57,27 @@ namespace SS2.Interactables
             return true;
         }
 
-        
+
+        // if a pickup doesnt have this component, it can be cloned and have this component added with one cloner. the cloned pickup will also have this component but with no cloners
+        // if a pickup does have this component but no cloners, it means the pickup was the result of a clone and therefore cannot be cloned
+        // if a pickup does have this component but with a cloner, it means the pickup was NOT the result of a clone and therefore CAN be cloned
+        public class ClonedPickup : MonoBehaviour 
+        { 
+            private List<GameObject> cloners = new List<GameObject>();
+            public bool CanBeCloned(GameObject cloner) => cloners.Count >= 1 && !cloners.Contains(cloner);
+            public bool OnCloned(GameObject cloner)
+            {
+                if(!cloners.Contains(cloner))
+                {
+                    cloners.Add(cloner);
+                    return true;
+                }
+                return false;
+            }
+        }
+
         private void SpawnCloneCorpse(On.EntityStates.Drone.DeathState.orig_OnImpactServer orig, EntityStates.Drone.DeathState self, Vector3 contactPoint)
         {
-            orig(self, contactPoint);
             if (self.characterBody.bodyIndex == BodyCatalog.FindBodyIndexCaseInsensitive("CloneDroneBody"))
             {
                 DirectorPlacementRule placementRule = new DirectorPlacementRule

@@ -71,7 +71,7 @@ namespace SS2.Components
         private EtherealBehavior ethInstance;
 
         [Header("Empyrean-Related")]
-        private float empyreanEliteCost = 1500f;
+        private float empyreanEliteCost = 1800f;
         private float empyreanMultiplier = 22.5f;
         public bool empyreanActive = false;
 
@@ -245,7 +245,7 @@ namespace SS2.Components
             inventory.RemoveItem(RoR2Content.Items.BoostHp, inventory.GetItemCount(RoR2Content.Items.BoostHp));
             inventory.RemoveItem(RoR2Content.Items.BoostDamage, inventory.GetItemCount(RoR2Content.Items.BoostDamage));
 
-            inventory.GiveItem(RoR2Content.Items.BoostHp, 500);
+            inventory.GiveItem(RoR2Content.Items.BoostHp, 750);
             inventory.GiveItem(SS2Content.Items.BoostMovespeed, 35);
             inventory.GiveItem(SS2Content.Items.BoostCooldowns, 50);
             inventory.GiveItem(RoR2Content.Items.BoostDamage, 60);

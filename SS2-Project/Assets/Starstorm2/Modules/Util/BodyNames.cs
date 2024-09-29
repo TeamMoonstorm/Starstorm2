@@ -34,7 +34,7 @@ namespace SS2
             }
 
             // "Cognate"
-            if (characterBody.inventory && characterBody.inventory.GetItemCount(SS2Content.Items.Cognation) > 0)
+            if (characterBody.inventory && characterBody.inventory.GetItemCount(SS2Content.Items.CognationHelper) > 0)
             {
                 result = Language.GetStringFormatted("SS2_ARTIFACT_COGNATION_PREFIX", result);
             }

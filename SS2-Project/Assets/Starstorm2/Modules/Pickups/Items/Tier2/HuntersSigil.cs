@@ -69,13 +69,13 @@ namespace SS2.Items
             orig(self, buffType);
             if(buffType == SS2Content.Buffs.BuffSigil.buffIndex)
             {
-                self.SetBuffCount(SS2Content.Buffs.BuffSigil.buffIndex, 0);
+                self.SetBuffCount(SS2Content.Buffs.BuffSigilStack.buffIndex, 0);
             }
         }
 
         private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
-            int buffCount = sender.GetBuffCount(SS2Content.Buffs.BuffSigil);
+            int buffCount = sender.GetBuffCount(SS2Content.Buffs.BuffSigilStack);
 
             if(buffCount > 0)
             {
@@ -90,7 +90,7 @@ namespace SS2.Items
             return true;
         }
 
-        public sealed class Behavior : BaseItemBodyBehavior//, IBodyStatArgModifier
+        public sealed class Behavior : BaseItemBodyBehavior
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.HuntersSigil;
@@ -117,8 +117,8 @@ namespace SS2.Items
 
                         WardUtils wu = sigilInstance.GetComponent<WardUtils>();
                         wu.body = body;
-                        wu.radius = radius;
                         wu.buffStacks = stack;
+                        wu.stackBuff = SS2Content.Buffs.BuffSigilStack.buffIndex;
                         NetworkServer.Spawn(sigilInstance);
 
                         sigilActive = true;

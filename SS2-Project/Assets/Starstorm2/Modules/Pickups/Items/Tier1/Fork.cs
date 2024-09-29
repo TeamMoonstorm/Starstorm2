@@ -63,7 +63,7 @@ namespace SS2.Items
                         float bodyDamage = t.body.damage;
                         int stack = t.body.inventory.GetItemCount(SS2Content.Items.Fork);
                         bool hasChocolate = t.body.HasBuff(SS2Content.Buffs.BuffChocolate);
-                        int sigil = t.body.GetBuffCount(SS2Content.Buffs.BuffSigil);
+                        int sigil = t.body.GetBuffCount(SS2Content.Buffs.BuffSigilStack);
 
                         if (stack > 0)
                         {

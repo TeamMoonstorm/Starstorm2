@@ -253,8 +253,6 @@ namespace SS2
 
             public static ItemDef CoffeeBag;
 
-            public static ItemDef Cognation;
-
             public static ItemDef CognationHelper;
 
             public static ItemDef CompositeInjector;
@@ -492,6 +490,8 @@ namespace SS2
             public static BuffDef BuffScavengersFortune;
 
             public static BuffDef BuffSigil;
+
+            public static BuffDef BuffSigilStack;
 
             public static BuffDef BuffKickflip;
 
