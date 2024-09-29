@@ -43,6 +43,8 @@
 	* Fixed Abduct crashes
 	* Fixed some debuffs not being cleansed from friends
 	* Added config option to change whether Abduct can grab friendly drones. Off by default.
+* Executioner
+	* Restored VFX for mastery skins
 * Nemesis Commando
 	* Implemented updated VFX for alt skins
 	* Added missing sound effect for Blade of Cessation
@@ -54,6 +56,7 @@
 	* Can now only clone a dropped item once
 	* Cannot clone an item that was spawned by a Duplicator Drone
 * Other
+	* Added config options for Typhoon
 	* Reimplemented config options to disable content
 	* Fixed Language files
 	* Drones no longer create two broken drones when destroyed
