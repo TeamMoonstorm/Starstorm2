@@ -139,6 +139,7 @@ namespace EntityStates.Executioner2
                         taserOrb.target = hurtBox;
                         taserOrb.damageColorIndex = DamageColorIndex.Default;
                         taserOrb.damageType = DamageType.Generic;
+                        taserOrb.skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken; 
                         OrbManager.instance.AddOrb(taserOrb);
                     }
                     else
@@ -189,6 +190,8 @@ namespace EntityStates.Executioner2
                         taserOrb.damageType = DamageType.Generic;
                         taserOrb.targetPosition = ray;
                         taserOrb.attackerAimVector = aimRay.direction;
+                        taserOrb.skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
+
                         //taserOrb.groundHit = groundHit;
                         OrbManager.instance.AddOrb(taserOrb);
                     }

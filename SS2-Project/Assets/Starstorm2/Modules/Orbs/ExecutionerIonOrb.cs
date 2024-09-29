@@ -23,14 +23,14 @@ namespace SS2.Orbs
         {
             var helper = new ParallelMultiStartAssetLoadCoroutine();
             helper.AddAssetToLoad<GameObject>("ExecutionerIonOrbEffect", SS2Bundle.Executioner2);
-            helper.AddAssetToLoad<GameObject>("ExecutionerIonOrbEffectMastery", SS2Bundle.Executioner2);
+            helper.AddAssetToLoad<GameObject>("ExecutionerIonOrbEffectBlack", SS2Bundle.Executioner2);
 
             helper.Start();
             while (!helper.IsDone)
                 yield return null;
 
             _orbEffect = helper.GetLoadedAsset<GameObject>("ExecutionerIonOrbEffect");
-            _masteryOrbEffect = helper.GetLoadedAsset<GameObject>("ExecutionerIonOrbEffectMastery");
+            _masteryOrbEffect = helper.GetLoadedAsset<GameObject>("ExecutionerIonOrbEffectBlack");
             yield break;
         }
 
@@ -46,11 +46,24 @@ namespace SS2.Orbs
             };
             effectData.SetHurtBoxReference(target);
 
-            EffectManager.SpawnEffect(_orbEffect, effectData, true);
+            
 
             HurtBox hurtBox = target.GetComponent<HurtBox>();
             if (hurtBox)
+            {
                 execController = hurtBox.healthComponent.GetComponent<ExecutionerController>();
+                skinNameToken = hurtBox.gameObject.transform.root.GetComponentInChildren<ModelSkinController>().skins[hurtBox.healthComponent.body.skinIndex].nameToken;
+
+
+                if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
+                {
+                    EffectManager.SpawnEffect(_masteryOrbEffect, effectData, true);
+                }
+                else
+                {
+                    EffectManager.SpawnEffect(_orbEffect, effectData, true);
+                }
+            }
         }
 
         public override void OnArrival()
