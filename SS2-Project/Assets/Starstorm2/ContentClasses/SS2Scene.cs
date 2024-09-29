@@ -45,8 +45,11 @@ namespace SS2
             assetCollection = request.Asset;
 
             sceneDef = assetCollection.sceneDef;
-            mainTrack = assetCollection.mainTrack;
-            bossTrack = assetCollection.bossTrack;
+            
+            if(assetCollection.mainTrack.hasValue)
+                mainTrack = assetCollection.mainTrack;
+            if(assetCollection.bossTrack.hasValue)
+                bossTrack = assetCollection.bossTrack;
 
             weightRelativeToSiblings = assetCollection.stageWeightRelativeToSiblings;
             preLoop = assetCollection.appearsPreLoop;
