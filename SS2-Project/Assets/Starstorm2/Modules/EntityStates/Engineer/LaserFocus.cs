@@ -200,23 +200,23 @@ namespace EntityStates.Engi
 
                 if (counter == 4)
                 {
-                    DamageAPI.AddModdedDamageType(bulletLeft, Engineer.EngiFocusDamageProc);
-                    DamageAPI.AddModdedDamageType(bulletRight, Engineer.EngiFocusDamage);
+                    DamageAPI.AddModdedDamageType(bulletLeft, SS2.Survivors.Engineer.EngiFocusDamageProc);
+                    DamageAPI.AddModdedDamageType(bulletRight, SS2.Survivors.Engineer.EngiFocusDamage);
                     base.PlayCrossfade("Gesture Left Cannon, Additive", "FireGrenadeLeft", 0.1f);
                     base.PlayCrossfade("Gesture Right Cannon, Additive", "FireGrenadeRight", 0.1f);
 
                 }
                 else if(counter == 8)
                 {
-                    DamageAPI.AddModdedDamageType(bulletRight, Engineer.EngiFocusDamageProc);
-                    DamageAPI.AddModdedDamageType(bulletLeft, Engineer.EngiFocusDamage);
+                    DamageAPI.AddModdedDamageType(bulletRight, SS2.Survivors.Engineer.EngiFocusDamageProc);
+                    DamageAPI.AddModdedDamageType(bulletLeft, SS2.Survivors.Engineer.EngiFocusDamage);
                     base.PlayCrossfade("Gesture Left Cannon, Additive", "FireGrenadeLeft", 0.1f);
                     base.PlayCrossfade("Gesture Right Cannon, Additive", "FireGrenadeRight", 0.1f);
                 }
                 else
                 {
-                    DamageAPI.AddModdedDamageType(bulletLeft, Engineer.EngiFocusDamage);
-                    DamageAPI.AddModdedDamageType(bulletRight, Engineer.EngiFocusDamage);
+                    DamageAPI.AddModdedDamageType(bulletLeft, SS2.Survivors.Engineer.EngiFocusDamage);
+                    DamageAPI.AddModdedDamageType(bulletRight, SS2.Survivors.Engineer.EngiFocusDamage);
 
                 }
 

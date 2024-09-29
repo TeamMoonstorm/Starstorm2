@@ -1,14 +1,12 @@
-﻿using MSU;
+﻿using EntityStates.Engi;
+using MSU;
 using R2API.ScriptableObjects;
 using RoR2;
 using RoR2.ContentManagement;
+using RoR2.Skills;
 using SS2;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine.AddressableAssets;
 
 namespace SS2
@@ -51,5 +49,15 @@ namespace SS2
         }
 
         public abstract void ModifyContentPack(ContentPack contentPack);
+
+        public void AddSkill(SkillFamily skillFamily, SkillDef skillDef)
+        {
+            Array.Resize(ref skillFamily.variants, skillFamily.variants.Length + 1);
+            skillFamily.variants[skillFamily.variants.Length - 1] = new SkillFamily.Variant
+            {
+                skillDef = skillDef,
+                viewableNode = new ViewablesCatalog.Node(skillDef.skillNameToken, false, null)
+            };
+        }
     }
 }
