@@ -185,11 +185,6 @@ namespace SS2.Orbs
                                 taserOrb.skinNameToken = this.skinNameToken;
                                 //taserOrb.groundHit = groundHit;
                                 OrbManager.instance.AddOrb(taserOrb);
-								Debug.Log("Shot whiff at " + this.bouncesRemaining);
-							}
-							else
-							{
-								Debug.Log("Invalid bounce target; " + target.healthComponent.body.name);
 							}
 						}
 
@@ -228,17 +223,14 @@ namespace SS2.Orbs
             {
                 if (!repeatsAllowed)
                 {
-					Debug.Log("newTarget");
 					this.bouncedObjects.Add(hurtBox.healthComponent);
 				}
-				Debug.Log("hitting original guy ");
 				
             }
             else if(repeatsAllowed)
             {
 				if(this.target.healthComponent.alive)
                 {
-					Debug.Log("No options, hitting self");
 					hurtBox = this.target;
                 }
 				//hurtBox = (from v in this.search.GetResults() where repeatsAllowed == this.bouncedObjects.Contains(v.healthComponent) && v.healthComponent.alive select v).FirstOrDefault<HurtBox>(); //should i just do this.target? what if it's dead?

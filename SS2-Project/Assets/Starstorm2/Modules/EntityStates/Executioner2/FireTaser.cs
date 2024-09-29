@@ -167,12 +167,7 @@ namespace EntityStates.Executioner2
                         if(casts.Length > 0)
                         {
                             ray = casts[0].point;
-                            Debug.Log("Overriding with " + ray + " | " + casts[0].point);
-                            //groundHit = true;
-                        }
-                        else
-                        {
-                            Debug.Log("Didnt overide!");
+
                         }
 
                         ExecutionerTaserOrb taserOrb = new ExecutionerTaserOrb();
