@@ -84,7 +84,7 @@ namespace EntityStates.Events
             this.stormController.StartLerp(stormLevel, lerpDuration);
 
 
-            isPermanent = stormController.IsPermanent && this.stormLevel == stormController.MaxStormLevel;
+            isPermanent = stormController.IsPermanent && this.stormLevel >= stormController.MaxStormLevel;
 
             if (NetworkServer.active)
             {
@@ -140,6 +140,7 @@ namespace EntityStates.Events
         private void CreateStormElite(GameObject masterObject)
         {
             CharacterMaster master = masterObject.GetComponent<CharacterMaster>();
+            if (master.inventory.GetEquipment(0).equipmentIndex == SS2Content.Equipments.AffixEmpyrean.equipmentIndex) return;
             master.inventory.GiveItem(SS2Content.Items.AffixStorm);
 
             GameObject bodyObject = master.GetBodyObject();

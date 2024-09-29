@@ -258,7 +258,7 @@ namespace SS2.Items
             }
             if (obj.inventory)
             {
-                if (obj.inventory.GetItemCount(SS2Content.Items.Cognation) > 0)
+                if (obj.inventory.GetItemCount(SS2Content.Items.CognationHelper) > 0)
                 {
                     return;
                 }

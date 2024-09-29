@@ -5,28 +5,25 @@ namespace SS2.Unlocks.NemCommando
 {  
     public sealed class NemCommandoBeamAchievement : BaseAchievement
     {
-        private BodyIndex bodyIndex;
-        public override void OnInstall()
+        public override void OnBodyRequirementMet()
         {
-            base.OnInstall();
+            base.OnBodyRequirementMet();
             RoR2Application.onUpdate += CheckBleedChance;
         }
-
-        public override void OnUninstall()
+        public override void OnBodyRequirementBroken()
         {
-            base.OnUninstall();
+            base.OnBodyRequirementBroken();
             RoR2Application.onUpdate -= CheckBleedChance;
         }
 
         public override BodyIndex LookUpRequiredBodyIndex()
         {
-            bodyIndex = BodyCatalog.FindBodyIndex("NemCommandoBody");
-            return bodyIndex;
+            return BodyCatalog.FindBodyIndex("NemCommandoBody");
         }
 
         private void CheckBleedChance()
         {
-            if (localUser != null && localUser.cachedBody && localUser.cachedBody.bodyIndex == bodyIndex && localUser.cachedBody.bleedChance >= 100f)
+            if (localUser != null && localUser.cachedBody && localUser.cachedBody.bleedChance >= 100f)
             {
                 Grant();
             }

@@ -22,9 +22,9 @@ namespace SS2.Items
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Amount of health restored per 25 gold, per stack.")]
         [FormatToken(token, 1)]
-        public static float healthRegen = 10f;
+        public static float healthRegen = 15f;
 
-        public static float buffDuration = 1f;
+        public static float buffDuration = 1.5f;
 
         public override void Initialize()
         {
@@ -52,6 +52,19 @@ namespace SS2.Items
                         stopwatch -= cooldown;
                         
                         body.AddTimedBuff(SS2Content.Buffs.BuffBloodTesterRegen, buffDuration);
+
+                        Transform modelTransform = body.modelLocator.modelTransform;
+                        if(modelTransform)
+                        {
+                            TemporaryOverlayInstance temporaryOverlay = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
+                            temporaryOverlay.duration = buffDuration;
+                            temporaryOverlay.animateShaderAlpha = true;
+                            temporaryOverlay.alphaCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(.15f, 1f), new Keyframe(.85f, 1f), new Keyframe(1f, 0f));
+                            temporaryOverlay.destroyComponentOnEnd = true;
+                            temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matHealOverlayBright", SS2Bundle.Items);
+                            temporaryOverlay.AddToCharacterModel(modelTransform.gameObject.GetComponent<CharacterModel>());
+                        }
+                        
                     }
                 }               
             }

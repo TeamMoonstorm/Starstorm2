@@ -129,7 +129,6 @@ namespace SS2
                 DifficultyModule.Init,
                 Events.Init,
                 //Bulwark.Init,
-                Components.StarstormBehavior.Init,
                 //Components.EtherealBehavior.Init,
                 Components.VoidBehavior.Init,
                 //Void.Init,
@@ -180,7 +179,7 @@ namespace SS2
                     VanillaSurvivorModule.AddProvider(main, ContentUtil.CreateContentPieceProvider<IVanillaSurvivorContentPiece>(main, SS2ContentPack));
                     return VanillaSurvivorModule.InitializeVanillaSurvivorContentPieces(main);
                 },
-                LoadFromAssetBundles
+                LoadFromAssetBundles,
             };
 
             _fieldAssignDispatchers = new Func<IEnumerator>[]
@@ -254,8 +253,6 @@ namespace SS2
 
             public static ItemDef CoffeeBag;
 
-            public static ItemDef Cognation;
-
             public static ItemDef CognationHelper;
 
             public static ItemDef CompositeInjector;
@@ -271,6 +268,8 @@ namespace SS2
             public static ItemDef DiaryConsumed;
 
             public static ItemDef DormantFungus;
+
+            public static ItemDef DoubleAllStats;
 
             public static ItemDef EtherealItemAffix;
 
@@ -491,6 +490,8 @@ namespace SS2
             public static BuffDef BuffScavengersFortune;
 
             public static BuffDef BuffSigil;
+
+            public static BuffDef BuffSigilStack;
 
             public static BuffDef BuffKickflip;
 

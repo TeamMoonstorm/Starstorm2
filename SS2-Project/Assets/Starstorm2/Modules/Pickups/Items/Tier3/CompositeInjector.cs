@@ -219,7 +219,7 @@ namespace SS2.Items
         {
             ILCursor c = new ILCursor(il);
             bool b = c.TryGotoNext(MoveType.After,
-                x => x.MatchRet(),
+                x => x.MatchStfld<CharacterModel>(nameof(CharacterModel.activeOverlayCount)),
                 x => x.MatchLdarg(0),
                 x => x.MatchLdfld<CharacterModel>(nameof(CharacterModel.inventoryEquipmentIndex))); // bad
             if (b)
@@ -248,7 +248,7 @@ namespace SS2.Items
             }
             else
             {
-                SS2Log.Warning("CompositeInjector.CharacterModel_UpdateOverlays: ILHook failed.");
+                SS2Log.Error("CompositeInjector.CharacterModel_UpdateOverlays: ILHook failed.");
             }
         }
 

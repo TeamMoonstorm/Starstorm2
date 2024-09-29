@@ -23,8 +23,8 @@ namespace EntityStates.Executioner2
         public static GameObject plumeEffectLarge = SS2Assets.LoadAsset<GameObject>("exePlumeBig", SS2Bundle.Executioner2);
         public static GameObject defaultPlume;
         public static GameObject defaultPlumeLarge;
-        //public static GameObject masteryPlume;
-        //public static GameObject masteryPlumeLarge;
+        public static GameObject masteryPlume;
+        public static GameObject masteryPlumeLarge;
 
         [SerializeField]
         public SkillDef primaryOverride;
@@ -77,17 +77,17 @@ namespace EntityStates.Executioner2
 
             skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
 
-            if (skinNameToken == "SS2_SKIN_EXECUTIONER_MASTERY")
+            if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
             {
                 chargeEffectPrefab = masteryChargeEffectPrefab;
-                //plumeEffect = masteryPlume;
-                //plumeEffectLarge = masteryPlumeLarge;
+                plumeEffect = masteryPlume;
+                plumeEffectLarge = masteryPlumeLarge;
             }
             else
             {
+                plumeEffect = defaultPlume;
+                plumeEffectLarge = defaultPlumeLarge;
                 chargeEffectPrefab = defaultChargeEffectPrefab;
-                //plumeEffect = defaultPlume;
-                //plumeEffectLarge = defaultPlumeLarge;
             }
 
             nsm = GetComponent<NetworkStateMachine>();
@@ -241,7 +241,7 @@ namespace EntityStates.Executioner2
             {
                 ChildLocator cl = modelLocator.modelTransform.GetComponent<ChildLocator>();
                 Transform muzzle = cl.FindChild("ExhaustGun");
-                if (skinNameToken == "SS2_SKIN_EXECUTIONER_MASTERY")
+                if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
                     chargeEffectInstance = UnityEngine.Object.Instantiate(masteryChargeEffectPrefab, muzzle.position, muzzle.rotation);
                 else
                     chargeEffectInstance = UnityEngine.Object.Instantiate(defaultChargeEffectPrefab, muzzle.position, muzzle.rotation);

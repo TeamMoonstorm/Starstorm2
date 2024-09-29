@@ -34,7 +34,7 @@ namespace SS2
             }
 
             // "Cognate"
-            if (characterBody.inventory && characterBody.inventory.GetItemCount(SS2Content.Items.Cognation) > 0)
+            if (characterBody.inventory && characterBody.inventory.GetItemCount(SS2Content.Items.CognationHelper) > 0)
             {
                 result = Language.GetStringFormatted("SS2_ARTIFACT_COGNATION_PREFIX", result);
             }
@@ -44,7 +44,7 @@ namespace SS2
             {
                 result = Language.GetStringFormatted("SS2_ELITE_MODIFIER_STORM", result);
             }
-           
+          
             return result;
         }
 
@@ -84,6 +84,11 @@ namespace SS2
                     eliteToken = eliteToken.Replace("{0}", string.Empty);
                     result = result.Replace(eliteToken, string.Empty);
                 }
+                string roman = String.Empty;
+                int count = characterBody.inventory?.GetItemCount(SS2Content.Items.DoubleAllStats) ?? 0;              
+                if (count > 1) // no I
+                    roman = " " + SS2Util.ToRoman(count);
+                result = Language.GetStringFormatted("SS2_ELITE_MODIFIER_EMPYREAN", roman, result);
             }
 
             // "Ultra"

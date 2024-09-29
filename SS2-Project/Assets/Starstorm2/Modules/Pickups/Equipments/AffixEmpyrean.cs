@@ -20,7 +20,7 @@ namespace SS2.Equipments
 
         public static List<String> whitelistedEliteDefStrings = new List<String>();
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Enabled Elite types, separated by commas. WARNING: MAY CAUSE GAME TO FAIL TO LOAD IF MIS-CONFIGURED.      Default: \"EliteFireEquipment,EliteIceEquipment,EliteLightningEquipment,EliteHauntedEquipment,ElitePoisonEquipment,EliteEarthEquipment\"")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Enabled Elite types, separated by commas. Default: \"EliteFireEquipment,EliteIceEquipment,EliteLightningEquipment,EliteHauntedEquipment,ElitePoisonEquipment,EliteEarthEquipment\"")]
         public static string eliteDefEnabledStrings = "EliteFireEquipment,EliteIceEquipment,EliteLightningEquipment,EliteEarthEquipment";
         public static void AddEliteToWhitelist(EliteDef eliteDef) => whitelistedEliteDefs.Add(eliteDef);
 
@@ -93,25 +93,34 @@ namespace SS2.Equipments
 
         private static void CreateWhitelist()
         {
-            string[] splitString = eliteDefEnabledStrings.Split(',');
-
-            whitelistedEliteDefStrings = new List<string>(splitString);
-
-            foreach (string name in whitelistedEliteDefStrings)
+            try
             {
-                EliteDef ed = GetEliteDefFromString(name);
-                if (ed != null)
+                string[] splitString = eliteDefEnabledStrings.Split(',');
+
+                whitelistedEliteDefStrings = new List<string>(splitString);
+
+                foreach (string name in whitelistedEliteDefStrings)
                 {
-                    whitelistedEliteDefs.Add(ed);
+                    EliteDef ed = GetEliteDefFromString(name);
+                    if (ed != null)
+                    {
+                        whitelistedEliteDefs.Add(ed);
+                    }
                 }
+            }
+            catch (NullReferenceException nre) // lol. lmao
+            {
+                SS2Log.Fatal("AffixEmpyrean.CreateWhitelist(): Failed to create whitelist. Using default.");
+                SS2Log.Fatal(nre);
+                whitelistedEliteDefs = new List<EliteDef> { RoR2Content.Elites.Fire, RoR2Content.Elites.Ice, RoR2Content.Elites.Lightning, DLC1Content.Elites.Earth };
             }
         }
 
-        public static EliteDef GetEliteDefFromString(String defString)
+        public static EliteDef GetEliteDefFromString(string defString)
         {
             foreach (EliteDef ed in EliteCatalog.eliteDefs)
             {
-                if (ed.eliteEquipmentDef.name == defString)
+                if (ed.eliteEquipmentDef?.name == defString)
                 {
                     return ed;
                 }
@@ -203,21 +212,16 @@ namespace SS2.Equipments
 
             if (!damageReport.attackerBody) return;
 
-            if (characterBody.teamComponent.teamIndex != TeamIndex.Player)
-            {
-                var cedInstance = Components.CustomEliteDirector.instance;
-                if (cedInstance.empyreanActive)
-                    cedInstance.empyreanActive = false;
-            }
+            if (characterBody.teamComponent.teamIndex == TeamIndex.Player) return;
 
-
-            int numItems = this.characterBody.isChampion ? 4 : 2;
+            int numItems = this.characterBody.isChampion ? 2 : 1;
             float spreadAngle = 360f / numItems;
             float startingAngle = -(spreadAngle / 2) * (numItems - 1);
             for (int i = 0; i < numItems; i++)
             {
                 float angle = startingAngle + i * spreadAngle;
                 Vector3 direction = Quaternion.Euler(0, angle, 0) * damageReport.victimBody.coreTransform.forward;
+                if (numItems == 1) direction = Vector3.zero;
                 Vector3 velocity = Vector3.up * 20f + direction * 10f;
 
                 PickupIndex pickupIndex = RoR2.Artifacts.SacrificeArtifactManager.dropTable.GenerateDrop(RoR2.Artifacts.SacrificeArtifactManager.treasureRng);

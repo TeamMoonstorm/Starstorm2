@@ -34,9 +34,9 @@ namespace SS2.Components
         [SystemInitializer]
         private static void SystemInit()
         {
-            Run.onRunStartGlobal += (run) =>
+            Stage.onStageStartGlobal += (run) =>
             {
-                if (NetworkServer.active && SS2.Events.EnableEvents.value)
+                if (!Instance && NetworkServer.active)
                 {
                     var go = Object.Instantiate(SS2Assets.LoadAsset<GameObject>("SS2EventDirector", SS2Bundle.Events), run.transform);
                     NetworkServer.Spawn(go);
@@ -54,6 +54,11 @@ namespace SS2.Components
             {
                 NetworkStateMachine = GetComponent<NetworkStateMachine>();
             }
+        }
+
+        private void Start()
+        {
+            base.transform.SetParent(Run.instance.transform);
         }
         private void OnEnable()
         {
@@ -107,18 +112,22 @@ namespace SS2.Components
         bool red;
         private void doit()
         {
-            if (red && orange) return;
-            bool redguy = !red && (orange || UnityEngine.Random.Range(0f, 1f) > 0.5f);
-            if (redguy)
+            if(NetworkServer.active)
             {
-                red = true;
-                NetworkStateMachine.stateMachines[0].SetState(new EntityStates.Events.NemCommandoBossState());
+                if (red && orange) return;
+                bool redguy = !red && (orange || UnityEngine.Random.Range(0f, 1f) > 0.5f);
+                if (redguy)
+                {
+                    red = true;
+                    NetworkStateMachine.stateMachines[0].SetState(new EntityStates.Events.NemCommandoBossState());
+                }
+                else
+                {
+                    NetworkStateMachine.stateMachines[0].SetState(new EntityStates.Events.NemMercenaryBossState());
+                    orange = true;
+                }
             }
-            else
-            {
-                NetworkStateMachine.stateMachines[0].SetState(new EntityStates.Events.NemMercenaryBossState());
-                orange = true;
-            }
+            
         }
 
         private void OnDisable()

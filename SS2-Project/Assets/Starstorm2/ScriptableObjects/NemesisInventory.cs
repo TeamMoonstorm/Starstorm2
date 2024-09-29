@@ -30,10 +30,9 @@ namespace SS2
         private static void Initialize()
         {
             AddressReferencedAsset.OnAddressReferencedAssetsLoaded += InitializeNemesisInventories;
-
             void InitializeNemesisInventories()
             {
-                foreach(NemesisInventory nemesisInventory in instances)
+                foreach (NemesisInventory nemesisInventory in instances)
                 {
                     nemesisInventory.CreateWeightedSelection();
                 }

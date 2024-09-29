@@ -8,44 +8,21 @@ namespace SS2.Components
     {
         private float timer;
         private float timer2;
+        private float timerfuck;
         [SyncVar]
         public bool shouldDestroySoon = false;
         public CharacterBody body;
-        public float radius;
-
         private BuffWard buffWard;
-        private TeamIndex teamIndex;
-        private SphereSearch ownerSearch;
-        private List<HurtBox> hits;
-        private BuffDef buffToAmplify;
-        public BuffDef amplifiedBuff;
-        public float buffCount;
+        public int buffStacks = 1;
+        public BuffIndex stackBuff; //goofy ahh code. if you use this you need to remove the buff manually in a CharacterBody.RemoveBuff hook. check HuntersSigil.cs
         public AnimateShaderAlpha thing;
         private void Start()
         {
-
-
-            buffWard = GetComponent<BuffWard>();
-
-            if (buffWard != null)
-            {
-                buffToAmplify = buffWard.buffDef;
-            }
-
-            if (NetworkServer.active)
-            {
-                teamIndex = body.teamComponent.teamIndex; // trash dont care
-                hits = new List<HurtBox>();
-                ownerSearch = new SphereSearch();
-                ownerSearch.mask = LayerIndex.entityPrecise.mask;
-                ownerSearch.radius = radius;
-            }
-            
+            buffWard = GetComponent<BuffWard>();      
         }
         
         private void FixedUpdate()
         {
-
             timer += Time.fixedDeltaTime;
 
             if (shouldDestroySoon == true)
@@ -73,42 +50,59 @@ namespace SS2.Components
                 }
                 CheckBodyInRadius();
             }
+
+            if(NetworkServer.active)
+            {
+                timerfuck -= Time.fixedDeltaTime;
+                if(timerfuck <= 0 && buffStacks > 0)
+                {
+                    timerfuck = buffWard.interval;
+                    this.SetBuffStacks(TeamComponent.GetTeamMembers(buffWard.teamFilter.teamIndex), buffWard.radius*buffWard.radius, base.transform.position);
+                }
+                    
+            }
+        }
+
+        // buffward copypaste fml
+        private void SetBuffStacks(IEnumerable<TeamComponent> recipients, float radiusSqr, Vector3 currentPosition)
+        {
+            if (!NetworkServer.active)
+            {
+                return;
+            }
+            if (!buffWard?.buffDef)
+            {
+                return;
+            }
+            foreach (TeamComponent teamComponent in recipients)
+            {
+                Vector3 vector = teamComponent.transform.position - currentPosition;
+                if (buffWard.shape == BuffWard.BuffWardShape.VerticalTube)
+                {
+                    vector.y = 0f;
+                }
+                CharacterBody component = teamComponent.GetComponent<CharacterBody>();
+                if (vector.sqrMagnitude <= radiusSqr)
+                {               
+                    if (component && component.HasBuff(buffWard.buffDef) && (!buffWard.requireGrounded || !component.characterMotor || component.characterMotor.isGrounded))
+                    {
+                        int buffCount = component.GetBuffCount(stackBuff);
+                        for(int i = buffCount; i < buffStacks; i++)
+                        {
+                            component.AddBuff(stackBuff);// fug
+                        }
+                    }
+                }
+            }
         }
 
         private void CheckBodyInRadius()
         {
             bool foundOwner = body && body.HasBuff(buffWard.buffDef);
 
-            //idk what this does and only hunter sigil "used" it so im commenting it out
-            //bool foundOwner = false;
-
-            //hits.Clear();
-            //ownerSearch.ClearCandidates();
-            //ownerSearch.origin = this.transform.position;
-            //ownerSearch.RefreshCandidates();
-            //ownerSearch.FilterCandidatesByDistinctHurtBoxEntities();
-            //ownerSearch.FilterCandidatesByHurtBoxTeam(TeamMask.allButNeutral);
-            //ownerSearch.GetHurtBoxes(hits);
-            //foreach (HurtBox h in hits)
-            //{
-            //    CharacterBody charBody = h.healthComponent.body;
-
-            //    if (buffToAmplify != null)
-            //    {
-            //        if (charBody.HasBuff(buffToAmplify))
-            //        {
-            //            charBody.SetBuffCount(amplifiedBuff.buffIndex, (int)buffCount);
-            //        }
-            //    }
-
-            //    if (charBody == body)
-            //        foundOwner = true;
-            //}
-
             if (!foundOwner)
             {
-                shouldDestroySoon = true;
-                
+                shouldDestroySoon = true;           
             }
                 
         }

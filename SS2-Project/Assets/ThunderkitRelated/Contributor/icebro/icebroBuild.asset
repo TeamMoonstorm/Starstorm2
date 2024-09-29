@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 1
   OverrideManifest: 1
-  targetpipeline: {fileID: 11400000, guid: 4e0ada562e823934dad284255704129a, type: 2}
+  targetpipeline: {fileID: 11400000, guid: c00ca7d5a71d1ac43b1a79a5d6a062c5, type: 2}
 --- !u!114 &-216652644370084839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31,7 +31,7 @@ MonoBehaviour:
   PerManifest: 1
   ListType: 1
   Manifests:
-  - {fileID: 11400000, guid: bcbdefdb47e2f8f45bdd7a2a4559b405, type: 2}
+  - {fileID: -3892906877110538616, guid: bcbdefdb47e2f8f45bdd7a2a4559b405, type: 2}
   - {fileID: 11400000, guid: 5ceb1d8ed3af40d4d806e9756b403649, type: 2}
   ReplaceDirectory: 1
   Recursive: 1
@@ -55,8 +55,9 @@ MonoBehaviour:
   - {fileID: 6698980336153669172}
   - {fileID: -3576180096776599551}
   - {fileID: -216652644370084839}
-  QuickAccess: 0
-  manifest: {fileID: 11400000, guid: bcbdefdb47e2f8f45bdd7a2a4559b405, type: 2}
+  QuickAccess: 1
+  manifest: {fileID: -3892906877110538616, guid: bcbdefdb47e2f8f45bdd7a2a4559b405,
+    type: 2}
 --- !u!114 &6698980336153669172
 MonoBehaviour:
   m_ObjectHideFlags: 0

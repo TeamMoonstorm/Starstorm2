@@ -16,15 +16,15 @@ namespace SS2.Survivors
         private GameObject hehe;
         public override void Initialize()
         {
-            oil = DamageAPI.ReserveDamageType();
-            hehe = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC2/Chef/ChefGlazeProjectile.prefab").WaitForCompletion();
-            if(hehe)
-            {
-                SS2Log.Info("Oil floats on water");
-                hehe.AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>().Add(oil);
+            //oil = DamageAPI.ReserveDamageType();
+            //hehe = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC2/Chef/ChefGlazeProjectile.prefab").WaitForCompletion();
+            //if(hehe)
+            //{
+            //    SS2Log.Info("Oil floats on water");
+            //    hehe.AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>().Add(oil);
 
-                GlobalEventManager.onServerDamageDealt += GlobalEventManager_onServerDamageDealt;
-            }
+            //    GlobalEventManager.onServerDamageDealt += GlobalEventManager_onServerDamageDealt;
+            //}
             
         }
         private void GlobalEventManager_onServerDamageDealt(DamageReport obj)

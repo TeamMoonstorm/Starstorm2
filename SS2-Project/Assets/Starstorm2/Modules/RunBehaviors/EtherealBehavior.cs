@@ -73,11 +73,11 @@ namespace SS2.Components
 
         private void Start()
         {
-            instance = this;
+            //instance = this;
 
-            etherealsCompleted = 0;
-            storedScalingValue = DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).scalingValue;
-            teleIsEthereal = false;
+            //etherealsCompleted = 0;
+            //storedScalingValue = DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).scalingValue;
+            //teleIsEthereal = false;
 
         }
 

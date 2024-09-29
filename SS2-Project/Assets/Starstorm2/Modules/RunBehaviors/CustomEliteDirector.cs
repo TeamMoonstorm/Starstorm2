@@ -10,6 +10,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using static RoR2.CombatDirector;
 using R2API;
+using UnityEngine.Networking;
 namespace SS2.Components
 {
     //This is a basic director for a custom elite to attempt to spawn.
@@ -70,7 +71,7 @@ namespace SS2.Components
         private EtherealBehavior ethInstance;
 
         [Header("Empyrean-Related")]
-        private float empyreanEliteCost = 420f;
+        private float empyreanEliteCost = 1800f;
         private float empyreanMultiplier = 22.5f;
         public bool empyreanActive = false;
 
@@ -81,10 +82,10 @@ namespace SS2.Components
 
         public void Awake()
         {
-            instance = this; //I guess there will only be one of you after all...
-
+            instance = this; //I guess there will only be one of you after all...        
             ethInstance = EtherealBehavior.instance;
 
+            if (!NetworkServer.active) return;
             rng = new Xoroshiro128Plus(Run.instance.stageRng.nextUint);
 
             GameObject director = GameObject.Find("Director");
@@ -123,25 +124,29 @@ namespace SS2.Components
 
         public void FixedUpdate()
         {
-            timer += Time.fixedDeltaTime;
-            if (timer > directorTickRate)
+            if(NetworkServer.active)
             {
-                timer = 0f;
-                eliteCredit += (rng.RangeFloat(minEliteCreditPerTick, maxEliteCreditPerTick) * Run.instance.compensatedDifficultyCoefficient * 0.4f);
-                minionCredit += (rng.RangeFloat(minMinionCreditPerTick, maxMinionCreditPerTick) * Run.instance.compensatedDifficultyCoefficient * 0.4f);
-            }
-
-            if (!enableMinionDirector)
-            {
-                if (minionCooldownTimer < minionCooldown)
-                    minionCooldownTimer += Time.fixedDeltaTime;
-
-                else
+                timer += Time.fixedDeltaTime;
+                if (timer > directorTickRate)
                 {
-                    enableMinionDirector = true;
-                    minionCooldownTimer = 0f;
+                    timer = 0f;
+                    eliteCredit += (rng.RangeFloat(minEliteCreditPerTick, maxEliteCreditPerTick) * Run.instance.compensatedDifficultyCoefficient * 0.4f);
+                    minionCredit += (rng.RangeFloat(minMinionCreditPerTick, maxMinionCreditPerTick) * Run.instance.compensatedDifficultyCoefficient * 0.4f);
+                }
+
+                if (!enableMinionDirector)
+                {
+                    if (minionCooldownTimer < minionCooldown)
+                        minionCooldownTimer += Time.fixedDeltaTime;
+
+                    else
+                    {
+                        enableMinionDirector = true;
+                        minionCooldownTimer = 0f;
+                    }
                 }
             }
+            
         }
 
 
@@ -200,7 +205,7 @@ namespace SS2.Components
             //    }
             //}
 
-            if (Run.instance.stageClearCount > 8)
+            if (Run.instance.stageClearCount > 7)
             {
                 if (empyreanEliteCost <= eliteCredit && ((baseCost * empyreanMultiplier <= fastCombatDirector.monsterCredit) || (baseCost * empyreanMultiplier <= slowCombatDirector.monsterCredit)))
                 {
@@ -240,7 +245,7 @@ namespace SS2.Components
             inventory.RemoveItem(RoR2Content.Items.BoostHp, inventory.GetItemCount(RoR2Content.Items.BoostHp));
             inventory.RemoveItem(RoR2Content.Items.BoostDamage, inventory.GetItemCount(RoR2Content.Items.BoostDamage));
 
-            inventory.GiveItem(RoR2Content.Items.BoostHp, 500);
+            inventory.GiveItem(RoR2Content.Items.BoostHp, 750);
             inventory.GiveItem(SS2Content.Items.BoostMovespeed, 35);
             inventory.GiveItem(SS2Content.Items.BoostCooldowns, 50);
             inventory.GiveItem(RoR2Content.Items.BoostDamage, 60);
@@ -248,14 +253,21 @@ namespace SS2.Components
             //inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
             inventory.SetEquipmentIndex(SS2Content.Equipments.AffixEmpyrean.equipmentIndex);
 
+            int extraStages = Mathf.Max(Run.instance.stageClearCount - 7, 0);
+            int extraLoops = Mathf.FloorToInt(extraStages / Run.stagesPerLoop);
+            //inventory.GiveItem(SS2Content.Items.DoubleAllStats, extraLoops); // it is not yet your time
+            inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 15 * extraLoops); // teehee
             // remove level cap
             if(Run.instance.ambientLevel >= Run.ambientLevelCap)
             {
                 int extraLevels = Mathf.FloorToInt(SS2Util.AmbientLevelUncapped()) - Run.instance.ambientLevelFloor;
                 inventory.GiveItem(RoR2Content.Items.LevelBonus, extraLevels);
             }
-            
 
+            EntityStateMachine bodyMachine = EntityStateMachine.FindByCustomName(body.gameObject, "Body");
+            if(bodyMachine)
+                bodyMachine.initialStateType = new EntityStates.SerializableEntityStateType(typeof(EntityStates.AffixEmpyrean.SpawnState));
+            
             DeathRewards rewards = body.GetComponent<DeathRewards>();
             if (rewards)
             {

@@ -98,7 +98,9 @@ namespace EntityStates.Chirr
                             //v.y = Math.Max(v.y, between.y);
                             //base.characterMotor.AddDisplacement(v);
                             // ^^^ SNAP TO VICTIM
-                            if(!CheckDrone(healthComponent.body) && BodyIsGrabbable(healthComponent.gameObject))
+                            bool canGrab = BodyIsGrabbable(healthComponent.gameObject);
+                            if (!SS2.Survivors.Chirr.grabDrones) canGrab &= !IsBodyDrone(healthComponent.body);
+                            if(canGrab)
                             {
                                 this.OnGrabBodyAuthority(hurtBox.healthComponent.body);
                                 return;
@@ -110,7 +112,7 @@ namespace EntityStates.Chirr
 			}
 		}
 
-        private bool CheckDrone(CharacterBody body)
+        private bool IsBodyDrone(CharacterBody body)
         {
             return body.GetDisplayName().Contains("drone", System.StringComparison.InvariantCultureIgnoreCase);
         }

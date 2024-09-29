@@ -1,5 +1,65 @@
   **Warning: content spoilers below!**
-### 0.6.8
+### 0.6.9
+* Items / Equipment
+	* Cloaking Headband duration changed to 12 seconds, from 16
+	* Broken Blood Tester heal increased to 15, from 10
+	* New visuals for Broken Blood Tester
+	* Cryptic Source now explodes automatically after using most dash skills. New config option to disable this behavior.
+	* Hunter's Sigil now properly stacks
+	* Added extra damage numbers for Hunter's Sigil's bonus damage
+	* Coffee Bag now grants the full buff duration to allies
+	* Pickups pulled by Simple Magnet, like Coffee Beans and Ammo Packs, now prioritize the player over the magnet.
+	* New visuals and extra damage numbers for Green Chocolate
+	* Universal Charger's glow now properly disappears when consumed
+	* Composite Injector no longer throws errors with some UI mods
+	* Composite Injector now properly uses elite overlays when they aren't in the first equipment slot
+	* Blacklisted the following items from monsters: Detritive Trematodes, Portable Reactor, and Low Quality Speakers
+	* Removed colliders from Haunted Lamp. Again.
+* Enemies
+	* Increased health of Empyrean monsters
+	* Empreans now only drop one item
+	* Fixed Empyrean particle effects stacking on top of eachother
+	* Reduced chance for Empyreans to drop elite aspects
+	* Fixed Empyrean aspect dropping more often than intended
+	* Added spawn animation for Empyrean monsters
+	* Empyreans can no longer be Stormborn
+* Events
+	* Adjusted storm visuals on several stages
+	* Added new config option to adjust the visual intensity of storms
+	* Config option to disable storms now works properly
+	* Storms now only appear with the SS2 expansion enabled.
+	* Reworked storms are now only permanent on Typhoon difficulty
+	* Stormborn spawn and death effects are less intense on certain stages
+	* Stormborn monsters no longer spawn twice as often as intended
+	* Stormborn monsters no longer gain bonus health in default Storms
+	* Added healthbar icon for Stormborn monsters
+	* Slightly nerfed bonus movement speed and attack speed for Stormborn monsters
+	* Storm buffs no longer persist between runs
+	* Nemesis invaders now spawn targeting the player holding the Condemned Bond
+	* Networked indicator ring and boss healthbar for Nemesis invaders
+* Artifacts
+	* Artifact of Cognation no longer spawns enemies infinitely
+* Chirr
+	* Fixed Abduct crashes
+	* Fixed some debuffs not being cleansed from friends
+	* Added config option to change whether Abduct can grab friendly drones. Off by default.
+* Nemesis Commando
+	* Implemented updated VFX for alt skins
+	* Added missing sound effect for Blade of Cessation
+	* Fixed missing materials after using Decisive Strike
+* Nemesis Mercenary
+	* Fixed model jittering at higher FPS
+	* Fixed rare Proliferate crash
+* Duplicator Drone
+	* Can now only clone a dropped item once
+	* Cannot clone an item that was spawned by a Duplicator Drone
+* Other
+	* Reimplemented config options to disable content
+	* Fixed Language files
+	* Drones no longer create two broken drones when destroyed
+	* Fixed skins being unselectable
+	* Fixed many achievements being unobtainable, or being obtained incorrectly.
+	* Fixed some startup errors
 ### 0.6.8
 * Items / Equipment
     * Various visual improvements to existing items.

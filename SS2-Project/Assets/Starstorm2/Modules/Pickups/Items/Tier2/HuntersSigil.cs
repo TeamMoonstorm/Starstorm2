@@ -18,6 +18,7 @@ namespace SS2.Items
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acHuntersSigil", SS2Bundle.Items);
 
         private static GameObject _effect;
+        private static GameObject _damageBonusEffect;
         private static GameObject _sigilWard;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Radius the effect is applied in.")]
@@ -45,19 +46,43 @@ namespace SS2.Items
         public override void Initialize()
         {
             _effect = AssetCollection.FindAsset<GameObject>("SigilEffect");
+            _damageBonusEffect = AssetCollection.FindAsset<GameObject>("SigilDamageBonusEffect");
             _sigilWard = AssetCollection.FindAsset<GameObject>("SigilWard");
 
             BuffOverlays.AddBuffOverlay(AssetCollection.FindAsset<BuffDef>("BuffSigil"), AssetCollection.FindAsset<Material>("matSigilBuffOverlay"));
 
             R2API.RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
+            GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
+            On.RoR2.CharacterBody.RemoveBuff_BuffIndex += FUCK;
+        }
+
+        private void OnServerDamageDealt(DamageReport damageReport)
+        {
+            if (damageReport.attackerBody && damageReport.attackerBody.HasBuff(SS2Content.Buffs.BuffChocolate))
+                EffectManager.SimpleImpactEffect(_damageBonusEffect, damageReport.damageInfo.position, Vector3.zero, true);
+        }
+
+        // dumbass
+        // remove all buff stacks when one gets removed. time d buffs r a fuck
+        private void FUCK(On.RoR2.CharacterBody.orig_RemoveBuff_BuffIndex orig, CharacterBody self, BuffIndex buffType)
+        {
+            orig(self, buffType);
+            if(buffType == SS2Content.Buffs.BuffSigil.buffIndex)
+            {
+                self.SetBuffCount(SS2Content.Buffs.BuffSigilStack.buffIndex, 0);
+            }
         }
 
         private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
-            int buffCount = sender.GetBuffCount(SS2Content.Buffs.BuffSigil);
+            int buffCount = sender.GetBuffCount(SS2Content.Buffs.BuffSigilStack);
 
-            args.armorAdd += HuntersSigil.baseArmor * buffCount;
-            args.damageMultAdd += HuntersSigil.baseDamage * buffCount;
+            if(buffCount > 0)
+            {
+                args.armorAdd += HuntersSigil.baseArmor + stackArmor * (buffCount-1);
+                args.damageMultAdd += HuntersSigil.baseDamage + stackDamage * (buffCount-1);
+            }
+            
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -65,7 +90,7 @@ namespace SS2.Items
             return true;
         }
 
-        public sealed class Behavior : BaseItemBodyBehavior//, IBodyStatArgModifier
+        public sealed class Behavior : BaseItemBodyBehavior
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.HuntersSigil;
@@ -92,8 +117,8 @@ namespace SS2.Items
 
                         WardUtils wu = sigilInstance.GetComponent<WardUtils>();
                         wu.body = body;
-                        wu.radius = radius;
-
+                        wu.buffStacks = stack;
+                        wu.stackBuff = SS2Content.Buffs.BuffSigilStack.buffIndex;
                         NetworkServer.Spawn(sigilInstance);
 
                         sigilActive = true;

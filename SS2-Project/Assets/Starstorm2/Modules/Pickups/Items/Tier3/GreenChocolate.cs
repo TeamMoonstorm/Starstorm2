@@ -139,6 +139,7 @@ namespace SS2.Items
             }
             private void OnDestroy()
             {
+                if (effectInstance) Destroy(effectInstance);
                 //This SHOULDNT cause any errors because nothing should be fucking with the order of things in this list... I hope.
                 if (body.healthComponent)
                 {
@@ -147,6 +148,7 @@ namespace SS2.Items
                         HG.ArrayUtils.ArrayRemoveAtAndResize(ref body.healthComponent.onIncomingDamageReceivers, body.healthComponent.onIncomingDamageReceivers.Length, i);
                 }
             }
+
         }
     }
 }

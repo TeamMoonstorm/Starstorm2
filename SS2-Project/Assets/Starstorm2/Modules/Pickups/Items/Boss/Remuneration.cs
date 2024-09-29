@@ -18,9 +18,8 @@ namespace SS2.Items
             On.RoR2.PickupDisplay.RebuildModel += EnableVoidParticles;
             On.RoR2.PickupDisplay.RebuildModel += EnableVoidParticles;
 
-            deleteEffectPrefab = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Nullifier/NullifierExplosion.prefab").WaitForCompletion(), "WAWA");
+            deleteEffectPrefab = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Nullifier/NullifierExplosion.prefab").WaitForCompletion(), "WAWA", false);
             deleteEffectPrefab.GetComponent<EffectComponent>().soundName = "Play_nullifier_death_vortex_explode"; // cringe.
-            ContentAddition.AddEffect(deleteEffectPrefab); // i think this is how r2api works? not gonna look it up tehe
         }
 
         // this works for all sibylline items but i dont know where to put general hooks like that
