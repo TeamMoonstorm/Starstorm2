@@ -1,10 +1,6 @@
-﻿using Moonstorm;
-using Moonstorm.Starstorm2;
-using Moonstorm.Starstorm2.DamageTypes;
-using R2API;
-using RoR2;
-using RoR2.Projectile;
+﻿using MSU;
 using RoR2.Skills;
+using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -12,30 +8,73 @@ namespace EntityStates.Knight
 {
     class SwingSword : BasicMeleeAttack, SteppedSkillDef.IStepSetter
     {
-        public static float swingTimeCoefficient = 1.42f;
-        [TokenModifier("SS2_KNIGHT_PRIMARY_SWORD_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
+        public static float swingTimeCoefficient;
+        [FormatToken("SS2_KNIGHT_PRIMARY_SWORD_DESC",  FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static GameObject beamProjectile;
         public static SkillDef buffedSkillRef;
         public static float TokenModifier_dmgCoefficient => new SwingSword().damageCoefficient;
-        public int swingSide;
+        public int swingSide = 0;
+
+        public static float baseDurationBeforeInterruptable;
+        public static float comboFinisherBaseDurationBeforeInterruptable;
+        private float durationBeforeInterruptable;
+        public static float comboFinisherhitPauseDuration;
+
+        public static float comboFinisherDamageCoefficient;
+
+        private bool isComboFinisher => swingSide == 2;
 
         public override void OnEnter()
         {
             base.OnEnter();
-
             animator = GetModelAnimator();
+
+            if (isComboFinisher)
+            {
+                //swingEffectPrefab = comboFinisherSwingEffectPrefab;
+                hitPauseDuration = comboFinisherhitPauseDuration;
+                damageCoefficient = comboFinisherDamageCoefficient;
+            }
+
+            durationBeforeInterruptable = (isComboFinisher ? (comboFinisherBaseDurationBeforeInterruptable / attackSpeedStat) : (baseDurationBeforeInterruptable / attackSpeedStat));
         }
 
         public override void PlayAnimation()
         {
-           string animationStateName = (swingSide == 0) ? "SwingSword1" : "SwingSword2";
-           PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.05f);             
+           string animationStateName = "SwingSword0";
+
+            switch (swingSide)
+            {
+                case 0:
+                    animationStateName = "SwingSword0";
+                    swingEffectMuzzleString = "SwingRight";
+                    break;
+                case 1:
+                    animationStateName = "SwingSword1";
+                    swingEffectMuzzleString = "SwingLeft";
+                    break;
+                case 2:
+                    animationStateName = "SwingSword3";
+                    swingEffectMuzzleString = "SwingLeft";
+                    break;
+                default:
+                    animationStateName = "SwingSword0";
+                    swingEffectMuzzleString = "SwingLeft";
+                    break;
+            }
+
+            if (base.isGrounded & !base.GetModelAnimator().GetBool("isMoving"))
+            {
+                PlayCrossfade("FullBody, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.08f);
+            } else
+            {
+                PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.08f);
+            }         
         }
 
         void SteppedSkillDef.IStepSetter.SetStep(int i)
         {
             swingSide = i;
-            swingEffectMuzzleString = (swingSide == 0) ? "SwingLeft" : "SwingRight";
         }
 
         public override void OnSerialize(NetworkWriter writer)
@@ -54,8 +93,17 @@ namespace EntityStates.Knight
             base.FixedUpdate();
         }
 
+        public override void OnExit()
+        {
+            base.OnExit();
+        }
+
         public override InterruptPriority GetMinimumInterruptPriority()
         {
+            if (!(base.fixedAge < durationBeforeInterruptable))
+            {
+                return InterruptPriority.Skill;
+            }
             return InterruptPriority.PrioritySkill;
         }
     }

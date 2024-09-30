@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4966642424071758}
   m_RootOrder: 0
@@ -44,10 +45,12 @@ TrailRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -171,6 +174,11 @@ MonoBehaviour:
   destroyOnEnd: 1
   disableOnEnd: 0
   time: 0
+  initialyEnabled: 0
+  OnFinished:
+    m_PersistentCalls:
+      m_Calls: []
+  continueExistingAfterTimeMaxIsReached: 0
 --- !u!1 &1618232449059287
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,7 +192,6 @@ GameObject:
   - component: {fileID: 114741297987199392}
   - component: {fileID: 54603887302498341}
   - component: {fileID: 114469780869898643}
-  - component: {fileID: 114362723683727069}
   m_Layer: 0
   m_Name: FlowerTurretOrbEffect
   m_TagString: Untagged
@@ -202,6 +209,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4966642424071758}
   m_Father: {fileID: 0}
@@ -222,6 +230,7 @@ MonoBehaviour:
   effectIndex: -1
   positionAtReferencedTransform: 0
   parentToReferencedTransform: 0
+  noEffectData: 0
   applyScale: 0
   soundName: 
   disregardZScale: 0
@@ -278,18 +287,8 @@ MonoBehaviour:
   onArrival:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: DetachChildren
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 114411678260913821}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
         m_MethodName: set_enabled
         m_Mode: 6
         m_Arguments:
@@ -300,6 +299,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  singletonArrayIndex: -1
 --- !u!54 &54603887302498341
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -330,21 +330,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vfxPriority: 1
   vfxIntensity: 1
+  DoNotPool: 1
+  DoNotCullPool: 0
   optionalLights: []
   secondaryParticleSystem: []
---- !u!114 &114362723683727069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1618232449059287}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1080798252, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  particleSystem: {fileID: 0}
 --- !u!1 &1986764479095420
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,6 +360,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4783018296188094}
   m_Father: {fileID: 4596543956395018}

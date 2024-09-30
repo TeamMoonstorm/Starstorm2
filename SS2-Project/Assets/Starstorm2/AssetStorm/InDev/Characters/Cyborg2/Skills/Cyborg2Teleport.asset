@@ -16,19 +16,19 @@ MonoBehaviour:
   skillNameToken: SS2_CYBORG2_UTILITY_TELEPORT_NAME
   skillDescriptionToken: SS2_CYBORG2_UTILITY_TELEPORT_DESCRIPTION
   keywordTokens: []
-  icon: {fileID: 21300000, guid: a039addf22f11d94db12d737b5697a78, type: 3}
+  icon: {fileID: 21300000, guid: 7c7862d4c16d6444ebac8f0603fd6d54, type: 3}
   activationStateMachineName: Body
   activationState:
     _typeName: EntityStates.Cyborg2.Teleport, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
   interruptPriority: 3
-  baseRechargeInterval: 4
+  baseRechargeInterval: 1
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 1
   stockToConsume: 1
   resetCooldownTimerOnUse: 0
-  fullRestockOnAssign: 1
+  fullRestockOnAssign: 0
   dontAllowPastMaxStocks: 1
   beginSkillCooldownOnSkillEnd: 1
   cancelSprintingOnActivation: 0

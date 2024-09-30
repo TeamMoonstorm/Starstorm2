@@ -1,17 +1,21 @@
-﻿using R2API;
+﻿using MSU;
+using R2API;
 using RoR2;
-using RoR2.Items;
+using System.Collections;
 using UnityEngine;
-using System;
-namespace Moonstorm.Starstorm2.Items
+using RoR2.ContentManagement;
+using System.Collections.Generic;
+
+namespace SS2.Items
 {
 
     //skills recharge x% faster
     // 100 stacks = 50% cdr
     // 200 stacks = 67% cdr
-    public sealed class BoostCooldowns : ItemBase
+
+    public sealed class BoostCooldowns : SS2Item
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("BoostCooldowns", SS2Bundle.Items);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemDef>("BoostCooldowns", SS2Bundle.Items);
 
         public override void Initialize()
         {
@@ -25,6 +29,11 @@ namespace Moonstorm.Starstorm2.Items
             {
                 args.cooldownMultAdd -= Util.ConvertAmplificationPercentageIntoReductionPercentage(itemCount) / 100f;
             }
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
         }
     }
 }

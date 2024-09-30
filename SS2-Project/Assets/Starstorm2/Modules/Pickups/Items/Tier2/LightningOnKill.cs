@@ -1,48 +1,58 @@
 ﻿using RoR2;
-using RoR2.Items;
 using UnityEngine;
 using UnityEngine.Networking;
-using Moonstorm.Starstorm2.Components;
+using SS2.Components;
 using System.Collections.Generic;
 using RoR2.Orbs;
-namespace Moonstorm.Starstorm2.Items
+using MSU;
+using RoR2.ContentManagement;
+using System.Collections;
+using MSU.Config;
+
+namespace SS2.Items
 {
-    public sealed class LightningOnKill : ItemBase
+    public sealed class LightningOnKill : SS2Item
     {
         private const string token = "SS2_ITEM_LIGHTNINGONKILL_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("LightningOnKill", SS2Bundle.Items);
 
-        public static GameObject orbEffect = SS2Assets.LoadAsset<GameObject>("JellyOrbEffect", SS2Bundle.Items);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acLightningOnKill", SS2Bundle.Items);
 
-        public static NetworkSoundEventDef soundEffect = SS2Assets.LoadAsset<NetworkSoundEventDef>("nsedProcLightningOnKill", SS2Bundle.Items);
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Total damage of Man O' War's lightning. (1 = 100%)")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
+        public static float damageCoeff = 2f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Total damage of Man O' War's lightning. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
-        public static float damageCoeff = 2f;         
-
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Number of bounces.")]
-        [TokenModifier(token, StatTypes.Default, 1)]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Number of bounces.")]
+        [FormatToken(token, 1)]
         public static int bounceBase = 3;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Number of bounces per stack.")]
-        [TokenModifier(token, StatTypes.Default, 2)]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Number of bounces per stack.")]
+        [FormatToken(token, 2)]
         public static int bounceStack = 2;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius of Man O' War's lightning, in meters.")]
-        [TokenModifier(token, StatTypes.Default, 3)]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Radius of Man O' War's lightning, in meters.")]
+        [FormatToken(token, 3)]
         public static float radiusBase = 20f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius of Man O' War's lightning per stack, in meters.")]
-        [TokenModifier(token, StatTypes.Default, 4)]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Radius of Man O' War's lightning per stack, in meters.")]
+        [FormatToken(token, 4)]
         public static float radiusPerStack = 4f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Proc coefficient of damage dealt by Man o' War.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Proc coefficient of damage dealt by Man o' War.")]
         public static float procCo = 1f;
 
+        private static GameObject _orbEffect;
+        private static NetworkSoundEventDef _soundEffect;
 
         public override void Initialize()
         {
+            _orbEffect = AssetCollection.FindAsset<GameObject>("JellyOrbEffect");
+            _soundEffect = AssetCollection.FindAsset<NetworkSoundEventDef>("nsedProcLightningOnKill");
             GlobalEventManager.onCharacterDeathGlobal += ProcLightningOnKill;
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
         }
 
         private void ProcLightningOnKill(DamageReport damageReport)
@@ -51,17 +61,19 @@ namespace Moonstorm.Starstorm2.Items
             int stack = body && body.inventory ? body.inventory.GetItemCount(ItemDef) : 0;
             if (stack <= 0) return;
 
-            
+
 
             if (!NetworkServer.active) return;
 
+            EffectManager.SimpleEffect(SS2Assets.LoadAsset<GameObject>("JellyLightningStart", SS2Bundle.Items), damageReport.victimBody.corePosition, Quaternion.identity, true);
+
             int bouncesRemaining = bounceBase + bounceStack * (stack - 1) - 1;
 
-            
+
 
             CustomLightningOrb orb = new CustomLightningOrb();
-            orb.orbEffectPrefab = orbEffect;
-            
+            orb.orbEffectPrefab = _orbEffect;
+
             orb.duration = 0.033f;
             orb.bouncesRemaining = bouncesRemaining;
             orb.range = radiusBase + radiusPerStack * (stack - 1);
@@ -84,7 +96,7 @@ namespace Moonstorm.Starstorm2.Items
                     orb.canProcGadget = true;
                 }
 
-                EffectManager.SimpleSoundEffect(soundEffect.index, damageReport.victim.transform.position, true);
+                EffectManager.SimpleSoundEffect(_soundEffect.index, damageReport.victim.transform.position, true);
                 orb.target = hurtbox;
                 OrbManager.instance.AddOrb(orb);
             }

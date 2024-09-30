@@ -1,11 +1,7 @@
 ﻿using RoR2;
 using RoR2.Orbs;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using static Moonstorm.Starstorm2.Items.FieldAccelerator;
-
-namespace Moonstorm.Starstorm2.Orbs
+using static SS2.Items.FieldAccelerator;
+namespace SS2.Orbs
 {
     public class FieldAcceleratorOrbEffect : OrbEffect
     {
@@ -17,9 +13,7 @@ namespace Moonstorm.Starstorm2.Orbs
             {
                 var fatb = teleInstance.GetComponent<FieldAcceleratorTeleporterBehavior>();
 
-                if (fatb != null)
-                    targetTransform = fatb.displayInstance.transform;
-                else
+                if(!targetTransform)
                     targetTransform = teleInstance.transform;
             }
         }

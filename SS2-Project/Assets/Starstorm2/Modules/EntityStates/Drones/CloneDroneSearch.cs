@@ -1,12 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using RoR2;
-using Moonstorm.Starstorm2;
-using UnityEngine.Networking;
 using HG;
-using Moonstorm.Starstorm2.Components;
-
+using UnityEngine.Networking;
 namespace EntityStates.CloneDrone
 {
     public class CloneDroneSearch : BaseSkillState
@@ -27,7 +23,7 @@ namespace EntityStates.CloneDrone
             //Animator = GetModelAnimator(); does this thing even need an animator?
             childLocator = GetModelChildLocator();
 
-            if (isAuthority)
+            if (NetworkServer.active)
             {
                 sphereSearch = new SphereSearch();
                 sphereSearch.origin = transform.position;
@@ -61,7 +57,6 @@ namespace EntityStates.CloneDrone
             foreach (Collider c in list)
             {
                 GameObject obj = c.transform.parent.gameObject;
-                //Debug.Log("found obj: " + obj.name);
                 objectList.Add(obj);
             }
 
@@ -70,26 +65,21 @@ namespace EntityStates.CloneDrone
             foreach (GameObject obj in objectList)
             {
                 //bypass non-items
-                if (obj.GetComponent<GenericPickupController>() != null)
+                var tempGPC = obj.GetComponent<GenericPickupController>();
+                if (tempGPC && (!obj.TryGetComponent<SS2.Interactables.CloneDroneDamaged.ClonedPickup>(out var c) || c.CanBeCloned(base.gameObject)) && IsWhitelistTier(tempGPC.pickupIndex.pickupDef))
                 {
-                    GenericPickupController tempGPC = obj.GetComponent<GenericPickupController>();
-                    //filter items that aren't normal world drops or void variants.
-                    if (IsWhitelistTier(tempGPC.pickupIndex.pickupDef))
+                    float distance = Vector3.Distance(transform.position, obj.transform.position);
+                    //if no closest object or obj is closer than old closest object
+                    if (closestObject == null || distance < Vector3.Distance(transform.position, closestObject.transform.position))
                     {
-                        float distance = Vector3.Distance(transform.position, obj.transform.position);
-                        //if no closest object or obj is closer than old closest object
-                        if (closestObject == null || distance < Vector3.Distance(transform.position, closestObject.transform.position))
-                        {
-                            closestObject = obj;
-                        }                      
-                    }
+                        closestObject = obj;
+                    }                                        
                 }
             }
 
             if (closestObject != null)
             {
                 gpc = closestObject.GetComponent<GenericPickupController>();
-                //Debug.Log("closest item pickup: " + gpc.GetDisplayName());
                 Clone();
             }
             else
@@ -111,16 +101,13 @@ namespace EntityStates.CloneDrone
             {
                 //Clone();
             }
-            //Debug.Log("exiting search");
         }
 
         public void Clone()
         {
-            //Debug.Log("setting state with gpc: " + gpc.GetDisplayName());
             CloneDroneCook nextState = new CloneDroneCook();
             nextState.target = gpc.gameObject;
-            outer.SetNextState(nextState); //why doesn't this work????
-            //Debug.Log("set next state");
+            outer.SetNextState(nextState); 
         }
 
         public override void FixedUpdate()

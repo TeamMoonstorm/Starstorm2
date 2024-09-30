@@ -1,9 +1,7 @@
-﻿using Moonstorm.Starstorm2;
-using Moonstorm.Starstorm2.Components;
+﻿using SS2;
+using SS2.Components;
 using RoR2;
 using RoR2.Skills;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace EntityStates.NemCaptain.Weapon

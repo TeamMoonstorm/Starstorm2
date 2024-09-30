@@ -1,8 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
-
-namespace Moonstorm.Starstorm2.PostProcess
+namespace SS2.PostProcess
 {
     [PostProcess(typeof(SS2RampFogRenderer), PostProcessEvent.BeforeTransparent, "SS2/RampFog", true)]
     [Serializable]

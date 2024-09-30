@@ -1,8 +1,10 @@
 ﻿using RoR2;
 using UnityEngine;
 using Path = System.IO.Path;
-
-namespace Moonstorm.Starstorm2
+using MonoMod.RuntimeDetour;
+using System;
+using R2API.Utils;
+namespace SS2
 {
     public static class SoundBankManager
     {
@@ -10,11 +12,29 @@ namespace Moonstorm.Starstorm2
         {
             get
             {
-                return Path.Combine(SS2Assets.Instance.AssemblyDir, "soundbanks");
+                return Path.Combine(Path.GetDirectoryName(SS2Main.Instance.Info.Location), "soundbanks");
             }
         }
 
         public static void Init()
+        {
+            var hook = new Hook(
+            typeof(AkSoundEngineInitialization).GetMethodCached(nameof(AkSoundEngineInitialization.InitializeSoundEngine)),
+            typeof(SoundBankManager).GetMethodCached(nameof(AddBanks)));
+
+            
+        }
+
+        private static bool AddBanks(Func<AkSoundEngineInitialization, bool> orig, AkSoundEngineInitialization self)
+        {
+            var res = orig(self);
+
+            LoadBanks();
+
+            return res;
+        }
+
+        private static void LoadBanks()
         {
             //LogCore.LogE(AkSoundEngine.ClearBanks().ToString());
             AkSoundEngine.AddBasePath(soundBankDirectory);

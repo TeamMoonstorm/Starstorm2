@@ -1,53 +1,34 @@
-﻿using Moonstorm.Starstorm2.Components;
+﻿using MSU;
 using RoR2;
-using RoR2.Items;
+using RoR2.ContentManagement;
 using UnityEngine;
-using UnityEngine.Networking;
 using R2API;
 using UnityEngine.AddressableAssets;
-using Mono.Cecil.Cil;
-using MonoMod.Cil;
-using System;
-
-namespace Moonstorm.Starstorm2.Items
+namespace SS2.Items
 {
-    // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION 
-    // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION 
-    // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION 
-    // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION 
-    // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION 
-    // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION // ITS NOT RENUMERATION 
-    public sealed class Remuneration : ItemBase
+    public sealed class Remuneration : SS2Item
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Remuneration", SS2Bundle.Items);
-
-        //[RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance to gain soul initially. (1 = 100%)")]
-        //[TokenModifier("SS2_ITEM_REMUNERATION_DESC", StatTypes.MultiplyByN, 0, "100")]
-        //public static float initChance = 0.005f;
-
-        //[RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Soul gain chance cap. (1 = 100%)")]
-        //public static float maxChance = 0.1f;
-
-
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRemuneration", SS2Bundle.Items);
         public static GameObject remunerationControllerPrefab;
 
-        // LAZY SHITCODE ALL TIME EVER. SRY. SHOULD BE TEMPORARY. NEMESIS MERCENARY MUST RELEASE
-        // ALL THE BEHAVIOR IS SPLIT UP IN LIKE 10 DIFFERENT CLASSES. HAHA LOL!. IT WILL EVENTUALLY MAKE SENSE WHEN ITS NOT JUST RED ITEMS. UNLESS I DIE BEFORE THEN.
+        public static GameObject deleteEffectPrefab;
         public override void Initialize()
         {
-            base.Initialize();
-            remunerationControllerPrefab = SS2Assets.LoadAsset<GameObject>("RemunerationController", SS2Bundle.Items);
-
+            remunerationControllerPrefab = AssetCollection.FindAsset<GameObject>("RemunerationController");
             On.RoR2.PickupDisplay.RebuildModel += EnableVoidParticles;
+            On.RoR2.PickupDisplay.RebuildModel += EnableVoidParticles;
+
+            deleteEffectPrefab = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Nullifier/NullifierExplosion.prefab").WaitForCompletion(), "WAWA", false);
+            deleteEffectPrefab.GetComponent<EffectComponent>().soundName = "Play_nullifier_death_vortex_explode"; // cringe.
         }
 
-
         // this works for all sibylline items but i dont know where to put general hooks like that
-
         // also MSU is apparently supposed to be able to do this. can remove this whenever thats fixed
-        private void EnableVoidParticles(On.RoR2.PickupDisplay.orig_RebuildModel orig, PickupDisplay self)
+
+        //That was orb, someone please ask him what he meant by this, he never told me what he was trying to do :,) -N
+        private void EnableVoidParticles(On.RoR2.PickupDisplay.orig_RebuildModel orig, PickupDisplay self, GameObject modelObjectOverride)
         {
-            orig(self);            
+            orig(self, modelObjectOverride);
             PickupDef pickupDef = PickupCatalog.GetPickupDef(self.pickupIndex);
             ItemIndex itemIndex = (pickupDef != null) ? pickupDef.itemIndex : ItemIndex.None;
             if (itemIndex != ItemIndex.None && ItemCatalog.GetItemDef(itemIndex).tier == SS2Content.ItemTierDefs.Sibylline.tier)
@@ -55,17 +36,24 @@ namespace Moonstorm.Starstorm2.Items
                 if (self.voidParticleEffect)
                 {
                     self.voidParticleEffect.SetActive(true);
-                }             
+                }
             }
         }
 
-        public sealed class RemunerationBehavior : BaseItemMasterBehavior
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+
+        public sealed class RemunerationBehavior : BaseItemMasterBehaviour
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.Remuneration;
 
             private void Awake()
             {
+                base.Awake();
                 Stage.onServerStageBegin += TrySpawnShop;
             }
 
@@ -75,8 +63,8 @@ namespace Moonstorm.Starstorm2.Items
             }
 
             private void TrySpawnShop(Stage stage)
-            {    
-                if(stage.sceneDef && stage.sceneDef.sceneType == SceneType.Stage)
+            {
+                if (stage.sceneDef && stage.sceneDef.sceneType == SceneType.Stage)
                     base.GetComponent<CharacterMaster>().onBodyStart += SpawnPortalOnBody;
             }
 
@@ -85,10 +73,9 @@ namespace Moonstorm.Starstorm2.Items
             {
                 GameObject controller = GameObject.Instantiate(remunerationControllerPrefab, body.coreTransform.position, body.coreTransform.rotation);
                 controller.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(body.gameObject);
-                //NetworkServer.Spawn(controller);
 
                 body.master.onBodyStart -= SpawnPortalOnBody;
-                
+
             }
         }
     }

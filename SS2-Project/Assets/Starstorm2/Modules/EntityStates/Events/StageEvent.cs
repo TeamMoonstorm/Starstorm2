@@ -1,12 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using RoR2;
-using Moonstorm;
-using System;
-using UnityEngine.Networking;
-
-namespace EntityStates.Events
+﻿/*namespace EntityStates.Events
 {
     public class StageEvent : EventState
     {
@@ -18,3 +10,4 @@ namespace EntityStates.Events
         }
     }
 }
+*/

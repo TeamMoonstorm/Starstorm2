@@ -1,15 +1,14 @@
-﻿using Moonstorm;
-using Moonstorm.Starstorm2;
+﻿using SS2;
 using RoR2;
-using RoR2.Skills;
 using UnityEngine;
-using UnityEngine.Networking;
+using MSU;
 
 namespace EntityStates.MULE
 {
+#if DEBUG
     class MULESpin : BasicMeleeAttack
     {
-        [TokenModifier("SS2_MULE_PRIMARY_SPIN_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_MULE_SPIN_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float dmgCoefficient;
         public static float minSpinCount;
         public static float maxSpinCount;
@@ -135,4 +134,5 @@ namespace EntityStates.MULE
             return InterruptPriority.Frozen;
         }
     }
+#endif
 }

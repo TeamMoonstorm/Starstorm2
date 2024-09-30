@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
-namespace Moonstorm.Starstorm2.Components
-{   
+namespace SS2.Components
+{
     public class SantaHatPickup : MonoBehaviour, IInteractable
     {
        
@@ -33,6 +30,11 @@ namespace Moonstorm.Starstorm2.Components
         }
 
         public bool ShouldIgnoreSpherecastForInteractibility([NotNull] Interactor activator)
+        {
+            return true;
+        }
+
+        public bool ShouldProximityHighlight()
         {
             return true;
         }

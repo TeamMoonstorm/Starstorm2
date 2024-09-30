@@ -1,13 +1,28 @@
-﻿using RoR2;
+﻿using MSU;
+using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Items;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Items
+namespace SS2.Items
 {
-    [DisabledContent]
-    public sealed class RelicOfDuality : ItemBase
+#if DEBUG
+    public sealed class RelicOfDuality : SS2Item
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfDuality", SS2Bundle.Indev);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRelicOFDuality", SS2Bundle.Items);
+
+
+        public override void Initialize()
+        {
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return false;
+        }
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnIncomingDamageServerReceiver, IOnDamageDealtServerReceiver
         {
@@ -58,4 +73,5 @@ namespace Moonstorm.Starstorm2.Items
             }
         }
     }
+#endif
 }

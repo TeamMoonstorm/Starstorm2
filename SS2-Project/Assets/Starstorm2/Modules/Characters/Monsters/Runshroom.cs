@@ -1,41 +1,34 @@
-﻿using JetBrains.Annotations;
-using RoR2;
+﻿using RoR2;
 using UnityEngine;
 using System;
-using Moonstorm.Starstorm2.Components;
-namespace Moonstorm.Starstorm2.Monsters
+using SS2.Components;
+using MSU;
+using R2API;
+using RoR2.ContentManagement;
+using System.Collections;
+
+namespace SS2.Monsters
 {
-    public sealed class Runshroom : MonsterBase
+    public sealed class Runshroom : SS2Monster
     {
-        public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("RunshroomBody", SS2Bundle.Monsters);
-        public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("RunshroomMaster", SS2Bundle.Monsters);
-
-        private MSMonsterDirectorCard defaultCard = SS2Assets.LoadAsset<MSMonsterDirectorCard>("msmdcRunshroom", SS2Bundle.Monsters);
-
+        public override SS2AssetRequest<MonsterAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<MonsterAssetCollection>("acRunshroom", SS2Bundle.Monsters);
         public override void Initialize()
         {
-            base.Initialize();
-            MonsterDirectorCards.Add(defaultCard);          
-        }
-
-        public override void ModifyPrefab()
-        {
-            base.ModifyPrefab();
-
-            DateTime today = DateTime.Today;
-            if (today.Month == 12 && ((today.Day == 27) || (today.Day == 26) || (today.Day == 25) || (today.Day == 24) || (today.Day == 23)))
+            if (SS2Main.ChristmasTime)
             {
                 ChristmasTime();
             }
         }
 
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
         private void ChristmasTime()
         {
-            BodyPrefab.AddComponent<SantaHatPickup>();
-            BodyPrefab.AddComponent<EntityLocator>().entity = BodyPrefab;
-            BodyPrefab.AddComponent<Highlight>().targetRenderer = BodyPrefab.GetComponent<ModelLocator>().modelTransform.GetComponent<CharacterModel>().mainSkinnedMeshRenderer;
+            CharacterPrefab.AddComponent<SantaHatPickup>();
+            CharacterPrefab.AddComponent<EntityLocator>().entity = CharacterPrefab;
+            CharacterPrefab.AddComponent<Highlight>().targetRenderer = CharacterPrefab.GetComponent<ModelLocator>().modelTransform.GetComponent<CharacterModel>().mainSkinnedMeshRenderer;
         }
     }
-
-    
 }

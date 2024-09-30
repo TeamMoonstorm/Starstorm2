@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RoR2;
 using UnityEngine;
-using UnityEngine.Networking;
 using R2API;
-using Moonstorm.Starstorm2.DamageTypes;
+
 
 namespace EntityStates.NemMerc
 {
@@ -69,7 +64,7 @@ namespace EntityStates.NemMerc
             this.timeBetweenAttacks = this.duration / numAttacks;
 
             this.attack = base.InitMeleeOverlap(this.damageCoefficient, this.hitEffectPrefab, base.GetModelTransform(), this.hitboxGroupName);
-            this.attack.AddModdedDamageType(RedirectHologram.damageType);
+            this.attack.AddModdedDamageType(SS2.Survivors.NemMerc.damageType);
 
             base.characterMotor.velocity = Vector3.zero;
             base.characterMotor.walkSpeedPenaltyCoefficient = this.walkSpeedCoefficient;

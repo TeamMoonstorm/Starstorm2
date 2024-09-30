@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RoR2;
-using Moonstorm.Starstorm2.Components;
-
-namespace EntityStates.Cyborg2.ShockMine
+﻿namespace EntityStates.Cyborg2.ShockMine
 {
     public class Burrow : BaseShockMineState
     {

@@ -2,63 +2,166 @@
 using UnityEngine;
 using RoR2.Skills;
 using System.Runtime.CompilerServices;
-using UnityEngine.AddressableAssets;
 using RoR2.UI;
-using System;
-using System.Collections.Generic;
+using MSU;
 using System.Collections;
-
-namespace Moonstorm.Starstorm2.Survivors
+using R2API;
+using System.Reflection;
+using UnityEngine.Networking;
+using RoR2.ContentManagement;
+using UnityEngine.AddressableAssets;
+using System.Collections.Generic;
+namespace SS2.Survivors
 {
-    //[DisabledContent]
-    public sealed class NemCommando : SurvivorBase
+    public sealed class NemCommando : SS2Survivor, IContentPackModifier
     {
-        public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemCommandoBody", SS2Bundle.NemCommando);
-        public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemCommandoMonsterMaster", SS2Bundle.NemCommando);
-        public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("survivorNemCommando", SS2Bundle.NemCommando);
+        public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acNemCommando", SS2Bundle.NemCommando);
 
-        private GameObject nemesisPod;
-        private CharacterSelectController csc;
+        private static float gougeDuration = 2;
+        public static DamageAPI.ModdedDamageType GougeDamageType { get; private set; }
+        public static DotController.DotIndex GougeDotIndex { get; private set; }
+        private BuffDef _gougeBuffDef;
+        private GameObject distantGashProjectile;
+        private GameObject distantGashProjectileBlue;
+        private GameObject distantGashProjectileYellow;
+        private GameObject grenadeProjectile;
+        private GameObject bodyPrefab;
+        private CharacterBody characterBody;
+        public GameObject nemesisPodPrefab;
+        public GameObject podPanelPrefab;
 
         public override void Initialize()
         {
-            base.Initialize();
-            if (Starstorm.ScepterInstalled)
+            _gougeBuffDef = AssetCollection.FindAsset<BuffDef>("BuffGouge");
+            distantGashProjectile = AssetCollection.FindAsset<GameObject>("NemCommandoSwordBeamProjectile");
+            distantGashProjectileBlue = AssetCollection.FindAsset<GameObject>("NemCommandoSwordBeamProjectileBlue");
+            distantGashProjectileYellow = AssetCollection.FindAsset<GameObject>("NemCommandoSwordBeamProjectileYellow");
+            bodyPrefab = AssetCollection.FindAsset<GameObject>("NemCommandoBody");
+
+            characterBody = bodyPrefab.GetComponent<CharacterBody>();
+
+            GougeDamageType = DamageAPI.ReserveDamageType();
+            GougeDotIndex = DotAPI.RegisterDotDef(0.25f, 0.25f, DamageColorIndex.SuperBleed, _gougeBuffDef);
+            On.RoR2.HealthComponent.TakeDamage += TakeDamageGouge;
+            GlobalEventManager.onServerDamageDealt += ApplyGouge;
+
+            ModifyProjectiles();
+            CreatePod();
+
+            //characterBody.preferredPodPrefab = nemesisPodPrefab;
+            // https://tenor.com/view/larry-david-unsure-uncertain-cant-decide-undecided-gif-3529136
+        }
+
+        private void TakeDamageGouge(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
+        {
+            bool triggerGougeProc = false;
+            if (NetworkServer.active)
             {
-                ScepterCompat();
-                //CreateNemesisPod();
+                if (damageInfo.dotIndex == GougeDotIndex && damageInfo.procCoefficient == 0f && self.alive)
+                {
+                    if (damageInfo.attacker)
+                    {
+                        CharacterBody attackerBody = damageInfo.attacker.GetComponent<CharacterBody>();
+                        if (attackerBody)
+                        {
+                            damageInfo.crit = Util.CheckRoll(attackerBody.crit, attackerBody.master);
+                        }
+                    }
+                    damageInfo.procCoefficient = 0.2f;
+                    triggerGougeProc = true;
+                }
             }
-            On.RoR2.CharacterSelectBarController.Awake += CharacterSelectBarController_Awake;
+
+            orig(self, damageInfo);
+
+            if (NetworkServer.active && !damageInfo.rejected && self.alive)
+            {
+                if (triggerGougeProc)
+                {
+                    GlobalEventManager.instance.OnHitEnemy(damageInfo, self.gameObject);
+                }
+            }
         }
 
-        private void CharacterSelectBarController_Awake(On.RoR2.CharacterSelectBarController.orig_Awake orig, CharacterSelectBarController self)
+        private void ApplyGouge(DamageReport report)
         {
-            //hide nemcommando from css proper
-            SS2Content.Survivors.survivorNemMerc.hidden = !SurvivorCatalog.SurvivorIsUnlockedOnThisClient(SS2Content.Survivors.survivorNemMerc.survivorIndex); // hello nem comado
-            SS2Content.Survivors.survivorNemCommando.hidden = !SurvivorCatalog.SurvivorIsUnlockedOnThisClient(SS2Content.Survivors.survivorNemCommando.survivorIndex);
-            orig(self);
+            var victimBody = report.victimBody;
+            var attackerBody = report.attackerBody;
+            var damageInfo = report.damageInfo;
+            if (DamageAPI.HasModdedDamageType(damageInfo, GougeDamageType))
+            {
+                var dotInfo = new InflictDotInfo()
+                {
+                    attackerObject = attackerBody.gameObject,
+                    victimObject = victimBody.gameObject,
+                    dotIndex = GougeDotIndex,
+                    duration = gougeDuration,
+                    damageMultiplier = 1,
+                    //maxStacksFromAttacker = 5,
+                };
+                DotController.InflictDot(ref dotInfo);
+
+                // refresh stack timers
+                //★ it is war.
+
+                // just to restate- i feel like this would be best on m2/special as a way to bring the whole kit together rather than just m1 doing lots of work?
+                // i like nemcommando just being a 'plain' generalist rather than having a specific gimmick he's trying to hone in on...
+
+                /*DotController dotController = DotController.FindDotController(victimBody.gameObject);
+                if (!dotController) return;
+                int j = 0;
+                List<DotController.DotStack> dotStackList = dotController.dotStackList;
+                while (j < dotStackList.Count)
+                {
+                    if (dotStackList[j].dotIndex == GougeDotIndex)
+                    {
+                        dotStackList[j].timer = Mathf.Max(dotStackList[j].timer, gougeDuration);
+                    }
+                    j++;
+                }*/
+            }
         }
 
-        private void Destroy(GameObject gameObject)
+        public override bool IsAvailable(ContentPack contentPack)
         {
-            Destroy(gameObject);
+            return true;
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-        public void ScepterCompat()
+        public void CreatePod()
         {
-            AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(SS2Assets.LoadAsset<SkillDef>("NemmandoScepterSubmission", SS2Bundle.Nemmando), "NemmandoBody", SkillSlot.Special, 0);
-            AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(SS2Assets.LoadAsset<SkillDef>("NemmandoScepterBossAttack", SS2Bundle.Nemmando), "NemmandoBody", SkillSlot.Special, 1);
+            Material podMat = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/TrimSheets/matTrimSheetConstructionBlue.mat").WaitForCompletion();
+            nemesisPodPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/SurvivorPod/SurvivorPod.prefab").WaitForCompletion().InstantiateClone("NemesisSurvivorPod", true);
+
+            Transform modelTransform = nemesisPodPrefab.GetComponent<ModelLocator>().modelTransform;
+
+            modelTransform.Find("EscapePodArmature/Base/Door/EscapePodDoorMesh").GetComponent<MeshRenderer>().material = podMat;
+            modelTransform.Find("EscapePodArmature/Base/ReleaseExhaustFX/Door,Physics").GetComponent<MeshRenderer>().material = podMat;
+            modelTransform.Find("EscapePodArmature/Base/EscapePodMesh").GetComponent<MeshRenderer>().material = podMat;
+            modelTransform.Find("EscapePodArmature/Base/RotatingPanel/EscapePodMesh.002").GetComponent<MeshRenderer>().material = podMat;
+
+            podPanelPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/SurvivorPod/SurvivorPodBatteryPanel.prefab").WaitForCompletion().InstantiateClone("NemesisPanel", true);
+            podPanelPrefab.GetComponent<Highlight>().targetRenderer.material = podMat;
+
+            InstantiatePrefabBehavior[] ipb;
+            ipb = nemesisPodPrefab.GetComponents<InstantiatePrefabBehavior>();
+            foreach (InstantiatePrefabBehavior prefab in ipb)
+            {
+                if (prefab.prefab == Addressables.LoadAssetAsync<GameObject>("RoR2/Base/SurvivorPod/SurvivorPodBatteryPanel.prefab").WaitForCompletion())
+                    prefab.prefab = podPanelPrefab;
+            }
         }
 
-        public void CreateNemesisPod()
-        {   
-            //later
-        }
-    }
+        private void ModifyProjectiles()
+        {
+            var damageAPIComponent = distantGashProjectile.AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>();
+            damageAPIComponent.Add(GougeDamageType);
+            damageAPIComponent = distantGashProjectileBlue.AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>();
+            damageAPIComponent.Add(GougeDamageType);
+            damageAPIComponent = distantGashProjectileYellow.AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>();
+            damageAPIComponent.Add(GougeDamageType);
 
-    public class NemmandoPistolToken : MonoBehaviour
-    {
-        public int secondaryStocks = 8;
+            //var pie = grenadeProjectile.GetComponent<RoR2.Projectile.ProjectileImpactExplosion>();
+            //pie.impactEffect = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/OmniExplosionVFXCommandoGrenade.prefab").WaitForCompletion();
+        }
     }
 }

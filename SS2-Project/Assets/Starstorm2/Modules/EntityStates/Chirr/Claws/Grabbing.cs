@@ -1,13 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
+﻿using UnityEngine;
 using RoR2;
-using RoR2.Projectile;
-using System.Linq;
 using RoR2.Skills;
-using Moonstorm.Starstorm2.Components;
-using UnityEngine.Networking;
+using SS2.Components;
 
 namespace EntityStates.Chirr.Claws
 {
@@ -94,11 +88,13 @@ namespace EntityStates.Chirr.Claws
             {
                 base.SmallHop(base.characterMotor, 9f); // hop :)
                 EntityStateMachine weapon = EntityStateMachine.FindByCustomName(base.gameObject, "Weapon"); // throw instead of dropping
-                if (weapon && weapon.state is AimDrop) weapon.SetNextStateToMain();
-                else
+                if (weapon && weapon.state is AimDrop)
                 {
-                    this.grabController.AttemptGrab(null);
+                    (weapon.state as AimDrop).cancelled = true;
+                    weapon.SetNextStateToMain();
                 }
+                this.grabController.AttemptGrab(null);
+                
                 this.outer.SetNextStateToMain();
                 return;
             }

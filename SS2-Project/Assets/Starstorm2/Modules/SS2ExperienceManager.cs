@@ -1,30 +1,25 @@
-﻿using Moonstorm;
-using RoR2;
+﻿using RoR2;
 using System;
 using UnityEngine;
 using UnityEngine.Networking;
 using R2API;
-using RoR2.Items;
 using System.Collections.Generic;
-using HG;
-using HG.Reflection;
-using JetBrains.Annotations;
-using System.Reflection;
 using MonoMod.Cil;
 using Mono.Cecil.Cil;
 using RoR2.UI;
 using R2API.Networking.Interfaces;
 using R2API.Networking;
 using UnityEngine.UI;
+using MSU.Config;
 
-namespace Moonstorm.Starstorm2
+namespace SS2
 {
     //Note from groove - I promise the voices had no say in the creation of this class, it seemed like the best way to handle it
     //Reconciling getting adjusted exp to recalc stats may not seem like the best idea, as there is a slight disconnect between master and body, but it allows other mods to also offset experience
     public static class SS2ExperienceManager
 	{
         //exp visuals mostly added to make the exp items feel cooler
-        [RooConfigurableField(SS2Config.IDMisc, ConfigSection = "Visuals", ConfigName = "Improved Experience Visuals", ConfigDesc = "Enable the new experience visuals?")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_MISC, configSectionOverride = "Visuals", configNameOverride = "Improved Experience Visuals", configDescOverride = "Enable the new experience visuals?")]
         public static bool enableNewExperienceVisuals = true;
 
         public static Dictionary<CharacterMaster, ulong> masterToFoundExperience = new Dictionary<CharacterMaster, ulong>();

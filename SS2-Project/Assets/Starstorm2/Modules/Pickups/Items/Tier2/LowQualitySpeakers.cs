@@ -1,39 +1,61 @@
-﻿using R2API;
+﻿using MSU;
+using MSU.Config;
 using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Items;
-using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-
-namespace Moonstorm.Starstorm2.Items
+namespace SS2.Items
 {
-
-    public sealed class LowQualitySpeakers : ItemBase
+    public sealed class LowQualitySpeakers : SS2Item
     {
         private const string token = "SS2_ITEM_LOWQUALITYSPEAKERS_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("LowQualitySpeakers", SS2Bundle.Items);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acLowQualitySpeakers", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius in which enemies are stunned, in meters.")]
-        [TokenModifier(token, StatTypes.Default, 0)]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Radius in which enemies are stunned, in meters.")]
+        [FormatToken(token, 0)]
         public static float baseRadius = 13f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Additional stun radius per stack.")]
-        [TokenModifier(token, StatTypes.Default, 1)]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Additional stun radius per stack.")]
+        [FormatToken(token, 1)]
         public static float radiusPerStack = 7f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance for this item to proc on taking damage")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Chance for this item to proc on taking damage")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
         public static float baseProcChance = 0.1f;
 
-        public static GameObject burstEffect = SS2Assets.LoadAsset<GameObject>("SpeakerBurstEffect", SS2Bundle.Items);
+        public static float cooldown = 0.5f;
+        private static GameObject _burstEffect;
+
+        public override void Initialize()
+        {
+            _burstEffect = AssetCollection.FindAsset<GameObject>("SpeakerBurstEffect");
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnIncomingDamageServerReceiver
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.LowQualitySpeakers;
+
+            private float cooldownStopwatch;
+
+            private void FixedUpdate()
+            {
+                cooldownStopwatch -= Time.fixedDeltaTime;
+            }
+
             public void OnIncomingDamageServer(DamageInfo damageInfo)
             {
                 int stack = body.inventory.GetItemCount(SS2Content.Items.LowQualitySpeakers);
-                if (stack <= 0) return;
+
+                if (stack <= 0 || cooldownStopwatch > 0) return;
+                cooldownStopwatch = cooldown;
 
                 // 100% chance at 0% health, baseProcChance at 100% health
                 // uses health fraction after damage, not before
@@ -60,7 +82,7 @@ namespace Moonstorm.Starstorm2.Items
                     blastAttack.attackerFiltering = AttackerFiltering.NeverHitSelf;
                     blastAttack.Fire();
 
-                    EffectManager.SpawnEffect(burstEffect, new EffectData
+                    EffectManager.SpawnEffect(_burstEffect, new EffectData
                     {
                         origin = body.corePosition,
                         scale = radius,

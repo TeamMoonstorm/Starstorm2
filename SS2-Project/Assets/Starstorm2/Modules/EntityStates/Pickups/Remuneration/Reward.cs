@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RoR2;
+﻿using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
-using Moonstorm.Starstorm2;
-using Moonstorm.Starstorm2.Components;
+using SS2;
+using SS2.Components;
 namespace EntityStates.Pickups.Remuneration
 {
     public class Reward : BaseState

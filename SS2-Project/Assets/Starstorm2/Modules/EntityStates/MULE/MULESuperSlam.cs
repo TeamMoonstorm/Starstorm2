@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using RoR2;
-using Moonstorm.Starstorm2;
+using SS2;
 using RoR2.Projectile;
-using UnityEngine.AddressableAssets;
 
 namespace EntityStates.MULE
 {
+#if DEBUG
     public class MULESuperSlam : BaseSkillState
     {
         public float charge;
@@ -143,4 +141,5 @@ namespace EntityStates.MULE
             return InterruptPriority.Frozen;
         }
     }
+#endif
 }

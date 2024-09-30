@@ -1,13 +1,11 @@
-﻿using Moonstorm;
-using RoR2;
-using RoR2.Skills;
-using UnityEngine.Networking;
+﻿using MSU;
 
 namespace EntityStates.MULE
 {
+#if DEBUG
     class MULESpinStart : BaseSkillState
     {
-        [TokenModifier("SS2_MULE_PRIMARY_SPIN_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_MULE_SPIN_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float swingTimeCoefficient = 1f;
         public static float duration = 0.2f;
 
@@ -34,4 +32,5 @@ namespace EntityStates.MULE
             return InterruptPriority.Frozen;
         }
     }
+#endif
 }

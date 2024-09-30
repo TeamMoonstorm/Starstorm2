@@ -1,95 +1,110 @@
 ﻿using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
-using static AkMIDIEvent;
+using MSU;
+using System.Collections;
+using RoR2.ContentManagement;
+using System.Collections.Generic;
 
-namespace Moonstorm.Starstorm2.Equipments
+namespace SS2.Equipments
 {
-    //[DisabledContent]
-    public sealed class PressurizedCanister : EquipmentBase
+    // still need to make dedicated bonus jump handler but im lazy. this code sucks
+    // INFINITE BANDAID GLITCH 2014 (NEWEST) (WORKS!!!)
+    public sealed class PressurizedCanister : SS2Equipment, IContentPackModifier
     {
-        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("PressurizedCanister", SS2Bundle.Equipments);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acPressurizedCannister", SS2Bundle.Equipments);
 
-        //[ConfigurableField(SS2Config.IDItem, ConfigName = "No Jump Control", ConfigDesc = "Set to true to disable jump control on Pressurized Canister - activating the equipment will apply constant upward force regardless of whether you hold the jump button. This may lead to Funny and Memorable (tm) moments, especially if you like picking up Gestures of the Drowned.")]
-        //public static bool funnyCanister = false;
-
-        public override bool FireAction(EquipmentSlot slot)
+        public override bool Execute(EquipmentSlot slot)
         {
-            var characterMotor = slot.characterBody.characterMotor;
+            CharacterBody body = slot.characterBody;
+            if(!body.HasBuff(SS2Content.Buffs.bdCanJump))
+                body.AddBuff(SS2Content.Buffs.bdCanJump.buffIndex);
+            
+            var characterMotor = body.characterMotor;
+            if (characterMotor.isGrounded)
+                EffectManager.SimpleEffect(Resources.Load<GameObject>("prefabs/effects/SmokescreenEffect"), body.footPosition, Quaternion.identity, true);
             if (characterMotor)
             {
-                slot.characterBody.AddItemBehavior<Behavior>(1);
-                Debug.Log($"Adding behavior");
-                //if (slot.hasAuthority)
+                characterMotor.Motor.ForceUnground();
+                EffectManager.SimpleEffect(SS2Assets.LoadAsset<GameObject>("canExhaust", SS2Bundle.Equipments), body.transform.position, body.transform.rotation, true);
+
+                float mass = body.rigidbody ? body.rigidbody.mass : 1;
+                Vector3 a = characterMotor.moveDirection;
+                a.y = 0f;
+                float magnitude = a.magnitude;
+                if (magnitude > 0f)
                 {
-                } //this is so fucking true
+                    a /= magnitude;
+                }
+                Vector3 vector = a * body.moveSpeed * 1.2f;
+                vector.y = body.jumpPower * 2.2f;
+                float shitass = characterMotor.velocity.y;
+                vector.y -= shitass; // ??????????????????????????????????????????????????????????????
+                vector *= mass;
+                characterMotor.ApplyForce(vector, true, false);
                 return true;
             }
             return false;
         }
 
-        //notice how this is not added by this.AddItemBehavior() but the Fire Action
-        public sealed class Behavior : CharacterBody.ItemBehavior
+        public override void Initialize()
         {
-            private static float duration = 0.8f;
-            private static float thrustForce = 90f;
-            private static int effectSpawnTotal = 10;
+        }
 
-            //private AnimationCurve curve = new AnimationCurve(new Keyframe(0, 1), new Keyframe(0.7f * duration, 1), new Keyframe(duration, 0));
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return false;
+        }
 
-            private float stopwatch;
-            private int effectInterval;
-            private CharacterMotor characterMotor;
 
-            private void Start()
+        public override void OnEquipmentLost(CharacterBody body)
+        {
+        }
+
+        public override void OnEquipmentObtained(CharacterBody body)
+        {
+        }
+        public sealed class PressurizedCanisterBehavior : BaseBuffBehaviour
+
+        {
+            [BuffDefAssociation]
+            private static BuffDef GetBuffDef() => SS2Content.Buffs.bdCanJump;
+
+            private bool hasJumped;
+
+            protected override void OnFirstStackGained()
             {
-                characterMotor = body.characterMotor;
-                if (characterMotor.isGrounded)
-                    EffectManager.SimpleEffect(Resources.Load<GameObject>("prefabs/effects/SmokescreenEffect"), body.footPosition, Quaternion.identity, true);
-                if (NetworkServer.active)
+                characterBody.baseJumpCount++;
+                characterBody.characterMotor.onHitGroundAuthority += fuck;
+                //CharacterBody.characterMotor.onHitGroundServer += RemoveBuff;
+                hasJumped = false;
+            }
+
+            public void FixedUpdate()
+            {
+                if (characterBody.inputBank.jump.justPressed && !hasJumped)
                 {
-                    characterMotor.Motor.ForceUnground();
-                    EffectManager.SimpleEffect(SS2Assets.LoadAsset<GameObject>("canExhaust", SS2Bundle.Equipments), body.transform.position, body.transform.rotation, true);
-                    body.AddBuff(SS2Content.Buffs.bdCanJump.buffIndex);
-                    body.characterMotor.Jump(1.2f, 2.2f, false); //it would be so awesome 
-                    //body.baseJumpCount++; done through invisible buff so it clears after landing //it would be so cool
-                    // characterMotor.velocity = new Vector3(characterMotor.velocity.x, Mathf.Max(characterMotor.velocity.y, 15f), characterMotor.velocity.z); //it would be the most incredible superher
-                } //why was there all of this complicated stuff instead of just a jump..?
+                    EffectManager.SimpleEffect(SS2Assets.LoadAsset<GameObject>("canExhaust", SS2Bundle.Equipments), characterBody.transform.position, characterBody.transform.rotation, false);
+                    hasJumped = true;
+                    characterBody.baseJumpCount--;
+                }
             }
 
-            private void FixedUpdate()
+            private void RemoveBuff(ref CharacterMotor.HitGroundInfo hitGroundInfo)
             {
-                stopwatch += Time.fixedDeltaTime;
-                if (body.hasAuthority)
-                    AuthorityUpdate();
-
-                //Gets removed if you switch equipments
-                if (stopwatch > duration || body.equipmentSlot.equipmentIndex != EquipmentCatalog.FindEquipmentIndex("PressurizedCanister"))
-                    Destroy(this);
+                characterBody.RemoveBuff(SS2Content.Buffs.bdCanJump);
+            }
+            private void fuck(ref CharacterMotor.HitGroundInfo hitGroundInfo)
+            {
+                if (!hasJumped) characterBody.baseJumpCount--;
             }
 
-            public void AuthorityUpdate()
+            protected override void OnAllStacksLost()
             {
-                //if (characterMotor.enabled)
-                //{
-                //    if (funnyCanister || body.inputBank.jump.down)
-                //    {
-                //        characterMotor.ApplyForce(Vector3.up * thrustForce * (body.rigidbody.mass / 100f));
-                //        if (stopwatch >= (duration / effectSpawnTotal * effectInterval))
-                //        {
-                //            EffectData effectData = new EffectData();
-                //            effectData.origin = body.footPosition;
-                //            effectData.scale = 0.5f;
-                //            EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/impacteffects/CharacterLandImpact"), effectData, true);
-                //        }
-                //    }
-                //    if (stopwatch >= (duration / effectSpawnTotal * effectInterval))
-                //        effectInterval++;
-                //}
-
-                //characterMotor.rootMotion += Vector3.up * (body.moveSpeed * EntityStates.Executioner2.ExecuteLeap.speedCoefficientCurve.Evaluate(stopwatch / (duration * 0.6f)) * Time.fixedDeltaTime * 10f);
-                
-                //characterMotor.velocity.y = 0f;
+                //CharacterBody.characterMotor.onHitGroundServer -= RemoveBuff;
+                characterBody.characterMotor.onHitGroundAuthority -= fuck;
+                if(!hasJumped)
+                    characterBody.baseJumpCount--;
             }
         }
     }

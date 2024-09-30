@@ -9,21 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb779dcd06d2f734e8581991b3565033, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d8158774e675ec4194714040c38e525, type: 3}
   m_Name: AkWwiseInitializationSettings
   m_EditorClassIdentifier: 
   PlatformSettingsNameList:
   - Windows
   PlatformSettingsList:
-  - {fileID: 11400000, guid: dbca42330d1cfc744b9c1657ba7ac8c1, type: 2}
+  - {fileID: 11400000, guid: dd0127f0eb5dd4342918dd4b20886186, type: 2}
   InvalidReferencePlatforms: []
   UserSettings:
     m_BasePath: Audio\GeneratedSoundBanks
     m_StartupLanguage: English(US)
     m_EngineLogging: 1
+    m_DefaultScalingFactor: 1
     m_MaximumNumberOfPositioningPaths: 255
     m_CommandQueueSize: 262144
-    m_SamplesPerFrame: 1024
+    m_SamplesPerFrame: 512
     m_MainOutputSettings:
       m_AudioDeviceShareset: 
       m_DeviceID: 0
@@ -37,31 +38,35 @@ MonoBehaviour:
     m_NumberOfRefillsInVoice: 4
     m_SpatialAudioSettings:
       m_MaxSoundPropagationDepth: 8
-      m_DiffractionFlags: -1
-      m_MovementThreshold: 1
-      m_NumberOfPrimaryRays: 100
-      m_MaxReflectionOrder: 1
-      m_MaxPathLength: 10000
-      m_EnableDiffractionOnReflections: 1
-      m_EnableDirectPathDiffraction: 1
-      m_EnableTransmission: 1
+      m_MovementThreshold: 0.25
+      m_NumberOfPrimaryRays: 35
+      m_MaxReflectionOrder: 2
+      m_MaxDiffractionOrder: 4
+      m_DiffractionOnReflectionsOrder: 2
+      m_MaxEmitterRoomAuxSends: 3
+      m_MaxPathLength: 1000
+      m_CPULimitPercentage: 0
+      m_EnableGeometricDiffractionAndTransmission: 1
+      m_CalcEmitterVirtualPosition: 1
+      m_LoadBalancingSpread: 1
   AdvancedSettings:
     m_IOMemorySize: 2097152
     m_TargetAutoStreamBufferLengthMs: 380
     m_UseStreamCache: 0
+    m_LoadBankAsynchronously: 0
     m_MaximumPinnedBytesInCache: 4294967295
     m_EnableGameSyncPreparation: 0
     m_ContinuousPlaybackLookAhead: 1
-    m_MonitorQueuePoolSize: 65536
+    m_MonitorQueuePoolSize: 1048576
     m_MaximumHardwareTimeoutMs: 1000
     m_DebugOutOfRangeCheckEnabled: 0
     m_DebugOutOfRangeLimit: 16
-    m_SpatialAudioSettings:
-      m_DiffractionShadowAttenuationFactor: 1
-      m_DiffractionShadowDegrees: 30
+    m_SuspendAudioDuringFocusLoss: 1
     m_RenderDuringFocusLoss: 0
     m_SoundBankPersistentDataPath: 
-    m_UseAsyncOpen: 0
+    m_MemoryAllocationSizeLimit: 0
+    m_MemoryDebugLevel: 0
+    m_MemorySpanCount: 2
   CommsSettings:
     m_PoolSize: 262144
     m_DiscoveryBroadcastPort: 24024

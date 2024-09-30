@@ -1,48 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using RoR2;
-
-namespace Moonstorm.Starstorm2.Components
+namespace SS2.Components
 {
     public class WardUtils : NetworkBehaviour
     {
         private float timer;
         private float timer2;
-        private bool shouldDestroySoon = false;
+        private float timerfuck;
+        [SyncVar]
+        public bool shouldDestroySoon = false;
         public CharacterBody body;
-        public float radius;
-
         private BuffWard buffWard;
-        private TeamIndex teamIndex;
-        private SphereSearch ownerSearch;
-        private List<HurtBox> hits;
-        private BuffDef buffToAmplify;
-        public BuffDef amplifiedBuff;
-        public float buffCount;
-
+        public int buffStacks = 1;
+        public BuffIndex stackBuff; //goofy ahh code. if you use this you need to remove the buff manually in a CharacterBody.RemoveBuff hook. check HuntersSigil.cs
+        public AnimateShaderAlpha thing;
         private void Start()
         {
-            if (body == null)
-            {
-                shouldDestroySoon = true;
-                return;
-            }
-
-            teamIndex = body.teamComponent.teamIndex;
-
-            buffWard = GetComponent<BuffWard>();
-
-            if (buffWard != null)
-            {
-                buffToAmplify = buffWard.buffDef;
-            }
-
-            hits = new List<HurtBox>();
-            ownerSearch = new SphereSearch();
-            ownerSearch.mask = LayerIndex.entityPrecise.mask;
-            ownerSearch.radius = radius;
+            buffWard = GetComponent<BuffWard>();      
         }
         
         private void FixedUpdate()
@@ -51,18 +27,21 @@ namespace Moonstorm.Starstorm2.Components
 
             if (shouldDestroySoon == true)
             {
+                if (thing) thing.enabled = true;
+
                 timer2 += Time.fixedDeltaTime;
-                if (buffWard.radius >= 0f)
+
+                if (buffWard && buffWard.radius >= 0f)
                 {
                     buffWard.radius -= buffWard.radius / 2f;
                 }
-                if (timer2 > 1f)
+                if (NetworkServer.active && timer2 > 1f)
                 {
                     NetworkServer.Destroy(this.gameObject);
                 }
             }
 
-            if (timer > 0.3f)
+            if (NetworkServer.active && timer > 0.3f)
             {
                 if (body == null)
                 {
@@ -71,42 +50,61 @@ namespace Moonstorm.Starstorm2.Components
                 }
                 CheckBodyInRadius();
             }
+
+            if(NetworkServer.active)
+            {
+                timerfuck -= Time.fixedDeltaTime;
+                if(timerfuck <= 0 && buffStacks > 0)
+                {
+                    timerfuck = buffWard.interval;
+                    this.SetBuffStacks(TeamComponent.GetTeamMembers(buffWard.teamFilter.teamIndex), buffWard.radius*buffWard.radius, base.transform.position);
+                }
+                    
+            }
+        }
+
+        // buffward copypaste fml
+        private void SetBuffStacks(IEnumerable<TeamComponent> recipients, float radiusSqr, Vector3 currentPosition)
+        {
+            if (!NetworkServer.active)
+            {
+                return;
+            }
+            if (!buffWard?.buffDef)
+            {
+                return;
+            }
+            foreach (TeamComponent teamComponent in recipients)
+            {
+                Vector3 vector = teamComponent.transform.position - currentPosition;
+                if (buffWard.shape == BuffWard.BuffWardShape.VerticalTube)
+                {
+                    vector.y = 0f;
+                }
+                CharacterBody component = teamComponent.GetComponent<CharacterBody>();
+                if (vector.sqrMagnitude <= radiusSqr)
+                {               
+                    if (component && component.HasBuff(buffWard.buffDef) && (!buffWard.requireGrounded || !component.characterMotor || component.characterMotor.isGrounded))
+                    {
+                        int buffCount = component.GetBuffCount(stackBuff);
+                        for(int i = buffCount; i < buffStacks; i++)
+                        {
+                            component.AddBuff(stackBuff);// fug
+                        }
+                    }
+                }
+            }
         }
 
         private void CheckBodyInRadius()
         {
-            if (!NetworkServer.active)
-                return;
-
-            bool foundOwner = false;
-
-            hits.Clear();
-            ownerSearch.ClearCandidates();
-            ownerSearch.origin = this.transform.position;
-            ownerSearch.RefreshCandidates();
-            ownerSearch.FilterCandidatesByDistinctHurtBoxEntities();
-            ownerSearch.FilterCandidatesByHurtBoxTeam(TeamMask.allButNeutral);
-            ownerSearch.GetHurtBoxes(hits);
-            foreach (HurtBox h in hits)
-            {
-                CharacterBody charBody = h.healthComponent.body;
-
-                if (buffToAmplify != null)
-                {
-                    if (charBody.HasBuff(buffToAmplify))
-                    {
-                        /*if (charBody.GetBuffCount(buffToAmplify) < buffCount)
-                            charBody.SetBuffCount(buffToAmplify.buffIndex, (int)buffCount);*/
-                        charBody.SetBuffCount(amplifiedBuff.buffIndex, (int)buffCount);
-                    }
-                }
-
-                if (charBody == body)
-                    foundOwner = true;
-            }
+            bool foundOwner = body && body.HasBuff(buffWard.buffDef);
 
             if (!foundOwner)
-                shouldDestroySoon = true;
+            {
+                shouldDestroySoon = true;           
+            }
+                
         }
     }
 }

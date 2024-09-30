@@ -1,39 +1,32 @@
 ﻿using RoR2;
 using UnityEngine;
-using RoR2.Skills;
 using System.Runtime.CompilerServices;
 using UnityEngine.AddressableAssets;
+using MSU;
+using System.Collections;
+using RoR2.ContentManagement;
 
-namespace Moonstorm.Starstorm2.Survivors
+#if DEBUG
+namespace SS2.Survivors
 {
-    [DisabledContent]
-    public sealed class NemBandit : SurvivorBase
+    public sealed class NemBandit : SS2Survivor
     {
-        public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemBanditBody", SS2Bundle.Indev);
-        public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemmandoMonsterMaster", SS2Bundle.Indev);
-        public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("survivorNemBandit", SS2Bundle.Indev);
-
+        public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acNemBandit", SS2Bundle.Indev);
         public override void Initialize()
         {
-            base.Initialize();
-            if (Starstorm.ScepterInstalled)
-            {
-                //ScepterCompat();
-            }
+            ModifyPrefab();
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-        public void ScepterCompat()
+        private void ModifyPrefab()
         {
-            //AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(SS2Assets.LoadAsset<SkillDef>("NemmandoScepterSubmission"), "NemmandoBody", SkillSlot.Special, 0);
-            //AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(SS2Assets.LoadAsset<SkillDef>("NemmandoScepterBossAttack"), "NemmandoBody", SkillSlot.Special, 1);
-        }
-
-        public override void ModifyPrefab()
-        {
-            var cb = BodyPrefab.GetComponent<CharacterBody>();
+            var cb = CharacterPrefab.GetComponent<CharacterBody>();
             cb._defaultCrosshairPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/StandardCrosshair.prefab").WaitForCompletion();
-            //cb.GetComponent<ModelLocator>().modelTransform.GetComponent<FootstepHandler>().footstepDustPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/GenericFootstepDust.prefab").WaitForCompletion();
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return false;
         }
     }
 }
+#endif

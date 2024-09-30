@@ -1,5 +1,4 @@
-﻿using Moonstorm;
-using Moonstorm.Starstorm2;
+﻿using MSU;
 using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -8,7 +7,7 @@ namespace EntityStates.NemCommando
 {
     public class ShootGun2 : BaseSkillState
     {
-        [TokenModifier("SS2_NEMMANDO_SECONDARY_SHOOT_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_NEMMANDO_SECONDARY_SHOOT_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float damageCoefficient;
         public static float procCoefficient;
         public static float baseDuration;
@@ -159,20 +158,18 @@ namespace EntityStates.NemCommando
                 Fire();
             }
 
+            if (fixedAge >= minimumDuration / attackSpeedStat && inputBank.skill2.down & skillLocator.secondary.stock >= 1)
+            {
+                outer.SetNextState(new ShootGun2());
+                skillLocator.secondary.stock -= 1;
+                base.characterBody.OnSkillActivated(skillLocator.secondary); // luiminous shot
+                return;
+            }
+
             if (fixedAge >= duration && isAuthority)
             {
-                if (inputBank.skill2.down & skillLocator.secondary.stock >= 1)
-                {
-                    outer.SetNextState(new ShootGun2());
-                    skillLocator.secondary.stock -= 1;
-                    return;
-                }
-                if(fixedAge >= 1.5f * duration)
-                {
-                    outer.SetNextState(new ReloadGun());
-                    return;
-                }
-                //outer.SetNextStateToMain();
+                //outer.SetNextState(new ReloadGun());
+                outer.SetNextStateToMain();
                 //return;
             }
         }

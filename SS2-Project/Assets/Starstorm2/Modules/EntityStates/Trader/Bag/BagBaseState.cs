@@ -1,9 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
-using RoR2;
-using Moonstorm.Starstorm2.Components;
+﻿using RoR2;
+using SS2.Components;
 
 namespace EntityStates.Trader.Bag
 {

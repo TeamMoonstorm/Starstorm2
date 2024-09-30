@@ -1,55 +1,75 @@
-﻿using RoR2;
+﻿using MSU;
+using MSU.Config;
+using R2API;
+using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Items;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-
-namespace Moonstorm.Starstorm2.Items
+namespace SS2.Items
 {
-    public sealed class WatchMetronome : ItemBase
+    public sealed class WatchMetronome : SS2Item, IContentPackModifier
     {
         private const string token = "SS2_ITEM_WATCHMETRONOME_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("WatchMetronome", SS2Bundle.Items);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acWatchMetronome", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of max charges per stack.")]
-        [TokenModifier(token, StatTypes.Default, 0)]
-        public static int chargeAmount = 5;
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Maximum movement speed bonus that can be achieved. (1 = 100%)")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
+        public static float maxMovementSpeed = 1f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Maximum movement speed bonus that can be achieved via metronome per stack. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
-        public static float maxMovementSpeed = 2;
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Maximum duration of the buff.")]
+        [FormatToken(token, 1)]
+        public static float maxDuration = 5;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Maximum duration of the buff, per stack.")]
+        [FormatToken(token, 2)]
+        public static float maxDurationPerStack = 3;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Duration of the buff gained per second, while not sprinting.")]
+        public static float gainPerSecond = 1;
+        public override void Initialize()
+        {
+            RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
+        }
+
+        private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
+        {
+            int buffCount = sender.GetBuffCount(SS2Content.Buffs.BuffWatchMetronome);
+            if (buffCount > 0 && sender.isSprinting)
+            {
+                args.moveSpeedMultAdd +=  maxMovementSpeed * 0.2f * buffCount; // 0.2 = 1/5. 5 stacks for max buff
+            }
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
 
         public sealed class Behavior : BaseItemBodyBehavior
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.WatchMetronome;
-            //this gets halved if they are walking
-            private const float buildCoefficient = 0.875f;
-            private const float drainCoefficient = -1f;
-            private const float notMoveBuffer = 0.6f;
-
-            private float charges;
-
-
+            private float charge;
             public void FixedUpdate()
             {
-                //What the fuck? To-do: Full rewrite this.
-
-                //N: full rewrite my ass, this doesnt need a full rewrite you dummy.
-                float metronomeCharge = Time.fixedDeltaTime * 0.75f * stack;
                 if (!body.isSprinting)
                 {
-                    metronomeCharge *= buildCoefficient;
-                    
+                    charge += gainPerSecond * Time.fixedDeltaTime;
                 }
                 else
                 {
-                    metronomeCharge *= drainCoefficient;
+                    float drainPerSecond = maxDuration / (maxDuration + maxDurationPerStack * (stack-1));
+                    charge -= drainPerSecond * Time.fixedDeltaTime;
                 }
-                charges = Mathf.Clamp(charges + metronomeCharge, 0, stack * chargeAmount);
+                charge = Mathf.Clamp(charge, 0, 5); // max 5 stacks of the buff
 
                 if (NetworkServer.active)
                 {
-                    body.SetBuffCount(SS2Content.Buffs.BuffWatchMetronome.buffIndex, Mathf.RoundToInt(charges));
+                    body.SetBuffCount(SS2Content.Buffs.BuffWatchMetronome.buffIndex, Mathf.RoundToInt(charge));
                 }
             }
 

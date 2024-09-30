@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Linq;
 using UnityEngine;
-
-
-namespace Moonstorm.Starstorm2.Components
+namespace SS2.Components
 {
     public class CreateAnimationCurve : MonoBehaviour
     {

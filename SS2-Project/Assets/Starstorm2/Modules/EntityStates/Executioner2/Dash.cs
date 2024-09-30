@@ -1,11 +1,11 @@
-﻿using Moonstorm;
-using Moonstorm.Starstorm2;
+﻿using SS2;
 using RoR2;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.Networking;
 using UnityEngine.AddressableAssets;
+using MSU;
 
 namespace EntityStates.Executioner2
 {
@@ -14,7 +14,7 @@ namespace EntityStates.Executioner2
         public static float baseDuration = 0.6f;
         public static float speedMultiplier = 3.0f;
         public static float debuffRadius = 14f;
-        [TokenModifier("SS2_EXECUTIONER_DASH_DESCRIPTION", StatTypes.Default, 0)]
+        [FormatToken("SS2_EXECUTIONER_DASH_DESCRIPTION",   0)]
         public static float debuffDuration = 4.0f;
         public static float debuffCheckInterval = 0.0333333f;
         public static float hopVelocity; // = 17f;
@@ -52,29 +52,30 @@ namespace EntityStates.Executioner2
             fearSearch.mask = LayerIndex.entityPrecise.mask;
             fearSearch.radius = debuffRadius;
 
+            skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
             //create dash aoe
             if (NetworkServer.active)
             {
                 CreateFearAoe();
+                
+                if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
+                {
+                    EffectManager.SimpleMuzzleFlash(dashEffectMastery, gameObject, ExhaustL, true);
+                    EffectManager.SimpleMuzzleFlash(dashEffectMastery, gameObject, ExhaustR, true);
+                }
+                else
+                {
+                    EffectManager.SimpleMuzzleFlash(dashEffect, gameObject, ExhaustL, true);
+                    EffectManager.SimpleMuzzleFlash(dashEffect, gameObject, ExhaustR, true);
+                }
             }
 
-            skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
-
-            if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
-            {
-                EffectManager.SimpleMuzzleFlash(dashEffectMastery, gameObject, ExhaustL, true);
-                EffectManager.SimpleMuzzleFlash(dashEffectMastery, gameObject, ExhaustR, true);
-            }
-            else
-            {
-                EffectManager.SimpleMuzzleFlash(dashEffect, gameObject, ExhaustL, true);
-                EffectManager.SimpleMuzzleFlash(dashEffect, gameObject, ExhaustR, true);
-            }
+            
 
             Transform modelTransform = GetModelTransform();
             if (modelTransform)
             {
-                TemporaryOverlay temporaryOverlay = modelTransform.gameObject.AddComponent<TemporaryOverlay>();
+                TemporaryOverlayInstance temporaryOverlay = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
                 // yknow i probably should have done !skinNameToken so its easier to understand but this works and i dont wanna change it so idk - b
                 if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
                 {
@@ -99,7 +100,8 @@ namespace EntityStates.Executioner2
                     temporaryOverlay.originalMaterial = Addressables.LoadAssetAsync<Material>("RoR2/Base/Huntress/matHuntressFlashBright.mat").WaitForCompletion();
                 }
 
-                temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
+                // TODO: No longer needed post-SOTS, leaving in for now but need to remove later
+                //temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
             }
         }
 
@@ -132,7 +134,7 @@ namespace EntityStates.Executioner2
                     {
                         body.AddTimedBuff(SS2Content.Buffs.BuffFear, debuffDuration);
 
-                        if(body.master && body.master.aiComponents[0])
+                        if(body.master && body.master.aiComponents.Length > 0 && body.master.aiComponents[0])
                         {
                             body.master.aiComponents[0].stateMachine.SetNextState(new AI.Walker.Fear { fearTarget = base.gameObject });
                         }

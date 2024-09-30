@@ -1,32 +1,67 @@
-﻿using RoR2;
+﻿using MSU;
+using MSU.Config;
+using R2API;
+using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Items;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using static AkMIDIEvent;
-
-namespace Moonstorm.Starstorm2.Items
+namespace SS2.Items
 {
-    public sealed class Insecticide : ItemBase
+    public sealed class Insecticide : SS2Item, IContentPackModifier
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Insecticide", SS2Bundle.Items);
-        public static DotController.DotIndex DotIndex;
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acInsecticide", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance. (1 = 100%)")]
-        [TokenModifier("SS2_ITEM_INSECTICIDE_DESC", StatTypes.MultiplyByN, 0, "100")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Chance. (1 = 100%)")]
+        [FormatToken("SS2_ITEM_INSECTICIDE_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float chance = 1f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Total damage. (1 = 100%)")]
-        [TokenModifier("SS2_ITEM_INSECTICIDE_DESC", StatTypes.MultiplyByN, 1, "100")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Total damage. (1 = 100%)")]
+        [FormatToken("SS2_ITEM_INSECTICIDE_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float damageCoeff = 1.8f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of poison.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Duration of poison.")]
         public static float duration = 3;
 
-        public static GameObject hitEffect = SS2Assets.LoadAsset<GameObject>("InsecticideEffect", SS2Bundle.Items);
+        private static GameObject _hitEffect;
+        public static DotController.DotIndex DotIndex { get; private set; }
         public override void Initialize()
         {
+            _hitEffect = AssetCollection.FindAsset<GameObject>("InsecticideEffect");
             DotController.onDotInflictedServerGlobal += RefreshInsects;
+            DotIndex = DotAPI.RegisterDotDef(0.25f, 0.15f, DamageColorIndex.DeathMark, AssetCollection.FindAsset<BuffDef>("BuffInsecticide"));
+            GlobalEventManager.onServerDamageDealt += GlobalEventManager_onServerDamageDealt;
         }
 
+        private void GlobalEventManager_onServerDamageDealt(DamageReport report)
+        {
+            if (!report.attackerMaster || !report.attackerBody) return;
+
+            int stack = report.attackerMaster.inventory.GetItemCount(SS2Content.Items.Insecticide);
+            if (stack > 0 && report.victimBody.teamComponent.teamIndex != report.attackerBody.teamComponent.teamIndex && report.damageInfo.procCoefficient > 0 && Util.CheckRoll(chance * 100 * report.damageInfo.procCoefficient, report.attackerMaster))
+            {
+                var dotInfo = new InflictDotInfo()
+                {
+                    attackerObject = report.attacker,
+                    victimObject = report.victim.gameObject,
+                    dotIndex = DotIndex,
+                    duration = report.damageInfo.procCoefficient * duration,
+                    damageMultiplier = stack * (damageCoeff / 1.8f)
+                };
+                DotController.InflictDot(ref dotInfo);
+
+                // GOOPY SOUNDS HERE WOULD BE FANTASTIC!!!!!!!!!!!!!!!!!!!!!!!!!!
+                EffectManager.SimpleEffect(_hitEffect, report.damageInfo.position, Quaternion.identity, true);
+            }
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        //Remove this as DotAPI can handle refreshment.
         private void RefreshInsects(DotController dotController, ref InflictDotInfo inflictDotInfo)
         {
             if (inflictDotInfo.dotIndex == DotIndex)
@@ -41,30 +76,6 @@ namespace Moonstorm.Starstorm2.Items
                         dotController.dotStackList[i].timer = Mathf.Max(dotController.dotStackList[i].timer, duration);
                     }
                     i++;
-                }
-            }
-        }
-
-        public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
-        {
-            [ItemDefAssociation]
-            private static ItemDef GetItemDef() => SS2Content.Items.Insecticide;
-            public void OnDamageDealtServer(DamageReport report)
-            {
-                if (report.victimBody.teamComponent.teamIndex != report.attackerBody.teamComponent.teamIndex && report.damageInfo.procCoefficient > 0 && Util.CheckRoll(chance * 100, report.attackerMaster))
-                {
-                    var dotInfo = new InflictDotInfo()
-                    {
-                        attackerObject = body.gameObject,
-                        victimObject = report.victim.gameObject,
-                        dotIndex = Buffs.Insecticide.index,
-                        duration = report.damageInfo.procCoefficient * duration,
-                        damageMultiplier = stack * (damageCoeff / 1.8f)
-                    };
-                    DotController.InflictDot(ref dotInfo);
-
-                    // GOOPY SOUNDS HERE WOULD BE FANTASTIC!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    EffectManager.SimpleEffect(hitEffect, report.damageInfo.position, Quaternion.identity, true);
                 }
             }
         }

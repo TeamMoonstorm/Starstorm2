@@ -1,4 +1,4 @@
-﻿namespace Moonstorm.Starstorm2
+﻿namespace SS2
 {
     /*
     public static class ExternalMods

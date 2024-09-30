@@ -1,39 +1,62 @@
 ﻿using RoR2;
 using UnityEngine;
-using RoR2.Skills;
 using System.Runtime.CompilerServices;
 using UnityEngine.AddressableAssets;
-
-namespace Moonstorm.Starstorm2.Survivors
+using MSU;
+using System.Collections;
+using RoR2.ContentManagement;
+using R2API;
+#if DEBUG
+namespace SS2.Survivors
 {
-    [DisabledContent]
-    public sealed class NemCaptain : SurvivorBase
+    public sealed class NemCaptain : SS2Survivor
     {
-        public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemCaptainBody", SS2Bundle.Indev);
-        public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("NemmandoMonsterMaster", SS2Bundle.Indev);
-        public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("survivorNemCaptain", SS2Bundle.Indev);
+        public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acNemCaptain", SS2Bundle.Indev);
+
+        public static BuffDef _buffDefOverstress;
 
         public override void Initialize()
         {
-            base.Initialize();
-            if (Starstorm.ScepterInstalled)
+            _buffDefOverstress = AssetCollection.FindAsset<BuffDef>("bdOverstress");
+            ModifyPrefab();
+            R2API.RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
+        }
+
+        public sealed class OvertressBuffBehavior : BaseBuffBehaviour, IBodyStatArgModifier
+        {
+            [BuffDefAssociation]
+            private static BuffDef GetBuffDef() => _buffDefOverstress;
+            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
             {
-                //ScepterCompat();
+                if (hasAnyStacks)
+                {
+                    args.armorAdd -= 20f;
+                    args.moveSpeedReductionMultAdd += 0.3f;
+                    args.damageMultAdd -= 0.5f;
+                }
             }
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-        public void ScepterCompat()
+        private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, R2API.RecalculateStatsAPI.StatHookEventArgs args)
         {
-            //AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(SS2Assets.LoadAsset<SkillDef>("NemmandoScepterSubmission"), "NemmandoBody", SkillSlot.Special, 0);
-            //AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(SS2Assets.LoadAsset<SkillDef>("NemmandoScepterBossAttack"), "NemmandoBody", SkillSlot.Special, 1);
+            if(sender.HasBuff(SS2Content.Buffs.bdNemCapDroneBuff))
+            {
+                args.armorAdd += 30f;
+                args.baseAttackSpeedAdd += 0.2f;
+            }
         }
 
-        public override void ModifyPrefab()
+        public void ModifyPrefab()
         {
-            var cb = BodyPrefab.GetComponent<CharacterBody>();
+            var cb = CharacterPrefab.GetComponent<CharacterBody>();
             cb._defaultCrosshairPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/StandardCrosshair.prefab").WaitForCompletion();
             //cb.GetComponent<ModelLocator>().modelTransform.GetComponent<FootstepHandler>().footstepDustPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/GenericFootstepDust.prefab").WaitForCompletion();
         }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return false;
+        }
     }
 }
+#endif

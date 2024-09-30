@@ -1,6 +1,4 @@
-﻿using Moonstorm;
-using Moonstorm.Starstorm2;
-using RoR2;
+﻿using RoR2;
 using RoR2.Projectile;
 using UnityEngine;
 

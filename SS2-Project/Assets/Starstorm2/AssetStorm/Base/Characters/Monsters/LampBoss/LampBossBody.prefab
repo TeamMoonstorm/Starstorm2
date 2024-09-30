@@ -630,7 +630,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: -3879366842521728577, guid: cc6e6d149e3fc8641867ce173d00c5a6, type: 3}
+  m_Mesh: {fileID: 4300000, guid: a7670e2718c668c478ddd74fbaf0ea81, type: 2}
   m_Bones:
   - {fileID: 8583246973683177363}
   - {fileID: 5316366329499698082}
@@ -14241,7 +14241,6 @@ GameObject:
   - component: {fileID: 4518887274636510872}
   - component: {fileID: 3239268561119236091}
   - component: {fileID: 81179489079014442}
-  - component: {fileID: 4354887866029301393}
   - component: {fileID: 7040613045096028987}
   - component: {fileID: 4655319437521976201}
   - component: {fileID: 5065244686899065093}
@@ -14299,6 +14298,7 @@ MonoBehaviour:
   body: {fileID: 1862279346882973295}
   itemDisplayRuleSet: {fileID: 11400000, guid: 1dacc103cb400a14fabaf291fb76c155, type: 2}
   autoPopulateLightInfos: 1
+  gameObjectActivationTransforms: []
   baseRendererInfos:
   - renderer: {fileID: 7496361300183835963}
     defaultMaterial: {fileID: 2100000, guid: 8108fa8422cd21f40a5f6e28a1c6de19, type: 2}
@@ -14379,24 +14379,6 @@ MonoBehaviour:
   - {fileID: 8184195956271989660}
   mainHurtBox: {fileID: 2950681265253728716}
   bullseyeCount: 1
---- !u!114 &4354887866029301393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3502845028911919073}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1480773730, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseFootstepString: 
-  baseFootliftString: 
-  sprintFootstepOverrideString: 
-  sprintFootliftOverrideString: 
-  enableFootstepDust: 1
-  footstepDustPrefab: {fileID: 0}
 --- !u!114 &7040613045096028987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14510,7 +14492,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3502845028911919073}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -1238519948, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
@@ -15073,7 +15055,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 7081795044176964797, guid: cc6e6d149e3fc8641867ce173d00c5a6, type: 3}
+  m_Mesh: {fileID: 4300000, guid: b236a331d1cca7243b5b46b4a620a563, type: 2}
   m_Bones:
   - {fileID: 8583246973683177363}
   - {fileID: 5316366329499698082}
@@ -17696,7 +17678,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: -3105479711392550574, guid: cc6e6d149e3fc8641867ce173d00c5a6, type: 3}
+  m_Mesh: {fileID: 4300000, guid: c4414aa878f18e4498aac43e04505abd, type: 2}
   m_Bones:
   - {fileID: 8583246973683177363}
   - {fileID: 5316366329499698082}
@@ -20390,7 +20372,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 1324904044107710708, guid: cc6e6d149e3fc8641867ce173d00c5a6, type: 3}
+  m_Mesh: {fileID: 4300000, guid: e3d3d54431352e64eb6f022f11a22e37, type: 2}
   m_Bones:
   - {fileID: 8583246973683177363}
   - {fileID: 5316366329499698082}
@@ -20793,7 +20775,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 3720044814431714314, guid: cc6e6d149e3fc8641867ce173d00c5a6, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 971be7cb10e131746829104b161eb89a, type: 2}
   m_Bones:
   - {fileID: 8583246973683177363}
   - {fileID: 5316366329499698082}
@@ -21774,7 +21756,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 5065116858508218394, guid: cc6e6d149e3fc8641867ce173d00c5a6, type: 3}
+  m_Mesh: {fileID: 4300000, guid: cad3295c271a6b948843c5cfdb248781, type: 2}
   m_Bones:
   - {fileID: 8583246973683177363}
   - {fileID: 5316366329499698082}

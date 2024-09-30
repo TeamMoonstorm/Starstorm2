@@ -1,56 +1,41 @@
-﻿using R2API;
-using RoR2;
-using RoR2.Items;
+﻿using RoR2;
 using MonoMod.Cil;
 using Mono.Cecil.Cil;
 using RoR2.UI;
-using System.Text;
 using System;
 using UnityEngine;
 using System.Collections.Generic;
-using Moonstorm.Components;
-using static RoR2.Items.BaseItemBodyBehavior;
+using MSU;
+using RoR2.ContentManagement;
+using System.Collections;
+using MSU.Config;
 
-namespace Moonstorm.Starstorm2.Items
+namespace SS2.Items
 {
-    [DisabledContent] //sorry groove
-
-    public sealed class BabyToys : ItemBase
+#if DEBUG
+    public sealed class BabyToys : SS2Item
     {
         private const string pickupToken = "SS2_ITEM_BABYTOYS_PICKUP";
-
         private const string descToken = "SS2_ITEM_BABYTOYS_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("BabyToys", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Levels removed per stack.")]
-        [TokenModifier(pickupToken, StatTypes.Default, 0)]
-        [TokenModifier(descToken, StatTypes.Default, 0)]
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acBabyToys", SS2Bundle.Items);
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Levels removed per stack.")]
+        [FormatToken(pickupToken, 0)]
+        [FormatToken(descToken, 0)]
         public static int levelReductionPerStack = 3;
 
         public override void Initialize()
         {
-            base.Initialize();
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return false;
         }
 
 
-
-        //public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier
-        //{
-        //    [ItemDefAssociation]
-        //    private static ItemDef GetItemDef() => SS2Content.Items.BabyToys;
-        //    public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
-        //    {
-        //        BabyToyToken token = body.GetComponent<BabyToyToken>();
-        //        if (token)
-        //        {
-        //
-        //        }
-        //        args.levelFlatAdd += (stack * levelReductionPerStack - (int)token.remainingLevelReduction);
-        //        //throw new NotImplementedException();
-        //    }
-        //}
-
-        public sealed class MasterBehavior : BaseItemMasterBehavior
+        public sealed class MasterBehavior : BaseItemMasterBehaviour
         {
             [ItemDefAssociation(useOnClient = true, useOnServer = true)]
             private static ItemDef GetItemDef() => SS2Content.Items.BabyToys;
@@ -209,6 +194,8 @@ namespace Moonstorm.Starstorm2.Items
                     }
                 }
             }
+
+            //N: I want to travel back in time and literally slap myself to death for suggesting using IL/ON hooks on monobehaviour methods, lmao.
             private void OnEnable()
             {
                 GlobalEventManager.onCharacterLevelUp += GlobalEventManager_onCharacterLevelUp;
@@ -266,7 +253,7 @@ namespace Moonstorm.Starstorm2.Items
                             {
                                 RectTransform rectTransform = (RectTransform)levelText.targetText.transform;
                                 //Transform transf = new Transform(0)
-                                rectTransform.transform.position += (Vector3.right * 1); 
+                                rectTransform.transform.position += (Vector3.right * 1);
                                 rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x - levelTextScaleAdjustment, rectTransform.sizeDelta.y);
                                 adjustedLevelText.Remove(levelText);
                             }
@@ -279,9 +266,9 @@ namespace Moonstorm.Starstorm2.Items
             private void CharacterBody_RecalculateStats(ILContext il)
             {
                 ILCursor c = new ILCursor(il);
-            
+
                 int localLevelMultiplierLocIndex = -1;
-            
+
                 bool ILFound = c.TryGotoNext(MoveType.After,
                     x => x.MatchLdarg(0),
                     x => x.MatchCall<CharacterBody>("get_level"),
@@ -291,7 +278,7 @@ namespace Moonstorm.Starstorm2.Items
                     ) && c.TryGotoNext(MoveType.After,
                     x => x.MatchStloc(out localLevelMultiplierLocIndex)
                     );
-            
+
                 if (ILFound)
                 {
                     c.MoveAfterLabels();
@@ -308,7 +295,7 @@ namespace Moonstorm.Starstorm2.Items
                     c.Emit(OpCodes.Stloc, localLevelMultiplierLocIndex);
                 }
                 else { SS2Log.Error(this + ": Bonus Level Stats IL hook failed!"); }
-            
+
             }
 
             private void OnDisable()
@@ -329,43 +316,5 @@ namespace Moonstorm.Starstorm2.Items
             public uint remainingLevelReduction;
         }
     }
+#endif
 }
-/*[ConfigurableField(ConfigName = "Stat Multiplier", ConfigDesc = "Multiplier applied to the stats per stack.")]
-[TokenModifier(token, StatTypes.Default, 0)]
-[TokenModifier(token, StatTypes.DivideBy2, 1)]
-public static float StatMultiplier = 3;
-[ConfigurableField(ConfigName = "XP Multiplier", ConfigDesc = "Multiplier applied to XP Gain per stack.")]
-[TokenModifier(token, StatTypes.Default, 2)]
-[TokenModifier(token, StatTypes.DivideBy2, 3)]
-public static float XPMultiplier = 2;
-public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier, IOnKilledOtherServerReceiver
-{
-    [ItemDefAssociation]
-    private static ItemDef GetItemDef() => SS2Content.Items.BabyToys;
-    public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
-    {
-        args.armorAdd += GetStatAugmentation(body.levelArmor);
-        args.baseAttackSpeedAdd += GetStatAugmentation(body.levelAttackSpeed);
-        args.baseDamageAdd += GetStatAugmentation(body.levelDamage);
-        args.baseHealthAdd += GetStatAugmentation(body.levelMaxHealth);
-        args.baseMoveSpeedAdd += GetStatAugmentation(body.levelMoveSpeed);
-        args.baseRegenAdd += GetStatAugmentation(body.levelRegen);
-        args.baseShieldAdd += GetStatAugmentation(body.levelMaxShield);
-        args.critAdd += GetStatAugmentation(body.levelCrit);
-    }
-    private float GetStatAugmentation(float stat)
-    {
-        return stat * (StatMultiplier + ((StatMultiplier / 2) * (stack - 1)));
-    }
-    public void OnKilledOtherServer(DamageReport damageReport)
-    {
-        if (damageReport.victimBody)
-        {
-            var deathRewards = damageReport.victimBody.GetComponent<DeathRewards>();
-            if (deathRewards)
-            {
-                body.master.GiveExperience((ulong)(deathRewards.expReward * (XPMultiplier + ((XPMultiplier / 2) * (stack - 1)))));
-            }
-        }
-    }
-}*/

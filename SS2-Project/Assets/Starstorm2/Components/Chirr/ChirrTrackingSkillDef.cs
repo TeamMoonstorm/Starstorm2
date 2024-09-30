@@ -1,21 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using RoR2.Skills;
 using JetBrains.Annotations;
 using RoR2;
-using EntityStates;
-using Moonstorm.Starstorm2.Components;
-namespace Moonstorm.Starstorm2.ScriptableObjects
+using SS2.Components;
+using MSU;
+
+namespace SS2.ScriptableObjects
 {
-	[CreateAssetMenu(menuName = "Starstorm2/SkillDef/ChirrTrackingSkillDef")]
+    [CreateAssetMenu(menuName = "Starstorm2/SkillDef/ChirrTrackingSkillDef")]
 
 	public class ChirrTrackingSkillDef : SkillDef
 	{
 		public bool isScepter;
 		public override BaseSkillInstanceData OnAssigned([NotNull] GenericSkill skillSlot)
 		{
-			ChirrFriendTracker tracker = skillSlot.EnsureComponent<ChirrFriendTracker>(); // should make it work on any body
+			ChirrFriendTracker tracker = skillSlot.gameObject.EnsureComponent<ChirrFriendTracker>(); // should make it work on any body
 			if (tracker) tracker.isScepter = this.isScepter;
 			return new ChirrTrackingSkillDef.InstanceData
 			{

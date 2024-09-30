@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using RoR2;
 using UnityEngine;
-using Moonstorm.Starstorm2;
+using SS2;
 
 namespace EntityStates.FlowerTurret
 {
-	public abstract class BaseFlowerTurretState : EntityState
+    public abstract class BaseFlowerTurretState : EntityState
 	{
 		protected NetworkedBodyAttachment networkedBodyAttachment;
 		protected CharacterBody body;
@@ -44,7 +43,9 @@ namespace EntityStates.FlowerTurret
 							ChildLocator childLocator = gameObject.GetComponentInChildren<ChildLocator>();
 							if (childLocator)
 							{
-								return childLocator.FindChild("Muzzle");
+								Transform muzzle = childLocator.FindChild("Muzzle");
+								if(muzzle)
+									return muzzle;
 							}
 						}
 					}

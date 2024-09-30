@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using RoR2;
-namespace Moonstorm.Starstorm2.Components
+namespace SS2.Components
 {
     [RequireComponent(typeof(EffectComponent))]
     public class EndEffectOnBuffEnd : MonoBehaviour

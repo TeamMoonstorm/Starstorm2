@@ -1,11 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using RoR2;
-using System;
-using UnityEngine.Networking;
-
-namespace EntityStates.Runshroom
+﻿namespace EntityStates.Runshroom
 {
     public class RushroomDeath : GenericCharacterDeath
     {

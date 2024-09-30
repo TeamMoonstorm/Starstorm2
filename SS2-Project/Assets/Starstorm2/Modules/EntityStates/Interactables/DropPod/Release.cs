@@ -1,4 +1,6 @@
-﻿using Moonstorm.Starstorm2.Components;
+﻿//Kill this once we make a proper drop pod, i hate my old code -N
+
+/*using SS2.Components;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -60,3 +62,4 @@ namespace EntityStates.DropPod
         }
     }
 }
+*/

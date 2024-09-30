@@ -2,14 +2,18 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: matArtifactGlassOverlayRed
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
-  m_ShaderKeywords: FRESNEL USE_CLOUDS _EMISSION
+  m_ValidKeywords:
+  - FRESNEL
+  - USE_CLOUDS
+  m_InvalidKeywords:
+  - _EMISSION
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -20,7 +24,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Cloud1Tex:
-        m_Texture: {fileID: 2800000, guid: 804f8f2b3c877ee468604842117ffb7a, type: 3}
+        m_Texture: {fileID: 2800000, guid: 14665851842caf74fb06364eaaeb01e9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Cloud2Tex:
@@ -35,6 +39,7 @@ Material:
         m_Texture: {fileID: 2800000, guid: b3a676c9d3d68e149bbc6a3ada158d1e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AlphaBias: 0.81
     - _AlphaBoost: 0
@@ -84,3 +89,4 @@ Material:
     - _CutoffScroll: {r: 0.1, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _TintColor: {r: 0.13029549, g: 0.14534396, b: 0.1509434, a: 1}
+  m_BuildTextureStacks: []

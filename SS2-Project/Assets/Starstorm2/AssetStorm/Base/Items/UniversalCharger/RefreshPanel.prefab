@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2530083043610570316}
   - component: {fileID: 2254589286883865306}
+  - component: {fileID: 7040212369123792329}
   m_Layer: 0
   m_Name: RefreshPanel
   m_TagString: Untagged
@@ -27,6 +28,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -2.4980018e-16, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.3499992, y: 1.3500004, z: 1.350001}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1556845958215851161}
   m_Father: {fileID: 0}
@@ -50,6 +52,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panel: {fileID: 1556845958215851161}
+--- !u!222 &7040212369123792329
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1160558681053595639}
+  m_CullTransparentMesh: 0
 --- !u!1 &1623060801511151243
 GameObject:
   m_ObjectHideFlags: 0
@@ -60,7 +70,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1556845958215851161}
   - component: {fileID: 1557640804218824065}
-  - component: {fileID: 485972730822790031}
+  - component: {fileID: 6941377236311232702}
   - component: {fileID: 1662812360713240656}
   m_Layer: 5
   m_Name: Panel
@@ -79,6 +89,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1556344808949343851}
   m_Father: {fileID: 2530083043610570316}
@@ -97,7 +108,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1623060801511151243}
   m_CullTransparentMesh: 0
---- !u!114 &485972730822790031
+--- !u!114 &6941377236311232702
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -106,12 +117,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1623060801511151243}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: d3e719b59ab71ba3f6b398058c866280, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 6d0c699ff0e939f4a84d19be1d9c79b3, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -171,7 +183,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  image: {fileID: 485972730822790031}
+  image: {fileID: 6941377236311232702}
   rawImage: {fileID: 0}
   spriteRenderer: {fileID: 0}
   timeMax: 1
@@ -189,7 +201,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1556344808949343851}
   - component: {fileID: 1554352373371032874}
-  - component: {fileID: 5269370953785409332}
+  - component: {fileID: 8765642169620320417}
   - component: {fileID: 1665692390618685163}
   m_Layer: 5
   m_Name: FlashPanel, Expanding
@@ -208,6 +220,7 @@ RectTransform:
   m_LocalRotation: {x: -2.1316282e-14, y: -5.684342e-14, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: -0.00000001454655}
   m_LocalScale: {x: 10, y: 1.25, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1556845958215851161}
   m_RootOrder: 0
@@ -225,7 +238,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1623068960681245581}
   m_CullTransparentMesh: 0
---- !u!114 &5269370953785409332
+--- !u!114 &8765642169620320417
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -234,12 +247,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1623068960681245581}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: d3e719b59ab71ba3f6b398058c866280, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 6d0c699ff0e939f4a84d19be1d9c79b3, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -290,7 +304,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  image: {fileID: 5269370953785409332}
+  image: {fileID: 8765642169620320417}
   rawImage: {fileID: 0}
   spriteRenderer: {fileID: 0}
   timeMax: 0.2

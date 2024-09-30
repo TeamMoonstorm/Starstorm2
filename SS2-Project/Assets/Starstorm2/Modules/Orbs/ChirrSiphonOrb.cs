@@ -1,8 +1,7 @@
 ﻿using RoR2;
 using RoR2.Orbs;
 using UnityEngine;
-
-namespace Moonstorm.Starstorm2.Orbs
+namespace SS2.Orbs
 {
     public class ChirrSiphonOrb : Orb
     {

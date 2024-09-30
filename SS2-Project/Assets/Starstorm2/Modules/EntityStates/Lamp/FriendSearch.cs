@@ -1,11 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using RoR2;
-using Moonstorm.Starstorm2;
-using UnityEngine.Networking;
 using HG;
-using Moonstorm.Starstorm2.Components;
 
 namespace EntityStates.Lamp
 {

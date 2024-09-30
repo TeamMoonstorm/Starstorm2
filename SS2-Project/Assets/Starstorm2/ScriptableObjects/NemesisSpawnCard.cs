@@ -1,6 +1,5 @@
-﻿using Assets.Starstorm2.ScriptableObjects;
-using EntityStates;
-using Moonstorm.Starstorm2.Components;
+﻿using EntityStates;
+using SS2.Components;
 using R2API.Networking.Interfaces;
 using RoR2;
 using RoR2.Skills;
@@ -8,8 +7,7 @@ using System;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.Networking;
-
-namespace Moonstorm.Starstorm2.ScriptableObjects
+namespace SS2
 {
     [CreateAssetMenu(fileName = "NemesisSpawnCard", menuName = "Starstorm2/NemesisSpawnCard")]
     public class NemesisSpawnCard : CharacterSpawnCard
@@ -56,13 +54,6 @@ namespace Moonstorm.Starstorm2.ScriptableObjects
                 var skillLocator = body.skillLocator;
                 foreach (var skillOverride in skillOverrides)
                     skillLocator.GetSkill(skillOverride.skillSlot).SetSkillOverride(this, skillOverride.skillDef, GenericSkill.SkillOverridePriority.Replacement);
-
-                ChildLocator childLocator = body.modelLocator.modelTransform.GetComponent<ChildLocator>();
-                var effect = GameObject.Instantiate(visualEffect, body.corePosition, Quaternion.identity, childLocator.FindChild(childName));
-
-                master.onBodyDeath.AddListener(RemoveEffect);
-                void RemoveEffect() => Destroy(effect);
-
 
                 if (useOverrideState)
                 {

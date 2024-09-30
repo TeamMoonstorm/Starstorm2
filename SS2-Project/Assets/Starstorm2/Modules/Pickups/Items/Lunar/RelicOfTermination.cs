@@ -1,52 +1,54 @@
-﻿using KinematicCharacterController;
-using RoR2;
-using RoR2.EntitlementManagement;
+﻿using RoR2;
 using RoR2.Items;
 using RoR2.UI;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 
-namespace Moonstorm.Starstorm2.Items
-{
-    public sealed class RelicOfTermination : ItemBase
-    {
-        private const string token = "SS2_ITEM_RELICOFTERMINATION_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfTermination", SS2Bundle.Items);
+using MSU;
+using RoR2.ContentManagement;
+using System.Collections;
+using MSU.Config;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Time, in seconds, to kill the marked enemy before going on cooldown.")]
-        [TokenModifier(token, StatTypes.Default, 0)]
-        [TokenModifier("SS2_ITEM_RELICOFTERMINATION_PICKUP", StatTypes.Default, 0)]
+namespace SS2.Items
+{
+    public sealed class RelicOfTermination : SS2Item, IContentPackModifier
+    {
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRelicOfTermination", SS2Bundle.Items);
+
+        private const string token = "SS2_ITEM_RELICOFTERMINATION_DESC";
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Time, in seconds, to kill the marked enemy before going on cooldown.")]
+        [FormatToken(token, 0)]
+        [FormatToken("SS2_ITEM_RELICOFTERMINATION_PICKUP", 0)]
         public static float maxTime = 30f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Percent reduction in time to kill per stack. (1 = 100% reduction, .1 = 10% reduction)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Percent reduction in time to kill per stack. (1 = 100% reduction, .1 = 10% reduction)")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float timeReduction = .1f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Damage multiplier which is added to the marked enemy. (1 = 100% more damage).")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Damage multiplier which is added to the marked enemy. (1 = 100% more damage).")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
         public static float damageMult = 1.5f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Health multiplier which is added to the marked enemy. (1 = 100% more health).")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 3, "100")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Health multiplier which is added to the marked enemy. (1 = 100% more health).")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 3)]
         public static float hpMult = 2.5f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Flat additional health which is added to the marked enemy. (1 = 100% more health).")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 7, "100")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Flat additional health which is added to the marked enemy. (1 = 100% more health).")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 7)]
         public static float hpAdd = 225;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Speed multiplier which is added to the marked enemy. (1 = 100% more speed).")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 4, "100")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Speed multiplier which is added to the marked enemy. (1 = 100% more speed).")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 4)]
         public static float speedMult = .5f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Attack speed multiplier which is added to the marked enemy. (1 = 100% more attack speed).")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 5, "100")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Attack speed multiplier which is added to the marked enemy. (1 = 100% more attack speed).")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 5)]
         public static float atkSpeedMult = 1f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Scale multiplier applied to marked enemies. (1 = 100% of normal scale (no change)).")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 6, "100")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Scale multiplier applied to marked enemies. (1 = 100% of normal scale (no change)).")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 6)]
         public static float scaleMod = 1.5f;
 
         private static List<BodyIndex> illegalMarks = new List<BodyIndex>();
@@ -56,7 +58,7 @@ namespace Moonstorm.Starstorm2.Items
         public static GameObject spawnRock2VFX;
 
         public static GameObject deathHalo;
-        
+
         public static GameObject markEffect;
         public static GameObject failEffect;
         public static GameObject buffEffect;
@@ -67,26 +69,39 @@ namespace Moonstorm.Starstorm2.Items
 
         List<PickupIndex> bossOptions;
 
-        override public void Initialize()
+        public override void Initialize()
         {
+            markEffect = AssetCollection.FindAsset<GameObject>("RelicOfTerminationTargetMark");
+            //failEffect = AssetCollection.FindAsset<GameObject>("RelicOfTerminationTargetMark");
+            buffEffect = AssetCollection.FindAsset<GameObject>("RelicOfTerminationBuffEffect");
+            deathHalo = AssetCollection.FindAsset<GameObject>("TerminationDeathHalo");
+            spawnRock1VFX = AssetCollection.FindAsset<GameObject>("TerminationDebris1");
+            spawnRock2VFX = AssetCollection.FindAsset<GameObject>("TerminationDebris2");
+            globalMarkEffectTwo = AssetCollection.FindAsset<GameObject>("TerminationPositionIndicator");
+
+            Material overlayMaterial = AssetCollection.FindAsset<Material>("matTerminationOverlay");
+            BuffDef buffCooldown = AssetCollection.FindAsset<BuffDef>("BuffTerminationCooldown");
+            BuffDef buffFailed = AssetCollection.FindAsset<BuffDef>("BuffTerminationFailed");
+            BuffDef buffReady = AssetCollection.FindAsset<BuffDef>("BuffTerminationReady");
+            BuffDef buffVfx = AssetCollection.FindAsset<BuffDef>("BuffTerminationVFX");
+
             CharacterBody.onBodyStartGlobal += TerminationSpawnHook;
             GlobalEventManager.onCharacterDeathGlobal += TerminationDeathHook;
-            On.RoR2.Util.GetBestBodyName += AddTerminalName;
             RoR2.Inventory.onInventoryChangedGlobal += CheckTerminationBuff;
             On.RoR2.TeamComponent.SetupIndicator += OverrideTerminalBossMarker;
 
-            markEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationTargetMark", SS2Bundle.Items);
-            failEffect = SS2Assets.LoadAsset<GameObject>("NemmandoScepterSlashAppear", SS2Bundle.Nemmando);
-            buffEffect = SS2Assets.LoadAsset<GameObject>("RelicOfTerminationBuffEffect", SS2Bundle.Items);
-
-            deathHalo = SS2Assets.LoadAsset<GameObject>("TerminationDeathHalo", SS2Bundle.Items);
-
-            globalMarkEffectTwo = SS2Assets.LoadAsset<GameObject>("TerminationPositionIndicator", SS2Bundle.Items);
-            spawnRock1VFX = SS2Assets.LoadAsset<GameObject>("TerminationDebris1", SS2Bundle.Items);
-            spawnRock2VFX = SS2Assets.LoadAsset<GameObject>("TerminationDebris2", SS2Bundle.Items);
-
             dropTable = ScriptableObject.CreateInstance<TerminationDropTable>();
             bossOptions = new List<PickupIndex>();
+
+            BuffOverlays.AddBuffOverlay(buffCooldown, overlayMaterial);
+            BuffOverlays.AddBuffOverlay(buffFailed, overlayMaterial);
+            BuffOverlays.AddBuffOverlay(buffReady, overlayMaterial);
+            BuffOverlays.AddBuffOverlay(buffVfx, overlayMaterial);
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
         }
 
         private void OverrideTerminalBossMarker(On.RoR2.TeamComponent.orig_SetupIndicator orig, TeamComponent self)
@@ -106,7 +121,6 @@ namespace Moonstorm.Starstorm2.Items
                             np.SetBody(self.body);
                         }
                         self.gameObject.AddComponent<TerminationMarkerToken>();
-                        //self.indicator = null;
                         return;
                     }
                 }
@@ -127,7 +141,7 @@ namespace Moonstorm.Starstorm2.Items
                 var body = master.GetBody();
                 if (body)
                 {
-                    if(obj.GetItemCount(SS2Content.Items.RelicOfTermination) == 0)
+                    if (obj.GetItemCount(SS2Content.Items.RelicOfTermination) == 0)
                     {
                         if (body.HasBuff(SS2Content.Buffs.BuffTerminationReady))
                         {
@@ -150,11 +164,7 @@ namespace Moonstorm.Starstorm2.Items
             {
                 var body = token.owner.body;
 
-                //SS2Log.Info("Attacker: " + obj.attacker); //attacker is ArenaMissionController in void fields, none for jellyfish suicide
-                //SS2Log.Info("AttackerBody: " + obj.attackerBody);
-                //SS2Log.Info("AttackerIndex: " + obj.attackerTeamIndex);
-
-                if(obj.attackerTeamIndex == TeamIndex.None)
+                if (obj.attackerTeamIndex == TeamIndex.None)
                     return;
 
                 var inital = token.initalTime;
@@ -165,15 +175,11 @@ namespace Moonstorm.Starstorm2.Items
                 }
                 var timeLimit = token.owner.target.timeLimit;
                 token.owner.target = null; // :)
-                //SS2Log.Info("time limit: " + timeLimit);
-                //float timeMult = Mathf.Pow(1 - timeReduction, token.itemCount - 1);
-                //float compmaxTime = maxTime * timeMult;
 
                 var pointerToken = obj.victimBody.transform.Find("TerminationPositionIndicator(Clone)");
                 if (pointerToken)
                 {
                     var posind = pointerToken.GetComponent<PositionIndicator>();
-                    //SS2Log.Info("posind: " + posind);
                     if (posind)
                     {
                         var insobj = posind.insideViewObject;
@@ -202,13 +208,10 @@ namespace Moonstorm.Starstorm2.Items
                 {
                     int count = token.itemCount;
                     Vector3 vector = Quaternion.AngleAxis(0, Vector3.up) * (Vector3.up * 20f);
-                    //List<PickupIndex> dropList;
 
-                    if(dropTable == null)
+                    if (dropTable == null)
                     {
-                        //dropTable = new TerminationDropTable();
                         dropTable = ScriptableObject.CreateInstance<TerminationDropTable>();
-                        //dropTable = (TerminationDropTable)ScriptableObject.CreateInstance("TerminationDropTable");
                     }
 
                     if (terminationRNG == null)
@@ -220,7 +223,6 @@ namespace Moonstorm.Starstorm2.Items
                         var deathRewards = ((obj.victimBody != null) ? obj.victimBody.GetComponent<DeathRewards>() : null);
                         if (deathRewards)
                         {
-                            //SS2Log.Info("a: " + deathRewards.bossDropTable.GenerateDrop(terminationRNG) + " | " + deathRewards.bossPickup);
                             PickupDropletController.CreatePickupDroplet(deathRewards.bossDropTable.GenerateDrop(terminationRNG), obj.victim.transform.position, vector);
                         }
                         else
@@ -231,26 +233,18 @@ namespace Moonstorm.Starstorm2.Items
                                 foreach (var item in selection)
                                 {
                                     bossOptions.Add(item);
-                                    //SS2Log.Info("item: " + item.pickupDef.nameToken);
                                 }
                             }
                             Util.ShuffleList<PickupIndex>(bossOptions);
                             PickupDropletController.CreatePickupDroplet(bossOptions[0], obj.victim.transform.position, vector);
                         }
-                        
+
                     }
                     else
                     {
                         PickupIndex ind = dropTable.GenerateDropPreReplacement(terminationRNG, count);
                         PickupDropletController.CreatePickupDroplet(ind, obj.victim.transform.position, vector);
                     }
-
-                    //EffectData effectData = new EffectData
-                    //{
-                    //    origin = obj.victimBody.transform.position,
-                    //    scale = .5f// * (float)obj.victimBody.hullClassification
-                    //};
-                    //EffectManager.SpawnEffect(deathHalo, effectData, transmit: true);
                 }
 
             }
@@ -264,7 +258,7 @@ namespace Moonstorm.Starstorm2.Items
             }
             if (obj.inventory)
             {
-                if (obj.inventory.GetItemCount(SS2Content.Items.Cognation) > 0)
+                if (obj.inventory.GetItemCount(SS2Content.Items.CognationHelper) > 0)
                 {
                     return;
                 }
@@ -295,7 +289,7 @@ namespace Moonstorm.Starstorm2.Items
                                     }
 
                                     var token = obj.gameObject.AddComponent<TerminationToken>();
-                                    
+
                                     token.itemCount = count;
                                     token.initalTime = Time.time;
                                     token.owner = holderToken;
@@ -308,7 +302,6 @@ namespace Moonstorm.Starstorm2.Items
 
                                     if (obj.isBoss)
                                     {
-                                        //SS2Log.Info("object is boss " + obj.isBoss);
                                         token.isBoss = true;
                                         compmaxTime *= 2;
                                     }
@@ -326,7 +319,7 @@ namespace Moonstorm.Starstorm2.Items
                                     {
                                         origin = obj.transform.position,
                                         scale = .5f
-                                    
+
                                     };
                                     EffectManager.SpawnEffect(spawnRock1VFX, effectData, transmit: true);
 
@@ -346,18 +339,7 @@ namespace Moonstorm.Starstorm2.Items
             }
         } //awesome
 
-        private string AddTerminalName(On.RoR2.Util.orig_GetBestBodyName orig, GameObject bodyObject) //i love stealing
-        {
-            var result = orig(bodyObject);
-            CharacterBody characterBody = bodyObject?.GetComponent<CharacterBody>();
-            if (characterBody && characterBody.inventory && characterBody.inventory.GetItemCount(SS2Content.Items.TerminationHelper) > 0)
-            {
-                result = Language.GetStringFormatted("SS2_ITEM_RELICOFTERMINATION_PREFIX", result);
-            }
-            return result;
-        }
-
-        public sealed class TerminationBehavior : BaseItemBodyBehavior//, IOnKilledServerReceiver//, IOnKilledOtherServerReceiver 
+        public sealed class TerminationBehavior : BaseItemBodyBehavior
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.RelicOfTermination;
@@ -380,7 +362,7 @@ namespace Moonstorm.Starstorm2.Items
 
             public void FixedUpdate()
             {
-                if(EntranceTimer > 0)
+                if (EntranceTimer > 0)
                 {
                     EntranceTimer -= Time.deltaTime;
                     return;
@@ -391,19 +373,19 @@ namespace Moonstorm.Starstorm2.Items
                     var holderToken = body.GetComponent<TerminationHolderToken>();
                     if (holderToken)
                     {
-                        if(holderToken.target != null && !body.HasBuff(SS2Content.Buffs.BuffTerminationFailed))
+                        if (holderToken.target != null && !body.HasBuff(SS2Content.Buffs.BuffTerminationFailed))
                         {
                             body.AddBuff(SS2Content.Buffs.BuffTerminationFailed);
 
                         }
-                        else if(holderToken.target == null && body.HasBuff(SS2Content.Buffs.BuffTerminationFailed))
+                        else if (holderToken.target == null && body.HasBuff(SS2Content.Buffs.BuffTerminationFailed))
                         {
                             for (int i = 0; i < 5; i++)
                             {
                                 body.AddTimedBuffAuthority(SS2Content.Buffs.BuffTerminationCooldown.buffIndex, i + 1);
                             }
                         }
-                        else if(holderToken.target == null)
+                        else if (holderToken.target == null)
                         {
                             body.AddBuff(SS2Content.Buffs.BuffTerminationReady);
                         }
@@ -551,6 +533,5 @@ namespace Moonstorm.Starstorm2.Items
 
             new private readonly WeightedSelection<PickupIndex> selector = new WeightedSelection<PickupIndex>(8);
         }
-
     }
 }

@@ -1,29 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using RoR2;
-using JetBrains.Annotations;
 using UnityEngine.Networking;
-using UnityEngine.AddressableAssets;
-using R2API;
-namespace Moonstorm.Starstorm2.Components
+namespace SS2.Components
 {
     public class RemunerationShopBehavior : NetworkBehaviour
     {
-
-        [SystemInitializer]
-        private static void Init()
-        {
-            deleteEffectPrefab = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Nullifier/NullifierExplosion.prefab").WaitForCompletion(), "WAWA");
-            deleteEffectPrefab.GetComponent<EffectComponent>().soundName = "Play_nullifier_death_vortex_explode"; // cringe.
-            ContentAddition.AddEffect(deleteEffectPrefab); // i think this is how r2api works? not gonna look it up tehe
-        }
-
         public float effectScale = 4.5f;// need for unityexplorer
-        public static GameObject deleteEffectPrefab;
+        
 
         public List<RemunerationChoiceBehavior> choices;
 
@@ -88,7 +72,7 @@ namespace Moonstorm.Starstorm2.Components
                     rotation = Quaternion.identity,
                     scale = effectScale,
                 };
-                EffectManager.SpawnEffect(deleteEffectPrefab, data, true);              
+                EffectManager.SpawnEffect(Items.Remuneration.deleteEffectPrefab, data, true); // :(        
                 Destroy(chois.gameObject);
             }
         }
@@ -123,7 +107,7 @@ namespace Moonstorm.Starstorm2.Components
                         rotation = Quaternion.identity,
                         scale = effectScale,
                     };
-                    EffectManager.SpawnEffect(deleteEffectPrefab, data, true);
+                    EffectManager.SpawnEffect(Items.Remuneration.deleteEffectPrefab, data, true); // :(
                     Destroy(droplet.gameObject);
                 }
                     

@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 055ad47894d63994fa4e32d1cfa2f4d3, type: 3}
+  m_Script: {fileID: 11500000, guid: 74a4b8a0e9a17f6419d0bf9a23a7c118, type: 3}
   m_Name: SkinHuntressGM
   m_EditorClassIdentifier: 
   baseSkins: []
@@ -23,11 +23,11 @@ MonoBehaviour:
   meshReplacements: []
   projectileGhostReplacements: []
   minionSkinReplacements: []
-  bodyAddress: RoR2/Base/Huntress/HuntressBody.prefab
-  displayAddress: RoR2/Base/Huntress/HuntressDisplay.prefab
+  _bodyAddress: RoR2/Base/Huntress/HuntressBody.prefab
+  _displayAddress: RoR2/Base/Huntress/HuntressDisplay.prefab
   _baseSkins:
-  - skinAddress: RoR2/Base/Huntress/skinHuntressDefault.asset
-    skin: {fileID: 0}
+  - _skinAddress: RoR2/Base/Huntress/skinHuntressDefault.asset
+    _skinDef: {fileID: 0}
   _rendererInfos:
   - defaultMaterial: {fileID: 2100000, guid: 083adc33f1451844b917be92fb96ab92, type: 2}
     defaultShadowCastingMode: 1
@@ -46,12 +46,12 @@ MonoBehaviour:
     rendererIndex: 11
   _gameObjectActivations: []
   _meshReplacements:
-  - mesh: {fileID: -2274143092984155997, guid: 217751fce7fae5049b68297465f95c7d, type: 3}
+  - mesh: {fileID: 4300000, guid: fa76cf3b3b2217144ab844fb5635279e, type: 2}
     rendererIndex: 1
-  - mesh: {fileID: 4088740649521433543, guid: 217751fce7fae5049b68297465f95c7d, type: 3}
+  - mesh: {fileID: 4300000, guid: 5dd6275fb3febc84498ac50314bd2270, type: 2}
     rendererIndex: 10
-  - mesh: {fileID: -6630046705913281940, guid: 217751fce7fae5049b68297465f95c7d, type: 3}
+  - mesh: {fileID: 4300000, guid: f75606f632e64464d8ce599c06c9ce22, type: 2}
     rendererIndex: 11
   _projectileGhostReplacements: []
   _minionSkinReplacements: []
-  rendererAmounts: 0
+  cachedRendererAmount: 0

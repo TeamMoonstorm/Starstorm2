@@ -1,15 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using R2API;
 using RoR2;
-using System.Text;
 using R2API.Utils;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.AddressableAssets;
-
-namespace Moonstorm.Starstorm2
+namespace SS2
 {
     //LASCIATE OGNI SPERANZA, VOI CH'ENTRATE
 
@@ -45,10 +41,10 @@ namespace Moonstorm.Starstorm2
             Components.TraderController.Initialize();
 
             //Initialize new difficulties
-            Deluge.Init();
+            /*Deluge.Init();
             Tempest.Init();
             Cyclone.Init();
-            SuperTyphoon.Init();
+            SuperTyphoon.Init();*/
 
             //Save level cap for later use
             storedLevelCap = Run.ambientLevelCap;
@@ -57,7 +53,7 @@ namespace Moonstorm.Starstorm2
             Debug.Log("Initializing Ethereal Sapling prefab...");
             shrinePrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("ShrineEthereal", SS2Bundle.Indev), "EtherealSapling", true);
             shrinePrefab.RegisterNetworkPrefab();
-            portalPrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("PortalStranger1", SS2Bundle.Stages), "StrangerPortal", true);
+            portalPrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("PortalStranger1", SS2Bundle.SharedStages), "StrangerPortal", true);
             portalPrefab.RegisterNetworkPrefab();
 
             //Add teleporter upgrading component to teleporters
@@ -84,7 +80,6 @@ namespace Moonstorm.Starstorm2
             etherealsCompleted = 0;
             storedScalingValue = DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).scalingValue;
             teleIsEthereal = false;
-            Run.ambientLevelCap = storedLevelCap;
             Debug.Log("completed: " + etherealsCompleted + "; teleIsEthereal: " + teleIsEthereal);
         }
 
@@ -286,7 +281,7 @@ namespace Moonstorm.Starstorm2
 
                             switch (ruleChoiceDef.difficultyIndex)
                             {
-                                //drizzle
+                                /*//drizzle
                                 case DifficultyIndex.Easy:
                                     {
                                         run.selectedDifficulty = Deluge.DelugeIndex;
@@ -309,18 +304,18 @@ namespace Moonstorm.Starstorm2
                                         Debug.Log("monsoon detected; trying to override");
                                         run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(Cyclone.CycloneDef.nameToken)));
                                     }
-                                    break;
+                                    break;*/
                             }
 
                             //typhoon is a modded difficulty and its index is not constant
-                            if (ruleChoiceDef.difficultyIndex == Typhoon.TyphoonIndex)
+                            /*if (ruleChoiceDef.difficultyIndex == Typhoon.TyphoonIndex)
                             {
                                 run.selectedDifficulty = SuperTyphoon.SuperTyphoonIndex;
                                 Debug.Log("typhoon detected; trying to override");
                                 run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + Language.GetString(SuperTyphoon.SuperTyphoonDef.nameToken)));
                                 //for some reason appears as deluge in run history???
                                 //appears correctly mid-run & at run end so will ignore for now...
-                            }
+                            }*/
                         }
 
                         diffIndex = run.ruleBook.FindDifficulty();

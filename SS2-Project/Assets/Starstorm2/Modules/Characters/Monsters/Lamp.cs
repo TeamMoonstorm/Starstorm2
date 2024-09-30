@@ -1,21 +1,25 @@
-﻿using RoR2;
+﻿using MSU;
+using R2API;
+using RoR2.ContentManagement;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-
-namespace Moonstorm.Starstorm2.Monsters
+namespace SS2.Monsters
 {
-    public sealed class Lamp : MonsterBase
+    public sealed class Lamp : SS2Monster
     {
-        public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("LampBody", SS2Bundle.Monsters);
-        public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("LampMaster", SS2Bundle.Monsters);
+        public override SS2AssetRequest<MonsterAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<MonsterAssetCollection>("acLamp", SS2Bundle.Monsters);
 
-        private MSMonsterDirectorCard defaultCard = SS2Assets.LoadAsset<MSMonsterDirectorCard>("msmdcLamp", SS2Bundle.Monsters);
+        public static GameObject _masterPrefab;
 
         public override void Initialize()
         {
-            base.Initialize();
-            MonsterDirectorCards.Add(defaultCard);
-            //Addressables.LoadAssetAsync<DccsPool>()
+            _masterPrefab = AssetCollection.FindAsset<GameObject>("LampMaster");
         }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
     }
 }

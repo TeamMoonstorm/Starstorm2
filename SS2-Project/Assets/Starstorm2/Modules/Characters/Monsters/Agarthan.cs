@@ -1,13 +1,24 @@
-﻿using RoR2;
+﻿using MSU;
+using R2API;
+using RoR2.ContentManagement;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-
-namespace Moonstorm.Starstorm2.Monsters
+namespace SS2.Monsters
 {
-    [DisabledContent]
-    public sealed class Agarthan : MonsterBase
+#if DEBUG
+    public sealed class Agarthan : SS2Monster
     {
-        public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("AgarthanBody", SS2Bundle.Indev);
-        public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("AgarthanMaster", SS2Bundle.Indev);
-        public override MSMonsterDirectorCard MonsterDirectorCard { get; } = null; //SS2Assets.LoadAsset<MSMonsterDirectorCard>("msmdcAgarthan", SS2Bundle.Indev);
+        public override SS2AssetRequest<MonsterAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<MonsterAssetCollection>("acAgarthan", SS2Bundle.Indev);
+
+        public override void Initialize()
+        {
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return false;
+        }
     }
+#endif
 }

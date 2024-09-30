@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-
-namespace Moonstorm.Starstorm2.Components
+namespace SS2.Components
 {
     [ExecuteAlways]
     public class AddressablesAsset : MonoBehaviour

@@ -1,25 +1,24 @@
-﻿using RoR2;
+﻿using MSU;
+using MSU.Config;
+using RoR2;
+using RoR2.ContentManagement;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using static AkMIDIEvent;
-
-namespace Moonstorm.Starstorm2.Equipments
+namespace SS2.Equipments
 {
-    //[DisabledContent]
-    public sealed class MIDAS : EquipmentBase
+    public sealed class MIDAS : SS2Equipment
     {
-        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("MIDAS", SS2Bundle.Equipments);
-        public float goldEarned;
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acMIDAS", SS2Bundle.Equipments);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Health percentage sacrificed (1 = 100%)")]
-        [TokenModifier("SS2_EQUIP_MIDAS_DESC", StatTypes.MultiplyByN, 0, "100")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Health percentage sacrificed (1 = 100%)")]
+        [FormatToken("SS2_EQUIP_MIDAS_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float healthPercentage = 0.5f;
 
-        [RooConfigurableField(SS2Config.IDItem)]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM)]
         public static float goldMultiplier = 1f;
 
-        //★ There's probably a way to do this involving an item behavior. Let me know about it.
-        //N Nah, this looks good.
-        public override bool FireAction(EquipmentSlot slot)
+        public override bool Execute(EquipmentSlot slot)
         {
             int playerCount = 0;
             foreach (var player in PlayerCharacterMasterController.instances)
@@ -32,13 +31,10 @@ namespace Moonstorm.Starstorm2.Equipments
             float commandoHealth = .5f * (110 + (33 * (level - 1)));
             float healthLost = slot.characterBody.healthComponent.health * healthPercentage;
             float chestFraction = healthLost / commandoHealth;
-            //SS2Log.Debug("chest fraction: " + chestFraction);
 
-            goldEarned = Run.instance.GetDifficultyScaledCost((int)(25 * chestFraction));
+            var goldEarned = Run.instance.GetDifficultyScaledCost((int)(25 * chestFraction));
 
-            goldEarned = Mathf.Max(goldEarned, healthLost);
-            //SS2Log.Debug("gold : " + goldEarned);
-            //goldEarned = slot.characterBody.healthComponent.health * 0.5f * (1.3f * (playerCount - 1));
+            goldEarned = Mathf.CeilToInt(Mathf.Max(goldEarned, healthLost));
             DamageInfo damageInfo = new DamageInfo()
             {
                 damage = healthLost,
@@ -50,9 +46,7 @@ namespace Moonstorm.Starstorm2.Equipments
             slot.characterBody.healthComponent.TakeDamage(damageInfo);
             if (!slot.characterBody.isPlayerControlled && slot.characterBody.teamComponent.teamIndex == TeamIndex.Player)
             {
-                //SS2Log.Debug("is not player controled");
                 uint splitAmount = (uint)((goldEarned * goldMultiplier) / playerCount);
-                //SS2Log.Debug("is not player controlled, giving " + splitAmount + " to all players");
                 foreach (var player in PlayerCharacterMasterController.instances)
                 {
                     player.master.GiveMoney(splitAmount);
@@ -60,11 +54,27 @@ namespace Moonstorm.Starstorm2.Equipments
             }
             else
             {
-                //SS2Log.Debug("is player controled@!!!!!");
                 slot.characterBody.master.GiveMoney((uint)goldEarned);
             }
-            
+
             return true;
+        }
+
+        public override void Initialize()
+        {
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        public override void OnEquipmentLost(CharacterBody body)
+        {
+        }
+
+        public override void OnEquipmentObtained(CharacterBody body)
+        {
         }
     }
 

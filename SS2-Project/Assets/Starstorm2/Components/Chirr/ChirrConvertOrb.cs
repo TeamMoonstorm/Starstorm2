@@ -1,8 +1,7 @@
 ﻿using RoR2;
 using RoR2.Orbs;
 using UnityEngine;
-
-namespace Moonstorm.Starstorm2.Components
+namespace SS2.Components
 {
     public class ChirrFriendOrb : GenericDamageOrb
     {
@@ -32,7 +31,7 @@ namespace Moonstorm.Starstorm2.Components
                 convertBehavior.lifetime = this.buffDuration;
                 convertBehavior.convertHealthFraction = this.convertHealthFraction;
                 convertBehavior.chirrFriendTracker = this.tracker;
-                DotController.InflictDot(this.target.healthComponent.gameObject, this.attacker, Buffs.ChirrConvert.dotIndex, buffDuration);
+                DotController.InflictDot(this.target.healthComponent.gameObject, this.attacker, Survivors.Chirr.ConvertDotIndex, buffDuration);
             }
 
         }
@@ -64,7 +63,6 @@ namespace Moonstorm.Starstorm2.Components
                     if (chirrFriendTracker && chirrFriendTracker.friendOwnership)
                     {
                         chirrFriendTracker.friendOwnership.AddFriend(damageReport.victimMaster);
-                        SS2Log.Info("ChirrFriendOrb.OnArrival: added fren :)");
                         Destroy(this);
                     }
                 }

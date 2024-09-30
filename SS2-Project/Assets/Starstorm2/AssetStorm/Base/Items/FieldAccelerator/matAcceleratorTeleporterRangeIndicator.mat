@@ -2,14 +2,17 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: matAcceleratorTeleporterRangeIndicator
   m_Shader: {fileID: 4800000, guid: b12ff619eec8e0a49b65f7bec2dfdc79, type: 2}
-  m_ShaderKeywords: TRIPLANAR _EMISSION
+  m_ValidKeywords:
+  - TRIPLANAR
+  m_InvalidKeywords:
+  - _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -20,7 +23,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Cloud1Tex:
-        m_Texture: {fileID: 2800000, guid: b004d600cc1e9dc438de3ef14f58a9d3, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7d141824ada450747b17a50e01bef09a, type: 3}
         m_Scale: {x: 0.3, y: 0.3}
         m_Offset: {x: 0, y: 0}
     - _Cloud2Tex:
@@ -35,6 +38,7 @@ Material:
         m_Texture: {fileID: 2800000, guid: f0aef17982d188243b3dbe460a409aac, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AlphaBoost: 0.42
     - _AlphaThreshold: 0.254
@@ -73,3 +77,4 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 0.68275857, b: 0, a: 0}
     - _TintColor: {r: 1.0294118, g: 1.0294118, b: 1.0294118, a: 1}
+  m_BuildTextureStacks: []

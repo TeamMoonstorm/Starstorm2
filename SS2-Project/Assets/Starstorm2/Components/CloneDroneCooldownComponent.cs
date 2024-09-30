@@ -1,18 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using RoR2;
-using UnityEngine.Networking;
 using UnityEngine.AddressableAssets;
-
-namespace Moonstorm.Starstorm2.Components
+namespace SS2.Components
 {
     public class CloneDroneCooldownComponent : MonoBehaviour
     {
-        [SerializeField]
-        public static Material defaultMat = SS2Assets.LoadAsset<Material>("matCloneDroneLight", SS2Bundle.Interactables);
-        [SerializeField]
-        public static Material disableMat = SS2Assets.LoadAsset<Material>("matCloneDroneNoLight", SS2Bundle.Interactables);
+        public Material defaultMat;
+
+        public Material disableMat;
 
         private ModelLocator modelLocator;
         private GameObject model;

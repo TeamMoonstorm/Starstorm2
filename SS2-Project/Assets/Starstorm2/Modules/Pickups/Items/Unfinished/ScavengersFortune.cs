@@ -1,12 +1,34 @@
-﻿using RoR2;
+﻿using MSU;
+using R2API;
+using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Items;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Items
+namespace SS2.Items
 {
-    [DisabledContent]
-    public sealed class ScavengersFortune : ItemBase
+#if DEBUG
+    public sealed class ScavengersFortune : SS2Item, IContentPackModifier
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ScavengersFortune", SS2Bundle.Indev);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acScavengersFortune", SS2Bundle.Items);
+
+        public override void Initialize()
+        {
+            RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
+        }
+
+        private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
+        {
+            args.healthMultAdd += 0.5f;
+            args.damageMultAdd += 0.5f;
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return false;
+        }
 
         public sealed class Behavior : BaseItemBodyBehavior
         {
@@ -38,4 +60,5 @@ namespace Moonstorm.Starstorm2.Items
             }
         }
     }
+#endif
 }

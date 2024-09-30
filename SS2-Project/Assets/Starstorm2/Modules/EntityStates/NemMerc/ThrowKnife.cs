@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 using RoR2;
 using RoR2.Projectile;
-using UnityEngine.Networking;
 
 namespace EntityStates.NemMerc
 {
-	public class ThrowKnife : BaseSkillState
+    public class ThrowKnife : BaseSkillState
 	{
 
 		public static GameObject projectilePrefab;

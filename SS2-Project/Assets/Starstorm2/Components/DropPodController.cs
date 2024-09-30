@@ -1,12 +1,13 @@
-﻿using JetBrains.Annotations;
+﻿//Kill this once we make a proper drop pod, i hate my old code -N
+
+/*using JetBrains.Annotations;
 using RoR2;
 using RoR2.Networking;
 using System;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Networking;
-
-namespace Moonstorm.Starstorm2.Components
+namespace SS2.Components
 {
     public sealed class DropPodController : NetworkBehaviour, IInteractable, IDisplayNameProvider
     {
@@ -178,4 +179,4 @@ namespace Moonstorm.Starstorm2.Components
             NetworkServer.Spawn(instancedSurvivor);
         }
     }
-}
+}*/

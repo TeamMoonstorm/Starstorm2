@@ -3,39 +3,56 @@ using RoR2;
 using RoR2.Items;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Items
-{
+using MSU;
+using System.Collections.Generic;
+using RoR2.ContentManagement;
+using System.Collections;
+using MSU.Config;
 
-    public sealed class SwiftSkateboard : ItemBase
+namespace SS2.Items
+{
+    public sealed class SwiftSkateboard : SS2Item, IContentPackModifier
     {
         public const string token = "SS2_ITEM_SKATEBOARD_DESC";
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acSwiftSkateboard", SS2Bundle.Items);
 
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("SwiftSkateboard", SS2Bundle.Items);
-
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Movement speed bonus for each skateboard push. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Movement speed bonus for each skateboard push. (1 = 100%)")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float moveSpeedBonus = 0.2f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Movement speed bonus for each skateboard push for each item stack past the first. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Movement speed bonus for each skateboard push for each item stack past the first. (1 = 100%)")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float moveSpeedBonusPerStack = 0.15f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Initial maximum stacks for the Swift Skateboard's movement speed buff.")]
-        [TokenModifier(token, StatTypes.Default, 2)]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Initial maximum stacks for the Swift Skateboard's movement speed buff.")]
+        [FormatToken(token, 2)]
         public static int maxStacks = 4;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Additional maximum stacks for each item stack of Swift Skateboard past the first.")]
-        [TokenModifier(token, StatTypes.Default, 3)]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Additional maximum stacks for each item stack of Swift Skateboard past the first.")]
+        [FormatToken(token, 3)]
         public static int maxStacksPerStack = 0;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of Swift Skateboard's movement speed buff.")]
-        [TokenModifier(token, StatTypes.Default, 4)]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Duration of Swift Skateboard's movement speed buff.")]
+        [FormatToken(token, 4)]
         public static float buffDuration = 6f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Whether Swift Skateboard should allow all-directional sprinting.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Whether Swift Skateboard should allow all-directional sprinting.")]
         public static bool omniSprint = true;
 
-        public static GameObject effectPrefab = SS2Assets.LoadAsset<GameObject>("SkateboardActivate", SS2Bundle.Items);
+        private static GameObject _effectPrefab;
+
+        private BuffDef _buffKickflip; // SS2Assets.LoadAsset<BuffDef>("BuffKickflip", SS2Bundle.Items);
+
+        public override void Initialize()
+        {
+            _effectPrefab = AssetCollection.FindAsset<GameObject>("SkateboardActivate");
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier
         {
             [ItemDefAssociation]
@@ -51,14 +68,14 @@ namespace Moonstorm.Starstorm2.Items
                 {
                     //check if body prefab had sprintanydirection
                     GameObject bodyPrefab = BodyCatalog.GetBodyPrefab(this.body.bodyIndex);
-                    if(bodyPrefab)
+                    if (bodyPrefab)
                     {
                         CharacterBody body = bodyPrefab.GetComponent<CharacterBody>();
                         hadOmniSprint = body.bodyFlags.HasFlag(CharacterBody.BodyFlags.SprintAnyDirection);
                     }
                     this.body.bodyFlags |= CharacterBody.BodyFlags.SprintAnyDirection;
                 }
-                
+
             }
 
             private void Kickflip(GenericSkill skill)
@@ -77,7 +94,7 @@ namespace Moonstorm.Starstorm2.Items
                     //body.AddTimedBuff(SS2Content.Buffs.BuffKickflip, buffDuration, maxStacks + ((stack - 1) * maxStacksPerStack));
                     if (buffCount < maxBuffStack)
                     {
-                        body.AddTimedBuff(SS2Content.Buffs.BuffKickflip.buffIndex, buffDuration); 
+                        body.AddTimedBuff(SS2Content.Buffs.BuffKickflip.buffIndex, buffDuration);
                     }
                     else if (buffCount == maxBuffStack)
                     {
@@ -93,7 +110,7 @@ namespace Moonstorm.Starstorm2.Items
                     effectData.origin = base.body.corePosition;
                     CharacterDirection characterDirection = base.body.characterDirection;
                     effectData.rotation = characterDirection && characterDirection.moveVector != Vector3.zero ? Util.QuaternionSafeLookRotation(characterDirection.moveVector) : base.body.transform.rotation;
-                    EffectManager.SpawnEffect(effectPrefab, effectData, true);
+                    EffectManager.SpawnEffect(_effectPrefab, effectData, true);
                 }
             }
 

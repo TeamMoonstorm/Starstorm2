@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Networking;
 using RoR2;
-using Moonstorm.Starstorm2;
+using SS2;
 
 namespace EntityStates.Trader.Bag
 {
@@ -123,8 +120,9 @@ namespace EntityStates.Trader.Bag
         {
             //sfx, vfx, etc.
             Util.PlaySound(exitSoundString, gameObject);
-            if (isAuthority)
-                characterBody.SetBuffCount(Moonstorm.Starstorm2.SS2Content.Buffs.bdHiddenSlow20.buffIndex, 0);
+            // TODO: Swuff doesnt know why this is here, but ill leave the code if it comes back to swuff, delete this if you dont need it please
+            // if (isAuthority)
+            //     characterBody.SetBuffCount(SS2.SS2Content.Buffs.bdHiddenSlow20.buffIndex, 0);
             base.OnExit();
         }
 

@@ -1,5 +1,5 @@
-﻿using Moonstorm.Starstorm2;
-using Moonstorm.Starstorm2.ScriptableObjects;
+﻿/*using SS2;
+using SS2.ScriptableObjects;
 using RoR2;
 using System.Collections.Generic;
 using UnityEngine;
@@ -133,3 +133,4 @@ namespace EntityStates.Events
         }
     }
 }
+*/

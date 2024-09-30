@@ -1,38 +1,38 @@
-﻿using EntityStates;
-using Moonstorm.Starstorm2.Components;
-using R2API;
-using RoR2;
-using System.Linq;
+﻿using RoR2;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.AddressableAssets;
-
-namespace Moonstorm.Starstorm2.Interactables
+using System.Collections.Generic;
+using MSU;
+using RoR2.ContentManagement;
+using System.Collections;
+using SS2.Modules;
+using System.Linq;
+using R2API;
+namespace SS2.Interactables
 {
-    //[DisabledContent]
-    public sealed class CloneDroneDamaged : InteractableBase
+    public sealed class CloneDroneDamaged : SS2Interactable
     {
-        public override GameObject Interactable { get; } = SS2Assets.LoadAsset<GameObject>("CloneDroneBroken", SS2Bundle.Interactables);
-        private GameObject interactable;
+        public override SS2AssetRequest<InteractableAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<InteractableAssetCollection>("acCloneDrone", SS2Bundle.Interactables);
+
+        public static GameObject clonedPickupPrefab;
+
         private SummonMasterBehavior smb;
         private CharacterMaster cm;
         private GameObject bodyPrefab;
         private AkEvent[] droneAkEvents;
 
-        public override MSInteractableDirectorCard InteractableDirectorCard { get; } = SS2Assets.LoadAsset<MSInteractableDirectorCard>("msidcCloneDrone", SS2Bundle.Interactables);
-
         public override void Initialize()
         {
-            base.Initialize();
-
-            On.EntityStates.Drone.DeathState.OnImpactServer += spawnCloneCorpse;
+            //This should stop hooking and really just be a global hook that checks for our drones tbh.
+            On.EntityStates.Drone.DeathState.OnImpactServer += SpawnCloneCorpse;
 
             //add sound events, the bad way
-            interactable = InteractableDirectorCard.prefab;
-            smb = interactable.GetComponent<SummonMasterBehavior>();
+            smb = InteractablePrefab.GetComponent<SummonMasterBehavior>();
             cm = smb.masterPrefab.GetComponent<CharacterMaster>();
             bodyPrefab = cm.bodyPrefab;
 
+            clonedPickupPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/GenericPickup.prefab").WaitForCompletion().InstantiateClone("ClonedPickup");
+            clonedPickupPrefab.AddComponent<ClonedPickup>();
             var droneBody = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Drones/Drone1Body.prefab").WaitForCompletion();
 
             droneAkEvents = droneBody.GetComponents<AkEvent>();
@@ -52,7 +52,31 @@ namespace Moonstorm.Starstorm2.Interactables
             }
         }
 
-        private void spawnCloneCorpse(On.EntityStates.Drone.DeathState.orig_OnImpactServer orig, EntityStates.Drone.DeathState self, Vector3 contactPoint)
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+
+        // if a pickup doesnt have this component, it can be cloned and have this component added with one cloner. the cloned pickup will also have this component but with no cloners
+        // if a pickup does have this component but no cloners, it means the pickup was the result of a clone and therefore cannot be cloned
+        // if a pickup does have this component but with a cloner, it means the pickup was NOT the result of a clone and therefore CAN be cloned
+        public class ClonedPickup : MonoBehaviour 
+        { 
+            private List<GameObject> cloners = new List<GameObject>();
+            public bool CanBeCloned(GameObject cloner) => cloners.Count >= 1 && !cloners.Contains(cloner);
+            public bool OnCloned(GameObject cloner)
+            {
+                if(!cloners.Contains(cloner))
+                {
+                    cloners.Add(cloner);
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        private void SpawnCloneCorpse(On.EntityStates.Drone.DeathState.orig_OnImpactServer orig, EntityStates.Drone.DeathState self, Vector3 contactPoint)
         {
             if (self.characterBody.bodyIndex == BodyCatalog.FindBodyIndexCaseInsensitive("CloneDroneBody"))
             {
@@ -61,7 +85,7 @@ namespace Moonstorm.Starstorm2.Interactables
                     placementMode = DirectorPlacementRule.PlacementMode.Direct,
                     position = contactPoint
                 };
-                GameObject gameObject = DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(InteractableDirectorCard, placementRule, new Xoroshiro128Plus(0UL)));
+                GameObject gameObject = DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(CardProvider.BuildSpawnCardSet().FirstOrDefault(), placementRule, new Xoroshiro128Plus(0UL)));
                 if (gameObject)
                 {
                     PurchaseInteraction component = gameObject.GetComponent<PurchaseInteraction>();
@@ -75,7 +99,6 @@ namespace Moonstorm.Starstorm2.Interactables
             {
                 orig(self, contactPoint);
             }
-
         }
     }
 }

@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: escTranquilizerGun
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.Bandit.TranquilizerGun, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: minimumBaseDuration
+      fieldValue:
+        stringValue: 0.1
+        objectValue: {fileID: 0}
+    - fieldName: baseDuration
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: bulletCount
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: maxDistance
+      fieldValue:
+        stringValue: 750
+        objectValue: {fileID: 0}
+    - fieldName: bulletRadius
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: useSmartCollision
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: damageCoefficient
+      fieldValue:
+        stringValue: 2.7
+        objectValue: {fileID: 0}
+    - fieldName: procCoefficient
+      fieldValue:
+        stringValue: 0.8
+        objectValue: {fileID: 0}
+    - fieldName: force
+      fieldValue:
+        stringValue: 200
+        objectValue: {fileID: 0}
+    - fieldName: minSpread
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: maxSpread
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: spreadPitchScale
+      fieldValue:
+        stringValue: 0.3
+        objectValue: {fileID: 0}
+    - fieldName: spreadYawScale
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: spreadBloomValue
+      fieldValue:
+        stringValue: 0.4
+        objectValue: {fileID: 0}
+    - fieldName: recoilAmplitudeY
+      fieldValue:
+        stringValue: 0.7
+        objectValue: {fileID: 0}
+    - fieldName: recoilAmplitudeX
+      fieldValue:
+        stringValue: 0.4
+        objectValue: {fileID: 0}
+    - fieldName: muzzleName
+      fieldValue:
+        stringValue: MuzzleShotgun
+        objectValue: {fileID: 0}
+    - fieldName: fireSoundString
+      fieldValue:
+        stringValue: Play_bandit2_m1_rifle
+        objectValue: {fileID: 0}
+    - fieldName: muzzleFlashPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: tracerEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: hitEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}

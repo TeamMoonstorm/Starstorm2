@@ -1,5 +1,5 @@
-﻿using Moonstorm.Starstorm2;
-using Moonstorm.Starstorm2.Components;
+﻿using SS2;
+using SS2.Components;
 using RoR2;
 
 namespace EntityStates.Pickups.Extinction

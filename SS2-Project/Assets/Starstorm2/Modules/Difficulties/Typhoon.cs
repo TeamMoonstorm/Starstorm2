@@ -1,70 +1,82 @@
-﻿using R2API;
-using R2API.Utils;
+﻿using MSU;
+using MSU.Config;
+using R2API;
+using R2API.ScriptableObjects;
 using RoR2;
-using UnityEngine;
+using RoR2.ContentManagement;
+using System.Collections;
 using UnityEngine.Networking;
+using static AkMIDIEvent;
 
-namespace Moonstorm.Starstorm2
+namespace SS2
 {
-    public static class Typhoon
+    public class Typhoon : SS2Difficulty
     {
-        public static R2API.ScriptableObjects.SerializableDifficultyDef TyphoonDef { get; private set; }
-        public static DifficultyIndex TyphoonIndex { get => TyphoonDef.DifficultyIndex; }
-
-        private static int defMonsterCap;
-
-        [RooConfigurableField(SS2Config.IDMain, ConfigSection = "Typhoon", ConfigName = "Increase Team Limit", ConfigDesc = "Multiplies the Monster, Lunar, and Void Team maximum size by 2 when enabled. May affect performance.")]
+        public override SS2AssetRequest<SerializableDifficultyDef> AssetRequest => SS2Assets.LoadAssetAsync<SerializableDifficultyDef>("Typhoon", SS2Bundle.Base);
+        
+        // Typhoon Config
+        [RiskOfOptionsConfigureField(SS2Config.ID_MAIN, configSectionOverride = "Typhoon", configNameOverride = "Increase Team Limit", configDescOverride = "Multiplies the Monster, Lunar, and Void Team maximum size by 2 (or the configured value) when enabled. May affect performance.")]
         internal static bool IncreaseSpawnCap = true;
 
-        internal static void Init()
+        [RiskOfOptionsConfigureField(SS2Config.ID_MAIN, configSectionOverride = "Typhoon", configNameOverride = "Spawn Cap Multiplier", configDescOverride = "The spawn cap multiplier to increase enemy team sizes by. Only works if you have Increase Team Limit enabled. Default is 2.")]
+        public static int spawnCapMultiplier = 2;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_MAIN, configSectionOverride = "Typhoon", configNameOverride = "Credit Multiplier",  configDescOverride = "The credit multipler the monster director has for spawning enemies.")]
+        public static float creditMultiplierVal = 1.4f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_MAIN, configSectionOverride = "Typhoon", configNameOverride = "Experience Reward Multipler", configDescOverride = "The experience reward multipler when defeating an enemy.")]
+        public static float expRewardCoefficientVal = 0.8f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_MAIN, configSectionOverride = "Typhoon", configNameOverride = "Gold Reward Multipler", configDescOverride = "The gold reward multipler when defeating an enemy.")]
+        public static float goldRewardCoefficientVal = 0.8f;
+
+
+        private int defMonsterCap;
+        public static SerializableDifficultyDef sdd;
+        public override void Initialize()
         {
-            TyphoonDef = SS2Assets.LoadAsset<R2API.ScriptableObjects.SerializableDifficultyDef>("Typhoon", SS2Bundle.Base);
-            DifficultyAPI.AddDifficulty(TyphoonDef);
-            Run.onRunStartGlobal += Run_onRunStartGlobal;
-            Run.onRunDestroyGlobal += Run_onRunDestroyGlobal;
+            sdd = difficultyDef;
         }
 
-        public static void CombatDirector_Awake(On.RoR2.CombatDirector.orig_Awake orig, CombatDirector self)
+        public override bool IsAvailable(ContentPack contentPack)
         {
-            if (IncreaseSpawnCap)
-            {
-                self.creditMultiplier *= 1.25f;
-                self.expRewardCoefficient *= 0.8f;
-                self.goldRewardCoefficient *= 0.8f;
-                //Debug.Log("creditMultiplier = " + self.creditMultiplier);
-                //Debug.Log("expRewardCoefficient = " + self.expRewardCoefficient);
-                //Debug.Log("goldRewardCoefficient = " + self.goldRewardCoefficient);
-            }
-            orig(self);
+            return true;
         }
 
-        private static void Run_onRunStartGlobal(Run run)
-        {
-            defMonsterCap = TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit;
-            if (run.selectedDifficulty == TyphoonIndex)
-            {
-                foreach (CharacterMaster cm in run.userMasters.Values)
-                    if(NetworkServer.active)
-                        cm.inventory.GiveItem(RoR2Content.Items.MonsoonPlayerHelper.itemIndex);
-                if (IncreaseSpawnCap)
-                {
-                    TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit *= 2;
-                    TeamCatalog.GetTeamDef(TeamIndex.Void).softCharacterLimit *= 2;
-                    TeamCatalog.GetTeamDef(TeamIndex.Lunar).softCharacterLimit *= 2;
-                    On.RoR2.CombatDirector.Awake += CombatDirector_Awake;
-                }
-            }
-            //On.RoR2.CombatDirector.Awake += CombatDirector_Awake_Test;
-        }
-
-        private static void Run_onRunDestroyGlobal(Run run)
+        public override void OnRunEnd(Run run)
         {
             TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit = defMonsterCap;
             TeamCatalog.GetTeamDef(TeamIndex.Void).softCharacterLimit = defMonsterCap;
             TeamCatalog.GetTeamDef(TeamIndex.Lunar).softCharacterLimit = defMonsterCap;
-            //On.RoR2.CombatDirector.Awake -= CombatDirector_Awake_Test;
             if (IncreaseSpawnCap)
                 On.RoR2.CombatDirector.Awake -= CombatDirector_Awake;
+        }
+
+        public override void OnRunStart(Run run)
+        {
+            defMonsterCap = TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit;
+
+            foreach (CharacterMaster cm in run.userMasters.Values)
+                if (NetworkServer.active)
+                    cm.inventory.GiveItem(RoR2Content.Items.MonsoonPlayerHelper.itemIndex);
+            if (IncreaseSpawnCap)
+            {
+                TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit *= spawnCapMultiplier;
+                TeamCatalog.GetTeamDef(TeamIndex.Void).softCharacterLimit *= spawnCapMultiplier;
+                TeamCatalog.GetTeamDef(TeamIndex.Lunar).softCharacterLimit *= spawnCapMultiplier;
+                On.RoR2.CombatDirector.Awake += CombatDirector_Awake;
+            }
+        }
+
+        private void CombatDirector_Awake(On.RoR2.CombatDirector.orig_Awake orig, CombatDirector self)
+        {
+            if (IncreaseSpawnCap)
+            {
+                self.creditMultiplier *= creditMultiplierVal;
+                self.expRewardCoefficient *= expRewardCoefficientVal;
+                self.goldRewardCoefficient *= goldRewardCoefficientVal;
+            }
+            orig(self);
         }
     }
 }

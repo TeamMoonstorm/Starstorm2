@@ -1,13 +1,11 @@
-﻿using System;
-using RoR2;
+﻿using RoR2;
 using RoR2.CharacterAI;
 using RoR2.Navigation;
 using UnityEngine;
-using Moonstorm.Starstorm2;
 namespace EntityStates.AI.Walker
 {
-	// half jank solution to make any AI follow a "leader" without changing their aiskilldrivers
-	public class FollowLeader : BaseAIState
+    // half jank solution to make any AI follow a "leader" without changing their aiskilldrivers
+    public class FollowLeader : BaseAIState
 	{
 		public GameObject leader;
 

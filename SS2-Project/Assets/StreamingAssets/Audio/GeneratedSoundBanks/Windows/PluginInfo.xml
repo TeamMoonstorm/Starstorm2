@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PluginInfo Project="Starstorm2" Platform="Windows" BasePlatform="Windows">
-	<Plugins>
-		<Plugin Name="Wwise Compressor" ID="7077891" DLL="AkCompressor"/>
-		<Plugin Name="Wwise Expander" ID="7143427" DLL="AkExpander"/>
-		<Plugin Name="Wwise RoomVerb" ID="7733251" DLL="AkRoomVerb"/>
-		<Plugin Name="Wwise Time Stretch" ID="8519683" DLL="AkTimeStretch"/>
-		<Plugin Name="Wwise Tremolo" ID="8585219" DLL="AkTremolo"/>
-		<Plugin Name="System" ID="11403271" DLL="DefaultSink"/>
-		<Plugin Name="No Output" ID="11862023" DLL="DefaultSink"/>
-	</Plugins>
+<PluginInfo Platform="Windows" BasePlatform="Windows">
+	<PluginLibs>
+		<PluginLib LibName="Wwise Compressor" LibId="7077891" Type="Effect" DLL="AkCompressor" StaticLib="AkCompressorFX"/>
+		<PluginLib LibName="Wwise Expander" LibId="7143427" Type="Effect" DLL="AkExpander" StaticLib="AkExpanderFX"/>
+		<PluginLib LibName="Wwise RoomVerb" LibId="7733251" Type="Effect" DLL="AkRoomVerb" StaticLib="AkRoomVerbFX"/>
+		<PluginLib LibName="Wwise Time Stretch" LibId="8519683" Type="Effect" DLL="AkTimeStretch" StaticLib="AkTimeStretchFX"/>
+		<PluginLib LibName="Wwise Tremolo" LibId="8585219" Type="Effect" DLL="AkTremolo" StaticLib="AkTremoloFX"/>
+		<PluginLib LibName="System" LibId="11403271" Type="AudioDevice"/>
+		<PluginLib LibName="No Output" LibId="11862023" Type="AudioDevice"/>
+	</PluginLibs>
+	<FileHash>{3076FDE6-75C0-9AAD-920D-A2BC9FFE68ED}</FileHash>
 </PluginInfo>

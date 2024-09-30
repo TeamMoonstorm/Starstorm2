@@ -1,12 +1,8 @@
-﻿using Moonstorm.Starstorm2;
-using Moonstorm.Starstorm2.Orbs;
+﻿using SS2;
 using RoR2;
-using RoR2.Orbs;
 using RoR2.Skills;
-using System;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.Networking;
 
 namespace EntityStates.Executioner2
 {
@@ -27,8 +23,8 @@ namespace EntityStates.Executioner2
         public static GameObject plumeEffectLarge = SS2Assets.LoadAsset<GameObject>("exePlumeBig", SS2Bundle.Executioner2);
         public static GameObject defaultPlume;
         public static GameObject defaultPlumeLarge;
-        //public static GameObject masteryPlume;
-        //public static GameObject masteryPlumeLarge;
+        public static GameObject masteryPlume;
+        public static GameObject masteryPlumeLarge;
 
         [SerializeField]
         public SkillDef primaryOverride;
@@ -81,17 +77,17 @@ namespace EntityStates.Executioner2
 
             skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
 
-            if (skinNameToken == "SS2_SKIN_EXECUTIONER_MASTERY")
+            if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
             {
                 chargeEffectPrefab = masteryChargeEffectPrefab;
-                //plumeEffect = masteryPlume;
-                //plumeEffectLarge = masteryPlumeLarge;
+                plumeEffect = masteryPlume;
+                plumeEffectLarge = masteryPlumeLarge;
             }
             else
             {
+                plumeEffect = defaultPlume;
+                plumeEffectLarge = defaultPlumeLarge;
                 chargeEffectPrefab = defaultChargeEffectPrefab;
-                //plumeEffect = defaultPlume;
-                //plumeEffectLarge = defaultPlumeLarge;
             }
 
             nsm = GetComponent<NetworkStateMachine>();
@@ -232,7 +228,7 @@ namespace EntityStates.Executioner2
 
             /*if (inputBank.skill1.down && skillLocator.secondary.stock >= 1)
             {
-                characterBody.SetBuffCount(Moonstorm.Starstorm2.SS2Content.Buffs.bdExeCharge.buffIndex, 0);
+                characterBody.SetBuffCount(SS2.SS2Content.Buffs.bdExeCharge.buffIndex, 0);
                 PlayAnimation("Gesture, Override", "FireIonGunStart", "Secondary.playbackRate", duration);
                 FireChargeGun nextState = new FireChargeGun();
                 nextState.activatorSkillSlot = activatorSkillSlot;
@@ -245,7 +241,7 @@ namespace EntityStates.Executioner2
             {
                 ChildLocator cl = modelLocator.modelTransform.GetComponent<ChildLocator>();
                 Transform muzzle = cl.FindChild("ExhaustGun");
-                if (skinNameToken == "SS2_SKIN_EXECUTIONER_MASTERY")
+                if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
                     chargeEffectInstance = UnityEngine.Object.Instantiate(masteryChargeEffectPrefab, muzzle.position, muzzle.rotation);
                 else
                     chargeEffectInstance = UnityEngine.Object.Instantiate(defaultChargeEffectPrefab, muzzle.position, muzzle.rotation);

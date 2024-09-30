@@ -2,14 +2,16 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: matNeedleBurst
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
-  m_ShaderKeywords: _EMISSION
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -20,7 +22,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Cloud1Tex:
-        m_Texture: {fileID: 2800000, guid: 185101374a7d41e4784c6c3eeb1ec9be, type: 3}
+        m_Texture: {fileID: 2800000, guid: 14665851842caf74fb06364eaaeb01e9, type: 3}
         m_Scale: {x: 0.2, y: 0.2}
         m_Offset: {x: 0, y: 0}
     - _Cloud2Tex:
@@ -35,6 +37,7 @@ Material:
         m_Texture: {fileID: 2800000, guid: ac03cd838aff4251a3204bb71034f566, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AlphaBias: 0.134
     - _AlphaBoost: 0.82
@@ -89,3 +92,4 @@ Material:
     - _RimColor: {r: 1, g: 0.68275857, b: 0, a: 0}
     - _TimeScale: {r: 25, g: 10, b: 1, a: 1}
     - _TintColor: {r: 2.7235072, g: 2.7235072, b: 2.7235072, a: 1}
+  m_BuildTextureStacks: []

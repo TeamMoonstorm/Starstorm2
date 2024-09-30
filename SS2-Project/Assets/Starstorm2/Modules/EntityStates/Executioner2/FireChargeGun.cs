@@ -1,19 +1,17 @@
-﻿using Moonstorm;
-using Moonstorm.Starstorm2;
+﻿using MSU;
 using RoR2;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.Networking;
-using static Moonstorm.Starstorm2.Items.ShackledLamp;
+using static SS2.Items.ShackledLamp;
 
 namespace EntityStates.Executioner2
 {
     public class FireChargeGun : BaseSkillState
     {
-        [TokenModifier("SS2_EXECUTIONER_IONGUN_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_EXECUTIONER_IONGUN_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float damageCoefficient = 3.8f;
         public static float damageBurstCoefficient = 0.5f;
         public static float procCoefficient = 1.0f;
@@ -250,7 +248,7 @@ namespace EntityStates.Executioner2
 
                 if (skillLocator.secondary.stock == 1)
                 {
-                    //characterBody.SetBuffCount(Moonstorm.Starstorm2.SS2Content.Buffs.bdExeMuteCharge.buffIndex, 0);
+                    //characterBody.SetBuffCount(SS2.SS2Content.Buffs.bdExeMuteCharge.buffIndex, 0);
 
                     if (fullBurst)
                     {

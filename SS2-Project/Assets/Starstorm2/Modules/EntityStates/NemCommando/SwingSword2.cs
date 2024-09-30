@@ -1,11 +1,10 @@
-﻿using Moonstorm;
-using Moonstorm.Starstorm2;
-using Moonstorm.Starstorm2.DamageTypes;
+﻿using SS2;
 using R2API;
 using RoR2;
 using RoR2.Skills;
 using UnityEngine;
 using UnityEngine.Networking;
+using MSU;
 
 namespace EntityStates.NemCommando
 {
@@ -14,36 +13,41 @@ namespace EntityStates.NemCommando
     class SwingSword2 : BasicMeleeAttack, SteppedSkillDef.IStepSetter, ISkillState
     {
         public static float swingTimeCoefficient = 1.71f;
-        [TokenModifier("SS2_NEMMANDO_PRIMARY_BLADE_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
+        private static float reloadDelay = 0.5f;
+        [FormatToken("SS2_NEMMANDO_PRIMARY_BLADE_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float TokenModifier_dmgCoefficient => new SwingSword2().damageCoefficient;
         public int swingSide;
         private bool inCombo = false;
         private string skinNameToken;
+
+        private EntityStateMachine gunSM;
+        private NetworkStateMachine nsm;
         public GenericSkill activatorSkillSlot { get; set; }
 
         public override void OnEnter()
         {
             skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
 
+            /*if(skillLocator.secondary && skillLocator.secondary.skillDef is SS2ReloadSkillDef) // theres better syntax for casting but i stupet :(
+            {
+                (skillLocator.secondary.skillDef as SS2ReloadSkillDef).SetDelayTimer(skillLocator.secondary, reloadDelay);
+            }*/
+
             //red default
             swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffect", SS2Bundle.NemCommando);
-            hitEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemmandoImpactSlashEffect", SS2Bundle.NemCommando);
+            hitEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoImpactSlashEffect", SS2Bundle.NemCommando);
 
-            //overrides
-            if (skinNameToken != "SS2_SKIN_NEMCOMMANDO_DEFAULT" && skinNameToken != "SS2_SKIN_NEMCOMMANDO_GRANDMASTERY")
+            //Yellow
+            if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY" || skinNameToken.Contains("YELLOW"))
             {
-                //Yellow
-                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
-                {
-                    swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffectYellow", SS2Bundle.NemCommando);
-                    hitEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoImpactSlashEffectYellow", SS2Bundle.NemCommando);
-                }
-                //Blue
-                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO")
-                {
-                    swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffectBlue", SS2Bundle.NemCommando);
-                    hitEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoImpactSlashEffectBlue", SS2Bundle.NemCommando);
-                }
+                swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffectYellow", SS2Bundle.NemCommando);
+                hitEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoImpactSlashEffectYellow", SS2Bundle.NemCommando);
+            }
+            //Blue
+            if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO" || skinNameToken.Contains("BLUE"))
+            {
+                swingEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwingEffectBlue", SS2Bundle.NemCommando);
+                hitEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoImpactSlashEffectBlue", SS2Bundle.NemCommando);
             }
 
             base.OnEnter();
@@ -85,7 +89,12 @@ namespace EntityStates.NemCommando
                 inCombo = true;
             }
 
-            //swingEffectMuzzleString = (swingSide == 0) ? "SwingLeft" : "SwingRight";
+            swingEffectMuzzleString = (swingSide == 0) ? "SwingLeft" : "SwingRight";
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
         }
 
         public override void OnSerialize(NetworkWriter writer)
@@ -109,7 +118,7 @@ namespace EntityStates.NemCommando
         public override void AuthorityModifyOverlapAttack(OverlapAttack overlapAttack)
         {
             base.AuthorityModifyOverlapAttack(overlapAttack);
-            DamageAPI.AddModdedDamageType(overlapAttack, Gouge.gougeDamageType);
+            DamageAPI.AddModdedDamageType(overlapAttack, SS2.Survivors.NemCommando.GougeDamageType);
         }
     }
 }

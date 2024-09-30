@@ -1,10 +1,9 @@
 ﻿using RoR2;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace EntityStates.MULE
 {
+#if DEBUG
     public class MULESpinFling : BaseSkillState
     {
         public static float baseDamageCoefficient;
@@ -79,4 +78,5 @@ namespace EntityStates.MULE
             base.OnExit();
         }
     }
+#endif
 }

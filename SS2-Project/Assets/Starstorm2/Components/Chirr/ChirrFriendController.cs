@@ -1,21 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using RoR2;
 using UnityEngine.Networking;
-using RoR2.CharacterAI;
-using EntityStates.AI.Walker;
-using UnityEngine.SceneManagement;
 using JetBrains.Annotations;
 using RoR2.UI;
 using System.Runtime.CompilerServices;
-
-namespace Moonstorm.Starstorm2.Components
+namespace SS2.Components
 {
-	public class ChirrFriendController : MonoBehaviour
+    public class ChirrFriendController : MonoBehaviour
 	{
 		// this class is half supports-multiple-friends, half not. i need to be less indecisive.
 
@@ -176,9 +169,32 @@ namespace Moonstorm.Starstorm2.Components
             {
 				body.teamComponent.teamIndex = newTeam;
 				body.healthComponent.Networkhealth = body.healthComponent.fullCombinedHealth * 0.5f;
-				Util.CleanseBody(body, true, false, false, true, true, false); // lol
+				Util.CleanseBody(body, false, false, false, true, true, false); // lol
+
+				// manual cleanse cuz debuffs cleansebody only works on timed buffs
+				BuffIndex buffIndex = (BuffIndex)0;
+				BuffIndex buffCount = (BuffIndex)BuffCatalog.buffCount;
+				while (buffIndex < buffCount)
+				{
+					BuffDef buffDef = BuffCatalog.GetBuffDef(buffIndex);
+					if (buffDef.isDebuff)
+					{
+						body.ClearTimedBuffs(buffIndex);
+						int count = body.GetBuffCount(buffIndex);
+						if(count > 0)
+                        {
+							for (int i = 0; i < count; i++)
+							{
+								body.RemoveBuff(buffIndex);
+							}
+						}
+						
+					}
+					buffIndex++;
+				}
 				body.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 3f);
 				HauntedAffixFix(body, newTeam);
+				BeadAffixFix(body, newTeam);
 				//body.healthComponent.HealFraction(1f, default(ProcChainMask)); // BORING. HEAL IT YOURSELF WITH SECONDARY
 			}
 
@@ -252,6 +268,7 @@ namespace Moonstorm.Starstorm2.Components
 			if (body)
 			{
 				HauntedAffixFix(body, newTeam);
+				BeadAffixFix(body, newTeam);
 				SetStateOnHurt setStateOnHurt = body.GetComponent<SetStateOnHurt>(); // stun is good
 				if (setStateOnHurt) setStateOnHurt.SetStun(1f);
 			}
@@ -311,6 +328,15 @@ namespace Moonstorm.Starstorm2.Components
 				component.affixHauntedWard.GetComponent<TeamFilter>().teamIndex = newTeam;
             }
         }
+
+		private void BeadAffixFix(CharacterBody body, TeamIndex newTeam)
+		{
+			AffixBeadBehavior component = body.GetComponent<AffixBeadBehavior>();
+			if(component && component.affixBeadWard)
+            {
+				component.affixBeadWard.GetComponent<TeamFilter>().teamIndex = newTeam;
+            }
+		}
 
 		// HEALTHBAR STUFF
 		#region Healthbar Stuff

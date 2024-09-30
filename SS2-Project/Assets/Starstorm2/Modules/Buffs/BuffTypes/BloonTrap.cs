@@ -1,12 +1,13 @@
-﻿using Moonstorm.Components;
-using Moonstorm.Starstorm2.Items;
-using R2API;
+﻿using R2API;
 using RoR2;
-using System;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Buffs
+using MSU;
+namespace SS2.Buffs
 {
+    //What even is this...? -N
+    //For future reference, that interface only works on monobehaviours attached to a body, i should make it more clear next time. -N
+    /*
     //[DisabledContent]
     public sealed class BloonTrap : BuffBase, IBodyStatArgModifier
     {
@@ -34,5 +35,5 @@ namespace Moonstorm.Starstorm2.Buffs
             }
             return result;
         }
-    }
+    }*/
 }

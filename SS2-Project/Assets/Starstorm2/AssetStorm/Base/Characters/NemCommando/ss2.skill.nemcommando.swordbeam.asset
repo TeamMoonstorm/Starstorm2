@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d2dc8cbdb9720c418fcff8f84588cab, type: 3}
+  m_Script: {fileID: 11500000, guid: 02a17d3a7bea384489c0fc6e66051d29, type: 3}
   m_Name: ss2.skill.nemcommando.swordbeam
   m_EditorClassIdentifier: 
   nameToken: ???
@@ -17,17 +17,15 @@ MonoBehaviour:
   displayModelPrefab: {fileID: 0}
   hidden: 0
   achievementIcon: {fileID: 21300000, guid: 534f18ac85de24340ab7e3d0561892c1, type: 3}
+  requiredExpansion: {fileID: 0}
   achievementCondition:
-    assemblyQualifiedName: Moonstorm.Starstorm2.Unlocks.NemCommando.NemCommandoBeamUnlock+NemCommandoBeamAchievement,
-      Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  serverTracked: 1
-  baseServerAchievement:
-    assemblyQualifiedName: Moonstorm.Starstorm2.Unlocks.NemCommando.NemCommandoBeamUnlock+NemCommandoBeamAchievement+NemCommandoBeamUnlockServerAchievement,
-      Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+    assemblyQualifiedName: SS2.Unlocks.NemCommando.NemCommandoBeamAchievement, Starstorm2,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  serverAchievementCondition:
+    assemblyQualifiedName: 
   achievementNameToken: SS2_ACHIEVEMENT_NEMCOMMANDO_SWORDBEAM_NAME
-  achievementDescToken: SS2_ACHIEVEMENT_NEMCOMMANDO_SWORDBEAM_DESC
-  achievedIcon: {fileID: 21300000, guid: 3148cf08c2048624189835a220f28245, type: 3}
-  unachievedIcon: {fileID: 21300000, guid: 3148cf08c2048624189835a220f28245, type: 3}
-  prerequisiteAchievement:
-    AchievementIdentifier: 
-    UnlockableDef: {fileID: 11400000, guid: 6ea167caf1b549f4eb5c25875d6a4188, type: 2}
+  achievementDescriptionToken: SS2_ACHIEVEMENT_NEMCOMMANDO_SWORDBEAM_DESC
+  coinReward: 1
+  _preRequisiteAchievement:
+    unlockableDef: {fileID: 11400000, guid: 6ea167caf1b549f4eb5c25875d6a4188, type: 2}
+    achievementIdentifier: 

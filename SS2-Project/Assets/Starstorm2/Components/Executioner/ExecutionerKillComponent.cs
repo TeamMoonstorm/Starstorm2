@@ -1,10 +1,9 @@
-﻿using Moonstorm.Starstorm2.Orbs;
-using Moonstorm.Starstorm2.Survivors;
+﻿using SS2.Orbs;
+using SS2.Survivors;
 using RoR2;
 using RoR2.Orbs;
 using UnityEngine;
-
-namespace Moonstorm.Starstorm2.Components
+namespace SS2.Components
 {
     public class ExecutionerKillComponent : MonoBehaviour, IOnKilledServerReceiver
     {
@@ -24,14 +23,14 @@ namespace Moonstorm.Starstorm2.Components
             int orbCount = 1;
             CharacterBody body = GetComponent<CharacterBody>();
             if (body)
-                orbCount = Executioner.GetIonCountFromBody(body);
+                orbCount = SS2.Survivors.Executioner2.GetIonCountFromBody(body);
             /*if (report.attackerBody.skillLocator.secondary.stock == 0 || report.damageInfo.damageType.HasFlag(DamageType.Shock5s))
                 orbCount *= 0;*/
             if (report.victimBody.teamComponent.teamIndex == TeamIndex.Lunar)
-                orbCount *= 3;
+                orbCount *= 2;
             if (report.victimBody.isElite)
                 orbCount *= 2;
-            if (report.damageInfo.damageType.HasFlag(DamageType.BypassOneShotProtection))
+            if (report.damageInfo.damageType.damageType.HasFlag(DamageType.BypassOneShotProtection))
                 orbCount *= 2;
 
             //Christ we should really just scale the size of the orb or some shit...

@@ -1,28 +1,50 @@
-﻿using Moonstorm.Starstorm2.Buffs;
+﻿using SS2.Buffs;
 using RoR2;
 using RoR2.Items;
+using RoR2.Orbs;
 using UnityEngine;
+using MSU;
+using System.Collections.Generic;
+using RoR2.ContentManagement;
+using System.Collections;
+using MSU.Config;
+using R2API;
 
-namespace Moonstorm.Starstorm2.Items
+namespace SS2.Items
 {
-    public sealed class DetritiveTrematode : ItemBase
+    public sealed class DetritiveTrematode : SS2Item
     {
         private const string token = "SS2_ITEM_DETRITIVETREMATODE_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("DetritiveTrematode", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigName = "Trematode Threshold", ConfigDesc = "Amount of missing health needed for Trematode to proc. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
-        public static float missingHealthPercentage = 0.30f;
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acDetritiveTrematode", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigName = "Trematode Threshold Per Stack", ConfigDesc = "Increase in missing health threshold, per stack. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
-        public static float missingHealthPercentagePerStack = 0.15f;
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configNameOverride = "Trematode Threshold", configDescOverride = "Amount of missing health needed for Trematode to proc. (1 = 100%)")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
+        public static float missingHealthPercentage = 0.25f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Damage dealt by the Trematode debuff, per second. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 2, "100")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configNameOverride = "Trematode Threshold Per Stack", configDescOverride = "Increase in missing health threshold, per stack. (1 = 100%)")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
+        public static float missingHealthPercentagePerStack = 0.10f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Damage dealt by the Trematode debuff, per second. (1 = 100%)")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
         public static float trematodeDamage = 1f;
 
-        public static GameObject biteEffect = SS2Assets.LoadAsset<GameObject>("TrematodeBiteEffect", SS2Bundle.Items);
+        private static DotController.DotIndex _trematodeDotIndex;
+        private static GameObject _biteEffect;
+        public override void Initialize()
+        {
+            _biteEffect = AssetCollection.FindAsset<GameObject>("TrematodeBiteEffect");
+            BuffDef buffTrematodes = AssetCollection.FindAsset<BuffDef>("BuffTrematodes");
+            _trematodeDotIndex = DotAPI.RegisterDotDef(.5f, .5f, DamageColorIndex.Item, buffTrematodes);
+            BuffOverlays.AddBuffOverlay(buffTrematodes, AssetCollection.FindAsset<Material>("matBloodOverlay"));
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
         {
             [ItemDefAssociation]
@@ -36,12 +58,8 @@ namespace Moonstorm.Starstorm2.Items
 
                 var victim = report.victim;
                 var attacker = report.attacker;
-                bool hasDot = false;
 
-                //var dotController = DotController.FindDotController(victim.gameObject);               
-                //if (dotController)
-                //    hasDot = dotController.HasDotActive(Trematodes.index);
-                hasDot = victim.body.HasBuff(SS2Content.Buffs.BuffTrematodes);
+                bool hasDot = victim.body.HasBuff(SS2Content.Buffs.BuffTrematodes);
                 // dots apparently dont get updated instantly???? so we can apply multiple of the same dot before HasDotActive returns true. hopo game
 
                 if (victim.body.bodyIndex == Fucker)
@@ -57,37 +75,68 @@ namespace Moonstorm.Starstorm2.Items
                 //1 = 30%
                 //5 = 65%
                 // 9 = 105%
-                //float requiredHealthPercentage = missingHealthPercentage + missingHealthPercentagePerStack * (stack - 1);
-                if (victim.combinedHealthFraction < requiredHealthPercentage && !hasDot && report.damageInfo.dotIndex != Trematodes.index && (victim.gameObject != attacker))
+                if (victim.combinedHealthFraction < requiredHealthPercentage && !hasDot && (victim.gameObject != attacker))
                 {
-                    
-                    // do the first tick instantly
-                    DamageInfo damageInfo = new DamageInfo();
-                    damageInfo.attacker = base.gameObject;
-                    damageInfo.crit = false;
-                    damageInfo.damage = trematodeDamage * base.body.damage;
-                    damageInfo.force = Vector3.zero;
-                    damageInfo.inflictor = base.gameObject;
-                    damageInfo.position = victim.body.corePosition;
-                    damageInfo.procCoefficient = 0f;
-                    damageInfo.damageColorIndex = DamageColorIndex.Item;
-                    damageInfo.damageType = DamageType.DoT;
-                    damageInfo.dotIndex = Trematodes.index;
-                    victim.TakeDamage(damageInfo);
+
+                    // do the first "tick" instantly
+                    ExtraDamageInstanceOrb orb = new ExtraDamageInstanceOrb();
+                    orb.origin = victim.body.mainHurtBox.transform.position;
+                    orb.target = victim.body.mainHurtBox;
+                    orb.damageValue = trematodeDamage * base.body.damage * 0.5f; // 2 ticks per second means divide by 2
+                    orb.attacker = base.gameObject;
+                    OrbManager.instance.AddOrb(orb);
 
                     var dotInfo = new InflictDotInfo()
                     {
                         attackerObject = attacker,
                         victimObject = victim.gameObject,
-                        dotIndex = Trematodes.index,
+                        dotIndex = _trematodeDotIndex,
                         duration = Mathf.Infinity,
                         damageMultiplier = trematodeDamage * stack,
                     };
                     DotController.InflictDot(ref dotInfo);
 
-                    EffectManager.SimpleEffect(biteEffect, report.damageInfo.position, Quaternion.identity, true);
+                    EffectManager.SimpleEffect(_biteEffect, report.damageInfo.position, Quaternion.identity, true);
                 }
             }
+        }
+        // dumb (but probably correct) way of adding an extra instance of damage from within HealthComponent.TakeDamage
+        // simply calling TakeDamage again can make enemies die twice
+        private class ExtraDamageInstanceOrb : Orb
+        {
+            public override void Begin()
+            {
+                base.duration = 0;
+            }
+            public override void OnArrival()
+            {
+                if (this.target)
+                {
+                    HealthComponent healthComponent = this.target.healthComponent;
+                    if (healthComponent)
+                    {
+                        DamageInfo damageInfo = new DamageInfo();
+                        damageInfo.damage = this.damageValue;
+                        damageInfo.attacker = this.attacker;
+                        damageInfo.inflictor = null;
+                        damageInfo.force = Vector3.zero;
+                        damageInfo.crit = false;
+                        damageInfo.procChainMask = default(ProcChainMask);
+                        damageInfo.procCoefficient = 0f;
+                        damageInfo.position = this.target.transform.position;
+                        damageInfo.damageColorIndex = DamageColorIndex.Item;
+                        damageInfo.damageType = DamageType.DoT;
+                        healthComponent.TakeDamage(damageInfo);
+
+                        //purposefully not doing this. keeping it here to remind u not to do this.
+                        //GlobalEventManager.instance.OnHitEnemy(damageInfo, healthComponent.gameObject);
+                        //GlobalEventManager.instance.OnHitAll(damageInfo, healthComponent.gameObject);
+                    }
+                }
+            }
+            public float damageValue;
+            public GameObject attacker;
+            public TeamIndex teamIndex;
         }
     }
 }

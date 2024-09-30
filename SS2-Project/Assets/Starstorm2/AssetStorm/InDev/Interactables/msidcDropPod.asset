@@ -7,40 +7,259 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8577aced8c5464a488c5ef8182ea0b80, type: 3}
+  m_Script: {fileID: 11500000, guid: d10af29dc523c7243a6e6e3d787aa1d6, type: 3}
   m_Name: msidcDropPod
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
-  sendOverNetwork: 1
-  hullSize: 0
-  nodeGraphType: 0
-  requiredFlags: 1
-  forbiddenFlags: 8
-  directorCreditCost: 1
-  occupyPosition: 1
-  eliteRules: 0
-  orientToFloor: 1
-  slightlyRandomizeOrientation: 0
-  skipSpawnWhenSacrificeArtifactEnabled: 0
-  weightScalarWhenSacrificeArtifactEnabled: 1
-  maxSpawnsPerStage: -1
-  directorCard:
-    spawnCard: {fileID: 11400000}
-    selectionWeight: 4
-    spawnDistance: 0
-    preventOverhead: 0
-    minimumStageCompletions: 0
-    requiredUnlockable: 
-    forbiddenUnlockable: 
-    requiredUnlockableDef: {fileID: 0}
-    forbiddenUnlockableDef: {fileID: 0}
-  interactableCategory: 2
-  customCategory: 
-  stages: 147966
-  customStages: []
-  requiredExpansions:
-  - address: 
-    useDirectReference: 1
-    asset: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+  _serializedCardPairs:
+  - stage:
+      Value: 2
+    stageEnum: 2
+    customStageNames: []
+    interactableCategory: 2
+    customCategoryWeight: 0
+    customCategoryName: 
+    requiredExpansions: []
+    card:
+      spawnCard:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 1
+      selectionWeight: 0
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+  - stage:
+      Value: 4
+    stageEnum: 4
+    customStageNames: []
+    interactableCategory: 2
+    customCategoryWeight: 0
+    customCategoryName: 
+    requiredExpansions: []
+    card:
+      spawnCard:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 1
+      selectionWeight: 0
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+  - stage:
+      Value: 8
+    stageEnum: 8
+    customStageNames: []
+    interactableCategory: 2
+    customCategoryWeight: 0
+    customCategoryName: 
+    requiredExpansions: []
+    card:
+      spawnCard:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 1
+      selectionWeight: 0
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+  - stage:
+      Value: 16
+    stageEnum: 16
+    customStageNames: []
+    interactableCategory: 2
+    customCategoryWeight: 0
+    customCategoryName: 
+    requiredExpansions: []
+    card:
+      spawnCard:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 1
+      selectionWeight: 0
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+  - stage:
+      Value: 32
+    stageEnum: 32
+    customStageNames: []
+    interactableCategory: 2
+    customCategoryWeight: 0
+    customCategoryName: 
+    requiredExpansions: []
+    card:
+      spawnCard:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 1
+      selectionWeight: 0
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+  - stage:
+      Value: 64
+    stageEnum: 64
+    customStageNames: []
+    interactableCategory: 2
+    customCategoryWeight: 0
+    customCategoryName: 
+    requiredExpansions: []
+    card:
+      spawnCard:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 1
+      selectionWeight: 0
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+  - stage:
+      Value: 128
+    stageEnum: 128
+    customStageNames: []
+    interactableCategory: 2
+    customCategoryWeight: 0
+    customCategoryName: 
+    requiredExpansions: []
+    card:
+      spawnCard:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 1
+      selectionWeight: 0
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+  - stage:
+      Value: 256
+    stageEnum: 256
+    customStageNames: []
+    interactableCategory: 2
+    customCategoryWeight: 0
+    customCategoryName: 
+    requiredExpansions: []
+    card:
+      spawnCard:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 1
+      selectionWeight: 0
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+  - stage:
+      Value: 16384
+    stageEnum: 16384
+    customStageNames: []
+    interactableCategory: 2
+    customCategoryWeight: 0
+    customCategoryName: 
+    requiredExpansions: []
+    card:
+      spawnCard:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 1
+      selectionWeight: 0
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+  - stage:
+      Value: 131072
+    stageEnum: 131072
+    customStageNames: []
+    interactableCategory: 2
+    customCategoryWeight: 0
+    customCategoryName: 
+    requiredExpansions: []
+    card:
+      spawnCard:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 1
+      selectionWeight: 0
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0

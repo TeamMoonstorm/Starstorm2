@@ -16,10 +16,10 @@ MonoBehaviour:
   PerManifest: 1
   ListType: 1
   Manifests:
-  - {fileID: 11400000, guid: bcbdefdb47e2f8f45bdd7a2a4559b405, type: 2}
+  - {fileID: -3892906877110538616, guid: bcbdefdb47e2f8f45bdd7a2a4559b405, type: 2}
   ArchiveType: 1
-  Source: <BuildPath>
-  Output: <ReleasePath>.zip
+  Source: <MSUBuildPath>
+  Output: <MSUReleasePath>.zip
 --- !u!114 &-640416070249004058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52,7 +52,8 @@ MonoBehaviour:
   - {fileID: -640416070249004058}
   - {fileID: -4598038704487222675}
   QuickAccess: 0
-  manifest: {fileID: 11400000, guid: bcbdefdb47e2f8f45bdd7a2a4559b405, type: 2}
+  manifest: {fileID: -3892906877110538616, guid: bcbdefdb47e2f8f45bdd7a2a4559b405,
+    type: 2}
 --- !u!114 &431528400288499764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,7 +82,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 1
   OverrideManifest: 1
-  targetpipeline: {fileID: 11400000, guid: 4e0ada562e823934dad284255704129a, type: 2}
+  targetpipeline: {fileID: 11400000, guid: c00ca7d5a71d1ac43b1a79a5d6a062c5, type: 2}
 --- !u!114 &3526975474243183003
 MonoBehaviour:
   m_ObjectHideFlags: 0

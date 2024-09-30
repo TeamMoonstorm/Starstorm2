@@ -1,0 +1,546 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!300 &1
+RuntimeInitializeOnLoadManager:
+  m_ObjectHideFlags: 0
+  m_AssemblyNames:
+  - Unity.RenderPipelines.Core.Runtime
+  - RoR2
+  - com.unity.multiplayer-hlapi.Runtime
+  m_NamespaceNames:
+  - UnityEngine.Rendering
+  - 
+  - RoR2
+  - RoR2.WwiseUtils
+  - RoR2.Stats
+  - RoR2.Orbs
+  - RoR2.Items
+  - RoR2.Skills
+  - RoR2.Networking
+  - RoR2.UI
+  - RoR2.UI.SkinControllers
+  - RoR2.Audio
+  - UnityEngine.Networking
+  m_ClassInfos:
+  - m_AssemblyNameIndex: 0
+    m_NamespaceIndex: 0
+    m_ClassName: DebugUpdater
+    m_NumOfMethods: 1
+    m_MethodIndex: 0
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 1
+    m_ClassName: FlashWindow
+    m_NumOfMethods: 1
+    m_MethodIndex: 1
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: FadeToBlackManager
+    m_NumOfMethods: 1
+    m_MethodIndex: 2
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: BurnEffectController
+    m_NumOfMethods: 1
+    m_MethodIndex: 3
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: CameraRigController
+    m_NumOfMethods: 1
+    m_MethodIndex: 4
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: CharacterBody
+    m_NumOfMethods: 1
+    m_MethodIndex: 5
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: CharacterBody
+    m_NumOfMethods: 1
+    m_MethodIndex: 6
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: CharacterMaster
+    m_NumOfMethods: 1
+    m_MethodIndex: 7
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: CharacterModel
+    m_NumOfMethods: 1
+    m_MethodIndex: 8
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: CharacterModel
+    m_NumOfMethods: 1
+    m_MethodIndex: 9
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: CharacterModel
+    m_NumOfMethods: 1
+    m_MethodIndex: 10
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: ChestRevealer
+    m_NumOfMethods: 1
+    m_MethodIndex: 11
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: Console
+    m_NumOfMethods: 1
+    m_MethodIndex: 12
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: Corpse
+    m_NumOfMethods: 1
+    m_MethodIndex: 13
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: DeathRewards
+    m_NumOfMethods: 1
+    m_MethodIndex: 14
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: GlobalEventManager
+    m_NumOfMethods: 1
+    m_MethodIndex: 15
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: HealthComponent
+    m_NumOfMethods: 1
+    m_MethodIndex: 16
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: HoldoutZoneController
+    m_NumOfMethods: 1
+    m_MethodIndex: 17
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: AffixEarthBehavior
+    m_NumOfMethods: 1
+    m_MethodIndex: 18
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: MusicController
+    m_NumOfMethods: 1
+    m_MethodIndex: 19
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: NetworkUser
+    m_NumOfMethods: 1
+    m_MethodIndex: 20
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: OccupyNearbyNodes
+    m_NumOfMethods: 1
+    m_MethodIndex: 21
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: PlayerCharacterMasterController
+    m_NumOfMethods: 1
+    m_MethodIndex: 22
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: PrintController
+    m_NumOfMethods: 1
+    m_MethodIndex: 23
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: PurchaseInteraction
+    m_NumOfMethods: 1
+    m_MethodIndex: 24
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: ShakeEmitter
+    m_NumOfMethods: 1
+    m_MethodIndex: 25
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: SpawnPoint
+    m_NumOfMethods: 1
+    m_MethodIndex: 26
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: LevelUpEffectManager
+    m_NumOfMethods: 1
+    m_MethodIndex: 27
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: PlatformSystems
+    m_NumOfMethods: 1
+    m_MethodIndex: 28
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: RoR2Content
+    m_NumOfMethods: 1
+    m_MethodIndex: 29
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 2
+    m_ClassName: SteamworksInviteManager
+    m_NumOfMethods: 1
+    m_MethodIndex: 30
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 3
+    m_ClassName: CommonWwiseIds
+    m_NumOfMethods: 1
+    m_MethodIndex: 31
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 4
+    m_ClassName: PlayerStatsComponent
+    m_NumOfMethods: 1
+    m_MethodIndex: 32
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 5
+    m_ClassName: ItemTransferOrb
+    m_NumOfMethods: 1
+    m_MethodIndex: 33
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 6
+    m_ClassName: IcicleBodyBehavior
+    m_NumOfMethods: 1
+    m_MethodIndex: 34
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 6
+    m_ClassName: MushroomBodyBehavior
+    m_NumOfMethods: 1
+    m_MethodIndex: 35
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 7
+    m_ClassName: LunarDetonatorSkill
+    m_NumOfMethods: 1
+    m_MethodIndex: 36
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 8
+    m_ClassName: RttManager
+    m_NumOfMethods: 1
+    m_MethodIndex: 37
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 8
+    m_ClassName: ServerAuthManager
+    m_NumOfMethods: 1
+    m_MethodIndex: 38
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 8
+    m_ClassName: NetworkMessageHandlerAttribute
+    m_NumOfMethods: 1
+    m_MethodIndex: 39
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 8
+    m_ClassName: NetworkManagerSystem
+    m_NumOfMethods: 1
+    m_MethodIndex: 40
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 9
+    m_ClassName: AchievementNotificationPanel
+    m_NumOfMethods: 1
+    m_MethodIndex: 41
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 9
+    m_ClassName: ConsoleWindow
+    m_NumOfMethods: 1
+    m_MethodIndex: 42
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 9
+    m_ClassName: HGTextMeshProUGUI
+    m_NumOfMethods: 1
+    m_MethodIndex: 43
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 9
+    m_ClassName: LanguageTextMeshController
+    m_NumOfMethods: 1
+    m_MethodIndex: 44
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 9
+    m_ClassName: LoadoutPanelController
+    m_NumOfMethods: 1
+    m_MethodIndex: 45
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 9
+    m_ClassName: SetLabelTextToMainUserProfileName
+    m_NumOfMethods: 1
+    m_MethodIndex: 46
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 9
+    m_ClassName: ViewableTag
+    m_NumOfMethods: 1
+    m_MethodIndex: 47
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 10
+    m_ClassName: ButtonSkinController
+    m_NumOfMethods: 1
+    m_MethodIndex: 48
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 1
+    m_NamespaceIndex: 11
+    m_ClassName: PointSoundManager
+    m_NumOfMethods: 1
+    m_MethodIndex: 49
+    m_IsUnityClass: 0
+  - m_AssemblyNameIndex: 2
+    m_NamespaceIndex: 12
+    m_ClassName: NetworkIdentity
+    m_NumOfMethods: 1
+    m_MethodIndex: 50
+    m_IsUnityClass: 0
+  m_ClassMethodInfos:
+  - m_ClassIndex: 0
+    m_MethodName: RuntimeInit
+    m_OrderNumber: 0
+  - m_ClassIndex: 1
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 2
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 3
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 4
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 5
+    m_MethodName: LoadCommonAssets
+    m_OrderNumber: 0
+  - m_ClassIndex: 6
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 7
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 8
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 9
+    m_MethodName: InitMaterials
+    m_OrderNumber: 0
+  - m_ClassIndex: 10
+    m_MethodName: InitSharedMaterialsArrays
+    m_OrderNumber: 0
+  - m_ClassIndex: 11
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 12
+    m_MethodName: RegisterLogHandler
+    m_OrderNumber: 0
+  - m_ClassIndex: 13
+    m_MethodName: StaticInit
+    m_OrderNumber: 0
+  - m_ClassIndex: 14
+    m_MethodName: LoadAssets
+    m_OrderNumber: 0
+  - m_ClassIndex: 15
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 16
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 17
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 18
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 19
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 20
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 21
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 22
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 23
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 24
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 25
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 26
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 27
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 28
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 29
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 30
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 31
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 32
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 33
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 34
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 35
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 36
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 37
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 38
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 39
+    m_MethodName: CollectHandlers
+    m_OrderNumber: 0
+  - m_ClassIndex: 40
+    m_MethodName: ClientInit
+    m_OrderNumber: 0
+  - m_ClassIndex: 41
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 42
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 43
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 44
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 45
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 46
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 47
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 48
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 49
+    m_MethodName: Init
+    m_OrderNumber: 0
+  - m_ClassIndex: 50
+    m_MethodName: OnRuntimeInitializeOnLoad
+    m_OrderNumber: 0
+  m_BeforeUnityMethodExecutionOrders: []
+  m_AfterUnityMethodExecutionOrders:
+  - 0
+  - 50
+  m_BeforeMethodExecutionOrders:
+  - 1
+  - 12
+  - 19
+  - 20
+  - 30
+  - 32
+  - 39
+  - 40
+  m_AfterMethodExecutionOrders:
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
+  - 11
+  - 13
+  - 14
+  - 15
+  - 16
+  - 17
+  - 18
+  - 21
+  - 22
+  - 23
+  - 24
+  - 25
+  - 26
+  - 27
+  - 29
+  - 31
+  - 33
+  - 34
+  - 35
+  - 36
+  - 37
+  - 38
+  - 41
+  - 42
+  - 43
+  - 44
+  - 45
+  - 46
+  - 47
+  - 48
+  - 49
+  m_AfterAssembliesLoadedUnityMethodExecutionOrders: []
+  m_AfterAssembliesLoadedMethodExecutionOrders:
+  - 28
+  m_BeforeSplashScreenUnityMethodExecutionOrders: []
+  m_BeforeSplashScreenMethodExecutionOrders: []
+  m_SubsystemRegistrationUnityMethodExecutionOrders: []
+  m_SubsystemRegistrationMethodExecutionOrders: []
+  m_FullClassNames: []

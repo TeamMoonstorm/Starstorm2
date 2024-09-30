@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace EntityStates.Pickups.Augury
 {
+#if DEBUG
     public class AuguryPrepDetonation : AuguryBaseState
     {
         public static float baseDuration = 10;
@@ -33,4 +34,5 @@ namespace EntityStates.Pickups.Augury
             }
         }
     }
+#endif
 }

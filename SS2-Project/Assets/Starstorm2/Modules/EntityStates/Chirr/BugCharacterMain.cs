@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
+﻿using UnityEngine;
 using RoR2;
 using EntityStates.Chirr.Wings;
 namespace EntityStates.Chirr
@@ -20,7 +17,7 @@ namespace EntityStates.Chirr
         {
             bool isHovering = !wingsStateMachine.IsInMainState();
             // if we are hovering, we want the next "jump" input to end the hover instead of jumping
-            bool shouldSkipJump = isHovering && Moonstorm.Starstorm2.Survivors.Chirr.toggleHover;
+            bool shouldSkipJump = isHovering && SS2.Survivors.Chirr.toggleHover;
             if (!shouldSkipJump)
                 base.ProcessJump();
 

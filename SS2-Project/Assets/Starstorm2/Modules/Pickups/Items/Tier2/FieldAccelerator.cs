@@ -1,4 +1,4 @@
-﻿using Moonstorm.Starstorm2.Orbs;
+﻿using SS2.Orbs;
 using R2API;
 using RoR2;
 using RoR2.Items;
@@ -6,34 +6,40 @@ using RoR2.Orbs;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
+using MSU;
+using System.Collections.Generic;
+using RoR2.ContentManagement;
+using System.Collections;
+using MSU.Config;
 
-namespace Moonstorm.Starstorm2.Items
+namespace SS2.Items
 {
-    public sealed class FieldAccelerator : ItemBase
+    public sealed class FieldAccelerator : SS2Item
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("FieldAccelerator", SS2Bundle.Items);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acFieldAccelerator", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of charge to add to the teleporter on kill. (1 = 100%)")]
-        [TokenModifier("SS2_ITEM_FIELDACCELERATOR_DESC", StatTypes.MultiplyByN, 0, "100")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Amount of charge to add to the teleporter on kill. (1 = 100%)")]
+        [FormatToken("SS2_ITEM_FIELDACCELERATOR_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float chargePerKill = 0.01f;
 
-        /*[RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Maximum Amount of Charge per kill. (1 = 100%)")]
-        public static float maxChargePerKill = 0.05f;*/
-
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Extra % teleporter charge radius. (0.01 = 1%")]
-        [TokenModifier("SS2_ITEM_FIELDACCELERATOR_DESC", StatTypes.MultiplyByN, 1, "100")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Extra % teleporter charge radius. (0.01 = 1%")]
+        [FormatToken("SS2_ITEM_FIELDACCELERATOR_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float radiusPerStack = 0.75f;
 
-        public static GameObject objectPrefab;
+        private static GameObject _objectPrefab;
 
         public override void Initialize()
         {
-            base.Initialize();
-            objectPrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("ObjectFieldAccelerator", SS2Bundle.Items), "ObjectDisplayFieldAccelerator", true);
-            objectPrefab.RegisterNetworkPrefab();
-            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/Teleporter1.prefab").WaitForCompletion().AddComponent<FieldAcceleratorTeleporterBehavior>();
-            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/LunarTeleporter Variant.prefab").WaitForCompletion().AddComponent<FieldAcceleratorTeleporterBehavior>();
+            //???
+            _objectPrefab = AssetCollection.FindAsset<GameObject>("ObjectFieldAccelerator"); // 
+
+            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/Teleporter1.prefab").Completed+= (r) => r.Result.AddComponent<FieldAcceleratorTeleporterBehavior>();
+            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/LunarTeleporter Variant.prefab").Completed += (r) => r.Result.AddComponent<FieldAcceleratorTeleporterBehavior>();
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
         }
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver
@@ -79,7 +85,6 @@ namespace Moonstorm.Starstorm2.Items
                     displayInstance = fatb.displayInstance;
                     if (displayInstance != null)
                         displayHurtbox = displayInstance.GetComponent<HurtBoxGroup>().mainHurtBox;
-                    Debug.Log("displayHurtbox : " + displayHurtbox);
                 }
             }
 
@@ -90,9 +95,6 @@ namespace Moonstorm.Starstorm2.Items
 
                 if (teleInstance)
                 {
-                    if (teleInstance.GetComponent<FieldAcceleratorTeleporterBehavior>() == null)
-                        teleInstance.gameObject.AddComponent<FieldAcceleratorTeleporterBehavior>();
-
                     FieldAcceleratorTeleporterBehavior fatb = teleInstance.GetComponent<FieldAcceleratorTeleporterBehavior>();
 
                     fatb.RecalcRadius();
@@ -118,7 +120,7 @@ namespace Moonstorm.Starstorm2.Items
             }
         }
 
-        public class FieldAcceleratorTeleporterBehavior : NetworkBehaviour
+        public class FieldAcceleratorTeleporterBehavior : MonoBehaviour
         {
             private HoldoutZoneController hzc;
             private Transform pos;
@@ -127,6 +129,7 @@ namespace Moonstorm.Starstorm2.Items
             public static float acceleratorCount;
             private bool teleCharging;
             private bool monstersCleared;
+
             public GameObject displayInstance;
             private float timer;
 
@@ -164,18 +167,19 @@ namespace Moonstorm.Starstorm2.Items
             {
                 acceleratorCount = 0;
 
-                foreach (CharacterMaster cm in Run.instance.userMasters.Values)
+                foreach (PlayerCharacterMasterController pcmc in PlayerCharacterMasterController.instances)
                 {
-                    if (cm.inventory)
-                        acceleratorCount += cm.inventory.GetItemCount(SS2Content.Items.FieldAccelerator);
+                    if (pcmc.master && pcmc.master.inventory)
+                        acceleratorCount += pcmc.master.inventory.GetItemCount(SS2Content.Items.FieldAccelerator);
                 }
+
 
                 if (acceleratorCount == 0)
                     return;
 
-                if (displayChildLocator == null)
+                if (displayChildLocator == null && displayInstance) // i give up
                 {
-                    displayChildLocator = displayInstance.GetComponent<ChildLocator>();
+                    displayChildLocator = displayInstance?.GetComponent<ChildLocator>();
                 }
 
                 if (displayChildLocator != null)
@@ -218,10 +222,10 @@ namespace Moonstorm.Starstorm2.Items
 
                 acceleratorCount = 0;
 
-                foreach (CharacterMaster cm in Run.instance.userMasters.Values)
+                foreach (PlayerCharacterMasterController pcmc in PlayerCharacterMasterController.instances)
                 {
-                    if (cm.inventory)
-                        acceleratorCount += cm.inventory.GetItemCount(SS2Content.Items.FieldAccelerator);
+                    if (pcmc.master && pcmc.master.inventory)
+                        acceleratorCount += pcmc.master.inventory.GetItemCount(SS2Content.Items.FieldAccelerator);
                 }
 
                 if (acceleratorCount == 0)
@@ -230,17 +234,17 @@ namespace Moonstorm.Starstorm2.Items
                 //set a bunch of variables we'll be using for teleporter modifications:
 
                 //get EVERYTHING
-                telePassiveParticles = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/PassiveParticle, Sphere").GetComponent<ParticleSystem>();
-                teleCenterParticles = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/PassiveParticle, Center").GetComponent<ParticleSystem>();
-                lightningParticles = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargedEffect/LightningAlongProngs").GetComponent<ParticleSystem>();
-                lightningLightRef = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargedEffect/LightningAlongProngs/ReferencePointLight").GetComponent<Light>();
-                betweenProngsCore = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/IdleToChargingEffect/BetweenProngs/Core").GetComponent<ParticleSystem>();
-                coreLightRef = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/IdleToChargingEffect/BetweenProngs/Point light").GetComponent<Light>();
-                debris = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/IdleToChargingEffect/3DDebris").GetComponent<ParticleSystem>();
-                chargingRing = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/Ring").GetComponent<ParticleSystem>();
-                loopLight = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/BetweenProngs/Loop/Point light").GetComponent<Light>();
-                core = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/BetweenProngs/Loop/Core").GetComponent<ParticleSystem>();
-                beam = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/BetweenProngs/Loop/Beam").GetComponent<ParticleSystem>();
+                telePassiveParticles = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/PassiveParticle, Sphere")?.GetComponent<ParticleSystem>();
+                teleCenterParticles = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/PassiveParticle, Center")?.GetComponent<ParticleSystem>();
+                lightningParticles = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargedEffect/LightningAlongProngs")?.GetComponent<ParticleSystem>();
+                lightningLightRef = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargedEffect/LightningAlongProngs/ReferencePointLight")?.GetComponent<Light>();
+                betweenProngsCore = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/IdleToChargingEffect/BetweenProngs/Core")?.GetComponent<ParticleSystem>();
+                coreLightRef = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/IdleToChargingEffect/BetweenProngs/Point light")?.GetComponent<Light>();
+                debris = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/IdleToChargingEffect/3DDebris")?.GetComponent<ParticleSystem>();
+                chargingRing = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/Ring")?.GetComponent<ParticleSystem>();
+                loopLight = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/BetweenProngs/Loop/Point light")?.GetComponent<Light>();
+                core = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/BetweenProngs/Loop/Core")?.GetComponent<ParticleSystem>();
+                beam = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/BetweenProngs/Loop/Beam")?.GetComponent<ParticleSystem>();
                 rangeIndicator = hzc.radiusIndicator;
 
                 //resize & recolor large teleporter particles
@@ -274,16 +278,18 @@ namespace Moonstorm.Starstorm2.Items
 
                 //center beam
                 loopLight.color = new Color(0.8f, .42f, 0f);
-                var beamCorePSR = core.GetComponent<ParticleSystemRenderer>();
-                beamCorePSR.material = SS2Assets.LoadAsset<Material>("matAcceleratorTPFire", SS2Bundle.Items);
+                var beamCorePSR = core?.GetComponent<ParticleSystemRenderer>();
+                if(beamCorePSR)
+                    beamCorePSR.material = SS2Assets.LoadAsset<Material>("matAcceleratorTPFire", SS2Bundle.Items);
                 //core.transform.position += new Vector3(core.transform.position.x, core.transform.position.y + 1.5f, core.transform.position.z);
-                var beamPSR = beam.GetComponent<ParticleSystemRenderer>();
-                beamPSR.material = SS2Assets.LoadAsset<Material>("matAcceleratorTPLaser", SS2Bundle.Items);
+                var beamPSR = beam?.GetComponent<ParticleSystemRenderer>();
+                if(beamPSR)
+                    beamPSR.material = SS2Assets.LoadAsset<Material>("matAcceleratorTPLaser", SS2Bundle.Items);
                 //beam.transform.position += new Vector3(beam.transform.position.x, beam.transform.position.y + 1.5f, beam.transform.position.z);
 
-                displayChildLocator.FindChild("Passive").gameObject.SetActive(true);
-                displayChildLocator.FindChild("Burst").gameObject.GetComponent<ParticleSystem>().Emit(40);
-                displayChildLocator.FindChild("Ring").gameObject.GetComponent<ParticleSystem>().Emit(1);
+                displayChildLocator?.FindChild("Passive")?.gameObject.SetActive(true);
+                displayChildLocator?.FindChild("Burst")?.gameObject.GetComponent<ParticleSystem>().Emit(40);
+                displayChildLocator?.FindChild("Ring")?.gameObject.GetComponent<ParticleSystem>().Emit(1);
             }
 
             public void RecalcRadius()
@@ -293,29 +299,33 @@ namespace Moonstorm.Starstorm2.Items
                 if (hzc == null)
                     hzc = GetComponent<HoldoutZoneController>();
 
-                foreach (CharacterMaster cm in Run.instance.userMasters.Values)
+                foreach (PlayerCharacterMasterController pcmc in PlayerCharacterMasterController.instances)
                 {
-                    if (cm.inventory)
-                        acceleratorCount += cm.inventory.GetItemCount(SS2Content.Items.FieldAccelerator);
+                    if (pcmc.master && pcmc.master.inventory)
+                        acceleratorCount += pcmc.master.inventory.GetItemCount(SS2Content.Items.FieldAccelerator);
                 }
 
-                if (acceleratorCount > 0 && displayInstance == null)
+                if (NetworkServer.active)
                 {
-                    Vector3 position = new Vector3(TeleporterInteraction.instance.transform.position.x, TeleporterInteraction.instance.transform.position.y + 1.5f, TeleporterInteraction.instance.transform.position.z);
-                    displayInstance = Instantiate(objectPrefab, position, new Quaternion(0, 0, 0, 0));
-                    displayChildLocator = displayInstance.GetComponent<ChildLocator>();
-                    NetworkServer.Spawn(displayInstance);
-                }
+                    if (acceleratorCount > 0 && displayInstance == null)
+                    {
+                        Vector3 position = new Vector3(TeleporterInteraction.instance.transform.position.x, TeleporterInteraction.instance.transform.position.y + 1.5f, TeleporterInteraction.instance.transform.position.z);
+                        displayInstance = Instantiate(_objectPrefab, position, new Quaternion(0, 0, 0, 0));
+                        displayChildLocator = displayInstance.GetComponent<ChildLocator>();
+                        NetworkServer.Spawn(displayInstance);
 
-                if (acceleratorCount == 0 && displayInstance != null)
-                {
-                    NetworkServer.Destroy(displayInstance);
+                    }
+
+                    if (acceleratorCount == 0 && displayInstance != null)
+                    {
+                        NetworkServer.Destroy(displayInstance);
+                    }
                 }
+                
 
                 if (hzc != null && acceleratorCount > 0 && monstersCleared)
                 {
-                    hzc.baseRadius *= 1 + (radiusPerStack * acceleratorCount);
-                    //Util.PlaySound("AcceleratorBoot", displayInstance.gameObject);
+                    hzc.baseRadius *= 1 + (radiusPerStack * acceleratorCount); // *= is bad. this is run multiple times
                 }
             }
         }

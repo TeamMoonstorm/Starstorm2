@@ -1,19 +1,38 @@
-﻿using Moonstorm.Starstorm2.Components;
+﻿using SS2.Components;
 using RoR2;
 using RoR2.Orbs;
 using UnityEngine;
+using System.Collections;
+using MSU;
 
-namespace Moonstorm.Starstorm2.Orbs
+namespace SS2.Orbs
 {
     public class ExecutionerIonOrb : Orb
     {
         public ExecutionerController execController;
 
         //private NetworkSoundEventDef sound = SS2Assets.LoadAsset<NetworkSoundEventDef>("SoundEventExecutionerGainCharge", SS2Bundle.Executioner);
-        private GameObject orbEffect = SS2Assets.LoadAsset<GameObject>("ExecutionerIonOrbEffect", SS2Bundle.Executioner);
-        private GameObject orbEffectMastery = SS2Assets.LoadAsset<GameObject>("ExecutionerIonOrbEffectMastery", SS2Bundle.Executioner);// referenced just for u <3 -b
         private const float speed = 50f;
         private string skinNameToken;
+
+        private static GameObject _orbEffect;
+        private static GameObject _masteryOrbEffect;
+
+        [AsyncAssetLoad]
+        private static IEnumerator LoadAssets()
+        {
+            var helper = new ParallelMultiStartAssetLoadCoroutine();
+            helper.AddAssetToLoad<GameObject>("ExecutionerIonOrbEffect", SS2Bundle.Executioner2);
+            helper.AddAssetToLoad<GameObject>("ExecutionerIonOrbEffectBlack", SS2Bundle.Executioner2);
+
+            helper.Start();
+            while (!helper.IsDone)
+                yield return null;
+
+            _orbEffect = helper.GetLoadedAsset<GameObject>("ExecutionerIonOrbEffect");
+            _masteryOrbEffect = helper.GetLoadedAsset<GameObject>("ExecutionerIonOrbEffectBlack");
+            yield break;
+        }
 
         public override void Begin()
         {
@@ -27,11 +46,24 @@ namespace Moonstorm.Starstorm2.Orbs
             };
             effectData.SetHurtBoxReference(target);
 
-            EffectManager.SpawnEffect(orbEffect, effectData, true);
+            
 
             HurtBox hurtBox = target.GetComponent<HurtBox>();
             if (hurtBox)
+            {
                 execController = hurtBox.healthComponent.GetComponent<ExecutionerController>();
+                skinNameToken = hurtBox.gameObject.transform.root.GetComponentInChildren<ModelSkinController>().skins[hurtBox.healthComponent.body.skinIndex].nameToken;
+
+
+                if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
+                {
+                    EffectManager.SpawnEffect(_masteryOrbEffect, effectData, true);
+                }
+                else
+                {
+                    EffectManager.SpawnEffect(_orbEffect, effectData, true);
+                }
+            }
         }
 
         public override void OnArrival()

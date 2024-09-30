@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RoR2;
+﻿using RoR2;
 using UnityEngine;
 using RoR2.Projectile;
 namespace EntityStates.Cyborg2
 {
-	public class FireShockMine : BaseSkillState
+    public class FireShockMine : BaseSkillState
 	{
 		public static GameObject projectilePrefab;
 		public static string soundString = "Play_captain_m2_tazer_shoot";

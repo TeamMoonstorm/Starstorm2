@@ -1,29 +1,33 @@
-﻿using RoR2;
+﻿using MSU;
+using MSU.Config;
+using R2API;
+using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Items;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Items
+namespace SS2.Items
 {
-    [DisabledContent]
-    public sealed class BaneFlask : ItemBase
+    public sealed class BaneFlask : SS2Item, IContentPackModifier
     {
-
         private const string token = "SS2_ITEM_BANEFLASK_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("BaneFlask", SS2Bundle.Items);
-        public static DotController.DotIndex DotIndex;
-        //public static float duration = 2;
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acBaneFlask", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Debuff Damage per Second. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
+        private BuffDef _baneBuffDef;
+        public static DotController.DotIndex BaneDotIndex { get; private set; }
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Debuff Damage per Second. (1 = 100%)")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float debuffDamage = .3f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of applied Bane debuff. (1 = 1 second)")]
-        [TokenModifier(token, StatTypes.Default, 1)]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Duration of applied Bane debuff. (1 = 1 second)")]
+        [FormatToken(token, 1)]
         public static float debuffDuration = 5;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Range of on-death AOE. For reference, Gasoline's base range is 12m. (1 = 1m)")]
-        [TokenModifier(token, StatTypes.Default, 2)]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Range of on-death AOE. For reference, Gasoline's base range is 12m. (1 = 1m)")]
+        [FormatToken(token, 2)]
         public static float aoeRange = 15;
 
         public static GameObject explosionGross;
@@ -32,19 +36,22 @@ namespace Moonstorm.Starstorm2.Items
 
         public static Dictionary<BuffIndex, GameObject> buffColors = new Dictionary<BuffIndex, GameObject>();
 
-
-        //[ConfigurableField(ConfigDesc = "Max active warbanners for each character.")]
-        //[TokenModifier(token, StatTypes.Default, 3)]
-        //public static int maxGreaterBanners = 5;
-
         public override void Initialize()
         {
-            explosionGross = SS2Assets.LoadAsset<GameObject>("BaneGrayVFX", SS2Bundle.Items);
-            particleBase = SS2Assets.LoadAsset<GameObject>("BaneHitsparkVFX", SS2Bundle.Items);
-            floorGloop = SS2Assets.LoadAsset<GameObject>("BaneGrayGoop", SS2Bundle.Items);
-            //DotController.onDotInflictedServerGlobal += RefreshInsects;
+            _baneBuffDef = AssetCollection.FindAsset<BuffDef>("BuffBane");
+
+            // idk which is which
+            explosionGross = AssetCollection.FindAsset<GameObject>("BaneGraysparkVFX");
+            particleBase = AssetCollection.FindAsset<GameObject>("BaneGrayVFX");
+            floorGloop = AssetCollection.FindAsset<GameObject>("BaneGrayGoop");
+
+            BaneDotIndex = DotAPI.RegisterDotDef(1f, .15f, DamageColorIndex.Poison, _baneBuffDef);
         }
 
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return false;
+        }
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver, IOnDamageDealtServerReceiver
         {
@@ -52,14 +59,14 @@ namespace Moonstorm.Starstorm2.Items
             private static ItemDef GetItemDef() => SS2Content.Items.BaneFlask;
 
             public void OnDamageDealtServer(DamageReport damageReport)
-            { 
-                if(damageReport.victimBody.GetBuffCount(SS2Content.Buffs.BuffBane) < 1)
+            {
+                if (damageReport.victimBody.GetBuffCount(SS2Content.Buffs.BuffBane) < 1)
                 {
                     var dotInfo = new InflictDotInfo() //add bane
                     {
                         attackerObject = body.gameObject,
                         victimObject = damageReport.victimBody.gameObject,
-                        dotIndex = Buffs.Bane.index,
+                        dotIndex = BaneFlask.BaneDotIndex,
                         duration = debuffDuration,
                         damageMultiplier = stack
                     };
@@ -76,7 +83,7 @@ namespace Moonstorm.Starstorm2.Items
                 }
 
                 CharacterBody victimBody = damageReport.victimBody;
-                CharacterBody attackerBody = damageReport.attackerBody;             
+                CharacterBody attackerBody = damageReport.attackerBody;
 
                 //notes: 
                 //timed buffs have the same index as regular buffs, so i can just check the timed list and then skip it in normal buffs
@@ -92,7 +99,6 @@ namespace Moonstorm.Starstorm2.Items
 
                         foreach (CharacterBody.TimedBuff buff in timeddebuffs)
                         {
-                            //SS2Log.Info("1: timed buff: " + buff + " | " + buff.buffIndex + " | " + buff.timer); //finds active timed buffs
                             bool real = timedBuffs.TryGetValue(buff.buffIndex, out var current);
                             if (!real && BuffCatalog.GetBuffDef(buff.buffIndex).isDebuff)
                             {
@@ -102,7 +108,6 @@ namespace Moonstorm.Starstorm2.Items
                             {
                                 if (current.timer < buff.timer)
                                 {
-                                    //SS2Log.Info("overriding original debuff because old duration was " + current.timer + " and new one is " + buff.timer + " which is more awesome");
                                     timedBuffs.Remove(buff.buffIndex);
                                     timedBuffs.Add(buff.buffIndex, buff);
                                 }
@@ -117,7 +122,6 @@ namespace Moonstorm.Starstorm2.Items
                             List<DotController.DotStack> dotList = dotController.dotStackList;
                             foreach (DotController.DotStack dot in dotList)
                             {
-                                //SS2Log.Info("3: dot: " + dot + " | def: " + dot.dotDef + " | ind: " + dot.dotIndex + " | buff index " + dot.dotDef.associatedBuff.buffIndex); //gets DOT stacks 
                                 bool real = uniqueDots.TryGetValue(dot.dotDef.associatedBuff.buffIndex, out var current);
                                 if (!real)
                                 {
@@ -127,7 +131,6 @@ namespace Moonstorm.Starstorm2.Items
                                 {
                                     if (current.timer < dot.timer)
                                     {
-                                        //SS2Log.Info("overriding original dot because old duration was " + current.timer + " and new one is " + dot.timer + " which is more awesome");
                                         uniqueDots.Remove(dot.dotDef.associatedBuff.buffIndex);
                                         uniqueDots.Add(dot.dotDef.associatedBuff.buffIndex, dot);
                                     }
@@ -143,29 +146,21 @@ namespace Moonstorm.Starstorm2.Items
                             if (victimBody.HasBuff(ind))
                             {
                                 var relevantDef = BuffCatalog.GetBuffDef(ind);
-                                //SS2Log.Info("yeah they actually have " + BuffCatalog.GetBuffDef(ind) + " | " + victimBody.GetBuffCount(BuffCatalog.GetBuffDef(ind)));
                                 bool real1 = uniqueDots.TryGetValue(ind, out _);
                                 bool real2 = timedBuffs.TryGetValue(ind, out _);
                                 if (relevantDef.isDebuff && !real1 && !real2)
                                 {
-                                    //SS2Log.Info("Adding " + BuffCatalog.GetBuffDef(ind) + " because it's a perm buff");
                                     infDebuffs.Add(ind);
                                 }
                             }
                         }
 
-                        float stackRadius = aoeRange;// + (aoeRangeStacking.Value * (float)(cryoCount - 1));
+                        float stackRadius = aoeRange;
                         float victimRadius = victimBody.radius;
                         float effectiveRadius = stackRadius + victimRadius;
 
                         var attackerTeamIndex = attackerBody.teamComponent.teamIndex;
 
-                        //float num = 8f + 4f * (float)cryoCount;
-                        //float radius = victimBody.radius;
-                        //float num2 = num + radius;
-                        //float num3 = 1.5f;
-                        //float baseDamage = obj.attackerBody.damage * num3;
-                        //float value = (float)(1 + cryoCount) * 0.75f * obj.attackerBody.damage;
 
                         Vector3 corePosition = victimBody.corePosition;
 
@@ -188,17 +183,7 @@ namespace Moonstorm.Starstorm2.Items
                             if (hurtBox.healthComponent)
                             {
 
-                                //var dotInfo = new InflictDotInfo() //add bane
-                                //{
-                                //    attackerObject = body.gameObject,
-                                //    victimObject = hurtBox.healthComponent.gameObject,
-                                //    dotIndex = Buffs.Bane.index,
-                                //    duration = debuffDuration,
-                                //    damageMultiplier = stack
-                                //};
-                                //DotController.InflictDot(ref dotInfo);
-
-                                foreach(var dot in uniqueDots) //add all dots
+                                foreach (var dot in uniqueDots) //add all dots
                                 {
                                     var dotInfoTemp = new InflictDotInfo()
                                     {
@@ -214,26 +199,26 @@ namespace Moonstorm.Starstorm2.Items
                                     {
                                         origin = victimBody.transform.position,
                                         color = dot.Value.dotDef.associatedBuff.buffColor,
-                                        scale = 1// * (float)obj.victimBody.hullClassification
+                                        scale = 1
                                     };
                                     EffectManager.SpawnEffect(particleBase, effectDataTemp, transmit: true);
                                 }
 
-                                foreach(var timed in timedBuffs) //add all timed debuffs
+                                foreach (var timed in timedBuffs) //add all timed debuffs
                                 {
                                     hurtBox.healthComponent.body.AddTimedBuffAuthority(timed.Key, timed.Value.timer);
 
                                     EffectData effectDataTemp = new EffectData
                                     {
                                         origin = victimBody.transform.position,
-                                        color = BuffCatalog.GetBuffDef(timed.Value.buffIndex).buffColor,                                        
-                                        scale = 1// * (float)obj.victimBody.hullClassification
+                                        color = BuffCatalog.GetBuffDef(timed.Value.buffIndex).buffColor,
+                                        scale = 1
                                     };
                                     EffectManager.SpawnEffect(particleBase, effectDataTemp, transmit: true);
 
                                 }
 
-                                foreach(var inf in infDebuffs) //add all infinite debuffs
+                                foreach (var inf in infDebuffs) //add all infinite debuffs
                                 {
                                     hurtBox.healthComponent.body.AddBuff(inf);
 
@@ -241,7 +226,7 @@ namespace Moonstorm.Starstorm2.Items
                                     {
                                         origin = victimBody.transform.position,
                                         color = BuffCatalog.GetBuffDef(inf).buffColor,
-                                        scale = 1// * (float)obj.victimBody.hullClassification
+                                        scale = 1
                                     };
                                     EffectManager.SpawnEffect(particleBase, effectDataTemp, transmit: true);
                                 }
@@ -249,12 +234,10 @@ namespace Moonstorm.Starstorm2.Items
                         }
                         baneAOEHurtBoxBuffer.Clear();
 
-                        //EntityStates.Mage.Weapon.IceNova.impactEffectPrefab
                         EffectData effectData = new EffectData
                         {
                             origin = victimBody.transform.position,
-                            //
-                            scale = 1// * (float)obj.victimBody.hullClassification
+                            scale = 1
                         };
                         EffectManager.SpawnEffect(explosionGross, effectData, transmit: true);
                         if (victimBody.characterMotor.isGrounded)
@@ -266,25 +249,10 @@ namespace Moonstorm.Starstorm2.Items
                             };
                             EffectManager.SpawnEffect(floorGloop, efd2, transmit: true);
                         }
-
-                        //Util.PlaySound("RefabricatorAction", victimBody.gameObject);
-
-                        //Util.PlaySound("Play_acid_larva_impact", victimBody.gameObject);
-                        //EffectManager.SpawnEffect(iceDeathAOEObject, new EffectData
-                        //{
-                        //    origin = corePosition,
-                        //    scale = effectiveRadius,
-                        //    rotation = Util.QuaternionSafeLookRotation(obj.damageInfo.force)
-                        //}, true);
                     }
                 }
 
             }
-
-            //npublic void OnKilledServer(DamageReport damageReport)
-            //n{
-            //n    //throw new System.NotImplementedException();
-            //n}
         }
     }
 }
