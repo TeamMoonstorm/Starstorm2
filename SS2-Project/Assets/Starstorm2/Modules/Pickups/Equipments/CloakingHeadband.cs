@@ -1,15 +1,22 @@
-﻿using RoR2;
+﻿using MSU;
+using MSU.Config;
+using RoR2;
+using RoR2.ContentManagement;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Equipments
+namespace SS2.Equipments
 {
-    public sealed class CloakingHeadband : EquipmentBase
+    public sealed class CloakingHeadband : SS2Equipment
     {
-        public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("CloakingHeadband", SS2Bundle.Equipments);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<EquipmentAssetCollection>("acCloakingHeadband", SS2Bundle.Equipments);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "How long the Cloak buff lasts, in seconds.")]
-        [TokenModifier("SS2_EQUIP_CLOAKINGHEADBAND_DESC", StatTypes.Default, 0)]
-        public static float cloakDuration = 8f;
-        public override bool FireAction(EquipmentSlot slot)
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "How long the Cloak buff lasts, in seconds.")]
+        [FormatToken("SS2_EQUIP_CLOAKINGHEADBAND_DESC")]
+        public static float cloakDuration = 16f;
+
+        public override bool Execute(EquipmentSlot slot)
         {
             slot.characterBody.AddTimedBuff(RoR2Content.Buffs.Cloak.buffIndex, cloakDuration);
             slot.characterBody.AddTimedBuff(RoR2Content.Buffs.CloakSpeed.buffIndex, cloakDuration);
@@ -21,6 +28,22 @@ namespace Moonstorm.Starstorm2.Equipments
             EffectManager.SpawnEffect(EntityStates.Bandit2.StealthMode.smokeBombEffectPrefab, effectData, transmit: true);
             return true;
         }
-    }
 
+        public override void Initialize()
+        {
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        public override void OnEquipmentLost(CharacterBody body)
+        {
+        }
+
+        public override void OnEquipmentObtained(CharacterBody body)
+        {
+        }
+    }
 }

@@ -1,19 +1,27 @@
-﻿using RoR2;
+﻿using MSU;
+using R2API.ScriptableObjects;
+using RoR2;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.SceneManagement;
+using RoR2.ContentManagement;
 
-
-namespace Moonstorm.Starstorm2.Artifacts
+namespace SS2.Artifacts
 {
-    [DisabledContent]
-    public class Adversity : ArtifactBase
+#if DEBUG
+    public class Adversity : SS2Artifact
     {
-        public override ArtifactDef ArtifactDef { get; } = SS2Assets.LoadAsset<ArtifactDef>("Adversity", SS2Bundle.Artifacts);
+        public override SS2AssetRequest assetRequest => SS2Assets.LoadAssetAsync<ArtifactAssetCollection>("acAdversity", SS2Bundle.Artifacts);
 
-        private static bool shouldUpgradeTP;
-        private static float timer;
+        public static bool shouldUpgradeTP;
+        public static float timer;
+        public override void Initialize()
+        {
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return false;
+        }
 
         public override void OnArtifactDisabled()
         {
@@ -42,4 +50,5 @@ namespace Moonstorm.Starstorm2.Artifacts
             }
         }
     }
+#endif
 }

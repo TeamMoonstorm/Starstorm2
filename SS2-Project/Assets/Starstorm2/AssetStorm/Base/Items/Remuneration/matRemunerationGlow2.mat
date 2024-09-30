@@ -2,14 +2,17 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: matRemunerationGlow2
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
-  m_ShaderKeywords: USE_CLOUDS _EMISSION
+  m_ValidKeywords:
+  - USE_CLOUDS
+  m_InvalidKeywords:
+  - _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -20,7 +23,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Cloud1Tex:
-        m_Texture: {fileID: 2800000, guid: cc23f07135f7dac41b75c9698649cc76, type: 2}
+        m_Texture: {fileID: 2800000, guid: 1faf5fc63af584d4d9667c3ac6f41faf, type: 3}
         m_Scale: {x: 9.35, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Cloud2Tex:
@@ -35,6 +38,7 @@ Material:
         m_Texture: {fileID: 2800000, guid: ca2bed65249788f46821cbd52fe53de0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AlphaBias: 0.198
     - _AlphaBoost: 1.14
@@ -92,3 +96,4 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 0.68275857, b: 0, a: 0}
     - _TintColor: {r: 0.3679245, g: 0.13016197, b: 0.28107446, a: 1}
+  m_BuildTextureStacks: []

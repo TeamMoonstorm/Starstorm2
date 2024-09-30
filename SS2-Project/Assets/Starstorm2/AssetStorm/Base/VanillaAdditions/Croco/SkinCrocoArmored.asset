@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 055ad47894d63994fa4e32d1cfa2f4d3, type: 3}
+  m_Script: {fileID: 11500000, guid: 74a4b8a0e9a17f6419d0bf9a23a7c118, type: 3}
   m_Name: SkinCrocoArmored
   m_EditorClassIdentifier: 
   baseSkins: []
@@ -23,11 +23,11 @@ MonoBehaviour:
   meshReplacements: []
   projectileGhostReplacements: []
   minionSkinReplacements: []
-  bodyAddress: RoR2/Base/Croco/CrocoBody.prefab
-  displayAddress: RoR2/Base/Croco/CrocoDisplay.prefab
+  _bodyAddress: RoR2/Base/Croco/CrocoBody.prefab
+  _displayAddress: RoR2/Base/Croco/CrocoDisplay.prefab
   _baseSkins:
-  - skinAddress: RoR2/Base/Croco/skinCrocoDefault.asset
-    skin: {fileID: 0}
+  - _skinAddress: RoR2/Base/Croco/skinCrocoDefault.asset
+    _skinDef: {fileID: 0}
   _rendererInfos:
   - defaultMaterial: {fileID: 2100000, guid: 98e04da8c9e26324483565d1220bd1a8, type: 2}
     defaultShadowCastingMode: 1
@@ -47,4 +47,4 @@ MonoBehaviour:
     rendererIndex: 3
   _projectileGhostReplacements: []
   _minionSkinReplacements: []
-  rendererAmounts: 4
+  cachedRendererAmount: 0

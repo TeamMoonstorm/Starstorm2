@@ -1,26 +1,37 @@
-﻿using Moonstorm.Experimental;
+﻿using MSU;
+using R2API.ScriptableObjects;
 using RoR2;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RoR2.ContentManagement;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-
-namespace Moonstorm.Starstorm2.ItemTiers
+namespace SS2.ItemTiers
 {
-    public class Sibylline : ItemTierBase
+    public class Sibylline : SS2ItemTier, IContentPackModifier
     {
-        public override ItemTierDef ItemTierDef => SS2Assets.LoadAsset<ItemTierDef>("Sibylline", SS2Bundle.Items);
-
-        public override GameObject PickupDisplayVFX => SS2Assets.LoadAsset<GameObject>("SibyllinePickupDisplayVFX", SS2Bundle.Items);
+        public override SS2AssetRequest<ItemTierAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<ItemTierAssetCollection>("acSibylline", SS2Bundle.Base);
 
         public override void Initialize()
         {
-            base.Initialize();
-            //ItemTierDef.highlightPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/HighlightTier1Item.prefab").WaitForCompletion();
-            ItemTierDef.dropletDisplayPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/Common/VoidOrb.prefab").WaitForCompletion();
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            var enumerator = base.LoadContentAsync();
+            while (!enumerator.IsDone())
+                yield return null;
+
+            var request = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/Common/VoidOrb.prefab");
+            while (!request.IsDone)
+                yield return null;
+
+            ItemTierDef.dropletDisplayPrefab = request.Result;
+            yield break;
         }
     }
 }

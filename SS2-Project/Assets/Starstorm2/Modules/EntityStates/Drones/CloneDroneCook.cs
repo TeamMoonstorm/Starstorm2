@@ -1,12 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using RoR2;
-using HG;
-using Moonstorm.Starstorm2;
-using Moonstorm.Starstorm2.Components;
+using SS2;
 using UnityEngine.Networking;
-
+using SS2.Interactables;
 namespace EntityStates.CloneDrone
 {
     public class CloneDroneCook : BaseSkillState
@@ -211,7 +207,7 @@ namespace EntityStates.CloneDrone
                 outer.SetNextStateToMain();
                 return;
             }
-            if (duration <= fixedAge)
+            if (fixedAge >= duration)
             {
                 outer.SetNextStateToMain();
                 //create the item
@@ -233,7 +229,16 @@ namespace EntityStates.CloneDrone
 
         public void CreateClone()
         {
-            PickupDropletController.CreatePickupDroplet(gpc.pickupIndex, transform.position, Vector3.up * dropUpVelocityStrength + transform.forward * dropForwardVelocityStrength);
+            GenericPickupController.CreatePickupInfo info = new GenericPickupController.CreatePickupInfo
+            {
+                prefabOverride = CloneDroneDamaged.clonedPickupPrefab,
+                pickupIndex = gpc.pickupIndex,
+                position = transform.position,
+            };
+            var component = this.gpc.gameObject.GetComponent<CloneDroneDamaged.ClonedPickup>();
+            if (!component) component = gpc.gameObject.AddComponent<CloneDroneDamaged.ClonedPickup>();
+            component.OnCloned(base.gameObject);
+            PickupDropletController.CreatePickupDroplet(info, transform.position, Vector3.up * dropUpVelocityStrength + transform.forward * dropForwardVelocityStrength);
         }
         
 

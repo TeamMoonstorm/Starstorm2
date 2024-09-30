@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using RoR2;
-using Moonstorm.Starstorm2;
-using UnityEngine.AddressableAssets;
+using SS2;
 
 namespace EntityStates.MULE
 {
+#if DEBUG
     public class MULESlam : BaseSkillState
     {
         public float charge;
@@ -109,4 +107,5 @@ namespace EntityStates.MULE
             return InterruptPriority.Frozen;
         }
     }
+#endif
 }

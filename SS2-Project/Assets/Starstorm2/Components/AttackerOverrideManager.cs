@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using RoR2;
 using UnityEngine;
-namespace Moonstorm.Starstorm2
+namespace SS2
 {
     // overwrites damageInfo.attacker with a specified gameobject
     // not really tested. could be some unforeseen abuse cases

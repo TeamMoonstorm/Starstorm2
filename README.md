@@ -9,7 +9,7 @@ Table of Contents
 
 ## About
 
-Starstorm 2 is a work-in-progress RoR2 port/sequel of Starstorm, a diverse gameplay and content mod for Risk of Rain 1. It features two new survivors, over 20 new items and equipment, and a new, dangerous event to shake up your runs.
+Starstorm 2 is a work-in-progress RoR2 port/sequel of Starstorm, a diverse gameplay and content mod for Risk of Rain 1. It features four new survivors, over 20 new items and equipment, and a new, dangerous event to shake up your runs.
 
 ## Developing/Contributions
 
@@ -23,30 +23,30 @@ That said, if you are looking to contribute to the project, set-up instructions 
 
 * You'll need:
     * Unity Hub
-    * Unity version 2019.4.26f1 (Available from: https://unity.com/releases/editor/archive)
+    * Unity version 2019.4.37f1 (Available from: https://unity.com/releases/editor/archive)
     * A Git client (IE: GithubDesktop, Gitkraken, etc)
 
-* Begin by cloning the repository to your hard drive
+* Begin by cloning the repository to your hard drive.
 
-![](https://cdn.discordapp.com/attachments/1035279289668616202/1035279344601399397/unknown.png)
+![](https://files.catbox.moe/2dz2k4.gif)
 
-* Once the project downloads, open the `SS2-Project` folder with Unity 2019.4.26f1, keep in mind that opening the project for the first time will take time, so patience is key
+* Once the project downloads, open the `SS2-Project` folder with Unity 2019.4.37f1. Keep in mind that opening the project for the first time will take time, so patience is key.
 
-![](https://media.discordapp.net/attachments/1035279289668616202/1035282400088952832/unknown.png)
+![](https://files.catbox.moe/gyzq2y.gif)
 
-* During your importing or opening the project, or any other scenario, there is a chance you'll see this box pop up, Always hit "No Thanks", as hitting the other option WILL cause issues with specific assemblies.
+* During your importing or opening the project, or any other scenario, there is a chance you'll see this box pop up. Always hit "No Thanks", as hitting the other option WILL cause issues with specific assemblies.
 
-![](https://cdn.discordapp.com/attachments/1035279289668616202/1035282616154337411/unknown.png)
+![](https://files.catbox.moe/fgjo1f.PNG)
 
-* Once the project opens, you'll have a bunch of errors, these errors **are normal**, and are caused by missing ror2 assemblies. To fix this, Go to ``Assets/ThunderKitSettings`` folder, and look for the "ImportConfiguration" file.
+* Once the project opens, you'll have a bunch of errors, these errors **are normal**, and are caused by missing RoR2 assemblies. To fix this, Go to ``Assets/ThunderKitSettings`` folder and look for the "ImportConfiguration" file.
     * If there are no Configuration Executors, delete the ImportConfiguration so Thunderkit can regenerate it.
-    * If no configurations exist after this, please contact Nebby and ask for help
+    * If no configurations exist after this, please contact Nebby and ask for help.
 
-![](https://cdn.discordapp.com/attachments/1035279289668616202/1035284101839720520/unknown.png)
+![](https://files.catbox.moe/ml1vot.PNG)
 
 * Once the import configurations are created, go to Tools/Thunderkit/Settings
 
-![](https://cdn.discordapp.com/attachments/1035279289668616202/1035292228303736853/unknown.png)
+![](https://files.catbox.moe/th1ahp.PNG)
 
 * Select the Import Configurations, ensure that your configurations match the one from the image.
     * If you can't find one of the configurations, delete the import configuration.
@@ -64,7 +64,6 @@ That said, if you are looking to contribute to the project, set-up instructions 
 | Assembly Publicizer | Enabled | Publicize at least RoR2.dll and KinematicCharacterController.dll |
 | MMHook Generator | Enabled | Generate MMHook assemblies for at least RoR2.dll and KinematicCharacterController.dll |
 | Import Assemblies | Enabled |  |
-| RoR2 LegacyResourceAPI Patcher | Enabled |  |
 | Import Project Settings | Enabled | Set the enum to Everything |
 | Set Deferred Shading | Enabled |  |
 | Create Game Package | Enabled |  |
@@ -76,7 +75,7 @@ That said, if you are looking to contribute to the project, set-up instructions 
 | Install RoR2MultiplayerHLAPI | Disabled |  |
 | Install Ancient Scepter | Enabled |  |
 | Install RoR2EditorKit | Disabled |  |
-| Install Risk of Options | Enabled |  |
+| Install Dependencies | Enabled |  |
 | Get Bitness | Enabled |  |
 | Beep | Enabled |  |
 | Prompt Restart | Enabled |  |
@@ -85,7 +84,7 @@ That said, if you are looking to contribute to the project, set-up instructions 
     * Find your RoR2 Executable, select it
     * Hit Import
 
-![](https://cdn.discordapp.com/attachments/1035279289668616202/1035292666038071296/unknown.png)
+![](https://files.catbox.moe/6odrmh.gif)
 
 * You're now ready to start development.
 
@@ -101,14 +100,7 @@ For contributors, what you need to know is the following:
 1. Create pull requests to ``main`` if you wish to submit bugfixes/patches of the current thunderstore version
 2. Create pull requests to ``indev`` if you wish to submit new features/content.
 
-## Issues Q&A
-
-Q: I'm having an issue where certain components cannot be added or general instability
-* A: Make sure you didn't leave Install RoR2MultiplayerHLAPI and Install RoR2EditorKit enabled, having these enabled will cause issues due to duplicate assemblies
-
-Q: I'm having an issue where there are compiler errors due to DamageAPI/RecalcStatsAPI/OtherR2APISubmodule is missing
-* A: Some of the project's soft dependencies such as AncientScepter still rely on the old R2API and as such, when they're installed, it installs R2API version 4.x.x, causing duplicate types in the project. To fix this, just delete the R2API folder in the packages folder.
-
+## Q&A
 Q: How do I build?
 * A: Do the following:
     * Go into Assets/ThunderkitRelated/Contributor
@@ -124,7 +116,34 @@ Q: How do I build?
     * Running the build pipeline should output the built mod into your r2modman profile
 
 Q: Any mods I should have on my r2modman development profile?
-* A: We recommend using the `SS2Dev_1685585348913.r2z` found in the Docs/ folder, as this profile code contains all the dependencies and configuration. You can import a r2modman profile from a file by clicking the "Import/Update" button on the r2modman profile selection screen. 
+* A: We recommend using the `SS2Dev_1718366591833.r2z` found in the Docs/ folder, as this profile code contains all the dependencies and configuration. You can import a r2modman profile from a file by clicking the "Import/Update" button on the r2modman profile selection screen. 
+
+
+## Troubleshooting
+
+Q: I'm still having errors in the console after importing
+* A: Try reimporting RoR2 as in some cases Thunderkit settings aren't set correctly on the first game import.
+
+Q: I am having missing references errors in my Visual Studio to various parts of RoR2/Networking/etc
+* A: Delete all your packages and package-lock file found under the Packages/ folder and reimport the game exe following the same thunderkit import configuration settings/guide up above
+
+Q: I'm having an issue where certain components cannot be added or general instability
+* A: Make sure you didn't leave Install RoR2MultiplayerHLAPI and Install RoR2EditorKit enabled, having these enabled will cause issues due to duplicate assemblies
+
+Q:I am having an issue with importextensions saying thunderkit is not found (or an error with Player scripts)
+A: Here is a fix by Orbeez ![](./Docs/TroubleshootingPlayerScript.png)
+
+Q: My Shader Dict does not appear in Unity -> Project Settings
+A: Inside the packages folder and in the Risk of Rain 2 folder you need to edit the package file to the correct ror2 version ![](./Docs/ShaderDictError.png)
+
+Q: I'm having an issue where there are compiler errors due to DamageAPI/RecalcStatsAPI/OtherR2APISubmodule is missing
+* A: Some of the project's soft dependencies such as AncientScepter still rely on the old R2API and as such, when they're installed, it installs R2API version 4.x.x, causing duplicate types in the project. To fix this, just delete the R2API folder in the packages folder.
+
+Q: I am getting errors about missing NewtonsoftJson.dll?
+* A: Uninstall ror2bepinexpack with the thunderkit package manager then install it again OR use the dll in our development discord thats pinned and place it inside packages\BepInExPack\BepInExPack\BepInEx\core
+
+Q: The RoR2EK CharacterBody wizard does nothing and returns an error in the console OR my CharacterBody is missing Network components
+* A: In the project tab of Unity, scroll down to packages, and right click Risk of Rain 2, select "reimport", repeat the same for Multiplayer HLAPI
 
 Q: When I build my project using the pipelines no DLL is created
 * A: Check the pipeline log, it usually logs anything and everything regarding issues with the build process, there's also a high chance that a duplicate MMHook assembly (such as AssemblyCSharp mmhook) is causing issues. If this is the case, go into HookGenPatcher's plugins folder and delete MMHOOK_AssemblyCSharp.dll

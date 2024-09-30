@@ -2,20 +2,37 @@
 using RoR2;
 using RoR2.Items;
 
-namespace Moonstorm.Starstorm2.Items
-{
-    public sealed class RelicOfMass : ItemBase
-    {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfMass", SS2Bundle.Items);
+using MSU;
+using System.Collections.Generic;
+using UnityEngine;
+using RoR2.ContentManagement;
+using System.Collections;
+using MSU.Config;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of health increase. (1 = 100%)")]
-        [TokenModifier("SS2_ITEM_RELICOFMASS_DESC", StatTypes.MultiplyByN, 0, "100")]
+namespace SS2.Items
+{
+    public sealed class RelicOfMass : SS2Item
+    {
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRelicOfMass", SS2Bundle.Items);
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Amount of health increase. (1 = 100%)")]
+        [FormatToken("SS2_ITEM_RELICOFMASS_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float healthIncrease = 1f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of which acceleration is divided by.")]
-        [TokenModifier("SS2_ITEM_RELICOFMASS_DESC", StatTypes.Default, 1)]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Amount of which acceleration is divided by.")]
+        [FormatToken("SS2_ITEM_RELICOFMASS_DESC", 1)]
         public static float acclMult = 8f;
 
+        public override void Initialize()
+        {
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        //N: Maybe this can be reduced to just a RecalcStatsAPI call? that'd be ideal.
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier, IStatItemBehavior
         {
             [ItemDefAssociation]

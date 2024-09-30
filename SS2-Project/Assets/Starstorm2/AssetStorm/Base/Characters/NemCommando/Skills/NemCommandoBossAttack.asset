@@ -17,6 +17,7 @@ MonoBehaviour:
   skillDescriptionToken: SS2_NEMCOMMANDO_SPECIAL_BOSS_DESCRIPTION
   keywordTokens:
   - SS2_KEYWORD_GOUGE
+  - KEYWORD_STUNNING
   icon: {fileID: 21300000, guid: 5ad9bc6831e357c409ccfcdf660364aa, type: 3}
   activationStateMachineName: Body
   activationState:
@@ -27,6 +28,8 @@ MonoBehaviour:
   rechargeStock: 1
   requiredStock: 1
   stockToConsume: 1
+  attackSpeedBuffsRestockSpeed: 0
+  attackSpeedBuffsRestockSpeed_Multiplier: 1
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
@@ -36,3 +39,5 @@ MonoBehaviour:
   canceledFromSprinting: 0
   isCombatSkill: 1
   mustKeyPress: 0
+  autoHandleLuminousShot: 1
+  hideStockCount: 0

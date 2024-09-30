@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 055ad47894d63994fa4e32d1cfa2f4d3, type: 3}
+  m_Script: {fileID: 11500000, guid: 74a4b8a0e9a17f6419d0bf9a23a7c118, type: 3}
   m_Name: SkinCommandoClassic
   m_EditorClassIdentifier: 
   baseSkins: []
@@ -23,8 +23,8 @@ MonoBehaviour:
   meshReplacements: []
   projectileGhostReplacements: []
   minionSkinReplacements: []
-  bodyAddress: RoR2/Base/Commando/CommandoBody.prefab
-  displayAddress: RoR2/Base/Commando/CommandoDisplay.prefab
+  _bodyAddress: RoR2/Base/Commando/CommandoBody.prefab
+  _displayAddress: RoR2/Base/Commando/CommandoDisplay.prefab
   _baseSkins: []
   _rendererInfos:
   - defaultMaterial: {fileID: 2100000, guid: 8dd677474a6180f4fafd70cc96bc3a6e, type: 2}
@@ -52,4 +52,4 @@ MonoBehaviour:
     rendererIndex: 0
   _projectileGhostReplacements: []
   _minionSkinReplacements: []
-  rendererAmounts: 3
+  cachedRendererAmount: 0

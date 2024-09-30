@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using RoR2;
 using UnityEngine.Networking;
-using Moonstorm.Starstorm2.Components;
-using RoR2.Navigation;
-using Moonstorm.Starstorm2;
+using SS2.Components;
+using SS2;
 
 namespace EntityStates.NemMerc
 {
@@ -111,6 +106,7 @@ namespace EntityStates.NemMerc
         public static bool ItemFilter(ItemIndex itemIndex)
         {
             var def = ItemCatalog.GetItemDef(itemIndex);
+            if (def == null) return false;
             if(def.name == "ITEM_ANCIENT_SCEPTER" || def.nameToken == "ITEM_ANCIENT_SCEPTER_NAME")
             {
                 return false;
@@ -121,6 +117,7 @@ namespace EntityStates.NemMerc
             }
             foreach (var item in illegalItems)
             {
+                if (item == null) return false;
                 if(item.itemIndex == itemIndex)
                 {
                     return false;

@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d2dc8cbdb9720c418fcff8f84588cab, type: 3}
+  m_Script: {fileID: 11500000, guid: 02a17d3a7bea384489c0fc6e66051d29, type: 3}
   m_Name: ss2.item.diary
   m_EditorClassIdentifier: 
   nameToken: ???
@@ -18,15 +18,12 @@ MonoBehaviour:
   hidden: 0
   achievementIcon: {fileID: 21300000, guid: 2bcfb98a5eb07684eb5326d0d976559e, type: 3}
   achievementCondition:
-    assemblyQualifiedName: Moonstorm.Starstorm2.Unlocks.Pickups.DiaryUnlockable+DiaryAchievement,
-      Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  serverTracked: 0
-  baseServerAchievement:
+    assemblyQualifiedName: SS2.Unlocks.Pickups.DiaryAchievement, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serverAchievementCondition:
     assemblyQualifiedName: 
   achievementNameToken: SS2_ACHIEVEMENT_DIARY_NAME
-  achievementDescToken: SS2_ACHIEVEMENT_DIARY_DESC
-  achievedIcon: {fileID: 21300000, guid: 6a60883fa76297c49b811fc992b18487, type: 3}
-  unachievedIcon: {fileID: 21300000, guid: 6a60883fa76297c49b811fc992b18487, type: 3}
-  prerequisiteAchievement:
-    AchievementIdentifier: 
-    UnlockableDef: {fileID: 0}
+  achievementDescriptionToken: SS2_ACHIEVEMENT_DIARY_DESC
+  _preRequisiteAchievement:
+    unlockableDef: {fileID: 0}
+    achievementIdentifier: 

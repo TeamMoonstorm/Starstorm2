@@ -1,23 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using RoR2;
 using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 using RoR2.ExpansionManagement;
 using R2API;
+using System.Collections;
 
-namespace Moonstorm.Starstorm2
+namespace SS2
 {
     public class Void : NetworkBehaviour
     {
         public static GameObject shrinePrefab;
 
-        internal static void Init()
+        internal static IEnumerator Init()
         {
             shrinePrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("VoidRockPickup", SS2Bundle.Interactables), "BondPickup", true);
             shrinePrefab.RegisterNetworkPrefab();
-            On.RoR2.SceneDirector.Start += SceneDirector_Start;
+            //On.RoR2.SceneDirector.Start += SceneDirector_Start;
+            yield break;
         }
 
         public static void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)

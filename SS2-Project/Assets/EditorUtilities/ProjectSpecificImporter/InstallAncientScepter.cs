@@ -13,6 +13,6 @@ namespace Moonstorm.Starstorm2.Editor
 
         public override string ThunderstoreAddress => "https://thunderstore.io";
 
-        public override int Priority => RiskOfThunder.RoR2Importer.Constants.Priority.InstallMLAPI - 500;
+        public override int Priority => RiskOfThunder.RoR2Importer.Constants.Priority.InstallMHLAPI - 500;
     }
 }

@@ -1,4 +1,4 @@
-﻿using Moonstorm.Starstorm2;
+﻿using SS2;
 using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -7,9 +7,10 @@ namespace EntityStates.NemCommmando
 {
     public class Dodge2 : BaseSkillState
     {
-        public float duration = 0.6f;
-        public float initialSpeedCoefficient = 7.5f;
-        public float finalSpeedCoefficient = 1f;
+        private static float duration = 0.5f;
+        private static float initialSpeedCoefficient = 6.5f;
+        private static float finalSpeedCoefficient = 1.5f;
+        private static float upThing = 0.67f;
         public static float dodgeFOV = -1f;
         public static GameObject JetEffect;
         public static string DashJetL;
@@ -55,8 +56,10 @@ namespace EntityStates.NemCommmando
             RecalculateRollSpeed();
             if (characterMotor && characterDirection)
             {
-                characterMotor.velocity.y = 0f;
+                // min is 0, max is rollSpeed
+                float y = Mathf.Min(Mathf.Max(characterMotor.velocity.y, 0), rollSpeed) * upThing;
                 characterMotor.velocity = forwardDirection * rollSpeed;
+                characterMotor.velocity.y = y;
             }
 
             skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
@@ -98,6 +101,8 @@ namespace EntityStates.NemCommmando
         {
             base.FixedUpdate();
             RecalculateRollSpeed();
+
+            base.characterBody.isSprinting = true; // makes cryptic source work when not rolling forwards. sprintanydirection flag also works but this is easier
 
             if (isAuthority)
             {

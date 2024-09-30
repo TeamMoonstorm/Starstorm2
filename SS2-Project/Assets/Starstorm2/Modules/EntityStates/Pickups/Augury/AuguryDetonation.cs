@@ -3,6 +3,7 @@ using UnityEngine.Networking;
 
 namespace EntityStates.Pickups.Augury
 {
+#if DEBUG
     public class AuguryDetonation : AuguryBaseState
     {
         public static string detonationSound = "";
@@ -64,4 +65,5 @@ namespace EntityStates.Pickups.Augury
             }
         }
     }
+#endif
 }

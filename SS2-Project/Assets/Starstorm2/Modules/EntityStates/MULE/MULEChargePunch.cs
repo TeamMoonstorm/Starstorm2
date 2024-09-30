@@ -1,11 +1,10 @@
-﻿using Moonstorm.Starstorm2;
+﻿using SS2;
 using RoR2;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace EntityStates.MULE
 {
+#if DEBUG
     public class MULEChargePunch : BaseSkillState
     {
         public static float baseChargeDuration = 0.5f;
@@ -84,4 +83,5 @@ namespace EntityStates.MULE
             base.OnExit();
         }
     }
+#endif
 }

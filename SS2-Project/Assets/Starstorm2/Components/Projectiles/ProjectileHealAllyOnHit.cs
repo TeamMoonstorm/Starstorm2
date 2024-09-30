@@ -3,8 +3,7 @@ using RoR2.Projectile;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-
-namespace Moonstorm.Starstorm2.Components
+namespace SS2.Components
 {
     [RequireComponent(typeof(ProjectileController))]
     public class ProjectileHealAllyOnHit : MonoBehaviour, IProjectileImpactBehavior

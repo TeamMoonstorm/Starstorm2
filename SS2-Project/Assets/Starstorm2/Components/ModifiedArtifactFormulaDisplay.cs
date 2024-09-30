@@ -3,8 +3,7 @@ using RoR2;
 using System;
 using ThreeEyedGames;
 using UnityEngine;
-
-namespace Moonstorm.Starstorm2.Components
+namespace SS2.Components
 {
     public class ModifiedArtifactFormulaDisplay : MonoBehaviour
     {

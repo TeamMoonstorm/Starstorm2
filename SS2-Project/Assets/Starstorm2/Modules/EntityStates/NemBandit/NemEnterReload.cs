@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
-using RoR2;
+﻿using RoR2;
 
 namespace EntityStates.NemBandit
 {

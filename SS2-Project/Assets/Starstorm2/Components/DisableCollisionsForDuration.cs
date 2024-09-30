@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-namespace Moonstorm.Starstorm2.Components
+﻿using UnityEngine;
+namespace SS2.Components
 {
     public class DisableCollisionsForDuration : MonoBehaviour
     {

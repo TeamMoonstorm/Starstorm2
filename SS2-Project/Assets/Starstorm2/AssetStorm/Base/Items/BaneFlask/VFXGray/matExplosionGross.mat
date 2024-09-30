@@ -2,14 +2,18 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: matExplosionGross
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
-  m_ShaderKeywords: USE_CLOUDS VERTEXALPHA _EMISSION
+  m_ValidKeywords:
+  - USE_CLOUDS
+  - VERTEXALPHA
+  m_InvalidKeywords:
+  - _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -20,7 +24,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Cloud1Tex:
-        m_Texture: {fileID: 2800000, guid: 804f8f2b3c877ee468604842117ffb7a, type: 3}
+        m_Texture: {fileID: 2800000, guid: 14665851842caf74fb06364eaaeb01e9, type: 3}
         m_Scale: {x: 5, y: 3}
         m_Offset: {x: 0, y: 0}
     - _Cloud2Tex:
@@ -32,9 +36,10 @@ Material:
         m_Scale: {x: 4, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RemapTex:
-        m_Texture: {fileID: 2800000, guid: 256a0de29d8ec7b4b8229a31d9edf568, type: 3}
+        m_Texture: {fileID: 2800000, guid: c3b6c50dd1215c3459720c2c5e5eea9f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AlphaBias: 0
     - _AlphaBoost: 1.63
@@ -84,3 +89,4 @@ Material:
     - _CutoffScroll: {r: 0, g: -20, b: 3, a: -14}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _TintColor: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
+  m_BuildTextureStacks: []

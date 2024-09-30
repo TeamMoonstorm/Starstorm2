@@ -1,4 +1,4 @@
-﻿namespace EntityStates.DropPod
+﻿/*namespace EntityStates.DropPod
 {
     public class ReleaseFinished : DropPodBaseState
     {
@@ -9,3 +9,4 @@
         }
     }
 }
+*/

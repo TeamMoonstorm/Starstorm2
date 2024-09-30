@@ -1,7 +1,4 @@
-﻿using EntityStates;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using RoR2;
 
 namespace EntityStates.LampBoss

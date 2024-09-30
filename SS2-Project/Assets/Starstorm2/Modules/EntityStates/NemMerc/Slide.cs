@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 using RoR2;
-using UnityEngine.Networking;
-using Moonstorm.Starstorm2.Components;
+using SS2.Components;
 
 namespace EntityStates.NemMerc
 {
@@ -112,7 +106,7 @@ namespace EntityStates.NemMerc
                 float msMultiplier = base.characterBody.moveSpeed / base.characterBody.baseMoveSpeed;
                 msMultiplier *= movespeedScalingCoefficient;
                 if(inMainState && !this.isClone)
-                    base.characterMotor.rootMotion += base.characterBody.moveSpeed * msMultiplier * forwardSpeed * this.forwardDirection * Time.fixedDeltaTime;
+                    base.characterMotor.rootMotion += base.characterBody.baseMoveSpeed * msMultiplier * forwardSpeed * this.forwardDirection * Time.fixedDeltaTime;
 
                 
                 if (!base.IsKeyDownAuthority() && base.fixedAge >= minDuration && inMainState)

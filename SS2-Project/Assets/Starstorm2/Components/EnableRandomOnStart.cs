@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-
-
-namespace Moonstorm.Starstorm2.Components
+namespace SS2.Components
 {
     public class EnableRandomOnStart : MonoBehaviour // not networked. just used for visuals (nemmerc hologram poses)
     {

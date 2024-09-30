@@ -1,48 +1,120 @@
-﻿using RoR2;
+﻿using MSU;
+using MSU.Config;
+using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Items;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-namespace Moonstorm.Starstorm2.Items
+namespace SS2.Items
 {
-    public sealed class GreenChocolate : ItemBase
+    public sealed class GreenChocolate : SS2Item
     {
         private const string token = "SS2_ITEM_GREENCHOCOLATE_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("GreenChocolate", SS2Bundle.Items);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acGreenChocolate", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Percentage of max hp that must be lost for Green Chocolate's effect to proc. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
+        private static GameObject _effect;
+        private static GameObject _damageBonusEffect;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Percentage of max hp that must be lost for Green Chocolate's effect to proc. (1 = 100%)")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float damageThreshold = 0.2f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Percent damage reduction that the damage in excess of the above threshold (base value 20%) is reduced by. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Percent damage reduction that the damage in excess of the above threshold is reduced by. (1 = 100%)")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float damageReduction = 0.5f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Base duration of the buff provided by Green Chocolate. (1 = 1 second)")]
-        [TokenModifier(token, StatTypes.Default, 2)]
-        public static float baseDuration = 12f;
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Base duration of the buff provided by Green Chocolate. (1 = 1 second)")]
+        [FormatToken(token, 2)]
+        public static float baseDuration = 6f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of the buff gained per stack. (1 = 1 second)")]
-        [TokenModifier(token, StatTypes.Default, 3)]
-        public static float stackDuration = 6f;
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Duration of the buff gained per stack. (1 = 1 second)")]
+        [FormatToken(token, 3)]
+        public static float stackDuration = 3f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Percent damage increase from the buff. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 4, "100")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Percent damage increase from the buff. (1 = 100%)")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 4)]
         public static float buffDamage = 0.5f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Crit chance increase from the buff. (1 = 1% crit chance)")]
-        [TokenModifier(token, StatTypes.Default, 5)]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Crit chance increase from the buff. (1 = 1% crit chance)")]
+        [FormatToken(token, 5)]
         public static float buffCrit = 20f;
 
-        public static GameObject effectPrefab = SS2Assets.LoadAsset<GameObject>("ChocolateEffect", SS2Bundle.Items);
+        public static DamageColorIndex damageColor;
+        public override void Initialize()
+        {
+            _effect = AssetCollection.FindAsset<GameObject>("ChocolateEffect");
+            _damageBonusEffect = AssetCollection.FindAsset<GameObject>("ChocolateDamageBonusEffect");
+            damageColor = R2API.ColorsAPI.RegisterDamageColor(new Color(.428f, .8f, 0f));
+            R2API.RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
+            GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
+        }
+
+        private void OnServerDamageDealt(DamageReport damageReport)
+        {
+            if (damageReport.attackerBody && damageReport.attackerBody.HasBuff(SS2Content.Buffs.BuffChocolate))
+                EffectManager.SimpleImpactEffect(_damageBonusEffect, damageReport.damageInfo.position, Vector3.zero, true);
+        }
+
+        private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, R2API.RecalculateStatsAPI.StatHookEventArgs args)
+        {
+            
+            if(sender.HasBuff(SS2Content.Buffs.BuffChocolate))
+            {
+                args.critAdd += buffCrit;
+                args.damageMultAdd += buffDamage;
+            }
+            //int buffStacks = sender.GetBuffCount(SS2Content.Buffs.BuffChocolate);
+            //args.critAdd += buffCrit * buffStacks;
+            //args.damageMultAdd += buffDamage * buffStacks;
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
         public sealed class Behavior : BaseItemBodyBehavior, IOnIncomingDamageServerReceiver
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.GreenChocolate;
+            private GameObject effectInstance;
+            private PostProcessDuration ppUp;
+            private PostProcessDuration ppDown;
+            private bool effectEnabled;
             public void Start()
             {
                 if (body.healthComponent)
                 {
                     HG.ArrayUtils.ArrayAppend(ref body.healthComponent.onIncomingDamageReceivers, this);
+                }
+            }
+
+            private void FixedUpdate()
+            {
+                if (body.HasBuff(SS2Content.Buffs.BuffChocolate))
+                {
+                    if (!effectInstance)
+                    {
+                        effectInstance = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("ChocolatePP", SS2Bundle.Items), body.coreTransform);
+                        effectInstance.GetComponent<LocalCameraEffect>().targetCharacter = base.gameObject;
+                        ppUp = effectInstance.transform.Find("CameraEffect/PP").GetComponent<PostProcessDuration>();
+                        ppDown = effectInstance.GetComponent<PostProcessDuration>();
+                        effectEnabled = true;
+                    }
+                    if (!effectEnabled)
+                    {
+                        ppUp.enabled = true;
+                        ppDown.enabled = false;
+                        effectEnabled = true;
+                    }
+                }
+                else if (effectEnabled)
+                {
+                    ppUp.enabled = false;
+                    ppDown.enabled = true;
+                    effectEnabled = false;
                 }
             }
 
@@ -62,11 +134,12 @@ namespace Moonstorm.Starstorm2.Items
                         scale = this.body.radius,
                     };
                     effectData.SetNetworkedObjectReference(this.body.gameObject);
-                    EffectManager.SpawnEffect(effectPrefab, effectData, true);
+                    EffectManager.SpawnEffect(_effect, effectData, true);
                 }
             }
             private void OnDestroy()
             {
+                if (effectInstance) Destroy(effectInstance);
                 //This SHOULDNT cause any errors because nothing should be fucking with the order of things in this list... I hope.
                 if (body.healthComponent)
                 {
@@ -75,6 +148,7 @@ namespace Moonstorm.Starstorm2.Items
                         HG.ArrayUtils.ArrayRemoveAtAndResize(ref body.healthComponent.onIncomingDamageReceivers, body.healthComponent.onIncomingDamageReceivers.Length, i);
                 }
             }
+
         }
     }
 }

@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RoR2;
-using Moonstorm.Starstorm2.Components;
-using UnityEngine;
+﻿using UnityEngine;
 namespace EntityStates.Cyborg2.ShockMine
 {
-	public class Unburrow : BaseShockMineState
+    public class Unburrow : BaseShockMineState
 	{
 		public override void OnEnter()
 		{

@@ -2,14 +2,16 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: matNullifierGemPortal 1
   m_Shader: {fileID: 4800000, guid: a37cfc6085e6fab4f9481e8001ce1dd7, type: 2}
-  m_ShaderKeywords: ALPHACLIP
+  m_ValidKeywords:
+  - ALPHACLIP
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -36,9 +38,10 @@ Material:
         m_Scale: {x: 0.01, y: 0.01}
         m_Offset: {x: 0, y: 0}
     - _Normal:
-        m_Texture: {fileID: 2800000, guid: f7239dd6c64c10940aeb100d7e3a5b47, type: 3}
+        m_Texture: {fileID: 2800000, guid: 8132b2fdee32300458a3f5bb7656213c, type: 3}
         m_Scale: {x: 0.01, y: 0.01}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _BumpScale: 1
     - _ClipOn: 1
@@ -69,3 +72,4 @@ Material:
     - _Color: {r: 9.082411, g: 9.082411, b: 9.082411, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _ScrollSpeed: {r: 10, g: 10, b: 10, a: 10}
+  m_BuildTextureStacks: []

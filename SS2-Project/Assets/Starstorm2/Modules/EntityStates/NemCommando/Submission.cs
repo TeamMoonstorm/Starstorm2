@@ -1,20 +1,20 @@
-﻿using Moonstorm;
-using Moonstorm.Starstorm2;
+﻿using SS2;
 using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using MSU;
 
 namespace EntityStates.NemCommando
 {
     public class Submission : BaseSkillState
     {
-        [TokenModifier("SS2_NEMMANDO_SUBMISSION_DESCRIPTION", StatTypes.MultiplyByN, 1, "100")]
+        [FormatToken("SS2_NEMMANDO_SPECIAL_SUBMISSION_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float damageCoefficient;
         public static float procCoefficient;
         public static uint bulletCountPerShot;
         public static float range;
         public static float maxSpread;
-        [TokenModifier("SS2_NEMMANDO_SUBMISSION_DESCRIPTION", StatTypes.Default, 0)]
+        [FormatToken("SS2_NEMMANDO_SPECIAL_SUBMISSION_DESCRIPTION",   0)]
         public static int BulletCount;
         public static float baseDuration;
         //public static float timeBetweenShots;
@@ -57,14 +57,14 @@ namespace EntityStates.NemCommando
             if (skinNameToken != "SS2_SKIN_NEMCOMMANDO_DEFAULT" && skinNameToken != "SS2_SKIN_NEMCOMMANDO_GRANDMASTERY")
             {
                 //Yellow
-                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
+                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY" || skinNameToken.Contains("YELLOW"))
                 {
                     tracerPrefab = SS2Assets.LoadAsset<GameObject>("TracerNemCommandoShotgunYellow", SS2Bundle.NemCommando);
                     muzzleFlashPrefab = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoYellow", SS2Bundle.NemCommando);
                     hitSparkPrefab = SS2Assets.LoadAsset<GameObject>("HitsparkNemCommandoYellow", SS2Bundle.NemCommando);
                 }
                 //Blue
-                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO")
+                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO" || skinNameToken.Contains("BLUE"))
                 {
                     tracerPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/TracerCommandoShotgun.prefab").WaitForCompletion();
                     muzzleFlashPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/MuzzleflashFMJ.prefab").WaitForCompletion();

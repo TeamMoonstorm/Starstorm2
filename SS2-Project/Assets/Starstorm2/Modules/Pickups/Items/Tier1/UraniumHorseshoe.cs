@@ -1,18 +1,26 @@
-﻿using RoR2;
+﻿using MSU;
+using RoR2;
+using RoR2.ContentManagement;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Items
+namespace SS2.Items
 {
-    [DisabledContent]
-    public sealed class UraniumHorseshoe : ItemBase
+#if DEBUG
+    public sealed class UraniumHoreshoe : SS2Item
     {
-
         private const string token = "SS2_ITEM_URANIUMHORSESHOE_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("UraniumHorseshoe", SS2Bundle.Items);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acUraniumHorseshoe", SS2Bundle.Items);
 
         public override void Initialize()
         {
-
         }
 
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return false;
+        }
     }
+#endif
 }

@@ -1,31 +1,24 @@
 ﻿using HG;
+using MSU;
+using MSU.Config;
 using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Orbs;
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-
-namespace Moonstorm.Starstorm2.Items
+namespace SS2.Items
 {
-    public sealed class NkotasHeritage : ItemBase
+    public sealed class NkotasHeritage : SS2Item
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("NkotasHeritage", SS2Bundle.Items);
-
         public const string token = "SS2_ITEM_NKOTASHERITAGE_DESC";
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Number of items given upon level up per stack.")]
-        [TokenModifier(token, StatTypes.Default, 0)]
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acNkotasHeritage", SS2Bundle.Items);
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Number of items given upon level up per stack.")]
+        [FormatToken(token, 0)]
         public static int itemsPerStack = 1;
-
-        //
-        //SS2Config.IDItem, ConfigDesc = "Level where white items are removed from the reward pool.")]
-        //[TokenModifier(token, StatTypes.Default, 1)]
-        //public static int whiteRemovalLevel = 11;
-
-        //[ConfigurableField(SS2Config.IDItem, ConfigDesc = "Level where green items are removed from the reward pool.")]
-        //[TokenModifier(token, StatTypes.Default, 2)]
-        //public static int greenRemovalLevel = 22;
 
         //Either store this in a static var or do a dictionary checkup if you want to save all the assetbundle lookups in this code
         //Im lazy and this works so.......................
@@ -38,7 +31,11 @@ namespace Moonstorm.Starstorm2.Items
             GlobalEventManager.onCharacterLevelUp += GlobalEventManager_onCharacterLevelUp;
             SceneExitController.onBeginExit += SceneExitController_onBeginExit;
             Stage.onStageStartGlobal += Stage_onServerStageBegin; //Cannot be onServerStageBegin because the players havent spawned by then!
-            //PickupDropletController.onDropletHitGroundServer += NkotaApplyParticleEffect;
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
         }
 
         private void Stage_onServerStageBegin(Stage obj)
@@ -71,14 +68,8 @@ namespace Moonstorm.Starstorm2.Items
                 HG.ArrayUtils.ArrayAppend(ref characterMasters, obj.master); //Should add the same master in case they level up multiple times... not sure if its ok?
                 return;
             }
-            if (!obj.gameObject.GetComponent<BabyToys.BabyToyToken>())
-            {
-                NkotasManager.ActivateSingle(obj);
-            }
-            else
-            {
-                //SS2Log.Debug("babys removal - ignoring level adjustment");
-            }
+
+            NkotasManager.ActivateSingle(obj);
 
         }
 

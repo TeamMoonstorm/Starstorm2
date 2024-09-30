@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-namespace Assets.Starstorm2.ScriptableObjects
+namespace SS2
 {
     [CreateAssetMenu(menuName = "Starstorm2/SkillDef/BeastmasterSkillDef")]
     internal class BeastmasterSkillDef : SkillDef
@@ -123,17 +123,17 @@ namespace Assets.Starstorm2.ScriptableObjects
         {
             if ((BeastmasterSkillDef.InstanceData)skillSlot.skillInstanceData != null && ((BeastmasterSkillDef.InstanceData)skillSlot.skillInstanceData).currentlyTrackingOrTamedTarget != null)
             {
-                return IsTargetFriend(skillSlot) ? EntityStateCatalog.InstantiateState(this.friendStateType) : EntityStateCatalog.InstantiateState(this.tameStateType);
+                return IsTargetFriend(skillSlot) ? EntityStateCatalog.InstantiateState(this.friendStateType.stateType) : EntityStateCatalog.InstantiateState(this.tameStateType.stateType);
             }
-            return EntityStateCatalog.InstantiateState(this.activationState);
+            return EntityStateCatalog.InstantiateState(this.activationState.stateType);
         }
 
-        public override void OnFixedUpdate([NotNull] GenericSkill skillSlot)
+        public override void OnFixedUpdate([NotNull] GenericSkill skillSlot, float deltaTime)
         {
-            base.OnFixedUpdate(skillSlot);
+            base.OnFixedUpdate(skillSlot, deltaTime);
             if ((BeastmasterSkillDef.InstanceData)skillSlot.skillInstanceData != null)
             {
-                ((BeastmasterSkillDef.InstanceData)skillSlot.skillInstanceData).DoFixedUpdate(skillSlot);
+                ((BeastmasterSkillDef.InstanceData)skillSlot.skillInstanceData).DoFixedUpdate(skillSlot, deltaTime);
             }
         }
 
@@ -174,9 +174,9 @@ namespace Assets.Starstorm2.ScriptableObjects
                 }
             }
 
-            public void DoFixedUpdate(GenericSkill runningGS)
+            public void DoFixedUpdate(GenericSkill runningGS, float deltaTime)
             {
-                this.trackerUpdateStopwatch += Time.fixedDeltaTime;
+                this.trackerUpdateStopwatch += deltaTime;
                 if (this.trackerUpdateStopwatch >= 1f / this.trackerUpdateFrequency)
                 {
                     this.trackerUpdateStopwatch -= 1f / this.trackerUpdateFrequency;

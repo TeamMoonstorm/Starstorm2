@@ -1,14 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using RoR2;
-using Moonstorm.Starstorm2;
-using UnityEngine;
-using UnityEngine.Networking;
-using RoR2.Skills;
+using SS2;
 
 namespace EntityStates.MULE
 {
+#if DEBUG
     public class MULEChargeJump : BaseSkillState
     {
         public static float baseChargeDuration = 1.25f;
@@ -82,4 +78,5 @@ namespace EntityStates.MULE
             return InterruptPriority.Frozen;
         }
     }
+#endif
 }

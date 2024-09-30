@@ -1,28 +1,40 @@
-﻿using Moonstorm.Starstorm2.Components;
+﻿using SS2.Components;
 using RoR2;
 using RoR2.Items;
 using UnityEngine;
 using UnityEngine.Networking;
+using MSU;
+using System.Collections.Generic;
+using RoR2.ContentManagement;
+using System.Collections;
+using MSU.Config;
 
-namespace Moonstorm.Starstorm2.Items
+namespace SS2.Items
 {
-    //[DisabledContent]
-    public sealed class DormantFungus : ItemBase
+    public sealed class DormantFungus : SS2Item
     {
         private const string token = "SS2_ITEM_DORMANTFUNGUS_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("DormantFungus", SS2Bundle.Items);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acDormantFungus", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Base amount of healing. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Base amount of healing. (1 = 100%)")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float baseHealPercentage = 0.015f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Amount of healing per stack. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Amount of healing per stack. (1 = 100%)")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float stackHealPercentage = 0.015f;
+
+        private static GameObject _dungusTrailEffect;
+        private static GameObject _dungusTrailEffectAlt;
         public override void Initialize()
         {
-            base.Initialize();
-            //On.RoR2.FootstepHandler.Footstep_string_GameObject += ModifiedFootstepHandlerFootstep;
+            _dungusTrailEffect = AssetCollection.FindAsset<GameObject>("DungusTrailEffect");
+            _dungusTrailEffectAlt = AssetCollection.FindAsset<GameObject>("DungusTrailEffectAlt");
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return false;
         }
 
         public sealed class Behavior : BaseItemBodyBehavior
@@ -42,7 +54,7 @@ namespace Moonstorm.Starstorm2.Items
                 if (body.modelLocator.modelTransform.GetComponent<FootstepHandler>())
                 {
                     footstepHandler = body.modelLocator.modelTransform.gameObject.AddComponent<ModifiedFootstepHandler>();
-                    footstepHandler.footstepEffect = SS2Assets.LoadAsset<GameObject>("DungusTrailEffect", SS2Bundle.Items);
+                    footstepHandler.footstepEffect = _dungusTrailEffect;
                     footstepHandler.enableFootstepDust = false;
                     hasFootsteps = true;
                 }
@@ -64,9 +76,9 @@ namespace Moonstorm.Starstorm2.Items
                         if (hasFootsteps)
                         {
                             if (Run.instance.runRNG.nextBool)
-                                footstepHandler.footstepEffect = SS2Assets.LoadAsset<GameObject>("DungusTrailEffect", SS2Bundle.Items);
+                                footstepHandler.footstepEffect = _dungusTrailEffect;
                             else
-                                footstepHandler.footstepEffect = SS2Assets.LoadAsset<GameObject>("DungusTrailEffectAlt", SS2Bundle.Items);
+                                footstepHandler.footstepEffect = _dungusTrailEffectAlt;
                         }
                     }
                 }

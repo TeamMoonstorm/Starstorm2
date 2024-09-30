@@ -2,14 +2,17 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: matNemCaptainHealRadius
   m_Shader: {fileID: 4800000, guid: b12ff619eec8e0a49b65f7bec2dfdc79, type: 2}
-  m_ShaderKeywords: IGNORE_VERTEX_COLORS USE_CLOUDS
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - IGNORE_VERTEX_COLORS
+  - USE_CLOUDS
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -24,7 +27,7 @@ Material:
         m_Scale: {x: 0.5, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Cloud2Tex:
-        m_Texture: {fileID: 2800000, guid: af77af093a4dcb548a42039f530de375, type: 3}
+        m_Texture: {fileID: 2800000, guid: 2e0310a73054ccb4a9e17de6be40e4e0, type: 3}
         m_Scale: {x: 1, y: 0.12500003}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -35,6 +38,7 @@ Material:
         m_Texture: {fileID: 2800000, guid: 810985250a3dc5947b40e1663d578bba, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AlphaBias: 0
     - _AlphaBoost: 0.57
@@ -92,3 +96,4 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 0.14705884, g: 1, b: 0.32941172, a: 0}
     - _TintColor: {r: 0.015686266, g: 0.87058824, b: 0.20907944, a: 1}
+  m_BuildTextureStacks: []

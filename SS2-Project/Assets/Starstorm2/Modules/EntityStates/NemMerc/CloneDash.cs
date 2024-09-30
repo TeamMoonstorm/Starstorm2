@@ -2,17 +2,16 @@
 using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
-using EntityStates.Merc;
-using Moonstorm.Starstorm2.Components;
+using SS2.Components;
 using R2API;
-using Moonstorm.Starstorm2;
+using SS2;
 
 namespace EntityStates.NemMerc
 {
-	//copy pasted merc assaulter x3
+    //copy pasted merc assaulter x3
 
-	// in hindsight a base assaulter state mightve been better?
-	public class CloneDash : BaseSkillState
+    // in hindsight a base assaulter state mightve been better?
+    public class CloneDash : BaseSkillState
 	{
 		public bool hasHit;
 		public bool dashVectorLocked;
@@ -50,7 +49,7 @@ namespace EntityStates.NemMerc
 
 			this.overlapAttack = base.InitMeleeOverlap(CloneDash.damageCoefficient, CloneDash.hitEffectPrefab, this.modelTransform, "Assaulter");
 			this.overlapAttack.damageType = DamageType.Stun1s;
-			this.overlapAttack.AddModdedDamageType(Moonstorm.Starstorm2.DamageTypes.RedirectHologram.damageType);
+			this.overlapAttack.AddModdedDamageType(SS2.Survivors.NemMerc.damageType);
 
 			Vector3 dashTarget = base.GetAimRay().GetPoint(CloneDash.baseDashDistance);
 
@@ -87,14 +86,15 @@ namespace EntityStates.NemMerc
 
 			if (this.modelTransform)
 			{
-				TemporaryOverlay temporaryOverlay = this.modelTransform.gameObject.AddComponent<TemporaryOverlay>();
-				temporaryOverlay.duration = CloneDash.dashPrepDuration;
+                TemporaryOverlayInstance temporaryOverlay = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
+                temporaryOverlay.duration = CloneDash.dashPrepDuration;
 				temporaryOverlay.animateShaderAlpha = true;
 				temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 				temporaryOverlay.destroyComponentOnEnd = true;
 				temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matNemergize", SS2Bundle.NemMercenary);
-				temporaryOverlay.AddToCharacerModel(this.characterModel);
 
+                // TODO: No longer needed post-SOTS, leaving in for now but need to remove later
+                //temporaryOverlay.AddToCharacerModel(this.characterModel);
 			}
 
 
@@ -150,13 +150,15 @@ namespace EntityStates.NemMerc
 				base.characterMotor.Motor.RebuildCollidableLayers();
 				if (this.modelTransform)
 				{
-					TemporaryOverlay temporaryOverlay = this.modelTransform.gameObject.AddComponent<TemporaryOverlay>();
-					temporaryOverlay.duration = 1.2f;
+                    TemporaryOverlayInstance temporaryOverlay = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
+                    temporaryOverlay.duration = 1.2f;
 					temporaryOverlay.animateShaderAlpha = true;
 					temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
 					temporaryOverlay.destroyComponentOnEnd = true;
 					temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matNemergize", SS2Bundle.NemMercenary);
-					temporaryOverlay.AddToCharacerModel(this.characterModel);
+
+                    // TODO: No longer needed post-SOTS, leaving in for now but need to remove later
+                    //temporaryOverlay.AddToCharacerModel(this.characterModel);
 				}
 			}
 			if (!this.isDashing)
@@ -204,13 +206,15 @@ namespace EntityStates.NemMerc
 
 						if (this.modelTransform)
 						{
-							TemporaryOverlay temporaryOverlay2 = this.modelTransform.gameObject.AddComponent<TemporaryOverlay>();
-							temporaryOverlay2.duration = CloneDash.hitPauseDuration / this.attackSpeedStat;
+                            TemporaryOverlayInstance temporaryOverlay2 = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
+                            temporaryOverlay2.duration = CloneDash.hitPauseDuration / this.attackSpeedStat;
 							temporaryOverlay2.animateShaderAlpha = true;
 							temporaryOverlay2.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
 							temporaryOverlay2.destroyComponentOnEnd = true;
 							temporaryOverlay2.originalMaterial = SS2Assets.LoadAsset<Material>("matNemergize", SS2Bundle.NemMercenary);
-							temporaryOverlay2.AddToCharacerModel(this.modelTransform.GetComponent<CharacterModel>());
+
+                            // TODO: No longer needed post-SOTS, leaving in for now but need to remove later
+                            //temporaryOverlay2.AddToCharacerModel(this.modelTransform.GetComponent<CharacterModel>());
 						}
 					}
 					base.characterMotor.rootMotion += this.dashVector * this.dashSpeed * Time.fixedDeltaTime;

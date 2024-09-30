@@ -1,22 +1,27 @@
 ﻿using EntityStates;
-using Moonstorm.Starstorm2.Components;
+using SS2.Components;
 using R2API;
 using RoR2;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
-
-namespace Moonstorm.Starstorm2.Interactables
+namespace SS2.Interactables
 {
-    [DisabledContent]
-    public sealed class DropPod : InteractableBase
+#if DEBUG
+    //This fucking thing sucks ass and unironically is awful, i hate and will forever hate having to clone prefabs.
+    //Not to mention, using the default survivor pod doesnt really make sense since these are supposed to be leftover pods from contact light, so again, this shit should just be re-written and homemade instead of cloned.
+    // - Nebby -
+    /*public sealed class DropPod : SS2Interactable
     {
         public override GameObject Interactable { get => interactable; }
 
         private static GameObject interactable;
 
-        public override MSInteractableDirectorCard InteractableDirectorCard { get; } = SS2Assets.LoadAsset<MSInteractableDirectorCard>("msidcDropPod", SS2Bundle.Indev);
+        public override List<MSInteractableDirectorCard> InteractableDirectorCards => new List<MSInteractableDirectorCard>()
+        {
+            SS2Assets.LoadAsset<MSInteractableDirectorCard>("msidcDropPod", SS2Bundle.Indev)
+        };
 
         public override void Initialize()
         {
@@ -33,8 +38,8 @@ namespace Moonstorm.Starstorm2.Interactables
             AddNewComponents();
 
             HG.ArrayUtils.ArrayAppend(ref SS2Content.Instance.SerializableContentPack.networkedObjectPrefabs, Interactable);
-            InteractableDirectorCard.prefab = Interactable;
-            InteractableDirectorCard.maxSpawnsPerStage = 2;
+            InteractableDirectorCards[0].prefab = Interactable;
+            InteractableDirectorCards[0].maxSpawnsPerStage = 2;
 
             DirectorAPI.MonsterActions += HandleAvailableMonsters2;
 
@@ -70,7 +75,7 @@ namespace Moonstorm.Starstorm2.Interactables
             Object.Destroy(donut.gameObject);
 
             /*var mdl = Interactable.transform.Find("Base/mdlEscapePod");
-            Object.Destroy(mdl.GetComponent<Animator>());*/
+            Object.Destroy(mdl.GetComponent<Animator>());
         }
 
         private void EnableObjects()
@@ -119,5 +124,6 @@ namespace Moonstorm.Starstorm2.Interactables
             var podMesh = Interactable.transform.Find("Base/mdlEscapePod/EscapePodArmature/Base").gameObject;
             podMesh.AddComponent<EntityLocator>().entity = Interactable;
         }
-    }
+    }*/
+#endif
 }

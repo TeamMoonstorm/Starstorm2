@@ -5,7 +5,12 @@ using UnityEngine;
 using RoR2.Orbs;
 using System.Collections.Generic;
 using System.Linq;
-namespace Moonstorm.Starstorm2.Items
+using MSU;
+using RoR2.ContentManagement;
+using System.Collections;
+using MSU.Config;
+
+namespace SS2.Items
 {
 
     /// <summary>
@@ -16,49 +21,63 @@ namespace Moonstorm.Starstorm2.Items
     /// 
     /// 
     /// </summary>
-    public sealed class ErraticGadget : ItemBase
+    public sealed class ErraticGadget : SS2Item
     {
         private const string token = "SS2_ITEM_ERRATICGADGET_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ErraticGadget", SS2Bundle.Items);
-      
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance on hit to fire lightning. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acErraticGadget", SS2Bundle.Items);
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Chance on hit to fire lightning. (1 = 100%)")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float procChance = 0.1f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Damage coefficient of Erratic Gadget's lightning proc. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 1, "100")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Damage coefficient of Erratic Gadget's lightning proc. (1 = 100%)")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float damageCoefficient = 3f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Number of targets for Erratic Gadget's lightning proc, per stack.")]
-        [TokenModifier(token, StatTypes.Default, 2)]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Number of targets for Erratic Gadget's lightning proc, per stack.")]
+        [FormatToken(token, 2)]
         public static int bounceTargets = 1;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Damage multiplier for Erratic Gadget's doubled lightning.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Damage multiplier for Erratic Gadget's doubled lightning.")]
         public static int repeatDamageMultiplier = 1;
 
-        public static GameObject orbEffectPrefab = SS2Assets.LoadAsset<GameObject>("GadgetOrbEffect", SS2Bundle.Items);
-        public static GameObject procEffectPrefab = SS2Assets.LoadAsset<GameObject>("GadgetLightningStartEffect", SS2Bundle.Items);
-        public static GameObject displayEffectPrefab = SS2Assets.LoadAsset<GameObject>("GadgetLightningProc", SS2Bundle.Items);
+        private static GameObject _orbEffectPrefab;
+        public static GameObject _procEffectPrefab;
+        private static GameObject _displayEffectPrefab;
 
+        //N: True...
         public static DamageAPI.ModdedDamageType PROCTYPEAPIWHEN;
 
-
+        // man o war handled in its own class
         public override void Initialize()
         {
-            // man o war handled in its own class
+            _orbEffectPrefab = AssetCollection.FindAsset<GameObject>("GadgetOrbEffect");
+            _procEffectPrefab = AssetCollection.FindAsset<GameObject>("GadgetLightningStartEffect");
+            _displayEffectPrefab = AssetCollection.FindAsset<GameObject>("GadgetLightningProc");
+
             PROCTYPEAPIWHEN = DamageAPI.ReserveDamageType();
             On.RoR2.Orbs.LightningOrb.OnArrival += LightningOrb_OnArrival; // uke tesla BFG arti loader 
             //On.RoR2.Orbs.VoidLightningOrb.Begin += VoidLightningOrb_Begin; // polylute /// nah no thanks not real lightning
             On.RoR2.Orbs.SimpleLightningStrikeOrb.OnArrival += SimpleLightningStrikeOrb_OnArrival; // charged perforator i think
-            On.RoR2.Orbs.LightningStrikeOrb.OnArrival += LightningStrikeOrb_OnArrival; // royal capacitor         
+            On.RoR2.Orbs.LightningStrikeOrb.OnArrival += LightningStrikeOrb_OnArrival; // royal capacitor
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
         }
 
         // figure out if a lightningorb "ends", then figure out how many objects it bounced to, then spawn a gadgetlightningorb with the same stats that bounces to that many targets
         private void LightningOrb_OnArrival(On.RoR2.Orbs.LightningOrb.orig_OnArrival orig, LightningOrb self)
         {
+            if(!self.target) // i dont like this... but im also lazy
+            {
+                orig(self);
+                return;
+            }
             // jank ass way to check if a lightning orb "ended" by not finding a new target
             bool orbFoundNewTarget = false;
-            if(self.bouncedObjects != null && self.bouncesRemaining > 0)
+            if (self.bouncedObjects != null && self.bouncesRemaining > 0)
             {
                 self.bouncedObjects.Add(self.target.healthComponent); // add self.target.healthComponent so PickNextTarget doesnt pick the same target it already had
                 orbFoundNewTarget = self.PickNextTarget(self.target.transform.position); // check if theres an available target, same way LightningOrb does
@@ -70,10 +89,10 @@ namespace Moonstorm.Starstorm2.Items
 
             bool isLastBounce = self.bouncedObjects != null && (self.bouncesRemaining == 0 || !orbFoundNewTarget);
 
-            if (isLastBounce && self.attacker?.GetComponent<CharacterBody>()?.inventory?.GetItemCount(SS2Content.Items.ErraticGadget) > 0)
+            if (isLastBounce && self.attacker && self.attacker.GetComponent<CharacterBody>().inventory.GetItemCount(SS2Content.Items.ErraticGadget) > 0)
             {
                 bool canProcGadget = false;
-                bool wasFirstBounceFake = false;                
+                bool wasFirstBounceFake = false;
                 switch (self.lightningType)
                 {
                     case LightningOrb.LightningType.Ukulele:
@@ -103,21 +122,21 @@ namespace Moonstorm.Starstorm2.Items
                         break;
                 }
 
-                if(canProcGadget)
+                if (canProcGadget)
                 {
                     // ukulele and tesla add the initial target to bouncedObjects without damaging them. 
                     //we want to subtract 1 if wasFirstBounceEnemy==true, in order to get the amount of targets the lightning actually hit
                     //we also have to count unique objects in bouncedObjects because vanilla code adds each target more than once
                     // tldr lightningorb is shit and now its my problem
-                    List<HealthComponent> uniqueObjects = new List<HealthComponent>();
-                    for(int i = 0; i < self.bouncedObjects.Count; i++)
+                    HashSet<HealthComponent> uniqueObjects = new HashSet<HealthComponent>();
+                    for (int i = 0; i < self.bouncedObjects.Count; i++)
                     {
-                        uniqueObjects.AddIfNotInCollection(self.bouncedObjects[i]);
+                        uniqueObjects.Add(self.bouncedObjects[i]);
                     }
                     int bounces = uniqueObjects.Count;
                     if (wasFirstBounceFake) bounces--;
 
-                    
+
                     GadgetLightningOrb gadgetOrb = new GadgetLightningOrb();
                     gadgetOrb.search = self.search;
                     gadgetOrb.origin = self.target.transform.position;
@@ -138,12 +157,12 @@ namespace Moonstorm.Starstorm2.Items
                     gadgetOrb.duration = self.duration;
 
                     HurtBox nextTarget = gadgetOrb.PickNextTarget(self.target.transform.position);
-                    if(nextTarget)
+                    if (nextTarget)
                     {
                         gadgetOrb.target = nextTarget;
                         OrbManager.instance.AddOrb(gadgetOrb);
-                        EffectManager.SimpleEffect(procEffectPrefab, self.target.transform.position, Quaternion.identity, true);
-                    }                  
+                        EffectManager.SimpleEffect(_procEffectPrefab, self.target.transform.position, Quaternion.identity, true);
+                    }
                 }
             }
         }
@@ -155,12 +174,12 @@ namespace Moonstorm.Starstorm2.Items
             // jank ass way to check if lightning was spawned by erratic gadget proc
             // can be un-janked whith proctypeapi
             //hopefully no lightning orbs use FruitOnHit lol
-            bool isSecondStrike = self.damageType.HasFlag(DamageType.FruitOnHit);
+            bool isSecondStrike = self.damageType.damageType.HasFlag(DamageType.FruitOnHit);
             if (isSecondStrike) self.damageType &= ~DamageType.FruitOnHit;
             orig(self);
 
             if (!isSecondStrike && self.attacker?.GetComponent<CharacterBody>()?.inventory?.GetItemCount(SS2Content.Items.ErraticGadget) > 0)
-            {               
+            {
                 OrbManager.instance.AddOrb(new LightningStrikeOrb
                 {
                     attacker = self.attacker,
@@ -173,14 +192,14 @@ namespace Moonstorm.Starstorm2.Items
                     target = self.target
                 });
 
-                EffectManager.SimpleEffect(procEffectPrefab, self.target.transform.position, Quaternion.identity, true);
+                EffectManager.SimpleEffect(_procEffectPrefab, self.target.transform.position, Quaternion.identity, true);
             }
         }
 
         // charged perforator strikes twice
         private void SimpleLightningStrikeOrb_OnArrival(On.RoR2.Orbs.SimpleLightningStrikeOrb.orig_OnArrival orig, SimpleLightningStrikeOrb self)
         {
-            bool isSecondStrike = self.damageType.HasFlag(DamageType.FruitOnHit);
+            bool isSecondStrike = self.damageType.damageType.HasFlag(DamageType.FruitOnHit);
             if (isSecondStrike) self.damageType &= ~DamageType.FruitOnHit;
             orig(self);
 
@@ -198,7 +217,7 @@ namespace Moonstorm.Starstorm2.Items
                     target = self.target
                 });
 
-                EffectManager.SimpleEffect(procEffectPrefab, self.target.transform.position, Quaternion.identity, true);
+                EffectManager.SimpleEffect(_procEffectPrefab, self.target.transform.position, Quaternion.identity, true);
             }
         }
 
@@ -210,7 +229,7 @@ namespace Moonstorm.Starstorm2.Items
             {
                 self.totalStrikes *= 2;
 
-                EffectManager.SimpleEffect(procEffectPrefab, self.target.transform.position, Quaternion.identity, true);
+                EffectManager.SimpleEffect(_procEffectPrefab, self.target.transform.position, Quaternion.identity, true);
             }
         }
         #endregion
@@ -267,7 +286,7 @@ namespace Moonstorm.Starstorm2.Items
 
                     OrbManager.instance.AddOrb(orb);
 
-                    EffectManager.SimpleMuzzleFlash(displayEffectPrefab, this.childLocator.gameObject, "Muzzle", true);
+                    EffectManager.SimpleMuzzleFlash(_displayEffectPrefab, this.childLocator.gameObject, "Muzzle", true);
                 }
             }
         }
@@ -276,6 +295,7 @@ namespace Moonstorm.Starstorm2.Items
         {
             public override void Begin()
             {
+                if (duration <= 0) duration = 0.01f; //??????????????????????????
                 base.duration = duration;
                 EffectData effectData = new EffectData
                 {
@@ -283,7 +303,7 @@ namespace Moonstorm.Starstorm2.Items
                     genericFloat = base.duration
                 };
                 effectData.SetHurtBoxReference(this.target);
-                EffectManager.SpawnEffect(orbEffectPrefab, effectData, true);
+                EffectManager.SpawnEffect(_orbEffectPrefab, effectData, true);
             }
 
             public override void OnArrival()
@@ -312,7 +332,7 @@ namespace Moonstorm.Starstorm2.Items
                     if (this.bouncesRemaining > 0)
                     {
                         if (this.bouncedObjects != null)
-                        {                           
+                        {
                             if (this.canBounceOnSameTarget)
                             {
                                 this.bouncedObjects.Clear();

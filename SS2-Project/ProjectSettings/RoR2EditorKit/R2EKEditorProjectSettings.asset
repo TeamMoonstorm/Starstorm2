@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 53
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a797bc9ab1d580e4089f16a5204d77ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _projectSettings:
+  - _typeName: MapNodeGroupInspector
+    _editorTypeQualifiedName: RoR2.Editor.Inspectors.MapNodeGroupInspector, RoR2.Editor.Scripts,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    _editorTypeQualifiedHash: -1072116966
+    _serializedSettings:
+    - _settingName: parentGameObjectName
+      _settingID: -2021767324
+      _valueTypeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      _serializedValue: NodeContainer
+      _defaultSerializedValue: 
+    - _settingName: _offsetUpVector
+      _settingID: 1577955846
+      _valueTypeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      _serializedValue: 0, 15, 0
+      _defaultSerializedValue: 
+    - _settingName: _raycastMask
+      _settingID: -1075014934
+      _valueTypeQualifiedName: UnityEngine.LayerMask, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      _serializedValue: 6144
+      _defaultSerializedValue: 
+    - _settingName: forbiddenHullMask
+      _settingID: -1516650752
+      _valueTypeQualifiedName: RoR2.HullMask, RoR2, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      _serializedValue: '{"assemblyQualifiedName":"RoR2.HullMask, RoR2, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null","values":"None"}'
+      _defaultSerializedValue: 
+    - _settingName: nodeFlags
+      _settingID: 277474959
+      _valueTypeQualifiedName: RoR2.Navigation.NodeFlags, RoR2, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      _serializedValue: '{"assemblyQualifiedName":"RoR2.Navigation.NodeFlags, RoR2,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","values":"None"}'
+      _defaultSerializedValue: 
+    - _settingName: gateName
+      _settingID: -1148318642
+      _valueTypeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      _serializedValue: 
+      _defaultSerializedValue: 
+    _settingType: 0
+    _settingProviderName: R2EKEditorProjectSettings

@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RoR2;
 using UnityEngine;
 using RoR2.Projectile;
 namespace EntityStates.Cyborg2
 {
-	public class FireMagnetBall : BaseSkillState
+    public class FireMagnetBall : BaseSkillState
 	{
 		public static GameObject projectilePrefab;
 		public static string soundString = "Play_captain_m2_tazer_shoot";
@@ -18,12 +14,11 @@ namespace EntityStates.Cyborg2
 		public static float recoilAmplitude = 7f;
 		public static float baseDuration = 1.5f;
 		public static float earlyExitTime = 0.5f;
-		public static float damageCoefficient = 6f;
+		private static float damageCoefficient = 8f;
 		public static float force = 500f;
-		public static float chargeTime = 0.33f;
+		private static float chargeTime = 0.2f;
 
-		[NonSerialized]
-		public static float selfKnockbackForce = 4400f;
+		private static float selfKnockbackForce = 6000f;
 
 		private float duration;
 		private bool hasFired;
@@ -61,7 +56,7 @@ namespace EntityStates.Cyborg2
 
 			if (base.isAuthority)
 			{
-				if (base.characterMotor && !base.characterMotor.isGrounded)
+				if (base.characterMotor)
 				{
 					base.characterMotor.ApplyForce((aimRay.direction * -1f) * selfKnockbackForce);
 				}

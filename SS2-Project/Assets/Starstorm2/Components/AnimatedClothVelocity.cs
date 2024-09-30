@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-using Moonstorm.Components;
-
-namespace Moonstorm.Starstorm2.Components
+namespace SS2.Components
 {
     [RequireComponent(typeof(Cloth))]
     public class AnimatedClothVelocity : MonoBehaviour

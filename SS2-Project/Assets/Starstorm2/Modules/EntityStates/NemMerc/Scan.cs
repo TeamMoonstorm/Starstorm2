@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using RoR2;
 using UnityEngine.Networking;
-using Moonstorm.Starstorm2.Components;
+using SS2.Components;
 using RoR2.Navigation;
-using Moonstorm.Starstorm2;
+using SS2;
 
 namespace EntityStates.NemMerc
 {
@@ -49,13 +46,15 @@ namespace EntityStates.NemMerc
             // POST PROCESSING!!! NEED TO LEARN THIS REAL QUICK
             //HELMET GLOW!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             Transform modelTransform = base.GetModelTransform();
-            TemporaryOverlay temporaryOverlay = modelTransform.gameObject.AddComponent<TemporaryOverlay>();
+            TemporaryOverlayInstance temporaryOverlay = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
             temporaryOverlay.duration = Scan.hologramDuration;
             temporaryOverlay.alphaCurve = AnimationCurve.Constant(0, 1, 1);
             temporaryOverlay.animateShaderAlpha = true; // hopoo shitcode. stopwatch doesnt run w/o this
             temporaryOverlay.destroyComponentOnEnd = true;
             temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matNemMercGlow", SS2Bundle.NemMercenary);
-            temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
+
+            // TODO: No longer needed post-SOTS, leaving in for now but need to remove later
+            // temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
 
 
             // GAS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -176,9 +175,9 @@ namespace EntityStates.NemMerc
             hologram.owner = base.gameObject;
             hologram.target = target;
 
-            //Moonstorm.Starstorm2.SS2Log.Info("-------------------");
-            //Moonstorm.Starstorm2.SS2Log.Info("timeUntilReveal: " + hologram.timeUntilReveal);
-            //Moonstorm.Starstorm2.SS2Log.Info("-------------------");
+            //SS2.SS2Log.Info("-------------------");
+            //SS2.SS2Log.Info("timeUntilReveal: " + hologram.timeUntilReveal);
+            //SS2.SS2Log.Info("-------------------");
             NetworkServer.Spawn(hologram.gameObject);
         }
 

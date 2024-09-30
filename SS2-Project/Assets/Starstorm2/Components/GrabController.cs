@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections.Generic;
 using RoR2.Networking;
-namespace Moonstorm.Starstorm2.Components
+namespace SS2.Components
 {
     //bastardized vehicleseat
     // use for anything, not just chirr
@@ -69,6 +69,15 @@ namespace Moonstorm.Starstorm2.Components
             }
         }
 
+        private void Update()// buh
+        {
+            if (!this.grabTransform) return;
+            if (this.victimInfo.transform)
+            {
+                this.victimInfo.transform.position = this.grabTransform.position;
+            }
+        }
+
         public void UpdateVictimPosition() 
         {
             if (!this.grabTransform) return;
@@ -117,7 +126,7 @@ namespace Moonstorm.Starstorm2.Components
                         //interrupt all statemachines
                         if (shouldLog) SS2Log.Warning("GrabController.ForcePassengerState: Interrupted " + this.victimInfo.bodyStateMachine.state + " on " + this.victimBodyObject);
 
-                        EntityState grabState = EntityStateCatalog.InstantiateState(this.grabState);
+                        EntityState grabState = EntityStateCatalog.InstantiateState(this.grabState.stateType);
                         if(this.grabStateModifier != null) 
                         {
                             this.grabStateModifier(this.victimInfo.bodyStateMachine, ref grabState); // the fuck was i thinking? you give it your own grab state anyways...

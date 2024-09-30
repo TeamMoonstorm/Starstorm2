@@ -1,7 +1,7 @@
 ﻿/*using EntityStates;
 using EntityStates.Captain.Weapon;
 using RoR2;
-using Moonstorm.Starstorm2.Buffs;
+using SS2.Buffs;
 using UnityEngine;
 
 namespace EntityStates.Nucleator

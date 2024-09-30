@@ -1,8 +1,6 @@
-﻿using Moonstorm.Starstorm2;
-using Moonstorm.Starstorm2.Components;
-using RoR2;
+﻿using RoR2;
 using UnityEngine.Networking;
-using static Moonstorm.Starstorm2.Interactables.DroneTable;
+using static SS2.Interactables.DroneTable;
 
 namespace EntityStates.DroneTable
 {

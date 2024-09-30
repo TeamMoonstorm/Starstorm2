@@ -1,7 +1,6 @@
-
 ![Starstorm 2](https://github.com/swuff-star/Starstorm2/blob/main/SS2-Project/Assets/Starstorm2/ReadmeAssets/ss2logopurple.gif?raw=true)
 
-**Starstorm 2** is a work-in-progress adaptation of the Risk of Rain 1 mod "Starstorm". It currently features four new survivors, three new monsters, over 20 new items and equipment, and numerous new challenges to shake up your runs. In-depth information can be found on our [Wiki](https://thunderstore.io/package/TeamMoonstorm/Starstorm2/wiki/).
+**Starstorm 2** is a work-in-progress sequel to the Risk of Rain 1 mod "Starstorm". It currently features four new survivors, three new monsters, over 20 new items and equipment, and numerous new challenges to shake up your runs. In-depth information can be found on our [Wiki](https://thunderstore.io/package/TeamMoonstorm/Starstorm2/wiki/).
 
 ![New Survivors...](https://github.com/swuff-star/Starstorm2/blob/main/SS2-Project/Assets/Starstorm2/ReadmeAssets/ss2survivorpromo.gif?raw=true)
 
@@ -34,16 +33,16 @@ Starstorm 2 is currently being developed and maintained by...
 * Buns, Nebby, orbeezeater22, swuff★, Zenithrium
 
 With previous and one-off code contributions by...
-* Anreol, bread, Flan, Gaforb, GrooveSalad, HIFU, KevinFromHPCustomerService, MagicGonads, malfaisant, Moffein, Nebby, Noop, Phreel, prod, rob, swuff★, sebacame, Shared, TheTimesweeper, Vale-X, xpcybic, Xubas
+* Anreol, bread, Flan, Gaforb, GrooveSalad, HIFU, JaceCascade, KevinFromHPCustomerService, MagicGonads, malfaisant, Moffein, Nebby, Phreel, prod, rob, sebacame, Shared, TheTimesweeper, Vale-X, xpcybic, Xubas
 
 With Art/Modelling/Animation contributions by...
-* Alexstarwras, Anreol, Bolty, bread, bruh, Cexeub, dotflare, Draymarc, Domi, JestAnotherAnimator, Gem, goodguy, GrooveSalad, JaceDaDorito, LucidInceptor, Neik, KevinFromHPCustomerService, PapaZach, Plexus, prodzpod, QuietAnon, rekkadraws, redacted, rob, SkeletorChampion, SOM, Spenny, swuff★, Slipskip, xpcybic, Reithierion, UnknownGlaze, Zenithrium
+* Alexstarwras, Anreol, Bolty, bread, bruh, Cexeub, dotflare, Draymarc, Domi, JestAnotherAnimator, Gem, goodguy, GrooveSalad, JaceDaDorito, LucidInceptor, Neik, KevinFromHPCustomerService, orbeezeater22, PapaZach, Plexus, prodzpod, QuietAnon, rekkadraws, redacted, rob, SkeletorChampion, SOM, Spenny, Starnoenas, swuff★, Slipskip, xpcybic, Reithierion, UnknownGlaze, Zenithrium
 
 Additional thanks to... 
 * Writing - Blimblam, Lyrical Endymion, rekkadraws, swuff★, T_Dimensional, Zenithrium
 * Translations - Anreol, BannyDee (Spanish), MysticSword (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight (Chinese), Kauzok (Portuguese), StyleMyk (French)
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze, NAIRB zepol
-* Special thanks - Altzeus, DestroyedClone, Dee', don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, VioletChaolan, valerie ♥ 
+* Special thanks - Altzeus, DestroyedClone, Dee', don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, VioletChaolan, valerie♥, Whitedude887 
 
 ## Feedback, Bug Reporting & Known Issues
 
@@ -51,134 +50,5 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 
 * Known Issues
     * Elite events are currently disabled.
-    * Artifact codes are not placed in world, and can instead be found on the wiki.
-
-## Changelog
-**Warning: content spoilers below!**
-### 0.6.7
-* Items
-    * Fork adjusted (+2 flat damage => +8% damage)
-    * Molten Coin now properly scales with proc coefficient.
-    * Reduced volume of Molten Coin procs.
-* Enemies
-    * Wayfarer animations adjusted to face the player more often.
-    * Wayfarer no longer fails to disappear after dying.
-* Events
-    * Empyrean event selects tougher enemies more often.
-    * Empyrean events and storms can now occur simultaneously
-    * Empyrean boss now gains adaptive armor and teleports when falling out of bounds.
-    * Added 50% movespeed, 50% cooldown reduction, and 4x health to Empyreans.
-    * Increased hurtbox size of nemesis invaders.
-* Chirr
-    * Friends now gain a flower turret that automatically fires at enemies for 100% damage per second.
-    * Corrected Soothing Venom's tooltip (450% damage -> 750% damage).
-    * Soothing Venom no longer uses a custom debuff for its slow effect.
-    * Abduct's indicator is more accurate and no longer undershoots with taller enemies.
-    * Enemies thrown by abduct can now collide with other enemies.
-    * Enemies no longer lose their own items when befriended.
-    * Enemies are now forced to half health when befriended.
-    * Fixed friend's Celestine aura not updating its team.
-    * Fixed friend's health regen being capped at 0, which was drastically reducing Soothing Venom's heal.
-    * Fixed friend's cooldown reduction not properly scaling with attackspeed.
-    * Fixed missing logbook entry.
-* Other
-    * Increased visibility of Mysterious Cuffs
-
-### 0.6.6
-* Events
-    * Storms and Empyrean Manifestations now require the Starstorm expansion to be enabled.
-    * Really fixed Nemesis Invasions... 😅
-* Artifacts
-    * Artifact of Havoc now requires the Starstorm expansion to be enabled to be selected.
-* Rushrum
-    * Further increased visibility of glowing tip of head.
-* Other
-    * Fixed a networking issue with Follower, Wayfarer, and Shock Drone's attacks.
-    * Networked Mysterious Cuff interactable spawning.
-
-### 0.6.5
-* Interactables
-    * Drone Table no longer counts as a Shrine.
-    * Mysterious Cuff now drops a pickup rather than depositing the Condemned Bond directly in the player's inventory.
-* Monsters
-    * Disabled the white Christmas pom-pom at the end of the Rushrum's head.
-* Events
-    * Fixed events spawning infrequently, if at all.
-
-### 0.6.4
-* Interactables
-    * Fixed Mysterious Cuff spawning in unintended locations.
-
-### 0.6.3
-* Monsters
-    * Disabled something! 😉
-
-### 0.6.2
-* New Content
-    * Interactable: Mysterious Cuff.
-    * Item: Condemned Bond.
-* Follower
-    * Fixed a bug causing Followers to inherit Duplicator Drone sound and visual effects.
-    * Adjusted AI to prioritize fighting the player in close range.
-    * Hopefully addressed buggs pertaining to performance issues & corpse cleanup.
-* Wayfarer
-    * Adjusted projectiles of primary attack to be more interesting to play against.
-    * Secondary now creates a small explosion around Wayfarer while creating the buff ward.
-    * Adjusted AI to better utilize tweaked skills.
-    * Hopefully addressed buggs pertaining to performance issues & corpse cleanup.
-* Events
-    * All Nemesis Invasions now only occur if a player acquires the Condemned Bond during a run. Looping is no longer a requirement.
-    * Nemesis Mercenary Invasion now only occurs if Mercenary is unlocked.
-    * Refined selection of enemies for Empyrean Manifestation.
-* Other
-    * Added proper strings for Artifact of Havoc unlockable name / description.
-    * A guaranteed Mysterious Cuff can be found in the Void Fields.
-
-### 0.6.1
-* Chirr
-    * Reduced hurtbox size by about 33%.
-    * Friends now give you the money and experience you would have gotten by killing them.
-    * Updated position in Character Select.
-* General
-    * Added missing information to the README.
-
-### 0.6.0
-* New Content
-    * Survivor: Chirr.
-    * Event: Empyrean Invasion.
-    * Elite: Empyrean.
-    * Artifact: Artifact of Havoc.
-* General
-    * Added ScrollableLobbyUI as a dependency.
-* Nemesis Mercenary
-    * New Mastery Skin: Rogue
-
-
-### 0.5.7
-* General
-    * Added French translation. Thank you StyleMyk!
-    * Survivors and monsters are better organized in the config. 
-    * Fixed sweeping disables for survivors, monsters, and interactables.
-    * Fixed the footstep visuals for all survivors and footstep sound effects for Executioner and Nemesis Commando.
-* Nemesis Commando
-    * Fixed issue with timing on primary swing. 
-* Interactables
-    * Refabricator can no longer spawn in Simulacrum.
-* Drones
-    * Restored Duplicator Drone's cooldown visuals.
-
-### 0.5.6
-* General
-    * Finally finished implementing Portuguse translation.
-    * Survivors and monsters can now be disabled.
-    * Unfinished equipments are now entirely disabled.
-    * Typhoon has been reverted to +25% spawn rate and -20% enemy rewards.
-* Items
-    * Hopefully fixed a Relic of Termination nullref with Refightilization.
-* Nemeis Mercenary
-    * Fixed an bug with Proliferate and sources of damage without an attacker.
-* Monsters
-    * All monsters are now properly added to the ExpansionDef. 
-    * Rushroom's trail VFX now stops when it dies.
-* Interactables
-    * Interactables are now properly added to the ExpansionDef.
+    * Artifact codes are not placed in world, and can instead be found on the wiki. (For now)
+    * NOTE: Chirr players are advised to download [EnemyImportance](https://thunderstore.io/package/pseudopulse/EnemyImportance/) due to a known enemy sliding bug caused by how SOTS changes enemy collision and Chirr's grab. This mod also impacts performance so it isnt a requirement, but is recommended if you want the best Chirr experience

@@ -1,15 +1,12 @@
-﻿using Moonstorm.Starstorm2;
-using Moonstorm.Starstorm2.Buffs;
-using Moonstorm.Starstorm2.Components;
+﻿using SS2.Components;
 using RoR2;
 using System;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
 namespace EntityStates.Events
 {
-    public abstract class GenericEliteEvent : EventState
+    /*public abstract class GenericEliteEvent : EventState
     {
         [SerializeField]
         public GameObject effectPrefab;
@@ -136,7 +133,7 @@ namespace EntityStates.Events
                     }
                 }
             }
-        }*/
-    }
+        }
+    }*/
 
 }

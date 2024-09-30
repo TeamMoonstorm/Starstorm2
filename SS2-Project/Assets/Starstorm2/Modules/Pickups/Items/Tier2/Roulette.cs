@@ -1,15 +1,27 @@
-﻿using RoR2;
+﻿using MSU;
+using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Items;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-
-namespace Moonstorm.Starstorm2.Items
+namespace SS2.Items
 {
-    [DisabledContent]
-    public sealed class Roulette : ItemBase
+#if DEBUG
+    public sealed class Roulette : SS2Item
     {
         private const string token = "SS2_ITEM_JETBOOTS_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Roulette", SS2Bundle.Items);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRoulette", SS2Bundle.Items);
+
+        public override void Initialize()
+        {
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return false;
+        }
 
         public sealed class Behavior : BaseItemBodyBehavior
         {
@@ -30,4 +42,5 @@ namespace Moonstorm.Starstorm2.Items
             }
         }
     }
+#endif
 }

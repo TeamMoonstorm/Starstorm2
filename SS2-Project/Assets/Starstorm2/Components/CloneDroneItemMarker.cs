@@ -1,10 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using RoR2;
-using UnityEngine.Networking;
-
-namespace Moonstorm.Starstorm2.Components
+﻿using UnityEngine;
+namespace SS2.Components
 {
     public class CloneDroneItemMarker : MonoBehaviour
     {

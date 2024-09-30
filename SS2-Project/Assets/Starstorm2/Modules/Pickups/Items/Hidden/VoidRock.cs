@@ -1,14 +1,15 @@
-﻿using R2API;
+﻿using MSU;
 using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Items;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-
-namespace Moonstorm.Starstorm2.Items
+namespace SS2.Items
 {
-    public sealed class VoidRock : ItemBase
+    public sealed class VoidRock : SS2Item
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("VoidRock", SS2Bundle.Interactables);
-
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemDef>("VoidRock", SS2Bundle.Interactables);
         public static int initialStage = 0;
         public static bool setStage = false;
         public static bool invasionStage = false;
@@ -16,16 +17,20 @@ namespace Moonstorm.Starstorm2.Items
 
         public override void Initialize()
         {
-            base.Initialize();
-
             Run.onRunStartGlobal += Run_onRunStartGlobal;
         }
+
 
         private static void Run_onRunStartGlobal(Run run)
         {
             initialStage = 0;
             setStage = false;
             invasionStage = false;
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
         }
 
         public sealed class VoidRockBehavior : BaseItemBodyBehavior
@@ -48,7 +53,7 @@ namespace Moonstorm.Starstorm2.Items
                     invasionStage = false;
                     initialStage = 0;
                     return;
-                }    
+                }
 
                 if (setStage)
                 {
@@ -61,13 +66,6 @@ namespace Moonstorm.Starstorm2.Items
                         invasionStage = false;
                     }
                 }
-                /*else
-                {
-                    setStage = true;
-                    initialStage = Run.instance.stageClearCount;
-                    inventory = body.inventory;
-                    invasionStage = true;
-                }*/
             }
         }
     }

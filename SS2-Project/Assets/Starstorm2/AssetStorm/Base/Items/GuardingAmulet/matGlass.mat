@@ -2,14 +2,18 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: matGlass
   m_Shader: {fileID: 4800000, guid: b12ff619eec8e0a49b65f7bec2dfdc79, type: 2}
-  m_ShaderKeywords: DITHER USE_CLOUDS _EMISSION
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - DITHER
+  - USE_CLOUDS
+  - _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -35,6 +39,7 @@ Material:
         m_Texture: {fileID: 2800000, guid: 4ec49b996e2fa41489240e1b72a4294b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AlphaBias: 0
     - _AlphaBoost: 4.69
@@ -93,3 +98,4 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 0.68275857, b: 0, a: 0}
     - _TintColor: {r: 1, g: 0.8726415, b: 0.8831299, a: 1}
+  m_BuildTextureStacks: []

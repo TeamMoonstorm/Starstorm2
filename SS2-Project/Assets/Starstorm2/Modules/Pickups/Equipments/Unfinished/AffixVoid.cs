@@ -1,9 +1,8 @@
 ﻿using RoR2;
 using System.Collections.Generic;
-
-namespace Moonstorm.Starstorm2.Equipments
+namespace SS2.Equipments
 {
-    public sealed class AffixVoid : EliteEquipmentBase
+    /*public sealed class AffixVoid : SS2EliteEquipment
     {
         public override EquipmentDef EquipmentDef { get; } = SS2Assets.LoadAsset<EquipmentDef>("AffixVoid", SS2Bundle.Indev);
 
@@ -16,5 +15,5 @@ namespace Moonstorm.Starstorm2.Equipments
         {
             return false;
         }
-    }
+    }*/
 }

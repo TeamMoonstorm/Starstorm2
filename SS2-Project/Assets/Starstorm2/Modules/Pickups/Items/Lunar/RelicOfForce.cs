@@ -1,38 +1,40 @@
-﻿using Mono.Cecil.Cil;
-using MonoMod.Cil;
-using R2API;
+﻿using R2API;
 using RoR2;
 using RoR2.Items;
-using System;
 using System.Collections;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Items
-{
-    public sealed class RelicOfForce : ItemBase
-    {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("RelicOfForce", SS2Bundle.Items);
+using MSU;
+using System.Collections.Generic;
+using RoR2.ContentManagement;
+using MSU.Config;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Attack speed reduction and cooldown increase per stack. (1 = 100% slower attack speed and longer cooldowns)")]
-        [TokenModifier("SS2_ITEM_RELICOFFORCE_DESC", StatTypes.MultiplyByN, 0, "100")]
+namespace SS2.Items
+{
+    public sealed class RelicOfForce : SS2Item
+    {
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRelicOfForce", SS2Bundle.Items);
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Attack speed reduction and cooldown increase per stack. (1 = 100% slower attack speed and longer cooldowns)")]
+        [FormatToken("SS2_ITEM_RELICOFFORCE_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float forcePenalty = .4f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Delay between additional hits. (1 = 1 second)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Delay between additional hits. (1 = 1 second)")]
         public static float hitDelay = .2f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Increased damage per additional hits. (1 = 100%)")]
-        [TokenModifier("SS2_ITEM_RELICOFFORCE_DESC", StatTypes.MultiplyByN, 1, "100")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Increased damage per additional hits. (1 = 100%)")]
+        [FormatToken("SS2_ITEM_RELICOFFORCE_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float hitIncrease = .05f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Increased damage cap for additional hits. (1 = 100%)")]
-        [TokenModifier("SS2_ITEM_RELICOFFORCE_DESC", StatTypes.MultiplyByN, 2, "100")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Increased damage cap for additional hits. (1 = 100%)")]
+        [FormatToken("SS2_ITEM_RELICOFFORCE_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
         public static float hitMax = 1f;
 
         public static DamageAPI.ModdedDamageType relicForceDamageType;
 
-        override public void Initialize()
+        public override void Initialize()
         {
-            if (!Starstorm.GOTCEInstalled)
+            if (!SS2Main.GOTCEInstalled)
             {
                 On.RoR2.GenericSkill.CalculateFinalRechargeInterval += ForceSkillFinalRecharge; //since this hook is exactly one from gotce, let's not run it twice
             }
@@ -43,6 +45,12 @@ namespace Moonstorm.Starstorm2.Items
 
             relicForceDamageType = DamageAPI.ReserveDamageType();
         }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
 
         private float ForceSkillFinalRecharge(On.RoR2.GenericSkill.orig_CalculateFinalRechargeInterval orig, GenericSkill self)
         {
@@ -55,7 +63,7 @@ namespace Moonstorm.Starstorm2.Items
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.RelicOfForce;
 
-            ForceHitToken EnemyToken;
+            //ForceHitToken EnemyToken;
 
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
             {
@@ -71,7 +79,7 @@ namespace Moonstorm.Starstorm2.Items
 
             public void OnDamageDealtServer(DamageReport damageReport)
             {
-                if (!damageReport.damageInfo.HasModdedDamageType(relicForceDamageType) && !damageReport.damageInfo.HasModdedDamageType(Malice.maliceDamageType) && damageReport.damageInfo.procCoefficient > 0 && damageReport.attacker && damageReport.victimBody)
+                if (!damageReport.damageInfo.HasModdedDamageType(relicForceDamageType) && !damageReport.damageInfo.HasModdedDamageType(Malice.MaliceDamageType) && damageReport.damageInfo.procCoefficient > 0 && damageReport.attacker && damageReport.victimBody)
                 {
                     int count = damageReport.attackerBody.inventory.GetItemCount(SS2Content.Items.RelicOfForce); //im pretty sure using stack here made the mod break and im just not having it rn, this works
                     if (count > 0)
@@ -83,17 +91,8 @@ namespace Moonstorm.Starstorm2.Items
                         }
                         else
                         {
-                            if (EnemyToken)
-                            {
-                                Destroy(EnemyToken);
-                            }
                             token = damageReport.victim.body.gameObject.AddComponent<ForceHitToken>();
-                            EnemyToken = token;
                             token.CallMoreHits(damageReport, count);
-                            //token = damageReport.victim.body.gameObject.GetComponent<ForceHitToken>();
-                            //token.count = count;
-                            //token.damageReport = damageReport;
-                            //token.enabled = true;
                         }
 
                     }
@@ -103,22 +102,18 @@ namespace Moonstorm.Starstorm2.Items
 
         public class ForceHitToken : MonoBehaviour
         {
-            //public int count = 0;
-            //public DamageReport damageReport;
             public int hitCount = 0;
 
             private void Start()
             {
-                //StartCoroutine(RelicForceDelayedHits(damageReport, count));
             }
 
             public void CallMoreHits(DamageReport damageReport, int count)
             {
-                if(hitCount * hitIncrease < hitMax)
+                if (hitCount * hitIncrease < hitMax)
                 {
                     hitCount++;
                 }
-                //hitCount++;
                 StartCoroutine(RelicForceDelayedHits(damageReport, count));
             }
 
@@ -130,7 +125,7 @@ namespace Moonstorm.Starstorm2.Items
                 var initalHit = damageReport.damageInfo;
 
                 float hitMult = hitCount * hitIncrease;
-                
+
                 for (int i = 0; i < count; i++)
                 {
                     DamageInfo damageInfo = new DamageInfo();
@@ -162,7 +157,7 @@ namespace Moonstorm.Starstorm2.Items
                         EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("RelicOfForceHitEffect", SS2Bundle
                             .Items), effectData, transmit: true);
                     }
-                    
+
                 }
             }
 

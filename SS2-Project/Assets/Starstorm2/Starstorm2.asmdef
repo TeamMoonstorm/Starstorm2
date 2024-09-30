@@ -1,10 +1,18 @@
 {
     "name": "Starstorm2",
+    "rootNamespace": "",
     "references": [
         "Wwise",
         "Unity.Postprocessing.Runtime",
         "com.unity.multiplayer-hlapi.Runtime",
-        "MoonstormSharedUtils"
+        "MSU.Runtime",
+        "Ak.Wwise.Api.WAAPI",
+        "AK.Wwise.Unity.API",
+        "AK.Wwise.Unity.API.WwiseTypes",
+        "AK.Wwise.Unity.MonoBehaviour",
+        "AK.Wwise.Unity.Timeline",
+        "UnityEngine.UI",
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -48,7 +56,9 @@
         "R2API.Difficulty.dll",
         "R2API.TempVisualEffect.dll",
         "RiskOfOptions.dll",
-        "R2API.Deployable.dll"
+        "R2API.Addressables.dll",
+        "R2API.Deployable.dll",
+        "R2API.Rules.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [],

@@ -1,77 +1,140 @@
 ﻿using Mono.Cecil.Cil;
 using MonoMod.Cil;
-using Moonstorm.Starstorm2.Components;
+using SS2.Components;
 using RoR2;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
+using MSU;
+using System.Collections;
+using UnityEngine.Networking;
+using UnityEngine.AddressableAssets;
+using R2API;
+using RoR2.ContentManagement;
+using RoR2.Orbs;
+using R2API.Utils;
 
-
-namespace Moonstorm.Starstorm2.Survivors
+namespace SS2.Survivors
 {
-    public sealed class Executioner2 : SurvivorBase
+    public sealed class Executioner2 : SS2Survivor
     {
-        public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("Executioner2Body", SS2Bundle.Executioner2);
-        public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("Executioner2Master", SS2Bundle.Executioner2);
-        public override SurvivorDef SurvivorDef { get; } = SS2Assets.LoadAsset<SurvivorDef>("SurvivorExecutioner2", SS2Bundle.Executioner2);
+        public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acExecutioner2", SS2Bundle.Executioner2);
+
+        static string path = "Prefabs/Effects/OrbEffects/LightningOrbEffect";
+
+        public static GameObject plumeEffect;
+        public static GameObject plumeEffectLarge;
+        public static GameObject taserVFX;
+        public static GameObject taserVFXFade;
+
+        public static BuffDef _buffDefFear;
+        public static BuffDef _buffExeMuteCharge;
+        public static BuffDef _buffExeSuperCharged;
+
 
         public static ReadOnlyCollection<BodyIndex> BodiesThatGiveSuperCharge { get; private set; }
-        private static List<BodyIndex> bodiesThatGiveSuperCharge = new List<BodyIndex>();
-
-        [SystemInitializer(typeof(BodyCatalog))]
-        private static void InitializeSuperchargeList()
+        private static HashSet<string> bodiesThatGiveSuperCharge = new HashSet<string>
         {
-            List<string> defaultBodyNames = new List<string>
-            {
                 "BrotherHurtBody",
                 "ScavLunar1Body",
                 "ScavLunar2Body",
                 "ScavLunar3Body",
                 "ScavLunar4Body",
                 "ShopkeeperBody"
-            };
+        };
 
-            foreach(string bodyName in defaultBodyNames)
+        public static void AddBodyToSuperChargeCollection(string body)
+        {
+            bodiesThatGiveSuperCharge.Add(body);
+            UpdateSuperChargeList();
+        }
+
+        public override void Initialize()
+        {
+            plumeEffect = AssetCollection.FindAsset<GameObject>("exePlume");
+            plumeEffectLarge = AssetCollection.FindAsset<GameObject>("exePlumeBig");
+            _buffDefFear = AssetCollection.FindAsset<BuffDef>("BuffFear");
+            _buffExeMuteCharge = AssetCollection.FindAsset<BuffDef>("bdExeMuteCharge");
+            _buffExeSuperCharged = AssetCollection.FindAsset<BuffDef>("BuffExecutionerSuperCharged");
+
+            BodyCatalog.availability.CallWhenAvailable(UpdateSuperChargeList);
+            Hook();
+            ModifyPrefab();
+
+            taserVFX = LegacyResourcesAPI.Load<GameObject>(path);
+
+            //IL.RoR2.Orbs.OrbEffect.Start += OrbEffect_Start; // i dont know what this is but its failing
+
+            //On.RoR2.UI.CharacterSelectController.RebuildStrip += CheckForSwitches;
+            //On.RoR2.UI.CharacterSelectController.BuildSkillStripDisplayData += CheckForDisplaySwitch;
+        }
+
+        private void CheckForDisplaySwitch(On.RoR2.UI.CharacterSelectController.orig_BuildSkillStripDisplayData orig, RoR2.UI.CharacterSelectController self, Loadout loadout, ValueType bodyInfo, object dest)
+        {
+            orig(self, loadout, bodyInfo, dest);
+        }
+
+        private void OrbEffect_Start(ILContext il)
+        {
+            ILCursor cursor = new ILCursor(il);
+
+            bool ILFound = cursor.TryGotoNext(MoveType.After,
+                instruction => instruction.MatchBrtrue(out _),
+                instruction => instruction.MatchLdarg(0),
+                instruction => instruction.MatchLdfld<OrbEffect>(nameof(OrbEffect.startPosition))
+                );
+            if (ILFound)
             {
-                BodyIndex index = BodyCatalog.FindBodyIndexCaseInsensitive(bodyName);
-                if(index != BodyIndex.None)
+                cursor.Emit(OpCodes.Ldarg_0);
+                cursor.Emit(OpCodes.Ldfld, typeof(OrbEffect).GetFieldCached(nameof(OrbEffect.targetTransform)));
+                cursor.Emit(OpCodes.Ldloc_0);
+                cursor.EmitDelegate<Func<Vector3, Transform, EffectComponent, Vector3>>((startPosition, targetTransform, effectComponent) =>
                 {
-                    //AddBodyToSuperchargeList(index); //this counts as a fix.
-                }
+                    if (targetTransform == null)
+                    {
+                        startPosition = effectComponent.effectData.start;
+                    }
+                    return startPosition;
+                });
+                SS2Log.Info("Added OrbEffect_Start hook :D");
+                //Debug.Log("Added OrbEffect_Start hook :D");
+            }
+            else
+            {
+                SS2Log.Error("OrbEffect_Start hook failed.");
+                //Debug.Log("ah shit");  soulless but informative
             }
         }
 
-        public static void AddBodyToSuperchargeList(BodyIndex bodyIndex)
+        private static void UpdateSuperChargeList()
         {
-            if (bodyIndex == BodyIndex.None)
+            List<BodyIndex> indices = new List<BodyIndex>();
+            foreach(var bodyName in bodiesThatGiveSuperCharge)
             {
-                //SS2Log.Debug($"Tried to add a body to the supercharge list, but it's index is none");
-                return;
-            }
+                BodyIndex index = BodyCatalog.FindBodyIndex(bodyName);
+                if (index == BodyIndex.None)
+                    continue;
 
-            if (bodiesThatGiveSuperCharge.Contains(bodyIndex))
-            {
-                GameObject prefab = BodyCatalog.GetBodyPrefab(bodyIndex);
-                //SS2Log.Debug($"Body prefab {prefab} is already in the list of bodies that give supercharge.");
-                return;
+                indices.Add(index);
             }
-            bodiesThatGiveSuperCharge.Add(bodyIndex);
-            BodiesThatGiveSuperCharge = new ReadOnlyCollection<BodyIndex>(bodiesThatGiveSuperCharge);
+            BodiesThatGiveSuperCharge = new ReadOnlyCollection<BodyIndex>(indices);
         }
 
-        public override void ModifyPrefab()
+        public override bool IsAvailable(ContentPack contentPack)
         {
-            base.ModifyPrefab();
+            return true;
+        }
 
-            var cb = BodyPrefab.GetComponent<CharacterBody>();
+
+        public void ModifyPrefab()
+        {
+            var cb = CharacterPrefab.GetComponent<CharacterBody>();
             cb.preferredPodPrefab = Resources.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod");
             cb._defaultCrosshairPrefab = Resources.Load<GameObject>("Prefabs/Crosshair/StandardCrosshair");
-            /*var footstepHandler = BodyPrefab.GetComponent<ModelLocator>().modelTransform.GetComponent<FootstepHandler>();
-            footstepHandler.footstepDustPrefab = Resources.Load<GameObject>("Prefabs/GenericFootstepDust");*/
         }
 
-        public override void Hook()
+        public void Hook()
         {
             SetupFearExecute();
             On.RoR2.MapZone.TeleportBody += MarkOOB;
@@ -80,7 +143,6 @@ namespace Moonstorm.Starstorm2.Survivors
 
         private void MarkOOB(On.RoR2.MapZone.orig_TeleportBody orig, MapZone self, CharacterBody characterBody)
         {
-            //orig(self, characterBody);
             var exc = characterBody.gameObject.GetComponent<ExecutionerController>();
             if (exc)
             {
@@ -94,7 +156,6 @@ namespace Moonstorm.Starstorm2.Survivors
             var exc = body.gameObject.GetComponent<ExecutionerController>();
             if (exc)
             {
-                //SS2Log.Info("isOOB? " + exc.hasOOB + " | " + exc.isExec);
                 if (exc.isExec)
                 {
                     exc.hasOOB = true;
@@ -109,7 +170,7 @@ namespace Moonstorm.Starstorm2.Survivors
             var hbv = orig(self);
             if (!self.body.bodyFlags.HasFlag(CharacterBody.BodyFlags.ImmuneToExecutes) && self.body.HasBuff(SS2Content.Buffs.BuffFear))
             {
-                hbv.cullFraction += 0.15f;//(self.body && self.body.isChampion) ? 0.15f : 0.3f; //might stack too crazy if it's 30% like Freeze
+                hbv.cullFraction += 0.15f;//might stack too crazy if it's 30% like Freeze
             }
             return hbv;
         }
@@ -119,7 +180,7 @@ namespace Moonstorm.Starstorm2.Survivors
             On.RoR2.HealthComponent.GetHealthBarValues += FearExecuteHealthbar;
 
             //Prone to breaking when the game updates
-            IL.RoR2.HealthComponent.TakeDamage += (il) =>
+            IL.RoR2.HealthComponent.TakeDamageProcess += (il) =>
             {
                 bool error = true;
                 ILCursor c = new ILCursor(il);
@@ -128,11 +189,11 @@ namespace Moonstorm.Starstorm2.Survivors
                     ))
                 {
                     if (c.TryGotoNext(MoveType.After,
-                    x => x.MatchLdloc(8)   //flag 5, this is checked before final Execute damage calculations.
+                    x => x.MatchLdloc(9)   //flag 5, this is checked before final Execute damage calculations.
                     ))
                     {
                         c.Emit(OpCodes.Ldarg_0);//self
-                        c.Emit(OpCodes.Ldloc, 53);//execute fraction
+                        c.Emit(OpCodes.Ldloc, 59);//execute fraction
                         c.EmitDelegate<Func<HealthComponent, float, float>>((self, executeFraction) =>
                         {
                             if (self.body.HasBuff(SS2Content.Buffs.BuffFear))
@@ -142,7 +203,7 @@ namespace Moonstorm.Starstorm2.Survivors
                             }
                             return executeFraction;
                         });
-                        c.Emit(OpCodes.Stloc, 53);
+                        c.Emit(OpCodes.Stloc, 59);
 
                         error = false;
                     }
@@ -150,7 +211,7 @@ namespace Moonstorm.Starstorm2.Survivors
 
                 if (error)
                 {
-                    Debug.LogError("Starstorm 2: Fear Execute IL Hook failed.");
+                    SS2Log.Fatal("Starstorm 2: Fear Execute IL Hook failed.");
                 }
 
             };
@@ -170,11 +231,10 @@ namespace Moonstorm.Starstorm2.Survivors
                 }
                 else
                 {
-                    Debug.LogError("Starstorm 2: Fear VFX IL Hook failed.");
+                    SS2Log.Fatal("Starstorm 2: Fear VFX IL Hook failed.");
                 }
             };
         }
-
         internal static int GetIonCountFromBody(CharacterBody body)
         {
             if (body == null) return 1;
@@ -184,20 +244,81 @@ namespace Moonstorm.Starstorm2.Survivors
                 return 100;
 
             if (body.isChampion)
-                return 10;
+                return 5;
 
-            switch(body.hullClassification)
+            switch (body.hullClassification)
             {
                 case HullClassification.Human:
                     return 1;
                 case HullClassification.Golem:
-                    return 3;
+                    return 2;
                 case HullClassification.BeetleQueen:
-                    return 5;
+                    return 3;
                 default:
                     return 1;
             }
         }
+        public sealed class ExeArmorBehavior : BaseBuffBehaviour, IBodyStatArgModifier
+        {
+            [BuffDefAssociation]
+            private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffExecutionerArmor;
+            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            {
+                //the stacking amounts are added by the item - these base values are here in case the buff is granted by something other than sigil
+                args.armorAdd += 60;
+            }
+        }
 
+        public sealed class FearDebuffBehavior : BaseBuffBehaviour, IBodyStatArgModifier
+        {
+            [BuffDefAssociation]
+            private static BuffDef GetBuffDef() => _buffDefFear;
+
+            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            {
+                args.moveSpeedReductionMultAdd += 0.5f;
+            }
+        }
+
+        public sealed class ExeSuperChargeBehavior : BaseBuffBehaviour
+        {
+            [BuffDefAssociation]
+            private static BuffDef GetBuffDef() => _buffExeSuperCharged;
+            private float timer;
+
+            public void FixedUpdate()
+            {
+                if (NetworkServer.active && hasAnyStacks)
+                {
+                    if (characterBody.baseNameToken != "SS2_EXECUTIONER2_NAME" || characterBody.HasBuff(_buffExeMuteCharge))
+                        return;
+                    else
+                        timer += Time.fixedDeltaTime;
+
+                    if (timer >= 0.2f && characterBody.skillLocator.secondary.stock < characterBody.skillLocator.secondary.maxStock)
+                    {
+                        timer = 0f;
+
+                        characterBody.skillLocator.secondary.AddOneStock();
+
+                        if (characterBody.skillLocator.secondary.stock < characterBody.skillLocator.secondary.maxStock)
+                        {
+                            Util.PlaySound("ExecutionerGainCharge", gameObject);
+                            EffectManager.SimpleMuzzleFlash(plumeEffect, gameObject, "ExhaustL", true);
+                            EffectManager.SimpleMuzzleFlash(plumeEffect, gameObject, "ExhaustR", true);
+                        }
+                        if (characterBody.skillLocator.secondary.stock >= characterBody.skillLocator.secondary.maxStock)
+                        {
+                            Util.PlaySound("ExecutionerMaxCharge", gameObject);
+                            EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustL", true);
+                            EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustR", true);
+                            EffectManager.SimpleEffect(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/LightningFlash.prefab").WaitForCompletion(), characterBody.corePosition, Quaternion.identity, false);
+                        }
+
+                        characterBody.SetAimTimer(1.6f);
+                    }
+                }
+            }
+        }
     }
 }

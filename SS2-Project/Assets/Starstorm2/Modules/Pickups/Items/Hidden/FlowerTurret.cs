@@ -1,20 +1,25 @@
-﻿using R2API;
+﻿using MSU;
 using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Items;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using System;
-namespace Moonstorm.Starstorm2.Items
+namespace SS2.Items
 {
-    public sealed class FlowerTurret : ItemBase
+    public sealed class FlowerTurret : SS2Item
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("FlowerTurret", SS2Bundle.Items);
-
-        public override GameObject ItemDisplayPrefab => SS2Assets.LoadAsset<GameObject>("DisplayFlowerTurret", SS2Bundle.Items);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acFlowerTurret", SS2Bundle.Items);
 
         public override void Initialize()
         {
-
         }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return contentPack.survivorDefs.Find("Chirr");
+        }
+
         public sealed class BodyBehavior : BaseItemBodyBehavior
         {
             [ItemDefAssociation]

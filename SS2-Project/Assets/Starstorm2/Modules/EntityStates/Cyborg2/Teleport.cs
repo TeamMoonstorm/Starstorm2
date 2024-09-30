@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RoR2;
+﻿using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
-using Moonstorm.Starstorm2.Components;
+using SS2.Components;
+using SS2;
+using System.Collections.Generic;
 namespace EntityStates.Cyborg2
 {
     public class Teleport : BaseSkillState
@@ -18,8 +15,13 @@ namespace EntityStates.Cyborg2
         private TeleporterProjectile.ProjectileTeleporterOwnership teleporterOwnership;
         private Vector3 teleportTarget;
 
-        public static float exitVelocityCoefficient = 400f;
+        private static float exitVelocityCoefficient = 1.25f;
+        private static float damageRadius = 10f;
+        private static float damageCoefficient = 3f;
         private Vector3 storedVelocity;
+        private bool didTeleport;
+        private Vector3 lastPositionBeforeTeleport;
+        Vector3 initialPosition;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -32,6 +34,7 @@ namespace EntityStates.Cyborg2
                 return;
             }
 
+            this.initialPosition = base.transform.position;
             this.teleportTarget = this.teleporterOwnership.teleporter.GetSafeTeleportPosition();
 
             this.duration = baseDuration; //movespeed? attackspeed?
@@ -44,6 +47,7 @@ namespace EntityStates.Cyborg2
 
             if (NetworkServer.active)
             {
+                
                 base.characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
             }
         }
@@ -71,21 +75,14 @@ namespace EntityStates.Cyborg2
                 //for some reason its 0,0,0 on the same frame the teleporter disappears
                 if(this.teleportTarget != Vector3.zero)
                 {
+                    didTeleport = true;
+                    lastPositionBeforeTeleport = base.characterBody.corePosition;
                     TeleportHelper.TeleportBody(base.characterBody, this.teleportTarget);
                     base.characterDirection.forward = base.GetAimRay().direction;
-                    Vector3 velocity = Vector3.zero;
-                    if(this.teleporterOwnership && this.teleporterOwnership.teleporter)
-                    {
-                        velocity = this.teleporterOwnership.teleporter.GetComponent<Rigidbody>().velocity;
-                    }
-                    velocity *= Teleport.exitVelocityCoefficient;
-                    base.characterMotor.ApplyForce(velocity);
+
 
                     base.SmallHop(base.characterMotor, Teleport.exitHopVelocity);
-                }
-                
-                
-                
+                }             
                 this.outer.SetNextStateToMain();
                 return;
             }
@@ -94,10 +91,28 @@ namespace EntityStates.Cyborg2
 
         public override void OnExit()
         {
-            base.OnExit();
-            if(this.teleporterOwnership)
+            base.OnExit();           
+            if (didTeleport)
             {
-                this.teleporterOwnership.DoTeleport();
+                storedVelocity.y = Mathf.Max(storedVelocity.y, 0);
+                //base.characterMotor.velocity = storedVelocity * exitVelocityCoefficient;
+            }
+            Transform modelTransform = base.characterBody.modelLocator.modelTransform;
+            if (modelTransform)
+            {
+                TemporaryOverlayInstance temporaryOverlay2 = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
+                temporaryOverlay2.duration = 0.67f;
+                temporaryOverlay2.animateShaderAlpha = true;
+                temporaryOverlay2.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
+                temporaryOverlay2.destroyComponentOnEnd = true;
+                temporaryOverlay2.originalMaterial = SS2Assets.LoadAsset<Material>("matTeleportOverlay", SS2Bundle.Indev);
+
+                // TODO: No longer needed post-SOTS, leaving in for now but need to remove later
+                //temporaryOverlay2.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
+            }
+            if (this.teleporterOwnership)
+            {
+                this.teleporterOwnership.DoTeleport(initialPosition);
             }
             if (this.camera)
             {

@@ -1,12 +1,10 @@
 ﻿using RoR2.Skills;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using JetBrains.Annotations;
 using RoR2;
-using Moonstorm.Starstorm2.Components;
+using SS2.Components;
 
-namespace Assets.Starstorm2.ScriptableObjects
+namespace SS2
 {
     [CreateAssetMenu(menuName = "Starstorm2/SkillDef/StressSkillDef")]
     public class StressSkillDef : SkillDef

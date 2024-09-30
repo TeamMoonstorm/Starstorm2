@@ -1,35 +1,31 @@
-﻿using EntityStates;
-using Moonstorm.Starstorm2.Components;
-using R2API;
-using RoR2;
-using System.Linq;
+﻿using RoR2;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.AddressableAssets;
+using System.Collections.Generic;
+using MSU;
+using RoR2.ContentManagement;
+using System.Collections;
+using SS2.Modules;
+using System.Linq;
 
-namespace Moonstorm.Starstorm2.Interactables
+namespace SS2.Interactables
 {
-    //[DisabledContent]
-    public sealed class ShockDroneDamaged : InteractableBase
+    public sealed class ShockDroneDamaged : SS2Interactable
     {
-        public override GameObject Interactable { get; } = SS2Assets.LoadAsset<GameObject>("ShockDroneBroken", SS2Bundle.Interactables);
-        private GameObject interactable;
+        public override SS2AssetRequest<InteractableAssetCollection> AssetRequest =>  SS2Assets.LoadAssetAsync<InteractableAssetCollection>("acShockDrone", SS2Bundle.Interactables);
+
         private SummonMasterBehavior smb;
         private CharacterMaster cm;
         private GameObject bodyPrefab;
         private AkEvent[] droneAkEvents;
 
-        public override MSInteractableDirectorCard InteractableDirectorCard { get; } = SS2Assets.LoadAsset<MSInteractableDirectorCard>("msidcShockDrone", SS2Bundle.Interactables);
-
         public override void Initialize()
         {
-            base.Initialize();
-
-            On.EntityStates.Drone.DeathState.OnImpactServer += spawnShockCorpse;
+            //This should stop hooking and really just be a global hook that checks for our drones tbh.
+            On.EntityStates.Drone.DeathState.OnImpactServer += SpawnShockCorpse;
 
             //add sound events, the bad way
-            interactable = InteractableDirectorCard.prefab;
-            smb = interactable.GetComponent<SummonMasterBehavior>();
+            smb = InteractablePrefab.GetComponent<SummonMasterBehavior>();
             cm = smb.masterPrefab.GetComponent<CharacterMaster>();
             bodyPrefab = cm.bodyPrefab;
 
@@ -52,16 +48,21 @@ namespace Moonstorm.Starstorm2.Interactables
             }
         }
 
-        private void spawnShockCorpse(On.EntityStates.Drone.DeathState.orig_OnImpactServer orig, EntityStates.Drone.DeathState self, Vector3 contactPoint)
+        public override bool IsAvailable(ContentPack contentPack)
         {
-            if(self.characterBody.bodyIndex == BodyCatalog.FindBodyIndexCaseInsensitive("ShockDroneBody"))
+            return true;
+        }
+
+        private void SpawnShockCorpse(On.EntityStates.Drone.DeathState.orig_OnImpactServer orig, EntityStates.Drone.DeathState self, Vector3 contactPoint)
+        {
+            if (self.characterBody.bodyIndex == BodyCatalog.FindBodyIndexCaseInsensitive("ShockDroneBody"))
             {
                 DirectorPlacementRule placementRule = new DirectorPlacementRule
                 {
                     placementMode = DirectorPlacementRule.PlacementMode.Direct,
                     position = contactPoint
                 };
-                GameObject gameObject = DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(InteractableDirectorCard, placementRule, new Xoroshiro128Plus(0UL)));
+                GameObject gameObject = DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(CardProvider.BuildSpawnCardSet().FirstOrDefault(), placementRule, new Xoroshiro128Plus(0UL)));
                 if (gameObject)
                 {
                     PurchaseInteraction component = gameObject.GetComponent<PurchaseInteraction>();

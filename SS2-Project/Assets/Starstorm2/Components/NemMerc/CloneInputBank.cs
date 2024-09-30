@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using RoR2;
 using RoR2.Skills;
 using EntityStates.NemMerc;
 using UnityEngine.Networking;
-
-namespace Moonstorm.Starstorm2.Components
+namespace SS2.Components
 {
     [RequireComponent(typeof(CharacterMaster))]
     class CloneInputBank : NetworkBehaviour
@@ -171,7 +166,7 @@ namespace Moonstorm.Starstorm2.Components
             }
             else
             {
-                SS2Log.Error("CloneInputBank: Missing InputBanks! inputBank: " + this.inputBank + " | ownerInputBank: " + this.ownerInputBank);
+                //SS2Log.Error("CloneInputBank: Missing InputBanks! inputBank: " + this.inputBank + " | ownerInputBank: " + this.ownerInputBank);
             }
             
             if(copyMovements)
@@ -183,6 +178,19 @@ namespace Moonstorm.Starstorm2.Components
             if(copyEquipment)
             {
                 this.inputBank.activateEquipment.PushState(this.ownerInputBank.activateEquipment.down);
+            }
+
+            if(this.body)
+            {
+                Vector3 huh = body.transform.position;
+                if(float.IsNaN(huh.x) || float.IsNaN(huh.y) || float.IsNaN(huh.z))
+                {
+                    Chat.AddMessage("why is your clone infinitely far away. how did you do that. please report this");
+                    SS2Log.Fatal($"Clone is fucked. {huh}");
+                    Destroy(body.gameObject);
+                    Destroy(body.masterObject);
+                    return;
+                }
             }
         }
 

@@ -1,85 +1,36 @@
-﻿using RoR2;
+﻿using MSU;
+using R2API;
+using RoR2;
+using RoR2.ContentManagement;
 using System;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using static RoR2.ExplicitPickupDropTable;
-
-namespace Moonstorm.Starstorm2.Monsters
+namespace SS2.Monsters
 {
-    //[DisabledContent]
-    public sealed class LampBoss : MonsterBase
+    public sealed class LampBoss : SS2Monster
     {
-        public override GameObject BodyPrefab { get; } = SS2Assets.LoadAsset<GameObject>("LampBossBody", SS2Bundle.Monsters);
-        public override GameObject MasterPrefab { get; } = SS2Assets.LoadAsset<GameObject>("LampBossMaster", SS2Bundle.Monsters);
-        //public override MSMonsterDirectorCardHolder directorCards { get; set; } = Assets.Instance.MainAssetBundle.LoadAsset<MSMonsterDirectorCardHolder>("WayfarerCardHolder");
-        //public override MSMonsterDirectorCard MonsterDirectorCard { get; } = SS2Assets.LoadAsset<MSMonsterDirectorCard>("msmdcLampBoss", SS2Bundle.Indev);
+        public override SS2AssetRequest<MonsterAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<MonsterAssetCollection>("acLampBoss", SS2Bundle.Monsters);
 
-        private MSMonsterDirectorCard defaultCard = SS2Assets.LoadAsset<MSMonsterDirectorCard>("msmdcLampBoss", SS2Bundle.Monsters);
-        private MSMonsterDirectorCard chainedCard = SS2Assets.LoadAsset<MSMonsterDirectorCard>("msmdcLampBossChained", SS2Bundle.Monsters);
-        private MSMonsterDirectorCard moonCard = SS2Assets.LoadAsset<MSMonsterDirectorCard>("msmdcLampBossMoon", SS2Bundle.Monsters);
-
-        internal static GameObject wayfarerBuffWardPrefab;
-
+        private static BodyIndex BodyIndex;
         public override void Initialize()
         {
-            base.Initialize();
-            MonsterDirectorCards.Add(chainedCard);
+            //N: i hate that people want to disable the boss's item but keep the boss, it doesnt make any fucking sense imo. Either that or i'm just schizo. Either way item disabling the way prod did it is not really feasable i think rn so i'll just comment this out
             
-
-            //RoR2.SceneDirector.onPrePopulateSceneServer += die;
-
-            var comp = BodyPrefab.GetComponent<LampDropOverride>();
-            if (!comp)
+            /*var lampItem = SS2Assets.LoadAsset<ItemDef>("ShackledLamp", SS2Bundle.Items);
+            if (lampItem.tier != ItemTier.Boss) // item is disabled
             {
-                var lampItem = SS2Assets.LoadAsset<ItemDef>("ShackledLamp", SS2Bundle.Items);
-                if (lampItem.tier != ItemTier.Boss) // item is disabled
+                DeathRewards deathRewards = CharacterPrefab.GetComponent<DeathRewards>();
+                ExplicitPickupDropTable dt = ScriptableObject.CreateInstance<ExplicitPickupDropTable>();
+                dt.pickupEntries = new ExplicitPickupDropTable.PickupDefEntry[]
                 {
-                    //var drw = BodyPrefab.GetComponent<DeathRewards>();
-                    //SS2Log.Info(drw);
-                    //var fuck = (ExplicitPickupDropTable)drw.bossDropTable;
-                    //
-                    //PickupDefEntry pde;
-                    //pde.pickupDef = RoR2Content.Items.Pearl;
-                    //pde.pickupWeight = 1;
-                    //
-                    //SS2Log.Info("setting fuck | " + fuck.pickupEntries[0]);
-                    //try
-                    //{
-                    //    SS2Log.Info("fuck: " + fuck.pickupEntries[0].pickupDef.name);
-                    //}catch(Exception e)
-                    //{
-                    //    SS2Log.Info("exceptionl ol " + e);
-                    //}
-                    //fuck.pickupEntries[0] = pde;
-                    ////SerializablePickupIndex fuck2;
-                    ////fuck2.pickupName = RoR2Content.Items.Pearl.name;
-                    ////drw.bossPickup = fuck2;
-                    //SS2Log.Info("done");
-                    ////SS2Log.Info("Disabling lamp drop");
-                    ////BodyPrefab.AddComponent<LampDropOverride>();
-                    //
-                    //
-                    ////ExplicitPickupDropTable dt = ScriptableObject.CreateInstance<ExplicitPickupDropTable>();
-                    ////dt.pickupEntries = new ExplicitPickupDropTable.PickupDefEntry[]
-                    ////{
-                    ////    new ExplicitPickupDropTable.PickupDefEntry {pickupDef = RoR2Content.Items.Pearl, pickupWeight = 1f},
-                    ////};
-                    ////drw.bossDropTable = dt;
-                    ///
+                    new ExplicitPickupDropTable.PickupDefEntry {pickupDef = RoR2Content.Items.Pearl, pickupWeight = 1f},
+                };
+                deathRewards.bossDropTable = dt;
+            }*/
 
-                    DeathRewards deathRewards = BodyPrefab.GetComponent<DeathRewards>();
-                    ExplicitPickupDropTable dt = ScriptableObject.CreateInstance<ExplicitPickupDropTable>();
-                    dt.pickupEntries = new ExplicitPickupDropTable.PickupDefEntry[]
-                    {
-                        new ExplicitPickupDropTable.PickupDefEntry {pickupDef = RoR2Content.Items.Pearl, pickupWeight = 1f},
-                    };
-                    deathRewards.bossDropTable = dt;
-
-
-                }
-            }
-
-            DateTime currentDate = DateTime.Now;
+            //N: IDK how you'd do this with the monster card providers, but i aint bothering.
+            /*DateTime currentDate = DateTime.Now;
 
             double daysSinceLastFullMoon = (currentDate - new DateTime(2023, 12, 25)).TotalDays;
 
@@ -97,89 +48,39 @@ namespace Moonstorm.Starstorm2.Monsters
             {
                 MonsterDirectorCards.Add(defaultCard);
                 Debug.Log("You stand alone in the dark. - " + moonPhase);
-            }
+            }*/
+
+            RoR2Application.onLoad += () => BodyIndex = BodyCatalog.FindBodyIndex("LampBossBody");
+            R2API.RecalculateStatsAPI.GetStatCoefficients += GetStatCoefficients;
         }
 
-        private void die(SceneDirector obj)
+        private void GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
-            //SS2Log.Info("guh");
-            var comp = BodyPrefab.GetComponent<LampDropOverride>();
-            if (!comp)
+            if (sender.HasBuff(SS2Content.Buffs.bdLampBuff) && sender.bodyIndex != BodyIndex)
             {
-                var lampItem = SS2Assets.LoadAsset<ItemDef>("ShackledLamp", SS2Bundle.Items);
-                if (lampItem.tier != ItemTier.Boss) // item is disabled
-                {
-                    var drw = BodyPrefab.GetComponent<DeathRewards>();
-                    SS2Log.Info(drw);
-                    var fuck = (ExplicitPickupDropTable)drw.bossDropTable;
-
-                    //BasicPickupDropTable
-
-                    PickupDefEntry pde;
-                    pde.pickupDef = RoR2Content.Items.Pearl;
-                    pde.pickupWeight = 1;
-
-                    //SS2Log.Info("setting fuck | " + fuck.pickupEntries[0]);
-                    //try
-                    //{
-                    //    SS2Log.Info("fuck: " + fuck.pickupEntries[0].pickupDef.name);
-                    //}
-                    //catch (Exception e)
-                    //{
-                    //    SS2Log.Info("exceptionl ol " + e);
-                    //}
-
-                    fuck.pickupEntries[0] = pde;
-                    SerializablePickupIndex fuck2;
-                    fuck2.pickupName = RoR2Content.Items.Pearl.name;
-                    drw.bossPickup = fuck2;
-                    //SS2Log.Info("done");
-                    //SS2Log.Info("Disabling lamp drop");
-                    //BodyPrefab.AddComponent<LampDropOverride>();
-
-
-                    //ExplicitPickupDropTable dt = ScriptableObject.CreateInstance<ExplicitPickupDropTable>();
-                    //dt.pickupEntries = new ExplicitPickupDropTable.PickupDefEntry[]
-                    //{
-                    //    new ExplicitPickupDropTable.PickupDefEntry {pickupDef = RoR2Content.Items.Pearl, pickupWeight = 1f},
-                    //};
-                    //drw.bossDropTable = dt;
-
-                }
+                args.primaryCooldownMultAdd += 0.5f;
+                args.secondaryCooldownMultAdd += 0.25f;
+                args.damageMultAdd += 0.2f;
+                args.moveSpeedMultAdd += 1.5f;
             }
-
         }
 
-        public override void Hook()
+
+        public override bool IsAvailable(ContentPack contentPack)
         {
-            On.RoR2.CharacterBody.AddBuff_BuffDef += CharacterBody_AddBuff_BuffDef;
-            //On.RoR2.Projectile.HookProjectileImpact.FixedUpdate += HookProjectileImpact_FixedUpdate;
+            return true;
         }
 
-        private static void CharacterBody_AddBuff_BuffDef(On.RoR2.CharacterBody.orig_AddBuff_BuffDef orig, CharacterBody self, BuffDef buffDef)
+        [Serializable]
+        public class MoonPhaseData
         {
-            //wayfarer can't buff itself/other wayfarers
-            if (self.bodyIndex == BodyCatalog.FindBodyIndex("LampBossBody") && buffDef == SS2Content.Buffs.bdLampBuff)
-                return;
-            orig(self, buffDef);
+            public PhaseData[] phasedata;
+        }
+
+        [Serializable]
+        public class PhaseData
+        {
+            public string phase;
         }
     }
-
-    [Serializable]
-    public class MoonPhaseData
-    {
-        public PhaseData[] phasedata;
-    }
-
-    [Serializable]
-    public class PhaseData
-    {
-        public string phase;
-    }
-
-    public class LampDropOverride : MonoBehaviour
-    {
-        //why is there not a list of yellow items before a run starts
-    }
-
 }

@@ -1,11 +1,8 @@
 ﻿using RoR2;
 using RoR2.Projectile;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-using R2API;
-
-namespace Moonstorm.Starstorm2.Components
+namespace SS2.Components
 {
     [RequireComponent(typeof(ProjectileController))]
     public class SpitBombZone : MonoBehaviour

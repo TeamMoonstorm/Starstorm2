@@ -1,5 +1,4 @@
-﻿using System;
-using EntityStates.Barrel;
+﻿using EntityStates.Barrel;
 using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -7,8 +6,8 @@ using UnityEngine.Networking;
 namespace EntityStates.RemunerationOption
 {
 
-	// VOID TOKEN SPITTER
-	public class Opening : EntityState
+    // VOID TOKEN SPITTER
+    public class Opening : EntityState
 	{
 		public override void OnEnter()
 		{

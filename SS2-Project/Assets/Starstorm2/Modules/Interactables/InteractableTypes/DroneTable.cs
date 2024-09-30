@@ -1,30 +1,20 @@
 ﻿using EntityStates;
 using EntityStates.DroneTable;
-using Moonstorm.Starstorm2.Components;
-using R2API;
+using MSU;
 using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Items;
-using System;
+using SS2.Modules;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
-using UnityEngine.ResourceManagement.AsyncOperations;
-
-namespace Moonstorm.Starstorm2.Interactables
+namespace SS2.Interactables
 {
-    //[DisabledContent]
-
-    public sealed class DroneTable : InteractableBase
+    public sealed class DroneTable : SS2Interactable
     {
-        public override GameObject Interactable { get; } = SS2Assets.LoadAsset<GameObject>("DroneTablePrefab", SS2Bundle.Interactables);
-
-        private static GameObject interactable;
-
-        private static GameObject bodyOrb = SS2Assets.LoadAsset<GameObject>("CharacterBodyOrbEffect", SS2Bundle.Interactables);
-
+        public override SS2AssetRequest<InteractableAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<InteractableAssetCollection>("acDroneTable", SS2Bundle.Interactables);
 
         /// <summary>
         /// List of drone and interactable cost pairs. String is the body.name, int is the price a player pays, not the director.
@@ -35,7 +25,7 @@ namespace Moonstorm.Starstorm2.Interactables
         /// Dictonary of drone string (body.name) and the required pseudo-transform required to make it sit nicely on the table. The drone hologram is a child of a specific node on the table, so you should just be able to edit the drone itself's local transforms, and then input them here.
         /// </summary>
         public static Dictionary<string, RefabricatorTriple> droneTripletPairs = new Dictionary<string, RefabricatorTriple>(); //i guess you cant make transforms without an object and i didnt want to make dummy objects
-        
+
         /// <summary>
         /// Dictonary of drone names and runtime-made drone sprites.
         /// </summary>
@@ -44,40 +34,40 @@ namespace Moonstorm.Starstorm2.Interactables
         public static CostTypeDef droneCostDef;
         public static int droneCostIndex;
         public static DroneTableDropTable droneDropTable;
+        private static GameObject bodyOrb;
 
-        //public static Material GreenHoloMaterial = SS2Assets.LoadAsset<Material>("matHoloGreen");
-
-        public override MSInteractableDirectorCard InteractableDirectorCard { get; } = SS2Assets.LoadAsset<MSInteractableDirectorCard>("midcDroneTable", SS2Bundle.Interactables);
 
         public override void Initialize()
         {
-            CostTypeCatalog.modHelper.getAdditionalEntries += addDroneCostType;
+            bodyOrb = AssetCollection.FindAsset<GameObject>("CharacterBodyOrbEffect");
+            CostTypeCatalog.modHelper.getAdditionalEntries += AddDroneCostType;
 
-            On.EntityStates.Drone.DeathState.OnEnter += overrideDroneCorpse;
+            On.EntityStates.Drone.DeathState.OnEnter += OverrideDroneCorpse;
 
-            interactable = InteractableDirectorCard.prefab;
+            var interactionToken = InteractablePrefab.AddComponent<RefabricatorInteractionToken>();
+            interactionToken.PurchaseInteraction = InteractablePrefab.GetComponent<PurchaseInteraction>();
 
-            var interactionToken = interactable.AddComponent<RefabricatorInteractionToken>();
-            interactionToken.PurchaseInteraction = interactable.GetComponent<PurchaseInteraction>();
-
-            //droneDropTable = new DroneTableDropTable();
             droneDropTable = ScriptableObject.CreateInstance<DroneTableDropTable>();
-
-            SetupDroneValueList();  
+            SetupDroneValueList();
         }
 
-        private void overrideDroneCorpse(On.EntityStates.Drone.DeathState.orig_OnEnter orig, EntityStates.Drone.DeathState self)
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
+        private void OverrideDroneCorpse(On.EntityStates.Drone.DeathState.orig_OnEnter orig, EntityStates.Drone.DeathState self)
         {
             orig(self);
             var hardToken = self.characterBody.GetComponent<RefabricatorHardDeathToken>();
             if (hardToken)
             {
-                //SS2Log.Info(self.gameObject.name + " | " + self.characterBody + " | " + self.characterBody.name);
                 EntityState.Destroy(self.gameObject);
             }
         }
 
-        private void overrideItemIcon(On.RoR2.Orbs.ItemTakenOrbEffect.orig_Start orig, RoR2.Orbs.ItemTakenOrbEffect self)
+        //This is zombie code, it should be deleted when possible, orig_start fails btw. -N
+        /*private void OverrideItemIcon(On.RoR2.Orbs.ItemTakenOrbEffect.orig_Start orig, RoR2.Orbs.ItemTakenOrbEffect self)
         {
             var efc = self.GetComponent<EffectComponent>();
             bool boolean = efc.effectData.genericBool;
@@ -110,7 +100,7 @@ namespace Moonstorm.Starstorm2.Interactables
                     output = Sprite.Create(tex2d, new Rect(0, 0, 128, 128), new Vector2(.5f, .5f), 25);
                     //output.pixelsPerUnit = 25;
                     output.name = body.portraitIcon.name + "Refabricator";
-                    
+
                     droneSpritePairs.Add(pair.Key, output);
                 }
 
@@ -120,7 +110,7 @@ namespace Moonstorm.Starstorm2.Interactables
                 self.trailToColor.startColor *= color;
                 self.trailToColor.endColor *= color;
                 for (int i = 0; i < self.particlesToColor.Length; i++)
-                {   
+                {
                     ParticleSystem particleSystem = self.particlesToColor[i];
                     var main = particleSystem.main;
                     main.startColor = color;
@@ -136,7 +126,7 @@ namespace Moonstorm.Starstorm2.Interactables
             {
                 orig(self);
             }
-        }
+        }*/
 
         private void SetupDroneValueList()
         {
@@ -148,7 +138,7 @@ namespace Moonstorm.Starstorm2.Interactables
             dronePairs.Add(new KeyValuePair<string, int>("EmergencyDroneBody", 100));
             dronePairs.Add(new KeyValuePair<string, int>("FlameDroneBody", 100));
             dronePairs.Add(new KeyValuePair<string, int>("MegaDroneBody", 350));
-            
+
             dronePairs.Add(new KeyValuePair<string, int>("ShockDroneBody", 40));
             dronePairs.Add(new KeyValuePair<string, int>("CloneDroneBody", 140));
 
@@ -167,7 +157,7 @@ namespace Moonstorm.Starstorm2.Interactables
 
         }
 
-        private void addDroneCostType(List<CostTypeDef> obj)
+        private void AddDroneCostType(List<CostTypeDef> obj)
         {
             droneCostDef = new CostTypeDef();
             droneCostDef.costStringFormatToken = "SS2_COST_DRONE_FORMAT";
@@ -228,10 +218,6 @@ namespace Moonstorm.Starstorm2.Interactables
                                                 return true;
                                             }
                                         }
-                                    }
-                                    else
-                                    {
-                                        //SS2Log.Info("Drone " + master.name + " didn't have a body? affordab;e");
                                     }
                                 }
                             }
@@ -307,7 +293,7 @@ namespace Moonstorm.Starstorm2.Interactables
                                             genericFloat = 1.5f,
                                             genericUInt = (uint)(drone.bodyIndex + 1),
                                             genericBool = true
-                                            
+
                                         };
 
                                         var model = context.purchasedObject;
@@ -328,8 +314,6 @@ namespace Moonstorm.Starstorm2.Interactables
                                             droneDropTable = new DroneTableDropTable();
                                         }
                                         int dropvalue = Mathf.RoundToInt((Mathf.Pow(pair.Value, 1.01f) * .15f) - 4);
-                                        //int dropvalue = Mathf.RoundToInt((Mathf.Sqrt(pair.Value) - 5.65f) * 2.2f);
-                                        //int val = Mathf.RoundToInt(Mathf.Pow(Mathf.Sqrt(pair.Value) / 3, 1.35f) - 1.5f);
                                         PickupIndex ind = droneDropTable.GenerateDropPreReplacement(context.rng, dropvalue);
 
                                         //some weird catches to try help make drones give roughly their 'tier' but like i dunno man
@@ -339,7 +323,7 @@ namespace Moonstorm.Starstorm2.Interactables
                                             if (ind2.pickupDef.itemTier != ItemTier.Tier3)
                                             {
                                                 ind = ind2;
-                                            }  
+                                            }
                                         }
 
                                         if (ind.pickupDef.itemTier == ItemTier.Tier3 && pair.Value >= 60 && pair.Value < 350)
@@ -399,9 +383,6 @@ namespace Moonstorm.Starstorm2.Interactables
         {
             public CharacterBody LastActivator;
             public PurchaseInteraction PurchaseInteraction;
-            
-            //public Transform symbolTransform;
-            //public EntityStateMachine esm;
 
             public void Start()
             {
@@ -411,16 +392,6 @@ namespace Moonstorm.Starstorm2.Interactables
                 }
                 PurchaseInteraction.costType = (CostTypeIndex)droneCostIndex;
                 PurchaseInteraction.onPurchase.AddListener(DronePurchaseAttempt);
-
-                
-                //esm = GetComponent<EntityStateMachine>();
-                //SS2Log.Info("esm: " + esm);
-                //InteractableBodyModelPrefab.transform.Find("Symbol");
-                //BuffBrazierStateMachine = EntityStateMachine.FindByCustomName(gameObject, "Body");
-
-                //ConstructFlameChoice();
-                //BaseCostDetermination = (int)(PurchaseInteraction.cost * ChosenBuffBrazierBuff.CostModifier);
-                //SetCost();
             }
 
             public void DronePurchaseAttempt(Interactor interactor)
@@ -432,20 +403,7 @@ namespace Moonstorm.Starstorm2.Interactables
                 {
                     if (NetworkServer.active)
                     {
-                        //SS2Log.Info("Purchase Successful");
-                        //AttemptSpawnVoidPortal();
-                        //GameObject effectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/ShrineUseEffect.prefab").WaitForCompletion();
-                        //EffectManager.SimpleImpactEffect(effectPrefab, this.transform.position, new Vector3(0, 0, 0), true);
-
-                        //GameObject portal = UnityEngine.Object.Instantiate<GameObject>(ShatteredMonolith.voidFieldPortalObject, this.transform.position, new Quaternion(0, 70, 0, 0));
-                        //NetworkServer.Spawn(portal);
                         LastActivator = body;
-
-                        //symbolTransform.gameObject.SetActive(false);
-                        //PurchaseInteraction.SetAvailable(false);
-                        //play animation
-                        //esm.SetNextState(new DestroyLeadin());
-                        //StartCoroutine(reenableAvailablity());
                     }
                 }
             }
@@ -500,7 +458,7 @@ namespace Moonstorm.Starstorm2.Interactables
             new private readonly WeightedSelection<PickupIndex> selector = new WeightedSelection<PickupIndex>(8);
         }
 
-        public class RefabricatorTriple : MonoBehaviour
+        public class RefabricatorTriple
         {
             public Vector3 position;
             public Vector3 rotation;

@@ -1,4 +1,4 @@
-﻿using Moonstorm;
+﻿using MSU;
 using RoR2;
 using RoR2.Projectile;
 using UnityEngine;
@@ -11,7 +11,7 @@ namespace EntityStates.Nemmando
 
         public static float maxEmission;
         public static float minEmission;
-        [TokenModifier("SS2_NEMMANDO_SECONDARY_CONCUSSION_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_NEMMANDO_SECONDARY_CONCUSSION_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float maxDamageCoefficient;
         public static float minDamageCoeffficient;
         public static float procCoefficient;

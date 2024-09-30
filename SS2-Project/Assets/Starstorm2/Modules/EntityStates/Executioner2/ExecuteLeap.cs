@@ -1,11 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Moonstorm;
+﻿using UnityEngine;
 using RoR2;
-using System;
-using UnityEngine.Networking;
-using Moonstorm.Starstorm2.Components;
+using SS2.Components;
 using UnityEngine.AddressableAssets;
 
 namespace EntityStates.Executioner2
@@ -72,8 +67,7 @@ namespace EntityStates.Executioner2
             Transform modelTransform = GetModelTransform();
             if (modelTransform)
             {
-                TemporaryOverlay temporaryOverlay = modelTransform.gameObject.AddComponent<TemporaryOverlay>();
-
+                TemporaryOverlayInstance temporaryOverlay = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
 
                 temporaryOverlay.animateShaderAlpha = true;
 
@@ -92,7 +86,8 @@ namespace EntityStates.Executioner2
                     temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 0.5f, 0.5f, 0f);
                 }
 
-                temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
+                // TODO: No longer needed post-SOTS, leaving in for now but need to remove later
+                //temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
             }
 
             Util.PlaySound("ExecutionerSpecialCast", gameObject);

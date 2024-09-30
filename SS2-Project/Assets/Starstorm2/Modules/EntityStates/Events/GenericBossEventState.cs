@@ -1,9 +1,5 @@
-﻿using Moonstorm.Starstorm2;
-using Moonstorm.Starstorm2.Components;
-using Moonstorm.Starstorm2.ScriptableObjects;
-using R2API.Networking.Interfaces;
+﻿/*using SS2;
 using RoR2;
-using RoR2.UI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -163,3 +159,4 @@ namespace EntityStates.Events
     }
 
 }
+*/

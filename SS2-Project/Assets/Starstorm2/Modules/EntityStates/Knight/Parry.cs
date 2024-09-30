@@ -1,5 +1,4 @@
-﻿using Moonstorm;
-using R2API.Utils;
+﻿using MSU;
 using RoR2;
 using RoR2.Skills;
 using UnityEngine;
@@ -11,7 +10,7 @@ namespace EntityStates.Knight
     public class Parry : BasicMeleeAttack
     {
         public static float swingTimeCoefficient = 1f;
-        [TokenModifier("SS2_KNIGHT_SHIELD_BASH_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_KNIGHT_SHIELD_BASH_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float TokenModifier_dmgCoefficient => new ShieldPunch().damageCoefficient;
         
         // TODO: Make static once you have a replacement
@@ -40,13 +39,10 @@ namespace EntityStates.Knight
             originalUtilitySkill = skillLocator.utility;
             originalSpecialSkill = skillLocator.special;
 
-            //var buffedPrimary = originalPrimarySkill.GetFieldValue<SkillDef>("buffedSkillRef");
-
             // Assign the buffed skill versions
             originalPrimarySkill.SetSkillOverride(gameObject, buffedPrimarySkill, GenericSkill.SkillOverridePriority.Contextual);
             originalUtilitySkill.SetSkillOverride(gameObject, buffedUtilitySkill, GenericSkill.SkillOverridePriority.Contextual);
             originalSpecialSkill.SetSkillOverride(gameObject, buffedSpecialSkill, GenericSkill.SkillOverridePriority.Contextual);
-            Debug.Log("setting buffed skills");
 
             EffectData effectData = new EffectData();
             effectData.origin = this.characterBody.corePosition;
@@ -68,11 +64,15 @@ namespace EntityStates.Knight
             if (inputBank.skill2.down)
             {
                 outer.SetNextState(new Shield());
+            } 
+            else
+            {
+                outer.SetNextStateToMain();
             }
 
             characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility);
 
-            outer.SetNextStateToMain();
+            
             base.OnExit();
         }
         public override void AuthorityModifyOverlapAttack(OverlapAttack overlapAttack)

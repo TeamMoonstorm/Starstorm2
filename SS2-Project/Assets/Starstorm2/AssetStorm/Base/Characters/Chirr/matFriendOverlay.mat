@@ -2,14 +2,20 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: matFriendOverlay
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
-  m_ShaderKeywords: CLOUDOFFSET FRESNEL USE_CLOUDS USE_UV1 _EMISSION
+  m_ValidKeywords:
+  - CLOUDOFFSET
+  - FRESNEL
+  - USE_CLOUDS
+  - USE_UV1
+  m_InvalidKeywords:
+  - _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -20,7 +26,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Cloud1Tex:
-        m_Texture: {fileID: 2800000, guid: ec8b3d3c23979ec4082ed9c288fd2882, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1faf5fc63af584d4d9667c3ac6f41faf, type: 3}
         m_Scale: {x: 3, y: 3}
         m_Offset: {x: 0, y: 0}
     - _Cloud2Tex:
@@ -35,6 +41,7 @@ Material:
         m_Texture: {fileID: 2800000, guid: 056152faff0560e4c9aa5ef6a3c69327, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AlphaBias: 0.389
     - _AlphaBoost: 2.21
@@ -89,3 +96,4 @@ Material:
     - _RimColor: {r: 1, g: 0.68275857, b: 0, a: 0}
     - _TimeScale: {r: 25, g: 10, b: 1, a: 1}
     - _TintColor: {r: 0.37204456, g: 3.25436, b: 0.015350791, a: 1}
+  m_BuildTextureStacks: []

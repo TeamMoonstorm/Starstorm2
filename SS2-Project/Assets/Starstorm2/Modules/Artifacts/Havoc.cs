@@ -1,25 +1,47 @@
 ﻿using RoR2;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using Moonstorm;
-using Moonstorm.Components;
 using R2API.ScriptableObjects;
-
-namespace Moonstorm.Starstorm2.Artifacts
+using MSU;
+using System.Collections;
+using RoR2.ContentManagement;
+#if DEBUG
+namespace SS2.Artifacts
 {
-    //[DisabledContent]
-    public class Havoc : ArtifactBase
+    public class Havoc : SS2Artifact
     {
-        public override ArtifactDef ArtifactDef { get; } = SS2Assets.LoadAsset<ArtifactDef>("Havoc", SS2Bundle.Artifacts);
+        public override SS2AssetRequest assetRequest => SS2Assets.LoadAssetAsync<ArtifactAssetCollection>("acHavoc", SS2Bundle.Artifacts);
 
-        public override ArtifactCode ArtifactCode { get; } = SS2Assets.LoadAsset<ArtifactCode>("HavocCode", SS2Bundle.Artifacts);
+        public override void Initialize()
+        {
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return false;
+        }
 
         public override void OnArtifactDisabled()
-        { }
+        { 
+        }
 
         public override void OnArtifactEnabled()
-        { }
+        { 
+        }
+
+        public override IEnumerator LoadContentAsync()
+        {
+            /*ParallelAssetLoadCoroutineHelper helper = new ParallelAssetLoadCoroutineHelper();
+            
+            helper.AddAssetToLoad<ArtifactDef>("Havoc", SS2Bundle.Artifacts);
+            helper.AddAssetToLoad<ArtifactCode>("HavocCode", SS2Bundle.Artifacts);
+
+            helper.Start();
+            while (!helper.IsDone())
+                yield return null;
+
+            _artifactCode = helper.GetLoadedAsset<ArtifactCode>("HavocCode");
+            _artifactDef = helper.GetLoadedAsset<ArtifactDef>("Havoc");¨*/
+            yield break;
+        }
     }
 }
+#endif

@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using RoR2;
 using RoR2.Projectile;
-using UnityEngine.Networking;
 
 namespace EntityStates.Chirr
 {
-	public class SpitBomb : BaseSkillState
+    public class SpitBomb : BaseSkillState
 	{
 
 		public static GameObject projectilePrefab;

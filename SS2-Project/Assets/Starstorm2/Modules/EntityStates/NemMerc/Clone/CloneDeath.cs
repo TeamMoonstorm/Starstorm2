@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EntityStates.NemMerc.Clone
+﻿namespace EntityStates.NemMerc.Clone
 {
     public class CloneDeath : GenericCharacterDeath
     {

@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 055ad47894d63994fa4e32d1cfa2f4d3, type: 3}
+  m_Script: {fileID: 11500000, guid: 74a4b8a0e9a17f6419d0bf9a23a7c118, type: 3}
   m_Name: CapGM
   m_EditorClassIdentifier: 
   baseSkins: []
@@ -23,8 +23,8 @@ MonoBehaviour:
   meshReplacements: []
   projectileGhostReplacements: []
   minionSkinReplacements: []
-  bodyAddress: RoR2/Base/Captain/CaptainBody.prefab
-  displayAddress: RoR2/Base/Captain/CaptainDisplay.prefab
+  _bodyAddress: RoR2/Base/Captain/CaptainBody.prefab
+  _displayAddress: RoR2/Base/Captain/CaptainDisplay.prefab
   _baseSkins: []
   _rendererInfos:
   - defaultMaterial: {fileID: 2100000, guid: cd15a7e4c0a49ba4394c7a42158559f0, type: 2}
@@ -47,7 +47,7 @@ MonoBehaviour:
     ignoreOverlays: 0
     hideOnDeath: 0
     rendererIndex: 3
-  - defaultMaterial: {fileID: 2100000, guid: 881d4e1df27646841bdf42de5701b924, type: 2}
+  - defaultMaterial: {fileID: 2100000, guid: 23f3f99c67849f64f80a89347b8eeda7, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
@@ -74,10 +74,10 @@ MonoBehaviour:
     rendererIndex: 3
   - mesh: {fileID: 4300000, guid: 3ff91e114b62c7e43b820c9bd3f0672d, type: 2}
     rendererIndex: 4
-  - mesh: {fileID: 4300000, guid: 71be145439eb3a749b61194dd7118572, type: 2}
+  - mesh: {fileID: 4300000, guid: ccee8bce599b2c141901a26f12ae2cff, type: 2}
     rendererIndex: 5
   - mesh: {fileID: 4300000, guid: 0f2113551040fb64e912819f10dde735, type: 2}
     rendererIndex: 6
   _projectileGhostReplacements: []
   _minionSkinReplacements: []
-  rendererAmounts: 7
+  cachedRendererAmount: 0

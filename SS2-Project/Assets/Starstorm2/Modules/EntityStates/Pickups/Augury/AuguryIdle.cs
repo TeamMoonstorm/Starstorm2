@@ -4,6 +4,7 @@ using UnityEngine.Networking;
 
 namespace EntityStates.Pickups.Augury
 {
+#if DEBUG
     public class AuguryIdle : AuguryBaseState
     {
         public static float damageThresholdMultiplier = 6;
@@ -54,4 +55,5 @@ namespace EntityStates.Pickups.Augury
             tankedDamage = reader.ReadSingle();
         }
     }
+#endif
 }

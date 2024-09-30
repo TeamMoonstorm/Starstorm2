@@ -1,8 +1,8 @@
-﻿using Moonstorm;
-using Moonstorm.Starstorm2;
+﻿using SS2;
 using RoR2;
 using RoR2.Projectile;
 using UnityEngine;
+using MSU;
 
 namespace EntityStates.NemCommando
 {
@@ -12,7 +12,7 @@ namespace EntityStates.NemCommando
 
         public static float maxEmission;
         public static float minEmission;
-        [TokenModifier("SS2_NEMMANDO_SECONDARY_CONCUSSION_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_NEMMANDO_SECONDARY_CONCUSSION_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float damageCoefficient;
         public static float procCoefficient;
         public static float maxRecoil;
@@ -58,27 +58,23 @@ namespace EntityStates.NemCommando
 
                 skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
 
-                if (skinNameToken != "SS2_SKIN_NEMCOMMANDO_DEFAULT")
+                //red
+                muzzleFlash = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoRed", SS2Bundle.NemCommando);
+                projectilePrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwordBeamProjectile", SS2Bundle.NemCommando);
+
+
+                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO" || skinNameToken.Contains("BLUE"))
                 {
-                    //Blue
-                    if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_COMMANDO")
-                    {
-                        muzzleFlash = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoYellow", SS2Bundle.NemCommando);
-                        projectilePrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwordBeamProjectileBlue", SS2Bundle.NemCommando);
-                    }
-                    //Yellow
-                    if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY")
-                    {
-                        muzzleFlash = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoYellow", SS2Bundle.NemCommando);
-                        projectilePrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwordBeamProjectileYellow", SS2Bundle.NemCommando);
-                    }
+                    muzzleFlash = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoBlue", SS2Bundle.NemCommando);
+                    projectilePrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwordBeamProjectileBlue", SS2Bundle.NemCommando);
                 }
-                //Red
-                else
+                //Yellow
+                if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_MASTERY" || skinNameToken.Contains("YELLOW"))
                 {
-                    muzzleFlash = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoRed", SS2Bundle.NemCommando);
-                    projectilePrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwordBeamProjectile", SS2Bundle.NemCommando);
+                    muzzleFlash = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoYellow", SS2Bundle.NemCommando);
+                    projectilePrefab = SS2Assets.LoadAsset<GameObject>("NemCommandoSwordBeamProjectileYellow", SS2Bundle.NemCommando);
                 }
+
 
                 EffectManager.SimpleMuzzleFlash(muzzleFlash, gameObject, muzzleString, false);
 

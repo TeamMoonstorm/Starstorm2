@@ -1,11 +1,10 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Networking;
 using RoR2;
-using Moonstorm.Starstorm2.Items;
-namespace Moonstorm.Starstorm2.Components
+using SS2.Items;
+namespace SS2.Components
 {
-	public class CoffeeBeanPickup : MonoBehaviour
+    public class CoffeeBeanPickup : MonoBehaviour
 	{
 		private void OnTriggerStay(Collider other)
 		{
@@ -14,7 +13,7 @@ namespace Moonstorm.Starstorm2.Components
 				CharacterBody body = other.GetComponent<CharacterBody>();
 				if (body)
 				{
-					int stack = body.inventory ? body.inventory.GetItemCount(SS2Content.Items.CoffeeBag) : 1;					
+					int stack = ownerBody && ownerBody.inventory ? ownerBody.inventory.GetItemCount(SS2Content.Items.CoffeeBag) : 1;					
 					body.AddTimedBuff(SS2Content.Buffs.BuffCoffeeBag, CoffeeBag.buffDuration * stack);
 					EffectManager.SimpleEffect(this.pickupEffect, base.transform.position, Quaternion.identity, true);
 
@@ -29,6 +28,8 @@ namespace Moonstorm.Starstorm2.Components
 
 		[Tooltip("The team filter object which determines who can pick up this pack.")]
 		public TeamFilter teamFilter;
+
+		public CharacterBody ownerBody;
 
 		public GameObject pickupEffect;
 

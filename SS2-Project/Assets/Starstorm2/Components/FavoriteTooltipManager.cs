@@ -1,12 +1,8 @@
 ﻿using RoR2;
 using RoR2.UI;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.UI;
-
-namespace Moonstorm.Starstorm2.Components
+namespace SS2.Components
 {
     public class FavoriteTooltipManager : NetworkBehaviour
     {

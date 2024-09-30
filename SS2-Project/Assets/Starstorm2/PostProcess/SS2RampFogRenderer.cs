@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
-
-namespace Moonstorm.Starstorm2.PostProcess
+namespace SS2.PostProcess
 {
     public sealed class SS2RampFogRenderer : PostProcessEffectRenderer<SS2RampFog>
     {

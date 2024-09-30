@@ -1,27 +1,39 @@
-﻿using RoR2;
+﻿using MSU;
+using MSU.Config;
+using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Items;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-
-namespace Moonstorm.Starstorm2.Items
+namespace SS2.Items
 {
-    
-    public sealed class MoltenCoin : ItemBase
+    public sealed class MoltenCoin : SS2Item
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("MoltenCoin", SS2Bundle.Items);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acMoltenCoin", SS2Bundle.Items);
+        private static GameObject _impactEffect;
 
-        public static GameObject impactEffect { get; } = SS2Assets.LoadAsset<GameObject>("MoltenCoinEffect", SS2Bundle.Items);
-
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance for Molten Coin to Proc. (100 = 100%)")]
-        [TokenModifier("SS2_ITEM_MOLTENCOIN_DESC", StatTypes.Default, 0)]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Chance for Molten Coin to Proc. (100 = 100%)")]
+        [FormatToken("SS2_ITEM_MOLTENCOIN_DESC", 0)]
         public static float procChance = 6f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Base Damage per stack. (1 = 100%)")]
-        [TokenModifier("SS2_ITEM_MOLTENCOIN_DESC", StatTypes.MultiplyByN, 1, "100")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Base Damage per stack. (1 = 100%)")]
+        [FormatToken("SS2_ITEM_MOLTENCOIN_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
         public static float damageCoeff = 1f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Coin gain on proc. Scales with time. (1 = 1$)")]
-        [TokenModifier("SS2_ITEM_MOLTENCOIN_DESC", StatTypes.Default, 2)]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Coin gain on proc. Scales with time. (1 = 1$)")]
+        [FormatToken("SS2_ITEM_MOLTENCOIN_DESC", 2)]
         public static int coinGain = 1;
+
+        public override void Initialize()
+        {
+            _impactEffect = AssetCollection.FindAsset<GameObject>("MoltenCoinEffect");
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
         {
@@ -43,11 +55,9 @@ namespace Moonstorm.Starstorm2.Items
                     DotController.InflictDot(ref dotInfo);
 
                     body.master.GiveMoney((uint)(stack * (Run.instance.stageClearCount + (coinGain * 1f))));
-                        
-                    //MSUtil.PlayNetworkedSFX("MoltenCoin", report.victim.gameObject.transform.position);
-                    //moved the sound to an effect so it takes advantage of vfx priority
-                    EffectManager.SimpleEffect(MoltenCoin.impactEffect, report.victimBody.transform.position, Quaternion.identity, true);
-                    EffectManager.SimpleImpactEffect(HealthComponent.AssetReferences.gainCoinsImpactEffectPrefab, report.victimBody.transform.position, UnityEngine.Vector3.up, true);                  
+
+                    EffectManager.SimpleEffect(MoltenCoin._impactEffect, report.victimBody.transform.position, Quaternion.identity, true);
+                    EffectManager.SimpleImpactEffect(HealthComponent.AssetReferences.gainCoinsImpactEffectPrefab, report.victimBody.transform.position, UnityEngine.Vector3.up, true);
                 }
             }
         }

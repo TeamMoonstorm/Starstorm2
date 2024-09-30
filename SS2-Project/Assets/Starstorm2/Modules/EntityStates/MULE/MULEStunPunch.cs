@@ -1,20 +1,15 @@
-﻿using Moonstorm;
+﻿using MSU;
 using RoR2;
 using RoR2.Skills;
 using UnityEngine;
 using UnityEngine.Networking;
-using System;
-using UnityEngine;
-using UnityEngine.Animations;
-using System.Runtime.CompilerServices;
-using EntityStates;
-using RoR2;
 
 namespace EntityStates.MULE
 {
+#if DEBUG
     class MULEStunPunch : BasicMeleeAttack, SteppedSkillDef.IStepSetter
     {
-        [TokenModifier("SS2_MULE_PRIMARY_PUNCH_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_MULE_PUNCH_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float dmgCoefficient;
         public static float swingTimeCoefficient = 1.33f;
         public int swingSide;
@@ -74,4 +69,5 @@ namespace EntityStates.MULE
             overlapAttack.damageType = DamageType.Stun1s;
         }
     }
+#endif
 }

@@ -7,8 +7,9 @@ PhysicsManager:
     x: 0
     y: -30
     z: 0
-  m_DefaultMaterial: {fileID: 5190, guid: dd9bf71c9f649cde4fc0e81cdc1bd2d5, type: 2}
+  m_DefaultMaterial: {fileID: 4827, guid: 366ce7beb882a63e3c3acb5bc226ec35, type: 2}
   m_BounceThreshold: 2
+  m_DefaultMaxDepenetrationVelocity: 10
   m_SleepThreshold: 0.005
   m_DefaultContactOffset: 0.01
   m_DefaultSolverIterations: 6
@@ -20,38 +21,38 @@ PhysicsManager:
   m_ClothInterCollisionStiffness: 0
   m_ContactsGeneration: 1
   m_LayerCollisionMatrix:
-  - 4274556105
-  - 4261937352
-  - 4261937352
+  - 1590201545
+  - 503840968
+  - 503840968
   - 4294967295
-  - 4261937352
-  - 4261937352
-  - 4294967295
-  - 4294967295
-  - 4261973448
-  - 4261937352
-  - 4274522569
-  - 4274677193
-  - 4278730952
-  - 4261939400
-  - 4261943496
-  - 4274520521
-  - 4261937352
-  - 4262070472
-  - 4261937352
-  - 4275044351
-  - 4261413064
-  - 4261413064
-  - 4274556105
-  - 4266167497
-  - 4261417160
+  - 503840968
+  - 503840968
   - 4294967295
   - 4294967295
-  - 4294967295
-  - 4294967295
-  - 4294967295
-  - 4294967295
-  - 4294967295
+  - 3725102536
+  - 503840968
+  - 2663909833
+  - 3200935369
+  - 520634568
+  - 503843016
+  - 503847112
+  - 2663907785
+  - 503840968
+  - 503974088
+  - 503840968
+  - 2664431615
+  - 503316680
+  - 503316680
+  - 516459721
+  - 1581812937
+  - 503320776
+  - 2684354559
+  - 2684354559
+  - 2684354559
+  - 2684354559
+  - 2248
+  - 1082130889
+  - 2651360712
   m_AutoSimulation: 1
   m_AutoSyncTransforms: 0
   m_ReuseCollisionCallbacks: 1
@@ -61,7 +62,7 @@ PhysicsManager:
     y: -9.81
     z: 0
   m_ContactPairsMode: 0
-  m_BroadphaseType: 0
+  m_BroadphaseType: 2
   m_WorldBounds:
     m_Center:
       x: 0
@@ -75,5 +76,6 @@ PhysicsManager:
   m_FrictionType: 0
   m_EnableEnhancedDeterminism: 0
   m_EnableUnifiedHeightmaps: 1
+  m_ImprovedPatchFriction: 0
   m_SolverType: 0
   m_DefaultMaxAngularSpeed: 7

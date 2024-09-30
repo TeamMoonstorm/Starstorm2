@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using RoR2;
 namespace EntityStates.Chirr.Wings
 {
@@ -28,7 +26,7 @@ namespace EntityStates.Chirr.Wings
             }
             Util.PlaySound("ChirrSprintStart", base.gameObject); // loop should be in start event but idc
             this.soundId = Util.PlaySound("ChirrSprintLoop", base.gameObject);
-            isToggle = Moonstorm.Starstorm2.Survivors.Chirr.toggleHover;
+            isToggle = SS2.Survivors.Chirr.toggleHover;
             base.characterBody.bodyFlags |= RoR2.CharacterBody.BodyFlags.SprintAnyDirection;
             //find & enable hover effect
         }

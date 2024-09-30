@@ -1,13 +1,13 @@
-﻿using Moonstorm;
+﻿using MSU;
 using RoR2;
 using UnityEngine;
 
 //Dont fix what isnt broken or something
 namespace EntityStates.Nemmando
 {
-    public class ShootGun : RendHandler
+    public class ShootGun : BaseState
     {
-        [TokenModifier("SS2_NEMMANDO_SECONDARY_SHOOT_DESCRIPTION", StatTypes.MultiplyByN, 0, "100")]
+        [FormatToken("SS2_NEMMANDO_SECONDARY_SHOOT_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float damageCoefficient;
         public static float procCoefficient;
         public static float baseDuration;
@@ -109,7 +109,7 @@ namespace EntityStates.Nemmando
                     hitEffectPrefab = EntityStates.Commando.CommandoWeapon.FirePistol2.hitEffectPrefab
                 };
 
-                RendMultiplier(bulletAttack);
+                //RendMultiplier(bulletAttack);
 
                 bulletAttack.Fire();
 

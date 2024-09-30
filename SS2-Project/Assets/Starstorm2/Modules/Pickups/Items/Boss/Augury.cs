@@ -1,17 +1,32 @@
 ﻿using EntityStates.Pickups.Augury;
+using MSU;
 using RoR2;
+using RoR2.ContentManagement;
 using RoR2.Items;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-
-namespace Moonstorm.Starstorm2.Items
+#if DEBUG
+namespace SS2.Items
 {
-    [DisabledContent]
-    public sealed class Augury : ItemBase
+    public sealed class Augury : SS2Item
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Augury", SS2Bundle.Indev);
+        private static GameObject _attachment;
 
-        public sealed class Behavior : BaseItemBodyBehavior, IOnTakeDamageServerReceiver
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acAugury", SS2Bundle.Indev);
+
+        public override void Initialize()
+        {
+            _attachment = AssetCollection.FindAsset<GameObject>("AuguryBodyAttachment");
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return false; //TODO: MSUtil.IsModInstalled("Enforcer GUID goes here... also check if nemforcer is enabled or something."); 
+        }
+
+        public sealed class AuguryBehavior : BaseItemBodyBehavior, IOnTakeDamageServerReceiver
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.Augury;
@@ -19,7 +34,7 @@ namespace Moonstorm.Starstorm2.Items
             private EntityStateMachine esm;
             private void Start()
             {
-                attachment = Instantiate(SS2Assets.LoadAsset<GameObject>($"{nameof(Augury)}BodyAttachment", SS2Bundle.Indev)).GetComponent<NetworkedBodyAttachment>();
+                attachment = Instantiate(_attachment).GetComponent<NetworkedBodyAttachment>();
                 attachment.AttachToGameObjectAndSpawn(body.gameObject);
                 esm = attachment.gameObject.GetComponent<EntityStateMachine>();
 
@@ -59,3 +74,4 @@ namespace Moonstorm.Starstorm2.Items
         }
     }
 }
+#endif

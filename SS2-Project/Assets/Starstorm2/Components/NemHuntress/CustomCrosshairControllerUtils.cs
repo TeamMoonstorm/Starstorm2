@@ -1,13 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
-using RoR2.Skills;
-using UnityEngine.UI;
+﻿using UnityEngine;
 using RoR2.UI;
-
-
-namespace Moonstorm.Starstorm2.UI
+namespace SS2.UI
 {
     [RequireComponent(typeof(HudElement))]
     [RequireComponent(typeof(RectTransform))]

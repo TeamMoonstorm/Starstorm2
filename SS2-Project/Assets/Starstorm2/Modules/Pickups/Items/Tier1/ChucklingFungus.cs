@@ -1,45 +1,48 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using RoR2;
 using RoR2.Items;
 using UnityEngine.Networking;
 using System.Linq;
+using MSU;
+using RoR2.ContentManagement;
+using System.Collections;
 
-namespace Moonstorm.Starstorm2.Items
+namespace SS2.Items
 {
-    public sealed class ChucklingFungus : ItemBase
+    //N: This is so fucking epic
+    public sealed class ChucklingFungus : SS2VoidItem
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("ChucklingFungus", SS2Bundle.Items);
+        public override SS2AssetRequest AssetRequest()
+        {
+            return SS2Assets.LoadAssetAsync<ItemAssetCollection>("acChucklingFungus", SS2Bundle.Items);
+        }
 
-        public static GameObject ChungusWard { get; set; } = SS2Assets.LoadAsset<GameObject>("ChungusWard", SS2Bundle.Items);
+        private static GameObject _chungusWard;
 
         public static float baseHealFractionPerSecond = 0.055f;
 
         public static float healFractionPerSecondPerStack = 0.0275f;
 
+        public override List<ItemDef> GetInfectableItems()
+        {
+            return new List<ItemDef>
+            {
+                SS2Content.Items.DormantFungus
+            };
+        }
+
         public override void Initialize()
         {
-            base.Initialize();
-            On.RoR2.Items.ContagiousItemManager.Init += AddPair;
+            _chungusWard = AssetCollection.FindAsset<GameObject>("ChungusWard");
         }
 
-        private void AddPair(On.RoR2.Items.ContagiousItemManager.orig_Init orig)
+        //Should return true only if dungus is available as well, unsure how to do that lol
+        public override bool IsAvailable(ContentPack contentPack)
         {
-            List<ItemDef.Pair> newVoidPairs = new List<ItemDef.Pair>();
-
-            ItemDef.Pair chungusPair = new ItemDef.Pair()
-            {
-                itemDef1 = SS2Content.Items.DormantFungus,
-                itemDef2 = ItemDef
-            };
-            newVoidPairs.Add(chungusPair);
-
-            var voidPairs = ItemCatalog.itemRelationships[DLC1Content.ItemRelationshipTypes.ContagiousItem];
-            ItemCatalog.itemRelationships[DLC1Content.ItemRelationshipTypes.ContagiousItem] = voidPairs.Union(newVoidPairs).ToArray();
-
-            orig();
+            return false;
         }
+
 
         public sealed class Behavior : BaseItemBodyBehavior
         {
@@ -64,7 +67,7 @@ namespace Moonstorm.Starstorm2.Items
 
                         float networkradius = body.radius + 1.5f + 1.5f * stack;
 
-                        wardInstance = Instantiate(ChungusWard, position, Quaternion.identity);
+                        wardInstance = Instantiate(_chungusWard, position, Quaternion.identity);
                         teamFilter = wardInstance.GetComponent<TeamFilter>();
                         healingWard = wardInstance.GetComponent<HealingWard>();
                         NetworkServer.Spawn(wardInstance);

@@ -1,16 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using RoR2;
-using System;
 using RoR2.Projectile;
-using Moonstorm.Starstorm2;
-using R2API;
-using Moonstorm.Starstorm2.DamageTypes;
 using static R2API.DamageAPI;
 
 namespace EntityStates.MULE
 {
+#if DEBUG
     public class MULEAimNet : BaseState
     {
         public static GameObject projectilePrefab;
@@ -28,21 +23,15 @@ namespace EntityStates.MULE
         public override void OnEnter()
         {
             base.OnEnter();
-            //EffectManager.SimpleMuzzleFlash
             duration = baseDuration / attackSpeedStat;
             Util.PlaySound(enterSoundString, gameObject);
             PlayCrossfade("Gesture, Override", "ShootNet", 0.05f);
 
             projectileInstance = projectilePrefab;
             Debug.Log("projectile instance: " + projectileInstance);
-            //pie = projectileInstance.GetComponent<ProjectileImpactExplosion>();
-            //Debug.Log("pie: " + pie);
-            //pd = projectileInstance.GetComponent<ProjectileDamage>();   
-            //pd.damageType = (DamageType)Moonstorm.Starstorm2.DamageTypes.NetOnHit.netDamageType;
-            //Debug.Log("damage type: " + pd.damageType);
 
             var damageAPIComponent = projectileInstance.AddComponent<ModdedDamageTypeHolderComponent>();
-            damageAPIComponent.Add(NetOnHit.netDamageType);
+            damageAPIComponent.Add(SS2.Survivors.MULE.NetDamageType);
 
             if (isAuthority)
             {
@@ -79,4 +68,5 @@ namespace EntityStates.MULE
             }    
         }
     }
+#endif
 }

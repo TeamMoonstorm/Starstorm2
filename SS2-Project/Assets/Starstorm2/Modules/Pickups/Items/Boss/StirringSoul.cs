@@ -1,33 +1,51 @@
-﻿using Moonstorm.Starstorm2.Components;
+﻿using SS2.Components;
 using RoR2;
 using RoR2.Items;
 using UnityEngine;
 using UnityEngine.Networking;
+using MSU;
+using System.Collections;
+using MSU.Config;
+using RoR2.ContentManagement;
+using System.Collections.Generic;
 
-namespace Moonstorm.Starstorm2.Items
+namespace SS2.Items
 {
-    public sealed class StirringSoul : ItemBase
+    public sealed class StirringSoul : SS2Item
     {
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("StirringSoul", SS2Bundle.Items);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acStirringSoul", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Chance to gain soul initially. (1 = 100%)")]
-        [TokenModifier("SS2_ITEM_STIRRINGSOUL_DESC", StatTypes.MultiplyByN, 0, "100")]
+        private static GameObject _monsterSoulPickup;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Chance to gain soul initially. (1 = 100%)")]
+        [FormatToken("SS2_ITEM_STIRRINGSOUL_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float initChance = 0.005f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Soul gain chance cap. (1 = 100%)")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Soul gain chance cap. (1 = 100%)")]
         public static float maxChance = 0.1f;
+
+        public override void Initialize()
+        {
+            _monsterSoulPickup = AssetCollection.FindAsset<GameObject>("MonsterSoul");
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.StirringSoul;
             public float currentChance;
-            private static GameObject MonsterSoulPickup = SS2Assets.LoadAsset<GameObject>("MonsterSoul", SS2Bundle.Items);
+
             public void OnKilledOtherServer(DamageReport report)
             {
                 if (NetworkServer.active && !Run.instance.isRunStopwatchPaused && report.victimMaster)
                 {
-                    GameObject soul = Instantiate(MonsterSoulPickup, report.victimBody.corePosition, Random.rotation);
+                    GameObject soul = Instantiate(_monsterSoulPickup, report.victimBody.corePosition, Random.rotation);
                     soul.GetComponent<TeamFilter>().teamIndex = body.teamComponent.teamIndex;
                     SoulPickup pickup = soul.GetComponentInChildren<SoulPickup>();
                     pickup.team = soul.GetComponent<TeamFilter>();

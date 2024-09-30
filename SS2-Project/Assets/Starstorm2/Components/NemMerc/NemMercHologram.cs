@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using RoR2;
 using EntityStates;
 using EntityStates.NemMerc;
 using UnityEngine.Networking;
 using RoR2.CharacterAI;
-
-namespace Moonstorm.Starstorm2.Components
+namespace SS2.Components
 {
     public class NemMercHologram : NetworkBehaviour
     {
@@ -103,7 +99,7 @@ namespace Moonstorm.Starstorm2.Components
         {
             if (!damageReport.victim || !damageReport.attacker) return;
 
-            if(damageReport.attacker == this.owner && (R2API.DamageAPI.HasModdedDamageType(damageReport.damageInfo, DamageTypes.RedirectHologram.damageType)))
+            if(damageReport.attacker == this.owner && (R2API.DamageAPI.HasModdedDamageType(damageReport.damageInfo, SS2.Survivors.NemMerc.damageType)))
             {
                 Vector3 between = damageReport.damageInfo.position - base.transform.position;
                 if(between.magnitude <= this.targetSearchRadius)

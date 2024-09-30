@@ -1,11 +1,4 @@
-﻿using BepInEx;
-using EntityStates.DroneTable;
-using Moonstorm.Starstorm2;
-using RoR2;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Networking;
+﻿using UnityEngine.Networking;
 
 namespace EntityStates.DroneTable
 {

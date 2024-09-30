@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RoR2;
-using Moonstorm.Starstorm2.Components;
-using RoR2.Projectile;
+﻿using RoR2.Projectile;
 using UnityEngine.Networking;
 
 namespace EntityStates.Cyborg2.ShockMine

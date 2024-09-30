@@ -1,43 +1,45 @@
 ﻿using RoR2;
 using RoR2.Items;
 using RoR2.Orbs;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using R2API;
-using Moonstorm.Components;
+using MSU;
+using RoR2.ContentManagement;
+using System.Collections;
+using MSU.Config;
 
-namespace Moonstorm.Starstorm2.Items
+namespace SS2.Items
 {
-    public sealed class Malice : ItemBase
+    public sealed class Malice : SS2Item
     {
         private const string token = "SS2_ITEM_MALICE_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("Malice", SS2Bundle.Items);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acMalice", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Total damage each Malice bounce deals. (1 = 100%)")]
-        [TokenModifier(token, StatTypes.MultiplyByN, 0, "100")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Total damage each Malice bounce deals. (1 = 100%)")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float damageCoeff = 0.25f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Number of bounces per stack.")]
-        [TokenModifier(token, StatTypes.Default, 1)]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Number of bounces per stack.")]
+        [FormatToken(token, 1)]
         public static int bounceStack = 1;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius of Malice, in meters.")]
-        [TokenModifier(token, StatTypes.Default, 2)]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Radius of Malice, in meters.")]
+        [FormatToken(token, 2)]
         public static float radiusBase = 12f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius of Malice per stack, in meters.")]
-        [TokenModifier(token, StatTypes.Default, 3)]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Radius of Malice per stack, in meters.")]
+        [FormatToken(token, 3)]
         public static float radiusPerStack = 2.4f;
 
-        
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Proc coefficient of damage dealt by Malice.")]
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Proc coefficient of damage dealt by Malice.")]
         public static float procCo = 0.1f;
 
         //damage types should not be used as a substitute for proper proc chain masks, but it works here
-        public static DamageAPI.ModdedDamageType maliceDamageType;
+        public static DamageAPI.ModdedDamageType MaliceDamageType { get; private set; }
 
         //a proc chain mask of proc types that shouldn't invalidate malice
         public static ProcChainMask ignoredProcs;
@@ -46,15 +48,19 @@ namespace Moonstorm.Starstorm2.Items
 
         public override void Initialize()
         {
-            base.Initialize();
-            maliceDamageType = DamageAPI.ReserveDamageType();
+            maliceOrbEffectPrefab = AssetCollection.FindAsset<GameObject>("MaliceOrbEffect");
+            MaliceDamageType = DamageAPI.ReserveDamageType();
             ignoredProcs.AddProc(ProcType.Backstab);
-
-            maliceOrbEffectPrefab = SS2Assets.LoadAsset<GameObject>("MaliceOrbEffect", SS2Bundle.Items);
         }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
+
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
         {
-            
+
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.Malice;
             public void OnDamageDealtServer(DamageReport report)
@@ -62,7 +68,7 @@ namespace Moonstorm.Starstorm2.Items
                 DamageInfo damageInfo = report.damageInfo;
 
                 //damage has proc co and damage info does not contained any banned proc types
-                if (damageInfo.procCoefficient > 0 && (damageInfo.procChainMask.mask & ~ignoredProcs.mask) == 0U && !damageInfo.HasModdedDamageType(maliceDamageType))      
+                if (damageInfo.procCoefficient > 0 && (damageInfo.procChainMask.mask & ~ignoredProcs.mask) == 0U && !damageInfo.HasModdedDamageType(MaliceDamageType))
                 {
                     MaliceOrb malOrb = new MaliceOrb();
                     malOrb.bouncesRemaining = bounceStack * stack - 1;
@@ -124,7 +130,7 @@ namespace Moonstorm.Starstorm2.Items
                             damageInfo.position = this.target.transform.position;
                             damageInfo.damageColorIndex = this.damageColorIndex;
                             damageInfo.damageType = this.damageType;
-                            damageInfo.AddModdedDamageType(maliceDamageType);
+                            damageInfo.AddModdedDamageType(MaliceDamageType);
                             healthComponent.TakeDamage(damageInfo);
                             GlobalEventManager.instance.OnHitEnemy(damageInfo, healthComponent.gameObject);
                             GlobalEventManager.instance.OnHitAll(damageInfo, healthComponent.gameObject);
@@ -168,7 +174,7 @@ namespace Moonstorm.Starstorm2.Items
                         this.search = new BullseyeSearch();
                     }
                     float range = baseRange;
-                    if(currentVictim && currentVictim.body)
+                    if (currentVictim && currentVictim.body)
                     {
                         range += currentVictim.body.radius;
                     }

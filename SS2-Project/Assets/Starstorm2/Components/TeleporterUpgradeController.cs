@@ -1,11 +1,9 @@
 ﻿using RoR2;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
-
-namespace Moonstorm.Starstorm2
+namespace SS2
 {
     public class TeleporterUpgradeController : NetworkBehaviour
     {
@@ -36,6 +34,21 @@ namespace Moonstorm.Starstorm2
             Debug.Log("TELEPORTER UPGRADE CONTROLLER AWAKE");
             hzc = GetComponent<HoldoutZoneController>();
             ti = GetComponent<TeleporterInteraction>();
+
+            var teleBase = GameObject.Find("TeleporterBaseMesh").gameObject;
+            var teleProngs = teleBase.transform.Find("TeleporterProngMesh").gameObject;
+            var teleBeacon = teleBase.transform.Find("SurfaceHeight/TeleporterBeacon").gameObject;
+
+            var currStage = SceneManager.GetActiveScene().name;
+
+            var newTeleMat = Addressables.LoadAssetAsync<Material>("RoR2/Base/Teleporters/matTeleporterFresnelOverlay.mat").WaitForCompletion();
+
+            if (currStage != "skymeadow" && currStage != "slumberingsatellite")
+            {
+                teleBase.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
+                teleProngs.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
+                teleBeacon.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
+            }
 
             //passive vfx
             telePassiveParticles = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/PassiveParticle, Sphere").GetComponent<ParticleSystem>();

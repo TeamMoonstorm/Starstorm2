@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using RoR2;
-using EntityStates;
+﻿using RoR2;
 
 
 namespace EntityStates.NemMerc

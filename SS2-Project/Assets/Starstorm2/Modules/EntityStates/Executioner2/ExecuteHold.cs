@@ -1,13 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Moonstorm;
+﻿using UnityEngine;
 using RoR2;
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Networking;
-using Moonstorm.Starstorm2.Components;
+using SS2.Components;
 
 namespace EntityStates.Executioner2
 {

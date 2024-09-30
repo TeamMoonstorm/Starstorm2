@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
-
-namespace Moonstorm.Starstorm2.Components
+namespace SS2.Components
 {
     //This is different from the Post Process Duration component because it grabs it from the current pp's weight
     public class LerpPostProcessingWeight : MonoBehaviour

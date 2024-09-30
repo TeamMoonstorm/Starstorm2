@@ -1,10 +1,7 @@
 ﻿using RoR2;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-
-namespace Moonstorm.Starstorm2
+namespace SS2
 {
     public class NemSpawnPrefabBehavior : NetworkBehaviour
     {

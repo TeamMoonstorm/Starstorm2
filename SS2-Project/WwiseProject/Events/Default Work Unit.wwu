@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<WwiseDocument Type="WorkUnit" ID="{39C9FF65-90F2-4516-9F65-D552D7641167}" SchemaVersion="97">
+<WwiseDocument Type="WorkUnit" ID="{39C9FF65-90F2-4516-9F65-D552D7641167}" SchemaVersion="119">
 	<Events>
 		<WorkUnit Name="Default Work Unit" ID="{39C9FF65-90F2-4516-9F65-D552D7641167}" PersistMode="Standalone">
 			<ChildrenList>
@@ -646,7 +646,7 @@
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Target">
-											<ObjectRef Name="item_proc_goldonignite_01" ID="{0D0616C2-931A-47AD-BBE8-93A0246B343A}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+											<ObjectRef Name="MoltenCoin" ID="{D90875C8-CA7E-4F0C-80E2-303BD422B9C0}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
@@ -786,7 +786,7 @@
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Target">
-											<ObjectRef Name="ProcLightningOnKill" ID="{441EF015-666E-4AB7-9A34-8988DFEF8553}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+											<ObjectRef Name="item_proc_lightningOnKill" ID="{441EF015-666E-4AB7-9A34-8988DFEF8553}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
@@ -800,7 +800,7 @@
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Target">
-											<ObjectRef Name="Trematode" ID="{2B0FC3A7-5C08-4746-8CE0-88490606B930}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+											<ObjectRef Name="item_proc_trematode_init1" ID="{F299E3F9-1ABF-4E5B-ACAA-FF6ED3F7761E}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
@@ -913,6 +913,48 @@
 									<ReferenceList>
 										<Reference Name="Target">
 											<ObjectRef Name="item_proc_universalcharger" ID="{3606D7F3-9541-4B70-B08E-1A7EFE1ADF12}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ProcSpeaker" ID="{B0A404C2-D700-4C5D-BD71-85DDE889F31E}">
+							<ChildrenList>
+								<Action Name="" ID="{A2403FB9-E0C8-4B6F-A55B-312222CEBAFC}" ShortID="817672851">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="LowQualitySpeaker" ID="{D8488279-CB39-4BCA-8A8A-0144F73BF591}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ProcAmulet" ID="{6EF3E780-B6E7-48E2-9DA4-C0BC5FD7E014}">
+							<ChildrenList>
+								<Action Name="" ID="{AC1BE82C-BA6E-4733-8B15-2D08DD24926E}" ShortID="321957998">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="GuardingAmulet" ID="{644B527A-00A5-4C9F-92FC-D67697A5B8D1}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ActivateBloodTester" ID="{E047E795-BE10-4F3B-A2F6-3236B6A32CB1}">
+							<ChildrenList>
+								<Action Name="" ID="{0D3E0CA4-F454-4AF6-BDEB-45FE05F33CE7}" ShortID="520452324">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="item_proc_bloodtester_proc_01" ID="{E2C9A0A1-A93C-43AA-8486-51DE83535140}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
@@ -1881,6 +1923,190 @@
 					</ChildrenList>
 				</Folder>
 				<Folder Name="Elites" ID="{2773EFB8-1825-4137-B93E-C852D3052340}" ShortID="594742518"/>
+				<Folder Name="Ethereal" ID="{63341D7A-5DF2-47DF-8A34-B52A1258BD0A}" ShortID="376923916">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="16"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+					<ChildrenList>
+						<Event Name="EtherealActivate" ID="{FB24EB2B-FF3A-40E8-BB52-B749AAC32E70}">
+							<ChildrenList>
+								<Action Name="" ID="{A1E95E50-7941-4626-B795-C4BB514F79B8}" ShortID="717755842">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="EtherealActivate" ID="{6DCDCFCB-AAEA-4E3E-AC7D-7BB91FDE195D}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="EtherealBell" ID="{87977AD0-AFA7-462D-9589-8CE0059C2A7D}">
+							<ChildrenList>
+								<Action Name="" ID="{E6F925B0-10F1-491E-B2DC-60B7D0424C26}" ShortID="31308497">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="EtherealBell" ID="{055AC7FB-AF63-4C75-9C6E-FAD8FC841776}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="EtherealIdle" ID="{73146E44-2F58-4B66-8E1C-B1F3BB98BC59}">
+							<ChildrenList>
+								<Action Name="" ID="{392D8003-C8F1-4F8A-84EC-EF13714F18A3}" ShortID="1000371188">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="EtherealIdle" ID="{17F0EFCE-1781-4AD8-A4A8-06B9EEB3F97E}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="EtherealPillarIdle" ID="{E72CCBA3-2276-474D-82B4-836194FDE5FD}">
+							<ChildrenList>
+								<Action Name="" ID="{DF1F9E5E-9C61-4D0B-91C8-46405A5D9461}" ShortID="621121336">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="EtherealPillarIdle" ID="{7BE337B8-C926-4183-BF91-F341D7FD7476}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="EtherealPillarSpawn" ID="{CE2ACAA4-0228-411F-B72E-F39AE18FE641}">
+							<ChildrenList>
+								<Action Name="" ID="{B0C2703B-C8EB-43A5-ADAE-AD45DF4FF2B5}" ShortID="993140140">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="EtherealPillarSpawn" ID="{8CA203BA-663E-469D-8307-0E910CECEFD0}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="EtherealPillarImpact" ID="{C8AB8F79-EF86-4388-AF44-24B31C9FD8E2}">
+							<ChildrenList>
+								<Action Name="" ID="{C75BFB7B-FE8B-4357-99B9-0BF1F7E8992F}" ShortID="353319952">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="EtherealPillarImpact" ID="{E0474EF6-A663-45DC-BA4D-2B55579DF27F}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="EtherealSpawn" ID="{E51E3D85-A9B2-4D52-9E69-C4DC21904BC1}">
+							<ChildrenList>
+								<Action Name="" ID="{85693236-566D-4689-8E49-5E462B322BD1}" ShortID="591949244">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="EtherealSpawn" ID="{87EFD802-2F83-4BC8-BD21-C5280B5FF9F4}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_ethereal_firePillar_loop" ID="{76E53E99-86B5-46E8-B6E3-FA10E690461A}">
+							<ChildrenList>
+								<Action Name="" ID="{144B6175-9769-4907-A00A-D910D3C1CD88}" ShortID="32133156">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="EtherealPillarIdle" ID="{7BE337B8-C926-4183-BF91-F341D7FD7476}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Stop_ethereal_firePillar_loop" ID="{81AC67C3-AC6D-4E8A-832E-C569407F02C5}">
+							<ChildrenList>
+								<Action Name="" ID="{A88F95CF-0A8C-42A7-ADF2-4CBFE47CAA91}" ShortID="526429719">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="2"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="EtherealPillarIdle" ID="{7BE337B8-C926-4183-BF91-F341D7FD7476}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="EtherealPillarSpawn2" ID="{8CF2FF32-06FC-4F97-B7BD-0218FB935FBD}">
+							<ChildrenList>
+								<Action Name="" ID="{678DAFC3-E661-4A17-8BED-434E33EF2BFA}" ShortID="568122836">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="pillarspawn" ID="{776F8F8C-4998-4C6E-A991-FBF2FE4C0B9C}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="EtherealActivaGlobal" ID="{2EBA40C3-9099-49C1-8A39-634C3564D944}">
+							<ChildrenList>
+								<Action Name="" ID="{5E3B46A7-61BB-47B4-874C-21C36A51B9AB}" ShortID="410091459">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="EtherealActivateGlobal" ID="{55224B92-5912-4CFB-A747-28AB2F8274E5}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+					</ChildrenList>
+				</Folder>
+				<Folder Name="Empyrean" ID="{73C54B49-B63D-48A5-B019-09025AE20EDD}" ShortID="957742158">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="26"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+					<ChildrenList>
+						<Event Name="RainbowAffixSpawn" ID="{B291A12A-7437-420E-B696-E1FA5C6E05A6}">
+							<ChildrenList>
+								<Action Name="" ID="{AE4E246D-42BF-4E80-A588-1E2AD185B3AE}" ShortID="670574146">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="emp_spawn_v3_3" ID="{A62D0225-F17D-4C15-8E4B-C932480663A9}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+					</ChildrenList>
+				</Folder>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

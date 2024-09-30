@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RoR2;
 using UnityEngine;
 using RoR2.Orbs;
-using R2API;
-using static Moonstorm.Starstorm2.Items.ErraticGadget;
-namespace Moonstorm.Starstorm2.Components
+using static SS2.Items.ErraticGadget;
+using MSU;
+namespace SS2.Components
 {
     // copy of ror2.orbs.lgihtningorb
     public class CustomLightningOrb : Orb
@@ -94,10 +91,10 @@ namespace Moonstorm.Starstorm2.Components
                 // only when no new target
                 if (canProcGadget)
                 {
-                    List<HealthComponent> uniqueObjects = new List<HealthComponent>();
+                    HashSet<HealthComponent> uniqueObjects = new HashSet<HealthComponent>();
                     for (int i = 0; i < this.bouncedObjects.Count; i++)
                     {
-                        uniqueObjects.AddIfNotInCollection(this.bouncedObjects[i]);
+                        uniqueObjects.Add(this.bouncedObjects[i]);
                     }
                     int bounces = uniqueObjects.Count;
                     HurtBox hurtBox = this.PickNextTarget(this.target.transform.position, this.target.healthComponent);
@@ -121,7 +118,7 @@ namespace Moonstorm.Starstorm2.Components
                     lightningOrb.canBounceOnSameTarget = this.canBounceOnSameTarget;
                     OrbManager.instance.AddOrb(lightningOrb);
 
-                    EffectManager.SimpleEffect(procEffectPrefab, this.target.transform.position, Quaternion.identity, true);
+                    EffectManager.SimpleEffect(SS2.Items.ErraticGadget._procEffectPrefab, this.target.transform.position, Quaternion.identity, true);
                 }
 
             }

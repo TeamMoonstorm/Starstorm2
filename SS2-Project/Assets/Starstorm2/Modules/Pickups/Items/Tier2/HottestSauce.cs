@@ -3,22 +3,39 @@ using RoR2.Items;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Moonstorm.Starstorm2.Items
-{
-    [DisabledContent]
+using MSU;
+using RoR2.ContentManagement;
+using System.Collections;
+using HG;
+using MSU.Config;
 
-    public sealed class HottestSauce : ItemBase
+namespace SS2.Items
+{
+#if DEBUG
+    public sealed class HottestSauce : SS2Item, IContentPackModifier
     {
         private const string token = "SS2_ITEM_HOTTESTSAUCE_DESC";
-        public override ItemDef ItemDef { get; } = SS2Assets.LoadAsset<ItemDef>("HottestSauce", SS2Bundle.Items);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acHottestSauce", SS2Bundle.Items);
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Radius in which the hottest sauce deals damage, in meters.")]
-        [TokenModifier(token, StatTypes.Default, 0)]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Radius in which the hottest sauce deals damage, in meters.")]
+        [FormatToken(token, 0)]
         public static float radius = 30f;
 
-        [RooConfigurableField(SS2Config.IDItem, ConfigDesc = "Duration of the burn effect, in seconds.")]
-        [TokenModifier(token, StatTypes.Default, 1)]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Duration of the burn effect, in seconds.")]
+        [FormatToken(token, 1)]
         public static float DOTDuration = 6f;
+
+        private GameObject sauceProjectile;
+
+        public override void Initialize()
+        {
+            sauceProjectile = AssetCollection.FindAsset<GameObject>("SauceProjectile");
+        }
+
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return false;
+        }
 
         public sealed class Behavior : BaseItemBodyBehavior
         {
@@ -36,7 +53,8 @@ namespace Moonstorm.Starstorm2.Items
                 if (slot.characterBody != body)
                     return;
 
-                MSUtil.PlayNetworkedSFX("HottestSauce", gameObject.transform.position);
+                //N: got removed from MSU 2.0, lol
+                //MSUtil.PlayNetworkedSFX("HottestSauce", gameObject.transform.position);
 
                 var hits = new List<HurtBox>();
                 SphereSearch sauceSearch = new SphereSearch();
@@ -73,13 +91,7 @@ namespace Moonstorm.Starstorm2.Items
                         DotController.InflictDot(ref dotInfo);
                     }
                 }
-                //EffectData effectData = new EffectData
-                //{
-                //    origin = slot.characterBody.transform.position
-                //};
-                //effectData.SetNetworkedObjectReference(slot.characterBody.gameObject);
-                //EffectManager.SpawnEffect(CharacterBody.AssetReferences., effectData, transmit: true);
-                
+
             }
             public void OnDestroy()
             {
@@ -87,6 +99,6 @@ namespace Moonstorm.Starstorm2.Items
             }
 
         }
-
     }
+#endif
 }

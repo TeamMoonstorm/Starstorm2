@@ -2,18 +2,22 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: matEliteVioletPickup
-  m_Shader: {fileID: 4800000, guid: 9b2024ee08a5bfc418ff897991e84323, type: 2}
-  m_ShaderKeywords: FORCE_SPEC FRESNEL_EMISSION USE_CLOUDS
+  m_Shader: {fileID: 4800000, guid: 6983ef21d508b4e46806f5a4283436ce, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - FORCE_SPEC
+  - FRESNEL_EMISSION
+  - USE_CLOUDS
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2000
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -84,13 +88,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SliceAlphaTex:
-        m_Texture: {fileID: 2800000, guid: cc23f07135f7dac41b75c9698649cc76, type: 2}
+        m_Texture: {fileID: 2800000, guid: 1faf5fc63af584d4d9667c3ac6f41faf, type: 3}
         m_Scale: {x: 2, y: 2}
         m_Offset: {x: 0, y: 0}
     - _SplatmapTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AOON: 0
     - _AlphaBias: 0
@@ -112,6 +117,7 @@ Material:
     - _DisableRemapOn: 0
     - _DistortionStrength: 0.1
     - _DitherOn: 0
+    - _DoubleColorsOn: 0
     - _DstBlend: 0
     - _EliteBrightnessMax: 1
     - _EliteBrightnessMin: 0
@@ -159,6 +165,7 @@ Material:
     - _PrintEmissionToAlbedoLerp: 0
     - _PrintOn: 0
     - _RampInfo: 0
+    - _SecondarySmoothness: 0
     - _SkyboxOnly: 0
     - _SliceAlphaDepth: 0.1
     - _SliceBandHeight: 1
@@ -185,3 +192,4 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FlashColor: {r: 0, g: 0, b: 0, a: 1}
     - _TintColor: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []

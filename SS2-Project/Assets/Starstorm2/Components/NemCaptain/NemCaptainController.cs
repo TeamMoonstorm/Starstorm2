@@ -2,18 +2,13 @@
 using RoR2.HudOverlay;
 using RoR2.Skills;
 using RoR2.UI;
-using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
-using TMPro;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-using EntityStates;
-
-namespace Moonstorm.Starstorm2.Components
+namespace SS2.Components
 {
     public class NemCaptainController : NetworkBehaviour, IOnTakeDamageServerReceiver, IOnDamageDealtServerReceiver, IOnKilledOtherServerReceiver
     {
@@ -176,7 +171,7 @@ namespace Moonstorm.Starstorm2.Components
         {
             if (!NetworkServer.active)
             {
-                Debug.LogWarning("[Server] function 'Moonstorm.Starstorm2.Components.NemCaptainController::AddStress(System.Single)' called on client");
+                Debug.LogWarning("[Server] function 'SS2.Components.NemCaptainController::AddStress(System.Single)' called on client");
                 return;
             }
 

@@ -1,13 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
+﻿using UnityEngine;
 using RoR2;
-using RoR2.Projectile;
-using System.Linq;
-using Moonstorm.Starstorm2.Components;
+using SS2.Components;
 using EntityStates.Huntress;
-using Moonstorm.Starstorm2;
+using SS2;
 using UnityEngine.Networking;
 namespace EntityStates.Chirr
 {
@@ -30,6 +25,8 @@ namespace EntityStates.Chirr
 		private ChirrGrabBehavior chirrGrabBehavior;
 
 		private Vector3 desiredTrajectory;
+
+		public bool cancelled;
 
 		public override void OnEnter()
         {
@@ -85,7 +82,7 @@ namespace EntityStates.Chirr
 			Vector3 victimFootPosition = aimOrigin;
 			if (this.grabController.IsGrabbing()) victimFootPosition = GetBetterFootPosition();
 			float flightDuration = Trajectory.CalculateFlightDuration(victimFootPosition.y, hitPoint.y, 0f, Physics.gravity.y + extraGravity);
-
+			if (flightDuration <= .2f) flightDuration = .2f; // hopefully final crash fix
 			Vector3 hBetween = hitPoint - aimOrigin;
 			hBetween.y = 0;
 			float hDistance = hBetween.magnitude;
@@ -130,13 +127,12 @@ namespace EntityStates.Chirr
                 }
             }
 
-            if (!this.outer.destroying && this.grabController && this.grabController.IsGrabbing())
+            if (!this.cancelled && !this.outer.destroying && this.grabController && this.grabController.IsGrabbing())
 			{
                 Util.PlaySound("ChirrGrabThrow", base.gameObject);
 				base.PlayAnimation("FullBody, Override", "GrabThrow");
 				base.StartAimMode();
 				bool isFriend = this.grabController.victimInfo.body.teamComponent.teamIndex == this.teamComponent.teamIndex;
-
 
 				if (NetworkServer.active && this.chirrGrabBehavior)
                 {
@@ -146,10 +142,7 @@ namespace EntityStates.Chirr
                 }
 				
 			}
-			else
-            {
-				SS2Log.Warning("Chirr.AimDrop: didn't see victim! This is fine if you are a client. IsGrabbing = " + this.grabController.IsGrabbing());
-            }
+
 			if (this.areaIndicatorInstance)
 			{
 				EntityState.Destroy(this.areaIndicatorInstance.gameObject);

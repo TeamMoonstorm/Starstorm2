@@ -1,12 +1,7 @@
-﻿using Moonstorm.Starstorm2.Orbs;
-using Moonstorm.Starstorm2.Survivors;
-using RoR2;
-using RoR2.Orbs;
+﻿using RoR2;
 using UnityEngine;
-using RoR2.UI;
 using RoR2.HudOverlay;
-
-namespace Moonstorm.Starstorm2.Components
+namespace SS2.Components
 {
     public class NemHuntressController : MonoBehaviour
     {
