@@ -68,7 +68,7 @@ namespace EntityStates.Events
 
             if (oldStorm)
             {
-                if (base.fixedAge >= oldDuration)
+                if (base.fixedAge >= oldDuration && ShouldCharge())
                 {
                     outer.SetNextState(new Storm { stormLevel = 3, lerpDuration = 10f });
                 }
@@ -98,6 +98,7 @@ namespace EntityStates.Events
         private float fuckingduration()
         {
             if (Run.instance.stageClearCount < 2) return Mathf.Infinity; // >:(
+            if (UnityEngine.Random.Range(0f, 1f) > 0.6f) return Mathf.Infinity; // idk
             float stageCount = Run.instance.stageClearCount + 1;
             float minutesToStorm = (-13f * stageCount) / (stageCount + 1) + 13f;
             float variance = chargeVariance * minutesToStorm;

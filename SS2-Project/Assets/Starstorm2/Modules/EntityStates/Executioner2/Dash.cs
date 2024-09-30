@@ -52,24 +52,25 @@ namespace EntityStates.Executioner2
             fearSearch.mask = LayerIndex.entityPrecise.mask;
             fearSearch.radius = debuffRadius;
 
+            skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
             //create dash aoe
             if (NetworkServer.active)
             {
                 CreateFearAoe();
+                
+                if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
+                {
+                    EffectManager.SimpleMuzzleFlash(dashEffectMastery, gameObject, ExhaustL, true);
+                    EffectManager.SimpleMuzzleFlash(dashEffectMastery, gameObject, ExhaustR, true);
+                }
+                else
+                {
+                    EffectManager.SimpleMuzzleFlash(dashEffect, gameObject, ExhaustL, true);
+                    EffectManager.SimpleMuzzleFlash(dashEffect, gameObject, ExhaustR, true);
+                }
             }
 
-            skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
-
-            if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
-            {
-                EffectManager.SimpleMuzzleFlash(dashEffectMastery, gameObject, ExhaustL, true);
-                EffectManager.SimpleMuzzleFlash(dashEffectMastery, gameObject, ExhaustR, true);
-            }
-            else
-            {
-                EffectManager.SimpleMuzzleFlash(dashEffect, gameObject, ExhaustL, true);
-                EffectManager.SimpleMuzzleFlash(dashEffect, gameObject, ExhaustR, true);
-            }
+            
 
             Transform modelTransform = GetModelTransform();
             if (modelTransform)
@@ -133,7 +134,7 @@ namespace EntityStates.Executioner2
                     {
                         body.AddTimedBuff(SS2Content.Buffs.BuffFear, debuffDuration);
 
-                        if(body.master && body.master.aiComponents[0])
+                        if(body.master && body.master.aiComponents.Length > 0 && body.master.aiComponents[0])
                         {
                             body.master.aiComponents[0].stateMachine.SetNextState(new AI.Walker.Fear { fearTarget = base.gameObject });
                         }

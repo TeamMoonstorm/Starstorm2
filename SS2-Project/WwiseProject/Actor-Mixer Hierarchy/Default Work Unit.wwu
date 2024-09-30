@@ -4925,6 +4925,49 @@
 										</Sound>
 									</ChildrenList>
 								</RandomSequenceContainer>
+								<Sound Name="emp_spawn_v3_3" ID="{A62D0225-F17D-4C15-8E4B-C932480663A9}" ShortID="88701898">
+									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="1"/>
+										<Property Name="OverridePositioning" Type="bool" Value="True"/>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>12</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Attenuation">
+											<ObjectRef Name="EliteGlobalAttenuation" ID="{95B01EB5-085C-4AE6-ABDD-2AC73786503B}" WorkUnitID="{01E36904-BE25-433F-9547-3A046044CA56}"/>
+										</Reference>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="emp_spawn_v3_3" ID="{4B0D9088-C2B9-46DF-A4F3-B49829F6BD86}">
+											<PropertyList>
+												<Property Name="LoopBegin" Type="Real64" Value="-0.001"/>
+												<Property Name="LoopEnd" Type="Real64" Value="-0.001"/>
+												<Property Name="TrimBegin" Type="Real64" Value="-0.001"/>
+												<Property Name="TrimEnd" Type="Real64" Value="-0.001"/>
+											</PropertyList>
+											<Language>SFX</Language>
+											<AudioFile>emp_spawn_v3.3.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="988222233"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<PositioningInfo>
+										<Panner Name="" ID="{3E19C6C5-A845-4002-AA2D-D0476FD87CF2}"/>
+									</PositioningInfo>
+									<ActiveSourceList>
+										<ActiveSource Name="emp_spawn_v3_3" ID="{4B0D9088-C2B9-46DF-A4F3-B49829F6BD86}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
 							</ChildrenList>
 						</Folder>
 						<Folder Name="Cyborg" ID="{B2F71EA4-8F10-4EDF-ADF1-77877F2E10FA}" ShortID="152489485">

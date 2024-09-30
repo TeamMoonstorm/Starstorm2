@@ -18,6 +18,7 @@
 * Enemies
 	* Increased health of Empyrean monsters
 	* Empreans now only drop one item
+	* Empyreans are now much more resistant to knockback
 	* Fixed Empyrean particle effects stacking on top of eachother
 	* Reduced chance for Empyreans to drop elite aspects
 	* Fixed Empyrean aspect dropping more often than intended

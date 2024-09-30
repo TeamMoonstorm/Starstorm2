@@ -257,6 +257,8 @@ namespace SS2.Components
             int extraLoops = Mathf.FloorToInt(extraStages / Run.stagesPerLoop);
             //inventory.GiveItem(SS2Content.Items.DoubleAllStats, extraLoops); // it is not yet your time
             inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 15 * extraLoops); // teehee
+            if (body.characterMotor) body.characterMotor.mass = 2000f; // NO KNOCKBACK !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if (body.rigidbody) body.rigidbody.mass = 2000f;
             // remove level cap
             if(Run.instance.ambientLevel >= Run.ambientLevelCap)
             {

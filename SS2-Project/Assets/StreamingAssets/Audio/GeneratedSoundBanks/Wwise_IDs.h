@@ -128,6 +128,7 @@ namespace AK
         static const AkUniqueID PROCLIGHTNINGONKILL = 3105193662U;
         static const AkUniqueID PROCSPEAKER = 2402360908U;
         static const AkUniqueID PROCTREMATODES = 1520542387U;
+        static const AkUniqueID RAINBOWAFFIXSPAWN = 3799852474U;
         static const AkUniqueID REFABRICATORACTION = 2808251015U;
         static const AkUniqueID REMUNERATIONSPAWN = 159540939U;
         static const AkUniqueID REMUNERATIONSPAWN2 = 3276263843U;

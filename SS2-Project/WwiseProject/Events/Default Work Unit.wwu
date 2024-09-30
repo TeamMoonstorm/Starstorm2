@@ -2085,6 +2085,28 @@
 						</Event>
 					</ChildrenList>
 				</Folder>
+				<Folder Name="Empyrean" ID="{73C54B49-B63D-48A5-B019-09025AE20EDD}" ShortID="957742158">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="26"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+					<ChildrenList>
+						<Event Name="RainbowAffixSpawn" ID="{B291A12A-7437-420E-B696-E1FA5C6E05A6}">
+							<ChildrenList>
+								<Action Name="" ID="{AE4E246D-42BF-4E80-A588-1E2AD185B3AE}" ShortID="670574146">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="emp_spawn_v3_3" ID="{A62D0225-F17D-4C15-8E4B-C932480663A9}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+					</ChildrenList>
+				</Folder>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

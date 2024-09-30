@@ -140,7 +140,7 @@ namespace EntityStates.Events
         private void CreateStormElite(GameObject masterObject)
         {
             CharacterMaster master = masterObject.GetComponent<CharacterMaster>();
-            if (master.inventory.GetEquipment(0).equipmentIndex == SS2Content.Equipments.AffixEmpyrean.equipmentIndex) return;
+            if (master.inventory.currentEquipmentIndex == SS2Content.Equipments.AffixEmpyrean.equipmentIndex) return;
             master.inventory.GiveItem(SS2Content.Items.AffixStorm);
 
             GameObject bodyObject = master.GetBodyObject();
@@ -192,7 +192,7 @@ namespace EntityStates.Events
                         textDuration = 6,
                     };
                     GameplayEventTextController.instance.EnqueueNewTextRequest(request, false);
-                    outer.SetNextState(new Calm { thing = 2f });
+                    outer.SetNextState(new Calm { thing = 3f });
 
                     var enemies = TeamComponent.GetTeamMembers(TeamIndex.Monster).Concat(TeamComponent.GetTeamMembers(TeamIndex.Lunar)).Concat(TeamComponent.GetTeamMembers(TeamIndex.Void));
                     foreach (var teamMember in enemies)
