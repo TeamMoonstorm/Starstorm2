@@ -8,6 +8,7 @@ namespace SS2.Components
         public string baseFootstepString;
         public string sprintFootstepOverrideString;
         public bool enableFootstepDust;
+        public bool rotateToMoveDirection;
         public GameObject footstepDustPrefab;
         public GameObject footstepEffect;
         private ChildLocator childLocator;
@@ -30,11 +31,20 @@ namespace SS2.Components
             }
         }
 
+        public void Footstep(AnimationEvent animationEvent)
+        {
+            if ((double)animationEvent.animatorClipInfo.weight > 0.5)
+            {
+                this.Footstep(animationEvent.stringParameter);
+            }
+        }
+
         public void Footstep(string childName)
         {
             if (!body || !enableFootstepDust)
                 return;
             Transform transform = childLocator.FindChild(childName);
+            int childIndex = childLocator.FindChildIndex(childName);
             if (transform)
             {
                 Color color = Color.gray;
@@ -45,7 +55,21 @@ namespace SS2.Components
                 {
                     //TODO: make this shit work with the normal
                     if (footstepEffect)
-                        EffectManager.SimpleImpactEffect(footstepEffect, raycastHit.point, raycastHit.normal, false);
+                    {
+                        EffectData effectData = new EffectData();
+                        effectData.origin = raycastHit.point;
+                        
+                        if (rotateToMoveDirection)
+                        {
+                            Vector3 forward = body.characterDirection ? body.characterDirection.forward : body.coreTransform.forward;
+                            effectData.rotation = Util.QuaternionSafeLookRotation(forward, raycastHit.normal);
+                        }
+                        else effectData.rotation = Util.QuaternionSafeLookRotation(raycastHit.normal);
+                        effectData.SetChildLocatorTransformReference(this.body.gameObject, childIndex);
+                        EffectManager.SpawnEffect(footstepEffect, effectData, false);
+                        //EffectManager.SimpleImpactEffect(footstepEffect, raycastHit.point, raycastHit.normal, false);
+                    }
+                        
                     if (footstepDustInstanceTransform)
                     {
                         footstepDustInstanceTransform.position = raycastHit.point;
