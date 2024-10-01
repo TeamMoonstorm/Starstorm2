@@ -4,7 +4,9 @@
 	* Composite Injector no longer throws errors with some other UI mods
 	* Universal Charger's glow no longer appears for other players
 	* Universal Charger's sound effect is no longer global
+	* White Flag now properly appears for clients in multiplayer
 * Enemies
+	* Empyrean healthbar and spawn animation now properly appears for clients in multiplayer
 	* Empyrean elite whitelist is now functional
 	* Fixed missing spawn sound
 * Nemesis Commando

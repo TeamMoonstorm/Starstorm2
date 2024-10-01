@@ -268,7 +268,11 @@ namespace SS2.Components
 
             EntityStateMachine bodyMachine = EntityStateMachine.FindByCustomName(body.gameObject, "Body");
             if(bodyMachine)
+            {
                 bodyMachine.initialStateType = new EntityStates.SerializableEntityStateType(typeof(EntityStates.AffixEmpyrean.SpawnState));
+                bodyMachine.SetNextState(new EntityStates.AffixEmpyrean.SpawnState()); // why does this work for stormborn but not here ?>>???
+            }
+                
             
             DeathRewards rewards = body.GetComponent<DeathRewards>();
             if (rewards)
