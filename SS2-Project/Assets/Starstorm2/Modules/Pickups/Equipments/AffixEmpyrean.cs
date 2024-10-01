@@ -20,13 +20,13 @@ namespace SS2.Equipments
 
         public static List<String> whitelistedEliteDefStrings = new List<String>();
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Enabled Elite types, separated by commas. Default: \"EliteFireEquipment,EliteIceEquipment,EliteLightningEquipment,EliteHauntedEquipment,ElitePoisonEquipment,EliteEarthEquipment\"")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Enabled Elite types, separated by commas. Default: \"EliteFireEquipment,EliteIceEquipment,EliteLightningEquipment,ElitePoisonEquipment,EliteEarthEquipment\"")]
         public static string eliteDefEnabledStrings = "EliteFireEquipment,EliteIceEquipment,EliteLightningEquipment,EliteEarthEquipment";
         public static void AddEliteToWhitelist(EliteDef eliteDef) => whitelistedEliteDefs.Add(eliteDef);
 
         public override void Initialize()
         {
-            RoR2Application.onLoad += CreateWhitelist;
+            Run.onRunStartGlobal += CreateWhitelist;
             IL.RoR2.CharacterBody.RecalculateStats += RecalculateStatsEmpyreanIL;
         }
         public override bool IsAvailable(ContentPack contentPack)
@@ -91,27 +91,27 @@ namespace SS2.Equipments
         }
         #endregion
 
-        private static void CreateWhitelist()
+        private static void CreateWhitelist(Run run)
         {
+            whitelistedEliteDefs = new List<EliteDef>();
             try
             {
                 string[] splitString = eliteDefEnabledStrings.Split(',');
-
                 whitelistedEliteDefStrings = new List<string>(splitString);
 
                 foreach (string name in whitelistedEliteDefStrings)
                 {
                     EliteDef ed = GetEliteDefFromString(name);
-                    if (ed != null)
+                    if (ed != null && (!ed.eliteEquipmentDef.requiredExpansion || Run.instance.IsExpansionEnabled(ed.eliteEquipmentDef.requiredExpansion)))
                     {
                         whitelistedEliteDefs.Add(ed);
                     }
                 }
             }
-            catch (NullReferenceException nre) // lol. lmao
+            catch (Exception e) // lol. lmao
             {
                 SS2Log.Fatal("AffixEmpyrean.CreateWhitelist(): Failed to create whitelist. Using default.");
-                SS2Log.Fatal(nre);
+                SS2Log.Fatal(e);
                 whitelistedEliteDefs = new List<EliteDef> { RoR2Content.Elites.Fire, RoR2Content.Elites.Ice, RoR2Content.Elites.Lightning, DLC1Content.Elites.Earth };
             }
         }
@@ -120,15 +120,12 @@ namespace SS2.Equipments
         {
             foreach (EliteDef ed in EliteCatalog.eliteDefs)
             {
-                if (ed.eliteEquipmentDef?.name == defString)
+                if (ed && ed.eliteEquipmentDef && ed.eliteEquipmentDef.name == defString)
                 {
                     return ed;
                 }
-                else
-                {
-                }
             }
-
+            SS2Log.Error("Empyrean Whitelist: Could not find eliteEquipmentDef " + defString);
             return null;
         }
  

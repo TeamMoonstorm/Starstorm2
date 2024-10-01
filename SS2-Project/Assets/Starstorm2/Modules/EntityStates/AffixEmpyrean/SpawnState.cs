@@ -43,7 +43,7 @@ namespace EntityStates.AffixEmpyrean
 			if(animator)
             {
 				base.PlayAnimation("Body", "Idle");
-				animator.Play("Idle", animator.GetLayerIndex("Body"), .5f);
+				animator.Play("Idle", animator.GetLayerIndex("Body"), .5f); // ok just dont do anything i guess. just tpose. whatever
 				animator.SetBool("isGrounded", true);
 				animator.SetFloat("aimPitchCycle", .5f);
 				animator.SetFloat("aimYawCycle", .5f);			

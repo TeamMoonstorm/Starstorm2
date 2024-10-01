@@ -41,7 +41,6 @@ namespace SS2.Components
                 RaycastHit raycastHit = default(RaycastHit);
                 Vector3 position = transform.position;
                 position.y += 1.5f;
-                Debug.DrawRay(position, Vector3.down);
                 if (Physics.Raycast(new Ray(position, Vector3.down), out raycastHit, 4f, LayerIndex.world.mask | LayerIndex.water.mask, QueryTriggerInteraction.Collide))
                 {
                     //TODO: make this shit work with the normal

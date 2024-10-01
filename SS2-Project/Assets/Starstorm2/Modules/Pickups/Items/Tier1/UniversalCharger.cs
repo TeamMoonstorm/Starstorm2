@@ -94,7 +94,8 @@ namespace SS2.Items
 
                 if(this.cooldownTimer <= 0)
                 {
-                    SkillRefreshPanel.SetActive(true, SkillSlot.None);
+                    if(body.hasEffectiveAuthority)
+                        SkillRefreshPanel.SetActive(true, SkillSlot.None);
                 }
             }
             //dont want to consume it on skills with no cooldown. or on primaries because loader primary has a cooldown XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD

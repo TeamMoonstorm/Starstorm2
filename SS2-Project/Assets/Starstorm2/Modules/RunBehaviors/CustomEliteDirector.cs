@@ -284,6 +284,7 @@ namespace SS2.Components
             {
                 squad.AddMember(body.master);
             }
+            NetworkServer.Spawn(squad.gameObject);
         }
 
         public void MakeUltra(CharacterBody body)

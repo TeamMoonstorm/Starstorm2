@@ -4139,11 +4139,13 @@
 								</Folder>
 								<Sound Name="item_proc_universalcharger" ID="{3606D7F3-9541-4B70-B08E-1A7EFE1ADF12}" ShortID="964882934">
 									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="1"/>
 										<Property Name="Highpass" Type="int16">
 											<ValueList>
 												<Value>28</Value>
 											</ValueList>
 										</Property>
+										<Property Name="OverridePositioning" Type="bool" Value="True"/>
 										<Property Name="Pitch" Type="int32">
 											<ValueList>
 												<Value>1360</Value>
@@ -4167,6 +4169,9 @@
 										</Property>
 									</PropertyList>
 									<ReferenceList>
+										<Reference Name="Attenuation">
+											<ObjectRef Name="BodyAttenuation" ID="{A986EB11-7B06-4BE3-9630-2DEB2646D5C4}" WorkUnitID="{01E36904-BE25-433F-9547-3A046044CA56}"/>
+										</Reference>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
 										</Reference>
@@ -4931,7 +4936,7 @@
 										<Property Name="OverridePositioning" Type="bool" Value="True"/>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
-												<Value>12</Value>
+												<Value>13</Value>
 											</ValueList>
 										</Property>
 									</PropertyList>
@@ -4960,12 +4965,148 @@
 												<MediaID ID="988222233"/>
 											</MediaIDList>
 										</AudioFileSource>
+										<AudioFileSource Name="emp_spawn_v3_5" ID="{F9A0842F-B803-4665-8B40-AE7A7411E16C}">
+											<PropertyList>
+												<Property Name="LoopBegin" Type="Real64" Value="-0.001"/>
+												<Property Name="LoopEnd" Type="Real64" Value="-0.001"/>
+												<Property Name="TrimBegin" Type="Real64" Value="-0.001"/>
+												<Property Name="TrimEnd" Type="Real64" Value="-0.001"/>
+											</PropertyList>
+											<Language>SFX</Language>
+											<AudioFile>emp_spawn_v3.5.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="226192699"/>
+											</MediaIDList>
+										</AudioFileSource>
 									</ChildrenList>
 									<PositioningInfo>
 										<Panner Name="" ID="{3E19C6C5-A845-4002-AA2D-D0476FD87CF2}"/>
 									</PositioningInfo>
 									<ActiveSourceList>
-										<ActiveSource Name="emp_spawn_v3_3" ID="{4B0D9088-C2B9-46DF-A4F3-B49829F6BD86}" Platform="Linked"/>
+										<ActiveSource Name="emp_spawn_v3_5" ID="{F9A0842F-B803-4665-8B40-AE7A7411E16C}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="emp_spawn_v3_4" ID="{EC99E994-BCFA-418B-8A3C-87085907E370}" ShortID="617810600">
+									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="1"/>
+										<Property Name="OverridePositioning" Type="bool" Value="True"/>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>12</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Attenuation">
+											<ObjectRef Name="EliteGlobalAttenuation" ID="{95B01EB5-085C-4AE6-ABDD-2AC73786503B}" WorkUnitID="{01E36904-BE25-433F-9547-3A046044CA56}"/>
+										</Reference>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="emp_spawn_v3_4" ID="{B433DE8C-9331-4C10-9706-408FCB98B6AB}">
+											<PropertyList>
+												<Property Name="LoopBegin" Type="Real64" Value="-0.001"/>
+												<Property Name="LoopEnd" Type="Real64" Value="-0.001"/>
+												<Property Name="TrimBegin" Type="Real64" Value="-0.001"/>
+												<Property Name="TrimEnd" Type="Real64" Value="-0.001"/>
+											</PropertyList>
+											<Language>SFX</Language>
+											<AudioFile>emp_spawn_v3.4.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="111281231"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<PositioningInfo>
+										<Panner Name="" ID="{D1F7B59E-F16D-4C2B-B637-283E7B1617FE}"/>
+									</PositioningInfo>
+									<ActiveSourceList>
+										<ActiveSource Name="emp_spawn_v3_4" ID="{B433DE8C-9331-4C10-9706-408FCB98B6AB}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="emp_spawn_v3_5" ID="{673DCA6A-20BB-4E43-B0C1-3BF0237FD219}" ShortID="1035640016">
+									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="1"/>
+										<Property Name="OverridePositioning" Type="bool" Value="True"/>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>12</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Attenuation">
+											<ObjectRef Name="EliteGlobalAttenuation" ID="{95B01EB5-085C-4AE6-ABDD-2AC73786503B}" WorkUnitID="{01E36904-BE25-433F-9547-3A046044CA56}"/>
+										</Reference>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="emp_spawn_v3_5" ID="{8FEEE080-540F-47B8-A86B-15F616644552}">
+											<PropertyList>
+												<Property Name="LoopBegin" Type="Real64" Value="-0.001"/>
+												<Property Name="LoopEnd" Type="Real64" Value="-0.001"/>
+												<Property Name="TrimBegin" Type="Real64" Value="-0.001"/>
+												<Property Name="TrimEnd" Type="Real64" Value="-0.001"/>
+											</PropertyList>
+											<Language>SFX</Language>
+											<AudioFile>emp_spawn_v3.5.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="226192699"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="emp_spawn_v3_5" ID="{8FEEE080-540F-47B8-A86B-15F616644552}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="emp_spawn_v3_6" ID="{2A103986-CA6B-4D17-AFD5-4C0C12C09E42}" ShortID="38874044">
+									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="1"/>
+										<Property Name="OverridePositioning" Type="bool" Value="True"/>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>12</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Attenuation">
+											<ObjectRef Name="EliteGlobalAttenuation" ID="{95B01EB5-085C-4AE6-ABDD-2AC73786503B}" WorkUnitID="{01E36904-BE25-433F-9547-3A046044CA56}"/>
+										</Reference>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="emp_spawn_v3_6" ID="{F71A922B-0711-4ED5-9CF9-BECB2A213BD2}">
+											<PropertyList>
+												<Property Name="LoopBegin" Type="Real64" Value="-0.001"/>
+												<Property Name="LoopEnd" Type="Real64" Value="-0.001"/>
+												<Property Name="TrimBegin" Type="Real64" Value="-0.001"/>
+												<Property Name="TrimEnd" Type="Real64" Value="-0.001"/>
+											</PropertyList>
+											<Language>SFX</Language>
+											<AudioFile>emp_spawn_v3.6.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="1061145637"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="emp_spawn_v3_6" ID="{F71A922B-0711-4ED5-9CF9-BECB2A213BD2}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
 							</ChildrenList>

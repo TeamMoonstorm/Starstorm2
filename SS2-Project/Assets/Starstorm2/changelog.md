@@ -1,4 +1,16 @@
   **Warning: content spoilers below!**
+### 0.6.10
+* Items / Equipment
+	* Composite Injector no longer throws errors with some other UI mods
+	* Universal Charger's glow no longer appears for other players
+	* Universal Charger's sound effect is no longer global
+* Enemies
+	* Empyrean elite whitelist is now functional
+	* Fixed missing spawn sound
+* Nemesis Commando
+	* Fixed softlock when using Decisive Strike for the first time
+* Other
+	* Fixed some config options
 ### 0.6.9
 * Items / Equipment
 	* Cloaking Headband duration changed to 12 seconds, from 16
