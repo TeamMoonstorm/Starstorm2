@@ -86,7 +86,9 @@ namespace EntityStates.AffixEmpyrean
 		public override void FixedUpdate()
 		{
 			base.FixedUpdate();
-			animator.enabled = false;
+			if (!animator) animator = base.GetModelAnimator();
+			if (animator) // apparently doesnt exist on clients. sure. whatever
+				animator.enabled = false;
 			if (fixedAge > duration)
 				this.outer.SetNextStateToMain();
 		}

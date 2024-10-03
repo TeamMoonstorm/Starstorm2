@@ -83,7 +83,7 @@ namespace SS2.Items
                     EffectManager.SpawnEffect(procEffect, effectData, true);
                     float cooldownReduction = Util.ConvertAmplificationPercentageIntoReductionPercentage(cooldownReductionPerStack * (stack - 1)) / 100f;
                     this.cooldownTimer = baseCooldown * (1 - cooldownReduction);
-                    SkillRefreshPanel.SetActive(false, body.skillLocator.FindSkillSlot(genericSkill));
+                    SkillRefreshPanel.SetActiveForBody(false, body, body.skillLocator.FindSkillSlot(genericSkill));
 
                 }
             }
@@ -95,7 +95,7 @@ namespace SS2.Items
                 if(this.cooldownTimer <= 0)
                 {
                     if(body.hasEffectiveAuthority)
-                        SkillRefreshPanel.SetActive(true, SkillSlot.None);
+                        SkillRefreshPanel.SetActiveForBody(true, body, SkillSlot.None);
                 }
             }
             //dont want to consume it on skills with no cooldown. or on primaries because loader primary has a cooldown XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD

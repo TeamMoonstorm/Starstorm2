@@ -27,10 +27,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _Cloud2Tex:
         m_Texture: {fileID: 2800000, guid: 85316a7c7d1f2a64e870e82eb86ba836, type: 3}
-        m_Scale: {x: 2, y: 2}
+        m_Scale: {x: 4, y: 4}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 7823cd3c613c46e49ae8fe318855488f, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1305eec7c2baf3540b0ce5cd18c0ba3e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
@@ -47,12 +47,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaBoost: 2
+    - _AlphaBoost: 7
     - _AngleLimit: 0
     - _BumpScale: 1
     - _CloudOn: 1
     - _Cutoff: 0.5
-    - _DecalBlendMode: 0
+    - _DecalBlendMode: 1
     - _DecalDstBlend: 1
     - _DecalLayer: 1
     - _DecalSrcBlend: 1
@@ -73,9 +73,9 @@ Material:
     - _RampInfo: 3
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
-    - _SpecularExponent: 0.1
+    - _SpecularExponent: 9
     - _SpecularHighlights: 1
-    - _SpecularStrength: 1
+    - _SpecularStrength: 0.25
     - _SrcBlend: 1
     - _UVSec: 0
     - _UseAtlas: 0
@@ -83,7 +83,7 @@ Material:
     m_Colors:
     - _AtlasCoord: {r: 0, g: 0, b: 0, a: 0}
     - _AtlasSize: {r: 4, g: 4, b: 0, a: 0}
-    - _Color: {r: 1.8848617, g: 1.9191178, b: 1.2982267, a: 1}
+    - _Color: {r: 0.577646, g: 2.5621731, b: 0, a: 1}
     - _CutoffScroll: {r: 1, g: -1.5, b: -1, a: 3}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

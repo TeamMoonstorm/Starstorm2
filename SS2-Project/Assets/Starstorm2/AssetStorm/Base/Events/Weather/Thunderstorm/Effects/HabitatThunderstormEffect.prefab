@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a44a494b82857594a9a13e8d85cfaad4, type: 2}
+  - {fileID: 2100000, guid: e153f6c6b26f55648a25b0b741ab767e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96,19 +96,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f16cfe0e340f0f40bf9f569e3e8129f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetRenderer: {fileID: 6456613702210760797}
+  targetRenderer: {fileID: 1114905237678671723}
   minimumIntensity: 0
   breakpoints:
   - requiredIntensity: 0
     alpha: 0
   - requiredIntensity: 1
-    alpha: 0.3
+    alpha: 0.11
   - requiredIntensity: 2
-    alpha: 0.5
+    alpha: 0.25
   - requiredIntensity: 3
-    alpha: 0.85
+    alpha: 0.56
   - requiredIntensity: 4
-    alpha: 1
+    alpha: 0.8
 --- !u!1 &2822378468549960307
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,8 +265,88 @@ Transform:
   - {fileID: 6787917078644512787}
   - {fileID: 5996005119371540963}
   m_Father: {fileID: 840303959914180082}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4085520846235831843
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2730292147841769568}
+  - component: {fileID: 3630749552425093669}
+  - component: {fileID: 2217513675909066282}
+  m_Layer: 20
+  m_Name: PP
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2730292147841769568
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4085520846235831843}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 840303959914180082}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3630749552425093669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4085520846235831843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedProfile: {fileID: 11400000, guid: a75e0399a12fa744085068e633a01ebe, type: 2}
+  isGlobal: 1
+  blendDistance: 0
+  weight: 0
+  priority: 7
+--- !u!114 &2217513675909066282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4085520846235831843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 682a8bea9902b1f40906f5109e31780f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentIntensity: 0
+  postProcessVolume: {fileID: 3630749552425093669}
+  breakpoints:
+  - requiredIntensity: 0
+    weight: 0
+    rainIntensity: 0
+  - requiredIntensity: 1
+    weight: 0.5
+    rainIntensity: 2
+  - requiredIntensity: 2
+    weight: 0.9
+    rainIntensity: 4
+  - requiredIntensity: 3
+    weight: 0.95
+    rainIntensity: 7
+  - requiredIntensity: 4
+    weight: 1
+    rainIntensity: 10
 --- !u!1 &4723806792247222961
 GameObject:
   m_ObjectHideFlags: 0
@@ -512,7 +592,7 @@ GameObject:
   - component: {fileID: 3325511590296837680}
   - component: {fileID: 5201861345736832464}
   m_Layer: 0
-  m_Name: DefaultThunderstormEffect
+  m_Name: HabitatThunderstormEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -531,6 +611,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 149765038726581503}
+  - {fileID: 2730292147841769568}
   - {fileID: 435455622089082561}
   - {fileID: 4811332425193665453}
   m_Father: {fileID: 0}
@@ -695,7 +776,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a44a494b82857594a9a13e8d85cfaad4, type: 2}
+  - {fileID: 2100000, guid: e153f6c6b26f55648a25b0b741ab767e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -735,13 +816,13 @@ MonoBehaviour:
   - requiredIntensity: 0
     alpha: 0
   - requiredIntensity: 1
-    alpha: 0.3
+    alpha: 0.11
   - requiredIntensity: 2
-    alpha: 0.5
+    alpha: 0.25
   - requiredIntensity: 3
-    alpha: 0.85
+    alpha: 0.56
   - requiredIntensity: 4
-    alpha: 1
+    alpha: 0.8
 --- !u!1 &6719073880345883092
 GameObject:
   m_ObjectHideFlags: 0
@@ -772,7 +853,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 840303959914180082}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!182 &8182146693709512882
 WindZone:

@@ -31,8 +31,9 @@ namespace SS2.Interactables
             cm = smb.masterPrefab.GetComponent<CharacterMaster>();
             bodyPrefab = cm.bodyPrefab;
 
-            clonedPickupPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/GenericPickup.prefab").WaitForCompletion().InstantiateClone("ClonedPickup");
+            clonedPickupPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/GenericPickup.prefab").WaitForCompletion().InstantiateClone("ClonedPickup", false);
             clonedPickupPrefab.AddComponent<ClonedPickup>();
+
             var droneBody = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Drones/Drone1Body.prefab").WaitForCompletion();
 
             droneAkEvents = droneBody.GetComponents<AkEvent>();
@@ -50,6 +51,12 @@ namespace SS2.Interactables
                     field.SetValue(newComponent, value);
                 }
             }
+        }
+
+        public override void ModifyContentPack(ContentPack contentPack)
+        {
+            contentPack.networkedObjectPrefabs.AddSingle(clonedPickupPrefab);
+            base.ModifyContentPack(contentPack);
         }
 
         public override bool IsAvailable(ContentPack contentPack)
