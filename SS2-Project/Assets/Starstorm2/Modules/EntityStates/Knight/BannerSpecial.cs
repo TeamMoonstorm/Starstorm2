@@ -14,17 +14,14 @@ namespace EntityStates.Knight
         private GameObject bannerObject;
         private GameObject slowBuffWardInstance;
 
-        public float initialSpeedCoefficient = 6f;
-        public float finalSpeedCoefficient = 2.5f;
-
-
-        public float rollSpeed = 1f;
+        public float rollSpeed = 1.2f;
         private Vector3 forwardDirection;
-        public float hopVelocity = 10f;
+        public float hopVelocity = 25f;
+        public float upwardVelocity = 5f;
 
         private void FireImpact()
         {
-            PlayAnimation("FullBody, Override", "SpecialLeapEnd", "Special.playbackRate", 1 * 0.8f);
+            PlayAnimation("FullBody, Override", "SpecialLeapEnd", "Special.playbackRate", 1f);
 
 
             if (base.isAuthority)
@@ -72,6 +69,7 @@ namespace EntityStates.Knight
             if (characterMotor && characterDirection)
             {
                 characterMotor.velocity = forwardDirection * rollSpeed;
+                characterMotor.velocity.y = upwardVelocity;
                 SmallHop(characterMotor, hopVelocity);
             }
         }

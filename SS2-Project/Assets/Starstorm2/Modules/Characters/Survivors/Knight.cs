@@ -51,7 +51,7 @@ namespace SS2.Survivors
 
         public AssetCollection ExtraAssetCollection { get; set; }
 
-        public static float reducedGravity = 0.10f;
+        public static float reducedGravity = 0.07f;
 
         public static DamageAPI.ModdedDamageType ExtendedStunDamageType { get; set; }
 
@@ -124,6 +124,9 @@ namespace SS2.Survivors
             var cb = CharacterPrefab.GetComponent<CharacterBody>();
             cb._defaultCrosshairPrefab = KnightCrosshair;
             cb.preferredPodPrefab = KnightDroppod;
+
+            EntityStateMachine bodyState = EntityStateMachine.FindByCustomName(cb.gameObject, "Body");
+            bodyState.mainStateType = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Knight.MainState));
         }
 
         public override bool IsAvailable(ContentPack contentPack)
