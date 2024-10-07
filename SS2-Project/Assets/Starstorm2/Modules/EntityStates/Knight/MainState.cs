@@ -15,9 +15,7 @@ namespace EntityStates.Knight
         {
             EntityStateMachine currentWeaponState = EntityStateMachine.FindByCustomName(this.characterBody.gameObject, "Weapon");
 
-            Debug.Log("DEBUGGER " + currentWeaponState);
-
-            if (currentWeaponState.name == "Shield")
+            if (currentWeaponState.state is Shield)
             {
                 Debug.Log("DEBUGGER SHIELD IS HELD");
             }

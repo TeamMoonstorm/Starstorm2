@@ -23,6 +23,8 @@ namespace SS2.Survivors
         public static GameObject KnightHitEffect;
         public static GameObject KnightSpinEffect;
 
+        public static SerializableEntityStateType ShieldStateType = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Knight.Shield));
+
 
 
         public static float dodgeFOV = EntityStates.Commando.DodgeState.dodgeFOV;

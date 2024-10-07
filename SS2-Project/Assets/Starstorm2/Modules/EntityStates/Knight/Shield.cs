@@ -24,6 +24,7 @@ namespace EntityStates.Knight
         private bool parryHookRemoved = false;
         public CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
 
+
         private void CameraSwap()
         {
             if (useAltCamera)
