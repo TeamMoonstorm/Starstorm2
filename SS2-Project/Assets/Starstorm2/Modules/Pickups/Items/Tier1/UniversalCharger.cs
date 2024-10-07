@@ -68,6 +68,7 @@ namespace SS2.Items
             private void OnDisable()
             {
                 body.onSkillActivatedAuthority -= TryRefresh;
+                SkillRefreshPanel.SetActiveForBody(false, body, SkillSlot.None);
             }
 
             private void TryRefresh(GenericSkill genericSkill)
