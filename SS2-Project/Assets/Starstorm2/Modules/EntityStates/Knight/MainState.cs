@@ -5,22 +5,34 @@ namespace EntityStates.Knight
 {
     public class MainState : GenericCharacterMain
     {
+        EntityStateMachine currentWeaponState;
+
         public override void OnEnter()
         {
             base.OnEnter();
-            Debug.Log("DEBUGGER OnEnter triggered....");
+            currentWeaponState = EntityStateMachine.FindByCustomName(this.characterBody.gameObject, "Weapon");
         }
 
         public override void ProcessJump()
         {
-            EntityStateMachine currentWeaponState = EntityStateMachine.FindByCustomName(this.characterBody.gameObject, "Weapon");
-
-            if (currentWeaponState.state is Shield)
+            if (base.hasCharacterMotor && !healthComponent.isInFrozenState)
             {
-                Debug.Log("DEBUGGER SHIELD IS HELD");
+                if (base.jumpInputReceived && base.characterBody && base.characterMotor.jumpCount < base.characterBody.maxJumpCount)
+                {
+                    if (currentWeaponState && currentWeaponState.state is Shield)
+                    {
+                        outer.SetNextState(new EntityStates.Knight.Roll());
+                    } else
+                    {
+                        base.ProcessJump();
+                    }
+                }
             }
+        }
 
-            base.ProcessJump();
+        public override void OnExit()
+        {
+            base.OnExit();
         }
     }
 }

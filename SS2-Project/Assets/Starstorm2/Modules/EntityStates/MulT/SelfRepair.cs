@@ -9,7 +9,7 @@ namespace EntityStates.MulT
     public class SelfRepair : BaseSkillState
     {
         public float baseDuration = 0.5f;
-        private float duration = 10f;
+        private float duration = 5f;
 
         public override void OnEnter()
         {
@@ -19,6 +19,12 @@ namespace EntityStates.MulT
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+            this.characterBody.healthComponent.HealFraction(5f, default);
+
+            if (base.fixedAge >= duration && base.isAuthority)
+            {
+                outer.SetNextStateToMain();
+            }
         }
 
         public override void OnExit()
