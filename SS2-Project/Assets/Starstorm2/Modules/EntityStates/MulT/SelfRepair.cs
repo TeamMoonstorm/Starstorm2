@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SS2.Components;
 
 namespace EntityStates.MulT
 {
@@ -10,18 +6,28 @@ namespace EntityStates.MulT
     {
         public float baseDuration = 0.5f;
         private float duration = 5f;
+        private float healthGainPerRepair = 8f;
+        private float repairLossPerTick = 10f;
+
+        private SelfRepairController selfRepairController;
 
         public override void OnEnter()
         {
             base.OnEnter();
+            selfRepairController = GetComponent<SelfRepairController>();
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            this.characterBody.healthComponent.HealFraction(5f, default);
 
-            if (base.fixedAge >= duration && base.isAuthority)
+            if (selfRepairController && base.isAuthority && selfRepairController.repair >= repairLossPerTick)
+            {
+                this.characterBody.healthComponent.HealFraction(healthGainPerRepair, default);
+                selfRepairController.AddRepair(-repairLossPerTick);
+            }
+
+            if (base.fixedAge >= duration && selfRepairController.repair <= repairLossPerTick)
             {
                 outer.SetNextStateToMain();
             }

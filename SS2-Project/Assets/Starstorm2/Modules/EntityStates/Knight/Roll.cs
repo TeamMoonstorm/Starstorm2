@@ -16,13 +16,11 @@ namespace EntityStates.Knight
 
         private float rollSpeed;
         private Vector3 forwardDirection;
-        private Animator animator;
         private Vector3 previousPosition;
 
         public override void OnEnter()
         {
             base.OnEnter();
-            animator = GetModelAnimator();
 
             if (isAuthority && inputBank && characterDirection)
             {
@@ -46,7 +44,11 @@ namespace EntityStates.Knight
             Vector3 b = characterMotor ? characterMotor.velocity : Vector3.zero;
             previousPosition = transform.position - b;
 
-            PlayAnimation("FullBody, Override", "Roll", "Roll.playbackRate", duration);
+            if (isGrounded)
+            {
+                PlayAnimation("FullBody, Override", "RollsBlendTree", "walkSpeed", duration);
+            }
+            
             Util.PlaySound(dodgeSoundString, gameObject);
 
         }

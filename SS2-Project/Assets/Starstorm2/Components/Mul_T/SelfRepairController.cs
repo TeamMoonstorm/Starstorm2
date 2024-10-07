@@ -5,27 +5,22 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.UI;
 
 namespace SS2.Components
 {
     public class SelfRepairController : NetworkBehaviour
     {
         public CharacterBody characterBody;
-        public float repairMax;
+        public float repairMax = 50f;
+        public float repairGainPerUpdate = 1f;
 
-        [Header("Heat UI")]
-        [SerializeField]
-        public GameObject heatOverlayPrefab;
+        public GameObject repairOverlayPrefab;
 
-        [SerializeField]
-        public string heatOverlayChildLocatorEntry;
-        private ChildLocator heatOverlayInstanceChildlocator;
-        private OverlayController heatOverlayController;
+        public string repairOverlayChildLocatorEntry;
+        private OverlayController repairOverlayController;
         private List<ImageFillController> fillUiList = new List<ImageFillController>();
-        private Text uiHeatText;
 
-        [SyncVar(hook = "OnHeatModified")]
+        [SyncVar(hook = "OnRepairModified")]
         private float _repair;
         public float repair
         {
@@ -64,25 +59,25 @@ namespace SS2.Components
 
         public void OnEnable()
         {
-            OverlayCreationParams heatOverlayCreationParams = new OverlayCreationParams
+            OverlayCreationParams repairOverlayCreationParams = new OverlayCreationParams
             {
-                prefab = heatOverlayPrefab,
-                childLocatorEntry = heatOverlayChildLocatorEntry
+                prefab = repairOverlayPrefab,
+                childLocatorEntry = repairOverlayChildLocatorEntry
             };
-            heatOverlayController = HudOverlayManager.AddOverlay(gameObject, heatOverlayCreationParams);
-            heatOverlayController.onInstanceAdded += OnHeatOverlayInstanceAdded;
-            heatOverlayController.onInstanceRemove += OnHeatOverlayInstanceRemoved;
+            repairOverlayController = HudOverlayManager.AddOverlay(gameObject, repairOverlayCreationParams);
+            repairOverlayController.onInstanceAdded += OnRepairOverlayInstanceAdded;
+            repairOverlayController.onInstanceRemove += OnRepairOverlayInstanceRemoved;
             characterBody = GetComponent<CharacterBody>();
         }
 
         private void OnDisable()
         {
-            if (heatOverlayController != null)
+            if (repairOverlayController != null)
             {
-                heatOverlayController.onInstanceAdded -= OnHeatOverlayInstanceAdded;
-                heatOverlayController.onInstanceRemove -= OnHeatOverlayInstanceRemoved;
+                repairOverlayController.onInstanceAdded -= OnRepairOverlayInstanceAdded;
+                repairOverlayController.onInstanceRemove -= OnRepairOverlayInstanceRemoved;
                 fillUiList.Clear();
-                HudOverlayManager.RemoveOverlay(heatOverlayController);
+                HudOverlayManager.RemoveOverlay(repairOverlayController);
             }
         }
 
@@ -94,7 +89,7 @@ namespace SS2.Components
 
                 if (!isMaxRepair)
                 {
-                    AddRepair(1f);
+                    AddRepair(repairGainPerUpdate);
                 }
             }
         }
@@ -107,15 +102,12 @@ namespace SS2.Components
             }
         }
 
-        private void OnHeatOverlayInstanceAdded(OverlayController controller, GameObject instance)
+        private void OnRepairOverlayInstanceAdded(OverlayController controller, GameObject instance)
         {
             fillUiList.Add(instance.GetComponent<ImageFillController>());
-            uiHeatText = instance.GetComponent<Text>();
-
-            heatOverlayInstanceChildlocator = instance.GetComponent<ChildLocator>();
         }
 
-        private void OnHeatOverlayInstanceRemoved(OverlayController controller, GameObject instance)
+        private void OnRepairOverlayInstanceRemoved(OverlayController controller, GameObject instance)
         {
             fillUiList.Remove(instance.transform.GetComponent<ImageFillController>());
         }

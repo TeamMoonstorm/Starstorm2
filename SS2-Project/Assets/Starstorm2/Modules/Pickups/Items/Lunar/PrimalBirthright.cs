@@ -24,9 +24,19 @@ namespace SS2.Items
         {
             Debug.Log("WHAT IS THE NAME OF THE GOLD CHEST: " + self.name);
 
-            if (PrimalBirthright.numChestsSpawned > 0)
+            if (self.name == "GoldChest")
+            {
+                Debug.Log("IT WORKED!!!");
+            }
+
+            if (PrimalBirthright.numChestsSpawned > 0 && self.name == "GoldChest")
             {
                 PrimalBirthright.numChestsSpawned--;
+
+                if (PrimalBirthright.numChestsSpawned == 0)
+                {
+                    TeleporterInteraction.instance.locked = false;
+                }
             }
 
             orig(self, activator);
@@ -69,6 +79,11 @@ namespace SS2.Items
                 {
                     PrimalBirthright.numChestsSpawned += 1;
                 }
+            }
+
+            if (PrimalBirthright.numChestsSpawned == 0) 
+            {
+                TeleporterInteraction.instance.locked = true;
             }
             
         }
