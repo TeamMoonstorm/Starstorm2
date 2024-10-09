@@ -292,7 +292,9 @@ namespace SS2.Items
 
                         OrbManager.instance.AddOrb(orb);
 
-                        EffectManager.SimpleMuzzleFlash(_displayEffectPrefab, this.childLocator.gameObject, "Muzzle", true);
+                        Transform muzzle = GetMuzzleTransform();
+                        if (muzzle)
+                            EffectManager.SimpleEffect(_displayEffectPrefab, muzzle.position, muzzle.rotation, true);
                     }               
                 }
             }
