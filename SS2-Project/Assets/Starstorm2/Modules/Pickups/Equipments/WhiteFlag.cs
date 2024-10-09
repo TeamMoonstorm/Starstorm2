@@ -6,7 +6,7 @@ using RoR2.Skills;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Networking;
 namespace SS2.Equipments
 {
     public sealed class WhiteFlag : SS2Equipment, IContentPackModifier
@@ -29,12 +29,12 @@ namespace SS2.Equipments
 
         public override bool Execute(EquipmentSlot slot)
         {            
-            //To do: make better placement system
             GameObject gameObject = Object.Instantiate(_flagObject, slot.characterBody.corePosition, Quaternion.identity);
             BuffWard buffWard = gameObject.GetComponent<BuffWard>();
             buffWard.expireDuration = flagDuration;
             buffWard.radius = flagRadius;
             gameObject.GetComponent<TeamFilter>().teamIndex = slot.teamComponent.teamIndex;
+            NetworkServer.Spawn(gameObject);
             return true;
         }
 

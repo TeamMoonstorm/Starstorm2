@@ -7,18 +7,20 @@ namespace SS2.Components
     public class SkillRefreshPanel : MonoBehaviour
     {
         private static readonly List<SkillRefreshPanel> instances = new List<SkillRefreshPanel>();
-        public static void SetActive(bool active, SkillSlot skillSlot)
+
+        // ideally theres just a field in characterbody that tells us if charger is ready
+        public static void SetActiveForBody(bool active, CharacterBody body, SkillSlot skillSlot)
         {
             foreach(SkillRefreshPanel panel in instances)
             {
-                panel.SetActiveSingle(active, skillSlot);
+                if (panel.skillIcon && panel.skillIcon.targetSkill && panel.skillIcon.targetSkill.characterBody == body)
+                    panel.SetActiveSingle(active, skillSlot);
             }
         }
 
         private SkillIcon skillIcon;
         public Transform panel;
         bool panelActive;
-
         private void Start()
         {
             instances.Add(this);

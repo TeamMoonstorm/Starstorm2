@@ -1,6 +1,7 @@
 ﻿using RoR2;
 using UnityEngine;
 using SS2;
+using UnityEngine.Networking;
 namespace EntityStates.AffixEmpyrean
 {
 	public class SpawnState : BaseState
@@ -43,7 +44,7 @@ namespace EntityStates.AffixEmpyrean
 			if(animator)
             {
 				base.PlayAnimation("Body", "Idle");
-				animator.Play("Idle", animator.GetLayerIndex("Body"), .5f);
+				animator.Play("Idle", animator.GetLayerIndex("Body"), .5f); // ok just dont do anything i guess. just tpose. whatever
 				animator.SetBool("isGrounded", true);
 				animator.SetFloat("aimPitchCycle", .5f);
 				animator.SetFloat("aimYawCycle", .5f);			
@@ -54,13 +55,13 @@ namespace EntityStates.AffixEmpyrean
 				aimAnimator.enabled = false;
 			}
 
-			if (SpawnState.spawnEffectPrefab)
+			if (NetworkServer.active && SpawnState.spawnEffectPrefab)
 			{
 				EffectManager.SpawnEffect(SpawnState.spawnEffectPrefab, new EffectData
 				{
 					origin = base.characterBody.isFlying ? characterBody.corePosition : characterBody.footPosition,
 					scale = scale,
-				}, false);
+				}, true); // transmit was false but it still played twice ???????????????????????????????????????
 			}
 
 			characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreKnockback;
@@ -85,7 +86,9 @@ namespace EntityStates.AffixEmpyrean
 		public override void FixedUpdate()
 		{
 			base.FixedUpdate();
-			animator.enabled = false;
+			if (!animator) animator = base.GetModelAnimator();
+			if (animator) // apparently doesnt exist on clients. sure. whatever
+				animator.enabled = false;
 			if (fixedAge > duration)
 				this.outer.SetNextStateToMain();
 		}

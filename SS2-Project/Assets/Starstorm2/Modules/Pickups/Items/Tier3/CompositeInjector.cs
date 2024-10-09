@@ -415,12 +415,13 @@ namespace SS2.Items
         {
             orig(self);
 
-            IconHolder epic = self.gameObject.AddComponent<IconHolder>();
-            epic.hud = self;
-            epic.icons = new EquipmentIconButEpic[funnyNumber];
+            
             Transform scaler = self.transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomRightCluster/Scaler");
             Transform slot = scaler.Find("AltEquipmentSlot");
             if (!scaler || !slot) return;
+            IconHolder epic = self.gameObject.AddComponent<IconHolder>();
+            epic.hud = self;
+            epic.icons = new EquipmentIconButEpic[funnyNumber];
             for (int i = 1; i <= funnyNumber; i++)
             {
                 Transform newIcon = GameObject.Instantiate(slot.gameObject, slot.parent).transform;
@@ -457,7 +458,8 @@ namespace SS2.Items
                     return;
                 }
                 foreach (EquipmentIconButEpic epic in icons)
-                    epic.targetInventory = hud.targetMaster?.inventory;
+                    if(epic) 
+                        epic.targetInventory = hud.targetMaster != null ? hud.targetMaster.inventory : null;
             }
         }
 

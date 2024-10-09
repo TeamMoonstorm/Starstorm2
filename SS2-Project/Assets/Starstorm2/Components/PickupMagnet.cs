@@ -66,7 +66,7 @@ namespace SS2.Components
             foreach (GravitatePickup pickup in PickupMagnet.trackedPickups)
             {
                 pickup.gravitateTarget = null;
-                pickupsToPull.Add(new Pickup { gravComponent = pickup, rigidbody = pickup.rigidbody, target = base.transform.position, layer = pickup.rigidbody.gameObject.layer });
+                pickupsToPull.Add(new Pickup { gravComponent = pickup, rigidbody = pickup.rigidbody, target = base.transform.position, layer = pickup.gameObject.layer });
             }
         }
 
