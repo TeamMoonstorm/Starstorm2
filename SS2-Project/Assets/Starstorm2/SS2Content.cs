@@ -652,6 +652,8 @@ namespace SS2
         {
             public static SurvivorDef Chirr;
 
+            public static SurvivorDef survivorNemBandit;
+
             public static SurvivorDef survivorExecutioner2;
 
             public static SurvivorDef survivorNemCommando;
