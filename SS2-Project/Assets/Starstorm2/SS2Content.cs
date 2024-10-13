@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine;
 using MSU;
 using RoR2;
+using System.Runtime.CompilerServices;
 
 namespace SS2
 {
@@ -14,6 +15,10 @@ namespace SS2
         public string identifier => SS2Main.GUID;
         public static ReadOnlyContentPack ReadOnlyContentPack => new ReadOnlyContentPack(SS2ContentPack);
         internal static ContentPack SS2ContentPack { get; private set; } = new ContentPack();
+
+        internal static bool loadStaticContentFinished { get; private set; } = false;
+
+        internal static event Action onLoadStaticContentFinished;
 
         internal static ParallelMultiStartCoroutine _parallelPreLoadDispatchers = new ParallelMultiStartCoroutine();
         private static Func<IEnumerator>[] _loadDispatchers;
@@ -44,9 +49,6 @@ namespace SS2
                 while (enumerator?.MoveNext() ?? false) yield return null;
             }
 
-            _parallelPostLoadDispatchers.Start();
-            while (!_parallelPostLoadDispatchers.IsDone()) yield return null;
-
             for (int i = 0; i < _fieldAssignDispatchers.Length; i++)
             {
                 args.ReportProgress(Util.Remap(i + 1, 0f, _fieldAssignDispatchers.Length, 0.95f, 0.99f));
@@ -54,6 +56,12 @@ namespace SS2
 
                 while (enumerator?.MoveNext() ?? false) yield return null;
             }
+
+            _parallelPostLoadDispatchers.Start();
+            while (!_parallelPostLoadDispatchers.IsDone()) yield return null;
+
+            loadStaticContentFinished = true;
+            onLoadStaticContentFinished?.Invoke();
         }
 
         public IEnumerator GenerateContentPackAsync(GetContentPackAsyncArgs args)
@@ -381,6 +389,8 @@ namespace SS2
 
             // public static ItemDef WickedStaff;
             public static ItemDef WeatherRadio;
+
+            public static ItemDef LuckyPup;
 
         }
 

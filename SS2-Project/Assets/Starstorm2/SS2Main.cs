@@ -6,6 +6,7 @@ using R2API.Networking;
 using UnityEngine;
 using MSU;
 using System;
+using System.Globalization;
 namespace SS2
 {
     #region R2API
@@ -33,6 +34,7 @@ namespace SS2
         public static bool GOTCEInstalled { get; private set; }
         public static bool StageAestheticInstalled { get; private set; }
         internal static bool ChristmasTime { get; private set; }
+        internal static bool ChileanIndependenceWeek { get; private set; }
         public void Awake()
         {
             Instance = this;
@@ -49,14 +51,14 @@ namespace SS2
             TMProEffects.Init();
             BodyNames.Hook();
             HideUnlocks.Hook();
-            //N: Not gonna lie, i love the idea of seasonal effects, but having the same date time check is silly, so there's that internal static bool now.
-            DateTime today = DateTime.Today;
-            if (today.Month == 12 && ((today.Day == 27) || (today.Day == 26) || (today.Day == 25) || (today.Day == 24) || (today.Day == 23)))
-                ChristmasTime = true;
+            SetSpecialEventBooleans();            
+        }
 
-            //N: i have no idea if SystemInitializer would be too late for this, so it stays here for now.
-            //R2API.Networking.NetworkingAPI.RegisterMessageType<ScriptableObjects.NemesisSpawnCard.SyncBaseStats>();
-            
+        private void SetSpecialEventBooleans()
+        {
+            //N: Funny method i wrote that makes both Runshroom's Santa Hat and Clay Monger's Lucky Pup events last an entire week, said week is the week where the "special day" lands. so even if christmas lands on a sunday, all previous days will count as the Christmas time event.
+            ChristmasTime = SS2Util.DoesTodayLandWithinASpecificDaysWeek(25, 12);
+            ChileanIndependenceWeek = SS2Util.DoesTodayLandWithinASpecificDaysWeek(18, 9);
         }
 
 
