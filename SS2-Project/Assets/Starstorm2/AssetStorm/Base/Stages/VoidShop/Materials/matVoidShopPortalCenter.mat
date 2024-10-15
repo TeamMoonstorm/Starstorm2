@@ -17,7 +17,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -29,10 +29,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _Cloud1Tex:
         m_Texture: {fileID: 2800000, guid: 25ec9b11a89d7284ab02ab574f86344e, type: 3}
-        m_Scale: {x: 0.1, y: 0.2}
+        m_Scale: {x: 0.2, y: 0.2}
         m_Offset: {x: 0, y: 0}
     - _Cloud2Tex:
-        m_Texture: {fileID: 2800000, guid: 6f26a1b564e83614ba842884ab6301de, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1faf5fc63af584d4d9667c3ac6f41faf, type: 3}
         m_Scale: {x: 0.2, y: 0.2}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -68,14 +68,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RemapTex:
-        m_Texture: {fileID: 2800000, guid: 797e6b6e2240efd41a3252bc6a5a783a, type: 3}
+        m_Texture: {fileID: 2800000, guid: 10dba6d76d62aa44484503f21e2abcb6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaBias: 0.5465569
-    - _AlphaBoost: 0.6295395
-    - _Boost: 9.418886
+    - _AlphaBias: 0.249
+    - _AlphaBoost: 1.43
+    - _Boost: 4.61
     - _BumpScale: 1
     - _CalcTextureAlphaOn: 0
     - _CloudOffsetOn: 0
@@ -86,13 +86,13 @@ Material:
     - _DetailNormalMapScale: 1
     - _DisableRemapOn: 0
     - _DistortionStrength: -0.2389832
-    - _DstBlend: 0
+    - _DstBlend: 10
     - _ExternalAlpha: 1
     - _Fade: 1
     - _FadeCloseDistance: 0.5
     - _FadeCloseOn: 0
     - _FresnelOn: 1
-    - _FresnelPower: 20
+    - _FresnelPower: 1.1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -106,7 +106,7 @@ Material:
     - _SkyboxOnly: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SrcBlend: 1
+    - _SrcBlend: 5
     - _UVSec: 0
     - _UseUV1On: 0
     - _VertexAlphaOn: 1
@@ -116,7 +116,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _CutoffScroll: {r: -2, g: 4, b: -1, a: 2}
+    - _CutoffScroll: {r: -2, g: -2, b: -1, a: 2}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _TintColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
