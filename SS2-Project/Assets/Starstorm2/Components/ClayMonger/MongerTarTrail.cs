@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine;
+using UnityEngine.Jobs;
 using UnityEngine.Networking;
 using UnityEngine.ParticleSystemJobs;
 using UnityEngine.Serialization;
+using SS2.Jobs;
 
 namespace SS2.Components
 {
@@ -35,6 +37,51 @@ namespace SS2.Components
             _transform = transform;
             teamComponent = GetComponent<TeamComponent>();
         }
+
+        private void OnEnable()
+        {
+            InstanceTracker.Add(this);
+        }
+
+        private void OnDisable()
+        {
+            InstanceTracker.Remove(this);
+        }
+
+        private static void SystemInit() => RoR2Application.onFixedUpdate += StaticFixedUpdate;
+
+        private static void StaticFixedUpdate()
+        {
+            /*float deltaTime = Time.fixedDeltaTime;
+            var instances = InstanceTracker.GetInstancesList<MongerTarTrail>();
+            NativeArray<MongerFixedUpdateJob.MongerData> mongerDatas = new NativeArray<MongerFixedUpdateJob.MongerData>(instances.Count, Allocator.TempJob);
+
+            for(int i = 0; i < instances.Count; i++)
+            {
+                var instance = instances[i];
+                mongerDatas[i] = new MongerFixedUpdateJob.MongerData
+                {
+                    trailCheckStopwatch = instance._trailCheckStopwatch,
+                    trailUpdateStopwatch = instance._trailUpdateStopwatch
+                };
+            }
+
+            var job = new MongerFixedUpdateJob
+            {
+                datas = mongerDatas,
+                deltaTime = deltaTime
+            };
+            var handle = job.Schedule(instances.Count, 10);
+            handle.Complete();
+
+            for(int i = 0; i < instances.Count; i++)
+            {
+                var instance = instances[i];
+                instance._trailCheckStopwatch = mongerDatas[i].trailCheckStopwatch;
+                instance._trailUpdateStopwatch = mongerDatas[i].trailUpdateStopwatch;
+            }*/
+        }
+
         private void FixedUpdate()
         {
             float deltaTime = Time.fixedDeltaTime;
@@ -79,7 +126,7 @@ namespace SS2.Components
 
         private void CheckForBodiesOnTrail()
         {
-            SS2Log.Info("BODY CHECK");
+
         }
 
         private void UpdateTrail()
