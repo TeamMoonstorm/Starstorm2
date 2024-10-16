@@ -112,7 +112,7 @@ namespace SS2.Items
             //sound is on the buffdef
             //Util.PlaySound("StrangeCan", report.victim.gameObject);
             CharacterBody body = report.attackerBody;
-            if (!body || (body && !body.inventory)) return;
+            if (!body || !body.inventory) return;
 
             int stack = body.inventory.GetItemCount(ItemDef);
             if (stack <= 0) return;

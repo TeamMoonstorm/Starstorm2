@@ -15,7 +15,6 @@ using static MSU.BaseBuffBehaviour;
 
 namespace SS2.Equipments
 {
-#if DEBUG
     public sealed class AffixEthereal : SS2EliteEquipment
     {
         public Material _matEtherealOverlay; //=> SS2Assets.LoadAsset<Material>("matEtherealOverlay", SS2Bundle.Equipments);
@@ -75,7 +74,7 @@ namespace SS2.Equipments
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return false;
+            return true;
         }
         public override void OnEquipmentLost(CharacterBody body)
         {
@@ -361,5 +360,4 @@ namespace SS2.Equipments
         }
 
     }
-#endif
 }
