@@ -14,6 +14,7 @@ using SS2.Jobs;
 namespace SS2.Components
 {
     [RequireComponent(typeof(TeamComponent))]
+    [RequireComponent(typeof(CharacterBody))]
     public class MongerTarTrail : MonoBehaviour
     {
         public GameObject pointPrefab;
@@ -27,64 +28,71 @@ namespace SS2.Components
         public BuffDef tarBuff;
 
         public TeamComponent teamComponent { get; private set; }
+        public CharacterBody charBody { get; private set; }
         private Transform _transform;
         private float _trailUpdateStopwatch;
         private float _trailCheckStopwatch;
 
         private List<TarPoint> _points = new List<TarPoint>();
+        private List<GameObject> _ignoredObjects = new List<GameObject>();
+        private static List<MongerTarTrail> _instances = new List<MongerTarTrail>();
         private void Awake()
         {
             _transform = transform;
             teamComponent = GetComponent<TeamComponent>();
+            charBody = GetComponent<CharacterBody>();
         }
 
         private void OnEnable()
         {
-            InstanceTracker.Add(this);
+            _instances.Add(this);
         }
-
         private void OnDisable()
         {
-            InstanceTracker.Remove(this);
+            _instances.Remove(this);
+
+            if (!EffectManager.UsePools)
+            {
+                for(int i = _points.Count - 1; i >= 0; i--)
+                {
+                    if (_points[i].pointTransform)
+                    {
+                        Destroy(_points[i].pointTransform.gameObject);
+                    }
+                    _points.RemoveAt(i);
+                }
+                return;
+            }
+
+            for(int i = _points.Count - 1; i >= 0; i--)
+            {
+                var point = _points[i];
+                if(point.effectManagerHelper && point.effectManagerHelper.OwningPool != null)
+                {
+                    point.effectManagerHelper.OwningPool.ReturnObject(point.effectManagerHelper);
+                }
+                else
+                {
+                    Destroy(point.pointTransform.gameObject);
+                }
+            }
         }
 
-        private static void SystemInit() => RoR2Application.onFixedUpdate += StaticFixedUpdate;
+        [SystemInitializer]
+        private static void SystemInit() => SS2Main.onFixedUpdate += StaticFixedUpdate;
 
         private static void StaticFixedUpdate()
         {
-            /*float deltaTime = Time.fixedDeltaTime;
-            var instances = InstanceTracker.GetInstancesList<MongerTarTrail>();
-            NativeArray<MongerFixedUpdateJob.MongerData> mongerDatas = new NativeArray<MongerFixedUpdateJob.MongerData>(instances.Count, Allocator.TempJob);
-
-            for(int i = 0; i < instances.Count; i++)
+            float deltaTime = Time.fixedDeltaTime;
+            for(int i = 0; i < _instances.Count; i++)
             {
-                var instance = instances[i];
-                mongerDatas[i] = new MongerFixedUpdateJob.MongerData
-                {
-                    trailCheckStopwatch = instance._trailCheckStopwatch,
-                    trailUpdateStopwatch = instance._trailUpdateStopwatch
-                };
+                _instances[i].MyFixedUpdate(deltaTime);
             }
-
-            var job = new MongerFixedUpdateJob
-            {
-                datas = mongerDatas,
-                deltaTime = deltaTime
-            };
-            var handle = job.Schedule(instances.Count, 10);
-            handle.Complete();
-
-            for(int i = 0; i < instances.Count; i++)
-            {
-                var instance = instances[i];
-                instance._trailCheckStopwatch = mongerDatas[i].trailCheckStopwatch;
-                instance._trailUpdateStopwatch = mongerDatas[i].trailUpdateStopwatch;
-            }*/
         }
 
-        private void FixedUpdate()
+        //I'm Gearbooxing
+        private void MyFixedUpdate(float deltaTime)
         {
-            float deltaTime = Time.fixedDeltaTime;
             _trailUpdateStopwatch += deltaTime;
             if (_trailUpdateStopwatch > timeBetweenTrailUpdates)
             {
@@ -126,6 +134,56 @@ namespace SS2.Components
 
         private void CheckForBodiesOnTrail()
         {
+            if (!NetworkServer.active || _points.Count == 0)
+                return;
+
+            _ignoredObjects.Clear();
+            TeamIndex attackerTeam = teamComponent.teamIndex;
+            float damage = charBody.damage * damageCoefficient;
+            _ignoredObjects.Add(gameObject);
+
+            DamageInfo damageInfo = new DamageInfo();
+            damageInfo.attacker = gameObject;
+            damageInfo.inflictor = gameObject;
+            damageInfo.crit = false;
+            damageInfo.damage = damage;
+            damageInfo.damageColorIndex = DamageColorIndex.Item;
+            damageInfo.damageType = DamageType.Generic;
+            damageInfo.force = Vector3.zero;
+            damageInfo.procCoefficient = 0;
+            for (int i = _points.Count - 1; i >= 0; i--)
+            {
+                var point = _points[i];
+                var pointPos = point.worldPosition;
+                var xy = Vector2.Lerp(Vector2.zero, point.pointWidthDepth, Util.Remap(point.pointLifetime, 0, point.totalLifetime, 0, 1));
+
+                Collider[] colliders;
+                int totalOverlaps = HGPhysics.OverlapBox(out colliders, pointPos, new Vector3(xy.x / 2, 0.5f, xy.y / 2), Quaternion.identity, LayerIndex.entityPrecise.mask);
+                for(int j = 0; j < totalOverlaps; j++)
+                {
+                    var collider = colliders[j];
+                    if(!collider.TryGetComponent<HurtBox>(out var hb))
+                    {
+                        continue;
+                    }
+
+                    HealthComponent hc = hb.healthComponent;
+                    if (!hc)
+                        continue;
+
+                    if(!_ignoredObjects.Contains(hc.gameObject) && FriendlyFireManager.ShouldSplashHitProceed(hc, teamComponent.teamIndex))
+                    {
+                        _ignoredObjects.Add(hc.gameObject);
+                        hc.body.AddTimedBuff(SS2Content.Buffs.bdMongerTar, timeBetweenChecks * 2);
+                        if(point.isBubbling)
+                        {
+                            damageInfo.position = collider.transform.position;
+                            hc.TakeDamage(damageInfo);
+                        }
+                    }
+                }
+                HGPhysics.ReturnResults(colliders);
+            }
 
         }
 
@@ -177,7 +235,7 @@ namespace SS2.Components
                 pointTransform.up = hit.normal;
                 pointTransform.rotation = Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0);
                 tarPoint.pointTransform = pointTransform;
-                tarPoint.tiedHelper = helper;
+                tarPoint.effectManagerHelper = helper;
                 tarPoint.particleSystem = helper.GetComponentInChildren<ParticleSystem>();
                 var emission = tarPoint.particleSystem.emission;
                 emission.enabled = true;
@@ -197,7 +255,7 @@ namespace SS2.Components
                 }
                 else
                 {
-                    var helper = point.tiedHelper;
+                    var helper = point.effectManagerHelper;
                     if(helper && helper.OwningPool != null)
                     {
                         helper.OwningPool.ReturnObject(helper);
@@ -218,7 +276,7 @@ namespace SS2.Components
             public float pointLifetime;
             public float totalLifetime;
             public Transform pointTransform;
-            public EffectManagerHelper tiedHelper;
+            public EffectManagerHelper effectManagerHelper;
             public bool stoppedParticleSystem;
             public ParticleSystem particleSystem;
 
