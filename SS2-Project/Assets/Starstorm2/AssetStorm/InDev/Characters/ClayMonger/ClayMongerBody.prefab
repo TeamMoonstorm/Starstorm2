@@ -324,6 +324,7 @@ GameObject:
   - component: {fileID: 6750577437030014482}
   - component: {fileID: 4496784533419329106}
   - component: {fileID: 2276935383635213381}
+  - component: {fileID: 951211891918884131}
   m_Layer: 0
   m_Name: ClayMongerBody
   m_TagString: Player
@@ -919,6 +920,26 @@ MonoBehaviour:
   bossDropTable: {fileID: 0}
   bossPickup:
     pickupName: 
+--- !u!114 &951211891918884131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2390772666606925308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65c1aeab130dfb4459ffed45494f987a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointPrefab: {fileID: 3891989070667894104, guid: 1d7770c69d4920c41a9a67415b1e86f3,
+    type: 3}
+  pointLifetime: 15
+  timeBetweenTrailUpdates: 0.2
+  raycastLength: 2
+  timeBetweenChecks: 0.25
+  radius: 0.5
+  height: 0.5
 --- !u!1 &2733394242140884865
 GameObject:
   m_ObjectHideFlags: 0

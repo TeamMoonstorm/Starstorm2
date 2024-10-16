@@ -17,6 +17,19 @@ namespace SS2.Monsters
                 pickup.contextToken = "SS2_INTERACTABLE_LUCKYPUP_CONTEXT";
                 SS2Main.Instance.StartCoroutine(AwaitForLoad(pickup));
             }
+
+            R2API.RecalculateStatsAPI.GetStatCoefficients += HandleTar;
+        }
+
+        private void HandleTar(CharacterBody sender, R2API.RecalculateStatsAPI.StatHookEventArgs args)
+        {
+            if(!sender.HasBuff(SS2Content.Buffs.bdMongerTar))
+            {
+                return;
+            }
+
+            args.moveSpeedReductionMultAdd += 0.1f;
+            args.attackSpeedReductionMultAdd += 0.5f; 
         }
 
         private IEnumerator AwaitForLoad(SpecialEventPickup pickup)
