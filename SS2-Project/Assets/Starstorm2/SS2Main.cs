@@ -35,6 +35,7 @@ namespace SS2
         public static bool StageAestheticInstalled { get; private set; }
         internal static bool ChristmasTime { get; private set; }
         internal static bool ChileanIndependenceWeek { get; private set; }
+        internal static event Action onFixedUpdate;
         public void Awake()
         {
             Instance = this;
@@ -59,6 +60,11 @@ namespace SS2
             //N: Funny method i wrote that makes both Runshroom's Santa Hat and Clay Monger's Lucky Pup events last an entire week, said week is the week where the "special day" lands. so even if christmas lands on a sunday, all previous days will count as the Christmas time event.
             ChristmasTime = SS2Util.DoesTodayLandWithinASpecificDaysWeek(25, 12);
             ChileanIndependenceWeek = SS2Util.DoesTodayLandWithinASpecificDaysWeek(18, 9);
+        }
+
+        private void FixedUpdate()
+        {
+            onFixedUpdate?.Invoke();
         }
 
 
