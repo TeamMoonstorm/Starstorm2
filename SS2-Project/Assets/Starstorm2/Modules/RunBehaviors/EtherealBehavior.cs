@@ -68,6 +68,7 @@ namespace SS2
         private void OnDestroy()
         {
             Run.ambientLevelCap = defaultLevelCap;
+            On.RoR2.SceneDirector.Start -= SceneDirector_Start;
         }
 
         public void OnEtherealTeleporterCharged()
@@ -206,7 +207,7 @@ namespace SS2
         // pick a random disabled statue to replace with an ethereal shrine
         private void ReplaceRandomNewtStatue()
         {
-            PortalStatueBehavior[] statues = GameObject.FindObjectsOfType<PortalStatueBehavior>().Where(p => p.portalType == PortalStatueBehavior.PortalType.Shop).ToArray();
+            PortalStatueBehavior[] statues = GameObject.FindObjectsOfType<PortalStatueBehavior>(true).Where(p => p.portalType == PortalStatueBehavior.PortalType.Shop).ToArray();
             PortalStatueBehavior[] disabledStatues = statues.Where(p => !p.gameObject.activeInHierarchy).ToArray();
             if(false)//disabledStatues.Length > 0) // FUCK newt. that shits getting replaced 25 to 33 percent of the time
             {

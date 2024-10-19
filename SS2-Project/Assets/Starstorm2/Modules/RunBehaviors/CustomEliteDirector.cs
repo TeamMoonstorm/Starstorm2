@@ -27,99 +27,44 @@ namespace SS2.Components
 
     //add support for appropriate hidden realms
 
-
-    //maybe should've been an abstract with inheritence for different director types but scared to do that with il hook
+    //add stormborns to this
 
     public class CustomEliteDirector : MonoBehaviour
     {
         public static CustomEliteDirector instance;
-
+        
+        private static bool shouldLog;
         [SystemInitializer]
         private static void Init()
         {
             IL.RoR2.CombatDirector.Spawn += SpawnEliteIL;
+            
         }
         
         public float directorTickRate = 4f;
-        //numbers currently based off of Instinct.
         [Header("Elite Director Values")]
-        public float eliteCredit;
         public float minEliteCreditPerTick = 1.6f;
         public float maxEliteCreditPerTick = 5.2f;
-
-        [Header("Minion Director Values")]
-        public float minionCredit;
-        public float minMinionCreditPerTick = 0.2f;
-        public float maxMinionCreditPerTick = 4.6f;
-        public float followerCost = 28f;
-        public float minionCooldown = 18f;
-        private bool enableMinionDirector = true;
-        private float minionCooldownTimer = 0f;
-     
-
+        private List<StackableAffix> allElites = new List<StackableAffix>();
         private Xoroshiro128Plus rng;
-
-        private List<EquipmentDef> eliteEquips = new List<EquipmentDef>();
-
-        private CombatDirector fastCombatDirector;
-        private CombatDirector slowCombatDirector;
         private float timer = 0;
-
-        [Header("Ethereal-Related")]
-        private float etherealEliteCost = 80f;
-        private float etherealMultiplier = 2.5f;
-        private EtherealBehavior ethInstance;
-
-        [Header("Empyrean-Related")]
-        private float empyreanEliteCost = 1800f;
-        private float empyreanMultiplier = 22.5f;
-        public bool empyreanActive = false;
-
-        [Header("Ultra-Related")]
-        private float ultraEliteCost = 550f;
-        private float ultraMultiplier = 30f;
-        
 
         public void Awake()
         {
             instance = this; //I guess there will only be one of you after all...        
-            ethInstance = EtherealBehavior.instance;
 
             if (!NetworkServer.active) return;
             rng = new Xoroshiro128Plus(Run.instance.stageRng.nextUint);
 
-            GameObject director = GameObject.Find("Director");
-            if (director != null)
+            if(EtherealBehavior.instance)
             {
-                if (director.GetComponents<CombatDirector>().Length > 0 && director.GetComponents<CombatDirector>()[0] != null)
-                    fastCombatDirector = director.GetComponents<CombatDirector>()[0];
-                //the first director spams his shit
-                if (director.GetComponents<CombatDirector>().Length > 1 && director.GetComponents<CombatDirector>()[1] != null)
-                    slowCombatDirector = director.GetComponents<CombatDirector>()[1];
-                //the second director loves to build big guys 
-                if (fastCombatDirector == null || slowCombatDirector == null)
-                {
-                    SS2Log.Info("No combat director found. Killing custom director.");
-                    Destroy(instance);
-                }
-            }
-        }
-
-        public void Start()
-        {
-            //Stage.onServerStageBegin += Stage_onServerStageBegin;
-        }
-
-        // this sucks
-        private void Stage_onServerStageBegin(Stage stage)
-        {
-            DirectorAPI.Stage stageEnum = DirectorAPI.GetStageEnumFromSceneDef(stage.sceneDef);
-            // and does nothing atm.
-        }
-
-        public void OnDestroy()
-        {
-            Stage.onServerStageBegin -= Stage_onServerStageBegin;
+                allElites.Add(new Ethereal()); // lol what was the point
+                allElites.Add(new Ultra());
+            }          
+            allElites.Add(new Empyrean());
+#if DEBUG
+            shouldLog = true;
+#endif
         }
 
         public void FixedUpdate()
@@ -130,201 +75,81 @@ namespace SS2.Components
                 if (timer > directorTickRate)
                 {
                     timer = 0f;
-                    eliteCredit += (rng.RangeFloat(minEliteCreditPerTick, maxEliteCreditPerTick) * Run.instance.compensatedDifficultyCoefficient * 0.4f);
-                    minionCredit += (rng.RangeFloat(minMinionCreditPerTick, maxMinionCreditPerTick) * Run.instance.compensatedDifficultyCoefficient * 0.4f);
-                }
-
-                if (!enableMinionDirector)
-                {
-                    if (minionCooldownTimer < minionCooldown)
-                        minionCooldownTimer += Time.fixedDeltaTime;
-
-                    else
+                    float eliteCredit = (rng.RangeFloat(minEliteCreditPerTick, maxEliteCreditPerTick) * Run.instance.compensatedDifficultyCoefficient * 0.4f);
+                    for (int i = allElites.Count - 1; i >= 0; i--)
                     {
-                        enableMinionDirector = true;
-                        minionCooldownTimer = 0f;
+                        if (allElites[i].IsAvailable())
+                            allElites[i].eliteCredit += eliteCredit;
                     }
                 }
-            }
-            
-        }
+            }            
+        }      
 
-
-        
-
-        public void ModifySpawn(SpawnCard.SpawnResult spawnResult)
+        public void ModifySpawn(CombatDirector director, SpawnCard.SpawnResult spawnResult)
         {
             if (spawnResult.spawnedInstance == null || spawnResult.spawnRequest == null || spawnResult.spawnRequest.spawnCard == null)
                 return;
             CharacterMaster cm = spawnResult.spawnedInstance.GetComponent<CharacterMaster>();
             if (cm == null || cm.bodyInstanceObject == null)
                 return;
-            CharacterBody cb = cm.bodyInstanceObject.GetComponent<CharacterBody>();
-            if (cb == null)
+            CharacterBody body = cm.bodyInstanceObject.GetComponent<CharacterBody>();
+            if (body == null)
                 return;
-            //cardCosts.TryGetValue(cm.bodyPrefab, out float baseCost);
 
             if (spawnResult.spawnRequest.spawnCard.eliteRules != SpawnCard.EliteRules.Default)
                 return;
 
             float baseCost = spawnResult.spawnRequest.spawnCard.directorCreditCost;
             float totalCost = baseCost;
-            if (cb.eliteBuffCount > 0)
+            if (body.eliteBuffCount > 0)
             {
-                totalCost *= baseEliteCostMultiplier;
+                totalCost *= director.currentActiveEliteTier.costMultiplier;
             }
-
-            //if (totalCost * 2.5f <= fastCombatDirector.monsterCredit)
-            //{
-            //    if (followerStage && followerCost <= minionCredit)
-            //    {
-            //        var followerSummon = new MasterSummon();
-            //        //to-do: get position of nearby air node
-            //        followerSummon.position = cb.corePosition + (Vector3.up * 3);
-            //        followerSummon.masterPrefab = Monsters.Lamp._masterPrefab;
-            //        followerSummon.summonerBodyObject = cb.gameObject;
-            //        var followerMaster = followerSummon.Perform();
-            //        fastCombatDirector.monsterCredit -= followerCost;
-            //        minionCredit -= followerCost;
-            //        if (followerMaster)
-            //        {
-            //            var masterEquip = cb.inventory.GetEquipmentIndex();
-            //            if (masterEquip != EquipmentIndex.None)
-            //            {
-            //                followerMaster.inventory.SetEquipmentIndex(masterEquip);
-            //                fastCombatDirector.monsterCredit -= followerCost * 2f;
-            //                minionCredit -= followerCost * 2f;
-            //                //possibly a bug where would-be masters are getting 'follower' prefix and no minion..???
-            //                //saw it once on a scav super deep loop. this isn't even programmed behavior.
-            //                //why???
-
-            //                //im thinking about it even more and it wasnt even on a map where followers were enabled at the time!!!!!!!!!!!!
-            //                //WHAT THE FUCK!!!!!!!!!!!
-            //            }
-            //        }
-            //    }
-            //}
-
-            if (Run.instance.stageClearCount > 7)
+            if(shouldLog)
             {
-                if (empyreanEliteCost <= eliteCredit && ((baseCost * empyreanMultiplier <= fastCombatDirector.monsterCredit) || (baseCost * empyreanMultiplier <= slowCombatDirector.monsterCredit)))
-                {
-                    MakeEmpyrean(cb);
-                    fastCombatDirector.monsterCredit -= baseCost * empyreanMultiplier * 1.5f;
-                    eliteCredit -= empyreanEliteCost * 1.5f;
-                }
-            }
-
-            //if (ethInstance.etherealsCompleted >= 1)
-            //{
-            //    float baseEtherealCost = (totalCost * etherealMultiplier) / ethInstance.etherealsCompleted; //possibly too mean?? lol
-
-            //    if (Run.instance.stageClearCount > 5)
-            //    {
-            //        if ((ultraEliteCost - (20 * (ethInstance.etherealsCompleted - 1))) <= eliteCredit && baseEtherealCost * 3f <= fastCombatDirector.monsterCredit)
-            //        {
-            //            MakeUltra(cb);
-            //            fastCombatDirector.monsterCredit -= baseEtherealCost * 5f;
-            //            eliteCredit -= ultraEliteCost * 1.5f;
-            //        }
-            //    }
-
-            //    if ((etherealEliteCost - (20 * (ethInstance.etherealsCompleted - 1))) <= eliteCredit && baseEtherealCost <= fastCombatDirector.monsterCredit)
-            //    {
-            //        MakeEthereal(cb);
-            //        fastCombatDirector.monsterCredit -= baseEtherealCost * 1.25f; //fuck you go broke
-            //        eliteCredit -= etherealEliteCost * 1.25f;
-            //    }
-            //}
-        }
-
-        public void MakeEmpyrean(CharacterBody body)
-        {
-            var inventory = body.inventory;
-
-            inventory.RemoveItem(RoR2Content.Items.BoostHp, inventory.GetItemCount(RoR2Content.Items.BoostHp));
-            inventory.RemoveItem(RoR2Content.Items.BoostDamage, inventory.GetItemCount(RoR2Content.Items.BoostDamage));
-
-            inventory.GiveItem(RoR2Content.Items.BoostHp, 750);
-            inventory.GiveItem(SS2Content.Items.BoostMovespeed, 35);
-            inventory.GiveItem(SS2Content.Items.BoostCooldowns, 50);
-            inventory.GiveItem(RoR2Content.Items.BoostDamage, 60);
-            //inventory.GiveItem(RoR2Content.Items.TeleportWhenOob); //REALLY DON'T LIKE THIS ONE. knocking enemies off the stage is a RIGHT. going to make a specific elite to replace this functionality.
-            //inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
-            inventory.SetEquipmentIndex(SS2Content.Equipments.AffixEmpyrean.equipmentIndex);
-
-            int extraStages = Mathf.Max(Run.instance.stageClearCount - 7, 0);
-            int extraLoops = Mathf.FloorToInt(extraStages / Run.stagesPerLoop);
-            //inventory.GiveItem(SS2Content.Items.DoubleAllStats, extraLoops); // it is not yet your time
-            inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 15 * extraLoops); // teehee
-            if (body.characterMotor) body.characterMotor.mass = 2000f; // NO KNOCKBACK !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            if (body.rigidbody) body.rigidbody.mass = 2000f;
-            // remove level cap
-            if(Run.instance.ambientLevel >= Run.ambientLevelCap)
-            {
-                int extraLevels = Mathf.FloorToInt(SS2Util.AmbientLevelUncapped()) - Run.instance.ambientLevelFloor;
-                inventory.GiveItem(RoR2Content.Items.LevelBonus, extraLevels);
-            }
-
-            EntityStateMachine bodyMachine = EntityStateMachine.FindByCustomName(body.gameObject, "Body");
-            if(bodyMachine)
-            {
-                bodyMachine.initialStateType = new EntityStates.SerializableEntityStateType(typeof(EntityStates.AffixEmpyrean.SpawnState));
-                bodyMachine.SetNextState(new EntityStates.AffixEmpyrean.SpawnState()); // why does this work for stormborn but not here ?>>???
+                SS2Log.Info($"CombatDirector {director.GetInstanceID()} has {director.monsterCredit} credits");
+                string e = (director.currentActiveEliteDef ? director.currentActiveEliteDef.name : "None");
+                SS2Log.Info($"CharacterBody {body}, Elite {e}, costs {totalCost} credits");
             }
                 
-            
-            DeathRewards rewards = body.GetComponent<DeathRewards>();
-            if (rewards)
+            // :(
+            StackableAffix highestCostAffix = null;
+            bool isBoss = false;
+            for(int i = allElites.Count - 1; i >= 0; i--)
             {
-                rewards.expReward *= 15;
-                rewards.goldReward *= 15;
+                StackableAffix affix = allElites[i];
+                if(affix.IsAvailable())
+                {
+                    if(shouldLog)
+                        SS2Log.Info($"{affix.GetType().Name} Available. eliteCredit: {affix.eliteCredit}, EliteDirector Cost: {affix.EliteCreditCost}, CombatDirector Cost: {affix.CostMultiplier * totalCost}");
+                    if (affix.CanAfford(baseCost, totalCost, director))
+                    {
+                        if (shouldLog)
+                            SS2Log.Info($"Could afford {affix.GetType().Name}. EliteDirector Cost: {affix.EliteCreditCost}, CombatDirector Cost: {affix.CostMultiplier * totalCost}");
+                        if (highestCostAffix  == null || affix.CostMultiplier > highestCostAffix.CostMultiplier)
+                        {
+                            highestCostAffix = affix;
+                        }
+                        affix.MakeElite(body);
+                        affix.SubtractCost(body, baseCost, director); // lol
+                        isBoss |= affix.IsBoss;
+                    }
+                }
+            }           
+            if(highestCostAffix != null)
+            {
+                EntityStateMachine bodyMachine = EntityStateMachine.FindByCustomName(body.gameObject, "Body");
+                if(bodyMachine)
+                    highestCostAffix.SetSpawnState(bodyMachine);
             }
-
-            empyreanActive = true;
-
-            CombatSquad squad = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("EliteBossGroup", SS2Bundle.Equipments))?.GetComponent<CombatSquad>();
-            if(squad)
+            if (isBoss)
             {
-                squad.AddMember(body.master);
-            }
-            NetworkServer.Spawn(squad.gameObject);
-        }
-
-        public void MakeUltra(CharacterBody body)
-        {
-            var inventory = body.inventory;
-
-            inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(500f + (250f * ethInstance.etherealsCompleted)));
-            //inventory.GiveItem(SS2Content.Items.BoostMovespeed, 50);
-            inventory.GiveItem(SS2Content.Items.BoostCooldowns, 70);
-            inventory.GiveItem(RoR2Content.Items.BoostDamage, 100);
-            inventory.GiveItem(RoR2Content.Items.TeleportWhenOob); 
-            inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
-            inventory.GiveItem(SS2Content.Items.AffixUltra);
-
-            DeathRewards rewards = body.GetComponent<DeathRewards>();
-            if (rewards)
-            {
-                rewards.expReward *= (uint)(10 + (5 * ethInstance.etherealsCompleted));
-                rewards.goldReward *= (uint)(10 + (5 * ethInstance.etherealsCompleted));
-            }
-        }
-
-        public void MakeEthereal(CharacterBody body)
-        {
-            var inventory = body.inventory;
-
-            inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(30 + (30 * ethInstance.etherealsCompleted)));
-            inventory.GiveItem(SS2Content.Items.BoostCooldowns, 15);
-            inventory.GiveItem(RoR2Content.Items.BoostDamage, (int)(10 + (10 * ethInstance.etherealsCompleted)));
-            inventory.GiveItem(SS2Content.Items.EtherealItemAffix);
-
-            DeathRewards rewards = body.GetComponent<DeathRewards>();
-            if (rewards)
-            {
-                rewards.expReward *= (uint)(2 + (2 * ethInstance.etherealsCompleted));
-                rewards.goldReward *= (uint)(2 + (2 * ethInstance.etherealsCompleted));
+                CombatSquad squad = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("EliteBossGroup", SS2Bundle.Equipments))?.GetComponent<CombatSquad>();
+                if (squad)
+                {
+                    squad.AddMember(body.master);
+                }
+                NetworkServer.Spawn(squad.gameObject);
             }
         }
 
@@ -343,19 +168,155 @@ namespace SS2.Components
 
             if (ILFound)
             {
-                c.EmitDelegate<Func<Action<SpawnCard.SpawnResult>, Action<SpawnCard.SpawnResult>>>((ogMethod) =>
+                c.Emit(OpCodes.Ldarg_0);
+                c.EmitDelegate<Func<Action<SpawnCard.SpawnResult>, CombatDirector, Action<SpawnCard.SpawnResult>>>((ogMethod, director) =>
                 {
                     if (CustomEliteDirector.instance == null) return ogMethod;
                     return new Action<SpawnCard.SpawnResult>((spawnResult) =>
                     {
                         ogMethod(spawnResult);
-                        CustomEliteDirector.instance.ModifySpawn(spawnResult);
+                        CustomEliteDirector.instance.ModifySpawn(director, spawnResult);
                     });
                 });
             }
             else
                 SS2Log.Fatal("Custom Elite IL Hook Failed ! ! !");
         }
+    }
 
+    // was gonna make this work kinda like objectivetracker with subscriptions and automatic collecting but i stoppe caring half way thru
+    // each elite builds up credits independently, which should make stacking more common
+    // also gives us more control over how frequently each elite spawns. which is good because their spawns are almost all opt-in and conditional
+    public abstract class StackableAffix
+    {
+        public float eliteCredit; // independent credit
+        public abstract float EliteCreditCost { get; } // flat value for CustomEliteDirector elite credit cost. higher = less common
+        public abstract float CostMultiplier { get; } // multiplier for CombatDirector monster credit cost. lower = bigger enemies get the affix
+        public virtual bool IsBoss => false;
+        public virtual bool CanAfford(float baseCost, float totalCost, CombatDirector combatDirector)
+        {
+            return EliteCreditCost <= eliteCredit && totalCost * CostMultiplier <= combatDirector.monsterCredit;
+        }
+
+        // this is just because Empyreans were subtracting extra for reasons i do not fully understand. but i already liked their spawn rate and didnt want to change it
+        public virtual void SubtractCost(float baseCost, float totalCost, CombatDirector combatDirector) 
+        {
+            combatDirector.monsterCredit -= totalCost * CostMultiplier - totalCost;
+            eliteCredit -= EliteCreditCost;
+        }
+        public abstract bool IsAvailable();
+        public abstract void MakeElite(CharacterBody body); // add items n stuff
+        public virtual void SetSpawnState(EntityStateMachine bodyMachine) { } // only called on the highest cost affix
+    }
+
+    public class Empyrean : StackableAffix
+    {
+        public override float EliteCreditCost => 1800f;
+        public override float CostMultiplier => 22.5f;
+        public override bool IsBoss => true;
+        public override bool IsAvailable()
+        {
+            return Run.instance.stageClearCount > 7;
+        }
+        public override bool CanAfford(float baseCost, float totalCost, CombatDirector combatDirector)
+        {
+            return EliteCreditCost <= eliteCredit && baseCost * CostMultiplier <= combatDirector.monsterCredit; // use base cost instead of elite
+        }
+        public override void SubtractCost(float baseCost, float totalCost, CombatDirector combatDirector)
+        {
+            combatDirector.monsterCredit -= baseCost * CostMultiplier * 1.5f - baseCost;
+            eliteCredit -= EliteCreditCost * 1.5f;
+        }
+
+        public override void MakeElite(CharacterBody body)
+        {
+            var inventory = body.inventory;
+
+            inventory.RemoveItem(RoR2Content.Items.BoostHp, inventory.GetItemCount(RoR2Content.Items.BoostHp));
+            inventory.RemoveItem(RoR2Content.Items.BoostDamage, inventory.GetItemCount(RoR2Content.Items.BoostDamage));
+
+            inventory.GiveItem(RoR2Content.Items.BoostHp, 750);
+            inventory.GiveItem(SS2Content.Items.BoostMovespeed, 35);
+            inventory.GiveItem(SS2Content.Items.BoostCooldowns, 50);
+            inventory.GiveItem(RoR2Content.Items.BoostDamage, 60);
+            //inventory.GiveItem(RoR2Content.Items.TeleportWhenOob); //REALLY DON'T LIKE THIS ONE. knocking enemies off the stage is a RIGHT. going to make a specific elite to replace this functionality.
+            //inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
+            inventory.SetEquipmentIndex(SS2Content.Equipments.AffixEmpyrean.equipmentIndex);
+
+            int extraStages = Mathf.Max(Run.instance.stageClearCount - 7, 0);
+            int extraLoops = Mathf.FloorToInt(extraStages / Run.stagesPerLoop);
+            //inventory.GiveItem(SS2Content.Items.DoubleAllStats, extraLoops); // it is not yet your time
+            inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 15 + 15 * extraLoops); // teehee
+            if (body.characterMotor) body.characterMotor.mass = 2000f; // NO KNOCKBACK !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if (body.rigidbody) body.rigidbody.mass = 2000f;
+            // remove level cap
+            if (Run.instance.ambientLevel >= Run.ambientLevelCap)
+            {
+                int extraLevels = Mathf.FloorToInt(SS2Util.AmbientLevelUncapped()) - Run.instance.ambientLevelFloor;
+                inventory.GiveItem(RoR2Content.Items.LevelBonus, extraLevels);
+            }
+            DeathRewards rewards = body.GetComponent<DeathRewards>();
+            if (rewards)
+            {
+                rewards.expReward *= 30;
+                rewards.goldReward *= 30;
+            }         
+        }
+        public override void SetSpawnState(EntityStateMachine bodyMachine)
+        {
+            bodyMachine.initialStateType = new EntityStates.SerializableEntityStateType(typeof(EntityStates.AffixEmpyrean.SpawnState));
+            bodyMachine.SetNextState(new EntityStates.AffixEmpyrean.SpawnState());
+        }
+    }
+
+    public class Ethereal : StackableAffix
+    {
+        public override float EliteCreditCost => 300f * Mathf.Pow(0.67f, EtherealBehavior.instance.etherealsCompleted-1);
+        public override float CostMultiplier => 12f * Mathf.Pow(0.67f, EtherealBehavior.instance.etherealsCompleted-1);
+        public override bool IsAvailable() => EtherealBehavior.instance && EtherealBehavior.instance.etherealsCompleted > 0;
+        public override void SubtractCost(float baseCost, float totalCost, CombatDirector combatDirector)
+        {
+            combatDirector.monsterCredit -= totalCost * CostMultiplier * 1.25f - totalCost;
+            eliteCredit -= EliteCreditCost * 1.25f;
+        }
+        public override void MakeElite(CharacterBody body)
+        {
+            var inventory = body.inventory;
+            var ethInstance = EtherealBehavior.instance;
+            inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(100 + (100 * ethInstance.etherealsCompleted)));
+            inventory.GiveItem(SS2Content.Items.BoostCooldowns, 15);
+            inventory.GiveItem(RoR2Content.Items.BoostDamage, (int)(20 + (20 * ethInstance.etherealsCompleted)));
+            inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 20); // MORE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            inventory.GiveItem(SS2Content.Items.EtherealItemAffix);
+            DeathRewards rewards = body.GetComponent<DeathRewards>();
+            if (rewards)
+            {
+                rewards.expReward *= (uint)(8 + (8 * ethInstance.etherealsCompleted));
+                rewards.goldReward *= (uint)(8 + (8 * ethInstance.etherealsCompleted));
+            }
+        }
+    }
+    public class Ultra : StackableAffix
+    {
+        public override float EliteCreditCost => 1200f * Mathf.Pow(0.8f, EtherealBehavior.instance.etherealsCompleted-1);
+        public override float CostMultiplier => 20f * Mathf.Pow(0.8f, EtherealBehavior.instance.etherealsCompleted-1);
+        public override bool IsAvailable() => EtherealBehavior.instance && EtherealBehavior.instance.etherealsCompleted > 0 && Run.instance.loopClearCount >= 1;
+        public override bool IsBoss => true;
+        public override void MakeElite(CharacterBody body)
+        {
+            var inventory = body.inventory;
+            var ethInstance = EtherealBehavior.instance;
+            inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(500f + (250f * ethInstance.etherealsCompleted)));
+            inventory.GiveItem(SS2Content.Items.BoostCooldowns, 70);
+            inventory.GiveItem(RoR2Content.Items.BoostDamage, 100);
+            inventory.GiveItem(SS2Content.Items.AffixUltra);
+
+            DeathRewards rewards = body.GetComponent<DeathRewards>();
+            if (rewards)
+            {
+                rewards.expReward *= (uint)(20 + (20 * ethInstance.etherealsCompleted));
+                rewards.goldReward *= (uint)(20 + (20 * ethInstance.etherealsCompleted));
+            }
+        }
     }
 }
