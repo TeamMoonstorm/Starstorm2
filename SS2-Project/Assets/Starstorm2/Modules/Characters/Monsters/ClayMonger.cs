@@ -1,12 +1,16 @@
+using MSU;
+using MSU.Config;
 using RoR2;
 using RoR2.ContentManagement;
 using SS2.Components;
 using System.Collections;
+using UnityEngine;
 
 namespace SS2.Monsters
 {
     public class ClayMonger : SS2Monster
     {
+        public static GameObject manager { get; private set; }
         public override SS2AssetRequest<MonsterAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<MonsterAssetCollection>("acClayMonger", SS2Bundle.Indev);
 
         public override void Initialize()
@@ -19,6 +23,8 @@ namespace SS2.Monsters
             }
 
             R2API.RecalculateStatsAPI.GetStatCoefficients += HandleTar;
+            manager = AssetCollection.FindAsset<GameObject>("MongerTarTrailManager");
+            SS2Main.Instance.StartCoroutine(AwaitForConfig(AssetCollection.FindAsset<GameObject>("MongerTarPoint")));
         }
 
         private void HandleTar(CharacterBody sender, R2API.RecalculateStatsAPI.StatHookEventArgs args)
@@ -40,6 +46,15 @@ namespace SS2.Monsters
             }
 
             pickup.itemDef = SS2Content.Items.LuckyPup;
+        }
+
+        private IEnumerator AwaitForConfig(GameObject mongerTarPoint)
+        {
+            while (!ConfigSystem.configsBound)
+                yield return null;
+
+            var main = mongerTarPoint.GetComponentInChildren<ParticleSystem>().main;
+            main.duration = MongerTarTrailManager.pointLifetime / 2;
         }
 
         public override bool IsAvailable(ContentPack contentPack)
