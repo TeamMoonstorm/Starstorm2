@@ -22,10 +22,10 @@ namespace EntityStates.Knight
         public static float TokenModifier_dmgCoefficient => new ShieldPunch().damageCoefficient;
         public int swingSide;
 
-        public float hopVelocity = 10f;
+        public float hopVelocity = 12f;
         public float airControl = 0.30f;
-        public float upwardVelocity = 0.5f;
-        public float forwardVelocity = 17f;
+        public float upwardVelocity = 0.6f;
+        public float forwardVelocity = 18f;
         public float minimumY = 0.05f;
         public float aimVelocity = 1f;
 

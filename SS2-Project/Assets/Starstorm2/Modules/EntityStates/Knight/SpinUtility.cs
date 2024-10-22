@@ -40,12 +40,6 @@ namespace EntityStates.Knight
                 forwardDirection = (inputBank.moveVector == Vector3.zero ? characterDirection.forward : inputBank.moveVector).normalized;
             }
 
-            Vector3 rhs = characterDirection ? characterDirection.forward : forwardDirection;
-            Vector3 rhs2 = Vector3.Cross(Vector3.up, rhs);
-
-            float num = Vector3.Dot(forwardDirection, rhs);
-            float num2 = Vector3.Dot(forwardDirection, rhs2);
-
             RecalculateRollSpeed();
 
             if (characterMotor && characterDirection)
@@ -61,8 +55,6 @@ namespace EntityStates.Knight
             {
                 SmallHop(characterMotor, hopVelocity);
             }
-
-            //Util.PlaySound(dodgeSoundString, gameObject);
         }
 
         private void RecalculateRollSpeed()

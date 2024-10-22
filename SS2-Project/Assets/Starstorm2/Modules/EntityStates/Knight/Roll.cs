@@ -7,31 +7,38 @@ namespace EntityStates.Knight
 {
     public class Roll : BaseSkillState
     {
-        public static float duration = 0.5f;
+        public static float duration = 0.5f; // 0.5 was the real nice sweet spot on distance
         public static float initialSpeedCoefficient = 5f;
         public static float finalSpeedCoefficient = 2.5f;
 
-        public static string dodgeSoundString = "HenryRoll";
         public static float dodgeFOV = SS2.Survivors.Knight.dodgeFOV;
 
         private float rollSpeed;
         private Vector3 forwardDirection;
         private Vector3 previousPosition;
+        private Animator animator;
+
+        //private static int DodgeForwardStateHash = Animator.StringToHash("DodgeForward");
+
+        //private static int DodgeBackwardStateHash = Animator.StringToHash("DodgeBackward");
+
+        //private static int DodgeRightStateHash = Animator.StringToHash("DodgeRight");
+
+        //private static int DodgeLeftStateHash = Animator.StringToHash("DodgeLeft");
+
+        //private static int DodgeParamHash = Animator.StringToHash("Dodge.playbackRate");
 
         public override void OnEnter()
         {
             base.OnEnter();
+            animator.SetBool("isRolling", true);
+            animator = GetModelAnimator();
+            Util.PlaySound(Commando.DodgeState.dodgeSoundString, gameObject);
 
             if (isAuthority && inputBank && characterDirection)
             {
                 forwardDirection = (inputBank.moveVector == Vector3.zero ? characterDirection.forward : inputBank.moveVector).normalized;
             }
-
-            Vector3 rhs = characterDirection ? characterDirection.forward : forwardDirection;
-            Vector3 rhs2 = Vector3.Cross(Vector3.up, rhs);
-
-            float num = Vector3.Dot(forwardDirection, rhs);
-            float num2 = Vector3.Dot(forwardDirection, rhs2);
 
             RecalculateRollSpeed();
 
@@ -46,11 +53,13 @@ namespace EntityStates.Knight
 
             if (isGrounded)
             {
-                PlayAnimation("FullBody, Override", "RollsBlendTree", "walkSpeed", duration);
+                PlayCrossfade("Body", "Utility", "Utility.rate", duration * 1.25f, 0.05f);
+            } 
+            else
+            {
+                PlayCrossfade("Body", "AirUtility", "Utility.rate", duration * 1.25f, 0.05f);
             }
-            
-            Util.PlaySound(dodgeSoundString, gameObject);
-
+         
         }
 
         private void RecalculateRollSpeed()
@@ -88,8 +97,8 @@ namespace EntityStates.Knight
         public override void OnExit()
         {
             if (cameraTargetParams) cameraTargetParams.fovOverride = -1f;
+            animator.SetBool("isRolling", false);
             base.OnExit();
-
             characterMotor.disableAirControlUntilCollision = false;
         }
 
