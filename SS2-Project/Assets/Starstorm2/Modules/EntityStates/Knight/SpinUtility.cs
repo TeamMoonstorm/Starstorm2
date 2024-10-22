@@ -20,7 +20,7 @@ namespace EntityStates.Knight
         public new float duration = 0.7f; // prev: 1f
         public float initialSpeedCoefficient = 7f; // prev: 8, 10f
         public float finalSpeedCoefficient = 5f;
-        public float hopVelocity = 23f; //prev: 25, 30f
+        public float hopVelocity = 25f; //prev: 25, 30f
         public string dodgeSoundString = "";
         public float dodgeFOV = SS2.Survivors.Knight.dodgeFOV;
         public float rollSpeed;

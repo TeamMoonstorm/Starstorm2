@@ -19,6 +19,8 @@ namespace EntityStates.Knight
         public static float comboFinisherhitPauseDuration;
         public static float comboFinisherDamageCoefficient;
 
+        public new float baseDuration = 1.2f;
+
         private bool isComboFinisher => swingIndex == 2;
         private string animationStateName = "SwingSword0";
 
@@ -58,7 +60,7 @@ namespace EntityStates.Knight
             else
             {
                 swingEffectPrefab = SS2.Survivors.Knight.KnightSpinEffect;
-                damageCoefficient = 12;
+                damageCoefficient = 1.5f;
                 hitStopDuration = 0.012f;
             }
 
@@ -71,16 +73,15 @@ namespace EntityStates.Knight
 
             //0-1 multiplier of baseduration, used to time when the hitbox is out (usually based on the run time of the animation)
             //for example, if attackStartPercentTime is 0.5, the attack will start hitting halfway through the ability. if baseduration is 3 seconds, the attack will start happening at 1.5 seconds
-            attackStartPercentTime = 0.1f;
-            attackEndPercentTime = 0.4f;
+            attackStartPercentTime = 0.2f;
+            attackEndPercentTime = 0.7f;
 
             //this is the point at which the attack can be interrupted by itself, continuing a combo
-            earlyExitPercentTime = 0.6f;
-
+            earlyExitPercentTime = 0.8f;
 
             swingSoundString = "NemmandoSwing";
             hitSoundString = "";
-            playbackRateParam = "Primary.playbackRate";
+            playbackRateParam = "Primary.Hitbox";
             hitEffectPrefab = SS2.Survivors.Knight.KnightHitEffect;
         }
 
@@ -116,11 +117,7 @@ namespace EntityStates.Knight
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            if (!(base.fixedAge < durationBeforeInterruptable))
-            {
-                return InterruptPriority.Skill;
-            }
-            return InterruptPriority.PrioritySkill;
+          return InterruptPriority.Skill;
         }
     }
 }

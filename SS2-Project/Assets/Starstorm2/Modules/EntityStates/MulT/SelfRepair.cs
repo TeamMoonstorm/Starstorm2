@@ -4,9 +4,9 @@ namespace EntityStates.MulT
 {
     public class SelfRepair : BaseSkillState
     {
-        public float baseDuration = 0.5f;
-        private float duration = 5f;
-        private float healthGainPerRepair = 8f;
+        public float baseDuration = 3f;
+        private float duration = 3f;
+        private float healthGainPerRepair = 0.5f;
         private float repairLossPerTick = 10f;
 
         private SelfRepairController selfRepairController;
@@ -21,15 +21,15 @@ namespace EntityStates.MulT
         {
             base.FixedUpdate();
 
+            if (base.fixedAge >= duration && selfRepairController.repair <= repairLossPerTick)
+            {
+                outer.SetNextStateToMain();
+            }
+
             if (selfRepairController && base.isAuthority && selfRepairController.repair >= repairLossPerTick)
             {
                 this.characterBody.healthComponent.HealFraction(healthGainPerRepair, default);
                 selfRepairController.AddRepair(-repairLossPerTick);
-            }
-
-            if (base.fixedAge >= duration && selfRepairController.repair <= repairLossPerTick)
-            {
-                outer.SetNextStateToMain();
             }
         }
 

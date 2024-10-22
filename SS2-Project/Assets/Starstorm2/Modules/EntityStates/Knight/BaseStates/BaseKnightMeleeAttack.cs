@@ -22,7 +22,7 @@ namespace EntityStates.Knight
         protected float procCoefficient = 1f;
         protected float pushForce = 300f;
         protected Vector3 bonusForce = Vector3.zero;
-        protected float baseDuration = 1f;
+        public float baseDuration = 1f;
 
         protected float attackStartPercentTime = 0.2f;
         protected float attackEndPercentTime = 0.4f;

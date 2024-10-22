@@ -12,11 +12,11 @@ namespace SS2.Components
     {
         public CharacterBody characterBody;
         public float repairMax = 50f;
-        public float repairGainPerUpdate = 1f;
+        public float repairGainPerUpdate = 0.1f;
 
-        public GameObject repairOverlayPrefab;
+        public GameObject repairOverlayPrefab = SS2.Survivors.Toolbot.RepairOverlayPrefab;
 
-        public string repairOverlayChildLocatorEntry;
+        public string repairOverlayChildLocatorEntry = "CrosshairExtras";
         private OverlayController repairOverlayController;
         private List<ImageFillController> fillUiList = new List<ImageFillController>();
 

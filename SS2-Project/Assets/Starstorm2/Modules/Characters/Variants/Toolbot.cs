@@ -5,13 +5,15 @@ using MSU;
 using RoR2.Skills;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using SS2.ScriptableObjects;
+using SS2.Components;
 
 namespace SS2.Survivors
 {
-    public class MulT : SS2VanillaSurvivor
+    public class Toolbot : SS2VanillaSurvivor
     {
         public override SS2AssetRequest<VanillaSurvivorAssetCollection> assetRequest => SS2Assets.LoadAssetAsync<VanillaSurvivorAssetCollection>("acToolbot", SS2Bundle.Indev);
-
+        public static GameObject RepairOverlayPrefab;
 
         public override void Initialize()
         {
@@ -19,8 +21,15 @@ namespace SS2.Survivors
 
             SkillLocator skillLocator = toolbotBodyPrefab.GetComponent<SkillLocator>();
             SkillFamily primarySkillFamily = skillLocator.primary.skillFamily;
-            SkillFamily secondarySkillFamily = skillLocator.primary.skillFamily;
+            SkillFamily secondarySkillFamily = skillLocator.secondary.skillFamily;
             SkillFamily specialSkillFamily = skillLocator.special.skillFamily;
+
+            RepairOverlayPrefab = assetCollection.FindAsset<GameObject>("ToolbotRepairUI");
+
+            SelfRepairSkillDef sdSelfRepair = assetCollection.FindAsset<SelfRepairSkillDef>("sdSelfRepair");
+
+            AddSkill(secondarySkillFamily, sdSelfRepair);
+
         }
 
         public override void ModifyContentPack(ContentPack contentPack)

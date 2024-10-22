@@ -9,17 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1391837873, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Script: {fileID: 11500000, guid: 38dad52487f0fab488f8921457c7c505, type: 3}
   m_Name: sdSelfRepair
   m_EditorClassIdentifier: 
-  skillName: 
-  skillNameToken: 
-  skillDescriptionToken: 
+  skillName: Self-Repair
+  skillNameToken: SS2_TOOLBOT_SELF_REPAIR_NAME
+  skillDescriptionToken: SS2_TOOLBOT_SELF_REPAIR_DESC
   keywordTokens: []
   icon: {fileID: 0}
-  activationStateMachineName: 
+  activationStateMachineName: Weapon
   activationState:
-    _typeName: 
+    _typeName: EntityStates.MulT.SelfRepair, Starstorm2, Version=1.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   interruptPriority: 1
   baseRechargeInterval: 1
   baseMaxStock: 1

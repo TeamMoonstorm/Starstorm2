@@ -7,7 +7,7 @@ namespace EntityStates.Knight
 {
     public class Roll : BaseSkillState
     {
-        public static float duration = 0.5f; // 0.5 was the real nice sweet spot on distance
+        public static float duration = 0.6f; // 0.5 was the real nice sweet spot on distance
         public static float initialSpeedCoefficient = 5f;
         public static float finalSpeedCoefficient = 2.5f;
 
@@ -17,16 +17,6 @@ namespace EntityStates.Knight
         private Vector3 forwardDirection;
         private Vector3 previousPosition;
         private Animator animator;
-
-        //private static int DodgeForwardStateHash = Animator.StringToHash("DodgeForward");
-
-        //private static int DodgeBackwardStateHash = Animator.StringToHash("DodgeBackward");
-
-        //private static int DodgeRightStateHash = Animator.StringToHash("DodgeRight");
-
-        //private static int DodgeLeftStateHash = Animator.StringToHash("DodgeLeft");
-
-        //private static int DodgeParamHash = Animator.StringToHash("Dodge.playbackRate");
 
         public override void OnEnter()
         {
@@ -53,11 +43,11 @@ namespace EntityStates.Knight
 
             if (isGrounded)
             {
-                PlayCrossfade("Body", "Utility", "Utility.rate", duration * 1.25f, 0.05f);
+                PlayCrossfade("FullBody, Override", "Roll", "Utility.rate", duration, 0.05f);
             } 
             else
             {
-                PlayCrossfade("Body", "AirUtility", "Utility.rate", duration * 1.25f, 0.05f);
+                PlayCrossfade("FullBody, Override", "AirRoll", "Utility.rate", duration, 0.05f);
             }
          
         }
