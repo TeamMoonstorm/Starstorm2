@@ -1,68 +1,100 @@
 ﻿using MSU;
+using RoR2;
 using RoR2.Skills;
-using System.Linq.Expressions;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace EntityStates.Knight
 {
-    class SwingSword : BasicMeleeAttack, SteppedSkillDef.IStepSetter
+    class SwingSword : BaseKnightMeleeAttack
     {
         public static float swingTimeCoefficient;
         [FormatToken("SS2_KNIGHT_PRIMARY_SWORD_DESC",  FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static GameObject beamProjectile;
         public static SkillDef buffedSkillRef;
         public static float TokenModifier_dmgCoefficient => new SwingSword().damageCoefficient;
-        public int swingSide = 0;
 
         public static float baseDurationBeforeInterruptable;
         public static float comboFinisherBaseDurationBeforeInterruptable;
         private float durationBeforeInterruptable;
         public static float comboFinisherhitPauseDuration;
-
         public static float comboFinisherDamageCoefficient;
 
-        private bool isComboFinisher => swingSide == 2;
+        private bool isComboFinisher => swingIndex == 2;
+        private string animationStateName = "SwingSword0";
 
-        public override void OnEnter()
+
+        private void SetupHitbox()
         {
-            base.OnEnter();
-            animator = GetModelAnimator();
-
-            if (isComboFinisher)
-            {
-                //swingEffectPrefab = comboFinisherSwingEffectPrefab;
-                hitPauseDuration = comboFinisherhitPauseDuration;
-                damageCoefficient = comboFinisherDamageCoefficient;
-            }
-
-            durationBeforeInterruptable = (isComboFinisher ? (comboFinisherBaseDurationBeforeInterruptable / attackSpeedStat) : (baseDurationBeforeInterruptable / attackSpeedStat));
-        }
-
-        public override void PlayAnimation()
-        {
-           string animationStateName = "SwingSword0";
-
-            switch (swingSide)
+            switch (swingIndex)
             {
                 case 0:
                     animationStateName = "SwingSword0";
-                    swingEffectMuzzleString = "SwingRight";
+                    muzzleString = "SwingRight";
+                    hitboxGroupName = "SwordHitbox";
                     break;
                 case 1:
                     animationStateName = "SwingSword1";
-                    swingEffectMuzzleString = "SwingLeft";
+                    muzzleString = "SwingLeft";
+                    hitboxGroupName = "SwordHitbox";
                     break;
                 case 2:
                     animationStateName = "SwingSword3";
-                    swingEffectMuzzleString = "SwingLeft";
+                    muzzleString = "SwingLeft";
+                    hitboxGroupName = "SpearHitbox";
                     break;
                 default:
                     animationStateName = "SwingSword0";
-                    swingEffectMuzzleString = "SwingLeft";
+                    muzzleString = "SwingLeft";
+                    hitboxGroupName = "SwordHitbox";
                     break;
             }
 
+            if (isComboFinisher)
+            {
+                swingEffectPrefab = SS2.Survivors.Knight.KnightSpinEffect; //comboFinisherSwingEffectPrefab;
+                hitStopDuration = comboFinisherhitPauseDuration;
+                damageCoefficient = comboFinisherDamageCoefficient;
+            } 
+            else
+            {
+                swingEffectPrefab = SS2.Survivors.Knight.KnightSpinEffect;
+                damageCoefficient = 12;
+                hitStopDuration = 0.012f;
+            }
+
+            durationBeforeInterruptable = (isComboFinisher ? (comboFinisherBaseDurationBeforeInterruptable / attackSpeedStat) : (baseDurationBeforeInterruptable / attackSpeedStat));
+
+            damageType = DamageType.Generic;
+            procCoefficient = 0.6f;
+            bonusForce = Vector3.zero;
+            baseDuration = 1f;
+
+            //0-1 multiplier of baseduration, used to time when the hitbox is out (usually based on the run time of the animation)
+            //for example, if attackStartPercentTime is 0.5, the attack will start hitting halfway through the ability. if baseduration is 3 seconds, the attack will start happening at 1.5 seconds
+            attackStartPercentTime = 0.1f;
+            attackEndPercentTime = 0.4f;
+
+            //this is the point at which the attack can be interrupted by itself, continuing a combo
+            earlyExitPercentTime = 0.6f;
+
+
+            swingSoundString = "NemmandoSwing";
+            hitSoundString = "";
+            playbackRateParam = "Primary.playbackRate";
+            hitEffectPrefab = SS2.Survivors.Knight.KnightHitEffect;
+        }
+
+        public override void OnEnter()
+        {
+            if (base.isAuthority)
+            {
+                SetupHitbox();
+                base.OnEnter();
+            }
+        }
+
+        public override void PlayAttackAnimation()
+        {
             if (base.isGrounded & !base.GetModelAnimator().GetBool("isMoving"))
             {
                 PlayCrossfade("FullBody, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.08f);
@@ -70,22 +102,6 @@ namespace EntityStates.Knight
             {
                 PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.08f);
             }         
-        }
-
-        void SteppedSkillDef.IStepSetter.SetStep(int i)
-        {
-            swingSide = i;
-        }
-
-        public override void OnSerialize(NetworkWriter writer)
-        {
-            base.OnSerialize(writer);
-            writer.Write((byte)swingSide);
-        }
-        public override void OnDeserialize(NetworkReader reader)
-        {
-            base.OnDeserialize(reader);
-            swingSide = (int)reader.ReadByte();
         }
 
         public override void FixedUpdate()
