@@ -11,8 +11,8 @@ namespace SS2.Components
     public class SelfRepairController : NetworkBehaviour
     {
         public CharacterBody characterBody;
-        public float repairMax = 50f;
-        public float repairGainPerUpdate = 0.1f;
+        public float repairMax = 10f;
+        public float repairGainPerUpdate = 0.01f;
 
         public GameObject repairOverlayPrefab = SS2.Survivors.Toolbot.RepairOverlayPrefab;
 

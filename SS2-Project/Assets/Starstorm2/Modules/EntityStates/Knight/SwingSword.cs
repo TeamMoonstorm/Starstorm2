@@ -19,7 +19,8 @@ namespace EntityStates.Knight
         public static float comboFinisherhitPauseDuration;
         public static float comboFinisherDamageCoefficient;
 
-        public new float baseDuration = 1.2f;
+        public new float baseDuration = 1f;
+        public new float duration = 1f;
 
         private bool isComboFinisher => swingIndex == 2;
         private string animationStateName = "SwingSword0";
@@ -113,11 +114,6 @@ namespace EntityStates.Knight
         public override void OnExit()
         {
             base.OnExit();
-        }
-
-        public override InterruptPriority GetMinimumInterruptPriority()
-        {
-          return InterruptPriority.Skill;
         }
     }
 }

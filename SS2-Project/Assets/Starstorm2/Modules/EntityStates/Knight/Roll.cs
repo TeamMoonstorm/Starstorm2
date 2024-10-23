@@ -21,8 +21,9 @@ namespace EntityStates.Knight
         public override void OnEnter()
         {
             base.OnEnter();
-            animator.SetBool("isRolling", true);
             animator = GetModelAnimator();
+            animator.SetBool("isRolling", true);
+            
             Util.PlaySound(Commando.DodgeState.dodgeSoundString, gameObject);
 
             if (isAuthority && inputBank && characterDirection)

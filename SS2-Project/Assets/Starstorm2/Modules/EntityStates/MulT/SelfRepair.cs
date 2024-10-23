@@ -4,10 +4,10 @@ namespace EntityStates.MulT
 {
     public class SelfRepair : BaseSkillState
     {
-        public float baseDuration = 3f;
+        public float baseDuration = 1f;
         private float duration = 3f;
-        private float healthGainPerRepair = 0.5f;
-        private float repairLossPerTick = 10f;
+        private float healthGainPerRepair = 0.01f;
+        private float repairLossPerTick = 1f;
 
         private SelfRepairController selfRepairController;
 
