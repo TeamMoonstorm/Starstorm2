@@ -20,6 +20,7 @@ namespace SS2.Survivors
         public static GameObject KnightImpactEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/Bandit2SmokeBomb.prefab").WaitForCompletion();
         public static GameObject KnightCrosshair = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/SimpleDotCrosshair.prefab").WaitForCompletion();
         public static GameObject KnightDroppod = Addressables.LoadAssetAsync<GameObject>("Prefabs/NetworkedObjects/SurvivorPod").WaitForCompletion();
+        public static GameObject KnightPassiveWard;
         public static GameObject KnightHitEffect;
         public static GameObject KnightSpinEffect;
 
@@ -93,6 +94,7 @@ namespace SS2.Survivors
             Material matSpecialPowerOverlay = AssetCollection.FindAsset<Material>("matKnightBuffOverlay");
             KnightHitEffect = AssetCollection.FindAsset<GameObject>("KnightImpactSlashEffect");
             KnightSpinEffect = AssetCollection.FindAsset<GameObject>("KnightSpin");
+            KnightPassiveWard = AssetCollection.FindAsset<GameObject>("KnightPassiveBuffWard");
 
             RegisterKnightDamageTypes();
             ModifyPrefab();

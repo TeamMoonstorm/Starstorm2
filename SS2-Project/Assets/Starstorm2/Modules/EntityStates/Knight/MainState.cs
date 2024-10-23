@@ -19,8 +19,9 @@ namespace EntityStates.Knight
             {
                 if (base.jumpInputReceived && base.characterBody)
                 {
-                    if (currentWeaponState && currentWeaponState.state is Shield)
+                    if (currentWeaponState && currentWeaponState.state is Shield && base.characterMotor.jumpCount < (base.characterBody.maxJumpCount + 1))
                     {
+                        base.characterMotor.jumpCount++;
                         outer.SetNextState(new EntityStates.Knight.Roll());
                     } 
                     else if (base.characterMotor.jumpCount < base.characterBody.maxJumpCount)

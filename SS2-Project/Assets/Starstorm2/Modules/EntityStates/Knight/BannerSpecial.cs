@@ -24,7 +24,7 @@ namespace EntityStates.Knight
         public float upwardVelocity = 7f;
         public float forwardVelocity = 3f;
 
-
+        private bool detonateNextFrame;
         private float previousAirControl;
 
         private void FireImpact()
@@ -88,6 +88,17 @@ namespace EntityStates.Knight
             }
             base.characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
             GetModelTransform().GetComponent<AimAnimator>().enabled = true;
+            base.characterDirection.moveVector = direction;
+
+            if (base.isAuthority)
+            {
+                base.characterMotor.onMovementHit += OnMovementHit;
+            }
+        }
+
+        private void OnMovementHit(ref CharacterMotor.MovementHitInfo movementHitInfo)
+        {
+            detonateNextFrame = true;
         }
 
         public override void FixedUpdate()
@@ -97,7 +108,7 @@ namespace EntityStates.Knight
             if (base.isAuthority && base.characterMotor)
             {
                 base.characterMotor.moveDirection = base.inputBank.moveVector;
-                if (base.isGrounded)
+                if (detonateNextFrame || (base.characterMotor.Motor.GroundingStatus.IsStableOnGround && !base.characterMotor.Motor.LastGroundingStatus.IsStableOnGround))
                 {
                     FireImpact();
                     outer.SetNextStateToMain();
@@ -107,6 +118,15 @@ namespace EntityStates.Knight
 
         public override void OnExit()
         {
+            if (base.isAuthority)
+            {
+                base.characterMotor.onMovementHit -= OnMovementHit;
+            }
+
+            base.characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage;
+            base.characterMotor.airControl = previousAirControl;
+            base.characterBody.isSprinting = false;
+
             outer.SetNextStateToMain();
             base.OnExit();
         }
