@@ -61,14 +61,14 @@ namespace EntityStates.Knight
             else
             {
                 swingEffectPrefab = SS2.Survivors.Knight.KnightSpinEffect;
-                damageCoefficient = 1.5f;
-                hitStopDuration = 0.012f;
+                damageCoefficient = 3.5f;
+                hitStopDuration = 0.02f;
             }
 
             durationBeforeInterruptable = (isComboFinisher ? (comboFinisherBaseDurationBeforeInterruptable / attackSpeedStat) : (baseDurationBeforeInterruptable / attackSpeedStat));
 
             damageType = DamageType.Generic;
-            procCoefficient = 0.6f;
+            procCoefficient = 0.7f;
             bonusForce = Vector3.zero;
             baseDuration = 1f;
 

@@ -17,7 +17,15 @@ namespace EntityStates.Knight
         public float rollSpeed = 1.2f;
         private Vector3 forwardDirection;
         public float hopVelocity = 25f;
-        public float upwardVelocity = 5f;
+
+        public float minimumY = 0.05f;
+        public float airControl = 0.15f;
+        public float aimVelocity = 4f;
+        public float upwardVelocity = 7f;
+        public float forwardVelocity = 3f;
+
+
+        private float previousAirControl;
 
         private void FireImpact()
         {
@@ -64,24 +72,36 @@ namespace EntityStates.Knight
 
             PlayAnimation("FullBody, Override", "SpecialLeapStart", "Special.playbackRate", 1);
 
-            forwardDirection = (inputBank.moveVector == Vector3.zero ? characterDirection.forward : inputBank.moveVector).normalized;
-
-            if (characterMotor && characterDirection)
+            base.OnEnter();
+            previousAirControl = base.characterMotor.airControl;
+            base.characterMotor.airControl = airControl;
+            Vector3 direction = GetAimRay().direction;
+            if (base.isAuthority)
             {
-                characterMotor.velocity = forwardDirection * rollSpeed;
-                characterMotor.velocity.y = upwardVelocity;
-                SmallHop(characterMotor, hopVelocity);
+                base.characterBody.isSprinting = true;
+                direction.y = Mathf.Max(direction.y, minimumY);
+                Vector3 vector = direction.normalized * aimVelocity * moveSpeedStat;
+                Vector3 vector2 = Vector3.up * upwardVelocity;
+                Vector3 vector3 = new Vector3(direction.x, 0f, direction.z).normalized * forwardVelocity;
+                base.characterMotor.Motor.ForceUnground();
+                base.characterMotor.velocity = vector + vector2 + vector3;
             }
+            base.characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
+            GetModelTransform().GetComponent<AimAnimator>().enabled = true;
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
 
-            if (base.isGrounded)
+            if (base.isAuthority && base.characterMotor)
             {
-                FireImpact();
-                outer.SetNextStateToMain();
+                base.characterMotor.moveDirection = base.inputBank.moveVector;
+                if (base.isGrounded)
+                {
+                    FireImpact();
+                    outer.SetNextStateToMain();
+                }
             }
         }
 

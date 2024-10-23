@@ -20,6 +20,11 @@ namespace EntityStates.Knight
 
         public override void OnEnter()
         {
+            // This check is to prevent roll spamming in the air
+            // Also the +1 is so Knight can still jump to his max and roll at least once
+            // This isnt in the body bc goofy nonsense
+            if (base.characterMotor.jumpCount >= (base.characterBody.maxJumpCount + 1)) return;
+
             base.OnEnter();
             animator = GetModelAnimator();
             animator.SetBool("isRolling", true);
@@ -48,9 +53,10 @@ namespace EntityStates.Knight
             } 
             else
             {
+                // If we arent grounded, we play the air dodge and increment the jump count
+                base.characterMotor.jumpCount++;
                 PlayCrossfade("FullBody, Override", "AirRoll", "Utility.rate", duration, 0.05f);
             }
-         
         }
 
         private void RecalculateRollSpeed()

@@ -29,6 +29,7 @@ namespace SS2.Survivors
             SelfRepairSkillDef sdSelfRepair = assetCollection.FindAsset<SelfRepairSkillDef>("sdSelfRepair");
 
             AddSkill(secondarySkillFamily, sdSelfRepair);
+            AddEntityStateMachine(toolbotBodyPrefab, "Toolbox"); // Used by skills like self-repair that dont want to interrupt weapon
 
         }
 

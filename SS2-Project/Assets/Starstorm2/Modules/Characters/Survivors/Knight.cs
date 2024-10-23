@@ -19,13 +19,11 @@ namespace SS2.Survivors
 
         public static GameObject KnightImpactEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/Bandit2SmokeBomb.prefab").WaitForCompletion();
         public static GameObject KnightCrosshair = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/SimpleDotCrosshair.prefab").WaitForCompletion();
-        public static GameObject KnightDroppod = Resources.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod");
+        public static GameObject KnightDroppod = Addressables.LoadAssetAsync<GameObject>("Prefabs/NetworkedObjects/SurvivorPod").WaitForCompletion();
         public static GameObject KnightHitEffect;
         public static GameObject KnightSpinEffect;
 
         public static SerializableEntityStateType ShieldStateType = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Knight.Shield));
-
-
 
         public static float dodgeFOV = EntityStates.Commando.DodgeState.dodgeFOV;
 
@@ -145,7 +143,7 @@ namespace SS2.Survivors
                 args.damageMultAdd += 0.2f;
             }
 
-            if (sender.HasBuff(SS2Content.Buffs.bdShield))
+            if (sender.HasBuff(SS2Content.Buffs.bdKnightShield))
             {
                 args.armorAdd += 200f;
                 args.moveSpeedReductionMultAdd += 0.6f;

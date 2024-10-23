@@ -17,12 +17,13 @@ namespace EntityStates.Knight
         {
             if (base.hasCharacterMotor && !healthComponent.isInFrozenState)
             {
-                if (base.jumpInputReceived && base.characterBody && base.characterMotor.jumpCount < base.characterBody.maxJumpCount)
+                if (base.jumpInputReceived && base.characterBody)
                 {
                     if (currentWeaponState && currentWeaponState.state is Shield)
                     {
                         outer.SetNextState(new EntityStates.Knight.Roll());
-                    } else
+                    } 
+                    else if (base.characterMotor.jumpCount < base.characterBody.maxJumpCount)
                     {
                         base.ProcessJump();
                     }

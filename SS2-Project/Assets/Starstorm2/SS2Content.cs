@@ -548,7 +548,7 @@ namespace SS2
 
             public static BuffDef bdNemCapDroneBuff;
 
-            public static BuffDef bdShield;
+            public static BuffDef bdKnightShield;
 
             public static BuffDef bdParry;
 
