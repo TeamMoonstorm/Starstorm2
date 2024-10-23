@@ -12,7 +12,7 @@ namespace SS2.Components
         [SerializeField]
         public GameObject PassiveWardPrefab;
 
-        public void OnEnable()
+        public void Start()
         {
             characterBody = GetComponent<CharacterBody>();
             if (NetworkServer.active)
