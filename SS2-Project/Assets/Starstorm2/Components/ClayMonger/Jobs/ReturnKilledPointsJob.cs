@@ -6,16 +6,19 @@ using Unity.Jobs;
 namespace SS2.Jobs
 {
     [BurstCompile(OptimizeFor = OptimizeFor.Performance)]
-    public struct ReturnKilledPointsJob : IJobParallelForDefer
+    public struct ReturnKilledPointsJob : IJobParallelFor
     {
         [WriteOnly, NativeDisableParallelForRestriction]
         public NativeArray<MongerTarTrailManager.TarPoint> allPoints;
-        [ReadOnly]
-        public NativeArray<MongerTarTrailManager.TarPoint> killedPointsJob;
+        [ReadOnly, NativeDisableParallelForRestriction]
+        public NativeArray<MongerTarTrailManager.TarPoint> killedPoints;
         public NativeQueue<int>.ParallelWriter invalidPointIndices;
         public void Execute(int index)
         {
-            var killedPoint = killedPointsJob[index];
+            if (index >= killedPoints.Length)
+                return;
+
+            var killedPoint = killedPoints[index];
             int managerIndex = (int)killedPoint.managerIndex;
             invalidPointIndices.Enqueue((int)killedPoint.managerIndex);
             allPoints[managerIndex] = MongerTarTrailManager.TarPoint.invalid;

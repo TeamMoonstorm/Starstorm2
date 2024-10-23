@@ -3,6 +3,7 @@ using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
+using UnityEngine;
 
 namespace SS2.Jobs
 {
@@ -19,7 +20,7 @@ namespace SS2.Jobs
                 return;
 
             point.pointLifetime -= deltaTime;
-            point.remappedLifetime0to1 = math.remap(0f, point.totalLifetime, 0, 1, point.pointLifetime);
+            point.remappedLifetime0to1 = math.clamp(math.remap(0f, point.totalLifetime, 0, 1, point.pointLifetime), 0, 1);
             tarPoints[index] = point;
         }
     }

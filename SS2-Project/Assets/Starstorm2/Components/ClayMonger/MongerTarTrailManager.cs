@@ -16,7 +16,7 @@ namespace SS2.Components
     public class MongerTarTrailManager : MonoBehaviour
     {
         public static MongerTarTrailManager instance { get; private set; }
-        [ConfigureField(SS2Config.ID_MAIN, configDescOverride = "The lifetime of a single tar puddle of a clay monger, lowering this value will increase performance.")]
+        [ConfigureField(SS2Config.ID_MAIN, configDescOverride = "The lifetime of a single tar puddle of a clay monger, A monger will usually have 5 times this amount, rounded to the nearest highest integer. (10 = 50 puddles).\nLowering this value will increase performance.")]
         public static float pointLifetime = 10;
 
         public GameObject pointPrefab;
@@ -27,7 +27,7 @@ namespace SS2.Components
 
         //We cannot directly reference a tar point's trail owner, but we can reference their instance id, so we have this dictionary to get the owner of a point.
         private Dictionary<int, MongerTarTrail> _instanceIDToMonger = new Dictionary<int, MongerTarTrail>();
-        private List<MongerTarTrail> _mongerInstances;
+        private List<MongerTarTrail> _mongerInstances = new List<MongerTarTrail>();
         private List<Transform> _mongerTransforms; //Used for raycast purposes.
 
         private float _trailUpdateStopwatch;
@@ -52,6 +52,7 @@ namespace SS2.Components
         private int _currentPoolChildCount;
         private GameObject _currentPoolObject;
         private List<GameObject> _allPoolObjects = new List<GameObject>();
+        private HashSet<GameObject> _affectedBodiesOnPhysicsChecks = new HashSet<GameObject>();
 
         private void Awake()
         {
@@ -92,15 +93,12 @@ namespace SS2.Components
             //We neeed to return the points used by this trail.
             for (int i = trail.points.Length - 1; i >= 0; i--)
             {
-                ReturnTarPoint(trail.points[i]);
+                ReturnTarPointMainThread(trail.points[i]);
             }
             trail.points.Clear(); //Clear the list to prepare for deallocation if needed.
 
-            void ReturnTarPoint(TarPoint tarPoint)
+            void ReturnTarPointMainThread(TarPoint tarPoint)
             {
-                if (!tarPoint.isValid)
-                    return;
-
                 int index = (int)tarPoint.managerIndex;
 
                 TarPoolEntry gameObjectForPoint = _tarPoolEntries[index];
@@ -171,7 +169,7 @@ namespace SS2.Components
                 }
                 if (!_currentPoolObject)
                 {
-                    //Creates a new pool object, stores it in dont destroy on load.
+                    //Creates a new pool object, stores it in dont destroy on load. The reason behind this optimization is due to the fact that IJobParallelForTransforms increases the amounts of jobs per ROOT object, so in this case, each new splotch container is a new Executor of the job that will process the changes to all its children pool objects.
                     _currentPoolObject = new GameObject($"SplotchContainer{_poolCounts}");
                     UnityEngine.Object.DontDestroyOnLoad(_currentPoolObject);
                     _allPoolObjects.Add(_currentPoolObject); //Store it for destruction when this behaviour is destroyed
@@ -237,7 +235,7 @@ namespace SS2.Components
                 physicsScene = Physics.defaultPhysicsScene;
             }
 
-            if(shouldTrailUpdate)
+            if (shouldTrailUpdate)
             {
                 //Initialize collections related to trail update.
                 TransformAccessArray mongerTransformsAccessArray = new TransformAccessArray(0);
@@ -264,9 +262,9 @@ namespace SS2.Components
                 {
                     allPoints = _allTarPoints,
                     invalidPointIndices = _invalidIndexQueue.AsParallelWriter(),
-                    killedPointsJob = pointsToKill.AsDeferredJobArray(),
+                    killedPoints = pointsToKill.AsDeferredJobArray(),
                 };
-                killTrailsHandle = returnKilledPointsJob.Schedule(pointsToKill, 4, killTrailsHandle);
+                killTrailsHandle = returnKilledPointsJob.Schedule(Mathf.CeilToInt(totalPointsPerMonger * 1.5f), 4, killTrailsHandle);
 
                 //Creates raycast commands for adding new points, Raycastcommands are jobs that can be executed in parallel.
                 mongerRaycastDependency = default;
@@ -392,6 +390,8 @@ namespace SS2.Components
 
             if(shouldPhysicsCheck)
             {
+                _affectedBodiesOnPhysicsChecks.Clear();
+
                 //From the results of the boxcasts, we shall check for enemies of the monger.
                 for (int i = 0; i < pointsThatCollidedWithSomething.Length; i++)
                 {
@@ -405,9 +405,12 @@ namespace SS2.Components
                     if (!hc)
                         continue;
 
-                    var point = GetPoint(managerIndex);
-
                     var collidedGameObject = hc.gameObject;
+                    if (_affectedBodiesOnPhysicsChecks.Contains(collidedGameObject))
+                        continue;
+                    _affectedBodiesOnPhysicsChecks.Add(collidedGameObject);
+
+                    var point = GetPoint(managerIndex);
                     //Avoid doing stuff to the owner of the point
                     var mongerTrailThatOwnsTheCurrentPoint = _instanceIDToMonger[point.currentOwnerInstanceID];
                     if (hc.gameObject == mongerTrailThatOwnsTheCurrentPoint.gameObject)
@@ -512,25 +515,20 @@ namespace SS2.Components
             private GameObject _tiedGameObject;
 
             public Transform cachedTransform;
-            public bool isInPool
+            public bool? isInPool
             {
-                get => _isInPool;
+                get
+                {
+                    if (tiedGameObject)
+                        return tiedGameObject;
+                    return null;
+                }
                 set
                 {
-                    if (!tiedGameObject)
-                    {
-                        _isInPool = false;
-                        return;
-                    }
-
-                    if (_isInPool != value)
-                    {
-                        _isInPool = value;
-                        tiedGameObject.SetActive(!value);
-                    }
+                    if (tiedGameObject)
+                        tiedGameObject.SetActive(!value ?? false);
                 }
             }
-            private bool _isInPool;
             public ManagerIndex managerPoolIndex => _managerPoolIndex;
             private ManagerIndex _managerPoolIndex;
 
@@ -538,7 +536,6 @@ namespace SS2.Components
             {
                 _tiedGameObject = null;
                 cachedTransform = null;
-                _isInPool = false;
                 _managerPoolIndex = (ManagerIndex)index;
             }
 
