@@ -96,6 +96,7 @@ namespace SS2
         {
             if (hasUpgraded)
             {
+
                 if (portalIndicator) Destroy(portalIndicator);
                 EtherealBehavior.instance.OnEtherealTeleporterCharged();
                 teleporter.AttemptSpawnPortal(SS2Assets.LoadAsset<InteractableSpawnCard>("iscStrangerPortal", SS2Bundle.Indev), 20f, 300f, "hehe oortal");

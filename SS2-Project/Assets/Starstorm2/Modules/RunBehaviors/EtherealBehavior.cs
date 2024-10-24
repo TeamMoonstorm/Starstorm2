@@ -335,6 +335,7 @@ namespace SS2
             {
                 etherealBehavior.etherealsCompleted = level;
                 etherealBehavior.SetEtherealsCompleted(level);
+                FindObjectOfType<RoR2.UI.CurrentDifficultyIconController>()?.Start(); // XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
             }
         }
     }

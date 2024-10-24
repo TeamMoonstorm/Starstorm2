@@ -252,6 +252,8 @@ namespace SS2
 
             public static ItemDef BoostMovespeed;
 
+            public static ItemDef BlastKnuckles;
+
             public static ItemDef CoffeeBag;
 
             public static ItemDef CognationHelper;
@@ -333,6 +335,8 @@ namespace SS2
             public static ItemDef ScavengersFortune;
 
             public static ItemDef ShackledLamp;
+
+            public static ItemDef StickyOverloader;
 
             public static ItemDef StirringSoul;
 
@@ -441,6 +445,8 @@ namespace SS2
             public static BuffDef BuffAffixUltra;
 
             public static BuffDef BuffBloodTesterRegen;
+
+            public static BuffDef BuffBlastKnucklesCharge;
 
             public static BuffDef BuffBackThruster;
 

@@ -131,7 +131,7 @@ namespace SS2.Components
                             highestCostAffix = affix;
                         }
                         affix.MakeElite(body);
-                        affix.SubtractCost(body, baseCost, director); // lol
+                        affix.SubtractCost(baseCost, totalCost, director); // lol
                         isBoss |= affix.IsBoss;
                     }
                 }
