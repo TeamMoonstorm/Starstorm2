@@ -13,9 +13,25 @@ MonoBehaviour:
   m_Name: BurstStagedAssemblies
   m_EditorClassIdentifier: 
   Active: 1
-  stageAssembliesJob: {fileID: -715294958435390540, guid: aef4103e08541c748aa705db54e8b3f9,
-    type: 2}
+  stageAssembliesJob: {fileID: -82466271387635231}
   combineOutputIntoSingleAssembly: 0
+--- !u!114 &-82466271387635231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5b20fac9c71fd64183cb7a8f359d73a, type: 3}
+  m_Name: StageAssemblies
+  m_EditorClassIdentifier: 
+  Active: 1
+  stageDebugDatabases: 0
+  releaseBuild: 0
+  assemblyArtifactPath: <AssemblyStaging>
+  buildTarget: 19
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29,6 +45,7 @@ MonoBehaviour:
   m_Name: Pipeline
   m_EditorClassIdentifier: 
   Data:
+  - {fileID: -82466271387635231}
   - {fileID: -7618891240902906910}
   QuickAccess: 0
   manifest: {fileID: -3892906877110538616, guid: bcbdefdb47e2f8f45bdd7a2a4559b405,
