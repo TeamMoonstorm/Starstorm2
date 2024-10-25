@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7618891240902906910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88f8d1ec46010bb419982bcbe79f0960, type: 3}
+  m_Name: BurstStagedAssemblies
+  m_EditorClassIdentifier: 
+  Active: 1
+  stageAssembliesJob: {fileID: -715294958435390540, guid: aef4103e08541c748aa705db54e8b3f9,
+    type: 2}
+  combineOutputIntoSingleAssembly: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3695521163bdd74fa2845bbd3438240, type: 3}
+  m_Name: Pipeline
+  m_EditorClassIdentifier: 
+  Data:
+  - {fileID: -7618891240902906910}
+  QuickAccess: 0
+  manifest: {fileID: -3892906877110538616, guid: bcbdefdb47e2f8f45bdd7a2a4559b405,
+    type: 2}
