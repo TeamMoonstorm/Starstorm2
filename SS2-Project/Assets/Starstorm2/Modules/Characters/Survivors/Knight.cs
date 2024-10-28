@@ -15,11 +15,9 @@ namespace SS2.Survivors
     {
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acKnight", SS2Bundle.Indev);
         
-        public SS2AssetRequest<AssetCollection> ExtraKnightAssets => SS2Assets.LoadAssetAsync<AssetCollection>("acKnightExtra", SS2Bundle.Indev);
-
-        public static GameObject KnightImpactEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/Bandit2SmokeBomb.prefab").WaitForCompletion();
-        public static GameObject KnightCrosshair = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/SimpleDotCrosshair.prefab").WaitForCompletion();
-        public static GameObject KnightDroppod = Addressables.LoadAssetAsync<GameObject>("Prefabs/NetworkedObjects/SurvivorPod").WaitForCompletion();
+        public static GameObject KnightImpactEffect;
+        public static GameObject KnightCrosshair;
+        public static GameObject KnightDroppod;
         public static GameObject KnightPassiveWard;
         public static GameObject KnightHitEffect;
         public static GameObject KnightSpinEffect;
@@ -58,36 +56,6 @@ namespace SS2.Survivors
 
         private static float stunDebuffDuration = 3f;
 
-        public override IEnumerator LoadContentAsync()
-        {
-            SS2AssetRequest<SurvivorAssetCollection> request = AssetRequest;
-            SS2AssetRequest<AssetCollection> extraRequest = ExtraKnightAssets;
-
-            request.StartLoad();
-            while (!request.IsComplete)
-                yield return null;
-
-            AssetCollection = request.Asset;
-
-            CharacterPrefab = AssetCollection.bodyPrefab;
-            masterPrefab = AssetCollection.masterPrefab;
-            survivorDef = AssetCollection.survivorDef;
-
-
-            extraRequest.StartLoad();
-            while (!extraRequest.IsComplete)
-                yield return null;
-
-            ExtraAssetCollection = extraRequest.Asset;
-
-        }
-
-        public override void ModifyContentPack(ContentPack contentPack)
-        {
-            contentPack.AddContentFromAssetCollection(ExtraAssetCollection);
-            contentPack.AddContentFromAssetCollection(AssetCollection);
-        }
-
         public override void Initialize()
         {
             BuffDef buffKnightSpecialPower = AssetCollection.FindAsset<BuffDef>("bdKnightSpecialPowerBuff");
@@ -95,6 +63,10 @@ namespace SS2.Survivors
             KnightHitEffect = AssetCollection.FindAsset<GameObject>("KnightImpactSlashEffect");
             KnightSpinEffect = AssetCollection.FindAsset<GameObject>("KnightSpin");
             KnightPassiveWard = AssetCollection.FindAsset<GameObject>("KnightPassiveBuffWard");
+
+            KnightImpactEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/Bandit2SmokeBomb.prefab").WaitForCompletion();
+            KnightCrosshair = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/SimpleDotCrosshair.prefab").WaitForCompletion();
+            KnightDroppod = Addressables.LoadAssetAsync<GameObject>("Prefabs/NetworkedObjects/SurvivorPod").WaitForCompletion();
 
             RegisterKnightDamageTypes();
             ModifyPrefab();
@@ -192,7 +164,6 @@ namespace SS2.Survivors
                         return;
                     }
 
-                    // TODO: No clue if this will work
                     characterBody.characterMotor.velocity.y -= Time.fixedDeltaTime * Physics.gravity.y * reducedGravity;
                 }
             }

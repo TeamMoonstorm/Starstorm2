@@ -47,7 +47,7 @@ namespace EntityStates.Knight
                     radius = 5f,
                     position = base.characterBody.footPosition,
                     attackerFiltering = AttackerFiltering.NeverHitSelf,
-                    impactEffect = EffectCatalog.FindEffectIndexFromPrefab(SS2.Survivors.Knight.KnightImpactEffect),
+                    //impactEffect = EffectCatalog.FindEffectIndexFromPrefab(SS2.Survivors.Knight.KnightImpactEffect),
                     teamIndex = base.teamComponent.teamIndex,
                 }.Fire();
             }
