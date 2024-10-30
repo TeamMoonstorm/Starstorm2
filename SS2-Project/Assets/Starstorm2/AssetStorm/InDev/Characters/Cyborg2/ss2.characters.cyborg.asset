@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 02a17d3a7bea384489c0fc6e66051d29, type: 3}
-  m_Name: ss2.item.stickyoverloader
+  m_Name: ss2.characters.cyborg
   m_EditorClassIdentifier: 
   nameToken: ???
   displayModelPath: Prefabs/NullModel
   displayModelPrefab: {fileID: 0}
   hidden: 0
   achievementIcon: {fileID: 21300000, guid: c105f5995486de54886ee98971a0f175, type: 3}
-  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+  requiredExpansion: {fileID: 0}
   achievementCondition:
-    assemblyQualifiedName: SS2.Unlocks.Pickups.StickyOverloaderAchievement, Starstorm2,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+    assemblyQualifiedName: SS2.Unlocks.Chirr.CyborgAchievement, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   serverAchievementCondition:
     assemblyQualifiedName: 
-  achievementNameToken: SS2_ACHIEVEMENT_STICKYOVERLOADER_NAME
-  achievementDescriptionToken: SS2_ACHIEVEMENT_STICKYOVERLOADER_DESC
-  coinReward: 2
+  achievementNameToken: SS2_ACHIEVEMENT_CYBORG_NAME
+  achievementDescriptionToken: SS2_ACHIEVEMENT_CYBORG_DESC
+  coinReward: 3
   _preRequisiteAchievement:
     unlockableDef: {fileID: 0}
-    achievementIdentifier: RepeatFirstTeleporter
+    achievementIdentifier: 
