@@ -182,7 +182,7 @@ namespace SS2.Components
             }
             if(animator)
             {
-                animator.SetFloat("intensity", count / (StickyOverloader.maxStacks + StickyOverloader.maxStacksPerStack * (itemStacks - 1)));
+                animator.SetFloat("intensity", count / (float)(StickyOverloader.maxStacks + StickyOverloader.maxStacksPerStack * (itemStacks - 1)));
             }
         }
 
