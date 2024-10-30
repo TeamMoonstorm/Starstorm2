@@ -286,6 +286,8 @@ namespace SS2
 
             public static ItemDef NemBossHelper;
 
+            public static ItemDef PoisonousGland;
+
             public static ItemDef VoidRock;
 
             public static ItemDef VoidRockTracker;
@@ -492,6 +494,8 @@ namespace SS2
 
             public static BuffDef BuffNucleatorSpecial;
 
+            public static BuffDef BuffPoisonousGland;
+
             public static BuffDef BuffReactor;
 
             public static BuffDef BuffScavengersFortune;
@@ -499,6 +503,8 @@ namespace SS2
             public static BuffDef BuffSigil;
 
             public static BuffDef BuffSigilStack;
+
+            public static BuffDef BuffStickyOverloader;
 
             public static BuffDef BuffKickflip;
 

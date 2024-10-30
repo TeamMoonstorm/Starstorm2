@@ -10,17 +10,18 @@ namespace SS2.Items
 {
     public class BlastKnuckles : SS2Item
     {
+		// TODO: MAKE THE BLAST A CONE FROM PLAYER INSTEAD OF SPHERE ON TARGEWT
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acBlastKnuckles", SS2Bundle.Items);
 
         private const string TOKEN = "SS2_ITEM_BLASTKNUCKLES_DESC";
 
 		public static int maxCharges = 5;
-		public static float cooldownPerCharge = 6f;
+		public static float cooldownPerCharge = 5f;
 
-		[FormatToken(TOKEN, 3)]
-		public static float damageCoefficient = 3f;
-		[FormatToken(TOKEN, 4)]
-		public static float damageCoefficientPerStack = 2f;
+		[FormatToken(TOKEN, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 3)]
+		public static float damageCoefficient = 4f;
+		[FormatToken(TOKEN, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 4)]
+		public static float damageCoefficientPerStack = 4f;
 		public static float procCoefficient = 0.5f;
 
 		[FormatToken(TOKEN, 1)]
@@ -76,12 +77,13 @@ namespace SS2.Items
             public void OnDamageDealtServer(DamageReport damageReport)
             {
 				DamageInfo damageInfo = damageReport.damageInfo;				
-				if (damageInfo.damage <= 0) return;
+				if (damageInfo.damage <= 0 || !damageInfo.damageType.IsDamageSourceSkillBased) return;
 
 				Vector3 position = damageInfo.position;
-				Vector3 between = damageReport.victimBody.corePosition - position;
+				Vector3 between = damageReport.attackerBody.corePosition - position;
 				if (body.HasBuff(SS2Content.Buffs.BuffBlastKnucklesCharge) && between.sqrMagnitude <= sqrRange)
 				{
+					body.RemoveBuff(SS2Content.Buffs.BuffBlastKnucklesCharge);
 					float damage = damageCoefficient + damageCoefficientPerStack * (stack - 1);
 					float radius = blastRadius + blastRadiusPerStack * (stack - 1);
 					EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/OmniEffect/OmniExplosionVFXQuick"), new EffectData

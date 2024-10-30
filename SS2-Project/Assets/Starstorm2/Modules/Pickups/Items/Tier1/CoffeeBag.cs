@@ -10,6 +10,7 @@ using UnityEngine.Networking;
 using SS2.Components;
 namespace SS2.Items
 {
+    //bean behavior in CoffeeBeanPickup and CoffeeBeanPooler
     public sealed class CoffeeBag : SS2Item, IContentPackModifier
     {
         public const string token = "SS2_ITEM_COFFEEBAG_DESC";
@@ -33,7 +34,6 @@ namespace SS2.Items
 
         public override void Initialize()
         {
-            _coffeeBean = AssetCollection.FindAsset<GameObject>("CoffeeBeanPickup");
             GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
             RecalculateStatsAPI.GetStatCoefficients += CalculateStatsCoffeeBag;
         }
@@ -59,7 +59,7 @@ namespace SS2.Items
 
             if (stack > 0 && Util.CheckRoll(procChance * report.damageInfo.procCoefficient * 100f, report.attackerMaster))
             {
-                CoffeeBeanPickup.SpawnBean(report.damageInfo.position, stack, report.attackerTeamIndex);
+                CoffeeBeanPooler.SpawnBean(report.damageInfo.position, stack, report.attackerTeamIndex);
             }
         }
     }

@@ -1,7 +1,7 @@
 {
 	"strings": {
 		"SS2_ITEM_BLASTKNUCKLES_NAME": "Blast Knuckles",
-		"SS2_ITEM_BLASTKNUCKLES_DESC": "Your attacks within <style=cIsDamage>{0}m</style> also explode in a <style=cIsDamage>{1}m</style> <style=cStack>(+{2}m per stack)</style> radius for <style=cIsDamage>{3}%</style> <style=cStack>(+{4}% per stack)</style> base damage. You can hold up to <style=cIsUtility>5</style> <style=cIsDamage>charges</style> which all reload over <style=cIsUtility>30</style> seconds.",
+		"SS2_ITEM_BLASTKNUCKLES_DESC": "Hits from your <style=cIsUtility>skills</style> within <style=cIsDamage>{0}m</style> also explode in a <style=cIsDamage>{1}m</style> <style=cStack>(+{2}m per stack)</style> radius for <style=cIsDamage>{3}%</style> <style=cStack>(+{4}% per stack)</style> base damage. You can hold up to <style=cIsUtility>5</style> <style=cIsDamage>charges</style> which all reload over <style=cIsUtility>30</style> seconds.",
 		"SS2_ITEM_BLASTKNUCKLES_PICKUP": "Your attacks create explosions at close range.",
 		"SS2_ITEM_BLASTKNUCKLES_LORE": "\"Best fight I ever won\"\n 	- One-Arm Larry",
 	
@@ -39,6 +39,16 @@
 		"SS2_ITEM_LOWQUALITYSPEAKERS_DESC": "Chance when getting hit to <style=cIsDamage>stun</style> enemies in a <style=cIsDamage>{0}m</style> <style=cStack>(+{1}m per stack)</style> radius. Chance starts at <style=cIsDamage>10%</style> and increases with <style=cIsHealth>low health</style>.",
 		"SS2_ITEM_LOWQUALITYSPEAKERS_PICKUP": "Stun nearby enemies when taking damage.",
 		"SS2_ITEM_LOWQUALITYSPEAKERS_LORE": "Return: A-AMP 25-Watt All Purpose Speaker\nTracking Number: 629********\nEstimated Delivery: 03/14/2055\nShipping Method: Priority\nShipping Address 444 Anthem Ln., Twin Cities, Earth\nReason For Return:\n\nSorry to be a burden, mate, but when I unpackaged it and plugged it in to test it, the audio came out...fuzzy? Staticky? I-it's hard to describe. If I had to guess, it got damaged in transit. Guess I'm glad I sprung for the warranty.\n\nRefund:\nReplace: X",
+		
+		"SS2_ITEM_POISONOUSGLAND_NAME": "Poisonous Gland",
+		"SS2_ITEM_POISONOUSGLAND_DESC": "<style=cIsUtility>Daze</style> enemies on hit for <style=cIsUtility>2</style> <style=cStack>(+2 per stack)</style> seconds, making them miss <style=cIsUtility>{0}%</style> of their attacks for each <style=cIsDamage>debuff</style> they have.",
+		"SS2_ITEM_POISONOUSGLAND_PICKUP": "Debuffs make enemies miss their attacks.",
+		"SS2_ITEM_POISONOUSGLAND_LORE": "wawa",
+		
+		"SS2_ITEM_STICKYOVERLOADER_NAME": "Sticky Overloader",
+		"SS2_ITEM_STICKYOVERLOADER_DESC": "<style=cIsDamage>{0}%</style> chance to attach a <style=cIsDamage>living bomb</style> that gains <style=cIsDamage>{1}%</style> <style=cStack>(+{2}% per stack)</style> base damage and a <style=cIsDamage>{3}m</style> blast radius per hit, up to <style=cIsUtility>25</style> <style=cStack>(+{4} per stack)</style> times. The bomb explodes after <style=cIsDamage>1</style> second without growing.",
+		"SS2_ITEM_STICKYOVERLOADER_PICKUP": "Your attacks charge up a living bomb.",
+		"SS2_ITEM_STICKYOVERLOADER_LORE": "wawa",
 
 		"SS2_ITEM_STRANGECAN_NAME": "Strange Can",
 		"SS2_ITEM_STRANGECAN_DESC": "<style=cIsDamage>{0}%</style> <style=cStack>(+{1}% per stack)</style> chance on hit to <style=cIsDamage>intoxicate</style> an enemy dealing <style=cIsDamage>{2}% damage per second</style>. <style=cIsDamage>Intoxicate</style> stacks up to 10 times. Killing enemies <style=cIsHealing>heals</style> for <style=cIsHealing>{3}</style> <style=cStack>(+{4} per stack)</style> <style=cIsHealing>health</style> per stack of <style=cIsDamage>intoxicate</style>.",
