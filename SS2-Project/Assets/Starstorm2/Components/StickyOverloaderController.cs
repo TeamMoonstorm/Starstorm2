@@ -13,17 +13,12 @@ namespace SS2.Components
         private static void Init() => impactEffect = EffectCatalog.FindEffectIndexFromPrefab(SS2Assets.LoadAsset<GameObject>("StickyExplosionImpact", SS2Bundle.Items));
 
         private static EffectIndex impactEffect;
-        private static Dictionary<CharacterBody, StickyOverloaderController> victimsToInstances = new Dictionary<CharacterBody, StickyOverloaderController>();
         public static void TrySpawnBomb(CharacterBody victimBody, CharacterBody attackerBody)
         {
-            if(!victimsToInstances.TryGetValue(victimBody, out var bomb))
-            {
-                var goop = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("StickyOverloaderBomb", SS2Bundle.Items), victimBody.corePosition, Quaternion.identity);
-                StickyOverloaderController bomba = goop.GetComponent<StickyOverloaderController>();
-                bomba.TrySticking(victimBody, attackerBody);
-                NetworkServer.Spawn(goop);
-                victimsToInstances.Add(victimBody, bomba);
-            }          
+            var goop = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("StickyOverloaderBomb", SS2Bundle.Items), victimBody.corePosition, Quaternion.identity);
+            StickyOverloaderController bomba = goop.GetComponent<StickyOverloaderController>();
+            bomba.TrySticking(victimBody, attackerBody);
+            NetworkServer.Spawn(goop);  
         }
 
         public Transform indicator;
@@ -75,7 +70,7 @@ namespace SS2.Components
             // raycast to body coreposition
             this.attackerBody = attackerBody;
             this.itemStacks = attackerBody.inventory ? attackerBody.inventory.GetItemCount(SS2Content.Items.StickyOverloader) : 1; 
-            Vector3 origin = UnityEngine.Random.onUnitSphere * victimBody.radius;
+            Vector3 origin = UnityEngine.Random.onUnitSphere * victimBody.radius * 2f;
             origin.y = Mathf.Abs(origin.y);
             origin += victimBody.corePosition;
             var hits = Physics.RaycastAll(origin, victimBody.corePosition - origin, Mathf.Infinity, LayerIndex.entityPrecise.mask);
@@ -107,10 +102,6 @@ namespace SS2.Components
             SetBuffCount(buffCount);
             //victimsToInstances.Add(stuckBody, this); // im so fuckig stupdi man
             indicator.transform.SetParent(null); // :/
-        }
-        private void OnDestroy()
-        {
-            victimsToInstances.Remove(stuckBody);
         }
         private void FixedUpdate()
         {

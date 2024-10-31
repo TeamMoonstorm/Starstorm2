@@ -86,10 +86,10 @@ namespace SS2.Items
             int buffStacks = report.victimBody.GetBuffCount(SS2Content.Buffs.BuffStickyOverloader);
             if ((buffStacks > 0 && report.damageInfo.procCoefficient > 0) || Util.CheckRoll(procChance * report.damageInfo.procCoefficient, body.master))
             {
-                if(buffStacks < maxStacks + maxStacksPerStack * (stack - 1))
+                if(buffStacks == 0) StickyOverloaderController.TrySpawnBomb(report.victimBody, report.attackerBody);
+                if (buffStacks < maxStacks + maxStacksPerStack * (stack - 1))
                 {
-                    report.victimBody.AddBuff(SS2Content.Buffs.BuffStickyOverloader);
-                    StickyOverloaderController.TrySpawnBomb(report.victimBody, report.attackerBody);
+                    report.victimBody.AddBuff(SS2Content.Buffs.BuffStickyOverloader);                 
                     EffectManager.SimpleEffect(_procEffect, report.damageInfo.position, Quaternion.identity, true);
                 }               
             }

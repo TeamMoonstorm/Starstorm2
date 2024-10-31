@@ -6,6 +6,7 @@ using RoR2.Items;
 using SS2;
 using UnityEngine;
 using UnityEngine.Networking;
+using System.Collections.Generic;
 namespace SS2.Items
 {
     public class BlastKnuckles : SS2Item
@@ -18,25 +19,27 @@ namespace SS2.Items
 		public static int maxCharges = 5;
 		public static float cooldownPerCharge = 5f;
 
-		[FormatToken(TOKEN, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 3)]
+		[FormatToken(TOKEN, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
 		public static float damageCoefficient = 4f;
-		[FormatToken(TOKEN, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 4)]
+		[FormatToken(TOKEN, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
 		public static float damageCoefficientPerStack = 4f;
 		public static float procCoefficient = 0.5f;
-
-		[FormatToken(TOKEN, 1)]
-		public static float blastRadius = 4f;
-		[FormatToken(TOKEN, 2)]
-		public static float blastRadiusPerStack = 2f;
 
 		[FormatToken(TOKEN, 0)]
 		public static float range = 13f;
 
+		public static float blastAngle = 20f;
+		public static float blastRange = 16f;
 		private static float sqrRange;
+
+		private static GameObject coneEffect;
+		private static GameObject impactEffect;
         public override void Initialize()
         {
 			sqrRange = Mathf.Pow(range, 2);
-        }
+			coneEffect = SS2Assets.LoadAsset<GameObject>("BlastKnucklesCone", SS2Bundle.Items);
+			impactEffect = LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/OmniEffect/OmniExplosionVFXQuick");
+		}
 
         public override bool IsAvailable(ContentPack contentPack)
 		{
@@ -49,10 +52,13 @@ namespace SS2.Items
 			private static ItemDef GetItemDef() => SS2Content.Items.BlastKnuckles;
 			private GameObject indicatorInstance;
 			private float reloadTimer;
-
+			private BullseyeSearch search;
+			private SphereSearch sphereSearch;
 			private void OnEnable()
 			{
-				this.indicatorEnabled = true;			
+				this.indicatorEnabled = true;
+				search = new BullseyeSearch();
+				sphereSearch = new SphereSearch();
 			}
 
 			private void OnDisable()
@@ -72,6 +78,7 @@ namespace SS2.Items
 						this.reloadTimer -= cooldownPerCharge;
 					}
 				}
+				else reloadTimer = 0f;
 			}
 
             public void OnDamageDealtServer(DamageReport damageReport)
@@ -85,31 +92,73 @@ namespace SS2.Items
 				{
 					body.RemoveBuff(SS2Content.Buffs.BuffBlastKnucklesCharge);
 					float damage = damageCoefficient + damageCoefficientPerStack * (stack - 1);
-					float radius = blastRadius + blastRadiusPerStack * (stack - 1);
-					EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/OmniEffect/OmniExplosionVFXQuick"), new EffectData
+					Vector3 damageDirection = (position - body.corePosition).normalized;
+					EffectManager.SpawnEffect(coneEffect, new EffectData
 					{
-						origin = position,
-						scale = radius,
-						rotation = Util.QuaternionSafeLookRotation(damageInfo.force)
+						origin = body.corePosition,
+						scale = 1f,
+						rotation = Util.QuaternionSafeLookRotation(damageDirection)
 					}, true);
-					new BlastAttack
-					{
-						attacker = body.gameObject,
-						inflictor = body.gameObject,
-						attackerFiltering = AttackerFiltering.Default,
-						position = position,
-						teamIndex = body.teamComponent.teamIndex,
-						radius = radius,
-						baseDamage = body.damage * damage,
-						damageType = DamageType.Generic,
-						crit = damageInfo.crit,
-						procCoefficient = .5f,
-						procChainMask = default(ProcChainMask),
-						baseForce = 300f,
-						damageColorIndex = DamageColorIndex.Item,
-						falloffModel = BlastAttack.FalloffModel.Linear,
-						losType = BlastAttack.LoSType.None,
-					}.Fire();
+					List<HealthComponent> uniqueTargets = new List<HealthComponent>();
+
+					//cone + small sphere to avoid jank angles
+					// i dont really know why i didnt just make this  abulletattack. no one would be able to tell the difference
+					search.searchOrigin = body.corePosition;
+					search.searchDirection = damageDirection;
+					search.teamMaskFilter = TeamMask.all;
+					search.teamMaskFilter.RemoveTeam(body.teamComponent.teamIndex);
+					search.sortMode = BullseyeSearch.SortMode.DistanceAndAngle;
+					search.filterByLoS = false;
+					search.filterByDistinctEntity = true;
+					search.maxAngleFilter = blastAngle;
+					search.maxDistanceFilter = blastRange;
+					search.RefreshCandidates();
+					sphereSearch.radius = 1.5f;
+					sphereSearch.origin = body.corePosition;
+					sphereSearch.mask = LayerIndex.entityPrecise.mask;
+					sphereSearch.RefreshCandidates();
+					sphereSearch.FilterCandidatesByDistinctHurtBoxEntities();
+					
+					foreach (HurtBox hurtBox in search.GetResults())
+                    {
+						if(hurtBox && hurtBox.healthComponent)
+                        {
+							uniqueTargets.Add(hurtBox.healthComponent);
+							DealDamage(hurtBox);
+						}
+                    }
+					foreach(HurtBox hurtBox in sphereSearch.GetHurtBoxes())
+                    {
+						if (hurtBox && hurtBox.healthComponent && !uniqueTargets.Contains(hurtBox.healthComponent))
+							DealDamage(hurtBox);
+                    }
+
+					void DealDamage(HurtBox hurtBox)
+                    {
+						if(hurtBox.healthComponent.alive)
+                        {
+							DamageInfo attack = new DamageInfo();
+							attack.damage = body.damage * damage;
+							attack.attacker = body.gameObject;
+							attack.inflictor = body.gameObject;
+							attack.force = damageDirection * 1600f;
+							attack.crit = damageInfo.crit;
+							attack.procChainMask = default(ProcChainMask);
+							attack.procCoefficient = .5f;
+							attack.position = hurtBox.transform.position;
+							attack.damageColorIndex = DamageColorIndex.Item;
+							attack.damageType = DamageType.Generic;
+							hurtBox.healthComponent.TakeDamage(attack);
+							GlobalEventManager.instance.OnHitEnemy(attack, hurtBox.healthComponent.gameObject);
+							GlobalEventManager.instance.OnHitAll(attack, hurtBox.healthComponent.gameObject);
+							EffectManager.SpawnEffect(impactEffect, new EffectData
+							{
+								origin = position,
+								scale = 1f,
+								rotation = Util.QuaternionSafeLookRotation(damageInfo.force)
+							}, true);
+						}						
+					}
 				}
 			}
 
