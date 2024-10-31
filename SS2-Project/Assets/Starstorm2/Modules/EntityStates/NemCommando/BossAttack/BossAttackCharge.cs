@@ -67,7 +67,7 @@ namespace EntityStates.Nemmando
                 //Red
                 else
                 {
-                    chargeEffect = SS2Assets.LoadAsset<GameObject>("DecisiveStrikeChargeNew", SS2Bundle.NemCommando);
+                    chargeEffect = SS2Assets.LoadAsset<GameObject>("DecisiveStrikeCharge", SS2Bundle.NemCommando);
                 }
 
                 chargeEffectInstance = Object.Instantiate(chargeEffect, chargeTransform);

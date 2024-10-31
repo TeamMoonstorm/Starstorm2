@@ -126,7 +126,6 @@ namespace SS2
                     EnableItem(item, cfg.value);
                 }              
             }
-            EnableAllItem(EnableItems.value);
             EnableEquipments = SS2Config.ConfigFactory.MakeConfiguredBool(true, b =>
             {
                 b.section = "Enable Equipments";
@@ -160,14 +159,13 @@ namespace SS2
                     EnableItem(item, cfg.value);
                 }
             }
-            EnableAllEquipment(EnableEquipments.value);
             EnableInteractables = SS2Config.ConfigFactory.MakeConfiguredBool(true, (b) =>
             {
                 b.section = "Enable Interactables";
                 b.key = "Enable All Interactables";
                 b.description = "Enables Starstorm 2's interactables. Set to false to disable interactables.";
                 b.configFile = SS2Config.ConfigMain;
-                b.onConfigChanged += EnableAllInteractable;
+                //b.onConfigChanged += EnableAllInteractable;
             }).DoConfigure();
             foreach (InteractableSpawnCard isc in SS2Assets.LoadAllAssets<InteractableSpawnCard>(SS2Bundle.All))
             {
@@ -199,17 +197,16 @@ namespace SS2
                         };
                     }).DoConfigure();
                     //cfg.onConfigChanged += (b) => EnableItem(item, b);
-                    EnableItem(item, cfg.value);
+                    EnableInteractable(item, cfg.value);
                 }
             }
-            EnableAllInteractable(EnableInteractables.value);
             EnableMonsters = SS2Config.ConfigFactory.MakeConfiguredBool(true, (b) =>
             {
                 b.section = "Enable Monsters";
                 b.key = "Enable All Monsters";
                 b.description = "Enables Starstorm 2's monsters. Set to false to disable monsters.";
                 b.configFile = SS2Config.ConfigMain;
-                b.onConfigChanged += EnableAllMonster;
+                //b.onConfigChanged += EnableAllMonster;
             }).DoConfigure();            
             EnableSurvivors = SS2Config.ConfigFactory.MakeConfiguredBool(true, (b) =>
             {
@@ -248,10 +245,9 @@ namespace SS2
                         };
                     }).DoConfigure();
                     //cfg.onConfigChanged += (b) => EnableItem(item, b);
-                    EnableItem(item, cfg.value);
+                    EnableMonster(item, cfg.value);
                 }
             }
-            EnableAllMonster(EnableMonsters.value);
             foreach (SurvivorDef sd in SS2Content.SS2ContentPack.survivorDefs)
             {
                 if (sd.bodyPrefab)
@@ -273,10 +269,9 @@ namespace SS2
                         };
                     }).DoConfigure();
                     //cfg.onConfigChanged += (b) => EnableItem(item, b);
-                    EnableItem(item, cfg.value);
+                    EnableSurvivor(item, cfg.value);
                 }
             }
-            EnableAllSurvivor(EnableSurvivors.value);
         }
 
         private static ExpansionRequirementComponent GetExpansion(GameObject gameObject)
@@ -292,71 +287,28 @@ namespace SS2
             }
             return component;
         }
-
-        private static void EnableAllItem(bool enable)
-        {
-            foreach (ItemDef item in SS2Content.SS2ContentPack.itemDefs)
-            {
-                if (ItemTierCatalog.GetItemTierDef(item.tier)?.isDroppable == true)
-                {
-                    EnableItem(item, enable);
-                }
-            }
-        }
-        private static void EnableAllEquipment(bool enable)
-        {
-            foreach (EquipmentDef item in SS2Content.SS2ContentPack.equipmentDefs)
-            {
-                if (item.canDrop)
-                {
-                    EnableItem(item, enable);
-                }
-            }
-        }
-        private static void EnableAllSurvivor(bool enable)
-        {
-            foreach (SurvivorDef sd in SS2Content.SS2ContentPack.survivorDefs)
-            {
-                if (sd.bodyPrefab)
-                {
-                    ExpansionRequirementComponent item = GetExpansion(sd.bodyPrefab);
-                    EnableItem(item, enable);
-                }
-            }
-        }
-        private static void EnableAllMonster(bool enable)
-        {
-            foreach (CharacterSpawnCard csc in SS2Assets.LoadAllAssets<CharacterSpawnCard>(SS2Bundle.All))
-            {
-                CharacterMaster master = csc.prefab?.GetComponent<CharacterMaster>();
-                if (!master || (master && !master.bodyPrefab)) continue;
-                ExpansionRequirementComponent item = GetExpansion(master.gameObject);
-                EnableItem(item, enable);
-            }
-        }
-        private static void EnableAllInteractable(bool enable)
-        {
-            foreach (GameObject interactable in SS2Content.SS2ContentPack.networkedObjectPrefabs)
-            {
-                if (interactable.TryGetComponent<IInteractable>(out _))
-                {
-                    ExpansionRequirementComponent item = GetExpansion(interactable);
-                    EnableItem(item, enable);
-                }
-            }
-        }
         private static void EnableItem(ItemDef item, bool enable)
         {
-            item.requiredExpansion = enable ? SS2Content.SS2ContentPack.expansionDefs[0] : fuckyou;
+            item.requiredExpansion = enable && EnableItems.value ? SS2Content.SS2ContentPack.expansionDefs[0] : fuckyou;
         }
         private static void EnableItem(EquipmentDef item, bool enable)
         {
-            item.requiredExpansion = enable ? SS2Content.SS2ContentPack.expansionDefs[0] : fuckyou;
+            item.requiredExpansion = enable && EnableEquipments.value ? SS2Content.SS2ContentPack.expansionDefs[0] : fuckyou;
         }
-        private static void EnableItem(ExpansionRequirementComponent item, bool enable)
+        private static void EnableInteractable(ExpansionRequirementComponent item, bool enable)
         {
             if(item)
-                item.requiredExpansion = enable ? SS2Content.SS2ContentPack.expansionDefs[0] : fuckyou;
+                item.requiredExpansion = enable && EnableInteractables.value ? SS2Content.SS2ContentPack.expansionDefs[0] : fuckyou;
+        }
+        private static void EnableSurvivor(ExpansionRequirementComponent item, bool enable)
+        {
+            if (item)
+                item.requiredExpansion = enable && EnableSurvivors.value ? SS2Content.SS2ContentPack.expansionDefs[0] : fuckyou;
+        }
+        private static void EnableMonster(ExpansionRequirementComponent item, bool enable)
+        {
+            if (item)
+                item.requiredExpansion = enable && EnableMonsters.value ? SS2Content.SS2ContentPack.expansionDefs[0] : fuckyou;
         }
 
         internal static ConfigFile CreateConfigFile(string identifier, bool z = false)

@@ -88,8 +88,8 @@ namespace SS2.Items
             orig(self);
 
             bool isLastBounce = self.bouncedObjects != null && (self.bouncesRemaining == 0 || !orbFoundNewTarget);
-
-            if (isLastBounce && self.attacker && self.attacker.GetComponent<CharacterBody>().inventory.GetItemCount(SS2Content.Items.ErraticGadget) > 0)
+            CharacterBody body = self.attacker ? self.attacker.GetComponent<CharacterBody>() : null;
+            if (isLastBounce && body && body.inventory.GetItemCount(SS2Content.Items.ErraticGadget) > 0)
             {
                 bool canProcGadget = false;
                 bool wasFirstBounceFake = false;
@@ -178,7 +178,9 @@ namespace SS2.Items
             if (isSecondStrike) self.damageType &= ~DamageType.FruitOnHit;
             orig(self);
 
-            if (!isSecondStrike && self.attacker?.GetComponent<CharacterBody>()?.inventory?.GetItemCount(SS2Content.Items.ErraticGadget) > 0)
+            if (!self.attacker) return;
+            CharacterBody body = self.attacker.GetComponent<CharacterBody>();
+            if (!isSecondStrike && body && body.inventory && body.inventory.GetItemCount(SS2Content.Items.ErraticGadget) > 0)
             {
                 OrbManager.instance.AddOrb(new LightningStrikeOrb
                 {
@@ -202,8 +204,9 @@ namespace SS2.Items
             bool isSecondStrike = self.damageType.damageType.HasFlag(DamageType.FruitOnHit);
             if (isSecondStrike) self.damageType &= ~DamageType.FruitOnHit;
             orig(self);
-
-            if (!isSecondStrike && self.attacker?.GetComponent<CharacterBody>()?.inventory?.GetItemCount(SS2Content.Items.ErraticGadget) > 0)
+            if (!self.attacker) return;
+            CharacterBody body = self.attacker.GetComponent<CharacterBody>();
+            if (!isSecondStrike && body && body.inventory && body.inventory.GetItemCount(SS2Content.Items.ErraticGadget) > 0)
             {
                 OrbManager.instance.AddOrb(new SimpleLightningStrikeOrb
                 {
@@ -224,8 +227,9 @@ namespace SS2.Items
         private void VoidLightningOrb_Begin(On.RoR2.Orbs.VoidLightningOrb.orig_Begin orig, VoidLightningOrb self)
         {
             orig(self);
-
-            if (self.attacker?.GetComponent<CharacterBody>()?.inventory?.GetItemCount(SS2Content.Items.ErraticGadget) > 0)
+            if (!self.attacker) return;
+            CharacterBody body = self.attacker.GetComponent<CharacterBody>();
+            if (body && body.inventory && body.inventory.GetItemCount(SS2Content.Items.ErraticGadget) > 0)
             {
                 self.totalStrikes *= 2;
 
@@ -265,28 +269,33 @@ namespace SS2.Items
             {
                 if (!report.damageInfo.HasModdedDamageType(PROCTYPEAPIWHEN) && Util.CheckRoll(procChance * report.damageInfo.procCoefficient * 100f, body.master))
                 {
-                    // 1, 3, 5...
-                    int bouncesRemaining = bounceTargets + 2 * (this.stack - 1);
-                    GadgetLightningOrb orb = new GadgetLightningOrb();
-                    orb.duration = 0.2f;
-                    orb.bouncesRemaining = bouncesRemaining;
-                    orb.range = 24f;
-                    orb.damageCoefficientPerBounce = 1f;
-                    orb.damageValue = body.damage * damageCoefficient;
-                    orb.damageType = DamageType.Generic;
-                    orb.isCrit = body.RollCrit();
-                    orb.damageColorIndex = DamageColorIndex.Item;
-                    orb.procCoefficient = 1f;
-                    orb.origin = GetMuzzleTransform().position;
-                    orb.teamIndex = body.teamComponent.teamIndex;
-                    orb.attacker = body.gameObject;
-                    orb.procChainMask = default(ProcChainMask); //////////////////////////////////////////////////////////////////////////////
-                    orb.bouncedObjects = new List<HealthComponent>();
-                    orb.target = report.victimBody.mainHurtBox;
+                    if(report.victimBody)
+                    {
+                        // 1, 3, 5...
+                        int bouncesRemaining = bounceTargets + 2 * (this.stack - 1);
+                        GadgetLightningOrb orb = new GadgetLightningOrb();
+                        orb.duration = 0.2f;
+                        orb.bouncesRemaining = bouncesRemaining;
+                        orb.range = 24f;
+                        orb.damageCoefficientPerBounce = 1f;
+                        orb.damageValue = body.damage * damageCoefficient;
+                        orb.damageType = DamageType.Generic;
+                        orb.isCrit = body.RollCrit();
+                        orb.damageColorIndex = DamageColorIndex.Item;
+                        orb.procCoefficient = 1f;
+                        orb.origin = GetMuzzleTransform().position;
+                        orb.teamIndex = body.teamComponent.teamIndex;
+                        orb.attacker = body.gameObject;
+                        orb.procChainMask = default(ProcChainMask); //////////////////////////////////////////////////////////////////////////////
+                        orb.bouncedObjects = new List<HealthComponent>();
+                        orb.target = report.victimBody.mainHurtBox;
 
-                    OrbManager.instance.AddOrb(orb);
+                        OrbManager.instance.AddOrb(orb);
 
-                    EffectManager.SimpleMuzzleFlash(_displayEffectPrefab, this.childLocator.gameObject, "Muzzle", true);
+                        Transform muzzle = GetMuzzleTransform();
+                        if (muzzle)
+                            EffectManager.SimpleEffect(_displayEffectPrefab, muzzle.position, muzzle.rotation, true);
+                    }               
                 }
             }
         }

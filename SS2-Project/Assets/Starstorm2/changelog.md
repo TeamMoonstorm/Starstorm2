@@ -1,4 +1,26 @@
   **Warning: content spoilers below!**
+### 0.6.10
+* Items / Equipment
+	* (NEW) Uranium Horseshoe - Increases movement speed and jump height by 10% (+10% per stack)
+	* Composite Injector no longer throws errors with some other UI mods
+	* Universal Charger's glow no longer appears for players without the item
+	* Universal Charger's sound effect is no longer global
+	* White Flag now properly appears for clients in multiplayer
+	* Fixed several errors thrown by Erratic Gadget
+* Enemies
+	* Empyrean healthbar and spawn animation now properly appears for clients in multiplayer
+	* Empyrean elite whitelist is now functional
+	* Fixed missing spawn sound
+* Events
+	* Removed Post-Processing fog from the "fallback" storm that would get picked for modded stages
+* Chirr
+	* Fixed Abduct crash for real this time
+* Nemesis Commando
+	* Fixed softlock when using Decisive Strike for the first time
+* Duplicator Drone
+	* Cloned items now properly appear for clients in multiplayer
+* Other
+	* Fixed enable/disable configs
 ### 0.6.9
 * Items / Equipment
 	* Cloaking Headband duration changed to 12 seconds, from 16
