@@ -11,7 +11,7 @@ Material:
   m_Shader: {fileID: 4800000, guid: de043e0da04ca1443a2c10030908b547, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords:
-  - _FRESNEL_ON
+  - _FRESNELBLENDING_ON
   - _NORMALIZED_ON
   - _NORMAL_ON
   m_LightmapFlags: 4
@@ -56,8 +56,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalTex:
-        m_Texture: {fileID: 2800000, guid: b3b39944cb0046b468ade45c10b97b0e, type: 2}
-        m_Scale: {x: 0.5, y: 0.5}
+        m_Texture: {fileID: 2800000, guid: 1443722a813052e49b4af5dc36957e0c, type: 3}
+        m_Scale: {x: 2, y: 2}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
@@ -68,9 +68,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Ramp:
-        m_Texture: {fileID: 2800000, guid: d183f724e9aea294e9378c95bef8d643, type: 3}
-        m_Scale: {x: 0.1, y: 1}
-        m_Offset: {x: 7, y: 0}
+        m_Texture: {fileID: 2800000, guid: 8aa1ff9aa8882d64391a3e95adbbecf6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _BumpScale: 1
@@ -79,18 +79,18 @@ Material:
     - _DiffusePower: 0.026
     - _DiffuseThreshold: 0.005
     - _DstBlend: 0
-    - _Fresnel: 1
-    - _FresnelBlending: 0
+    - _Fresnel: 0
+    - _FresnelBlending: 1
     - _FresnelPower: 1.99
     - _FresnelThreshold: 0.233
-    - _Gloss: 0.773
+    - _Gloss: 0.864
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
     - _Normal: 1
-    - _NormalPower: 0.18
+    - _NormalPower: 0.964
     - _Normalized: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
@@ -99,7 +99,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularExponent: 4.15
     - _SpecularHighlights: 1
-    - _SpecularOuterBandThreshold: 0.972
+    - _SpecularOuterBandThreshold: 0.391
     - _SpecularPower: 0.118
     - _SpecularPower1: 0.3
     - _SpecularPower2: 0.1
@@ -115,7 +115,7 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FresnelTint: {r: 1, g: 1, b: 1, a: 1}
     - _ScrollDirection: {r: 1, g: 1, b: 1, a: 1}
-    - _ScrollVector: {r: 1, g: 1, b: 1, a: 0.06}
+    - _ScrollVector: {r: 1, g: 1, b: 1, a: 0.6}
     - _Tint: {r: 1, g: 1, b: 1, a: 1}
     - _TopColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

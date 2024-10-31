@@ -36,6 +36,7 @@ namespace SS2
         public override void Initialize()
         {
             sdd = difficultyDef;
+            EtherealBehavior.AddEtherealDifficulty(sdd.DifficultyIndex, SS2Assets.LoadAsset<SerializableDifficultyDef>("SuperTyphoon", SS2Bundle.Base));
         }
 
         public override bool IsAvailable(ContentPack contentPack)

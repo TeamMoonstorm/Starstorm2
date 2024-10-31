@@ -34,6 +34,7 @@ namespace SS2.Components
         public Dictionary<ItemDef, float> itemValues = new Dictionary<ItemDef, float>();
         public Dictionary<Sprite, ItemDef> itemSprites = new Dictionary<Sprite, ItemDef>(); //stupid solution
 
+        [SystemInitializer]
         internal static void Initialize()
         {
             menuPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Scrapper/ScrapperPickerPanel.prefab").WaitForCompletion().InstantiateClone("sansans");
@@ -41,15 +42,10 @@ namespace SS2.Components
                 ModifyMenu(menuPrefab);
         }
 
-        // private static GameObject menu = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Scrapper/ScrapperPickerPanel.prefab").WaitForCompletion();
         void Start()
         {
             modelLocator = GetComponent<ModelLocator>();
             childLocator = modelLocator.modelTransform.GetComponent<ChildLocator>();
-
-            menuPrefab = Instantiate(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Scrapper/ScrapperPickerPanel.prefab").WaitForCompletion());
-            if (menuPrefab != null)
-                ModifyMenu(menuPrefab);
 
             //Assign a favorite item.
             favoriteItem = FindFavorite();
@@ -137,10 +133,10 @@ namespace SS2.Components
             priceLabel.transform.SetParent(label);
 
             //Add tooltips to every item
-            Transform iconContainer = juice.Find("IconContainer");
-            Transform pickupTemplate = iconContainer.Find("PickupButtonTemplate");
-            TooltipProvider tooltipProvider = pickupTemplate.gameObject.AddComponent<TooltipProvider>();
-            PriceTooltipManager priceTooltipManager = pickupTemplate.gameObject.AddComponent<PriceTooltipManager>();
+            //Transform iconContainer = juice.Find("IconContainer");
+            //Transform pickupTemplate = iconContainer.Find("PickupButtonTemplate");
+            //TooltipProvider tooltipProvider = pickupTemplate.gameObject.AddComponent<TooltipProvider>();
+            //PriceTooltipManager priceTooltipManager = pickupTemplate.gameObject.AddComponent<PriceTooltipManager>();
 
             Debug.Log("MADE MENU");
             return menuPrefab;
@@ -281,14 +277,5 @@ namespace SS2.Components
             effectData.SetNetworkedObjectReference(targetObject);
             EffectManager.SpawnEffect(effectPrefab, effectData, true);
         }
-
-        private void UNetVersion()
-        { }
-
-        public override void OnDeserialize(NetworkReader reader, bool initialState)
-        { }
-
-        public override void PreStartClient()
-        { }
     }
 }

@@ -7,7 +7,7 @@ namespace SS2
 {
     public class TeleporterUpgradeController : NetworkBehaviour
     {
-        [SyncVar(hook = nameof(OnIsEtherealChanged))]
+        [SyncVar]
         public bool isEthereal = false;
         [SyncVar]
         private bool hasUpgraded = false;
@@ -28,10 +28,9 @@ namespace SS2
         private ParticleSystem beam;
 
         //private SpriteRenderer teleporterSprite;
-
+        private GameObject portalIndicator;
         private void Awake()
         {
-            Debug.Log("TELEPORTER UPGRADE CONTROLLER AWAKE");
             hzc = GetComponent<HoldoutZoneController>();
             ti = GetComponent<TeleporterInteraction>();
 
@@ -66,6 +65,51 @@ namespace SS2
             //teleporterSprite = GameObject.Find("TeleporterChargingPositionIndicator(Clone)/TeleporterSprite").GetComponent<SpriteRenderer>();
 
             rangeIndicator = hzc.radiusIndicator;
+
+            TeleporterInteraction.onTeleporterBeginChargingGlobal += OnTeleporterBeginChargingGlobal;
+            TeleporterInteraction.onTeleporterChargedGlobal += OnTeleporterChargedGlobal;
+
+            if(ti.bossDirector)
+                ti.bossDirector.onSpawnedServer.AddListener(new UnityEngine.Events.UnityAction<GameObject>(ModifySpawnedBoss));
+        }       
+        private void OnDestroy()
+        {
+            TeleporterInteraction.onTeleporterBeginChargingGlobal -= OnTeleporterBeginChargingGlobal;
+            TeleporterInteraction.onTeleporterChargedGlobal -= OnTeleporterChargedGlobal;
+        }
+        private void OnTeleporterBeginChargingGlobal(TeleporterInteraction tele)
+        {
+            if (hasUpgraded)
+            {
+                if (tele.bossDirector)
+                {
+                    tele.bossDirector.monsterCredit += (float)(int)(100f * Mathf.Pow(Run.instance.compensatedDifficultyCoefficient, 0.5f));
+                }
+                if (tele.bonusDirector)
+                {
+                    tele.bonusDirector.monsterCredit += (float)(int)(50f * Mathf.Pow(Run.instance.compensatedDifficultyCoefficient, 0.5f));
+                }
+            }
+
+        }
+        private void OnTeleporterChargedGlobal(TeleporterInteraction teleporter)
+        {
+            if (hasUpgraded)
+            {
+                if (portalIndicator) Destroy(portalIndicator);
+                EtherealBehavior.instance.OnEtherealTeleporterCharged();
+                teleporter.AttemptSpawnPortal(SS2Assets.LoadAsset<InteractableSpawnCard>("iscStrangerPortal", SS2Bundle.Indev), 20f, 300f, "hehe oortal");
+            }               
+        }
+
+        private void ModifySpawnedBoss(GameObject masterObject)
+        {
+            if(isEthereal && hasUpgraded)
+            {
+                CharacterMaster bodyMaster = masterObject.GetComponent<CharacterMaster>();
+                bodyMaster.inventory.GiveItem(SS2Content.Items.EtherealItemAffix);
+                bodyMaster.inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(12 + (6 * EtherealBehavior.instance.etherealsCompleted)));
+            }
         }
 
         public void FixedUpdate()
@@ -78,31 +122,21 @@ namespace SS2
             }
         }
 
-        [Command]
-        public void CmdUpdateIsEthereal(bool value)
+        public void UpdateIsEthereal(bool isEthereal)
         {
-            isEthereal = value;
-        }
-
-        [ClientRpc]
-        public void RpcUpdateIsEthereal(bool value)
-        {
-            isEthereal = value;
-        }
-
-        private void OnIsEtherealChanged(bool value)
-        {
-            isEthereal = value;
-            //UpgradeTeleporter();
+            this.isEthereal = isEthereal;
         }
 
         public void UpgradeTeleporter()
         {
-            Debug.Log("UPGRADING TELEPORTER");
             //check for sky meadows (lunar tp)
             var currStage = SceneManager.GetActiveScene().name;
 
-            Ethereal.teleIsEthereal = true;
+            // spawn portal orb
+            if (ti.modelChildLocator)
+            {
+                portalIndicator = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("VoidShopPortalIndicator", SS2Bundle.Indev), ti.modelChildLocator.FindChild("MSPortalIndicator").parent);
+            }
 
             //update teleporter holdout zone / directors / etc.
             hzc.baseRadius *= 1.5f;
