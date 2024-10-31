@@ -290,36 +290,6 @@ namespace SS2
             }
             run.selectedDifficulty = newDiffIndex;
             run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + DifficultyCatalog.GetDifficultyDef(newDiffIndex).nameToken));
-
-            switch (diff.scalingValue)
-            {
-                case 1:
-                    foreach (CharacterMaster cm in run.userMasters.Values)
-                    {
-                        //remove drizzle helpers on drizzle to emulate rainstorm player scaling
-                        if (cm.inventory)
-                            cm.inventory.RemoveItem(RoR2Content.Items.DrizzlePlayerHelper.itemIndex);
-                    }
-                    break;
-                case 2:
-                    foreach (CharacterMaster cm in run.userMasters.Values)
-                    {
-                        //add monsoon helpers on rainstorm to emulate monsoon player scaling
-                        if (cm.inventory)
-                            cm.inventory.GiveItem(RoR2Content.Items.MonsoonPlayerHelper.itemIndex);
-                    }
-                    break;
-                case 3:
-                    {
-                        //increase team caps on monsoon to emulate typhoon enemy scaling
-                        //TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit *= 2;
-                        //TeamCatalog.GetTeamDef(TeamIndex.Void).softCharacterLimit *= 2;
-                        //TeamCatalog.GetTeamDef(TeamIndex.Lunar).softCharacterLimit *= 2;
-
-                        // ^^dont feel like dealing with this right now sorry
-                    }
-                    break;
-            }
         }
 
         

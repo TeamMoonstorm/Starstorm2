@@ -9,10 +9,6 @@ namespace SS2.Components
 {
     public class StickyOverloaderController : NetworkBehaviour
     {
-        [SystemInitializer(typeof(EffectCatalog))]
-        private static void Init() => impactEffect = EffectCatalog.FindEffectIndexFromPrefab(SS2Assets.LoadAsset<GameObject>("StickyExplosionImpact", SS2Bundle.Items));
-
-        private static EffectIndex impactEffect;
         public static void TrySpawnBomb(CharacterBody victimBody, CharacterBody attackerBody)
         {
             var goop = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("StickyOverloaderBomb", SS2Bundle.Items), victimBody.corePosition, Quaternion.identity);
@@ -24,8 +20,10 @@ namespace SS2.Components
         public Transform indicator;
         public Animator animator;
         public GameObject explosionEffectPrefab;
+        public GameObject impactEffectPrefab;
         public Rigidbody rigidbody;
         
+
         private int buffCount;
 
         private bool hasExploded;
@@ -205,7 +203,7 @@ namespace SS2.Components
                     damageColorIndex = DamageColorIndex.Item,
                     falloffModel = BlastAttack.FalloffModel.Linear,
                     losType = BlastAttack.LoSType.NearestHit,
-                    impactEffect = impactEffect
+                    impactEffect = EffectCatalog.FindEffectIndexFromPrefab(impactEffectPrefab),
                 }.Fire();
 
                 stuckBody.SetBuffCount(SS2Content.Buffs.BuffStickyOverloader.buffIndex, 0);

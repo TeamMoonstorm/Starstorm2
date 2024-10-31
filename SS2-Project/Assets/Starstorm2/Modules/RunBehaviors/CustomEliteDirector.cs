@@ -95,7 +95,6 @@ namespace SS2.Components
             CharacterBody body = cm.bodyInstanceObject.GetComponent<CharacterBody>();
             if (body == null)
                 return;
-
             if (spawnResult.spawnRequest.spawnCard.eliteRules != SpawnCard.EliteRules.Default)
                 return;
 

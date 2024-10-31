@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 namespace SS2.Components
 {
     [RequireComponent(typeof(ProjectileController))]
-    public class SpitBombZone : MonoBehaviour
+    public class ProjectileExpandingDotZone : MonoBehaviour
     {
         public float startRadius = 7f;
         public float endRadius = 14f;
@@ -25,10 +25,13 @@ namespace SS2.Components
         public Transform[] scaledTransforms;
 
         private float currentRadius;
-        private GameObject impactEffect;
+        public GameObject impactEffect;
+        public BuffDef allyBuff;
+        public float allyBuffDuration = 3f;
+        public BuffDef enemyBuff;
+        public float enemyBuffDuration = 3f;
         private void Awake()
         {
-            impactEffect = SS2Assets.LoadAsset<GameObject>("SpitBombDotImpact", SS2Bundle.Chirr);
             this.projectileController = base.GetComponent<ProjectileController>();
             this.teamFilter = base.GetComponent<TeamFilter>();
             this.projectileDamage = base.GetComponent<ProjectileDamage>();
@@ -36,15 +39,14 @@ namespace SS2.Components
             this.fireStopwatch = 1 / this.fireFrequency;
         }
 
-        private bool ShouldGrantRegen(TeamIndex teamIndex)
+        private bool ShouldGrantAllyBuff(TeamIndex teamIndex)
         {
             return this.teamFilter.teamIndex == teamIndex;
         }
-        private bool ShouldConfuse(TeamIndex teamIndex)
+        private bool ShouldGrantEnemyBuff(TeamIndex teamIndex)
         {
             return this.teamFilter.teamIndex != teamIndex;
         }
-
         private void FixedUpdate()
         {
             this.lifeStopwatch += Time.fixedDeltaTime;
@@ -86,14 +88,12 @@ namespace SS2.Components
                 blastAttack.procCoefficient = this.projectileController.procCoefficient * this.procCoefficientPerSecond / fireFrequency;
                 blastAttack.falloffModel = BlastAttack.FalloffModel.None;
                 blastAttack.damageColorIndex = this.projectileDamage.damageColorIndex;
-                blastAttack.damageType = DamageType.SlowOnHit;
+                blastAttack.damageType = this.projectileDamage.damageType;
                 blastAttack.attackerFiltering = AttackerFiltering.Default;
                 blastAttack.impactEffect = EffectCatalog.FindEffectIndexFromPrefab(impactEffect);
-                
-                // not necessary anymore since its just a slow
-                //blastAttack.AddModdedDamageType(DamageTypes.ConfuseOnHit.confuseDamageType);
                 BlastAttack.Result result = blastAttack.Fire();
             }
+            if (!allyBuff && !enemyBuff) return;
             SphereSearch sphereSearch = new SphereSearch();
             sphereSearch.radius = this.startRadius;
             sphereSearch.origin = base.transform.position;
@@ -105,9 +105,13 @@ namespace SS2.Components
             for (int i = 0; i < hurtBoxes.Length; i++)
             {
                 HealthComponent healthComponent = hurtBoxes[i].healthComponent;
-                if (ShouldGrantRegen(healthComponent.body.teamComponent.teamIndex))
+                if (allyBuff && ShouldGrantAllyBuff(healthComponent.body.teamComponent.teamIndex))
                 {
-                    healthComponent.body.AddTimedBuff(SS2Content.Buffs.BuffChirrRegen, 3f); // yes i am hard coding everything. fuck you and fuck the laggy ass editor
+                    healthComponent.body.AddTimedBuff(allyBuff, 3f);
+                }
+                if(enemyBuff && ShouldGrantEnemyBuff(healthComponent.body.teamComponent.teamIndex))
+                {
+                    healthComponent.body.AddTimedBuff(enemyBuff, 3f);
                 }
             }
         }

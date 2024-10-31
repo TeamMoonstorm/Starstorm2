@@ -11,27 +11,23 @@ using static MSU.BaseBuffBehaviour;
 
 namespace SS2.Equipments
 {
-#if DEBUG
     public class AffixPurple : SS2EliteEquipment
     {
-        public static DotController.DotIndex index;
-        private BuffDef _buffPurplePoisonBuildup;
+        
         public override SS2AssetRequest<EliteAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<EliteAssetCollection>("acAffixPurple", SS2Bundle.Equipments);
+        public static DotController.DotIndex index;
+        private static GameObject poisonEffect;
+        private static GameObject projectilePrefab;
         public override void Initialize()
         {
-            _buffPurplePoisonBuildup = AssetCollection.FindAsset<BuffDef>("bdPoisonBuildup");
-            // TODO: Do I need a separate dot for poisondebuff buffdef? idk
-            index = DotAPI.RegisterDotDef(0.25f, 0.18f, DamageColorIndex.DeathMark, _buffPurplePoisonBuildup);
+            poisonEffect = SS2Assets.LoadAsset<GameObject>("PoisonPurpleEffect", SS2Bundle.Equipments);
+            projectilePrefab = SS2Assets.LoadAsset<GameObject>("PoisonBombProjectile", SS2Bundle.Equipments);
+            index = DotAPI.RegisterDotDef(0.25f, 0.2f, DamageColorIndex.DeathMark, AssetCollection.FindAsset<BuffDef>("bdPurplePoison"));
         }
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return false;
-        }
-
-        public override IEnumerator LoadContentAsync()
-        {
-            yield break;
+            return true;
         }
 
         public override bool Execute(EquipmentSlot slot)
@@ -47,105 +43,136 @@ namespace SS2.Equipments
         {
         }
 
-        // TODO: Test if we actually need this
-        //public class PurplePoisonBuildup : BaseBuffBehaviour
-        //{
-        //    [BuffDefAssociation]
-        //    private static BuffDef GetBuffDef() => SS2Content.Buffs.bdPoisonBuildup;
-        //}
+        public class PurplePoisonDebuff : BaseBuffBehaviour
+        {
+            [BuffDefAssociation]
+            private static BuffDef GetBuffDef() => SS2Content.Buffs.bdPurplePoison;
 
-        //public class PurplePoisonDebuff : BaseBuffBehaviour
-        //{
-        //    [BuffDefAssociation]
-        //    private static BuffDef GetBuffDef() => SS2Content.Buffs.bdPurplePoison;
-        //}
+            private GameObject effectInstace;
+            private ParticleSystem particleSystem;
+            private void OnEnable()
+            {
+                if(!effectInstace)
+                    effectInstace = GameObject.Instantiate(poisonEffect);
+                particleSystem = effectInstace.GetComponent<ParticleSystem>();
+                if (particleSystem) particleSystem.Play(true);
+            }
+
+            private void OnDisable()
+            {
+                if (particleSystem) particleSystem.Stop(true);
+            }
+
+            private void OnDestroy()
+            {
+                if (effectInstace) Destroy(effectInstace);
+            }
+        }
 
         public sealed class AffixPurpleBehavior : BaseBuffBehaviour, IOnDamageDealtServerReceiver
         {
             [BuffDefAssociation]
             private static BuffDef GetBuffDef() => SS2Content.Buffs.bdElitePurple;
-
-            private float prevInterval = 0.0f;
-
             private static float projectileLaunchInterval = 30f;
-
-            // Fields for launching projectiles
-            private int radius = 4;
-            private static int numProjectiles = 2;
-            private float damage;
-            private static int duration = 5;
-
+            private static float maxTrackingDistance = 90f;
+            private static float maxLaunchDistance = 40f;
+            private static float projectileSpeed = 35f;
+            private static float timeToTarget = 2f;
+            private static float minSpread = 5f;
+            private static float maxSpread = 25f;
+            private static float projectileDamageCoefficient = 1f;
+            private static float gravityCoefficient = 0.7f;
+            private float projectileTimer;
+            private EntityStates.TitanMonster.FireFist.Predictor predictor; // might as well use this lol
+            private SphereSearch sphereSearch;
+            private int numProjectiles;
+            private void OnEnable()
+            {
+                predictor = new EntityStates.TitanMonster.FireFist.Predictor(base.transform);
+                sphereSearch = new SphereSearch();
+                switch(base.characterBody.hullClassification)
+                {
+                    case HullClassification.Human: 
+                        numProjectiles = 1;
+                        break;
+                    case HullClassification.Golem:
+                        numProjectiles = 2;
+                        break;
+                    case HullClassification.BeetleQueen:
+                        numProjectiles = 3;
+                        break;
+                    default:
+                        numProjectiles = 2;
+                        break;
+                }
+            }
             public void OnDamageDealtServer(DamageReport damageReport)
             {
-                if (hasAnyStacks && NetworkServer.active)
-                {
-                    var victim = damageReport.victim;
-                    var attacker = damageReport.attacker;
-                    var victimBody = damageReport.victimBody;
-                    var attackerBody = damageReport.attackerBody;
-                    var buildUpBuffCount = victimBody.GetBuffCount(SS2Content.Buffs.bdPoisonBuildup);
 
-                    // Add stacks of buildup
-                    if (victim.gameObject != attacker && damageReport.damageInfo.procCoefficient > 0)
-                    {
-                        victim.body.AddTimedBuffAuthority(SS2Content.Buffs.bdPoisonBuildup.buffIndex, 9f);
-
-                        // increase buildup buff count since the victim just got one inflicted
-                        // and doing this would be a cheaper call then GetBuffCount
-                        buildUpBuffCount += 1;
-                    }
-
-                    if (victim.gameObject != attacker && buildUpBuffCount >= 3)
-                    {
-                        // We remove at least one instance of buiuldup to balance things a bit
-                        victimBody.RemoveBuff(SS2Content.Buffs.bdPoisonBuildup.buffIndex);
-
-                        // Duration will depend on how many buildups the victim has accured
-                        var dotDuration = duration + (buildUpBuffCount - 1);
-
-                        // Apply DOT!
-                        var dotInfo = new InflictDotInfo()
-                        {
-                            attackerObject = attackerBody.gameObject,
-                            victimObject = victimBody.gameObject,
-                            dotIndex = DotController.DotIndex.Poison,
-                            duration = dotDuration,
-                            damageMultiplier = 1,
-                            maxStacksFromAttacker = 5,
-                        };
-                        DotController.InflictDot(ref dotInfo);
-
-                        // Add a poison buff just to reflect the length of the poison dot in the UI
-                        victim.body.AddTimedBuffAuthority(SS2Content.Buffs.bdPurplePoison.buffIndex, dotDuration);
-                    }
-                }
             }
 
             private void FixedUpdate()
             {
-                // HasAnyStacks isnt needed here because epheremal nature of buffs in MSU
-                // means FixedUpdate isnt called if the buff isnt active
                 if (NetworkServer.active)
                 {
-                    prevInterval += Time.fixedDeltaTime;
+                    projectileTimer += Time.fixedDeltaTime;
 
                     // Periodically launch projectiles that create poison AOE fields
-                    if (prevInterval >= projectileLaunchInterval)
+                    if (projectileTimer >= projectileLaunchInterval)
                     {
-                        prevInterval = 0f;
-                        float num2 = 360f / numProjectiles;
-                        Vector3 val = Vector3.ProjectOnPlane(transform.forward, Vector3.up);
-                        Vector3 normalized = val.normalized;
-                        Vector3 val2 = Vector3.RotateTowards(Vector3.up, normalized, 0.43633232f, float.PositiveInfinity);
-                        for (int i = 0; i < numProjectiles; i++)
-                        {
-                            Vector3 forward = Quaternion.AngleAxis(num2 * i, Vector3.up) * val2;
-                            ProjectileManager.instance.FireProjectile(LegacyResourcesAPI.Load<GameObject>("Prefabs/Projectiles/PoisonOrbProjectile"), this.characterBody.corePosition, Util.QuaternionSafeLookRotation(forward), this.gameObject, damage * 1f, 0f, Util.CheckRoll(this.characterBody.crit, this.characterBody.master));
-                        }
+                        projectileTimer = 0f;
+                        FireProjectiles();
                     }
+                }
+            }
+
+            void FireProjectiles()
+            {
+                // pick target position. try predicting first, then pick random if failed
+                Vector3 origin = base.characterBody.corePosition;
+                Vector3 targetPosition = origin;
+                sphereSearch.radius = maxTrackingDistance;
+                sphereSearch.origin = origin;
+                sphereSearch.mask = LayerIndex.entityPrecise.mask;
+                sphereSearch.RefreshCandidates();
+                sphereSearch.FilterCandidatesByDistinctHurtBoxEntities();
+                HurtBox[] hurtBoxes = sphereSearch.GetHurtBoxes();
+                bool predicted = false;
+                if(hurtBoxes.Length > 0)
+                {
+                    int targetIndex = UnityEngine.Random.Range(0, hurtBoxes.Length - 1);
+                    HurtBox hurtBox = hurtBoxes[targetIndex];
+                    if (hurtBox)
+                    {
+                        this.predictor.SetTargetTransform(hurtBox.transform);
+                        predicted = predictor.GetPredictedTargetPosition(timeToTarget, out targetPosition);
+                    }
+                }
+                if(!predicted)
+                {
+                    Vector2 offset = UnityEngine.Random.insideUnitCircle * maxLaunchDistance;
+                    targetPosition = origin;
+                    targetPosition.x += offset.x;
+                    targetPosition.z += offset.y;
+                }
+
+                // calculate trajectory (speed and direction) to get to target position
+                // horizontal speed and flight time is constant. solving for vertical speed and direction
+                Ray ray = new Ray(origin, targetPosition - origin);
+                Util.CharacterRaycast(base.gameObject, ray, out var raycastHit, maxLaunchDistance, LayerIndex.world.mask, QueryTriggerInteraction.Ignore);                
+                Vector3 toTarget = raycastHit.point - origin;
+                Vector2 toTargetHDirection = new Vector2(toTarget.x, toTarget.z).normalized;
+                float y = Trajectory.CalculateInitialYSpeed(timeToTarget, toTarget.y, Physics.gravity.y * gravityCoefficient);
+                Vector3 velocity = new Vector3(toTargetHDirection.x * projectileSpeed, y, toTargetHDirection.y * projectileSpeed);
+                float trueSpeed = velocity.magnitude;
+                Vector3 aimDirection = velocity.normalized;
+
+                for (int i = 0; i < numProjectiles; i++)
+                {
+                    Vector3 spreadDirection = Util.ApplySpread(aimDirection, minSpread, maxSpread, 1, 1);
+                    ProjectileManager.instance.FireProjectile(projectilePrefab, origin, Util.QuaternionSafeLookRotation(spreadDirection), base.gameObject, base.characterBody.damage * projectileDamageCoefficient, 0f, false, DamageColorIndex.Default, null, trueSpeed, null);
                 }
             }
         }
     }
-#endif
 }
