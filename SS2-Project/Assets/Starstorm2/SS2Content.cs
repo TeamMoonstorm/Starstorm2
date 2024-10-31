@@ -245,6 +245,8 @@ namespace SS2
 
             public static ItemDef ArmedBackpack;
 
+            public static ItemDef AtkSpeedDecreasesUtilCooldown;
+
             public static ItemDef BoostCharacterSize;
 
             public static ItemDef BoostCooldowns;

@@ -3,16 +3,13 @@ using RoR2;
 
 namespace EntityStates.NemBandit
 {
-    public class NemReload : BaseState
+    public class NemBanditReload : BaseState
     {
         public static float enterSoundPitch;
         public static float exitSoundPitch;
 
         public static string enterSoundString;
         public static string exitSoundString;
-
-        public static GameObject reloadEffectPrefab;
-        public static string reloadEffectMuzzleString;
 
         public static float baseDuration;
         private bool hasGivenStock;
@@ -21,16 +18,14 @@ namespace EntityStates.NemBandit
         {
             get
             {
-                return baseDuration / attackSpeedStat;
+                return baseDuration;
             }
         }
 
         public override void OnEnter()
         {
             base.OnEnter();
-            //play animation
             Util.PlayAttackSpeedSound(enterSoundString, gameObject, enterSoundPitch);
-            //effect
         }
 
         public override void FixedUpdate()
@@ -42,7 +37,7 @@ namespace EntityStates.NemBandit
                 return;
             if (skillLocator.primary.stock < skillLocator.primary.maxStock)
             {
-                outer.SetNextState(new NemReload());
+                outer.SetNextState(new NemBanditReload());
                 return;
             }
             Util.PlayAttackSpeedSound(exitSoundString, gameObject.gameObject, exitSoundPitch);

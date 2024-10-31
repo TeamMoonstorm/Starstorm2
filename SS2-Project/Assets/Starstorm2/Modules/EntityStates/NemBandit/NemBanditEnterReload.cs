@@ -2,7 +2,7 @@
 
 namespace EntityStates.NemBandit
 {
-    public class NemEnterReload : BaseState
+    public class NemBanditEnterReload : BaseState
     {
         public static float baseDuration;
         public static string enterSoundString;
@@ -10,14 +10,13 @@ namespace EntityStates.NemBandit
         {
             get
             {
-                return baseDuration / attackSpeedStat;
+                return baseDuration;
             }
         }
 
         public override void OnEnter()
         {
             base.OnEnter();
-            //play animation
             Util.PlaySound(enterSoundString, gameObject);
         }
 
@@ -26,7 +25,7 @@ namespace EntityStates.NemBandit
             base.FixedUpdate();
             if (isAuthority && fixedAge > duration)
             {
-                outer.SetNextState(new NemReload());
+                outer.SetNextState(new NemBanditReload());
             }
         }
 

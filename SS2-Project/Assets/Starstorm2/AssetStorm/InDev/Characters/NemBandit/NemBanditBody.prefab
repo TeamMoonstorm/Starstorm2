@@ -126,6 +126,7 @@ GameObject:
   - component: {fileID: 2755665440890336093}
   - component: {fileID: 3624731592851631335}
   - component: {fileID: 62724799648698562}
+  - component: {fileID: 9095653429221093361}
   - component: {fileID: 2749598274420891814}
   - component: {fileID: 8355355892139953238}
   - component: {fileID: 3493226578283581161}
@@ -245,7 +246,7 @@ MonoBehaviour:
   isTeleporting: 0
   solitudeLevelCount: 0
   wasLucky: 0
-  spreadBloomDecayTime: 0.7
+  spreadBloomDecayTime: 0.6
   spreadBloomCurve:
     serializedVersion: 2
     m_Curve:
@@ -278,7 +279,7 @@ MonoBehaviour:
   runicLensMeteorReady: 0
   aimOriginTransform: {fileID: 7620363278018392501}
   hullClassification: 0
-  portraitIcon: {fileID: 2800000, guid: bc0d8a67460fb4041b52c4b42c3476f5, type: 3}
+  portraitIcon: {fileID: 2800000, guid: 43f2eb2141b215940bddeac1af202f97, type: 3}
   bodyColor: {r: 1, g: 1, b: 1, a: 1}
   doNotReassignToTeamBasedCollisionLayer: 0
   isChampion: 0
@@ -697,6 +698,24 @@ MonoBehaviour:
   mainStateType:
     _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   debug: 0
+--- !u!114 &9095653429221093361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8272423498477803604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillFamily: {fileID: 11400000, guid: fd9f343e9881dba468fc3738c0223883, type: 2}
+  skillName: Passive
+  hideInCharacterSelect: 0
+  baseStock: 1
+  baseRechargeStopwatch: 0
+  hasExecutedSuccessfully: 0
 --- !u!114 &2749598274420891814
 MonoBehaviour:
   m_ObjectHideFlags: 0

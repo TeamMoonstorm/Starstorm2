@@ -7499,7 +7499,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 380944266}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 70.52, y: 58.13, z: -42.96}
+  m_LocalPosition: {x: 70.52, y: -10.7, z: -42.96}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -26776,7 +26776,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1110787578}
   m_LocalRotation: {x: 0.35732818, y: -0.3310014, z: 0.13712762, w: 0.8625258}
-  m_LocalPosition: {x: 0, y: 6.61, z: 0}
+  m_LocalPosition: {x: -70.4, y: -16.46, z: 10.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -43915,6 +43915,7 @@ GameObject:
   - component: {fileID: 8526964285465620137}
   - component: {fileID: 86602792975617046}
   - component: {fileID: 9001168438249748121}
+  - component: {fileID: 9001168438249748122}
   m_Layer: 0
   m_Name: PortalStranger (OLD)
   m_TagString: Untagged
@@ -44297,10 +44298,12 @@ MonoBehaviour:
   interactability: 2
   shouldIgnoreSpherecastForInteractibility: 0
   contextToken: SS2_PORTAL_VOIDSHOP_CONTEXT
+  shouldProximityHighlight: 1
   onActivation:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8526964285465620137}
+        m_TargetAssemblyTypeName: 
         m_MethodName: SetInteractabilityDisabled
         m_Mode: 1
         m_Arguments:
@@ -44312,6 +44315,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 86602792975617046}
+        m_TargetAssemblyTypeName: 
         m_MethodName: Begin
         m_Mode: 1
         m_Arguments:
@@ -44713,6 +44717,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayToken: SS2_PORTAL_VOIDSHOP_NAME
+--- !u!114 &9001168438249748122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8043817298160464028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8258ea15b8f74c4889ce485d21cbbb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!4 &9101815827345803551
 Transform:
   m_ObjectHideFlags: 0

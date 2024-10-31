@@ -12,11 +12,11 @@ namespace SS2.Survivors
     public sealed class NemBandit : SS2Survivor
     {
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acNemBandit", SS2Bundle.Indev);
+
         public override void Initialize()
         {
             ModifyPrefab();
         }
-
         private void ModifyPrefab()
         {
             var cb = CharacterPrefab.GetComponent<CharacterBody>();
