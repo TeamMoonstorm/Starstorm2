@@ -8,18 +8,17 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: matVoidShopGrass
-  m_Shader: {fileID: 4800000, guid: dac5920e21f390243811bdf9e2b9c2df, type: 3}
-  m_ValidKeywords: []
-  m_InvalidKeywords:
+  m_Shader: {fileID: 14000, guid: 0000000000000000f000000000000000, type: 0}
+  m_ValidKeywords:
   - EFFECT_BUMP
   - EFFECT_HUE_VARIATION
-  - EFFECT_SUBSURFACE
   - GEOM_TYPE_LEAF
-  - USE_EMISSION
-  - _WINDQUALITY_BEST
+  m_InvalidKeywords:
+  - EFFECT_SUBSURFACE
+  - _WINDQUALITY_PALM
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 1
+  m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
@@ -35,7 +34,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionTex:
-        m_Texture: {fileID: 2800000, guid: 897500ef5f688684284cd485e67c2fea, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ExtraTex:
@@ -56,23 +55,26 @@ Material:
     - _BillboardShadowFade: 0.5
     - _Cull: 0
     - _Cutoff: 0.677
-    - _EmissionOn: 1
+    - _EmissionOn: 0
     - _Glossiness: 0.49803925
     - _HueVariationKwToggle: 1
     - _Metallic: 0
     - _NormalMapKwToggle: 1
     - _RampInfo: 5
     - _Smoothness: 0
-    - _SpecularExponent: 1
+    - _SpecularExponent: 3.54
     - _SpecularStrength: 0
     - _SubsurfaceIndirect: 0.25
     - _SubsurfaceKwToggle: 1
     - _TwoSided: 0
-    - _WindQuality: 5
+    - _VertexOffsetStrength: 0
+    - _WindQuality: 0
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.6367924, g: 0.764842, b: 1, a: 1}
     - _EmissionTint: {r: 1, g: 1, b: 1, a: 1}
-    - _HueVariation: {r: 0.7372549, g: 0.8705883, b: 1, a: 0.1}
+    - _HueVariation: {r: 0.25943398, g: 0.40027118, b: 1, a: 0.40392157}
     - _HueVariationColor: {r: 1, g: 0.5, b: 0, a: 0.1}
+    - _Scroll: {r: 0, g: 0, b: 0, a: 0}
     - _SubsurfaceColor: {r: 1, g: 1, b: 1, a: 1}
+    - _WindVector: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
