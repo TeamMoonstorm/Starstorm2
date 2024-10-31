@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 02a17d3a7bea384489c0fc6e66051d29, type: 3}
-  m_Name: ss2.items.poisonousgland
+  m_Name: ss2.item.x4
   m_EditorClassIdentifier: 
   nameToken: ???
   displayModelPath: Prefabs/NullModel
   displayModelPrefab: {fileID: 0}
   hidden: 0
-  achievementIcon: {fileID: 21300000, guid: 7b7b3cf5ecc105549b71410cdef8fb7c, type: 3}
-  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+  achievementIcon: {fileID: 21300000, guid: 6a12b121ae3fc814c93ff8ea479ee228, type: 3}
+  requiredExpansion: {fileID: 0}
   achievementCondition:
-    assemblyQualifiedName: SS2.Unlocks.Pickups.PoisonousGlandAchievement, Starstorm2,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+    assemblyQualifiedName: SS2.Unlocks.Pickups.X4Achievement, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   serverAchievementCondition:
-    assemblyQualifiedName: SS2.Unlocks.Pickups.PoisonousGlandAchievement+PoisonousGlandServerAchievement,
+    assemblyQualifiedName: SS2.Unlocks.Pickups.X4Achievement+X4ServerAchievement,
       Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  achievementNameToken: SS2_ACHIEVEMENT_POISONOUSGLAND_NAME
-  achievementDescriptionToken: SS2_ACHIEVEMENT_POISONOUSGLAND_DESC
-  coinReward: 2
+  achievementNameToken: SS2_ACHIEVEMENT_X4_NAME
+  achievementDescriptionToken: SS2_ACHIEVEMENT_X4_DESC
+  coinReward: 1
   _preRequisiteAchievement:
     unlockableDef: {fileID: 0}
-    achievementIdentifier: BeatArena
+    achievementIdentifier: 

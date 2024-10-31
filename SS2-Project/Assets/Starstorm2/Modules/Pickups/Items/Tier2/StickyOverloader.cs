@@ -21,7 +21,7 @@ namespace SS2.Items
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Chance for Sticky Overloader to be applied on hit, per stack. (1 = 1%)")]
         [FormatToken(token, 0)]
-        public static float procChance = 5;
+        public static float procChance = 3;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Damage of the explosion, per charge. (1 = 1%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
@@ -41,7 +41,7 @@ namespace SS2.Items
 
         public static int maxStacks = 25;
 
-        public static int maxStacksPerStack = 15;
+        public static int maxStacksPerStack = 5;
 
         public static float buffDuration = 1f;
 

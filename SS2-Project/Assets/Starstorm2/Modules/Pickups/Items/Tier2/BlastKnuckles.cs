@@ -135,29 +135,24 @@ namespace SS2.Items
 
 					void DealDamage(HurtBox hurtBox)
                     {
-						if(hurtBox.healthComponent.alive)
-                        {
-							DamageInfo attack = new DamageInfo();
-							attack.damage = body.damage * damage;
-							attack.attacker = body.gameObject;
-							attack.inflictor = body.gameObject;
-							attack.force = damageDirection * 1600f;
-							attack.crit = damageInfo.crit;
-							attack.procChainMask = default(ProcChainMask);
-							attack.procCoefficient = .5f;
-							attack.position = hurtBox.transform.position;
-							attack.damageColorIndex = DamageColorIndex.Item;
-							attack.damageType = DamageType.Generic;
-							hurtBox.healthComponent.TakeDamage(attack);
-							GlobalEventManager.instance.OnHitEnemy(attack, hurtBox.healthComponent.gameObject);
-							GlobalEventManager.instance.OnHitAll(attack, hurtBox.healthComponent.gameObject);
-							EffectManager.SpawnEffect(impactEffect, new EffectData
-							{
-								origin = position,
-								scale = 1f,
-								rotation = Util.QuaternionSafeLookRotation(damageInfo.force)
-							}, true);
-						}						
+						stupidfuck attack = new stupidfuck();
+						attack.damage = body.damage * damage;
+						attack.attacker = body.gameObject;
+						attack.inflictor = body.gameObject;
+						attack.force = damageDirection * 1600f;
+						attack.crit = damageInfo.crit;
+						attack.procChainMask = default(ProcChainMask);
+						attack.procCoefficient = 1f;
+						attack.position = hurtBox.transform.position;
+						attack.damageColorIndex = DamageColorIndex.Item;
+						attack.damageType = DamageType.Generic;
+						RoR2.Orbs.OrbManager.instance.AddOrb(attack);
+						EffectManager.SpawnEffect(impactEffect, new EffectData
+						{
+							origin = position,
+							scale = 1f,
+							rotation = Util.QuaternionSafeLookRotation(damageInfo.force)
+						}, true);											
 					}
 				}
 			}
@@ -187,7 +182,48 @@ namespace SS2.Items
 			}
 			
 		}
+		private class stupidfuck : RoR2.Orbs.Orb
+		{
+			public override void Begin()
+			{
+				base.duration = 0;
+			}
+			public override void OnArrival()
+			{
+				if (this.target)
+				{
+					HealthComponent healthComponent = this.target.healthComponent;
+					if (healthComponent && healthComponent.alive)
+					{
+						DamageInfo damageInfo = new DamageInfo();
+						damageInfo.damage = damage;
+						damageInfo.attacker = attacker;
+						damageInfo.inflictor = inflictor;
+						damageInfo.force = force;
+						damageInfo.crit = crit;
+						damageInfo.procChainMask = procChainMask;
+						damageInfo.procCoefficient = procCoefficient;
+						damageInfo.position = position;
+						damageInfo.damageColorIndex = damageColorIndex;
+						damageInfo.damageType = damageType;
+						healthComponent.TakeDamage(damageInfo);
+						GlobalEventManager.instance.OnHitEnemy(damageInfo, healthComponent.gameObject);
+						GlobalEventManager.instance.OnHitAll(damageInfo, healthComponent.gameObject);
+					}
+				}
+			}
+			public float damage;
+			public GameObject attacker;
+			public GameObject inflictor;
+			public Vector3 force;
+			public bool crit;
+			public ProcChainMask procChainMask;
+			public float procCoefficient;
+			public Vector3 position;
+			public DamageColorIndex damageColorIndex;
+			public DamageTypeCombo damageType;
+			public TeamIndex teamIndex;
+		}
 
-		
-    }
+	}
 }

@@ -5090,7 +5090,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7763800244574764821}
-  - component: {fileID: 3256148793624728243}
   m_Layer: 0
   m_Name: Rotator
   m_TagString: Untagged
@@ -5114,24 +5113,6 @@ Transform:
   m_Father: {fileID: 8756052427293215997}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &3256148793624728243
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7968721194503962667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1395413934, guid: da77c7bbf69f66ab2145560542327715, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 2
-  _slowRotationSpeed: 5
-  _fastRotationSpeed: 90
-  _rotateAroundAxis: 2
-  _relativeTo: 1
-  _reverse: 0
 --- !u!1 &8983456187914875843
 GameObject:
   m_ObjectHideFlags: 0
@@ -5141,6 +5122,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8756052427293215997}
+  - component: {fileID: 1840184546263702987}
   m_Layer: 0
   m_Name: PoisonBall
   m_TagString: Untagged
@@ -5164,3 +5146,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1840184546263702987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8983456187914875843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1395413934, guid: da77c7bbf69f66ab2145560542327715, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 2
+  _slowRotationSpeed: 5
+  _fastRotationSpeed: 90
+  _rotateAroundAxis: 1
+  _relativeTo: 1
+  _reverse: 0

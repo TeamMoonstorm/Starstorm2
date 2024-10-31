@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 02a17d3a7bea384489c0fc6e66051d29, type: 3}
-  m_Name: ss2.items.universalcharger
+  m_Name: ss2.item.insecticide
   m_EditorClassIdentifier: 
   nameToken: ???
   displayModelPath: Prefabs/NullModel
   displayModelPrefab: {fileID: 0}
   hidden: 0
-  achievementIcon: {fileID: 21300000, guid: e841fbb696f05284289fe3dd8a19f6a7, type: 3}
+  achievementIcon: {fileID: 21300000, guid: a9b36a942c196a949b1c7e358203343a, type: 3}
   requiredExpansion: {fileID: 0}
   achievementCondition:
-    assemblyQualifiedName: SS2.Unlocks.Pickups.UniversalChargerAchievement, Starstorm2,
+    assemblyQualifiedName: SS2.Unlocks.Pickups.InsecticideAchievement, Starstorm2,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   serverAchievementCondition:
-    assemblyQualifiedName: SS2.Unlocks.Pickups.UniversalChargerAchievement+UniversalChargerServerAchievement,
+    assemblyQualifiedName: SS2.Unlocks.Pickups.InsecticideAchievement+InsecticideServerAchievement,
       Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  achievementNameToken: SS2_ACHIEVEMENT_UNIVERSALCHARGER_NAME
-  achievementDescriptionToken: SS2_ACHIEVEMENT_UNIVERSALCHARGER_DESC
-  coinReward: 1
+  achievementNameToken: SS2_ACHIEVEMENT_INSECTICIDE_NAME
+  achievementDescriptionToken: SS2_ACHIEVEMENT_INSECTICIDE_DESC
+  coinReward: 3
   _preRequisiteAchievement:
     unlockableDef: {fileID: 0}
-    achievementIdentifier: Complete30StagesCareer
+    achievementIdentifier: RescueTreebot
