@@ -1,11 +1,12 @@
 ﻿using RoR2;
 using RoR2.Achievements;
 using RoR2.Stats;
+using SS2.Stats;
 namespace SS2.Unlocks.Pickups
 {	
 	public class UniversalChargerAchievement : BaseAchievement
 	{
-		public static readonly StatDef engiTurretKills = StatDef.Register("engiTurretKillsAchievementProgress", StatRecordType.Sum, StatDataType.ULong, 0.0, null);
+		
 		public override BodyIndex LookUpRequiredBodyIndex()
 		{
 			return BodyCatalog.FindBodyIndex("EngiBody");
@@ -19,7 +20,7 @@ namespace SS2.Unlocks.Pickups
 		}
 		public override float ProgressForAchievement()
 		{
-			return base.userProfile.statSheet.GetStatValueULong(engiTurretKills) / 400;
+			return base.userProfile.statSheet.GetStatValueULong(SS2StatDefs.engiTurretKills) / 400f;
 		}
 		public override void OnBodyRequirementBroken()
 		{
@@ -29,7 +30,7 @@ namespace SS2.Unlocks.Pickups
 		}
 		private void Check()
 		{
-			if (base.userProfile.statSheet.GetStatValueULong(engiTurretKills) >= 400)
+			if (base.userProfile.statSheet.GetStatValueULong(SS2StatDefs.engiTurretKills) >= 400)
 			{
 				base.Grant();
 			}
@@ -61,7 +62,7 @@ namespace SS2.Unlocks.Pickups
 						PlayerStatsComponent masterPlayerStatsComponent = base.networkUser.masterPlayerStatsComponent;
 						if (masterPlayerStatsComponent)
 						{
-							masterPlayerStatsComponent.currentStats.PushStatValue(engiTurretKills, 1);
+							masterPlayerStatsComponent.currentStats.PushStatValue(SS2StatDefs.engiTurretKills, 1);
 						}
 					}					
 				}

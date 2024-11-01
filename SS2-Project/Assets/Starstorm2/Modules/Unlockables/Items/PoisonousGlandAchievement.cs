@@ -1,11 +1,12 @@
 ﻿using RoR2;
 using RoR2.Achievements;
 using RoR2.Stats;
+using SS2.Stats;
 namespace SS2.Unlocks.Pickups
 {
     public sealed class PoisonousGlandAchievement : BaseAchievement
     {
-        public static readonly StatDef crocoPoisonedEnemies = StatDef.Register("crocoPoisonEnemeisAchievementProgress", StatRecordType.Sum, StatDataType.ULong, 0.0, null);
+        
         public override void OnInstall()
         {
             base.OnInstall();          
@@ -14,14 +15,14 @@ namespace SS2.Unlocks.Pickups
         }       
         private void Check()
         {
-            if (base.userProfile.statSheet.GetStatValueULong(crocoPoisonedEnemies) >= 500)
+            if (base.userProfile.statSheet.GetStatValueULong(SS2StatDefs.crocoPoisonedEnemies) >= 500)
             {
                 base.Grant();
             }
         }
         public override float ProgressForAchievement()
         {
-            return base.userProfile.statSheet.GetStatValueULong(crocoPoisonedEnemies) / 500;
+            return base.userProfile.statSheet.GetStatValueULong(SS2StatDefs.crocoPoisonedEnemies) / 500f;
         }
         public override void OnUninstall()
         {
@@ -51,13 +52,13 @@ namespace SS2.Unlocks.Pickups
             private void CheckCrocoPoison(DotController dotController, ref InflictDotInfo inflictDotInfo)
             {
                 if (inflictDotInfo.dotIndex != DotController.DotIndex.Poison) return;
-                CharacterBody body = base.networkUser.GetCurrentBody();
+                CharacterBody body = inflictDotInfo.attackerObject.GetComponent<CharacterBody>();
                 if(base.IsCurrentBody(body) && body.bodyIndex == crocoBodyIndex)
                 {
                     PlayerStatsComponent masterPlayerStatsComponent = base.networkUser.masterPlayerStatsComponent;
                     if (masterPlayerStatsComponent)
                     {
-                        masterPlayerStatsComponent.currentStats.PushStatValue(crocoPoisonedEnemies, 1);
+                        masterPlayerStatsComponent.currentStats.PushStatValue(SS2StatDefs.crocoPoisonedEnemies, 1);
                     }
                 }
             }

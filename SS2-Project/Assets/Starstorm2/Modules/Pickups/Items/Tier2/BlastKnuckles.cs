@@ -136,6 +136,7 @@ namespace SS2.Items
 					void DealDamage(HurtBox hurtBox)
                     {
 						stupidfuck attack = new stupidfuck();
+						attack.target = hurtBox;
 						attack.damage = body.damage * damage;
 						attack.attacker = body.gameObject;
 						attack.inflictor = body.gameObject;

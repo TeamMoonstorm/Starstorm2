@@ -8,14 +8,12 @@ namespace SS2.Unlocks.Pickups
 		public override void OnInstall()
 		{
 			base.OnInstall();
-			UserProfile userProfile = base.userProfile;
-			userProfile.onPickupDiscovered = (Action<PickupIndex>)Delegate.Combine(userProfile.onPickupDiscovered, new Action<PickupIndex>(this.OnPickupDiscovered));
-			this.Check();
+			Check();
+			base.userProfile.onPickupDiscovered += OnPickupDiscovered;
 		}
 		public override void OnUninstall()
 		{
-			UserProfile userProfile = base.userProfile;
-			userProfile.onPickupDiscovered = (Action<PickupIndex>)Delegate.Remove(userProfile.onPickupDiscovered, new Action<PickupIndex>(this.OnPickupDiscovered));
+			base.userProfile.onPickupDiscovered -= OnPickupDiscovered;
 			base.OnUninstall();
 		}
 		public override float ProgressForAchievement()

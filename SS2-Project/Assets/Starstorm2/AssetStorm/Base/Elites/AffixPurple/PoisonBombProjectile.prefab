@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3036576988044064680}
   - component: {fileID: 5304199801874772612}
   - component: {fileID: 3480356787123721365}
+  - component: {fileID: 1887592698929830433}
   - component: {fileID: 953619981383591143}
   - component: {fileID: 1478515898672125597}
   - component: {fileID: 138228749256929219}
@@ -116,6 +117,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultTeam: -1
+--- !u!114 &1887592698929830433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8211630325068300671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1790887305, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
+  crit: 0
+  force: 0
+  damageColorIndex: 0
+  damageType:
+    damageType: 0
+    damageTypeExtended: 0
+    damageSource: 0
+  useDotMaxStacksFromAttacker: 0
+  dotMaxStacksFromAttacker: 4294967295
 --- !u!114 &953619981383591143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,7 +211,8 @@ MonoBehaviour:
   bonusBlastForce: {x: 0, y: 0, z: 0}
   canRejectForce: 1
   projectileHealthComponent: {fileID: 0}
-  explosionEffect: {fileID: 8211630325068300671}
+  explosionEffect: {fileID: 6972869262159158147, guid: 89e2c9937469e3d4ba6d9f24b6946134,
+    type: 3}
   preserveExplosionOrientation: 0
   explosionSoundString: 
   fireChildren: 1
