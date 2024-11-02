@@ -28,7 +28,7 @@ namespace SS2.Items
 		[FormatToken(TOKEN, 0)]
 		public static float range = 13f;
 
-		public static float blastAngle = 20f;
+		public static float blastConeRadius = 3f;
 		public static float blastRange = 16f;
 		private static float sqrRange;
 
@@ -99,62 +99,25 @@ namespace SS2.Items
 						scale = 1f,
 						rotation = Util.QuaternionSafeLookRotation(damageDirection)
 					}, true);
-					List<HealthComponent> uniqueTargets = new List<HealthComponent>();
-
-					//cone + small sphere to avoid jank angles
-					// i dont really know why i didnt just make this  abulletattack. no one would be able to tell the difference
-					search.searchOrigin = body.corePosition;
-					search.searchDirection = damageDirection;
-					search.teamMaskFilter = TeamMask.all;
-					search.teamMaskFilter.RemoveTeam(body.teamComponent.teamIndex);
-					search.sortMode = BullseyeSearch.SortMode.DistanceAndAngle;
-					search.filterByLoS = false;
-					search.filterByDistinctEntity = true;
-					search.maxAngleFilter = blastAngle;
-					search.maxDistanceFilter = blastRange;
-					search.RefreshCandidates();
-					sphereSearch.radius = 1.5f;
-					sphereSearch.origin = body.corePosition;
-					sphereSearch.mask = LayerIndex.entityPrecise.mask;
-					sphereSearch.RefreshCandidates();
-					sphereSearch.FilterCandidatesByDistinctHurtBoxEntities();
-					
-					foreach (HurtBox hurtBox in search.GetResults())
-                    {
-						if(hurtBox && hurtBox.healthComponent)
-                        {
-							uniqueTargets.Add(hurtBox.healthComponent);
-							DealDamage(hurtBox);
-						}
-                    }
-					foreach(HurtBox hurtBox in sphereSearch.GetHurtBoxes())
-                    {
-						if (hurtBox && hurtBox.healthComponent && !uniqueTargets.Contains(hurtBox.healthComponent))
-							DealDamage(hurtBox);
-                    }
-
-					void DealDamage(HurtBox hurtBox)
-                    {
-						stupidfuck attack = new stupidfuck();
-						attack.target = hurtBox;
-						attack.damage = body.damage * damage;
-						attack.attacker = body.gameObject;
-						attack.inflictor = body.gameObject;
-						attack.force = damageDirection * 1600f;
-						attack.crit = damageInfo.crit;
-						attack.procChainMask = default(ProcChainMask);
-						attack.procCoefficient = 1f;
-						attack.position = hurtBox.transform.position;
-						attack.damageColorIndex = DamageColorIndex.Item;
-						attack.damageType = DamageType.Generic;
-						RoR2.Orbs.OrbManager.instance.AddOrb(attack);
-						EffectManager.SpawnEffect(impactEffect, new EffectData
-						{
-							origin = position,
-							scale = 1f,
-							rotation = Util.QuaternionSafeLookRotation(damageInfo.force)
-						}, true);											
-					}
+					new BulletAttack
+					{
+						owner = base.gameObject,
+						weapon = base.gameObject,
+						origin = body.corePosition,
+						aimVector = damageDirection,
+						maxDistance = blastRange,
+						radius = blastConeRadius,
+						falloffModel = BulletAttack.FalloffModel.None,
+						smartCollision = true,
+						stopperMask = 0,
+						hitMask = LayerIndex.CommonMasks.bullet,
+						damage = body.damage * damage,
+						procCoefficient = 1f,
+						force = 1600f,
+						isCrit = damageInfo.crit,
+						hitEffectPrefab = impactEffect,
+						damageColorIndex = DamageColorIndex.Item,
+					}.Fire();
 				}
 			}
 
@@ -182,49 +145,6 @@ namespace SS2.Items
 				}
 			}
 			
-		}
-		private class stupidfuck : RoR2.Orbs.Orb
-		{
-			public override void Begin()
-			{
-				base.duration = 0;
-			}
-			public override void OnArrival()
-			{
-				if (this.target)
-				{
-					HealthComponent healthComponent = this.target.healthComponent;
-					if (healthComponent && healthComponent.alive)
-					{
-						DamageInfo damageInfo = new DamageInfo();
-						damageInfo.damage = damage;
-						damageInfo.attacker = attacker;
-						damageInfo.inflictor = inflictor;
-						damageInfo.force = force;
-						damageInfo.crit = crit;
-						damageInfo.procChainMask = procChainMask;
-						damageInfo.procCoefficient = procCoefficient;
-						damageInfo.position = position;
-						damageInfo.damageColorIndex = damageColorIndex;
-						damageInfo.damageType = damageType;
-						healthComponent.TakeDamage(damageInfo);
-						GlobalEventManager.instance.OnHitEnemy(damageInfo, healthComponent.gameObject);
-						GlobalEventManager.instance.OnHitAll(damageInfo, healthComponent.gameObject);
-					}
-				}
-			}
-			public float damage;
-			public GameObject attacker;
-			public GameObject inflictor;
-			public Vector3 force;
-			public bool crit;
-			public ProcChainMask procChainMask;
-			public float procCoefficient;
-			public Vector3 position;
-			public DamageColorIndex damageColorIndex;
-			public DamageTypeCombo damageType;
-			public TeamIndex teamIndex;
-		}
-
+		}		
 	}
 }

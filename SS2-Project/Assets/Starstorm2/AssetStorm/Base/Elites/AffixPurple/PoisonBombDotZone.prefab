@@ -276,7 +276,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e0dba400fa3854f4097afd9afda518af, type: 2}
+  - {fileID: 2100000, guid: c34ab426447d55b4d98cbb1d38620785, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -442,8 +442,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startRadius: 7
   endRadius: 12
-  fireFrequency: 3
-  damageCoefficientPerSecond: 0.5
+  fireFrequency: 5
+  damageCoefficientPerSecond: 1
   procCoefficientPerSecond: 0
   lifetime: 3
   scaledTransforms:

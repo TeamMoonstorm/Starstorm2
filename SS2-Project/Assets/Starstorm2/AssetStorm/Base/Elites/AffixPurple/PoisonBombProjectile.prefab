@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 953619981383591143}
   - component: {fileID: 1478515898672125597}
   - component: {fileID: 138228749256929219}
-  - component: {fileID: 5854314773693159408}
   - component: {fileID: 3208960092164745264}
   - component: {fileID: 5345537789310281483}
   m_Layer: 14
@@ -251,20 +250,6 @@ MonoBehaviour:
   minimumPhysicsStepsToKeepAliveAfterImpact: 0
   transformSpace: 0
   explodeOnLifeTimeExpiration: 1
---- !u!114 &5854314773693159408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8211630325068300671}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1184802484, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 3036576988044064680}
-  antiGravityCoefficient: 0.3
 --- !u!114 &3208960092164745264
 MonoBehaviour:
   m_ObjectHideFlags: 0

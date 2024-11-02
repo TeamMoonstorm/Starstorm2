@@ -73,16 +73,17 @@ namespace SS2.Equipments
         {
             [BuffDefAssociation]
             private static BuffDef GetBuffDef() => SS2Content.Buffs.bdElitePurple;
-            private static float projectileLaunchInterval = 18f;
-            private static float maxTrackingDistance = 90f;
+            private static float projectileLaunchInterval = 13f;
+            private static float maxTrackingDistance = 60f;
+            private static float minDistance = 8f;
             private static float maxLaunchDistance = 40f;
-            private static float projectileSpeed = 35f;
-            private static float timeToTarget = 2f;
+            private static float timeToTarget = 1f;
             private static float timeVariance = 0.3f;
             private static float minSpread = 5f;
-            private static float maxSpread = 25f;
+            private static float maxSpread = 10f;
+            private static float spreadPerProjectile = 6f;
+            
             private static float projectileDamageCoefficient = 1f;
-            private static float gravityCoefficient = 0.7f;
             private float projectileTimer;
             private EntityStates.TitanMonster.FireFist.Predictor predictor; // might as well use this lol
             private SphereSearch sphereSearch;
@@ -106,6 +107,7 @@ namespace SS2.Equipments
                         numProjectiles = 2;
                         break;
                 }
+                projectileTimer = projectileLaunchInterval - 6f;
             }
             public void OnDamageDealtServer(DamageReport damageReport)
             {
@@ -114,7 +116,7 @@ namespace SS2.Equipments
 
             private void FixedUpdate()
             {
-                if (NetworkServer.active)
+                if (base.characterBody.healthComponent.alive && NetworkServer.active)
                 {
                     projectileTimer += Time.fixedDeltaTime;
 
@@ -125,7 +127,10 @@ namespace SS2.Equipments
                         sphereSearch.origin = base.characterBody.corePosition;
                         sphereSearch.mask = LayerIndex.entityPrecise.mask;
                         sphereSearch.RefreshCandidates();
-                        sphereSearch.FilterCandidatesByDistinctHurtBoxEntities();
+                        TeamMask mask = TeamMask.allButNeutral;
+                        mask.RemoveTeam(base.characterBody.teamComponent.teamIndex);
+                        sphereSearch.FilterCandidatesByHurtBoxTeam(mask);
+                        sphereSearch.FilterCandidatesByDistinctHurtBoxEntities();                      
                         HurtBox[] hurtBoxes = sphereSearch.GetHurtBoxes();
                         if (hurtBoxes.Length > 0)
                         {
@@ -151,11 +156,10 @@ namespace SS2.Equipments
                 // pick target position. try predicting first, then pick random if failed
                 Vector3 origin = base.characterBody.corePosition;
                 Vector3 targetPosition = origin;
-                bool predicted = predictor.GetPredictedTargetPosition(timeToTarget, out targetPosition);
+                bool predicted = predictor.isPredictionReady && predictor.GetPredictedTargetPosition(timeToTarget, out targetPosition);
                 if (!predicted)
                 {
                     Vector2 offset = UnityEngine.Random.insideUnitCircle * maxLaunchDistance;
-                    targetPosition = origin;
                     targetPosition.x += offset.x;
                     targetPosition.z += offset.y;
                 }
@@ -164,23 +168,26 @@ namespace SS2.Equipments
                 // horizontal speed and flight time is constant. solving for vertical speed and direction
                 Ray ray = new Ray(origin, targetPosition - origin);
                 Vector3 point = ray.GetPoint(maxLaunchDistance);             
-                if (Util.CharacterRaycast(base.gameObject, ray, out var raycastHit, maxLaunchDistance, LayerIndex.world.mask, QueryTriggerInteraction.Ignore))
+                if (Util.CharacterRaycast(base.gameObject, ray, out var raycastHit, maxLaunchDistance, LayerIndex.CommonMasks.bullet, QueryTriggerInteraction.Ignore))
                 {
-                    point = raycastHit.point - origin;
+                    point = raycastHit.point;
                 }
-                GameObject g = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                g.transform.position = point;
                 Vector3 toTarget = point - origin;
-                Vector2 toTargetHDirection = new Vector2(toTarget.x, toTarget.z).normalized;
-                float y = Trajectory.CalculateInitialYSpeed(UnityEngine.Random.Range(-timeVariance, timeVariance) + timeToTarget, toTarget.y, Physics.gravity.y * gravityCoefficient);
-                Vector3 velocity = new Vector3(toTargetHDirection.x * projectileSpeed, y, toTargetHDirection.y * projectileSpeed);
+                Vector2 toTargetH = new Vector2(toTarget.x, toTarget.z);
+                float hDistance = toTargetH.magnitude;
+                Vector2 toTargetHDirection = toTargetH / hDistance;
+                hDistance = Mathf.Clamp(hDistance, minDistance, maxLaunchDistance);                                      
+                float vSpeed = Trajectory.CalculateInitialYSpeed(UnityEngine.Random.Range(-timeVariance, timeVariance) + timeToTarget, toTarget.y);
+                float hSpeed = hDistance / timeToTarget;
+                Vector3 velocity = new Vector3(toTargetHDirection.x * hSpeed, vSpeed, toTargetHDirection.y * hSpeed);
                 float trueSpeed = velocity.magnitude;
                 Vector3 aimDirection = velocity.normalized;
 
-                Util.PlaySound("ChirrFireSpitBomb", base.gameObject);
+                Util.PlaySound("ChirrFireSpitBomb", base.gameObject); // TODO: not networked
                 for (int i = 0; i < numProjectiles; i++)
                 {                  
-                    Vector3 spreadDirection = Util.ApplySpread(aimDirection, minSpread, maxSpread, 1, 1);
+
+                    Vector3 spreadDirection = Util.ApplySpread(aimDirection, minSpread + spreadPerProjectile*i, maxSpread + spreadPerProjectile*i, 1, 1);
                     ProjectileManager.instance.FireProjectile(projectilePrefab, origin, Util.QuaternionSafeLookRotation(spreadDirection), base.gameObject, base.characterBody.damage * projectileDamageCoefficient, 0f, false, DamageColorIndex.Default, null, trueSpeed, null);
                 }
             }
