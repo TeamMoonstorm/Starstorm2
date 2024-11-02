@@ -62,10 +62,10 @@ MonoBehaviour:
   m_Name: ppVoidShop
   m_EditorClassIdentifier: 
   settings:
-  - {fileID: 114530848090978590}
   - {fileID: 114013959178173942}
   - {fileID: -4582002936251299104}
   - {fileID: 7575674751238074827}
+  - {fileID: 5415043679671683698}
 --- !u!114 &114013959178173942
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -110,7 +110,7 @@ MonoBehaviour:
   opacity:
     overrideState: 0
     value: 1
---- !u!114 &114530848090978590
+--- !u!114 &5415043679671683698
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -128,10 +128,10 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 10
+    value: 1.5
   threshold:
     overrideState: 1
-    value: 0.9
+    value: 0.67
   softKnee:
     overrideState: 0
     value: 0.5
@@ -139,11 +139,11 @@ MonoBehaviour:
     overrideState: 0
     value: 65472
   diffusion:
-    overrideState: 0
-    value: 7
+    overrideState: 1
+    value: 10
   anamorphicRatio:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 1
   color:
     overrideState: 0
     value: {r: 1, g: 1, b: 1, a: 1}
@@ -151,12 +151,12 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   dirtTexture:
-    overrideState: 1
-    value: {fileID: 2800000, guid: f0ddd802340f5e443bec628e97671358, type: 3}
+    overrideState: 0
+    value: {fileID: 0}
     defaultState: 1
   dirtIntensity:
-    overrideState: 1
-    value: 3
+    overrideState: 0
+    value: 0
 --- !u!114 &7575674751238074827
 MonoBehaviour:
   m_ObjectHideFlags: 3
