@@ -9,7 +9,9 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: matClayMongerClay
   m_Shader: {fileID: 4800000, guid: 9b2024ee08a5bfc418ff897991e84323, type: 2}
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - SPLATMAP
+  - USE_VERTEX_COLORS
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -73,11 +75,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GreenChannelNormalTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 8132b2fdee32300458a3f5bb7656213c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GreenChannelTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 128f25e9d7a65fd4ebe9bf4172f82ffa, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -114,14 +116,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _BlueChannelBias: 0
+    - _BlueChannelBias: -2
     - _BlueChannelSmoothness: 0
     - _BumpScale: 1
-    - _ColorsOn: 0
+    - _ColorsOn: 1
     - _Cull: 2
     - _Cutoff: 0.5
     - _DecalLayer: 0
-    - _Depth: 0.2
+    - _Depth: 0.05
     - _DetailNormalMapScale: 1
     - _DitherOn: 0
     - _DoubleColorsOn: 0
@@ -148,7 +150,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _GreenChannelBias: 0
+    - _GreenChannelBias: 0.66
     - _GreenChannelSmoothness: 0
     - _LimbPrimeMask: 1
     - _LimbRemovalOn: 0
@@ -172,8 +174,8 @@ Material:
     - _SpecularExponent: 1
     - _SpecularHighlights: 1
     - _SpecularStrength: 0
-    - _SplatmapOn: 0
-    - _SplatmapTileScale: 1
+    - _SplatmapOn: 1
+    - _SplatmapTileScale: 7
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1

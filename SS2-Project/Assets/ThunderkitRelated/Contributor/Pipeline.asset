@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 1
   stageAssembliesJob: {fileID: -82466271387635231}
-  combineOutputIntoSingleAssembly: 0
 --- !u!114 &-82466271387635231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28,7 +27,7 @@ MonoBehaviour:
   m_Name: StageAssemblies
   m_EditorClassIdentifier: 
   Active: 1
-  stageDebugDatabases: 0
+  stageDebugDatabases: 1
   releaseBuild: 0
   assemblyArtifactPath: <AssemblyStaging>
   buildTarget: 19

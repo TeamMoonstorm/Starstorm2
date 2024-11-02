@@ -23,8 +23,18 @@ namespace SS2.Monsters
             }
 
             R2API.RecalculateStatsAPI.GetStatCoefficients += HandleTar;
+            On.RoR2.CharacterBody.RecalculateStats += SlipperyBuff;
             manager = AssetCollection.FindAsset<GameObject>("MongerTarTrailManager");
             SS2Main.Instance.StartCoroutine(AwaitForConfig(AssetCollection.FindAsset<GameObject>("MongerTarPoint")));
+        }
+
+        private void SlipperyBuff(On.RoR2.CharacterBody.orig_RecalculateStats orig, CharacterBody self)
+        {
+            orig(self);
+            if(self.HasBuff(SS2Content.Buffs.bdMongerSlippery))
+            {
+                self.acceleration /= 3;
+            }
         }
 
         private void HandleTar(CharacterBody sender, R2API.RecalculateStatsAPI.StatHookEventArgs args)

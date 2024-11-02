@@ -15,14 +15,13 @@ GameObject:
   - component: {fileID: 5540868535476222772}
   - component: {fileID: 1909977618352154271}
   - component: {fileID: 6495939233140612475}
-  - component: {fileID: 6853769915948190030}
-  - component: {fileID: 1668289143856072441}
-  - component: {fileID: 2187727747860522999}
-  - component: {fileID: 926221688169684891}
-  - component: {fileID: 3335875423174812004}
-  - component: {fileID: 3820541615900473959}
+  - component: {fileID: 4060804738711164923}
+  - component: {fileID: -1424899185728230067}
+  - component: {fileID: -5434945943518458712}
+  - component: {fileID: 1573067852096222275}
+  - component: {fileID: 5900782240858370518}
   m_Layer: 0
-  m_Name: ClaymongerMasterTemp
+  m_Name: ClayMongerMaster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -184,7 +183,7 @@ MonoBehaviour:
     _typeName: EntityStates.AI.Walker.Wander, RoR2, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   debug: 0
---- !u!114 &6853769915948190030
+--- !u!114 &4060804738711164923
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -196,7 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customName: UsePrimaryWhenInRange
+  customName: UsePrimary
   skillSlot: 0
   requiredSkill: {fileID: 0}
   requireSkillReady: 1
@@ -206,28 +205,28 @@ MonoBehaviour:
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
   minDistance: 0
-  maxDistance: 6
+  maxDistance: 20
   selectionRequiresTargetLoS: 1
-  selectionRequiresOnGround: 0
+  selectionRequiresOnGround: 1
   selectionRequiresAimTarget: 0
   maxTimesSelected: -1
   moveTargetType: 0
-  activationRequiresTargetLoS: 0
+  activationRequiresTargetLoS: 1
   activationRequiresAimTargetLoS: 0
   activationRequiresAimConfirmation: 0
   movementType: 1
-  moveInputScale: 0
-  aimType: 1
+  moveInputScale: 1.5
+  aimType: 2
   ignoreNodeGraph: 1
   shouldSprint: 1
   shouldFireEquipment: 0
   shouldTapButton: 0
   buttonPressType: 0
-  driverUpdateTimerOverride: 1
+  driverUpdateTimerOverride: 7
   resetCurrentEnemyOnNextDriverSelection: 0
   noRepeat: 0
-  nextHighPriorityOverride: {fileID: 0}
---- !u!114 &1668289143856072441
+  nextHighPriorityOverride: {fileID: 5900782240858370518}
+--- !u!114 &-1424899185728230067
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -239,7 +238,7 @@ MonoBehaviour:
   m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customName: ChaseWhenPrimaryReady
+  customName: GetCloserBeforePrimary
   skillSlot: 0
   requiredSkill: {fileID: 0}
   requireSkillReady: 1
@@ -248,8 +247,8 @@ MonoBehaviour:
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 0
-  maxDistance: 25
+  minDistance: 20
+  maxDistance: 40
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
@@ -259,10 +258,10 @@ MonoBehaviour:
   activationRequiresAimTargetLoS: 0
   activationRequiresAimConfirmation: 0
   movementType: 1
-  moveInputScale: 0.7
-  aimType: 1
-  ignoreNodeGraph: 0
-  shouldSprint: 1
+  moveInputScale: 1
+  aimType: 2
+  ignoreNodeGraph: 1
+  shouldSprint: 0
   shouldFireEquipment: 0
   shouldTapButton: 0
   buttonPressType: 1
@@ -270,7 +269,7 @@ MonoBehaviour:
   resetCurrentEnemyOnNextDriverSelection: 0
   noRepeat: 0
   nextHighPriorityOverride: {fileID: 0}
---- !u!114 &2187727747860522999
+--- !u!114 &-5434945943518458712
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -282,8 +281,8 @@ MonoBehaviour:
   m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customName: BackAwayWhenPrimaryNotReady
-  skillSlot: -1
+  customName: StrafeAroundTargetWhenPrimaryNotReady
+  skillSlot: 0
   requiredSkill: {fileID: 0}
   requireSkillReady: 0
   requireEquipmentReady: 0
@@ -292,49 +291,6 @@ MonoBehaviour:
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
   minDistance: 0
-  maxDistance: 6
-  selectionRequiresTargetLoS: 0
-  selectionRequiresOnGround: 0
-  selectionRequiresAimTarget: 0
-  maxTimesSelected: -1
-  moveTargetType: 0
-  activationRequiresTargetLoS: 0
-  activationRequiresAimTargetLoS: 0
-  activationRequiresAimConfirmation: 0
-  movementType: 3
-  moveInputScale: 1
-  aimType: 1
-  ignoreNodeGraph: 0
-  shouldSprint: 1
-  shouldFireEquipment: 0
-  shouldTapButton: 0
-  buttonPressType: 1
-  driverUpdateTimerOverride: -1
-  resetCurrentEnemyOnNextDriverSelection: 0
-  noRepeat: 0
-  nextHighPriorityOverride: {fileID: 0}
---- !u!114 &926221688169684891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 320081282386812563}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  customName: StrafeIdley
-  skillSlot: -1
-  requiredSkill: {fileID: 0}
-  requireSkillReady: 0
-  requireEquipmentReady: 0
-  minUserHealthFraction: -Infinity
-  maxUserHealthFraction: Infinity
-  minTargetHealthFraction: -Infinity
-  maxTargetHealthFraction: Infinity
-  minDistance: 4
   maxDistance: 40
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
@@ -345,61 +301,18 @@ MonoBehaviour:
   activationRequiresAimTargetLoS: 0
   activationRequiresAimConfirmation: 0
   movementType: 2
-  moveInputScale: 0.75
-  aimType: 4
-  ignoreNodeGraph: 0
-  shouldSprint: 1
-  shouldFireEquipment: 0
-  shouldTapButton: 0
-  buttonPressType: 0
-  driverUpdateTimerOverride: -1
-  resetCurrentEnemyOnNextDriverSelection: 0
-  noRepeat: 0
-  nextHighPriorityOverride: {fileID: 0}
---- !u!114 &3335875423174812004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 320081282386812563}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  customName: ChaseOffNodegraph
-  skillSlot: -1
-  requiredSkill: {fileID: 0}
-  requireSkillReady: 0
-  requireEquipmentReady: 0
-  minUserHealthFraction: -Infinity
-  maxUserHealthFraction: Infinity
-  minTargetHealthFraction: -Infinity
-  maxTargetHealthFraction: Infinity
-  minDistance: 0
-  maxDistance: 5
-  selectionRequiresTargetLoS: 1
-  selectionRequiresOnGround: 0
-  selectionRequiresAimTarget: 0
-  maxTimesSelected: -1
-  moveTargetType: 0
-  activationRequiresTargetLoS: 0
-  activationRequiresAimTargetLoS: 0
-  activationRequiresAimConfirmation: 0
-  movementType: 1
   moveInputScale: 1
-  aimType: 1
-  ignoreNodeGraph: 1
-  shouldSprint: 1
+  aimType: 2
+  ignoreNodeGraph: 0
+  shouldSprint: 0
   shouldFireEquipment: 0
   shouldTapButton: 0
-  buttonPressType: 0
+  buttonPressType: 1
   driverUpdateTimerOverride: -1
   resetCurrentEnemyOnNextDriverSelection: 0
   noRepeat: 0
   nextHighPriorityOverride: {fileID: 0}
---- !u!114 &3820541615900473959
+--- !u!114 &1573067852096222275
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -431,6 +344,49 @@ MonoBehaviour:
   activationRequiresAimTargetLoS: 0
   activationRequiresAimConfirmation: 0
   movementType: 1
+  moveInputScale: 1.5
+  aimType: 1
+  ignoreNodeGraph: 0
+  shouldSprint: 0
+  shouldFireEquipment: 0
+  shouldTapButton: 0
+  buttonPressType: 1
+  driverUpdateTimerOverride: -1
+  resetCurrentEnemyOnNextDriverSelection: 0
+  noRepeat: 0
+  nextHighPriorityOverride: {fileID: 0}
+--- !u!114 &5900782240858370518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 320081282386812563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customName: FleePostCharge
+  skillSlot: -1
+  requiredSkill: {fileID: 0}
+  requireSkillReady: 0
+  requireEquipmentReady: 0
+  minUserHealthFraction: -Infinity
+  maxUserHealthFraction: Infinity
+  minTargetHealthFraction: -Infinity
+  maxTargetHealthFraction: Infinity
+  minDistance: 0
+  maxDistance: Infinity
+  selectionRequiresTargetLoS: 0
+  selectionRequiresOnGround: 0
+  selectionRequiresAimTarget: 0
+  maxTimesSelected: -1
+  moveTargetType: 0
+  activationRequiresTargetLoS: 0
+  activationRequiresAimTargetLoS: 0
+  activationRequiresAimConfirmation: 0
+  movementType: 3
   moveInputScale: 1
   aimType: 1
   ignoreNodeGraph: 0
@@ -438,7 +394,7 @@ MonoBehaviour:
   shouldFireEquipment: 0
   shouldTapButton: 0
   buttonPressType: 0
-  driverUpdateTimerOverride: -1
+  driverUpdateTimerOverride: 3
   resetCurrentEnemyOnNextDriverSelection: 0
   noRepeat: 0
   nextHighPriorityOverride: {fileID: 0}

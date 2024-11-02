@@ -15,6 +15,9 @@ namespace SS2.Jobs
         public void Execute(int index)
         {
             var myPoint = myTarPoints[index];
+            if (!myPoint.isValid)
+                return;
+
             myTarPoints[index] = allTarPoints[(int)myPoint.managerIndex];
         }
     }

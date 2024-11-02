@@ -16,6 +16,9 @@ namespace SS2.Jobs
         public void Execute(int index)
         {
             var point = points[index];
+            if (!point.isValid)
+                return;
+
             if (point.pointLifetime <= 0)
             {
                 pointsToKill.AddNoResize(point);

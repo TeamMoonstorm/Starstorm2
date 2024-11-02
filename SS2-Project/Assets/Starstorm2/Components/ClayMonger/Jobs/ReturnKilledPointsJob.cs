@@ -8,9 +8,7 @@ namespace SS2.Jobs
     [BurstCompile(OptimizeFor = OptimizeFor.Performance)]
     public struct ReturnKilledPointsJob : IJobParallelFor
     {
-        [WriteOnly, NativeDisableParallelForRestriction]
         public NativeArray<MongerTarTrailManager.TarPoint> allPoints;
-        [ReadOnly, NativeDisableParallelForRestriction]
         public NativeArray<MongerTarTrailManager.TarPoint> killedPoints;
         public NativeQueue<int>.ParallelWriter invalidPointIndices;
         public void Execute(int index)

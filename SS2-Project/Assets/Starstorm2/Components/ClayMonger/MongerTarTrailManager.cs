@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.Jobs;
 using SS2.Jobs;
 using RoR2;
+using System.Reflection;
 
 namespace SS2.Components
 {
@@ -88,19 +89,22 @@ namespace SS2.Components
         public void RemoveMonger(MongerTarTrail trail)
         {
             _mongerInstances.Remove(trail);
+            _mongerTransforms.Remove(trail.transform);
             _instanceIDToMonger.Remove(trail.GetInstanceID());
 
-            //We neeed to return the points used by this trail.
-            for (int i = trail.points.Length - 1; i >= 0; i--)
+            for(int i = trail.points.Length - 1; i >= 0; i--)
             {
+                var trailPoint = trail.points[i];
+                if (!trailPoint.isValid)
+                    continue;
+
                 ReturnTarPointMainThread(trail.points[i]);
+                trail.points[i] = TarPoint.invalid;
             }
-            trail.points.Clear(); //Clear the list to prepare for deallocation if needed.
 
             void ReturnTarPointMainThread(TarPoint tarPoint)
             {
                 int index = (int)tarPoint.managerIndex;
-
                 TarPoolEntry gameObjectForPoint = _tarPoolEntries[index];
                 //This index is being freed, add it to the stash so another monger can use it.
                 _invalidIndexQueue.Enqueue(index);
@@ -113,7 +117,7 @@ namespace SS2.Components
         }
 
         //This method returns a valid TarPoint alongside it's visual representation.
-        public TarPoint RequestTarPoint(MongerTarTrail owner, Vector3 position, Vector3 normalDirection, float yRotation, out TarPoolEntry gameObjectForPoint)
+        public TarPoint RequestTarPoint(MongerTarTrail owner, Vector3 position, Vector3 normalDirection, float yRotation, int ownerIndex, out TarPoolEntry gameObjectForPoint)
         {
             int index = GetFreeTarPointIndex();
             TarPoint tarPoint = new TarPoint(index)
@@ -126,7 +130,7 @@ namespace SS2.Components
                 remappedLifetime0to1 = 1,
                 worldPosition = position,
                 currentOwnerInstanceID = owner.GetInstanceID(),
-                ownerPointIndex = owner.points.Length
+                ownerPointIndex = ownerIndex
             };
             _allTarPoints[index] = tarPoint;
 
@@ -258,13 +262,13 @@ namespace SS2.Components
                 killTrailsHandle = killTrailsJob.Schedule(_allTarPoints.Length, 4, killTrailsHandle);
 
                 //Returns the points from the output of the previous job to the queue.
-                ReturnKilledPointsJob returnKilledPointsJob = new ReturnKilledPointsJob
+                /*ReturnKilledPointsJob returnKilledPointsJob = new ReturnKilledPointsJob
                 {
                     allPoints = _allTarPoints,
                     invalidPointIndices = _invalidIndexQueue.AsParallelWriter(),
                     killedPoints = pointsToKill.AsDeferredJobArray(),
                 };
-                killTrailsHandle = returnKilledPointsJob.Schedule(Mathf.CeilToInt(totalPointsPerMonger * 1.5f), 4, killTrailsHandle);
+                killTrailsHandle = returnKilledPointsJob.Schedule(Mathf.CeilToInt(totalPointsPerMonger * 1.5f), 4, killTrailsHandle);*/
 
                 //Creates raycast commands for adding new points, Raycastcommands are jobs that can be executed in parallel.
                 mongerRaycastDependency = default;
@@ -287,15 +291,20 @@ namespace SS2.Components
 
                 for (int i = 0; i < pointsToKill.Length; i++)
                 {
+
                     //Removes the expired points from the associated monger and disabled them from being modified.
                     var point = pointsToKill[i];
                     int managerIndex = (int)point.managerIndex;
 
-                    _tarPoolTransforms[managerIndex] = null;
                     TarPoolEntry gameObjectForPoint = _tarPoolEntries[managerIndex];
+                    //This index is being freed, add it to the stash so another monger can use it.
+                    _invalidIndexQueue.Enqueue(managerIndex);
+                    _allTarPoints[managerIndex] = TarPoint.invalid;
                     gameObjectForPoint.isInPool = true;
+                    //Maybe remove at swap back?
+                    _tarPoolTransforms[managerIndex] = null;
                     _tarPoolEntries[managerIndex] = gameObjectForPoint;
-                    _instanceIDToMonger[point.currentOwnerInstanceID].points.RemoveAt(point.ownerPointIndex);
+                    _instanceIDToMonger[point.currentOwnerInstanceID].RemovePoint(point);
                 }
 
                 //Create new points where mongers have succesfully raycasted downwards.
