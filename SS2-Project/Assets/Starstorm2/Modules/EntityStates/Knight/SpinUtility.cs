@@ -1,12 +1,11 @@
 ﻿using MSU;
 using RoR2;
-using RoR2.Audio;
 using RoR2.Skills;
 using UnityEngine;
 
 namespace EntityStates.Knight
 {
-    class SpinUtility : BaseKnightMeleeAttack
+    public class SpinUtility : BaseKnightMeleeAttack
     {
         public static float swingTimeCoefficient = 1f;
         [FormatToken("SS2_KNIGHT_SPECIAL_SPIN_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
@@ -26,6 +25,9 @@ namespace EntityStates.Knight
         public float rollSpeed;
         public Vector3 forwardDirection;
         public Vector3 previousPosition;
+
+        // Damage
+        public float dmgCoeff = 5.0f;
 
 
         // Multihit info
@@ -112,7 +114,7 @@ namespace EntityStates.Knight
             hitboxGroupName = "BigHitbox";
 
             damageType = DamageType.Generic;
-            damageCoefficient = 12;
+            damageCoefficient = dmgCoeff;
             procCoefficient = 1f;
             pushForce = 400f;
             bonusForce = Vector3.forward;

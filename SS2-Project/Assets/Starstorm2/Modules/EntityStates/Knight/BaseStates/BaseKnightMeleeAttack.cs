@@ -1,4 +1,5 @@
 ﻿using EntityStates;
+using R2API;
 using RoR2;
 using RoR2.Audio;
 using RoR2.Skills;
@@ -17,7 +18,7 @@ namespace EntityStates.Knight
 
         protected string hitboxGroupName = "SwordHitbox";
 
-        protected DamageType damageType = DamageType.Generic;
+        public DamageType damageType = DamageType.Generic;
         public float damageCoefficient = 3.5f;
         protected float procCoefficient = 1f;
         protected float pushForce = 300f;
@@ -40,6 +41,9 @@ namespace EntityStates.Knight
         protected GameObject swingEffectPrefab;
         protected GameObject hitEffectPrefab;
         protected NetworkSoundEventIndex impactSound = NetworkSoundEventIndex.Invalid;
+
+        public bool addModdedDamageType = false;
+        public DamageAPI.ModdedDamageType moddedDamageType;
 
         public float duration;
         private bool hasFired;
@@ -74,6 +78,11 @@ namespace EntityStates.Knight
             attack.hitBoxGroup = FindHitBoxGroup(hitboxGroupName);
             attack.isCrit = RollCrit();
             attack.impactSound = impactSound;
+
+            if (addModdedDamageType)
+            {
+                attack.AddModdedDamageType(moddedDamageType);
+            }
         }
 
         public virtual void PlayAttackAnimation()

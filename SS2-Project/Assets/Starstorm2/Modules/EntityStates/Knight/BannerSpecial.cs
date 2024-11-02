@@ -15,7 +15,6 @@ namespace EntityStates.Knight
         private GameObject slowBuffWardInstance;
 
         public float rollSpeed = 1.2f;
-        private Vector3 forwardDirection;
         public float hopVelocity = 25f;
 
         public float minimumY = 0.05f;
