@@ -49,6 +49,7 @@ namespace EntityStates.NemMerc
 
 			this.overlapAttack = base.InitMeleeOverlap(CloneDash.damageCoefficient, CloneDash.hitEffectPrefab, this.modelTransform, "Assaulter");
 			this.overlapAttack.damageType = DamageType.Stun1s;
+			this.overlapAttack.damageType.damageSource = DamageSource.Utility;
 			this.overlapAttack.AddModdedDamageType(SS2.Survivors.NemMerc.damageType);
 
 			Vector3 dashTarget = base.GetAimRay().GetPoint(CloneDash.baseDashDistance);

@@ -118,6 +118,8 @@ namespace EntityStates.Cyborg2
             //}
             if (base.isAuthority)
             {
+                DamageTypeCombo damageType = DamageType.Generic;
+                damageType.damageSource = DamageSource.Primary;
                 new BulletAttack
                 {
                     owner = base.gameObject,
@@ -125,7 +127,7 @@ namespace EntityStates.Cyborg2
                     origin = aimRay.origin,
                     aimVector = direction,
                     muzzleName = "", /////////
-                    maxDistance = this.range, 
+                    maxDistance = this.range,
                     minSpread = 0f,
                     maxSpread = 0f,
                     radius = LastPrism.bulletRadius,
@@ -137,6 +139,7 @@ namespace EntityStates.Cyborg2
                     procCoefficient = LastPrism.procCoefficientPerSecond / baseTicksPerSecond,
                     force = LastPrism.forcePerSecond / baseTicksPerSecond,
                     isCrit = Util.CheckRoll(this.critStat, base.characterBody.master),
+                    damageType = damageType,
                     hitEffectPrefab = null, //this.hitEffectPrefab
                 }.Fire();
             }
