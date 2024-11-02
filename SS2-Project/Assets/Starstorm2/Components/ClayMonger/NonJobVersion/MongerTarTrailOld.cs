@@ -5,25 +5,26 @@ using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine;
+using UnityEngine.Jobs;
 using UnityEngine.Networking;
 using UnityEngine.ParticleSystemJobs;
 using UnityEngine.Serialization;
 
 namespace SS2.Components
 {
+    //Non jobbified version, use the non old one if possible.
     [RequireComponent(typeof(TeamComponent))]
     [RequireComponent(typeof(CharacterBody))]
-    public class MongerTarTrail : MonoBehaviour
+    public class MongerTarTrailOld : MonoBehaviour
     {
         public GameObject pointPrefab;
-        public float pointLifetime;
-        public float timeBetweenTrailUpdates;
-        public float raycastLength;
+        public float pointLifetime = 10;
+        public float timeBetweenTrailUpdates = 0.25f;
+        public float raycastLength = 2;
 
         [Header("Check Data")]
-        public float timeBetweenChecks;
-        public float damageCoefficient;
-        public BuffDef tarBuff;
+        public float timeBetweenChecks = 0.3f;
+        public float damageCoefficient = 0.2f;
 
         public TeamComponent teamComponent { get; private set; }
         public CharacterBody charBody { get; private set; }
@@ -33,7 +34,7 @@ namespace SS2.Components
 
         private List<TarPoint> _points = new List<TarPoint>();
         private List<GameObject> _ignoredObjects = new List<GameObject>();
-        private static List<MongerTarTrail> _instances = new List<MongerTarTrail>();
+        private static List<MongerTarTrailOld> _instances = new List<MongerTarTrailOld>();
         private void Awake()
         {
             _transform = transform;
@@ -155,12 +156,10 @@ namespace SS2.Components
                 var pointPos = point.worldPosition;
                 var xy = Vector2.Lerp(Vector2.zero, point.pointWidthDepth, Util.Remap(point.pointLifetime, 0, point.totalLifetime, 0, 1));
 
-                Collider[] colliders;
-                int totalOverlaps = HGPhysics.OverlapBox(out colliders, pointPos, new Vector3(xy.x / 2, 0.5f, xy.y / 2), Quaternion.identity, LayerIndex.entityPrecise.mask);
-                for(int j = 0; j < totalOverlaps; j++)
+                if(Physics.BoxCast(pointPos, new Vector3(xy.x / 2, 0.5f, xy.y / 2), Vector3.up, out var hit, Quaternion.identity, 1, LayerIndex.entityPrecise.mask))
                 {
-                    var collider = colliders[j];
-                    if(!collider.TryGetComponent<HurtBox>(out var hb))
+                    var collider = hit.collider;
+                    if (!collider.TryGetComponent<HurtBox>(out var hb))
                     {
                         continue;
                     }
@@ -169,18 +168,17 @@ namespace SS2.Components
                     if (!hc)
                         continue;
 
-                    if(!_ignoredObjects.Contains(hc.gameObject) && FriendlyFireManager.ShouldSplashHitProceed(hc, teamComponent.teamIndex))
+                    if (!_ignoredObjects.Contains(hc.gameObject) && FriendlyFireManager.ShouldSplashHitProceed(hc, teamComponent.teamIndex))
                     {
                         _ignoredObjects.Add(hc.gameObject);
                         hc.body.AddTimedBuff(SS2Content.Buffs.bdMongerTar, timeBetweenChecks * 2);
-                        if(point.isBubbling)
+                        if (point.isBubbling)
                         {
                             damageInfo.position = collider.transform.position;
                             hc.TakeDamage(damageInfo);
                         }
                     }
                 }
-                HGPhysics.ReturnResults(colliders);
             }
 
         }

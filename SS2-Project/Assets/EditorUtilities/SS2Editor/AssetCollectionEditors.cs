@@ -1,4 +1,5 @@
-﻿using MSU;
+﻿#if SS2_GAME_IMPORTED
+using MSU;
 using RoR2;
 using RoR2.Skills;
 using RoR2.ExpansionManagement;
@@ -200,3 +201,4 @@ namespace Moonstorm.Starstorm2.Editor
 
     }
 }
+#endif

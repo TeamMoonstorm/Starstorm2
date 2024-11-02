@@ -27,6 +27,25 @@
       "source": "builtin",
       "dependencies": {}
     },
+    "com.unity.burst": {
+      "version": "1.8.18",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.mathematics": "1.2.1",
+        "com.unity.modules.jsonserialize": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.collections": {
+      "version": "file:com.unity.collections",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.burst": "1.6.6",
+        "com.unity.test-framework": "1.1.31"
+      }
+    },
     "com.unity.editorcoroutines": {
       "version": "1.0.0",
       "depth": 1,
@@ -48,6 +67,13 @@
       "dependencies": {
         "com.unity.test-framework": "1.1.9"
       },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.mathematics": {
+      "version": "1.2.6",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.multiplayer-hlapi": {
@@ -131,6 +157,12 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "riskofthunder-burstsofrain": {
+      "version": "file:BurstsOfRain",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "riskofthunder-fixplugintypesserialization": {
       "version": "file:FixPluginTypesSerialization",
       "depth": 0,
@@ -145,6 +177,12 @@
     },
     "riskofthunder-r2api_addressables": {
       "version": "file:R2API_Addressables",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "riskofthunder-r2api_animations": {
+      "version": "file:R2API_Animations",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
@@ -227,6 +265,18 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "riskofthunder-r2api_loadout": {
+      "version": "file:R2API_Loadout",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "riskofthunder-r2api_lobbyconfig": {
+      "version": "file:R2API_LobbyConfig",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "riskofthunder-r2api_networking": {
       "version": "file:R2API_Networking",
       "depth": 0,
@@ -257,6 +307,24 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "riskofthunder-r2api_sceneasset": {
+      "version": "file:R2API_SceneAsset",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "riskofthunder-r2api_skins": {
+      "version": "file:R2API_Skins",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "riskofthunder-r2api_sound": {
+      "version": "file:R2API_Sound",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "riskofthunder-r2api_stages": {
       "version": "file:R2API_Stages",
       "depth": 0,
@@ -275,6 +343,19 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "riskofthunder-r2api_unlockable": {
+      "version": "file:R2API_Unlockable",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "riskofthunder-ror2_thunder_burster": {
+      "version": "https://github.com/risk-of-thunder/RoR2ThunderBurster.git#0.0.2",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "9cbfd8c807e887111227b98f2803991c653d4717"
+    },
     "riskofthunder-ror2bepinexpack": {
       "version": "file:RoR2BepInExPack",
       "depth": 0,
@@ -291,11 +372,11 @@
       "hash": "64ee4623983d93b9742cb8b89f07c161a637d00a"
     },
     "riskofthunder-ror2importextensions": {
-      "version": "https://github.com/risk-of-thunder/RoR2ImportExtensions.git#1.7.0",
+      "version": "https://github.com/risk-of-thunder/RoR2ImportExtensions.git#1.7.1",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "d101e5d64337681ec17093f88fb1ea01d07a55f4"
+      "hash": "b8704d045fd4c32e83778bf3e1792d6e0cf76e00"
     },
     "rune580-risk_of_options": {
       "version": "file:Risk_Of_Options",
@@ -314,7 +395,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "7a401e5c948e383a0a7f3f593124dc1a476a0fa7"
+      "hash": "eec5a07ccc64a6a05c5c473224329ace8beb701e"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",

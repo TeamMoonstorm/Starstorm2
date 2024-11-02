@@ -19,10 +19,10 @@ MonoBehaviour:
   icon: {fileID: 0}
   activationStateMachineName: Body
   activationState:
-    _typeName: EntityStates.GenericCharacterMain, RoR2, Version=0.0.0.0, Culture=neutral,
+    _typeName: EntityStates.ClayMonger.PrepCharge, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
   interruptPriority: 1
-  baseRechargeInterval: 1
+  baseRechargeInterval: 12
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 1
@@ -32,9 +32,9 @@ MonoBehaviour:
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
-  beginSkillCooldownOnSkillEnd: 0
-  cancelSprintingOnActivation: 1
-  forceSprintDuringState: 0
+  beginSkillCooldownOnSkillEnd: 1
+  cancelSprintingOnActivation: 0
+  forceSprintDuringState: 1
   canceledFromSprinting: 0
   isCombatSkill: 1
   mustKeyPress: 0

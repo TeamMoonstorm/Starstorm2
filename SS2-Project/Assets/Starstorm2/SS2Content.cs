@@ -634,6 +634,8 @@ namespace SS2
             public static BuffDef bdOil;
 
             public static BuffDef bdMongerTar;
+
+            public static BuffDef bdMongerSlippery;
         }
 
         public static class Elites

@@ -193,6 +193,50 @@ MonoBehaviour:
   damageModifier: 0
   hurtBoxGroup: {fileID: 6619061634466904456}
   indexInGroup: 0
+--- !u!1 &2151160325446830640
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7595276954013991809}
+  - component: {fileID: 592113570979461369}
+  m_Layer: 0
+  m_Name: ChargeHitbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7595276954013991809
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2151160325446830640}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.072, z: 1.146}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4169471224047246526}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &592113570979461369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2151160325446830640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1783796254, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2237258812425194484
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,7 +368,7 @@ GameObject:
   - component: {fileID: 6750577437030014482}
   - component: {fileID: 4496784533419329106}
   - component: {fileID: 2276935383635213381}
-  - component: {fileID: 951211891918884131}
+  - component: {fileID: 1925059806078634301}
   m_Layer: 0
   m_Name: ClayMongerBody
   m_TagString: Player
@@ -404,15 +448,15 @@ MonoBehaviour:
   inLava: 0
   baseNameToken: SS2_CLAYMONGER_BODY_NAME
   subtitleNameToken: SS2_CLAYMONGER_BODY_SUBTITLE
-  bodyFlags: 8
+  bodyFlags: 40
   lavaCooldown: 0.2
   rootMotionInMainState: 0
   mainRootSpeed: 0
   baseMaxHealth: 110
   baseRegen: 0
   baseMaxShield: 0
-  baseMoveSpeed: 6
-  baseAcceleration: 80
+  baseMoveSpeed: 8
+  baseAcceleration: 30
   baseJumpPower: 15
   baseDamage: 12
   baseAttackSpeed: 1
@@ -420,7 +464,7 @@ MonoBehaviour:
   baseArmor: 0
   baseVisionDistance: Infinity
   baseJumpCount: 1
-  sprintingSpeedMultiplier: 1.75
+  sprintingSpeedMultiplier: 2
   autoCalculateLevelStats: 1
   levelMaxHealth: 33
   levelRegen: 0
@@ -473,7 +517,7 @@ MonoBehaviour:
   runicLensMeteorReady: 0
   aimOriginTransform: {fileID: 7962033560768326305}
   hullClassification: 0
-  portraitIcon: {fileID: 0}
+  portraitIcon: {fileID: 2800000, guid: f4afedc7175fea147a49f0512670a36d, type: 3}
   bodyColor: {r: 0.18867922, g: 0.116352186, b: 0, a: 1}
   doNotReassignToTeamBasedCollisionLayer: 0
   isChampion: 0
@@ -920,7 +964,7 @@ MonoBehaviour:
   bossDropTable: {fileID: 0}
   bossPickup:
     pickupName: 
---- !u!114 &951211891918884131
+--- !u!114 &1925059806078634301
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -929,17 +973,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2390772666606925308}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65c1aeab130dfb4459ffed45494f987a, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e67c4688999dea4ba9487faa273524b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointPrefab: {fileID: 3891989070667894104, guid: 1d7770c69d4920c41a9a67415b1e86f3,
-    type: 3}
-  pointLifetime: 15
-  timeBetweenTrailUpdates: 0.2
-  raycastLength: 2
-  timeBetweenChecks: 0.25
-  radius: 0.5
-  height: 0.5
 --- !u!1 &2733394242140884865
 GameObject:
   m_ObjectHideFlags: 0
@@ -1858,6 +1894,21 @@ MonoBehaviour:
   oldHeal: 0
   oldFade: 0
   forceUpdate: 0
+--- !u!114 &3510602714133843559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3645452037555799556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1294804675, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groupName: Charge
+  hitBoxes:
+  - {fileID: 592113570979461369}
 --- !u!114 &6619061634466904456
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,6 +7,10 @@ using UnityEngine;
 using MSU;
 using System;
 using System.Globalization;
+using System.IO;
+using System.Reflection;
+using Unity.Burst;
+
 namespace SS2
 {
     #region R2API
@@ -45,7 +49,8 @@ namespace SS2
             new SS2Log(Logger);
             new SS2Config(this);
             new SS2Content();
-            
+
+            LoadBurstAssembly();
             LanguageFileLoader.AddLanguageFilesFromMod(this, "languages");
             LoadingScreenSpriteUtility.AddSpriteAnimations(SS2Assets.GetLoadingScreenBundle());
 
@@ -81,6 +86,23 @@ namespace SS2
             RiskyModInstalled = MSUtil.IsModInstalled("com.RiskyLives.RiskyMod");
             GOTCEInstalled = MSUtil.IsModInstalled("com.TheBestAssociatedLargelyLudicrousSillyheadGroup.GOTCE");
             StageAestheticInstalled = MSUtil.IsModInstalled("com.HIFU.StageAesthetic");
+        }
+
+        //We need to explicitly tell the Burst system to load our assembly containing our bursted jobs.
+        private void LoadBurstAssembly()
+        {
+            SS2Log.Info("Loading Starstorm2_Burst.dll...");
+            var modLocation = Info.Location;
+            var directoryName = Path.GetDirectoryName(modLocation);
+            var assemblyPath = Path.Combine(directoryName, "Starstorm2_Burst.dll");
+            if(!File.Exists(assemblyPath))
+            {
+                SS2Log.Error($"Failed to load Starstorm2's Burst dll! file does not exist.");
+                return;
+            }
+
+            BurstRuntime.LoadAdditionalLibrary(assemblyPath);
+            SS2Log.Message("Starstorm2_Burst.dll loadded succesfully!");
         }
     }
 }
