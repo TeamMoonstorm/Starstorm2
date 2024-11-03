@@ -1,16 +1,7 @@
-﻿using HG;
-using R2API;
-using RoR2;
-using SS2.Components;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RoR2;
 using UnityEngine;
 
-namespace EntityStates.MulT
+namespace EntityStates.Toolbot
 {
     internal class Blowtorch : BaseSkillState
     {

@@ -12,7 +12,7 @@ namespace SS2.Components
     {
         public CharacterBody characterBody;
         public float repairMax = 10f;
-        public float repairGainPerUpdate = 0.01f;
+        public float repairGainPerUpdate = 0.10f;
 
         public GameObject repairOverlayPrefab = SS2.Survivors.Toolbot.RepairOverlayPrefab;
 

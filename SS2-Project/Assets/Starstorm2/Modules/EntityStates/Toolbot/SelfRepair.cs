@@ -1,12 +1,12 @@
 ﻿using SS2.Components;
 
-namespace EntityStates.MulT
+namespace EntityStates.Toolbot
 {
     public class SelfRepair : BaseSkillState
     {
         public float baseDuration = 1f;
         private float duration = 3f;
-        private float healthGainPerRepair = 0.01f;
+        private float healthGainPerRepair = 0.05f;
         private float repairLossPerTick = 1f;
 
         private SelfRepairController selfRepairController;

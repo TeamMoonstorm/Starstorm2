@@ -1,13 +1,10 @@
 ﻿using MSU;
 using RoR2;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using RoR2.ContentManagement;
 using R2API;
 using EntityStates;
-using System;
-using UnityEngine.Networking;
 
 namespace SS2.Survivors
 {

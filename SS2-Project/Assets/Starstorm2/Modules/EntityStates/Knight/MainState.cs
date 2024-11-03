@@ -23,13 +23,11 @@ namespace EntityStates.Knight
                     {
                         base.characterMotor.jumpCount++;
                         outer.SetNextState(new EntityStates.Knight.Roll());
-                    } 
-                    else if (base.characterMotor.jumpCount < base.characterBody.maxJumpCount)
-                    {
-                        base.ProcessJump();
                     }
                 }
             }
+
+            base.ProcessJump();
         }
 
         public override void OnExit()
