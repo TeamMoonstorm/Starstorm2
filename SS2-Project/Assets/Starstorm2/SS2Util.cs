@@ -9,6 +9,49 @@ namespace SS2
 {
     public static class SS2Util
     {
+        public static bool DoesTodayLandWithinASpecificDaysWeek(int desiredDay, int desiredMonth)
+        {
+            var now = DateTime.Now;
+            DateTime thisYearsSpecialWeek = new DateTime(now.Year, desiredMonth, desiredDay);
+            int minDay = desiredDay;
+            int maxDay = desiredDay;
+
+            switch(thisYearsSpecialWeek.DayOfWeek)
+            {
+                case DayOfWeek.Monday:
+                    maxDay += 6;
+                    break;
+                case DayOfWeek.Tuesday:
+                    maxDay += 5;
+                    minDay -= 1;
+                    break;
+                case DayOfWeek.Wednesday:
+                    maxDay += 4;
+                    minDay -= 2;
+                    break;
+                case DayOfWeek.Thursday:
+                    maxDay += 3;
+                    minDay -= 3;
+                    break;
+                case DayOfWeek.Friday:
+                    maxDay += 2;
+                    minDay -= 4;
+                    break;
+                case DayOfWeek.Saturday:
+                    maxDay += 1;
+                    minDay -= 5;
+                    break;
+                case DayOfWeek.Sunday:
+                    minDay -= 6;
+                    break;
+            }
+
+            DateTime minDate = new DateTime(now.Year, desiredMonth, minDay);
+            DateTime maxDate = new DateTime(now.Year, desiredMonth, maxDay);
+
+            return now >= minDate && now <= maxDate;
+        }
+
         public static string ToRoman(int number)
         {
             if ((number < 0) || (number > 3999)) throw new ArgumentOutOfRangeException(nameof(number), "insert value between 1 and 3999");

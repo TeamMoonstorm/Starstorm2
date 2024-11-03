@@ -16,7 +16,9 @@ namespace SS2.Monsters
         {
             if (SS2Main.ChristmasTime)
             {
-                ChristmasTime();
+                SpecialEventPickup pickup = SpecialEventPickup.AddAndSetupComponent(CharacterPrefab.GetComponent<CharacterBody>());
+                pickup.contextToken = "SS2_INTERACTABLE_SANTAHAT_CONTEXT";
+                SS2Main.Instance.StartCoroutine(AwaitForLoad(pickup));
             }
         }
 
@@ -24,11 +26,15 @@ namespace SS2.Monsters
         {
             return true;
         }
-        private void ChristmasTime()
+
+        private IEnumerator AwaitForLoad(SpecialEventPickup pickup)
         {
-            CharacterPrefab.AddComponent<SantaHatPickup>();
-            CharacterPrefab.AddComponent<EntityLocator>().entity = CharacterPrefab;
-            CharacterPrefab.AddComponent<Highlight>().targetRenderer = CharacterPrefab.GetComponent<ModelLocator>().modelTransform.GetComponent<CharacterModel>().mainSkinnedMeshRenderer;
+            while(!SS2Content.loadStaticContentFinished)
+            {
+                yield return null;
+            }
+
+            pickup.itemDef = SS2Content.Items.SantaHat;
         }
     }
 }
