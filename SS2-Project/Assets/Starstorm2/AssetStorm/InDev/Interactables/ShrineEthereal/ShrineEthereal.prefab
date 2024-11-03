@@ -232,6 +232,8 @@ MonoBehaviour:
     transform: {fileID: 2550105493390441451}
   - name: Symbol
     transform: {fileID: 6198059097493727124}
+  - name: Model
+    transform: {fileID: 5231662080453601277}
 --- !u!1 &80779711787346390
 GameObject:
   m_ObjectHideFlags: 0
@@ -16936,6 +16938,7 @@ GameObject:
   - component: {fileID: 5231662080453601277}
   - component: {fileID: 849143192209146858}
   - component: {fileID: 3514960807395447121}
+  - component: {fileID: 8012244613533915836}
   m_Layer: 0
   m_Name: MdlShrineEthereal
   m_TagString: Untagged
@@ -16983,7 +16986,8 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -5595373560775068227, guid: 607f73e506e96c647b237391be43080f, type: 3}
+  - {fileID: 2100000, guid: 64062fda7533fb6468493607b950e91d, type: 2}
+  - {fileID: 2100000, guid: b0c1c525be8b61f44ba1ea164da17c13, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -17032,6 +17036,53 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entity: {fileID: 1756738345324778}
   entityZoneIndex: 0
+--- !u!114 &8012244613533915836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8875553858366714969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 80205854, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  printTime: 3
+  printCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  age: 0
+  disableWhenFinished: 0
+  paused: 1
+  startingPrintHeight: 0
+  maxPrintHeight: -25
+  startingPrintBias: 2
+  maxPrintBias: 0
+  animateFlowmapPower: 0
+  startingFlowmapPower: 0
+  maxFlowmapPower: 0
 --- !u!1 &9092673386817637227
 GameObject:
   m_ObjectHideFlags: 0

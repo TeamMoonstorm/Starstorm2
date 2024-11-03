@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 1
   gateName: 
 --- !u!1 &14997266
 GameObject:
@@ -5479,8 +5479,8 @@ MonoBehaviour:
   m_Script: {fileID: -359052951, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forbiddenHulls: 0
-  flags: 0
+  forbiddenHulls: 6
+  flags: 1
   gateName: 
 --- !u!1 &132776496
 GameObject:
@@ -6181,7 +6181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 1
   gateName: 
 --- !u!1 &203503090
 GameObject:
@@ -6275,7 +6275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 1
   gateName: 
 --- !u!1 &227515656
 GameObject:
@@ -6322,7 +6322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 1
   gateName: 
 --- !u!1 &247279862
 GameObject:
@@ -6717,7 +6717,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1643554815}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8042,7 +8043,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 1
   gateName: 
 --- !u!1 &539221036
 GameObject:
@@ -8293,7 +8294,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 1
   gateName: 
 --- !u!1 &600287632
 GameObject:
@@ -13211,7 +13212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 1
   gateName: 
 --- !u!1 &628295863
 GameObject:
@@ -18402,7 +18403,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 1
   gateName: 
 --- !u!1 &674139732
 GameObject:
@@ -18449,7 +18450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 1
   gateName: 
 --- !u!1 &674283938
 GameObject:
@@ -18838,7 +18839,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 735094837}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 54.3, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -24448,7 +24449,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 1
   gateName: 
 --- !u!1 &927196152
 GameObject:
@@ -24527,7 +24528,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 1
   gateName: 
 --- !u!1 &987888083
 GameObject:
@@ -24574,7 +24575,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 1
   gateName: 
 --- !u!1001 &994682658
 PrefabInstance:
@@ -24766,7 +24767,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 1
   gateName: 
 --- !u!1 &1015842658
 GameObject:
@@ -24919,7 +24920,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1016494006
 Transform:
   m_ObjectHideFlags: 0
@@ -24928,7 +24929,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1016494005}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -41.3, y: 74.1, z: 78.3}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -24988,7 +24989,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 78
+  m_Radius: 53.6
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1020629954
 GameObject:
@@ -25137,7 +25138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 1
   gateName: 
 --- !u!1 &1049957918
 GameObject:
@@ -25388,7 +25389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 1
   gateName: 
 --- !u!1 &1139251616
 GameObject:
@@ -25435,7 +25436,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 2
   gateName: 
 --- !u!1 &1230993059
 GameObject:
@@ -25516,7 +25517,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 1
   gateName: 
 --- !u!1001 &1246831015
 PrefabInstance:
@@ -25789,7 +25790,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1259513073}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 37.477562, y: -67.95374, z: -6.363167}
+  m_LocalPosition: {x: 64.04, y: 78.21, z: 27.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -25843,7 +25844,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 3
   gateName: 
 --- !u!1 &1291127221
 GameObject:
@@ -26054,7 +26055,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 1
   gateName: 
 --- !u!1 &1319541974
 GameObject:
@@ -26797,7 +26798,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 1
   gateName: 
 --- !u!1 &1479594198
 GameObject:
@@ -26947,22 +26948,22 @@ PrefabInstance:
     - target: {fileID: 1384373837237966495, guid: 2adb6e0346208b44ca56ab40a3d8f9c8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 25.72
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1384373837237966495, guid: 2adb6e0346208b44ca56ab40a3d8f9c8,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 140.71
+      value: -4.51
       objectReference: {fileID: 0}
     - target: {fileID: 1384373837237966495, guid: 2adb6e0346208b44ca56ab40a3d8f9c8,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 31.79
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1384373837237966495, guid: 2adb6e0346208b44ca56ab40a3d8f9c8,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.53701526
+      value: 0.5933099
       objectReference: {fileID: 0}
     - target: {fileID: 1384373837237966495, guid: 2adb6e0346208b44ca56ab40a3d8f9c8,
         type: 3}
@@ -26972,7 +26973,7 @@ PrefabInstance:
     - target: {fileID: 1384373837237966495, guid: 2adb6e0346208b44ca56ab40a3d8f9c8,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.84357256
+      value: -0.80497426
       objectReference: {fileID: 0}
     - target: {fileID: 1384373837237966495, guid: 2adb6e0346208b44ca56ab40a3d8f9c8,
         type: 3}
@@ -26987,7 +26988,7 @@ PrefabInstance:
     - target: {fileID: 1384373837237966495, guid: 2adb6e0346208b44ca56ab40a3d8f9c8,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -115.039
+      value: -107.216
       objectReference: {fileID: 0}
     - target: {fileID: 1384373837237966495, guid: 2adb6e0346208b44ca56ab40a3d8f9c8,
         type: 3}
@@ -27002,7 +27003,7 @@ PrefabInstance:
     - target: {fileID: 3501035103686766137, guid: 2adb6e0346208b44ca56ab40a3d8f9c8,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2adb6e0346208b44ca56ab40a3d8f9c8, type: 3}
@@ -27295,6 +27296,51 @@ MonoBehaviour:
   blendDistance: 20
   weight: 1
   priority: 999
+--- !u!1 &1643554814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1643554815}
+  - component: {fileID: 1643554816}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1643554815
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643554814}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 14.4, y: 26.923, z: -83.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 314852507}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1643554816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643554814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1809671115, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  consumed: 0
 --- !u!1 &1662270367
 GameObject:
   m_ObjectHideFlags: 0
@@ -27340,7 +27386,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 1
   gateName: 
 --- !u!1 &1664633124
 GameObject:
@@ -27556,7 +27602,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 1
   gateName: 
 --- !u!1 &1727122380
 GameObject:
@@ -28009,7 +28055,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 1
   gateName: 
 --- !u!1 &1772231273
 GameObject:
@@ -28672,7 +28718,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 1
   gateName: 
 --- !u!1001 &1824329287
 PrefabInstance:
@@ -28864,7 +28910,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 1
   gateName: 
 --- !u!1001 &1878840407
 PrefabInstance:
@@ -29378,7 +29424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 3
   gateName: 
 --- !u!1 &1954804463
 GameObject:
@@ -29424,7 +29470,7 @@ MonoBehaviour:
   m_Script: {fileID: -359052951, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forbiddenHulls: 0
+  forbiddenHulls: 4
   flags: 0
   gateName: 
 --- !u!1 &1956138390
@@ -30240,7 +30286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 1
   gateName: 
 --- !u!1001 &2032700450
 PrefabInstance:
@@ -30679,7 +30725,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 1
   gateName: 
 --- !u!1 &2090498821
 GameObject:
@@ -30726,7 +30772,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forbiddenHulls: 0
-  flags: 0
+  flags: 1
   gateName: 
 --- !u!1 &2090833277
 GameObject:

@@ -19,18 +19,6 @@ namespace SS2.Scenes
             sceneDef.mainTrack = Addressables.LoadAssetAsync<MusicTrackDef>("RoR2/Base/Common/MusicTrackDefs/muSong08.asset").WaitForCompletion();
         }
 
-
-        public override void OnServerStageBegin(Stage stage)
-        {
-            //summon trader
-            var traderSummon = new MasterSummon();
-            traderSummon.position = new Vector3(-0.88f, 0.47f, 60.15f);
-            traderSummon.rotation = new Quaternion(0f, 90f, 0f, 0f);
-            traderSummon.masterPrefab = SS2Assets.LoadAsset<GameObject>("TraderMaster", SS2Bundle.Indev);
-            traderSummon.teamIndexOverride = TeamIndex.Neutral;
-            traderSummon.Perform();
-        }
-
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;

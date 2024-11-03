@@ -93,9 +93,13 @@ namespace SS2
                     childLocator.FindChild("Loop").gameObject.SetActive(false);
                     childLocator.FindChild("Particles").gameObject.SetActive(false);
                     childLocator.FindChild("Burst").gameObject.SetActive(true);
+
+                    childLocator.FindChild("Model").GetComponent<PrintController>().paused = false;
                 }
 
                 Util.PlaySound("EtherealBell", this.gameObject);
+
+                
 
                 purchaseCount++;
                 refreshTimer = 2;
