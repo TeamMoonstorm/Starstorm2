@@ -15,7 +15,6 @@ using static MSU.BaseBuffBehaviour;
 
 namespace SS2.Equipments
 {
-#if DEBUG
     public sealed class AffixEthereal : SS2EliteEquipment
     {
         public Material _matEtherealOverlay; //=> SS2Assets.LoadAsset<Material>("matEtherealOverlay", SS2Bundle.Equipments);
@@ -35,7 +34,7 @@ namespace SS2.Equipments
             BuffDef buffHakai = AssetCollection.FindAsset<BuffDef>("bdHakai");
             Material matHakaiOverlay = AssetCollection.FindAsset<Material>("matHakaiOverlay");
             // Add relevant hooks
-            IL.RoR2.HealthComponent.TakeDamage += EtherealDeathIL;
+            IL.RoR2.HealthComponent.TakeDamageProcess += EtherealDeathIL;
 
             BuffOverlays.AddBuffOverlay(EquipmentDef.passiveBuffDef, matEtherealOverlay);
             // Used for suicide buff
@@ -47,7 +46,7 @@ namespace SS2.Equipments
             ILCursor c = new ILCursor(il);
 
             bool ILFound = c.TryGotoNext(MoveType.Before,
-                x => x.MatchLdloc(11),
+                x => x.MatchLdloc(12),
                 x => x.MatchCallOrCallvirt<GlobalEventManager>(nameof(GlobalEventManager.ServerDamageDealt)),
                 x => x.MatchLdarg(0),
                 x => x.MatchCallOrCallvirt<HealthComponent>("get_alive")
@@ -71,11 +70,16 @@ namespace SS2.Equipments
                     }
                 });
             }
+            else
+            {
+                SS2Log.Fatal("AffixEthereal.EtherealDeathIL(): Failed to find IL match.");
+            }
+
         }
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return false;
+            return true;
         }
         public override void OnEquipmentLost(CharacterBody body)
         {
@@ -260,15 +264,19 @@ namespace SS2.Equipments
                     if (characterBody.healthComponent.alive)
                     {
                         NodeGraph groundNodes = SceneInfo.instance.groundNodes;
-                        List<NodeGraph.NodeIndex> nodeList = groundNodes.FindNodesInRange(characterBody.transform.position, 0f, 32f, HullMask.Human);
-                        NodeGraph.NodeIndex randomNode = nodeList[random.Next(nodeList.Count)];
-                        if (randomNode != null)
+                        List<NodeGraph.NodeIndex> nodeList = groundNodes.FindNodesInRange(characterBody.transform.position, 0f, 32f, HullMask.Human);                   
+                        if(nodeList.Count > 0)
                         {
-                            Vector3 position;
-                            groundNodes.GetNodePosition(randomNode, out position);
-                            //Util.PlaySound("EtherealActivate", this.gameObject);
-                            ProjectileManager.instance.FireProjectile(projectilePrefab, position, new Quaternion(0, 0, 0, 0), characterBody.gameObject, 1f, 0f, characterBody.RollCrit(), DamageColorIndex.Default, null, 0);
+                            NodeGraph.NodeIndex randomNode = nodeList[random.Next(nodeList.Count)];
+                            if (randomNode != null)
+                            {
+                                Vector3 position;
+                                groundNodes.GetNodePosition(randomNode, out position);
+                                //Util.PlaySound("EtherealActivate", this.gameObject);
+                                ProjectileManager.instance.FireProjectile(projectilePrefab, position, new Quaternion(0, 0, 0, 0), characterBody.gameObject, 1f, 0f, characterBody.RollCrit(), DamageColorIndex.Default, null, 0);
+                            }
                         }
+                        
                     }
                 }
             }
@@ -348,18 +356,21 @@ namespace SS2.Equipments
                     {
                         NodeGraph groundNodes = SceneInfo.instance.groundNodes;
                         List<NodeGraph.NodeIndex> nodeList = groundNodes.FindNodesInRange(characterBody.transform.position, 0f, 32f, HullMask.Human);
-                        NodeGraph.NodeIndex randomNode = nodeList[random.Next(nodeList.Count)];
-                        if (randomNode != null)
+                        if(nodeList.Count > 0)
                         {
-                            Vector3 position;
-                            groundNodes.GetNodePosition(randomNode, out position);
-                            ProjectileManager.instance.FireProjectile(projectilePrefab, position, new Quaternion(0, 0, 0, 0), characterBody.gameObject, 1f, 0f, characterBody.RollCrit(), DamageColorIndex.Default, null, 0);
+                            NodeGraph.NodeIndex randomNode = nodeList[random.Next(nodeList.Count)];
+                            if (randomNode != null)
+                            {
+                                Vector3 position;
+                                groundNodes.GetNodePosition(randomNode, out position);
+                                ProjectileManager.instance.FireProjectile(projectilePrefab, position, new Quaternion(0, 0, 0, 0), characterBody.gameObject, 1f, 0f, characterBody.RollCrit(), DamageColorIndex.Default, null, 0);
+                            }
                         }
+                        
                     }
                 }
             }
         }
 
     }
-#endif
 }

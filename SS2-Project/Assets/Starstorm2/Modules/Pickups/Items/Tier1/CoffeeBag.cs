@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 namespace SS2.Items
 {
+    // TODO : OBJECT POOLING FOR BEAN S!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public sealed class CoffeeBag : SS2Item, IContentPackModifier
     {
         public const string token = "SS2_ITEM_COFFEEBAG_DESC";

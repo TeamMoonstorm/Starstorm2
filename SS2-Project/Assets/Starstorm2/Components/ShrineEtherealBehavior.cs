@@ -72,17 +72,13 @@ namespace SS2
                 purchaseInteraction.SetAvailable(false);
                 waitingForRefresh = true;
 
-                if (TeleporterInteraction.instance != null)
+                if (TeleporterInteraction.instance)
                 {
-
                     TeleporterUpgradeController tuc = TeleporterInteraction.instance.GetComponent<TeleporterUpgradeController>();
                     if (tuc != null)
-                        tuc.CmdUpdateIsEthereal(true);
+                        tuc.UpdateIsEthereal(true);
                     else
                         return;
-
-                    Components.EtherealBehavior.teleIsEthereal = true;
-
                 }
 
                 CharacterBody body = interactor.GetComponent<CharacterBody>();

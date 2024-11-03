@@ -14,7 +14,7 @@ namespace SS2.Equipments
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return false;
+            return true;
         }
 
         public override bool Execute(EquipmentSlot slot)
