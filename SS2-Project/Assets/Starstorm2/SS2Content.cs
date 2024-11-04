@@ -129,7 +129,7 @@ namespace SS2
                 DifficultyModule.Init,
                 Events.Init,
                 //Bulwark.Init,
-                //Components.EtherealBehavior.Init,
+                Components.EtherealBehavior.Init,
                 Components.VoidBehavior.Init,
                 //Void.Init,
                 Storm.Init,
@@ -577,6 +577,8 @@ namespace SS2
             public static BuffDef bdEthereal;
 
             public static BuffDef bdBanditTranquilizer;
+
+            public static BuffDef bdBanditSleep;
 
             public static BuffDef bdAcridArmorCorrison;
 
