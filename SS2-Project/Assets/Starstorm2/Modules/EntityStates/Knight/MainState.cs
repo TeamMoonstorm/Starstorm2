@@ -1,4 +1,5 @@
 using RoR2;
+using UnityEditor;
 using UnityEngine;
 
 namespace EntityStates.Knight
@@ -21,8 +22,13 @@ namespace EntityStates.Knight
                 {
                     if (currentWeaponState && currentWeaponState.state is Shield && base.characterMotor.jumpCount < (base.characterBody.maxJumpCount + 1))
                     {
-                        base.characterMotor.jumpCount++;
+                        if (!isGrounded)
+                        {
+                            base.characterMotor.jumpCount++;
+                        }
+                        
                         outer.SetNextState(new EntityStates.Knight.Roll());
+                        return;
                     }
                 }
             }

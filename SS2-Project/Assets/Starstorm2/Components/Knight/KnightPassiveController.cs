@@ -7,11 +7,10 @@ namespace SS2.Components
     public class KnightPassiveController : NetworkBehaviour
     {
         public CharacterBody characterBody;
-        public GameObject PassiveWardPrefab = SS2.Survivors.Knight.KnightPassiveWard;
+        public GameObject PassiveWardPrefab;
 
         public void Start()
         {
-            //characterBody = GetComponent<CharacterBody>();
             if (NetworkServer.active)
             {
                 GameObject passiveWardInstance = UnityEngine.Object.Instantiate(PassiveWardPrefab, characterBody.footPosition, Quaternion.identity);
