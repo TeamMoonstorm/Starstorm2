@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: sdKnightSpin
   m_EditorClassIdentifier: 
   skillName: KnightSpinnySpin
-  skillNameToken: SS2_KNIGHT_SPECIAL_SPIN_NAME
-  skillDescriptionToken: SS2_KNIGHT_SPECIAL_SPIN_DESC
+  skillNameToken: SS2_KNIGHT_UTILITY_LEAP_NAME
+  skillDescriptionToken: SS2_KNIGHT_UTILITY_LEAP_DESC
   keywordTokens: []
   icon: {fileID: 21300000, guid: aaf4c083f4e28c145be8d0b78c07aeb2, type: 3}
   activationStateMachineName: Weapon
@@ -27,6 +27,8 @@ MonoBehaviour:
   rechargeStock: 1
   requiredStock: 1
   stockToConsume: 1
+  attackSpeedBuffsRestockSpeed: 0
+  attackSpeedBuffsRestockSpeed_Multiplier: 1
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
@@ -36,3 +38,5 @@ MonoBehaviour:
   canceledFromSprinting: 0
   isCombatSkill: 1
   mustKeyPress: 0
+  autoHandleLuminousShot: 1
+  hideStockCount: 0

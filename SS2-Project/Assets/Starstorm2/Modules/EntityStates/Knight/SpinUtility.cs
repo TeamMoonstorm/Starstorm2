@@ -1,12 +1,11 @@
 ﻿using MSU;
 using RoR2;
-using RoR2.Audio;
 using RoR2.Skills;
 using UnityEngine;
 
 namespace EntityStates.Knight
 {
-    class SpinUtility : BaseKnightMeleeAttack
+    public class SpinUtility : BaseKnightMeleeAttack
     {
         public static float swingTimeCoefficient = 1f;
         [FormatToken("SS2_KNIGHT_SPECIAL_SPIN_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
@@ -17,15 +16,18 @@ namespace EntityStates.Knight
         private int _origLayer;
 
         // Movement variables
-        public new float duration = 1f;
-        public float initialSpeedCoefficient = 10f;
-        public float finalSpeedCoefficient = 5f;
-        public float hopVelocity = 30f;
+        public new float duration = 0.7f; // prev: 1f
+        public float initialSpeedCoefficient = 6f; // prev: 7, 8, 10f
+        public float finalSpeedCoefficient = 4f; //prev: 5
+        public float hopVelocity = 25f; //prev: 25, 30f
         public string dodgeSoundString = "";
         public float dodgeFOV = SS2.Survivors.Knight.dodgeFOV;
         public float rollSpeed;
         public Vector3 forwardDirection;
         public Vector3 previousPosition;
+
+        // Damage
+        public float dmgCoeff = 5.0f;
 
 
         // Multihit info
@@ -39,12 +41,6 @@ namespace EntityStates.Knight
             {
                 forwardDirection = (inputBank.moveVector == Vector3.zero ? characterDirection.forward : inputBank.moveVector).normalized;
             }
-
-            Vector3 rhs = characterDirection ? characterDirection.forward : forwardDirection;
-            Vector3 rhs2 = Vector3.Cross(Vector3.up, rhs);
-
-            float num = Vector3.Dot(forwardDirection, rhs);
-            float num2 = Vector3.Dot(forwardDirection, rhs2);
 
             RecalculateRollSpeed();
 
@@ -61,8 +57,6 @@ namespace EntityStates.Knight
             {
                 SmallHop(characterMotor, hopVelocity);
             }
-
-            //Util.PlaySound(dodgeSoundString, gameObject);
         }
 
         private void RecalculateRollSpeed()
@@ -120,7 +114,7 @@ namespace EntityStates.Knight
             hitboxGroupName = "BigHitbox";
 
             damageType = DamageType.Generic;
-            damageCoefficient = 12;
+            damageCoefficient = dmgCoeff;
             procCoefficient = 1f;
             pushForce = 400f;
             bonusForce = Vector3.forward;

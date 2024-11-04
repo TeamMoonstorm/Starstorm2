@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1881990681, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: sdWarden
+  m_EditorClassIdentifier: 
+  bodyPrefab: {fileID: 9004431372236832307, guid: 947e0ce6646a4ca4da908a8af4bcc3b6,
+    type: 3}
+  displayPrefab: {fileID: 5131757048367304, guid: bb4be4bdec99576469e6ffd8bc5491b2,
+    type: 3}
+  unlockableName: 
+  unlockableDef: {fileID: 0}
+  displayNameToken: SS2_SURVIVOR_WARDEN_NAME
+  descriptionToken: SS2_SURVIVOR_WARDEN_DESC
+  outroFlavorToken: SS2_SURVIVOR_WARDEN_OUTRO_WIN
+  mainEndingEscapeFailureFlavorToken: SS2_SURVIVOR_WARDEN_OUTRO_lose
+  primaryColor: {r: 0.55998576, g: 0.76347125, b: 0.9811321, a: 0}
+  desiredSortPosition: 0
+  hidden: 0

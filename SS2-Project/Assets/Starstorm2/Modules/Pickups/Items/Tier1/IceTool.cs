@@ -1,11 +1,9 @@
-﻿using EntityStates;
-using MSU;
-using R2API;
+﻿using MSU;
 using RoR2;
 using RoR2.ContentManagement;
 using RoR2.Items;
 using UnityEngine;
-using UnityEngine.Networking;
+
 
 namespace SS2.Items
 {
@@ -21,7 +19,7 @@ namespace SS2.Items
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return false;
+            return true;
         }
 
         public class IceToolBodyBehavior : BaseItemBodyBehavior

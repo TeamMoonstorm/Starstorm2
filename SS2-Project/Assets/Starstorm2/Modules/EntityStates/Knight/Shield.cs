@@ -3,6 +3,7 @@ using RoR2;
 using RoR2.Skills;
 using SS2;
 using System;
+using UnityEngine.Networking;
 
 namespace EntityStates.Knight
 {
@@ -23,6 +24,7 @@ namespace EntityStates.Knight
         private bool useAltCamera = false;
         private bool parryHookRemoved = false;
         public CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
+
 
         private void CameraSwap()
         {
@@ -142,7 +144,11 @@ namespace EntityStates.Knight
             characterBody.SetAimTimer(0.5f);
 
             //characterBody.AddTimedBuff(parryBuff, 0.1f);
-            characterBody.AddBuff(shieldBuff);
+            if (NetworkServer.active)
+            {
+                characterBody.AddBuff(shieldBuff);
+            }
+            
 
             // This sets the shield bash skill
             SetShieldOverride();

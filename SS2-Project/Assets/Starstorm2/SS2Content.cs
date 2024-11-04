@@ -390,9 +390,8 @@ namespace SS2
 
             // public static ItemDef WickedStaff;
             public static ItemDef WeatherRadio;
-
+            public static ItemDef PrimalBirthright;
             public static ItemDef LuckyPup;
-
         }
 
         public static class Equipments
@@ -558,7 +557,7 @@ namespace SS2
 
             public static BuffDef bdNemCapDroneBuff;
 
-            public static BuffDef bdShield;
+            public static BuffDef bdKnightShield;
 
             public static BuffDef bdParry;
 
@@ -587,6 +586,8 @@ namespace SS2
             public static BuffDef bdEthereal;
 
             public static BuffDef bdBanditTranquilizer;
+
+            public static BuffDef bdBanditSleep;
 
             public static BuffDef bdAcridArmorCorrison;
 
@@ -674,6 +675,8 @@ namespace SS2
             public static SurvivorDef survivorNemCaptain;
 
             public static SurvivorDef survivorKnight;
+
+            public static SurvivorDef Warden;
 
             public static SurvivorDef NemMerc;
         }
