@@ -58,7 +58,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Data:
   - {fileID: 114211852988908172}
-  - {fileID: 114107831304456238}
+  - {fileID: 4961625933286759612}
   - {fileID: 114431642618062350}
   - {fileID: 114987763159783732}
   - {fileID: -5363697519406383111}
@@ -66,22 +66,6 @@ MonoBehaviour:
   - {fileID: -4467616490986340797}
   identity: {fileID: 114211852988908172}
   QuickAccess: 1
---- !u!114 &114107831304456238
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b7e13dda513544419a89926bd12ad8a, type: 3}
-  m_Name: AssemblyDefinitions
-  m_EditorClassIdentifier: 
-  StagingPaths:
-  - <MSUBuildPathPlugins>
-  definitions:
-  - {fileID: 5897886265953266890, guid: f054131d8b8c38f49bfb7567178d0531, type: 3}
 --- !u!114 &114211852988908172
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -99,7 +83,7 @@ MonoBehaviour:
   Author: TeamMoonstorm
   Name: Starstorm2
   Description: A general content mod adapting Risk of Rain 1's Starstorm
-  Version: 0.6.9
+  Version: 0.6.10
   Dependencies:
   - {fileID: 11400000, guid: 5ceb1d8ed3af40d4d806e9756b403649, type: 2}
   - {fileID: 11400000, guid: 890a1759ee352a00d2367557b4d6225f, type: 2}
@@ -212,9 +196,25 @@ MonoBehaviour:
   - <MSUBuildPathStreamingSoundbank>
   includeMetaFiles: 0
   files:
-  - {fileID: 102900000, guid: d813f4b7681d1db4c952790148a59003, type: 3}
-  - {fileID: 102900000, guid: 8351b34f58625b74da6b24f5ca86fafb, type: 3}
-  - {fileID: 102900000, guid: 8e2ee2e0f542f814a81627d7ac321245, type: 3}
+  - {fileID: 102900000, guid: 7631214b97f81ad48a53c3c60fe99825, type: 3}
+  - {fileID: 102900000, guid: 93b3518e45956fc4ab34d872b34b2204, type: 3}
+  - {fileID: 102900000, guid: 063031f8c482d7a428bc53a88b4be7f0, type: 3}
+--- !u!114 &4961625933286759612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8871ca15c6b4bb247b2c0735eef89e9c, type: 3}
+  m_Name: BurstAssemblyDefinitionsDatum
+  m_EditorClassIdentifier: 
+  StagingPaths:
+  - <MSUBuildPathPlugins>
+  definitions:
+  - {fileID: 5897886265953266890, guid: f054131d8b8c38f49bfb7567178d0531, type: 3}
 --- !u!114 &8324102109481770816
 MonoBehaviour:
   m_ObjectHideFlags: 0

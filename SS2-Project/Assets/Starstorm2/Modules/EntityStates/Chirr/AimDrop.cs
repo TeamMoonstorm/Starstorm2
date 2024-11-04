@@ -72,23 +72,34 @@ namespace EntityStates.Chirr
             {
 				hitPoint = raycastHit.point;
 			}
+			Vector3 victimFootPosition = aimOrigin;
+			if (this.grabController.IsGrabbing()) victimFootPosition = GetBetterFootPosition();
+			hitPoint.y = Mathf.Min(hitPoint.y - 0.1f, victimFootPosition.y - 0.1f); // if hitpoint is higher or equal to footposition, it wont be pretty
 			if (this.areaIndicatorInstance)
 			{
 				this.areaIndicatorInstance.transform.position = hitPoint;
 				this.areaIndicatorInstance.transform.up = hitPoint;
 			}
 
-			//calculate trajectory with no upwards velocity
-			Vector3 victimFootPosition = aimOrigin;
-			if (this.grabController.IsGrabbing()) victimFootPosition = GetBetterFootPosition();
+			//calculate trajectory with no upwards velocity			
 			float flightDuration = Trajectory.CalculateFlightDuration(victimFootPosition.y, hitPoint.y, 0f, Physics.gravity.y + extraGravity);
-			if (flightDuration <= .2f) flightDuration = .2f; // hopefully final crash fix
+			if (float.IsNaN(flightDuration) || flightDuration < 0.2f) flightDuration = .2f; // hopefully final crash fix
 			Vector3 hBetween = hitPoint - aimOrigin;
 			hBetween.y = 0;
 			float hDistance = hBetween.magnitude;
 			float hSpeed = hDistance / flightDuration;
-
+			
 			this.desiredTrajectory = hSpeed * hBetween.normalized;
+
+
+			SS2Log.Info("aimOrigin " + aimOrigin);
+			SS2Log.Info("hitPoint " + hitPoint);
+			SS2Log.Info("victimFootPosition " + victimFootPosition);
+			SS2Log.Info("flightDuration " + flightDuration);
+			SS2Log.Info("hBetween " + hBetween);
+			SS2Log.Info("hSpeed " + hSpeed);
+			SS2Log.Info("hDistance " + hDistance);
+			SS2Log.Info("desiredTrajectory " + desiredTrajectory);
 		}
 
 		public Vector3 GetBetterFootPosition()

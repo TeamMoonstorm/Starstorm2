@@ -1,6 +1,7 @@
 ﻿
 using R2API;
 using RoR2;
+using SS2.Monsters;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -26,6 +27,10 @@ namespace SS2.Components
         private void Awake()
         {
             run = GetComponentInParent<Run>();
+            if(ClayMonger.manager)
+            {
+                Instantiate(ClayMonger.manager, transform);
+            }
         }
 
         private void Start()

@@ -12,7 +12,10 @@
         "AK.Wwise.Unity.MonoBehaviour",
         "AK.Wwise.Unity.Timeline",
         "UnityEngine.UI",
-        "Unity.TextMeshPro"
+        "Unity.TextMeshPro",
+        "Unity.Mathematics",
+        "Unity.Collections",
+        "Unity.Burst"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -58,10 +61,19 @@
         "RiskOfOptions.dll",
         "R2API.Addressables.dll",
         "R2API.Deployable.dll",
-        "R2API.Rules.dll"
+        "R2API.Rules.dll",
+        "Grumpy.dll"
     ],
     "autoReferenced": false,
-    "defineConstraints": [],
-    "versionDefines": [],
+    "defineConstraints": [
+        "SS2_GAME_IMPORTED"
+    ],
+    "versionDefines": [
+        {
+            "name": "riskofrain2",
+            "expression": "1.3.0",
+            "define": "SS2_GAME_IMPORTED"
+        }
+    ],
     "noEngineReferences": false
 }

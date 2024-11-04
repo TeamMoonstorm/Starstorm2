@@ -52,7 +52,7 @@ namespace SS2
 		private static Xoroshiro128Plus cloakRng = new Xoroshiro128Plus(0UL);
 		private static Run.FixedTimeStamp lastMoneyPenalty;
 		private static Color teleporterRadiusColor = new Color(0f, 3.9411764f, 5f, 1f);
-		private static readonly EntityStates.SerializableEntityStateType openState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Barrel.OpeningSlow));
+		private static readonly EntityStates.SerializableEntityStateType openState = new EntityStates.SerializableEntityStateType(typeof(OpeningSlow));
 		private static readonly Queue<BombArtifactManager.BombRequest> bombRequestQueue = new Queue<BombArtifactManager.BombRequest>();
 
 		private static int[] pendingCurses = new int[21];
@@ -573,8 +573,42 @@ namespace SS2
             }
 		}
 
+		public class OpeningSlow : EntityStates.EntityState
+		{
+			private GameObject timerInstance;
+			private ChestBehavior chestBehavior;
+			public override void OnEnter()
+			{
+				base.OnEnter();
 
-		
+				duration = CurseManager.GetChestTimer();
+				chestBehavior = base.GetComponent<ChestBehavior>();
+				base.PlayAnimation("Body", "Opening", "Opening.playbackRate", duration);
+				if (base.sfxLocator)
+				{
+					Util.PlaySound(base.sfxLocator.openSound, base.gameObject);
+				}
+
+				GameObject prefab = SS2Assets.LoadAsset<GameObject>("ChestTimerEffect", SS2Bundle.Interactables);
+				if (prefab)
+				{
+					timerInstance = GameObject.Instantiate(prefab, base.transform.position, Quaternion.identity);
+				}
+
+			}
+			public override void FixedUpdate()
+			{
+				base.FixedUpdate();
+				if(chestBehavior && chestBehavior.isChestOpened)
+					if (timerInstance) Destroy(timerInstance);
+				if (base.fixedAge >= duration)
+				{				
+					this.outer.SetNextState(new EntityStates.Barrel.Opened());
+					return;
+				}
+			}
+			private float duration = 1f;
+		}
 		private class SkillDisableBehavior : MonoBehaviour
         {
 			private static SkillDef disabledSkillDef = SS2Assets.LoadAsset<SkillDef>("DisabledSkill", SS2Bundle.Shared);

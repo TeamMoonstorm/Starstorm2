@@ -13,19 +13,38 @@
       "dependencies": {}
     },
     "com.passivepicasso.thunderkit": {
-      "version": "https://github.com/PassivePicasso/ThunderKit.git#9.0.0",
+      "version": "https://github.com/PassivePicasso/ThunderKit.git#9.0.1",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.unity.scriptablebuildpipeline": "1.16.1"
       },
-      "hash": "2f048021a13d98a8600898a6f4203cfe18554f36"
+      "hash": "9501deb9cb6b62d45cfa56f0c5629e3c8366d1f7"
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
       "source": "builtin",
       "dependencies": {}
+    },
+    "com.unity.burst": {
+      "version": "1.8.18",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.mathematics": "1.2.1",
+        "com.unity.modules.jsonserialize": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.collections": {
+      "version": "file:com.unity.collections",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.burst": "1.6.6",
+        "com.unity.test-framework": "1.1.31"
+      }
     },
     "com.unity.editorcoroutines": {
       "version": "1.0.0",
@@ -48,6 +67,13 @@
       "dependencies": {
         "com.unity.test-framework": "1.1.9"
       },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.mathematics": {
+      "version": "1.2.6",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.multiplayer-hlapi": {
@@ -127,6 +153,12 @@
     },
     "riskofthunder-bepinex_gui": {
       "version": "file:BepInEx_GUI",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "riskofthunder-burstsofrain": {
+      "version": "file:BurstsOfRain",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
@@ -317,6 +349,13 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "riskofthunder-ror2_thunder_burster": {
+      "version": "https://github.com/risk-of-thunder/RoR2ThunderBurster.git#0.0.2",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "9cbfd8c807e887111227b98f2803991c653d4717"
+    },
     "riskofthunder-ror2bepinexpack": {
       "version": "file:RoR2BepInExPack",
       "depth": 0,
@@ -324,13 +363,13 @@
       "dependencies": {}
     },
     "riskofthunder-ror2editorkit": {
-      "version": "https://github.com/risk-of-thunder/RoR2EditorKit.git#5.2.1",
+      "version": "https://github.com/risk-of-thunder/RoR2EditorKit.git#5.3.0",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.unity.editorcoroutines": "1.0.0"
       },
-      "hash": "88d3b2ec4317d7fc9c6e2364405197d41b42e505"
+      "hash": "64ee4623983d93b9742cb8b89f07c161a637d00a"
     },
     "riskofthunder-ror2importextensions": {
       "version": "https://github.com/risk-of-thunder/RoR2ImportExtensions.git#1.7.1",
@@ -356,7 +395,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "fee4ccb97b9630486ce67061f7be30f910b040ff"
+      "hash": "eec5a07ccc64a6a05c5c473224329ace8beb701e"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
