@@ -17,8 +17,8 @@ namespace EntityStates.Knight
 
         // Movement variables
         public new float duration = 0.7f; // prev: 1f
-        public float initialSpeedCoefficient = 7f; // prev: 8, 10f
-        public float finalSpeedCoefficient = 5f;
+        public float initialSpeedCoefficient = 6f; // prev: 7, 8, 10f
+        public float finalSpeedCoefficient = 4f; //prev: 5
         public float hopVelocity = 25f; //prev: 25, 30f
         public string dodgeSoundString = "";
         public float dodgeFOV = SS2.Survivors.Knight.dodgeFOV;
