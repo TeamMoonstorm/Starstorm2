@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: escTornadoSpin
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills.TornadoSpin,
-      Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+    assemblyQualifiedName: EntityStates.Knight.TornadoSpin, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
     - fieldName: swingTimeCoefficient
@@ -36,8 +36,7 @@ MonoBehaviour:
     - fieldName: hitEffectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 7162646827672994295, guid: 7fd93c4884044c543b37c5603cd8d10f,
-          type: 3}
+        objectValue: {fileID: 0}
     - fieldName: procCoefficient
       fieldValue:
         stringValue: 1
@@ -57,8 +56,7 @@ MonoBehaviour:
     - fieldName: swingEffectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 3741879095020577079, guid: aaef7441b70e1bf44926e21e9b0d5138,
-          type: 3}
+        objectValue: {fileID: 0}
     - fieldName: swingEffectMuzzleString
       fieldValue:
         stringValue: SwingCenter

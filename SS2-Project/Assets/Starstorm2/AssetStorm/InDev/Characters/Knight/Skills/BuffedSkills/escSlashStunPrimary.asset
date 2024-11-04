@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: escSlashStunPrimary
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills.StunSlash,
-      Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+    assemblyQualifiedName: EntityStates.Knight.StunSlash, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
     - fieldName: swingTimeCoefficient
@@ -41,8 +41,7 @@ MonoBehaviour:
     - fieldName: hitEffectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 7162646827672994295, guid: 7fd93c4884044c543b37c5603cd8d10f,
-          type: 3}
+        objectValue: {fileID: 0}
     - fieldName: procCoefficient
       fieldValue:
         stringValue: 1
@@ -62,7 +61,7 @@ MonoBehaviour:
     - fieldName: swingEffectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 2403289935087244035, guid: 29b4a6789b9ae8948bde57ec47eb33f8,
+        objectValue: {fileID: 4237556790985801160, guid: af04f0c5e0fbe6d49aa4b6a2447115cd,
           type: 3}
     - fieldName: swingEffectMuzzleString
       fieldValue:
