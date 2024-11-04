@@ -663,6 +663,8 @@ namespace SS2
         public static class Scenes
         {
             public static SceneDef ss2_voidshop;
+
+            public static SceneDef ss2_slatemines;
         }
         public static class Survivors
         {
