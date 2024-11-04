@@ -13,7 +13,7 @@ namespace SS2.Survivors
 {
     public class Bandit : SS2VanillaSurvivor
     {
-        public override SS2AssetRequest<VanillaSurvivorAssetCollection> assetRequest => SS2Assets.LoadAssetAsync<VanillaSurvivorAssetCollection>("acBandit", SS2Bundle.Indev);
+        public override SS2AssetRequest<VanillaSurvivorAssetCollection> assetRequest => SS2Assets.LoadAssetAsync<VanillaSurvivorAssetCollection>("acBandit2", SS2Bundle.Indev);
 
         public static DamageAPI.ModdedDamageType TranqDamageType { get; set; }
         public static BuffDef _bdBanditTranquilizer;
