@@ -1,4 +1,20 @@
   **Warning: content spoilers below!**
+
+### 0.6.14
+* General
+    * Re-add lobbyskinsfix and scrollable lobby ui as dependencies
+    * Fixed the bug caused by the new bugfix patch that added a new parameter to a method used with Executioner 
+### 0.6.13
+* General
+    * Recompiled the mod (again) to try and fix why some game objects (wards, projectiles) were failing.
+### 0.6.12
+* General
+    * Fixed issue causing wards (Hunter's Sigil, White Flag, etc.) and probably other things to fail.
+    * Items / Equipment
+    * Fixed an NRE with Erratic Gadget.
+### 0.6.11
+* General
+    * Rebuild for MSU 2.2.1 compat.
 ### 0.6.10
 * Items / Equipment
 	* (NEW) Uranium Horseshoe - Increases movement speed and jump height by 10% (+10% per stack)
