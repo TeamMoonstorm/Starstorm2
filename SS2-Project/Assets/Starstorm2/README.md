@@ -49,6 +49,7 @@ Additional thanks to...
 Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Starstorm2/issues). A list of known & previously reported issues can also be found here. Please include an [Output Log](https://h3vr-modding.github.io/wiki/installing/troubleshooting/log_file.html) and detailed steps to help recreate your error! Feedback about the modded characters pertaining to balance and gameplay can be discussed in our [Discord server](https://discord.com/invite/SgFxwKT7nY).
 
 * Known Issues
+    * Man o War causes NRE spam, we've made a temporary dependenncy on MiscFixes mod by score until we can resolve the issue ourselves. Thank you score for the fix!
     * Elite events are currently disabled.
     * Artifact codes are not placed in world, and can instead be found on the wiki. (For now)
     * NOTE: Chirr players are advised to download [EnemyImportance](https://thunderstore.io/package/pseudopulse/EnemyImportance/) due to a known enemy sliding bug caused by how SOTS changes enemy collision and Chirr's grab. This mod also impacts performance so it isnt a requirement, but is recommended if you want the best Chirr experience
