@@ -4,6 +4,8 @@ using RoR2;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using RoR2.ContentManagement;
+using R2API;
+using System.Collections.Generic;
 
 namespace SS2.Artifacts
 {
@@ -14,41 +16,15 @@ namespace SS2.Artifacts
 
         public static bool shouldUpgradeTP;
         public static float timer;
-        public override void Initialize()
-        {
-        }
+        public override void Initialize(){}
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return false;
+            return true;
         }
 
-        public override void OnArtifactDisabled()
-        {
-            On.RoR2.SceneDirector.Start -= SceneDirector_Start;
-            shouldUpgradeTP = false;
-            //Ethereal.adversityEnabled = false;
-        }
-
-        public override void OnArtifactEnabled()
-        {
-            On.RoR2.SceneDirector.Start += SceneDirector_Start;
-            shouldUpgradeTP = false;
-            //Ethereal.adversityEnabled = true;
-        }
-
-        public static void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)
-        {
-            orig(self);
-
-            var currStage = SceneManager.GetActiveScene().name;
-            if (self.teleporterInstance && (currStage == "skymeadow" || currStage == "slumberingsatellite"))
-            {
-                TeleporterUpgradeController tuc = self.teleporterInstance.GetComponent<TeleporterUpgradeController>();
-                if (tuc != null)
-                    tuc.UpgradeTeleporter();
-            }
-        }
+        public override void OnArtifactDisabled(){}
+        public override void OnArtifactEnabled(){}
     }
 #endif
 }

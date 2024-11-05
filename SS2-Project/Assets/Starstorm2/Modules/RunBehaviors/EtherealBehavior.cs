@@ -26,6 +26,8 @@ namespace SS2
         public static GameObject shrinePrefab;
         public static GameObject portalPrefab;
 
+        public GameObject shrineInstance;
+
         [SyncVar]
         public int etherealsCompleted = 0;
         public bool pendingDifficultyUp;
@@ -83,10 +85,25 @@ namespace SS2
             orig(self);
             if (self.teleporterInstance && NetworkServer.active)
             {
-                SpawnShrine();               
+                SpawnShrine();
                 // from what i could tell, we only wanted to increase difficulty if the new stage had time running
+
                 if (pendingDifficultyUp && SceneCatalog.GetSceneDefForCurrentScene().sceneType == SceneType.Stage)
                     SetEtherealsCompleted(etherealsCompleted+1);
+
+                if (RunArtifactManager.instance && RunArtifactManager.instance.IsArtifactEnabled(SS2Content.Artifacts.Adversity))
+                {
+                    var currStage = SceneCatalog.currentSceneDef;
+                    if (currStage.stageOrder == 5)
+                    {
+                        TeleporterUpgradeController tuc = self.teleporterInstance.GetComponent<TeleporterUpgradeController>();
+                        if (tuc != null)
+                            tuc.UpgradeTeleporter();
+
+                        if(shrineInstance != null)
+                            shrineInstance.GetComponent<ShrineEtherealBehavior>().Deactivate();
+                    }
+                }
             }
         }
 
@@ -199,9 +216,8 @@ namespace SS2
                     return;
                     break;
             }          
-            GameObject term = Instantiate(shrinePrefab, position, rotation);
-            NetworkServer.Spawn(term);
-            
+            shrineInstance =  Instantiate(shrinePrefab, position, rotation);
+            NetworkServer.Spawn(shrineInstance);
         }
 
         // pick a random disabled statue to replace with an ethereal shrine
@@ -212,19 +228,20 @@ namespace SS2
             if(false)//disabledStatues.Length > 0) // FUCK newt. that shits getting replaced 25 to 33 percent of the time
             {
                 Transform newt = disabledStatues[UnityEngine.Random.Range(0, disabledStatues.Length)].transform;
-                GameObject term = Instantiate(shrinePrefab, newt.position + Vector3.up * -1.2f, newt.rotation);
-                NetworkServer.Spawn(term);               
+                shrineInstance = Instantiate(shrinePrefab, newt.position + Vector3.up * -1.2f, newt.rotation);
+                NetworkServer.Spawn(shrineInstance);
             }
             else if (statues.Length > 0)
             {
-                Transform newt = statues[UnityEngine.Random.Range(0, statues.Length)].transform;           
-                GameObject term = Instantiate(shrinePrefab, newt.position + Vector3.up * -1.2f, newt.rotation);
-                NetworkServer.Spawn(term);
+                Transform newt = statues[UnityEngine.Random.Range(0, statues.Length)].transform;
+                shrineInstance = Instantiate(shrinePrefab, newt.position + Vector3.up * -1.2f, newt.rotation);
+                NetworkServer.Spawn(shrineInstance);
                 Destroy(newt.gameObject);
             }
             else
             {
                 SS2Log.Warning("EtherealBehavior.ReplaceRandomNewtStatue(): No newt statues found for stage!");
+                shrineInstance = null;
                 return;
             }
         }

@@ -155,7 +155,7 @@ namespace SS2
             var radiusScaler = teleBuiltInEffects.transform.Find("ChargingEffect/RadiusScaler").gameObject;
 
             //update the fresnel material from red to green
-            if (currStage != "skymeadow")
+            if (currStage != "skymeadow" || currStage != "helminthroost")
             {
                 teleBase.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
                 teleProngs.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);

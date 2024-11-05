@@ -230,13 +230,13 @@ namespace SS2
 
         public static class Artifacts
         {
-            public static ArtifactDef Cognation;
+            public static ArtifactDef Adversity;
 
-            public static ArtifactDef Havoc;
+            public static ArtifactDef Cognation;
 
             public static ArtifactDef Deviation;
 
-            public static ArtifactDef Adversity;
+            public static ArtifactDef Havoc;
         }
         public static class Items
         {

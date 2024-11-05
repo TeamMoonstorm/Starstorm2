@@ -97,13 +97,27 @@ namespace SS2
                     childLocator.FindChild("Model").GetComponent<PrintController>().paused = false;
                 }
 
-                Util.PlaySound("EtherealBell", this.gameObject);
-
-                
+                Util.PlaySound("EtherealBell", this.gameObject);               
 
                 purchaseCount++;
                 refreshTimer = 2;
             }
+        }
+
+        public void Deactivate()
+        {
+            purchaseInteraction.SetAvailable(false);
+            purchaseCount = maxPurchaseCount;
+            waitingForRefresh = true;
+
+            if(childLocator != null)
+            {
+                childLocator.FindChild("Symbol").gameObject.SetActive(false);
+                childLocator.FindChild("Burst").gameObject.SetActive(true);
+                childLocator.FindChild("Model").GetComponent<PrintController>().paused = false;
+            }
+
+            //Util.PlaySound("EtherealBell", this.gameObject);
         }
     }
 }
