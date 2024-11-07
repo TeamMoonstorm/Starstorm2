@@ -2,6 +2,8 @@
 using RoR2.Projectile;
 using UnityEngine;
 using UnityEngine.Networking;
+using R2API;
+using System;
 namespace SS2.Components
 {
     [RequireComponent(typeof(ProjectileController))]
@@ -30,6 +32,9 @@ namespace SS2.Components
         public float allyBuffDuration = 3f;
         public BuffDef enemyBuff;
         public float enemyBuffDuration = 3f;
+
+        [NonSerialized]
+        public DamageAPI.ModdedDamageType? moddedDamageType;
         private void Awake()
         {
             this.projectileController = base.GetComponent<ProjectileController>();
@@ -91,6 +96,7 @@ namespace SS2.Components
                 blastAttack.damageType = this.projectileDamage.damageType;
                 blastAttack.attackerFiltering = AttackerFiltering.Default;
                 blastAttack.impactEffect = EffectCatalog.FindEffectIndexFromPrefab(impactEffect);
+                if (moddedDamageType != null) blastAttack.AddModdedDamageType(moddedDamageType.Value);
                 BlastAttack.Result result = blastAttack.Fire();
             }
             if (!allyBuff && !enemyBuff) return;

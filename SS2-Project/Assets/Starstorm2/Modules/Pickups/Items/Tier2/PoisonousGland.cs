@@ -35,7 +35,7 @@ namespace SS2.Items
             proc = SS2Assets.LoadAsset<GameObject>("GlandProc", SS2Bundle.Items);
             GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
 
-            FUCK = SS2Assets.LoadAsset<Material>("tmpSquaresBold Material", SS2Bundle.Items);
+            FUCK = SS2Assets.LoadAsset<Material>("tmpSquaresBoldGreen", SS2Bundle.Base);
             FUCK.shader = LegacyShaderAPI.Find("TextMeshPro/Distance Field");
         }
         public override bool IsAvailable(ContentPack contentPack)
@@ -126,7 +126,13 @@ namespace SS2.Items
                     if(Util.CheckRoll(miss, victimHealthComponent.body.master))
                     {
                         damageInfo.rejected = true;
-                        EffectManager.SimpleEffect(proc, damageInfo.position, Util.QuaternionSafeLookRotation((damageInfo.force != Vector3.zero) ? damageInfo.force : UnityEngine.Random.onUnitSphere), true);
+                        EffectData effectData = new EffectData
+                        {
+                            origin = damageInfo.position,
+                            rotation = Util.QuaternionSafeLookRotation(damageInfo.position - base.characterBody.corePosition),
+                        };
+                        effectData.SetNetworkedObjectReference(victimHealthComponent.gameObject);
+                        EffectManager.SpawnEffect(proc, effectData, true);
                     }
                 }
             }

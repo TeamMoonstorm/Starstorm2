@@ -8,23 +8,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using static MSU.BaseBuffBehaviour;
-
+using SS2.Components;
 namespace SS2.Equipments
 {
     public class AffixPurple : SS2EliteEquipment
     {
         
         public override SS2AssetRequest<EliteAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<EliteAssetCollection>("acAffixPurple", SS2Bundle.Equipments);
-        public static DotController.DotIndex index;
+        public static DotController.DotIndex dotIndex;
+        public static DamageAPI.ModdedDamageType poison;
         private static GameObject poisonEffect;
         private static GameObject projectilePrefab;
+        private static GameObject explosionEffect;
+        private static float projectileDamageCoefficient = 0.7f;
+        private static float onHitRadius = 1.5f;
+        private static float onHitDamageCoefficient = 0.1f;
+        private static float poisonDamageCoefficient = 0.2f;
+        private static float poisonDuration = 3f;
+
         public override void Initialize()
         {
+            explosionEffect = SS2Assets.LoadAsset<GameObject>("PoisonPurpleExplosionEffect", SS2Bundle.Equipments);
             poisonEffect = SS2Assets.LoadAsset<GameObject>("PoisonPurpleEffect", SS2Bundle.Equipments);
             projectilePrefab = SS2Assets.LoadAsset<GameObject>("PoisonBombProjectile", SS2Bundle.Equipments);
-            index = DotAPI.RegisterDotDef(0.25f, 0.2f, DamageColorIndex.DeathMark, AssetCollection.FindAsset<BuffDef>("bdPurplePoison"));
-        }
+            var dot = SS2Assets.LoadAsset<GameObject>("PoisonBombDotone", SS2Bundle.Equipments);
+            
+            // damage coefficient is 1 per second so we can multiply it when applying
+            dotIndex = DotAPI.RegisterDotDef(0.25f, 0.25f, DamageColorIndex.Void, AssetCollection.FindAsset<BuffDef>("bdPurplePoison"));
+            poison = DamageAPI.ReserveDamageType();
+            dot.GetComponent<ProjectileExpandingDotZone>().moddedDamageType = poison;
 
+            On.RoR2.GlobalEventManager.OnHitAllProcess += OnHitAllProcess;
+            GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
+        }
+             
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
@@ -42,6 +59,67 @@ namespace SS2.Equipments
         public override void OnEquipmentObtained(CharacterBody body)
         {
         }
+        // aoe on hit
+        private void OnHitAllProcess(On.RoR2.GlobalEventManager.orig_OnHitAllProcess orig, GlobalEventManager self, DamageInfo damageInfo, GameObject hitObject)
+        {
+            orig(self, damageInfo, hitObject);
+            if (damageInfo.procCoefficient > 0 && damageInfo.attacker && damageInfo.attacker.TryGetComponent(out CharacterBody body) && body.HasBuff(SS2Content.Buffs.bdElitePurple))
+            {
+                float radius = onHitRadius * damageInfo.procCoefficient;
+                EffectManager.SpawnEffect(explosionEffect, new EffectData
+                {
+                    origin = damageInfo.position,
+                    scale = radius,
+                    rotation = Util.QuaternionSafeLookRotation(damageInfo.force)
+                }, true);
+                BlastAttack blastAttack = new BlastAttack();
+                blastAttack.position = damageInfo.position;
+                blastAttack.baseDamage = damageInfo.damage * onHitDamageCoefficient;
+                blastAttack.baseForce = 0f;
+                blastAttack.radius = radius;
+                blastAttack.attacker = damageInfo.attacker;
+                blastAttack.inflictor = null;
+                blastAttack.teamIndex = TeamComponent.GetObjectTeam(blastAttack.attacker);
+                blastAttack.crit = damageInfo.crit;
+                blastAttack.procChainMask = damageInfo.procChainMask;
+                blastAttack.procCoefficient = 0f;
+                blastAttack.damageColorIndex = DamageColorIndex.Void;
+                blastAttack.falloffModel = BlastAttack.FalloffModel.None;
+                blastAttack.damageType = DamageType.Generic;
+                blastAttack.AddModdedDamageType(poison);
+                blastAttack.Fire();
+            }
+        }
+        // apply poison from damageType
+        private void OnServerDamageDealt(DamageReport report)
+        {
+            var victimBody = report.victimBody;
+            var damageInfo = report.damageInfo;
+            if (report.damageInfo.procCoefficient > 0 && damageInfo.HasModdedDamageType(poison))// && damageInfo.attacker && damageInfo.attacker.TryGetComponent<CharacterBody>(out var body)) && body.HasBuff(SS2Content.Buffs.bdElitePurple))
+            {
+                InflictDotInfo inflictDotInfo = new InflictDotInfo
+                {
+                    attackerObject = damageInfo.attacker,
+                    victimObject = victimBody.gameObject,
+                    damageMultiplier = poisonDamageCoefficient,
+                    duration = poisonDuration,
+                    dotIndex = dotIndex,
+                };
+                DotController.InflictDot(ref inflictDotInfo);
+                DotController dotController = DotController.FindDotController(victimBody.gameObject);
+                if (!dotController) return;
+                int j = 0;
+                List<DotController.DotStack> dotStackList = dotController.dotStackList;
+                while (j < dotStackList.Count)
+                {
+                    if (dotStackList[j].dotIndex == dotIndex)
+                    {
+                        dotStackList[j].timer = Mathf.Max(dotStackList[j].timer, dotStackList[j].totalDuration);
+                    }
+                    j++;
+                }
+            }
+        }
 
         public class PurplePoisonDebuff : BaseBuffBehaviour
         {
@@ -49,18 +127,18 @@ namespace SS2.Equipments
             private static BuffDef GetBuffDef() => SS2Content.Buffs.bdPurplePoison;
 
             private GameObject effectInstace;
-            private ParticleSystem particleSystem;
+            private ParticleSystem ps;
             private void OnEnable()
             {
-                if(!effectInstace)
+                if (!effectInstace)
                     effectInstace = GameObject.Instantiate(poisonEffect);
-                particleSystem = effectInstace.GetComponent<ParticleSystem>();
-                if (particleSystem) particleSystem.Play(true);
+                ps = effectInstace.GetComponent<ParticleSystem>();
+                ps.Play(true);
             }
 
             private void OnDisable()
             {
-                if (particleSystem) particleSystem.Stop(true);
+                ps.Stop(true);
             }
 
             private void OnDestroy()
@@ -69,7 +147,7 @@ namespace SS2.Equipments
             }
         }
 
-        public sealed class AffixPurpleBehavior : BaseBuffBehaviour, IOnDamageDealtServerReceiver
+        public sealed class AffixPurpleBehavior : BaseBuffBehaviour
         {
             [BuffDefAssociation]
             private static BuffDef GetBuffDef() => SS2Content.Buffs.bdElitePurple;
@@ -79,11 +157,10 @@ namespace SS2.Equipments
             private static float maxLaunchDistance = 40f;
             private static float timeToTarget = 1f;
             private static float timeVariance = 0.3f;
-            private static float minSpread = 5f;
-            private static float maxSpread = 10f;
-            private static float spreadPerProjectile = 6f;
+            private static float minSpread = 1f;
+            private static float maxSpread = 3f;
+            private static float spreadPerProjectile = 9f;           
             
-            private static float projectileDamageCoefficient = 1f;
             private float projectileTimer;
             private EntityStates.TitanMonster.FireFist.Predictor predictor; // might as well use this lol
             private SphereSearch sphereSearch;
@@ -108,10 +185,6 @@ namespace SS2.Equipments
                         break;
                 }
                 projectileTimer = projectileLaunchInterval - 6f;
-            }
-            public void OnDamageDealtServer(DamageReport damageReport)
-            {
-
             }
 
             private void FixedUpdate()
@@ -156,6 +229,7 @@ namespace SS2.Equipments
                 // pick target position. try predicting first, then pick random if failed
                 Vector3 origin = base.characterBody.corePosition;
                 Vector3 targetPosition = origin;
+                float timeToTarget = UnityEngine.Random.Range(-timeVariance, timeVariance) + AffixPurpleBehavior.timeToTarget;
                 bool predicted = predictor.isPredictionReady && predictor.GetPredictedTargetPosition(timeToTarget, out targetPosition);
                 if (!predicted)
                 {
@@ -166,18 +240,21 @@ namespace SS2.Equipments
                 predictor = new EntityStates.TitanMonster.FireFist.Predictor(base.transform);
                 // calculate trajectory (speed and direction) to get to target position
                 // horizontal speed and flight time is constant. solving for vertical speed and direction
-                Ray ray = new Ray(origin, targetPosition - origin);
-                Vector3 point = ray.GetPoint(maxLaunchDistance);             
-                if (Util.CharacterRaycast(base.gameObject, ray, out var raycastHit, maxLaunchDistance, LayerIndex.CommonMasks.bullet, QueryTriggerInteraction.Ignore))
-                {
-                    point = raycastHit.point;
-                }
+
+                //raycasting. maybe good maybe not
+                //Ray ray = new Ray(origin, targetPosition - origin);
+                //Vector3 point = ray.GetPoint(maxLaunchDistance);             
+                //if (Util.CharacterRaycast(base.gameObject, ray, out var raycastHit, maxLaunchDistance, LayerIndex.CommonMasks.bullet, QueryTriggerInteraction.Ignore))
+                //{
+                //    point = raycastHit.point;
+                //}
+                Vector3 point = targetPosition;
                 Vector3 toTarget = point - origin;
                 Vector2 toTargetH = new Vector2(toTarget.x, toTarget.z);
                 float hDistance = toTargetH.magnitude;
                 Vector2 toTargetHDirection = toTargetH / hDistance;
                 hDistance = Mathf.Clamp(hDistance, minDistance, maxLaunchDistance);                                      
-                float vSpeed = Trajectory.CalculateInitialYSpeed(UnityEngine.Random.Range(-timeVariance, timeVariance) + timeToTarget, toTarget.y);
+                float vSpeed = Trajectory.CalculateInitialYSpeed(timeToTarget, toTarget.y);
                 float hSpeed = hDistance / timeToTarget;
                 Vector3 velocity = new Vector3(toTargetHDirection.x * hSpeed, vSpeed, toTargetHDirection.y * hSpeed);
                 float trueSpeed = velocity.magnitude;

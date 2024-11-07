@@ -39,6 +39,49 @@ namespace SS2.Items
 			sqrRange = Mathf.Pow(range, 2);
 			coneEffect = SS2Assets.LoadAsset<GameObject>("BlastKnucklesCone", SS2Bundle.Items);
 			impactEffect = LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/OmniEffect/OmniExplosionVFXQuick");
+            GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
+		}
+
+        private void OnServerDamageDealt(DamageReport damageReport)
+        {
+			DamageInfo damageInfo = damageReport.damageInfo;
+			if (damageInfo.damage <= 0 || !damageInfo.damageType.IsDamageSourceSkillBased || !damageReport.attackerBody) return;
+			CharacterBody body = damageReport.attackerBody;
+			Vector3 position = damageInfo.position;
+			Vector3 between = damageReport.attackerBody.corePosition - position;
+			if (body && body.HasBuff(SS2Content.Buffs.BuffBlastKnucklesCharge) && between.sqrMagnitude <= sqrRange)
+			{
+				body.RemoveBuff(SS2Content.Buffs.BuffBlastKnucklesCharge);
+				int stack = body.inventory ? body.inventory.GetItemCount(SS2Content.Items.BlastKnuckles) : 1;
+				float damage = damageCoefficient + damageCoefficientPerStack * stack;
+				Vector3 damageDirection = (position - body.corePosition).normalized;
+				EffectManager.SpawnEffect(coneEffect, new EffectData
+				{
+					origin = body.corePosition,
+					scale = 1f,
+					rotation = Util.QuaternionSafeLookRotation(damageDirection)
+				}, true);
+				// nice cone bro
+				new BulletAttack
+				{
+					owner = body.gameObject,
+					weapon = body.gameObject,
+					origin = body.corePosition,
+					aimVector = damageDirection,
+					maxDistance = blastRange,
+					radius = blastConeRadius,
+					falloffModel = BulletAttack.FalloffModel.None,
+					smartCollision = true,
+					stopperMask = 0,
+					hitMask = LayerIndex.CommonMasks.bullet,
+					damage = body.damage * damage,
+					procCoefficient = 1f,
+					force = 1600f,
+					isCrit = damageInfo.crit,
+					hitEffectPrefab = impactEffect,
+					damageColorIndex = DamageColorIndex.Item,
+				}.Fire();
+			}
 		}
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -46,19 +89,16 @@ namespace SS2.Items
 			return true;
 		}
 
-		public class BlastKnucklesBehavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
+		public class BlastKnucklesBehavior : BaseItemBodyBehavior
 		{
 			[ItemDefAssociation(useOnServer = true, useOnClient = false)]
 			private static ItemDef GetItemDef() => SS2Content.Items.BlastKnuckles;
 			private GameObject indicatorInstance;
 			private float reloadTimer;
-			private BullseyeSearch search;
-			private SphereSearch sphereSearch;
+
 			private void OnEnable()
 			{
 				this.indicatorEnabled = true;
-				search = new BullseyeSearch();
-				sphereSearch = new SphereSearch();
 			}
 
 			private void OnDisable()
@@ -79,46 +119,6 @@ namespace SS2.Items
 					}
 				}
 				else reloadTimer = 0f;
-			}
-
-            public void OnDamageDealtServer(DamageReport damageReport)
-            {
-				DamageInfo damageInfo = damageReport.damageInfo;				
-				if (damageInfo.damage <= 0 || !damageInfo.damageType.IsDamageSourceSkillBased) return;
-
-				Vector3 position = damageInfo.position;
-				Vector3 between = damageReport.attackerBody.corePosition - position;
-				if (body.HasBuff(SS2Content.Buffs.BuffBlastKnucklesCharge) && between.sqrMagnitude <= sqrRange)
-				{
-					body.RemoveBuff(SS2Content.Buffs.BuffBlastKnucklesCharge);
-					float damage = damageCoefficient + damageCoefficientPerStack * (stack - 1);
-					Vector3 damageDirection = (position - body.corePosition).normalized;
-					EffectManager.SpawnEffect(coneEffect, new EffectData
-					{
-						origin = body.corePosition,
-						scale = 1f,
-						rotation = Util.QuaternionSafeLookRotation(damageDirection)
-					}, true);
-					new BulletAttack
-					{
-						owner = base.gameObject,
-						weapon = base.gameObject,
-						origin = body.corePosition,
-						aimVector = damageDirection,
-						maxDistance = blastRange,
-						radius = blastConeRadius,
-						falloffModel = BulletAttack.FalloffModel.None,
-						smartCollision = true,
-						stopperMask = 0,
-						hitMask = LayerIndex.CommonMasks.bullet,
-						damage = body.damage * damage,
-						procCoefficient = 1f,
-						force = 1600f,
-						isCrit = damageInfo.crit,
-						hitEffectPrefab = impactEffect,
-						damageColorIndex = DamageColorIndex.Item,
-					}.Fire();
-				}
 			}
 
             private bool indicatorEnabled

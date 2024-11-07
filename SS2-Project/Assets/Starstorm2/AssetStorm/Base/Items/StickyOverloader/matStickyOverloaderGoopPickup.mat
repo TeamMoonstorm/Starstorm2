@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: matStickyOverloaderGoop
+  m_Name: matStickyOverloaderGoopPickup
   m_Shader: {fileID: 4800000, guid: 9b2024ee08a5bfc418ff897991e84323, type: 2}
   m_ValidKeywords:
   - DITHER
@@ -131,7 +131,7 @@ Material:
     - _EliteBrightnessMax: 1
     - _EliteBrightnessMin: 0
     - _EliteIndex: 0
-    - _EmPower: 2.3
+    - _EmPower: 0.36
     - _EnableCutout: 0
     - _FEON: 1
     - _Fade: 1
@@ -145,8 +145,8 @@ Material:
     - _FlowTextureScaleFactor: 1
     - _FlowmapOn: 0
     - _ForceSpecOn: 0
-    - _FresnelBoost: 10
-    - _FresnelPower: 4.64
+    - _FresnelBoost: 1.5
+    - _FresnelPower: 2.25
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1

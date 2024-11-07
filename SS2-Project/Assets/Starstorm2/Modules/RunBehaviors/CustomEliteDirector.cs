@@ -130,7 +130,7 @@ namespace SS2.Components
                             highestCostAffix = affix;
                         }
                         affix.MakeElite(body);
-                        affix.SubtractCost(baseCost, totalCost, director); // lol
+                        affix.SubtractCost(baseCost, ref totalCost, director);
                         isBoss |= affix.IsBoss;
                     }
                 }
@@ -198,9 +198,11 @@ namespace SS2.Components
         }
 
         // this is just because Empyreans were subtracting extra for reasons i do not fully understand. but i already liked their spawn rate and didnt want to change it
-        public virtual void SubtractCost(float baseCost, float totalCost, CombatDirector combatDirector) 
+        public virtual void SubtractCost(float baseCost, ref float totalCost, CombatDirector combatDirector) 
         {
-            combatDirector.monsterCredit -= totalCost * CostMultiplier - totalCost;
+            float originalCost = totalCost;
+            totalCost *= CostMultiplier;
+            combatDirector.monsterCredit -= totalCost - originalCost;
             eliteCredit -= EliteCreditCost;
         }
         public abstract bool IsAvailable();
@@ -221,8 +223,9 @@ namespace SS2.Components
         {
             return EliteCreditCost <= eliteCredit && baseCost * CostMultiplier <= combatDirector.monsterCredit; // use base cost instead of elite
         }
-        public override void SubtractCost(float baseCost, float totalCost, CombatDirector combatDirector)
+        public override void SubtractCost(float baseCost, ref float totalCost, CombatDirector combatDirector)
         {
+            totalCost = baseCost * CostMultiplier;
             combatDirector.monsterCredit -= baseCost * CostMultiplier * 1.5f - baseCost;
             eliteCredit -= EliteCreditCost * 1.5f;
         }
@@ -270,14 +273,11 @@ namespace SS2.Components
 
     public class Ethereal : StackableAffix
     {
-        public override float EliteCreditCost => 300f * Mathf.Pow(0.67f, EtherealBehavior.instance.etherealsCompleted-1);
-        public override float CostMultiplier => 12f * Mathf.Pow(0.67f, EtherealBehavior.instance.etherealsCompleted-1);
+        private static float baseCostMultiplier = 6; // so i can change it easier in game
+        private static float baseCreditCost = 300;
+        public override float EliteCreditCost => baseCreditCost * Mathf.Pow(0.67f, EtherealBehavior.instance.etherealsCompleted-1);
+        public override float CostMultiplier => baseCostMultiplier * Mathf.Pow(0.67f, EtherealBehavior.instance.etherealsCompleted-1);
         public override bool IsAvailable() => EtherealBehavior.instance && EtherealBehavior.instance.etherealsCompleted > 0;
-        public override void SubtractCost(float baseCost, float totalCost, CombatDirector combatDirector)
-        {
-            combatDirector.monsterCredit -= totalCost * CostMultiplier * 1.25f - totalCost;
-            eliteCredit -= EliteCreditCost * 1.25f;
-        }
         public override void MakeElite(CharacterBody body)
         {
             var inventory = body.inventory;
@@ -297,8 +297,10 @@ namespace SS2.Components
     }
     public class Ultra : StackableAffix
     {
-        public override float EliteCreditCost => 1200f * Mathf.Pow(0.8f, EtherealBehavior.instance.etherealsCompleted-1);
-        public override float CostMultiplier => 20f * Mathf.Pow(0.8f, EtherealBehavior.instance.etherealsCompleted-1);
+        private static float baseCostMultiplier = 12;
+        private static float baseCreditCost = 1200;
+        public override float EliteCreditCost => baseCreditCost * Mathf.Pow(0.8f, EtherealBehavior.instance.etherealsCompleted-1);
+        public override float CostMultiplier => baseCostMultiplier * Mathf.Pow(0.8f, EtherealBehavior.instance.etherealsCompleted-1);
         public override bool IsAvailable() => EtherealBehavior.instance && EtherealBehavior.instance.etherealsCompleted > 0 && Run.instance.loopClearCount >= 1;
         public override bool IsBoss => true;
         public override void MakeElite(CharacterBody body)

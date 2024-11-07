@@ -25,9 +25,9 @@ namespace SS2.Unlocks.Pickups
             return base.userProfile.statSheet.GetStatValueULong(SS2StatDefs.crocoPoisonedEnemies) / 500f;
         }
         public override void OnUninstall()
-        {
-            base.OnUninstall();           
+        {                   
             base.userProfile.onStatsReceived -= Check;
+            base.OnUninstall();
         }
 
         public override BodyIndex LookUpRequiredBodyIndex()

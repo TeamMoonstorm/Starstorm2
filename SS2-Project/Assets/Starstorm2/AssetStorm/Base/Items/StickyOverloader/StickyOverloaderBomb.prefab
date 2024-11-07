@@ -550,7 +550,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 83f10d319d5a19944bd64b95a59a4b5d, type: 2}
+  - {fileID: 2100000, guid: d37fb7904cd845c41aaaf44b94bd375f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -674,6 +674,7 @@ MonoBehaviour:
   animator: {fileID: 3045048355520072663}
   explosionEffectPrefab: {fileID: 6210446328390803964, guid: a10b66cbdef7b23459d0a427b9ba6bbd,
     type: 3}
+  impactEffectPrefab: {fileID: 0}
   rigidbody: {fileID: 0}
 --- !u!54 &5492345396718890858
 Rigidbody:
