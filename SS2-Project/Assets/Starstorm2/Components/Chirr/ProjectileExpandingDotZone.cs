@@ -34,7 +34,7 @@ namespace SS2.Components
         public float enemyBuffDuration = 3f;
 
         [HideInInspector]
-        public DamageAPI.ModdedDamageType moddedDamageType;
+        public DamageAPI.ModdedDamageType moddedDamageType = (DamageAPI.ModdedDamageType)(-1);
         private void Awake()
         {
             this.projectileController = base.GetComponent<ProjectileController>();
@@ -96,7 +96,7 @@ namespace SS2.Components
                 blastAttack.damageType = this.projectileDamage.damageType;
                 blastAttack.attackerFiltering = AttackerFiltering.Default;
                 blastAttack.impactEffect = EffectCatalog.FindEffectIndexFromPrefab(impactEffect);
-                if (moddedDamageType > (DamageAPI.ModdedDamageType)(-1)) blastAttack.AddModdedDamageType(moddedDamageType);
+                if (moddedDamageType != (DamageAPI.ModdedDamageType)(-1)) blastAttack.AddModdedDamageType(moddedDamageType);
                 BlastAttack.Result result = blastAttack.Fire();
             }
             if (!allyBuff && !enemyBuff) return;

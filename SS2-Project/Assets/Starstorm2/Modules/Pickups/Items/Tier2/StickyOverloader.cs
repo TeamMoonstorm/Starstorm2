@@ -47,11 +47,13 @@ namespace SS2.Items
 
         private static GameObject _procEffect;
 
+        private static R2API.ModdedProcType sticky;
         public override void Initialize()
         {
             _procEffect = SS2Assets.LoadAsset<GameObject>("StrangeCanEffect", SS2Bundle.Items);
             GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
             On.RoR2.Orbs.VineOrb.OnArrival += VineOrb_OnArrival;
+            sticky = ProcTypeAPI.ReserveProcType();
         }
 
         // too lazy to ilhook. its beta code so i dont want to keep fixing it
@@ -78,7 +80,7 @@ namespace SS2.Items
         private void OnServerDamageDealt(DamageReport report)
         {
             CharacterBody body = report.attackerBody;
-            if (!body || !body.inventory) return;
+            if (!body || !body.inventory || report.damageInfo.procChainMask.HasModdedProc(sticky)) return;
             //if (!report.damageInfo.damageType.IsDamageSourceSkillBased) return;
 
             int stack = body.inventory.GetItemCount(SS2Content.Items.StickyOverloader);
