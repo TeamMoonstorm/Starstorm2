@@ -84,7 +84,8 @@ namespace SS2.Items
             int stack = body.inventory.GetItemCount(SS2Content.Items.StickyOverloader);
             if (stack <= 0) return;
             int buffStacks = report.victimBody.GetBuffCount(SS2Content.Buffs.BuffStickyOverloader);
-            if ((buffStacks > 0 && report.damageInfo.procCoefficient > 0) || Util.CheckRoll(procChance * report.damageInfo.procCoefficient, body.master))
+            float chance = buffStacks > 0 ? 100f : procChance; // 100% chance if already applied, * proc coefficient
+            if (Util.CheckRoll(chance * report.damageInfo.procCoefficient, body.master))
             {
                 if(buffStacks == 0) StickyOverloaderController.TrySpawnBomb(report.victimBody, report.attackerBody);
                 if (buffStacks < maxStacks + maxStacksPerStack * (stack - 1))

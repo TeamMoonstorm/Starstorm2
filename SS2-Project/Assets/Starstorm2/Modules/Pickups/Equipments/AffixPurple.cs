@@ -3,59 +3,57 @@ using R2API;
 using RoR2;
 using RoR2.ContentManagement;
 using RoR2.Projectile;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-using static MSU.BaseBuffBehaviour;
+using Mono.Cecil.Cil;
+using MonoMod.Cil;
 using SS2.Components;
+using System;
 namespace SS2.Equipments
 {
     public class AffixPurple : SS2EliteEquipment
     {
         
         public override SS2AssetRequest<EliteAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<EliteAssetCollection>("acAffixPurple", SS2Bundle.Equipments);
-        public static DotController.DotIndex dotIndex;
+        public static DotController.DotIndex poisonDotIndex;
         public static DamageAPI.ModdedDamageType poison;
         private static GameObject poisonEffect;
         private static GameObject projectilePrefab;
         private static GameObject explosionEffect;
-        private static float projectileDamageCoefficient = 0.7f;
+        private static float projectileDamageCoefficient = .75f;
         private static float onHitRadius = 1.5f;
         private static float onHitDamageCoefficient = 0.1f;
         private static float poisonDamageCoefficient = 0.2f;
-        private static float poisonDuration = 3f;
+        private static float poisonDuration = 4f;
 
         public override void Initialize()
         {
             explosionEffect = SS2Assets.LoadAsset<GameObject>("PoisonPurpleExplosionEffect", SS2Bundle.Equipments);
             poisonEffect = SS2Assets.LoadAsset<GameObject>("PoisonPurpleEffect", SS2Bundle.Equipments);
             projectilePrefab = SS2Assets.LoadAsset<GameObject>("PoisonBombProjectile", SS2Bundle.Equipments);
-            var dot = SS2Assets.LoadAsset<GameObject>("PoisonBombDotone", SS2Bundle.Equipments);
+            var dot = SS2Assets.LoadAsset<GameObject>("PoisonBombDotZone", SS2Bundle.Equipments);
             
             // damage coefficient is 1 per second so we can multiply it when applying
-            dotIndex = DotAPI.RegisterDotDef(0.25f, 0.25f, DamageColorIndex.Void, AssetCollection.FindAsset<BuffDef>("bdPurplePoison"));
+            poisonDotIndex = DotAPI.RegisterDotDef(0.25f, 0.25f, DamageColorIndex.Void, AssetCollection.FindAsset<BuffDef>("bdPurplePoison"));
             poison = DamageAPI.ReserveDamageType();
-            dot.GetComponent<ProjectileExpandingDotZone>().moddedDamageType = poison;
 
+            dot.GetComponent<ProjectileExpandingDotZone>().moddedDamageType = poison;
+            IL.RoR2.DotController.EvaluateDotStacksForType += EvaluateDotStacksForType;
             On.RoR2.GlobalEventManager.OnHitAllProcess += OnHitAllProcess;
             GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
-        }
-             
+        }       
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
         }
-
         public override bool Execute(EquipmentSlot slot)
         {
             return false;
         }
-
         public override void OnEquipmentLost(CharacterBody body)
         {
         }
-
         public override void OnEquipmentObtained(CharacterBody body)
         {
         }
@@ -95,7 +93,7 @@ namespace SS2.Equipments
         {
             var victimBody = report.victimBody;
             var damageInfo = report.damageInfo;
-            if (report.damageInfo.procCoefficient > 0 && damageInfo.HasModdedDamageType(poison))// && damageInfo.attacker && damageInfo.attacker.TryGetComponent<CharacterBody>(out var body)) && body.HasBuff(SS2Content.Buffs.bdElitePurple))
+            if (damageInfo.HasModdedDamageType(poison))// && damageInfo.attacker && damageInfo.attacker.TryGetComponent<CharacterBody>(out var body)) && body.HasBuff(SS2Content.Buffs.bdElitePurple))
             {
                 InflictDotInfo inflictDotInfo = new InflictDotInfo
                 {
@@ -103,7 +101,7 @@ namespace SS2.Equipments
                     victimObject = victimBody.gameObject,
                     damageMultiplier = poisonDamageCoefficient,
                     duration = poisonDuration,
-                    dotIndex = dotIndex,
+                    dotIndex = poisonDotIndex,
                 };
                 DotController.InflictDot(ref inflictDotInfo);
                 DotController dotController = DotController.FindDotController(victimBody.gameObject);
@@ -112,7 +110,7 @@ namespace SS2.Equipments
                 List<DotController.DotStack> dotStackList = dotController.dotStackList;
                 while (j < dotStackList.Count)
                 {
-                    if (dotStackList[j].dotIndex == dotIndex)
+                    if (dotStackList[j].dotIndex == poisonDotIndex)
                     {
                         dotStackList[j].timer = Mathf.Max(dotStackList[j].timer, dotStackList[j].totalDuration);
                     }
@@ -120,7 +118,34 @@ namespace SS2.Equipments
                 }
             }
         }
-
+        // multiply poison dot damage by victim health fraction
+        private void EvaluateDotStacksForType(MonoMod.Cil.ILContext il)
+        {
+            ILCursor c = new ILCursor(il);
+            bool b = c.TryGotoNext(MoveType.Before,
+                x => x.MatchLdfld<DotController.PendingDamage>(nameof(DotController.PendingDamage.totalDamage)),
+                x => x.MatchStfld<DamageInfo>(nameof(DamageInfo.damage)));
+            if (b)
+            {
+                c.Index++;
+                c.Emit(OpCodes.Ldarg_0); // dotcontroller
+                c.Emit(OpCodes.Ldarg_1); // dotindex
+                c.EmitDelegate<Func<float, DotController, DotController.DotIndex, float>>((dmg, dc, dot) =>
+                {
+                    if (dot == poisonDotIndex)
+                    {
+                        dmg *= dc.victimHealthComponent.health / dc.victimHealthComponent.fullHealth;
+                        if (dmg < 1) dmg = 1;
+                    }
+                    return dmg;
+                });
+            }
+            else
+            {
+                SS2Log.Fatal("AffixPurple.EvaluateDotStacksForType: ILHook failed.");
+            }
+        }
+        // basically temporaryvisualeffect
         public class PurplePoisonDebuff : BaseBuffBehaviour
         {
             [BuffDefAssociation]
@@ -146,7 +171,7 @@ namespace SS2.Equipments
                 if (effectInstace) Destroy(effectInstace);
             }
         }
-
+        // fire projectiles with prediction
         public sealed class AffixPurpleBehavior : BaseBuffBehaviour
         {
             [BuffDefAssociation]
@@ -159,7 +184,7 @@ namespace SS2.Equipments
             private static float timeVariance = 0.3f;
             private static float minSpread = 1f;
             private static float maxSpread = 3f;
-            private static float spreadPerProjectile = 9f;           
+            private static float spreadPerProjectile = 18f;           
             
             private float projectileTimer;
             private EntityStates.TitanMonster.FireFist.Predictor predictor; // might as well use this lol

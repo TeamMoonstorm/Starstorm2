@@ -280,6 +280,8 @@ namespace SS2
 
             public static ItemDef Malice;
 
+            public static ItemDef MaxHealthPerMinute;
+
             public static ItemDef MoltenCoin;
 
             public static ItemDef Needles;

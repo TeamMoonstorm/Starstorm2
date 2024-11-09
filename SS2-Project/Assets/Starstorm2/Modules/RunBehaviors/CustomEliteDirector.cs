@@ -41,7 +41,7 @@ namespace SS2.Components
             
         }
         
-        public float directorTickRate = 4f;
+        public float directorTickInterval = 4f;
         [Header("Elite Director Values")]
         public float minEliteCreditPerTick = 1.6f;
         public float maxEliteCreditPerTick = 5.2f;
@@ -72,7 +72,7 @@ namespace SS2.Components
             if(NetworkServer.active)
             {
                 timer += Time.fixedDeltaTime;
-                if (timer > directorTickRate)
+                if (timer > directorTickInterval)
                 {
                     timer = 0f;
                     float eliteCredit = (rng.RangeFloat(minEliteCreditPerTick, maxEliteCreditPerTick) * Run.instance.compensatedDifficultyCoefficient * 0.4f);
@@ -247,7 +247,7 @@ namespace SS2.Components
 
             int extraStages = Mathf.Max(Run.instance.stageClearCount - 7, 0);
             int extraLoops = Mathf.FloorToInt(extraStages / Run.stagesPerLoop);
-            //inventory.GiveItem(SS2Content.Items.DoubleAllStats, extraLoops); // it is not yet your time
+            inventory.GiveItem(SS2Content.Items.DoubleAllStats, extraLoops);
             inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 15 + 15 * extraLoops); // teehee
             if (body.characterMotor) body.characterMotor.mass = 2000f; // NO KNOCKBACK !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             if (body.rigidbody) body.rigidbody.mass = 2000f;
@@ -262,7 +262,11 @@ namespace SS2.Components
             {
                 rewards.expReward *= 30;
                 rewards.goldReward *= 30;
-            }         
+            }
+            if (body.TryGetComponent(out RigidbodyMotor motor))
+            {
+                motor.canTakeImpactDamage = false; // i hate this shit so much. wisps and jellies take up all these spawns in the first loop and they die instantly
+            }
         }
         public override void SetSpawnState(EntityStateMachine bodyMachine)
         {
@@ -283,6 +287,7 @@ namespace SS2.Components
             var inventory = body.inventory;
             var ethInstance = EtherealBehavior.instance;
             inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(100 + (100 * ethInstance.etherealsCompleted)));
+            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, Mathf.Max(Run.instance.loopClearCount, 1));
             inventory.GiveItem(SS2Content.Items.BoostCooldowns, 15);
             inventory.GiveItem(RoR2Content.Items.BoostDamage, (int)(20 + (20 * ethInstance.etherealsCompleted)));
             inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 20); // MORE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -292,6 +297,10 @@ namespace SS2.Components
             {
                 rewards.expReward *= (uint)(8 + (8 * ethInstance.etherealsCompleted));
                 rewards.goldReward *= (uint)(8 + (8 * ethInstance.etherealsCompleted));
+            }
+            if(body.TryGetComponent(out RigidbodyMotor motor))
+            {
+                motor.canTakeImpactDamage = false; // i hate this shit so much. wisps and jellies take up all these spawns in the first loop and they die instantly
             }
         }
     }
@@ -308,6 +317,7 @@ namespace SS2.Components
             var inventory = body.inventory;
             var ethInstance = EtherealBehavior.instance;
             inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(500f + (250f * ethInstance.etherealsCompleted)));
+            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, Mathf.Max(Run.instance.loopClearCount, 1));
             inventory.GiveItem(SS2Content.Items.BoostCooldowns, 70);
             inventory.GiveItem(RoR2Content.Items.BoostDamage, 100);
             inventory.GiveItem(SS2Content.Items.AffixUltra);
@@ -317,6 +327,10 @@ namespace SS2.Components
             {
                 rewards.expReward *= (uint)(20 + (20 * ethInstance.etherealsCompleted));
                 rewards.goldReward *= (uint)(20 + (20 * ethInstance.etherealsCompleted));
+            }
+            if (body.TryGetComponent(out RigidbodyMotor motor))
+            {
+                motor.canTakeImpactDamage = false;
             }
         }
     }
