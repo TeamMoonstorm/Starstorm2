@@ -1,4 +1,4 @@
-﻿using Mono.Cecil.Cil;
+using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using SS2.Components;
 using RoR2;
@@ -151,7 +151,7 @@ namespace SS2.Survivors
             orig(self, characterBody);
         }
 
-        private void HelpOOB(On.RoR2.TeleportHelper.orig_TeleportBody orig, CharacterBody body, Vector3 targetFootPosition)
+        private void HelpOOB(On.RoR2.TeleportHelper.orig_TeleportBody orig, CharacterBody body, Vector3 targetFootPosition, bool forceOutOfVehicle)
         {
             var exc = body.gameObject.GetComponent<ExecutionerController>();
             if (exc)
@@ -162,7 +162,7 @@ namespace SS2.Survivors
                     targetFootPosition += new Vector3(0, 1, 0);
                 }
             }
-            orig(body, targetFootPosition);
+            orig(body, targetFootPosition, forceOutOfVehicle);
         }
 
         private HealthComponent.HealthBarValues FearExecuteHealthbar(On.RoR2.HealthComponent.orig_GetHealthBarValues orig, HealthComponent self)

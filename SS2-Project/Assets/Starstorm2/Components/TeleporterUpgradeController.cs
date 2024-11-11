@@ -71,7 +71,25 @@ namespace SS2
 
             if(ti.bossDirector)
                 ti.bossDirector.onSpawnedServer.AddListener(new UnityEngine.Events.UnityAction<GameObject>(ModifySpawnedBoss));
-        }       
+        }
+
+        private void Start()
+        {
+            if (RunArtifactManager.instance && RunArtifactManager.instance.IsArtifactEnabled(SS2Content.Artifacts.Adversity))
+            {
+                var currStage = SceneCatalog.currentSceneDef;
+                if (currStage.stageOrder == 5)
+                {
+                    SS2Log.Debug($"TeleporterUpgradeController.Start(): Reached stage 5 with Adversity enabled, bumping ethereal difficulty");
+                    UpdateIsEthereal(true);
+
+                    Chat.SendBroadcastChat(new Chat.SubjectFormatChatMessage
+                    {
+                        baseToken = "SS2_ARTIFACT_ADVERSITY_ETHEREAL_BUMP",
+                    });
+                }
+            }
+        }
         private void OnDestroy()
         {
             TeleporterInteraction.onTeleporterBeginChargingGlobal -= OnTeleporterBeginChargingGlobal;

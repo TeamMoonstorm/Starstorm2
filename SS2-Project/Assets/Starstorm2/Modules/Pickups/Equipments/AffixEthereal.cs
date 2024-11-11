@@ -12,6 +12,7 @@ using System;
 using RoR2.Navigation;
 using RoR2.Projectile;
 using static MSU.BaseBuffBehaviour;
+using UnityEngine.AddressableAssets;
 
 namespace SS2.Equipments
 {
@@ -132,7 +133,14 @@ namespace SS2.Equipments
                 if (!hasAnyStacks)
                     return;
 
-                if (characterBody.hullClassification == HullClassification.BeetleQueen)
+                EtherealReliquaryController erc = characterBody.GetComponent<EtherealReliquaryController>();
+
+                if (erc)
+                {
+                    timerDur = baseTimerDur * 3f;
+                    //Do other reliquary shit here
+                }  
+                else if (characterBody.hullClassification == HullClassification.BeetleQueen)
                     timerDur = baseTimerDur * 2f;
                 else if (characterBody.hullClassification == HullClassification.Golem)
                     timerDur = baseTimerDur * 1.5f;

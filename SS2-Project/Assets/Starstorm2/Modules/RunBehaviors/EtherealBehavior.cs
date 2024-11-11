@@ -50,6 +50,8 @@ namespace SS2
             //Add teleporter upgrading component to teleporters
             Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/Teleporter1.prefab").WaitForCompletion().AddComponent<TeleporterUpgradeController>();
             Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/LunarTeleporter Variant.prefab").WaitForCompletion().AddComponent<TeleporterUpgradeController>();
+            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/ArtifactShell/ArtifactShellBody.prefab").WaitForCompletion().AddComponent<EtherealReliquaryController>();
+
             yield return null;
         }
 
@@ -73,6 +75,26 @@ namespace SS2
             On.RoR2.SceneDirector.Start -= SceneDirector_Start;
         }
 
+        /*private void OnEnable()
+        {
+            ArtifactTrialMissionController.onShellTakeDamageServer += OnArtifactShellTakeDamageServer;
+        }
+
+
+        private void OnDisable()
+        {
+            ArtifactTrialMissionController.onShellTakeDamageServer -= OnArtifactShellTakeDamageServer;
+        }
+
+        private void OnArtifactShellTakeDamageServer(ArtifactTrialMissionController missionController, DamageReport dmgReport)
+        {
+            if (RunArtifactManager.instance && RunArtifactManager.instance.IsArtifactEnabled(SS2Content.Artifacts.Adversity))
+            {
+                SS2Log.Debug($"TeleporterUpgradeController.Start(): Artifact shell taking damage. Spawning Ethereals.");
+
+            }
+        }*/
+
         public void OnEtherealTeleporterCharged()
         {
             pendingDifficultyUp = true;
@@ -88,22 +110,10 @@ namespace SS2
                 SpawnShrine();
                 // from what i could tell, we only wanted to increase difficulty if the new stage had time running
 
+                SS2Log.Debug($"EtherealBehavior.SceneDirector_Start(): Spawning shrine");
+
                 if (pendingDifficultyUp && SceneCatalog.GetSceneDefForCurrentScene().sceneType == SceneType.Stage)
                     SetEtherealsCompleted(etherealsCompleted+1);
-
-                if (RunArtifactManager.instance && RunArtifactManager.instance.IsArtifactEnabled(SS2Content.Artifacts.Adversity))
-                {
-                    var currStage = SceneCatalog.currentSceneDef;
-                    if (currStage.stageOrder == 5)
-                    {
-                        TeleporterUpgradeController tuc = self.teleporterInstance.GetComponent<TeleporterUpgradeController>();
-                        if (tuc != null)
-                            tuc.UpgradeTeleporter();
-
-                        if(shrineInstance != null)
-                            shrineInstance.GetComponent<ShrineEtherealBehavior>().Deactivate();
-                    }
-                }
             }
         }
 

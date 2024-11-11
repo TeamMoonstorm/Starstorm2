@@ -23,6 +23,16 @@ namespace SS2
             childLocator = GetComponent<ChildLocator>();
 
             purchaseCount = 0;
+
+            if (RunArtifactManager.instance && RunArtifactManager.instance.IsArtifactEnabled(SS2Content.Artifacts.Adversity))
+            {
+                var currStage = SceneCatalog.currentSceneDef;
+                if (currStage.stageOrder == 5)
+                {
+                    Deactivate();
+                    SS2Log.Debug($"ShrineEtherealBehavior.Start(): Deactivating shrine {this.transform}");
+                }
+            }
         }
 
         public void FixedUpdate()

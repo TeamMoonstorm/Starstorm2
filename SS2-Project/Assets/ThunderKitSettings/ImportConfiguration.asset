@@ -242,6 +242,15 @@ MonoBehaviour:
     - HookGenPatcher
     - R2API_Core
     - R2API_ContentManagement
+  - submoduleName: R2API_ProcType
+    description: R2API_ProcType
+    dependedncyID: RiskofThunder-R2API_ProcType
+    shouldInstall: 0
+    isHardDependency: 0
+    dependencies:
+    - BepInExPack
+    - HookGenPatcher
+    - R2API_Core
   - submoduleName: R2API_RecalculateStats
     description: R2API_RecalculateStats
     dependedncyID: RiskofThunder-R2API_RecalculateStats

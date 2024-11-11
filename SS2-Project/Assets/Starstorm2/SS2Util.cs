@@ -278,6 +278,11 @@ namespace SS2
             yield break;
         }
 
+        public static Color ColorRGB(float r, float g, float b, float a = 1)
+        {
+            return new Color(r / 255f, g / 255f, b / 255f, a);
+        }
+
         internal static string ScepterDescription(string desc)
         {
             return "\n<color=#d299ff>SCEPTER: " + desc + "</color>";
@@ -285,6 +290,7 @@ namespace SS2
 
         #endregion Misc
     }
+
 
     internal static class ArrayHelper
     {
