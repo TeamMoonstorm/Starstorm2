@@ -16,6 +16,7 @@ namespace SS2.Components
                 SS2Log.Warning($"No body object for effect \"{base.gameObject.name}\"");
                 return;
             }
+            localPosition = bodyObject.transform.InverseTransformPoint(base.transform.position);
             stuckTransform = bodyObject.transform;
         }
         private void Update()

@@ -22,9 +22,9 @@ namespace SS2.Equipments
         private static GameObject projectilePrefab;
         private static GameObject explosionEffect;
         private static float projectileDamageCoefficient = .75f;
-        private static float onHitRadius = 1.5f;
+        private static float onHitRadius = 2f;
         private static float onHitDamageCoefficient = 0.1f;
-        private static float poisonDamageCoefficient = 0.2f;
+        private static float poisonDamageCoefficient = 0.25f;
         private static float poisonDuration = 4f;
 
         public override void Initialize()
@@ -63,7 +63,7 @@ namespace SS2.Equipments
             orig(self, damageInfo, hitObject);
             if (damageInfo.procCoefficient > 0 && damageInfo.attacker && damageInfo.attacker.TryGetComponent(out CharacterBody body) && body.HasBuff(SS2Content.Buffs.bdElitePurple))
             {
-                float radius = onHitRadius * damageInfo.procCoefficient;
+                float radius = onHitRadius;// * damageInfo.procCoefficient;
                 EffectManager.SpawnEffect(explosionEffect, new EffectData
                 {
                     origin = damageInfo.position,
@@ -172,6 +172,7 @@ namespace SS2.Equipments
             }
         }
         // fire projectiles with prediction
+        // will probably change it to on-death
         public sealed class AffixPurpleBehavior : BaseBuffBehaviour
         {
             [BuffDefAssociation]
@@ -259,6 +260,7 @@ namespace SS2.Equipments
                 if (!predicted)
                 {
                     Vector2 offset = UnityEngine.Random.insideUnitCircle * maxLaunchDistance;
+                    targetPosition = origin;
                     targetPosition.x += offset.x;
                     targetPosition.z += offset.y;
                 }

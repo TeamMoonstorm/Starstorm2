@@ -77,6 +77,7 @@ namespace SS2.Items
                     malOrb.origin = report.damageInfo.position;
                     malOrb.teamIndex = body.teamComponent.teamIndex;
                     malOrb.attacker = base.gameObject;
+                    damageInfo.procChainMask.AddModdedProc(malice);
                     malOrb.procChainMask = damageInfo.procChainMask;
                     malOrb.bouncedObjects = new List<HealthComponent>
                     {
@@ -125,7 +126,6 @@ namespace SS2.Items
                             damageInfo.position = this.target.transform.position;
                             damageInfo.damageColorIndex = this.damageColorIndex;
                             damageInfo.damageType = this.damageType;
-                            damageInfo.AddModdedDamageType(MaliceDamageType);
                             healthComponent.TakeDamage(damageInfo);
                             GlobalEventManager.instance.OnHitEnemy(damageInfo, healthComponent.gameObject);
                             GlobalEventManager.instance.OnHitAll(damageInfo, healthComponent.gameObject);

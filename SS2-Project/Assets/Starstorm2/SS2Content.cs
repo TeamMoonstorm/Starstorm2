@@ -284,6 +284,8 @@ namespace SS2
 
             public static ItemDef MoltenCoin;
 
+            public static ItemDef Nanobots;
+
             public static ItemDef Needles;
 
             public static ItemDef NemBossHelper;

@@ -45,6 +45,7 @@ namespace SS2
                 childLocator.FindChild("Loop").gameObject.SetActive(false);
                 childLocator.FindChild("Particles").gameObject.SetActive(false);
                 childLocator.FindChild("Burst").gameObject.SetActive(true);
+                childLocator.FindChild("Symbol").gameObject.SetActive(false);
                 purchaseInteraction.SetAvailable(false);
             }
         }

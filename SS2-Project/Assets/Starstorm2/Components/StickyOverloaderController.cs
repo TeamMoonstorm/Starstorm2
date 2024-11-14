@@ -23,7 +23,6 @@ namespace SS2.Components
         public GameObject impactEffectPrefab;
         public Rigidbody rigidbody;
         
-
         private int buffCount;
 
         private bool hasExploded;
@@ -59,14 +58,20 @@ namespace SS2.Components
             set => _stuckBody = value;
         }
         private CharacterBody _stuckBody;
-        private CharacterBody attackerBody;
+        private GameObject owner;
+        private TeamIndex teamIndex;
+        private float baseDamage;
+        private bool crit;
         public void TrySticking(CharacterBody victimBody, CharacterBody attackerBody)
         {
             if (!NetworkServer.active) return;
 
             // origin of raycast is a hemisphere above body coreposition
             // raycast to body coreposition
-            this.attackerBody = attackerBody;
+            this.owner = attackerBody.gameObject;
+            this.teamIndex = attackerBody.teamComponent.teamIndex;
+            this.baseDamage = attackerBody.damage;
+            this.crit = attackerBody.RollCrit();
             this.itemStacks = attackerBody.inventory ? attackerBody.inventory.GetItemCount(SS2Content.Items.StickyOverloader) : 1; 
             Vector3 origin = UnityEngine.Random.onUnitSphere * victimBody.radius * 2f;
             origin.y = Mathf.Abs(origin.y);
@@ -188,15 +193,15 @@ namespace SS2.Components
                 }, true);
                 new BlastAttack
                 {
-                    attacker = attackerBody.gameObject,
-                    inflictor = attackerBody.gameObject,
+                    attacker = owner,
+                    inflictor = base.gameObject,
                     attackerFiltering = AttackerFiltering.Default,
                     position = base.transform.position,
-                    teamIndex = attackerBody.teamComponent.teamIndex,
+                    teamIndex = teamIndex,
                     radius = blastRadius,
-                    baseDamage = attackerBody.damage * (StickyOverloader.damageCoefficient + StickyOverloader.damageCoefficientPerStack * (itemStacks - 1)) * buffCount,
+                    baseDamage = baseDamage * (StickyOverloader.damageCoefficient + StickyOverloader.damageCoefficientPerStack * (itemStacks - 1)) * buffCount,
                     damageType = DamageType.Generic,
-                    crit = attackerBody.RollCrit(),
+                    crit = crit,
                     procCoefficient = 1f,
                     procChainMask = default(ProcChainMask),
                     baseForce = 600f,

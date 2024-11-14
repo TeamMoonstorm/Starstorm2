@@ -20,9 +20,9 @@ namespace SS2.Items
 		public static float cooldownPerCharge = 5f;
 
 		[FormatToken(TOKEN, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
-		public static float damageCoefficient = 4f;
+		public static float damageCoefficient = 5f;
 		[FormatToken(TOKEN, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
-		public static float damageCoefficientPerStack = 4f;
+		public static float damageCoefficientPerStack = 5f;
 		public static float procCoefficient = 0.5f;
 
 		[FormatToken(TOKEN, 0)]
@@ -39,21 +39,20 @@ namespace SS2.Items
 			sqrRange = Mathf.Pow(range, 2);
 			coneEffect = SS2Assets.LoadAsset<GameObject>("BlastKnucklesCone", SS2Bundle.Items);
 			impactEffect = LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/OmniEffect/OmniExplosionVFXQuick");
-            GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
+            On.RoR2.GlobalEventManager.ProcessHitEnemy += OnHitEnemy; // needs to be after takedamage
 		}
 
-        private void OnServerDamageDealt(DamageReport damageReport)
+        private void OnHitEnemy(On.RoR2.GlobalEventManager.orig_ProcessHitEnemy orig, GlobalEventManager self, DamageInfo damageInfo, GameObject victim)
         {
-			DamageInfo damageInfo = damageReport.damageInfo;
-			if (damageInfo.damage <= 0 || !damageInfo.damageType.IsDamageSourceSkillBased || !damageReport.attackerBody) return;
-			CharacterBody body = damageReport.attackerBody;
+			orig(self, damageInfo, victim);
+			if (damageInfo.damage <= 0 || !damageInfo.damageType.IsDamageSourceSkillBased || !damageInfo.attacker || !damageInfo.attacker.TryGetComponent(out CharacterBody body)) return;
 			Vector3 position = damageInfo.position;
-			Vector3 between = damageReport.attackerBody.corePosition - position;
+			Vector3 between = body.corePosition - position;
 			if (body && body.HasBuff(SS2Content.Buffs.BuffBlastKnucklesCharge) && between.sqrMagnitude <= sqrRange)
 			{
 				body.RemoveBuff(SS2Content.Buffs.BuffBlastKnucklesCharge);
 				int stack = body.inventory ? body.inventory.GetItemCount(SS2Content.Items.BlastKnuckles) : 1;
-				float damage = damageCoefficient + damageCoefficientPerStack * stack;
+				float damage = damageCoefficient + damageCoefficientPerStack * (stack - 1);
 				Vector3 damageDirection = (position - body.corePosition).normalized;
 				EffectManager.SpawnEffect(coneEffect, new EffectData
 				{
