@@ -24,7 +24,7 @@ namespace SS2.Equipments
         private static float projectileDamageCoefficient = .75f;
         private static float onHitRadius = 2f;
         private static float onHitDamageCoefficient = 0.1f;
-        private static float poisonDamageCoefficient = 0.25f;
+        private static float poisonDamageCoefficient = 0.2f;
         private static float poisonDuration = 4f;
 
         public override void Initialize()
@@ -172,7 +172,6 @@ namespace SS2.Equipments
             }
         }
         // fire projectiles with prediction
-        // will probably change it to on-death
         public sealed class AffixPurpleBehavior : BaseBuffBehaviour
         {
             [BuffDefAssociation]

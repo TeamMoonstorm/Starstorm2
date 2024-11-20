@@ -33,18 +33,18 @@ namespace SS2.Components
     {
         public static CustomEliteDirector instance;
         
-        private static bool shouldLog;
+        private static bool shouldLog = false;
         [SystemInitializer]
         private static void Init()
         {
             IL.RoR2.CombatDirector.Spawn += SpawnEliteIL;
             
         }
-        
+        // 5 ish credits per second, up to 10 per second giga late game.
         public float directorTickInterval = 4f;
         [Header("Elite Director Values")]
-        public float minEliteCreditPerTick = 1.6f;
-        public float maxEliteCreditPerTick = 5.2f;
+        public float minEliteCreditPerTick = 10f;
+        public float maxEliteCreditPerTick = 30f;
         private List<StackableAffix> allElites = new List<StackableAffix>();
         private Xoroshiro128Plus rng;
         private float timer = 0;
@@ -75,7 +75,8 @@ namespace SS2.Components
                 if (timer > directorTickInterval)
                 {
                     timer = 0f;
-                    float eliteCredit = (rng.RangeFloat(minEliteCreditPerTick, maxEliteCreditPerTick) * Run.instance.compensatedDifficultyCoefficient * 0.4f);
+                    float multiplier = Util.Remap(Run.instance.difficultyCoefficient, 0, 200, 1, 2); // arbitrary values. just guessing
+                    float eliteCredit = (rng.RangeFloat(minEliteCreditPerTick, maxEliteCreditPerTick) * multiplier);
                     for (int i = allElites.Count - 1; i >= 0; i--)
                     {
                         if (allElites[i].IsAvailable())
@@ -181,6 +182,11 @@ namespace SS2.Components
             else
                 SS2Log.Fatal("Custom Elite IL Hook Failed ! ! !");
         }
+        [ConCommand(commandName = "elitedirector_enable_log", flags = ConVarFlags.None, helpText = "Enables/Disables CustomEliteDirector logging.")]
+        public static void CCSetEliteLog(ConCommandArgs args)
+        {
+            shouldLog = !shouldLog;
+        }
     }
 
     // was gonna make this work kinda like objectivetracker with subscriptions and automatic collecting but i stoppe caring half way thru
@@ -247,6 +253,7 @@ namespace SS2.Components
 
             int extraStages = Mathf.Max(Run.instance.stageClearCount - 7, 0);
             int extraLoops = Mathf.FloorToInt(extraStages / Run.stagesPerLoop);
+            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, 1); ///
             inventory.GiveItem(SS2Content.Items.DoubleAllStats, extraLoops);
             inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 15 + 15 * extraLoops); // teehee
             if (body.characterMotor) body.characterMotor.mass = 2000f; // NO KNOCKBACK !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -300,7 +307,7 @@ namespace SS2.Components
             }
             if(body.TryGetComponent(out RigidbodyMotor motor))
             {
-                motor.canTakeImpactDamage = false; // i hate this shit so much. wisps and jellies take up all these spawns in the first loop and they die instantly
+                motor.canTakeImpactDamage = false;
             }
         }
     }
@@ -334,4 +341,6 @@ namespace SS2.Components
             }
         }
     }
+
+    
 }

@@ -18,7 +18,7 @@ namespace SS2.Items
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Chance on hit to drop a coffee bean. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
-        public static float procChance = .08f;
+        public static float procChance = .1f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Attack speed bonus granted per stack while the buff is active. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
@@ -28,9 +28,13 @@ namespace SS2.Items
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
         public static float moveSpeedBonus = .08f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Duration of the buff gained upon picking up a coffee bean, per stack.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Duration of the buff gained upon picking up a coffee bean.")]
         [FormatToken(token, 3)]
-        public static float buffDuration = 5;
+        public static float buffDuration = 6;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Maximum stacks of the buff gained upon picking up a coffee bean, per stack.")]
+        [FormatToken(token, 4)]
+        public static int maxStax = 5;
 
         public override void Initialize()
         {

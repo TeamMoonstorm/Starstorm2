@@ -270,7 +270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blinkFrequency: 20
-  delayBeforeBeginningBlinking: 6
+  delayBeforeBeginningBlinking: 8
   blinkingRootObject: {fileID: 3454945921802938642}
 --- !u!114 &3342220135409953235
 MonoBehaviour:
@@ -327,7 +327,7 @@ MonoBehaviour:
   velocity: {fileID: 3342220135409953235}
   blink: {fileID: 3342515253303587609}
   beanis: {fileID: 8071568559002677509}
-  duration: 7
+  duration: 9
 --- !u!1 &3454750214552642647
 GameObject:
   m_ObjectHideFlags: 0
@@ -372,7 +372,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 5
+  m_Radius: 7
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3342170518237482777
 MonoBehaviour:

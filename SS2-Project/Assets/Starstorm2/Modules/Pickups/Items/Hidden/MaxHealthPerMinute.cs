@@ -21,7 +21,7 @@ namespace SS2.Items
         private void GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
             float itemCount = sender.inventory ? sender.inventory.GetItemCount(ItemDef) : 0;
-            int minutes = Run.instance ? Mathf.FloorToInt(Run.instance.fixedTime) : 0;
+            int minutes = Run.instance ? Mathf.FloorToInt(Run.instance.fixedTime/60f) : 0;
             if (itemCount > 0)
             {
                 float hp = minutes * itemCount * 0.01f;
