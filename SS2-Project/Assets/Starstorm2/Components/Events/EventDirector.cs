@@ -39,14 +39,16 @@ namespace SS2
                 stagesUntilInvasion--;
                 currentEventSelection = EventSelection.GetEventSelectionForStage(stage);
                 this.rng = new Xoroshiro128Plus((ulong)Run.instance.stageRng.nextUint);
-                CreateEventTimeline();
+                currentTimeline = CreateEventTimeline();
             }
             
         }
 
         public void PickEventTimeline()
         {
-            // create multiple event timelines, then do random selection weighted by viability
+            // create multiple event timelines, then do random selection weighted by some kind of score given to each timeline
+            // score increases with event count, overlapping events, and earlier storm times.
+            // would want to set a "target" score per stage, based on a variety of things. create low and high-event stages
         }
 
         // want to create these at the start of each stage rather than randomly spawn them thruout
@@ -79,7 +81,7 @@ namespace SS2
                 }
             }
             // misc events can be thrown in mostly randomly
-            int miscEventCount = UnityEngine.Random.Range(0, 1 + Run.instance.loopClearCount);         
+            int miscEventCount = UnityEngine.Random.Range(0, 1 + Run.instance.loopClearCount);      /// ??? lmao   
             if(miscEventCount > 0)
             {
                 float startTime = 0f;
@@ -91,7 +93,6 @@ namespace SS2
                     miscEvents.RemoveChoice(index);
                     startTime += UnityEngine.Random.Range(90f, 300f);
                     eventTimeline.AddEvent(miscEvent, startTime);
-                    // add to timeline
                 }
             }
             // pick mostly random storm start time.
@@ -182,6 +183,7 @@ namespace SS2
             }
         }
 
+        // use this info to display on timeline
         public struct EventInfo
         {
             public EventInfo(EventCard eventCard, float startTime)
