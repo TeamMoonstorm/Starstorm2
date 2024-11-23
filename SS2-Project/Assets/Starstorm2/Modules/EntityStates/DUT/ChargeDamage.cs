@@ -29,12 +29,13 @@ namespace EntityStates.DUT
         public override void OnEnter()
         {
             base.OnEnter();
-            Charge();
             controller = characterBody.GetComponent<DUTController>();
             if (controller == null)
             {
                 SS2Log.Error("Failed to find DU-T controller on body " + characterBody);
+                outer.SetNextStateToMain();
             }
+            Charge();
         }
         public override void FixedUpdate()
         {
@@ -78,9 +79,9 @@ namespace EntityStates.DUT
             }    
         }
 
-        //......this method prevents the assetbundle from building?
         public void SiphonEnemies()
         {
+            bool crit = RollCrit();
             BlastAttack blast = new BlastAttack()
             {
                 radius = chargeRadius,
@@ -88,7 +89,7 @@ namespace EntityStates.DUT
                 position = characterBody.corePosition,
                 attacker = gameObject,
                 teamIndex = teamComponent.teamIndex,
-                crit = RollCrit(),
+                crit = crit,
                 baseDamage = characterBody.damage * chargeDmgCoefficient,
                 falloffModel = BlastAttack.FalloffModel.None,
                 attackerFiltering = AttackerFiltering.NeverHitSelf,

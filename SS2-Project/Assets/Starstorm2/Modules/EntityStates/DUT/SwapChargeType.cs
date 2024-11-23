@@ -8,7 +8,7 @@ namespace EntityStates.DUT
 {
     public class SwapChargeType : BaseSkillState
     {
-        /*public static float baseDuration = 0.1f;
+        public static float baseDuration = 0.1f;
         private DUTController controller;
 
         public override void OnEnter()
@@ -37,6 +37,6 @@ namespace EntityStates.DUT
                     return;
                 }
             }
-        }*/
+        }
     }
 }

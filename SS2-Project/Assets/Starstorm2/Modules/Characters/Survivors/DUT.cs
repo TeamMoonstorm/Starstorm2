@@ -9,7 +9,6 @@ using RoR2.ContentManagement;
 using SS2.Orbs;
 using RoR2.Orbs;
 
-#if DEBUG
 namespace SS2.Survivors
 {
 
@@ -39,7 +38,7 @@ namespace SS2.Survivors
             var victimBody = report.victimBody;
             var attackerBody = report.attackerBody;
             var damageInfo = report.damageInfo;
-            if (DamageAPI.HasModdedDamageType(damageInfo, DUTDamageType))
+            if (damageInfo.HasModdedDamageType(DUTDamageType))
             {
                 DUTChargeOrb orb = new DUTChargeOrb();
                 orb.origin = victimBody.transform.position;
@@ -57,4 +56,3 @@ namespace SS2.Survivors
         }
     }
 }
-#endif
