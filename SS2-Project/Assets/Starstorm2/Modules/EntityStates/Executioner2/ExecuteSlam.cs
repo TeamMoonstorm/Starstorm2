@@ -79,14 +79,6 @@ namespace EntityStates.Executioner2
 
         private void FixedUpdateAuthority()
         {
-            //if (exeController)
-            //{
-            //    if (exeController.hasOOB)
-            //    {
-            //        SS2Log.Info("Has OOBed");
-            //    }
-            //}
-
             characterDirection.forward = dashVector;
             if (!hasSlammed)
             {
@@ -95,13 +87,6 @@ namespace EntityStates.Executioner2
                 //SS2Log.Info("Haven't started");
                 
             }
-            /*if (fixedAge >= duration)
-            {
-                //if (wasLiedTo)
-                //by request of ts <3
-                GroundSlamPos(characterBody.footPosition);
-                outer.SetNextStateToMain();
-            }*/
             else
             {
                 if (exeController)
@@ -115,7 +100,6 @@ namespace EntityStates.Executioner2
                         outer.SetNextStateToMain(); //emergency "everything has failed" stop slamming
                     }
                 }
-                // HandleMovement();
             }
   
         }
@@ -128,7 +112,6 @@ namespace EntityStates.Executioner2
         private void GroundSlamPos(Vector3 position)
         {
             //get number of enemies hit to divide damage
-            //LogCore.LogI($"Velocity {hitGroundInfo.velocity}");
 
             SphereSearch search = new SphereSearch();
             List<HurtBox> hits = new List<HurtBox>();

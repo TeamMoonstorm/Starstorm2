@@ -681,6 +681,10 @@ namespace SS2
             public static SurvivorDef Warden;
 
             public static SurvivorDef NemMerc;
+
+            public static SurvivorDef survivorPyro;
+
+            public static SurvivorDef survivorDUT;
         }
 
         public static class ItemTierDefs

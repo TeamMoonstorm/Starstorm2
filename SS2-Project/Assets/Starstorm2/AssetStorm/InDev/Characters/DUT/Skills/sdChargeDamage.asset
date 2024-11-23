@@ -27,12 +27,16 @@ MonoBehaviour:
   rechargeStock: 1
   requiredStock: 1
   stockToConsume: 1
+  attackSpeedBuffsRestockSpeed: 0
+  attackSpeedBuffsRestockSpeed_Multiplier: 1
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
   beginSkillCooldownOnSkillEnd: 0
-  cancelSprintingOnActivation: 1
+  cancelSprintingOnActivation: 0
   forceSprintDuringState: 0
   canceledFromSprinting: 0
   isCombatSkill: 1
   mustKeyPress: 0
+  autoHandleLuminousShot: 1
+  hideStockCount: 0

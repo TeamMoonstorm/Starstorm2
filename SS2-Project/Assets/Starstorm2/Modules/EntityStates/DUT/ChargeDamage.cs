@@ -5,6 +5,7 @@ using UnityEngine.AddressableAssets;
 using SS2;
 using SS2.Components;
 using UnityEngine.Networking;
+using R2API;
 
 namespace EntityStates.DUT
 {
@@ -28,6 +29,7 @@ namespace EntityStates.DUT
         public override void OnEnter()
         {
             base.OnEnter();
+            Charge();
             controller = characterBody.GetComponent<DUTController>();
             if (controller == null)
             {
@@ -71,28 +73,29 @@ namespace EntityStates.DUT
                     SiphonSelf();
                     break;
                 }
+                default:
+                    break;
             }    
         }
 
+        //......this method prevents the assetbundle from building?
         public void SiphonEnemies()
         {
-            if (NetworkServer.active)
+            BlastAttack blast = new BlastAttack()
             {
-                BlastAttack blast = new BlastAttack()
-                {
-                    radius = chargeRadius,
-                    procCoefficient = chargeProcCoef,
-                    position = characterBody.corePosition,
-                    attacker = gameObject,
-                    teamIndex = teamComponent.teamIndex,
-                    crit = RollCrit(),
-                    baseDamage = characterBody.damage * chargeDmgCoefficient,
-                    falloffModel = BlastAttack.FalloffModel.None,
-                    attackerFiltering = AttackerFiltering.NeverHitSelf
-                };
-                R2API.DamageAPI.AddModdedDamageType(blast, SS2.Survivors.DUT.DUTDamageType);
-                blast.Fire();
-            }
+                radius = chargeRadius,
+                procCoefficient = chargeProcCoef,
+                position = characterBody.corePosition,
+                attacker = gameObject,
+                teamIndex = teamComponent.teamIndex,
+                crit = RollCrit(),
+                baseDamage = characterBody.damage * chargeDmgCoefficient,
+                falloffModel = BlastAttack.FalloffModel.None,
+                attackerFiltering = AttackerFiltering.NeverHitSelf,
+                damageType = DamageType.Generic,
+            };
+            DamageAPI.AddModdedDamageType(blast, SS2.Survivors.DUT.DUTDamageType);
+            blast.Fire();
         }
 
         public void SiphonSelf()

@@ -8,7 +8,6 @@ using static R2API.DamageAPI;
 using RoR2.ContentManagement;
 using SS2.Orbs;
 using RoR2.Orbs;
-using static R2API.DamageAPI;
 
 #if DEBUG
 namespace SS2.Survivors
@@ -18,10 +17,15 @@ namespace SS2.Survivors
     {
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acDUT", SS2Bundle.Indev);
         public static ModdedDamageType DUTDamageType { get; private set; }
+
+        public static GameObject _dutOrb;
         public override void Initialize()
         {
             ModifyPrefab();
-            DUTDamageType = DamageAPI.ReserveDamageType();
+            DUTDamageType = ReserveDamageType();
+
+            _dutOrb = AssetCollection.FindAsset<GameObject>("DUTOrbEffect");
+
             GlobalEventManager.onServerDamageDealt += CheckDUT;
         }
 
