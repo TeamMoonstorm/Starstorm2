@@ -9,12 +9,9 @@ namespace EntityStates.Warden
         public static float swingTimeCoefficient;
         [FormatToken("SS2_KNIGHT_PRIMARY_SWORD_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static GameObject beamProjectile;
-        public static SkillDef buffedSkillRef;
-        public static float TokenModifier_dmgCoefficient => new SwingSword().damageCoefficient;
 
         public static float baseDurationBeforeInterruptable;
         public static float comboFinisherBaseDurationBeforeInterruptable;
-        private float durationBeforeInterruptable;
         public static float comboFinisherhitPauseDuration;
         public static float comboFinisherDamageCoefficient;
 
@@ -46,8 +43,6 @@ namespace EntityStates.Warden
                     break;
             }
 
-
-            durationBeforeInterruptable = (isComboFinisher ? (comboFinisherBaseDurationBeforeInterruptable / attackSpeedStat) : (baseDurationBeforeInterruptable / attackSpeedStat));
 
             damageType = DamageType.Generic;
             procCoefficient = 0.7f;

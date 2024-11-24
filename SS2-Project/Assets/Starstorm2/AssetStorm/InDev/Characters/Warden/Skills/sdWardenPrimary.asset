@@ -12,14 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 1348642413, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: sdWardenPrimary
   m_EditorClassIdentifier: 
-  skillName: 
-  skillNameToken: 
-  skillDescriptionToken: 
+  skillName: sdWardenPrimary
+  skillNameToken: SS2_WARDEN_PRIMARY_NAME
+  skillDescriptionToken: SS2_WARDEN_PRIMARY_DESC
   keywordTokens: []
-  icon: {fileID: 0}
-  activationStateMachineName: 
+  icon: {fileID: 21300000, guid: 9b411f49fb99537408c4402f56a9dfb4, type: 3}
+  activationStateMachineName: Weapon
   activationState:
-    _typeName: 
+    _typeName: EntityStates.Warden.BatteringBatons, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   interruptPriority: 1
   baseRechargeInterval: 1
   baseMaxStock: 1

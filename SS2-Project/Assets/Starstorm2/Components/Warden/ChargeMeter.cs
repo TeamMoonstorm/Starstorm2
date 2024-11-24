@@ -116,7 +116,7 @@ namespace SS2.Components
             fillUiList.Remove(instance.transform.GetComponent<ImageFillController>());
         }
 
-        public void AddRepair(float amount)
+        public void AddCharge(float amount)
         {
             if (!NetworkServer.active)
             {

@@ -2,6 +2,8 @@
 using RoR2;
 using RoR2.Audio;
 using RoR2.Skills;
+using SS2.Components;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -53,9 +55,13 @@ namespace EntityStates.Warden
         private HitStopCachedState hitStopCachedState;
         private Vector3 storedVelocity;
 
+        private ChargeMeter chargeMeter;
+        private float chargeMeterGain = 15f;
+
         public override void OnEnter()
         {
             base.OnEnter();
+            chargeMeter = characterBody.GetComponent<ChargeMeter>();
             duration = baseDuration / attackSpeedStat;
             animator = GetModelAnimator();
             StartAimMode(0.5f + duration, false);
@@ -132,8 +138,15 @@ namespace EntityStates.Warden
         {
             if (isAuthority)
             {
-                if (attack.Fire())
+                List<HurtBox> hitResults = new List<HurtBox>();
+                if (attack.Fire(hitResults))
                 {
+                    if (chargeMeter)
+                    {
+                        // TODO: This is too generic
+                        chargeMeter.AddCharge(hitResults.Count * chargeMeterGain);
+                    }
+
                     OnHitEnemyAuthority();
                 }
             }
