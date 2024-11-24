@@ -1,6 +1,6 @@
 ﻿namespace EntityStates.Warden
 {
-    public class PowerVault
+    public class PowerVault : BaseSkillState
     {
     }
 }

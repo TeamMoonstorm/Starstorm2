@@ -1,6 +1,6 @@
 ﻿namespace EntityStates.Warden
 {
-    public class VolticSurge
+    public class VolticSurge : BaseSkillState
     {
     }
 }

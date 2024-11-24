@@ -1,6 +1,6 @@
 ﻿namespace EntityStates.Warden
 {
-    public class MagneticRecall
+    public class MagneticRecall : BaseSkillState
     {
     }
 }
