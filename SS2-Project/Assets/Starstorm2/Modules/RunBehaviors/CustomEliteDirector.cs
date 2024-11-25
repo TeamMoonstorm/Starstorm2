@@ -33,18 +33,18 @@ namespace SS2.Components
     {
         public static CustomEliteDirector instance;
         
-        private static bool shouldLog;
+        private static bool shouldLog = false;
         [SystemInitializer]
         private static void Init()
         {
             IL.RoR2.CombatDirector.Spawn += SpawnEliteIL;
             
         }
-        
-        public float directorTickRate = 4f;
+        // 5 ish credits per second, up to 10 per second giga late game.
+        public float directorTickInterval = 4f;
         [Header("Elite Director Values")]
-        public float minEliteCreditPerTick = 1.6f;
-        public float maxEliteCreditPerTick = 5.2f;
+        public float minEliteCreditPerTick = 10f;
+        public float maxEliteCreditPerTick = 30f;
         private List<StackableAffix> allElites = new List<StackableAffix>();
         private Xoroshiro128Plus rng;
         private float timer = 0;
@@ -72,10 +72,11 @@ namespace SS2.Components
             if(NetworkServer.active)
             {
                 timer += Time.fixedDeltaTime;
-                if (timer > directorTickRate)
+                if (timer > directorTickInterval)
                 {
                     timer = 0f;
-                    float eliteCredit = (rng.RangeFloat(minEliteCreditPerTick, maxEliteCreditPerTick) * Run.instance.compensatedDifficultyCoefficient * 0.4f);
+                    float multiplier = Util.Remap(Run.instance.difficultyCoefficient, 0, 200, 1, 2); // arbitrary values. just guessing
+                    float eliteCredit = (rng.RangeFloat(minEliteCreditPerTick, maxEliteCreditPerTick) * multiplier);
                     for (int i = allElites.Count - 1; i >= 0; i--)
                     {
                         if (allElites[i].IsAvailable())
@@ -95,7 +96,6 @@ namespace SS2.Components
             CharacterBody body = cm.bodyInstanceObject.GetComponent<CharacterBody>();
             if (body == null)
                 return;
-
             if (spawnResult.spawnRequest.spawnCard.eliteRules != SpawnCard.EliteRules.Default)
                 return;
 
@@ -131,7 +131,7 @@ namespace SS2.Components
                             highestCostAffix = affix;
                         }
                         affix.MakeElite(body);
-                        affix.SubtractCost(baseCost, totalCost, director); // lol
+                        affix.SubtractCost(baseCost, ref totalCost, director);
                         isBoss |= affix.IsBoss;
                     }
                 }
@@ -182,6 +182,11 @@ namespace SS2.Components
             else
                 SS2Log.Fatal("Custom Elite IL Hook Failed ! ! !");
         }
+        [ConCommand(commandName = "elitedirector_enable_log", flags = ConVarFlags.None, helpText = "Enables/Disables CustomEliteDirector logging.")]
+        public static void CCSetEliteLog(ConCommandArgs args)
+        {
+            shouldLog = !shouldLog;
+        }
     }
 
     // was gonna make this work kinda like objectivetracker with subscriptions and automatic collecting but i stoppe caring half way thru
@@ -199,9 +204,11 @@ namespace SS2.Components
         }
 
         // this is just because Empyreans were subtracting extra for reasons i do not fully understand. but i already liked their spawn rate and didnt want to change it
-        public virtual void SubtractCost(float baseCost, float totalCost, CombatDirector combatDirector) 
+        public virtual void SubtractCost(float baseCost, ref float totalCost, CombatDirector combatDirector) 
         {
-            combatDirector.monsterCredit -= totalCost * CostMultiplier - totalCost;
+            float originalCost = totalCost;
+            totalCost *= CostMultiplier;
+            combatDirector.monsterCredit -= totalCost - originalCost;
             eliteCredit -= EliteCreditCost;
         }
         public abstract bool IsAvailable();
@@ -222,8 +229,9 @@ namespace SS2.Components
         {
             return EliteCreditCost <= eliteCredit && baseCost * CostMultiplier <= combatDirector.monsterCredit; // use base cost instead of elite
         }
-        public override void SubtractCost(float baseCost, float totalCost, CombatDirector combatDirector)
+        public override void SubtractCost(float baseCost, ref float totalCost, CombatDirector combatDirector)
         {
+            totalCost = baseCost * CostMultiplier;
             combatDirector.monsterCredit -= baseCost * CostMultiplier * 1.5f - baseCost;
             eliteCredit -= EliteCreditCost * 1.5f;
         }
@@ -245,7 +253,8 @@ namespace SS2.Components
 
             int extraStages = Mathf.Max(Run.instance.stageClearCount - 7, 0);
             int extraLoops = Mathf.FloorToInt(extraStages / Run.stagesPerLoop);
-            //inventory.GiveItem(SS2Content.Items.DoubleAllStats, extraLoops); // it is not yet your time
+            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, 1); ///
+            inventory.GiveItem(SS2Content.Items.DoubleAllStats, extraLoops);
             inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 15 + 15 * extraLoops); // teehee
             if (body.characterMotor) body.characterMotor.mass = 2000f; // NO KNOCKBACK !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             if (body.rigidbody) body.rigidbody.mass = 2000f;
@@ -260,7 +269,11 @@ namespace SS2.Components
             {
                 rewards.expReward *= 30;
                 rewards.goldReward *= 30;
-            }         
+            }
+            if (body.TryGetComponent(out RigidbodyMotor motor))
+            {
+                motor.canTakeImpactDamage = false; // i hate this shit so much. wisps and jellies take up all these spawns in the first loop and they die instantly
+            }
         }
         public override void SetSpawnState(EntityStateMachine bodyMachine)
         {
@@ -271,19 +284,17 @@ namespace SS2.Components
 
     public class Ethereal : StackableAffix
     {
-        public override float EliteCreditCost => 300f * Mathf.Pow(0.67f, EtherealBehavior.instance.etherealsCompleted-1);
-        public override float CostMultiplier => 12f * Mathf.Pow(0.67f, EtherealBehavior.instance.etherealsCompleted-1);
+        private static float baseCostMultiplier = 6; // so i can change it easier in game
+        private static float baseCreditCost = 300;
+        public override float EliteCreditCost => baseCreditCost * Mathf.Pow(0.67f, EtherealBehavior.instance.etherealsCompleted-1);
+        public override float CostMultiplier => baseCostMultiplier * Mathf.Pow(0.67f, EtherealBehavior.instance.etherealsCompleted-1);
         public override bool IsAvailable() => EtherealBehavior.instance && EtherealBehavior.instance.etherealsCompleted > 0;
-        public override void SubtractCost(float baseCost, float totalCost, CombatDirector combatDirector)
-        {
-            combatDirector.monsterCredit -= totalCost * CostMultiplier * 1.25f - totalCost;
-            eliteCredit -= EliteCreditCost * 1.25f;
-        }
         public override void MakeElite(CharacterBody body)
         {
             var inventory = body.inventory;
             var ethInstance = EtherealBehavior.instance;
             inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(100 + (100 * ethInstance.etherealsCompleted)));
+            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, Mathf.Max(Run.instance.loopClearCount, 1));
             inventory.GiveItem(SS2Content.Items.BoostCooldowns, 15);
             inventory.GiveItem(RoR2Content.Items.BoostDamage, (int)(20 + (20 * ethInstance.etherealsCompleted)));
             inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 20); // MORE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -294,12 +305,18 @@ namespace SS2.Components
                 rewards.expReward *= (uint)(8 + (8 * ethInstance.etherealsCompleted));
                 rewards.goldReward *= (uint)(8 + (8 * ethInstance.etherealsCompleted));
             }
+            if(body.TryGetComponent(out RigidbodyMotor motor))
+            {
+                motor.canTakeImpactDamage = false;
+            }
         }
     }
     public class Ultra : StackableAffix
     {
-        public override float EliteCreditCost => 1200f * Mathf.Pow(0.8f, EtherealBehavior.instance.etherealsCompleted-1);
-        public override float CostMultiplier => 20f * Mathf.Pow(0.8f, EtherealBehavior.instance.etherealsCompleted-1);
+        private static float baseCostMultiplier = 12;
+        private static float baseCreditCost = 1200;
+        public override float EliteCreditCost => baseCreditCost * Mathf.Pow(0.8f, EtherealBehavior.instance.etherealsCompleted-1);
+        public override float CostMultiplier => baseCostMultiplier * Mathf.Pow(0.8f, EtherealBehavior.instance.etherealsCompleted-1);
         public override bool IsAvailable() => EtherealBehavior.instance && EtherealBehavior.instance.etherealsCompleted > 0 && Run.instance.loopClearCount >= 1;
         public override bool IsBoss => true;
         public override void MakeElite(CharacterBody body)
@@ -307,6 +324,7 @@ namespace SS2.Components
             var inventory = body.inventory;
             var ethInstance = EtherealBehavior.instance;
             inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(500f + (250f * ethInstance.etherealsCompleted)));
+            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, Mathf.Max(Run.instance.loopClearCount, 1));
             inventory.GiveItem(SS2Content.Items.BoostCooldowns, 70);
             inventory.GiveItem(RoR2Content.Items.BoostDamage, 100);
             inventory.GiveItem(SS2Content.Items.AffixUltra);
@@ -317,6 +335,12 @@ namespace SS2.Components
                 rewards.expReward *= (uint)(20 + (20 * ethInstance.etherealsCompleted));
                 rewards.goldReward *= (uint)(20 + (20 * ethInstance.etherealsCompleted));
             }
+            if (body.TryGetComponent(out RigidbodyMotor motor))
+            {
+                motor.canTakeImpactDamage = false;
+            }
         }
     }
+
+    
 }

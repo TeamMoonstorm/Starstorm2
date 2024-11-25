@@ -38,19 +38,15 @@ namespace SS2.Items
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Proc coefficient of damage dealt by Malice.")]
         public static float procCo = 0.1f;
 
-        //damage types should not be used as a substitute for proper proc chain masks, but it works here
-        public static DamageAPI.ModdedDamageType MaliceDamageType { get; private set; }
 
-        //a proc chain mask of proc types that shouldn't invalidate malice
-        public static ProcChainMask ignoredProcs;
+        public static R2API.ModdedProcType malice;
 
         public static GameObject maliceOrbEffectPrefab;
 
         public override void Initialize()
         {
             maliceOrbEffectPrefab = AssetCollection.FindAsset<GameObject>("MaliceOrbEffect");
-            MaliceDamageType = DamageAPI.ReserveDamageType();
-            ignoredProcs.AddProc(ProcType.Backstab);
+            malice = ProcTypeAPI.ReserveProcType();
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -67,8 +63,7 @@ namespace SS2.Items
             {
                 DamageInfo damageInfo = report.damageInfo;
 
-                //damage has proc co and damage info does not contained any banned proc types
-                if (damageInfo.procCoefficient > 0 && (damageInfo.procChainMask.mask & ~ignoredProcs.mask) == 0U && !damageInfo.HasModdedDamageType(MaliceDamageType))
+                if (damageInfo.procCoefficient > 0 && !damageInfo.procChainMask.HasModdedProc(malice))
                 {
                     MaliceOrb malOrb = new MaliceOrb();
                     malOrb.bouncesRemaining = bounceStack * stack - 1;
@@ -82,6 +77,7 @@ namespace SS2.Items
                     malOrb.origin = report.damageInfo.position;
                     malOrb.teamIndex = body.teamComponent.teamIndex;
                     malOrb.attacker = base.gameObject;
+                    damageInfo.procChainMask.AddModdedProc(malice);
                     malOrb.procChainMask = damageInfo.procChainMask;
                     malOrb.bouncedObjects = new List<HealthComponent>
                     {
@@ -130,7 +126,6 @@ namespace SS2.Items
                             damageInfo.position = this.target.transform.position;
                             damageInfo.damageColorIndex = this.damageColorIndex;
                             damageInfo.damageType = this.damageType;
-                            damageInfo.AddModdedDamageType(MaliceDamageType);
                             healthComponent.TakeDamage(damageInfo);
                             GlobalEventManager.instance.OnHitEnemy(damageInfo, healthComponent.gameObject);
                             GlobalEventManager.instance.OnHitAll(damageInfo, healthComponent.gameObject);

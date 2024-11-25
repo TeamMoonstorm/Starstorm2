@@ -260,6 +260,8 @@ namespace SS2
 
             public static ItemDef BoostMovespeed;
 
+            public static ItemDef BlastKnuckles;
+
             public static ItemDef CoffeeBag;
 
             public static ItemDef CognationHelper;
@@ -286,11 +288,17 @@ namespace SS2
 
             public static ItemDef Malice;
 
+            public static ItemDef MaxHealthPerMinute;
+
             public static ItemDef MoltenCoin;
+
+            public static ItemDef Nanobots;
 
             public static ItemDef Needles;
 
             public static ItemDef NemBossHelper;
+
+            public static ItemDef PoisonousGland;
 
             public static ItemDef VoidRock;
 
@@ -341,6 +349,8 @@ namespace SS2
             public static ItemDef ScavengersFortune;
 
             public static ItemDef ShackledLamp;
+
+            public static ItemDef StickyOverloader;
 
             public static ItemDef StirringSoul;
 
@@ -451,6 +461,8 @@ namespace SS2
 
             public static BuffDef BuffBloodTesterRegen;
 
+            public static BuffDef BuffBlastKnucklesCharge;
+
             public static BuffDef BuffBackThruster;
 
             public static BuffDef BuffUniversalCharger;
@@ -495,6 +507,8 @@ namespace SS2
 
             public static BuffDef BuffNucleatorSpecial;
 
+            public static BuffDef BuffPoisonousGland;
+
             public static BuffDef BuffReactor;
 
             public static BuffDef BuffScavengersFortune;
@@ -502,6 +516,8 @@ namespace SS2
             public static BuffDef BuffSigil;
 
             public static BuffDef BuffSigilStack;
+
+            public static BuffDef BuffStickyOverloader;
 
             public static BuffDef BuffKickflip;
 
