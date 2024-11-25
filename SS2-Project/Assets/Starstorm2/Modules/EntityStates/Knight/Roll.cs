@@ -1,5 +1,7 @@
 ﻿using EntityStates;
+using MSU.Config;
 using RoR2;
+using SS2;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -7,9 +9,18 @@ namespace EntityStates.Knight
 {
     public class Roll : BaseSkillState
     {
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
         public static float duration = 0.6f; // 0.5 was the real nice sweet spot on distance
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
         public static float initialSpeedCoefficient = 5f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
         public static float finalSpeedCoefficient = 2.5f;
+
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
+        public static float interruptible = 0.2f;
 
         public static float dodgeFOV = SS2.Survivors.Knight.dodgeFOV;
 
@@ -60,9 +71,27 @@ namespace EntityStates.Knight
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+
+            if ((inputBank.skill1.down || inputBank.skill3.down || inputBank.skill4.down) && fixedAge >= interruptible * duration)
+            {
+                outer.SetNextStateToMain();
+                return;
+            }
+
+            if (isAuthority && fixedAge >= duration)
+            {
+                outer.SetNextStateToMain();
+                return;
+            }
+
+            MoveRoll();
+        }
+
+        private void MoveRoll()
+        {
             RecalculateRollSpeed();
 
-            if (characterDirection) characterDirection.forward = forwardDirection;
+            //if (characterDirection) characterDirection.forward = forwardDirection;
             if (cameraTargetParams) cameraTargetParams.fovOverride = Mathf.Lerp(dodgeFOV, 60f, fixedAge / duration);
 
             Vector3 normalized = (transform.position - previousPosition).normalized;
@@ -76,18 +105,14 @@ namespace EntityStates.Knight
                 characterMotor.velocity = vector;
             }
             previousPosition = transform.position;
-
-            if (isAuthority && fixedAge >= duration)
-            {
-                outer.SetNextStateToMain();
-                return;
-            }
         }
 
         public override void OnExit()
         {
             if (cameraTargetParams) cameraTargetParams.fovOverride = -1f;
             animator.SetBool("isRolling", false);
+            fixedAge = duration;
+            MoveRoll();
             base.OnExit();
             characterMotor.disableAirControlUntilCollision = false;
         }

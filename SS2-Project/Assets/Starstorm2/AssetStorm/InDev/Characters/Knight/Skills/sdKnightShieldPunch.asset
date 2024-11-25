@@ -17,17 +17,19 @@ MonoBehaviour:
   skillDescriptionToken: SS2_KNIGHT_SHIELD_BASH_DESC
   keywordTokens:
   - KEYWORD_STUNNING
-  icon: {fileID: 21300000, guid: bf66c3d4ad1462a44ad8c08f2e66d6f7, type: 3}
+  icon: {fileID: 21300000, guid: ff43b28e90efe444896b656fa5573b4a, type: 3}
   activationStateMachineName: Weapon
   activationState:
     _typeName: EntityStates.Knight.ShieldPunch, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  interruptPriority: 2
+  interruptPriority: 0
   baseRechargeInterval: 0
   baseMaxStock: 1
   rechargeStock: 0
   requiredStock: 1
   stockToConsume: 1
+  attackSpeedBuffsRestockSpeed: 0
+  attackSpeedBuffsRestockSpeed_Multiplier: 1
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
@@ -37,3 +39,5 @@ MonoBehaviour:
   canceledFromSprinting: 0
   isCombatSkill: 1
   mustKeyPress: 0
+  autoHandleLuminousShot: 1
+  hideStockCount: 0

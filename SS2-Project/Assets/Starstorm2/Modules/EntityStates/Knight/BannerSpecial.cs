@@ -109,7 +109,6 @@ namespace EntityStates.Knight
                 base.characterMotor.moveDirection = base.inputBank.moveVector;
                 if (detonateNextFrame || (base.characterMotor.Motor.GroundingStatus.IsStableOnGround && !base.characterMotor.Motor.LastGroundingStatus.IsStableOnGround))
                 {
-                    FireImpact();
                     outer.SetNextStateToMain();
                 }
             }
@@ -122,6 +121,8 @@ namespace EntityStates.Knight
                 base.characterMotor.onMovementHit -= OnMovementHit;
             }
 
+            FireImpact();
+
             base.characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage;
             base.characterMotor.airControl = previousAirControl;
             base.characterBody.isSprinting = false;
@@ -132,7 +133,7 @@ namespace EntityStates.Knight
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.PrioritySkill;
+            return InterruptPriority.Any;
         }
     }
 

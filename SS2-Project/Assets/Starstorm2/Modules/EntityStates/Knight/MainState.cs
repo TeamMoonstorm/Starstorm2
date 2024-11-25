@@ -18,7 +18,7 @@ namespace EntityStates.Knight
         {
             if (base.hasCharacterMotor && !healthComponent.isInFrozenState)
             {
-                if (base.jumpInputReceived && base.characterBody)
+                if (/*base.jumpInputReceived*/base.inputBank.jump.down && base.characterBody)
                 {
                     if (currentWeaponState && currentWeaponState.state is Shield && base.characterMotor.jumpCount < (base.characterBody.maxJumpCount + 1))
                     {

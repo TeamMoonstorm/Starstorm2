@@ -61,7 +61,7 @@ namespace EntityStates.Knight
             base.OnEnter();
             duration = baseDuration / attackSpeedStat;
             animator = GetModelAnimator();
-            StartAimMode(0.5f + duration, false);
+            StartAimMode(2f + duration, false);
 
             PlayAttackAnimation();
 

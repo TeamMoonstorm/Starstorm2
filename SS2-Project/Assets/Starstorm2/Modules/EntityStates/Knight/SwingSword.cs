@@ -1,6 +1,8 @@
 ﻿using MSU;
+using MSU.Config;
 using RoR2;
 using RoR2.Skills;
+using SS2;
 using UnityEngine;
 
 namespace EntityStates.Knight
@@ -8,28 +10,69 @@ namespace EntityStates.Knight
     class SwingSword : BaseKnightMeleeAttack
     {
         public static float swingTimeCoefficient;
-        [FormatToken("SS2_KNIGHT_PRIMARY_SWORD_DESC",  FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
+        public static float swingTimeCoefficientFinisher;
         public static GameObject beamProjectile;
         public static SkillDef buffedSkillRef;
+        [FormatToken("SS2_KNIGHT_PRIMARY_SWORD_DESC",  FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float TokenModifier_dmgCoefficient => new SwingSword().damageCoefficient;
 
         public static float baseDurationBeforeInterruptable;
         public static float comboFinisherBaseDurationBeforeInterruptable;
-        private float durationBeforeInterruptable;
         public static float comboFinisherhitPauseDuration;
         public static float comboFinisherDamageCoefficient;
 
-        public new float baseDuration = 1f;
-        public new float duration = 1f;
+        //public new float baseDuration = 1f;
+        //public new float duration = 1f;
 
         private bool isComboFinisher => swingIndex == 2;
         private string animationStateName = "SwingSword0";
+        private Transform swordPivot;
 
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
+        public static float testHitHop = 1;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
+        public static float testDuration = 1;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
+        public static float testSwingTimeCoefficient = 0.8f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
+        public static float testEarlyExit = 0.8f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
+        public static float testDamage = 3f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
+        public static float testHistop = 0.08f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
+        public static float testFinisherDuration = 1;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
+        public static float testFinisherSwingTimeCoefficient = 0.8f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
+        public static float testFinisherEarlyExit = 0.8f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
+        public static float testFinisherDamage = 5f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
+        public static float testFinisherHistop = 0.14f;
 
         private void SetupHitbox()
         {
+            damageType = DamageType.Generic;
+            procCoefficient = 1f; //what the fuck 0.7
+            bonusForce = Vector3.zero;
+            hitSoundString = "";
+            playbackRateParam = "Primary.playbackRate";
+            hitEffectPrefab = SS2.Survivors.Knight.KnightHitEffect;
+            hitHopVelocity = testHitHop;
             switch (swingIndex)
             {
+                default:
                 case 0:
                     animationStateName = "SwingSword0";
                     muzzleString = "SwingRight";
@@ -45,74 +88,76 @@ namespace EntityStates.Knight
                     muzzleString = "SwingLeft";
                     hitboxGroupName = "SpearHitbox";
                     break;
-                default:
-                    animationStateName = "SwingSword0";
-                    muzzleString = "SwingLeft";
-                    hitboxGroupName = "SwordHitbox";
-                    break;
             }
 
-            if (isComboFinisher)
+            if (!isComboFinisher)
             {
-                swingEffectPrefab = SS2.Survivors.Knight.KnightSpinEffect; //comboFinisherSwingEffectPrefab;
-                hitStopDuration = comboFinisherhitPauseDuration;
-                damageCoefficient = comboFinisherDamageCoefficient;
-            } 
+                swingSoundString = "NemmandoSwing";
+                swingEffectPrefab = SS2.Survivors.Knight.KnightSpinEffect;
+                damageCoefficient = testDamage;
+                hitStopDuration = testHistop;
+
+                baseDuration = testDuration;
+
+                swingTimeCoefficient = testSwingTimeCoefficient;
+
+                attackStartPercentTime = 0.215f * swingTimeCoefficient;
+                attackEndPercentTime = 0.4f * swingTimeCoefficient;
+
+                earlyExitPercentTime = testEarlyExit * swingTimeCoefficient/*0.8f*/;
+            }
             else
             {
-                swingEffectPrefab = SS2.Survivors.Knight.KnightSpinEffect;
-                damageCoefficient = 3.5f;
-                hitStopDuration = 0.02f;
+                swingSoundString = "NemmandoSwing";
+                swingEffectPrefab = SS2.Survivors.Knight.KnightSpinEffect; //comboFinisherSwingEffectPrefab;
+
+                hitStopDuration = testFinisherHistop/*comboFinisherhitPauseDuration*/;
+                damageCoefficient = testFinisherDamage/*comboFinisherDamageCoefficient*/;
+
+                baseDuration = testFinisherDuration;
+
+                swingTimeCoefficient = testFinisherSwingTimeCoefficient;
+
+                attackStartPercentTime = 0.252f * swingTimeCoefficient;
+                attackEndPercentTime = 0.6f * swingTimeCoefficient;
+                earlyExitPercentTime = testFinisherEarlyExit * swingTimeCoefficient/*0.8f*/;
             }
 
-            durationBeforeInterruptable = (isComboFinisher ? (comboFinisherBaseDurationBeforeInterruptable / attackSpeedStat) : (baseDurationBeforeInterruptable / attackSpeedStat));
-
-            damageType = DamageType.Generic;
-            procCoefficient = 0.7f;
-            bonusForce = Vector3.zero;
-            baseDuration = 1f;
-
-            //0-1 multiplier of baseduration, used to time when the hitbox is out (usually based on the run time of the animation)
-            //for example, if attackStartPercentTime is 0.5, the attack will start hitting halfway through the ability. if baseduration is 3 seconds, the attack will start happening at 1.5 seconds
-            attackStartPercentTime = 0.25f;
-            attackEndPercentTime = 0.7f;
-
-            //this is the point at which the attack can be interrupted by itself, continuing a combo
-            earlyExitPercentTime = 0.8f;
-
-            swingSoundString = "NemmandoSwing";
-            hitSoundString = "";
-            playbackRateParam = "Primary.Hitbox";
-            hitEffectPrefab = SS2.Survivors.Knight.KnightHitEffect;
         }
 
         public override void OnEnter()
         {
-            if (base.isAuthority)
-            {
-                SetupHitbox();
-                base.OnEnter();
-            }
+            SetupHitbox();
+            swordPivot = FindModelChild("HitboxAnchor");
+            base.OnEnter();
         }
 
         public override void PlayAttackAnimation()
         {
             if (base.isGrounded & !base.GetModelAnimator().GetBool("isMoving"))
             {
-                PlayCrossfade("FullBody, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.08f);
-            } else
+                PlayCrossfade("FullBody, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient/*swingTimeCoefficient*/, 0.08f);
+            } 
+            else
             {
-                PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.08f);
-            }         
+                PlayCrossfade("FullBody, Override", "BufferEmpty", 0.1f);
+            }
+            PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient/*swingTimeCoefficient*/, 0.08f);
+
         }
 
         public override void FixedUpdate()
         {
+            Vector3 direction = this.GetAimRay().direction;
+            direction.y = Mathf.Max(direction.y, direction.y * 0.5f);
+            swordPivot.rotation = Util.QuaternionSafeLookRotation(direction);
+
             base.FixedUpdate();
         }
 
         public override void OnExit()
         {
+            swordPivot.transform.rotation = Quaternion.identity;
             base.OnExit();
         }
     }

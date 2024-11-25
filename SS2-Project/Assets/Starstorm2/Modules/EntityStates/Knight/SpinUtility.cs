@@ -1,57 +1,72 @@
 ﻿using MSU;
+using MSU.Config;
 using RoR2;
 using RoR2.Skills;
+using SS2;
 using UnityEngine;
 
 namespace EntityStates.Knight
 {
     public class SpinUtility : BaseKnightMeleeAttack
     {
-        public static float swingTimeCoefficient = 1f;
+        public static float swingTimeCoefficient = 1.63f;
         [FormatToken("SS2_KNIGHT_SPECIAL_SPIN_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float TokenModifier_dmgCoefficient => new SpinUtility().damageCoefficient;
-        public static SkillDef buffedSkillRef;
+        public static SkillDef buffedSkillRef;              //ew
         
-        // To disable collision
-        private int _origLayer;
-
         // Movement variables
-        public new float duration = 0.7f; // prev: 1f
-        public float initialSpeedCoefficient = 6f; // prev: 7, 8, 10f
-        public float finalSpeedCoefficient = 4f; //prev: 5
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
+        public static new float duration = 0.7f; // prev: 1f
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
+        public static float minSpeedCoefficient = 2f; // prev: 7, 8, 10f
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
+        public static float maxSpeedCoefficient = 7f; //prev: 5
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
+        public static float interruptSpeedCoefficient = 0.2f; //prev: 5
+
+        public static AnimationCurve dashAnimationCurve;
         public float hopVelocity = 25f; //prev: 25, 30f
         public string dodgeSoundString = "";
         public float dodgeFOV = SS2.Survivors.Knight.dodgeFOV;
-        public float rollSpeed;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
+        public static float rollSpeed;
         public Vector3 forwardDirection;
         public Vector3 previousPosition;
 
         // Damage
         public float dmgCoeff = 5.0f;
 
-
         // Multihit info
-        private float baseFireFrequency = 0.1f;
+        private float baseFireFrequency = 2f;
         private float fireFrequency;
         private float fireAge;
+        private bool interrupted;
+        private float sprintSpeedMultiplier;
+
+        private int _origLayer;
 
         private void CalculateInitialDirection()
         {
-            if (inputBank && characterDirection)
+            if (inputBank)
             {
-                forwardDirection = (inputBank.moveVector == Vector3.zero ? characterDirection.forward : inputBank.moveVector).normalized;
+                forwardDirection = GetAimRay().direction;
             }
+
+            sprintSpeedMultiplier = characterBody.isSprinting ? 1 : characterBody.sprintingSpeedMultiplier;
 
             RecalculateRollSpeed();
 
             if (characterMotor && characterDirection)
             {
-                characterMotor.velocity.y = 0f;
                 characterMotor.velocity = forwardDirection * rollSpeed;
             }
 
             Vector3 b = characterMotor ? characterMotor.velocity : Vector3.zero;
             previousPosition = transform.position - b;
+
+            characterMotor.Motor.ForceUnground();
 
             if (!isGrounded)
             {
@@ -61,7 +76,7 @@ namespace EntityStates.Knight
 
         private void RecalculateRollSpeed()
         {
-            rollSpeed = moveSpeedStat * Mathf.Lerp(initialSpeedCoefficient, finalSpeedCoefficient, fixedAge / duration);
+            rollSpeed = moveSpeedStat * sprintSpeedMultiplier * Mathf.Lerp(minSpeedCoefficient, maxSpeedCoefficient, dashAnimationCurve.Evaluate(fixedAge / duration)) * (interrupted ? interruptSpeedCoefficient : 1);
         }
 
         private void MoveKnight()
@@ -72,16 +87,16 @@ namespace EntityStates.Knight
             if (cameraTargetParams) cameraTargetParams.fovOverride = Mathf.Lerp(dodgeFOV, 60f, fixedAge / duration);
 
 
-            Vector3 normalized = (transform.position - previousPosition).normalized;
-            if (characterMotor && characterDirection && normalized != Vector3.zero)
-            {
-                Vector3 vector = normalized * rollSpeed;
-                float d = Mathf.Max(Vector3.Dot(vector, forwardDirection), 0f);
-                vector = forwardDirection * d;
-                vector.y = 0f;
+            //Vector3 normalized = (transform.position - previousPosition).normalized;
+            //if (characterMotor && characterDirection && normalized != Vector3.zero)
+            //{
+            //    Vector3 vector = normalized * rollSpeed;
+            //    float d = Mathf.Max(Vector3.Dot(vector, forwardDirection), 0f);
+            //    vector = forwardDirection * d;
 
-                characterMotor.velocity = vector;
-            }
+            //    characterMotor.velocity = vector;
+            //}
+            characterMotor.velocity = forwardDirection * rollSpeed;
             previousPosition = transform.position;
         }
 
@@ -147,7 +162,7 @@ namespace EntityStates.Knight
             attackSpeedStat = base.characterBody.attackSpeed;
             fireFrequency = baseFireFrequency * attackSpeedStat;
 
-            if (fireAge >= 1f / fireFrequency && base.isAuthority)
+            if ((fireAge >= (1f / fireFrequency)) && base.isAuthority)
             {
                 fireAge = 0f;
                 attack.ResetIgnoredHealthComponents();
@@ -170,39 +185,52 @@ namespace EntityStates.Knight
 
         public override void FixedUpdate()
         {
+            base.FixedUpdate();
+
             if (base.isAuthority)
             {
-                base.FixedUpdate();
-                MoveKnight();
-                MultiHitAttack();
-
                 if (fixedAge >= duration)
                 {
                     outer.SetNextStateToMain();
                     return;
                 }
+                MoveKnight();
+                MultiHitAttack();
             }
         }
 
 
         public override void OnExit()
         {
+            base.OnExit();
+
             if (base.isAuthority)
             {
                 if (cameraTargetParams) cameraTargetParams.fovOverride = -1f;
                 EnableCharacterMotorCollision();
-                base.OnExit();
-            }   
+            }
+
+            if (fixedAge < duration*0.9f)
+            {
+                interrupted = true;
+                MoveKnight();
+                PlayCrossfade("FullBody, Override", "BufferEmpty", 0.1f);
+            }
         }
 
         public override void PlayAttackAnimation()
         {
-            PlayCrossfade("FullBody, Override", "Utility", "Utility.playbackRate", duration * swingTimeCoefficient, 0.15f);   
+            PlayCrossfade("FullBody, Override", "Utility", "Utility.playbackRate", duration * /*swingTimeCoefficient*/1.63f, duration * 0.15f);   
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.Skill;
+            if (fixedAge < 0.2f * duration)
+            {
+                return InterruptPriority.PrioritySkill;
+            }
+
+            return InterruptPriority.Any;
         }
     }
 }
