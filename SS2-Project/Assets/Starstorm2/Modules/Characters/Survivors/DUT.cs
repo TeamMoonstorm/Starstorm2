@@ -17,20 +17,41 @@ namespace SS2.Survivors
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acDUT", SS2Bundle.Indev);
         public static ModdedDamageType DUTDamageType { get; private set; }
 
-        public static GameObject _dutOrb;
+        public static GameObject _dutOrbRed;
+        public static GameObject _dutOrbGreen;
         public override void Initialize()
         {
             ModifyPrefab();
             DUTDamageType = ReserveDamageType();
 
-            _dutOrb = AssetCollection.FindAsset<GameObject>("DUTOrbEffect");
+            _dutOrbRed = AssetCollection.FindAsset<GameObject>("DUTOrbEffectRed");
+            _dutOrbGreen = AssetCollection.FindAsset<GameObject>("DUTOrbEffectGreen");
 
+            On.RoR2.CharacterBody.RecalculateStats += DUTDrift;
+            R2API.RecalculateStatsAPI.GetStatCoefficients += DUTDriftBoost;
             GlobalEventManager.onServerDamageDealt += CheckDUT;
         }
 
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
+        }
+
+        private void DUTDrift(On.RoR2.CharacterBody.orig_RecalculateStats orig, CharacterBody self)
+        {
+            orig(self);
+            if (self.HasBuff(SS2Content.Buffs.bdDUTDrift))
+            {
+                self.acceleration /= 6;
+            }
+        }
+
+        private void DUTDriftBoost(CharacterBody sender, R2API.RecalculateStatsAPI.StatHookEventArgs args)
+        {
+            if (!sender.HasBuff(SS2Content.Buffs.bdDUTDrift))
+                return;
+
+            args.moveSpeedMultAdd += 1.5f;
         }
 
         private void CheckDUT(DamageReport report)
@@ -40,7 +61,7 @@ namespace SS2.Survivors
             var damageInfo = report.damageInfo;
             if (damageInfo.HasModdedDamageType(DUTDamageType))
             {
-                DUTChargeOrb orb = new DUTChargeOrb();
+                DUTRedOrb orb = new DUTRedOrb();
                 orb.origin = victimBody.transform.position;
                 orb.target = Util.FindBodyMainHurtBox(attackerBody);
                 OrbManager.instance.AddOrb(orb);

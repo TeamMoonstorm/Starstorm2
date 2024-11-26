@@ -6,6 +6,8 @@ using SS2;
 using SS2.Components;
 using UnityEngine.Networking;
 using R2API;
+using SS2.Orbs;
+using RoR2.Orbs;
 
 namespace EntityStates.DUT
 {
@@ -17,12 +19,16 @@ namespace EntityStates.DUT
         public static float chargeDmgCoefficient = 0.8f;
         public static float chargeProcCoef = 0.2f;
 
-        public static float selfHarmCoef = 0.8f;
+        public static float selfHarmCoef = 2.4f;
 
         public static float minDischargeDmg = 0.8f;
         public static float maxDischargeDmg = 135.75f; //le railgunner
+        public static float minRadius = 0.2f;
+        public static float maxRadius = 3f;
         public static float baseRecoil = 1f;
+
         public static string muzzleName = "Muzzle";
+
         private float timer;
         private DUTController controller;
 
@@ -76,7 +82,7 @@ namespace EntityStates.DUT
                 }
                 default:
                     break;
-            }    
+            }
         }
 
         public void SiphonEnemies()
@@ -116,14 +122,30 @@ namespace EntityStates.DUT
                 damageInfo.procChainMask = default(ProcChainMask);
                 healthComponent.TakeDamage(damageInfo);
 
-                controller.AddCharge(3f);
+                DUTGreenOrb orb = new DUTGreenOrb();
+                orb.origin = damageInfo.position;
+                orb.target = characterBody.mainHurtBox;
+
+                OrbManager.instance.AddOrb(orb);
+                OrbManager.instance.AddOrb(orb);
+                OrbManager.instance.AddOrb(orb);
             }
         }
 
         public void Discharge()
         {
             float dmgCoefficient = Util.Remap(controller.charge, 0f, controller.chargeMax, minDischargeDmg, maxDischargeDmg);
+            float radius = Util.Remap(controller.charge, 0f, controller.chargeMax, minRadius, maxRadius);
+                
             Ray r = GetAimRay();
+
+            SS2Log.Debug("discharging at " + controller.charge + " with a dmgcoef of " + dmgCoefficient);
+
+            float procCoefficient = 1f;
+            if (controller.charge >= controller.chargeMax * 0.5f)
+                procCoefficient++;
+            if (controller.charge >= controller.chargeMax)
+                procCoefficient++;
 
             BulletAttack bullet = new BulletAttack
             {
@@ -141,12 +163,17 @@ namespace EntityStates.DUT
                 muzzleName = muzzleName,
                 smartCollision = true,
                 procChainMask = default(ProcChainMask),
-                procCoefficient = 1f, //make this scale too LOL
-                radius = 1f, //and this...
-                weapon = gameObject
-                //tracerEffectPrefab = tracerPrefab,
+                procCoefficient = procCoefficient,
+                radius = radius,
+                weapon = gameObject,
+                tracerEffectPrefab = controller.tracerPrefab,
                 //hitEffectPrefab = hitPrefab
             };
+
+            //pierce if over 33% charge
+            if (controller.charge >= controller.chargeMax / 3f)
+                bullet.stopperMask = LayerIndex.world.mask;
+
             bullet.Fire();
 
             //also needs to scale...
@@ -162,7 +189,10 @@ namespace EntityStates.DUT
         {
             base.OnExit();
             if (controller != null)
-                controller.AddCharge(-controller.charge);
+            {
+                SS2Log.Debug("DUT Charge: " + controller.charge);
+                controller.ResetCharge();
+            }
         }
     }
 }

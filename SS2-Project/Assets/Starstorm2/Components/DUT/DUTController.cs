@@ -17,6 +17,13 @@ namespace SS2.Components
         public ParticleSystem fireParticle;
         public ParticleSystem beamParticle;
         public ParticleSystem lightningParticle;
+
+        [SerializeField]
+        public GameObject tracerPrefabRed;
+        [SerializeField]
+        public GameObject tracerPrefabGreen;
+
+        public GameObject tracerPrefab;
         public enum ChargeType
         {
             Damage,
@@ -88,7 +95,8 @@ namespace SS2.Components
 
         public void OnEnable()
         {
-
+            tracerPrefab = tracerPrefabRed;
+            ModifySphere();
         }
 
         public void AddCharge(float amount)
@@ -108,10 +116,19 @@ namespace SS2.Components
             if (pastThreshold2)
                 amount *= threshold2Multiplier;
 
-            if (isMaxCharge)
+            if (isMaxCharge) //to-do: rewrite to remove this. will need custom damage scaling in skill rather than ramping but that's nbd. wanting incredibly tiny increases past max, but increases nonetheless.
                 amount = 0f;
 
             Network_charge = Mathf.Clamp(charge + amount, 0f, chargeMax);
+
+            ModifySphere();
+        }
+
+        public void ResetCharge()
+        {
+            Network_charge = 0f;
+
+            ModifySphere();
         }
 
         public void SwapChargeType()
@@ -119,12 +136,16 @@ namespace SS2.Components
             if (currentChargeType == ChargeType.Damage)
             {
                 currentChargeType = ChargeType.Healing;
+                tracerPrefab = tracerPrefabGreen;
+                ModifySphere();
                 return;
             }
 
             if (currentChargeType == ChargeType.Healing)
             {
                 currentChargeType = ChargeType.Damage;
+                tracerPrefab = tracerPrefabRed;
+                ModifySphere();
                 return;
             }
         }
@@ -143,7 +164,7 @@ namespace SS2.Components
             if (currentChargeType == ChargeType.Healing)
                 fireParticle.startColor = Color.green;
 
-            if (charge == 0)
+            if (charge < 1)
             {
                 fireParticle.gameObject.SetActive(false);
 
@@ -183,8 +204,6 @@ namespace SS2.Components
         private void OnChargeModified(float newCharge)
         {
             Network_charge = newCharge;
-            Debug.Log("can i just ... do shit here?");
-            ModifySphere();
         }
 
         //let him cook

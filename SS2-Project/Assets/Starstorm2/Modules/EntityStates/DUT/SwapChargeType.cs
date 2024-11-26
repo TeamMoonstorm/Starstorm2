@@ -20,7 +20,9 @@ namespace EntityStates.DUT
                 SS2Log.Error("Failed to find DU-T controller on body " + characterBody);
 
             else
+            {
                 controller.SwapChargeType();
+            }
 
             Debug.Log(controller.currentChargeType);
         }
