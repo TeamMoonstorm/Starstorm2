@@ -1,0 +1,39 @@
+﻿using UnityEngine;
+
+namespace EntityStates.Generic
+{
+    public abstract class BaseWindDownState : BaseState
+    {
+        [SerializeField]
+        public float baseDuration;
+        [SerializeField]
+        public InterruptPriority priority;
+        [SerializeField]
+        public bool ignoreAttackSpeed;
+
+
+        private float duration;
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            duration = ignoreAttackSpeed? baseDuration : baseDuration / attackSpeedStat;
+        }
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+
+            if (fixedAge >= duration && isAuthority)
+            {
+                outer.SetNextStateToMain();
+                return;
+
+            }
+        }
+        public override InterruptPriority GetMinimumInterruptPriority()
+        {
+            return priority;
+        }
+    }
+}

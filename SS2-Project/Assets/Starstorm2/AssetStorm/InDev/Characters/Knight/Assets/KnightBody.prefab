@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 5961420081284677721}
   - component: {fileID: 5072596841796980718}
   - component: {fileID: 2818190628323442051}
+  - component: {fileID: 4254329117781760613}
   - component: {fileID: 241779594850744952}
   - component: {fileID: 8321155026412443090}
   - component: {fileID: 8616875480692789324}
@@ -332,6 +333,7 @@ MonoBehaviour:
   stateMachines:
   - {fileID: 5072596841796980718}
   - {fileID: 2818190628323442051}
+  - {fileID: 4254329117781760613}
 --- !u!114 &5072596841796980718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -365,6 +367,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customName: Weapon
+  initialStateType:
+    _typeName: RoR2.RouletteChestController+Idle, RoR2, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  mainStateType:
+    _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  debug: 0
+--- !u!114 &4254329117781760613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7725647466612521720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1297580292, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customName: Roll
   initialStateType:
     _typeName: RoR2.RouletteChestController+Idle, RoR2, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
@@ -667,7 +688,7 @@ MonoBehaviour:
       PublicKeyToken=null
   idleStateMachine:
   - {fileID: 2818190628323442051}
-  - {fileID: 5072596841796980718}
+  - {fileID: 4254329117781760613}
   bypassDeathLayerChange: 0
 --- !u!114 &1827339712691547538
 MonoBehaviour:
@@ -804,6 +825,7 @@ MonoBehaviour:
   targetStateMachine: {fileID: 5072596841796980718}
   idleStateMachine:
   - {fileID: 2818190628323442051}
+  - {fileID: 4254329117781760613}
   hurtState:
     _typeName: 
   canBeHitStunned: 0
@@ -839,7 +861,7 @@ PrefabInstance:
     - target: {fileID: 537117806164445188, guid: 411af68e233e4714c93ff5aa1ad9cefb,
         type: 3}
       propertyPath: m_Name
-      value: KnightFinal
+      value: mdlKnight
       objectReference: {fileID: 0}
     - target: {fileID: 823950417140205550, guid: 411af68e233e4714c93ff5aa1ad9cefb,
         type: 3}

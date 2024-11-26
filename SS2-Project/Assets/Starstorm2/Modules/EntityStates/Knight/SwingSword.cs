@@ -93,7 +93,7 @@ namespace EntityStates.Knight
             if (!isComboFinisher)
             {
                 swingSoundString = "NemmandoSwing";
-                swingEffectPrefab = SS2.Survivors.Knight.KnightSpinEffect;
+                //swingEffectPrefab = SS2.Survivors.Knight.KnightSpinEffect;
                 damageCoefficient = testDamage;
                 hitStopDuration = testHistop;
 
@@ -101,8 +101,8 @@ namespace EntityStates.Knight
 
                 swingTimeCoefficient = testSwingTimeCoefficient;
 
-                attackStartPercentTime = 0.215f * swingTimeCoefficient;
-                attackEndPercentTime = 0.4f * swingTimeCoefficient;
+                attackStartTimeFraction = 0.215f * swingTimeCoefficient;
+                attackEndTimeFraction = 0.4f * swingTimeCoefficient;
 
                 earlyExitPercentTime = testEarlyExit * swingTimeCoefficient/*0.8f*/;
             }
@@ -118,8 +118,8 @@ namespace EntityStates.Knight
 
                 swingTimeCoefficient = testFinisherSwingTimeCoefficient;
 
-                attackStartPercentTime = 0.252f * swingTimeCoefficient;
-                attackEndPercentTime = 0.6f * swingTimeCoefficient;
+                attackStartTimeFraction = 0.252f * swingTimeCoefficient;
+                attackEndTimeFraction = 0.7f * swingTimeCoefficient;
                 earlyExitPercentTime = testFinisherEarlyExit * swingTimeCoefficient/*0.8f*/;
             }
 
@@ -157,7 +157,7 @@ namespace EntityStates.Knight
 
         public override void OnExit()
         {
-            swordPivot.transform.rotation = Quaternion.identity;
+            swordPivot.transform.localRotation = Quaternion.identity;
             base.OnExit();
         }
     }

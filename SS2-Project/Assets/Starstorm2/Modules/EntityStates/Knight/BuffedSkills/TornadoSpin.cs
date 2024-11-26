@@ -4,34 +4,19 @@ namespace EntityStates.Knight
 {
     public class TornadoSpin : SpinUtility
     {
-
-        public override void OnEnter()
-        {
-            // This is stupid I gotta fix this
-            dmgCoeff = 7.0f;
-            base.OnEnter();
-        }
+        //change the damage and effect in the esc
+        //change interrupt priority from any
+        //dee's concept had a spinning projectile that lingers in front of the attack at the end so do that good luck love you
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-        }
-
-
-        public override void OnExit()
-        {
-            if (base.isAuthority)
+            if (inputBank.skill1.justPressed)
             {
-                GenericSkill primarySkill = skillLocator.primary;
-                GenericSkill utilitySkill = skillLocator.utility;
-                GenericSkill specialSkill = skillLocator.special;
-
-                primarySkill.UnsetSkillOverride(gameObject, SwingSword.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
-                utilitySkill.UnsetSkillOverride(gameObject, SpinUtility.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
-                specialSkill.UnsetSkillOverride(gameObject, BannerSpecial.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
+                //replacement for util being interruptible by m1
+                base.outer.SetNextStateToMain();
+                //do projectile on exit
             }
-
-            base.OnExit();
         }
     }
 }

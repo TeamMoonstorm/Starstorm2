@@ -22,7 +22,7 @@ MonoBehaviour:
   activationState:
     _typeName: EntityStates.Knight.ShieldPunch, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  interruptPriority: 0
+  interruptPriority: 2
   baseRechargeInterval: 0
   baseMaxStock: 1
   rechargeStock: 0
@@ -38,6 +38,6 @@ MonoBehaviour:
   forceSprintDuringState: 0
   canceledFromSprinting: 0
   isCombatSkill: 1
-  mustKeyPress: 0
+  mustKeyPress: 1
   autoHandleLuminousShot: 1
   hideStockCount: 0
