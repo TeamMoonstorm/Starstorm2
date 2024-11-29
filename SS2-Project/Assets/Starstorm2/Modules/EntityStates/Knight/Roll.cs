@@ -38,7 +38,6 @@ namespace EntityStates.Knight
 
             base.OnEnter();
             animator.SetBool("isRolling", true);
-            characterBody.isSprinting = true;
             if (isGrounded)
             {
                 PlayCrossfade("FullBody, Override", "Roll", "Utility.rate", duration, 0.05f);
@@ -52,6 +51,16 @@ namespace EntityStates.Knight
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+        }
+
+        protected override void SetNextState()
+        {
+            outer.SetNextState(new RollWindDown());
+        }
+
+        protected override void OnInterrupted()
+        {
+            return;
         }
 
         public override void OnExit()

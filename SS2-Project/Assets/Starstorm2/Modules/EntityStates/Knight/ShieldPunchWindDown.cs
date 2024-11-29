@@ -2,5 +2,6 @@
 
 namespace EntityStates.Knight
 {
+
     public class ShieldPunchWindDown : BaseWindDownState { }
 }

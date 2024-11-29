@@ -11,8 +11,7 @@ namespace EntityStates.Generic
         [SerializeField]
         public bool ignoreAttackSpeed;
 
-
-        private float duration;
+        protected float duration;
 
         public override void OnEnter()
         {

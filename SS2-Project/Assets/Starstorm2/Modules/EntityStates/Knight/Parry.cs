@@ -11,6 +11,9 @@ namespace EntityStates.Knight
     // Parry state that is entered/triggered from the bdKnightParryBuff code.
     public class Parry : BasicMeleeAttack
     {
+        [SerializeField]
+        private float inputtableTime;
+
         [FormatToken("SS2_KNIGHT_SHIELD_BASH_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float TokenModifier_dmgCoefficient => new ShieldPunch().damageCoefficient;
         
@@ -28,14 +31,16 @@ namespace EntityStates.Knight
         private GenericSkill originalUtilitySkill;
         private GenericSkill originalSpecialSkill;
 
-
-        // Movement variables
         [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
         public static float testbaseDuration = 0.69f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
+        public static float testInputLockDuration = 0.69f;
 
         public override void OnEnter()
         {
             baseDuration = testbaseDuration;
+            inputtableTime = testInputLockDuration;
 
             base.OnEnter();
 
@@ -48,9 +53,18 @@ namespace EntityStates.Knight
             originalSpecialSkill = skillLocator.special;
 
             // Assign the buffed skill versions
+            float originalcooldown;
+            originalcooldown = originalPrimarySkill.rechargeStopwatch;
             originalPrimarySkill.SetSkillOverride(gameObject, buffedPrimarySkillDef, GenericSkill.SkillOverridePriority.Contextual);
+            originalPrimarySkill.rechargeStopwatch = originalcooldown;
+
+            originalcooldown = originalUtilitySkill.rechargeStopwatch;
             originalUtilitySkill.SetSkillOverride(gameObject, buffedUtilitySkillDef, GenericSkill.SkillOverridePriority.Contextual);
+            originalUtilitySkill.rechargeStopwatch = originalcooldown;
+
+            originalcooldown = originalSpecialSkill.rechargeStopwatch;
             originalSpecialSkill.SetSkillOverride(gameObject, buffedSpecialSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+            originalSpecialSkill.rechargeStopwatch = originalcooldown;
 
             EffectData effectData = new EffectData();
             effectData.origin = this.characterBody.corePosition;
@@ -68,7 +82,11 @@ namespace EntityStates.Knight
             inputBank.moveVector = Vector3.zero;
             characterMotor.velocity = Vector3.zero;
 
-            PerformInputs();
+
+            if (fixedAge >= inputtableTime * duration)
+            {
+                PerformInputs();
+            }
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()
@@ -107,10 +125,18 @@ namespace EntityStates.Knight
             //}
 
             // Assign the buffed skill versions
+            float originalcooldown;
+            originalcooldown = originalPrimarySkill.rechargeStopwatch;
             originalPrimarySkill.UnsetSkillOverride(gameObject, buffedPrimarySkillDef, GenericSkill.SkillOverridePriority.Contextual);
-            originalUtilitySkill.UnsetSkillOverride(gameObject, buffedUtilitySkillDef, GenericSkill.SkillOverridePriority.Contextual);
-            originalSpecialSkill.UnsetSkillOverride(gameObject, buffedSpecialSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+            originalPrimarySkill.rechargeStopwatch = originalcooldown;
 
+            originalcooldown = originalUtilitySkill.rechargeStopwatch;
+            originalUtilitySkill.UnsetSkillOverride(gameObject, buffedUtilitySkillDef, GenericSkill.SkillOverridePriority.Contextual);
+            originalUtilitySkill.rechargeStopwatch = originalcooldown;
+
+            originalcooldown = originalSpecialSkill.rechargeStopwatch;
+            originalSpecialSkill.UnsetSkillOverride(gameObject, buffedSpecialSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+            originalSpecialSkill.rechargeStopwatch = originalcooldown;
 
             characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility);
             

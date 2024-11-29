@@ -1,12 +1,24 @@
-﻿using RoR2;
+﻿using MSU.Config;
+using RoR2;
+using SS2;
+using UnityEngine;
 
 namespace EntityStates.Knight
 {
     public class TornadoSpin : SpinUtility
     {
-        //change the damage and effect in the esc
-        //change interrupt priority from any
+        //change the damage and vfx in the ESC
         //dee's concept had a spinning projectile that lingers in front of the attack at the end so do that good luck love you
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
+        public static float testDamageBoosted = 4f;
+
+        public override void OnEnter()
+        {
+            damageCoefficient = testDamageBoosted;
+
+            base.OnEnter();
+        }
 
         public override void FixedUpdate()
         {

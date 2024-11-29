@@ -22,7 +22,7 @@ MonoBehaviour:
     _typeName: EntityStates.Knight.TornadoSpin, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
   interruptPriority: 2
-  baseRechargeInterval: 14
+  baseRechargeInterval: 8
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 1
@@ -37,6 +37,6 @@ MonoBehaviour:
   forceSprintDuringState: 0
   canceledFromSprinting: 0
   isCombatSkill: 1
-  mustKeyPress: 0
+  mustKeyPress: 1
   autoHandleLuminousShot: 1
   hideStockCount: 0

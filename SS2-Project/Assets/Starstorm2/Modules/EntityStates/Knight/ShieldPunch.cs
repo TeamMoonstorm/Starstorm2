@@ -6,13 +6,19 @@ using MSU;
 using UnityEngine.Networking;
 using System;
 using MSU.Config;
+using SS2.Survivors;
 
 namespace EntityStates.Knight
 {
     public class ShieldPunch : BaseKnightDashMelee
     {
+        public static float TokenModifier_dmgCoefficient => new ShieldPunch().damageCoefficient;
+        public int swingSide;
+        [SerializeField]
+        public BuffDef shieldBuff;
+
         [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
-        public static float swingTimeCoefficient = 1.63f;
+        public static float swingTimeCoefficient = 2.4f;
 
         // Movement variables
         [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
@@ -44,10 +50,9 @@ namespace EntityStates.Knight
             earlyExitPercentTime = testearlyexit;
 
             base.OnEnter();
-        }
 
-        public static float TokenModifier_dmgCoefficient => new ShieldPunch().damageCoefficient;
-        public int swingSide;
+            characterBody.AddTimedBuff(shieldBuff, duration + 0.5f);
+        }
 
         public override void PlayAttackAnimation()
         {

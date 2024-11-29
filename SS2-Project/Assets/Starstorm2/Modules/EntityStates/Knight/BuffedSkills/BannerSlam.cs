@@ -8,35 +8,14 @@ namespace EntityStates.Knight
 {
     public class BannerSlam : BannerSpecial
     {
-        public override void OnEnter()
+        protected override void ModifyBlastAttack(BlastAttack blastAttack)
         {
-            base.OnEnter();
+            //TODO: using force in this game for gameplay is ass. Do this instead https://discord.com/channels/562704639141740588/562704639569428506/1192073657267261534
+            //also I think dee's concept had him swiping everyone in before jumping, rather than on impact, then you banner them all when you land
+                //think I would make a new knightmelee state and on enter set the roll statemachine to that state and apply the force to the hitresults 
+            blastAttack.baseForce = -1000f;
+            blastAttack.bonusForce = Vector3.up * 1000;
         }
-
-        public override void FixedUpdate()
-        {
-            base.FixedUpdate();
-        }
-        //handle in parry state
-        //public override void OnExit()
-        //{
-        //    if (base.isAuthority)
-        //    {
-        //        GenericSkill primarySkill = skillLocator.primary;
-        //        GenericSkill utilitySkill = skillLocator.utility;
-        //        GenericSkill specialSkill = skillLocator.special;
-
-        //        primarySkill.UnsetSkillOverride(gameObject, SwingSword.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
-        //        utilitySkill.UnsetSkillOverride(gameObject, SpinUtility.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
-        //        specialSkill.UnsetSkillOverride(gameObject, BannerSpecial.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
-
-        //        specialSkill.DeductStock(1);
-        //    }
-              //redundant. the state is already exiting.
-                //unless the intention was to NEVER let this state transition to another state and only let it go to main
-        //    outer.SetNextStateToMain();
-        //    base.OnExit();
-        //}
     }
 
 }

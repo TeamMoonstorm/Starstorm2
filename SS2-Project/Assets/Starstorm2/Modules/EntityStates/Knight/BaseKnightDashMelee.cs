@@ -20,6 +20,9 @@ namespace EntityStates.Knight
         [SerializeField]
         public string dodgeSoundString = "";
 
+        [SerializeField]
+        public bool forceUnground = true;
+
         [SerializeField, Tooltip("locks to x/z plane")]
         public bool lockY;
 
@@ -91,14 +94,17 @@ namespace EntityStates.Knight
             Vector3 b = characterMotor ? characterMotor.velocity : Vector3.zero;
             previousPosition = transform.position - b;
 
-            characterMotor.Motor.ForceUnground();
+            if (forceUnground)
+            {
+                characterMotor.Motor.ForceUnground();
+            }
         }
 
         private Vector3 GetDashDirection()
         {
             Vector3 aimDirection = inputBank.aimDirection;
 
-            if (directionAimOverride)
+            if (directionAimOverride || inputBank.moveVector == Vector3.zero)
             {
                 if(lockY)
                 {
@@ -158,7 +164,7 @@ namespace EntityStates.Knight
             {
                 if (fixedAge >= duration)
                 {
-                    outer.SetNextStateToMain();
+                    //base state sets next state
                     return;
                 }
                 MoveKnight();
@@ -177,10 +183,16 @@ namespace EntityStates.Knight
 
             if (fixedAge < duration * 0.9f)
             {
-                interrupted = true;
-                MoveKnight();
-                PlayCrossfade("FullBody, Override", "BufferEmpty", 0.1f);
+                OnInterrupted();
             }
+
+            MoveKnight();
+        }
+
+        protected virtual void OnInterrupted()
+        {
+            interrupted = true;
+            PlayCrossfade("FullBody, Override", "BufferEmpty", 0.1f);
         }
     }
 }

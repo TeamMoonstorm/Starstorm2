@@ -29,6 +29,8 @@ namespace EntityStates.Knight
         public Vector3 bonusForce = Vector3.zero;
         [SerializeField]
         public float baseDuration = 1f;
+        [SerializeField]
+        public bool ignoreAttackSpeed = false;
 
         [SerializeField]
         public float attackStartTimeFraction = 0f;
@@ -37,6 +39,11 @@ namespace EntityStates.Knight
 
         [SerializeField]
         public float earlyExitPercentTime = 0.4f;
+
+        [SerializeField]
+        public InterruptPriority earlyExitPriority = InterruptPriority.Any;
+        [SerializeField]
+        public InterruptPriority basePriority = InterruptPriority.Skill;
 
         [SerializeField]
         public float hitStopDuration = 0.012f;
@@ -59,11 +66,6 @@ namespace EntityStates.Knight
         public GameObject hitEffectPrefab;
         [SerializeField]
         public NetworkSoundEventDef impactSound;
-
-        [SerializeField]
-        public InterruptPriority earlyExitPriority = InterruptPriority.Any;
-        [SerializeField]
-        public InterruptPriority basePriority = InterruptPriority.Skill;
 
         public bool addModdedDamageType = false;
         public DamageAPI.ModdedDamageType moddedDamageType;
@@ -90,7 +92,7 @@ namespace EntityStates.Knight
 
             ModifyMelee();
 
-            duration = baseDuration / attackSpeedStat;
+            duration = ignoreAttackSpeed ? baseDuration : baseDuration / attackSpeedStat;
             animator = GetModelAnimator();
             StartAimMode(2f + duration, false);
 
@@ -147,7 +149,7 @@ namespace EntityStates.Knight
             {
                 if (characterMotor && !characterMotor.isGrounded && hitHopVelocity > 0f)
                 {
-                    SmallHop(characterMotor, hitHopVelocity);
+                    SmallHop(characterMotor, hitHopVelocity / (attackSpeedStat * attackSpeedStat));
                 }
 
                 hasHopped = true;

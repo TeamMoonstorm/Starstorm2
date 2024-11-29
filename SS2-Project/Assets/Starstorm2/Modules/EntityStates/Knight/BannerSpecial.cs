@@ -2,6 +2,7 @@
 using RoR2;
 using RoR2.Skills;
 using UnityEngine.Networking;
+using System;
 
 namespace EntityStates.Knight
 {
@@ -26,45 +27,6 @@ namespace EntityStates.Knight
         private bool detonateNextFrame;
         private float previousAirControl;
 
-        private void FireImpact()
-        {
-            PlayAnimation("FullBody, Override", "SpecialLeapEnd", "Special.playbackRate", 1f);
-
-
-            if (base.isAuthority)
-            {
-                new BlastAttack
-                {
-                    attacker = base.gameObject,
-                    baseDamage = damageStat,
-                    baseForce = 20f,
-                    bonusForce = Vector3.up,
-                    crit = false,
-                    damageType = DamageType.Generic,
-                    falloffModel = BlastAttack.FalloffModel.Linear,
-                    procCoefficient = 0.1f,
-                    radius = 5f,
-                    position = base.characterBody.footPosition,
-                    attackerFiltering = AttackerFiltering.NeverHitSelf,
-                    //impactEffect = EffectCatalog.FindEffectIndexFromPrefab(SS2.Survivors.Knight.KnightImpactEffect),
-                    teamIndex = base.teamComponent.teamIndex,
-                }.Fire();
-            }
-
-            if (NetworkServer.active)
-            {
-                Vector3 position = inputBank.aimOrigin - (inputBank.aimDirection);
-                bannerObject = UnityEngine.Object.Instantiate(knightBannerWard, position, Quaternion.identity);
-
-                bannerObject.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
-                NetworkServer.Spawn(bannerObject);
-
-                slowBuffWardInstance = UnityEngine.Object.Instantiate(slowBuffWard, position, Quaternion.identity);
-                slowBuffWardInstance.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
-                slowBuffWardInstance.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(bannerObject);
-            }
-        }
-
         public override void OnEnter()
         {
             base.OnEnter();
@@ -78,7 +40,7 @@ namespace EntityStates.Knight
             if (base.isAuthority)
             {
                 base.characterBody.isSprinting = true;
-                direction.y = Mathf.Max(direction.y, minimumY);
+                //direction.y = Mathf.Max(direction.y, minimumY);
                 Vector3 vector = direction.normalized * aimVelocity * moveSpeedStat;
                 Vector3 vector2 = Vector3.up * upwardVelocity;
                 Vector3 vector3 = new Vector3(direction.x, 0f, direction.z).normalized * forwardVelocity;
@@ -127,9 +89,54 @@ namespace EntityStates.Knight
             base.characterMotor.airControl = previousAirControl;
             base.characterBody.isSprinting = false;
 
-            outer.SetNextStateToMain();
+            characterMotor.velocity *= 0.1f;
+
             base.OnExit();
         }
+
+        private void FireImpact()
+        {
+            PlayAnimation("FullBody, Override", "SpecialLeapEnd", "Special.playbackRate", detonateNextFrame ? 1f : 0.2f);
+
+            if (base.isAuthority)
+            {
+                var blastAttack = new BlastAttack
+                {
+                    attacker = base.gameObject,
+                    baseDamage = damageStat,
+                    baseForce = 20f,
+                    bonusForce = Vector3.up,
+                    crit = false,
+                    damageType = DamageType.Generic,
+                    falloffModel = BlastAttack.FalloffModel.Linear,
+                    procCoefficient = 0.1f,
+                    radius = 20f,
+                    position = base.characterBody.footPosition,
+                    attackerFiltering = AttackerFiltering.NeverHitSelf,
+                    //impactEffect = EffectCatalog.FindEffectIndexFromPrefab(SS2.Survivors.Knight.KnightImpactEffect),
+                    teamIndex = base.teamComponent.teamIndex,
+                };
+
+                ModifyBlastAttack(blastAttack);
+
+                blastAttack.Fire();
+            }
+
+            if (NetworkServer.active)
+            {
+                Vector3 position = inputBank.aimOrigin - (inputBank.aimDirection);
+                bannerObject = UnityEngine.Object.Instantiate(knightBannerWard, position, Quaternion.identity);
+
+                bannerObject.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
+                NetworkServer.Spawn(bannerObject);
+
+                slowBuffWardInstance = UnityEngine.Object.Instantiate(slowBuffWard, position, Quaternion.identity);
+                slowBuffWardInstance.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
+                slowBuffWardInstance.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(bannerObject);
+            }
+        }
+
+        protected virtual void ModifyBlastAttack(BlastAttack blastAttack) { }
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {

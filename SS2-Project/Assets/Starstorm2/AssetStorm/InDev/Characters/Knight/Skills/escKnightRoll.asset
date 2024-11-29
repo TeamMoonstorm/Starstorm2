@@ -31,7 +31,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: dashAnimationCurve
       fieldValue:
-        stringValue: '{"preWrapMode":8,"postWrapMode":8,"keys":[{"time":0.0,"value":0.86419677734375,"inTangent":3.747457265853882,"outTangent":3.747457265853882,"inWeight":0.0,"outWeight":0.3673446476459503,"weightedMode":0,"tangentMode":0},{"time":0.06950397789478302,"value":1.0,"inTangent":0.0,"outTangent":0.0,"inWeight":0.3333333432674408,"outWeight":0.3333333432674408,"weightedMode":0,"tangentMode":0},{"time":0.30111581087112429,"value":1.0,"inTangent":0.0,"outTangent":0.0,"inWeight":0.3333333432674408,"outWeight":0.3333333432674408,"weightedMode":0,"tangentMode":0},{"time":0.903564453125,"value":0.0,"inTangent":-1.329254388809204,"outTangent":-1.329254388809204,"inWeight":0.08479095250368118,"outWeight":0.0,"weightedMode":0,"tangentMode":0}]}'
+        stringValue: '{"preWrapMode":8,"postWrapMode":8,"keys":[{"time":0.0,"value":0.86419677734375,"inTangent":3.747457265853882,"outTangent":3.747457265853882,"inWeight":0.0,"outWeight":0.3673446476459503,"weightedMode":0,"tangentMode":0},{"time":0.06950397789478302,"value":1.0,"inTangent":0.0,"outTangent":0.0,"inWeight":0.3333333432674408,"outWeight":0.3333333432674408,"weightedMode":0,"tangentMode":0},{"time":0.4387044608592987,"value":1.0,"inTangent":0.0,"outTangent":0.0,"inWeight":0.3333333432674408,"outWeight":0.3333333432674408,"weightedMode":0,"tangentMode":0},{"time":0.9886474609375,"value":0.0,"inTangent":-1.329254388809204,"outTangent":Infinity,"inWeight":0.08479095250368118,"outWeight":0.0,"weightedMode":0,"tangentMode":97},{"time":1.137588620185852,"value":0.0,"inTangent":0.0,"outTangent":0.0,"inWeight":0.0,"outWeight":0.0,"weightedMode":0,"tangentMode":0}]}'
         objectValue: {fileID: 0}
     - fieldName: dodgeSoundString
       fieldValue:
@@ -129,7 +129,7 @@ MonoBehaviour:
     - fieldName: earlyExitPriority
       fieldValue:
         stringValue: '{"assemblyQualifiedName":"EntityStates.InterruptPriority, RoR2,
-          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","values":"Any"}'
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","values":"PrioritySkill"}'
         objectValue: {fileID: 0}
     - fieldName: basePriority
       fieldValue:
@@ -163,4 +163,12 @@ MonoBehaviour:
     - fieldName: attackEndTimeFraction
       fieldValue:
         stringValue: 0.6
+        objectValue: {fileID: 0}
+    - fieldName: forceUnground
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: ignoreAttackSpeed
+      fieldValue:
+        stringValue: 1
         objectValue: {fileID: 0}

@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 2161949507791879325}
   - component: {fileID: 5278585593546160489}
   - component: {fileID: 4747077024515164482}
+  - component: {fileID: 4608135033383063149}
   m_Layer: 0
   m_Name: KnightBody
   m_TagString: Player
@@ -846,6 +847,18 @@ MonoBehaviour:
   characterBody: {fileID: 8530518001122098039}
   PassiveWardPrefab: {fileID: 1703809909102045, guid: bf8e2245939c26e458c06fb893df9129,
     type: 3}
+--- !u!114 &4608135033383063149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7725647466612521720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0adbc0288cdf05443bef0b75cb6b8df1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3409225305625246073
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -853,20 +866,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7287274351398289365}
     m_Modifications:
-    - target: {fileID: 42698838799218731, guid: 411af68e233e4714c93ff5aa1ad9cefb,
-        type: 3}
-      propertyPath: m_ConnectedBody
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 537117806164445188, guid: 411af68e233e4714c93ff5aa1ad9cefb,
         type: 3}
       propertyPath: m_Name
       value: mdlKnight
-      objectReference: {fileID: 0}
-    - target: {fileID: 823950417140205550, guid: 411af68e233e4714c93ff5aa1ad9cefb,
-        type: 3}
-      propertyPath: m_ConnectedBody
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 882680650988540606, guid: 411af68e233e4714c93ff5aa1ad9cefb,
         type: 3}
@@ -923,37 +926,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2570729912521183156, guid: 411af68e233e4714c93ff5aa1ad9cefb,
-        type: 3}
-      propertyPath: m_ConnectedBody
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3098146058800808758, guid: 411af68e233e4714c93ff5aa1ad9cefb,
-        type: 3}
-      propertyPath: m_ConnectedBody
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3250198192194016089, guid: 411af68e233e4714c93ff5aa1ad9cefb,
-        type: 3}
-      propertyPath: skins.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3250198192194016089, guid: 411af68e233e4714c93ff5aa1ad9cefb,
-        type: 3}
-      propertyPath: skins.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 7ce7401e0032ce84b9c050b1988aba42,
-        type: 2}
     - target: {fileID: 3404809963666717092, guid: 411af68e233e4714c93ff5aa1ad9cefb,
         type: 3}
       propertyPath: healthComponent
       value: 
       objectReference: {fileID: 8032541010487473223}
-    - target: {fileID: 5344841318396188897, guid: 411af68e233e4714c93ff5aa1ad9cefb,
+    - target: {fileID: 3522296423152549362, guid: 411af68e233e4714c93ff5aa1ad9cefb,
         type: 3}
-      propertyPath: m_ConnectedBody
+      propertyPath: healthComponent
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8032541010487473223}
     - target: {fileID: 5756236051709664843, guid: 411af68e233e4714c93ff5aa1ad9cefb,
         type: 3}
       propertyPath: inputBank
@@ -964,41 +946,11 @@ PrefabInstance:
       propertyPath: directionComponent
       value: 
       objectReference: {fileID: 1301156465497949038}
-    - target: {fileID: 6102640341644129914, guid: 411af68e233e4714c93ff5aa1ad9cefb,
-        type: 3}
-      propertyPath: m_ConnectedBody
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 6989382658905640743, guid: 411af68e233e4714c93ff5aa1ad9cefb,
         type: 3}
       propertyPath: body
       value: 
       objectReference: {fileID: 8530518001122098039}
-    - target: {fileID: 7348156531755490763, guid: 411af68e233e4714c93ff5aa1ad9cefb,
-        type: 3}
-      propertyPath: m_ConnectedBody
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7892409228534270195, guid: 411af68e233e4714c93ff5aa1ad9cefb,
-        type: 3}
-      propertyPath: m_ConnectedBody
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7935706332226342102, guid: 411af68e233e4714c93ff5aa1ad9cefb,
-        type: 3}
-      propertyPath: m_ConnectedBody
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7986997692277176683, guid: 411af68e233e4714c93ff5aa1ad9cefb,
-        type: 3}
-      propertyPath: m_ConnectedBody
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8675740487900318642, guid: 411af68e233e4714c93ff5aa1ad9cefb,
-        type: 3}
-      propertyPath: m_ConnectedBody
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 411af68e233e4714c93ff5aa1ad9cefb, type: 3}
 --- !u!4 &2553515950558735303 stripped

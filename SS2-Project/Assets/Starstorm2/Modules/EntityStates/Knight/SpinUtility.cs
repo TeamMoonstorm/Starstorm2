@@ -29,12 +29,23 @@ namespace EntityStates.Knight
         [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
         public static float testearlyexit = 0.1f;
 
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
+        public static float testFireFrequency = 2f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
+        public static float testDamage = 2f;
+
         public override void OnEnter()
         {
             baseDuration = testbaseDuration;
             minSpeedCoefficient = testminSpeedCoefficient;
             maxSpeedCoefficient = testmaxSpeedCoefficient;
             interruptSpeedCoefficient = testinterruptSpeedCoefficient;
+            baseFireFrequency = testFireFrequency;
+            damageCoefficient = testDamage;
+
+            attackSpeedStat = base.characterBody.attackSpeed;
+            fireFrequency = baseFireFrequency * attackSpeedStat;
 
             earlyExitPercentTime = testearlyexit;
 
@@ -58,27 +69,18 @@ namespace EntityStates.Knight
 
             if (base.isAuthority)
             {
-                if (fixedAge >= duration)
-                {
-                    outer.SetNextStateToMain();
-                    return;
-                }
-                MultiHitAttack();
+                MultiHitAttackAuthority();
             }
         }
 
-        private void MultiHitAttack()
+        private void MultiHitAttackAuthority()
         {
             fireAge += Time.fixedDeltaTime;
-            base.characterBody.SetAimTimer(2f);
-            attackSpeedStat = base.characterBody.attackSpeed;
-            fireFrequency = baseFireFrequency * attackSpeedStat;
 
-            if ((fireAge >= (1f / fireFrequency)) && base.isAuthority)
+            while ((fireAge >= (1f / fireFrequency)))
             {
-                fireAge = 0f;
+                fireAge -= 1f / fireFrequency;
                 attack.ResetIgnoredHealthComponents();
-                attack.isCrit = base.characterBody.RollCrit();
                 attack.Fire();
             }
         }

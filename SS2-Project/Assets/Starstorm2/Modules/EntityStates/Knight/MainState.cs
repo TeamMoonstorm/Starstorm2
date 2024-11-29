@@ -9,6 +9,8 @@ namespace EntityStates.Knight
         private EntityStateMachine weaponStateMachine;
         private EntityStateMachine rollStateMachine;
 
+        private float jankInputBuffer;
+
         public override void OnEnter()
         {
             base.OnEnter();
@@ -41,21 +43,29 @@ namespace EntityStates.Knight
 
         public override void ProcessJump()
         {
+            jankInputBuffer -= GetDeltaTime();
+            if (jumpInputReceived)
+            {
+                jankInputBuffer = 0.35f;
+            }
+
             if (base.hasCharacterMotor && !healthComponent.isInFrozenState)
             {
-                if (base.jumpInputReceived &&
+                if (jumpInputReceived && jankInputBuffer > 0 &&
                     base.characterBody &&
                     base.characterMotor.jumpCount < (base.characterBody.maxJumpCount + 1) &&
                     weaponStateMachine &&
-                    weaponStateMachine.state is Shield &&
-                    weaponStateMachine.CanInterruptState(InterruptPriority.Skill))
+                    weaponStateMachine.state is Shield)
                 {
-                    if (!isGrounded)
+                    if (rollStateMachine && rollStateMachine.CanInterruptState(InterruptPriority.Skill))
                     {
-                        base.characterMotor.jumpCount++;
-                    }
+                        if (!isGrounded)
+                        {
+                            base.characterMotor.jumpCount++;
+                        }
 
-                    weaponStateMachine.SetNextState(new EntityStates.Knight.Roll());
+                        rollStateMachine.SetNextState(new EntityStates.Knight.Roll());
+                    }
                     return;
 
                 }

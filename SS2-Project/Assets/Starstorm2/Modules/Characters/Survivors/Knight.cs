@@ -5,6 +5,7 @@ using UnityEngine.AddressableAssets;
 using RoR2.ContentManagement;
 using R2API;
 using EntityStates;
+using MSU.Config;
 
 namespace SS2.Survivors
 {
@@ -25,6 +26,9 @@ namespace SS2.Survivors
 
         public static Vector3 chargeCameraPos = new Vector3(1.2f, -0.25f, -6.1f);
         public static Vector3 altCameraPos = new Vector3(-1.2f, -0.25f, -6.1f);
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
+        public static float BannerBuffRegen = 0.2f;
 
         
         public static CharacterCameraParamsData chargeCameraParams = new CharacterCameraParamsData
@@ -117,21 +121,19 @@ namespace SS2.Survivors
             if (sender.HasBuff(SS2Content.Buffs.bdKnightShield))
             {
                 args.armorAdd += 200f;
-                args.moveSpeedReductionMultAdd += 0.6f;
+                //args.moveSpeedReductionMultAdd += 0.6f;
             }
 
             if (sender.HasBuff(SS2Content.Buffs.bdKnightSpecialPowerBuff))
             {
-                args.baseJumpPowerAdd += 1f;
                 args.baseMoveSpeedAdd += 0.1f;
-                args.jumpPowerMultAdd += 0.5f;
                 args.damageMultAdd += 0.2f;
+                args.regenMultAdd += BannerBuffRegen;
             }
 
             if (sender.HasBuff(SS2Content.Buffs.bdKnightSpecialSlowBuff))
             {
-                args.attackSpeedReductionMultAdd += 2;
-                args.moveSpeedReductionMultAdd += 2;
+                args.moveSpeedReductionMultAdd += 1;
             }
 
             if (sender.HasBuff(SS2Content.Buffs.bdKnightStunAttack))
