@@ -1,6 +1,8 @@
-﻿using R2API;
+﻿using MSU;
+using R2API;
 using RoR2;
 using RoR2.ContentManagement;
+using UnityEngine;
 
 namespace SS2.Survivors
 {
@@ -8,9 +10,11 @@ namespace SS2.Survivors
     {
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acWarden", SS2Bundle.Indev);
 
+        public static GameObject wardenProjectile;
         public override void Initialize()
         {
             R2API.RecalculateStatsAPI.GetStatCoefficients += ModifyStats;
+            wardenProjectile = AssetCollection.FindAsset<GameObject>("WardProjectile");
         }
 
         private void ModifyStats(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
