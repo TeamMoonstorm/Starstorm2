@@ -25,7 +25,7 @@ namespace EntityStates.Warden
         private float jetpackHeat = 1f;
         private float jetpackTimer = 0f;
 
-        private ChargeMeter pc;
+        private WardenChargeMeter pc;
 
         private bool hasJumped = false;
         private bool jets = false;
@@ -36,7 +36,7 @@ namespace EntityStates.Warden
             {
                 previousAirControl = characterMotor.airControl;
 
-                pc = characterBody.GetComponent<ChargeMeter>();
+                pc = characterBody.GetComponent<WardenChargeMeter>();
 
                 //Vector3 direction = GetAimRay().direction;
                 Vector3 direction = inputBank.moveVector.normalized;

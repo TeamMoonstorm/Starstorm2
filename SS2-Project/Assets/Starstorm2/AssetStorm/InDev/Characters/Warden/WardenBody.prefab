@@ -102,8 +102,8 @@ GameObject:
   - component: {fileID: 6122045883468833884}
   - component: {fileID: 7335182634565435756}
   - component: {fileID: 1652308150175499759}
-  - component: {fileID: 3317480191058790754}
   - component: {fileID: 6940415227143873676}
+  - component: {fileID: 636647920248309150}
   m_Layer: 0
   m_Name: WardenBody
   m_TagString: Player
@@ -817,23 +817,6 @@ MonoBehaviour:
   groupName: BodyHitbox
   hitBoxes:
   - {fileID: 1039096571665662899}
---- !u!114 &3317480191058790754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3059570460920211812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0730ef7317569e541aa2a100766f004f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterBody: {fileID: 3114110159491548703}
-  chargeOverlayPrefab: {fileID: 1894802512682313, guid: ca0ed0b6367f9184c95d54a09a8cf2d9,
-    type: 3}
-  chargeOverlayChildLocatorEntry: CrosshairExtras
-  chargeMax: 100
 --- !u!114 &6940415227143873676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -852,6 +835,23 @@ MonoBehaviour:
   baseStock: 1
   baseRechargeStopwatch: 0
   hasExecutedSuccessfully: 0
+--- !u!114 &636647920248309150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3059570460920211812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0730ef7317569e541aa2a100766f004f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterBody: {fileID: 3114110159491548703}
+  chargeOverlayPrefab: {fileID: 1894802512682313, guid: 7a1c8fe2c75235d49a947de87a7d91aa,
+    type: 3}
+  chargeOverlayChildLocatorEntry: CrosshairExtras
+  chargeMax: 100
 --- !u!1 &3689360811300623505
 GameObject:
   m_ObjectHideFlags: 0
@@ -1321,21 +1321,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4740315836610702191}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8438836558766184600
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 194807057726483764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1294804675, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groupName: SwordHitbox
-  hitBoxes:
-  - {fileID: 7983427998682432954}
 --- !u!114 &2229791353507214469
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1351,6 +1336,38 @@ MonoBehaviour:
   groupName: BodyHitbox
   hitBoxes:
   - {fileID: 1039096571665662899}
+--- !u!114 &5935178727300584575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194807057726483764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0730ef7317569e541aa2a100766f004f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterBody: {fileID: 3114110159491548703}
+  chargeOverlayPrefab: {fileID: 1894802512682313, guid: ca0ed0b6367f9184c95d54a09a8cf2d9,
+    type: 3}
+  chargeOverlayChildLocatorEntry: CrosshairExtras
+  chargeMax: 100
+--- !u!114 &8438836558766184600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194807057726483764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1294804675, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groupName: SwordHitbox
+  hitBoxes:
+  - {fileID: 7983427998682432954}
 --- !u!4 &720513612773783438 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5203693261257972961, guid: 524f203fdb4930f4c8d4135417bb6987,
