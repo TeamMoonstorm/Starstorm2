@@ -2599,6 +2599,7 @@ GameObject:
   - component: {fileID: 7436914919231955961}
   - component: {fileID: 5096754670173080488}
   - component: {fileID: 8918610776335579012}
+  - component: {fileID: -8111170931550361603}
   m_Layer: 14
   m_Name: WardProjectile
   m_TagString: Untagged
@@ -2711,7 +2712,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   catalogIndex: -1
-  ghostPrefab: {fileID: 3026698946840511428, guid: 262c9e551c966a5439fc40b7acba46de,
+  ghostPrefab: {fileID: 3026698946840511428, guid: 1e6158bc27b88f54fb21a4a6b7f20502,
     type: 3}
   ghostTransformAnchor: {fileID: 0}
   startSound: 
@@ -2818,7 +2819,7 @@ MonoBehaviour:
   force: 0
   damageColorIndex: 0
   damageType:
-    damageType: 17408
+    damageType: 16384
     damageTypeExtended: 0
   useDotMaxStacksFromAttacker: 0
   dotMaxStacksFromAttacker: 4294967295
@@ -2839,6 +2840,23 @@ MonoBehaviour:
   impactEffect: {fileID: 0}
   hitSoundString: 
   enemyHitSoundString: 
+--- !u!114 &-8111170931550361603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3039063695962683861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1324642361, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 8
+  damping: 0.2
+  forceMagnitude: -1000
+  forceCoefficientAtEdge: 0.5
+  tetherVfxOrigin: {fileID: 0}
 --- !u!1 &6845017258513076361
 GameObject:
   m_ObjectHideFlags: 0

@@ -104,6 +104,7 @@ GameObject:
   - component: {fileID: 1652308150175499759}
   - component: {fileID: 6940415227143873676}
   - component: {fileID: 636647920248309150}
+  - component: {fileID: 9058998607786023809}
   m_Layer: 0
   m_Name: WardenBody
   m_TagString: Player
@@ -316,7 +317,7 @@ MonoBehaviour:
   m_Script: {fileID: -1067940895, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraParams: {fileID: 0}
+  cameraParams: {fileID: 11400000, guid: f85572b0de91bde4ba6e55de6a3c0469, type: 2}
   cameraPivotTransform: {fileID: 7399531122449199607}
   fovOverride: 0
   recoil: {x: 0, y: 0}
@@ -509,6 +510,7 @@ MonoBehaviour:
   - {fileID: 3012824659184634667}
   - {fileID: 6327518136803628865}
   - {fileID: 5962445558611189834}
+  - {fileID: 9058998607786023809}
 --- !u!114 &2188541155492767484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -852,6 +854,26 @@ MonoBehaviour:
     type: 3}
   chargeOverlayChildLocatorEntry: CrosshairExtras
   chargeMax: 100
+--- !u!114 &9058998607786023809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3059570460920211812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1297580292, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customName: Surge
+  initialStateType:
+    _typeName: EntityStates.DeepVoidPortalBattery.Idle, RoR2, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  mainStateType:
+    _typeName: EntityStates.DeepVoidPortalBattery.Idle, RoR2, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  debug: 0
 --- !u!1 &3689360811300623505
 GameObject:
   m_ObjectHideFlags: 0
