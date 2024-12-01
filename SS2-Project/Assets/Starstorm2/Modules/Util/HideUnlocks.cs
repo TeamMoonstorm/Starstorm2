@@ -14,7 +14,7 @@ namespace SS2
             //character unlocks
             On.RoR2.CharacterSelectBarController.Awake += CharacterSelectBarController_Awake;
             //skins/skills
-            //On.RoR2.UI.LoadoutPanelController.Row.AddButton += Row_AddButton;
+            On.RoR2.UI.LoadoutPanelController.Row.AddButton += Row_AddButton;
         }
 
         private static void Row_AddButton(On.RoR2.UI.LoadoutPanelController.Row.orig_AddButton orig, object self, LoadoutPanelController owner, Sprite icon, string titleToken, string bodyToken, Color tooltipColor, UnityEngine.Events.UnityAction callback, string unlockableName, ViewablesCatalog.Node viewableNode, bool isWIP, int defIndex)

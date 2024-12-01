@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74a4b8a0e9a17f6419d0bf9a23a7c118, type: 3}
-  m_Name: SkinCommandoAltVestige
+  m_Name: SkinCommandoRecolor1
   m_EditorClassIdentifier: 
   baseSkins: []
-  icon: {fileID: 21300000, guid: c213348e8cd98b1458c9e4b43074f7cb, type: 3}
-  nameToken: SS2_SKIN_COMMANDO_ALTVESTIGE
+  icon: {fileID: 21300000, guid: 2ba3481b4496dd442a6d4e3ff8b1ffec, type: 3}
+  nameToken: SS2_SKIN_COMMANDO_ALTRECOLOR1
   unlockableName: 
-  unlockableDef: {fileID: 11400000, guid: 1da9574ebd5919f43b3059015e1c3808, type: 2}
+  unlockableDef: {fileID: 11400000, guid: e6112a97c22930a478b615c2c889f464, type: 2}
   rootObject: {fileID: 0}
   rendererInfos: []
   gameObjectActivations: []
@@ -27,32 +27,23 @@ MonoBehaviour:
   _displayAddress: RoR2/Base/Commando/CommandoDisplay.prefab
   _baseSkins: []
   _rendererInfos:
-  - defaultMaterial: {fileID: 2100000, guid: 0155a8b4d079e25409c7362c7102f1ea, type: 2}
+  - defaultMaterial: {fileID: 2100000, guid: 4649f2e28f1f82245918fc3031cf6300, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
     rendererIndex: 2
-  - defaultMaterial: {fileID: 2100000, guid: 0155a8b4d079e25409c7362c7102f1ea, type: 2}
+  - defaultMaterial: {fileID: 2100000, guid: 4649f2e28f1f82245918fc3031cf6300, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
     rendererIndex: 1
-  - defaultMaterial: {fileID: 2100000, guid: 0155a8b4d079e25409c7362c7102f1ea, type: 2}
+  - defaultMaterial: {fileID: 2100000, guid: 4649f2e28f1f82245918fc3031cf6300, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
     rendererIndex: 0
   _gameObjectActivations: []
-  _meshReplacements:
-  - mesh: {fileID: 4300000, guid: 2faa1b60dbe342b4098e1bce82fcefc8, type: 2}
-    rendererIndex: 0
-  - mesh: {fileID: 4300000, guid: 39e35447914f614458398fe9268657c3, type: 2}
-    rendererIndex: 0
-  - mesh: {fileID: 4300000, guid: 39e35447914f614458398fe9268657c3, type: 2}
-    rendererIndex: 0
-  _projectileGhostReplacements:
-  - _projectilePrefabAddress: RoR2/Base/Commando/FMJRamping.prefab
-    _projectileGhostReplacement: {fileID: 6047370094585215884, guid: dceb175051787384881455d90b67318f,
-      type: 3}
+  _meshReplacements: []
+  _projectileGhostReplacements: []
   _minionSkinReplacements: []
   cachedRendererAmount: 0

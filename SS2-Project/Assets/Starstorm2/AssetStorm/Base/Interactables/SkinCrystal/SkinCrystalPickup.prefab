@@ -2729,6 +2729,7 @@ GameObject:
   - component: {fileID: 1250212065913323017}
   - component: {fileID: 6710963996669227803}
   - component: {fileID: -533213292994441003}
+  - component: {fileID: 7627614625205182214}
   m_Layer: 0
   m_Name: SkinCrystalPickup
   m_TagString: Untagged
@@ -2850,43 +2851,7 @@ MonoBehaviour:
   lockGameObject: {fileID: 0}
   onPurchase:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1996527137305128957}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 5169800782418515810}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SetAvailable
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 148757744557530372}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &7720899585271261622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2975,6 +2940,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateMachines:
   - {fileID: 6710963996669227803}
+--- !u!114 &7627614625205182214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861293054134004730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1610432528, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredUnlockable: 
+  forbiddenUnlockable: 
+  requiredUnlockableDef: {fileID: 0}
+  forbiddenUnlockableDef: {fileID: 0}
+  AchievementToDisable: 
 --- !u!1 &1996527137305128957
 GameObject:
   m_ObjectHideFlags: 0
@@ -8308,6 +8290,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9055215577881447501}
   - component: {fileID: 7629498693542422378}
+  - component: {fileID: 6101224722608209544}
   m_Layer: 0
   m_Name: mdlCrystal
   m_TagString: Untagged
@@ -8345,7 +8328,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 2
   _slowRotationSpeed: 5
-  _fastRotationSpeed: 40
+  _fastRotationSpeed: 80
   _rotateAroundAxis: 2
   _relativeTo: 1
   _reverse: 0
+--- !u!114 &6101224722608209544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8566205189588342519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 649432352, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bobDelay: 2
+  bobDistance: {x: 0, y: -0.3, z: 0}

@@ -9,7 +9,7 @@ namespace EntityStates.CrystalPickup
     {
         public bool isActive;
         public static float checkDur = 0.3f;
-        public static float radius = 18f;
+        public static float radius = 24f;
         private float timer;
         private SkinCrystal scc;
         private SphereSearch search;

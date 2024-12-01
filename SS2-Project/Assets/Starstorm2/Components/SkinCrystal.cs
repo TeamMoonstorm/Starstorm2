@@ -29,7 +29,15 @@ namespace SS2
 
             bodyIndex = BodyCatalog.FindBodyIndex(bodyString);
 
-            SS2Log.Debug("bodyIndex is " + BodyCatalog.GetBodyName(bodyIndex));
+            purchaseInteraction = GetComponent<PurchaseInteraction>();
+            purchaseInteraction.onPurchase.AddListener(UpdateState);
+        }
+
+        public void UpdateState(Interactor interactor)
+        {
+            EntityStateMachine esm = GetComponent<EntityStateMachine>();
+            EntityStates.CrystalPickup.DestroyCrystal nextState = new EntityStates.CrystalPickup.DestroyCrystal();
+            esm.SetNextState(nextState);
         }
     }
 }
