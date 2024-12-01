@@ -24,13 +24,9 @@ namespace SS2
             {
                 foreach (UnlockableDef ud in SS2Assets.LoadAllAssets<UnlockableDef>(SS2Bundle.Vanilla))
                 {
-                    Debug.Log("unlockabledef " + ud.nameToken);
-                    Debug.Log("unlockable " + titleToken);
-
                     //★ OMFG I HATE IT
                     if (titleToken == ud.nameToken)
                     {
-
                         bool unlocked = LocalUserManager.readOnlyLocalUsersList.Any((LocalUser localUser) => localUser.userProfile.HasUnlockable(ud));
                         if (!unlocked) return;
                     }

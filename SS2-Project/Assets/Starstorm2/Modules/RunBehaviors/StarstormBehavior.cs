@@ -20,15 +20,26 @@ namespace SS2.Components
         public GameObject directorInstance;
 
         public static GameObject crystalPrefab;
-        Quaternion rotation = Quaternion.Euler(-90, 0, 0);
+
+        public static GameObject frozenWallPrefab;
+        public static GameObject golemPlains2Prefab;
+        public static GameObject moon2Prefab;
+        public static GameObject mysterySpacePrefab;
+        public static GameObject rootJunglePrefab;
 
         [MSU.AsyncAssetLoad]
         internal static IEnumerator Init()
         {
             directorPrefab = SS2Assets.LoadAsset<GameObject>("StarstormDirectors", SS2Bundle.Base);
             crystalPrefab = SS2Assets.LoadAsset<GameObject>("SkinCrystalPickup", SS2Bundle.Interactables);
+
+            frozenWallPrefab = SS2Assets.LoadAsset<GameObject>("FrozenWallObjects", SS2Bundle.Base);
+            golemPlains2Prefab = SS2Assets.LoadAsset<GameObject>("GolemPlains2Objects", SS2Bundle.Base);
+            moon2Prefab = SS2Assets.LoadAsset<GameObject>("Moon2Objects", SS2Bundle.Base);
+            mysterySpacePrefab = SS2Assets.LoadAsset<GameObject>("MysterySpaceObjects", SS2Bundle.Base);
+            rootJunglePrefab = SS2Assets.LoadAsset<GameObject>("RootJungleObjects", SS2Bundle.Base);
+
             SS2Content.SS2ContentPack.networkedObjectPrefabs.Add(new GameObject[] { crystalPrefab });
-            ModifyUnlocks();
             yield return null;
         }
 
@@ -61,15 +72,18 @@ namespace SS2.Components
             {
                 directorInstance = Instantiate(directorPrefab);
                 NetworkServer.Spawn(directorInstance);
-                SpawnCrystals();
+                SpawnObjects();
             }
         }
 
-        public void SpawnCrystals()
+        public void SpawnObjects()
         {
             string currStage = SceneManager.GetActiveScene().name;
             switch (currStage)
             {
+                case "frozenwall":
+                    FrozenWall();
+                    break;
                 case "golemplains":
                     GolemPlains();
                     break;
@@ -82,14 +96,17 @@ namespace SS2.Components
                 case "mysteryspace":
                     MysterySpace();
                     break;
+                case "rootjungle":
+                    RootJungle();
+                    break;
                 case "default":
                     break;
             }
         }
 
-        public static void ModifyUnlocks()
+        public void FrozenWall()
         {
-            SS2Assets.LoadAsset<UnlockableDef>("ss2.skin.commando.recolor1", SS2Bundle.Vanilla).cachedName = "SS2_SKIN_COMMANDO_ALTRECOLOR1";
+            GameObject frozenWallInstance = Instantiate(frozenWallPrefab, Vector3.zero, Quaternion.identity);
         }
 
         public void GolemPlains()
@@ -98,47 +115,21 @@ namespace SS2.Components
 
         public void GolemPlains2()
         {
-            Vector3 commandoCrystalAPosition = new Vector3(290.6743f, 67.84853f, -49.18279f);
-            rotation = Quaternion.Euler(0, 5, 0);
-
-            GameObject commandoCrystalA = Instantiate(crystalPrefab, commandoCrystalAPosition, rotation);
-            SkinCrystal commandoSkinCrystalA = commandoCrystalA.GetComponent<SkinCrystal>();
-            commandoSkinCrystalA.bodyString = "CommandoBody";
-            commandoSkinCrystalA.skinUnlockID = 1;
-            GameObjectUnlockableFilter gouf = commandoCrystalA.GetComponent<GameObjectUnlockableFilter>();
-            gouf.forbiddenUnlockableDef = SS2Assets.LoadAsset<UnlockableDef>("ss2.skin.commando.recolor1", SS2Bundle.Vanilla);
-            gouf.AchievementToDisable = "SS2_SKIN_COMMANDO_ALTRECOLOR1.Achievement";
-            NetworkServer.Spawn(commandoCrystalA);
+            GameObject golemPlains2Instance = Instantiate(golemPlains2Prefab, Vector3.zero, Quaternion.identity);
         }
 
         public void Moon2()
         {
-            Vector3 commandoCrystalBPosition = new Vector3(290.6743f, 67.84853f, -49.18279f);
-            rotation = Quaternion.Euler(0, 5, 0);
-
-            GameObject commandoCrystalB = Instantiate(crystalPrefab, commandoCrystalBPosition, rotation);
-            SkinCrystal commandoSkinCrystalB = commandoCrystalB.GetComponent<SkinCrystal>();
-            commandoSkinCrystalB.bodyString = "CommandoBody";
-            commandoSkinCrystalB.skinUnlockID = 1;
-            GameObjectUnlockableFilter gouf = commandoCrystalB.GetComponent<GameObjectUnlockableFilter>();
-            gouf.forbiddenUnlockableDef = SS2Assets.LoadAsset<UnlockableDef>("ss2.skin.commando.recolor2", SS2Bundle.Vanilla);
-            gouf.AchievementToDisable = "SS2_SKIN_COMMANDO_ALTRECOLOR2";
-            NetworkServer.Spawn(commandoCrystalB);
+            GameObject moon2Instance = Instantiate(moon2Prefab, Vector3.zero, Quaternion.identity);
         }
 
         public void MysterySpace()
         {
-            Vector3 commandoCrystalCPosition = new Vector3(290.6743f, 67.84853f, -49.18279f);
-            rotation = Quaternion.Euler(0, 5, 0);
-
-            GameObject commandoCrystalC = Instantiate(crystalPrefab, commandoCrystalCPosition, rotation);
-            SkinCrystal commandoSkinCrystalC = commandoCrystalC.GetComponent<SkinCrystal>();
-            commandoSkinCrystalC.bodyString = "CommandoBody";
-            commandoSkinCrystalC.skinUnlockID = 1;
-            GameObjectUnlockableFilter gouf = commandoCrystalC.GetComponent<GameObjectUnlockableFilter>();
-            gouf.forbiddenUnlockableDef = SS2Assets.LoadAsset<UnlockableDef>("ss2.skin.commando.recolor3", SS2Bundle.Vanilla);
-            gouf.AchievementToDisable = "SS2_SKIN_COMMANDO_ALTRECOLOR3";
-            NetworkServer.Spawn(commandoCrystalC);
+            GameObject mysterySpaceInstance = Instantiate(mysterySpacePrefab, Vector3.zero, Quaternion.identity);
+        }
+        public void RootJungle()
+        {
+            GameObject rootJungleInstance = Instantiate(rootJunglePrefab, Vector3.zero, Quaternion.identity);
         }
     }
 }
