@@ -49,20 +49,20 @@ namespace EntityStates.Warden
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (!NetworkServer.active)
+            
+            if (NetworkServer.active)
             {
-                return;
-            }
-            rechargeTimer -= GetDeltaTime();
-            if (base.fixedAge > timeBetweenFiring)
-            {
-                base.fixedAge -= timeBetweenFiring;
-                if (isReadyToFire && DeleteNearbyProjectile())
+                rechargeTimer -= GetDeltaTime();
+                if (base.fixedAge > timeBetweenFiring)
                 {
-                    rechargeTimer = 1f / rechargeFrequency;
+                    base.fixedAge -= timeBetweenFiring;
+                    if (isReadyToFire && DeleteNearbyProjectile())
+                    {
+                        rechargeTimer = 1f / rechargeFrequency;
+                    }
                 }
             }
-
+            
             if (isAuthority && fixedAge >= duration)
             {
                 outer.SetNextStateToMain();
