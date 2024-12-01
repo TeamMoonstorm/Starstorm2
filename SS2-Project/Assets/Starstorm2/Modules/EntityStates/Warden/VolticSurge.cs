@@ -11,7 +11,7 @@ namespace EntityStates.Warden
 
             if (base.isAuthority)
             {
-                characterBody.AddTimedBuff(SS2Content.Buffs.bdWardenSurgeBuff, buffDuration);
+                //characterBody.AddTimedBuff(SS2Content.Buffs.bdWardenSurgeBuff, buffDuration);
             }
         }
 

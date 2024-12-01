@@ -19,12 +19,12 @@ namespace SS2.Survivors
 
         private void ModifyStats(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
-            if (sender.HasBuff(SS2Content.Buffs.bdWardenSurgeBuff))
-            {
-                args.attackSpeedMultAdd += 0.2f;
-                args.moveSpeedMultAdd += 0.2f;
-                args.armorAdd += 50f;
-            }
+            //if (sender.HasBuff(SS2Content.Buffs.bdWardenSurgeBuff))
+            //{
+            //    args.attackSpeedMultAdd += 0.2f;
+            //    args.moveSpeedMultAdd += 0.2f;
+            //    args.armorAdd += 50f;
+            //}
         }
 
         public override bool IsAvailable(ContentPack contentPack)
