@@ -322,8 +322,6 @@ namespace SS2
             }
         }
 
-        
-
         [ConCommand(commandName = "run_set_ethereals_cleared", flags = ConVarFlags.Cheat | ConVarFlags.ExecuteOnServer, helpText = "Sets the number of ethereal teleporters completed. Zero to disable. Format: {etherealsCompleted}")]
         public static void CCSetEtherealsCleared(ConCommandArgs args)
         {

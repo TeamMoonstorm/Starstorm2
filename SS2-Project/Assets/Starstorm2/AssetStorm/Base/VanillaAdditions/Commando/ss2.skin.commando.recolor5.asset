@@ -12,21 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02a17d3a7bea384489c0fc6e66051d29, type: 3}
   m_Name: ss2.skin.commando.recolor5
   m_EditorClassIdentifier: 
-  nameToken: SS2_SKIN_COMMANDO_ALTRECOLOR4
+  nameToken: SS2_SKIN_COMMANDO_ALTRECOLOR5
   displayModelPath: Prefabs/NullModel
   displayModelPrefab: {fileID: 0}
   hidden: 0
   achievementIcon: {fileID: 21300000, guid: 6e134c8abe0d2954eb5f300b0eb5b8bc, type: 3}
   requiredExpansion: {fileID: 0}
   achievementCondition:
-    assemblyQualifiedName: SS2.Unlocks.VanillaSurvivors.CommandoAltSkin4Achievement,
+    assemblyQualifiedName: SS2.Unlocks.VanillaSurvivors.CommandoAltSkin5Achievement,
       Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   serverAchievementCondition:
-    assemblyQualifiedName: SS2.Unlocks.VanillaSurvivors.CommandoAltSkin4Achievement+CommandoAltSkin4ServerAchievement,
+    assemblyQualifiedName: SS2.Unlocks.VanillaSurvivors.CommandoAltSkin5Achievement+CommandoAltSkin5ServerAchievement,
       Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  achievementNameToken: SS2_ACHIEVEMENT_COMMANDO_RECOLORSKIN4_NAME
-  achievementDescriptionToken: SS2_ACHIEVEMENT_COMMANDO_RECOLORSKIN4_DESC
+  achievementNameToken: SS2_ACHIEVEMENT_COMMANDO_RECOLORSKIN5_NAME
+  achievementDescriptionToken: SS2_ACHIEVEMENT_COMMANDO_RECOLORSKIN5_DESC
   coinReward: 3
   _preRequisiteAchievement:
     unlockableDef: {fileID: 0}
-    achievementIdentifier: 
+    achievementIdentifier: CommandoClearGameMonsoon
