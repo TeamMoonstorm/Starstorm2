@@ -12,6 +12,7 @@ namespace SS2
         public string bodyString;
         public BodyIndex bodyIndex;
         public int skinUnlockID;
+        public GameObject model;
 
         [SerializeField]
         public PurchaseInteraction purchaseInteraction;
@@ -27,6 +28,8 @@ namespace SS2
             }
 
             bodyIndex = BodyCatalog.FindBodyIndex(bodyString);
+
+            SS2Log.Debug("bodyIndex is " + BodyCatalog.GetBodyName(bodyIndex));
         }
     }
 }

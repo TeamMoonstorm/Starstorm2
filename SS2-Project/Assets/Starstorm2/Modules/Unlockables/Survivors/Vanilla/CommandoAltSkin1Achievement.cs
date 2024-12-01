@@ -20,7 +20,6 @@ namespace SS2.Unlocks.VanillaSurvivors
             SetServerTracked(false);
         }
 
-        // TODO: fix whenever events get done
         private class CommandoAltSkin1ServerAchievement : BaseServerAchievement
         {
             public override void OnInstall()

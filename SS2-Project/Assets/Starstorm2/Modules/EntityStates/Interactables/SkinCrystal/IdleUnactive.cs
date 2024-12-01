@@ -8,8 +8,8 @@ namespace EntityStates.CrystalPickup
     public class IdleUnactive : CrystalBaseState
     {
         public bool isActive;
-        public static float checkDur;
-        public static float radius;
+        public static float checkDur = 0.3f;
+        public static float radius = 18f;
         private float timer;
         private SkinCrystal scc;
         private SphereSearch search;
@@ -26,6 +26,8 @@ namespace EntityStates.CrystalPickup
         {
             base.OnEnter();
             scc = GetComponent<SkinCrystal>();
+            Debug.Log("crystal inactive");
+            scc.model.SetActive(false);
 
             hits = new List<HurtBox>();
             search = new SphereSearch();

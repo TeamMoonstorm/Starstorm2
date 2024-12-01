@@ -26,7 +26,7 @@ namespace EntityStates.CrystalPickup
 
             if (NetworkServer.active)
             {
-                // kms
+                Destroy(gameObject);
             }
         }   
 
