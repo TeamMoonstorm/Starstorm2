@@ -48,7 +48,7 @@ namespace EntityStates.Cyborg2
         private float fireStopwatch;
         private float exitTimer;
 
-        private string muzzleString = "CannonR";
+        private string muzzleString = "CannonL";
 
         public override void OnEnter()
         {
@@ -158,7 +158,7 @@ namespace EntityStates.Cyborg2
             //anim
             this.shotsFired++;
 
-
+            base.PlayAnimation("Gesture, Override", "Primary2");
             EffectManager.SimpleMuzzleFlash(muzzleFlashPrefab, base.gameObject, muzzleString, false);
             base.characterBody.AddSpreadBloom(bloom);
             base.AddRecoil(-1f * recoil, -1.5f * recoil, -1f * recoil, 1f * recoil);
@@ -200,10 +200,7 @@ namespace EntityStates.Cyborg2
                 };
                 bulletAttack.AddModdedDamageType(SS2.Survivors.Cyborg2.applyCyborgPrime);
                 bulletAttack.Fire();
-            }
-
-            
-
+            }            
         }
 
         private void AddIndicator(HurtBox hurtBox)

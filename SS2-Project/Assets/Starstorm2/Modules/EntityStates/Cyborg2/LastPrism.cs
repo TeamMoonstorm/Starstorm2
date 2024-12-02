@@ -5,24 +5,19 @@ namespace EntityStates.Cyborg2
 {
     public class LastPrism : BaseSkillState
     {
-        public static float minDamageCoefficientPerSecond = 2f;
         public static float maxDamageCoefficientPerSecond = 10f;
         public static float procCoefficientPerSecond = 0.7f;
         public static float forcePerSecond = 500f;
         public static float baseTicksPerSecond = 6f;
 
-        public static float baseMaxChargeTime = 2f;
         public static float baseMinimumDuration  = 0.25f;
 
-        public static float minRange = 8f;
         public static float maxRange = 50f;
         public static float bulletRadius = 1.5f;
 
-        public static float maxTurnAnglePerSecond = 720f;
         public static float minTurnAnglePerSecond = 90f;
 
         public static GameObject beamEffectPrefab;
-
 
         public static float walkSpeedPenaltyCoefficient = 0.33f;
 
@@ -40,19 +35,27 @@ namespace EntityStates.Cyborg2
         private float turnSpeedAngle;
         private float range;
 
+        private bool canceled = true;
+
         public override void OnEnter()
         {
             base.OnEnter();
             this.minimumDuration = baseMinimumDuration / this.attackSpeedStat;
-            this.maxChargeTime = baseMaxChargeTime / this.attackSpeedStat;
+            //this.maxChargeTime = baseMaxChargeTime / this.attackSpeedStat;
             this.currentAimVector = base.inputBank.aimDirection;
             this.turnSpeedAngle = minTurnAnglePerSecond;
-            this.range = minRange;
+            //this.range = minRange;
             //muzzle
             this.beamEffectInstance = GameObject.Instantiate(beamEffectPrefab, base.characterBody.corePosition, Quaternion.identity);
             this.beamEffectComponent = beamEffectInstance.GetComponent<BeamFromPoints>();
 
             base.characterMotor.walkSpeedPenaltyCoefficient = walkSpeedPenaltyCoefficient;
+
+            var animator = base.GetModelAnimator();
+            if (animator)
+            {
+                animator.SetLayerWeight(animator.GetLayerIndex("Body, SideWeapon"), 1f);
+            }
         }
 
         public override void Update()
@@ -78,9 +81,9 @@ namespace EntityStates.Cyborg2
             base.FixedUpdate();
 
             float t = base.fixedAge / this.maxChargeTime;
-            float damageCoefficient = Mathf.Lerp(minDamageCoefficientPerSecond, maxDamageCoefficientPerSecond, t) * (1 / baseTicksPerSecond);
-            this.turnSpeedAngle = Mathf.Lerp(maxTurnAnglePerSecond, minTurnAnglePerSecond * base.characterBody.attackSpeed, t);
-            this.range = Mathf.Lerp(minRange, maxRange, t);
+            float damageCoefficient = maxDamageCoefficientPerSecond;// Mathf.Lerp(minDamageCoefficientPerSecond, maxDamageCoefficientPerSecond, t) * (1 / baseTicksPerSecond);
+            this.turnSpeedAngle = minTurnAnglePerSecond;// Mathf.Lerp(maxTurnAnglePerSecond, minTurnAnglePerSecond * base.characterBody.attackSpeed, t);
+            this.range = maxRange;// Mathf.Lerp(minRange, maxRange, t);
 
             this.tickDamageStopwatch -= Time.fixedDeltaTime;
 
@@ -93,14 +96,25 @@ namespace EntityStates.Cyborg2
 
             if (((base.fixedAge >= this.minimumDuration && !base.IsKeyDownAuthority()) || base.characterBody.isSprinting) && base.isAuthority)
             {
-                this.outer.SetNextStateToMain();
+                canceled = false;
+                this.outer.SetNextState(new ExitLastPrism());
                 return;
             }
         }
         public override void OnExit()
         {
             base.OnExit();
-            if(this.beamEffectInstance)
+            var animator = base.GetModelAnimator();
+            if (animator)
+            {
+                animator.SetLayerWeight(animator.GetLayerIndex("Body, SideWeapon"), 0f);
+            }
+            if (canceled)
+            {
+                base.PlayAnimation("FullBody, Override", "BufferEmpty");
+                base.PlayAnimation("Gesture, Override", "BufferEmpty");
+            }
+            if (this.beamEffectInstance)
             {
                 Destroy(this.beamEffectInstance);
             }
@@ -146,6 +160,11 @@ namespace EntityStates.Cyborg2
             
         }
 
+        private void PlayAnimation(string animationStateName, string playbackRateParam, float duration)
+        {
+            string layerName = base.isGrounded ? "FullBody, Override" : "Gesture, Override";
+            base.PlayAnimation(layerName, animationStateName, playbackRateParam, duration);
+        }
         public override InterruptPriority GetMinimumInterruptPriority()
         {
             return InterruptPriority.Skill;

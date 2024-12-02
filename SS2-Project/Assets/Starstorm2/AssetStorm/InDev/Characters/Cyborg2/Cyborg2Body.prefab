@@ -952,12 +952,167 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 080812a0b9d335945b70b145145526c0, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 577b3c79db118904c8eda5144dd41024, type: 3}
+--- !u!4 &494262679200480182 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -3487603942887114297, guid: 577b3c79db118904c8eda5144dd41024,
+    type: 3}
+  m_PrefabInstance: {fileID: 5278909224662598257}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1303536996067123139 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6581276404244356530, guid: 577b3c79db118904c8eda5144dd41024,
+    type: 3}
+  m_PrefabInstance: {fileID: 5278909224662598257}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3401565705575396216 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -1840078870427668215, guid: 577b3c79db118904c8eda5144dd41024,
+    type: 3}
+  m_PrefabInstance: {fileID: 5278909224662598257}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3824196727469932479 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8957718281209413070, guid: 577b3c79db118904c8eda5144dd41024,
+    type: 3}
+  m_PrefabInstance: {fileID: 5278909224662598257}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5008875975933509408 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 577b3c79db118904c8eda5144dd41024,
     type: 3}
   m_PrefabInstance: {fileID: 5278909224662598257}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &536268439348013779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5008875975933509408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1864444436, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  focusPointTransform: {fileID: 0}
+  cameraPositionTransform: {fileID: 0}
+  modelRotation: {x: 0, y: 0, z: 0, w: 1}
+  minDistance: 0.75
+  maxDistance: 2
+--- !u!114 &2024178584823879167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5008875975933509408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392865457, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputBank: {fileID: 7320232498317758003}
+  directionComponent: {fileID: 2409229758586498619}
+  pitchRangeMin: -60
+  pitchRangeMax: 60
+  yawRangeMin: -90
+  yawRangeMax: 90
+  pitchGiveupRange: 30
+  yawGiveupRange: 10
+  giveupDuration: 3
+  raisedApproachSpeed: 720
+  loweredApproachSpeed: 360
+  smoothTime: 0.1
+  fullYaw: 0
+  aimType: 0
+  enableAimWeight: 0
+  UseTransformedAimVector: 0
+--- !u!114 &2294898117050698684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5008875975933509408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -517518216, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bones: []
+  componentsToDisableOnRagdoll: []
+--- !u!114 &2652344329062611648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5008875975933509408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -226763392, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transformPairs:
+  - name: FootR
+    transform: {fileID: 494262679200480182}
+  - name: FootL
+    transform: {fileID: 3401565705575396216}
+  - name: Chest
+    transform: {fileID: 3824196727469932479}
+  - name: Head
+    transform: {fileID: 1303536996067123139}
+  - name: CannonR
+    transform: {fileID: 7570983320592271982}
+  - name: CannonL
+    transform: {fileID: 5892961167297724129}
+--- !u!114 &2919270698225514030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5008875975933509408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1480773730, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseFootstepString: Play_player_footstep
+  baseFootliftString: 
+  sprintFootstepOverrideString: 
+  sprintFootliftOverrideString: 
+  enableFootstepDust: 1
+  footstepDustPrefab: {fileID: 0}
+  inLava: 0
+--- !u!114 &3913214122629329438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5008875975933509408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1792105662, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hurtBoxes: []
+  mainHurtBox: {fileID: 937228765377335665}
+  bullseyeCount: 0
+--- !u!114 &5652153021394497937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5008875975933509408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -46258121, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundCenter: {fileID: 0}
 --- !u!114 &7720387413032466013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -992,95 +1147,6 @@ MonoBehaviour:
   oldHeal: 0
   oldFade: 0
   forceUpdate: 0
---- !u!114 &2652344329062611648
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5008875975933509408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -226763392, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  transformPairs: []
---- !u!114 &3913214122629329438
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5008875975933509408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1792105662, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hurtBoxes: []
-  mainHurtBox: {fileID: 937228765377335665}
-  bullseyeCount: 0
---- !u!114 &2919270698225514030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5008875975933509408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1480773730, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseFootstepString: Play_player_footstep
-  baseFootliftString: 
-  sprintFootstepOverrideString: 
-  sprintFootliftOverrideString: 
-  enableFootstepDust: 1
-  footstepDustPrefab: {fileID: 0}
-  inLava: 0
---- !u!114 &2294898117050698684
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5008875975933509408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -517518216, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bones: []
-  componentsToDisableOnRagdoll: []
---- !u!114 &2024178584823879167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5008875975933509408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1392865457, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputBank: {fileID: 7320232498317758003}
-  directionComponent: {fileID: 2409229758586498619}
-  pitchRangeMin: -60
-  pitchRangeMax: 60
-  yawRangeMin: -90
-  yawRangeMax: 90
-  pitchGiveupRange: 30
-  yawGiveupRange: 10
-  giveupDuration: 3
-  raisedApproachSpeed: 720
-  loweredApproachSpeed: 360
-  smoothTime: 0.1
-  fullYaw: 0
-  aimType: 0
-  enableAimWeight: 0
-  UseTransformedAimVector: 0
 --- !u!114 &8474035733547286745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1094,39 +1160,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skins: []
---- !u!114 &536268439348013779
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5008875975933509408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1864444436, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  focusPointTransform: {fileID: 0}
-  cameraPositionTransform: {fileID: 0}
-  modelRotation: {x: 0, y: 0, z: 0, w: 1}
-  minDistance: 0.75
-  maxDistance: 2
---- !u!114 &5652153021394497937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5008875975933509408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -46258121, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundCenter: {fileID: 0}
 --- !u!4 &5677010006892963226 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 577b3c79db118904c8eda5144dd41024,
+    type: 3}
+  m_PrefabInstance: {fileID: 5278909224662598257}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5892961167297724129 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -7455019733310522224, guid: 577b3c79db118904c8eda5144dd41024,
+    type: 3}
+  m_PrefabInstance: {fileID: 5278909224662598257}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7570983320592271982 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2329481200080734239, guid: 577b3c79db118904c8eda5144dd41024,
     type: 3}
   m_PrefabInstance: {fileID: 5278909224662598257}
   m_PrefabAsset: {fileID: 0}

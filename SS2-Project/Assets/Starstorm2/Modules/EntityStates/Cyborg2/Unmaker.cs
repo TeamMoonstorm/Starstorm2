@@ -23,13 +23,14 @@ namespace EntityStates.Cyborg2
         private float duration;
         private bool hasFired;
         private string muzzleString;
+        private string animStateName;
         public override void OnEnter()
         {
             base.OnEnter();
             duration = Unmaker.baseDuration / base.attackSpeedStat;
             base.StartAimMode();
             Fire();
-
+            base.PlayAnimation("Gesture, Override", animStateName, "Primary.playbackRate", this.duration);
         }
         public override void FixedUpdate()
         {
@@ -99,6 +100,7 @@ namespace EntityStates.Cyborg2
         public void SetStep(int i)
         {
             this.muzzleString = i == 0 ? "CannonR" : "CannonL";
+            this.animStateName = i == 0 ? "Primary1" : "Primary2";
         }
     }
 }

@@ -27,7 +27,7 @@ namespace EntityStates.Cyborg2
 			base.OnEnter();
 			this.duration = baseDuration / attackSpeedStat;
 			StartAimMode();
-			//anim
+			base.PlayAnimation("Gesture, Override", "FireTeleporter", "Utility.playbackRate", this.duration);
 		}
 
 		public override void FixedUpdate()
