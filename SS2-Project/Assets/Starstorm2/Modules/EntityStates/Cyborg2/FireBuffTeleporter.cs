@@ -16,7 +16,7 @@ namespace EntityStates.Cyborg2
 		private static float earlyExitTime = 0.5f;
 		private static float damageCoefficient = 6f;
 		private static float force = -1400f;
-		private static float chargeTime = 0.25f;
+		private static float chargeTime = 0.21f;
 
 		private static float selfKnockbackForce = 5000f;
 
