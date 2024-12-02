@@ -5426,6 +5426,7 @@ GameObject:
   - component: {fileID: 695990313679591492}
   - component: {fileID: 1301648120163412411}
   - component: {fileID: 7799406075703596411}
+  - component: {fileID: 2999923555999267831}
   - component: {fileID: 2938573101440873720}
   - component: {fileID: 2714517508326409033}
   m_Layer: 0
@@ -5626,6 +5627,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateMachines:
   - {fileID: 1301648120163412411}
+--- !u!114 &2999923555999267831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5938250293659235426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 177e4e5c14c70a84cb1f6ca61c169a8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredUnlockableAddressableAddress: RoR2/Base/Commando/Skins.Commando.Alt1.asset
+  forbiddenUnlockableAddressableAddress: 
 --- !u!114 &2938573101440873720
 MonoBehaviour:
   m_ObjectHideFlags: 0
