@@ -12,13 +12,14 @@ namespace SS2
     [CreateAssetMenu(fileName = "NemesisSpawnCard", menuName = "Starstorm2/NemesisSpawnCard")]
     public class NemesisSpawnCard : CharacterSpawnCard
     {
+        public const StatModifier[] defaultStatModifier = new StatModifier[] { new StatModifier { fieldName = "baseMaxHealth", modifier = 12000f, statModifierType = StatModifierType.Override } }
+
         public NemesisInventory nemesisInventory;
         public bool useOverrideState;
         public SerializableEntityStateType overrideSpawnState = new SerializableEntityStateType(typeof(Idle));
         public StatModifier[] statModifiers;
         public SkillOverride[] skillOverrides;
         public GameObject visualEffect;
-        public string childName;
         public ItemDef itemDef;
 
 

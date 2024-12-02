@@ -94,7 +94,7 @@ namespace SS2.Survivors
                 blastAttack.baseDamage = bombRequest.damageTotal;
                 blastAttack.baseForce = 600f;
                 blastAttack.bonusForce = Vector3.zero;
-                blastAttack.radius = 5f;
+                blastAttack.radius = 6f;
                 blastAttack.attacker = bombRequest.attacker;
                 blastAttack.inflictor = bombRequest.attacker;
                 blastAttack.teamIndex = bombRequest.teamIndex;

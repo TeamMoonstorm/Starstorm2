@@ -12,8 +12,8 @@ namespace SS2
     {
         public DirectorAPI.StageSerde stage;
         public string customStage;
-
-        public GameObject stormPrefab;
+        public bool canStorm;
+        //public GameObject stormPrefab;
 
         [Header("Elite Event Settings")]
         public Event[] eliteEvents;

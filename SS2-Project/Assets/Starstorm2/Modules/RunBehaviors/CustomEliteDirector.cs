@@ -195,12 +195,17 @@ namespace SS2.Components
     public abstract class StackableAffix
     {
         public float eliteCredit; // independent credit
-        public abstract float EliteCreditCost { get; } // flat value for CustomEliteDirector elite credit cost. higher = less common
-        public abstract float CostMultiplier { get; } // multiplier for CombatDirector monster credit cost. lower = bigger enemies get the affix
+        public abstract float EliteCreditCost { get; } // flat value for CustomEliteDirector elite credit cost. higher = less common/more time between spawns
+        public abstract float CostMultiplier { get; } // multiplier for CombatDirector monster credit cost. this amount is subtracted from the combatdirector's credits. higher = longer "break" the player gets when this spawns
+        public virtual float CostRequirement { get => CostMultiplier; } // ugh. sort of a bandaid to make stacking elites spawn more consistently.
+                                                                        // vanilla combatdirectors use credits basically as soon as it gets them. so they usually dont have enough to spare for our elites
+                                                                        // basically, having this be lower than the multiplier means it will spawn more often, but still use up the full credit cost.
+                                                                        // i suck at this T_T   
+                                                                        // in hindsight, inserting the stackable elite selection before/"during" vanilla elite selection would have been smarter than after.
         public virtual bool IsBoss => false;
         public virtual bool CanAfford(float baseCost, float totalCost, CombatDirector combatDirector)
         {
-            return EliteCreditCost <= eliteCredit && totalCost * CostMultiplier <= combatDirector.monsterCredit;
+            return EliteCreditCost <= eliteCredit && totalCost * CostRequirement <= combatDirector.monsterCredit;
         }
 
         // this is just because Empyreans were subtracting extra for reasons i do not fully understand. but i already liked their spawn rate and didnt want to change it
@@ -284,10 +289,12 @@ namespace SS2.Components
 
     public class Ethereal : StackableAffix
     {
-        private static float baseCostMultiplier = 6; // so i can change it easier in game
+        private static float baseCostMultiplier = 9; // so i can change it easier in game
+        private static float baseCostRequirement = 4;
         private static float baseCreditCost = 300;
         public override float EliteCreditCost => baseCreditCost * Mathf.Pow(0.67f, EtherealBehavior.instance.etherealsCompleted-1);
         public override float CostMultiplier => baseCostMultiplier * Mathf.Pow(0.67f, EtherealBehavior.instance.etherealsCompleted-1);
+        public override float CostRequirement => baseCostRequirement * Mathf.Pow(0.67f, EtherealBehavior.instance.etherealsCompleted-1);
         public override bool IsAvailable() => EtherealBehavior.instance && EtherealBehavior.instance.etherealsCompleted > 0;
         public override void MakeElite(CharacterBody body)
         {
@@ -314,9 +321,11 @@ namespace SS2.Components
     public class Ultra : StackableAffix
     {
         private static float baseCostMultiplier = 12;
+        private static float baseCostRequirement = 10;
         private static float baseCreditCost = 1200;
-        public override float EliteCreditCost => baseCreditCost * Mathf.Pow(0.8f, EtherealBehavior.instance.etherealsCompleted-1);
-        public override float CostMultiplier => baseCostMultiplier * Mathf.Pow(0.8f, EtherealBehavior.instance.etherealsCompleted-1);
+        public override float EliteCreditCost => baseCreditCost * Mathf.Pow(0.8f, EtherealBehavior.instance.etherealsCompleted - 1);
+        public override float CostMultiplier => baseCostMultiplier * Mathf.Pow(0.8f, EtherealBehavior.instance.etherealsCompleted - 1);
+        public override float CostRequirement => baseCostRequirement * Mathf.Pow(0.8f, EtherealBehavior.instance.etherealsCompleted - 1);
         public override bool IsAvailable() => EtherealBehavior.instance && EtherealBehavior.instance.etherealsCompleted > 0 && Run.instance.loopClearCount >= 1;
         public override bool IsBoss => true;
         public override void MakeElite(CharacterBody body)

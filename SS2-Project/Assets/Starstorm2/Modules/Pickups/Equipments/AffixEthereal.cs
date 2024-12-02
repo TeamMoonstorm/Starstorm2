@@ -111,19 +111,17 @@ namespace SS2.Equipments
             }
 
         }
+
+        // add some kind of cooldown/movespeed buff
         public sealed class HakaiBuffBehavior : BaseBuffBehaviour
         {
             [BuffDefAssociation]
             private static BuffDef GetBuffDef() => SS2Content.Buffs.bdHakai;
             public static GameObject projectilePrefab = SS2Assets.LoadAsset<GameObject>("EtherealCircle", SS2Bundle.Equipments);
-            private static System.Random random = new System.Random();
-            public static float baseProjTimerDur = 12.5f;
-            public static float baseTimerDur = 5f;
+
             private float timer;
             private float timerDur;
             private bool expired = false;
-            private float projTimerDur;
-            private float projTimer;
 
             private List<GameObject> effectInstances;
 
@@ -131,17 +129,6 @@ namespace SS2.Equipments
             {
                 if (!hasAnyStacks)
                     return;
-
-                if (characterBody.hullClassification == HullClassification.BeetleQueen)
-                    timerDur = baseTimerDur * 2f;
-                else if (characterBody.hullClassification == HullClassification.Golem)
-                    timerDur = baseTimerDur * 1.5f;
-                else
-                    timerDur = baseTimerDur;
-
-                projTimerDur = baseTimerDur / 3f;
-                projTimer = (float)random.NextDouble() * projTimerDur; // doing this so tp bosses stagger their pillars
-
                 timer = 0;
 
                 Util.PlaySound("EtherealActivate", this.gameObject);
@@ -245,40 +232,6 @@ namespace SS2.Equipments
                     EffectManager.SimpleEffect(SS2Assets.LoadAsset<GameObject>("InitialBurst, Effect", SS2Bundle.Equipments), characterBody.corePosition, new Quaternion(0f, 0f, 0f, 0f), true);
                     expired = true;
                 }
-
-                projTimer += Time.fixedDeltaTime;
-                if (projTimer >= projTimerDur)
-                {
-                    projTimer = 0;
-
-                    PlaceCircle();                   
-                }
-            }
-
-            private void PlaceCircle()
-            {
-                //Debug.Log("Firing projectile: " + projectilePrefab);
-
-                if (characterBody != null)
-                {
-                    if (characterBody.healthComponent.alive)
-                    {
-                        NodeGraph groundNodes = SceneInfo.instance.groundNodes;
-                        List<NodeGraph.NodeIndex> nodeList = groundNodes.FindNodesInRange(characterBody.transform.position, 0f, 32f, HullMask.Human);                   
-                        if(nodeList.Count > 0)
-                        {
-                            NodeGraph.NodeIndex randomNode = nodeList[random.Next(nodeList.Count)];
-                            if (randomNode != null)
-                            {
-                                Vector3 position;
-                                groundNodes.GetNodePosition(randomNode, out position);
-                                //Util.PlaySound("EtherealActivate", this.gameObject);
-                                ProjectileManager.instance.FireProjectile(projectilePrefab, position, new Quaternion(0, 0, 0, 0), characterBody.gameObject, 1f, 0f, characterBody.RollCrit(), DamageColorIndex.Default, null, 0);
-                            }
-                        }
-                        
-                    }
-                }
             }
         }
 
@@ -363,7 +316,7 @@ namespace SS2.Equipments
                             {
                                 Vector3 position;
                                 groundNodes.GetNodePosition(randomNode, out position);
-                                ProjectileManager.instance.FireProjectile(projectilePrefab, position, new Quaternion(0, 0, 0, 0), characterBody.gameObject, 1f, 0f, characterBody.RollCrit(), DamageColorIndex.Default, null, 0);
+                                ProjectileManager.instance.FireProjectile(projectilePrefab, position, new Quaternion(0, 0, 0, 0), characterBody.gameObject, characterBody.damage, 0f, characterBody.RollCrit(), DamageColorIndex.Default, null, 0);
                             }
                         }
                         
