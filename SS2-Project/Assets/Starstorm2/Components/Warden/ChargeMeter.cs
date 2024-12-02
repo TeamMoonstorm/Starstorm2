@@ -29,7 +29,7 @@ namespace SS2.Components
         private OverlayController chargeOverlayController;
         private List<ImageFillController> fillUiList = new List<ImageFillController>();
 
-        [SyncVar(hook = "OnChargeModified")]
+        [SyncVar(hook = "OnRepairModified")]
         private float _charge;
         public float charge
         {

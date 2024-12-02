@@ -8,15 +8,14 @@ namespace EntityStates.Cyborg2
 {
     public class ExitLastPrism : BaseSkillState
     {
-        public static float exitHopVelocity = 12f;
         public static float baseDuration = 0.33f;
         private float duration;
         public override void OnEnter()
         {
             base.OnEnter();
             this.duration = baseDuration / attackSpeedStat;
-            string layerName = base.isGrounded ? "FullBody, Override" : "Gesture, Override";
-            base.PlayAnimation(layerName, "EndLaser", "Primary.playbackRate", duration);
+            //string layerName = base.isGrounded ? "FullBody, Override" : "Gesture, Override";
+            base.PlayAnimation("Gesture, Override", "EndLaser", "Primary.playbackRate", duration);
         }
 
         public override void FixedUpdate()

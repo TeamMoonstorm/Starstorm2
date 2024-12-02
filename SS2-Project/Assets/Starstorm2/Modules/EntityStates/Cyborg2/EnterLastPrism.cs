@@ -8,23 +8,23 @@ namespace EntityStates.Cyborg2
 {
     public class EnterLastPrism : BaseSkillState
     {
-        public static float exitHopVelocity = 12f;
         public static float baseDuration = 1f;
         private float duration;
         private bool canceled = true;
-        private bool startGrounded;
+        private static float startTime = 0.75f;
         public override void OnEnter()
         {
             base.OnEnter();
+            base.StartAimMode();
             this.duration = baseDuration / attackSpeedStat;
-            string layerName = base.isGrounded ? "FullBody, Override" : "Gesture, Override";
-            base.PlayAnimation(layerName, "FireLaser", "Primary.playbackRate", duration);
+            //string layerName = base.isGrounded ? "FullBody, Override" : "Gesture, Override";
+            base.PlayAnimation("Gesture, Override", "FireLaser", "Primary.playbackRate", duration);
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (base.isAuthority && base.fixedAge >= this.duration)
+            if (base.isAuthority && base.fixedAge >= this.duration * startTime)
             {
                 canceled = false;
                 this.outer.SetNextState(new LastPrism());

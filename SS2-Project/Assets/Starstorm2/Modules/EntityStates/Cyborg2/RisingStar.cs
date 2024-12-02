@@ -49,7 +49,10 @@ namespace EntityStates.Cyborg2
         private float exitTimer;
 
         private string muzzleString = "CannonL";
+        private Animator animator;
+        private Vector3 aimDirection;
 
+        private AimAnimator.DirectionOverrideRequest animatorDirectionOverrideRequest;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -57,14 +60,21 @@ namespace EntityStates.Cyborg2
             this.scanInterval = baseScanInterval / this.attackSpeedStat;
 
             this.targets = GetTargets();
-
-
+            base.StartAimMode();
+            animator = base.GetModelAnimator();
 
             this.targetIndicators = new Dictionary<HurtBox, IndicatorInfo>();
 
             this.fireInterval = baseFireDuration / maxShots / this.attackSpeedStat;
             exitTimer = baseExitDuration / attackSpeedStat;
             base.characterMotor.walkSpeedPenaltyCoefficient = walkSpeedPenaltyCoefficient;
+
+            this.aimDirection = base.GetAimRay().direction;
+            var aimAnimator = base.GetAimAnimator();
+            if (aimAnimator)
+            {
+                animatorDirectionOverrideRequest = aimAnimator.RequestDirectionOverride(new Func<Vector3>(this.GetAimDirection));
+            }
         }
 
         public override void FixedUpdate()
@@ -113,10 +123,26 @@ namespace EntityStates.Cyborg2
             }
         }
 
+        private Vector3 GetAimDirection()
+        {
+            return this.aimDirection;
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            if(this.animator) // bleh why doesnt vanilla do this
+            {
+                this.animator.SetFloat(AnimationParameters.walkSpeed, base.characterMotor.walkSpeed);
+            }
+        }
         public override void OnExit()
         {
             base.OnExit();
-
+            if (this.animatorDirectionOverrideRequest != null)
+            {
+                this.animatorDirectionOverrideRequest.Dispose();
+            }
             base.characterMotor.walkSpeedPenaltyCoefficient = 1;
 
             if (this.targetIndicators != null)
@@ -165,7 +191,8 @@ namespace EntityStates.Cyborg2
             Util.PlayAttackSpeedSound(fireSoundString, base.gameObject, wawaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa);         
 
             Ray aimRay = base.GetAimRay();
-            Vector3 direction = hurtBox != null ? (hurtBox.transform.position - aimRay.origin).normalized : aimRay.direction;         
+            Vector3 direction = hurtBox != null ? (hurtBox.transform.position - aimRay.origin).normalized : aimRay.direction;
+            this.aimDirection = direction;
             if (base.isAuthority)
             {
 

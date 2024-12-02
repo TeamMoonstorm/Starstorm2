@@ -5,32 +5,33 @@ namespace EntityStates.Cyborg2
 {
     public class Unmaker : BaseSkillState, SteppedSkillDef.IStepSetter
     {
-        public static float baseDuration = 0.45f;
-        public static float bulletMaxDistance = 256;
-        public static float bulletRadius = 1;
+        private static float baseDuration = 0.55f;
+        private static float bulletMaxDistance = 256;
+        private static float bulletRadius = 1;
 
         private static float damageCoefficient = 2f;
-        public static float procCoefficient = 1f;
-        public static float force = 150f;
+        private static float procCoefficient = 1f;
+        private static float force = 150f;
         public static GameObject tracerPrefab;
         public static GameObject hitEffectPrefab;
         public static GameObject muzzleFlashPrefab;
-        public static string fireSoundString = "Play_MULT_m1_snipe_shoot"; //"Play_MULT_m1_snipe_shoot"
-        public static float recoil = 1;
-        public static float bloom = .4f;
-        public static float fireSoundPitch = 1;
+        private static string fireSoundString = "Play_MULT_m1_snipe_shoot"; //"Play_MULT_m1_snipe_shoot"
+        private static float recoil = 1;
+        private static float bloom = .4f;
+        private static float fireSoundPitch = 1;
 
         private float duration;
         private bool hasFired;
         private string muzzleString;
-        private string animStateName;
+        private int step;
         public override void OnEnter()
         {
             base.OnEnter();
             duration = Unmaker.baseDuration / base.attackSpeedStat;
             base.StartAimMode();
+            this.muzzleString = step == 0 ? "CannonR" : "CannonL";
             Fire();
-            base.PlayAnimation("Gesture, Override", animStateName, "Primary.playbackRate", this.duration);
+            base.PlayAnimation("Gesture, Override", step == 0 ? "Primary1" : "Primary2");//, "Primary.playbackRate", this.duration);
         }
         public override void FixedUpdate()
         {
@@ -98,9 +99,8 @@ namespace EntityStates.Cyborg2
         }
 
         public void SetStep(int i)
-        {
-            this.muzzleString = i == 0 ? "CannonR" : "CannonL";
-            this.animStateName = i == 0 ? "Primary1" : "Primary2";
+        {            
+            step = i;
         }
     }
 }

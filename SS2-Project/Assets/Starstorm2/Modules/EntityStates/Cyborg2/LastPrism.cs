@@ -1,6 +1,7 @@
 ﻿using RoR2;
 using UnityEngine;
 using SS2.Components;
+using System;
 namespace EntityStates.Cyborg2
 {
     public class LastPrism : BaseSkillState
@@ -36,7 +37,9 @@ namespace EntityStates.Cyborg2
         private float range;
 
         private bool canceled = true;
-
+        private Transform muzzleTransform;
+        private AimAnimator aimAnimator;
+        private AimAnimator.DirectionOverrideRequest animatorDirectionOverrideRequest;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -46,15 +49,26 @@ namespace EntityStates.Cyborg2
             this.turnSpeedAngle = minTurnAnglePerSecond;
             //this.range = minRange;
             //muzzle
-            this.beamEffectInstance = GameObject.Instantiate(beamEffectPrefab, base.characterBody.corePosition, Quaternion.identity);
-            this.beamEffectComponent = beamEffectInstance.GetComponent<BeamFromPoints>();
+            muzzleTransform = base.FindModelChild("MuzzleLaser");       
+            if(muzzleTransform)
+            {
+                this.beamEffectInstance = GameObject.Instantiate(beamEffectPrefab, muzzleTransform.position, Quaternion.identity);
+                this.beamEffectComponent = beamEffectInstance.GetComponent<BeamFromPoints>();
+            }
+            
 
             base.characterMotor.walkSpeedPenaltyCoefficient = walkSpeedPenaltyCoefficient;
 
             var animator = base.GetModelAnimator();
             if (animator)
             {
-                animator.SetLayerWeight(animator.GetLayerIndex("Body, SideWeapon"), 1f);
+                animator.SetLayerWeight(animator.GetLayerIndex("Body, Laser"), 1f);
+                animator.SetBool("inLaser", true);
+            }
+            this.aimAnimator = base.GetAimAnimator();
+            if(this.aimAnimator)
+            {
+                this.animatorDirectionOverrideRequest = aimAnimator.RequestDirectionOverride(new Func<Vector3>(this.GetAimDirection));
             }
         }
 
@@ -72,16 +86,21 @@ namespace EntityStates.Cyborg2
                     point = raycastHit.point;
                 }
                 //beam is shitcode 
-                this.beamEffectComponent.startPoint.position = base.characterBody.corePosition; // MUZZZZZLLLLLLE
+                this.beamEffectComponent.startPoint.position = muzzleTransform.position; 
                 this.beamEffectComponent.endPoint.position = point;
             }
+        }
+
+        private Vector3 GetAimDirection()
+        {
+            return this.currentAimVector;
         }
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-
+            base.characterBody.SetAimTimer(2f);
             float t = base.fixedAge / this.maxChargeTime;
-            float damageCoefficient = maxDamageCoefficientPerSecond;// Mathf.Lerp(minDamageCoefficientPerSecond, maxDamageCoefficientPerSecond, t) * (1 / baseTicksPerSecond);
+            float damageCoefficient = maxDamageCoefficientPerSecond / baseTicksPerSecond;// Mathf.Lerp(minDamageCoefficientPerSecond, maxDamageCoefficientPerSecond, t) * (1 / baseTicksPerSecond);
             this.turnSpeedAngle = minTurnAnglePerSecond;// Mathf.Lerp(maxTurnAnglePerSecond, minTurnAnglePerSecond * base.characterBody.attackSpeed, t);
             this.range = maxRange;// Mathf.Lerp(minRange, maxRange, t);
 
@@ -94,7 +113,7 @@ namespace EntityStates.Cyborg2
                 this.FireBullet(damageCoefficient, this.currentAimVector);
             }
 
-            if (((base.fixedAge >= this.minimumDuration && !base.IsKeyDownAuthority()) || base.characterBody.isSprinting) && base.isAuthority)
+            if (((base.fixedAge >= this.minimumDuration && !base.inputBank.skill1.down) || base.characterBody.isSprinting) && base.isAuthority)
             {
                 canceled = false;
                 this.outer.SetNextState(new ExitLastPrism());
@@ -104,10 +123,15 @@ namespace EntityStates.Cyborg2
         public override void OnExit()
         {
             base.OnExit();
+            if(this.animatorDirectionOverrideRequest != null)
+            {
+                this.animatorDirectionOverrideRequest.Dispose();
+            }
             var animator = base.GetModelAnimator();
             if (animator)
             {
-                animator.SetLayerWeight(animator.GetLayerIndex("Body, SideWeapon"), 0f);
+                animator.SetLayerWeight(animator.GetLayerIndex("Body, Laser"), 0f);
+                animator.SetBool("inLaser", false);
             }
             if (canceled)
             {
