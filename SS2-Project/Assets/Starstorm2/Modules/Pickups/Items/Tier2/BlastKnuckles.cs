@@ -11,7 +11,6 @@ namespace SS2.Items
 {
     public class BlastKnuckles : SS2Item
     {
-		// TODO: MAKE THE BLAST A CONE FROM PLAYER INSTEAD OF SPHERE ON TARGEWT
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acBlastKnuckles", SS2Bundle.Items);
 
         private const string TOKEN = "SS2_ITEM_BLASTKNUCKLES_DESC";
@@ -28,8 +27,8 @@ namespace SS2.Items
 		[FormatToken(TOKEN, 0)]
 		public static float range = 13f;
 
-		public static float blastConeRadius = 3f;
-		public static float blastRange = 16f;
+		public static float blastConeRadius = 3.6f;
+		public static float blastRange = 20f;
 		private static float sqrRange;
 
 		private static GameObject coneEffect;
@@ -70,7 +69,7 @@ namespace SS2.Items
 					maxDistance = blastRange,
 					radius = blastConeRadius,
 					falloffModel = BulletAttack.FalloffModel.None,
-					smartCollision = true,
+					smartCollision = false,
 					stopperMask = 0,
 					hitMask = LayerIndex.CommonMasks.bullet,
 					damage = body.damage * damage,

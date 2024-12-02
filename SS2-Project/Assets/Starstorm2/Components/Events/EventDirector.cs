@@ -16,8 +16,16 @@ namespace SS2
         private void OnEnable()
         {
             Stage.onStageStartGlobal += OnStageStartGlobal;
+            EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal += OnNemesisDefeatedGlobal;
             instance = this;
         }
+
+        private void OnNemesisDefeatedGlobal(CharacterBody body)
+        {
+            string name = Language.GetString(body.baseNameToken);
+            Run.instance.SetEventFlag(name + "Defeated");
+        }
+
         private void OnDisable()
         {
             Stage.onStageStartGlobal -= OnStageStartGlobal;
@@ -96,7 +104,7 @@ namespace SS2
                 }
             }
             // pick mostly random storm start time.
-            if (Run.instance.stageClearCount >= 2 && currentEventSelection.stormPrefab)
+            if (Run.instance.stageClearCount >= 2 && currentEventSelection.canStorm)
             {
                 float startTime = UnityEngine.Random.Range(150f, 420f);
                 GameObject stormController = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("StormController", SS2Bundle.Events));
@@ -198,5 +206,81 @@ namespace SS2
             public Run.FixedTimeStamp endTime;
             public bool hasStarted;
         }
-    }   
+    } 
+    
+    public class NemesisCatalog
+    {
+        private static List<NemesisSpawnCard> externalSpawnCards = new List<NemesisSpawnCard>();
+        private static List<string> externalMasterNames = new List<string>();
+        [SystemInitializer(typeof(MasterCatalog))]
+        private static void Init()
+        {
+            // collect master names from config
+            FromNames();
+        }
+
+        private static void FromNames()
+        {
+            foreach(string master in externalMasterNames)
+            {
+                string b1 = !master.EndsWith("Body") ? master : master.Remove(master.Length - 3);
+                string m1 = master.EndsWith("Master") ? b1 : b1 + "Master";
+                var master1 = MasterCatalog.FindMasterIndex(master);
+                if(master1 == MasterCatalog.MasterIndex.none)
+                {
+                    string m2 = master.EndsWith("MonsterMaster") ? b1 : b1 + "MonsterMaster";
+                    master1 = MasterCatalog.FindMasterIndex(m2);
+                }
+                GameObject masterPrefab = MasterCatalog.GetMasterPrefab(master1);
+                if(masterPrefab)
+                {
+                    AddNemesisInvader(masterPrefab);
+                }
+                else
+                {
+                    SS2Log.Error($"NemesisCatalog.FromNames: Could not find master prefab from string \"{master}\". Nemesis invasion was not added.");
+                    return;
+                }
+            }
+        }
+
+        public static void AddNemesisInvader(string masterName)
+        {
+            externalMasterNames.Add(masterName);
+        }
+        public static void AddNemesisInvader(GameObject masterPrefab, ItemDef itemDef = null, NemesisSpawnCard.SkillOverride[] skillOverrides = null, EntityStates.SerializableEntityStateType spawnState = default(EntityStates.SerializableEntityStateType))
+        {
+            if(!masterPrefab)
+            {
+                SS2Log.Error($"NemesisCatalog.AddNemesisInvader(GameObject): Null master prefab. Nemesis invasion was not added.");
+                return;
+            }
+            if(masterPrefab.TryGetComponent(out CharacterBody _))
+            {
+                SS2Log.Error($"NemesisCatalog.AddNemesisInvader(GameObject): Expected a CharacterMaster component, but {masterPrefab} is a body prefab. Nemesis invasion was not added.");
+                return;
+            }
+            if (!masterPrefab.TryGetComponent(out CharacterMaster master))
+            {
+                SS2Log.Error($"NemesisCatalog.AddNemesisInvader(GameObject): Did not find a CharacterMaster component for {masterPrefab}. Nemesis invasion was not added.");
+                return;
+            }
+            if(!master.bodyPrefab || !master.bodyPrefab.TryGetComponent(out CharacterBody body))
+            {
+                SS2Log.Error($"NemesisCatalog.AddNemesisInvader(GameObject): {masterPrefab} did not have a valid body prefab. Nemesis invasion was not added.");
+                return;
+            }
+            NemesisSpawnCard spawnCard = ScriptableObject.CreateInstance<NemesisSpawnCard>();
+            spawnCard.prefab = masterPrefab;
+            spawnCard.hullSize = body.hullClassification;
+            spawnCard.nodeGraphType = body.isFlying ? RoR2.Navigation.MapNodeGroup.GraphType.Air : RoR2.Navigation.MapNodeGroup.GraphType.Ground;
+            if(skillOverrides != null)
+                spawnCard.skillOverrides = skillOverrides;
+            if(spawnState.stateType != null)
+                spawnCard.overrideSpawnState = spawnState;
+            externalSpawnCards.Add(spawnCard);
+        }
+
+        
+    }
 }
