@@ -95,6 +95,7 @@ namespace SS2.Components
                 blastAttack.damageColorIndex = this.projectileDamage.damageColorIndex;
                 blastAttack.damageType = this.projectileDamage.damageType;
                 blastAttack.attackerFiltering = AttackerFiltering.Default;
+                blastAttack.losType = BlastAttack.LoSType.None;
                 blastAttack.impactEffect = EffectCatalog.FindEffectIndexFromPrefab(impactEffect);
                 if (moddedDamageType != (DamageAPI.ModdedDamageType)(-1)) blastAttack.AddModdedDamageType(moddedDamageType);
                 BlastAttack.Result result = blastAttack.Fire();

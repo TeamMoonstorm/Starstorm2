@@ -13,9 +13,9 @@ namespace EntityStates.Cyborg2
         public override void OnEnter()
         {
             base.OnEnter();
-            this.duration = baseDuration / attackSpeedStat;
+            this.duration = baseDuration;// / attackSpeedStat;
             //string layerName = base.isGrounded ? "FullBody, Override" : "Gesture, Override";
-            base.PlayAnimation("Gesture, Override", "EndLaser", "Primary.playbackRate", duration);
+            base.PlayAnimation("Gesture, Override", "EndLaser");
         }
 
         public override void FixedUpdate()

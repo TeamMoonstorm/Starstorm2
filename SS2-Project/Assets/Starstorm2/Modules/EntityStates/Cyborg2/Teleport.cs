@@ -22,6 +22,7 @@ namespace EntityStates.Cyborg2
         private bool didTeleport;
         private Vector3 lastPositionBeforeTeleport;
         Vector3 initialPosition;
+        private bool wasSprinting;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -34,6 +35,7 @@ namespace EntityStates.Cyborg2
                 return;
             }
 
+            this.wasSprinting = base.characterBody.isSprinting;
             this.initialPosition = base.transform.position;
             this.teleportTarget = this.teleporterOwnership.teleporter.GetSafeTeleportPosition();
 
@@ -91,9 +93,10 @@ namespace EntityStates.Cyborg2
 
         public override void OnExit()
         {
-            base.OnExit();           
+            base.OnExit();  
             if (didTeleport)
             {
+                base.characterBody.isSprinting = wasSprinting;
                 storedVelocity.y = Mathf.Max(storedVelocity.y, 0);
                 //base.characterMotor.velocity = storedVelocity * exitVelocityCoefficient;
             }

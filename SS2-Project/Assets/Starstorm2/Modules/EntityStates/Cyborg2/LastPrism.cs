@@ -6,24 +6,24 @@ namespace EntityStates.Cyborg2
 {
     public class LastPrism : BaseSkillState
     {
-        public static float maxDamageCoefficientPerSecond = 10f;
-        public static float procCoefficientPerSecond = 0.7f;
-        public static float forcePerSecond = 500f;
-        public static float baseTicksPerSecond = 6f;
+        private static float maxDamageCoefficientPerSecond = 10f;
+        private static float procCoefficientPerSecond = 3f;
+        private static float forcePerSecond = 500f;
+        private static float baseTicksPerSecond = 6f;
 
-        public static float baseMinimumDuration  = 0.25f;
+        private static float baseMinimumDuration  = 0.25f;
 
-        public static float maxRange = 50f;
-        public static float bulletRadius = 1.5f;
+        private static float maxRange = 50f;
+        private static float bulletRadius = 1.5f;
 
-        public static float minTurnAnglePerSecond = 90f;
+        private static float minTurnAnglePerSecond = 90f;
 
         public static GameObject beamEffectPrefab;
 
-        public static float walkSpeedPenaltyCoefficient = 0.33f;
+        private static float walkSpeedPenaltyCoefficient = 0.33f;
 
-        public float recoilAmplitude = 0f;
-        public float spreadBloomValuePerSecond = 3f;
+        private float recoilAmplitude = 0f;
+        private float spreadBloomValuePerSecond = 3f;
 
         private float maxChargeTime;
         private float tickDamageStopwatch;

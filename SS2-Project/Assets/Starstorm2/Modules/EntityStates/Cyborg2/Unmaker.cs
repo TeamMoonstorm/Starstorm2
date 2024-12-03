@@ -16,8 +16,8 @@ namespace EntityStates.Cyborg2
         public static GameObject hitEffectPrefab;
         public static GameObject muzzleFlashPrefab;
         private static string fireSoundString = "Play_MULT_m1_snipe_shoot"; //"Play_MULT_m1_snipe_shoot"
-        private static float recoil = 1;
-        private static float bloom = .4f;
+        private static float recoil = 2;
+        private static float bloom = 2f;
         private static float fireSoundPitch = 1;
 
         private float duration;

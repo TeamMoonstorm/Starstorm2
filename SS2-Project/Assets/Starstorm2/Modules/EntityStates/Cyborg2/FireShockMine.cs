@@ -23,7 +23,7 @@ namespace EntityStates.Cyborg2
 
 			Util.PlaySound(soundString, base.gameObject);
 			EffectManager.SimpleMuzzleFlash(muzzleEffectPrefab, base.gameObject, "CannonR", true);
-			base.PlayAnimation("Gesture, Override", "FireMine", "Secondary.playbackRate", this.duration);
+			base.PlayAnimation("Gesture, Override", "FireMine");//, "Secondary.playbackRate", this.duration);
 			AddRecoil(-1f * recoilAmplitude, -1.5f * recoilAmplitude, -0.25f * recoilAmplitude, 0.25f * recoilAmplitude);
 			base.characterBody.AddSpreadBloom(bloom);
 			Ray aimRay = GetAimRay();
