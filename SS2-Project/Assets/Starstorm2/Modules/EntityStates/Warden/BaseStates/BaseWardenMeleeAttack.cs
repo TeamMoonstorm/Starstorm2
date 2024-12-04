@@ -149,6 +149,14 @@ namespace EntityStates.Warden
                         chargeMeter.AddCharge(hitResults.Count * chargeMeterGain); // TODO: gross
                     }
 
+                    foreach(var result in hitResults)
+                    {
+                        if (result.gameObject == SS2.Survivors.Warden.wardenProjectile)
+                        {
+                            Debug.Log("We hit a WARD!!");
+                        }
+                    }
+
                     OnHitEnemyAuthority();
                 }
             }
