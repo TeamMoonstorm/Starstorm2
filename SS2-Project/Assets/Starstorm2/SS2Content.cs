@@ -565,8 +565,6 @@ namespace SS2
 
             public static BuffDef BuffRiposte;
 
-            public static BuffDef BuffCyborgTeleporter;
-
             public static BuffDef BuffBloonTrap;
 
             public static BuffDef bdOverstress;

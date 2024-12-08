@@ -75,7 +75,15 @@ namespace EntityStates.Cyborg2
         public override void Update()
         {
             base.Update();
-
+            UpdateBeam();        
+        }
+        public void AimImmediate()
+        {
+            this.currentAimVector = base.inputBank.aimDirection;
+            UpdateBeam();
+        }
+        private void UpdateBeam()
+        {
             Vector3 aimInput = base.inputBank.aimDirection;
             this.currentAimVector = Vector3.RotateTowards(this.currentAimVector, aimInput, Mathf.Deg2Rad * turnSpeedAngle * Time.deltaTime, 0);
             if (this.beamEffectComponent)
@@ -86,7 +94,7 @@ namespace EntityStates.Cyborg2
                     point = raycastHit.point;
                 }
                 //beam is shitcode 
-                this.beamEffectComponent.startPoint.position = muzzleTransform.position; 
+                this.beamEffectComponent.startPoint.position = muzzleTransform.position;
                 this.beamEffectComponent.endPoint.position = point;
             }
         }

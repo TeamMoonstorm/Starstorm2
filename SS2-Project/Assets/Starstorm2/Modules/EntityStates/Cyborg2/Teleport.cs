@@ -15,12 +15,8 @@ namespace EntityStates.Cyborg2
         private TeleporterProjectile.ProjectileTeleporterOwnership teleporterOwnership;
         private Vector3 teleportTarget;
 
-        private static float exitVelocityCoefficient = 1.25f;
-        private static float damageRadius = 10f;
-        private static float damageCoefficient = 3f;
         private Vector3 storedVelocity;
         private bool didTeleport;
-        private Vector3 lastPositionBeforeTeleport;
         Vector3 initialPosition;
         private bool wasSprinting;
         public override void OnEnter()
@@ -78,7 +74,6 @@ namespace EntityStates.Cyborg2
                 if(this.teleportTarget != Vector3.zero)
                 {
                     didTeleport = true;
-                    lastPositionBeforeTeleport = base.characterBody.corePosition;
                     TeleportHelper.TeleportBody(base.characterBody, this.teleportTarget);
                     base.characterDirection.forward = base.GetAimRay().direction;
 
@@ -96,6 +91,11 @@ namespace EntityStates.Cyborg2
             base.OnExit();  
             if (didTeleport)
             {
+                var machine = EntityStateMachine.FindByCustomName(base.gameObject, "Weapon");
+                if(machine && machine.state is LastPrism)
+                {
+                    (machine.state as LastPrism).AimImmediate();
+                }
                 base.characterBody.isSprinting = wasSprinting;
                 storedVelocity.y = Mathf.Max(storedVelocity.y, 0);
                 //base.characterMotor.velocity = storedVelocity * exitVelocityCoefficient;

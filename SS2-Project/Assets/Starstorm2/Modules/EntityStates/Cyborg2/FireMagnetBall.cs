@@ -14,7 +14,7 @@ namespace EntityStates.Cyborg2
 		public static float recoilAmplitude = 7f;
 		public static float baseDuration = 1.5f;
 		public static float earlyExitTime = 0.5f;
-		private static float damageCoefficient = 8f;
+		private static float damageCoefficient = 7f;
 		public static float force = 500f;
 		private static float chargeTime = 0.2f;
 
@@ -69,7 +69,7 @@ namespace EntityStates.Cyborg2
 				fireProjectileInfo.damage = damageStat * damageCoefficient;
 				fireProjectileInfo.force = force;
 				fireProjectileInfo.crit = RollCrit();
-				DamageTypeCombo damageType = DamageType.Stun1s;
+				DamageTypeCombo damageType = DamageType.Generic;
 				damageType.damageSource = DamageSource.Special;
 				fireProjectileInfo.damageTypeOverride = damageType;
 				ProjectileManager.instance.FireProjectile(fireProjectileInfo);

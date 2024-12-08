@@ -119,6 +119,7 @@ namespace SS2.Equipments
             private static BuffDef GetBuffDef() => SS2Content.Buffs.bdHakai;
             public static GameObject projectilePrefab = SS2Assets.LoadAsset<GameObject>("EtherealCircle", SS2Bundle.Equipments);
 
+            private static float baseTimerDur = 5f;
             private float timer;
             private float timerDur;
             private bool expired = false;
@@ -129,6 +130,14 @@ namespace SS2.Equipments
             {
                 if (!hasAnyStacks)
                     return;
+
+                if (characterBody.hullClassification == HullClassification.BeetleQueen)
+                    timerDur = baseTimerDur * 2f;
+                else if (characterBody.hullClassification == HullClassification.Golem)
+                    timerDur = baseTimerDur * 1.5f;
+                else
+                    timerDur = baseTimerDur;
+
                 timer = 0;
 
                 Util.PlaySound("EtherealActivate", this.gameObject);

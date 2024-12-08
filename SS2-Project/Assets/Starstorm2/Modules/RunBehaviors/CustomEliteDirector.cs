@@ -75,7 +75,7 @@ namespace SS2.Components
                 if (timer > directorTickInterval)
                 {
                     timer = 0f;
-                    float multiplier = Util.Remap(Run.instance.difficultyCoefficient, 0, 200, 1, 2); // arbitrary values. just guessing
+                    float multiplier = Util.Remap(Run.instance.difficultyCoefficient, 0, 500, 1, 16); // arbitrary values. just guessing
                     float eliteCredit = (rng.RangeFloat(minEliteCreditPerTick, maxEliteCreditPerTick) * multiplier);
                     for (int i = allElites.Count - 1; i >= 0; i--)
                     {
@@ -223,7 +223,7 @@ namespace SS2.Components
 
     public class Empyrean : StackableAffix
     {
-        public override float EliteCreditCost => 1800f;
+        public override float EliteCreditCost => 1500f;
         public override float CostMultiplier => 22.5f;
         public override bool IsBoss => true;
         public override bool IsAvailable()
@@ -248,7 +248,7 @@ namespace SS2.Components
             inventory.RemoveItem(RoR2Content.Items.BoostHp, inventory.GetItemCount(RoR2Content.Items.BoostHp));
             inventory.RemoveItem(RoR2Content.Items.BoostDamage, inventory.GetItemCount(RoR2Content.Items.BoostDamage));
 
-            inventory.GiveItem(RoR2Content.Items.BoostHp, 750);
+            inventory.GiveItem(RoR2Content.Items.BoostHp, 2500);
             inventory.GiveItem(SS2Content.Items.BoostMovespeed, 35);
             inventory.GiveItem(SS2Content.Items.BoostCooldowns, 50);
             inventory.GiveItem(RoR2Content.Items.BoostDamage, 60);
@@ -259,7 +259,7 @@ namespace SS2.Components
             int extraStages = Mathf.Max(Run.instance.stageClearCount - 7, 0);
             int extraLoops = Mathf.FloorToInt(extraStages / Run.stagesPerLoop);
             inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, 1); ///
-            inventory.GiveItem(SS2Content.Items.DoubleAllStats, extraLoops);
+            inventory.GiveItem(SS2Content.Items.DoubleAllStats, extraLoops * extraLoops);
             inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 15 + 15 * extraLoops); // teehee
             if (body.characterMotor) body.characterMotor.mass = 2000f; // NO KNOCKBACK !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             if (body.rigidbody) body.rigidbody.mass = 2000f;
@@ -292,16 +292,17 @@ namespace SS2.Components
         private static float baseCostMultiplier = 9; // so i can change it easier in game
         private static float baseCostRequirement = 4;
         private static float baseCreditCost = 300;
-        public override float EliteCreditCost => baseCreditCost * Mathf.Pow(0.67f, EtherealBehavior.instance.etherealsCompleted-1);
-        public override float CostMultiplier => baseCostMultiplier * Mathf.Pow(0.67f, EtherealBehavior.instance.etherealsCompleted-1);
-        public override float CostRequirement => baseCostRequirement * Mathf.Pow(0.67f, EtherealBehavior.instance.etherealsCompleted-1);
+        public override float EliteCreditCost => baseCreditCost * Mathf.Pow(0.875f, EtherealBehavior.instance.etherealsCompleted-1);
+        public override float CostMultiplier => baseCostMultiplier * Mathf.Pow(0.875f, EtherealBehavior.instance.etherealsCompleted-1);
+        public override float CostRequirement => baseCostRequirement * Mathf.Pow(0.875f, EtherealBehavior.instance.etherealsCompleted-1);
         public override bool IsAvailable() => EtherealBehavior.instance && EtherealBehavior.instance.etherealsCompleted > 0;
         public override void MakeElite(CharacterBody body)
         {
             var inventory = body.inventory;
             var ethInstance = EtherealBehavior.instance;
+            int loopCount = Mathf.Max(Run.instance.loopClearCount, 1);
             inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(100 + (100 * ethInstance.etherealsCompleted)));
-            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, Mathf.Max(Run.instance.loopClearCount, 1));
+            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, loopCount * loopCount);
             inventory.GiveItem(SS2Content.Items.BoostCooldowns, 15);
             inventory.GiveItem(RoR2Content.Items.BoostDamage, (int)(20 + (20 * ethInstance.etherealsCompleted)));
             inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 20); // MORE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -332,8 +333,9 @@ namespace SS2.Components
         {
             var inventory = body.inventory;
             var ethInstance = EtherealBehavior.instance;
-            inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(500f + (250f * ethInstance.etherealsCompleted)));
-            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, Mathf.Max(Run.instance.loopClearCount, 1));
+            int loopCount = Mathf.Max(Run.instance.loopClearCount, 1);
+            inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(900f + (450f * ethInstance.etherealsCompleted)));
+            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, loopCount * loopCount * 2);
             inventory.GiveItem(SS2Content.Items.BoostCooldowns, 70);
             inventory.GiveItem(RoR2Content.Items.BoostDamage, 100);
             inventory.GiveItem(SS2Content.Items.AffixUltra);

@@ -5,7 +5,7 @@ namespace EntityStates.Cyborg2
 {
     public class Unmaker : BaseSkillState, SteppedSkillDef.IStepSetter
     {
-        private static float baseDuration = 0.55f;
+        private static float baseDuration = 0.625f;
         private static float bulletMaxDistance = 256;
         private static float bulletRadius = 1;
 

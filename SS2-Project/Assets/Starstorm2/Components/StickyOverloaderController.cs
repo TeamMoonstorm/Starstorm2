@@ -22,7 +22,6 @@ namespace SS2.Components
         public GameObject explosionEffectPrefab;
         public GameObject impactEffectPrefab;
         public Rigidbody rigidbody;
-        
         private int buffCount;
 
         private bool hasExploded;
@@ -62,6 +61,10 @@ namespace SS2.Components
         private TeamIndex teamIndex;
         private float baseDamage;
         private bool crit;
+
+        private Renderer indicatorRenderer;
+        private MaterialPropertyBlock _propBlock;
+        private Material[] materials;
         public void TrySticking(CharacterBody victimBody, CharacterBody attackerBody)
         {
             if (!NetworkServer.active) return;
@@ -101,10 +104,12 @@ namespace SS2.Components
         {
             sizeCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
             buffCount = stuckBody.GetBuffCount(SS2Content.Buffs.BuffStickyOverloader);
-            rigidbody = base.GetComponent<Rigidbody>();
-            SetBuffCount(buffCount);
+            rigidbody = base.GetComponent<Rigidbody>();        
             //victimsToInstances.Add(stuckBody, this); // im so fuckig stupdi man
             indicator.transform.SetParent(null); // :/
+            indicatorRenderer = indicator.GetComponentInChildren<Renderer>();
+            this.materials = indicatorRenderer.materials;
+            SetBuffCount(buffCount);
         }
         private void FixedUpdate()
         {
@@ -177,6 +182,14 @@ namespace SS2.Components
             if(animator)
             {
                 animator.SetFloat("intensity", count / (float)(StickyOverloader.maxStacks + StickyOverloader.maxStacksPerStack * (itemStacks - 1)));
+            }
+            float alpha = Util.Remap(count, 0, 25, .3f, 1);
+            for(int i = 0; i < this.indicatorRenderer.materials.Length; i++)
+            {
+                this._propBlock = new MaterialPropertyBlock();
+                this.indicatorRenderer.GetPropertyBlock(this._propBlock, i);
+                this._propBlock.SetFloat("_ExternalAlpha", alpha);
+                this.indicatorRenderer.SetPropertyBlock(this._propBlock, i);
             }
         }
 
