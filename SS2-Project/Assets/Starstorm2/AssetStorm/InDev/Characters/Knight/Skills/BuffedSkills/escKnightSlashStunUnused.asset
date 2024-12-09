@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: escKnightSlashStunPrimaryUnused
+  m_Name: escKnightSlashStunUnused
   m_EditorClassIdentifier: 
   targetType:
     assemblyQualifiedName: EntityStates.Knight.StunSlash, Starstorm2, Version=1.0.0.0,
@@ -195,6 +195,10 @@ MonoBehaviour:
         stringValue: 0
         objectValue: {fileID: 0}
     - fieldName: attackEndTimeFraction
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: earlyExitTimeFraction
       fieldValue:
         stringValue: 0
         objectValue: {fileID: 0}

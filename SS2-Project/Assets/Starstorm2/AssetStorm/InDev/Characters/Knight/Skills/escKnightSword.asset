@@ -19,161 +19,57 @@ MonoBehaviour:
     serializedFields:
     - fieldName: swingTimeCoefficient
       fieldValue:
-        stringValue: 1.41
+        stringValue: 0.8
         objectValue: {fileID: 0}
     - fieldName: baseDuration
       fieldValue:
-        stringValue: 0.7
+        stringValue: 0.8
         objectValue: {fileID: 0}
     - fieldName: damageCoefficient
       fieldValue:
-        stringValue: 2.4
-        objectValue: {fileID: 0}
-    - fieldName: hitBoxGroupName
-      fieldValue:
-        stringValue: SwordHitbox
+        stringValue: 2
         objectValue: {fileID: 0}
     - fieldName: hitEffectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 0}
+        objectValue: {fileID: 7162646827672994295, guid: df30f1ff218cf8843975d273aaf848d8,
+          type: 3}
     - fieldName: procCoefficient
       fieldValue:
         stringValue: 1
-        objectValue: {fileID: 0}
-    - fieldName: pushAwayForce
-      fieldValue:
-        stringValue: 40
-        objectValue: {fileID: 0}
-    - fieldName: forceVector
-      fieldValue:
-        stringValue: 0 0 0
-        objectValue: {fileID: 0}
-    - fieldName: hitPauseDuration
-      fieldValue:
-        stringValue: 0.05
         objectValue: {fileID: 0}
     - fieldName: swingEffectPrefab
       fieldValue:
         stringValue: 
         objectValue: {fileID: 4237556790985801160, guid: 852621f874c99214fa8355108e7ac86a,
           type: 3}
-    - fieldName: swingEffectMuzzleString
-      fieldValue:
-        stringValue: SwingLeft
-        objectValue: {fileID: 0}
-    - fieldName: mecanimHitboxActiveParameter
-      fieldValue:
-        stringValue: Primary.Hitbox
-        objectValue: {fileID: 0}
-    - fieldName: shorthopVelocityFromHit
-      fieldValue:
-        stringValue: 6.5
-        objectValue: {fileID: 0}
-    - fieldName: beginStateSoundString
-      fieldValue:
-        stringValue: NemmandoSwing
-        objectValue: {fileID: 0}
-    - fieldName: beginSwingSoundString
-      fieldValue:
-        stringValue: 
-        objectValue: {fileID: 0}
     - fieldName: impactSound
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 0}
-    - fieldName: forceForwardVelocity
-      fieldValue:
-        stringValue: 0
-        objectValue: {fileID: 0}
-    - fieldName: forwardVelocityCurve
-      fieldValue:
-        stringValue: '{"preWrapMode":8,"postWrapMode":8,"keys":[]}'
-        objectValue: {fileID: 0}
-    - fieldName: scaleHitPauseDurationAndVelocityWithAttackSpeed
-      fieldValue:
-        stringValue: 1
         objectValue: {fileID: 0}
     - fieldName: ignoreAttackSpeed
       fieldValue:
         stringValue: 0
         objectValue: {fileID: 0}
-    - fieldName: beamProjectile
-      fieldValue:
-        stringValue: 
-        objectValue: {fileID: 1166276589453209, guid: b427d6842457eba47a8e3aeed1c0883a,
-          type: 3}
-    - fieldName: buffedSkillRef
-      fieldValue:
-        stringValue: 
-        objectValue: {fileID: 11400000, guid: d60866c11fc8657499529725f9996160, type: 2}
-    - fieldName: baseDurationBeforeInterruptable
-      fieldValue:
-        stringValue: 0.3
-        objectValue: {fileID: 0}
-    - fieldName: comboFinisherBaseDurationBeforeInterruptable
-      fieldValue:
-        stringValue: 1.2
-        objectValue: {fileID: 0}
-    - fieldName: comboFinisherhitPauseDuration
-      fieldValue:
-        stringValue: 0.08
-        objectValue: {fileID: 0}
-    - fieldName: comboFinisherDamageCoefficient
-      fieldValue:
-        stringValue: 3
-        objectValue: {fileID: 0}
-    - fieldName: swingTimeCoefficientFinisher
-      fieldValue:
-        stringValue: 0
-        objectValue: {fileID: 0}
-    - fieldName: testHitHop
-      fieldValue:
-        stringValue: 0
-        objectValue: {fileID: 0}
     - fieldName: testDuration
       fieldValue:
-        stringValue: 0
-        objectValue: {fileID: 0}
-    - fieldName: testSwingTimeCoefficient
-      fieldValue:
-        stringValue: 0
-        objectValue: {fileID: 0}
-    - fieldName: testEarlyExit
-      fieldValue:
-        stringValue: 0
+        stringValue: 0.8
         objectValue: {fileID: 0}
     - fieldName: testDamage
       fieldValue:
-        stringValue: 0
-        objectValue: {fileID: 0}
-    - fieldName: testHistop
-      fieldValue:
-        stringValue: 0
+        stringValue: 2
         objectValue: {fileID: 0}
     - fieldName: testFinisherDuration
       fieldValue:
-        stringValue: 0
-        objectValue: {fileID: 0}
-    - fieldName: testFinisherSwingTimeCoefficient
-      fieldValue:
-        stringValue: 0
-        objectValue: {fileID: 0}
-    - fieldName: testFinisherEarlyExit
-      fieldValue:
-        stringValue: 0
+        stringValue: 1.1
         objectValue: {fileID: 0}
     - fieldName: testFinisherDamage
       fieldValue:
-        stringValue: 0
-        objectValue: {fileID: 0}
-    - fieldName: testFinisherHistop
-      fieldValue:
-        stringValue: 0
+        stringValue: 4
         objectValue: {fileID: 0}
     - fieldName: hitboxGroupName
       fieldValue:
-        stringValue: 
+        stringValue: SwordHitbox
         objectValue: {fileID: 0}
     - fieldName: damageType
       fieldValue:
@@ -188,21 +84,9 @@ MonoBehaviour:
       fieldValue:
         stringValue: 0, 0, 0
         objectValue: {fileID: 0}
-    - fieldName: attackStartPercentTime
-      fieldValue:
-        stringValue: 0
-        objectValue: {fileID: 0}
-    - fieldName: attackEndPercentTime
-      fieldValue:
-        stringValue: 0
-        objectValue: {fileID: 0}
-    - fieldName: earlyExitPercentTime
-      fieldValue:
-        stringValue: 0
-        objectValue: {fileID: 0}
     - fieldName: hitStopDuration
       fieldValue:
-        stringValue: 0
+        stringValue: 0.08
         objectValue: {fileID: 0}
     - fieldName: attackRecoil
       fieldValue:
@@ -210,11 +94,11 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: hitHopVelocity
       fieldValue:
-        stringValue: 0
+        stringValue: 4.4
         objectValue: {fileID: 0}
     - fieldName: swingSoundString
       fieldValue:
-        stringValue: 
+        stringValue: NemmandoSwing
         objectValue: {fileID: 0}
     - fieldName: hitSoundString
       fieldValue:
@@ -222,11 +106,11 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: muzzleString
       fieldValue:
-        stringValue: 
+        stringValue: SwingCenter
         objectValue: {fileID: 0}
     - fieldName: playbackRateParam
       fieldValue:
-        stringValue: 
+        stringValue: Primary.playbackRate
         objectValue: {fileID: 0}
     - fieldName: earlyExitPriority
       fieldValue:
@@ -240,9 +124,45 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: attackStartTimeFraction
       fieldValue:
-        stringValue: 0
+        stringValue: 0.215
         objectValue: {fileID: 0}
     - fieldName: attackEndTimeFraction
       fieldValue:
+        stringValue: 0.3
+        objectValue: {fileID: 0}
+    - fieldName: earlyExitTimeFraction
+      fieldValue:
+        stringValue: 0.6
+        objectValue: {fileID: 0}
+    - fieldName: finisherAttackStart
+      fieldValue:
+        stringValue: 0.26669
+        objectValue: {fileID: 0}
+    - fieldName: finisherAttackEnd
+      fieldValue:
+        stringValue: 0.5
+        objectValue: {fileID: 0}
+    - fieldName: finisherEarlyExit
+      fieldValue:
+        stringValue: 0.7
+        objectValue: {fileID: 0}
+    - fieldName: finisherHitPause
+      fieldValue:
+        stringValue: 0.12
+        objectValue: {fileID: 0}
+    - fieldName: finisherDamage
+      fieldValue:
+        stringValue: 4
+        objectValue: {fileID: 0}
+    - fieldName: finisherSwingTimeCoefficient
+      fieldValue:
+        stringValue: 0.8
+        objectValue: {fileID: 0}
+    - fieldName: finisherBaseDuration
+      fieldValue:
         stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: finisherSwingEffectPrefab
+      fieldValue:
+        stringValue: 
         objectValue: {fileID: 0}

@@ -71,7 +71,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: hitStopDuration
       fieldValue:
-        stringValue: 0.12
+        stringValue: 0.08
         objectValue: {fileID: 0}
     - fieldName: attackRecoil
       fieldValue:
@@ -91,7 +91,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: muzzleString
       fieldValue:
-        stringValue: SwingCenter
+        stringValue: HitboxAnchor
         objectValue: {fileID: 0}
     - fieldName: playbackRateParam
       fieldValue:
@@ -113,7 +113,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: baseDuration
       fieldValue:
-        stringValue: 0.69
+        stringValue: 0.8
         objectValue: {fileID: 0}
     - fieldName: hitboxGroupName
       fieldValue:
@@ -181,7 +181,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: directionAimOverride
       fieldValue:
-        stringValue: 0
+        stringValue: 1
         objectValue: {fileID: 0}
     - fieldName: forceUnground
       fieldValue:
@@ -197,9 +197,21 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: attackEndTimeFraction
       fieldValue:
-        stringValue: 0
+        stringValue: 1
         objectValue: {fileID: 0}
     - fieldName: testDamageBoosted
       fieldValue:
         stringValue: 3
+        objectValue: {fileID: 0}
+    - fieldName: earlyExitTimeFraction
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: baseFireFrequency
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: forceFacingDirection
+      fieldValue:
+        stringValue: 1
         objectValue: {fileID: 0}

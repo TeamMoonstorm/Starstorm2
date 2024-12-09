@@ -3,18 +3,47 @@ using UnityEngine;
 using RoR2;
 using RoR2.Skills;
 using UnityEngine.Networking;
+using MSU.Config;
+using SS2;
 
 namespace EntityStates.Knight
 {
     public class BannerSlam : BannerSpecial
     {
-        protected override void ModifyBlastAttack(BlastAttack blastAttack)
+        [SerializeField]
+        public float healMultiplier = 0.4f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
+        public static float TestHealMultiplier = 0.4f;
+
+        protected override void FireImpact()
         {
-            //TODO: using force in this game for gameplay is ass. Do this instead https://discord.com/channels/562704639141740588/562704639569428506/1192073657267261534
-            //also I think dee's concept had him swiping everyone in before jumping, rather than on impact, then you banner them all when you land
-                //think I would make a new knightmelee state and on enter set the roll statemachine to that state and apply the force to the hitresults 
-            blastAttack.baseForce = -1000f;
-            blastAttack.bonusForce = Vector3.up * 1000;
+            base.FireImpact();
+            healMultiplier = TestHealMultiplier;
+
+            for (int i = 0; i < CharacterBody.readOnlyInstancesList.Count; i++)
+            {
+                CharacterBody character = CharacterBody.readOnlyInstancesList[i];
+                if (character.teamComponent.teamIndex == characterBody.teamComponent.teamIndex &&
+                    (character.transform.position - transform.position).sqrMagnitude < impactRadius * impactRadius)
+                {
+                    character.healthComponent.Heal(characterBody.healthComponent.fullCombinedHealth * healMultiplier, default);
+                }
+            }
+        }
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+
+            characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+
+            characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility);
         }
     }
 

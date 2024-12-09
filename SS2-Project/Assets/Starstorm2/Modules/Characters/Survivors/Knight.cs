@@ -6,6 +6,7 @@ using RoR2.ContentManagement;
 using R2API;
 using EntityStates;
 using MSU.Config;
+using RoR2.Skills;
 
 namespace SS2.Survivors
 {
@@ -64,6 +65,10 @@ namespace SS2.Survivors
             KnightHitEffect = AssetCollection.FindAsset<GameObject>("KnightImpactSlashEffect");
             KnightSpinEffect = AssetCollection.FindAsset<GameObject>("KnightSpin");
             KnightPassiveWard = AssetCollection.FindAsset<GameObject>("KnightPassiveBuffWard");
+
+            AssetCollection.FindAsset<UpgradedSkillDef>("sdKnightBuffedPrimaryLunar").upgradedFrom = Addressables.LoadAssetAsync<LunarPrimaryReplacementSkill>("RoR2/Base/LunarSkillReplacements/LunarPrimaryReplacement.asset").WaitForCompletion();
+            //AssetCollection.FindAsset<UpgradedSkillDef>("sdKnightBuffedUtilityLunar").upgradedFrom = Addressables.LoadAssetAsync<SkillDef>("RoR2/Base/LunarSkillReplacements/LunarUtilityReplacement.asset").WaitForCompletion();
+            //AssetCollection.FindAsset<UpgradedSkillDef>("sdKnightBuffedSpecialLunar").upgradedFrom = Addressables.LoadAssetAsync<LunarDetonatorSkill>("RoR2/Base/LunarSkillReplacements/LunarDetonatorSpecialReplacement.asset").WaitForCompletion();
 
             KnightImpactEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/Bandit2SmokeBomb.prefab").WaitForCompletion();
             KnightCrosshair = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/SimpleDotCrosshair.prefab").WaitForCompletion();

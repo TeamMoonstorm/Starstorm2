@@ -3,6 +3,8 @@ using MSU.Config;
 using RoR2;
 using RoR2.Skills;
 using SS2;
+using SS2.Components;
+using System;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -19,17 +21,17 @@ namespace EntityStates.Knight
         
         // TODO: Make static once you have a replacement
         public GameObject impactEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/Bandit2SmokeBomb.prefab").WaitForCompletion();
-
-        //todo wish I had time to put these on the skilldef like GI
-        public static SkillDef buffedPrimarySkillDef;
-        public static SkillDef buffedUtilitySkillDef;
-        public static SkillDef buffedSpecialSkillDef;
-
         public int swingSide;
 
-        private GenericSkill originalPrimarySkill;
-        private GenericSkill originalUtilitySkill;
-        private GenericSkill originalSpecialSkill;
+        private GenericSkill primarySkill;
+        private GenericSkill utilitySkill;
+        private GenericSkill specialSkill;
+
+        private SkillDef buffedPrimarySkillDef;
+        private SkillDef buffedUtilitySkillDef;
+        private SkillDef buffedSpecialSkillDef;
+
+        private UpgradedSkillCache upgradedSkillCache;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
         public static float testbaseDuration = 0.69f;
@@ -48,32 +50,61 @@ namespace EntityStates.Knight
             animator = GetModelAnimator();
 
             // Grab and set the original skills
-            originalPrimarySkill = skillLocator.primary;
-            originalUtilitySkill = skillLocator.utility;
-            originalSpecialSkill = skillLocator.special;
+            primarySkill = skillLocator.primary;
+            utilitySkill = skillLocator.utility;
+            specialSkill = skillLocator.special;
 
-            // Assign the buffed skill versions
-            float originalcooldown;
-            originalcooldown = originalPrimarySkill.rechargeStopwatch;
-            originalPrimarySkill.SetSkillOverride(gameObject, buffedPrimarySkillDef, GenericSkill.SkillOverridePriority.Contextual);
-            originalPrimarySkill.rechargeStopwatch = originalcooldown;
+            upgradedSkillCache = gameObject.GetComponent<UpgradedSkillCache>();
 
-            originalcooldown = originalUtilitySkill.rechargeStopwatch;
-            originalUtilitySkill.SetSkillOverride(gameObject, buffedUtilitySkillDef, GenericSkill.SkillOverridePriority.Contextual);
-            originalUtilitySkill.rechargeStopwatch = originalcooldown;
-
-            originalcooldown = originalSpecialSkill.rechargeStopwatch;
-            originalSpecialSkill.SetSkillOverride(gameObject, buffedSpecialSkillDef, GenericSkill.SkillOverridePriority.Contextual);
-            originalSpecialSkill.rechargeStopwatch = originalcooldown;
+            TryOverrideSkill(primarySkill, ref buffedPrimarySkillDef);
+            TryOverrideSkill(utilitySkill, ref buffedUtilitySkillDef);
+            TryOverrideSkill(specialSkill, ref buffedSpecialSkillDef);
 
             EffectData effectData = new EffectData();
             effectData.origin = this.characterBody.corePosition;
             EffectManager.SpawnEffect(impactEffect, effectData, transmit: false);
         }
 
+        private void TryOverrideSkill(GenericSkill genericSkill, ref SkillDef buffedSkillDef)
+        {
+            if(upgradedSkillCache == null)
+            {
+                SS2Log.Warning($"no upgradedskillcachecomponent. doing a probably costly search through the skillcatalog");
+                buffedSkillDef = UpgradedSkillCache.FindUpgradedSkillDef(genericSkill.skillDef);
+            }
+            else
+            {
+                buffedSkillDef = upgradedSkillCache.GetUpgradedSkillDef(genericSkill.skillDef);
+            }
+
+            if (buffedSkillDef == null)
+                return;
+
+            SetOverride(genericSkill, buffedSkillDef, true);
+        }
+
+        private void SetOverride(GenericSkill genericSkill, SkillDef buffedSkillDef, bool shouldSet)
+        {
+            //setskilloverride should have a keepcooldown option
+            float origCooldown = genericSkill.rechargeStopwatch;
+            int stock = genericSkill.stock;
+
+            if (shouldSet)
+            {
+                genericSkill.SetSkillOverride(gameObject, buffedSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+            } 
+            else
+            {
+                genericSkill.UnsetSkillOverride(gameObject, buffedSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+            }
+
+            genericSkill.stock = stock;
+            genericSkill.rechargeStopwatch = origCooldown;
+        }
+
         public override void PlayAnimation()
         {
-            PlayCrossfade("FullBody, Override", "Parry", "Secondary.playbackRate", duration, 0.15f);
+            PlayAnimation("FullBody, Override", "Parry", "Secondary.playbackRate", duration);
         }
 
         public override void FixedUpdate()
@@ -94,6 +125,7 @@ namespace EntityStates.Knight
             return InterruptPriority.PrioritySkill;
         }
 
+        //ripped from genericcharactermain
         protected void PerformInputs()
         {
             if (base.isAuthority)
@@ -125,23 +157,24 @@ namespace EntityStates.Knight
             //}
 
             // Assign the buffed skill versions
-            float originalcooldown;
-            originalcooldown = originalPrimarySkill.rechargeStopwatch;
-            originalPrimarySkill.UnsetSkillOverride(gameObject, buffedPrimarySkillDef, GenericSkill.SkillOverridePriority.Contextual);
-            originalPrimarySkill.rechargeStopwatch = originalcooldown;
 
-            originalcooldown = originalUtilitySkill.rechargeStopwatch;
-            originalUtilitySkill.UnsetSkillOverride(gameObject, buffedUtilitySkillDef, GenericSkill.SkillOverridePriority.Contextual);
-            originalUtilitySkill.rechargeStopwatch = originalcooldown;
-
-            originalcooldown = originalSpecialSkill.rechargeStopwatch;
-            originalSpecialSkill.UnsetSkillOverride(gameObject, buffedSpecialSkillDef, GenericSkill.SkillOverridePriority.Contextual);
-            originalSpecialSkill.rechargeStopwatch = originalcooldown;
+            TryUnsetOverride(primarySkill, buffedPrimarySkillDef);
+            TryUnsetOverride(utilitySkill, buffedUtilitySkillDef);
+            TryUnsetOverride(specialSkill, buffedSpecialSkillDef);
 
             characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility);
             
             base.OnExit();
         }
+
+        private void TryUnsetOverride(GenericSkill primarySkill, SkillDef buffedPrimarySkillDef)
+        {
+            if(buffedPrimarySkillDef == null)
+                return;
+
+            SetOverride(primarySkill, buffedPrimarySkillDef, false);
+        }
+
         public override void AuthorityModifyOverlapAttack(OverlapAttack overlapAttack)
         {
             base.AuthorityModifyOverlapAttack(overlapAttack);

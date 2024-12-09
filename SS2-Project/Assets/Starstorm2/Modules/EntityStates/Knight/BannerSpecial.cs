@@ -8,15 +8,16 @@ namespace EntityStates.Knight
 {
     public class BannerSpecial : BaseState
     {
-        public static SkillDef buffedSkillRef;
         public static GameObject knightBannerWard;
         public static GameObject slowBuffWard;
 
         private GameObject bannerObject;
         private GameObject slowBuffWardInstance;
 
-        public float rollSpeed = 1.2f;
-        public float hopVelocity = 25f;
+        [SerializeField]
+        public float impactRadius = 20f;
+        [SerializeField]
+        public float impactDamage = 3f;
 
         public float minimumY = 0.05f;
         public float airControl = 0.15f;
@@ -94,7 +95,7 @@ namespace EntityStates.Knight
             base.OnExit();
         }
 
-        private void FireImpact()
+        protected virtual void FireImpact()
         {
             PlayAnimation("FullBody, Override", "SpecialLeapEnd", "Special.playbackRate", detonateNextFrame ? 1f : 0.2f);
 
@@ -103,14 +104,14 @@ namespace EntityStates.Knight
                 var blastAttack = new BlastAttack
                 {
                     attacker = base.gameObject,
-                    baseDamage = damageStat,
-                    baseForce = 20f,
+                    baseDamage = damageStat * impactDamage,
+                    baseForce = 0f,
                     bonusForce = Vector3.up,
                     crit = false,
                     damageType = DamageType.Generic,
                     falloffModel = BlastAttack.FalloffModel.Linear,
-                    procCoefficient = 0.1f,
-                    radius = 20f,
+                    procCoefficient = 1f,
+                    radius = impactRadius,
                     position = base.characterBody.footPosition,
                     attackerFiltering = AttackerFiltering.NeverHitSelf,
                     //impactEffect = EffectCatalog.FindEffectIndexFromPrefab(SS2.Survivors.Knight.KnightImpactEffect),

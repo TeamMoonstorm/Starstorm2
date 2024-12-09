@@ -28,7 +28,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: damageCoefficient
       fieldValue:
-        stringValue: 2
+        stringValue: 4
         objectValue: {fileID: 0}
     - fieldName: procCoefficient
       fieldValue:
@@ -44,7 +44,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: baseDuration
       fieldValue:
-        stringValue: 0.25
+        stringValue: 0.22
         objectValue: {fileID: 0}
     - fieldName: ignoreAttackSpeed
       fieldValue:
@@ -103,12 +103,22 @@ MonoBehaviour:
     - fieldName: swingEffectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 0}
+        objectValue: {fileID: 4237556790985801160, guid: 852621f874c99214fa8355108e7ac86a,
+          type: 3}
     - fieldName: hitEffectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 0}
+        objectValue: {fileID: 7162646827672994295, guid: df30f1ff218cf8843975d273aaf848d8,
+          type: 3}
     - fieldName: impactSound
       fieldValue:
         stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: testDamage
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: earlyExitTimeFraction
+      fieldValue:
+        stringValue: 0
         objectValue: {fileID: 0}

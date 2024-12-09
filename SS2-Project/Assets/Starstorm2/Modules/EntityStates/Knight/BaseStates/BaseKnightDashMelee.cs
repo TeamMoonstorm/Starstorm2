@@ -26,15 +26,17 @@ namespace EntityStates.Knight
         [SerializeField, Tooltip("locks to x/z plane")]
         public bool lockY;
 
-        [SerializeField, Tooltip("False for movement direction")]
+        [SerializeField, Tooltip("False for direction to be based on input")]
         public bool directionAimOverride;
+        [SerializeField, Tooltip("Force body to face the dashing direction.")]
+        public bool forceFacingDirection;
 
         public float dodgeFOV = EntityStates.Commando.DodgeState.dodgeFOV;
 
         public Vector3 forwardDirection;
         public Vector3 previousPosition;
 
-        protected float rollSpeed;
+        public float rollSpeed;
         protected bool interrupted;
 
         private float sprintSpeedMultiplier;
@@ -120,7 +122,7 @@ namespace EntityStates.Knight
             if (inputBank.aimDirection.y < 0) angle = -angle;
 
             Vector3 FinalDirection = Vector3.Normalize(Quaternion.AngleAxis(angle, rightDirection) * inputBank.moveVector);
-
+            
             if (lockY)
             {
                 FinalDirection.y = 0;
@@ -137,9 +139,8 @@ namespace EntityStates.Knight
         {
             RecalculateRollSpeed();
 
-            if (characterDirection) characterDirection.forward = forwardDirection;
-            if (cameraTargetParams) cameraTargetParams.fovOverride = Mathf.Lerp(dodgeFOV, 60f, fixedAge / duration);
-
+            if (characterDirection && forceFacingDirection) characterDirection.forward = forwardDirection;
+            if (cameraTargetParams) cameraTargetParams.fovOverride = Mathf.Lerp(dodgeFOV, 60f, stopwatch / duration);
 
             //Vector3 normalized = (transform.position - previousPosition).normalized;
             //if (characterMotor && characterDirection && normalized != Vector3.zero)
@@ -162,12 +163,15 @@ namespace EntityStates.Knight
 
             if (base.isAuthority)
             {
-                if (fixedAge >= duration)
+                if (stopwatch >= duration)
                 {
                     //base state sets next state
                     return;
                 }
-                MoveKnight();
+                if (!inHitPause)
+                {
+                    MoveKnight();
+                }
             }
         }
 
@@ -181,7 +185,7 @@ namespace EntityStates.Knight
                 EnableCharacterMotorCollision();
             }
 
-            if (fixedAge < duration * 0.9f)
+            if (stopwatch < duration * 0.9f)
             {
                 OnInterrupted();
             }

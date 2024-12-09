@@ -19,18 +19,14 @@ MonoBehaviour:
     serializedFields:
     - fieldName: baseDuration
       fieldValue:
-        stringValue: 0.3
-        objectValue: {fileID: 0}
-    - fieldName: priority
-      fieldValue:
-        stringValue: '{"assemblyQualifiedName":"EntityStates.InterruptPriority, RoR2,
-          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","values":"PrioritySkill"}'
+        stringValue: 0.5
         objectValue: {fileID: 0}
     - fieldName: ignoreAttackSpeed
       fieldValue:
         stringValue: 0
         objectValue: {fileID: 0}
-    - fieldName: testWindDown
+    - fieldName: minimumInterruptPriority
       fieldValue:
-        stringValue: 0
+        stringValue: '{"assemblyQualifiedName":"EntityStates.InterruptPriority, RoR2,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","values":"PrioritySkill"}'
         objectValue: {fileID: 0}

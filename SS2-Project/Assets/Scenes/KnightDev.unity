@@ -279,11 +279,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
       objectReference: {fileID: 0}
-    - target: {fileID: 5741885176565741150, guid: 8143dc0d9595a81448b5f8129fcecbda,
-        type: 3}
-      propertyPath: itemDisplayRuleSet
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 6902937394797517767, guid: 8143dc0d9595a81448b5f8129fcecbda,
         type: 3}
       propertyPath: m_AssetId.i0
@@ -402,6 +397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animators:
   - {fileID: 1330695088}
+  - {fileID: 212840152}
   animationCombos:
   - name: ug
     keyCode: 323
@@ -427,9 +423,7 @@ MonoBehaviour:
     keyCode: 324
     comboAnimations:
     - animations:
-      - animationState: SwingSword3
-        layerName: Gesture, Override
-      - animationState: SwingSword3
+      - animationState: Parry
         layerName: FullBody, Override
     comboTimer: 0
     comboStep: 0
@@ -880,7 +874,7 @@ PrefabInstance:
     - target: {fileID: 882680650988540606, guid: 411af68e233e4714c93ff5aa1ad9cefb,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.2
+      value: 4.69
       objectReference: {fileID: 0}
     - target: {fileID: 882680650988540606, guid: 411af68e233e4714c93ff5aa1ad9cefb,
         type: 3}
@@ -2625,6 +2619,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 411af68e233e4714c93ff5aa1ad9cefb, type: 3}
+--- !u!95 &212840152 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6548169762675198148, guid: 411af68e233e4714c93ff5aa1ad9cefb,
+    type: 3}
+  m_PrefabInstance: {fileID: 212840151}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &398200429
 GameObject:
   m_ObjectHideFlags: 0
@@ -4789,6 +4789,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1658468154640004193, guid: 8f1651863ef8edf4693942bafddd2488,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8102319736993305725, guid: 8f1651863ef8edf4693942bafddd2488,
         type: 3}
       propertyPath: m_AssetId.i0

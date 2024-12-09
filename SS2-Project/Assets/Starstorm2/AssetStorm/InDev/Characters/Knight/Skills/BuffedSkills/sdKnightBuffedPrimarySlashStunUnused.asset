@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1391837873, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: sdKnightDashFlurryPrimary
+  m_Name: sdKnightBuffedPrimarySlashStunUnused
   m_EditorClassIdentifier: 
   skillName: StunSlash
-  skillNameToken: SS2_DASH_FLURRY_NAME
-  skillDescriptionToken: SS2_DASH_FLURRY_DESCRIPTION
+  skillNameToken: SS2_STUN_SLASH_NAME
+  skillDescriptionToken: SS2_STUN_SLASH_DESCRIPTION
   keywordTokens: []
   icon: {fileID: 21300000, guid: 7c7862d4c16d6444ebac8f0603fd6d54, type: 3}
   activationStateMachineName: Weapon
   activationState:
-    _typeName: EntityStates.Knight.SwordDashToFlurry, Starstorm2, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    _typeName: EntityStates.Knight.StunSlash, Starstorm2, Version=1.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   interruptPriority: 2
   baseRechargeInterval: 1
   baseMaxStock: 1

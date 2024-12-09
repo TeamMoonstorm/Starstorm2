@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1391837873, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: sdKnightTornadoSpinUtility
+  m_Script: {fileID: 11500000, guid: 8bc21ad58a02e5f4a8dace079a9246d2, type: 3}
+  m_Name: sdKnightBuffedUtilityTornadoSpinUtility
   m_EditorClassIdentifier: 
   skillName: KnightTornaodSpin
   skillNameToken: SS2_KNIGHT_SPIN_UTILITY_BUFFED_NAME
-  skillDescriptionToken: SS2_KNIGHT_SPIN_UTILITY__BUFFED_DESC
+  skillDescriptionToken: SS2_KNIGHT_SPIN_UTILITY_BUFFED_DESC
   keywordTokens: []
   icon: {fileID: 21300000, guid: 8bfc3fdf902758a46a2b55dab135cd2f, type: 3}
   activationStateMachineName: Weapon
@@ -34,9 +34,10 @@ MonoBehaviour:
   dontAllowPastMaxStocks: 0
   beginSkillCooldownOnSkillEnd: 1
   cancelSprintingOnActivation: 1
-  forceSprintDuringState: 0
+  forceSprintDuringState: 1
   canceledFromSprinting: 0
   isCombatSkill: 1
   mustKeyPress: 1
   autoHandleLuminousShot: 1
   hideStockCount: 0
+  upgradedFrom: {fileID: 11400000, guid: eb772bc2afe4dbb49915b9cff7a7d3ef, type: 2}

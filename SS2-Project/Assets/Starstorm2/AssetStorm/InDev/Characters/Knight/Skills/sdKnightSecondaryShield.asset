@@ -10,19 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1391837873, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: sdKnightSpin
+  m_Name: sdKnightSecondaryShield
   m_EditorClassIdentifier: 
-  skillName: KnightSpinnySpin
-  skillNameToken: SS2_KNIGHT_UTILITY_LEAP_NAME
-  skillDescriptionToken: SS2_KNIGHT_UTILITY_LEAP_DESC
-  keywordTokens: []
-  icon: {fileID: 21300000, guid: aaf4c083f4e28c145be8d0b78c07aeb2, type: 3}
+  skillName: KnightShieldUp
+  skillNameToken: SS2_KNIGHT_SECONDARY_SHIELD_NAME
+  skillDescriptionToken: SS2_KNIGHT_SECONDARY_SHIELD_DESC
+  keywordTokens:
+  - SS2_KEYWORD_PARRY
+  - KEYWORD_STUNNING
+  icon: {fileID: 21300000, guid: ff43b28e90efe444896b656fa5573b4a, type: 3}
   activationStateMachineName: Weapon
   activationState:
-    _typeName: EntityStates.Knight.SpinUtility, Starstorm2, Version=1.0.0.0, Culture=neutral,
+    _typeName: EntityStates.Knight.Shield, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  interruptPriority: 2
-  baseRechargeInterval: 8
+  interruptPriority: 1
+  baseRechargeInterval: 4
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 1
@@ -33,8 +35,8 @@ MonoBehaviour:
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
   beginSkillCooldownOnSkillEnd: 1
-  cancelSprintingOnActivation: 0
-  forceSprintDuringState: 1
+  cancelSprintingOnActivation: 1
+  forceSprintDuringState: 0
   canceledFromSprinting: 0
   isCombatSkill: 1
   mustKeyPress: 1

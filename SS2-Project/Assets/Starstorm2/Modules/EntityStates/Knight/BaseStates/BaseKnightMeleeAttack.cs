@@ -38,7 +38,7 @@ namespace EntityStates.Knight
         public float attackEndTimeFraction = 1f;
 
         [SerializeField]
-        public float earlyExitPercentTime = 0.4f;
+        public float earlyExitTimeFraction = 0.4f;
 
         [SerializeField]
         public InterruptPriority earlyExitPriority = InterruptPriority.Any;
@@ -84,6 +84,10 @@ namespace EntityStates.Knight
         private HitStopCachedState hitStopCachedState;
         private Vector3 storedVelocity;
 
+        private GameObject swingEffectInstance;
+        private EffectManagerHelper swingEffectInstanceHelper;
+        private ScaleParticleSystemDuration swingEffectParticleScaler;
+
         protected virtual void ModifyMelee() { }
 
         public override void OnEnter()
@@ -113,6 +117,7 @@ namespace EntityStates.Knight
             attack.pushAwayForce = pushForce;
             attack.hitBoxGroup = FindHitBoxGroup(hitboxGroupName);
             attack.isCrit = RollCrit();
+            attack.maximumOverlapTargets = 1000;
             if (impactSound != null)
             {
                 attack.impactSound = impactSound.index;
@@ -138,7 +143,25 @@ namespace EntityStates.Knight
 
         protected virtual void PlaySwingEffect()
         {
-            EffectManager.SimpleMuzzleFlash(swingEffectPrefab, gameObject, muzzleString, false);
+            Transform transform = base.FindModelChild(muzzleString);
+            if (transform)
+            {
+                if (!EffectManager.ShouldUsePooledEffect(this.swingEffectPrefab))
+                {
+                    this.swingEffectInstance = UnityEngine.Object.Instantiate<GameObject>(this.swingEffectPrefab, transform);
+                }
+                else
+                {
+                    this.swingEffectInstanceHelper = EffectManager.GetAndActivatePooledEffect(this.swingEffectPrefab, transform, true);
+                    this.swingEffectInstance = this.swingEffectInstanceHelper.gameObject;
+                }
+
+                swingEffectParticleScaler = this.swingEffectInstance.GetComponent<ScaleParticleSystemDuration>();
+                if (swingEffectParticleScaler)
+                {
+                    swingEffectParticleScaler.newDuration = swingEffectParticleScaler.initialDuration;
+                }
+            }
         }
 
         protected virtual void OnHitEnemyAuthority()
@@ -169,7 +192,7 @@ namespace EntityStates.Knight
             }
         }
 
-        private void FireAttack()
+        protected virtual void FireAttack()
         {
             if (isAuthority && attack != null)
             {
@@ -243,12 +266,20 @@ namespace EntityStates.Knight
             ConsumeHitStopCachedState(hitStopCachedState, characterMotor, animator);
             inHitPause = false;
             characterMotor.velocity = storedVelocity;
+
+            if (this.swingEffectInstance)
+            {
+                if (swingEffectParticleScaler)
+                {
+                    swingEffectParticleScaler.newDuration = swingEffectParticleScaler.initialDuration;
+                }
+            }
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
 
-            if (stopwatch >= duration * earlyExitPercentTime)
+            if (stopwatch >= duration * earlyExitTimeFraction)
             {
                 return earlyExitPriority;
             }

@@ -19,15 +19,15 @@ MonoBehaviour:
     serializedFields:
     - fieldName: minSpeedCoefficient
       fieldValue:
-        stringValue: 0.3
+        stringValue: 0.05
         objectValue: {fileID: 0}
     - fieldName: maxSpeedCoefficient
       fieldValue:
-        stringValue: 2
+        stringValue: 3
         objectValue: {fileID: 0}
     - fieldName: interruptSpeedCoefficient
       fieldValue:
-        stringValue: 0.3
+        stringValue: 0.6
         objectValue: {fileID: 0}
     - fieldName: dashAnimationCurve
       fieldValue:
@@ -72,7 +72,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: baseDuration
       fieldValue:
-        stringValue: 0
+        stringValue: 0.5
         objectValue: {fileID: 0}
     - fieldName: attackStartPercentTime
       fieldValue:
@@ -138,31 +138,31 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: testminSpeedCoefficient
       fieldValue:
-        stringValue: 0.3
+        stringValue: 0.05
         objectValue: {fileID: 0}
     - fieldName: testmaxSpeedCoefficient
       fieldValue:
-        stringValue: 2
+        stringValue: 3
         objectValue: {fileID: 0}
     - fieldName: testbaseDuration
       fieldValue:
-        stringValue: 0
+        stringValue: 0.5
         objectValue: {fileID: 0}
     - fieldName: testinterruptSpeedCoefficient
       fieldValue:
-        stringValue: 0
+        stringValue: 0.6
         objectValue: {fileID: 0}
     - fieldName: testearlyexit
       fieldValue:
-        stringValue: 0
+        stringValue: 1
         objectValue: {fileID: 0}
     - fieldName: attackStartTimeFraction
       fieldValue:
-        stringValue: 0.5
+        stringValue: 0
         objectValue: {fileID: 0}
     - fieldName: attackEndTimeFraction
       fieldValue:
-        stringValue: 0.6
+        stringValue: 1
         objectValue: {fileID: 0}
     - fieldName: forceUnground
       fieldValue:
@@ -171,4 +171,16 @@ MonoBehaviour:
     - fieldName: ignoreAttackSpeed
       fieldValue:
         stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: earlyExitTimeFraction
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: testWindDown
+      fieldValue:
+        stringValue: 0.5
+        objectValue: {fileID: 0}
+    - fieldName: forceFacingDirection
+      fieldValue:
+        stringValue: 0
         objectValue: {fileID: 0}

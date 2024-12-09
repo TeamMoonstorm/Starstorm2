@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 5278585593546160489}
   - component: {fileID: 4747077024515164482}
   - component: {fileID: 4608135033383063149}
+  - component: {fileID: 1394626647}
   m_Layer: 0
   m_Name: KnightBody
   m_TagString: Player
@@ -218,8 +219,8 @@ MonoBehaviour:
   lavaCooldown: 0.2
   rootMotionInMainState: 0
   mainRootSpeed: 0
-  baseMaxHealth: 140
-  baseRegen: 1.15
+  baseMaxHealth: 110
+  baseRegen: 2.5
   baseMaxShield: 0
   baseMoveSpeed: 7.2
   baseAcceleration: 80
@@ -227,13 +228,13 @@ MonoBehaviour:
   baseDamage: 12
   baseAttackSpeed: 1
   baseCrit: 1
-  baseArmor: 0
+  baseArmor: 20
   baseVisionDistance: Infinity
   baseJumpCount: 1
   sprintingSpeedMultiplier: 1.45
   autoCalculateLevelStats: 1
-  levelMaxHealth: 42
-  levelRegen: 0.23
+  levelMaxHealth: 33
+  levelRegen: 0.5
   levelMaxShield: 0
   levelMoveSpeed: 0
   levelJumpPower: 0
@@ -859,6 +860,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0adbc0288cdf05443bef0b75cb6b8df1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1394626647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7725647466612521720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffea804f66f68034f9bcf7782ffaec43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgradedSkillDefs:
+  - {fileID: 11400000, guid: f8f6a4081f415304eb642fd56689408f, type: 2}
+  - {fileID: 11400000, guid: 6368af8e47d438d4b8ea719b84679de0, type: 2}
+  - {fileID: 11400000, guid: 7b56915308c78fd439b452fe7ba7e586, type: 2}
+  - {fileID: 11400000, guid: 49835b9801d843a4cb542f0aeafcf7d3, type: 2}
 --- !u!1001 &3409225305625246073
 PrefabInstance:
   m_ObjectHideFlags: 0

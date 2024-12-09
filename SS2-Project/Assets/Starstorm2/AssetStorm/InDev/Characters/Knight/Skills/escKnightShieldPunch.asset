@@ -19,7 +19,7 @@ MonoBehaviour:
     serializedFields:
     - fieldName: swingTimeCoefficient
       fieldValue:
-        stringValue: 1.42
+        stringValue: 2.3
         objectValue: {fileID: 0}
     - fieldName: baseDuration
       fieldValue:
@@ -47,19 +47,19 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: minSpeedCoefficient
       fieldValue:
-        stringValue: 0
+        stringValue: 0.4
         objectValue: {fileID: 0}
     - fieldName: maxSpeedCoefficient
       fieldValue:
-        stringValue: 10
+        stringValue: 5.5
         objectValue: {fileID: 0}
     - fieldName: interruptSpeedCoefficient
       fieldValue:
-        stringValue: 0.2
+        stringValue: 0.1
         objectValue: {fileID: 0}
     - fieldName: dashAnimationCurve
       fieldValue:
-        stringValue: '{"preWrapMode":8,"postWrapMode":8,"keys":[{"time":0.0,"value":1.0,"inTangent":0.0,"outTangent":0.0,"inWeight":0.0,"outWeight":0.3333333432674408,"weightedMode":0,"tangentMode":34},{"time":0.8759987950325012,"value":1.0,"inTangent":0.0,"outTangent":0.0,"inWeight":0.3333333432674408,"outWeight":0.3333333432674408,"weightedMode":0,"tangentMode":0},{"time":0.9560107588768005,"value":0.0,"inTangent":-25.646848678588868,"outTangent":-25.646848678588868,"inWeight":0.07069096714258194,"outWeight":0.0,"weightedMode":0,"tangentMode":0}]}'
+        stringValue: '{"preWrapMode":8,"postWrapMode":8,"keys":[{"time":0.0,"value":1.0,"inTangent":0.0,"outTangent":0.0,"inWeight":0.0,"outWeight":0.1523919403553009,"weightedMode":0,"tangentMode":0},{"time":0.8857033848762512,"value":1.0,"inTangent":0.0,"outTangent":0.0,"inWeight":0.3333333432674408,"outWeight":1.0,"weightedMode":0,"tangentMode":0},{"time":0.9560107588768005,"value":0.0,"inTangent":-25.646848678588868,"outTangent":-25.646848678588868,"inWeight":0.07069096714258194,"outWeight":0.0,"weightedMode":0,"tangentMode":0}]}'
         objectValue: {fileID: 0}
     - fieldName: dodgeSoundString
       fieldValue:
@@ -134,23 +134,23 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: testbaseDuration
       fieldValue:
-        stringValue: 0
+        stringValue: 0.28
         objectValue: {fileID: 0}
     - fieldName: testminSpeedCoefficient
       fieldValue:
-        stringValue: 0
+        stringValue: 0.4
         objectValue: {fileID: 0}
     - fieldName: testmaxSpeedCoefficient
       fieldValue:
-        stringValue: 0
+        stringValue: 5.5
         objectValue: {fileID: 0}
     - fieldName: testinterruptSpeedCoefficient
       fieldValue:
-        stringValue: 0
+        stringValue: 0.1
         objectValue: {fileID: 0}
     - fieldName: testearlyexit
       fieldValue:
-        stringValue: 0
+        stringValue: 1
         objectValue: {fileID: 0}
     - fieldName: attackStartTimeFraction
       fieldValue:
@@ -162,7 +162,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: testfuckingattackendwhyisitnotgettingitfromtheESC
       fieldValue:
-        stringValue: 0
+        stringValue: 1
         objectValue: {fileID: 0}
     - fieldName: forceUnground
       fieldValue:
@@ -176,3 +176,15 @@ MonoBehaviour:
       fieldValue:
         stringValue: 
         objectValue: {fileID: 11400000, guid: e66dae9a809d6aa428fa5bc0221f9a24, type: 2}
+    - fieldName: earlyExitTimeFraction
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: testDamage
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: forceFacingDirection
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}

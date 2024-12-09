@@ -27,6 +27,9 @@ namespace EntityStates.Knight
         [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
         public static float testearlyexit = 0.1f;
 
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
+        public static float testWindDown = 0.1f; // in rollwinddown state
+
         public override void OnEnter()
         {
             baseDuration = testbaseDuration;
@@ -34,7 +37,9 @@ namespace EntityStates.Knight
             maxSpeedCoefficient = testmaxSpeedCoefficient;
             interruptSpeedCoefficient = testinterruptSpeedCoefficient;
 
-            earlyExitPercentTime = testearlyexit;
+            earlyExitTimeFraction = testearlyexit;
+
+            StartAimMode();
 
             base.OnEnter();
             animator.SetBool("isRolling", true);

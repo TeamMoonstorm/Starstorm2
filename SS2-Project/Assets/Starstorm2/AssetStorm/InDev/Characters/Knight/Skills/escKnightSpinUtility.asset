@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: escKnightSpin
+  m_Name: escKnightSpinUtility
   m_EditorClassIdentifier: 
   targetType:
     assemblyQualifiedName: EntityStates.Knight.SpinUtility, Starstorm2, Version=1.0.0.0,
@@ -31,15 +31,15 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: interruptSpeedCoefficient
       fieldValue:
-        stringValue: 0.4
+        stringValue: 0.3
         objectValue: {fileID: 0}
     - fieldName: minSpeedCoefficient
       fieldValue:
-        stringValue: 2
+        stringValue: 1
         objectValue: {fileID: 0}
     - fieldName: maxSpeedCoefficient
       fieldValue:
-        stringValue: 4
+        stringValue: 4.5
         objectValue: {fileID: 0}
     - fieldName: earlyExitPercentTime
       fieldValue:
@@ -47,7 +47,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: hitStopDuration
       fieldValue:
-        stringValue: 0.1
+        stringValue: 0.06
         objectValue: {fileID: 0}
     - fieldName: attackRecoil
       fieldValue:
@@ -67,7 +67,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: muzzleString
       fieldValue:
-        stringValue: SwingCenter
+        stringValue: SpinMuzzle
         objectValue: {fileID: 0}
     - fieldName: playbackRateParam
       fieldValue:
@@ -112,7 +112,7 @@ MonoBehaviour:
           type: 3}
     - fieldName: pushForce
       fieldValue:
-        stringValue: 400
+        stringValue: 0
         objectValue: {fileID: 0}
     - fieldName: bonusForce
       fieldValue:
@@ -129,19 +129,19 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: testbaseDuration
       fieldValue:
-        stringValue: 0
+        stringValue: 0.69
         objectValue: {fileID: 0}
     - fieldName: testminSpeedCoefficient
       fieldValue:
-        stringValue: 0
+        stringValue: 1
         objectValue: {fileID: 0}
     - fieldName: testmaxSpeedCoefficient
       fieldValue:
-        stringValue: 0
+        stringValue: 4.5
         objectValue: {fileID: 0}
     - fieldName: testinterruptSpeedCoefficient
       fieldValue:
-        stringValue: 0
+        stringValue: 0.3
         objectValue: {fileID: 0}
     - fieldName: earlyExitPriority
       fieldValue:
@@ -150,7 +150,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: testearlyexit
       fieldValue:
-        stringValue: 0
+        stringValue: 0.2
         objectValue: {fileID: 0}
     - fieldName: lockY
       fieldValue:
@@ -166,7 +166,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: attackEndTimeFraction
       fieldValue:
-        stringValue: 0.7
+        stringValue: 1
         objectValue: {fileID: 0}
     - fieldName: forceUnground
       fieldValue:
@@ -174,7 +174,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: testFireFrequency
       fieldValue:
-        stringValue: 0
+        stringValue: 10
         objectValue: {fileID: 0}
     - fieldName: ignoreAttackSpeed
       fieldValue:
@@ -183,4 +183,24 @@ MonoBehaviour:
     - fieldName: testDamage
       fieldValue:
         stringValue: 2
+        objectValue: {fileID: 0}
+    - fieldName: earlyExitTimeFraction
+      fieldValue:
+        stringValue: 0.9
+        objectValue: {fileID: 0}
+    - fieldName: baseFireFrequency
+      fieldValue:
+        stringValue: 10
+        objectValue: {fileID: 0}
+    - fieldName: doNotOverrideFacingDirection
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: forceFacingDirection
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: testDamageBoosted
+      fieldValue:
+        stringValue: 0
         objectValue: {fileID: 0}

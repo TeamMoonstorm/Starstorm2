@@ -10,23 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1391837873, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: sdKnightShield
+  m_Name: sdKnightMiscShieldPunch
   m_EditorClassIdentifier: 
-  skillName: KnightShieldUp
-  skillNameToken: SS2_KNIGHT_SECONDARY_SHIELD_NAME
-  skillDescriptionToken: SS2_KNIGHT_SECONDARY_SHIELD_DESC
+  skillName: ShieldPunch
+  skillNameToken: SS2_KNIGHT_SHIELD_BASH_NAME
+  skillDescriptionToken: SS2_KNIGHT_SHIELD_BASH_DESC
   keywordTokens:
-  - SS2_KEYWORD_PARRY
   - KEYWORD_STUNNING
-  icon: {fileID: 21300000, guid: ff43b28e90efe444896b656fa5573b4a, type: 3}
+  icon: {fileID: 21300000, guid: b24da87bd5bc21c4b8d3c58ff932fc01, type: 3}
   activationStateMachineName: Weapon
   activationState:
-    _typeName: EntityStates.Knight.Shield, Starstorm2, Version=1.0.0.0, Culture=neutral,
+    _typeName: EntityStates.Knight.ShieldPunch, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  interruptPriority: 1
-  baseRechargeInterval: 4
+  interruptPriority: 2
+  baseRechargeInterval: 0
   baseMaxStock: 1
-  rechargeStock: 1
+  rechargeStock: 0
   requiredStock: 1
   stockToConsume: 1
   attackSpeedBuffsRestockSpeed: 0
@@ -34,7 +33,7 @@ MonoBehaviour:
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
-  beginSkillCooldownOnSkillEnd: 1
+  beginSkillCooldownOnSkillEnd: 0
   cancelSprintingOnActivation: 1
   forceSprintDuringState: 0
   canceledFromSprinting: 0

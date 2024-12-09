@@ -9,125 +9,77 @@ namespace EntityStates.Knight
 {
     class SwingSword : BaseKnightMeleeAttack
     {
-        public static float swingTimeCoefficient;
-        public static float swingTimeCoefficientFinisher;
-        public static GameObject beamProjectile;
-        public static SkillDef buffedSkillRef;
         [FormatToken("SS2_KNIGHT_PRIMARY_SWORD_DESC",  FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float TokenModifier_dmgCoefficient => new SwingSword().damageCoefficient;
 
-        public static float baseDurationBeforeInterruptable;
-        public static float comboFinisherBaseDurationBeforeInterruptable;
-        public static float comboFinisherhitPauseDuration;
-        public static float comboFinisherDamageCoefficient;
+        public static float swingTimeCoefficient;
+        public static float finisherSwingTimeCoefficient;
 
-        //public new float baseDuration = 1f;
-        //public new float duration = 1f;
+        public static float finisherAttackStart;
+        public static float finisherAttackEnd;
+        public static float finisherEarlyExit;
+        public static float finisherHitPause;
+        public static float finisherDamage;
+        public static float finisherBaseDuration;
 
-        private bool isComboFinisher => swingIndex == 2;
         private string animationStateName = "SwingSword0";
         private Transform swordPivot;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
-        public static float testHitHop = 1;
-
-        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
         public static float testDuration = 1;
-
-        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
-        public static float testSwingTimeCoefficient = 0.8f;
-
-        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
-        public static float testEarlyExit = 0.8f;
-
         [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
         public static float testDamage = 3f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
-        public static float testHistop = 0.08f;
-
-        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
         public static float testFinisherDuration = 1;
-
-        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
-        public static float testFinisherSwingTimeCoefficient = 0.8f;
-
-        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
-        public static float testFinisherEarlyExit = 0.8f;
-
         [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
         public static float testFinisherDamage = 5f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
-        public static float testFinisherHistop = 0.14f;
-
-        private void SetupHitbox()
+        private void SetupMelee()
         {
-            damageType = DamageType.Generic;
-            procCoefficient = 1f; //what the fuck 0.7
-            bonusForce = Vector3.zero;
-            hitSoundString = "";
-            playbackRateParam = "Primary.playbackRate";
-            hitEffectPrefab = SS2.Survivors.Knight.KnightHitEffect;
-            hitHopVelocity = testHitHop;
+            damageCoefficient = testDamage;
+            baseDuration = testDuration;
+            finisherDamage = testFinisherDamage;
+            finisherBaseDuration= testFinisherDuration;
+
             switch (swingIndex)
             {
-                default:
                 case 0:
                     animationStateName = "SwingSword0";
-                    muzzleString = "SwingRight";
-                    hitboxGroupName = "SwordHitbox";
+                    muzzleString = "Swing1Muzzle";
                     break;
                 case 1:
                     animationStateName = "SwingSword1";
-                    muzzleString = "SwingLeft";
-                    hitboxGroupName = "SwordHitbox";
+                    muzzleString = "Swing2Muzzle";
                     break;
+                default:
                 case 2:
                     animationStateName = "SwingSword3";
-                    muzzleString = "SwingLeft";
+                    muzzleString = "SwingStabMuzzle";
                     hitboxGroupName = "SpearHitbox";
+
+                    swingSoundString = "NemmandoSwing";
+
+                    hitStopDuration = finisherHitPause;
+                    damageCoefficient = finisherDamage;
+                    baseDuration = finisherBaseDuration;
+
+                    swingTimeCoefficient = finisherSwingTimeCoefficient;
+                    attackStartTimeFraction = finisherAttackStart;
+                    attackEndTimeFraction = finisherAttackEnd;
+                    earlyExitTimeFraction = finisherEarlyExit;
                     break;
             }
 
-            if (!isComboFinisher)
-            {
-                swingSoundString = "NemmandoSwing";
-                //swingEffectPrefab = SS2.Survivors.Knight.KnightSpinEffect;
-                damageCoefficient = testDamage;
-                hitStopDuration = testHistop;
-
-                baseDuration = testDuration;
-
-                swingTimeCoefficient = testSwingTimeCoefficient;
-
-                attackStartTimeFraction = 0.215f * swingTimeCoefficient;
-                attackEndTimeFraction = 0.4f * swingTimeCoefficient;
-
-                earlyExitPercentTime = testEarlyExit * swingTimeCoefficient/*0.8f*/;
-            }
-            else
-            {
-                swingSoundString = "NemmandoSwing";
-                swingEffectPrefab = SS2.Survivors.Knight.KnightSpinEffect; //comboFinisherSwingEffectPrefab;
-
-                hitStopDuration = testFinisherHistop/*comboFinisherhitPauseDuration*/;
-                damageCoefficient = testFinisherDamage/*comboFinisherDamageCoefficient*/;
-
-                baseDuration = testFinisherDuration;
-
-                swingTimeCoefficient = testFinisherSwingTimeCoefficient;
-
-                attackStartTimeFraction = 0.252f * swingTimeCoefficient;
-                attackEndTimeFraction = 0.7f * swingTimeCoefficient;
-                earlyExitPercentTime = testFinisherEarlyExit * swingTimeCoefficient/*0.8f*/;
-            }
-
+            attackStartTimeFraction *= swingTimeCoefficient;
+            attackEndTimeFraction *= swingTimeCoefficient;
+            earlyExitTimeFraction *= swingTimeCoefficient;
+            hitEffectPrefab = SS2.Survivors.Knight.KnightHitEffect;
         }
 
         public override void OnEnter()
         {
-            SetupHitbox();
+            SetupMelee();
             swordPivot = FindModelChild("HitboxAnchor");
             base.OnEnter();
         }
@@ -136,13 +88,13 @@ namespace EntityStates.Knight
         {
             if (base.isGrounded & !base.GetModelAnimator().GetBool("isMoving"))
             {
-                PlayCrossfade("FullBody, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient/*swingTimeCoefficient*/, 0.08f);
+                PlayCrossfade("FullBody, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.08f);
             } 
             else
             {
                 PlayCrossfade("FullBody, Override", "BufferEmpty", 0.1f);
             }
-            PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient/*swingTimeCoefficient*/, 0.08f);
+            PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.08f);
 
         }
 

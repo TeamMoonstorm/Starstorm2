@@ -10,14 +10,20 @@ namespace EntityStates.Knight
         //change the damage and vfx in the ESC
         //dee's concept had a spinning projectile that lingers in front of the attack at the end so do that good luck love you
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
-        public static float testDamageBoosted = 4f;
-
         public override void OnEnter()
         {
             damageCoefficient = testDamageBoosted;
 
             base.OnEnter();
+
+            characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+
+            characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility);
         }
 
         public override void FixedUpdate()

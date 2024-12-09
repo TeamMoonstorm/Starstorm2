@@ -18,36 +18,14 @@ namespace EntityStates.Knight
         public BuffDef shieldBuff;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
-        public static float swingTimeCoefficient = 2.4f;
-
+        public static float swingTimeCoefficient = 2.3f;
         // Movement variables
         [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
-        public static float testbaseDuration = 0.69f;
-
-        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
-        public static float testminSpeedCoefficient = 2f;
-
-        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
-        public static float testmaxSpeedCoefficient = 4f;
-
-        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
-        public static float testinterruptSpeedCoefficient = 0.0f;
-
-        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
-        public static float testearlyexit = 0.1f;
-
-        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
-        public static float testfuckingattackendwhyisitnotgettingitfromtheESC = 1f;
+        public static float testDamage = 2.4f;
 
         public override void OnEnter()
         {
-            baseDuration = testbaseDuration;
-            minSpeedCoefficient = testminSpeedCoefficient;
-            maxSpeedCoefficient = testmaxSpeedCoefficient;
-            interruptSpeedCoefficient = testinterruptSpeedCoefficient;
-            attackEndTimeFraction = testfuckingattackendwhyisitnotgettingitfromtheESC;
-
-            earlyExitPercentTime = testearlyexit;
+            damageCoefficient = testDamage;
 
             base.OnEnter();
 
@@ -62,7 +40,6 @@ namespace EntityStates.Knight
         public override void OnExit()
         {
             if (cameraTargetParams) cameraTargetParams.fovOverride = -1f;
-            skillLocator.primary.UnsetSkillOverride(skillLocator.primary, Shield.shieldBashSkillDef, GenericSkill.SkillOverridePriority.Contextual);
 
             base.OnExit();
         }

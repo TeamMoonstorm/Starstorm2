@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace EntityStates.Generic
 {
@@ -7,7 +8,7 @@ namespace EntityStates.Generic
         [SerializeField]
         public float baseDuration;
         [SerializeField]
-        public InterruptPriority priority;
+        public InterruptPriority minimumInterruptPriority;
         [SerializeField]
         public bool ignoreAttackSpeed;
 
@@ -32,7 +33,7 @@ namespace EntityStates.Generic
         }
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return priority;
+            return minimumInterruptPriority;
         }
     }
 }

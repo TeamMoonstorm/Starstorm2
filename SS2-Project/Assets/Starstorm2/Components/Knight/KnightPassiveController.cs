@@ -4,7 +4,6 @@ using UnityEngine.Networking;
 
 namespace SS2.Components
 {
-
     public class KnightPassiveController : NetworkBehaviour
     {
         public CharacterBody characterBody;

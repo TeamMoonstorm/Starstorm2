@@ -117,7 +117,6 @@ namespace EntityStates.Knight
                 return;
             isParrying = true;
 
-            //GlobalEventManager.onClientDamageNotified += ParryWindowOverride;
             blockTracker.onIncomingDamageAuthority += ParryAttacker;
             parryHurtbox.SetActive(true);
             characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
@@ -136,34 +135,9 @@ namespace EntityStates.Knight
                 return;
             isParrying = false;
 
-            //GlobalEventManager.onClientDamageNotified -= ParryWindowOverride;
             blockTracker.onIncomingDamageAuthority -= ParryAttacker;
             parryHurtbox.SetActive(false);
             characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility);
-        }
-
-        private void ParryWindowOverride(DamageDealtMessage msg)
-        {
-            SS2Log.Message("msg.victim: " + msg.victim);
-            SS2Log.Message("base.characterBody" + base.characterBody);
-
-            // || msg.victim != base.characterBody
-            if (!msg.victim || hasParried || msg.attacker == msg.victim)
-            {
-                return;
-            }
-
-            if (msg.attacker != msg.victim && msg.victim == base.characterBody.gameObject)
-            {
-                // TODO: Use body index
-                // We want to ensure that Knight is the one taking damage
-                //if (CharacterBody.baseNameToken != "SS2_KNIGHT_BODY_NAME")
-                //  return;
-
-                msg.damage = 0;
-
-                ParryAttacker(msg.attacker);
-            }
         }
 
         private void ParryAttacker(GameObject attacker)
@@ -182,14 +156,15 @@ namespace EntityStates.Knight
             // TODO: Should we have a custom sound for this?
             Util.PlaySound("NemmandoDecisiveStrikeReady", gameObject);
 
+            EndParrying();
+            hasParried = true;
+            SetPrimaryOverride(false);
             EntityStateMachine bodyEsm = EntityStateMachine.FindByCustomName(gameObject, "Body");
             if (bodyEsm != null)
             {
                 bodyEsm.SetNextState(new EntityStates.Knight.Parry());
             }
             outer.SetNextStateToMain();
-            hasParried = true;
-            EndParrying();
         }
 
         public override void Update()
@@ -240,39 +215,21 @@ namespace EntityStates.Knight
 
         public override void OnExit()
         {
+            base.OnExit();
+
             if (cameraTargetParams)
             {
                 cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 0.7f);
             }
 
-            //if (inputBank.skill2.down)
-            //{
-            //    outer.SetNextState(new Shield());
-            //    characterBody.RemoveBuff(shieldBuff);
-            //} 
-            //else
-            //{
-                //animator.SetBool("shieldUp", false);
-
-                characterBody.RemoveBuff(shieldBuff);
-
-                characterBody.SetAimTimer(0.5f);
-            //}
-
-            // If the player did not parry we need to unset the skill override
-            if (!hasParried)
-            {
-                //UnsetShieldOverride();
-            }
-
+            characterBody.SetAimTimer(0.5f);
             PlayCrossfade("Gesture, Override", "BufferEmpty", 0.1f);
 
+            characterBody.RemoveBuff(shieldBuff);
             SetPrimaryOverride(false);
+            EndParrying();
 
             rollStateMachine.SetNextStateToMain();
-
-            EndParrying();
-            base.OnExit();
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()
