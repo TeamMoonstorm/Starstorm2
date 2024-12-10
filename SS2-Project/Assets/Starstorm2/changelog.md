@@ -1,5 +1,9 @@
   **Warning: content spoilers below!**
 
+### 0.6.15
+* General
+    * Fixed for new patch
+    * Implemented DamageSource for all characters (Luminous Shot and Breaching Fin)
 ### 0.6.14
 * General
     * Re-add lobbyskinsfix and scrollable lobby ui as dependencies
