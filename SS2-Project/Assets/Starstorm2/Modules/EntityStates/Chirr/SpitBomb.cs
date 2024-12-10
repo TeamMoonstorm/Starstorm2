@@ -87,6 +87,9 @@ namespace EntityStates.Chirr
 				fireProjectileInfo.damage = damageStat * damageCoefficient;
 				fireProjectileInfo.force = force;
 				fireProjectileInfo.crit = RollCrit();
+				DamageTypeCombo damageType = DamageType.SlowOnHit;
+				damageType.damageSource = DamageSource.Secondary;
+				fireProjectileInfo.damageTypeOverride = damageType;
 				ProjectileManager.instance.FireProjectile(fireProjectileInfo);
 			}
 		}

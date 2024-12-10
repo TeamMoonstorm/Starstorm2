@@ -118,6 +118,7 @@ namespace EntityStates.NemCommando
         public override void AuthorityModifyOverlapAttack(OverlapAttack overlapAttack)
         {
             base.AuthorityModifyOverlapAttack(overlapAttack);
+            overlapAttack.damageType.damageSource = DamageSource.Primary;
             DamageAPI.AddModdedDamageType(overlapAttack, SS2.Survivors.NemCommando.GougeDamageType);
         }
     }

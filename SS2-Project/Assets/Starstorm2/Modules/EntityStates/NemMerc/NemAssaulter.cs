@@ -73,10 +73,9 @@ namespace EntityStates.NemMerc
 			base.SmallHop(base.characterMotor, NemAssaulter.smallHopVelocity);
 			base.PlayAnimation("FullBody, Override", "AssaulterPrep", "AssaulterPrep.playbackRate", NemAssaulter.dashPrepDuration);
 
-			
-			
 			this.overlapAttack = base.InitMeleeOverlap(NemAssaulter.damageCoefficient, NemAssaulter.hitEffectPrefab, this.modelTransform, "Assaulter");
 			this.overlapAttack.damageType = DamageType.Stun1s;
+			this.overlapAttack.damageType.damageSource = DamageSource.Special;
 			if (NetworkServer.active)
 			{
 				base.characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility.buffIndex);

@@ -37,6 +37,7 @@ namespace EntityStates.NemMerc
         {
             base.ModifyBullet(bulletAttack);
             bulletAttack.falloffModel = BulletAttack.FalloffModel.DefaultBullet;
+            bulletAttack.damageType.damageSource = DamageSource.Primary;
             bulletAttack.AddModdedDamageType(SS2.Survivors.NemMerc.damageType);
         }
         public override InterruptPriority GetMinimumInterruptPriority()

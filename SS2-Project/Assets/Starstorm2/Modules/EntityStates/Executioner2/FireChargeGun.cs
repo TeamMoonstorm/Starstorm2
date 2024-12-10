@@ -157,12 +157,14 @@ namespace EntityStates.Executioner2
                     }
                 }
 
+                DamageTypeCombo damageType = DamageType.Shock5s;
+                damageType.damageSource = DamageSource.Secondary;
                 var bulletAttack = new BulletAttack
                 {
                     aimVector = vec,
                     origin = ray.origin,
                     damage = damageCoefficient * damageStat,
-                    damageType = DamageType.Shock5s,
+                    damageType = damageType,
                     damageColorIndex = DamageColorIndex.Default,
                     minSpread = 0f,
                     maxSpread = characterBody.spreadBloomAngle,

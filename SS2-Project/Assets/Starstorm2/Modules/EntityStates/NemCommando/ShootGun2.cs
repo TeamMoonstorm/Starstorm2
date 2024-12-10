@@ -106,6 +106,8 @@ namespace EntityStates.NemCommando
                     maxSpread += 4f;
                 }
 
+                DamageTypeCombo damageType = DamageType.Generic;
+                damageType.damageSource = DamageSource.Secondary;
                 BulletAttack bulletAttack = new BulletAttack
                 {
                     bulletCount = 1,
@@ -113,7 +115,7 @@ namespace EntityStates.NemCommando
                     origin = aimRay.origin,
                     damage = damageCoefficient * damageStat,
                     damageColorIndex = DamageColorIndex.Default,
-                    damageType = DamageType.Generic,
+                    damageType = damageType,
                     falloffModel = BulletAttack.FalloffModel.DefaultBullet,
                     maxDistance = range,
                     force = force,

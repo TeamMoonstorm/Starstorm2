@@ -48,6 +48,8 @@ namespace EntityStates.Lamp
 
             Util.PlayAttackSpeedSound("LampBullet", gameObject, characterBody.attackSpeed);
 
+            DamageTypeCombo damageType = DamageType.Generic;
+            damageType.damageSource = DamageSource.Primary;
             ProjectileManager.instance.FireProjectile(
                     projectile,
                     muzzle.position,
@@ -58,7 +60,8 @@ namespace EntityStates.Lamp
                     RollCrit(),
                     DamageColorIndex.Default,
                     null,
-                    projectileSpeed);
+                    projectileSpeed,
+                    damageType);
         }
 
         public override void FixedUpdate()

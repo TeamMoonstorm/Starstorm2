@@ -174,6 +174,8 @@ namespace SS2.Components
             if (!healthComponent) return;
 
             CharacterBody ownerBody = this.owner ? this.owner.GetComponent<CharacterBody>() : null;
+            DamageTypeCombo damageType = DamageType.BonusToLowHealth;
+            damageType.damageSource = DamageSource.Secondary;
             DamageInfo damageInfo = new DamageInfo
             {
                 position = base.transform.position,
@@ -181,7 +183,7 @@ namespace SS2.Components
                 inflictor = this.owner,
                 damage = this.pullDamageCoefficient * (ownerBody ? ownerBody.damage : 12f),
                 damageColorIndex = DamageColorIndex.Default,
-                damageType = DamageType.BonusToLowHealth,
+                damageType = damageType,
                 crit = ownerBody ? ownerBody.RollCrit() : false,
                 force = Vector3.zero,
                 procChainMask = default(ProcChainMask),

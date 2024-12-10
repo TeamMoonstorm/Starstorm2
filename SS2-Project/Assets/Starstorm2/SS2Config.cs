@@ -86,7 +86,7 @@ namespace SS2
             ConfigMisc = CreateConfigFile(ID_MISC, true);
             unlockAll.WithConfigFile(ConfigMain).DoConfigure();
 
-            RoR2Application.onLoad += CreateConfigs;
+            //RoR2Application.onLoad += CreateConfigs;
         }
 
         // should probably try catch. but no thanks

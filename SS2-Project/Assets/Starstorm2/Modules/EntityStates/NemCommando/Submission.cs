@@ -96,7 +96,8 @@ namespace EntityStates.NemCommando
 
             if (isAuthority)
             {
-
+                DamageTypeCombo damageType = DamageType.Stun1s;
+                damageType.damageSource = DamageSource.Special;
                 BulletAttack bulletAttack = new BulletAttack
                 {
                     owner = gameObject,
@@ -114,7 +115,7 @@ namespace EntityStates.NemCommando
                     isCrit = RollCrit(),
                     radius = Commando.CommandoWeapon.FireBarrage.bulletRadius,
                     smartCollision = true,
-                    damageType = DamageType.Stun1s,
+                    damageType = damageType,
                     spreadPitchScale = 0.5f,
                     spreadYawScale = 0.5f,
                     procChainMask = default(ProcChainMask),

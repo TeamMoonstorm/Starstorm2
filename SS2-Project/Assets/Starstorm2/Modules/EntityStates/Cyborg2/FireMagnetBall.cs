@@ -69,6 +69,9 @@ namespace EntityStates.Cyborg2
 				fireProjectileInfo.damage = damageStat * damageCoefficient;
 				fireProjectileInfo.force = force;
 				fireProjectileInfo.crit = RollCrit();
+				DamageTypeCombo damageType = DamageType.Stun1s;
+				damageType.damageSource = DamageSource.Special;
+				fireProjectileInfo.damageTypeOverride = damageType;
 				ProjectileManager.instance.FireProjectile(fireProjectileInfo);
 			}
 		}

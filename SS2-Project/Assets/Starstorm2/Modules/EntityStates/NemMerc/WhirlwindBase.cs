@@ -65,6 +65,7 @@ namespace EntityStates.NemMerc
 
             this.attack = base.InitMeleeOverlap(this.damageCoefficient, this.hitEffectPrefab, base.GetModelTransform(), this.hitboxGroupName);
             this.attack.AddModdedDamageType(SS2.Survivors.NemMerc.damageType);
+            this.attack.damageType.damageSource = DamageSource.Secondary;
 
             base.characterMotor.velocity = Vector3.zero;
             base.characterMotor.walkSpeedPenaltyCoefficient = this.walkSpeedCoefficient;

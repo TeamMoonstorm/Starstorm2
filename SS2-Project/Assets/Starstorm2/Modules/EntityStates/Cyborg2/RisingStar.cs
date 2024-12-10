@@ -173,40 +173,8 @@ namespace EntityStates.Cyborg2
                 Vector3 position = hit ? hitInfo.point : aimRay.GetPoint(bulletDistance);
                 if (hurtBox)
                     this.RemoveIndicator(hurtBox);
-
-                //EffectManager.SpawnEffect(explosionEffectPrefab, new EffectData
-                //{
-                //    origin = position,
-                //    scale = blastRadius,
-                //}, true);
-
-                //EffectData effectData = new EffectData
-                //{
-                //    origin = position,
-                //    start = aimRay.origin,
-                //};
-                //int muzzleIndex = base.GetModelChildLocator().FindChildIndex("CannonR"); ///////// XXXXXXXDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-                //effectData.SetChildLocatorTransformReference(base.gameObject, muzzleIndex);
-                //EffectManager.SpawnEffect(tracerPrefab, effectData, true);
-
-                //new BlastAttack
-                //{
-                //    attacker = base.gameObject,
-                //    attackerFiltering = AttackerFiltering.Default,
-                //    position = position,
-                //    teamIndex = base.teamComponent.teamIndex,
-                //    radius = blastRadius,
-                //    baseDamage = damageStat * damageCoefficient,
-                //    damageType = DamageType.Stun1s,
-                //    crit = base.RollCrit(),
-                //    procCoefficient = procCoefficient,
-                //    procChainMask = default(ProcChainMask),
-                //    baseForce = force,
-                //    damageColorIndex = DamageColorIndex.Default,
-                //    falloffModel = BlastAttack.FalloffModel.Linear,
-                //    losType = BlastAttack.LoSType.None,
-                //}.Fire();
-
+                DamageTypeCombo damageType = DamageType.Stun1s;
+                damageType.damageSource = DamageSource.Secondary;
                 BulletAttack bulletAttack = new BulletAttack
                 {
                     aimVector = direction,
@@ -214,7 +182,7 @@ namespace EntityStates.Cyborg2
                     owner = base.gameObject,
                     damage = damageStat * damageCoefficient,
                     damageColorIndex = DamageColorIndex.Default,
-                    damageType = DamageType.Stun1s,
+                    damageType = damageType,
                     falloffModel = BulletAttack.FalloffModel.None,
                     force = force,
                     HitEffectNormal = false,

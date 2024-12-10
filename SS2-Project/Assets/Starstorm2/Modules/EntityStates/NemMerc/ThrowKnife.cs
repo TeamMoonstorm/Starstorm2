@@ -99,6 +99,7 @@ namespace EntityStates.NemMerc
 				fireProjectileInfo.force = force;
 				fireProjectileInfo.crit = RollCrit();
 				fireProjectileInfo.speedOverride = autoAimSpeed;
+				fireProjectileInfo.damageTypeOverride = new DamageTypeCombo(DamageType.BleedOnHit, DamageTypeExtended.Generic, DamageSource.Secondary);
 				ProjectileManager.instance.FireProjectile(fireProjectileInfo);
 			}
 		}
