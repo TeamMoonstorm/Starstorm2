@@ -85,10 +85,6 @@ namespace EntityStates.Knight
 
         private void SetOverride(GenericSkill genericSkill, SkillDef buffedSkillDef, bool shouldSet)
         {
-            //setskilloverride should have a keepcooldown option
-            float origCooldown = genericSkill.rechargeStopwatch;
-            int stock = genericSkill.stock;
-
             if (shouldSet)
             {
                 genericSkill.SetSkillOverride(gameObject, buffedSkillDef, GenericSkill.SkillOverridePriority.Contextual);
@@ -97,9 +93,6 @@ namespace EntityStates.Knight
             {
                 genericSkill.UnsetSkillOverride(gameObject, buffedSkillDef, GenericSkill.SkillOverridePriority.Contextual);
             }
-
-            genericSkill.stock = stock;
-            genericSkill.rechargeStopwatch = origCooldown;
         }
 
         public override void PlayAnimation()

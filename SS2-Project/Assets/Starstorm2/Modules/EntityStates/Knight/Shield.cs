@@ -20,8 +20,6 @@ namespace EntityStates.Knight
         public static SkillDef shieldBashSkillDef;
         private bool hasParried = false;
         private float stopwatch = 0f;
-
-        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
         public static float minDuration = 0.2f;
 
         public bool overridden;
