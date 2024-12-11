@@ -81,6 +81,7 @@ namespace EntityStates.Knight
             SetupMelee();
             swordPivot = FindModelChild("HitboxAnchor");
             base.OnEnter();
+            this.attack.damageType.damageSource = DamageSource.Primary;
         }
 
         public override void PlayAttackAnimation()

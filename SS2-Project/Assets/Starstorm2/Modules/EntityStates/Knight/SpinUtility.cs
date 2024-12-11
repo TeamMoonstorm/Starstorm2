@@ -61,7 +61,7 @@ namespace EntityStates.Knight
             #endregion test
 
             base.OnEnter();
-
+            this.attack.damageType.damageSource = DamageSource.Utility;
             fireFrequency = baseFireFrequency * attackSpeedStat;
             fireInterval = 1 / fireFrequency;
 

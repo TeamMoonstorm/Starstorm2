@@ -18,7 +18,7 @@ namespace EntityStates.Knight
             muzzleString = (swipeDown ? "SwingDownMuzzle" : "SwingUpMuzzle") + Random.Range(1,4);
 
             base.OnEnter();
-
+            this.attack.damageType.damageSource = DamageSource.Primary;
             characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
         }
 

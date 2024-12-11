@@ -108,7 +108,7 @@ namespace EntityStates.Knight
                     baseForce = 0f,
                     bonusForce = Vector3.up,
                     crit = false,
-                    damageType = DamageType.Generic,
+                    damageType = DamageTypeCombo.GenericSpecial,
                     falloffModel = BlastAttack.FalloffModel.None,
                     procCoefficient = 1f,
                     radius = impactRadius,

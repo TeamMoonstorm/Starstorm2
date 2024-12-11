@@ -26,9 +26,8 @@ namespace EntityStates.Knight
         public override void OnEnter()
         {
             damageCoefficient = testDamage;
-
             base.OnEnter();
-
+            this.attack.damageType.damageSource = DamageSource.Primary | DamageSource.Secondary;
             characterBody.AddTimedBuff(shieldBuff, duration + 0.5f);
         }
 
