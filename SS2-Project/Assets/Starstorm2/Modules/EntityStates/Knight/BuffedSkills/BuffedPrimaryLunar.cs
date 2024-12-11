@@ -39,6 +39,7 @@ namespace EntityStates.Knight
 
             //a custom animation perhaps
             PlayCrossfade("Gesture, Override", "BufferEmpty", 0.1f);
+            PlayCrossfade("FullBody, Override", "BufferEmpty", 0.1f);
         }
 
         public override void FixedUpdate()

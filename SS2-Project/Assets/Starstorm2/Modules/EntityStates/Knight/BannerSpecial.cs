@@ -15,7 +15,7 @@ namespace EntityStates.Knight
         private GameObject slowBuffWardInstance;
 
         [SerializeField]
-        public float impactRadius = 20f;
+        public float impactRadius = 5f;
         [SerializeField]
         public float impactDamage = 3f;
 
@@ -32,7 +32,7 @@ namespace EntityStates.Knight
         {
             base.OnEnter();
 
-            PlayAnimation("FullBody, Override", "SpecialLeapStart", "Special.playbackRate", 1);
+            PlayAnimation("FullBody, Override", "SpecialLeapStart");
 
             base.OnEnter();
             previousAirControl = base.characterMotor.airControl;
@@ -41,7 +41,7 @@ namespace EntityStates.Knight
             if (base.isAuthority)
             {
                 base.characterBody.isSprinting = true;
-                //direction.y = Mathf.Max(direction.y, minimumY);
+                direction.y = Mathf.Max(direction.y, minimumY);
                 Vector3 vector = direction.normalized * aimVelocity * moveSpeedStat;
                 Vector3 vector2 = Vector3.up * upwardVelocity;
                 Vector3 vector3 = new Vector3(direction.x, 0f, direction.z).normalized * forwardVelocity;
@@ -109,7 +109,7 @@ namespace EntityStates.Knight
                     bonusForce = Vector3.up,
                     crit = false,
                     damageType = DamageType.Generic,
-                    falloffModel = BlastAttack.FalloffModel.Linear,
+                    falloffModel = BlastAttack.FalloffModel.None,
                     procCoefficient = 1f,
                     radius = impactRadius,
                     position = base.characterBody.footPosition,

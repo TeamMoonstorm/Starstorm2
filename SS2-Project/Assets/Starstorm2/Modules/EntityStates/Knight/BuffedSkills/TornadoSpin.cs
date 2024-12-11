@@ -12,9 +12,12 @@ namespace EntityStates.Knight
 
         public override void OnEnter()
         {
-            damageCoefficient = testDamageBoosted;
-
             base.OnEnter();
+
+            #region test
+            fireFrequency = testFireFrequencyBoosted * attackSpeedStat;
+            fireInterval = 1 / fireFrequency;
+            #endregion test
 
             characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
         }

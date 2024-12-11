@@ -41,7 +41,6 @@ namespace EntityStates.Knight
             baseDuration = testDuration;
             finisherDamage = testFinisherDamage;
             finisherBaseDuration= testFinisherDuration;
-
             switch (swingIndex)
             {
                 case 0:

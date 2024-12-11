@@ -38,7 +38,9 @@ namespace EntityStates.Knight
         public static float testinterruptSpeedCoefficient = 0.4f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
-        public static float testFireFrequency = 2f;
+        public static float testFireFrequency = 5f;
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
+        public static float testFireFrequencyBoosted = 10f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
         public static float testDamage = 2f;
@@ -58,11 +60,10 @@ namespace EntityStates.Knight
             damageCoefficient = testDamage;
             #endregion test
 
-            attackSpeedStat = base.characterBody.attackSpeed;
+            base.OnEnter();
+
             fireFrequency = baseFireFrequency * attackSpeedStat;
             fireInterval = 1 / fireFrequency;
-
-            base.OnEnter();
 
             modelTransform = GetModelTransform();
 

@@ -11,15 +11,15 @@ namespace EntityStates.Knight
     public class BannerSlam : BannerSpecial
     {
         [SerializeField]
-        public float healMultiplier = 0.4f;
+        public float barrierMultiplier = 0.4f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
-        public static float TestHealMultiplier = 0.4f;
+        public static float TestBarrierMultiplier = 0.4f;
 
         protected override void FireImpact()
         {
             base.FireImpact();
-            healMultiplier = TestHealMultiplier;
+            barrierMultiplier = TestBarrierMultiplier;
 
             for (int i = 0; i < CharacterBody.readOnlyInstancesList.Count; i++)
             {
@@ -27,7 +27,7 @@ namespace EntityStates.Knight
                 if (character.teamComponent.teamIndex == characterBody.teamComponent.teamIndex &&
                     (character.transform.position - transform.position).sqrMagnitude < impactRadius * impactRadius)
                 {
-                    character.healthComponent.Heal(characterBody.healthComponent.fullCombinedHealth * healMultiplier, default);
+                    character.healthComponent.AddBarrier(characterBody.healthComponent.fullCombinedHealth * barrierMultiplier);
                 }
             }
         }
