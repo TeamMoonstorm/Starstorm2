@@ -130,7 +130,7 @@ namespace SS2.Items
                     damageMultiplier = damageCoefficient,
                 };
                 DotController.InflictDot(ref dotInfo);
-
+                
                 EffectManager.SimpleEffect(_procEffect, report.damageInfo.position, Quaternion.identity, true);
             }
         }

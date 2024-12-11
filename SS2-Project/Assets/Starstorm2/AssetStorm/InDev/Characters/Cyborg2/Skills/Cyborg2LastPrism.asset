@@ -19,14 +19,16 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: f509a7a568e34594d968974c569e7a09, type: 3}
   activationStateMachineName: Weapon
   activationState:
-    _typeName: EntityStates.Cyborg2.LastPrism, Starstorm2, Version=1.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    _typeName: EntityStates.Cyborg2.EnterLastPrism, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   interruptPriority: 0
   baseRechargeInterval: 0
   baseMaxStock: 1
   rechargeStock: 0
   requiredStock: 0
   stockToConsume: 0
+  attackSpeedBuffsRestockSpeed: 0
+  attackSpeedBuffsRestockSpeed_Multiplier: 1
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
@@ -36,3 +38,5 @@ MonoBehaviour:
   canceledFromSprinting: 1
   isCombatSkill: 1
   mustKeyPress: 1
+  autoHandleLuminousShot: 1
+  hideStockCount: 0

@@ -12,15 +12,6 @@ using MSU.Config;
 
 namespace SS2.Items
 {
-
-    /// <summary>
-    /// 
-    /// 
-    ///  LOTS OF STUFF NEEDS TO BE REDONE WHEN PROCTYPEAPI RELEASES
-    /// 
-    /// 
-    /// 
-    /// </summary>
     public sealed class ErraticGadget : SS2Item
     {
         private const string token = "SS2_ITEM_ERRATICGADGET_DESC";
@@ -45,9 +36,8 @@ namespace SS2.Items
         public static GameObject _procEffectPrefab;
         private static GameObject _displayEffectPrefab;
 
-        //N: True...
-        public static DamageAPI.ModdedDamageType PROCTYPEAPIWHEN;
-
+        private static R2API.ModdedProcType gadget;
+        private static R2API.ModdedProcType secondStrike;
         // man o war handled in its own class
         public override void Initialize()
         {
@@ -55,7 +45,8 @@ namespace SS2.Items
             _procEffectPrefab = AssetCollection.FindAsset<GameObject>("GadgetLightningStartEffect");
             _displayEffectPrefab = AssetCollection.FindAsset<GameObject>("GadgetLightningProc");
 
-            PROCTYPEAPIWHEN = DamageAPI.ReserveDamageType();
+            gadget = ProcTypeAPI.ReserveProcType();
+            secondStrike = ProcTypeAPI.ReserveProcType();
             On.RoR2.Orbs.LightningOrb.OnArrival += LightningOrb_OnArrival; // uke tesla BFG arti loader 
             //On.RoR2.Orbs.VoidLightningOrb.Begin += VoidLightningOrb_Begin; // polylute /// nah no thanks not real lightning
             On.RoR2.Orbs.SimpleLightningStrikeOrb.OnArrival += SimpleLightningStrikeOrb_OnArrival; // charged perforator i think
@@ -95,30 +86,17 @@ namespace SS2.Items
                 bool wasFirstBounceFake = false;
                 switch (self.lightningType)
                 {
+                    case LightningOrb.LightningType.Tesla:
                     case LightningOrb.LightningType.Ukulele:
                         canProcGadget = true;
                         wasFirstBounceFake = true;
                         break;
-                    case LightningOrb.LightningType.Tesla:
-                        canProcGadget = true;
-                        wasFirstBounceFake = true;
-                        break;
                     case LightningOrb.LightningType.BFG:
-                        canProcGadget = true;
-                        break;
-                    case LightningOrb.LightningType.TreePoisonDart:
-                        break;
-                    case LightningOrb.LightningType.HuntressGlaive:
-                        break;
+                    case LightningOrb.LightningType.MageLightning:
                     case LightningOrb.LightningType.Loader:
                         canProcGadget = true;
                         break;
-                    case LightningOrb.LightningType.RazorWire:
-                        break;
-                    case LightningOrb.LightningType.CrocoDisease:
-                        break;
-                    case LightningOrb.LightningType.MageLightning:
-                        canProcGadget = true;
+                    default:
                         break;
                 }
 
@@ -171,17 +149,12 @@ namespace SS2.Items
         // ROYAL CAPACITOR SPAWNS SECOND STRIKE
         private void LightningStrikeOrb_OnArrival(On.RoR2.Orbs.LightningStrikeOrb.orig_OnArrival orig, LightningStrikeOrb self)
         {
-            // jank ass way to check if lightning was spawned by erratic gadget proc
-            // can be un-janked whith proctypeapi
-            //hopefully no lightning orbs use FruitOnHit lol
-            bool isSecondStrike = self.damageType.damageType.HasFlag(DamageType.FruitOnHit);
-            if (isSecondStrike) self.damageType &= ~DamageType.FruitOnHit;
             orig(self);
-
             if (!self.attacker) return;
             CharacterBody body = self.attacker.GetComponent<CharacterBody>();
-            if (!isSecondStrike && body && body.inventory && body.inventory.GetItemCount(SS2Content.Items.ErraticGadget) > 0)
+            if (!self.procChainMask.HasModdedProc(secondStrike) && body && body.inventory && body.inventory.GetItemCount(SS2Content.Items.ErraticGadget) > 0)
             {
+                self.procChainMask.AddModdedProc(secondStrike);
                 OrbManager.instance.AddOrb(new LightningStrikeOrb
                 {
                     attacker = self.attacker,
@@ -190,7 +163,7 @@ namespace SS2.Items
                     isCrit = self.isCrit,
                     procChainMask = self.procChainMask,
                     procCoefficient = self.procCoefficient,
-                    damageType = self.damageType | DamageType.FruitOnHit, // PROCTYPEAPI WHENNNNNNNN
+                    damageType = self.damageType,
                     target = self.target
                 });
 
@@ -201,13 +174,12 @@ namespace SS2.Items
         // charged perforator strikes twice
         private void SimpleLightningStrikeOrb_OnArrival(On.RoR2.Orbs.SimpleLightningStrikeOrb.orig_OnArrival orig, SimpleLightningStrikeOrb self)
         {
-            bool isSecondStrike = self.damageType.damageType.HasFlag(DamageType.FruitOnHit);
-            if (isSecondStrike) self.damageType &= ~DamageType.FruitOnHit;
             orig(self);
             if (!self.attacker) return;
             CharacterBody body = self.attacker.GetComponent<CharacterBody>();
-            if (!isSecondStrike && body && body.inventory && body.inventory.GetItemCount(SS2Content.Items.ErraticGadget) > 0)
+            if (!self.procChainMask.HasModdedProc(secondStrike) && body && body.inventory && body.inventory.GetItemCount(SS2Content.Items.ErraticGadget) > 0)
             {
+                self.procChainMask.AddModdedProc(secondStrike);
                 OrbManager.instance.AddOrb(new SimpleLightningStrikeOrb
                 {
                     attacker = self.attacker,
@@ -216,7 +188,7 @@ namespace SS2.Items
                     isCrit = self.isCrit,
                     procChainMask = self.procChainMask,
                     procCoefficient = self.procCoefficient,
-                    damageType = self.damageType | DamageType.FruitOnHit, // PROCTYPEAPI WHENNNNNNNN
+                    damageType = self.damageType,
                     target = self.target
                 });
 
@@ -267,11 +239,12 @@ namespace SS2.Items
 
             public void OnDamageDealtServer(DamageReport report)
             {
-                if (!report.damageInfo.HasModdedDamageType(PROCTYPEAPIWHEN) && Util.CheckRoll(procChance * report.damageInfo.procCoefficient * 100f, body.master))
+                if (!report.damageInfo.procChainMask.HasModdedProc(gadget) && Util.CheckRoll(procChance * report.damageInfo.procCoefficient * 100f, body.master))
                 {
                     if(report.victimBody)
                     {
                         // 1, 3, 5...
+                        report.damageInfo.procChainMask.AddModdedProc(gadget);
                         int bouncesRemaining = bounceTargets + 2 * (this.stack - 1);
                         GadgetLightningOrb orb = new GadgetLightningOrb();
                         orb.duration = 0.2f;
@@ -286,7 +259,7 @@ namespace SS2.Items
                         orb.origin = GetMuzzleTransform().position;
                         orb.teamIndex = body.teamComponent.teamIndex;
                         orb.attacker = body.gameObject;
-                        orb.procChainMask = default(ProcChainMask); //////////////////////////////////////////////////////////////////////////////
+                        orb.procChainMask = report.damageInfo.procChainMask;
                         orb.bouncedObjects = new List<HealthComponent>();
                         orb.target = report.victimBody.mainHurtBox;
 
@@ -333,7 +306,6 @@ namespace SS2.Items
                         damageInfo.position = this.target.transform.position;
                         damageInfo.damageColorIndex = this.damageColorIndex;
                         damageInfo.damageType = this.damageType;
-                        damageInfo.AddModdedDamageType(PROCTYPEAPIWHEN);
                         healthComponent.TakeDamage(damageInfo);
                         GlobalEventManager.instance.OnHitEnemy(damageInfo, healthComponent.gameObject);
                         GlobalEventManager.instance.OnHitAll(damageInfo, healthComponent.gameObject);

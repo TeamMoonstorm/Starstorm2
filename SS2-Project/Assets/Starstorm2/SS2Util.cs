@@ -5,10 +5,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using MSU;
+using RoR2.ExpansionManagement;
 namespace SS2
 {
     public static class SS2Util
     {
+        public static ExpansionDef DLC1;
+        public static ExpansionDef DLC2;
+        [SystemInitializer(typeof(ExpansionCatalog))]
+        private static void Init()
+        {
+            DLC1 = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<ExpansionDef>("RoR2/DLC1/Common/DLC1.asset").WaitForCompletion();
+            DLC2 = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<ExpansionDef>("RoR2/DLC1/Common/DLC1.asset").WaitForCompletion();
+        }
+
         public static bool DoesTodayLandWithinASpecificDaysWeek(int desiredDay, int desiredMonth)
         {
             var now = DateTime.Now;
@@ -16,7 +26,7 @@ namespace SS2
             int minDay = desiredDay;
             int maxDay = desiredDay;
 
-            switch(thisYearsSpecialWeek.DayOfWeek)
+            switch (thisYearsSpecialWeek.DayOfWeek)
             {
                 case DayOfWeek.Monday:
                     maxDay += 6;
@@ -51,7 +61,6 @@ namespace SS2
 
             return now >= minDate && now <= maxDate;
         }
-
         public static string ToRoman(int number)
         {
             if ((number < 0) || (number > 3999)) throw new ArgumentOutOfRangeException(nameof(number), "insert value between 1 and 3999");
