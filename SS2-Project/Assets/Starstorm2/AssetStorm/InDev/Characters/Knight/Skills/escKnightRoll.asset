@@ -1,0 +1,186 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: escKnightRoll
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.Knight.Roll, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: minSpeedCoefficient
+      fieldValue:
+        stringValue: 0.05
+        objectValue: {fileID: 0}
+    - fieldName: maxSpeedCoefficient
+      fieldValue:
+        stringValue: 3
+        objectValue: {fileID: 0}
+    - fieldName: interruptSpeedCoefficient
+      fieldValue:
+        stringValue: 0.6
+        objectValue: {fileID: 0}
+    - fieldName: dashAnimationCurve
+      fieldValue:
+        stringValue: '{"preWrapMode":8,"postWrapMode":8,"keys":[{"time":0.0,"value":0.86419677734375,"inTangent":3.747457265853882,"outTangent":3.747457265853882,"inWeight":0.0,"outWeight":0.3673446476459503,"weightedMode":0,"tangentMode":0},{"time":0.06950397789478302,"value":1.0,"inTangent":0.0,"outTangent":0.0,"inWeight":0.3333333432674408,"outWeight":0.3333333432674408,"weightedMode":0,"tangentMode":0},{"time":0.4387044608592987,"value":1.0,"inTangent":0.0,"outTangent":0.0,"inWeight":0.3333333432674408,"outWeight":0.3333333432674408,"weightedMode":0,"tangentMode":0},{"time":0.9886474609375,"value":0.0,"inTangent":-1.329254388809204,"outTangent":Infinity,"inWeight":0.08479095250368118,"outWeight":0.0,"weightedMode":0,"tangentMode":97},{"time":1.137588620185852,"value":0.0,"inTangent":0.0,"outTangent":0.0,"inWeight":0.0,"outWeight":0.0,"weightedMode":0,"tangentMode":0}]}'
+        objectValue: {fileID: 0}
+    - fieldName: dodgeSoundString
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: lockY
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: directionAimOverride
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: hitboxGroupName
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: damageType
+      fieldValue:
+        stringValue: '{"assemblyQualifiedName":"RoR2.DamageType, RoR2, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null","values":"Generic"}'
+        objectValue: {fileID: 0}
+    - fieldName: damageCoefficient
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: procCoefficient
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: pushForce
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: bonusForce
+      fieldValue:
+        stringValue: 0, 0, 0
+        objectValue: {fileID: 0}
+    - fieldName: baseDuration
+      fieldValue:
+        stringValue: 0.5
+        objectValue: {fileID: 0}
+    - fieldName: attackStartPercentTime
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: attackEndPercentTime
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: earlyExitPercentTime
+      fieldValue:
+        stringValue: 0.2
+        objectValue: {fileID: 0}
+    - fieldName: hitStopDuration
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: attackRecoil
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: hitHopVelocity
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: swingSoundString
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: hitSoundString
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: muzzleString
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: playbackRateParam
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: swingEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: hitEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: impactSound
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: earlyExitPriority
+      fieldValue:
+        stringValue: '{"assemblyQualifiedName":"EntityStates.InterruptPriority, RoR2,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","values":"PrioritySkill"}'
+        objectValue: {fileID: 0}
+    - fieldName: basePriority
+      fieldValue:
+        stringValue: '{"assemblyQualifiedName":"EntityStates.InterruptPriority, RoR2,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","values":"PrioritySkill"}'
+        objectValue: {fileID: 0}
+    - fieldName: testminSpeedCoefficient
+      fieldValue:
+        stringValue: 0.05
+        objectValue: {fileID: 0}
+    - fieldName: testmaxSpeedCoefficient
+      fieldValue:
+        stringValue: 3
+        objectValue: {fileID: 0}
+    - fieldName: testbaseDuration
+      fieldValue:
+        stringValue: 0.5
+        objectValue: {fileID: 0}
+    - fieldName: testinterruptSpeedCoefficient
+      fieldValue:
+        stringValue: 0.6
+        objectValue: {fileID: 0}
+    - fieldName: testearlyexit
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: attackStartTimeFraction
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: attackEndTimeFraction
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: forceUnground
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: ignoreAttackSpeed
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: earlyExitTimeFraction
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: testWindDown
+      fieldValue:
+        stringValue: 0.5
+        objectValue: {fileID: 0}
+    - fieldName: forceFacingDirection
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
