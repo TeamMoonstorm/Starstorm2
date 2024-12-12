@@ -87,7 +87,8 @@ MonoBehaviour:
   - {fileID: -3576180096776599551}
   - {fileID: -3853556619106336772}
   - {fileID: -216652644370084839}
-  QuickAccess: 0
+  - {fileID: 8145649117286039540}
+  QuickAccess: 1
   manifest: {fileID: -3892906877110538616, guid: bcbdefdb47e2f8f45bdd7a2a4559b405,
     type: 2}
 --- !u!114 &4419625240071112074
@@ -104,3 +105,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 1
   buildMode: 0
+--- !u!114 &8145649117286039540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77f65d4371163fb4695da79ab8df0e84, type: 3}
+  m_Name: ExecuteProcess
+  m_EditorClassIdentifier: 
+  Active: 1
+  PerManifest: 0
+  ListType: 1
+  Manifests: []
+  workingDirectory: C:\Program Files (x86)\Steam\steamapps\common\Risk of Rain 2
+  executable: Risk of Rain 2.exe
+  arguments:
+  - --doorstop-enabled true
+  - --doorstop-target-assembly "C:\Users\natep\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\profiles\SS2Dev\BepInEx\core\BepInEx.Preloader.dll"

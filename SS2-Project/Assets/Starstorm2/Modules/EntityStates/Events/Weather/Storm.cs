@@ -14,9 +14,8 @@ namespace EntityStates.Events
     // being lazy. should be StormX : Storm and use entitystateconfigs
     public class Storm : GenericWeatherState
     {
-        private static float chargeInterval = 10f;
-        private static float chargeVariance = 0.66f;
-        private static float chargeFromKill = 0.5f;
+        private static float baseDuration = 60f;
+        private static float durationVariance = 0.66f;
         private static float effectLerpDuration = 5f;
         private static SerializableEntityStateType textState = new SerializableEntityStateType(typeof(StormController.EtherealFadeIn));
         private static SerializableEntityStateType textState2 = new SerializableEntityStateType(typeof(StormController.EtherealBlinkIn)); // fuck my life
@@ -26,9 +25,6 @@ namespace EntityStates.Events
         private static float eliteChancePerExtraLevelCoefficient = 2f;
         private static float eliteChancePerSecond = 2.5f;
         private static float baseEliteChance = 10f;
-
-        private float charge;
-        private float chargeStopwatch = 10f; // longer stopwatch means more variance
         private bool isPermanent;
         private float eliteChance;
         private float eliteChanceStopwatch;
@@ -38,62 +34,35 @@ namespace EntityStates.Events
 
         public float lerpDuration;
         public int stormLevel;
-        public bool instantStorm;
-        private bool oldStorm;
 
-        private static float oldstormelitemutlifewafa = 0.67f;
-        private float oldStormMinDuration = 120;
-        private float oldStormMaxDuration = 180;
-        private float oldStormDuration;
+        private float duration;
+
         private UnityAction<GameObject> modifyMonsters;
         private UnityAction<GameObject> modifyBoss;
         public override void OnEnter()
         {
             base.OnEnter();
-
-
-
-
-            oldStorm = !SS2.Storm.ReworkedStorm;
-
-            if (true)
-            {
-                if (oldStorm)
-                {
-                    oldStormDuration = UnityEngine.Random.Range(oldStormMinDuration, oldStormMaxDuration);
-                    GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
-                    {
-                        eventToken = GETDUMBASSTOKENDELETELATER() + "_START",
-                        eventColor = textColor,
-                        textDuration = 6,
-                    };
-                    GameplayEventTextController.instance.EnqueueNewTextRequest(request, false);
-                }
-                else
-                {
-                    GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
-                    {
-                        eventToken = "ermmmm..... storm " + stormLevel,
-                        eventColor = textColor,
-                        textDuration = 6,
-                    };
-                    GameplayEventTextController.instance.EnqueueNewTextRequest(request, false);
-                }
-            }
             
+            GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
+            {
+                eventToken = "ermmmm..... storm " + stormLevel,
+                eventColor = textColor,
+                textDuration = 6,
+            };
+            GameplayEventTextController.instance.EnqueueNewTextRequest(request, false);
             this.stormController.StartLerp(stormLevel, lerpDuration);
-
-
             isPermanent = stormController.IsPermanent && this.stormLevel >= stormController.MaxStormLevel;
 
             if (NetworkServer.active)
             {
+                float variance = baseDuration * durationVariance;
+                this.duration = stormController.timeRng.RangeFloat(baseDuration - variance, baseDuration + variance);
+
                 CombatDirector bossDirector = TeleporterInteraction.instance?.bossDirector;
                 if (bossDirector && stormLevel >= bossEliteLevel)
                 {
                     bossDirector.onSpawnedServer.AddListener(modifyBoss = new UnityAction<GameObject>(ModifySpawnedBoss));
                 }
-
 
                 foreach (CombatDirector combatDirector in CombatDirector.instancesList)
                 {
@@ -121,7 +90,6 @@ namespace EntityStates.Events
         {
             int extraLevels = this.stormLevel - eliteLevel;
             float chance = eliteChance * (1 + extraLevels * eliteChancePerExtraLevelCoefficient);
-            if (oldStorm) chance *= oldstormelitemutlifewafa;
             if (Util.CheckRoll(chance))
             {
                 eliteChance /= 2f;
@@ -165,7 +133,6 @@ namespace EntityStates.Events
             }
         }
 
-
         public override void FixedUpdate()
         {
             base.FixedUpdate();
@@ -181,68 +148,26 @@ namespace EntityStates.Events
                 if (eliteChance > 100) eliteChance = 100;
                 eliteChanceTimer = 0;
             }
-            if (oldStorm)
+            if (!isPermanent && base.fixedAge > duration)
             {
-                if (base.fixedAge >= oldStormDuration)
+                if(stormLevel == stormController.MaxStormLevel && !stormController.IsPermanent)
                 {
+                    outer.SetNextState(new Calm());                   
                     GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
                     {
-                        eventToken = GETDUMBASSTOKENDELETELATER() + "_END",
+                        eventToken = "ermmmm..... bye storm",
                         eventColor = textColor,
                         textDuration = 6,
                     };
                     GameplayEventTextController.instance.EnqueueNewTextRequest(request, false);
-                    outer.SetNextState(new Calm { thing = 3f });
-
-                    var enemies = TeamComponent.GetTeamMembers(TeamIndex.Monster).Concat(TeamComponent.GetTeamMembers(TeamIndex.Lunar)).Concat(TeamComponent.GetTeamMembers(TeamIndex.Void));
-                    foreach (var teamMember in enemies)
-                    {
-                        int buffCount = teamMember.body.GetBuffCount(SS2Content.Buffs.BuffStorm);
-                        for (int i = 0; i < buffCount; i++)
-                            teamMember.body.RemoveBuff(SS2Content.Buffs.BuffStorm);
-
-                    }
-                }
-            }
-            else
-            {
-                this.chargeStopwatch -= Time.fixedDeltaTime;
-                if (this.chargeStopwatch <= 0 && ShouldCharge())
-                {
-                    this.chargeStopwatch = chargeInterval;
-                    float charge = CalculateCharge(chargeInterval);
-                    this.charge += charge;
-                    this.stormController.AddCharge(charge);
-                }
-
-                if (!isPermanent && charge >= 100f)
-                {
-                    if(stormLevel == stormController.MaxStormLevel && !stormController.IsPermanent)
-                    {
-                        outer.SetNextState(new Calm());
-                        var enemies = TeamComponent.GetTeamMembers(TeamIndex.Monster).Concat(TeamComponent.GetTeamMembers(TeamIndex.Lunar)).Concat(TeamComponent.GetTeamMembers(TeamIndex.Void));
-                        foreach (var teamMember in enemies)
-                        {
-                            int buffCount = teamMember.body.GetBuffCount(SS2Content.Buffs.BuffStorm);
-                            for (int i = 0; i < buffCount; i++)
-                                teamMember.body.RemoveBuff(SS2Content.Buffs.BuffStorm);
-
-                        }
-                        GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
-                        {
-                            eventToken = "ermmmm..... bye storm",
-                            eventColor = textColor,
-                            textDuration = 6,
-                        };
-                        GameplayEventTextController.instance.EnqueueNewTextRequest(request, false);
-                        return;
-                    }
-
-                    this.stormController.OnStormLevelCompleted();
-                    outer.SetNextState(new Storm { stormLevel = stormLevel + 1, lerpDuration = 8f });
                     return;
                 }
+
+                this.stormController.OnStormLevelCompleted();
+                outer.SetNextState(new Storm { stormLevel = stormLevel + 1, lerpDuration = 8f });
+                return;
             }
+            
 
         }
 
@@ -275,17 +200,6 @@ namespace EntityStates.Events
             return shouldCharge;
         }
 
-        private float CalculateCharge(float deltaTime)
-        {
-            float timeToCharge = 60f;
-            float creditsPerSecond = 100f / timeToCharge;
-            float variance = chargeVariance * creditsPerSecond;
-
-            float charge = StormController.chargeRng.RangeFloat(creditsPerSecond - variance, creditsPerSecond + variance) * deltaTime;
-            return charge;
-
-        }
-
         public override void OnExit()
         {
             base.OnExit();
@@ -300,7 +214,7 @@ namespace EntityStates.Events
                 {
                     bossDirector.onSpawnedServer.RemoveListener(modifyBoss);
                 }
-                if (oldStorm || !stormController.IsPermanent)
+                if (!stormController.IsPermanent)
                 {
                     foreach (CombatDirector combatDirector in CombatDirector.instancesList)
                     {
@@ -308,13 +222,19 @@ namespace EntityStates.Events
                             combatDirector.onSpawnedServer.RemoveListener(modifyMonsters);
                     }
                 }
+
+                if(this.outer.nextState is Calm) // un buff
+                {
+                    var enemies = TeamComponent.GetTeamMembers(TeamIndex.Monster).Concat(TeamComponent.GetTeamMembers(TeamIndex.Lunar)).Concat(TeamComponent.GetTeamMembers(TeamIndex.Void));
+                    foreach (var teamMember in enemies)
+                    {
+                        int buffCount = teamMember.body.GetBuffCount(SS2Content.Buffs.BuffStorm);
+                        for (int i = 0; i < buffCount; i++)
+                            teamMember.body.RemoveBuff(SS2Content.Buffs.BuffStorm);
+                    }
+                }
             }
-            
-
         }
-
-
-
         public override void OnSerialize(NetworkWriter writer)
         {
             writer.Write(this.stormLevel);
@@ -331,7 +251,7 @@ namespace EntityStates.Events
         {
             public void OnKilledServer(DamageReport damageReport)
             {
-                PickupIndex pickupIndex = StormController.dropTable.GenerateDrop(StormController.treasureRng);
+                PickupIndex pickupIndex = StormController.dropTable.GenerateDrop(StormController.instance.treasureRng);
                 if (pickupIndex != PickupIndex.none)
                 {
                     PickupDropletController.CreatePickupDroplet(pickupIndex, damageReport.victimBody.corePosition, Vector3.up * 20f);
