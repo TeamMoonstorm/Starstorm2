@@ -13,6 +13,7 @@ namespace SS2.Components
     [RequireComponent(typeof(HealthComponent))]
     public class NukeSelfDamageController : MonoBehaviour
     {
+        [SerializeField] private Animator nukeAnimator;
         [SerializeField] private SerializableDamageColor _selfDamageColor;
         [SerializeField] private float _maxHPCoefficientAsDamage;
         [SerializeField] private float _timeBetweenTicks;
@@ -96,6 +97,15 @@ namespace SS2.Components
                 selfDamageBuffStacks = newBuffStacks;
                 if (NetworkServer.active)
                     characterBody.SetBuffCount(SS2Content.Buffs.bdNukeSelfDamage.buffIndex, selfDamageBuffStacks);
+            }
+        }
+
+        private void Update()
+        {
+            if(nukeAnimator)
+            {
+                Debug.Log(_crosshairChargeRemap);
+                nukeAnimator.SetFloat("charge", _crosshairChargeRemap);
             }
         }
 

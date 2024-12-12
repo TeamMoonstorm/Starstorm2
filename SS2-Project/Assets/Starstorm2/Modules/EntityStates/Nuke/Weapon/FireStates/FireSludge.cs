@@ -21,7 +21,12 @@ namespace EntityStates.Nuke.Weapon
         [HideInInspector]
         public static GameObject muzzleFlashPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Croco/CrocoDiseaseImpactEffect.prefab").WaitForCompletion();
 
+        private static int leftFireHash = Animator.StringToHash("IrradiateFireL");
+        private static int rightFireHash = Animator.StringToHash("IrradiateFireR");
+        private static int irradiatePlaybackHash = Animator.StringToHash("irradiate.playbackRate");
+
         public string chosenMuzzleString;
+        public int stepIndex;
         public Transform muzzleTransform;
 
         private float duration;
@@ -64,6 +69,9 @@ namespace EntityStates.Nuke.Weapon
                 projectileInfo.target = earlyTarget;
             }
             ProjectileManager.instance.FireProjectile(projectileInfo);
+
+            int chosenHash = stepIndex == 0 ? leftFireHash : rightFireHash;
+            PlayAnimation("UpperBody, Override", chosenHash, irradiatePlaybackHash, duration);
         }
 
         public override void FixedUpdate()

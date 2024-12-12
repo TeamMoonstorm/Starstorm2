@@ -43,7 +43,7 @@ namespace EntityStates.Nuke
                 SelfDamageController = ctrl;
                 if (SelfDamageController.isImmune)
                     chargeGain *= 2f;
-                SelfDamageController.AsValidOrNull()?.SetDefaults(this);
+                SelfDamageController.SetDefaults(this);
             }
         }
 

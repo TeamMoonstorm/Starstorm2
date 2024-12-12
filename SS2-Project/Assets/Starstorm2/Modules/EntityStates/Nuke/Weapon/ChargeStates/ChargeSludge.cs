@@ -15,7 +15,13 @@ namespace EntityStates.Nuke.Weapon
         public static string leftMuzzleChildName;
         public static string rightMuzzleChildName;
 
-        private string chosenMuzzle;
+        private static int leftChargeHash = Animator.StringToHash("IrradiateChargeL");
+        private static int rightChargeHash = Animator.StringToHash("IrradiateChargeR");
+        private static int irradiatePlaybackHash = Animator.StringToHash("irradiate.playbackRate");
+
+        private string _chosenMuzzle;
+        private int _chosenAnimationHash;
+        private int _step;
         private Transform muzzleTransform;
         private GameObject chargePrefabInstance;
         public override void OnEnter()
@@ -25,7 +31,7 @@ namespace EntityStates.Nuke.Weapon
             ChildLocator modelChildLocator = GetModelChildLocator();
             if (modelChildLocator)
             {
-                muzzleTransform = modelChildLocator.FindChild(chosenMuzzle);
+                muzzleTransform = modelChildLocator.FindChild(_chosenMuzzle);
             }
 
             if (muzzleTransform && chargePrefab)
@@ -33,6 +39,9 @@ namespace EntityStates.Nuke.Weapon
                 chargePrefabInstance = GameObject.Instantiate(chargePrefab, muzzleTransform);
                 chargePrefabInstance.transform.SetPositionAndRotation(muzzleTransform.position, muzzleTransform.rotation);
             }
+
+            StartAimMode();
+            PlayAnimation("UpperBody, Override", _chosenAnimationHash, irradiatePlaybackHash, attackSpeedStat);
         }
 
         public override void OnExit()
@@ -47,8 +56,9 @@ namespace EntityStates.Nuke.Weapon
         protected override SS2.Survivors.Nuke.IChargedState GetFireState()
         {
             var fireSludge = new FireSludge();
-            fireSludge.chosenMuzzleString = chosenMuzzle;
+            fireSludge.chosenMuzzleString = _chosenMuzzle;
             fireSludge.muzzleTransform = muzzleTransform;
+            fireSludge.stepIndex = _step;
             return fireSludge;
         }
 
@@ -59,7 +69,9 @@ namespace EntityStates.Nuke.Weapon
 
         public void SetStep(int i)
         {
-            chosenMuzzle = i == 0 ? leftMuzzleChildName : rightMuzzleChildName;
+            _step = i;
+            _chosenMuzzle = i == 0 ? leftMuzzleChildName : rightMuzzleChildName;
+            _chosenAnimationHash = i == 0 ? leftChargeHash : rightChargeHash;
         }
     }
 }
