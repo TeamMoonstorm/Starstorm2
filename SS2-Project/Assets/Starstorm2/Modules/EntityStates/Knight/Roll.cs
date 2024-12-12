@@ -14,6 +14,8 @@ namespace EntityStates.Knight
         // Movement variables
         [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
         public static float testbaseDuration = 0.69f;
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
+        public static float testAnimationDurationMulti = 1.69f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
         public static float testminSpeedCoefficient = 2f;
@@ -45,11 +47,12 @@ namespace EntityStates.Knight
             animator.SetBool("isRolling", true);
             if (isGrounded)
             {
-                PlayCrossfade("FullBody, Override", "Roll", "Utility.rate", duration, 0.05f);
+                PlayCrossfade("FullBody, Override", "Roll", "Utility.rate", duration * testAnimationDurationMulti, 0.05f);
+                PlayCrossfade("Gesture, Override", "Roll", "Utility.rate", duration * testAnimationDurationMulti, 0.05f);
             } 
             else
             {
-                PlayCrossfade("FullBody, Override", "AirRoll", "Utility.rate", duration, 0.05f);
+                PlayCrossfade("FullBody, Override", "AirRoll", "Utility.rate", duration * testAnimationDurationMulti, 0.05f);
             }
         }
 
