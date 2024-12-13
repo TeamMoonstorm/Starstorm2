@@ -147,8 +147,6 @@ MonoBehaviour:
   amputateMaxHealthMinimum: 1
   extraSecondaryFromSkill: 0
   extraSpecialFromSkill: 0
-  lowerHealthHigherDamageEffectUpdater: {fileID: 0}
-  canBoostAllStats: 0
   increaseDamageOnMultiKillItemDisplayUpdater: {fileID: 0}
   allSkillsDisabled: 0
   isTeleporting: 0
@@ -183,6 +181,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   _defaultCrosshairPrefab: {fileID: 0}
   hideCrosshair: 0
+  canAddIncrasePrimaryDamage: 0
   knockBackFinGroundedTimer: 0
   runicLensPosition: {x: 0, y: 0, z: 0}
   meteorVictimBody: {fileID: 0}
@@ -682,7 +681,7 @@ MonoBehaviour:
   KillVelocityWhenExceedMaxMovementIterations: 1
   KillRemainingMovementWhenExceedMaxMovementIterations: 1
   timeUntilUpdate: 0
-  playerCharacter: 0
+  playerCharacter: 1
 --- !u!114 &1004718732815417702
 MonoBehaviour:
   m_ObjectHideFlags: 0

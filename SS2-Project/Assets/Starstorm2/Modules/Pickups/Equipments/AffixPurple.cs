@@ -21,10 +21,10 @@ namespace SS2.Equipments
         private static GameObject poisonEffect;
         private static GameObject projectilePrefab;
         private static GameObject explosionEffect;
-        private static float projectileDamageCoefficient = .75f;
+        private static float projectileDamageCoefficient = .6f;
         private static float onHitRadius = 2f;
         private static float onHitDamageCoefficient = 0.1f;
-        private static float poisonDamageCoefficient = 0.2f;
+        private static float poisonDamageCoefficient = 0.3f;
         private static float poisonDuration = 4f;
 
         public override void Initialize()
@@ -286,7 +286,6 @@ namespace SS2.Equipments
                 float trueSpeed = velocity.magnitude;
                 Vector3 aimDirection = velocity.normalized;
 
-                Util.PlaySound("ChirrFireSpitBomb", base.gameObject); // TODO: not networked
                 for (int i = 0; i < numProjectiles; i++)
                 {                  
 

@@ -121,7 +121,6 @@ namespace SS2.Components
                     SetBuffCount(count);
                 }
             }     
-            if (!NetworkServer.active) return;
             detonationTimer -= Time.fixedDeltaTime;
             if(detonationTimer <= 0f)
             {
@@ -195,7 +194,7 @@ namespace SS2.Components
 
         private void FireBlast()
         {
-            if(!hasExploded)
+            if(NetworkServer.active && !hasExploded)
             {
                 hasExploded = true;          
                 EffectManager.SpawnEffect(explosionEffectPrefab, new EffectData
