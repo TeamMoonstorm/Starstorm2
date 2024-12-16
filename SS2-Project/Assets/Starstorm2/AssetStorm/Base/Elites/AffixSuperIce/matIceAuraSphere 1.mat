@@ -23,11 +23,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Cloud1Tex:
-        m_Texture: {fileID: 2800000, guid: 903e0aae9d035e64ca5fa2ca3bfacc03, type: 2}
-        m_Scale: {x: 0.2, y: 0.2}
+        m_Texture: {fileID: 2800000, guid: d439f0d4fa539a345bd0f9964157f9ae, type: 2}
+        m_Scale: {x: 0.05, y: 0.05}
         m_Offset: {x: 0, y: 0}
     - _Cloud2Tex:
-        m_Texture: {fileID: 2800000, guid: 14665851842caf74fb06364eaaeb01e9, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 0.1, y: 0.1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -35,13 +35,13 @@ Material:
         m_Scale: {x: 1, y: 3}
         m_Offset: {x: 0, y: 0}
     - _RemapTex:
-        m_Texture: {fileID: 2800000, guid: b09def87c82194440902f8fb14599b5d, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5d348bc511f080f46b0591182b77c62a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _AlphaBoost: 6.3
-    - _Boost: 1
+    - _Boost: 0.16
     - _BumpScale: 1
     - _Cull: 0
     - _Cutoff: 0.5
@@ -53,17 +53,17 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _IntersectionStrength: 9.48
-    - _InvFade: 7.61
+    - _IntersectionStrength: 9.36
+    - _InvFade: 0
     - _Magnitude: 10
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _RimPower: 6.78
-    - _RimStrength: 0.03
+    - _RimPower: 2.09
+    - _RimStrength: 0.08
     - _SmoothnessTextureChannel: 0
-    - _SoftPower: 2.63
+    - _SoftPower: 0.1
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _SrcBlendFloat: 1
@@ -74,7 +74,7 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Colour: {r: 1, g: 1, b: 1, a: 1}
-    - _CutoffScroll: {r: 0, g: -5, b: 30, a: 30}
+    - _CutoffScroll: {r: -31.87, g: -38.9, b: 82, a: 30}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _TintColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

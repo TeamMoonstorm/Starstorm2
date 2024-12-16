@@ -499,7 +499,7 @@ namespace SS2
 
             public static BuffDef BuffJetBootsCooldown;
 
-            public static BuffDef BuffJetBootsReady;
+            public static BuffDef BuffJetBootsReady;        
 
             public static BuffDef BuffCoffeeBag;
 
@@ -518,6 +518,8 @@ namespace SS2
             public static BuffDef BuffSigilStack;
 
             public static BuffDef BuffStickyOverloader;
+
+            public static BuffDef BuffSuperLightningOrb;
 
             public static BuffDef BuffKickflip;
 

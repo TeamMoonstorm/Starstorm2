@@ -10,10 +10,9 @@ namespace SS2.Equipments
     {
         public override SS2AssetRequest<EliteAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<EliteAssetCollection>("acSuperFire", SS2Bundle.Equipments);
         public static GameObject projectilePrefab;
-        public static float projectileDamageCoefficient = 1f; // fucking jank ass number. theres a billion instances of damage
+        public static float projectileDamageCoefficient = 2f; // fucking jank ass number. theres a billion instances of damage
         public override void Initialize()
         {
-            BuffOverlays.AddBuffOverlay(SS2Assets.LoadAsset<BuffDef>("BuffAffixSuperFire", SS2Bundle.Equipments), SS2Assets.LoadAsset<Material>("matSuperFireOverlay", SS2Bundle.Equipments));
             projectilePrefab = SS2Assets.LoadAsset<GameObject>("SuperFireball", SS2Bundle.Equipments);
         }
 
@@ -34,7 +33,7 @@ namespace SS2.Equipments
 
         public override void OnEquipmentObtained(CharacterBody body)
         {
-            body.AddBuff(RoR2Content.Buffs.AffixRed);
+            body.AddBuff(RoR2Content.Buffs.AffixRed);       
         }
 
         // guess im copying affixpurple
@@ -44,6 +43,24 @@ namespace SS2.Equipments
             private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffAffixSuperFire;
             private static float projectileLaunchInterval = 8f;
             private float projectileTimer;
+            private TemporaryOverlayInstance temporaryOverlayInstance;
+
+            private void OnEnable()
+            {
+                if (characterBody.modelLocator && characterBody.modelLocator.modelTransform)
+                {
+                    temporaryOverlayInstance = TemporaryOverlayManager.AddOverlay(characterBody.modelLocator.modelTransform.gameObject);
+                    temporaryOverlayInstance.animateShaderAlpha = false;
+                    temporaryOverlayInstance.destroyComponentOnEnd = true;
+                    temporaryOverlayInstance.originalMaterial = SS2Assets.LoadAsset<Material>("matSuperFireOverlay", SS2Bundle.Equipments);
+                    temporaryOverlayInstance.AddToCharacterModel(characterBody.modelLocator.modelTransform.GetComponent<CharacterModel>());
+                }
+            }
+            private void OnDisable()
+            {
+                if (temporaryOverlayInstance != null)
+                    temporaryOverlayInstance.RemoveFromCharacterModel();
+            }
 
             private void FixedUpdate()
             {

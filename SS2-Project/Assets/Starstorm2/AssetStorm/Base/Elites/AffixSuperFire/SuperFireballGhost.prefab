@@ -106,7 +106,6 @@ GameObject:
   - component: {fileID: 7911837951932526332}
   - component: {fileID: 2182686433436538212}
   - component: {fileID: 1350897011543124964}
-  - component: {fileID: 2668204281010465603}
   - component: {fileID: 2124680032482583498}
   m_Layer: 0
   m_Name: SuperFireballGhost
@@ -162,30 +161,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 8367464381212552192}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 4027566083681205495}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &2182686433436538212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,22 +194,6 @@ MonoBehaviour:
   particleSystems:
   - {fileID: 6097016866877842847}
   - {fileID: 8221497758636436159}
---- !u!114 &2668204281010465603
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3519305036670422378}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1431018688, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetTrailRenderers:
-  - {fileID: 8701352186398920722}
-  - {fileID: 2816795561683280087}
-  IgnoreDestroy: 0
 --- !u!114 &2124680032482583498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14896,7 +14855,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6059171520806988956}
   - component: {fileID: 4027566083681205495}
-  - component: {fileID: 8367464381212552192}
   m_Layer: 0
   m_Name: Helix
   m_TagString: Untagged
@@ -14933,21 +14891,7 @@ MonoBehaviour:
   m_Script: {fileID: 1044368294, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: {x: 0, y: 0, z: 720}
---- !u!114 &8367464381212552192
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7339772384725333518}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1788389205, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  duration: 3
-  resetAgeOnDisable: 0
+  rotationSpeed: {x: 0, y: 720, z: 0}
 --- !u!1 &9209600506155853940
 GameObject:
   m_ObjectHideFlags: 0

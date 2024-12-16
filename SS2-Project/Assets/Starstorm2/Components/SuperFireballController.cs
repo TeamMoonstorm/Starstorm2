@@ -47,9 +47,11 @@ namespace SS2
 			this.sphereSearch = new SphereSearch();
 			sphereSearch.radius = 128f;
 			sphereSearch.mask = LayerIndex.entityPrecise.mask;
-			DoBounce(); // ??
 		}
-
+        private void Start()
+        {
+			DoBounce(); //??????
+        }
         private void FixedUpdate()
         {
 			if(NetworkServer.active)
