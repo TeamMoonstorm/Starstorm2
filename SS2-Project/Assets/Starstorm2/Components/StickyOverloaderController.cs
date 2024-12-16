@@ -183,13 +183,14 @@ namespace SS2.Components
                 animator.SetFloat("intensity", count / (float)(StickyOverloader.maxStacks + StickyOverloader.maxStacksPerStack * (itemStacks - 1)));
             }
             float alpha = Util.Remap(count, 0, 25, .3f, 1);
-            for(int i = 0; i < this.indicatorRenderer.materials.Length; i++)
-            {
-                this._propBlock = new MaterialPropertyBlock();
-                this.indicatorRenderer.GetPropertyBlock(this._propBlock, i);
-                this._propBlock.SetFloat("_ExternalAlpha", alpha);
-                this.indicatorRenderer.SetPropertyBlock(this._propBlock, i);
-            }
+            this._propBlock = new MaterialPropertyBlock();
+            this.indicatorRenderer.GetPropertyBlock(this._propBlock, 0);
+            this._propBlock.SetFloat("_ExternalAlpha", alpha);
+            this.indicatorRenderer.SetPropertyBlock(this._propBlock, 0);
+            this._propBlock = new MaterialPropertyBlock();
+            this.indicatorRenderer.GetPropertyBlock(this._propBlock, 1);
+            this._propBlock.SetFloat("_ExternalAlpha", alpha);
+            this.indicatorRenderer.SetPropertyBlock(this._propBlock, 1); // iterating wasnt wokring idk
         }
 
         private void FireBlast()

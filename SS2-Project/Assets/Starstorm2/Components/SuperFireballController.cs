@@ -11,7 +11,7 @@ namespace SS2
 	[RequireComponent(typeof(TeamFilter))]
 	public class SuperFireballController : MonoBehaviour, IProjectileImpactBehavior
 	{
-		private static float stupidUpThing = 1f;
+		private static float stupidUpThing = 3f;
 		private float targetSwitchTimer;
 		private HurtBox currentTarget;
 		private SphereSearch sphereSearch;
@@ -118,10 +118,6 @@ namespace SS2
 			// set velocity
 			this.rigidbody.velocity = aimDirection * trueSpeed;
 			this.lifetimeStopwatch = 10f;
-
-			var debug = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-			debug.transform.position = point;
-			debug.transform.localScale = Vector3.one * 3f;
 		}
 
         public void OnProjectileImpact(ProjectileImpactInfo impactInfo)
@@ -139,10 +135,11 @@ namespace SS2
 				EffectManager.SpawnEffect(impactEffectPrefab, effectData, true);
 				
 				Vector3 forward = Vector3.up;
+				float startAngle = UnityEngine.Random.Range(0, 360f / childrenCount);
 				for (int i = 0; i < childrenCount; i++)
 				{
 					float hSpeed = UnityEngine.Random.Range(minChildSpeed, maxChildSpeed);
-					float childAngle = i * 360f / childrenCount;
+					float childAngle = startAngle + (i * 360f / childrenCount);
 					Vector3 rotation = Quaternion.Euler(0, childAngle, 0) * Vector3.forward;
 					Vector3 velocity =  rotation * hSpeed;
 					velocity.y = childUpSpeed;
@@ -210,5 +207,11 @@ namespace SS2
 				DoBounce();
 
 		}
+
+        private void Update()
+        {
+			if(rigidbody.velocity != Vector3.zero)
+				base.transform.rotation = Quaternion.LookRotation(rigidbody.velocity);
+        }
     }
 }

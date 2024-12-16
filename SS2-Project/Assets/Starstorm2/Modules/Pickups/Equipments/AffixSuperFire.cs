@@ -13,7 +13,7 @@ namespace SS2.Equipments
         public static float projectileDamageCoefficient = 1f; // fucking jank ass number. theres a billion instances of damage
         public override void Initialize()
         {
-            BuffOverlays.AddBuffOverlay(SS2Content.Buffs.BuffAffixSuperFire, SS2Assets.LoadAsset<Material>("matSuperFireOverlay", SS2Bundle.Equipments));
+            BuffOverlays.AddBuffOverlay(SS2Assets.LoadAsset<BuffDef>("BuffAffixSuperFire", SS2Bundle.Equipments), SS2Assets.LoadAsset<Material>("matSuperFireOverlay", SS2Bundle.Equipments));
             projectilePrefab = SS2Assets.LoadAsset<GameObject>("SuperFireball", SS2Bundle.Equipments);
         }
 
@@ -38,57 +38,18 @@ namespace SS2.Equipments
         }
 
         // guess im copying affixpurple
-        public sealed class Behavior : BaseBuffBehaviour
+        public sealed class Behavior : BaseBuffBehaviour, IOnTakeDamageServerReceiver
         {
             [BuffDefAssociation]
             private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffAffixSuperFire;
             private static float projectileLaunchInterval = 8f;
-            private static float maxTrackingDistance = 90f;
-            private static float minDistance = 8f;
-            private static float maxLaunchDistance = 50f;
-            private static float bounceVelocity = 45f;
-            private static float minSpread = 1f;
-            private static float maxSpread = 3f;
-
             private float projectileTimer;
-            private EntityStates.TitanMonster.FireFist.Predictor predictor; // might as well use this lol
-            private SphereSearch sphereSearch;
-            private void OnEnable()
-            {
-                predictor = new EntityStates.TitanMonster.FireFist.Predictor(base.transform);
-                sphereSearch = new SphereSearch();
-                projectileTimer = projectileLaunchInterval;
-            }
 
             private void FixedUpdate()
             {
                 if (base.characterBody.healthComponent.alive && NetworkServer.active)
                 {
                     projectileTimer += Time.fixedDeltaTime;
-
-                    // Periodically launch projectiles that create poison AOE fields
-                    if (!predictor.hasTargetTransform && projectileTimer >= projectileLaunchInterval - 0.5f)
-                    {
-                        sphereSearch.radius = maxTrackingDistance;
-                        sphereSearch.origin = base.characterBody.corePosition;
-                        sphereSearch.mask = LayerIndex.entityPrecise.mask;
-                        sphereSearch.RefreshCandidates();
-                        TeamMask mask = TeamMask.allButNeutral;
-                        mask.RemoveTeam(base.characterBody.teamComponent.teamIndex);
-                        sphereSearch.FilterCandidatesByHurtBoxTeam(mask);
-                        sphereSearch.FilterCandidatesByDistinctHurtBoxEntities();
-                        HurtBox[] hurtBoxes = sphereSearch.GetHurtBoxes();
-                        if (hurtBoxes.Length > 0)
-                        {
-                            int targetIndex = UnityEngine.Random.Range(0, hurtBoxes.Length - 1);
-                            HurtBox hurtBox = hurtBoxes[targetIndex];
-                            if (hurtBox)
-                            {
-                                this.predictor.SetTargetTransform(hurtBox.transform);
-                            }
-                        }
-                    }
-                    predictor.Update();
                     if (projectileTimer >= projectileLaunchInterval)
                     {
                         projectileTimer = 0f;
@@ -104,6 +65,10 @@ namespace SS2.Equipments
                 ProjectileManager.instance.FireProjectile(projectilePrefab, origin, Util.QuaternionSafeLookRotation(base.transform.forward), base.gameObject, base.characterBody.damage * projectileDamageCoefficient, 0f, false, DamageColorIndex.Default);
             }
 
+            public void OnTakeDamageServer(DamageReport damageReport)
+            {
+                
+            }
         }
     }
 }

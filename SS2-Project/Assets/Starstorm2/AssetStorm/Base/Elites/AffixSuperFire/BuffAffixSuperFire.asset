@@ -13,11 +13,14 @@ MonoBehaviour:
   m_Name: BuffAffixSuperFire
   m_EditorClassIdentifier: 
   iconPath: 
-  iconSprite: {fileID: 0}
+  iconSprite: {fileID: 21300000, guid: a2d1368d11d70ea48a3d3f4a2a792d66, type: 3}
   buffColor: {r: 1, g: 1, b: 1, a: 1}
   canStack: 0
   eliteDef: {fileID: 11400000, guid: a839c67dca6e8e741826f8ed3362d897, type: 2}
   isDebuff: 0
+  isDOT: 0
+  ignoreGrowthNectar: 0
   isCooldown: 0
   isHidden: 0
+  flags: 0
   startSfx: {fileID: 0}
