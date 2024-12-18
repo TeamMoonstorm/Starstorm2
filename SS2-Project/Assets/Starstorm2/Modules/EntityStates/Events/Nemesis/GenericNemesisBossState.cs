@@ -232,7 +232,7 @@ namespace EntityStates.Events
             RoR2.CharacterAI.BaseAI ai = master.GetComponent<RoR2.CharacterAI.BaseAI>();
             if (ai)
                 ai.currentEnemy.gameObject = target;
-            new NemesisSpawnCard.SyncBaseStats(nemesisBossBody).Send(R2API.Networking.NetworkDestination.Clients);
+            new FriendManager.SyncBaseStats(nemesisBossBody).Send(R2API.Networking.NetworkDestination.Clients);
             combatSquad.AddMember(master);
             combatSquad.GetComponent<TeamFilter>().defaultTeam = TeamIndex.Monster;
             NetworkServer.Spawn(combatSquad.gameObject);

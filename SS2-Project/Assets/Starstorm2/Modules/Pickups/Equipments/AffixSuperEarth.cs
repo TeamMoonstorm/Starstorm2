@@ -66,7 +66,7 @@ namespace SS2.Equipments
                 for (int i = 0; i < projectileCount; i++)
                 {
                     float childAngle = startAngle + (i * 360f / projectileCount);
-                    Vector3 rotation = Quaternion.Euler(0, childAngle, 0) * Vector3.forward;
+                    Vector3 rotation = Quaternion.Euler(0, childAngle, 0) * (Vector3.forward * (base.characterBody.radius + 2));
                     FireProjectileInfo fireProjectileInfo = new FireProjectileInfo
                     {
                         projectilePrefab = projectilePrefab,

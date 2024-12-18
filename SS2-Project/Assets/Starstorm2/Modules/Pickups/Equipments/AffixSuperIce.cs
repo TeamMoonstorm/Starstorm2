@@ -67,9 +67,10 @@ namespace SS2.Equipments
             {
                 //pick target. has a few attempts to try to choose a point away from other meteors
                 Vector3 origin = base.characterBody.corePosition + Vector3.up * 2f;
-                Vector3 target = origin + UnityEngine.Random.insideUnitSphere * maxMeteorDistance;
+                Vector3 target = origin;
                 for (int i = 0; i < maxPlacementAttempts; i++)
-                {                                
+                {
+                    target = origin + UnityEngine.Random.insideUnitSphere * maxMeteorDistance;
                     Vector3 between = target - origin;
                     float distance = Mathf.Min(between.magnitude, maxMeteorDistance);
                     target = between.normalized * distance + origin;

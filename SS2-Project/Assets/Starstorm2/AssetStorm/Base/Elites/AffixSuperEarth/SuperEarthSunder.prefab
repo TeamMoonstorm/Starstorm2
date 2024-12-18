@@ -193,7 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: -343225066, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookRange: 45
+  lookRange: 60
   lookCone: 180
   targetSearchInterval: 0.5
   onlySearchIfNoTarget: 0
@@ -220,7 +220,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yAxisOnly: 1
-  rotationSpeed: 40
+  rotationSpeed: 60
 --- !u!114 &114641388333734811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,9 +255,9 @@ MonoBehaviour:
   m_Script: {fileID: -317677761, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  falloffModel: 1
+  falloffModel: 2
   blastRadius: 12
-  blastDamageCoefficient: 3
+  blastDamageCoefficient: 2
   blastProcCoefficient: 1
   blastAttackerFiltering: 0
   bonusBlastForce: {x: 0, y: 4000, z: 0}
@@ -268,17 +268,17 @@ MonoBehaviour:
   preserveExplosionOrientation: 0
   explosionSoundString: 
   fireChildren: 1
-  childrenProjectilePrefab: {fileID: 1125224221550585, guid: 0cbe6491232de1a43a398667fee94162,
+  childrenProjectilePrefab: {fileID: 1705670771434268797, guid: 6d6caea4046e7d24287fff7e3c835b1c,
     type: 3}
-  childrenCount: 3
-  childrenDamageCoefficient: 0
+  childrenCount: 1
+  childrenDamageCoefficient: 1
   childrenInheritDamageType: 0
   minAngleOffset: {x: 0, y: 0, z: 0}
   maxAngleOffset: {x: 0, y: 0, z: 0}
-  minRollDegrees: -13
-  rangeRollDegrees: 26
-  minPitchDegrees: -13
-  rangePitchDegrees: 26
+  minRollDegrees: 0
+  rangeRollDegrees: 0
+  minPitchDegrees: 0
+  rangePitchDegrees: 0
   useLocalSpaceForChildren: 0
   applyDot: 0
   dotIndex: -1
@@ -354,7 +354,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4283124084843442}
   - component: {fileID: 114576757928449587}
-  - component: {fileID: 135188938162832033}
+  - component: {fileID: 6764678182858332572}
   m_Layer: 14
   m_Name: Trigger
   m_TagString: Untagged
@@ -370,7 +370,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1986978171741252}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -405,8 +405,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!135 &135188938162832033
-SphereCollider:
+--- !u!136 &6764678182858332572
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -415,6 +415,7 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.3
+  m_Radius: 3
+  m_Height: 40
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}

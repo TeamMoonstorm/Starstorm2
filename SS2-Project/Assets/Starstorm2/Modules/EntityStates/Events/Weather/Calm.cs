@@ -23,7 +23,7 @@ namespace EntityStates.Events
             base.FixedUpdate();
             if (!NetworkServer.active) return;
 
-            if (stormController.stormStartTime.hasPassed)
+            if (!stormController.hasStarted && stormController.stormStartTime.hasPassed)
             {
                 this.stormController.OnStormLevelCompleted();
                 outer.SetNextState(new Storm { stormLevel = 1, lerpDuration = 15f });

@@ -4613,7 +4613,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4266022723900756}
   - component: {fileID: 114841339645111389}
-  - component: {fileID: 114808576601568480}
   - component: {fileID: 114445635581591328}
   - component: {fileID: 114081907757672808}
   - component: {fileID: 54292343577650252}
@@ -4665,19 +4664,6 @@ MonoBehaviour:
   radius: 15
   scaleShakeRadiusWithLocalScale: 0
   amplitudeTimeDecay: 1
---- !u!114 &114808576601568480
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1590272024798926}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -335047464, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trackedParticleSystem: {fileID: 0}
 --- !u!114 &114445635581591328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4709,7 +4695,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vfxPriority: 2
   vfxIntensity: 1
-  DoNotPool: 1
+  DoNotPool: 0
   DoNotCullPool: 0
   optionalLights: []
   secondaryParticleSystem: []

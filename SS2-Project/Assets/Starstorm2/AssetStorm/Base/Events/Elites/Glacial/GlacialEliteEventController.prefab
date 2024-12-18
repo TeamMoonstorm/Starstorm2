@@ -1,0 +1,273 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7523069071521145345
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2074136670341350495}
+  - component: {fileID: 5229651713303568034}
+  - component: {fileID: 5924658299747166876}
+  - component: {fileID: 5006735818149380258}
+  - component: {fileID: 1726000132339027382}
+  - component: {fileID: 4419008222804789653}
+  - component: {fileID: 4249146383033120982}
+  m_Layer: 0
+  m_Name: GlacialEliteEventController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2074136670341350495
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7523069071521145345}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2292254374345303839}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5229651713303568034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7523069071521145345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8258ea15b8f74c4889ce485d21cbbb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
+--- !u!114 &5924658299747166876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7523069071521145345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9965a9c4e8ebf274a99ec345999d6bb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  beginOnStart: 0
+  _announcementDuration: 6
+  _eventDuration: -1
+  _eventStartToken: SS2_EVENT_GLACIALELITE_START
+  _eventStartSfx: {fileID: 0}
+  _eventEndToken: SS2_EVENT_GLACIALELITE_END
+  _eventEndSfx: {fileID: 0}
+  _eventColor: {r: 0.5882353, g: 0.8117647, b: 0.8509804, a: 1}
+  _onEventStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _onEventEnd:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &5006735818149380258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7523069071521145345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c2f76830a6da854e9547d7e0ec35f91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossEliteEquipment: {fileID: 11400000, guid: a79fa394c47368540970d219c4803112, type: 2}
+  eliteParticles: {fileID: 0}
+  baseBossCredit: 20
+  maxDuration: 180
+  bossWaitDuration: 3
+  requiredEliteKills: 25
+--- !u!114 &1726000132339027382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7523069071521145345}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 653292689, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customName: 
+  monsterCredit: 0
+  refundedMonsterCredit: 0
+  expRewardCoefficient: 12
+  goldRewardCoefficient: 12
+  minSeriesSpawnInterval: 0.5
+  maxSeriesSpawnInterval: 0.5
+  minRerollSpawnInterval: 0.1
+  maxRerollSpawnInterval: 0.1
+  moneyWaveIntervals: []
+  teamIndex: 2
+  creditMultiplier: 1
+  spawnDistanceMultiplier: 1
+  maxSpawnDistance: Infinity
+  minSpawnRange: 120
+  shouldSpawnOneWave: 1
+  targetPlayers: 1
+  skipSpawnIfTooCheap: 0
+  maxConsecutiveCheapSkips: 2147483647
+  resetMonsterCardIfFailed: 1
+  maximumNumberToSpawnBeforeSkipping: 1
+  eliteBias: 1
+  onSpawnedServer:
+    m_PersistentCalls:
+      m_Calls: []
+  combatSquad: {fileID: 0}
+  spawnEffectPrefab: {fileID: 0}
+  ignoreTeamSizeLimit: 1
+  _monsterCards: {fileID: 0}
+  fallBackToStageMonsterCards: 1
+  currentSpawnTarget: {fileID: 0}
+--- !u!114 &4419008222804789653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7523069071521145345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1720486850, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  propagateMembershipToSummons: 0
+  grantBonusHealthInMultiplayer: 1
+  onDefeatedClientLogicEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onDefeatedServerLogicEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &4249146383033120982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7523069071521145345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1358022786, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossDropChance: 0
+  dropPosition: {fileID: 2074136670341350495}
+  dropTable: {fileID: 0}
+  scaleRewardsByPlayerCount: 1
+  shouldDisplayHealthBarOnHud: 1
+  forceTier3Reward: 0
+--- !u!1001 &8439627264109924701
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2074136670341350495}
+    m_Modifications:
+    - target: {fileID: 3195754168759004068, guid: 9dc4a143cdbe76c48a0a56f90e7446a3,
+        type: 3}
+      propertyPath: m_Name
+      value: GlacialEventEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 7696701780156397122, guid: 9dc4a143cdbe76c48a0a56f90e7446a3,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7696701780156397122, guid: 9dc4a143cdbe76c48a0a56f90e7446a3,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7696701780156397122, guid: 9dc4a143cdbe76c48a0a56f90e7446a3,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7696701780156397122, guid: 9dc4a143cdbe76c48a0a56f90e7446a3,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7696701780156397122, guid: 9dc4a143cdbe76c48a0a56f90e7446a3,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7696701780156397122, guid: 9dc4a143cdbe76c48a0a56f90e7446a3,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7696701780156397122, guid: 9dc4a143cdbe76c48a0a56f90e7446a3,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7696701780156397122, guid: 9dc4a143cdbe76c48a0a56f90e7446a3,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7696701780156397122, guid: 9dc4a143cdbe76c48a0a56f90e7446a3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7696701780156397122, guid: 9dc4a143cdbe76c48a0a56f90e7446a3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7696701780156397122, guid: 9dc4a143cdbe76c48a0a56f90e7446a3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9dc4a143cdbe76c48a0a56f90e7446a3, type: 3}
+--- !u!4 &2292254374345303839 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7696701780156397122, guid: 9dc4a143cdbe76c48a0a56f90e7446a3,
+    type: 3}
+  m_PrefabInstance: {fileID: 8439627264109924701}
+  m_PrefabAsset: {fileID: 0}

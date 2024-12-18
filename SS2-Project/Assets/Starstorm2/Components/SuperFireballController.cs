@@ -200,7 +200,7 @@ namespace SS2
 				blastAttack.canRejectForce = true;
 				blastAttack.Fire();
 			}
-			if(!hitWorld || bounces > maxBounces)
+			if(bounces > maxBounces) // || !hitWorld)
             {
 				Destroy(base.gameObject);
 				// effect here
