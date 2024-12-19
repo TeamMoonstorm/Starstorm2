@@ -8,6 +8,8 @@ using MonoMod.Cil;
 
 namespace SS2
 {
+    // theres definitely room for optimization here but im not sure what
+    // would be nice to do since GetBestBodyName is used in Update/LateUpdate and per character
     public static class BodyNames
     {
         volatile static bool areWeCurrentlyInHell = false;
@@ -91,6 +93,12 @@ namespace SS2
                 result = Language.GetStringFormatted("SS2_ELITE_MODIFIER_EMPYREAN", roman, result);
             }
 
+            //Remove lesser elite modifier from super elites
+            // hardcoded cuz y not
+            ReplaceLesser(ref result, characterBody, SS2Content.Buffs.BuffAffixSuperFire, RoR2Content.Buffs.AffixRed);
+            ReplaceLesser(ref result, characterBody, SS2Content.Buffs.BuffAffixSuperIce, RoR2Content.Buffs.AffixWhite);
+            ReplaceLesser(ref result, characterBody, SS2Content.Buffs.BuffAffixSuperLightning, RoR2Content.Buffs.AffixBlue);
+            ReplaceLesser(ref result, characterBody, SS2Content.Buffs.BuffAffixSuperEarth, DLC1Content.Buffs.EliteEarth);
             // "Ultra"
             if (characterBody.HasBuff(SS2Content.Buffs.bdUltra))
             {
@@ -99,6 +107,15 @@ namespace SS2
             return result;
         }
 
+        private static void ReplaceLesser(ref string result, CharacterBody body, BuffDef greater, BuffDef lesser)
+        {
+            if (body.HasBuff(greater))
+            {
+                var eliteToken = Language.GetString(BuffCatalog.GetBuffDef(lesser.buffIndex).eliteDef.modifierToken);
+                eliteToken = eliteToken.Replace("{0}", string.Empty);
+                result = result.Replace(eliteToken, string.Empty);
+            }
+        }
 
         #region Hook
         private static void BodyNameIL(ILContext il)

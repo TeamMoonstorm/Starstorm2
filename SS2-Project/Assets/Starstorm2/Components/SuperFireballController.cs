@@ -129,40 +129,45 @@ namespace SS2
 			if (NetworkServer.active)
 			{				
 				//mini fireballs
-				EffectData effectData = new EffectData
-				{
-					scale = this.blastRadius,
-					origin = base.transform.position
-				};
-				EffectManager.SpawnEffect(impactEffectPrefab, effectData, true);
-				
-				Vector3 forward = Vector3.up;
-				float startAngle = UnityEngine.Random.Range(0, 360f / childrenCount);
-				for (int i = 0; i < childrenCount; i++)
-				{
-					float hSpeed = UnityEngine.Random.Range(minChildSpeed, maxChildSpeed);
-					float childAngle = startAngle + (i * 360f / childrenCount);
-					Vector3 rotation = Quaternion.Euler(0, childAngle, 0) * Vector3.forward;
-					Vector3 velocity =  rotation * hSpeed;
-					velocity.y = childUpSpeed;
-					FireProjectileInfo fireProjectileInfo = new FireProjectileInfo
+				if(impactEffectPrefab)
+                {
+					EffectData effectData = new EffectData
 					{
-						projectilePrefab = childPrefab,
-						position = Vector3.up * stupidUpThing + impactInfo.estimatedPointOfImpact + rotation,
-						rotation = Util.QuaternionSafeLookRotation(velocity),
-						procChainMask = default(ProcChainMask),
-						owner = controller.owner,
-						damage = damage.damage * childDamageCoefficient,
-						crit = damage.crit,
-						force = 200f,
-						damageColorIndex = DamageColorIndex.Default,
-						speedOverride = velocity.magnitude,
-						useSpeedOverride = true
+						scale = this.blastRadius,
+						origin = base.transform.position
 					};
-					ProjectileManager.instance.FireProjectile(fireProjectileInfo);
-					forward.x += Mathf.Sin(childAngle + UnityEngine.Random.Range(-20f, 20f));
-					forward.z += Mathf.Cos(childAngle + UnityEngine.Random.Range(-20f, 20f));
-				}
+					EffectManager.SpawnEffect(impactEffectPrefab, effectData, true);
+				}				
+				if(childrenCount > 0)
+                {
+					Vector3 forward = Vector3.up;
+					float startAngle = UnityEngine.Random.Range(0, 360f / childrenCount);
+					for (int i = 0; i < childrenCount; i++)
+					{
+						float hSpeed = UnityEngine.Random.Range(minChildSpeed, maxChildSpeed);
+						float childAngle = startAngle + (i * 360f / childrenCount);
+						Vector3 rotation = Quaternion.Euler(0, childAngle, 0) * Vector3.forward;
+						Vector3 velocity = rotation * hSpeed;
+						velocity.y = childUpSpeed;
+						FireProjectileInfo fireProjectileInfo = new FireProjectileInfo
+						{
+							projectilePrefab = childPrefab,
+							position = Vector3.up * stupidUpThing + impactInfo.estimatedPointOfImpact + rotation,
+							rotation = Util.QuaternionSafeLookRotation(velocity),
+							procChainMask = default(ProcChainMask),
+							owner = controller.owner,
+							damage = damage.damage * childDamageCoefficient,
+							crit = damage.crit,
+							force = 200f,
+							damageColorIndex = DamageColorIndex.Default,
+							speedOverride = velocity.magnitude,
+							useSpeedOverride = true
+						};
+						ProjectileManager.instance.FireProjectile(fireProjectileInfo);
+						forward.x += Mathf.Sin(childAngle + UnityEngine.Random.Range(-20f, 20f));
+						forward.z += Mathf.Cos(childAngle + UnityEngine.Random.Range(-20f, 20f));
+					}
+				}				
 				//dot zone
 				if(hitWorld)
                 {

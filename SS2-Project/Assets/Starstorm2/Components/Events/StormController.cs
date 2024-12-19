@@ -80,8 +80,12 @@ namespace SS2.Components
         private float levelPercentComplete;
         public Xoroshiro128Plus timeRng = new Xoroshiro128Plus(0UL);
         public Xoroshiro128Plus treasureRng = new Xoroshiro128Plus(0UL);
+        [NonSerialized]
         public Run.FixedTimeStamp stormStartTime;
+
+        [NonSerialized]
         public bool hasStarted;
+
         private EntityStateMachine stateMachine;
 
         [SyncVar]
@@ -91,6 +95,7 @@ namespace SS2.Components
             if (StormController.instance)
             {
                 Debug.LogError("Only one StormController can exist at a time.");
+                Destroy(base.gameObject);
                 return;
             }
             StormController.instance = this;
@@ -116,7 +121,7 @@ namespace SS2.Components
             DifficultyDef difficulty = DifficultyCatalog.GetDifficultyDef(Run.instance.selectedDifficulty);
             MaxStormLevel = Mathf.FloorToInt(difficulty.scalingValue) + 1;
             MaxStormLevel = Mathf.Clamp(MaxStormLevel, 2, 4); // drizzle 2, monsoon/typhoon+ 4
-            if (EtherealBehavior.instance.etherealsCompleted > 0) MaxStormLevel++;
+
             IsPermanent = Run.instance.GetEventFlag("PermanentStorms");
             if (shouldShowObjective)
                 ObjectivePanelController.collectObjectiveSources += StormObjective;        
@@ -187,7 +192,7 @@ namespace SS2.Components
 
         public void OnStormLevelCompleted()
         {
-            hasStarted = true; //?????????????????
+            hasStarted = true;
             this.stormLevel++;
         }
 

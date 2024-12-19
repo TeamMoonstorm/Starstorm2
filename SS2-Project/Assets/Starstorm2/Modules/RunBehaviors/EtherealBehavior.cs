@@ -28,6 +28,7 @@ namespace SS2
 
         [SyncVar]
         public int etherealsCompleted = 0;
+        public int etherealStagesCompleted;
         public bool pendingDifficultyUp;
         public bool runIsEthereal;
         internal static IEnumerator Init()
@@ -81,6 +82,8 @@ namespace SS2
         public void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)
         {
             orig(self);
+            if (runIsEthereal)
+                etherealStagesCompleted++;
             if (self.teleporterInstance && NetworkServer.active)
             {
                 SpawnShrine();               

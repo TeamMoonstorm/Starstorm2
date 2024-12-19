@@ -42,7 +42,7 @@ namespace SS2.Equipments
             [BuffDefAssociation]
             private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffAffixSuperEarth;
             private TemporaryOverlayInstance temporaryOverlayInstance;
-            private static float projectileLaunchInterval = 12f;
+            private static float projectileLaunchInterval = 8f;
             private static int projectileCount = 3;
             private float projectileTimer;
 

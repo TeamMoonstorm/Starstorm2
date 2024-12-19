@@ -14,8 +14,8 @@ namespace EntityStates.Events
     // being lazy. should be StormX : Storm and use entitystateconfigs
     public class Storm : GenericWeatherState
     {
-        private static float baseDuration = 60f;
-        private static float durationVariance = 0.66f;
+        private static float baseDuration = 66f;
+        private static float durationVariance = 0.8f;
         private static float effectLerpDuration = 5f;
         private static SerializableEntityStateType textState = new SerializableEntityStateType(typeof(StormController.EtherealFadeIn));
         private static SerializableEntityStateType textState2 = new SerializableEntityStateType(typeof(StormController.EtherealBlinkIn)); // fuck my life
@@ -124,12 +124,9 @@ namespace EntityStates.Events
             if (!NetworkServer.active)
                 return;
             var team = body.teamComponent.teamIndex;
-            int buffCount = body.GetBuffCount(SS2Content.Buffs.BuffStorm);
             if (TeamMask.GetEnemyTeams(TeamIndex.Player).HasTeam(team) && !body.bodyFlags.HasFlag(CharacterBody.BodyFlags.Masterless))
             {
-                int buffsToGrant = stormLevel - buffCount;
-                for (int i = 0; i < buffsToGrant; i++)
-                    body.AddBuff(SS2Content.Buffs.BuffStorm);
+                body.SetBuffCount(SS2Content.Buffs.BuffStorm.buffIndex, stormLevel);
             }
         }
 
@@ -148,7 +145,7 @@ namespace EntityStates.Events
                 if (eliteChance > 100) eliteChance = 100;
                 eliteChanceTimer = 0;
             }
-            if (!isPermanent && base.fixedAge > duration)
+            if (!isPermanent && base.fixedAge > duration && ShouldCharge())
             {
                 if(stormLevel == stormController.MaxStormLevel && !stormController.IsPermanent)
                 {
@@ -167,32 +164,8 @@ namespace EntityStates.Events
                 outer.SetNextState(new Storm { stormLevel = stormLevel + 1, lerpDuration = 8f });
                 return;
             }
-            
-
         }
 
-        private string GETDUMBASSTOKENDELETELATER()
-        {
-            string fuk;
-            switch (R2API.DirectorAPI.GetStageEnumFromSceneDef(Stage.instance.sceneDef))
-            {
-                case R2API.DirectorAPI.Stage.RallypointDelta:
-                case R2API.DirectorAPI.Stage.SiphonedForest:
-                    fuk = "SS2_EVENT_BLIZZARD";
-                    break;
-                case R2API.DirectorAPI.Stage.AbyssalDepths:
-                case R2API.DirectorAPI.Stage.ScorchedAcres:
-                    fuk = "SS2_EVENT_ASHSTORM";
-                    break;
-                case R2API.DirectorAPI.Stage.AbandonedAqueduct:
-                    fuk = "SS2_EVENT_SANDSTORM";
-                    break;
-                default:
-                    fuk = "SS2_EVENT_THUNDERSTORM";
-                    break;
-            }
-            return fuk;
-        }
         private bool ShouldCharge()
         {
             bool shouldCharge = !TeleporterInteraction.instance;
@@ -228,9 +201,7 @@ namespace EntityStates.Events
                     var enemies = TeamComponent.GetTeamMembers(TeamIndex.Monster).Concat(TeamComponent.GetTeamMembers(TeamIndex.Lunar)).Concat(TeamComponent.GetTeamMembers(TeamIndex.Void));
                     foreach (var teamMember in enemies)
                     {
-                        int buffCount = teamMember.body.GetBuffCount(SS2Content.Buffs.BuffStorm);
-                        for (int i = 0; i < buffCount; i++)
-                            teamMember.body.RemoveBuff(SS2Content.Buffs.BuffStorm);
+                        teamMember.body.SetBuffCount(SS2Content.Buffs.BuffStorm.buffIndex, 0);
                     }
                 }
             }

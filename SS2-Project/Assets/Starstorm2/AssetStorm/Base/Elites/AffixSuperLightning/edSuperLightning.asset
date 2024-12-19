@@ -16,13 +16,14 @@ MonoBehaviour:
   eliteEquipmentDef: {fileID: 11400000, guid: fd5d0c87feae18146abc050cdb88d7d1, type: 2}
   color:
     serializedVersion: 2
-    rgba: 4293519849
+    rgba: 4294928132
   shaderEliteRampIndex: -1
-  healthBoostCoefficient: 1
-  damageBoostCoefficient: 1
+  healthBoostCoefficient: 32
+  damageBoostCoefficient: 6
   eliteTier: 0
   eliteRamp: {fileID: 2800000, guid: 728dc946283d1ef4b89871716c09ec11, type: 3}
   overlayMaterial: {fileID: 2100000, guid: 8271747994eef6f4b9d545629bffd942, type: 2}
-  applyLightColorOverrides: 0
-  particleReplacementMaterial: {fileID: 0}
+  applyLightColorOverrides: 1
+  particleReplacementMaterial: {fileID: 2100000, guid: 4ef1b628fd4814448932bc06ff80d5dc,
+    type: 2}
   effect: {fileID: 0}

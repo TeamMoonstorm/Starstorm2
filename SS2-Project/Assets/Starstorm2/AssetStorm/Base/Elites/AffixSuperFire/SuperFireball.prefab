@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 1086490812645340526}
   - component: {fileID: 8841618105036927035}
   - component: {fileID: 5047798171908285467}
+  - component: {fileID: -8831652176304773295}
   - component: {fileID: 92272301288496016}
   - component: {fileID: 7009144000793497114}
-  - component: {fileID: -8831652176304773295}
+  - component: {fileID: -8831878626300678870}
   m_Layer: 14
   m_Name: SuperFireball
   m_TagString: Untagged
@@ -132,6 +133,36 @@ MonoBehaviour:
     damageSource: 0
   useDotMaxStacksFromAttacker: 0
   dotMaxStacksFromAttacker: 4294967295
+--- !u!114 &-8831652176304773295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3222690275679103419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 203d4f6f6850ba54c9a397543e482b0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blastRadius: 12
+  maxBounces: 3
+  minBounceDistance: 5
+  maxBounceDistance: 75
+  bounceVelocity: 45
+  targetDuration: 10
+  maxOffsetToTarget: 5
+  childrenCount: 4
+  minChildSpeed: 5
+  maxChildSpeed: 15
+  childUpSpeed: 25
+  childDamageCoefficient: 0.5
+  childPrefab: {fileID: 1815958616721259, guid: 31658e8ea281c5542a905ec0544f394a,
+    type: 3}
+  dotZonePrefab: {fileID: 1271530757819299, guid: de75c5057fcb1ff44a0e42616b65383d,
+    type: 3}
+  impactEffectPrefab: {fileID: 8996909996083135210, guid: 48ff058acd4e3f14d8d24f4e2b7ad2b8,
+    type: 3}
 --- !u!135 &92272301288496016
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -161,7 +192,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &-8831652176304773295
+--- !u!114 &-8831878626300678870
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -170,24 +201,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3222690275679103419}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 203d4f6f6850ba54c9a397543e482b0f, type: 3}
+  m_Script: {fileID: -270136354, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blastRadius: 12
-  maxBounces: 2
-  minBounceDistance: 5
-  maxBounceDistance: 50
-  bounceVelocity: 45
-  targetDuration: 10
-  maxOffsetToTarget: 4
-  childrenCount: 4
-  minChildSpeed: 5
-  maxChildSpeed: 15
-  childUpSpeed: 25
-  childDamageCoefficient: 0.5
-  childPrefab: {fileID: 1815958616721259, guid: 31658e8ea281c5542a905ec0544f394a,
-    type: 3}
-  dotZonePrefab: {fileID: 1271530757819299, guid: de75c5057fcb1ff44a0e42616b65383d,
-    type: 3}
-  impactEffectPrefab: {fileID: 8996909996083135210, guid: 48ff058acd4e3f14d8d24f4e2b7ad2b8,
-    type: 3}
+  positionTransmitInterval: 0.033333335
+  interpolationFactor: 1
+  allowClientsideCollision: 0
+  checkForLocalPlayerAuthority: 0
+  singletonArrayIndex: -1
+  serverPosition: {x: 0, y: 0, z: 0}
+  serverRotation: {x: 0, y: 0, z: 0, w: 0}

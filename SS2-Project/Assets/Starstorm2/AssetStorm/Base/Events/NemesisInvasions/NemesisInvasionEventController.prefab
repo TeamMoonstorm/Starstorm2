@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1247073465456298660}
   - component: {fileID: 2828187814204818430}
   - component: {fileID: 4980183377632005064}
-  - component: {fileID: 1010008673497005060}
   - component: {fileID: 2826115522138079228}
   m_Layer: 0
   m_Name: NemesisInvasionEventController
@@ -83,18 +82,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateMachines:
   - {fileID: 2826115522138079228}
---- !u!114 &1010008673497005060
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6371274143261092301}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c200ecd4b7084d4290566e65fe22279, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2826115522138079228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,7 +96,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customName: Nemesis
   initialStateType:
-    _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    _typeName: EntityStates.Events.GenericNemesisEvent, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   mainStateType:
     _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   debug: 0
@@ -120,6 +108,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1247073465456298660}
     m_Modifications:
+    - target: {fileID: 1991000932777651981, guid: 7e679ccf587050a47a5988b9b36c591f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2598161600679060404, guid: 7e679ccf587050a47a5988b9b36c591f,
+        type: 3}
+      propertyPath: postProcessVolume
+      value: 
+      objectReference: {fileID: 8822324512690193093}
     - target: {fileID: 4391492834568961299, guid: 7e679ccf587050a47a5988b9b36c591f,
         type: 3}
       propertyPath: m_RootOrder
@@ -175,6 +173,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5391763124387045082, guid: 7e679ccf587050a47a5988b9b36c591f,
+        type: 3}
+      propertyPath: postProcessVolume
+      value: 
+      objectReference: {fileID: 8822324512690193093}
     - target: {fileID: 8824807275847475445, guid: 7e679ccf587050a47a5988b9b36c591f,
         type: 3}
       propertyPath: m_Name
@@ -188,3 +191,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 38203860138104966}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8822324512690193093 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8856481858113395267, guid: 7e679ccf587050a47a5988b9b36c591f,
+    type: 3}
+  m_PrefabInstance: {fileID: 38203860138104966}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

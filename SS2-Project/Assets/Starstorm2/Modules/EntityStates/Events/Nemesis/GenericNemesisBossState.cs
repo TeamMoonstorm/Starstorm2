@@ -26,34 +26,7 @@ namespace EntityStates.Events
         public float warningDur = 10f;
 
         public static GameObject musicOverridePrefab;
-
-        /// <summary>
-        /// Wether or not this event should end on a timer
-        /// </summary>
-        public virtual bool OverrideTimer => false;
-
-        /// <summary>
-        /// Wether this event is already past the "Warned" phase
-        /// </summary>
         public bool HasWarned { get; protected set; }
-
-        /// <summary>
-        /// The actual duration of the event
-        /// <para>Duration is taken by remaping the current <see cref="DiffScalingValue"/> capping the in value with min 1 and max 3.5, and keeping the result between min <see cref="minDuration"/> and max <see cref="maxDuration"/></para>
-        /// </summary>
-        public float DiffScaledDuration { get; protected set; }
-
-        /// <summary>
-        /// The current run's difficulty scaling value, taken from the difficultyDef.
-        /// </summary>
-        public float DiffScalingValue { get; protected set; }
-
-        /// <summary>
-        /// The total duration of the event, calculated from the sum of <see cref="DiffScaledDuration"/> and <see cref="warningDur"/>
-        /// </summary>
-        public float TotalDuration { get; protected set; }
-
-
 
         [SerializeField]
         public MusicTrackDef introTrack;
@@ -61,25 +34,14 @@ namespace EntityStates.Events
         public MusicTrackDef mainTrack;
         [SerializeField]
         public MusicTrackDef outroTrack;
-
-        //[SerializeField]
-        //public GameObject effectPrefab;
-
         public static GameObject encounterPrefab;
         [SerializeField]
         public NemesisSpawnCard spawnCard;
-        [SerializeField]
-        public string spawnDistanceString;
 
         public static float fadeDuration = 7f;
 
-        /// <summary>This is gotten from the string</summary>
-        private MonsterSpawnDistance spawnDistance;
         private Xoroshiro128Plus rng;
         private MusicTrackOverride musicTrack;
-
-        //private EventStateEffect eventStateEffect;
-        //private GameObject effectInstance;
 
         public GameObject chosenPlayer;
 
@@ -92,7 +54,19 @@ namespace EntityStates.Events
         private bool hasSpawned;
         public override void OnEnter()
         {
-            base.OnEnter();
+            base.OnEnter();     
+            rng = Run.instance.spawnRng;
+            if (NetworkServer.active) //Spawn target gets serialized and deserialized later by the network state machine
+            {
+                this.spawnCard = EventDirector.instance.availableNemesisSpawnCards.Evaluate(EventDirector.instance.rng.nextNormalizedFloat);
+                FindSpawnTarget();
+            }
+                
+            if (musicOverridePrefab && introTrack && mainTrack)
+            {
+                musicTrack = GameObject.Instantiate(musicOverridePrefab, Stage.instance.transform).GetComponent<MusicTrackOverride>();
+                musicTrack.track = introTrack;
+            }
 
             GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
             {
@@ -102,18 +76,6 @@ namespace EntityStates.Events
             };
             GameplayEventTextController.instance.EnqueueNewTextRequest(request, false);
 
-            rng = Run.instance.spawnRng;
-            if (!Enum.TryParse(spawnDistanceString, out spawnDistance))
-                spawnDistance = MonsterSpawnDistance.Standard;
-
-            if (NetworkServer.active) //Spawn target gets serialized and deserialized later by the network state machine
-                FindSpawnTarget();
-
-            if (musicOverridePrefab && introTrack && mainTrack)
-            {
-                musicTrack = GameObject.Instantiate(musicOverridePrefab, Stage.instance.transform).GetComponent<MusicTrackOverride>();
-                musicTrack.track = introTrack;
-            }
         }
 
         public override void FixedUpdate()
@@ -122,9 +84,6 @@ namespace EntityStates.Events
             if (!HasWarned && fixedAge >= warningDur)
                 StartEvent();
         }
-
-
-
         public void StartEvent()
         {
             if (musicOverridePrefab)
@@ -134,10 +93,7 @@ namespace EntityStates.Events
                 SpawnNemesisBoss();
                 hasSpawned = true;
             }
-
         }
-
-
         private void FindSpawnTarget()
         {
             ReadOnlyCollection<PlayerCharacterMasterController> instances = PlayerCharacterMasterController.instances;
@@ -165,7 +121,7 @@ namespace EntityStates.Events
 
             var spawnCard = UnityEngine.Object.Instantiate(this.spawnCard);
             Transform spawnTarget = null;
-            MonsterSpawnDistance distance = spawnDistance;
+            MonsterSpawnDistance distance = MonsterSpawnDistance.Far;
 
             if (chosenPlayer)
                 spawnTarget = chosenPlayer.GetComponent<CharacterBody>().coreTransform;
@@ -184,7 +140,7 @@ namespace EntityStates.Events
                 spawnOnTarget = spawnTarget,
                 placementMode = DirectorPlacementRule.PlacementMode.NearestNode
             };
-            DirectorCore.GetMonsterSpawnDistance(spawnDistance, out directorPlacementRule.minDistance, out directorPlacementRule.maxDistance);
+            DirectorCore.GetMonsterSpawnDistance(distance, out directorPlacementRule.minDistance, out directorPlacementRule.maxDistance);
 
 
             DirectorSpawnRequest directorSpawnRequest = new DirectorSpawnRequest(spawnCard, directorPlacementRule, rng);
@@ -204,7 +160,7 @@ namespace EntityStates.Events
             master.onBodyDeath.AddListener(OnBodyDeath);
             master.onBodyStart += (body) =>
             {
-                FriendManager.instance.RpcSetupNemBoss(body.gameObject, spawnCard.visualEffect.name); // lol. lmao
+                FriendManager.instance.RpcSetupNemBoss(body.gameObject, spawnCard.visualEffect?.name); // lol. lmao
             };
             master.inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
             master.inventory.GiveItem(RoR2Content.Items.UseAmbientLevel);
@@ -240,24 +196,22 @@ namespace EntityStates.Events
 
         public virtual void OnBodyDeath()
         {
-            onNemesisDefeatedGlobal?.Invoke(nemesisBossBody);
-            if (musicOverridePrefab)
-                musicTrack.track = outroTrack;
-            outer.SetNextState(new IdleRestOfStage());
-        }
-
-        public override void OnExit()
-        {
-            base.OnExit();
-
             GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
             {
                 eventToken = "SS2_EVENT_GENERICNEMESIS_END",
                 eventColor = new Color(.67f, .168f, .168f),
                 textDuration = 7,
             };
-            GameplayEventTextController.instance.EnqueueNewTextRequest(request, false);
+            GameplayEventTextController.instance.EnqueueNewTextRequest(request, false);           
+            if (musicOverridePrefab)
+                musicTrack.track = outroTrack;
+            outer.SetNextState(new IdleRestOfStage());
+            onNemesisDefeatedGlobal?.Invoke(nemesisBossBody);
+        }
 
+        public override void OnExit()
+        {
+            base.OnExit();        
             // need to do outro here instead of destroying
             if (musicTrack)
                 Destroy(musicTrack.gameObject);

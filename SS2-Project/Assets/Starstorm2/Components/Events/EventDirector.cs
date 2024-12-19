@@ -29,8 +29,9 @@ namespace SS2
         public EventTimeline currentTimeline;
         public float eliteEventChance;
         public int stagesUntilInvasion = 5;
-        private Xoroshiro128Plus rng;
+        public Xoroshiro128Plus rng { get; private set; }
         private Dictionary<GameObject, int> eventsToMostRecentStage = new Dictionary<GameObject, int>();
+        public WeightedSelection<NemesisSpawnCard> availableNemesisSpawnCards { get; private set; }
         private void OnStageStartGlobal(Stage stage)
         {
             // get eventpool for stage
@@ -58,8 +59,9 @@ namespace SS2
         // going  with almost entirely random events. will hopefully improve later
         public EventTimeline CreateEventTimeline()
         {
-            if (currentEventSelection == null || Run.instance.stageClearCount == 0) return null;
+            
             EventTimeline eventTimeline = new EventTimeline();
+            if (currentEventSelection == null || Run.instance.stageClearCount == 0) return eventTimeline;
             // nemesis invasions always appear when available.
             if (TryAddNemesisInvader(ref eventTimeline))
             {
@@ -73,7 +75,7 @@ namespace SS2
                 {
                     eliteEventChance = 25f;
                     EventCard eliteEvent = eliteEvents.Evaluate(this.rng.nextNormalizedFloat);
-                    float startTime = UnityEngine.Random.Range(30f, 180f);//////////////////////////////////////////////////////////////////////////////////////////////////////
+                    float startTime = UnityEngine.Random.Range(30f, 120f);//////////////////////////////////////////////////////////////////////////////////////////////////////
                     eventTimeline.AddEvent(eliteEvent.eventPrefab, startTime);
                 }
                 else
@@ -87,17 +89,20 @@ namespace SS2
             {
                 float startTime = 0f;
                 WeightedSelection<EventCard> miscEvents = currentEventSelection.GenerateMiscEventWeightedSelection();
-                for (int i = 0; i < miscEventCount; i++)
+                if(miscEvents.Count > 0)
                 {
-                    int index = miscEvents.EvaluateToChoiceIndex(this.rng.nextNormalizedFloat);
-                    EventCard miscEvent = miscEvents.GetChoice(index).value;
-                    miscEvents.RemoveChoice(index);
-                    startTime += UnityEngine.Random.Range(90f, 300f); /////////////////////////////////////////////////////////////////////////////////////////////
-                    eventTimeline.AddEvent(miscEvent.eventPrefab, startTime);
-                }
+                    for (int i = 0; i < miscEventCount; i++)
+                    {
+                        int index = miscEvents.EvaluateToChoiceIndex(this.rng.nextNormalizedFloat);
+                        EventCard miscEvent = miscEvents.GetChoice(index).value;
+                        miscEvents.RemoveChoice(index);
+                        startTime += UnityEngine.Random.Range(90f, 300f); /////////////////////////////////////////////////////////////////////////////////////////////
+                        eventTimeline.AddEvent(miscEvent.eventPrefab, startTime);
+                    }
+                }               
             }
             // pick mostly random storm start time.
-            if (Run.instance.stageClearCount >= 2 && currentEventSelection.canStorm)
+            if (Run.instance.stageClearCount >= 1 && currentEventSelection.canStorm)
             {
                 float startTime = UnityEngine.Random.Range(150f, 420f);////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// :(
                 GameObject stormController = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("StormController", SS2Bundle.Events));
@@ -157,11 +162,12 @@ namespace SS2
                         selection.AddChoice(card, 1);
                 }
                 // pick one at random
+                availableNemesisSpawnCards = selection;
                 if (selection.Count == 0) return false;
                 NemesisSpawnCard nemesisSpawnCard = selection.Evaluate(rng.nextNormalizedFloat);
                 if(nemesisSpawnCard)
                 {
-                    timeline.AddEvent(SS2Assets.LoadAsset<GameObject>("NemesisInvasionEventController", SS2Bundle.Events), Run.FixedTimeStamp.now.t + 3);
+                    timeline.AddEvent(SS2Assets.LoadAsset<GameObject>("NemesisInvasionEventController", SS2Bundle.Events), 3);
                     stagesUntilInvasion = 3;
                     return true;
                 }
@@ -177,6 +183,7 @@ namespace SS2
         private void FixedUpdate()
         {
             // start events when their starttimes have passed
+            if (!Stage.instance || currentTimeline.events.Count == 0) return; // lol wtf
             for (int i = 0; i < currentTimeline.events.Count; i++)
             {
                 EventInfo eventInfo = currentTimeline.events[i];
@@ -196,6 +203,10 @@ namespace SS2
         // ?
         private void StartEvent(GameObject eventPrefab)
         {
+            if(!eventPrefab)
+            {
+                return;
+            }
             if (!eventsToMostRecentStage.ContainsKey(eventPrefab))
             {
                 eventsToMostRecentStage.Add(eventPrefab, Run.instance.stageClearCount);
@@ -216,7 +227,7 @@ namespace SS2
 
         public class EventTimeline
         {
-            public List<EventInfo> events;
+            public List<EventInfo> events = new List<EventInfo>();
             public float viability;
 
             public bool AddEvent(GameObject eventPrefab, float startTime, float endTime = Mathf.Infinity, bool canStartDuringTeleporterEvent = false)
@@ -227,7 +238,7 @@ namespace SS2
         }
 
         // use this info to display on timeline
-        public struct EventInfo
+        public class EventInfo
         {
             public EventInfo(GameObject eventPrefab, float startTime, float endTime, bool canStartDuringTeleporterEvent)
             {
