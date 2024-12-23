@@ -9,6 +9,7 @@ using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using System;
 using UnityEngine.Networking;
+using RoR2.Orbs;
 namespace SS2.Items
 {
     public sealed class Blessings : SS2Item
@@ -68,40 +69,125 @@ namespace SS2.Items
         //potential
         //shield
         //crit
-        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync <ExtendedAssetCollection>("acBlessings", SS2Bundle.Items);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ExtendedAssetCollection>("acBlessings", SS2Bundle.Items);
         private static GameObject optionPrefab;
+        private static GameObject hpOrbEffect;
+        private static GameObject shieldOrbEffect;
+        private static GameObject critOrbEffect;
         private static BasicPickupDropTable eliteDropTable;
         private static Xoroshiro128Plus eliteDropRng;
-        private static BasicPickupDropTable bossDropTable;
+        private static BossDropTable bossDropTable;
         private static Xoroshiro128Plus bossDropRng;
         public override void Initialize()
         {
             optionPrefab = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/OptionPickup/OptionPickup.prefab").WaitForCompletion();
-            On.RoR2.PurchaseInteraction.OnInteractionBegin += OnChestOpened;
-            On.RoR2.ChestBehavior.Roll += ChestRoll;
-            IL.RoR2.ChestBehavior.BaseItemDrop += ChestDrop;
-
+            hpOrbEffect = SS2Assets.LoadAsset<GameObject>("HpOnKillOrbEffect", SS2Bundle.Items);
+            shieldOrbEffect = SS2Assets.LoadAsset<GameObject>("ShieldOnKillOrbEffect", SS2Bundle.Items);
+            shieldOrbEffect = SS2Assets.LoadAsset<GameObject>("CritOnShrineOrbEffect", SS2Bundle.Items);
+            eliteDropTable = SS2Assets.LoadAsset<BasicPickupDropTable>("dtItemOnEliteKill", SS2Bundle.Items);
+            bossDropTable = SS2Assets.LoadAsset<BossDropTable>("dtItemOnBossKill", SS2Bundle.Items);
+            On.RoR2.CharacterMaster.GiveMoney += GiveMoney; // goldengun
+            On.RoR2.HealthComponent.TakeDamageProcess += TakeDamageProcess; // timing of this one might be wrong
+            On.RoR2.PurchaseInteraction.OnInteractionBegin += OnInteractionBegin; // scrap, snakeeyes
+            On.RoR2.ChestBehavior.Roll += ChestRoll; // option
+            IL.RoR2.ChestBehavior.BaseItemDrop += ChestDrop; // option
+            RecalculateStatsAPI.GetStatCoefficients += GetStatCoefficients; //hp, shieldgate, snakeeyes, goldengun
             Run.onRunStartGlobal += (run) =>
             {
                 eliteDropRng = new Xoroshiro128Plus(run.treasureRng.nextUlong);
                 bossDropRng = new Xoroshiro128Plus(run.treasureRng.nextUlong);
             };
-            GlobalEventManager.onCharacterDeathGlobal += OnCharacterDeathGlobal;
+            GlobalEventManager.onCharacterDeathGlobal += OnCharacterDeathGlobal; //boss, elite, shield, hp
         }
 
-        
-
-        public override bool IsAvailable(ContentPack contentPack)
+        // 10% increased money per minute
+        private void GiveMoney(On.RoR2.CharacterMaster.orig_GiveMoney orig, CharacterMaster self, uint amount)
         {
-            return true;
+            int gun = self.inventory ? self.inventory.GetItemCount(SS2Content.Items.GoldenGun) : 0;
+            if (gun > 0)
+            {
+                int minutes = Mathf.FloorToInt(Run.FixedTimeStamp.tNow / 60f);
+                float multiplier = Mathf.Pow(1 + (0.1f * gun), minutes);
+                orig(self, (uint)(amount * multiplier));
+                return;
+            }
+            orig(self, amount);
+        }
+
+        // bonus damage to elites WRONG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ga sl eak
+        private void TakeDamageProcess(On.RoR2.HealthComponent.orig_TakeDamageProcess orig, HealthComponent self, DamageInfo damageInfo)
+        {
+            if (self.body.isElite && damageInfo.attacker && damageInfo.attacker.TryGetComponent(out CharacterBody body) && body.inventory)
+            {
+                int elite = body.inventory.GetItemCount(SS2Content.Items.BonusDamageToElites);
+                if(elite > 0)
+                {
+                    //damageInfo.
+                }
+            }
+            orig(self, damageInfo);
+        }
+
+        public override bool IsAvailable(ContentPack contentPack) => true;
+
+        //storing the stacks as items because im too lazy to implement propersave
+        //golden gun dmg
+        private void GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
+        {
+            if (!sender.inventory) return;
+            args.baseHealthAdd += sender.inventory.GetItemCount(SS2Content.Items.StackMaxHpOnKill);
+            args.baseShieldAdd += sender.inventory.GetItemCount(SS2Content.Items.StackShieldGate);
+            args.critAdd += sender.inventory.GetItemCount(SS2Content.Items.StackSnakeEyes);
+            if (sender.crit > 100)
+            {
+                // it will take a second recalcstats to calculate this correctly
+                // you could do sender.crit + itemCount to fix the first recalcstats, but it would mean the crit dmg bonus is doubled afterwards
+                // i stupid
+                args.critDamageMultAdd += sender.crit - 100;
+            }
+            if (sender.master && sender.inventory.GetItemCount(SS2Content.Items.GoldenGun) > 0)
+            {
+                int maxStacks = 20; /////////////////////////////////////////////////////////////////////////////////////////////
+                float smallChest = Mathf.Min(sender.master.money / Run.instance.GetDifficultyScaledCost(25), maxStacks);
+                args.damageMultAdd += .05f * smallChest;
+            }
+
         }
 
         // guaranteed items on boss kill. chance for boss item
         // chance for items on elite kill
+        // hp and shield on kill
         private void OnCharacterDeathGlobal(DamageReport damageReport)
         {
             if (!NetworkServer.active) return;
-            if (damageReport.victimTeamIndex == TeamIndex.Player) return;
+            Inventory inventory = damageReport.attackerMaster ? damageReport.attackerMaster.inventory : null;
+            if(inventory)
+            {
+                int hp = inventory.GetItemCount(SS2Content.Items.MaxHpOnKill);
+                int shield = inventory.GetItemCount(SS2Content.Items.ShieldGate);
+                Vector3 origin = damageReport.victimBody ? damageReport.victimBody.corePosition : Vector3.zero;
+                if(hp > 0)
+                {
+                    GrantItemOrb orb = new GrantItemOrb();
+                    orb.origin = origin;
+                    orb.target = Util.FindBodyMainHurtBox(damageReport.attackerBody);
+                    orb.item = SS2Content.Items.StackMaxHpOnKill.itemIndex;
+                    orb.count = 1 + hp;
+                    orb.effectPrefab = hpOrbEffect;
+                    OrbManager.instance.AddOrb(orb);
+                }
+                if (shield > 0)
+                {
+                    GrantItemOrb orb = new GrantItemOrb();
+                    orb.origin = origin;
+                    orb.target = Util.FindBodyMainHurtBox(damageReport.attackerBody);
+                    orb.item = SS2Content.Items.StackShieldGate.itemIndex;
+                    orb.count = 1 + shield;
+                    orb.effectPrefab = shieldOrbEffect;
+                    OrbManager.instance.AddOrb(orb);
+                }
+            }
+            if (damageReport.victimTeamIndex == TeamIndex.Player || !damageReport.victimBody) return;
             int eliteItems = SS2Util.GetItemCountForPlayers(SS2Content.Items.ItemOnEliteKill);
             int bossItems = SS2Util.GetItemCountForPlayers(SS2Content.Items.ItemOnBossKill);
             if (eliteItems > 0 && damageReport.victimIsElite && Util.CheckRoll(4f + 1f * (eliteItems - 1))) // realizing i have no idea how to use run seeds/rng correctly
@@ -173,9 +259,24 @@ namespace SS2.Items
         }
 
         // chance to add 1 to chest drops, then replace the first drop with scrap
-        private void OnChestOpened(On.RoR2.PurchaseInteraction.orig_OnInteractionBegin orig, PurchaseInteraction self, Interactor activator)
+        // grant crit chance on shrine
+        private void OnInteractionBegin(On.RoR2.PurchaseInteraction.orig_OnInteractionBegin orig, PurchaseInteraction self, Interactor activator)
         {
             orig(self, activator);
+            if(self.isShrine && activator && activator.TryGetComponent(out CharacterBody body) && body.inventory)
+            {
+                int crit = body.inventory.GetItemCount(SS2Content.Items.SnakeEyes);
+                if(crit > 0)
+                {
+                    GrantItemOrb orb = new GrantItemOrb();
+                    orb.origin = self.transform.position;
+                    orb.target = Util.FindBodyMainHurtBox(body);
+                    orb.item = SS2Content.Items.StackSnakeEyes.itemIndex;
+                    orb.count = 3 + 2 * crit;
+                    orb.effectPrefab = critOrbEffect;
+                    OrbManager.instance.AddOrb(orb);
+                }               
+            }
             int scrap = SS2Util.GetItemCountForPlayers(SS2Content.Items.ScrapFromChest);         
             if (self.TryGetComponent(out ChestBehavior chest))
             {             
@@ -197,5 +298,39 @@ namespace SS2.Items
         }
 
         
+    }
+    public class GrantItemOrb : RoR2.Orbs.Orb
+    {
+        public override void Begin()
+        {
+            base.duration = base.distanceToTarget / 30f;
+            EffectData effectData = new EffectData
+            {
+                origin = this.origin,
+                genericFloat = base.duration
+            };
+            effectData.SetHurtBoxReference(this.target);
+            EffectManager.SpawnEffect(effectPrefab, effectData, true);
+            HurtBox component = this.target.GetComponent<HurtBox>();
+            CharacterBody characterBody = (component != null) ? component.healthComponent.GetComponent<CharacterBody>() : null;
+            if (characterBody)
+            {
+                this.targetInventory = characterBody.inventory;
+            }
+        }
+        public override void OnArrival()
+        {
+            if (this.targetInventory)
+            {
+                this.targetInventory.GiveItem(item, count);
+            }
+        }
+
+        public float speed = 30f;
+
+        public int count;
+        public ItemIndex item;
+        public GameObject effectPrefab;
+        private Inventory targetInventory;
     }
 }

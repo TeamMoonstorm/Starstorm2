@@ -426,6 +426,10 @@ namespace SS2
             public static ItemDef ShellPiece;
             public static ItemDef ShieldGate;
             public static ItemDef SnakeEyes;
+
+            public static ItemDef StackSnakeEyes;
+            public static ItemDef StackMaxHpOnKill;
+            public static ItemDef StackShieldGate;
         }
 
         public static class Equipments
