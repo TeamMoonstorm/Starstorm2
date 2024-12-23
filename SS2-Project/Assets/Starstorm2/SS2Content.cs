@@ -302,6 +302,14 @@ namespace SS2
 
             public static ItemDef PoisonousGland;
 
+            public static ItemDef ShardEarth;
+
+            public static ItemDef ShardFire;
+
+            public static ItemDef ShardIce;
+
+            public static ItemDef ShardLightning;
+
             public static ItemDef VoidRock;
 
             public static ItemDef VoidRockTracker;
@@ -404,6 +412,20 @@ namespace SS2
             public static ItemDef WeatherRadio;
             public static ItemDef PrimalBirthright;
             public static ItemDef LuckyPup;
+
+            //blessings
+            public static ItemDef Bleedout;
+            public static ItemDef BonusDamageToElites;
+            public static ItemDef DebuffsApplyPoison;
+            public static ItemDef GoldenGun;
+            public static ItemDef ItemOnBossKill;
+            public static ItemDef ItemOnEliteKill;
+            public static ItemDef MaxHpOnKill;
+            public static ItemDef OptionFromChest;
+            public static ItemDef ScrapFromChest;
+            public static ItemDef ShellPiece;
+            public static ItemDef ShieldGate;
+            public static ItemDef SnakeEyes;
         }
 
         public static class Equipments
@@ -705,6 +727,7 @@ namespace SS2
         {
             public static ItemTierDef Sibylline;
 
+            public static ItemTierDef Curio;
             //public static ItemTierDef Relic;
         }
     }

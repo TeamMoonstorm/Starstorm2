@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23256b3f9ae6da5468e49c12347d9065, type: 3}
+  m_Name: TradeGold
+  m_EditorClassIdentifier: 
+  desiredItem: {fileID: 11400000, guid: bd7fc433524339f438763353c06dbf8a, type: 2}
+  maxOptions: 3
+  options:
+  - itemDef: {fileID: 11400000, guid: 2e2698a5275548745b6f7040ed45176b, type: 2}
+    pickupAddress: 
+    weight: 1
+  - itemDef: {fileID: 11400000, guid: da86c66bc42eac248be4bf19652b9d83, type: 2}
+    pickupAddress: 
+    weight: 1
+  - itemDef: {fileID: 11400000, guid: 19f1ecce6aabce243b3a8194e1856d33, type: 2}
+    pickupAddress: 
+    weight: 1

@@ -102,8 +102,9 @@ namespace SS2
             hasStarted = true;
             foreach (CombatDirector director in allCombatDirectors)
             {
-                directorToOriginalEliteBias.Add(director, director.eliteBias);
-                director.eliteBias = Mathf.Infinity; // stop credits from being spent on elites
+                // apparently this makes monsters rarely ever spawn ??? idk
+                //directorToOriginalEliteBias.Add(director, director.eliteBias);
+                //director.eliteBias = Mathf.Infinity; // stop credits from being spent on elites
                 director.onSpawnedServer.AddListener(OnSpawnedServer);
             }
             GlobalEventManager.onCharacterDeathGlobal += OnCharacterDeathGlobal;
@@ -115,7 +116,7 @@ namespace SS2
             hasStarted = false;
             foreach (CombatDirector director in allCombatDirectors)
             {
-                director.eliteBias = directorToOriginalEliteBias.TryGetValue(director, out float eliteBias) ? eliteBias : 1;
+                //director.eliteBias = directorToOriginalEliteBias.TryGetValue(director, out float eliteBias) ? eliteBias : 1;
                 director.onSpawnedServer.RemoveListener(OnSpawnedServer);
             }
             GlobalEventManager.onCharacterDeathGlobal -= OnCharacterDeathGlobal;

@@ -18,7 +18,35 @@ namespace SS2
             DLC1 = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<ExpansionDef>("RoR2/DLC1/Common/DLC1.asset").WaitForCompletion();
             DLC2 = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<ExpansionDef>("RoR2/DLC1/Common/DLC1.asset").WaitForCompletion();
         }
-
+        public static int GetItemCountForPlayers(ItemDef itemDef)
+        {
+            int count = 0;
+            foreach (PlayerCharacterMasterController playerCharacterMasterController in PlayerCharacterMasterController.instances)
+            {
+                if (playerCharacterMasterController.master)
+                {
+                    int itemCount = playerCharacterMasterController.master.inventory.GetItemCount(itemDef);
+                    count += itemCount;
+                }
+            }
+            return count;
+        }
+        public static int GetItemCountForTeam(ItemDef itemDef, TeamIndex teamIndex)
+        {
+            return GetItemCountForTeam(itemDef.itemIndex, teamIndex);
+        }
+        public static int GetItemCountForTeam(ItemIndex itemIndex, TeamIndex teamIndex)
+        {
+            int count = 0;
+            foreach(TeamComponent member in TeamComponent.GetTeamMembers(teamIndex))
+            {
+                if(member && member.body && member.body.inventory)
+                {
+                    count += member.body.inventory.GetItemCount(itemIndex);
+                }
+            }
+            return count;
+        }
         public static bool DoesTodayLandWithinASpecificDaysWeek(int desiredDay, int desiredMonth)
         {
             var now = DateTime.Now;

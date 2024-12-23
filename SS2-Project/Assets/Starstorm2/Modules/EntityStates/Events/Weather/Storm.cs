@@ -110,7 +110,7 @@ namespace EntityStates.Events
             CharacterMaster master = masterObject.GetComponent<CharacterMaster>();
             if (master.inventory.currentEquipmentIndex == SS2Content.Equipments.AffixEmpyrean.equipmentIndex) return;
             master.inventory.GiveItem(SS2Content.Items.AffixStorm);
-
+            master.inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, 2 * (stormLevel - eliteLevel)); // lvl 3 = 2, lvl4 = 4
             GameObject bodyObject = master.GetBodyObject();
             if (bodyObject)
             {

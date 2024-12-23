@@ -56,16 +56,17 @@ namespace SS2
         // want to create these at the start of each stage rather than randomly spawn them thruout
         // ^want to have a visible timeline in the HUD ( behind ruleset/debug/weather radio )
         // ^^ might also make it easier to iterate without having to play each time
-        // going  with almost entirely random events. will hopefully improve later
+        // going  with almost entirely random events for now. will hopefully improve later
         public EventTimeline CreateEventTimeline()
         {
             
             EventTimeline eventTimeline = new EventTimeline();
             if (currentEventSelection == null || Run.instance.stageClearCount == 0) return eventTimeline;
+            float stormTime = 0; // jank ass bandaid for now.
             // nemesis invasions always appear when available.
             if (TryAddNemesisInvader(ref eventTimeline))
             {
-
+                stormTime += 45f;
             }
             // pick elite event. should be mostly normalized across the run as the rewards are important
             WeightedSelection<EventCard> eliteEvents = currentEventSelection.GenerateEliteEventWeightedSelection();
@@ -77,6 +78,7 @@ namespace SS2
                     EventCard eliteEvent = eliteEvents.Evaluate(this.rng.nextNormalizedFloat);
                     float startTime = UnityEngine.Random.Range(30f, 120f);//////////////////////////////////////////////////////////////////////////////////////////////////////
                     eventTimeline.AddEvent(eliteEvent.eventPrefab, startTime);
+                    stormTime += 45f;
                 }
                 else
                 {
@@ -104,7 +106,7 @@ namespace SS2
             // pick mostly random storm start time.
             if (Run.instance.stageClearCount >= 1 && currentEventSelection.canStorm)
             {
-                float startTime = UnityEngine.Random.Range(150f, 420f);////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// :(
+                float startTime = UnityEngine.Random.Range(150f, 420f) + stormTime;////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// :(
                 GameObject stormController = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("StormController", SS2Bundle.Events));
 
                 var evt = stormController.GetComponent<StormController>();

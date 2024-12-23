@@ -43,8 +43,8 @@ namespace SS2.Components
         // 5 ish credits per second, up to 10 per second giga late game.
         public float directorTickInterval = 4f;
         [Header("Elite Director Values")]
-        public float minEliteCreditPerTick = 10f;
-        public float maxEliteCreditPerTick = 30f;
+        public float minEliteCreditPerSecond = 2f;
+        public float maxEliteCreditPerSecond = 5f;
         private List<StackableAffix> allElites = new List<StackableAffix>();
         private Xoroshiro128Plus rng;
         private float timer = 0;
@@ -76,7 +76,7 @@ namespace SS2.Components
                 {
                     timer = 0f;
                     float multiplier = Util.Remap(Run.instance.difficultyCoefficient, 0, 500, 1, 12); // arbitrary values. just guessing
-                    float eliteCredit = (rng.RangeFloat(minEliteCreditPerTick, maxEliteCreditPerTick) * multiplier);
+                    float eliteCredit = (rng.RangeFloat(minEliteCreditPerSecond * directorTickInterval, maxEliteCreditPerSecond * directorTickInterval) * multiplier);
                     for (int i = allElites.Count - 1; i >= 0; i--)
                     {
                         if (allElites[i].IsAvailable())
@@ -101,7 +101,13 @@ namespace SS2.Components
 
             float baseCost = spawnResult.spawnRequest.spawnCard.directorCreditCost;
             float totalCost = baseCost;
-            if (body.eliteBuffCount > 0)
+            // yeah im hard coding it whho caresNOT ME thats who
+            if(body.HasBuff(SS2Content.Buffs.BuffAffixSuperFire) || body.HasBuff(SS2Content.Buffs.BuffAffixSuperIce) || body.HasBuff(SS2Content.Buffs.BuffAffixSuperLightning) || body.HasBuff(SS2Content.Buffs.BuffAffixSuperEarth))
+            {
+                totalCost *= 18f;
+                SS2Log.Info($"CharacterBody {body} has a Super Elite buff. Multiplying totalCost by 18 ({baseCost} => {totalCost})");             
+            }
+            else if (body.eliteBuffCount > 0)
             {
                 totalCost *= director.currentActiveEliteTier.costMultiplier;
             }
@@ -258,7 +264,7 @@ namespace SS2.Components
 
             int extraStages = Mathf.Max(Run.instance.stageClearCount - 7, 0);
             int extraLoops = Mathf.FloorToInt(extraStages / Run.stagesPerLoop);
-            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, 3 + extraLoops * extraLoops * 2); ///
+            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, 3 + extraLoops * extraLoops * extraLoops * 2); ///
             inventory.GiveItem(SS2Content.Items.DoubleAllStats, extraLoops * extraLoops);
             inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 15 + 15 * extraLoops); // teehee
             if (body.characterMotor) body.characterMotor.mass = 2000f; // NO KNOCKBACK !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -301,8 +307,9 @@ namespace SS2.Components
             var inventory = body.inventory;
             var ethInstance = EtherealBehavior.instance;
             int loopCount = Mathf.Max(Run.instance.loopClearCount, 1);
+            int stageCount = EtherealBehavior.instance.etherealStagesCompleted;
             inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(150 + (150 * ethInstance.etherealsCompleted)));
-            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, 3 + EtherealBehavior.instance.etherealStagesCompleted + loopCount * loopCount);
+            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, 3 + stageCount * stageCount * 2 + loopCount * loopCount * loopCount);
             inventory.GiveItem(SS2Content.Items.BoostCooldowns, 15);
             inventory.GiveItem(RoR2Content.Items.BoostDamage, (int)(20 + (20 * ethInstance.etherealsCompleted)));
             inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 20); // MORE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -335,8 +342,8 @@ namespace SS2.Components
             var ethInstance = EtherealBehavior.instance;
             int loopCount = Mathf.Max(Run.instance.loopClearCount, 1);
             int stageCount = EtherealBehavior.instance.etherealStagesCompleted;
-            inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(1200f + (600f * ethInstance.etherealsCompleted)));
-            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, 3 + stageCount * stageCount + loopCount * loopCount);
+            inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(1600f + (800f * ethInstance.etherealsCompleted)));
+            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, 3 + stageCount * stageCount * 2 + loopCount * loopCount * loopCount);
             inventory.GiveItem(SS2Content.Items.BoostCooldowns, 70);
             inventory.GiveItem(RoR2Content.Items.BoostDamage, 100);
             inventory.GiveItem(SS2Content.Items.AffixUltra);

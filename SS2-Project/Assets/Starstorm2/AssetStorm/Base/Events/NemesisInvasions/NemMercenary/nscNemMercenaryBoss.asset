@@ -35,16 +35,15 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   statModifiers:
   - fieldName: baseMaxHealth
-    statModifierType: 0
-    modifier: 10
+    statModifierType: 2
+    modifier: 12000
   - fieldName: baseRegen
     statModifierType: 2
     modifier: 0
   - fieldName: baseDamage
-    statModifierType: 0
-    modifier: 0.3
+    statModifierType: 2
+    modifier: 4
   skillOverrides: []
   visualEffect: {fileID: 7263082866239962126, guid: e5e59c683a84a944292ea9b979e6bfa8,
     type: 3}
-  childName: Chest
   itemDef: {fileID: 11400000, guid: 8d674b99944123e45977a18f5b5229f9, type: 2}

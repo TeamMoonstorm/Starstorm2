@@ -224,8 +224,8 @@ namespace SS2.Components
                     losType = BlastAttack.LoSType.NearestHit,
                     impactEffect = EffectCatalog.FindEffectIndexFromPrefab(impactEffectPrefab),
                 }.Fire();
-
-                stuckBody.SetBuffCount(SS2Content.Buffs.BuffStickyOverloader.buffIndex, 0);
+                if(stuckBody)
+                    stuckBody.SetBuffCount(SS2Content.Buffs.BuffStickyOverloader.buffIndex, 0);
             }
             
             Destroy(base.gameObject);

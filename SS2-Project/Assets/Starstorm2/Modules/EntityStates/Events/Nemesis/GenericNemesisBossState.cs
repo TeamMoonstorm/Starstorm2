@@ -14,8 +14,6 @@ using MSU;
 
 namespace EntityStates.Events
 {
-    //TODO: Post processing
-    //Does it need it? 
     public class GenericNemesisEvent : EntityState
     {
         [SerializeField, Tooltip("The minimum duration for this EventState")]
@@ -49,14 +47,14 @@ namespace EntityStates.Events
 
         public static event Action<CharacterBody> onNemesisDefeatedGlobal;
 
-        private static int minimumLevel = 30;
+        private static int minimumLevel = 60;
 
         private bool hasSpawned;
         public override void OnEnter()
         {
             base.OnEnter();     
             rng = Run.instance.spawnRng;
-            if (NetworkServer.active) //Spawn target gets serialized and deserialized later by the network state machine
+            if (NetworkServer.active)
             {
                 this.spawnCard = EventDirector.instance.availableNemesisSpawnCards.Evaluate(EventDirector.instance.rng.nextNormalizedFloat);
                 FindSpawnTarget();
@@ -162,7 +160,10 @@ namespace EntityStates.Events
             {
                 FriendManager.instance.RpcSetupNemBoss(body.gameObject, spawnCard.visualEffect?.name); // lol. lmao
             };
-            master.inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
+            int itemCount = Run.instance.stageClearCount * Mathf.Max(Run.instance.loopClearCount, 1);
+            if (EtherealBehavior.instance.runIsEthereal) itemCount *= 2;
+            master.inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, itemCount);
+            //master.inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
             master.inventory.GiveItem(RoR2Content.Items.UseAmbientLevel);
             int level = Mathf.FloorToInt(Run.instance.ambientLevel);
             if (level < minimumLevel)
