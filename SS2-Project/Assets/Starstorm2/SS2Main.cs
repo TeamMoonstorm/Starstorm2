@@ -37,6 +37,7 @@ namespace SS2
         public static bool RiskyModInstalled { get; private set; }
         public static bool GOTCEInstalled { get; private set; }
         public static bool StageAestheticInstalled { get; private set; }
+        public static bool ProperSaveInstalled { get; private set; }
         internal static bool ChristmasTime { get; private set; }
         internal static bool ChileanIndependenceWeek { get; private set; }
         internal static event Action onFixedUpdate;
@@ -86,6 +87,7 @@ namespace SS2
             RiskyModInstalled = MSUtil.IsModInstalled("com.RiskyLives.RiskyMod");
             GOTCEInstalled = MSUtil.IsModInstalled("com.TheBestAssociatedLargelyLudicrousSillyheadGroup.GOTCE");
             StageAestheticInstalled = MSUtil.IsModInstalled("com.HIFU.StageAesthetic");
+            ProperSaveInstalled = MSUtil.IsModInstalled("com.KingEnderBrine-ProperSave");
         }
 
         //We need to explicitly tell the Burst system to load our assembly containing our bursted jobs.
