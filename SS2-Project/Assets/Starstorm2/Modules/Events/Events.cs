@@ -84,8 +84,7 @@ namespace SS2
         {
             if (scene.name.Equals("title"))
             {
-                DateTime today = DateTime.Today;
-                if ((today.Month == 12) && ((today.Day == 27) || (today.Day == 26) || (today.Day == 25) || (today.Day == 24)|| (today.Day == 23)))
+                if (SS2Main.ChristmasTime)
                 {
                     Object.Instantiate(SS2Assets.LoadAsset<GameObject>("ChristmasMenuEffect", SS2Bundle.Events), Vector3.zero, Quaternion.identity);
                     Debug.Log("Merry Christmas from TeamMoonstorm!! :)");
