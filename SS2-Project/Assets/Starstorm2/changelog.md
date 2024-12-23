@@ -1,5 +1,8 @@
   **Warning: content spoilers below!**
-
+### 0.6.16
+* General
+    * Merry Chirristmas!
+    * Minions no longer inherit Field Accelerator
 ### 0.6.15
 * General
     * Fixed for new patch
