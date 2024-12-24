@@ -1,0 +1,57 @@
+﻿using RoR2;
+using UnityEngine;
+using RoR2.ContentManagement;
+using RoR2.Items;
+using R2API;
+namespace SS2.Items
+{
+    public sealed class Bleedout : SS2Item
+    {
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acBleedout", SS2Bundle.Items);
+        public override bool IsAvailable(ContentPack contentPack) => true;
+
+        public static DotController.DotIndex bleedout;
+        public override void Initialize()
+        {
+            bleedout = DotAPI.RegisterDotDef(0.1f, 1f, DamageColorIndex.Bleed, SS2Assets.LoadAsset<BuffDef>("BuffBleedout", SS2Bundle.Items));
+        }
+
+        public class BleedoutBehavior : BaseItemBodyBehavior
+        {
+            [ItemDefAssociation(useOnServer = true, useOnClient = false)]
+            private static ItemDef GetItemDef() => SS2Content.Items.BlastKnuckles;
+            private GameObject indicatorInstance;
+            private float rechargeTimer;
+
+            private void OnEnable()
+            {
+                this.body.AddBuff(SS2Content.Buffs.BuffBleedoutReady);
+            }
+
+            private void OnDisable()
+            {
+                body.RemoveBuff(SS2Content.Buffs.BuffBleedoutReady);
+            }
+
+            private void FixedUpdate()
+            {
+                if (!body.HasBuff(SS2Content.Buffs.BuffBleedoutReady))
+                {
+                    this.rechargeTimer += Time.fixedDeltaTime;
+                    if (this.rechargeTimer >= 240f)
+                    {
+                        this.body.AddBuff(SS2Content.Buffs.BuffBleedoutReady);
+                    }
+                }
+                else
+                {
+                    rechargeTimer = 0f;
+                }
+
+                //
+                // BLEEDOUT VFX HERE
+                //
+            }
+        }
+    }
+}

@@ -92,8 +92,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalTex:
-        m_Texture: {fileID: 2595840939845178758, guid: 00000000000000000000000000000000,
-          type: 0}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 2, y: 2}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -128,6 +127,7 @@ Material:
     - _Depth: 0.094
     - _DetailNormalMapScale: 1
     - _DitherOn: 0
+    - _DoubleColorsOn: 0
     - _DstBlend: 10
     - _EliteBrightnessMax: 1
     - _EliteBrightnessMin: 0
@@ -166,6 +166,7 @@ Material:
     - _PrintEmissionToAlbedoLerp: 0
     - _PrintOn: 0
     - _RampInfo: 0
+    - _SecondarySmoothness: 0
     - _SliceAlphaDepth: 0.1
     - _SliceBandHeight: 1
     - _SliceHeight: 5

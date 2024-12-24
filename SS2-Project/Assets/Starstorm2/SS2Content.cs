@@ -306,9 +306,15 @@ namespace SS2
 
             public static ItemDef ShardFire;
 
+            public static ItemDef ShardGold;
+
             public static ItemDef ShardIce;
 
             public static ItemDef ShardLightning;
+
+            public static ItemDef ShardPoison;
+
+            public static ItemDef ShardVoid;
 
             public static ItemDef VoidRock;
 
@@ -415,7 +421,7 @@ namespace SS2
 
             //blessings
             public static ItemDef Bleedout;
-            public static ItemDef BonusDamageToElites;
+            public static ItemDef EliteDamageBonus;
             public static ItemDef DebuffsApplyPoison;
             public static ItemDef GoldenGun;
             public static ItemDef ItemOnBossKill;
@@ -426,6 +432,8 @@ namespace SS2
             public static ItemDef ShellPiece;
             public static ItemDef ShieldGate;
             public static ItemDef SnakeEyes;
+
+            public static ItemDef ShellPieceConsumed;
 
             public static ItemDef StackSnakeEyes;
             public static ItemDef StackMaxHpOnKill;
@@ -490,6 +498,10 @@ namespace SS2
             public static BuffDef BuffBloodTesterRegen;
 
             public static BuffDef BuffBlastKnucklesCharge;
+
+            public static BuffDef BuffBleedout;
+
+            public static BuffDef BuffBleedoutReady;
 
             public static BuffDef BuffBackThruster;
 

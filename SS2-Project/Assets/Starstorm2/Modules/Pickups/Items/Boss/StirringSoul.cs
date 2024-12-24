@@ -17,55 +17,31 @@ namespace SS2.Items
 
         private static GameObject _monsterSoulPickup;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Chance to gain soul initially. (1 = 100%)")]
-        [FormatToken("SS2_ITEM_STIRRINGSOUL_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
-        public static float initChance = 0.005f;
-
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Soul gain chance cap. (1 = 100%)")]
-        public static float maxChance = 0.1f;
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Chance for souls to drop an item. (1 = 100%)")]
+        public static float chance = 1f;
 
         public override void Initialize()
         {
             _monsterSoulPickup = AssetCollection.FindAsset<GameObject>("MonsterSoul");
+            GlobalEventManager.onCharacterDeathGlobal += OnCharacterDeathGlobal;
+        }
+
+        private void OnCharacterDeathGlobal(DamageReport report)
+        {
+            if (NetworkServer.active && !Run.instance.isRunStopwatchPaused && report.victimMaster)
+            {
+                GameObject soul = GameObject.Instantiate(_monsterSoulPickup, report.victimBody.corePosition, Random.rotation);
+                soul.GetComponent<TeamFilter>().teamIndex = report.attackerTeamIndex;
+                SoulPickup pickup = soul.GetComponentInChildren<SoulPickup>();
+                pickup.team = soul.GetComponent<TeamFilter>();
+                pickup.chance = chance;
+                NetworkServer.Spawn(soul);
+            }
         }
 
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-
-        public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver
-        {
-            [ItemDefAssociation]
-            private static ItemDef GetItemDef() => SS2Content.Items.StirringSoul;
-            public float currentChance;
-
-            public void OnKilledOtherServer(DamageReport report)
-            {
-                if (NetworkServer.active && !Run.instance.isRunStopwatchPaused && report.victimMaster)
-                {
-                    GameObject soul = Instantiate(_monsterSoulPickup, report.victimBody.corePosition, Random.rotation);
-                    soul.GetComponent<TeamFilter>().teamIndex = body.teamComponent.teamIndex;
-                    SoulPickup pickup = soul.GetComponentInChildren<SoulPickup>();
-                    pickup.team = soul.GetComponent<TeamFilter>();
-                    pickup.chance = currentChance;
-                    pickup.Behavior = this;
-                    NetworkServer.Spawn(soul);
-                }
-
-            }
-            public void ChangeChance(bool reset)
-            {
-                if (reset)
-                {
-                    currentChance = initChance * 200;
-                }
-                else if (currentChance < (maxChance * 200))
-                {
-                    currentChance += initChance * 200;
-                }
-            }
         }
     }
 }

@@ -621,9 +621,9 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0, g: 0.36487365, b: 1, a: 1}
-        key1: {r: 0, g: 0.44234678, b: 0.9843137, a: 1}
-        key2: {r: 0.07084783, g: 0.007843147, b: 0.5137255, a: 0}
+        key0: {r: 1, g: 0.9175284, b: 0, a: 1}
+        key1: {r: 0.9843137, g: 0.54476136, b: 0, a: 1}
+        key2: {r: 0.5137255, g: 0.061511, b: 0.007843147, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
@@ -2400,8 +2400,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0, g: 0.5639739, b: 1, a: 1}
-      key1: {r: 0, g: 0.03938793, b: 0.34901962, a: 1}
+      key0: {r: 0.98475003, g: 1, b: 0, a: 1}
+      key1: {r: 0.34901962, g: 0.24436124, b: 0, a: 1}
       key2: {r: 1, g: 0.802825, b: 0, a: 0}
       key3: {r: 0.21130466, g: 1, b: 0, a: 0}
       key4: {r: 0.0990566, g: 0.47342366, b: 1, a: 0}
@@ -2634,7 +2634,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0, g: 0.037123334, b: 0.09411765, a: 0.92941177}
+      maxColor: {r: 0.055950217, g: 0.05660379, b: 0.00080099556, a: 0.92941177}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -3104,10 +3104,10 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 0.1764706}
+        key0: {r: 1, g: 1, b: 1, a: 0.43529412}
         key1: {r: 1, g: 1, b: 1, a: 1}
         key2: {r: 0.25490198, g: 0.5137255, b: 0.007843138, a: 1}
-        key3: {r: 0, g: 0, b: 0, a: 0.1764706}
+        key3: {r: 0, g: 0, b: 0, a: 0.43529412}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
         key6: {r: 0, g: 0, b: 0, a: 0}
@@ -4888,8 +4888,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentObjectTransform: {fileID: 0}
-  startVelocity1: {x: -10, y: 10, z: -10}
-  startVelocity2: {x: 10, y: 13, z: 10}
+  startVelocity1: {x: -10, y: 20, z: -10}
+  startVelocity2: {x: 10, y: 28, z: 10}
   endVelocity1: {x: -10, y: 0, z: -10}
   endVelocity2: {x: 10, y: 5, z: 10}
   movementCurve:
