@@ -106,7 +106,7 @@ namespace SS2
             // pick mostly random storm start time.
             if (Run.instance.stageClearCount >= 1 && currentEventSelection.canStorm)
             {
-                float startTime = UnityEngine.Random.Range(150f, 420f) + stormTime;////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// :(
+                float startTime = UnityEngine.Random.Range(120f, 360f) + stormTime;////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// :(
                 GameObject stormController = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("StormController", SS2Bundle.Events));
 
                 var evt = stormController.GetComponent<StormController>();
@@ -128,39 +128,16 @@ namespace SS2
         public bool TryAddNemesisInvader(ref EventTimeline timeline)
         {
             // check if any player has voidrock
-            bool voidRock = false;
-            foreach (var player in PlayerCharacterMasterController.instances)
-            {
-                if (player.master.inventory)
-                {
-                    if (player.master.inventory.GetItemCount(SS2Content.Items.VoidRock) > 0)
-                    {
-                        voidRock = true;
-                    }
-                }
-            }
             // check if its the first stage or every third stage after
-            if (voidRock && stagesUntilInvasion <= 0)
+            if (SS2Util.GetItemCountForPlayers(SS2Content.Items.VoidRock) > 0 && stagesUntilInvasion <= 0)
             {
                 // get list of possible nemesis invaders
                 // doing it by drop makes more sense imo? dont want two stirring souls with ss2u.
                 // also cool thematically. like they keep reviving if you dont claim the item
                 WeightedSelection<NemesisSpawnCard> selection = new WeightedSelection<NemesisSpawnCard>();
                 foreach(NemesisSpawnCard card in NemesisCatalog.readonlySpawnCards)
-                {
-                    bool anyPlayerHasDrop = false;
-                    foreach (var player in PlayerCharacterMasterController.instances)
-                    {
-                        if (player.master.inventory)
-                        {
-                            if (player.master.inventory.GetItemCount(card.itemDef) > 0)
-                            {
-                                anyPlayerHasDrop = true;
-                                break;
-                            }
-                        }
-                    }
-                    if(!anyPlayerHasDrop)
+                {                    
+                    if(SS2Util.GetItemCountForPlayers(card.itemDef) == 0)
                         selection.AddChoice(card, 1);
                 }
                 // pick one at random

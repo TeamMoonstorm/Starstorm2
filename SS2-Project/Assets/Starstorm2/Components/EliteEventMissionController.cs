@@ -11,6 +11,7 @@ namespace SS2
     public class EliteEventMissionController : NetworkBehaviour
     {
         public EquipmentDef bossEliteEquipment;
+        public ItemDef bossDrop;
         public string eliteEquipmentAddress;
         public EquipmentDef eliteEquipment;
         public Transform eliteParticles;
@@ -183,13 +184,19 @@ namespace SS2
                 inventory.SetEquipmentIndex(bossEliteEquipment.equipmentIndex);
                 int loopCount = Mathf.Max(Run.instance.loopClearCount, 0);
                 inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 100);
-                inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, Run.instance.stageClearCount + loopCount * loopCount);
+                inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, Run.instance.stageClearCount * loopCount * loopCount);
             }
             CharacterBody body = masterObject.GetComponent<CharacterMaster>().GetBody();
             body.baseMaxHealth = Mathf.Max(body.maxHealth, 2100f);
             body.baseDamage = 20;
-            body.PerformAutoCalculateLevelStats();
+            body.PerformAutoCalculateLevelStats();           
             new FriendManager.SyncBaseStats(body).Send(R2API.Networking.NetworkDestination.Clients);
+            if (bossDrop && bossDrop.itemIndex != ItemIndex.None)
+                body.gameObject.AddComponent<OnBossKilledServer>().drop = PickupCatalog.FindPickupIndex(bossDrop.itemIndex);
+            else
+            {
+                SS2Log.Error("Elite Event " + base.name + " has no boss drop"!);
+            }
         }
 
         private void OnBossDefeatedServer()
@@ -235,6 +242,36 @@ namespace SS2
                     inventory.GiveItem(RoR2Content.Items.BoostDamage, boostHp);
             }    
         }
+        private class OnBossKilledServer : MonoBehaviour, IOnKilledServerReceiver
+        {
+            public PickupIndex drop = PickupIndex.none;
+            public void OnKilledServer(DamageReport damageReport)
+            {
+                if (drop == PickupIndex.none) return;
+                
+                int playerCount = Run.instance.participatingPlayerCount;
+                if(playerCount > 1)
+                {
+                    float angle = 360f / (float)playerCount;
+                    Vector3 vector = Quaternion.AngleAxis((float)UnityEngine.Random.Range(0, 360), Vector3.up) * (Vector3.up * 40f + Vector3.forward * 5f);
+                    Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
+                    PickupIndex drop = PickupCatalog.FindPickupIndex(SS2Content.Items.ShardStorm.itemIndex);
+                    int i = 0;
+                    while (i < playerCount)
+                    {
+                        PickupDropletController.CreatePickupDroplet(drop, damageReport.victimBody.corePosition, vector);
+                        i++;
+                        vector = rotation * vector;
+                    }
+                }
+                else
+                {
+                    PickupDropletController.CreatePickupDroplet(drop, damageReport.victimBody.corePosition, Vector3.up * 20f);
+                }
+                    
+                
+            }
+        }
 
         #region ObjectiveTracker
         private void EliteObjective(CharacterMaster master, List<ObjectivePanelController.ObjectiveSourceDescriptor> dest)
@@ -253,13 +290,20 @@ namespace SS2
         private class EliteObjectiveTracker : ObjectivePanelController.ObjectiveTracker
         {
             private int eliteKills = -1;
+            private int requiredEliteKills = 25;
             public override string GenerateString()
             {
                 EliteEventMissionController mission = (EliteEventMissionController)sourceDescriptor.source;
                 eliteKills = mission.currentEliteKills;
+                requiredEliteKills = mission.requiredEliteKills;
                 return string.Format("elite kills heehaw: {0}%", (float)mission.currentEliteKills / (float)mission.requiredEliteKills * 100f);
             }
-            public override bool shouldConsiderComplete => base.shouldConsiderComplete;
+            public override bool shouldConsiderComplete => IsComplete();
+            bool IsComplete()
+            {
+                return eliteKills != -1 ? eliteKills >= requiredEliteKills : base.shouldConsiderComplete;               
+            }
+
             public override bool IsDirty()
             {
                 return ((EliteEventMissionController)sourceDescriptor.source).currentEliteKills != eliteKills;

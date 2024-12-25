@@ -134,7 +134,8 @@ namespace SS2.Equipments
                 {
                     if (dot == poisonDotIndex)
                     {
-                        dmg *= dc.victimHealthComponent.health / dc.victimHealthComponent.fullHealth;
+                        float remap = Util.Remap(dc.victimHealthComponent.health / dc.victimHealthComponent.fullHealth, 0, 1, .05f, 1); // min 5% of og damage
+                        dmg *= remap;
                         if (dmg < 1) dmg = 1;
                     }
                     return dmg;

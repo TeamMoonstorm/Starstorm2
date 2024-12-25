@@ -32,7 +32,7 @@ namespace SS2
         private static void CharacterBody_OnInventoryChanged(ILContext il)
         {
             ILCursor c = new ILCursor(il);
-            bool b = c.TryGotoNext(MoveType.Before,
+            bool b = c.TryGotoNext(MoveType.After,
                 x => x.MatchLdarg(0),
                 x => x.MatchLdcI4(1),
                 x => x.MatchStfld<CharacterBody>(nameof(CharacterBody.statsDirty))); // statsDirty = true;
@@ -48,9 +48,9 @@ namespace SS2
                     for (int i = 0; i < body.inventory.GetEquipmentSlotCount(); i++)
                     {
                         BuffDef buffDef = body.inventory.GetEquipment((uint)i).equipmentDef?.passiveBuffDef;
-                        // no multielite means its always ok
+                        // injector means its always ok
                         // no injector means we only want elite
-                        bool multiElite = !hasMultiElite || (!hasInjector && buffDef && buffDef.isElite);
+                        bool multiElite = hasInjector || (buffDef && buffDef.isElite);
                         if (buffDef && !body.HasBuff(buffDef) && multiElite)
                         {
                             body.AddBuff(buffDef);

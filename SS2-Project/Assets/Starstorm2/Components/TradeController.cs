@@ -30,8 +30,8 @@ namespace SS2
 			pickupPickerController = base.GetComponent<PickupPickerController>();
 			esm = base.GetComponent<EntityStateMachine>();
 			// temp
-			pickupPrefab = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/OptionPickup/OptionPickup.prefab").WaitForCompletion();
-
+			pickupPrefab = R2API.PrefabAPI.InstantiateClone(UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/OptionPickup/OptionPickup.prefab").WaitForCompletion(), "BRUHHHHHHHHHHHHHH");
+			pickupPrefab.GetComponent<PickupPickerController>().panelPrefab = SS2Assets.LoadAsset<GameObject>("TradeOptionPickerPanel", SS2Bundle.Interactables);
 
 		}
         private void Start()

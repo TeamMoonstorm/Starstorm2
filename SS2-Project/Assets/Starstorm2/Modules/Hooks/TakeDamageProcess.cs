@@ -30,7 +30,7 @@ namespace SS2.Hooks
             {
                 c.Emit(OpCodes.Ldarg_0); // hc
                 c.Emit(OpCodes.Ldarg_1); // damageinfo
-                c.Emit(OpCodes.Ldloc, 4); // total damage
+                c.Emit(OpCodes.Ldloc, 4); // combined health before damage
                 c.EmitDelegate<Action<HealthComponent, DamageInfo, float>>(OnLethalDamageTaken);
             }
             else
@@ -40,7 +40,7 @@ namespace SS2.Hooks
 
         }
 
-        public static void OnLethalDamageTaken(HealthComponent healthComponent, DamageInfo damageInfo, float totalDamage) // poorly named
+        public static void OnLethalDamageTaken(HealthComponent healthComponent, DamageInfo damageInfo, float combinedHealthBeforeDamage) // poorly named
         {
             if (healthComponent.health > 0) return; ///
             CharacterBody body = healthComponent.body;
@@ -50,13 +50,21 @@ namespace SS2.Hooks
                 body.RemoveBuff(SS2Content.Buffs.BuffBleedoutReady);
                 healthComponent.Networkhealth = 1f;
                 healthComponent.HealFraction(1, default(ProcChainMask));
+                float undoBodyDamage = damageInfo.attacker && damageInfo.attacker.TryGetComponent(out CharacterBody attackerBody) ? 1 / attackerBody.damage : 1f;
+                //undodamage will make it do 1 damage per tick
+                //4 ticks per second
+                //2 seconds duration
+                //total damage is hc.fullhealth
+                //fml and fuck dots
+                float desiredDamagePerTick = healthComponent.fullHealth / (2 * 4);
+                float damagePerTick = undoBodyDamage * desiredDamagePerTick;
                 InflictDotInfo dot = new InflictDotInfo
                 {
-                    attackerObject = null,
-                    dotIndex = Items.Blessings.bleedout,
+                    attackerObject = damageInfo.attacker ? damageInfo.attacker : healthComponent.gameObject,
+                    dotIndex = Items.Bleedout.bleedout,
                     duration = 2f,
                     victimObject = healthComponent.gameObject,
-                    totalDamage = healthComponent.fullHealth,
+                    damageMultiplier = damagePerTick,
                 };
                 DotController.InflictDot(ref dot);
                 //
@@ -67,7 +75,8 @@ namespace SS2.Hooks
             //shell piece
             if (body.inventory && body.inventory.GetItemCount(SS2Content.Items.ShellPiece) > 0)
             {
-                healthComponent.Networkhealth += totalDamage;
+                healthComponent.Networkhealth = combinedHealthBeforeDamage;
+                if (healthComponent.Networkhealth < 1) healthComponent.Networkhealth = 1;
                 body.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 3f);
                 body.inventory.RemoveItem(SS2Content.Items.ShellPiece);
                 body.inventory.GiveItem(SS2Content.Items.ShellPieceConsumed);
@@ -77,7 +86,7 @@ namespace SS2.Hooks
                 //
                 return;
             }
-            // ethereal death
+            // ethereal death 
             if (body.HasBuff(SS2Content.Buffs.bdEthereal))
             {
                 healthComponent.health = 1;

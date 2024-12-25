@@ -2,42 +2,55 @@
 using UnityEngine;
 using RoR2.ContentManagement;
 using R2API;
+using RoR2.Items;
+using RoR2.Orbs;
+using System.Collections.Generic;
 namespace SS2.Items
 {
     public sealed class GoldenGun : SS2Item
     {
-        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemDef>("GoldenGun", SS2Bundle.Items);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acGoldenGun", SS2Bundle.Items);
         public override bool IsAvailable(ContentPack contentPack) => true;
+        static GameObject orbEffect;
+
         public override void Initialize()
         {
-            On.RoR2.CharacterMaster.GiveMoney += GiveMoney;
-            RecalculateStatsAPI.GetStatCoefficients += GetStatCoefficients;
+            orbEffect = SS2Assets.LoadAsset<GameObject>("EliteDamageOrbEffect", SS2Bundle.Items);
         }
-
-        // 10% increased money per minute
-        private void GiveMoney(On.RoR2.CharacterMaster.orig_GiveMoney orig, CharacterMaster self, uint amount)
+        
+        public class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
         {
-            int gun = self.inventory ? self.inventory.GetItemCount(SS2Content.Items.GoldenGun) : 0;
-            if (gun > 0)
-            {
-                int minutes = Mathf.FloorToInt(Run.FixedTimeStamp.tNow / 60f);
-                float multiplier = Mathf.Pow(1 + (0.1f * gun), minutes);
-                orig(self, (uint)(amount * multiplier));
-                return;
-            }
-            orig(self, amount);
-        }
+            [ItemDefAssociation(useOnServer = true, useOnClient = false)]
+            private static ItemDef GetItemDef() => SS2Content.Items.GoldenGun;
 
-        private void GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
-        {
-            if (!sender.inventory) return;
-            if (sender.master && sender.inventory.GetItemCount(SS2Content.Items.GoldenGun) > 0)
+            private static readonly Queue<GoldOrb> orbQueue = new Queue<GoldOrb>();
+            private static float minInterval = 0.05f;
+            private float stopwatch;
+            private void FixedUpdate()
             {
-                int maxStacks = 20; /////////////////////////////////////////////////////////////////////////////////////////////
-                float smallChest = Mathf.Min(sender.master.money / Run.instance.GetDifficultyScaledCost(25), maxStacks);
-                args.damageMultAdd += .05f * smallChest;
+                if (orbQueue.Count > 0)
+                {
+                    stopwatch += Time.fixedDeltaTime;
+                    while (stopwatch > minInterval)
+                    {
+                        stopwatch -= minInterval;
+                        GoldOrb orb = orbQueue.Dequeue();
+                        OrbManager.instance.AddOrb(orb);
+                    }
+                }
             }
-
+            public void OnDamageDealtServer(DamageReport damageReport)
+            {
+                DamageInfo damageInfo = damageReport.damageInfo;
+                if (!damageInfo.damageType.IsDamageSourceSkillBased) return;
+                uint gold = (uint)(Run.instance.GetDifficultyScaledCost(1) * damageInfo.procCoefficient);
+                GoldOrb orb = new GoldOrb();
+                orb.origin = damageInfo.position;
+                orb.overrideDuration = 0.3f;
+                orb.goldAmount = gold;
+                orb.target = body.mainHurtBox;               
+                orbQueue.Enqueue(orb);
+            }
         }
     }
 }

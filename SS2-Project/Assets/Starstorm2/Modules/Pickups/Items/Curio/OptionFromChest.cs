@@ -9,7 +9,7 @@ namespace SS2.Items
 {
     public sealed class OptionFromChest : SS2Item
     {
-        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemDef>("OptionFromChests", SS2Bundle.Items);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemDef>("OptionFromChest", SS2Bundle.Items);
         public override bool IsAvailable(ContentPack contentPack) => true;
 
         private static GameObject optionPrefab;
@@ -31,10 +31,15 @@ namespace SS2.Items
                 orig(self);
                 return;
             }
+            //YES i should replace it with my own drop table. NO im not going to
             dropTable.tier1Weight *= tier1Coefficient; // lol.
+            dropTable.tier2Weight /= tier1Coefficient; //????????
+            dropTable.tier3Weight /= (tier1Coefficient * 0.7f);
             dropTable.GenerateWeightedSelection(Run.instance);
             orig(self);
             dropTable.tier1Weight /= tier1Coefficient;
+            dropTable.tier2Weight *= tier1Coefficient;
+            dropTable.tier3Weight *= (tier1Coefficient * 0.7f);
             dropTable.GenerateWeightedSelection(Run.instance);
         }
 
@@ -50,7 +55,7 @@ namespace SS2.Items
             {
                 c.Emit(OpCodes.Ldloc_3); // createpickupinfo
                 c.Emit(OpCodes.Ldarg_0); // chestbehavior
-                c.EmitDelegate<Action<GenericPickupController.CreatePickupInfo, ChestBehavior>>((info, chest) =>
+                c.EmitDelegate<Func<GenericPickupController.CreatePickupInfo, ChestBehavior, GenericPickupController.CreatePickupInfo>>((info, chest) =>
                 {
                     int option = SS2Util.GetItemCountForPlayers(SS2Content.Items.OptionFromChest);
                     float chance = 1f - Mathf.Pow(0.7f, option);
@@ -63,7 +68,9 @@ namespace SS2.Items
                         info.pickerOptions = PickupPickerController.GenerateOptionsFromArray(chest.dropTable.GenerateUniqueDrops(3, chest.rng));
                         info.pickupIndex = PickupCatalog.FindPickupIndex(PickupCatalog.GetPickupDef(chest.dropPickup).itemTier); // idk if we need to do this? void potentials use the pickupdef for the tier
                     }
+                    return info;
                 });
+                c.Emit(OpCodes.Stloc_3);
             }
             else
             {

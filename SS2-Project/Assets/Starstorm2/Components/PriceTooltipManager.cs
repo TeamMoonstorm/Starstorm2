@@ -46,7 +46,7 @@ namespace SS2.Components
             if (item != null)
             {
                 Debug.Log("item = " + item);
-                float itemValue = zanzanController.itemValues[item];
+                float itemValue = zanzanController.itemValues[item.itemIndex];
                 string quality;
                 //these thresholds should be calculated but they're hard coded for now.
                 if (itemValue >= 0.82f)
@@ -72,7 +72,7 @@ namespace SS2.Components
 
                 tooltip.titleColor = ColorCatalog.GetColor(item.darkColorIndex);
                 tooltip.titleToken = item.nameToken;
-                string value = Mathf.Floor(zanzanController.itemValues[item] * 100).ToString();
+                string value = Mathf.Floor(zanzanController.itemValues[item.itemIndex] * 100).ToString();
                 string combinedString = string.Format("{0}{1}{2}", value, "% - ", Language.GetStringFormatted(quality));
                 tooltip.bodyToken = combinedString;
             }

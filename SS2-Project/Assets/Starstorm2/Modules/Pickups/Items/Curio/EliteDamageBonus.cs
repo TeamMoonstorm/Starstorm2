@@ -5,49 +5,79 @@ using System.Collections.Generic;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using System;
+using RoR2.Items;
+using RoR2.Orbs;
 namespace SS2.Items
 {
     public sealed class EliteDamageBonus : SS2Item
     {
-        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemDef>("EliteDamageBonus", SS2Bundle.Items);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acEliteDamageBonus", SS2Bundle.Items);
         public override bool IsAvailable(ContentPack contentPack) => true;
+
+		static GameObject orbEffect;
         public override void Initialize()
         {
-            IL.RoR2.HealthComponent.TakeDamageProcess += TakeDamageProcess; // should move this to one hook
+			orbEffect = SS2Assets.LoadAsset<GameObject>("EliteDamageOrbEffect", SS2Bundle.Items);
         }
+		public class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
+		{
+			[ItemDefAssociation(useOnServer = true, useOnClient = false)]
+			private static ItemDef GetItemDef() => SS2Content.Items.EliteDamageBonus;
 
-        // bonus damage to elites
-        private void TakeDamageProcess(ILContext il)
-        {
-            //grabbed this from moffein. no clue how to get that dumbass displayclass thing and idc to find out
-            ILCursor c = new ILCursor(il);
-            if (c.TryGotoNext(
-                 x => x.MatchStloc(7)
-                ))
+			private static readonly Queue<EliteDamageOrb> orbQueue = new Queue<EliteDamageOrb>();
+			private static float minInterval = 0.1f;
+			private float stopwatch;
+            private void FixedUpdate()
             {
-                c.Emit(OpCodes.Ldarg_0);    //self
-                c.Emit(OpCodes.Ldarg_1);    //damageInfo
-                c.EmitDelegate<Func<float, HealthComponent, DamageInfo, float>>((damage, victim, damageInfo) =>
+                if(orbQueue.Count > 0)
                 {
-                    if (victim.body.isElite && damageInfo.attacker && damageInfo.attacker.TryGetComponent(out CharacterBody body) && body.inventory)
-                    {
-                        int elite = body.inventory.GetItemCount(SS2Content.Items.EliteDamageBonus);
-                        if (elite > 0)
+					stopwatch += Time.fixedDeltaTime;
+					while(stopwatch > minInterval && orbQueue.Count > 0)
+                    {						
+						EliteDamageOrb orb = orbQueue.Dequeue();
+						if(orb.target && orb.target.healthComponent.alive)
                         {
-                            damage *= 1.3f + 0.1f * (elite - 1);
-                            damageInfo.damageColorIndex = DamageColorIndex.Luminous;
-                            //
-                            // GET CUSTOM COLOR LATER ?
-                            //
-                        }
+							stopwatch -= minInterval;
+							orb.origin = body.inputBank.aimOrigin;
+							OrbManager.instance.AddOrb(orb);
+						}						
                     }
-                    return damage;
-                });
+                }
             }
-            else
+            public void OnDamageDealtServer(DamageReport damageReport)
             {
-                SS2Log.Fatal("RiskyMod: ModifyFinalDamage IL Hook failed. This will break a lot of things.");
+				DamageInfo damageInfo = damageReport.damageInfo;
+				if (!damageInfo.damageType.IsDamageSourceSkillBased) return;
+				float damageCoefficient = 0.5f + 0.25f * (stack - 1);
+				EliteDamageOrb orb = new EliteDamageOrb();
+				orb.origin = base.body.inputBank.aimOrigin;
+				orb.damageValue = damageInfo.damage * damageCoefficient;
+				orb.isCrit = damageInfo.crit;
+				orb.teamIndex = damageReport.attackerTeamIndex;
+				orb.attacker = damageInfo.attacker;
+				orb.procChainMask = damageInfo.procChainMask;
+				//orb.procChainMask.AddProc(ProcType.Missile); // shouldnt need this cuz its skills only
+				orb.procCoefficient = damageInfo.procCoefficient * 0.5f;
+				orb.damageColorIndex = DamageColorIndex.Item;
+				HurtBox mainHurtBox = damageReport.victimBody ? damageReport.victimBody.mainHurtBox : null;
+				if (mainHurtBox)
+				{
+					orb.target = mainHurtBox;					
+				}
+				orbQueue.Enqueue(orb);
+			}
+		}
+		public class EliteDamageOrb : GenericDamageOrb
+        {
+            public override void Begin()
+            {
+				speed = 80f;
+                base.Begin();
             }
-        }
-    }
+			public override GameObject GetOrbEffect()
+			{
+				return orbEffect;
+			}
+		}
+	}
 }

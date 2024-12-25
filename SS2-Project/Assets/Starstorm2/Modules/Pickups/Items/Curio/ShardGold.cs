@@ -13,17 +13,17 @@ namespace SS2.Items
 
 		public override void Initialize()
 		{
-            On.RoR2.MultiOptionPickerPanel.KillPanel += GrantGoldShard; // when the item thingy is finished
-            //On.RoR2.HalcyoniteShrineInteractable.DropRewards += SpawnGoldShard; // when the shrine is finished
+           // On.RoR2.MultiOptionPickerPanel.KillPanel += GrantGoldShard; // when the item thingy is finished
+            On.RoR2.HalcyoniteShrineInteractable.DropRewards += SpawnGoldShard; // when the shrine is finished
 		}
 
         private void GrantGoldShard(On.RoR2.MultiOptionPickerPanel.orig_KillPanel orig, MultiOptionPickerPanel self)
         {
-			orig(self);
-			if(self.gameObject.name.Equals("FragmentPotentialPickup(Clone)"))
-            {
-				self.GetComponent<PickupPickerController>().CreatePickup(PickupCatalog.FindPickupIndex(base.ItemDef.itemIndex));
-            }
+			if (self.gameObject.name.Equals("FragmentPotentialPickup(Clone)"))
+			{
+				self.GetComponent<PickupPickerController>()?.CreatePickup(PickupCatalog.FindPickupIndex(base.ItemDef.itemIndex));
+			}
+			orig(self);			
         }
 
         private void SpawnGoldShard(On.RoR2.HalcyoniteShrineInteractable.orig_DropRewards orig, HalcyoniteShrineInteractable self)

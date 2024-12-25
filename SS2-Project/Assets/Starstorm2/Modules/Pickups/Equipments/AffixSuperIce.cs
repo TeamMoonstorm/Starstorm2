@@ -42,7 +42,7 @@ namespace SS2.Equipments
             [BuffDefAssociation]
             private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffAffixSuperIce;
             private static float projectileLaunchInterval = 4f;
-            private static float maxMeteorDistance = 150f;
+            private static float maxMeteorDistance = 100f;
             private static float minimumDistanceBetweenMeteors = 32f;
             private static float delayBeforeExpiringAPreviousStrikePoint = 24f;
             private static int maxPlacementAttempts = 4;

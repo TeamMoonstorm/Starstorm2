@@ -28,7 +28,9 @@ namespace SS2.Items
 
         private void OnCharacterDeathGlobal(DamageReport report)
         {
-            if (NetworkServer.active && !Run.instance.isRunStopwatchPaused && report.victimMaster)
+            if (!NetworkServer.active) return;
+            if (Run.instance.isRunStopwatchPaused || !report.victimMaster) return;
+            if (report.attackerMaster && report.attackerMaster.inventory.GetItemCount(SS2Content.Items.StirringSoul) > 0)
             {
                 GameObject soul = GameObject.Instantiate(_monsterSoulPickup, report.victimBody.corePosition, Random.rotation);
                 soul.GetComponent<TeamFilter>().teamIndex = report.attackerTeamIndex;

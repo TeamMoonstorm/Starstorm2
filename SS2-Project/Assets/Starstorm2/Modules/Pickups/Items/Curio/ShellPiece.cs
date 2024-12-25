@@ -11,6 +11,7 @@ namespace SS2.Items
         public override bool IsAvailable(ContentPack contentPack) => true;
         public override void Initialize()
         {
+            On.RoR2.CharacterMaster.OnServerStageBegin += OnServerStageBegin;
         }
 
         // restore consumed shells

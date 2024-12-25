@@ -19,7 +19,7 @@ namespace SS2.Items
         private void SpawnVoidShard(On.EntityStates.VoidCamp.Deactivate.orig_OnEnter orig, Deactivate self)
         {
             orig(self);
-			if (NetworkServer.active)
+			if (NetworkServer.active && Run.instance)
 			{
 				Transform transform = self.GetModelChildLocator().FindChild("RewardSpawnTarget");
 				int participatingPlayerCount = Run.instance.participatingPlayerCount;

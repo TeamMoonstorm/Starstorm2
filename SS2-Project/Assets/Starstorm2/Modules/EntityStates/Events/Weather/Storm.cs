@@ -14,7 +14,7 @@ namespace EntityStates.Events
     // being lazy. should be StormX : Storm and use entitystateconfigs
     public class Storm : GenericWeatherState
     {
-        private static float baseDuration = 66f;
+        private static float baseDuration = 60f;
         private static float durationVariance = 0.8f;
         private static float effectLerpDuration = 5f;
         private static SerializableEntityStateType textState = new SerializableEntityStateType(typeof(StormController.EtherealFadeIn));
@@ -36,9 +36,6 @@ namespace EntityStates.Events
         public int stormLevel;
 
         private float duration;
-
-        private UnityAction<GameObject> modifyMonsters;
-        private UnityAction<GameObject> modifyBoss;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -61,13 +58,15 @@ namespace EntityStates.Events
                 CombatDirector bossDirector = TeleporterInteraction.instance?.bossDirector;
                 if (bossDirector && stormLevel >= bossEliteLevel)
                 {
-                    bossDirector.onSpawnedServer.AddListener(modifyBoss = new UnityAction<GameObject>(ModifySpawnedBoss));
+                    if (TeleporterUpgradeController.instance) TeleporterUpgradeController.instance.UpgradeStorm(true);
+                    BossGroup.onBossGroupDefeatedServer += OnBossGroupDefeatedServer;
+                    bossDirector.onSpawnedServer.AddListener(ModifySpawnedBoss);
                 }
 
                 foreach (CombatDirector combatDirector in CombatDirector.instancesList)
                 {
                     if (combatDirector != bossDirector)
-                        combatDirector.onSpawnedServer.AddListener(modifyMonsters = new UnityAction<GameObject>(ModifySpawnedMasters));
+                        combatDirector.onSpawnedServer.AddListener(ModifySpawnedMasters);
                 }
 
                 CharacterBody.onBodyStartGlobal += BuffEnemy;
@@ -79,6 +78,25 @@ namespace EntityStates.Events
             }
 
             TeleporterInteraction.onTeleporterChargedGlobal += OnTeleporterChargedGlobal;
+        }
+
+        private void OnBossGroupDefeatedServer(BossGroup bossGroup)
+        {
+            if(bossGroup == TeleporterInteraction.instance.bossGroup && Run.instance.participatingPlayerCount > 0)
+            {
+                int playerCount = Run.instance.participatingPlayerCount;
+                float angle = 360f / (float)playerCount;
+                Vector3 vector = Quaternion.AngleAxis((float)UnityEngine.Random.Range(0, 360), Vector3.up) * (Vector3.up * 40f + Vector3.forward * 5f);
+                Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
+                PickupIndex drop = PickupCatalog.FindPickupIndex(SS2Content.Items.ShardStorm.itemIndex);
+                int i = 0;
+                while (i < playerCount)
+                {
+                    PickupDropletController.CreatePickupDroplet(drop, bossGroup.dropPosition.position, vector);
+                    i++;
+                    vector = rotation * vector;
+                }
+            }
         }
 
         private void OnTeleporterChargedGlobal(TeleporterInteraction _)
@@ -149,7 +167,8 @@ namespace EntityStates.Events
             {
                 if(stormLevel == stormController.MaxStormLevel && !stormController.IsPermanent)
                 {
-                    outer.SetNextState(new Calm());                   
+                    outer.SetNextState(new Calm());
+                    if (TeleporterUpgradeController.instance) TeleporterUpgradeController.instance.UpgradeStorm(false);
                     GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
                     {
                         eventToken = "ermmmm..... bye storm",
@@ -185,14 +204,15 @@ namespace EntityStates.Events
                 CombatDirector bossDirector = TeleporterInteraction.instance?.bossDirector;
                 if (bossDirector && stormLevel >= 4)
                 {
-                    bossDirector.onSpawnedServer.RemoveListener(modifyBoss);
+                    BossGroup.onBossGroupDefeatedServer -= OnBossGroupDefeatedServer;
+                    bossDirector.onSpawnedServer.RemoveListener(ModifySpawnedBoss);
                 }
                 if (!stormController.IsPermanent)
                 {
                     foreach (CombatDirector combatDirector in CombatDirector.instancesList)
                     {
                         if (combatDirector != bossDirector)
-                            combatDirector.onSpawnedServer.RemoveListener(modifyMonsters);
+                            combatDirector.onSpawnedServer.RemoveListener(ModifySpawnedMasters);
                     }
                 }
 

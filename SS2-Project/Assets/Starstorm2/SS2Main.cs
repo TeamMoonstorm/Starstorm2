@@ -54,10 +54,6 @@ namespace SS2
             LoadBurstAssembly();
             LanguageFileLoader.AddLanguageFilesFromMod(this, "languages");
             LoadingScreenSpriteUtility.AddSpriteAnimations(SS2Assets.GetLoadingScreenBundle());
-
-            TMProEffects.Init();
-            BodyNames.Hook();
-            HideUnlocks.Hook();
             SetSpecialEventBooleans();            
         }
 

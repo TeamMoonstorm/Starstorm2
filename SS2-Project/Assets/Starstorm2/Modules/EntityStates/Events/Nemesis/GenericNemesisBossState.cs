@@ -160,8 +160,7 @@ namespace EntityStates.Events
             {
                 FriendManager.instance.RpcSetupNemBoss(body.gameObject, spawnCard.visualEffect?.name); // lol. lmao
             };
-            int itemCount = Run.instance.stageClearCount * Mathf.Max(Run.instance.loopClearCount, 1);
-            if (EtherealBehavior.instance.runIsEthereal) itemCount *= 2;
+            int itemCount = Run.instance.stageClearCount;
             master.inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, itemCount);
             //master.inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
             master.inventory.GiveItem(RoR2Content.Items.UseAmbientLevel);

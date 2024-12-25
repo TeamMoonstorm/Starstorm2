@@ -56,7 +56,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b5d773fb8f8f75640b70be1ab5c82829, type: 2}
+  - {fileID: 2100000, guid: d8ae37f7afbbc85499ad9431fb6169da, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -107,7 +107,7 @@ TrailRenderer:
       m_RotationOrder: 0
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0.7647059, b: 0.25882354, a: 1}
+      key0: {r: 1, g: 0.6017231, b: 0.2588235, a: 1}
       key1: {r: 0.44705883, g: 0.19607843, b: 0, a: 0}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -153,6 +153,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4218951571287027}
   - component: {fileID: 54685390765199775}
+  - component: {fileID: -7146792107067584657}
+  - component: {fileID: -6651506700718512489}
+  - component: {fileID: -3834554185510949237}
   m_Layer: 13
   m_Name: CurioOrb
   m_TagString: Untagged
@@ -192,6 +195,72 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-7146792107067584657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1435501264535029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 733712478, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-6651506700718512489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1435501264535029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1630511094, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -7146792107067584657}
+        m_TargetAssemblyTypeName: RoR2.EventFunctions, RoR2
+        m_MethodName: PlaySound
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Play_UI_item_spawn_tier2
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &-3834554185510949237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1435501264535029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1390580703, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -7146792107067584657}
+        m_TargetAssemblyTypeName: RoR2.EventFunctions, RoR2
+        m_MethodName: PlaySound
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Play_UI_item_land_tier2
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1544707573674628
 GameObject:
   m_ObjectHideFlags: 0
@@ -813,7 +882,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 0.648188, b: 0.25943398, a: 1}
+        key0: {r: 1, g: 0.44229656, b: 0.2588235, a: 1}
         key1: {r: 0.8396226, g: 0.24509732, b: 0.03564434, a: 1}
         key2: {r: 0.2784314, g: 0.5058824, b: 0.015686275, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
@@ -2673,8 +2742,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 2
-      minScalar: 1.2
+      scalar: 2.5
+      minScalar: 1.4
       maxCurve:
         serializedVersion: 2
         m_Curve: []
@@ -2895,7 +2964,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 20
+      scalar: 30
       minScalar: 0
       maxCurve:
         serializedVersion: 2

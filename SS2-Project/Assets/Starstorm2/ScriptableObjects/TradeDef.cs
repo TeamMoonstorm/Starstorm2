@@ -64,21 +64,30 @@ namespace SS2
             for (int i = 0; i < options.Length; i++)
             {
                 TradeOption option = options[i];
-                if (!option.itemDef && !string.IsNullOrWhiteSpace(option.pickupAddress))
+                UnityEngine.Object pickupDef = option.pickupDef;
+                if (pickupDef is ItemDef itemDef)
                 {
-                    option.itemDef = Addressables.LoadAssetAsync<ItemDef>(option.pickupAddress).WaitForCompletion();
+                    option.pickupIndex = PickupCatalog.FindPickupIndex(itemDef.itemIndex);                 
                 }
-                if (!option.itemDef)
+                else if(pickupDef is EquipmentDef equipmentDef)
                 {
-                    SS2Log.Error($"TradeDef {base.name} has invalid ItemDef");
+                    option.pickupIndex = PickupCatalog.FindPickupIndex(equipmentDef.equipmentIndex);
                 }
-                else
+                else if(pickupDef is ArtifactDef artifactDef)
                 {
-                    option.pickupIndex = PickupCatalog.FindPickupIndex(option.itemDef.itemIndex);
+                    option.pickupIndex = PickupCatalog.FindPickupIndex(artifactDef.artifactIndex);
+                }
+                else if(pickupDef is MiscPickupDef miscPickupDef)
+                {
+                    option.pickupIndex = PickupCatalog.FindPickupIndex(miscPickupDef.miscPickupIndex);
+                }
+                if (option.pickupIndex == PickupIndex.none && !string.IsNullOrWhiteSpace(option.pickupName))
+                {
+                    option.pickupIndex = PickupCatalog.FindPickupIndex(option.pickupName);
                 }
                 if (option.pickupIndex == PickupIndex.none)
                 {
-                    SS2Log.Error($"TradeDef {base.name} has invalid PickupIndex from ItemDef {option.itemDef}");
+                    SS2Log.Error($"TradeDef {base.name} has invalid PickupDef");
                 }
             }
         }
@@ -105,9 +114,15 @@ namespace SS2
         [Serializable]
         public class TradeOption
         {
-            //this can also have equipments/misc pickup defs but we only need items for now
-            public ItemDef itemDef;
-            public string pickupAddress;
+            [TypeRestrictedReference(new Type[]
+            {
+                typeof(ItemDef),
+                typeof(EquipmentDef),
+                typeof(MiscPickupDef),
+                typeof(ArtifactDef),
+            })]
+            public UnityEngine.Object pickupDef;
+            public string pickupName;
             [NonSerialized]
             public PickupIndex pickupIndex = PickupIndex.none;
             public float weight = 1f;

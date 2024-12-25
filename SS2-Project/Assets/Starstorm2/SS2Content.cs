@@ -314,6 +314,8 @@ namespace SS2
 
             public static ItemDef ShardPoison;
 
+            public static ItemDef ShardStorm;
+
             public static ItemDef ShardVoid;
 
             public static ItemDef VoidRock;
@@ -422,7 +424,7 @@ namespace SS2
             //blessings
             public static ItemDef Bleedout;
             public static ItemDef EliteDamageBonus;
-            public static ItemDef DebuffsApplyPoison;
+            public static ItemDef DebuffMissiles;
             public static ItemDef GoldenGun;
             public static ItemDef ItemOnBossKill;
             public static ItemDef ItemOnEliteKill;

@@ -4888,10 +4888,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentObjectTransform: {fileID: 0}
-  startVelocity1: {x: -10, y: 20, z: -10}
-  startVelocity2: {x: 10, y: 28, z: 10}
+  startVelocity1: {x: -10, y: 3, z: -10}
+  startVelocity2: {x: 10, y: 7, z: 10}
   endVelocity1: {x: -10, y: 0, z: -10}
-  endVelocity2: {x: 10, y: 5, z: 10}
+  endVelocity2: {x: 10, y: 1, z: 10}
   movementCurve:
     serializedVersion: 2
     m_Curve:
@@ -4981,7 +4981,7 @@ MonoBehaviour:
   m_Script: {fileID: 816898038, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vfxPriority: 1
+  vfxPriority: 0
   vfxIntensity: 0
   DoNotPool: 0
   DoNotCullPool: 0

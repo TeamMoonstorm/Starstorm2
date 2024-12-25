@@ -14,7 +14,8 @@ namespace SS2
     {
         volatile static bool areWeCurrentlyInHell = false;
 
-        public static void Hook()
+        [SystemInitializer]
+        private static void Hook()
         {
             IL.RoR2.Util.GetBestBodyName += BodyNameIL;
         }
@@ -79,7 +80,7 @@ namespace SS2
             {
                 foreach (BuffIndex buffIndex in BuffCatalog.eliteBuffIndices)
                 {
-                    if (buffIndex == empyreanIndex)
+                    if (buffIndex == empyreanIndex || buffIndex == SS2Content.Buffs.bdEthereal.buffIndex)
                         continue;
 
                     var eliteToken = Language.GetString(BuffCatalog.GetBuffDef(buffIndex).eliteDef.modifierToken);

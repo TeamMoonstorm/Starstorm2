@@ -11,6 +11,7 @@ using UnityEngine.SceneManagement;
 using static RoR2.CombatDirector;
 using R2API;
 using UnityEngine.Networking;
+using R2API.Networking.Interfaces;
 namespace SS2.Components
 {
     //This is a basic director for a custom elite to attempt to spawn.
@@ -45,6 +46,7 @@ namespace SS2.Components
         [Header("Elite Director Values")]
         public float minEliteCreditPerSecond = 2f;
         public float maxEliteCreditPerSecond = 5f;
+        public float initialCredits = 12f;
         private List<StackableAffix> allElites = new List<StackableAffix>();
         private Xoroshiro128Plus rng;
         private float timer = 0;
@@ -62,6 +64,12 @@ namespace SS2.Components
                 allElites.Add(new Ultra());
             }          
             allElites.Add(new Empyrean());
+
+            for (int i = allElites.Count - 1; i >= 0; i--)
+            {
+                if (allElites[i].IsAvailable())
+                    allElites[i].eliteCredit += initialCredits * Run.instance.difficultyCoefficient; //////////
+            }
 #if DEBUG
             shouldLog = true;
 #endif
@@ -75,7 +83,7 @@ namespace SS2.Components
                 if (timer > directorTickInterval)
                 {
                     timer = 0f;
-                    float multiplier = Util.Remap(Run.instance.difficultyCoefficient, 0, 500, 1, 12); // arbitrary values. just guessing
+                    float multiplier = Util.Remap(Run.instance.difficultyCoefficient, 0, 500, 1, 6); // arbitrary values. just guessing
                     float eliteCredit = (rng.RangeFloat(minEliteCreditPerSecond * directorTickInterval, maxEliteCreditPerSecond * directorTickInterval) * multiplier);
                     for (int i = allElites.Count - 1; i >= 0; i--)
                     {
@@ -229,7 +237,7 @@ namespace SS2.Components
 
     public class Empyrean : StackableAffix
     {
-        public override float EliteCreditCost => 1500f;
+        public override float EliteCreditCost => 1200f;
         public override float CostMultiplier => 22.5f;
         public override bool IsBoss => true;
         public override bool IsAvailable()
@@ -257,7 +265,7 @@ namespace SS2.Components
             inventory.GiveItem(RoR2Content.Items.BoostHp, 4000);
             inventory.GiveItem(SS2Content.Items.BoostMovespeed, 35);
             inventory.GiveItem(SS2Content.Items.BoostCooldowns, 50);
-            inventory.GiveItem(RoR2Content.Items.BoostDamage, 60);
+            inventory.GiveItem(RoR2Content.Items.BoostDamage, 100);
             //inventory.GiveItem(RoR2Content.Items.TeleportWhenOob); //REALLY DON'T LIKE THIS ONE. knocking enemies off the stage is a RIGHT. going to make a specific elite to replace this functionality.
             //inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
             inventory.SetEquipmentIndex(SS2Content.Equipments.AffixEmpyrean.equipmentIndex);
@@ -299,19 +307,26 @@ namespace SS2.Components
         private static float baseCostRequirement = 4;
         private static float baseCreditCost = 360;
         public override float EliteCreditCost => baseCreditCost * Mathf.Pow(0.875f, EtherealBehavior.instance.etherealsCompleted-1);
-        public override float CostMultiplier => baseCostMultiplier * Mathf.Pow(0.875f, EtherealBehavior.instance.etherealsCompleted-1);
-        public override float CostRequirement => baseCostRequirement * Mathf.Pow(0.875f, EtherealBehavior.instance.etherealsCompleted-1);
+        public override float CostMultiplier => baseCostMultiplier;// * Mathf.Pow(0.875f, EtherealBehavior.instance.etherealsCompleted-1);
+        public override float CostRequirement => baseCostRequirement;// * Mathf.Pow(0.875f, EtherealBehavior.instance.etherealsCompleted-1);
         public override bool IsAvailable() => EtherealBehavior.instance && EtherealBehavior.instance.etherealsCompleted > 0;
+
+        public override bool CanAfford(float baseCost, float totalCost, CombatDirector combatDirector)
+        {
+            return base.CanAfford(baseCost, totalCost, combatDirector) && combatDirector != TeleporterInteraction.instance?.bossDirector; // felt weird for tp bosses to be ethereal without shrine
+        }
         public override void MakeElite(CharacterBody body)
         {
             var inventory = body.inventory;
             var ethInstance = EtherealBehavior.instance;
             int loopCount = Mathf.Max(Run.instance.loopClearCount, 1);
             int stageCount = EtherealBehavior.instance.etherealStagesCompleted;
+            body.baseMaxHealth = Mathf.Max(body.baseMaxHealth, 300); /////////////////////////////////////////////////////////
+            new FriendManager.SyncBaseStats(body).Send(R2API.Networking.NetworkDestination.Clients);
             inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(150 + (150 * ethInstance.etherealsCompleted)));
             inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, 3 + stageCount * stageCount * 2 + loopCount * loopCount * loopCount);
             inventory.GiveItem(SS2Content.Items.BoostCooldowns, 15);
-            inventory.GiveItem(RoR2Content.Items.BoostDamage, (int)(20 + (20 * ethInstance.etherealsCompleted)));
+            inventory.GiveItem(RoR2Content.Items.BoostDamage, (int)(20 + (20 * ethInstance.etherealsCompleted * ethInstance.etherealsCompleted)));
             inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 20); // MORE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             inventory.GiveItem(SS2Content.Items.EtherealItemAffix);
             DeathRewards rewards = body.GetComponent<DeathRewards>();
@@ -329,11 +344,11 @@ namespace SS2.Components
     public class Ultra : StackableAffix
     {
         private static float baseCostMultiplier = 12;
-        private static float baseCostRequirement = 10;
-        private static float baseCreditCost = 1200;
+        private static float baseCostRequirement = 8;
+        private static float baseCreditCost = 1000;
         public override float EliteCreditCost => baseCreditCost * Mathf.Pow(0.8f, EtherealBehavior.instance.etherealsCompleted - 1);
-        public override float CostMultiplier => baseCostMultiplier * Mathf.Pow(0.8f, EtherealBehavior.instance.etherealsCompleted - 1);
-        public override float CostRequirement => baseCostRequirement * Mathf.Pow(0.8f, EtherealBehavior.instance.etherealsCompleted - 1);
+        public override float CostMultiplier => baseCostMultiplier;// * Mathf.Pow(0.8f, EtherealBehavior.instance.etherealsCompleted - 1);
+        public override float CostRequirement => baseCostRequirement;// * Mathf.Pow(0.8f, EtherealBehavior.instance.etherealsCompleted - 1);
         public override bool IsAvailable() => EtherealBehavior.instance && EtherealBehavior.instance.etherealsCompleted > 0 && Run.instance.loopClearCount >= 1;
         public override bool IsBoss => true;
         public override void MakeElite(CharacterBody body)

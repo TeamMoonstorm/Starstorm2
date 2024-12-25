@@ -107,11 +107,14 @@ namespace SS2.Components
                 StormController.instance = null;
             }
         }
+        private void Awake()
+        {
+            this.stateMachine = base.GetComponent<EntityStateMachine>();
+        }
 
         private void Start()
         {
-            InstantiateEffect();
-            this.stateMachine = base.GetComponent<EntityStateMachine>();
+            InstantiateEffect();         
             this.SetEffectIntensity(this.effectIntensity);
             timeRng = new Xoroshiro128Plus(Run.instance.stageRng.nextUlong);
             treasureRng = new Xoroshiro128Plus(Run.instance.stageRng.nextUlong);

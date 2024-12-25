@@ -201,7 +201,7 @@ MonoBehaviour:
       - m_Target: {fileID: 5361630757537246153}
         m_TargetAssemblyTypeName: SS2.TradeController, Starstorm2
         m_MethodName: BeginTrading
-        m_Mode: 3
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -228,10 +228,10 @@ MonoBehaviour:
       - m_Target: {fileID: 5361630757537246153}
         m_TargetAssemblyTypeName: SS2.TradeController, Starstorm2
         m_MethodName: SetOptionsFromInteractor
-        m_Mode: 2
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: RoR2.Interactor, RoR2
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -397,8 +397,9 @@ GameObject:
   - component: {fileID: 8551807703848067703}
   - component: {fileID: 7273638351107183498}
   - component: {fileID: 8696701525858530574}
-  - component: {fileID: 235755358201047902}
-  m_Layer: 0
+  - component: {fileID: 7257259142262722983}
+  - component: {fileID: 958728288969567416}
+  m_Layer: 11
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -470,8 +471,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &235755358201047902
-CapsuleCollider:
+--- !u!64 &7257259142262722983
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -480,10 +481,24 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &958728288969567416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584358608884641131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1161602148, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entity: {fileID: 1044628198958504}
+  entityZoneIndex: 0
 --- !u!1 &2277866125946317502
 GameObject:
   m_ObjectHideFlags: 0
@@ -496,7 +511,7 @@ GameObject:
   - component: {fileID: 2321377884543620929}
   - component: {fileID: 3696034201674382231}
   - component: {fileID: 4420115719050493607}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -593,7 +608,7 @@ GameObject:
   - component: {fileID: 6635332796520243233}
   - component: {fileID: 6683113990758058308}
   - component: {fileID: 7165515676345218412}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -690,7 +705,7 @@ GameObject:
   - component: {fileID: 6169932801129952926}
   - component: {fileID: 2218297992042487248}
   - component: {fileID: 1755195338771145743}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -787,7 +802,7 @@ GameObject:
   - component: {fileID: 1442808374522657755}
   - component: {fileID: 4671280447875689911}
   - component: {fileID: 7417927682580616586}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -47,7 +47,7 @@ namespace EntityStates.Trader.Bag
             ItemDef playerItem = ItemCatalog.GetItemDef(traderController.lastTradedItemIndex);
             if (playerItem != null)
             {
-                float playerValue = traderController.GetValue(playerItem);
+                float playerValue = traderController.GetValue(PickupCatalog.GetPickupDef(PickupCatalog.FindPickupIndex(playerItem.itemIndex)));
                 Debug.Log("initial player item value: " + playerValue);
 
                 if (playerItem.tier == ItemTier.Tier1 || playerItem.tier == ItemTier.VoidTier1)
