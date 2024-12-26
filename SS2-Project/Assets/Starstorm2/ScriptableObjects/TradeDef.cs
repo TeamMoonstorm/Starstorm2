@@ -33,30 +33,13 @@ namespace SS2
             WeightedSelection<PickupIndex> selector = new WeightedSelection<PickupIndex>();
             foreach (TradeOption option in options)
             {
-                if (Run.instance && Run.instance.IsPickupAvailable(option.pickupIndex))
+                if (option.pickupIndex != PickupIndex.none)
                 {
                     selector.AddChoice(option.pickupIndex, option.weight);
                 }
             }
-            PickupIndex[] array = GenerateUniquePickups(maxDrops, rng, selector);
+            PickupIndex[] array = PickupDropTable.GenerateUniqueDropsFromWeightedSelection(maxDrops, rng, selector);
             return array;
-        }
-
-        protected static PickupIndex[] GenerateUniquePickups(int maxDrops, Xoroshiro128Plus rng, WeightedSelection<PickupIndex> weightedSelection)
-        {
-            int num = Math.Min(maxDrops, weightedSelection.Count);
-            int[] array = Array.Empty<int>();
-            PickupIndex[] array2 = new PickupIndex[num];
-            for (int i = 0; i < num; i++)
-            {
-                int choiceIndex = weightedSelection.EvaluateToChoiceIndex(rng.nextNormalizedFloat, array);
-                WeightedSelection<PickupIndex>.ChoiceInfo choice = weightedSelection.GetChoice(choiceIndex);
-                weightedSelection.RemoveChoice(choiceIndex);
-                array2[i] = choice.value;
-                Array.Resize<int>(ref array, i + 1);
-                array[i] = choiceIndex;
-            }
-            return array2;
         }
 
         #region Init

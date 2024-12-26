@@ -42,6 +42,9 @@ namespace SS2
 			float t = tradeValue - lower.requiredValue;
 			float tMax = upper.requiredValue - lower.requiredValue;
 			ValueBreakpoint state = ValueBreakpoint.Lerp(ref lower, ref upper, t / tMax);
+#if DEBUG
+			SS2Log.Warning($"Trade Value = {tradeValue} \nNone = {state.nothing} \nTier1 = {state.tier1} \nTier2 = {state.tier2} \nTier3 = {state.tier3} \nBoss = {state.boss} \nShard = {state.shard}");
+#endif
 			this.selector.Clear();
 			this.selector.AddChoice(ItemTier.NoTier, state.nothing); // using itemtier is pointless but it makes my brain happy
 			this.selector.AddChoice(ItemTier.Tier1, state.tier1);
@@ -102,6 +105,7 @@ namespace SS2
 				if (a.Equals(b)) return a;
 				return new ValueBreakpoint
 				{
+					nothing = Mathf.LerpUnclamped(a.nothing, b.nothing, t),
 					tier1 = Mathf.LerpUnclamped(a.tier1, b.tier1, t),
 					tier2 = Mathf.LerpUnclamped(a.tier2, b.tier2, t),
 					tier3 = Mathf.LerpUnclamped(a.tier3, b.tier3, t),

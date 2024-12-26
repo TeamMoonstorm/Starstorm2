@@ -44,6 +44,18 @@ namespace SS2.Components
                 {
                     AddItem(item);                 
                 }
+                foreach (PickupIndex item in Run.instance.availableTier2DropList)
+                {
+                    AddItem(item);
+                }
+                foreach (PickupIndex item in Run.instance.availableTier3DropList)
+                {
+                    AddItem(item);
+                }
+                foreach (PickupIndex item in Run.instance.availableBossDropList)
+                {
+                    AddItem(item);
+                }
             }
         }
 
@@ -103,6 +115,8 @@ namespace SS2.Components
                 SS2Log.Error("non item pickups arent supported yet");
                 return;
             }
+            if (pickupIndex == favoriteItem)
+                value = 0.2f + value * 2; //////////////////////////////////////////////////////////////////
             itemValues.Add(pickupIndex, value);
         }
         [Server]
@@ -156,20 +170,25 @@ namespace SS2.Components
             }
             if(IsSpecial(pickup))
             {
-                nextReward = PickupCatalog.FindPickupIndex(SS2Content.Items.ScavengersFortune.itemIndex); // temp until we add tradedefs here
+                nextReward = PickupCatalog.FindPickupIndex(SS2Content.Items.ShardScav.itemIndex); // temp until we add tradedefs here
             }
             else
             {
                 float value = itemValues[pickup];
-                PickupIndex[] potentialRewards = dropTable.GenerateDrops(4, value, this.rng); // could have random number of drops. doesnt really matter
+                SS2Log.Info($"START TRADE {pickupDef.internalName}. VALUE = {value}--------------------------------");
+                PickupIndex[] potentialRewards = dropTable.GenerateDrops(4, value, this.rng); // could have random number of drops. doesnt really matter       
+                SS2Log.Info($"POTENTIAL REWARDS:");
                 for (int i = 0; i < potentialRewards.Length; i++)
                 {
-                    SS2Log.Info($"TraderController.BeginTrade({intPickupIndex}): POTENTIAL ITEM " + i + "=" + (potentialRewards[i] != PickupIndex.none ? PickupCatalog.GetPickupDef(potentialRewards[i]).internalName : "NOTHING"));
+                    SS2Log.Info(i + " = " + (potentialRewards[i] != PickupIndex.none ? PickupCatalog.GetPickupDef(potentialRewards[i]).internalName : "NOTHING"));
                 }
+                SS2Log.Info($"-------------------------------------------------------------");
                 PickupIndex reward = rng.NextElementUniform(potentialRewards);
                 if (reward == PickupIndex.none) reward = PickupCatalog.FindScrapIndexForItemTier(ItemTier.Tier1); // TEMP FOR DEBUG(?)
                 nextReward = reward; ///////// PROBABLY NEED TO TURN THIS INTO LIST OF PENDING REWARDS FOR MULTIPLAYER
                 itemValues[pickup] *= 0.75f; ////////////////////////////////////////////////////////////////////////////////////////////////////////
+                if(itemValues.ContainsKey(reward)) // reward can be none or special item
+                    itemValues[reward] *= 0.75f; //////////////////////////////////;le balace////////////////////////////////////////////////////////////////////////
                 /// chance to change favorite item could be good
             }
             if (esm)
@@ -184,10 +203,7 @@ namespace SS2.Components
         }
         public float GetValue(PickupIndex pickupIndex)
         {
-            float value = itemValues[pickupIndex];
-            if (pickupIndex == favoriteItem)
-                value = 0.2f + value * 2; //////////////////////////////////////////////////////////////////
-            return value;
+            return itemValues[pickupIndex];
         }
     }
 }
