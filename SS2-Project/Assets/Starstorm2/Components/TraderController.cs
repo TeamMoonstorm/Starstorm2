@@ -19,16 +19,14 @@ namespace SS2.Components
         private Interactor interactor;
 
         public TraderDropTable dropTable; // make generic
-        public float t1Min = 10;
+        public float t1Min = 10; // yucky
         public float t1Max = 35;
         public float t2Min = 40;
         public float t2Max = 60;
         public float t3Min = 60;
         public float t3Max = 100;
         public float bossMin = 75;
-        public float bossMax = 120;
-
-        
+        public float bossMax = 120;    
 
         private Xoroshiro128Plus rng;
         public Dictionary<PickupIndex, float> itemValues = new Dictionary<PickupIndex, float>();
@@ -106,7 +104,6 @@ namespace SS2.Components
                 return;
             }
             itemValues.Add(pickupIndex, value);
-
         }
         [Server]
         public void AssignPotentialInteractor(Interactor activator)
@@ -157,7 +154,7 @@ namespace SS2.Components
                     ScrapperController.CreateItemTakenOrb(interactorBody.corePosition, gameObject, pickupDef.itemIndex); // remove later
                 }
             }
-            if(!IsSpecial(pickup))
+            if(IsSpecial(pickup))
             {
                 nextReward = PickupCatalog.FindPickupIndex(SS2Content.Items.ScavengersFortune.itemIndex); // temp until we add tradedefs here
             }
@@ -172,7 +169,8 @@ namespace SS2.Components
                 PickupIndex reward = rng.NextElementUniform(potentialRewards);
                 if (reward == PickupIndex.none) reward = PickupCatalog.FindScrapIndexForItemTier(ItemTier.Tier1); // TEMP FOR DEBUG(?)
                 nextReward = reward; ///////// PROBABLY NEED TO TURN THIS INTO LIST OF PENDING REWARDS FOR MULTIPLAYER
-                itemValues[pickup] *= 0.8f; ////////////////////////////////////////////////////////////////////////////////////////////////////////
+                itemValues[pickup] *= 0.75f; ////////////////////////////////////////////////////////////////////////////////////////////////////////
+                /// chance to change favorite item could be good
             }
             if (esm)
             {

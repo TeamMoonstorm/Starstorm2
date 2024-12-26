@@ -11,6 +11,7 @@ namespace SS2
     public class TradeDef : ScriptableObject
     {
         public ItemDef desiredItem;
+        public int desiredAmount = 1;
         public int maxOptions = 3;
         public TradeOption[] options;
 
@@ -91,7 +92,6 @@ namespace SS2
                 }
             }
         }
-
         [SystemInitializer(typeof(PickupCatalog))]
         private static void Init()
         {
