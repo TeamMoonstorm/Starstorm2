@@ -9,140 +9,47 @@ using R2API;
 
 namespace SS2.Components
 {
-
-    //TODO: nuke this and start over
     public class TraderController : NetworkBehaviour
     {
-        public ItemIndex lastTradedItemIndex { get; private set; }
+        public PickupIndex nextReward { get; private set; }
+        public PickupIndex favoriteItem { get; private set; }
+
         public EntityStateMachine esm;
-        public ModelLocator modelLocator;
-        public ChildLocator childLocator;
-        public static GameObject menuPrefab;
         public PickupPickerController pickupPickerController;
         private Interactor interactor;
 
-        public float commonValue = 0.12f;
-        public float uncommonValue = 0.3f;
-        public float rareValue = 0.62f;
-        public float lunarValue = 0.45f;
+        public TraderDropTable dropTable; // make generic
+        public float t1Min = 10;
+        public float t1Max = 35;
+        public float t2Min = 40;
+        public float t2Max = 60;
+        public float t3Min = 60;
+        public float t3Max = 100;
+        public float bossMin = 75;
+        public float bossMax = 120;
 
-        public ItemDef favoriteItem;
-        private LanguageTextMeshController ltmcPrice;
+        
 
-        private GameObject priceLabel;
-
-        public Dictionary<ItemDef, float> itemValues = new Dictionary<ItemDef, float>();
-        public Dictionary<Sprite, ItemDef> itemSprites = new Dictionary<Sprite, ItemDef>(); //stupid solution
-
-        [SystemInitializer]
-        internal static void Initialize()
-        {
-            menuPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Scrapper/ScrapperPickerPanel.prefab").WaitForCompletion().InstantiateClone("sansans");
-            if (menuPrefab != null)
-                ModifyMenu(menuPrefab);
-        }
-
+        private Xoroshiro128Plus rng;
+        public Dictionary<PickupIndex, float> itemValues = new Dictionary<PickupIndex, float>();
+        private List<PickupIndex> specialItems = new List<PickupIndex>();
+        public PickupIndex[] potentialRewards = new PickupIndex[4];
         void Start()
         {
-            modelLocator = GetComponent<ModelLocator>();
-            childLocator = modelLocator.modelTransform.GetComponent<ChildLocator>();
-
             //Assign a favorite item.
-            favoriteItem = FindFavorite();
-
             //Give every item a value.
             if (NetworkServer.active)
             {
-                Debug.Log("yep");
-                foreach (ItemDef item in ItemCatalog.allItemDefs)
+                favoriteItem = FindFavorite();
+                rng = new Xoroshiro128Plus(Run.instance.treasureRng); 
+                foreach (PickupIndex item in Run.instance.availableTier1DropList)
                 {
-                    if (Run.instance.IsItemAvailable(item.itemIndex))
-                    {
-                        float value = CalcValue(item);
-                        itemValues[item] = value;
-                        Debug.Log("Value for " + item.nameToken + " is " + itemValues[item]);
-                        if (item == favoriteItem)
-                            Debug.Log("I ABSOLUTELY FUCKING LOVE " + item.nameToken + " BTW");
-                        itemSprites[item.pickupIconSprite] = item; //fuck it we ball.
-                    }
+                    AddItem(item);                 
                 }
             }
-
-            //Modify pickup controller; deprecate once something custom is made in project.
-            if (pickupPickerController)
-            {
-                pickupPickerController.panelPrefab = menuPrefab;
-
-                Transform panel = pickupPickerController.panelPrefab.transform.Find("MainPanel");
-                Transform juice = panel.Find("Juice");
-                Transform label = juice.Find("Label");
-
-                priceLabel = Instantiate(label.gameObject);
-                priceLabel.AddComponent<FavoriteTooltipManager>();
-                RectTransform priceLabelRect = priceLabel.GetComponent<RectTransform>();
-                priceLabelRect.SetPositionAndRotation(new Vector3(priceLabelRect.localPosition.x, priceLabelRect.localPosition.y - 45, priceLabelRect.localPosition.z), priceLabelRect.rotation);
-
-                if (label.Find("Label(Clone") == null)
-                {
-                    priceLabel = Instantiate(label.gameObject);
-                    priceLabel.transform.SetParent(label);
-                }
-                else
-                    Debug.Log("pricelabel null, returning"); return;
-                
-                ltmcPrice = priceLabel.GetComponent<LanguageTextMeshController>();
-
-                //Set 'favorite item' label
-                if (ltmcPrice != null)
-                {
-                    string combinedString = string.Format("{0}{1}{2}", Language.GetStringFormatted("SS2_TRADER_WANT_TEXT"), Language.GetStringFormatted(favoriteItem.nameToken), Language.GetStringFormatted("SS2_TRADER_WANT2_TEXT"));
-                    ltmcPrice.token = combinedString;
-                }
-                else
-                    Debug.Log("ltmc2 null");
-            }
-
-            Debug.Log("hi");
         }
 
-        public ItemDef GetItemThroughSprite(Sprite sprite)
-        {
-            return itemSprites[sprite];
-        }
-
-        public static GameObject ModifyMenu(GameObject menuPrefab)
-        {
-            Debug.Log("MAKING MENU");
-            //Pull some elements of the menu for easy reference
-            Transform panel = menuPrefab.transform.Find("MainPanel");
-            Transform juice = panel.Find("Juice");
-            Transform label = juice.Find("Label");
-            LanguageTextMeshController ltmc = label.GetComponent<LanguageTextMeshController>();
-
-            //Set trader info label
-            if (ltmc != null)
-                ltmc.token = "SS2_TRADER_POPUP_TEXT";
-            else
-                Debug.Log("ltmc null");
-
-            //Create the 'favorite item' label
-            GameObject priceLabel = Instantiate(label.gameObject);
-            priceLabel.AddComponent<FavoriteTooltipManager>();
-            RectTransform priceLabelRect = priceLabel.GetComponent<RectTransform>();
-            priceLabelRect.SetPositionAndRotation(new Vector3(priceLabelRect.localPosition.x, priceLabelRect.localPosition.y - 45, priceLabelRect.localPosition.z), priceLabelRect.rotation);
-            priceLabel.transform.SetParent(label);
-
-            //Add tooltips to every item
-            //Transform iconContainer = juice.Find("IconContainer");
-            //Transform pickupTemplate = iconContainer.Find("PickupButtonTemplate");
-            //TooltipProvider tooltipProvider = pickupTemplate.gameObject.AddComponent<TooltipProvider>();
-            //PriceTooltipManager priceTooltipManager = pickupTemplate.gameObject.AddComponent<PriceTooltipManager>();
-
-            Debug.Log("MADE MENU");
-            return menuPrefab;
-        }
-
-        private ItemDef FindFavorite()
+        private PickupIndex FindFavorite()
         {
             int itemCount = ItemCatalog.allItemDefs.Length;
             int randomindex = UnityEngine.Random.Range(0, itemCount); //dual wielding randoms
@@ -156,126 +63,133 @@ namespace SS2.Components
             if (favoriteItem == RoR2Content.Items.ScrapGreen || favoriteItem == RoR2Content.Items.ScrapWhite || favoriteItem == RoR2Content.Items.ScrapYellow || favoriteItem == RoR2Content.Items.ScrapRed)
                 favoriteItem = RoR2Content.Items.BarrierOnOverHeal;
 
-            return favoriteItem;
+            return PickupCatalog.FindPickupIndex(favoriteItem.itemIndex);
         }
 
-        private float CalcValue(ItemDef itemDef)
+        // NOT NETWORKED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        private void AddItem(PickupIndex pickupIndex)
         {
             float value = 0;
-
-            switch (itemDef.tier)
+            ItemIndex itemIndex = PickupCatalog.GetPickupDef(pickupIndex).itemIndex;
+            ItemDef itemDef = ItemCatalog.GetItemDef(itemIndex);
+            if(itemDef)
             {
-                //rare, boss, and void equivalents:
-                case ItemTier.Tier3:
-                case ItemTier.Boss:
-                case ItemTier.VoidTier3:
-                case ItemTier.VoidBoss:
-                    value = UnityEngine.Random.Range(rareValue * 0.9f, rareValue * 1.3f);
-                    break;
-
-                //lunar:
-                case ItemTier.Lunar:
-                    value = UnityEngine.Random.Range(lunarValue * 0.7f, lunarValue * 1.3f);
-                    break;
-
-                //uncommon and void equivalent:
-                case ItemTier.Tier2:
-                case ItemTier.VoidTier2:
-                    value = UnityEngine.Random.Range(uncommonValue * 0.7f, uncommonValue * 1.5f);
-                    break;
-
-                //common and void equivalent:
-                default:
-                    value = UnityEngine.Random.Range(commonValue * 0.7f, commonValue * 1.45f);
-                    if ((itemDef.tier != ItemTier.Tier1) && (itemDef.tier != ItemTier.VoidTier1)) //bonus for mystery items
-                        value += 0.65f; //now how'd you manage that...?
-                    break;
-            }
-
-            //small bonus for desired item; lets items go over 100% but that's fun and will be rare so ... why not?
-            if (itemDef == favoriteItem)
-                value += 0.3f;
-
-            //zanzan does not care much for garbage
-            if (itemDef == RoR2Content.Items.ScrapGreen || itemDef == RoR2Content.Items.ScrapWhite || itemDef == RoR2Content.Items.ScrapYellow || itemDef == RoR2Content.Items.ScrapRed)
-                value *= 0.2f;
-
-            //we stay silly
-            if (itemDef == RoR2Content.Items.BarrierOnOverHeal && favoriteItem != RoR2Content.Items.BarrierOnOverHeal)
-                value -= 0.2f;
-
-            return value;
-        }
-
-        void Update()
-        { }
-
-        [Server]
-        public void AssignPotentialInteractor(Interactor potentialInteractor)
-        {
-            if (!NetworkServer.active)
-            {
-                Debug.Log("THIS MF IS A CLIENT LOL @ TraderController AssignPotentialInteractor");
-                return;
+                switch (itemDef.tier)
+                {
+                    case ItemTier.Boss:
+                        value = rng.RangeFloat(bossMin, bossMax);
+                        break;
+                    //rare, boss, and void equivalents:
+                    case ItemTier.Tier3:
+                    case ItemTier.VoidTier3:
+                    case ItemTier.VoidBoss:
+                        value = rng.RangeFloat(t3Min, t3Max);
+                        break;
+                    //uncommon and void equivalent:
+                    case ItemTier.Tier2:
+                    case ItemTier.VoidTier2:
+                        value = rng.RangeFloat(t2Min, t2Max);
+                        break;
+                    //common and void equivalent:
+                    case ItemTier.Tier1:
+                    case ItemTier.VoidTier1:
+                        value = rng.RangeFloat(t1Min, t1Max);
+                        break;
+                }
+                //we stay silly
+                if (itemDef == RoR2Content.Items.BarrierOnOverHeal && favoriteItem.itemIndex != RoR2Content.Items.BarrierOnOverHeal.itemIndex)
+                    value -= 0.2f;
             }
             else
             {
-                Debug.Log("hello!");
+                SS2Log.Error("non item pickups arent supported yet");
+                return;
             }
-            interactor = potentialInteractor;
+            itemValues.Add(pickupIndex, value);
+
+        }
+        [Server]
+        public void AssignPotentialInteractor(Interactor activator)
+        {
+            if (!activator)
+            {
+                return;
+            }
+            CharacterBody component = activator.GetComponent<CharacterBody>();
+            if (!component)
+            {
+                return;
+            }
+            Inventory inventory = component.inventory;
+            if (!inventory)
+            {
+                return;
+            }
+            this.interactor = activator;
+            List<PickupPickerController.Option> list = new List<PickupPickerController.Option>();
+            for (int i = 0; i < inventory.itemAcquisitionOrder.Count; i++)
+            {
+                ItemIndex itemIndex = inventory.itemAcquisitionOrder[i];
+                PickupIndex pickupIndex = PickupCatalog.FindPickupIndex(itemIndex);
+                if (pickupIndex != PickupIndex.none && itemValues.ContainsKey(pickupIndex))
+                {
+                    list.Add(new PickupPickerController.Option
+                    {
+                        available = true,
+                        pickupIndex = pickupIndex
+                    });
+                }
+            }
+            pickupPickerController.SetOptionsServer(list.ToArray());
         }
 
         [Server]
         public void BeginTrade(int intPickupIndex)
         {
-            if (!NetworkServer.active)
-            {
-                return;
-            }
-            PickupDef pickupDef = PickupCatalog.GetPickupDef(new PickupIndex(intPickupIndex));
+            PickupIndex pickup = new PickupIndex(intPickupIndex);
+            PickupDef pickupDef = PickupCatalog.GetPickupDef(pickup);
             if (pickupDef != null && interactor)
             {
-                lastTradedItemIndex = pickupDef.itemIndex;
                 CharacterBody interactorBody = interactor.GetComponent<CharacterBody>();
                 if (interactorBody && interactorBody.inventory)
                 {
                     interactorBody.inventory.RemoveItem(pickupDef.itemIndex, 1);
-                    CreateItemTakenOrb(interactorBody.corePosition, gameObject, pickupDef.itemIndex);
+                    ScrapperController.CreateItemTakenOrb(interactorBody.corePosition, gameObject, pickupDef.itemIndex); // remove later
                 }
+            }
+            if(!IsSpecial(pickup))
+            {
+                nextReward = PickupCatalog.FindPickupIndex(SS2Content.Items.ScavengersFortune.itemIndex); // temp until we add tradedefs here
+            }
+            else
+            {
+                float value = itemValues[pickup];
+                PickupIndex[] potentialRewards = dropTable.GenerateDrops(4, value, this.rng); // could have random number of drops. doesnt really matter
+                for (int i = 0; i < potentialRewards.Length; i++)
+                {
+                    SS2Log.Info($"TraderController.BeginTrade({intPickupIndex}): POTENTIAL ITEM " + i + "=" + (potentialRewards[i] != PickupIndex.none ? PickupCatalog.GetPickupDef(potentialRewards[i]).internalName : "NOTHING"));
+                }
+                PickupIndex reward = rng.NextElementUniform(potentialRewards);
+                if (reward == PickupIndex.none) reward = PickupCatalog.FindScrapIndexForItemTier(ItemTier.Tier1); // TEMP FOR DEBUG(?)
+                nextReward = reward; ///////// PROBABLY NEED TO TURN THIS INTO LIST OF PENDING REWARDS FOR MULTIPLAYER
+                itemValues[pickup] *= 0.8f; ////////////////////////////////////////////////////////////////////////////////////////////////////////
             }
             if (esm)
             {
                 esm.SetNextState(new WaitToBeginTrade());
             }
         }
-
-        public float GetValue(ItemDef itemDef)
+        public bool IsSpecial(PickupIndex pickupIndex)
         {
-            return itemValues[itemDef];
+            return PickupCatalog.GetPickupDef(pickupIndex).itemIndex == SS2Content.Items.ScavengersFortune.itemIndex;
+            //return specialItems.Contains(pickupIndex); // implement this when we combine it with tradecontroller?
         }
-
-        public void ReduceValue()
+        public float GetValue(PickupIndex pickupIndex)
         {
-            itemValues[ItemCatalog.GetItemDef(lastTradedItemIndex)] *= 0.8f;
-        }
-
-        [Server]
-        public static void CreateItemTakenOrb(Vector3 effectOrigin, GameObject targetObject, ItemIndex itemIndex)
-        {
-            if (!NetworkServer.active)
-            {
-                Debug.Log("client client client @ TraderController CreateItemTakenOrb");
-                return;
-            }
-            GameObject effectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/ItemTakenOrbEffect.prefab").WaitForCompletion();
-            EffectData effectData = new EffectData
-            {
-                origin = effectOrigin,
-                genericFloat = 1.5f,
-                genericUInt = (uint)(itemIndex + 1)
-            };
-            effectData.SetNetworkedObjectReference(targetObject);
-            EffectManager.SpawnEffect(effectPrefab, effectData, true);
+            float value = itemValues[pickupIndex];
+            if (pickupIndex == favoriteItem)
+                value = 0.2f + value * 2; //////////////////////////////////////////////////////////////////
+            return value;
         }
     }
 }

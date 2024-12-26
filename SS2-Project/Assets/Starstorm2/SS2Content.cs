@@ -314,6 +314,8 @@ namespace SS2
 
             public static ItemDef ShardPoison;
 
+            public static ItemDef ShardScav;
+
             public static ItemDef ShardStorm;
 
             public static ItemDef ShardVoid;

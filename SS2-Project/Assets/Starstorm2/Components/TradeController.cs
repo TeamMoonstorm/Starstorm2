@@ -8,12 +8,12 @@ using System.Collections.Generic;
 namespace SS2
 {
 	// this is for evil tp
-	// would take some refactoring to make this also usable for zanzan
+	// TODO: combine with TraderController (zanzan)?????????
 	public class TradeController : NetworkBehaviour
 	{
-		public TradeDef[] trades;
+		public TradeDef[] trades; // rename to explicitTrades
 		public SerializableEntityStateType tradeState = new SerializableEntityStateType(typeof(WaitToBeginScrapping));
-		public GameObject pickupPrefab;
+		public GameObject pickupPrefab; // move into tradedef
 		public Transform dropTransform;
 
 		public float dropUpVelocityStrength = 15f;
@@ -67,6 +67,7 @@ namespace SS2
 				PickupIndex pickupIndex = PickupCatalog.FindPickupIndex(itemIndex);
 				if (pickupIndex != PickupIndex.none && desiredItems.Contains(itemIndex))
 				{
+					// have a required itemcount for tradedefs, set available to false if player has less
 					list.Add(new PickupPickerController.Option
 					{
 						available = true,
@@ -90,7 +91,7 @@ namespace SS2
 					if (component.inventory.GetItemCount(pickupDef.itemIndex) > 0)
 					{
 						component.inventory.RemoveItem(pickupDef.itemIndex);
-						CreateItemTakenOrb(component.corePosition, base.gameObject, pickupDef.itemIndex);
+						ScrapperController.CreateItemTakenOrb(component.corePosition, base.gameObject, pickupDef.itemIndex);
 					}
 				}
 			}
@@ -116,21 +117,6 @@ namespace SS2
 				this.esm.SetNextState(EntityStateCatalog.InstantiateState(ref this.tradeState));
 			}
 		}
-
-		[Server]
-		public static void CreateItemTakenOrb(Vector3 effectOrigin, GameObject targetObject, ItemIndex itemIndex)
-		{
-			GameObject effectPrefab = LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/OrbEffects/ItemTakenOrbEffect");
-			EffectData effectData = new EffectData
-			{
-				origin = effectOrigin,
-				genericFloat = 1.5f,
-				genericUInt = (uint)(itemIndex + 1)
-			};
-			effectData.SetNetworkedObjectReference(targetObject);
-			EffectManager.SpawnEffect(effectPrefab, effectData, true);
-		}
-
 		
 	}
 }
