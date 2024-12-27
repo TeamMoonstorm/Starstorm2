@@ -29,11 +29,11 @@ namespace SS2.UI
 		public void ShowInfo(MPButton button, PickupDef pickupDef)
 		{
 			InspectInfo info = pickupDef;
-			info.MarkForceShowInfo();
-			this.inspectPanelController.Show(info, withSidecar);
+			if(pickupDef != null)
+            {
+				info.MarkForceShowInfo();
+				this.inspectPanelController.Show(info, withSidecar);
+			}			
 		}
-
-		
-
 	}
 }

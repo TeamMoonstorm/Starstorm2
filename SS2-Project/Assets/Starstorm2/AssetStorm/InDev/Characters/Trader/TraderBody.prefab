@@ -4747,6 +4747,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 720c19d8e540e9446a4f2e378778a6b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rewardControllerPrefab: {fileID: 683425583528693915, guid: fa233c9050967f84c9271cb0168c0f49,
+    type: 3}
   esm: {fileID: 8305973606314702422}
   pickupPickerController: {fileID: 3411196135211828814}
   dropTable: {fileID: 11400000, guid: d158d94723eef384687a5e25add5039b, type: 2}
@@ -4754,8 +4756,8 @@ MonoBehaviour:
   t1Max: 35
   t2Min: 40
   t2Max: 60
-  t3Min: 60
-  t3Max: 100
+  t3Min: 80
+  t3Max: 110
   bossMin: 75
   bossMax: 120
   potentialRewards:

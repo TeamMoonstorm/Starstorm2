@@ -16,6 +16,7 @@ namespace SS2.Components
 
         public static GameObject directorPrefab;
         public GameObject directorInstance;
+        public Xoroshiro128Plus voidshopRng; // for persistent chests
 
         [MSU.AsyncAssetLoad]
         internal static IEnumerator Init()
@@ -38,6 +39,7 @@ namespace SS2.Components
             instance = this;
             On.RoR2.SceneDirector.Start += SceneDirector_Start; /////// fuck OFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
             base.transform.SetParent(Run.instance.transform);
+            voidshopRng = new Xoroshiro128Plus(Run.instance.runRNG.nextUlong);
         }
 
         private void OnDestroy()

@@ -46,6 +46,7 @@ namespace SS2.Items
             }
             public void OnDamageDealtServer(DamageReport damageReport)
             {
+				if (!damageReport.victimIsElite) return;
 				DamageInfo damageInfo = damageReport.damageInfo;
 				if (!damageInfo.damageType.IsDamageSourceSkillBased) return;
 				float damageCoefficient = 0.5f + 0.25f * (stack - 1);

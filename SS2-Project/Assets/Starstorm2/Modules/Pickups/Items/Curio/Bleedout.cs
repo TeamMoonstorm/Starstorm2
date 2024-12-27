@@ -38,7 +38,9 @@ namespace SS2.Items
                 if (!body.HasBuff(SS2Content.Buffs.BuffBleedoutReady))
                 {
                     this.rechargeTimer += Time.fixedDeltaTime;
-                    float cooldown = 240f * Util.ConvertAmplificationPercentageIntoReductionPercentage(20f * (stack - 1));
+                    float cooldown = 240f;
+                    for (int i = 0; i < stack; i++)
+                        cooldown *= 0.8f;
                     if (this.rechargeTimer >= cooldown)
                     {
                         this.body.AddBuff(SS2Content.Buffs.BuffBleedoutReady);

@@ -69,7 +69,7 @@ namespace SS2.UI
 				image.pixelsPerUnitMultiplier = 0.75f; // thicker outline
 				childLocator.FindChild("HoverOutline").GetComponent<Image>().color = desiredItemHover;
 			}
-			else if (traderController.IsSpecial(pickupDef.pickupIndex))
+			else if (traderController && traderController.IsSpecial(pickupDef.pickupIndex))
             {
 				Image image = childLocator.FindChild("BaseOutline").GetComponent<Image>();
 				image.color = valueGradient.Evaluate(999);

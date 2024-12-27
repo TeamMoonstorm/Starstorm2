@@ -7,7 +7,7 @@ using RoR2.Orbs;
 using System.Collections.Generic;
 namespace SS2.Items
 {
-    public sealed class GoldenGun : SS2Item
+    public sealed class GoldenGun : SS2Item // MAKE IT HIT LIST INSTEAD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     {
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acGoldenGun", SS2Bundle.Items);
         public override bool IsAvailable(ContentPack contentPack) => true;

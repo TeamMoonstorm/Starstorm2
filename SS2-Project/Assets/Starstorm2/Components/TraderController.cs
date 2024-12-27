@@ -11,7 +11,13 @@ namespace SS2.Components
 {
     public class TraderController : NetworkBehaviour
     {
-        public PickupIndex nextReward { get; private set; }
+        public GameObject rewardControllerPrefab;
+        public Queue<Reward> pendingRewards = new Queue<Reward>();
+        public struct Reward
+        {
+            public PickupIndex drop;
+            public GameObject target;
+        }
         public PickupIndex favoriteItem { get; private set; }
 
         public EntityStateMachine esm;
@@ -23,8 +29,8 @@ namespace SS2.Components
         public float t1Max = 35;
         public float t2Min = 40;
         public float t2Max = 60;
-        public float t3Min = 60;
-        public float t3Max = 100;
+        public float t3Min = 80;
+        public float t3Max = 110;
         public float bossMin = 75;
         public float bossMax = 120;    
 
@@ -32,48 +38,27 @@ namespace SS2.Components
         public Dictionary<PickupIndex, float> itemValues = new Dictionary<PickupIndex, float>();
         private List<PickupIndex> specialItems = new List<PickupIndex>();
         public PickupIndex[] potentialRewards = new PickupIndex[4];
+        private PickupIndex[] allAvailableItems;
         void Start()
         {
+            allAvailableItems = HG.ArrayUtils.Join(Run.instance.availableTier1DropList.ToArray(), Run.instance.availableTier2DropList.ToArray(), Run.instance.availableTier3DropList.ToArray(), Run.instance.availableBossDropList.ToArray());
             //Assign a favorite item.
             //Give every item a value.
             if (NetworkServer.active)
             {
+                              
+                rng = new Xoroshiro128Plus(Run.instance.treasureRng);
                 favoriteItem = FindFavorite();
-                rng = new Xoroshiro128Plus(Run.instance.treasureRng); 
-                foreach (PickupIndex item in Run.instance.availableTier1DropList)
+                foreach (PickupIndex item in allAvailableItems)
                 {
                     AddItem(item);                 
-                }
-                foreach (PickupIndex item in Run.instance.availableTier2DropList)
-                {
-                    AddItem(item);
-                }
-                foreach (PickupIndex item in Run.instance.availableTier3DropList)
-                {
-                    AddItem(item);
-                }
-                foreach (PickupIndex item in Run.instance.availableBossDropList)
-                {
-                    AddItem(item);
                 }
             }
         }
 
         private PickupIndex FindFavorite()
         {
-            int itemCount = ItemCatalog.allItemDefs.Length;
-            int randomindex = UnityEngine.Random.Range(0, itemCount); //dual wielding randoms
-            ItemDef favoriteItem = ItemCatalog.allItemDefs[randomindex];
-
-            //if an item can't be found, then find an item.
-            if (!Run.instance.IsItemAvailable(favoriteItem.itemIndex))
-                favoriteItem = RoR2Content.Items.BarrierOnOverHeal;
-
-            //replace trash with trash
-            if (favoriteItem == RoR2Content.Items.ScrapGreen || favoriteItem == RoR2Content.Items.ScrapWhite || favoriteItem == RoR2Content.Items.ScrapYellow || favoriteItem == RoR2Content.Items.ScrapRed)
-                favoriteItem = RoR2Content.Items.BarrierOnOverHeal;
-
-            return PickupCatalog.FindPickupIndex(favoriteItem.itemIndex);
+            return rng.NextElementUniform(allAvailableItems);
         }
 
         // NOT NETWORKED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -107,7 +92,7 @@ namespace SS2.Components
                         break;
                 }
                 //we stay silly
-                if (itemDef == RoR2Content.Items.BarrierOnOverHeal && favoriteItem.itemIndex != RoR2Content.Items.BarrierOnOverHeal.itemIndex)
+                if (itemDef == RoR2Content.Items.BarrierOnOverHeal)
                     value -= 0.2f;
             }
             else
@@ -168,32 +153,43 @@ namespace SS2.Components
                     ScrapperController.CreateItemTakenOrb(interactorBody.corePosition, gameObject, pickupDef.itemIndex); // remove later
                 }
             }
+            PickupIndex[] potentialRewards = null;
+            int rewardIndex = 0;
             if(IsSpecial(pickup))
             {
-                nextReward = PickupCatalog.FindPickupIndex(SS2Content.Items.ShardScav.itemIndex); // temp until we add tradedefs here
+                potentialRewards = new PickupIndex[1] { PickupCatalog.FindPickupIndex(SS2Content.Items.ShardScav.itemIndex) }; // temp until we add tradedefs here
             }
             else
             {
                 float value = itemValues[pickup];
                 SS2Log.Info($"START TRADE {pickupDef.internalName}. VALUE = {value}--------------------------------");
-                PickupIndex[] potentialRewards = dropTable.GenerateDrops(4, value, this.rng); // could have random number of drops. doesnt really matter       
-                SS2Log.Info($"POTENTIAL REWARDS:");
+                potentialRewards = dropTable.GenerateDrops(4, value, this.rng); // could have random number of drops. doesnt really matter       
                 for (int i = 0; i < potentialRewards.Length; i++)
                 {
-                    SS2Log.Info(i + " = " + (potentialRewards[i] != PickupIndex.none ? PickupCatalog.GetPickupDef(potentialRewards[i]).internalName : "NOTHING"));
+                    if (potentialRewards[i] == PickupIndex.none) potentialRewards[i] = PickupCatalog.FindScrapIndexForItemTier(ItemTier.Tier1);
                 }
                 SS2Log.Info($"-------------------------------------------------------------");
-                PickupIndex reward = rng.NextElementUniform(potentialRewards);
-                if (reward == PickupIndex.none) reward = PickupCatalog.FindScrapIndexForItemTier(ItemTier.Tier1); // TEMP FOR DEBUG(?)
-                nextReward = reward; ///////// PROBABLY NEED TO TURN THIS INTO LIST OF PENDING REWARDS FOR MULTIPLAYER
+                rewardIndex = rng.RangeInt(0, potentialRewards.Length);
+                PickupIndex reward = potentialRewards[rewardIndex];
+                pendingRewards.Enqueue(new Reward { drop = reward, target = interactor.gameObject });
+                /// NETWORK THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 itemValues[pickup] *= 0.75f; ////////////////////////////////////////////////////////////////////////////////////////////////////////
                 if(itemValues.ContainsKey(reward)) // reward can be none or special item
                     itemValues[reward] *= 0.75f; //////////////////////////////////;le balace////////////////////////////////////////////////////////////////////////
                 /// chance to change favorite item could be good
             }
+            if(rewardControllerPrefab)
+            {
+                PickupCarouselController reward = GameObject.Instantiate(rewardControllerPrefab, interactor.transform.position, Quaternion.identity).GetComponent<PickupCarouselController>();
+                reward.options = potentialRewards;
+                reward.chosenRewardIndex = (uint)rewardIndex;
+                NetworkServer.Spawn(reward.gameObject);
+                pickupPickerController.networkUIPromptController.SetParticipantMaster(null);
+                reward.GetComponent<NetworkUIPromptController>().SetParticipantMasterFromInteractor(interactor);
+            }
             if (esm)
             {
-                esm.SetNextState(new WaitToBeginTrade());
+                esm.SetNextState(new WaitToBeginTrade()); ///
             }
         }
         public bool IsSpecial(PickupIndex pickupIndex)

@@ -18,6 +18,24 @@ namespace SS2
             DLC1 = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<ExpansionDef>("RoR2/DLC1/Common/DLC1.asset").WaitForCompletion();
             DLC2 = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<ExpansionDef>("RoR2/DLC1/Common/DLC1.asset").WaitForCompletion();
         }
+
+        public static float IntegrateCurve(AnimationCurve curve, float startTime, float endTime, int steps)
+        {
+            return Integrate(curve.Evaluate, startTime, endTime, steps);
+        }
+
+        // Integrate function f(x) using the trapezoidal rule between x=x_low..x_high
+        public static float Integrate(Func<float, float> f, float x_low, float x_high, int N_steps)
+        {
+            float h = (x_high - x_low) / N_steps;
+            float res = (f(x_low) + f(x_high)) / 2;
+            for (int i = 1; i < N_steps; i++)
+            {
+                res += f(x_low + i * h);
+            }
+            return h * res;
+        }
+
         public static int GetItemCountForPlayers(ItemDef itemDef)
         {
             int count = 0;

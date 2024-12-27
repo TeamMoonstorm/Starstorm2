@@ -74,7 +74,7 @@ namespace EntityStates.Cyborg2
                     damage = damageStat * damageCoefficient,
                     damageColorIndex = DamageColorIndex.Default,
                     damageType = damageType,
-                    falloffModel = BulletAttack.FalloffModel.DefaultBullet,
+                    falloffModel = BulletAttack.FalloffModel.None,
                     force = force,
                     HitEffectNormal = false,
                     procChainMask = default(ProcChainMask),

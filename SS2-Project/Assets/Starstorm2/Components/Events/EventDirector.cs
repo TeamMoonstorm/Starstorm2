@@ -70,6 +70,8 @@ namespace SS2
             }
             // pick elite event. should be mostly normalized across the run as the rewards are important
             WeightedSelection<EventCard> eliteEvents = currentEventSelection.GenerateEliteEventWeightedSelection();
+            if (EtherealBehavior.instance.runIsEthereal)
+                eliteEventChance += 17.5f;
             if (eliteEvents.Count > 0)
             {
                 if (Util.CheckRoll(eliteEventChance))

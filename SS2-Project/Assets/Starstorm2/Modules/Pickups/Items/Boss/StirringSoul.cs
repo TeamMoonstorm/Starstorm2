@@ -18,7 +18,7 @@ namespace SS2.Items
         private static GameObject _monsterSoulPickup;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Chance for souls to drop an item. (1 = 100%)")]
-        public static float chance = 1f;
+        public static float chance = 2f;
 
         public override void Initialize()
         {

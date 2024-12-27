@@ -184,7 +184,7 @@ namespace SS2
                 inventory.SetEquipmentIndex(bossEliteEquipment.equipmentIndex);
                 int loopCount = Mathf.Max(Run.instance.loopClearCount, 0);
                 inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 100);
-                inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, Run.instance.stageClearCount * loopCount * loopCount);
+                inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, 2 + Run.instance.stageClearCount * loopCount * loopCount * (1 + EtherealBehavior.instance.etherealStagesCompleted));
             }
             CharacterBody body = masterObject.GetComponent<CharacterMaster>().GetBody();
             body.baseMaxHealth = Mathf.Max(body.maxHealth, 2100f);
