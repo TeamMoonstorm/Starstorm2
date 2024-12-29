@@ -39,7 +39,7 @@ namespace SS2.Items
                 {
                     this.rechargeTimer += Time.fixedDeltaTime;
                     float cooldown = 240f;
-                    for (int i = 0; i < stack; i++)
+                    for (int i = 0; i < stack-1; i++)
                         cooldown *= 0.8f;
                     if (this.rechargeTimer >= cooldown)
                     {

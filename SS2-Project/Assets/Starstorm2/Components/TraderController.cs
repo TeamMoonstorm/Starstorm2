@@ -11,6 +11,7 @@ namespace SS2.Components
 {
     public class TraderController : NetworkBehaviour
     {
+        private static readonly uint valuesDirtyBit = 1U;
         public GameObject rewardControllerPrefab;
         public Queue<Reward> pendingRewards = new Queue<Reward>();
         public struct Reward
@@ -39,14 +40,18 @@ namespace SS2.Components
         private List<PickupIndex> specialItems = new List<PickupIndex>();
         public PickupIndex[] potentialRewards = new PickupIndex[4];
         private PickupIndex[] allAvailableItems;
-        void Start()
+        private void Awake()
         {
             allAvailableItems = HG.ArrayUtils.Join(Run.instance.availableTier1DropList.ToArray(), Run.instance.availableTier2DropList.ToArray(), Run.instance.availableTier3DropList.ToArray(), Run.instance.availableBossDropList.ToArray());
+            itemValues = new Dictionary<PickupIndex, float>(allAvailableItems.Length);
+
+        }
+        void Start()
+        {            
             //Assign a favorite item.
             //Give every item a value.
             if (NetworkServer.active)
-            {
-                              
+            {                       
                 rng = new Xoroshiro128Plus(Run.instance.treasureRng);
                 favoriteItem = FindFavorite();
                 foreach (PickupIndex item in allAvailableItems)
@@ -172,10 +177,10 @@ namespace SS2.Components
                 rewardIndex = rng.RangeInt(0, potentialRewards.Length);
                 PickupIndex reward = potentialRewards[rewardIndex];
                 pendingRewards.Enqueue(new Reward { drop = reward, target = interactor.gameObject });
-                /// NETWORK THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 itemValues[pickup] *= 0.75f; ////////////////////////////////////////////////////////////////////////////////////////////////////////
                 if(itemValues.ContainsKey(reward)) // reward can be none or special item
                     itemValues[reward] *= 0.75f; //////////////////////////////////;le balace////////////////////////////////////////////////////////////////////////
+                base.SetDirtyBit(valuesDirtyBit);
                 /// chance to change favorite item could be good
             }
             if(rewardControllerPrefab)
@@ -201,5 +206,33 @@ namespace SS2.Components
         {
             return itemValues[pickupIndex];
         }
+
+        //public override bool OnSerialize(NetworkWriter writer, bool initialState)
+        //{
+        //    uint bits = base.syncVarDirtyBits;
+        //    if (initialState) bits = valuesDirtyBit;
+        //    bool shouldWrite = (bits & valuesDirtyBit) > 0U; 
+        //    writer.WritePackedUInt32(syncVarDirtyBits); // im learning please be nice
+        //    if(shouldWrite)
+        //    {
+        //        for (int i = 0; i < allAvailableItems.Length; i++)
+        //        {
+        //            writer.Write(itemValues[allAvailableItems[i]]); // are floats bad?
+        //        }
+        //    }
+            
+        //    return shouldWrite;
+        //}
+        //public override void OnDeserialize(NetworkReader reader, bool initialState)
+        //{
+        //    uint dirtyBits = reader.ReadPackedUInt32();
+        //    if((dirtyBits & valuesDirtyBit) > 0U)
+        //    {
+        //        for (int i = 0; i < allAvailableItems.Length; i++)
+        //        {
+        //            itemValues[allAvailableItems[i]] = reader.ReadSingle(); // 
+        //        }
+        //    }            
+        //}
     }
 }

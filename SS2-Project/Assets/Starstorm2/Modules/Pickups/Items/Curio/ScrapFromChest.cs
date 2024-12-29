@@ -23,7 +23,7 @@ namespace SS2.Items
             int scrap = SS2Util.GetItemCountForPlayers(SS2Content.Items.ScrapFromChest);
             if (self.TryGetComponent(out ChestBehavior chest))
             {
-                if (scrap > 0 && Util.CheckRoll(25f + 10 * (scrap - 1)))
+                if (scrap > 0 && Util.CheckRoll(33f + 11 * (scrap - 1)))
                 {
                     PickupIndex pickup = chest.dropTable.GenerateDrop(chest.rng);
                     if (pickup != PickupIndex.none)

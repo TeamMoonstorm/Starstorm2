@@ -31,7 +31,7 @@ namespace SS2.Items
                     orb.origin = self.transform.position;
                     orb.target = Util.FindBodyMainHurtBox(body);
                     orb.item = SS2Content.Items.StackSnakeEyes.itemIndex;
-                    orb.count = 3 + 2 * crit;
+                    orb.count = 2 + 1 * crit;
                     orb.effectPrefab = orbEffect;
                     OrbManager.instance.AddOrb(orb);
                 }
@@ -40,12 +40,12 @@ namespace SS2.Items
         private void GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
             if (!sender.inventory) return;
-            args.critAdd += sender.inventory.GetItemCount(SS2Content.Items.SnakeEyes);
+            args.critAdd += sender.inventory.GetItemCount(SS2Content.Items.StackSnakeEyes);
         }
         public class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
         {
             [ItemDefAssociation(useOnServer = true, useOnClient = false)]
-            private static ItemDef GetItemDef() => SS2Content.Items.GoldenGun;
+            private static ItemDef GetItemDef() => SS2Content.Items.SnakeEyes;
 
             private static readonly Queue<ReduceCooldownOrb> orbQueue = new Queue<ReduceCooldownOrb>();
             private static float minInterval = 0.07f;

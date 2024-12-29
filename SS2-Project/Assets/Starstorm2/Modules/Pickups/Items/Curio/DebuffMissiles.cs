@@ -12,7 +12,9 @@ namespace SS2.Items
     {
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acDebuffMissiles", SS2Bundle.Items);
         public override bool IsAvailable(ContentPack contentPack) => true;
-		static GameObject orbEffect;
+		public static GameObject orbEffect;
+		public static float healthDamage = .01f;
+		public static float percentChancePerDebuff = 3f;
 		public override void Initialize()
 		{
 			orbEffect = SS2Assets.LoadAsset<GameObject>("DebuffDamageOrbEffect", SS2Bundle.Items);
@@ -21,27 +23,6 @@ namespace SS2.Items
 		{
 			[ItemDefAssociation(useOnServer = true, useOnClient = false)]
 			private static ItemDef GetItemDef() => SS2Content.Items.DebuffMissiles;
-
-			private static readonly Queue<DamageOrb> orbQueue = new Queue<DamageOrb>();
-			private static float minInterval = 0.04f;
-			private float stopwatch;
-			private void FixedUpdate()
-			{
-				if (orbQueue.Count > 0)
-				{
-					stopwatch += Time.fixedDeltaTime;
-					while(stopwatch > minInterval && orbQueue.Count > 0)
-                    {						
-						DamageOrb orb = orbQueue.Dequeue();
-						if(orb.target && orb.target.healthComponent.alive)
-                        {
-							stopwatch -= minInterval;
-							orb.origin = body.inputBank.aimOrigin;
-							OrbManager.instance.AddOrb(orb);
-						}						
-                    }
-				}
-			}
 			public void OnDamageDealtServer(DamageReport damageReport)
 			{
 				DamageInfo damageInfo = damageReport.damageInfo;
@@ -65,36 +46,35 @@ namespace SS2.Items
 						}
 					}
 				}
-				float damageCoefficient = 0.2f + 0.05f * (stack - 1);
-				float damage = body.damage * damageCoefficient;
-				Vector3 origin = body.inputBank.aimOrigin;
-				for (int i = 0; i < debuffs; i++)
+				float chance = (percentChancePerDebuff + (stack - 1)) * debuffs;
+				if(Util.CheckRoll(chance * damageReport.damageInfo.procCoefficient, body.master))
                 {
+					Vector3 origin = body.inputBank.aimOrigin;
 					DamageOrb orb = new DamageOrb();
 					orb.origin = origin;
-					orb.damageValue = damage;
-					orb.isCrit = damageInfo.crit;
+					orb.damageValue = 4f * damageInfo.damage;// damageReport.victimBody.healthComponent.health * healthDamage;
+					orb.isCrit = false;
 					orb.teamIndex = damageReport.attackerTeamIndex;
 					orb.attacker = damageInfo.attacker;
 					orb.procChainMask = damageInfo.procChainMask;
-					orb.procCoefficient = damageInfo.procCoefficient * 0.2f;
-					orb.damageColorIndex = DamageColorIndex.Item;
+					orb.procCoefficient = 1f;
+					orb.damageColorIndex = DamageColorIndex.Void;
 					HurtBox[] group = damageReport.victimBody.hurtBoxGroup.hurtBoxes;
 					int index = UnityEngine.Random.Range(0, group.Length - 1);
 					HurtBox target = group[index];
 					if (target)
 					{
 						orb.target = target;
-					}
-					orbQueue.Enqueue(orb);
-				}				
+						OrbManager.instance.AddOrb(orb);
+					}					
+				}						
 			}
 		}
 		public class DamageOrb : GenericDamageOrb
 		{
 			public override void Begin()
 			{
-				speed = 100f;
+				speed = 75f;
 				base.Begin();
 			}
 			public override GameObject GetOrbEffect()

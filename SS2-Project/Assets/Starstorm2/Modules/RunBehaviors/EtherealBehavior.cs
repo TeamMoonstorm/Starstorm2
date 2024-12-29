@@ -59,13 +59,21 @@ namespace SS2
             run = GetComponentInParent<Run>();
             instance = this;
             Run.ambientLevelCap = defaultLevelCap;
+            Stage.onServerStageComplete += OnServerStageComplete;
             On.RoR2.SceneDirector.Start += SceneDirector_Start;
+        }
+
+        private void OnServerStageComplete(Stage stage)
+        {
+            if (runIsEthereal && stage.sceneDef.sceneType == SceneType.Stage)
+                etherealStagesCompleted++;
         }
 
         private void OnDestroy()
         {
             Run.ambientLevelCap = defaultLevelCap;
             On.RoR2.SceneDirector.Start -= SceneDirector_Start;
+            Stage.onServerStageComplete -= OnServerStageComplete;
         }
 
         public void OnEtherealTeleporterCharged()
@@ -77,9 +85,7 @@ namespace SS2
         // probably not the right hook but new async stage stuff makes timing a headache so im not going to bother changing it
         public void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)
         {
-            orig(self);
-            if (runIsEthereal)
-                etherealStagesCompleted++;
+            orig(self);         
             if (self.teleporterInstance && NetworkServer.active)
             {
                 SpawnShrine();               

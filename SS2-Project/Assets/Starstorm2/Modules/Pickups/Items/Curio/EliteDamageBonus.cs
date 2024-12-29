@@ -25,60 +25,59 @@ namespace SS2.Items
 			private static ItemDef GetItemDef() => SS2Content.Items.EliteDamageBonus;
 
 			private static readonly Queue<EliteDamageOrb> orbQueue = new Queue<EliteDamageOrb>();
-			private static float minInterval = 0.1f;
+			private static float minInterval = 0.05f;
 			private float stopwatch;
             private void FixedUpdate()
             {
                 if(orbQueue.Count > 0)
                 {
 					stopwatch += Time.fixedDeltaTime;
-					while(stopwatch > minInterval && orbQueue.Count > 0)
+					while(stopwatch > minInterval)
                     {						
 						EliteDamageOrb orb = orbQueue.Dequeue();
-						if(orb.target && orb.target.healthComponent.alive)
-                        {
-							stopwatch -= minInterval;
-							orb.origin = body.inputBank.aimOrigin;
-							OrbManager.instance.AddOrb(orb);
-						}						
+						stopwatch -= minInterval;
+						OrbManager.instance.AddOrb(orb);												
                     }
                 }
             }
             public void OnDamageDealtServer(DamageReport damageReport)
             {
-				if (!damageReport.victimIsElite) return;
-				DamageInfo damageInfo = damageReport.damageInfo;
-				if (!damageInfo.damageType.IsDamageSourceSkillBased) return;
-				float damageCoefficient = 0.5f + 0.25f * (stack - 1);
-				EliteDamageOrb orb = new EliteDamageOrb();
-				orb.origin = base.body.inputBank.aimOrigin;
-				orb.damageValue = damageInfo.damage * damageCoefficient;
-				orb.isCrit = damageInfo.crit;
-				orb.teamIndex = damageReport.attackerTeamIndex;
-				orb.attacker = damageInfo.attacker;
-				orb.procChainMask = damageInfo.procChainMask;
-				//orb.procChainMask.AddProc(ProcType.Missile); // shouldnt need this cuz its skills only
-				orb.procCoefficient = damageInfo.procCoefficient * 0.5f;
-				orb.damageColorIndex = DamageColorIndex.Item;
-				HurtBox mainHurtBox = damageReport.victimBody ? damageReport.victimBody.mainHurtBox : null;
-				if (mainHurtBox)
-				{
-					orb.target = mainHurtBox;					
-				}
-				orbQueue.Enqueue(orb);
-			}
+                DamageInfo damageInfo = damageReport.damageInfo;
+                if (!damageReport.victimIsElite || !damageInfo.damageType.IsDamageSourceSkillBased) return;
+                float chance = 20 + 10 * stack;
+                if(Util.CheckRoll(chance * damageInfo.procCoefficient))
+                {
+                    EliteDamageOrb orb = new EliteDamageOrb();
+                    orb.origin = damageInfo.position;
+                    orb.target = body.mainHurtBox;
+                    orbQueue.Enqueue(orb);
+                }              
+            }
 		}
-		public class EliteDamageOrb : GenericDamageOrb
+		public class EliteDamageOrb : Orb
         {
+            public SkillSlot skillSlot;
             public override void Begin()
             {
-				speed = 80f;
-                base.Begin();
+                if (this.target)
+                {
+                    base.duration = 0.2f;
+                    EffectData effectData = new EffectData
+                    {
+                        origin = this.origin,
+                        genericFloat = base.duration
+                    };
+                    effectData.SetHurtBoxReference(this.target);
+                    EffectManager.SpawnEffect(orbEffect, effectData, true);
+                }
             }
-			public override GameObject GetOrbEffect()
-			{
-				return orbEffect;
-			}
-		}
+            public override void OnArrival()
+            {
+                if (target && target.healthComponent)
+                {
+                    target.healthComponent.body.skillLocator.DeductCooldownFromAllSkillsServer(0.5f);
+                }
+            }
+        }
 	}
 }

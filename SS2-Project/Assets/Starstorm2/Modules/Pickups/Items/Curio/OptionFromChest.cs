@@ -23,7 +23,7 @@ namespace SS2.Items
         private void ChestRoll(On.RoR2.ChestBehavior.orig_Roll orig, ChestBehavior self)
         {
             int option = SS2Util.GetItemCountForPlayers(SS2Content.Items.OptionFromChest);
-            float tier1Coefficient = Mathf.Pow(0.85f, option);
+            float tier1Coefficient = Mathf.Pow(0.7f, option);
             BasicPickupDropTable dropTable = null;
             bool valid = self && self.dropTable && (dropTable = (BasicPickupDropTable)self.dropTable) != null;
             if (!valid)
@@ -58,8 +58,8 @@ namespace SS2.Items
                 c.EmitDelegate<Func<GenericPickupController.CreatePickupInfo, ChestBehavior, GenericPickupController.CreatePickupInfo>>((info, chest) =>
                 {
                     int option = SS2Util.GetItemCountForPlayers(SS2Content.Items.OptionFromChest);
-                    float chance = 1f - Mathf.Pow(0.7f, option);
-                    if (Util.CheckRoll(chance))
+                    float chance = 1f - Mathf.Pow(0.5f, option);
+                    if (Util.CheckRoll(chance * 100f))
                     {
                         //
                         // VFX HERE

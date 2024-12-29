@@ -262,7 +262,7 @@ namespace SS2.Components
             inventory.RemoveItem(RoR2Content.Items.BoostHp, inventory.GetItemCount(RoR2Content.Items.BoostHp));
             inventory.RemoveItem(RoR2Content.Items.BoostDamage, inventory.GetItemCount(RoR2Content.Items.BoostDamage));
 
-            body.baseMaxHealth = Mathf.Max(body.baseMaxHealth, 200); /////////////////////////////////////////////////////////
+            body.baseMaxHealth = Mathf.Max(body.baseMaxHealth, 500); /////////////////////////////////////////////////////////
             new FriendManager.SyncBaseStats(body).Send(R2API.Networking.NetworkDestination.Clients);
             inventory.GiveItem(RoR2Content.Items.BoostHp, 4000);
             inventory.GiveItem(SS2Content.Items.BoostMovespeed, 35);
@@ -361,8 +361,10 @@ namespace SS2.Components
             var ethInstance = EtherealBehavior.instance;
             int loopCount = Mathf.Max(Run.instance.loopClearCount, 1);
             int stageCount = EtherealBehavior.instance.etherealStagesCompleted;
+            body.baseMaxHealth = Mathf.Max(body.baseMaxHealth, 500); /////////////////////////////////////////////////////////
+            new FriendManager.SyncBaseStats(body).Send(R2API.Networking.NetworkDestination.Clients); ////////////////// make a fucking thing for this idiot
             inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(1600f + (800f * ethInstance.etherealsCompleted)));
-            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, 3 + stageCount * stageCount * 2 * (1 + loopCount * loopCount) * ethInstance.etherealsCompleted * ethInstance.etherealsCompleted);
+            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, 3 + stageCount * stageCount * (1 + loopCount * loopCount) * ethInstance.etherealsCompleted * ethInstance.etherealsCompleted);
             inventory.GiveItem(SS2Content.Items.BoostCooldowns, 70);
             inventory.GiveItem(RoR2Content.Items.BoostDamage, 100);
             inventory.GiveItem(SS2Content.Items.AffixUltra);

@@ -15,7 +15,7 @@ namespace EntityStates.Events
     public class Storm : GenericWeatherState
     {
         private static float baseDuration = 60f;
-        private static float durationVariance = 0.8f;
+        private static float durationVariance = 0.4f;
         private static float effectLerpDuration = 5f;
         private static SerializableEntityStateType textState = new SerializableEntityStateType(typeof(StormController.EtherealFadeIn));
         private static SerializableEntityStateType textState2 = new SerializableEntityStateType(typeof(StormController.EtherealBlinkIn)); // fuck my life

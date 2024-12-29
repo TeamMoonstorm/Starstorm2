@@ -427,7 +427,7 @@ namespace SS2
             public static ItemDef Bleedout;
             public static ItemDef EliteDamageBonus;
             public static ItemDef DebuffMissiles;
-            public static ItemDef GoldenGun;
+            public static ItemDef HitList;
             public static ItemDef ItemOnBossKill;
             public static ItemDef ItemOnEliteKill;
             public static ItemDef MaxHpOnKill;
@@ -442,6 +442,7 @@ namespace SS2
             public static ItemDef StackSnakeEyes;
             public static ItemDef StackMaxHpOnKill;
             public static ItemDef StackShieldGate;
+            public static ItemDef StackHitList;
         }
 
         public static class Equipments
@@ -534,6 +535,8 @@ namespace SS2
             public static BuffDef BuffGouge;
 
             public static BuffDef bdHakai;
+
+            public static BuffDef BuffHitListMark;
 
             public static BuffDef BuffGreaterBanner;
 

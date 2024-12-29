@@ -36,14 +36,16 @@ MonoBehaviour:
   statModifiers:
   - fieldName: baseMaxHealth
     statModifierType: 2
-    modifier: 12000
+    modifier: 7000
   - fieldName: baseRegen
     statModifierType: 2
     modifier: 0
   - fieldName: baseDamage
     statModifierType: 2
     modifier: 4
-  skillOverrides: []
+  skillOverrides:
+  - skillSlot: 2
+    skillDef: {fileID: 11400000, guid: b320cb4835b3e5f43b09ff961d6e9fbf, type: 2}
   visualEffect: {fileID: 7263082866239962126, guid: e5e59c683a84a944292ea9b979e6bfa8,
     type: 3}
   itemDef: {fileID: 11400000, guid: 8d674b99944123e45977a18f5b5229f9, type: 2}
