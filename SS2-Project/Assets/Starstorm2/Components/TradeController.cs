@@ -11,6 +11,12 @@ namespace SS2
 	// TODO: combine with TraderController (zanzan)?????????
 	public class TradeController : NetworkBehaviour
 	{
+		public static GameObject pickupPrefablol; // move into tradedef
+		private static void InitPrefabTEMP()
+        {
+			pickupPrefablol = R2API.PrefabAPI.InstantiateClone(UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/OptionPickup/OptionPickup.prefab").WaitForCompletion(), "BRUHHHHHHHHHHHHHH");
+			pickupPrefablol.GetComponent<PickupPickerController>().panelPrefab = SS2Assets.LoadAsset<GameObject>("TradeOptionPickerPanel", SS2Bundle.Interactables);
+		}
 		public TradeDef[] trades; // rename to explicitTrades
 		public SerializableEntityStateType tradeState = new SerializableEntityStateType(typeof(WaitToBeginScrapping));
 		public GameObject pickupPrefab; // move into tradedef
@@ -30,9 +36,7 @@ namespace SS2
 			pickupPickerController = base.GetComponent<PickupPickerController>();
 			esm = base.GetComponent<EntityStateMachine>();
 			// temp
-			pickupPrefab = R2API.PrefabAPI.InstantiateClone(UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/OptionPickup/OptionPickup.prefab").WaitForCompletion(), "BRUHHHHHHHHHHHHHH");
-			pickupPrefab.GetComponent<PickupPickerController>().panelPrefab = SS2Assets.LoadAsset<GameObject>("TradeOptionPickerPanel", SS2Bundle.Interactables);
-
+			pickupPrefab = pickupPrefablol;
 		}
         private void Start()
         {
@@ -41,7 +45,8 @@ namespace SS2
 				if (trades[i].desiredItem)
 					desiredItems.Add(trades[i].desiredItem.itemIndex);
 			}
-			rng = new Xoroshiro128Plus(Run.instance.treasureRng.nextUlong);
+			if(NetworkServer.active)
+				rng = new Xoroshiro128Plus(Run.instance.treasureRng.nextUlong);
 		}
         public void SetOptionsFromInteractor(Interactor activator)
 		{

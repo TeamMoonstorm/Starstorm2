@@ -139,7 +139,7 @@ namespace SS2
                 WeightedSelection<NemesisSpawnCard> selection = new WeightedSelection<NemesisSpawnCard>();
                 foreach(NemesisSpawnCard card in NemesisCatalog.readonlySpawnCards)
                 {                    
-                    if(SS2Util.GetItemCountForPlayers(card.itemDef) == 0)
+                    if(SS2Util.GetItemCountForPlayers(card.itemDef) == 0) // check card.IsAvailable()
                         selection.AddChoice(card, 1);
                 }
                 // pick one at random
@@ -164,7 +164,7 @@ namespace SS2
         private void FixedUpdate()
         {
             // start events when their starttimes have passed
-            if (!Stage.instance || currentTimeline.events.Count == 0) return; // lol wtf
+            if (!NetworkServer.active || !Stage.instance || currentTimeline.events.Count == 0) return; // lol wtf
             for (int i = 0; i < currentTimeline.events.Count; i++)
             {
                 EventInfo eventInfo = currentTimeline.events[i];

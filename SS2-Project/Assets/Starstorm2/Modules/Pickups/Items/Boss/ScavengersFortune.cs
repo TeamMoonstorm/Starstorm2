@@ -20,7 +20,8 @@ namespace SS2.Items
             RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
             Stage.onStageStartGlobal += (stage) =>
             {
-                rng = new Xoroshiro128Plus(Run.instance.bossRewardRng.nextUlong);
+                if(NetworkServer.active)
+                    rng = new Xoroshiro128Plus(Run.instance.bossRewardRng.nextUlong);
             };
             On.EntityStates.ScavBackpack.Opening.FixedUpdate += Opening_FixedUpdate;
         }

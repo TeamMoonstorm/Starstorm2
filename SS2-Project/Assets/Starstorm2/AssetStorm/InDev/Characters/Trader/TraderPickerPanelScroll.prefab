@@ -887,8 +887,8 @@ MonoBehaviour:
   m_MinHeight: -1
   m_PreferredWidth: -1
   m_PreferredHeight: 10000
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
+  m_FlexibleWidth: 1
+  m_FlexibleHeight: 1
   m_LayoutPriority: 1
 --- !u!222 &2099531201151869711
 CanvasRenderer:
@@ -952,7 +952,7 @@ MonoBehaviour:
   m_Script: {fileID: 1979810121, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spacingPerElement: 0
+  spacingPerElement: 2
   allowVerticalScrollingWithGamepadSticks: 1
   stickScale: 2000
   requiredTopLayer: {fileID: 0}
@@ -5552,6 +5552,7 @@ GameObject:
   - component: {fileID: 7469216166892071068}
   - component: {fileID: 7290191173914069049}
   - component: {fileID: 7468926792854025000}
+  - component: {fileID: 8343178581521278564}
   m_Layer: 5
   m_Name: IconContainer
   m_TagString: Untagged
@@ -5578,7 +5579,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 253}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7288284645591344202
 CanvasRenderer:
@@ -5650,6 +5651,20 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &8343178581521278564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7364610383720152430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
 --- !u!1 &7364634323919465143
 GameObject:
   m_ObjectHideFlags: 0

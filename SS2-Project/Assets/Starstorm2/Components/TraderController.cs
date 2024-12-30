@@ -44,19 +44,15 @@ namespace SS2.Components
         {
             allAvailableItems = HG.ArrayUtils.Join(Run.instance.availableTier1DropList.ToArray(), Run.instance.availableTier2DropList.ToArray(), Run.instance.availableTier3DropList.ToArray(), Run.instance.availableBossDropList.ToArray());
             itemValues = new Dictionary<PickupIndex, float>(allAvailableItems.Length);
-
-        }
-        void Start()
-        {            
             //Assign a favorite item.
             //Give every item a value.
             if (NetworkServer.active)
-            {                       
+            {
                 rng = new Xoroshiro128Plus(Run.instance.treasureRng);
                 favoriteItem = FindFavorite();
                 foreach (PickupIndex item in allAvailableItems)
                 {
-                    AddItem(item);                 
+                    AddItem(item);
                 }
             }
         }
@@ -66,7 +62,6 @@ namespace SS2.Components
             return rng.NextElementUniform(allAvailableItems);
         }
 
-        // NOT NETWORKED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         private void AddItem(PickupIndex pickupIndex)
         {
             float value = 0;
@@ -163,6 +158,7 @@ namespace SS2.Components
             if(IsSpecial(pickup))
             {
                 potentialRewards = new PickupIndex[1] { PickupCatalog.FindPickupIndex(SS2Content.Items.ShardScav.itemIndex) }; // temp until we add tradedefs here
+                pendingRewards.Enqueue(new Reward { drop = potentialRewards[0], target = interactor.gameObject });
             }
             else
             {
@@ -173,7 +169,7 @@ namespace SS2.Components
                 {
                     if (potentialRewards[i] == PickupIndex.none) potentialRewards[i] = PickupCatalog.FindScrapIndexForItemTier(ItemTier.Tier1);
                 }
-                SS2Log.Info($"-------------------------------------------------------------");
+                SS2Log.Info($"END TRADE {pickupDef.internalName} -------------------------------------------------");
                 rewardIndex = rng.RangeInt(0, potentialRewards.Length);
                 PickupIndex reward = potentialRewards[rewardIndex];
                 pendingRewards.Enqueue(new Reward { drop = reward, target = interactor.gameObject });
@@ -185,12 +181,12 @@ namespace SS2.Components
             }
             if(rewardControllerPrefab)
             {
-                PickupCarouselController reward = GameObject.Instantiate(rewardControllerPrefab, interactor.transform.position, Quaternion.identity).GetComponent<PickupCarouselController>();
+                PickupCarouselController reward = GameObject.Instantiate(rewardControllerPrefab, base.transform.position, Quaternion.identity).GetComponent<PickupCarouselController>();
                 reward.options = potentialRewards;
                 reward.chosenRewardIndex = (uint)rewardIndex;
-                NetworkServer.Spawn(reward.gameObject);
-                pickupPickerController.networkUIPromptController.SetParticipantMaster(null);
-                reward.GetComponent<NetworkUIPromptController>().SetParticipantMasterFromInteractor(interactor);
+                reward.interactor = interactor;
+                pickupPickerController.networkUIPromptController.SetParticipantMaster(null);             
+                NetworkServer.Spawn(reward.gameObject);              
             }
             if (esm)
             {
@@ -207,32 +203,37 @@ namespace SS2.Components
             return itemValues[pickupIndex];
         }
 
-        //public override bool OnSerialize(NetworkWriter writer, bool initialState)
-        //{
-        //    uint bits = base.syncVarDirtyBits;
-        //    if (initialState) bits = valuesDirtyBit;
-        //    bool shouldWrite = (bits & valuesDirtyBit) > 0U; 
-        //    writer.WritePackedUInt32(syncVarDirtyBits); // im learning please be nice
-        //    if(shouldWrite)
-        //    {
-        //        for (int i = 0; i < allAvailableItems.Length; i++)
-        //        {
-        //            writer.Write(itemValues[allAvailableItems[i]]); // are floats bad?
-        //        }
-        //    }
-            
-        //    return shouldWrite;
-        //}
-        //public override void OnDeserialize(NetworkReader reader, bool initialState)
-        //{
-        //    uint dirtyBits = reader.ReadPackedUInt32();
-        //    if((dirtyBits & valuesDirtyBit) > 0U)
-        //    {
-        //        for (int i = 0; i < allAvailableItems.Length; i++)
-        //        {
-        //            itemValues[allAvailableItems[i]] = reader.ReadSingle(); // 
-        //        }
-        //    }            
-        //}
+        public override bool OnSerialize(NetworkWriter writer, bool initialState)
+        {
+            uint bits = base.syncVarDirtyBits;
+            if (initialState) bits = valuesDirtyBit;
+            bool shouldWrite = (bits & valuesDirtyBit) > 0U;
+            writer.WritePackedUInt32(bits); // im learning please be nice
+            if (shouldWrite)
+            {
+                writer.WritePackedUInt32((uint)allAvailableItems.Length);
+                for (int i = 0; i < allAvailableItems.Length; i++)
+                {
+                    writer.Write(allAvailableItems[i]);
+                    writer.Write(itemValues[allAvailableItems[i]]); // are floats bad?
+                }
+                writer.Write(favoriteItem); // should be a separate bit
+            }
+            return shouldWrite;
+        }
+        public override void OnDeserialize(NetworkReader reader, bool initialState)
+        {
+            uint dirtyBits = reader.ReadPackedUInt32();
+            if ((dirtyBits & valuesDirtyBit) > 0U)
+            {
+                int count = (int)reader.ReadPackedUInt32();
+                itemValues = new Dictionary<PickupIndex, float>(count);
+                for (int i = 0; i < count; i++)
+                {
+                    itemValues.Add(reader.ReadPickupIndex(), reader.ReadSingle());
+                }
+                favoriteItem = reader.ReadPickupIndex();
+            }
+        }
     }
 }

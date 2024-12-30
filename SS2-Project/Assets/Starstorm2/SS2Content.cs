@@ -300,6 +300,8 @@ namespace SS2
 
             public static ItemDef NemBossHelper;
 
+            public static ItemDef NoSelfDamage;
+
             public static ItemDef PoisonousGland;
 
             public static ItemDef ShardEarth;

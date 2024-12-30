@@ -10,6 +10,7 @@ namespace SS2.Components
 {
     public class PickupCarouselController : NetworkBehaviour // TODO : display above player head for other players
     {
+		public Interactor interactor;
 		public GameObject panelPrefab;
 		private GameObject panelInstance;
 		private PickupCarouselPanel panelInstanceController;
@@ -27,9 +28,14 @@ namespace SS2.Components
 			if(NetworkServer.active)
             {
 				networkUIPromptController.messageFromClientHandler += HandleClientMessage;
-            }
+				
+			}
         }
-
+        private void Start()
+        {
+            if(NetworkServer.active)
+				networkUIPromptController.SetParticipantMasterFromInteractor(interactor);
+		}
         private void OnDisplayBegin(NetworkUIPromptController controller, LocalUser user, CameraRigController camera)
         {
 			this.panelInstance = Instantiate<GameObject>(this.panelPrefab, camera.hud.mainContainer.transform);
@@ -61,13 +67,13 @@ namespace SS2.Components
 
 		public override bool OnSerialize(NetworkWriter writer, bool initialState)
 		{
-			writer.WritePackedIndex32((int)chosenRewardIndex);
-			writer.WritePackedIndex32(options.Length);
+			writer.WritePackedUInt32(chosenRewardIndex);
+			writer.WritePackedUInt32((uint)options.Length);
 			for(int i = 0; i < options.Length; i++)
             {
 				writer.Write(options[i]);
             }
-			return true;
+			return initialState;
 		}
 		public override void OnDeserialize(NetworkReader reader, bool initialState)
 		{

@@ -89,8 +89,8 @@ namespace SS2
                 }
                 string roman = String.Empty;
                 int count = characterBody.inventory?.GetItemCount(SS2Content.Items.DoubleAllStats) ?? 0;              
-                if (count > 1) // no I
-                    roman = " " + SS2Util.ToRoman(count);
+                if (count > 0)
+                    roman = " " + SS2Util.ToRoman(count + 1);
                 result = Language.GetStringFormatted("SS2_ELITE_MODIFIER_EMPYREAN", roman, result);
             }
 

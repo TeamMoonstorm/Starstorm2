@@ -186,11 +186,11 @@ namespace SS2.Components
             float a2 = Util.Remap(count, 0, 25, .45f, 1);
             this._propBlock = new MaterialPropertyBlock();
             this.indicatorRenderer.GetPropertyBlock(this._propBlock, 0);
-            this._propBlock.SetFloat("_ExternalAlpha", a1);
+            this._propBlock.SetFloat("_ExternalAlpha", Mathf.Clamp01(a1));
             this.indicatorRenderer.SetPropertyBlock(this._propBlock, 0);
             this._propBlock = new MaterialPropertyBlock();
             this.indicatorRenderer.GetPropertyBlock(this._propBlock, 1);
-            this._propBlock.SetFloat("_ExternalAlpha", a2);
+            this._propBlock.SetFloat("_ExternalAlpha", Mathf.Clamp01(a2));
             this.indicatorRenderer.SetPropertyBlock(this._propBlock, 1); // iterating wasnt wokring idk
         }
 

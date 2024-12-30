@@ -27,27 +27,15 @@ namespace SS2.Items
             args.damageMultAdd += sender.inventory ? sender.inventory.GetItemCount(SS2Content.Items.StackHitList) * 0.01f : 0;
         }
 
-        public class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver, IOnKilledOtherServerReceiver
+        public class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver
         {
             [ItemDefAssociation(useOnServer = true, useOnClient = false)]
             private static ItemDef GetItemDef() => SS2Content.Items.HitList;
 
             private static readonly Queue<GoldOrb> orbQueue = new Queue<GoldOrb>();
-            private static float minInterval = 0.025f;
-            private float orbStopwatch;
             private float markStopwatch;
             private void FixedUpdate()
             {
-                if (orbQueue.Count > 0)
-                {
-                    orbStopwatch += Time.fixedDeltaTime;
-                    while (orbStopwatch > minInterval)
-                    {
-                        orbStopwatch -= minInterval;
-                        GoldOrb orb = orbQueue.Dequeue();
-                        OrbManager.instance.AddOrb(orb);
-                    }
-                }
                 markStopwatch += Time.fixedDeltaTime;
                 float cooldown = 30f;
                 for (int i = 0; i < stack-1; i++)
@@ -75,18 +63,6 @@ namespace SS2.Items
                 }
                 return false;
             }
-            public void OnDamageDealtServer(DamageReport damageReport)
-            {
-                DamageInfo damageInfo = damageReport.damageInfo;
-                if (!damageInfo.damageType.IsDamageSourceSkillBased) return;
-                uint gold = (uint)(Run.instance.GetDifficultyScaledCost(1) * damageInfo.procCoefficient);
-                GoldOrb orb = new GoldOrb();
-                orb.origin = damageInfo.position;
-                orb.overrideDuration = 0.3f;
-                orb.goldAmount = gold;
-                orb.target = body.mainHurtBox;               
-                orbQueue.Enqueue(orb);
-            }
 
             public void OnKilledOtherServer(DamageReport damageReport)
             {
@@ -111,16 +87,16 @@ namespace SS2.Items
             private TemporaryVisualEffect instance;
             private void FixedUpdate()
             {
-                characterBody.UpdateSingleTemporaryVisualEffect(ref instance, markEffect, 1, characterBody.HasBuff(SS2Content.Buffs.BuffHitListMark));
+                characterBody.UpdateSingleTemporaryVisualEffect(ref instance, markEffect, Mathf.Max(characterBody.radius, 1), characterBody.HasBuff(SS2Content.Buffs.BuffHitListMark));
             }
             private void OnEnable()
             {
                 Util.PlaySound("RemunerationSpawn2", base.gameObject); //////////////////
-                characterBody.UpdateSingleTemporaryVisualEffect(ref instance, markEffect, 1, characterBody.HasBuff(SS2Content.Buffs.BuffHitListMark));
+                characterBody.UpdateSingleTemporaryVisualEffect(ref instance, markEffect, Mathf.Max(characterBody.radius, 1), characterBody.HasBuff(SS2Content.Buffs.BuffHitListMark));
             }
             private void OnDisable()
             {
-                characterBody.UpdateSingleTemporaryVisualEffect(ref instance, markEffect, 1, characterBody.HasBuff(SS2Content.Buffs.BuffHitListMark));
+                characterBody.UpdateSingleTemporaryVisualEffect(ref instance, markEffect, Mathf.Max(characterBody.radius, 1), characterBody.HasBuff(SS2Content.Buffs.BuffHitListMark));
             }
         }
     }

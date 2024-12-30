@@ -273,10 +273,11 @@ namespace SS2.Components
             inventory.SetEquipmentIndex(SS2Content.Equipments.AffixEmpyrean.equipmentIndex);
 
             int extraStages = Mathf.Max(Run.instance.stageClearCount - 7, 0);
-            int extraLoops = Mathf.FloorToInt(extraStages / Run.stagesPerLoop);
-            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, 3 + extraLoops * extraLoops * extraLoops * 2); ///
-            inventory.GiveItem(SS2Content.Items.DoubleAllStats, extraLoops * extraLoops);
-            inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 15 + 15 * extraLoops); // teehee
+            int extraLoops = Mathf.CeilToInt(extraStages / Run.stagesPerLoop);
+            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, 3 + extraStages * extraLoops * extraLoops * extraLoops * 2); ///
+            inventory.GiveItem(SS2Content.Items.DoubleAllStats, extraLoops);
+            inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 15 + 20 * extraLoops); // teehee
+            inventory.GiveItem(SS2Content.Items.NoSelfDamage); // >:)
             if (body.characterMotor) body.characterMotor.mass = 2000f; // NO KNOCKBACK !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             if (body.rigidbody) body.rigidbody.mass = 2000f;
             // remove level cap
@@ -333,6 +334,8 @@ namespace SS2.Components
             inventory.GiveItem(RoR2Content.Items.BoostDamage, (int)(20 + (20 * ethInstance.etherealsCompleted * ethInstance.etherealsCompleted)));
             inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 20); // MORE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             inventory.GiveItem(SS2Content.Items.EtherealItemAffix);
+            if (body.characterMotor && body.characterMotor.mass < 400) body.characterMotor.mass = 400f;
+            if (body.rigidbody && body.rigidbody.mass < 400) body.rigidbody.mass = 400f;
             DeathRewards rewards = body.GetComponent<DeathRewards>();
             if (rewards)
             {
@@ -367,8 +370,10 @@ namespace SS2.Components
             inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, 3 + stageCount * stageCount * (1 + loopCount * loopCount) * ethInstance.etherealsCompleted * ethInstance.etherealsCompleted);
             inventory.GiveItem(SS2Content.Items.BoostCooldowns, 70);
             inventory.GiveItem(RoR2Content.Items.BoostDamage, 100);
+            inventory.GiveItem(SS2Content.Items.NoSelfDamage); // >:)
             inventory.GiveItem(SS2Content.Items.AffixUltra);
-
+            if (body.characterMotor && body.characterMotor.mass < 2000) body.characterMotor.mass = 2000f; 
+            if (body.rigidbody && body.rigidbody.mass < 2000) body.rigidbody.mass = 2000f;
             DeathRewards rewards = body.GetComponent<DeathRewards>();
             if (rewards)
             {

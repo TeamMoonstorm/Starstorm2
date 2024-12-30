@@ -10,7 +10,7 @@ using UnityEngine.Networking;
 namespace SS2
 {
     [CreateAssetMenu(fileName = "NemesisSpawnCard", menuName = "Starstorm2/NemesisSpawnCard")]
-    public class NemesisSpawnCard : CharacterSpawnCard
+    public class NemesisSpawnCard : CharacterSpawnCard // add IsAvailable() here to check for unlocks or whatever
     {
 
         public NemesisInventory nemesisInventory;

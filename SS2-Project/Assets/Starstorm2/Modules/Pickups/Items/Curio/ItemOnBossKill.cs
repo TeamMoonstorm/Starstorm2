@@ -16,7 +16,8 @@ namespace SS2.Items
             GlobalEventManager.onCharacterDeathGlobal += OnCharacterDeathGlobal;
             Run.onRunStartGlobal += (run) =>
             {
-                dropRng = new Xoroshiro128Plus(run.treasureRng.nextUlong);
+                if(NetworkServer.active)
+                    dropRng = new Xoroshiro128Plus(run.treasureRng.nextUlong);
             };
         }
         private void OnCharacterDeathGlobal(DamageReport damageReport)
@@ -27,7 +28,7 @@ namespace SS2.Items
             if (bossItems > 0 && damageReport.victimIsChampion)
             {
                 PickupIndex pickupIndex = PickupIndex.none;
-                if (Util.CheckRoll(1 - Mathf.Pow(0.95f, bossItems)) && damageReport.victimBody.TryGetComponent(out DeathRewards deathRewards))
+                if (Util.CheckRoll(1 - Mathf.Pow(0.97f, bossItems) * 100f) && damageReport.victimBody.TryGetComponent(out DeathRewards deathRewards))
                 {
                     pickupIndex = deathRewards.bossDropTable ? deathRewards.bossDropTable.GenerateDrop(dropRng) : (PickupIndex)deathRewards.bossPickup;
                 }
