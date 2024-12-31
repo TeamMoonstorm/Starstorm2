@@ -11,6 +11,11 @@ using R2API.ScriptableObjects;
 
 namespace EntityStates.Nuke.Weapon
 {
+    /// <summary>
+    /// Fire state of nucleator's primary, fire a glob of nuclear waste towards the enemies. Projectile ghoes faster the more charge it has.
+    /// <br></br>
+    /// <see cref="ChargeSludge"/>
+    /// </summary>
     public class FireSludge : BaseNukeFireState
     {
         public static GameObject projectilePrefab;

@@ -52,14 +52,13 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.collections": {
-      "version": "1.2.4",
+      "version": "file:com.unity.collections",
       "depth": 0,
-      "source": "registry",
+      "source": "embedded",
       "dependencies": {
         "com.unity.burst": "1.6.6",
         "com.unity.test-framework": "1.1.31"
-      },
-      "url": "https://packages.unity.com"
+      }
     },
     "com.unity.editorcoroutines": {
       "version": "1.0.0",
@@ -168,6 +167,12 @@
     },
     "riskofthunder-bepinex_gui": {
       "version": "file:BepInEx_GUI",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "riskofthunder-burstsofrain": {
+      "version": "file:BurstsOfRain",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
@@ -364,6 +369,13 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "riskofthunder-ror2_thunder_burster": {
+      "version": "https://github.com/risk-of-thunder/RoR2ThunderBurster.git#0.0.2",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "9cbfd8c807e887111227b98f2803991c653d4717"
+    },
     "riskofthunder-ror2bepinexpack": {
       "version": "file:RoR2BepInExPack",
       "depth": 0,
@@ -380,11 +392,11 @@
       "hash": "3373df696da00fa01a2768907554c5752a1141a9"
     },
     "riskofthunder-ror2importextensions": {
-      "version": "https://github.com/risk-of-thunder/RoR2ImportExtensions.git#1.7.0",
+      "version": "https://github.com/risk-of-thunder/RoR2ImportExtensions.git#1.7.1",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "d101e5d64337681ec17093f88fb1ea01d07a55f4"
+      "hash": "b8704d045fd4c32e83778bf3e1792d6e0cf76e00"
     },
     "rune580-risk_of_options": {
       "version": "file:Risk_Of_Options",

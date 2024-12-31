@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace EntityStates.Nuke
 {
+    //Apply surge buff, nothing fancy honestly.
     public class ApplySurge : GenericCharacterMain
     {
         public static float baseDuration;

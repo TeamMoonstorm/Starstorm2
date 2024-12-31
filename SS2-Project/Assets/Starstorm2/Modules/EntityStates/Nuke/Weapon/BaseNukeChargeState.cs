@@ -12,6 +12,9 @@ using IChargeableState = SS2.Survivors.Nuke.IChargeableState;
 
 namespace EntityStates.Nuke
 {
+    /// <summary>
+    /// A custom <see cref="BaseSkillState"/> that implements <see cref="IChargeableState"/>. Most of nucleator's skills start with a state that inherits from this then fires into a state that inherits <see cref="BaseNukeFireState"/>
+    /// </summary>
     public abstract class BaseNukeChargeState : BaseSkillState, IChargeableState
     {
         [SerializeField, Tooltip("The starting chargeCoefficient, this is also the base damage coefficient of this skill.")]
@@ -23,7 +26,10 @@ namespace EntityStates.Nuke
         [SerializeField, Tooltip("The coefficient at which the skill is fired automatically")]
         public float _chargeCoefficientHardCap;
 
-        public NukeSelfDamageController SelfDamageController { get; private set; }
+        /// <summary>
+        /// Access to the self damage controller
+        /// </summary>
+        public NukeSelfDamageController selfDamageController { get; private set; }
 
         public float currentCharge { get; protected set; }
 
@@ -32,37 +38,41 @@ namespace EntityStates.Nuke
 
         float IChargeableState.chargeCoefficientHardCap => _chargeCoefficientHardCap;
 
-        private float chargeGain;
+        private float _chargeGain;
         public override void OnEnter()
         {
             base.OnEnter();
             currentCharge = _startingChargeCoefficient;
-            chargeGain = _baseChargeGain * attackSpeedStat;
+            _chargeGain = _baseChargeGain * attackSpeedStat; //Increase charge gain by attack speed
             if (gameObject.TryGetComponent<NukeSelfDamageController>(out var ctrl))
             {
-                SelfDamageController = ctrl;
-                if (SelfDamageController.isImmune)
-                    chargeGain *= 2f;
-                SelfDamageController.SetDefaults(this);
+                selfDamageController = ctrl;
+                if (selfDamageController.isImmune) //Double charge gain if he's immune for fast attacks
+                    _chargeGain *= 2f;
+
+                //Set the default values for the controller
+                selfDamageController.SetDefaults(this);
             }
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+            //If nucleator is charging, continue charging and report back the charge to the controller
             if (IsKeyDownAuthority())
             {
-                currentCharge += chargeGain * Time.fixedDeltaTime;
-                if (SelfDamageController)
-                    SelfDamageController.charge = currentCharge;
+                currentCharge += _chargeGain * Time.fixedDeltaTime;
+                if (selfDamageController)
+                    selfDamageController.charge = currentCharge;
 
+                //If the charge goes past the threshold, fire.
                 if (currentCharge > _chargeCoefficientHardCap)
                 {
                     currentCharge = _chargeCoefficientHardCap;
                     Fire();
                 }
             }
-            else
+            else //No longer holding down, fire.
             {
                 Fire();
             }
@@ -70,14 +80,19 @@ namespace EntityStates.Nuke
 
         private void Fire()
         {
+            //Get the next state we should transition to
             SS2.Survivors.Nuke.IChargedState nextState = GetFireState();
+
+            //Set the charge for the new state
             nextState.charge = currentCharge;
 
-            if (SelfDamageController)
+            //Reset damage controller
+            if (selfDamageController)
             {
-                SelfDamageController.SetDefaults(null);
+                selfDamageController.SetDefaults(null);
             }
 
+            //Make sure we can cast to entity state, since IChargedState should only be applied to entity states
             bool canCastToEntityState = nextState is EntityState;
             if (!canCastToEntityState)
             {
@@ -86,6 +101,11 @@ namespace EntityStates.Nuke
             }
             outer.SetNextState((EntityState)nextState);
         }
+
+        /// <summary>
+        /// Implement what state nucleator should exit to when he finishes firing.
+        /// </summary>
+        /// <returns>An entity state that implements <see cref="SS2.Survivors.Nuke.IChargedState"/></returns>
         protected abstract SS2.Survivors.Nuke.IChargedState GetFireState();
     }
 

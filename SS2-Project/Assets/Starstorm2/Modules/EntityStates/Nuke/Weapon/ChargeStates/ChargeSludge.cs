@@ -9,12 +9,18 @@ using UnityEngine;
 
 namespace EntityStates.Nuke.Weapon
 {
+    /// <summary>
+    /// Implementation of nucleator's primary.
+    /// <br></br>
+    /// See <see cref="FireSludge"/>
+    /// </summary>
     public class ChargeSludge : BaseNukeChargeState, SteppedSkillDef.IStepSetter
     {
         public static GameObject chargePrefab;
         public static string leftMuzzleChildName;
         public static string rightMuzzleChildName;
 
+        //Hash them for performance reasons
         private static int leftChargeHash = Animator.StringToHash("IrradiateChargeL");
         private static int rightChargeHash = Animator.StringToHash("IrradiateChargeR");
         private static int irradiatePlaybackHash = Animator.StringToHash("irradiate.playbackRate");
@@ -34,6 +40,7 @@ namespace EntityStates.Nuke.Weapon
                 muzzleTransform = modelChildLocator.FindChild(_chosenMuzzle);
             }
 
+            //Spawn the charge vfx
             if (muzzleTransform && chargePrefab)
             {
                 chargePrefabInstance = GameObject.Instantiate(chargePrefab, muzzleTransform);
@@ -53,6 +60,7 @@ namespace EntityStates.Nuke.Weapon
             }
         }
 
+        //Exit to FireSludge, give it the chosen strings, transform and step index
         protected override SS2.Survivors.Nuke.IChargedState GetFireState()
         {
             var fireSludge = new FireSludge();
@@ -67,6 +75,12 @@ namespace EntityStates.Nuke.Weapon
             return InterruptPriority.Skill;
         }
 
+        /// <summary>
+        /// Nucleator's stepped skill goes Left -> Right -> Left -> Right -> left...
+        /// <br></br>
+        /// He doesnt use one single cannon for the sludge, he fires from both in an alternative pattern
+        /// </summary>
+        /// <param name="i"></param>
         public void SetStep(int i)
         {
             _step = i;
