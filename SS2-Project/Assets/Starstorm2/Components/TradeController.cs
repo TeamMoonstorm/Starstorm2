@@ -12,6 +12,7 @@ namespace SS2
 	public class TradeController : NetworkBehaviour
 	{
 		public static GameObject pickupPrefablol; // move into tradedef
+		[SystemInitializer]
 		private static void InitPrefabTEMP()
         {
 			pickupPrefablol = R2API.PrefabAPI.InstantiateClone(UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/OptionPickup/OptionPickup.prefab").WaitForCompletion(), "BRUHHHHHHHHHHHHHH");
