@@ -34,48 +34,13 @@ namespace SS2.Equipments
             BuffDef buffHakai = AssetCollection.FindAsset<BuffDef>("bdHakai");
             Material matHakaiOverlay = AssetCollection.FindAsset<Material>("matHakaiOverlay");
             // Add relevant hooks
-            IL.RoR2.HealthComponent.TakeDamageProcess += EtherealDeathIL;
+            //IL.RoR2.HealthComponent.TakeDamageProcess += EtherealDeathIL; // MOVED TO Hooks.TakeDamageProcess
 
             BuffOverlays.AddBuffOverlay(EquipmentDef.passiveBuffDef, matEtherealOverlay);
             // Used for suicide buff
             BuffOverlays.AddBuffOverlay(buffHakai, matHakaiOverlay);
         }
 
-        private void EtherealDeathIL(ILContext il)
-        {
-            ILCursor c = new ILCursor(il);
-
-            bool ILFound = c.TryGotoNext(MoveType.Before,
-                x => x.MatchLdloc(12),
-                x => x.MatchCallOrCallvirt<GlobalEventManager>(nameof(GlobalEventManager.ServerDamageDealt)),
-                x => x.MatchLdarg(0),
-                x => x.MatchCallOrCallvirt<HealthComponent>("get_alive")
-            );
-
-            c.Index += 3;
-
-            if (ILFound)
-            {
-                c.Emit(OpCodes.Ldarg_0);
-                c.EmitDelegate<Action<HealthComponent>>((hc) =>
-                {
-                    if (hc.health <= 0 && hc.body.HasBuff(SS2Content.Buffs.bdEthereal))
-                    {
-                        hc.health = 1;
-                        if (!hc.body.HasBuff(SS2Content.Buffs.bdHakai))
-                        {
-                            hc.body.AddBuff(SS2Content.Buffs.bdHakai);
-                            hc.body.AddBuff(RoR2Content.Buffs.Intangible);
-                        }
-                    }
-                });
-            }
-            else
-            {
-                SS2Log.Fatal("AffixEthereal.EtherealDeathIL(): Failed to find IL match.");
-            }
-
-        }
 
         public override bool IsAvailable(ContentPack contentPack)
         {

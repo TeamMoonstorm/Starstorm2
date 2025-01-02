@@ -7,11 +7,20 @@ namespace SS2
 {
     public class TeleporterUpgradeController : NetworkBehaviour
     {
+        public static TeleporterUpgradeController instance;
+        [SystemInitializer]
+        private static void Init()
+        {
+            //Add teleporter upgrading component to teleporters
+            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/Teleporter1.prefab").WaitForCompletion().AddComponent<TeleporterUpgradeController>();
+            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/LunarTeleporter Variant.prefab").WaitForCompletion().AddComponent<TeleporterUpgradeController>();
+        }
         [SyncVar]
         public bool isEthereal = false;
         [SyncVar]
-        private bool hasUpgraded = false;
+        public bool isStorm = false;
 
+        private Transform teleBase;
         private HoldoutZoneController hzc;
         private TeleporterInteraction ti;
         private ParticleSystem telePassiveParticles;
@@ -29,38 +38,37 @@ namespace SS2
 
         //private SpriteRenderer teleporterSprite;
         private GameObject portalIndicator;
+
+        private Transform stormIcon;
+        private Transform etherealIcon;
+        private static float iconHeightOffset = 2.4f;
         private void Awake()
         {
             hzc = GetComponent<HoldoutZoneController>();
             ti = GetComponent<TeleporterInteraction>();
 
-            var teleBase = GameObject.Find("TeleporterBaseMesh").gameObject;
+            teleBase = ti.transform.Find("TeleporterBaseMesh");           
             var teleProngs = teleBase.transform.Find("TeleporterProngMesh").gameObject;
             var teleBeacon = teleBase.transform.Find("SurfaceHeight/TeleporterBeacon").gameObject;
 
-            var currStage = SceneManager.GetActiveScene().name;
-
-            var newTeleMat = Addressables.LoadAssetAsync<Material>("RoR2/Base/Teleporters/matTeleporterFresnelOverlay.mat").WaitForCompletion();
-
-            if (currStage != "skymeadow" && currStage != "slumberingsatellite")
-            {
-                teleBase.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
-                teleProngs.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
-                teleBeacon.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
-            }
+            stormIcon = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("StormTeleporterSymbol", SS2Bundle.Events), teleBase).transform;
+            stormIcon.gameObject.SetActive(false);
+            etherealIcon = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("EtherealTeleporterSymbol", SS2Bundle.Indev), teleBase).transform;
+            etherealIcon.gameObject.SetActive(false);
 
             //passive vfx
-            telePassiveParticles = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/PassiveParticle, Sphere").GetComponent<ParticleSystem>();
-            teleCenterParticles = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/PassiveParticle, Center").GetComponent<ParticleSystem>();
-            lightningParticles = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargedEffect/LightningAlongProngs").GetComponent<ParticleSystem>();
-            lightningLightRef = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargedEffect/LightningAlongProngs/ReferencePointLight").GetComponent<Light>();
-            betweenProngsCore = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/IdleToChargingEffect/BetweenProngs/Core").GetComponent<ParticleSystem>();
-            coreLightRef = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/IdleToChargingEffect/BetweenProngs/Point light").GetComponent<Light>();
-            debris = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/IdleToChargingEffect/3DDebris").GetComponent<ParticleSystem>();
-            chargingRing = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/Ring").GetComponent<ParticleSystem>();
-            loopLight = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/BetweenProngs/Loop/Point light").GetComponent<Light>();
-            core = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/BetweenProngs/Loop/Core").GetComponent<ParticleSystem>();
-            beam = GameObject.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/BetweenProngs/Loop/Beam").GetComponent<ParticleSystem>();
+            Transform effects = teleBase.Find("BuiltInEffects");
+            telePassiveParticles = effects.Find("PassiveParticle, Sphere").GetComponent<ParticleSystem>();
+            teleCenterParticles = effects.Find("PassiveParticle, Center").GetComponent<ParticleSystem>();
+            lightningParticles = effects.Find("ChargedEffect/LightningAlongProngs").GetComponent<ParticleSystem>();
+            lightningLightRef = effects.Find("ChargedEffect/LightningAlongProngs/ReferencePointLight").GetComponent<Light>();
+            betweenProngsCore = effects.Find("IdleToChargingEffect/BetweenProngs/Core").GetComponent<ParticleSystem>();
+            coreLightRef = effects.Find("IdleToChargingEffect/BetweenProngs/Point light").GetComponent<Light>();
+            debris = effects.Find("IdleToChargingEffect/3DDebris").GetComponent<ParticleSystem>();
+            chargingRing = effects.Find("ChargingEffect/Ring").GetComponent<ParticleSystem>();
+            loopLight = effects.Find("ChargingEffect/BetweenProngs/Loop/Point light").GetComponent<Light>();
+            core = effects.Find("ChargingEffect/BetweenProngs/Loop/Core").GetComponent<ParticleSystem>();
+            beam = effects.Find("ChargingEffect/BetweenProngs/Loop/Beam").GetComponent<ParticleSystem>();
 
             //teleporterSprite = GameObject.Find("TeleporterChargingPositionIndicator(Clone)/TeleporterSprite").GetComponent<SpriteRenderer>();
 
@@ -77,9 +85,17 @@ namespace SS2
             TeleporterInteraction.onTeleporterBeginChargingGlobal -= OnTeleporterBeginChargingGlobal;
             TeleporterInteraction.onTeleporterChargedGlobal -= OnTeleporterChargedGlobal;
         }
+        private void OnEnable()
+        {
+            instance = this;
+        }
+        private void OnDisable()
+        {
+            instance = null;
+        }
         private void OnTeleporterBeginChargingGlobal(TeleporterInteraction tele)
         {
-            if (hasUpgraded)
+            if (isEthereal)
             {
                 if (tele.bossDirector)
                 {
@@ -94,44 +110,107 @@ namespace SS2
         }
         private void OnTeleporterChargedGlobal(TeleporterInteraction teleporter)
         {
-            if (hasUpgraded)
+            if (isEthereal)
             {
                 if (portalIndicator) Destroy(portalIndicator);
                 EtherealBehavior.instance.OnEtherealTeleporterCharged();
-                teleporter.AttemptSpawnPortal(SS2Assets.LoadAsset<InteractableSpawnCard>("iscStrangerPortal", SS2Bundle.Indev), 20f, 300f, "hehe oortal");
+                teleporter.AttemptSpawnPortal(SS2Assets.LoadAsset<InteractableSpawnCard>("iscStrangerPortal", SS2Bundle.Indev), 20f, 900f, "hehe oortal");
             }               
         }
 
         private void ModifySpawnedBoss(GameObject masterObject)
         {
-            if(isEthereal && hasUpgraded)
+            if(isEthereal)
             {
                 CharacterMaster bodyMaster = masterObject.GetComponent<CharacterMaster>();
+                // TODO: move all this item granting to one class. its getting tricky to keep track of
                 bodyMaster.inventory.GiveItem(SS2Content.Items.EtherealItemAffix);
-                bodyMaster.inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(12 + (6 * EtherealBehavior.instance.etherealsCompleted)));
+                bodyMaster.inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(14 + (7 * EtherealBehavior.instance.etherealsCompleted)));
+                bodyMaster.inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, 1 + EtherealBehavior.instance.etherealsCompleted);
             }
         }
 
-        public void FixedUpdate()
+        private void FixedUpdate()
         {
-            if (isEthereal && !hasUpgraded)
+            stormIcon.gameObject.SetActive(isStorm && !ti.isCharged);
+            etherealIcon.gameObject.SetActive(isEthereal && !ti.isCharged);
+            Vector3 position = ti.bossShrineIndicator.transform.localPosition;
+            float z = 0;
+            if (ti.bossShrineIndicator.activeSelf)
             {
-                hasUpgraded = true;
+                z += iconHeightOffset;
+            }
+            if(isEthereal)
+            {
+                etherealIcon.transform.localPosition = position + Vector3.forward * z;
+                z += iconHeightOffset;
+            }
+            if(isStorm)
+            {
+                stormIcon.transform.localPosition = position + Vector3.forward * z;
+                z += iconHeightOffset;
+            }
+            
+        }
 
-                UpgradeTeleporter();
+        [Server]
+        public void UpgradeStorm(bool upgrade) // just gonna use this for visuals for now. too lazy to move stuff here. behavior is in EntityStates/Events/Weather/Storm.cs
+        {
+            if (upgrade == isStorm)
+                return;
+            isStorm = upgrade;
+            if (upgrade) 
+                EffectManager.SimpleEffect(SS2Assets.LoadAsset<GameObject>("StormTeleporterUpgradeEffect", SS2Bundle.Events), ti.transform.position, Quaternion.identity, true);
+            RpcUpgradeStorm(upgrade);
+        }
+        [ClientRpc]
+        public void RpcUpgradeStorm(bool upgrade)
+        {
+            if(upgrade)
+            {
+                Material stormOverlay = SS2Assets.LoadAsset<Material>("matStormTeleporterOverlay", SS2Bundle.Equipments);
+                AppendMaterial(teleBase.gameObject.GetComponent<Renderer>(), stormOverlay);
+                AppendMaterial(teleBase.Find("TeleporterProngMesh").gameObject.GetComponent<Renderer>(), stormOverlay);
+                AppendMaterial(teleBase.Find("SurfaceHeight/TeleporterBeacon").gameObject.GetComponent<Renderer>(), stormOverlay);
+                void AppendMaterial(Renderer renderer, Material material)
+                {
+                    Material[] materials = renderer.sharedMaterials;
+                    HG.ArrayUtils.ArrayAppend(ref materials, material);
+                    renderer.sharedMaterials = materials;
+                }
+            }
+            else
+            {
+                RemoveMaterial(teleBase.gameObject.GetComponent<Renderer>(), 2); // XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+                RemoveMaterial(teleBase.Find("TeleporterProngMesh").gameObject.GetComponent<Renderer>(), 2);
+                RemoveMaterial(teleBase.Find("SurfaceHeight/TeleporterBeacon").gameObject.GetComponent<Renderer>(), 2);
+                void RemoveMaterial(Renderer renderer, int index)
+                {
+                    Material[] materials = renderer.sharedMaterials;
+                    HG.ArrayUtils.ArrayRemoveAtAndResize(ref materials, index);
+                    renderer.sharedMaterials = materials;
+                }
+
             }
         }
-
-        public void UpdateIsEthereal(bool isEthereal)
+        
+        [Server]
+        public void UpgradeEthereal()
         {
-            this.isEthereal = isEthereal;
+            if (isEthereal) return;
+            isEthereal = true;
+            EffectManager.SimpleEffect(SS2Assets.LoadAsset<GameObject>("EtherealTeleporterUpgradeEffect", SS2Bundle.Indev), ti.transform.position, Quaternion.identity, true);
+            RpcUpgradeEthereal();
         }
 
-        public void UpgradeTeleporter()
-        {
-            //check for sky meadows (lunar tp)
-            var currStage = SceneManager.GetActiveScene().name;
+        [ClientRpc]
+        public void RpcUpgradeEthereal()
+        {         
+            EtherealUpgradeInternal();
+        }
 
+        private void EtherealUpgradeInternal() // not gonna bother undoing this. will never happen in gameplay
+        {
             // spawn portal orb
             if (ti.modelChildLocator)
             {
@@ -145,23 +224,17 @@ namespace SS2
             cd.maxConsecutiveCheapSkips = 2; //:slight_smile:
             cd.maximumNumberToSpawnBeforeSkipping = 10;
 
-
-            //set a bunch of variables we'll be using for teleporter modifications:
-            var newTeleMat = SS2Assets.LoadAsset<Material>("matEtherealFresnelOverlay", SS2Bundle.Indev);
-            var teleBase = GameObject.Find("TeleporterBaseMesh").gameObject;
-            var teleProngs = teleBase.transform.Find("TeleporterProngMesh").gameObject;
-            var teleBeacon = teleBase.transform.Find("SurfaceHeight/TeleporterBeacon").gameObject;
-            var teleBuiltInEffects = teleBase.transform.Find("BuiltInEffects").gameObject;
-            var radiusScaler = teleBuiltInEffects.transform.Find("ChargingEffect/RadiusScaler").gameObject;
-
             //update the fresnel material from red to green
-            if (currStage != "skymeadow")
+            var newTeleMat = SS2Assets.LoadAsset<Material>("matEtherealFresnelOverlay", SS2Bundle.Indev);
+            ReplaceMaterial(teleBase.gameObject.GetComponent<MeshRenderer>(), 1, newTeleMat);
+            ReplaceMaterial(teleBase.Find("TeleporterProngMesh").gameObject.GetComponent<Renderer>(), 1, newTeleMat);
+            ReplaceMaterial(teleBase.Find("SurfaceHeight/TeleporterBeacon").gameObject.GetComponent<Renderer>(), 1, newTeleMat);
+            void ReplaceMaterial(Renderer renderer, int index, Material material)
             {
-                teleBase.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
-                teleProngs.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
-                teleBeacon.GetComponent<MeshRenderer>().sharedMaterials[1].CopyPropertiesFromMaterial(newTeleMat);
+                Material[] materials = renderer.sharedMaterials;
+                materials[index] = material;
+                renderer.sharedMaterials = materials;
             }
-
             //resize & reposition the teleporter
             //teleBase.transform.localScale *= 2f;
             //teleBase.transform.position = new Vector3(teleBase.transform.position.x, teleBase.transform.position.y, teleBase.transform.position.z);
@@ -182,22 +255,18 @@ namespace SS2
             rangeIndicator.material = SS2Assets.LoadAsset<Material>("matEthTeleporterRangeIndicator", SS2Bundle.Indev);
 
             //lightning effects
-            var lightningPSR = lightningParticles.GetComponent<ParticleSystemRenderer>();
-            lightningPSR.material = SS2Assets.LoadAsset<Material>("matEthTPLightning", SS2Bundle.Indev);
+            lightningParticles.GetComponent<ParticleSystemRenderer>().material = SS2Assets.LoadAsset<Material>("matEthTPLightning", SS2Bundle.Indev);
             lightningLightRef.color = new Color(.0f, .89f, .39f);
 
             //idletocharging
-            var corePSR = betweenProngsCore.GetComponent<ParticleSystemRenderer>();
-            corePSR.material = SS2Assets.LoadAsset<Material>("matEthTPFire", SS2Bundle.Indev);
+            betweenProngsCore.GetComponent<ParticleSystemRenderer>().material = SS2Assets.LoadAsset<Material>("matEthTPFire", SS2Bundle.Indev);
             coreLightRef.color = new Color(.0f, .89f, .39f);
 
             //3DDebris
-            var debrisPSR = debris.GetComponent<ParticleSystemRenderer>();
-            debrisPSR.trailMaterial = SS2Assets.LoadAsset<Material>("matEthExplosion", SS2Bundle.Indev);
+            debris.GetComponent<ParticleSystemRenderer>().trailMaterial = SS2Assets.LoadAsset<Material>("matEthExplosion", SS2Bundle.Indev);
 
             //charging effects
-            var ringPSR = chargingRing.GetComponent<ParticleSystemRenderer>();
-            ringPSR.material = SS2Assets.LoadAsset<Material>("matEthTPShockwave", SS2Bundle.Indev);
+            chargingRing.GetComponent<ParticleSystemRenderer>().material = SS2Assets.LoadAsset<Material>("matEthTPShockwave", SS2Bundle.Indev);
 
             //center beam
             loopLight.color = new Color(.0f, .89f, .39f);

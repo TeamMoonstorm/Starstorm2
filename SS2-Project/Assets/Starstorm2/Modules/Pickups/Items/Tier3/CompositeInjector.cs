@@ -17,6 +17,8 @@ namespace SS2.Items
 {
     // welcome to hell
     //N: This is fucking insanity, LOL
+
+    // SEE ExtraEquipmentManager.cs for implementation of passive buffs and elite overlays
     public sealed class CompositeInjector : SS2Item
     {
         private const string token = "SS2_ITEM_COMPOSITEINJECTOR_DESC";
@@ -36,10 +38,8 @@ namespace SS2.Items
             On.RoR2.UI.HUD.Awake += AddIcons;
             On.RoR2.EquipmentDef.AttemptGrant += EquipmentDef_AttemptGrant;
             EquipmentSlot.onServerEquipmentActivated += ActivateAllEquipment;
-            IL.RoR2.CharacterBody.OnInventoryChanged += CharacterBody_OnInventoryChanged;
             IL.RoR2.Inventory.UpdateEquipment += Inventory_UpdateEquipment;
-            On.RoR2.CharacterModel.Awake += CharacterModel_Awake;
-            IL.RoR2.CharacterModel.UpdateOverlays += CharacterModel_UpdateOverlays;
+            
             On.RoR2.EquipmentSlot.Update += EquipmentSlot_Update;
         }
 
@@ -155,41 +155,7 @@ namespace SS2.Items
                 // AAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
                 context.body.OnEquipmentLost(lastEquipmentState.equipmentDef);
             }
-        }
-
-        //vanilla only adds passivebuffdef from active equipment slot
-        //if body has composite injector, we want them from all equipment slots
-        // hook runs after OnEquipmentLost and OnEquipmentGained, and before adding itembehaviors from elite buffs
-        private void CharacterBody_OnInventoryChanged(ILContext il)
-        {
-            ILCursor c = new ILCursor(il);
-            bool b = c.TryGotoNext(MoveType.Before,
-                x => x.MatchLdarg(0),
-                x => x.MatchLdcI4(1),
-                x => x.MatchStfld<CharacterBody>(nameof(CharacterBody.statsDirty))); // statsDirty = true;
-            if (b)
-            {
-                c.Emit(OpCodes.Ldarg_0); //body
-                c.EmitDelegate<Action<CharacterBody>>((body) =>
-                {
-                    if (body.inventory.GetItemCount(SS2Content.Items.CompositeInjector) <= 0) return;
-
-                    for (int i = 0; i < body.inventory.GetEquipmentSlotCount(); i++)
-                    {
-                        BuffDef buffDef = body.inventory.GetEquipment((uint)i).equipmentDef?.passiveBuffDef;
-                        if (buffDef && !body.HasBuff(buffDef))
-                        {
-                            body.AddBuff(buffDef);
-                        }
-                    }
-                });
-            }
-            else
-            {
-                SS2Log.Warning("CompositeInjector.CharacterBody_OnEquipmentLost: ILHook failed.");
-            }
-
-        }
+        }       
 
         // display indicator of the first equipment that uses one
         // would be cool to get all the indicators but it would be very annoying to do
@@ -213,183 +179,6 @@ namespace SS2.Items
         }
         #endregion
 
-        #region Item Displays
-        // make charactermodel use the first elite equipment for overlays instead of only in active slot
-        private void CharacterModel_UpdateOverlays(ILContext il)
-        {
-            ILCursor c = new ILCursor(il);
-            bool b = c.TryGotoNext(MoveType.After,
-                x => x.MatchStfld<CharacterModel>(nameof(CharacterModel.activeOverlayCount)),
-                x => x.MatchLdarg(0),
-                x => x.MatchLdfld<CharacterModel>(nameof(CharacterModel.inventoryEquipmentIndex))); // bad
-            if (b)
-            {
-                c.Index++; // so bad
-                           // EquipmentDef equipmentDef = EquipmentCatalog.GetEquipmentDef(inventoryEquipmentIndex);
-                c.Emit(OpCodes.Ldarg_0); // charactermodel
-                c.EmitDelegate<Func<EquipmentDef, CharacterModel, EquipmentDef>>((ed, model) =>
-                {
-                    CharacterBody body = model.body;
-                    // return TRUE if we want to remove the buff
-                    // return FALSE if we want to skip removing the buff
-                    if (body?.inventory?.GetItemCount(SS2Content.Items.CompositeInjector) > 0)
-                    {
-                        for (int i = 0; i < body.inventory.GetEquipmentSlotCount(); i++)
-                        {
-                            EquipmentState state = body.inventory.GetEquipment((uint)i);
-                            if (state.equipmentDef?.passiveBuffDef?.eliteDef?.eliteIndex != null)
-                            {
-                                return state.equipmentDef;
-                            }
-                        }
-                    }
-                    return ed;
-                });
-            }
-            else
-            {
-                SS2Log.Error("CompositeInjector.CharacterModel_UpdateOverlays: ILHook failed.");
-            }
-        }
-
-        //add a component to CharacterModel that handles extra equipment displays
-        private void CharacterModel_Awake(On.RoR2.CharacterModel.orig_Awake orig, CharacterModel self)
-        {
-            orig(self);
-            self.gameObject.AddComponent<ExtraEquipmentDisplays>();
-        }
-
-        // keep itemdisplays of all equipment in inventory, if body has composite injector.
-        // mostly copypasted functionality of charactermodel, except it keeps more than one equipment display active
-        private class ExtraEquipmentDisplays : MonoBehaviour
-        {
-            private CharacterModel model;
-            private ChildLocator childLocator;
-            private List<CharacterModel.ParentedPrefabDisplay> parentedPrefabDisplays = new List<CharacterModel.ParentedPrefabDisplay>();
-            private List<CharacterModel.LimbMaskDisplay> limbMaskDisplays = new List<CharacterModel.LimbMaskDisplay>();
-            private List<EquipmentIndex> enabledEquipmentDisplays = new List<EquipmentIndex>();
-
-            private void Awake()
-            {
-                this.model = base.GetComponent<CharacterModel>();
-                this.childLocator = base.GetComponent<ChildLocator>();
-            }
-            private void OnEnable()
-            {
-                if (model.body) model.body.onInventoryChanged += OnInventoryChanged;
-            }
-            private void OnDisable()
-            {
-                if (model.body) model.body.onInventoryChanged -= OnInventoryChanged;
-            }
-
-            private void OnInventoryChanged()
-            {
-                EquipmentIndex equipmentIndex = 0;
-                EquipmentIndex equipmentCount = (EquipmentIndex)EquipmentCatalog.equipmentCount;
-                while (equipmentIndex < equipmentCount)
-                {
-                    // only show multiple equipments with composite injector, to not interfere with toolbot
-                    // also dont want to re enable CharacterModel's equipment display
-                    if (HasEquipment(equipmentIndex) && model.body.inventory.GetItemCount(SS2Content.Items.CompositeInjector) > 0)
-                    {
-                        this.EnableEquipmentDisplay(equipmentIndex);
-                    }
-                    else
-                    {
-                        this.DisableEquipmentDisplay(equipmentIndex);
-                    }
-                    equipmentIndex++;
-                }
-            }
-            private void EnableEquipmentDisplay(EquipmentIndex index)
-            {
-                if (this.enabledEquipmentDisplays.Contains(index))
-                {
-                    return;
-                }
-                this.enabledEquipmentDisplays.Add(index);
-                if (model.itemDisplayRuleSet)
-                {
-                    DisplayRuleGroup itemDisplayRuleGroup = model.itemDisplayRuleSet.GetEquipmentDisplayRuleGroup(index);
-                    this.InstantiateDisplayRuleGroup(itemDisplayRuleGroup, index);
-                }
-            }
-            private void DisableEquipmentDisplay(EquipmentIndex index)
-            {
-                if (!this.enabledEquipmentDisplays.Contains(index))
-                {
-                    return;
-                }
-                this.enabledEquipmentDisplays.Remove(index);
-                for (int i = this.parentedPrefabDisplays.Count - 1; i >= 0; i--)
-                {
-                    if (this.parentedPrefabDisplays[i].equipmentIndex == index)
-                    {
-                        this.parentedPrefabDisplays[i].Undo();
-                        this.parentedPrefabDisplays.RemoveAt(i);
-                    }
-                }
-                for (int j = this.limbMaskDisplays.Count - 1; j >= 0; j--)
-                {
-                    if (this.limbMaskDisplays[j].equipmentIndex == index)
-                    {
-                        this.limbMaskDisplays[j].Undo(model);
-                        this.limbMaskDisplays.RemoveAt(j);
-                    }
-                }
-            }
-            private bool HasEquipment(EquipmentIndex index)
-            {
-                Inventory inventory = model.body.inventory;
-                //dont use first equipment slot because charactermodel already uses it
-                EquipmentIndex first = inventory.GetEquipment(0).equipmentIndex;
-                for (int i = 1; i < inventory.GetEquipmentSlotCount(); i++)
-                {
-                    EquipmentIndex equipmentIndex = inventory.GetEquipment((uint)i).equipmentIndex;
-                    if (equipmentIndex == index && equipmentIndex != first) return true;
-                }
-                return false;
-            }
-
-            private void InstantiateDisplayRuleGroup(DisplayRuleGroup displayRuleGroup, EquipmentIndex equipmentIndex)
-            {
-                if (displayRuleGroup.rules != null)
-                {
-                    for (int i = 0; i < displayRuleGroup.rules.Length; i++)
-                    {
-                        ItemDisplayRule itemDisplayRule = displayRuleGroup.rules[i];
-                        ItemDisplayRuleType ruleType = itemDisplayRule.ruleType;
-                        if (ruleType != ItemDisplayRuleType.ParentedPrefab)
-                        {
-                            if (ruleType == ItemDisplayRuleType.LimbMask)
-                            {
-                                CharacterModel.LimbMaskDisplay item = new CharacterModel.LimbMaskDisplay
-                                {
-                                    equipmentIndex = equipmentIndex
-                                };
-                                item.Apply(model, itemDisplayRule.limbMask);
-                                this.limbMaskDisplays.Add(item);
-                            }
-                        }
-                        else if (this.childLocator)
-                        {
-                            Transform transform = this.childLocator.FindChild(itemDisplayRule.childName);
-                            if (transform)
-                            {
-                                CharacterModel.ParentedPrefabDisplay item2 = new CharacterModel.ParentedPrefabDisplay
-                                {
-                                    equipmentIndex = equipmentIndex
-                                };
-                                item2.Apply(model, itemDisplayRule.followerPrefab, transform, itemDisplayRule.localPos, Quaternion.Euler(itemDisplayRule.localAngles), itemDisplayRule.localScale);
-                                this.parentedPrefabDisplays.Add(item2);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        #endregion
 
         #region	HUD stuff
         // dont display mul-t's alt equipment slot if we just have composite injector

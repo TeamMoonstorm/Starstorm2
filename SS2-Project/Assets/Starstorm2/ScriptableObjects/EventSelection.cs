@@ -13,8 +13,9 @@ namespace SS2
         public DirectorAPI.StageSerde stage;
         public string customStage;
         public bool canStorm;
-        //public GameObject stormPrefab;
+        //public GameObject stormPrefab; // stormcontroller already handles this and im lazy to port it
 
+        // ideally this is a list of some kind of "EventCategory" struct, with info about the time they spawn, if they can repeat, how many per stage, etc.
         [Header("Elite Event Settings")]
         public Event[] eliteEvents;
 
@@ -38,7 +39,7 @@ namespace SS2
                     return eventSelection;
                 }                   
             }
-            return sceneDef.sceneType == SceneType.Stage ? SS2Assets.LoadAsset<EventSelection>("esDefault", SS2Bundle.Events) : null;
+            return sceneDef.sceneType == SceneType.Stage ? SS2Assets.LoadAsset<EventSelection>("default", SS2Bundle.Events) : null;
         }
         public WeightedSelection<EventCard> GenerateMiscEventWeightedSelection()
         {
@@ -68,6 +69,10 @@ namespace SS2
 
         protected virtual void OnEnable()
         {
+            if(Run.instance)
+            {
+                SS2Log.Info("EventSelection '" + base.name + "' has been loaded after the Run started.");
+            }
             EventSelection.instancesList.Add(this);
         }
         protected virtual void OnDisable()

@@ -11,6 +11,7 @@ namespace SS2
     public class EventCard : ScriptableObject
     {
         public GameObject eventPrefab;
+        public float maximumDuration = Mathf.Infinity;
         public bool canStartDuringTeleporterEvent;
 
         public string requiredUnlockable;

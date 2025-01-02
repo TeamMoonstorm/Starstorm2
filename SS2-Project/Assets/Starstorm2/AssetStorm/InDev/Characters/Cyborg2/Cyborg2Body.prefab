@@ -147,8 +147,6 @@ MonoBehaviour:
   amputateMaxHealthMinimum: 1
   extraSecondaryFromSkill: 0
   extraSpecialFromSkill: 0
-  lowerHealthHigherDamageEffectUpdater: {fileID: 0}
-  canBoostAllStats: 0
   increaseDamageOnMultiKillItemDisplayUpdater: {fileID: 0}
   allSkillsDisabled: 0
   isTeleporting: 0
@@ -183,6 +181,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   _defaultCrosshairPrefab: {fileID: 0}
   hideCrosshair: 0
+  canAddIncrasePrimaryDamage: 0
   knockBackFinGroundedTimer: 0
   runicLensPosition: {x: 0, y: 0, z: 0}
   meteorVictimBody: {fileID: 0}
@@ -682,7 +681,7 @@ MonoBehaviour:
   KillVelocityWhenExceedMaxMovementIterations: 1
   KillRemainingMovementWhenExceedMaxMovementIterations: 1
   timeUntilUpdate: 0
-  playerCharacter: 0
+  playerCharacter: 1
 --- !u!114 &1004718732815417702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -793,7 +792,7 @@ Transform:
   m_GameObject: {fileID: 5926529148531982006}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 2.24, z: 0}
-  m_LocalScale: {x: 1.8, y: 1.8, z: 1.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5677010006892963226}
@@ -809,8 +808,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.39
-  m_Height: 2.52
+  m_Radius: 0.7
+  m_Height: 4.5
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &937228765377335665

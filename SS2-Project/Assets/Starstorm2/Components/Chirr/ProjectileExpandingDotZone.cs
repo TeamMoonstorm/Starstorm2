@@ -59,7 +59,7 @@ namespace SS2.Components
             this.currentRadius = Mathf.Lerp(startRadius, endRadius, this.lifeStopwatch / this.lifetime);
             foreach (Transform transform in scaledTransforms)
             {
-                transform.localScale = Vector3.one * this.currentRadius / this.startRadius;
+                transform.localScale = Vector3.one * this.currentRadius;
             }
             if(this.lifeStopwatch >= this.lifetime)
             {

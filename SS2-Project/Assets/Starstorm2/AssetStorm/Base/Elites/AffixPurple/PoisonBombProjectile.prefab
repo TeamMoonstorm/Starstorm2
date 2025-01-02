@@ -154,7 +154,7 @@ MonoBehaviour:
   ghostPrefab: {fileID: 5491722639517189450, guid: 3a90eb553e06b0e44a41f1a9e735efa5,
     type: 3}
   ghostTransformAnchor: {fileID: 0}
-  startSound: 
+  startSound: ChirrFireSpitBomb
   cannotBeDeleted: 0
   authorityHandlesCollisionEvents: 0
   flightSoundLoop: {fileID: 0}
@@ -219,6 +219,7 @@ MonoBehaviour:
     type: 3}
   childrenCount: 1
   childrenDamageCoefficient: 1
+  childrenInheritDamageType: 0
   minAngleOffset: {x: 0, y: 0, z: 0}
   maxAngleOffset: {x: 0, y: 0, z: 0}
   minRollDegrees: 0

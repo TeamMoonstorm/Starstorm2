@@ -71,7 +71,11 @@ namespace SS2.Components
                         EffectManager.SimpleEffect(SS2Assets.LoadAsset<GameObject>("TeleportDashEffect", SS2Bundle.Indev), body.corePosition, Quaternion.LookRotation(dest - body.corePosition), true);
 					
 						TeleportHelper.TeleportBody(body, dest);
-
+                        SetStateOnHurt setStateOnHurt = body.GetComponent<SetStateOnHurt>();
+                        if(setStateOnHurt)
+                        {
+                            setStateOnHurt.SetStun(2);
+                        }
                         if(body.modelLocator && body.modelLocator.modelTransform)
                         {
                             Transform modelTransform = body.modelLocator.modelTransform;

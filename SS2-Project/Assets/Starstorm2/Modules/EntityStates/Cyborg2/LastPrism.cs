@@ -2,6 +2,8 @@
 using UnityEngine;
 using SS2.Components;
 using System;
+using UnityEngine.Networking;
+
 namespace EntityStates.Cyborg2
 {
     public class LastPrism : BaseSkillState
@@ -55,7 +57,7 @@ namespace EntityStates.Cyborg2
                 this.beamEffectInstance = GameObject.Instantiate(beamEffectPrefab, muzzleTransform.position, Quaternion.identity);
                 this.beamEffectComponent = beamEffectInstance.GetComponent<BeamFromPoints>();
             }
-            
+            this.UpdateBeam();
 
             base.characterMotor.walkSpeedPenaltyCoefficient = walkSpeedPenaltyCoefficient;
 
@@ -192,10 +194,16 @@ namespace EntityStates.Cyborg2
             
         }
 
-        private void PlayAnimation(string animationStateName, string playbackRateParam, float duration)
+        public override void OnSerialize(NetworkWriter writer)
         {
-            string layerName = base.isGrounded ? "FullBody, Override" : "Gesture, Override";
-            base.PlayAnimation(layerName, animationStateName, playbackRateParam, duration);
+            base.OnSerialize(writer);
+            writer.Write(this.currentAimVector);
+        }
+
+        public override void OnDeserialize(NetworkReader reader)
+        {
+            base.OnDeserialize(reader);
+            this.currentAimVector = reader.ReadVector3();
         }
         public override InterruptPriority GetMinimumInterruptPriority()
         {

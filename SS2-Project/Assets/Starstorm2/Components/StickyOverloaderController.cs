@@ -121,7 +121,6 @@ namespace SS2.Components
                     SetBuffCount(count);
                 }
             }     
-            if (!NetworkServer.active) return;
             detonationTimer -= Time.fixedDeltaTime;
             if(detonationTimer <= 0f)
             {
@@ -183,19 +182,21 @@ namespace SS2.Components
             {
                 animator.SetFloat("intensity", count / (float)(StickyOverloader.maxStacks + StickyOverloader.maxStacksPerStack * (itemStacks - 1)));
             }
-            float alpha = Util.Remap(count, 0, 25, .3f, 1);
-            for(int i = 0; i < this.indicatorRenderer.materials.Length; i++)
-            {
-                this._propBlock = new MaterialPropertyBlock();
-                this.indicatorRenderer.GetPropertyBlock(this._propBlock, i);
-                this._propBlock.SetFloat("_ExternalAlpha", alpha);
-                this.indicatorRenderer.SetPropertyBlock(this._propBlock, i);
-            }
+            float a1 = Util.Remap(count, 0, 25, 0f, 1);
+            float a2 = Util.Remap(count, 0, 25, .45f, 1);
+            this._propBlock = new MaterialPropertyBlock();
+            this.indicatorRenderer.GetPropertyBlock(this._propBlock, 0);
+            this._propBlock.SetFloat("_ExternalAlpha", Mathf.Clamp01(a1));
+            this.indicatorRenderer.SetPropertyBlock(this._propBlock, 0);
+            this._propBlock = new MaterialPropertyBlock();
+            this.indicatorRenderer.GetPropertyBlock(this._propBlock, 1);
+            this._propBlock.SetFloat("_ExternalAlpha", Mathf.Clamp01(a2));
+            this.indicatorRenderer.SetPropertyBlock(this._propBlock, 1); // iterating wasnt wokring idk
         }
 
         private void FireBlast()
         {
-            if(!hasExploded)
+            if(NetworkServer.active && !hasExploded)
             {
                 hasExploded = true;          
                 EffectManager.SpawnEffect(explosionEffectPrefab, new EffectData
@@ -223,8 +224,8 @@ namespace SS2.Components
                     losType = BlastAttack.LoSType.NearestHit,
                     impactEffect = EffectCatalog.FindEffectIndexFromPrefab(impactEffectPrefab),
                 }.Fire();
-
-                stuckBody.SetBuffCount(SS2Content.Buffs.BuffStickyOverloader.buffIndex, 0);
+                if(stuckBody)
+                    stuckBody.SetBuffCount(SS2Content.Buffs.BuffStickyOverloader.buffIndex, 0);
             }
             
             Destroy(base.gameObject);

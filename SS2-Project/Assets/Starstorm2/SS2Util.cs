@@ -19,6 +19,52 @@ namespace SS2
             DLC2 = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<ExpansionDef>("RoR2/DLC1/Common/DLC1.asset").WaitForCompletion();
         }
 
+        public static float IntegrateCurve(AnimationCurve curve, float startTime, float endTime, int steps)
+        {
+            return Integrate(curve.Evaluate, startTime, endTime, steps);
+        }
+
+        // Integrate function f(x) using the trapezoidal rule between x=x_low..x_high
+        public static float Integrate(Func<float, float> f, float x_low, float x_high, int N_steps)
+        {
+            float h = (x_high - x_low) / N_steps;
+            float res = (f(x_low) + f(x_high)) / 2;
+            for (int i = 1; i < N_steps; i++)
+            {
+                res += f(x_low + i * h);
+            }
+            return h * res;
+        }
+
+        public static int GetItemCountForPlayers(ItemDef itemDef)
+        {
+            int count = 0;
+            foreach (PlayerCharacterMasterController playerCharacterMasterController in PlayerCharacterMasterController.instances)
+            {
+                if (playerCharacterMasterController.master)
+                {
+                    int itemCount = playerCharacterMasterController.master.inventory.GetItemCount(itemDef);
+                    count += itemCount;
+                }
+            }
+            return count;
+        }
+        public static int GetItemCountForTeam(ItemDef itemDef, TeamIndex teamIndex)
+        {
+            return GetItemCountForTeam(itemDef.itemIndex, teamIndex);
+        }
+        public static int GetItemCountForTeam(ItemIndex itemIndex, TeamIndex teamIndex)
+        {
+            int count = 0;
+            foreach(TeamComponent member in TeamComponent.GetTeamMembers(teamIndex))
+            {
+                if(member && member.body && member.body.inventory)
+                {
+                    count += member.body.inventory.GetItemCount(itemIndex);
+                }
+            }
+            return count;
+        }
         public static bool DoesTodayLandWithinASpecificDaysWeek(int desiredDay, int desiredMonth)
         {
             var now = DateTime.Now;

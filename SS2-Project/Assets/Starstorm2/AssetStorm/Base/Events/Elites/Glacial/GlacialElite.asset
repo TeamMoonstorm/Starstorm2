@@ -9,43 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 462267d798a056b4ab94d737b7da67f6, type: 3}
+  m_Script: {fileID: 11500000, guid: 787ebc4012f2f5b4099a7cc5918eb5e5, type: 3}
   m_Name: GlacialElite
   m_EditorClassIdentifier: 
-  eventFlags: 0
-  eventState:
-    _typeName: EntityStates.Events.GlacialEventState, Starstorm2, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  requiredStateMachine: 
-  startMessageToken: SS2_EVENT_GLACIALELITE_START
-  endMessageToken: SS2_EVENT_GLACIALELITE_END
-  messageColor: {r: 0.5882353, g: 0.8117648, b: 0.85098046, a: 1}
-  startSound: {fileID: 0}
-  availableStages: 0
-  customStageNames: []
-  category: CommonEvents
-  selectionWeight: 33
-  cost: 1750
-  repeatedSelectionCostCoefficient: 4
-  minimumStageCompletions: 5
-  requiredUnlock:
-    _asset: {fileID: 0}
-    _address: 
-    _useDirectReference: 0
-  requiredUnlockableDef:
-    address: 
-    useDirectReference: 1
-    asset: {fileID: 0}
-  forbiddenUnlock:
-    _asset: {fileID: 0}
-    _address: 
-    _useDirectReference: 0
-  forbiddenUnlockableDef:
-    address: 
-    useDirectReference: 1
-    asset: {fileID: 0}
-  requiredExpansionDefs: []
-  requiredExpansions:
-  - address: 
-    useDirectReference: 1
-    asset: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+  eventPrefab: {fileID: 7523069071521145345, guid: a21ee6392246b1b488a42a944728c14f,
+    type: 3}
+  maximumDuration: Infinity
+  canStartDuringTeleporterEvent: 0
+  requiredUnlockable: 
+  requiredUnlockableDef: {fileID: 0}
+  requiredFlag: 
+  forbiddenFlag: 
+  requiredExpansion: 0
+  requiredStagesCompleted: 1
