@@ -62,6 +62,8 @@ namespace EntityStates.Cyborg2
             if (base.isAuthority)
             {
                 Ray aimRay = base.GetAimRay();
+                DamageTypeCombo damageType = DamageType.SlowOnHit;
+                damageType.damageSource = DamageSource.Primary;
                 new BulletAttack
                 {
                     aimVector = aimRay.direction,
@@ -69,7 +71,7 @@ namespace EntityStates.Cyborg2
                     owner = base.gameObject,
                     damage = damageStat * damageCoefficient,
                     damageColorIndex = DamageColorIndex.Default,
-                    damageType = DamageType.Generic,
+                    damageType = damageType,
                     falloffModel = BulletAttack.FalloffModel.DefaultBullet,
                     force = force,
                     HitEffectNormal = false,

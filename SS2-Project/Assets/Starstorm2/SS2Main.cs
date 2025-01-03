@@ -51,7 +51,7 @@ namespace SS2
             HideUnlocks.Hook();
             //N: Not gonna lie, i love the idea of seasonal effects, but having the same date time check is silly, so there's that internal static bool now.
             DateTime today = DateTime.Today;
-            if (today.Month == 12 && ((today.Day == 27) || (today.Day == 26) || (today.Day == 25) || (today.Day == 24) || (today.Day == 23)))
+            if (today.Month == 12 && ((today.Day == 31) || (today.Day == 30) || (today.Day == 29) || (today.Day == 28) || (today.Day == 27) || (today.Day == 26) || (today.Day == 25) || (today.Day == 24) || (today.Day == 23)))
                 ChristmasTime = true;
 
             //N: i have no idea if SystemInitializer would be too late for this, so it stays here for now.

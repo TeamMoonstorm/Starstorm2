@@ -138,7 +138,7 @@ namespace SS2.Survivors
         {
             SetupFearExecute();
             On.RoR2.MapZone.TeleportBody += MarkOOB;
-            On.RoR2.TeleportHelper.TeleportBody += HelpOOB;
+            On.RoR2.TeleportHelper.TeleportBody_CharacterBody_Vector3 += HelpOOB;
         }
 
         private void MarkOOB(On.RoR2.MapZone.orig_TeleportBody orig, MapZone self, CharacterBody characterBody)
@@ -151,7 +151,7 @@ namespace SS2.Survivors
             orig(self, characterBody);
         }
 
-        private void HelpOOB(On.RoR2.TeleportHelper.orig_TeleportBody orig, CharacterBody body, Vector3 targetFootPosition, bool forceOutOfVehicle)
+        private void HelpOOB(On.RoR2.TeleportHelper.orig_TeleportBody_CharacterBody_Vector3 orig, CharacterBody body, Vector3 targetFootPosition)
         {
             var exc = body.gameObject.GetComponent<ExecutionerController>();
             if (exc)
@@ -162,7 +162,7 @@ namespace SS2.Survivors
                     targetFootPosition += new Vector3(0, 1, 0);
                 }
             }
-            orig(body, targetFootPosition, forceOutOfVehicle);
+            orig(body, targetFootPosition);
         }
 
         private HealthComponent.HealthBarValues FearExecuteHealthbar(On.RoR2.HealthComponent.orig_GetHealthBarValues orig, HealthComponent self)
@@ -185,7 +185,7 @@ namespace SS2.Survivors
                 bool error = true;
                 ILCursor c = new ILCursor(il);
                 if (c.TryGotoNext(MoveType.After,
-                    x => x.MatchStloc(53)   //num17 = float.NegativeInfinity, stloc53 = Execute Fraction, first instance it is used
+                    x => x.MatchStloc(72)   //num23 = float.NegativeInfinity, stloc53 = Execute Fraction, first instance it is used
                     ))
                 {
                     if (c.TryGotoNext(MoveType.After,
@@ -193,7 +193,7 @@ namespace SS2.Survivors
                     ))
                     {
                         c.Emit(OpCodes.Ldarg_0);//self
-                        c.Emit(OpCodes.Ldloc, 59);//execute fraction
+                        c.Emit(OpCodes.Ldloc, 72);//execute fraction
                         c.EmitDelegate<Func<HealthComponent, float, float>>((self, executeFraction) =>
                         {
                             if (self.body.HasBuff(SS2Content.Buffs.BuffFear))
@@ -203,7 +203,7 @@ namespace SS2.Survivors
                             }
                             return executeFraction;
                         });
-                        c.Emit(OpCodes.Stloc, 59);
+                        c.Emit(OpCodes.Stloc, 72);
 
                         error = false;
                     }
