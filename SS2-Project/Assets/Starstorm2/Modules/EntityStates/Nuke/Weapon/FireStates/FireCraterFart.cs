@@ -12,6 +12,11 @@ using UnityEngine;
 
 namespace EntityStates.Nuke.Weapon
 {
+    /// <summary>
+    /// Possible fire state of nucleator's default secondary, if he's looking down and is on air while he's switching state, he'll plummet to the ground and crater it, causing damage around an area and leaving a pool of goo... i think i based part of it off of acrid's utility? i kinda forgot :skull:
+    /// <br></br>
+    /// See <see cref="ChargeFart"/>
+    /// </summary>
     public class FireCraterFart : BaseNukeFireState
     {
         public static SerializableDamageColor damageColor;
