@@ -16,10 +16,10 @@ MonoBehaviour:
   skillNameToken: SS2_WARDEN_SPECIAL_NAME
   skillDescriptionToken: SS2_WARDEN_SPECIAL_DESC
   keywordTokens: []
-  icon: {fileID: 0}
-  activationStateMachineName: Body
+  icon: {fileID: 21300000, guid: 1641d93aec8422149b22c8673330c6a9, type: 3}
+  activationStateMachineName: Surge
   activationState:
-    _typeName: EntityStates.Uninitialized, RoR2, Version=0.0.0.0, Culture=neutral,
+    _typeName: EntityStates.Warden.VolticSurge, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
   interruptPriority: 1
   baseRechargeInterval: 1
@@ -32,7 +32,7 @@ MonoBehaviour:
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
-  beginSkillCooldownOnSkillEnd: 0
+  beginSkillCooldownOnSkillEnd: 1
   cancelSprintingOnActivation: 1
   forceSprintDuringState: 0
   canceledFromSprinting: 0

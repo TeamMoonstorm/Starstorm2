@@ -12,7 +12,7 @@ using UnityEngine.Networking;
 
 namespace SS2.Components
 {
-    public class ChargeMeter : NetworkBehaviour
+    public class WardenChargeMeter : NetworkBehaviour
     {
         public CharacterBody characterBody;
 
@@ -59,7 +59,7 @@ namespace SS2.Components
                 if (NetworkServer.localClientActive && syncVarHookGuard)
                 {
                     syncVarHookGuard = true;
-                    OnRepairModified(value);
+                    OnChargeModified(value);
                     syncVarHookGuard = false;
                 }
                 SetSyncVar<float>(value, ref _charge, 1U);
@@ -68,14 +68,14 @@ namespace SS2.Components
 
         public void OnEnable()
         {
-            OverlayCreationParams repairOverlayCreationParams = new OverlayCreationParams
+            OverlayCreationParams chargeOverlayCreationParams = new OverlayCreationParams
             {
                 prefab = chargeOverlayPrefab,
                 childLocatorEntry = chargeOverlayChildLocatorEntry
             };
-            chargeOverlayController = HudOverlayManager.AddOverlay(gameObject, repairOverlayCreationParams);
-            chargeOverlayController.onInstanceAdded += OnRepairOverlayInstanceAdded;
-            chargeOverlayController.onInstanceRemove += OnRepairOverlayInstanceRemoved;
+            chargeOverlayController = HudOverlayManager.AddOverlay(gameObject, chargeOverlayCreationParams);
+            chargeOverlayController.onInstanceAdded += OnChargeOverlayInstanceAdded;
+            chargeOverlayController.onInstanceRemove += OnChargeOverlayInstanceRemoved;
             characterBody = GetComponent<CharacterBody>();
         }
 
@@ -83,8 +83,8 @@ namespace SS2.Components
         {
             if (chargeOverlayController != null)
             {
-                chargeOverlayController.onInstanceAdded -= OnRepairOverlayInstanceAdded;
-                chargeOverlayController.onInstanceRemove -= OnRepairOverlayInstanceRemoved;
+                chargeOverlayController.onInstanceAdded -= OnChargeOverlayInstanceAdded;
+                chargeOverlayController.onInstanceRemove -= OnChargeOverlayInstanceRemoved;
                 fillUiList.Clear();
                 HudOverlayManager.RemoveOverlay(chargeOverlayController);
             }
@@ -106,21 +106,21 @@ namespace SS2.Components
             }
         }
 
-        private void OnRepairOverlayInstanceAdded(OverlayController controller, GameObject instance)
+        private void OnChargeOverlayInstanceAdded(OverlayController controller, GameObject instance)
         {
             fillUiList.Add(instance.GetComponent<ImageFillController>());
         }
 
-        private void OnRepairOverlayInstanceRemoved(OverlayController controller, GameObject instance)
+        private void OnChargeOverlayInstanceRemoved(OverlayController controller, GameObject instance)
         {
             fillUiList.Remove(instance.transform.GetComponent<ImageFillController>());
         }
 
-        public void AddRepair(float amount)
+        public void AddCharge(float amount)
         {
             if (!NetworkServer.active)
             {
-                SS2Log.Error("self repair controller add repair on client");
+                SS2Log.Error("Warden Controller AddCharge network server error");
                 return;
             }
 
@@ -128,9 +128,10 @@ namespace SS2.Components
                 amount = 0f;
 
             Network_charge = Mathf.Clamp(charge + amount, 0f, chargeMax);
+            Debug.Log("DEBUGGER What is Network_charge? " + Network_charge);
         }
 
-        private void OnRepairModified(float newCharge)
+        private void OnChargeModified(float newCharge)
         {
             Network_charge = newCharge;
         }
@@ -170,7 +171,7 @@ namespace SS2.Components
             int num = (int)reader.ReadPackedUInt32();
             if ((num & 1) != 0)
             {
-                OnRepairModified(reader.ReadSingle());
+                OnChargeModified(reader.ReadSingle());
             }
         }
     }

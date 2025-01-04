@@ -652,6 +652,8 @@ namespace SS2
             public static BuffDef bdMongerTar;
 
             public static BuffDef bdMongerSlippery;
+
+            public static BuffDef bdWardenSurgeBuff;
         }
 
         public static class Elites
