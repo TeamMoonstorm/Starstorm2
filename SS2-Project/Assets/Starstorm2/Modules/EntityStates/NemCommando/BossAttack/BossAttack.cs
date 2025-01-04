@@ -81,7 +81,8 @@ namespace EntityStates.Nemmando
                 effectPrefab = SS2Assets.LoadAsset<GameObject>("DecisiveStrikeSlash", SS2Bundle.NemCommando);
             }
 
-
+            DamageTypeCombo damageType = DamageType.Stun1s;
+            damageType.damageSource = DamageSource.Special;
             blastAttack = new BlastAttack()
             {
                 attacker = gameObject,
@@ -91,7 +92,7 @@ namespace EntityStates.Nemmando
                 bonusForce = Vector3.zero,
                 crit = RollCrit(),
                 damageColorIndex = DamageColorIndex.Default,
-                damageType = RoR2.DamageType.Stun1s,
+                damageType = damageType,
                 falloffModel = BlastAttack.FalloffModel.None,
                 inflictor = gameObject,
                 losType = BlastAttack.LoSType.None,

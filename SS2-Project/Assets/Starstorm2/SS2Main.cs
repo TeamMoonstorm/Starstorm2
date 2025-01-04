@@ -6,6 +6,11 @@ using R2API.Networking;
 using UnityEngine;
 using MSU;
 using System;
+using System.Globalization;
+using System.IO;
+using System.Reflection;
+using Unity.Burst;
+
 namespace SS2
 {
     #region R2API
@@ -24,7 +29,7 @@ namespace SS2
     {
         public const string GUID = "com.TeamMoonstorm";
         public const string MODNAME = "Starstorm 2";
-        public const string VERSION = "0.6.9";
+        public const string VERSION = "0.6.10";
 
         internal static SS2Main Instance { get; private set; }
 
@@ -32,7 +37,10 @@ namespace SS2
         public static bool RiskyModInstalled { get; private set; }
         public static bool GOTCEInstalled { get; private set; }
         public static bool StageAestheticInstalled { get; private set; }
+        public static bool ProperSaveInstalled { get; private set; }
         internal static bool ChristmasTime { get; private set; }
+        internal static bool ChileanIndependenceWeek { get; private set; }
+        internal static event Action onFixedUpdate;
         public void Awake()
         {
             Instance = this;
@@ -42,21 +50,23 @@ namespace SS2
             new SS2Log(Logger);
             new SS2Config(this);
             new SS2Content();
-            
+
+            LoadBurstAssembly();
             LanguageFileLoader.AddLanguageFilesFromMod(this, "languages");
             LoadingScreenSpriteUtility.AddSpriteAnimations(SS2Assets.GetLoadingScreenBundle());
+            SetSpecialEventBooleans();            
+        }
 
-            TMProEffects.Init();
-            BodyNames.Hook();
-            HideUnlocks.Hook();
-            //N: Not gonna lie, i love the idea of seasonal effects, but having the same date time check is silly, so there's that internal static bool now.
-            DateTime today = DateTime.Today;
-            if (today.Month == 12 && ((today.Day == 27) || (today.Day == 26) || (today.Day == 25) || (today.Day == 24) || (today.Day == 23)))
-                ChristmasTime = true;
+        private void SetSpecialEventBooleans()
+        {
+            //N: Funny method i wrote that makes both Runshroom's Santa Hat and Clay Monger's Lucky Pup events last an entire week, said week is the week where the "special day" lands. so even if christmas lands on a sunday, all previous days will count as the Christmas time event.
+            ChristmasTime = SS2Util.DoesTodayLandWithinASpecificDaysWeek(25, 12);
+            ChileanIndependenceWeek = SS2Util.DoesTodayLandWithinASpecificDaysWeek(18, 9);
+        }
 
-            //N: i have no idea if SystemInitializer would be too late for this, so it stays here for now.
-            //R2API.Networking.NetworkingAPI.RegisterMessageType<ScriptableObjects.NemesisSpawnCard.SyncBaseStats>();
-            
+        private void FixedUpdate()
+        {
+            onFixedUpdate?.Invoke();
         }
 
 
@@ -73,6 +83,24 @@ namespace SS2
             RiskyModInstalled = MSUtil.IsModInstalled("com.RiskyLives.RiskyMod");
             GOTCEInstalled = MSUtil.IsModInstalled("com.TheBestAssociatedLargelyLudicrousSillyheadGroup.GOTCE");
             StageAestheticInstalled = MSUtil.IsModInstalled("com.HIFU.StageAesthetic");
+            ProperSaveInstalled = MSUtil.IsModInstalled("com.KingEnderBrine-ProperSave");
+        }
+
+        //We need to explicitly tell the Burst system to load our assembly containing our bursted jobs.
+        private void LoadBurstAssembly()
+        {
+            SS2Log.Info("Loading Starstorm2_Burst.dll...");
+            var modLocation = Info.Location;
+            var directoryName = Path.GetDirectoryName(modLocation);
+            var assemblyPath = Path.Combine(directoryName, "Starstorm2_Burst.dll");
+            if(!File.Exists(assemblyPath))
+            {
+                SS2Log.Error($"Failed to load Starstorm2's Burst dll! file does not exist.");
+                return;
+            }
+
+            BurstRuntime.LoadAdditionalLibrary(assemblyPath);
+            SS2Log.Message("Starstorm2_Burst.dll loadded succesfully!");
         }
     }
 }

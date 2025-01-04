@@ -4,7 +4,7 @@ using RoR2;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using RoR2.ContentManagement;
-
+using UnityEngine.Networking;
 namespace SS2.Artifacts
 {
 #if DEBUG
@@ -40,13 +40,13 @@ namespace SS2.Artifacts
         public static void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)
         {
             orig(self);
+            if (!NetworkServer.active) return;
 
             var currStage = SceneManager.GetActiveScene().name;
             if (self.teleporterInstance && (currStage == "skymeadow" || currStage == "slumberingsatellite"))
             {
-                TeleporterUpgradeController tuc = self.teleporterInstance.GetComponent<TeleporterUpgradeController>();
-                if (tuc != null)
-                    tuc.UpgradeTeleporter();
+                if (TeleporterUpgradeController.instance)
+                    TeleporterUpgradeController.instance.UpgradeEthereal();
             }
         }
     }

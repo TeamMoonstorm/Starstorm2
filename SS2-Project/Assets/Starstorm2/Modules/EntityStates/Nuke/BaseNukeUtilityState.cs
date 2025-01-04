@@ -7,10 +7,16 @@ using UnityEngine;
 
 namespace EntityStates.Nuke
 {
+    /// <summary>
+    /// Base state when nucleator fires either of his utilities.
+    /// </summary>
     public abstract class BaseNukeUtilityState : GenericCharacterMain, SS2.Survivors.Nuke.IChargedState
     {
+        [Tooltip("The min launch speed this utility has, final launch speed is derived from the charge value given by its corresponding charging state")]
         [SerializeField] public float minLaunchSpeed;
+        [Tooltip("The max launch speed this utility has, final launch speed is derived from the charge value given by its corresponding charging state")]
         [SerializeField] public float maxLaunchSpeed;
+        [Tooltip("The base duration of this state")]
         [SerializeField] public float baseDuration;
 
         protected float _launchSpeed;
@@ -22,6 +28,7 @@ namespace EntityStates.Nuke
         public override void OnEnter()
         {
             base.OnEnter();
+            //Unground the boy and calculate his velocity based off his charge
             if (isAuthority && characterMotor)
             {
                 characterMotor.Motor.ForceUnground();
@@ -35,6 +42,7 @@ namespace EntityStates.Nuke
 
         public override void FixedUpdate()
         {
+            //always sprint, try exit whenever possible.
             base.FixedUpdate();
             if (isAuthority)
             {

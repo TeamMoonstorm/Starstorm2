@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23256b3f9ae6da5468e49c12347d9065, type: 3}
+  m_Name: TradeFire
+  m_EditorClassIdentifier: 
+  desiredItem: {fileID: 11400000, guid: 8aa3284c8ba900e43928b5e4174d7c90, type: 2}
+  maxOptions: 3
+  options:
+  - pickupDef: {fileID: 11400000, guid: 824c636b8f648bf45b66cb594d7e4260, type: 2}
+    pickupAddress: 
+    weight: 1
+  - pickupDef: {fileID: 11400000, guid: a6da388ef33fad64e8d8f43d3ae4daca, type: 2}
+    pickupAddress: 
+    weight: 1
+  - pickupDef: {fileID: 11400000, guid: 19f1ecce6aabce243b3a8194e1856d33, type: 2}
+    pickupAddress: 
+    weight: 1

@@ -9,7 +9,7 @@
 	</RootPaths>
 	<DialogueEvents/>
 	<SoundBanks>
-		<SoundBank Id="866530374" Type="User" Language="SFX" Hash="{395D3C5E-955D-4E92-A3D0-015528EE7640}">
+		<SoundBank Id="866530374" Type="User" Language="SFX" Hash="{9236DD84-8212-80DA-334D-21A293DA193B}">
 			<ShortName>Starstorm2</ShortName>
 			<Path>Starstorm2.bnk</Path>
 			<Media>
@@ -709,6 +709,10 @@
 					<ShortName>sheathesound.wav</ShortName>
 					<CachePath>SFX/sheathesound_874B2913.wem</CachePath>
 				</File>
+				<File Id="1061145637" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>emp_spawn_v3.6.wav</ShortName>
+					<CachePath>SFX/emp_spawn_v3.6_28044A83.wem</CachePath>
+				</File>
 				<File Id="1072703392" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>NemmandoFireBeam.wav</ShortName>
 					<CachePath>SFX/NemmandoFireBeam_874B2913.wem</CachePath>
@@ -1211,7 +1215,7 @@
 						<MediaRef Id="438122999"/>
 					</MediaRefs>
 				</Event>
-				<Event Id="4059362439" Name="PickupCoffeeBean" MaxAttenuation="200" DurationType="OneShot" DurationMin="0.15683334" DurationMax="0.918625">
+				<Event Id="4059362439" Name="PickupCoffeeBean" MaxAttenuation="50" DurationType="OneShot" DurationMin="0.15683334" DurationMax="0.918625">
 					<MediaRefs>
 						<MediaRef Id="69768090"/>
 						<MediaRef Id="404549038"/>
@@ -1352,9 +1356,14 @@
 						<MediaRef Id="459602224"/>
 					</MediaRefs>
 				</Event>
-				<Event Id="1520542387" Name="ProcTrematodes" MaxAttenuation="200" DurationType="OneShot" DurationMin="0.9859153" DurationMax="1.1643587">
+				<Event Id="1520542387" Name="ProcTrematodes" MaxAttenuation="200" DurationType="OneShot" DurationMin="1.0112938" DurationMax="1.135139">
 					<MediaRefs>
 						<MediaRef Id="949467665"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3799852474" Name="RainbowAffixSpawn" MaxAttenuation="300" DurationType="OneShot" DurationMin="5.6350794" DurationMax="5.6350794">
+					<MediaRefs>
+						<MediaRef Id="1061145637"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="2808251015" Name="RefabricatorAction" MaxAttenuation="200" DurationType="OneShot" DurationMin="3.0868933" DurationMax="3.0868933">
@@ -1409,7 +1418,7 @@
 						<MediaRef Id="555558067"/>
 					</MediaRefs>
 				</Event>
-				<Event Id="1435965638" Name="UniversalCharger" DurationType="OneShot" DurationMin="1.0447363" DurationMax="1.1726769">
+				<Event Id="1435965638" Name="UniversalCharger" MaxAttenuation="200" DurationType="OneShot" DurationMin="1.0447363" DurationMax="1.1726769">
 					<MediaRefs>
 						<MediaRef Id="83880130"/>
 					</MediaRefs>
@@ -1474,8 +1483,8 @@
 			</GameParameters>
 		</SoundBank>
 		<SoundBank Id="1355168291" Type="User" Language="SFX" Hash="{02E1E83D-E60D-A3E1-D579-2D42656D33FF}">
-			<ShortName>SS2SS2SS2SS2SS2SS2SS2SS2Init</ShortName>
-			<Path>SS2SS2SS2SS2SS2SS2SS2SS2Init.bnk</Path>
+			<ShortName>Init</ShortName>
+			<Path>Init.bnk</Path>
 			<Plugins>
 				<AudioDevices>
 					<Plugin Id="2317455096" Name="No_Output" LibName="No Output" LibId="11862023"/>
@@ -1670,5 +1679,5 @@
 			</StateGroups>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{1C20F966-2FAF-2B64-570A-10CA02639D49}</FileHash>
+	<FileHash>{DB4C1D3B-44FC-B460-9FF0-5C2A4BADF301}</FileHash>
 </SoundBanksInfo>

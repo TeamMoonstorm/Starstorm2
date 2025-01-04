@@ -30,6 +30,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1043416152268569148}
   m_Father: {fileID: 0}
@@ -106,7 +107,7 @@ MonoBehaviour:
   data:
     idInternal: 0
     valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 8655b3c3fde40ef42886d85ca8a3c746,
+    WwiseObjectReference: {fileID: 11400000, guid: dffc34122d018c947989f4cc41e3948e,
       type: 2}
   useCallbacks: 0
   Callbacks: []
@@ -205,15 +206,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2daca17239b839e4287ced39d5d10e6c, type: 3}
---- !u!4 &1043416152268569148 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1785230581862430210, guid: 2daca17239b839e4287ced39d5d10e6c,
-    type: 3}
-  m_PrefabInstance: {fileID: 1638356674899971134}
-  m_PrefabAsset: {fileID: 0}
 --- !u!198 &916414875262793274 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 1876697910266149380, guid: 2daca17239b839e4287ced39d5d10e6c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1638356674899971134}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1043416152268569148 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1785230581862430210, guid: 2daca17239b839e4287ced39d5d10e6c,
     type: 3}
   m_PrefabInstance: {fileID: 1638356674899971134}
   m_PrefabAsset: {fileID: 0}
